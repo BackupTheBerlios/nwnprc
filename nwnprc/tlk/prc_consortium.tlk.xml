@@ -5759,29 +5759,31 @@ Augment: You can augment this power in one or both of the following ways.
 1. For every 2 additional power points you spend, this power’s damage increases by 1d6 points.
 2. For every 2 additional power points you spend, this power can affect an additional target. Any additional target cannot be more than 15 feet from another target of the power.</entry>
   <entry id="46501" lang="en" sex="m">Ego Whip</entry>
-  <entry id="46502" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 2
-Range: Medium
-Target: One Creature
+  <entry id="46502" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 2
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. +10 ft./level)
+Target: One creature
 Duration: Instantaneous
-Saving Throw: Will half
+Saving Throw: Will half; see text
 Power Resistance: Yes
-Power Point Cost: 3
+Power Points: 3
+Metapsionics: Empower, Maximize, Twin
 
-Your rapid mental lashings assault the ego of the target, debilitating its confidence. The target takes 1d4 points of Charisma damage, or half that amount on a save (minimum 1). A target that fails its save is also dazed for one round.
+Your rapid mental lashings assault the ego of your enemy, debilitating its confidence. The target takes 1d4 points of Charisma damage, or half that amount (minimum 1 point) on a successful save. A target that fails its save is also dazed for 1 round.
 
-Augment: For every 4 additional power points spent, this power's Charisma damage increases by 1d4, and the save DC increases by 2.</entry>
+Augment: For every 4 additional power points you spend, this power’s Charisma damage increases by 1d4 points and its save DC increases by 2.</entry>
   <entry id="46503" lang="en" sex="m">Elf Sight</entry>
-  <entry id="46504" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: Psion/Wilder 2, Psychic Warrior 1
+  <entry id="46504" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 2, psychic warrior 1
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Hour/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: Psion/Wilder 3, Psychic Warrior 1
+Target: You
+Duration: 1 hour/level
+Power Points: Psion/wilder 3, psychic warrior 1
+Metapsionics: Extend
 
-When you manifest this power, you gain a +2 bonus to spot and search, and gain low light vision as an elf.</entry>
+You gain low-light vision (as an elf) for the duration of the power, as well as a +2 bonus on Search and Spot checks.</entry>
   <entry id="46505" lang="en" sex="m">Energy Adaptation, Specified</entry>
   <entry id="46506" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
 Power Level: 2
@@ -5965,14 +5967,14 @@ Metapsionics: Extend
 
 You protect the subject’s thoughts from analysis. While the duration lasts, the subject gains a +10 circumstance bonus on Bluff checks.</entry>
   <entry id="46544" lang="en" sex="m">Empathy</entry>
-  <entry id="46545" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 1
+  <entry id="46545" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Round/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 1
+Target: You
+Duration: 1 round/level
+Power Points: 1
+Metapsionics: Extend
 
 You detect the surface emotions of creatures around you, giving you a +2 bonus to Bluff, Intimidate, and Persuade when interacting with them.</entry>
   <entry id="46546" lang="en" sex="m">Far Hand</entry>
@@ -6192,18 +6194,18 @@ Notes:
 * Implemented as within 10ft of you due to the lovely quality of NWN location tracking code.
 ** The direction is the same as the direction of where you target the spell relative to you. A listener will be created so you can say the distance.</entry>
   <entry id="46588" lang="en" sex="m">Empathic Feedback</entry>
-  <entry id="46589" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 4, Psychic Warrior 3
+  <entry id="46589" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 4, psychic warrior 3
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 10 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 7, Psychic Warrior 5
+Target: You
+Duration: 10 min./level
+Power Points: Psion/wilder 7, psychic warrior 5
+Metapsionics: Extend
 
-You share your pain and suffering with your attacker. Each time a creature strikes you in melee, it takes damage equal to the amount dealt or 5, whichever is less.
+You empathically share your pain and suffering with your attacker. Each time a creature strikes you in melee, it takes damage equal to the amount it dealt to you or 5 points, whichever is less. This damage is empathic in nature, so powers and abilities the attacker may have such as damage reduction and regeneration do not lessen or change this damage. The damage from empathic feedback has no type, so even if you took fire damage from a creature that has immunity to fire, empathic feedback will damage your attacker.
 
-Augment: For every additional power point spend, the damage empathic feedback can deal increases by 1.</entry>
+Augment: For every additional power point you spend, this power’s damage potential increases by 1 point.</entry>
   <entry id="46590" lang="en" sex="m">Energy Adaptation</entry>
   <entry id="46591" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
 Power Level: 4

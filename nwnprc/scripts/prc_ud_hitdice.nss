@@ -11,13 +11,20 @@
 //:: Created By:  Tenjac
 //:: Created On:  11/26/04
 //:://////////////////////////////////////////////
-#include "inc_item_props"
+
+#include "inc_utility"
+
 
 void main()
 {
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     int nBonus = 12;
+
+    if(DEBUG) DoDebug("prc_ud_hitdice: Applying +12 Con bonus\n"
+                    + "oPC = " + DebugObject2Str(oPC) + "\n"
+                    + "oSkin = " + DebugObject2Str(oSkin) + "\n"
+                      );
 
     SetCompositeBonus(oSkin, "PRCUndeadHD", nBonus, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
 }

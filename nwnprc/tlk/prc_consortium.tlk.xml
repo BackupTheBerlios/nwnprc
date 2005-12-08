@@ -5563,18 +5563,22 @@ You fill your enemies with self-doubt. Any enemy in the area that fails its save
 
 Augment: For every 2 additional power points you spend, this power’s range and the radius of its area both increase by 5 feet, and the power’s save DC increases by 1.</entry>
   <entry id="46471" lang="en" sex="m">Disable</entry>
-  <entry id="46472" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 1
-Range: Short
-Area: 20' Cone
-Duration: 1 Min/level
+  <entry id="46472" lang="en" sex="m">Telepathy (Compulsion) [Mind-Affecting]
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
+Range: 20 ft.
+Area: Cone-shaped emanation centered on you
+Duration: 1 min./level
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Extend, Twin, Widen
 
-You broadcast a mental compulsion that convinces one or more creatures of 4 or less HD that it is disabled. This has the effect of slowing them down, as they are lethargic.
+You broadcast a mental compulsion that convinces one or more creatures of 4 Hit Dice or less that they are disabled. Creatures with the fewest HD are affected first. Among creatures with equal Hit Dice, those who are closest to the power’s point of origin are affected first. Hit Dice that are not sufficient to affect a creature are wasted.
+Creatures affected by this power believe that they have somehow been brought to the brink of unconsciousness and must act accordingly.
 
-Augment: For every 2 additional power points spent, this power's range increases by 5 and its DC by 1. </entry>
+Augment: For every 2 additional power points you spend, this power’s range increases by 5 feet and its save DC increases by 1.
+In addition, for every additional power point you spend to increase the range and the save DC, this power can affect targets that have Hit Dice equal to 4 + the number of additional points.</entry>
   <entry id="46473" lang="en" sex="m">Distract</entry>
   <entry id="46474" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
 Power Level: 1

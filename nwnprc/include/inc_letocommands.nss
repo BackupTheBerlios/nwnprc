@@ -698,18 +698,21 @@ string SetNaturalAC(int nAC)
 //<gff:add 'NaturalAC' {value='23' setifexists=True}>
 //unicorn
 // /NaturalAC = 23;
+//this wont work for players
     return LetoSet("NaturalAC", IntToString(nAC), "byte");
 }
 
 string AdjustNaturalAC(int nAdjustment)
 {
 //<gff:set 'NaturalAC' <gff:get 'NaturalA'>+2>
+//this wont work for players
     return LetoAdjust("NaturalAC", nAdjustment, "byte");
 }
 
 string SetDomain(int nClassPos, int nDomainNo, int nDomainID)
 {
 //<gff:add 'ClassList/[0]/Domain1'  {type='byte' value='2' setifexists=True}>
+//this doesnt alter the matching feats
     return LetoSet("ClassList/["+IntToString(nClassPos-1)+"]/Domain"+IntToString(nDomainID), IntToString(nDomainNo), "byte");
 }
 

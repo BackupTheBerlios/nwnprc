@@ -148,7 +148,7 @@ void main()
             SetLocalInt(oSpellOrigin, "ImpRicochetVarRunning", 1);
         }
     }
-    
+
     // Warchief Devoted Bodyguards
     if(GetLevelByClass(CLASS_TYPE_WARCHIEF, oSpellOrigin) >= 8 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
@@ -165,7 +165,7 @@ void main()
         	SetLocalInt(oSpellOrigin, "WarChiefDelay", TRUE);
         	DelayCommand(6.0, DeleteLocalInt(oSpellOrigin, "WarChiefDelay"));
         }
-    }    
+    }
 
 
     // Foe Hunter Damage Resistance
@@ -229,29 +229,17 @@ void main()
         DelayCommand(0.01, FateLink(oSpellOrigin));
     }
 
-    if(GetLocalInt(oItem, "DissolvingWeaponDamage"))
-    {
-        int nDamage = GetLocalInt(oItem, "DissolvingWeaponDamage");
-
-        effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-        effect eLink = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_L));
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oSpellTarget);
-
-        // Clean up the local
-        DeleteLocalInt(oItem, "DissolvingWeaponDamage");
-    }
-    
     // Prevenom OnHit
     if(GetLocalInt(oItem, "Prevenom"))
     {
         ExecuteScript("psi_prevenom_hit", oSpellOrigin);
-    }    
-    
+    }
+
     // Truevenom OnHit
     if(GetLocalInt(oItem, "Truevenom"))
     {
         ExecuteScript("psi_truvenom_hit", oSpellOrigin);
-    }      
+    }
 
     // Astral Construct's Poison Touch special ability
     if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))

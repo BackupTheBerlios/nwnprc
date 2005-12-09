@@ -15,17 +15,24 @@ add Name => /StoreList/[2]/ItemList, Type=>gffList;
 for($i=0; $i<=$max; $i++)
 {
 	$resref = lookup 'item_to_ireq', $i, 'RECIPE_TAG';
-	add /StoreList/[2]/ItemList/InventoryRes, $resref, gffResRef;
-	add /StoreList/[2]/ItemList/[_]/Infinite, 1, gffByte;
-	add /StoreList/[2]/ItemList/[_]/Repos_PosX, $x, gffByte;
-	add /StoreList/[2]/ItemList/[_]/Repos_Posy, $y, gffByte;
-	$x++;
-	if($x>9)
+	if($resref eq '')
 	{
-		$x = 0;
-		$y++;
+		print "no entry\n";
 	}
-	print "$resref $x $y /StoreList/[2]/ItemList/[_]InventoryRes /StoreList/[2]/ItemList/[_]/Infinite /StoreList/[2]/ItemList/[_]/Repos_PosX /StoreList/[2]/ItemList/[_]/Repos_Posy \n";
+	else
+	{
+		add /StoreList/[2]/ItemList/InventoryRes, $resref, gffResRef;
+		add /StoreList/[2]/ItemList/[_]/Infinite, 1, gffByte;
+		add /StoreList/[2]/ItemList/[_]/Repos_PosX, $x, gffByte;
+		add /StoreList/[2]/ItemList/[_]/Repos_Posy, $y, gffByte;
+		$x++;
+		if($x>9)
+		{
+			$x = 0;
+			$y++;
+		}
+	}
+	print "$resref $x $y /StoreList/[2]/ItemList/[_]/InventoryRes /StoreList/[2]/ItemList/[_]/Infinite /StoreList/[2]/ItemList/[_]/Repos_PosX /StoreList/[2]/ItemList/[_]/Repos_Posy \n";
 }
 
 %store = ">$name.utm";

@@ -50,21 +50,21 @@ public class item {
 		text += "    <struct id=\"-1\" >\n";
 		text += "        <element name=\"TemplateResRef\" type=\"11\" value=\""+resRef+"\" />\n";
 		text += "        <element name=\"BaseItem\" type=\"5\" value=\""+baseItem+"\" />\n";
-		if(!name.matches("[0-9]")){
+		if(!name.matches("[0-9.\-]")){
 		text += "        <element name=\"LocalizedName\" type=\"12\" value=\"-1\" >\n";
 		text += "            <localString languageId=\"0\" value=\""+name+"\" />\n";
 		text += "        </element>\n";
 		} else {
 		text += "        <element name=\"LocalizedName\" type=\"12\" value=\""+name+"\" />\n";
 		}
-		if(!description.matches("[0-9]")){
+		if(!description.matches("[0-9.\-]")){
 		text += "        <element name=\"Description\" type=\"12\" value=\"-1\" >\n";
 		text += "            <localString languageId=\"0\" value=\""+description+"\" />\n";
 		text += "        </element>\n";
 		} else {
 		text += "        <element name=\"Description\" type=\"12\" value=\""+descriptionIdentified+"\" />\n";
 		}
-		if(!descriptionIdentified.matches("[0-9]")){
+		if(!descriptionIdentified.matches("[0-9.\-]")){
 		text += "        <element name=\"DescIdentified\" type=\"12\" value=\"-1\" >\n";
 		text += "            <localString languageId=\"0\" value=\""+descriptionIdentified+"\" />\n";
 		text += "        </element>\n";

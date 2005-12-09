@@ -56,6 +56,11 @@ public class rig {
 		String prefixName = rig2da.getBiowareEntry("Text", prefixID);
 		//String suffixName = rig2da.getBiowareEntry("Text", suffixID);
 		String rootName = rigbase2da.getBiowareEntry("Name", rootID);
+		String combinedName;
+		if(prefixName != "")
+			combinedName = prefixName +" "+rootName;
+		else
+			combinedName = rootName;
 		//sanity checks
 		if(prefixName.equals(null))
 			print = false;
@@ -63,7 +68,7 @@ public class rig {
 		//	return;
 		//setup name tag resref etc
 		item = new item();
-		item.name    = prefixName + rootID;// + suffixName;
+		item.name    = combinedName;// + suffixName;
 		item.tag     = "rig_"+prefixID+"_"+rootID;//+"_"+suffixID;
 		item.resRef  = item.tag;
 		item.baseItem = rigbase2da.getBiowareEntryAsInt("BaseItem", rootID);

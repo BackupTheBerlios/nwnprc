@@ -23,9 +23,27 @@ int GetPowerFromSpellID(int nSpellID);
 //useful for psionics GetHasPower function
 int GetClassFeatFromPower(int nPowerID, int nClass);
 
+/**
+ * Determines the name of the 2da file that defines the number of powers
+ * known, maximum level of powers known and number of power points
+ * at each level of the given class.
+ *
+ * @param nClass CLASS_TYPE_* of the class to determine the psionics 2da name of
+ * @return       The name of the given class's psionics 2da
+ */
+string GetPsionicFileName(int nClass);
+
+/**
+ * Determines the name of the 2da file that lists the powers
+ * on the given class's power list.
+ *
+ * @param nClass CLASS_TYPE_* of the class to determine the power list 2da name of
+ * @return       The name of the given class's power list 2da
+ */
+string GetPsiBookFileName(int nClass);
+
 
 #include "inc_utility"
-#include "psi_inc_psifunc"
 #include "prc_class_const"
 
 void MakeLookupLoopMaster()
@@ -127,4 +145,18 @@ int GetClassFeatFromPower(int nPowerID, int nClass)
     if(nPower == 0)
         nPower = -1;
     return nPower;
+}
+
+string GetPsionicFileName(int nClass)
+{
+    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
+    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    return sPsiFile;
+}
+
+string GetPsiBookFileName(int nClass)
+{
+    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
+    sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    return sPsiFile;
 }

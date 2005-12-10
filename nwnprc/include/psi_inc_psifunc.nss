@@ -161,20 +161,6 @@ void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration);
 // BEGIN FUNCTIONS
 // ---------------
 
-string GetPsionicFileName(int nClass)
-{
-    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
-    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
-    return sPsiFile;
-}
-
-string GetPsiBookFileName(int nClass)
-{
-    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
-    sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
-    return sPsiFile;
-}
-
 int GetManifestingClass(object oCaster)
 {
     return GetLocalInt(oCaster, "ManifestingClass");

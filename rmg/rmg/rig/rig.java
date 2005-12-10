@@ -62,8 +62,8 @@ public class rig {
 		else
 			combinedName = rootName;
 		//sanity checks
-		if(prefixName.equals(null))
-			print = false;
+		//if(prefixName.equals(""))
+		//	print = false;
 		//if(suffixName.equals(null))
 		//	return;
 		//setup name tag resref etc
@@ -93,9 +93,13 @@ public class rig {
 		for(int i = 1 ; i <= 5 ; i ++){
 			int itemproperty = rig2da.getBiowareEntryAsInt("Property"+i, prefixID);
 			int itempropertytype = rigIP2da.getBiowareEntryAsInt("Type", itemproperty);
-			if(itemprops2da.getBiowareEntry(itempropsdefcolumn, itempropertytype) != "1"
-				&& rig2da.getBiowareEntry("Property"+i, prefixID) != "")
+			if(itemprops2da.getBiowareEntryAsInt(itempropsdefcolumn, itempropertytype) != 1
+				&& rig2da.getBiowareEntry("Property"+i, prefixID) != ""){
+
 				print = false;
+				//System.out.println("rig2da.getBiowareEntry(\"Property\"+i, prefixID)="+rig2da.getBiowareEntry("Property"+i, prefixID));
+				//System.out.println("itemprops2da.getBiowareEntry(itempropsdefcolumn, itempropertytype)="+itemprops2da.getBiowareEntry(itempropsdefcolumn, itempropertytype));
+			}
 		}
 		//print it
 		if(print)

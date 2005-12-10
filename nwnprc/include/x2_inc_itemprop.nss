@@ -318,10 +318,11 @@ object IPGetIPWorkContainer(object oCaller = OBJECT_SELF)
 // This function needs to be rather extensive and needs to be updated if there are new
 // ip types we want to use, but it goes into the item property include anyway
 // ----------------------------------------------------------------------------
-itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0, int nParam3 = 0, int nParam4 = 0)
+//This version has been fixed up by Sunjammer from the bioware forums
+//http://nwn.bioware.com/forums/viewtopic.html?topic=431299&forum=47
+itemproperty IPGetItemPropertyByID(int nPropID, int nParam1=0, int nParam2=0, int nParam3=0, int nParam4=0)
 {
    itemproperty ipRet;
-
    if (nPropID == ITEM_PROPERTY_ABILITY_BONUS)
    {
         ipRet = ItemPropertyAbilityBonus(nParam1, nParam2);
@@ -502,18 +503,139 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyUnlimitedAmmo(nParam1);
    }
+   // SJ -----------------------------------------------------------------start-
    else if (nPropID == ITEM_PROPERTY_ONHITCASTSPELL)
    {
-        ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2);
+        // this constructor is bugged (@ v1.65) and will reduce nParam2 by 1
+        // we can compensate for this until it is fixed by adding 1 here
+        // however someone (you) will have to remember to remove it later!
+        ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2 + 1);
    }
+   // SJ -------------------------------------------------------------------end-
    else if (nPropID == ITEM_PROPERTY_ARCANE_SPELL_FAILURE)
    {
         ipRet = ItemPropertyArcaneSpellFailure(nParam1);
    }
-
-
+   // SJ -----------------------------------------------------------------start-
+   else if (nPropID == ITEM_PROPERTY_DECREASED_DAMAGE)
+   {
+        ipRet = ItemPropertyDamagePenalty(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_FREEDOM_OF_MOVEMENT)
+   {
+        ipRet = ItemPropertyFreeAction();
+   }
+   else if (nPropID == ITEM_PROPERTY_HEALERS_KIT)
+   {
+        ipRet = ItemPropertyHealersKit(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_HOLY_AVENGER)
+   {
+        ipRet = ItemPropertyHolyAvenger();
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE)
+   {
+        ipRet = ItemPropertyDamageImmunity(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_MISCELLANEOUS)
+   {
+        ipRet = ItemPropertyImmunityMisc(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPECIFIC_SPELL)
+   {
+        ipRet = ItemPropertySpellImmunitySpecific(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELL_SCHOOL)
+   {
+        ipRet = ItemPropertySpellImmunitySchool(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL)
+   {
+        // this constructor is bugged (@ v1.65) and will reduce nParam1 by 1
+        // we can compensate for this until it is fixed by adding 1 here
+        // however someone (you) will have to remember to remove it later!
+        ipRet = ItemPropertyImmunityToSpellLevel(nParam1 + 1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMPROVED_EVASION)
+   {
+        ipRet = ItemPropertyImprovedEvasion();
+   }
+   else if (nPropID == ITEM_PROPERTY_MIGHTY)
+   {
+        ipRet = ItemPropertyMaxRangeStrengthMod(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_MONSTER_DAMAGE)
+   {
+        ipRet = ItemPropertyMonsterDamage(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_ON_MONSTER_HIT)
+   {
+        ipRet = ItemPropertyOnMonsterHitProperties(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_REGENERATION)
+   {
+        ipRet = ItemPropertyRegeneration(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_REGENERATION_VAMPIRIC)
+   {
+        ipRet = ItemPropertyVampiricRegeneration(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS)
+   {
+        ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC)
+   {
+        ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_SKILL_BONUS)
+   {
+        ipRet = ItemPropertySkillBonus(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_SPECIAL_WALK)
+   {
+        ipRet = ItemPropertySpecialWalk(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_SPELL_RESISTANCE)
+   {
+        ipRet = ItemPropertyBonusSpellResistance(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_THIEVES_TOOLS)
+   {
+        ipRet = ItemPropertyThievesTools(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_TURN_RESISTANCE)
+   {
+        ipRet = ItemPropertyTurnResistance(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP)
+   {
+        ipRet = ItemPropertyLimitUseByAlign(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_CLASS)
+   {
+        ipRet = ItemPropertyLimitUseByClass(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE)
+   {
+        ipRet = ItemPropertyLimitUseByRace(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT)
+   {
+        ipRet = ItemPropertyLimitUseBySAlign(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_VISUALEFFECT)
+   {
+        ipRet = ItemPropertyVisualEffect(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_WEIGHT_INCREASE)
+   {
+        ipRet = ItemPropertyWeightIncrease(nParam1);
+   }
+   // SJ -------------------------------------------------------------------end-
    return ipRet;
 }
+
 
 // ----------------------------------------------------------------------------
 // Returns TRUE if oItem is a projectile

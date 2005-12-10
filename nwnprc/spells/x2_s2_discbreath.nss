@@ -531,6 +531,7 @@ void main()
     else                  nDamageDice = 18;
     */
     int nDamage = d10(nDamageDice);
+    if(DEBUG) DoDebug("x2_s2_discbreath: Rolling damage: " + IntToString(nDamageDice) + "d10 = " + IntToString(nDamage));
 
     //Only Dragons with Breath Weapons will have damage caused by their breath attack.
     //Any Dragon type not listed here will have a breath attack, but it will not

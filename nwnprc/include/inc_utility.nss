@@ -347,6 +347,24 @@ string DebugObject2Str(object o);
  */
 string DebugLocation2Str(location loc);
 
+/**
+ * Converts the given itemproperty into a string representation.
+ *
+ * @param iprop Itemproperty to convert into a string
+ * @return      A string representation of iprop
+ */
+string DebugIProp2Str(itemproperty iprop);
+
+/**
+ * Determines the angle between two given locations. Angle returned
+ * is relative to the first location.
+ *
+ * @param lFrom The base location
+ * @param lTo   The other location
+ * @return      The angle between the two locations, relative to lFrom
+ */
+float MyGetAngleBetweenLocations(location lFrom, location lTo);
+
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -891,4 +909,31 @@ string DebugLocation2Str(location loc)
     sF = TrimString(sF);
 
     return "Area: Name = '" + GetName(oArea) + "', Tag = '" + GetTag(oArea) + "'; Position: (" + sX + ", " + sY + ", " + sZ + ",); Facing: " + sF;
+}
+
+string DebugIProp2Str(itemproperty iprop)
+{
+    return "Type: " + IntToString(GetItemPropertyType(iprop)) + "; "
+         + "Subtype: " + IntToString(GetItemPropertySubType(iprop)) + "; "
+         + "Duration type: " + (GetItemPropertyDurationType(iprop) == DURATION_TYPE_INSTANT ?   "DURATION_TYPE_INSTANT"   :
+                                GetItemPropertyDurationType(iprop) == DURATION_TYPE_TEMPORARY ? "DURATION_TYPE_TEMPORARY" :
+                                GetItemPropertyDurationType(iprop) == DURATION_TYPE_PERMANENT ? "DURATION_TYPE_PERMANENT" :
+                                IntToString(GetItemPropertyDurationType(iprop))) + "; "
+         + "Param1: " + IntToString(GetItemPropertyParam1(iprop)) + "; "
+         + "Param1 value: " + IntToString(GetItemPropertyParam1Value(iprop)) + "; "
+         + "Cost table: " + IntToString(GetItemPropertyCostTable(iprop)) + "; "
+         + "Cost table value: " + IntToString(GetItemPropertyCostTableValue(iprop));
+}
+
+float MyGetAngleBetweenLocations(location lFrom, location lTo)
+{
+    vector vPos1 = GetPositionFromLocation(lFrom);
+    vector vPos2 = GetPositionFromLocation(lTo);
+
+    float fAngle = acos((vPos1.x - vPos2.x) / GetDistanceBetweenLocations(lFrom, lTo));
+    // The above formula only returns values [0, 180], so test for negative y movement
+    if((vPos1.y - vPos2.y) < 0.0f)
+        fAngle += 180;
+
+    return fAngle;
 }

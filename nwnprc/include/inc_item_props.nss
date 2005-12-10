@@ -1118,121 +1118,121 @@ void DeletePRCLocalIntsT(object oPC, object oItem = OBJECT_INVALID)
     // will be removing ints from it.
     // Otherwise, we will take the item in each slot and removing the
     // ints that should be on it.
-    int iValid = GetIsObjectValid(oItem);
+    int bGivenObject = GetIsObjectValid(oItem);
 
     // RIGHT HAND
-    if (!iValid)
-        oItem=GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
+    if(!bGivenObject)
+        oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
 
-    // Clear composite bonuses
-    TotalRemovePropertyT(oItem);
-    DeleteNamedComposites(oItem, "PRC_CBonT");
+    if(bGivenObject || GetIsObjectValid(oItem))
+    {
+        // Clear composite bonuses
+        TotalRemovePropertyT(oItem);
+        DeleteNamedComposites(oItem, "PRC_CBonT");
 
-    /* Clear other stuff
-     *
-     * All the commented out values are the ones that didn't seem to be used anywhere anymore - Ornedan
-     */
-    //Stormlord
-    DeleteLocalInt(oItem,"STShock"); /// @todo Rewrite the Stormlord not to directly manipulate values
-    DeleteLocalInt(oItem,"STThund");
-    //ManAtArms
-    //DeleteLocalInt(oItem,"ManArmsGenSpe");
-    //DeleteLocalInt(oItem,"ManArmsDmg");
-    DeleteLocalInt(oItem,"ManArmsCore");
-    //Vile/Sanctify & Un/Holy Martial Strike
-    DeleteLocalInt(oItem,"SanctMar");
-    DeleteLocalInt(oItem,"MartialStrik");
-    DeleteLocalInt(oItem,"UnholyStrik");
-    DeleteLocalInt(oItem,"USanctMar");
-    //Duelist Precise Strike
-    DeleteLocalInt(oItem,"DuelistPreciseSlash");
-    //DeleteLocalInt(oItem,"DuelistPreciseSmash");
-    //Duelist Elaborate Parry
-    //DeleteLocalInt(oItem,"ElaborateParryACBonus");
-    //DeleteLocalInt(oItem,"ElaborateParryAttackPenalty");
-    // Black Flame Zealot
-    DeleteLocalInt(oItem,"BFZFlame");
-    // Other
-    //DeleteLocalInt(oItem,"IPEnhA");
-    // Dispater
-    DeleteLocalInt(oItem,"DispIronPowerA");
-    DeleteLocalInt(oItem,"DispIronPowerD");
-    // knight Chalice
-    //DeleteLocalInt(oItem,"DSlayBonusDiv");
-    //DeleteLocalInt(oItem,"DSlayingAttackBonus");
-    // prc_battledance
-    //DeleteLocalInt(oItem,"BADanAtk");
-    // Dragonwrack
-    DeleteLocalInt(oItem,"DWright");
-    // Holy Avenger
-    //DeleteLocalInt(oItem,"HolyAvAntiStack");
+        /* Clear other stuff
+         *
+         * All the commented out values are the ones that didn't seem to be used anywhere anymore - Ornedan
+         */
+        //Stormlord
+        DeleteLocalInt(oItem,"STShock"); /// @todo Rewrite the Stormlord not to directly manipulate values
+        DeleteLocalInt(oItem,"STThund");
+        DeleteLocalInt(oItem,"ManArmsCore");
+        //Vile/Sanctify & Un/Holy Martial Strike
+        DeleteLocalInt(oItem,"SanctMar");
+        DeleteLocalInt(oItem,"MartialStrik");
+        DeleteLocalInt(oItem,"UnholyStrik");
+        DeleteLocalInt(oItem,"USanctMar");
+        //Duelist Precise Strike
+        DeleteLocalInt(oItem,"DuelistPreciseSlash");
+        //DeleteLocalInt(oItem,"DuelistPreciseSmash");
+        // Black Flame Zealot
+        DeleteLocalInt(oItem,"BFZFlame");
+        // Dispater
+        DeleteLocalInt(oItem,"DispIronPowerA");
+        DeleteLocalInt(oItem,"DispIronPowerD");
+        // Dragonwrack
+        DeleteLocalInt(oItem,"DWright");
+    }
 
     // LEFT HAND
-    if (!iValid)
-    {
+    if(!bGivenObject)
         oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND,oPC);
-        TotalRemovePropertyT(oItem);
-        DeleteNamedComposites(oItem, "PRC_CBonT");
-    }
 
-    //ManAtArms
-    //DeleteLocalInt(oItem,"ManArmsGenSpe");
-    //DeleteLocalInt(oItem,"ManArmsDmg");
-    //Vile/Sanctify & Un/Holy Martial Strike
-    DeleteLocalInt(oItem,"SanctMar");
-    DeleteLocalInt(oItem,"MartialStrik");
-    DeleteLocalInt(oItem,"UnholyStrik");
-    DeleteLocalInt(oItem,"USanctMar");
-    // Other
-    //DeleteLocalInt(oItem,"IPEnhA");
-    // Demonslaying
-    //DeleteLocalInt(oItem,"DSlayingAttackBonus");
-    // Dragonwrack
-    DeleteLocalInt(oItem,"DWleft");
-    // Holy Avenger
-    //DeleteLocalInt(oItem,"HolyAvAntiStack");
-    // Dispater
-    DeleteLocalInt(oItem,"DispIronPowerA");
-    DeleteLocalInt(oItem,"DispIronPowerD");
+    if(bGivenObject || GetIsObjectValid(oItem))
+    {
+        if(!bGivenObject)
+        {
+            // Clear composite bonuses
+            TotalRemovePropertyT(oItem);
+            DeleteNamedComposites(oItem, "PRC_CBonT");
+        }
+
+        //Vile/Sanctify & Un/Holy Martial Strike
+        DeleteLocalInt(oItem,"SanctMar");
+        DeleteLocalInt(oItem,"MartialStrik");
+        DeleteLocalInt(oItem,"UnholyStrik");
+        DeleteLocalInt(oItem,"USanctMar");
+        // Dragonwrack
+        DeleteLocalInt(oItem,"DWleft");
+        // Dispater
+        DeleteLocalInt(oItem,"DispIronPowerA");
+        DeleteLocalInt(oItem,"DispIronPowerD");
+    }
 
     // CHEST
-    if (!iValid)
-    {
+    if(!bGivenObject)
         oItem = GetItemInSlot(INVENTORY_SLOT_CHEST,oPC);
-        TotalRemovePropertyT(oItem);
-        DeleteNamedComposites(oItem, "PRC_CBonT");
-    }
 
-    // Bladesinger
-    DeleteLocalInt(oItem,"BladeASF");
-    // Frenzied Berzerker
-    DeleteLocalInt(oItem,"AFrenzy");
-    // Shadowlord
-    DeleteLocalInt(oItem,"ShaDiscorp");
-    // Dragonwrack
-    DeleteLocalInt(oItem,"Dragonwrack");
+    if(bGivenObject || GetIsObjectValid(oItem))
+    {
+        if(!bGivenObject)
+        {
+            // Clear composite bonuses
+            TotalRemovePropertyT(oItem);
+            DeleteNamedComposites(oItem, "PRC_CBonT");
+        }
+
+        // Bladesinger
+        DeleteLocalInt(oItem,"BladeASF");
+        // Frenzied Berzerker
+        DeleteLocalInt(oItem,"AFrenzy");
+        // Shadowlord
+        DeleteLocalInt(oItem,"ShaDiscorp");
+        // Dragonwrack
+        DeleteLocalInt(oItem,"Dragonwrack");
+    }
 
     // LEFT RING
-    if (!iValid)
-    {
+    if(!bGivenObject)
         oItem = GetItemInSlot(INVENTORY_SLOT_LEFTRING,oPC);
-        TotalRemovePropertyT(oItem);
-        DeleteNamedComposites(oItem, "PRC_CBonT");
-    }
 
-    // Bladesinger
-    //DeleteLocalInt(oItem,"NewPowAtk");
+    if(bGivenObject || GetIsObjectValid(oItem))
+    {
+        if(!bGivenObject)
+        {
+            // Clear composite bonuses
+            TotalRemovePropertyT(oItem);
+            DeleteNamedComposites(oItem, "PRC_CBonT");
+        }
+    }
 
     // ARMS
-    if (!iValid)
-    {
-        oItem=GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
-        TotalRemovePropertyT(oItem);
-        DeleteNamedComposites(oItem, "PRC_CBonT");
-    }
+    if(!bGivenObject)
+        oItem = GetItemInSlot(INVENTORY_SLOT_ARMS,oPC);
 
-    // Disciple of Mephistopheles
-    DeleteLocalInt(oItem,"DiscMephGlove");
+    if(bGivenObject || GetIsObjectValid(oItem))
+    {
+        if(!bGivenObject)
+        {
+            // Clear composite bonuses
+            TotalRemovePropertyT(oItem);
+            DeleteNamedComposites(oItem, "PRC_CBonT");
+        }
+
+        // Disciple of Mephistopheles
+        DeleteLocalInt(oItem,"DiscMephGlove");
+    }
 }
 
 void SetCompositeAttackBonus(object oPC, string sBonus, int iVal, int iSubType = ATTACK_BONUS_MISC)

@@ -5603,18 +5603,18 @@ Metapsionics: Extend, Twin
 
 You cause your subject’s mind to wander, distracting her. Subjects under the effect of distract make all Listen, Spot and Search checks at a -4 penalty.</entry>
   <entry id="46475" lang="en" sex="m">Empty Mind</entry>
-  <entry id="46476" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 1
+  <entry id="46476" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 1, psychic warrior 1
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Round/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 1
+Target: You
+Duration: 1 round/level
+Power Points: 1
+Metapsionics: Extend
 
-You empty your mind of all transitory and distracting thoughts, gaining a +2 bonus to will saves.
+You empty your mind of all transitory and distracting thoughts, improving your self-control. You gain a +2 bonus on all Will saves for the duration of the power.
 
-Augment: For every 2 additional power points you spend, the will save bonus improves by 1.</entry>
+Augment: For every 2 additional power points you spend, the bonus on your Will saves increases by 1.</entry>
   <entry id="46477" lang="en" sex="m">Energy Ray</entry>
   <entry id="46478" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 1
@@ -5785,16 +5785,22 @@ Metapsionics: Extend
 
 You gain low-light vision (as an elf) for the duration of the power, as well as a +2 bonus on Search and Spot checks.</entry>
   <entry id="46505" lang="en" sex="m">Energy Adaptation, Specified</entry>
-  <entry id="46506" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 2
+  <entry id="46506" lang="en" sex="m">Psychometabolism [see text]
+Level: Psion/wilder 2, psychic warrior 2
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 10 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 3
+Target: You
+Duration: 10 min./level
+Power Points: 3
+Metapsionics: Extend
 
-When you manifest this power, you gain 10 resistance to the chosen energy type. This increases to 20 at manifester level 9, and 30 at manifester level 13.</entry>
+Your body assimilates some of the effect of an energy attack and converts it to harmless light. You gain resistance 10 against any attack that deals damage of the chosen type.
+
+When you absorb damage, you radiate visible light that illuminates a 60-foot radius for a number of rounds equal to the points of damage you successfully resisted.
+
+The energy resistance provided by this power increases to 20 points at 9th manifester level and to a maximum of 30 points at 13th level.
+
+This power’s subtype is the same as the type of damage it protects against.</entry>
   <entry id="46507" lang="en" sex="m">Energy Adaptation, Acid</entry>
   <entry id="46508" lang="en" sex="m">Energy Adaptation, Cold</entry>
   <entry id="46509" lang="en" sex="m">Energy Adaptation, Electricity</entry>
@@ -6207,16 +6213,20 @@ You empathically share your pain and suffering with your attacker. Each time a c
 
 Augment: For every additional power point you spend, this power’s damage potential increases by 1 point.</entry>
   <entry id="46590" lang="en" sex="m">Energy Adaptation</entry>
-  <entry id="46591" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 4
+  <entry id="46591" lang="en" sex="m">Psychometabolism [Acid, Cold, Electricity, Fire, Sonic]
+Level: Psion/wilder 4, psychic warrior 4
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 10 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 7
+Target: You
+Duration: 10 min./level
+Power Points: 7
+Metapsionics: Extend
 
-When you manifest this power, you gain 10 resistance to acid, cold, electricity, fire and sonic damage. This increases to 20 at manifester level 9, and 30 at manifester level 13.</entry>
+Your body assimilates some of the effect of an energy attack and converts it to harmless light. You gain resistance 10 against any attack that deals acid, cold, electricity, fire, or sonic damage.
+
+When you absorb damage, you radiate visible light that illuminates a 60-foot radius for a number of rounds equal to the points of damage you successfully resisted.
+
+The energy resistance provided by this power increases to 20 points at 9th manifester level and to a maximum of 30 points at 13th level.</entry>
   <entry id="46592" lang="en" sex="m">Freedom of Movement</entry>
   <entry id="46593" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
 Power Level: 4

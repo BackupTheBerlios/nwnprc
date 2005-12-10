@@ -30,8 +30,18 @@ java -cp "tools\modpacker\nwn-tools.jar" org.progeeks.nwn.XmlToGff out in\*
 copy out\*.* *.*
 del /Q out\*.*
 del in\*.xml
-tools\erf -c worldmap.hak *.tga *.mdl *.wok *.set *.itp *.dds
-tools\erf -c worldmap.erf *.are *.git *.gic 
+copy *.tga out\*.tga
+copy *.mdl out\*.mdl
+copy *.wok out\*.wok
+copy *.set out\*.set
+copy *.itp out\*.itp
+copy *.dds out\*.dds
+java -cp "tools\modpacker\nwn-tools.jar" org.progeeks.nwn.ModPacker out worldmap.hak
+del out\*.*
+copy *.are out\*.are
+copy *.git out\*.git
+copy *.gic out\*.gic
+java -cp "tools\modpacker\nwn-tools.jar" org.progeeks.nwn.ModPacker out worldmap.erf
 del *.tga 
 del *.mdl 
 del *.wok 

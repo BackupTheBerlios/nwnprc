@@ -2,6 +2,7 @@ package prc;
 
 import prc.autodoc.ErrorPrinter;
 import prc.autodoc.Spinner;
+import prc.utils.LetoListsGenerator;
 
 /**
  * A menu class. Calls operations from classes in subpackages based on parameters
@@ -64,6 +65,9 @@ public class Main {
 		else if(toCall.equals("spellbookmaker")){
 			prc.utils.SpellbookMaker.main(paramsToPass);
 		}
+		else if(toCall.equals("letoxml")){
+			LetoListsGenerator.main(paramsToPass);
+		}
 
 		else{
 			System.out.println("Unknown class: " + toCall);
@@ -91,6 +95,7 @@ public class Main {
 						   "             dupentries - Seeks for duplicate entries in the given columns\n" +
 						   "                          of a given 2da\n"+
 						   "             2datosql   - Creates a SQL file from 2das\n" +
+						   "             letoxml    - Creates Leto XML lists from 2da and TLK\n" +
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

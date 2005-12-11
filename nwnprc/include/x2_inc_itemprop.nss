@@ -510,6 +510,11 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1=0, int nParam2=0, in
         // we can compensate for this until it is fixed by adding 1 here
         // however someone (you) will have to remember to remove it later!
         ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2 + 1);
+        //Primogenitor
+        //Not strictly true. You put in the level of the spell, its just that
+        //this doesnt match the row of the 2da directly. Thus you only need
+        //to remember this when getting the value later on.
+        ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2);
    }
    // SJ -------------------------------------------------------------------end-
    else if (nPropID == ITEM_PROPERTY_ARCANE_SPELL_FAILURE)

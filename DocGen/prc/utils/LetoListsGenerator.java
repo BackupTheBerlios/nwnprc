@@ -1,15 +1,14 @@
 package prc.utils;
 
 import static prc.Main.err_pr;
-import static prc.Main.spinner;
-import static prc.Main.verbose;
 import prc.autodoc.*;
 import java.io.*;
 import java.util.*;
 
 /**
- * @author heikki
- *
+ * A class for generating Leto XML files from 2da and TLK.
+ * 
+ * @author Ornedan
  */
 public final class LetoListsGenerator {
 	private final Data_TLK defaultTLK;

@@ -1,0 +1,61 @@
+Psionics:
+
+Psywarrior powers needing scripts:
+Strength of my Enemy
+Graft Weapon (might drop this)
+Immovability
+Form of Doom (toughie)
+
+Psionics needing 2das:
+Kineticist
+Egoist
+Psywarrior
+
+Psionic PrCs:
+Warmind
+Metamind
+Uncarnate
+FoZ (needs powers)
+Pyro
+
+Pale master -> 3.0:
+Fighter vassal
+Incorp vassal
+Cleric vassal
+Summon Undead
+Summon Greater Undead
+Poke attacks
+Death Touch -> create undead on failed save
+
+List of the feats to do
+
+Complete Divine:
+
+Cheetah's Speed
+Elephant's Hide
+Extra Wildshape
+Grizzly Claws
+Oaken Resilience
+Quicken Turning
+Sacred Healing
+True Believer
+Wolverine's Rage
+
+Complete Warrior:
+Axiomatic Strike
+Dash
+Extend Rage
+Extra Rage
+Extra Smiting
+Freezing the Lifeblood
+Improved Rapid Shot
+Intimidating Rage
+Karmic Strike
+Weakening Touch
+Divine Cleansing
+Divine Resistance
+Divine Vigor
+Sacred Vengeance
+
+Champions of Ruin:
+Doomspeak

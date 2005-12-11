@@ -101,6 +101,12 @@ public class rig {
 				//System.out.println("itemprops2da.getBiowareEntry(itempropsdefcolumn, itempropertytype)="+itemprops2da.getBiowareEntry(itempropsdefcolumn, itempropertytype));
 			}
 		}
+		//hardcoding for armor
+		//its not pretty, but it works
+		if(item.baseItem == 16)
+		{
+			item.partTorso = rigbase2da.getBiowareEntryAsInt("TorsoID", rootID);
+		}
 		//print it
 		if(print)
 			outputToFile(item);

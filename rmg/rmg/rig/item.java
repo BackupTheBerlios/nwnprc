@@ -21,6 +21,25 @@ public class item {
 	public int part1 = 1;
 	public int part2 = 1;
 	public int part3 = 1;
+	public int partBelt = 1;
+	public int partLBicep = 1;
+	public int partLFArm = 1;
+	public int partLFoot = 1;
+	public int partLHand = 1;
+	public int partLShin = 1;
+	public int partLShould = 1;
+	public int partLThigh = 1;
+	public int partNeck = 1;
+	public int partPelvis = 1;
+	public int partRBicep = 1;
+	public int partRFArm = 1;
+	public int partRFoot = 1;
+	public int partRHand = 1;
+	public int partRShin = 1;
+	public int partRShould = 1;
+	public int partRThigh = 1;
+	public int partTorso = 1;
+	public int partRobe = 0;
 	public int colorLeather1 = 1;
 	public int colorLeather2 = 1;
 	public int colorCloth1 = 1;
@@ -102,6 +121,31 @@ public class item {
 		text.append("        <element name=\"ModelPart3\" type=\"0\" value=\""+11+"\" />\n");
 		} else if(rig.baseitem2da.getBiowareEntryAsInt("ModelType", baseItem) == 3){
 			//armor
+		text.append("        <element name=\"ArmorPart_Belt\" type=\"0\" value=\""+partBelt+"\" />\n");
+		text.append("        <element name=\"ArmorPart_LBicep\" type=\"0\" value=\""+partLBicep+"\" />\n");
+		text.append("        <element name=\"ArmorPart_LFArm\" type=\"0\" value=\""+partLFArm+"\" />\n");
+		text.append("        <element name=\"ArmorPart_LFoot\" type=\"0\" value=\""+partLFoot+"\" />\n");
+		text.append("        <element name=\"ArmorPart_LHand\" type=\"0\" value=\""+partLHand+"\" />\n");
+		text.append("        <element name=\"ArmorPart_LShin\" type=\"0\" value=\""+partLShin+"\" />\n");
+		text.append("        <element name=\"ArmorPart_LShoul\" type=\"0\" value=\""+partLShould+"\" />\n");
+		text.append("        <element name=\"ArmorPart_LThigh\" type=\"0\" value=\""+partLThigh+"\" />\n");
+		text.append("        <element name=\"ArmorPart_Neck\" type=\"0\" value=\""+partNeck+"\" />\n");
+		text.append("        <element name=\"ArmorPart_Pelvis\" type=\"0\" value=\""+partPelvis+"\" />\n");
+		text.append("        <element name=\"ArmorPart_RBicep\" type=\"0\" value=\""+partRBicep+"\" />\n");
+		text.append("        <element name=\"ArmorPart_RFArm\" type=\"0\" value=\""+partRFArm+"\" />\n");
+		text.append("        <element name=\"ArmorPart_RFoot\" type=\"0\" value=\""+partRFoot+"\" />\n");
+		text.append("        <element name=\"ArmorPart_RHand\" type=\"0\" value=\""+partRHand+"\" />\n");
+		text.append("        <element name=\"ArmorPart_RShin\" type=\"0\" value=\""+partRShin+"\" />\n");
+		text.append("        <element name=\"ArmorPart_RShoul\" type=\"0\" value=\""+partRShould+"\" />\n");
+		text.append("        <element name=\"ArmorPart_RThigh\" type=\"0\" value=\""+partRThigh+"\" />\n");
+		text.append("        <element name=\"ArmorPart_Torso\" type=\"0\" value=\""+partTorso+"\" />\n");
+		text.append("        <element name=\"ArmorPart_Robe\" type=\"0\" value=\""+partRobe+"\" />\n");
+        text.append("        <element name=\"Leather1Color\" type=\"0\" value=\""+colorLeather1+"\" />\n");
+        text.append("        <element name=\"Leather2Color\" type=\"0\" value=\""+colorLeather2+"\" />\n");
+        text.append("        <element name=\"Cloth1Color\" type=\"0\" value=\""+colorCloth1+"\" />\n");
+        text.append("        <element name=\"Cloth2Color\" type=\"0\" value=\""+colorCloth2+"\" />\n");
+        text.append("        <element name=\"Metal1Color\" type=\"0\" value=\""+colorMetal1+"\" />\n");
+        text.append("        <element name=\"Metal2Color\" type=\"0\" value=\""+colorMetal2+"\" />\n");
 		}
 		text.append("        <element name=\"PropertiesList\" type=\"15\" />\n");
 		for(int i = 0 ; i < propertiesList.length ; i++){

@@ -1,91 +1,77 @@
 2DA V2.0
 
-           Label                 Text                  Property1 Property2 Property3 Property4 Property5 LevelMin 
-0          none                  ****                  ****      ****      ****      ****      ****      1        
-1          Str                   "Strength"            1         ****      ****      ****      ****      1        
-2          Dex                   "Dexterity"           2         ****      ****      ****      ****      1        
-3          Con                   "Constitution"        3         ****      ****      ****      ****      1        
-4          Int                   "Intelligence"        4         ****      ****      ****      ****      1        
-5          Wis                   "Wisdom"              5         ****      ****      ****      ****      1        
-6          Cha                   "Charisma"            6         ****      ****      ****      ****      1        
-7          Enh                   "Magic"               7         ****      ****      ****      ****      1        
-8          AC                    "Magic"               8         ****      ****      ****      ****      1        
-9          Fire                  "Flaming"             9         ****      ****      ****      ****      1        
-10         Cold                  "Cold"                10        ****      ****      ****      ****      1        
-11         Elec                  "Electrical"          11        ****      ****      ****      ****      1        
-12         Sonic                 "Sonic"               12        ****      ****      ****      ****      1        
-13         Acid                  "Acidic"              13        ****      ****      ****      ****      1        
-14         FireVsEvil            "Flaming vs Evil"     14        ****      ****      ****      ****      1        
-15         ColdVsEvil            "Cold vs Evil"        15        ****      ****      ****      ****      1        
-16         ElecVsEvil            "Electrical vs Evil"  16        ****      ****      ****      ****      1        
-17         SonicVsEvil           "Sonic vs Evil"       17        ****      ****      ****      ****      1        
-18         AcidVsEvil            "Acidic vs Evil"      18        ****      ****      ****      ****      1        
-19         FireVsGood            "Flaming vs Good"     19        ****      ****      ****      ****      1        
-20         ColdVsGood            "Cold vs Good"        20        ****      ****      ****      ****      1        
-21         ElecVsGood            "Electrical vs Good"  21        ****      ****      ****      ****      1        
-22         SonicVsGood           "Sonic vs Good"       22        ****      ****      ****      ****      1        
-23         AcidVsGood            "Acidic vs Good"      23        ****      ****      ****      ****      1        
-24         FireVsChaos           "Flaming vs Chaos"    24        ****      ****      ****      ****      1        
-25         ColdVsChaos           "Cold vs Chaos"       25        ****      ****      ****      ****      1        
-26         ElecVsChaos           "Electrical vs Chaos" 26        ****      ****      ****      ****      1        
-27         SonicVsChaos          "Sonic vs Chaos"      27        ****      ****      ****      ****      1        
-28         AcidVsChaos           "Acidic vs Chaos"     28        ****      ****      ****      ****      1        
-29         FireVsLaw             "Flaming vs Law"      29        ****      ****      ****      ****      1        
-30         ColdVsLaw             "Cold vs Law"         30        ****      ****      ****      ****      1        
-31         ElecVsLaw             "Electrical vs Law"   31        ****      ****      ****      ****      1        
-32         SonicVsLaw            "Sonic vs Law"        32        ****      ****      ****      ****      1        
-33         AcidVsLaw             "Acidic vs Law"       33        ****      ****      ****      ****      1        
-34         FireVsNeutral         "Flaming vs Law"      34        ****      ****      ****      ****      1        
-35         ColdVsNeutral         "Cold vs Law"         35        ****      ****      ****      ****      1        
-36         ElecVsNeutral         "Electrical vs Law"   36        ****      ****      ****      ****      1        
-37         SonicVsNeutral        "Sonic vs Law"        37        ****      ****      ****      ****      1        
-38         AcidVsNeutral         "Acidic vs Law"       38        ****      ****      ****      ****      1        
-39         Darkvision            "Darkvision"          39        ****      ****      ****      ****      1        
-40         Keen                  "Keen"                40        ****      ****      ****      ****      10       
-41         Haste                 "Haste"               41        ****      ****      ****      ****      30       
-42         FreedomOfMovement     "Freedom"             42        ****      ****      ****      ****      20       
-43         HolyAvenger           "Holy Avenger"        43        ****      ****      ****      ****      5        
-44         TrueSeeing            "True Seeing"         44        ****      ****      ****      ****      30       
-45         LightBlueDim          "Blue"                45        ****      ****      ****      ****      1        
-46         LightYellowDim        "Yellow"              46        ****      ****      ****      ****      1        
-47         LightPurpleDim        "Purple"              47        ****      ****      ****      ****      1        
-48         LightRedDim           "Red"                 48        ****      ****      ****      ****      1        
-49         LightGreenDim         "Green"               49        ****      ****      ****      ****      1        
-50         LightOrangeDim        "Orange"              50        ****      ****      ****      ****      1        
-51         LightWhiteDim         "White"               51        ****      ****      ****      ****      1        
-52         Mighty                "Mighty"              52        ****      ****      ****      ****      1        
-53         Regen                 "Regeneration"        53        ****      ****      ****      ****      1        
-54         VampRegen             "Vampiric"            54        ****      ****      ****      ****      1        
-55         ImmunitySneak         "Sneak Immunity"      55        ****      ****      ****      ****      20       
-56         ImmunityDrain         "Drain Immunity"      56        ****      ****      ****      ****      20       
-57         ImminutyMind          "Mind Immunity"       57        ****      ****      ****      ****      20       
-58         ImmunityPoison        "Poison Immunity"     58        ****      ****      ****      ****      10       
-59         ImmunityDisease       "Disease Immunity"    59        ****      ****      ****      ****      10       
-60         ImmunityFear          "Fear Immunity"       60        ****      ****      ****      ****      10       
-61         ImmunityKnockdown     "Knockdown Immunity"  61        ****      ****      ****      ****      10       
-62         ImmunityParalysis     "Paralysis Immunity"  62        ****      ****      ****      ****      20       
-63         ImmunityCriticals     "Critical Immunity"   63        ****      ****      ****      ****      20       
-64         ImmunityDeath         "Death Immunity"      64        ****      ****      ****      ****      20       
-65         ImprovedEvasion       "Evasive"             65        ****      ****      ****      ****      20       
-66         BonusSpellBard        "Bard's"              66        ****      ****      ****      ****      1        
-67         BonusSpellCleric      "Cleric's"            67        ****      ****      ****      ****      1        
-68         BonusSpellDruid       "Druid's"             68        ****      ****      ****      ****      1        
-69         BonusSpellPaladin     "Paladin's"           69        ****      ****      ****      ****      1        
-70         BonusSpellRanger      "Ranger's"            70        ****      ****      ****      ****      1        
-71         BonusSpellSorcerer    "Sorcerer's"          71        ****      ****      ****      ****      1        
-72         BonusSpellWizard      "Wizard's"            72        ****      ****      ****      ****      1        
-73         LimitedGood           "Good"                73        ****      ****      ****      ****      1        
-74         LimitedEvil           "Evil"                74        ****      ****      ****      ****      1        
-75         LimitedLawful         "Lawful"              75        ****      ****      ****      ****      1        
-76         LimitedChaotic        "Chaotic"             76        ****      ****      ****      ****      1        
-77         LimitedNeutral        "Neutral"             77        ****      ****      ****      ****      1        
-78         LimitedLawfulGood     "Lawful Good"         78        ****      ****      ****      ****      1        
-79         LimitedLawfulNeutral  "Lawful Neutral"      79        ****      ****      ****      ****      1        
-80         LimitedLawfulEvil     "Lawful Evil"         80        ****      ****      ****      ****      1        
-81         LimitedNeutralGood    "Neutral Good"        81        ****      ****      ****      ****      1        
-82         LimitedTrueNeutral    "True Neutral"        82        ****      ****      ****      ****      1        
-83         LimitedNeutralEvil    "Neutral Evil"        83        ****      ****      ****      ****      1        
-84         LimitedChaoticGood    "Chaotic Good"        84        ****      ****      ****      ****      1        
-85         LimitedChaoticNeutral "Chaotic Neutral"     85        ****      ****      ****      ****      1        
-86         LimitedChaoticEvil    "Chaotic Evil"        86        ****      ****      ****      ****      1        
-87         SR                    "Spell Resistance"    87        ****      ****      ****      ****      1        
+           Label              Text                    Property1 Property2 Property3 Property4 Property5 
+0          none               ****                    ****      ****      ****      ****      ****      
+1          Str                "Strength"              1         ****      ****      ****      ****      
+2          Dex                "Dexterity"             2         ****      ****      ****      ****      
+3          Con                "Constitution"          3         ****      ****      ****      ****      
+4          Int                "Intelligence"          4         ****      ****      ****      ****      
+5          Wis                "Wisdom"                5         ****      ****      ****      ****      
+6          Cha                "Charisma"              6         ****      ****      ****      ****      
+7          Enh                "Magic"                 7         ****      ****      ****      ****      
+8          AC                 "Magic"                 8         ****      ****      ****      ****      
+9          Fire               "Flaming"               9         ****      ****      ****      ****      
+10         Cold               "Cold"                  10        ****      ****      ****      ****      
+11         Elec               "Electrical"            11        ****      ****      ****      ****      
+12         Sonic              "Sonic"                 12        ****      ****      ****      ****      
+13         Acid               "Acidic"                13        ****      ****      ****      ****      
+14         FireVsEvil         "Flaming vs Evil"       14        73        79        82        85        
+15         ColdVsEvil         "Cold vs Evil"          15        73        79        82        85        
+16         ElecVsEvil         "Electrical vs Evil"    16        73        79        82        85        
+17         SonicVsEvil        "Sonic vs Evil"         17        73        79        82        85        
+18         AcidVsEvil         "Acidic vs Evil"        18        73        79        82        85        
+19         FireVsGood         "Flaming vs Good"       19        74        79        82        85        
+20         ColdVsGood         "Cold vs Good"          20        74        79        82        85        
+21         ElecVsGood         "Electrical vs Good"    21        74        79        82        85        
+22         SonicVsGood        "Sonic vs Good"         22        74        79        82        85        
+23         AcidVsGood         "Acidic vs Good"        23        74        79        82        85        
+24         FireVsChaos        "Flaming vs Chaos"      24        75        81        82        83        
+25         ColdVsChaos        "Cold vs Chaos"         25        75        81        82        83        
+26         ElecVsChaos        "Electrical vs Chaos"   26        75        81        82        83        
+27         SonicVsChaos       "Sonic vs Chaos"        27        75        81        82        83        
+28         AcidVsChaos        "Acidic vs Chaos"       28        75        81        82        83        
+29         FireVsLaw          "Flaming vs Law"        29        76        81        82        83        
+30         ColdVsLaw          "Cold vs Law"           30        76        81        82        83        
+31         ElecVsLaw          "Electrical vs Law"     31        76        81        82        83        
+32         SonicVsLaw         "Sonic vs Law"          32        76        81        82        83        
+33         AcidVsLaw          "Acidic vs Law"         33        76        81        82        83        
+34         FireVsNeutral      "Flaming vs Neutral"    34        78        80        84        86        
+35         ColdVsNeutral      "Cold vs Neutral"       35        78        80        84        86        
+36         ElecVsNeutral      "Electrical vs Neutral" 36        78        80        84        86        
+37         SonicVsNeutral     "Sonic vs Neutral"      37        78        80        84        86        
+38         AcidVsNeutral      "Acidic vs Neutral"     38        78        80        84        86        
+39         Darkvision         "Darkvision"            39        ****      ****      ****      ****      
+40         Keen               "Keen"                  40        ****      ****      ****      ****      
+41         Haste              "Haste"                 41        ****      ****      ****      ****      
+42         FreedomOfMovement  "Freedom"               42        ****      ****      ****      ****      
+43         HolyAvenger        "Holy Avenger"          43        ****      ****      ****      ****      
+44         TrueSeeing         "True Seeing"           44        ****      ****      ****      ****      
+45         LightBlueDim       "Blue"                  45        ****      ****      ****      ****      
+46         LightYellowDim     "Yellow"                46        ****      ****      ****      ****      
+47         LightPurpleDim     "Purple"                47        ****      ****      ****      ****      
+48         LightRedDim        "Red"                   48        ****      ****      ****      ****      
+49         LightGreenDim      "Green"                 49        ****      ****      ****      ****      
+50         LightOrangeDim     "Orange"                50        ****      ****      ****      ****      
+51         LightWhiteDim      "White"                 51        ****      ****      ****      ****      
+52         Mighty             "Mighty"                52        ****      ****      ****      ****      
+53         Regen              "Regeneration"          53        ****      ****      ****      ****      
+54         VampRegen          "Vampiric"              54        ****      ****      ****      ****      
+55         ImmunitySneak      "Sneak Immunity"        55        ****      ****      ****      ****      
+56         ImmunityDrain      "Drain Immunity"        56        ****      ****      ****      ****      
+57         ImminutyMind       "Mind Immunity"         57        ****      ****      ****      ****      
+58         ImmunityPoison     "Poison Immunity"       58        ****      ****      ****      ****      
+59         ImmunityDisease    "Disease Immunity"      59        ****      ****      ****      ****      
+60         ImmunityFear       "Fear Immunity"         60        ****      ****      ****      ****      
+61         ImmunityKnockdown  "Knockdown Immunity"    61        ****      ****      ****      ****      
+62         ImmunityParalysis  "Paralysis Immunity"    62        ****      ****      ****      ****      
+63         ImmunityCriticals  "Critical Immunity"     63        ****      ****      ****      ****      
+64         ImmunityDeath      "Death Immunity"        64        ****      ****      ****      ****      
+65         ImprovedEvasion    "Evasive"               65        ****      ****      ****      ****      
+66         BonusSpellBard     "Bard's"                66        ****      ****      ****      ****      
+67         BonusSpellCleric   "Cleric's"              67        ****      ****      ****      ****      
+68         BonusSpellDruid    "Druid's"               68        ****      ****      ****      ****      
+69         BonusSpellPaladin  "Paladin's"             69        ****      ****      ****      ****      
+70         BonusSpellRanger   "Ranger's"              70        ****      ****      ****      ****      
+71         BonusSpellSorcerer "Sorcerer's"            71        ****      ****      ****      ****      
+72         BonusSpellWizard   "Wizard's"              72        ****      ****      ****      ****      
+73         SR                 "Spell Resistance"      87        ****      ****      ****      ****      

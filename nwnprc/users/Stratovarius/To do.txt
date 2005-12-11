@@ -18,6 +18,9 @@ Uncarnate
 FoZ (needs powers)
 Pyro
 
+True Necromancer:
+Create Undead summons previous Create Greater Undead after level 10
+
 Pale master -> 3.0:
 Fighter vassal
 Incorp vassal

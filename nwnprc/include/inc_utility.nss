@@ -363,7 +363,7 @@ string DebugIProp2Str(itemproperty iprop);
  * @param lTo   The other location
  * @return      The angle between the two locations, relative to lFrom
  */
-float MyGetAngleBetweenLocations(location lFrom, location lTo);
+float GetRelativeAngleBetweenLocations(location lFrom, location lTo);
 
 
 //////////////////////////////////////////////////
@@ -925,15 +925,15 @@ string DebugIProp2Str(itemproperty iprop)
          + "Cost table value: " + IntToString(GetItemPropertyCostTableValue(iprop));
 }
 
-float MyGetAngleBetweenLocations(location lFrom, location lTo)
+float GetRelativeAngleBetweenLocations(location lFrom, location lTo)
 {
     vector vPos1 = GetPositionFromLocation(lFrom);
     vector vPos2 = GetPositionFromLocation(lTo);
 
-    float fAngle = acos((vPos1.x - vPos2.x) / GetDistanceBetweenLocations(lFrom, lTo));
+    float fAngle = acos((vPos2.x - vPos1.x) / GetDistanceBetweenLocations(lFrom, lTo));
     // The above formula only returns values [0, 180], so test for negative y movement
-    if((vPos1.y - vPos2.y) < 0.0f)
-        fAngle += 180;
+    if((vPos2.y - vPos1.y) < 0.0f)
+        fAngle = 360.0f -fAngle;
 
     return fAngle;
 }

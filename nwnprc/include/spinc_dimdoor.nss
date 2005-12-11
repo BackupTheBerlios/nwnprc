@@ -216,10 +216,13 @@ location GetDimensionDoorLocation(object oCaster, int nCasterLvl, location lBase
         location lCaster   = GetLocation(oCaster);
         vector vCaster     = GetPositionFromLocation(lCaster);
         vector vBaseTarget = GetPositionFromLocation(lBaseTarget);
-        float fAngle       = acos((vBaseTarget.x - vCaster.x) / GetDistanceBetweenLocations(lCaster, lBaseTarget));
+        /*float fAngle       = acos((vBaseTarget.x - vCaster.x) / GetDistanceBetweenLocations(lCaster, lBaseTarget));
         // The above formula only returns values [0, 180], so it needs to be mirrored if the caster is moving towards negative y
         if((vBaseTarget.y - vCaster.y) < 0.0f)
             fAngle         = -fAngle;
+        */
+        float fAngle       = GetRelativeAngleBetweenLocations(lCaster, lBaseTarget);
+        if(DEBUG) DoDebug("spinc_dimdoor: Angle is " + FloatToString(fAngle));
         vector vTarget     = Vector(vCaster.x + cos(fAngle) * fDistance,
                                     vCaster.y + sin(fAngle) * fDistance,
                                     vCaster.z

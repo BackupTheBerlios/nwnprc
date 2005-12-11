@@ -102,7 +102,7 @@ const int SCENE_PRISON_FLOOR        = 511;
 const int WELL                      = 358;
 
 const int NORMAL_ARROW              = 357;
-const int NORMAL_DART               = 358;
+const int NORMAL_DART               = 359;
 
 
 
@@ -349,18 +349,18 @@ const int VFX_IMP_REDUCE_ABILITY_SCORE_PUR       = 1227;
 const int VFX_IMP_REDUCE_ABILITY_SCORE_SOUNDFX   = 1228;
 
 //Baelnorn eyes by Tenjac
-const int VFX_BAELN_EYES            = 808; 
+const int VFX_BAELN_EYES            = 808;
 
 
 //Supamans Custom VFX for psionics & epic spells
-const int VFX_IMP_EPIC_GEM_EMERALD      = 809; 
-const int VFX_IMP_EPIC_GEM_SAPPHIRE     = 810; 
-const int VFX_IMP_EPIC_GEM_DIAMOND      = 811; 
-const int VFX_PRC_FNF_EARTHQUAKE        = 812; 
-const int PSI_IMP_ULTRABLAST            = 813; 
-const int PSI_DUR_TIMELESS_BODY         = 814; 
-const int PSI_DUR_TEMPORAL_ACCELERATION = 815; 
-const int PSI_DUR_SHADOW_BODY           = 816; 
-const int PSI_FNF_PSYCHIC_CRUSH         = 817; 
-const int EPIC_DUR_FLEETNESS_OF_FOOT    = 818; 
-const int PSI_DUR_ENERGY_ADAPTATION_ALL = 819; 
+const int VFX_IMP_EPIC_GEM_EMERALD      = 809;
+const int VFX_IMP_EPIC_GEM_SAPPHIRE     = 810;
+const int VFX_IMP_EPIC_GEM_DIAMOND      = 811;
+const int VFX_PRC_FNF_EARTHQUAKE        = 812;
+const int PSI_IMP_ULTRABLAST            = 813;
+const int PSI_DUR_TIMELESS_BODY         = 814;
+const int PSI_DUR_TEMPORAL_ACCELERATION = 815;
+const int PSI_DUR_SHADOW_BODY           = 816;
+const int PSI_FNF_PSYCHIC_CRUSH         = 817;
+const int EPIC_DUR_FLEETNESS_OF_FOOT    = 818;
+const int PSI_DUR_ENERGY_ADAPTATION_ALL = 819;

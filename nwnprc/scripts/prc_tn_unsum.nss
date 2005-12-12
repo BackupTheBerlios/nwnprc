@@ -1,4 +1,4 @@
-//::///////////////////////////////////////////////
+S//::///////////////////////////////////////////////
 //:: Unsummon
 //:: prc_tn_unsum.nss
 //:://////////////////////////////////////////////
@@ -17,7 +17,8 @@ object oTarget = PRCGetSpellTargetObject();
 string sRes = GetResRef(oTarget);
 object oMaster = GetMaster(oTarget);
 
-    if (OBJECT_SELF == oMaster)
+    // If it has no master, it can be cleaned up as well
+    if (OBJECT_SELF == oMaster || !GetIsObjectValid(oMaster))
     {
         if (sRes == "prc_sum_bonet" || sRes == "prc_sum_dbl" || sRes == "prc_sum_dk" || sRes == "prc_sum_grav" ||
             sRes == "prc_sum_mohrg" || sRes == "prc_sum_sklch" || sRes == "prc_sum_vamp1" || sRes == "prc_sum_vamp2" ||

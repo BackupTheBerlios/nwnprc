@@ -178,18 +178,18 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  DelayCommand(0.1, ExecuteScript("prc_ft_tacttrap", oPC));
 
     //Baelnorn & Undead
-    if(GetHasFeat(FEAT_UNDEAD_HD))                               ExecuteScript("prc_ud_hitdice", oPC);
-    if(GetHasFeat(FEAT_TURN_RESISTANCE))                         ExecuteScript("prc_turnres", oPC);
-    if(GetHasFeat(FEAT_IMPROVED_TURN_RESISTANCE))                ExecuteScript("prc_imp_turnres", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_ABILITY_DECREASE))               ExecuteScript("prc_ui_abildrain", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_CRITICAL))                       ExecuteScript("prc_ui_critical", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_DEATH))                          ExecuteScript("prc_ui_death", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_DISEASE))                        ExecuteScript("prc_ui_disease", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_MIND_SPELLS))                    ExecuteScript("prc_ui_mind", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_PARALYSIS))                      ExecuteScript("prc_ui_paral", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_POISON))                         ExecuteScript("prc_ui_poison", oPC);
-    if(GetHasFeat(FEAT_IMMUNITY_SNEAKATTACK))                    ExecuteScript("prc_ui_snattack", oPC);
-    if(GetHasFeat(FEAT_POSITIVE_ENERGY_RESISTANCE ))             ExecuteScript("prc_ud_poe", oPC);
+    if(GetHasFeat(FEAT_UNDEAD_HD, oPC))                          ExecuteScript("prc_ud_hitdice", oPC);
+    if(GetHasFeat(FEAT_TURN_RESISTANCE, oPC))                    ExecuteScript("prc_turnres", oPC);
+    if(GetHasFeat(FEAT_IMPROVED_TURN_RESISTANCE, oPC))           ExecuteScript("prc_imp_turnres", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_ABILITY_DECREASE, oPC))          ExecuteScript("prc_ui_abildrain", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_CRITICAL, oPC))                  ExecuteScript("prc_ui_critical", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_DEATH, oPC))                     ExecuteScript("prc_ui_death", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_DISEASE, oPC))                   ExecuteScript("prc_ui_disease", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_MIND_SPELLS, oPC))               ExecuteScript("prc_ui_mind", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_PARALYSIS, oPC))                 ExecuteScript("prc_ui_paral", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_POISON, oPC))                    ExecuteScript("prc_ui_poison", oPC);
+    if(GetHasFeat(FEAT_IMMUNITY_SNEAKATTACK, oPC))               ExecuteScript("prc_ui_snattack", oPC);
+    if(GetHasFeat(FEAT_POSITIVE_ENERGY_RESISTANCE, oPC))         ExecuteScript("prc_ud_poe", oPC);
 
     if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
        && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);

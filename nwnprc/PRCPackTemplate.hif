@@ -65,7 +65,7 @@ MinNWNVersion: 1.66, XP1, XP2
 erf : prc_consortium.erf
 
 # Haks used by the prc pack.
-module.Hak : prc_include.hak
+# module.Hak : prc_include.hak commented out since its not actually needed in a module and causing CEP conflicts.
 module.Hak : prc_2das.hak
 module.Hak : prc_scripts.hak
 module.Hak : prc_newspellbook.hak

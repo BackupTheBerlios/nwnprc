@@ -101,7 +101,7 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
         nRound = 3;
 
 
-    object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lLoc, TRUE, OBJECT_TYPE_CREATURE);
     int nStrongestAura;
     int nAuraCount;
     while(GetIsObjectValid(oTest))
@@ -190,7 +190,7 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
                 FloatingTextStringOnCreature(GetRGB(15,16-(nStrength*3),16-(nStrength*3)) + GetName(oTest) + " " + GetStringByStrRef(16832044) + " "+GetNounForStrength(nStrength)+" "+sAura+".", OBJECT_SELF, FALSE);
             }
         }
-        oTest = GetNextObjectInShape(SHAPE_SPELLCONE, 20.0, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+        oTest = GetNextObjectInShape(SHAPE_SPELLCONE, 20.0, lLoc, TRUE, OBJECT_TYPE_CREATURE);
     }
     if(nRound==2)
     {

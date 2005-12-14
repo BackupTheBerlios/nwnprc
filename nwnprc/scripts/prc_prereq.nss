@@ -500,34 +500,74 @@ void Maester(object oPC)
 
 void CombatMedic(object oPC)
 {
-    //The combat medic can only be taken if able to cast Cure Light Wounds. With druids and
-    //clerics, that's no problem - they get it at first level. Paladins and rangers are a bit more
-    //complicated, due to their bonus spells and later spell gains.
+    /* The combat medic can only be taken if the player is able to cast Cure Light Wounds.
+     * Base classes:
+     * With druids and clerics, that's no problem - they get it at first level. Paladins and
+     * rangers are a bit more complicated, due to their bonus spells and later spell gains.
+     * Prestige classes:
+     * Currently, BioWare Blackguard, Knight of the Middle Circle, Ocular Adept and Soldier
+     * of Light can cast CLW.
+     */
 
     SetLocalInt(oPC, "PRC_PrereqCbtMed", 1);
     object oSkin = GetPCSkin(oPC);
+    int iWis = GetLocalInt(oSkin, "PRC_trueWIS");
 
     if (GetLevelByClass(CLASS_TYPE_CLERIC) || GetLevelByClass(CLASS_TYPE_DRUID))
+    {
         SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        return;
+    }
 
     if (GetLevelByClass(CLASS_TYPE_PALADIN))
     {
-        if(GetLocalInt(oSkin, "PRC_trueWIS") > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
+        if(iWis > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
+        {
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
-
-        else if (GetLocalInt(oSkin, "PRC_trueWIS") == 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 6)
+            return
+        }
+        else if (GetLevelByClass(CLASS_TYPE_PALADIN) >= 6)
+        {
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+            return;
+        }
     }
 
     if (GetLevelByClass(CLASS_TYPE_RANGER))
-        {
-            if(GetLocalInt(oSkin, "PRC_trueWIS") > 11 && GetLevelByClass(CLASS_TYPE_RANGER) >= 4)
+    {
+            if(iWis > 11 && GetLevelByClass(CLASS_TYPE_RANGER) >= 4)
+            {
                 SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
-
-            else if (GetLocalInt(oSkin, "PRC_trueWIS") == 11 && GetLevelByClass(CLASS_TYPE_RANGER) >= 6)
+                return;
+            }
+            else if (GetLevelByClass(CLASS_TYPE_RANGER) >= 6)
+            {
                 SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+                return;
+            }
     }
 
+    if (GetLevelByClass(CLASS_TYPE_OCULAR))
+    {
+        SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        return;
+    }
+
+    if (GetLevelByClass(CLASS_TYPE_BLACKGUARD) || GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE)
+     || GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT))
+    {
+        if (iWis > 11 && (GetLevelByClass(CLASS_TYPE_BLACKGUARD) || GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT)
+           || GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE))
+        {
+            SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+            return;
+        }
+        else if ((GetLevelByClass(CLASS_TYPE_BLACKGUARD) >= 2|| GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT >= 2)
+           || GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE) >= 3)
+        {
+            SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
+        }
+    }
 }
 
 void RedWizard(object oPC)

@@ -105,46 +105,49 @@ int PRCGetUserSpecificSpellScriptFinished();
 
 int RedWizRestrictedSchool()
 {
+    object oCaster = OBJECT_SELF;
+    int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
 
-    int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, OBJECT_SELF);
-    int nSpell = PRCGetSpellId();
-    int iRWRes1;
-    int iRWRes2;
-
-    if (GetHasFeat(FEAT_RW_RES_ABJ, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_ABJURATION;
-    else if (GetHasFeat(FEAT_RW_RES_CON, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_CONJURATION;
-    else if (GetHasFeat(FEAT_RW_RES_DIV, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_DIVINATION;
-    else if (GetHasFeat(FEAT_RW_RES_ENC, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_ENCHANTMENT;
-    else if (GetHasFeat(FEAT_RW_RES_EVO, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_EVOCATION;
-    else if (GetHasFeat(FEAT_RW_RES_ILL, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_ILLUSION;
-    else if (GetHasFeat(FEAT_RW_RES_NEC, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_NECROMANCY;
-    else if (GetHasFeat(FEAT_RW_RES_TRS, OBJECT_SELF)) iRWRes1 = SPELL_SCHOOL_TRANSMUTATION;
-
-    if (GetHasFeat(FEAT_RW_RES_TRS, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_TRANSMUTATION;
-    else if (GetHasFeat(FEAT_RW_RES_NEC, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_NECROMANCY;
-    else if (GetHasFeat(FEAT_RW_RES_ILL, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_ILLUSION;
-    else if (GetHasFeat(FEAT_RW_RES_EVO, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_EVOCATION;
-    else if (GetHasFeat(FEAT_RW_RES_ENC, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_ENCHANTMENT;
-    else if (GetHasFeat(FEAT_RW_RES_DIV, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_DIVINATION;
-    else if (GetHasFeat(FEAT_RW_RES_CON, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_CONJURATION;
-    else if (GetHasFeat(FEAT_RW_RES_ABJ, OBJECT_SELF)) iRWRes2 = SPELL_SCHOOL_ABJURATION;
-
-    if (iRedWizard > 0)
+    // No need for wasting CPU on non-Red Wizards
+    if(iRedWizard > 0)
     {
-        int iSchool = GetSpellSchool(nSpell);
-        if (iSchool == iRWRes1)
+        object oItem   = GetSpellCastItem();
+        int nSpell     = PRCGetSpellId();
+        int iSchool    = GetSpellSchool(nSpell);
+        int iRWRes1;
+        int iRWRes2;
+
+        // Potion drinking is not restricted
+        if(oItem != OBJECT_INVALID &&
+           (GetBaseItemType(oItem) == BASE_ITEM_ENCHANTED_POTION ||
+            GetBaseItemType(oItem) == BASE_ITEM_POTIONS
+           ))
+            return TRUE;
+
+        // Determine forbidden schools
+        if      (GetHasFeat(FEAT_RW_RES_ABJ, oCaster)) iRWRes1 = SPELL_SCHOOL_ABJURATION;
+        else if (GetHasFeat(FEAT_RW_RES_CON, oCaster)) iRWRes1 = SPELL_SCHOOL_CONJURATION;
+        else if (GetHasFeat(FEAT_RW_RES_DIV, oCaster)) iRWRes1 = SPELL_SCHOOL_DIVINATION;
+        else if (GetHasFeat(FEAT_RW_RES_ENC, oCaster)) iRWRes1 = SPELL_SCHOOL_ENCHANTMENT;
+        else if (GetHasFeat(FEAT_RW_RES_EVO, oCaster)) iRWRes1 = SPELL_SCHOOL_EVOCATION;
+        else if (GetHasFeat(FEAT_RW_RES_ILL, oCaster)) iRWRes1 = SPELL_SCHOOL_ILLUSION;
+        else if (GetHasFeat(FEAT_RW_RES_NEC, oCaster)) iRWRes1 = SPELL_SCHOOL_NECROMANCY;
+        else if (GetHasFeat(FEAT_RW_RES_TRS, oCaster)) iRWRes1 = SPELL_SCHOOL_TRANSMUTATION;
+
+        if      (GetHasFeat(FEAT_RW_RES_TRS, oCaster)) iRWRes2 = SPELL_SCHOOL_TRANSMUTATION;
+        else if (GetHasFeat(FEAT_RW_RES_NEC, oCaster)) iRWRes2 = SPELL_SCHOOL_NECROMANCY;
+        else if (GetHasFeat(FEAT_RW_RES_ILL, oCaster)) iRWRes2 = SPELL_SCHOOL_ILLUSION;
+        else if (GetHasFeat(FEAT_RW_RES_EVO, oCaster)) iRWRes2 = SPELL_SCHOOL_EVOCATION;
+        else if (GetHasFeat(FEAT_RW_RES_ENC, oCaster)) iRWRes2 = SPELL_SCHOOL_ENCHANTMENT;
+        else if (GetHasFeat(FEAT_RW_RES_DIV, oCaster)) iRWRes2 = SPELL_SCHOOL_DIVINATION;
+        else if (GetHasFeat(FEAT_RW_RES_CON, oCaster)) iRWRes2 = SPELL_SCHOOL_CONJURATION;
+        else if (GetHasFeat(FEAT_RW_RES_ABJ, oCaster)) iRWRes2 = SPELL_SCHOOL_ABJURATION;
+
+        // Compare the spell's school versus the restricted schools
+        if(iSchool == iRWRes1 || iSchool == iRWRes2)
         {
-            FloatingTextStringOnCreature("You cannot cast spells of your prohibited schools. Spell terminated.", OBJECT_SELF, FALSE);
+            FloatingTextStrRefOnCreature(16822359, oCaster, FALSE); // "You cannot cast spells of your prohibited schools. Spell terminated."
             return FALSE;
-        }
-        else if (iSchool == iRWRes2)
-        {
-            FloatingTextStringOnCreature("You cannot cast spells of your prohibited schools. Spell terminated.", OBJECT_SELF, FALSE);
-            return FALSE;
-        }
-        else
-        {
-        return TRUE;
         }
     }
 
@@ -224,9 +227,9 @@ void CombatMedicHealingKicker()
         //Apply the Sanctuary VFX impact and effects
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
 
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
     }
     else if (GetLocalInt(OBJECT_SELF, "Heal_Kicker2") && oTarget != OBJECT_SELF)
     {
@@ -240,9 +243,9 @@ void CombatMedicHealingKicker()
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eSpeed, oTarget);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRefs, oTarget, 6.0);
 
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
     }
     else if (GetLocalInt(OBJECT_SELF, "Heal_Kicker3") && oTarget != OBJECT_SELF)
     {
@@ -264,9 +267,9 @@ void CombatMedicHealingKicker()
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 60.0);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, 60.0);
 
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
-            DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_1);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_2);
+        DecrementRemainingFeatUses(OBJECT_SELF, FEAT_HEALING_KICKER_3);
     }
 
 }

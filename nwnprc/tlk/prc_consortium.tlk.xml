@@ -5819,23 +5819,26 @@ This power’s subtype is the same as the type of damage it protects against.</ent
   <entry id="46510" lang="en" sex="m">Energy Adaptation, Fire</entry>
   <entry id="46511" lang="en" sex="m">Energy Adaptation, Sonic</entry>
   <entry id="46512" lang="en" sex="m">Energy Push</entry>
-  <entry id="46513" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 2
-Range: Medium
-Target: One Creature
+  <entry id="46513" lang="en" sex="m">Psychokinesis [see text]
+Level: Psion/wilder 2
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./ level)
 Duration: Instantaneous
-Saving Throw: Reflex or Fortitude half.
+Saving Throw: Reflex half or Fortitude half; see text
 Power Resistance: Yes
-Power Point Cost: 3
+Power Points: 3
+Metapsionics: Chain, Empower, Maximize, Twin
 
-You create a ray of energy of the chosen type that shoots forth from your finger tips, doing 2d6 elemental damage. On a successful save, damage is cut in half. On a failed save, the target is knocked down.
+Upon manifesting this power, you choose cold, electricity, fire, or sonic. You project a solid blast of energy of the chosen type at a target, dealing it 2d6 points of damage. In addition, if a subject of up to one size category larger than you fails a Strength check (DC equal to the save DC of this power), the driving force of the energy blast pushes it back 5 feet plus another 5 feet for every 5 points of damage it takes. If a wall or other solid object prevents the subject from being pushed back, the subject instead slams into the object and takes an extra 2d6 points of damage from the impact (no save).
 
-Cold: Fort Save, +1 damage a die.
-Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-Fire: Reflex Save, +1 damage a die.
-Sonic: Reflex Save, -1 damage a die.
+Cold: A blast of this energy type deals +1 point of damage per die (damage from impact remains at 2d6 points). The saving throw to reduce damage from a cold push is a Fortitude save instead of a Reflex save.
+Electricity: Manifesting a blast of this energy type provides a +2 bonus to the save DC and a +2 bonus on manifester level checks for the purpose of overcoming power resistance.
+Fire: A blast of this energy type deals +1 point of damage per die (damage from impact remains at 2d6 points).
+Sonic: A blast of this energy type deals -1 point of damage per die (damage from impact remains at 2d6 points) and ignores an object’s hardness.
 
-Augment: For every 2 additional power points spent, this power's damage increases by 1d6+1, and the DC increases by 1. </entry>
+This power’s subtype is the same as the type of energy you manifest.
+
+Augment: For every 2 additional power points you spend, this power’s damage increases by one die (d6) and its save DC increases by 1. The damage increase applies to both the initial blast and any damage from impact with an object.</entry>
   <entry id="46514" lang="en" sex="m">Energy Push, Cold</entry>
   <entry id="46515" lang="en" sex="m">Energy Push, Electricity</entry>
   <entry id="46516" lang="en" sex="m">Energy Push, Fire</entry>
@@ -5924,19 +5927,20 @@ You generate a mental wave of confusion that sweeps out from your location. Any 
 
 Augment: For every 2 additional power points spent, the DC on this power increases by 1.</entry>
   <entry id="46534" lang="en" sex="m">Swarm of Crystals</entry>
-  <entry id="46535" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 2
-Range: Short
-Shape: 15' Cone
+  <entry id="46535" lang="en" sex="m">CMetacreativity (Creation)
+Level: Psion/wilder 2
+Manifesting Time: 1 standard action
+Range: 15 ft.
+Area: Cone-shaped spread
 Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 3
+Power Points: 3
 Metapsionics: Empower, Maximize, Twin, Widen
 
-Thousands of tiny crystal shards spray forth in an arc from your hand. These razorlike crystals slice anything in their path. Anything caught in the cone takes 3d4 points of slashing damage.
+Thousands of tiny crystal shards spray forth in an arc from your hand. These razorlike crystals slice everything in their path. Anyone caught in the cone takes 3d4 points of slashing damage.
 
-Augment: For every additional power point spend, this power's damage increases by 1d4. </entry>
+Augment: For every additional power point you spend, this power’s damage increases by 1d4 points.</entry>
   <entry id="46536" lang="en" sex="m">Thought Shield</entry>
   <entry id="46537" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
 Power Level: 2
@@ -6084,45 +6088,53 @@ You can sense the presence of danger before your senses would normally allow it.
 
 Augment: If you spend 3 additional power points, this power also gives you the uncanny dodge ability</entry>
   <entry id="46560" lang="en" sex="m">Energy Bolt</entry>
-  <entry id="46561" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 3
-Range: Long
-Area: 120 ft line
+  <entry id="46561" lang="en" sex="m">Psychokinesis [see text]
+Level: Psion/wilder 3
+Manifesting Time: 1 standard action
+Range: 120 ft.
+Area: 120-ft. line
 Duration: Instantaneous
-Saving Throw: Reflex or Fortitude half.
+Saving Throw: Reflex half or Fortitude half; see text
 Power Resistance: Yes
-Power Point Cost: 5
+Power Points: 5
+Metapsionics: Empower, Maximize, Twin, Widen
 
-You release a powerful bolt of energy that hits all creatures in the area, dealing 5d6 points of damage to them.
+Upon manifesting this power, you choose cold, electricity, fire, or sonic. You release a powerful stroke of energy of the chosen type that deals 5d6 points of damage to every creature or object within the area. The beam begins at your fingertips.
 
-Cold: Fort Save, +1 damage a die.
-Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-Fire: Reflex Save, +1 damage a die.
-Sonic: Reflex Save, -1 damage a die.
+Cold: A bolt of this energy type deals +1 point of damage per die. The saving throw to reduce damage from a cold bolt is a Fortitude save instead of a Reflex save.
+Electricity: Manifesting a bolt of this energy type provides a +2 bonus to the save DC and a +2 bonus on manifester level checks for the purpose of overcoming power resistance.
+Fire: A bolt of this energy type deals +1 point of damage per die.
+Sonic: A bolt of this energy type deals -1 point of damage per die and ignores an object’s hardness.
 
-Augment: For every additional power point spent, this power's damage increases by 1d6. For every two additional power points spent the DC increases by 1. </entry>
+This power’s subtype is the same as the type of energy you manifest.
+
+Augment: For every additional power point you spend, this power’s damage increases by one die (d6). For each extra two dice of damage, this power’s save DC increases by 1.</entry>
   <entry id="46562" lang="en" sex="m">Energy Bolt, Cold</entry>
   <entry id="46563" lang="en" sex="m">Energy Bolt, Electricity</entry>
   <entry id="46564" lang="en" sex="m">Energy Bolt, Fire</entry>
   <entry id="46565" lang="en" sex="m">Energy Bolt, Sonic</entry>
   <entry id="46566" lang="en" sex="m">Energy Burst</entry>
-  <entry id="46567" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 3
-Range: 40
-Area: 40 ft burst centered on caster
+  <entry id="46567" lang="en" sex="m">Psychokinesis [see text]
+Level: Psion/wilder 3
+Manifesting Time: 1 standard action
+Range: 40 ft.
+Area: 40-ft-radius burst centered on you
 Duration: Instantaneous
-Saving Throw: Reflex or Fortitude half.
+Saving Throw: Reflex half or Fortitude half; see text
 Power Resistance: Yes
-Power Point Cost: 5
+Power Points: 5
+Metapsionics: Empower, Maximize, Twin, Widen
 
-You create an explosion of unstable ectoplasmic energy of the chosen type that deals 5d6 to every creature or object in the area.
+Upon manifesting this power, you choose cold, electricity, fire, or sonic. You create an explosion of unstable ectoplasmic energy of the chosen type that deals 5d6 points of damage to every creature or object within the area. The explosion creates almost no pressure. Since this power extends outward from you, you are not affected by the damage.
 
-Cold: Fort Save, +1 damage a die.
-Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-Fire: Reflex Save, +1 damage a die.
-Sonic: Reflex Save, -1 damage a die.
+Cold: A burst of this energy type deals +1 point of damage per die. The saving throw to reduce damage from a cold burst is a Fortitude save instead of a Reflex save.
+Electricity: Manifesting a burst of this energy type provides a +2 bonus to the save DC and a +2 bonus on manifester level checks for the purpose of overcoming power resistance.
+Fire: A burst of this energy type deals +1 point of damage per die.
+Sonic: A burst of this energy type deals -1 point of damage per die and ignores an object’s hardness.
 
-Augment: For every additional power point spent, this power's damage increases by 1d6. For every two additional dice of damage, the DC increases by 1. </entry>
+This power’s subtype is the same as the type of energy you manifest.
+
+Augment: For every additional power point you spend, this power’s damage increases by one die (d6). For each extra two dice of damage, this power’s save DC increases by 1.</entry>
   <entry id="46568" lang="en" sex="m">Energy Burst, Cold</entry>
   <entry id="46569" lang="en" sex="m">Energy Burst, Electricity</entry>
   <entry id="46570" lang="en" sex="m">Energy Burst, Fire</entry>

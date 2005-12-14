@@ -8,12 +8,12 @@
 //:: clean up the three arrays that hold the caster level and references to all
 //:: effects on the object having this effect applied to it.
 //:: It also returns the expected number of entries in the new arrays it will have set up.
-int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaster = OBJECT_SELF);
+int ReorderEffects(struct PRCeffect eIn, object oTarget);
 
 //:: This function is called from withing ReorderEffects().  It's purpose is to verify
 //:: that the effect referred to by an entry in the 3 arrays is still in effect, returning
 //:: FALSE if it is not.
-int IsStillRealEffect(int nSpellID, object oCaster, object oTarget);
+int IsStillRealEffect(struct PRCeffect eEffect, object oTarget);
 
 //:: This is my remake of the spellsDispelMagic found in x0_i0_spells.   It's pretty much
 //:: identical to the old one except instead of calling the EffectDispelMagicBest() and
@@ -72,6 +72,9 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "lookup_2da_spell"
 #include "prcsp_spell_adjs"
 #include "nw_i0_spells"
+#include "prc_inc_effect"
+
+const string X2_EFFECT = "X2_Effects_";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,44 +86,32 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 //:: Thus, the list gets cleaned up every time it is added to.
 //:: It returns the number of effects in the 3 new arrays.
 
-int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaster = OBJECT_SELF)
+int ReorderEffects(struct PRCeffect eIn, object oTarget)
 {
-   int nIndex = GetLocalInt(oTarget, "X2_Effects_Index_Number");
-   int nEffectCastLevel;
-   int nEffectSpellID;
-   object oEffectCaster;
-   int nWeave ;
-   int nRealIndex = 0;
-   int nPlace;
+    int nIndex = GetLocalInt(oTarget, X2_EFFECT+"Index_Number");
+    struct PRCeffect eEffect;
+    int nRealIndex = 0;
+    int nPlace;
 
-   for(nPlace = 0; nPlace <= nIndex; nPlace++)
-   {
-     // SendMessageToPC(OBJECT_SELF, "reorder for loop is happening at least once.");
-      nEffectSpellID = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nPlace));
-      oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nPlace));
-      nEffectCastLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nPlace));
-      nWeave =   GetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nPlace));
+    for(nPlace = 0; nPlace <= nIndex; nPlace++)
+    {
+        // SendMessageToPC(OBJECT_SELF, "reorder for loop is happening at least once.");
+        eEffect = GetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nPlace));
+        DeleteLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nPlace));
 
-
-      DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nPlace));
-      DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nPlace));
-      DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nPlace));
-      DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nPlace));
-      if(IsStillRealEffect(nEffectSpellID, oEffectCaster, oTarget))
-      {
-          if(nEffectSpellID != nSpellID || oEffectCaster != oCaster)
+        if(IsStillRealEffect(eEffect, oTarget))
+        {
+            if(eEffect.nSpellID != eIn.nSpellID 
+                || eEffect.oCaster != eIn.oCaster)
           // Take it out of the list if it's the spell now being cast, and by the same caster
           // This way spells that don't self dispel when they're recast don't flood the list.
-          {
-             SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nRealIndex), nEffectSpellID);
-             SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nRealIndex), nEffectCastLevel);
-             SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nRealIndex),oEffectCaster );
-             SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nRealIndex),nWeave);
- //            SendMessageToPC(OBJECT_SELF, "Index is incrementing.");
-             nRealIndex++;
-          }// end of if is the same as the current spell and caster
-      }// end of if is valid effect statement
-   }// end of for statement
+            {
+                SetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nRealIndex), eEffect);
+ //             SendMessageToPC(OBJECT_SELF, "Index is incrementing.");
+                nRealIndex++;
+            }// end of if is the same as the current spell and caster
+        }// end of if is valid effect statement
+    }// end of for statement
    return nRealIndex; // This is the number of values currently in all 3 arrays -1.
 }// end of function
 
@@ -128,27 +119,12 @@ int ReorderEffects(int nCasterLevel, int nSpellID, object oTarget, object oCaste
 
 //:: This tests to make sure the data in my array still refers to an actual effect
 //:: in case it has been dispelled or run out its duration since the data was put there.
-int IsStillRealEffect(int nSpellID, object oCaster, object oTarget)
+int IsStillRealEffect(struct PRCeffect eEffect, object oTarget)
 {
-   if(!GetHasSpellEffect(nSpellID, oTarget) || nSpellID == 0)
-   {
-      return FALSE;
-   }
-
-   effect eTestSubject = GetFirstEffect(oTarget);
-   while(GetIsEffectValid(eTestSubject))
-   {
-      if(GetEffectSpellId(eTestSubject) == nSpellID)
-      {
-         if(GetEffectCreator(eTestSubject) == oCaster)
-         {
- //           SendMessageToPC(OBJECT_SELF, "Considered a Valid effect");
-            return TRUE;
-         }// end of if originates from oCaster.
-      }// end if originates from nSpellID.
-      eTestSubject = GetNextEffect(oTarget);
-   }
-   return FALSE;
+    effect eTest = GetEffectOnObjectFromPRCEffect(eEffect, oTarget);
+    if(GetIsEffectValid(eTest))
+        return TRUE;
+    return FALSE;
 }
 
 //:: Copy of the original function with 1 minor change: calls DispelMagicAll() and
@@ -263,121 +239,113 @@ void spellsDispelAoEMod(object oTargetAoE, object oCaster, int nCasterLevel)
 
 void DispelMagicBestMod(object oTarget, int nCasterLevel)
 {
-  /// I *really*  want to rewrite this one so that it simply dispels the most useful effect
-  /// instead of just the one with the highest caster level.
-  /// Sure hate to dispel mage armor on somebody who's immune to necromancy.   Difficult Decision, these.
+    /// I *really*  want to rewrite this one so that it simply dispels the most useful effect
+    /// instead of just the one with the highest caster level.
+    /// Sure hate to dispel mage armor on somebody who's immune to necromancy.   Difficult Decision, these.
 
+    //:: calls a function to determine whether infestation of maggots is in effect
+    //:: on the target.   If so, it adds it to the 3 arrays so it can be sorted with them.
+    HandleInfestationOfMaggots(oTarget);
 
-  //:: calls a function to determine whether infestation of maggots is in effect
-  //:: on the target.   If so, it adds it to the 3 arrays so it can be sorted with them.
+    //:: calls a function to arrange the values in the 3 arrays in order of highest caster level to lowest
+    //:: Index 0 will be the highest, and nLastEntry will be the lowest.
 
-  HandleInfestationOfMaggots(oTarget);
+    SortAll3Arrays(oTarget);
 
-  //:: calls a function to arrange the values in the 3 arrays in order of highest caster level to lowest
-  //:: Index 0 will be the highest, and nLastEntry will be the lowest.
+    int nCurrentEntry;
+    int nLastEntry = GetLocalInt(oTarget, X2_EFFECT+"Index_Number");
 
-  SortAll3Arrays(oTarget);
+    struct PRCeffect eEffect;
+    int nBuffer;
+    if (GetLocalInt(oTarget, "DispellingBuffer")) 
+        nBuffer = 5; // from psi_pow_displbuf
 
-  int nCurrentEntry;
-  int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
-
-  int nEffectSpellID, nEffectCastLevel;
-  object oEffectCaster;
-  int ModWeave;
-  int nBuffer;
-  int nGirding = 0;
-
-  string sSelf = "Dispelled: ";
-  string sCast = "Dispelled on "+GetName(oTarget)+": ";
+    string sSelf = "Dispelled: ";
+    string sCast = "Dispelled on "+GetName(oTarget)+": ";
  
- int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
 // SendMessageToPC(GetFirstPC(), "DispelMagicBestMod Weave Caster:"+ IntToString(Weave));
-  if (GetLocalInt(oTarget, "DispellingBuffer")) nBuffer = 5;
 
-  for(nCurrentEntry = 0; nCurrentEntry <= nLastEntry; nCurrentEntry++)
-  {
-    nEffectSpellID = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry));
-    oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrentEntry));
-    //:: Make sure the effect it refers to is still in place before making it
-    //:: number one.
-    if(IsStillRealEffect(nEffectSpellID, oEffectCaster, oTarget))
+    for(nCurrentEntry = 0; nCurrentEntry <= nLastEntry; nCurrentEntry++)
     {
-      ModWeave = 0;
-      string SchoolWeave = lookup_spell_school(nEffectSpellID);
-      string SpellName = GetStringByStrRef(StringToInt(lookup_spell_name(nEffectSpellID)));
-      nEffectCastLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
-      if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nCurrentEntry)) && !Weave) ModWeave = 4;
-      if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
-      if (GetHasFeat(FEAT_SPELL_GIRDING, oTarget)) nGirding = 2;
+        eEffect = GetLocalPRCEffect(oTarget,X2_EFFECT+IntToString(nCurrentEntry));
+        //:: Make sure the effect it refers to is still in place before making it
+        //:: number one.
+        if(IsStillRealEffect(eEffect, oTarget))
+        {
+            int nModWeave = 0;
+            string SchoolWeave = lookup_spell_school(eEffect.nSpellID);
+            string SpellName = GetStringByStrRef(StringToInt(lookup_spell_name(eEffect.nSpellID)));            
 
-      int iDice = d20(1);
-//      SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nEffectSpellID)+" T "+GetName(oTarget)+" C "+GetName(oEffectCaster));
-//      SendMessageToPC(GetFirstPC(), "Dispell :"+ IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + nEffectCastLevel+ModWeave)+" Mod Weave"+IntToString(ModWeave)+" "+SchoolWeave);
-      if(iDice + nCasterLevel >= 11 + nEffectCastLevel+ModWeave+nBuffer+nGirding)
-      {
-        if(nEffectSpellID != SPELL_INFESTATION_OF_MAGGOTS)
-        {// If it isn't infestation of maggots we remove it one way, if it is, we remove it another.
-            effect eToDispel = GetFirstEffect(oTarget);
-            while(GetIsEffectValid(eToDispel))
+            int nRoll, nDC;
+            nRoll += d20();
+            nRoll += nCasterLevel;
+            nDC += 11; //base
+            nDC += eEffect.nCasterLevel;
+            nDC += nBuffer; // from psi_pow_displbuf
+            if (GetHasFeat(FEAT_TENACIOUSMAGIC, eEffect.oCaster)//effect creator has Tenacious Magic
+                && !GetHasFeat(FEAT_SHADOWWEAVE, OBJECT_SELF) //other shadow weave users casting the dispel ignore this
+                && SchoolWeave != "V" //evocation & transmutation spells dont benefit from Tenacious Magic
+                && SchoolWeave != "T")  
+                nDC += 4; //base goes from 11 to 15, +4
+            if (GetHasFeat(FEAT_SPELL_GIRDING, eEffect.oCaster)) 
+                nDC += 2; // from Spell Girding feat
+//          SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nEffectSpellID)+" T "+GetName(oTarget)+" C "+GetName(oEffectCaster));
+//          SendMessageToPC(GetFirstPC(), "Dispell :"+ IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + nEffectCastLevel+ModWeave)+" Mod Weave"+IntToString(ModWeave)+" "+SchoolWeave);
+            if(nRoll >= nDC)
             {
-                if(GetEffectSpellId(eToDispel) == nEffectSpellID)
-                {
-                    if(GetEffectCreator(eToDispel) == oEffectCaster)
+                if(eEffect.nSpellID != SPELL_INFESTATION_OF_MAGGOTS)
+                {// If it isn't infestation of maggots we remove it one way, if it is, we remove it another.
+                    effect eToDispel = GetFirstEffect(oTarget);
+                    while(GetIsEffectValid(eToDispel))
                     {
-                      RemoveEffect(oTarget, eToDispel);
-                    }// end if effect comes from this caster
-                }// end if effect comes from this spell
-                eToDispel = GetNextEffect(oTarget);
-            }// end of while loop
-        }// end if infestation is not the spell
+                        if(GetEffectSpellId(eToDispel) == eEffect.nSpellID
+                            && GetEffectCreator(eToDispel) == eEffect.oCaster)
+                        {
+                            RemoveEffect(oTarget, eToDispel);
+                        }// end if effect comes from this spell
+                        eToDispel = GetNextEffect(oTarget);
+                    }// end of while loop
+                }// end if infestation is not the spell
+                else
+                {   
+                    DeleteLocalInt(oTarget, "XP2_L_SPELL_CASTER_LVL_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
+                    // Deleting this variable is what actually ends the spell effect's damage.
+                    effect eToDispel = GetFirstEffect(oTarget);
+                    while(GetIsEffectValid(eToDispel))
+                    {
+                        //:: We don't worry about who cast it.  A person can only really have one infestation
+                        //:: going on at a time, I think.
+                        if(GetEffectSpellId(eToDispel) == eEffect.nSpellID)
+                        {
+                            RemoveEffect(oTarget, eToDispel);
+                        }// end if effect comes from this spell
+                        eToDispel = GetNextEffect(oTarget);
+                    }// end of while loop
+                }// end else
+
+                //:: Since the effect has been removed, delete the references to it.
+                //:: This will help out the sweeping function when it gets called next (not now, though)
+                DeleteLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nCurrentEntry));
+
+                //:: Display a message to all involved.
+                SendMessageToPC(OBJECT_SELF, sCast+SpellName);
+                if (oTarget != OBJECT_SELF) 
+                    SendMessageToPC(oTarget, sSelf+SpellName);
+
+                //:: If the check was successful, then we're done.
+                return;
+            }// end if check is successful.
+        }// end if is still a valid spell.
         else
         {
-          DeleteLocalInt(oTarget, "XP2_L_SPELL_CASTER_LVL_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
-          // Deleting this variable is what actually ends the spell effect's damage.
-          DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
-          DeleteLocalInt(oTarget,"XP2_L_SPELL_WEAVE" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
-          effect eToDispel = GetFirstEffect(oTarget);
-          while(GetIsEffectValid(eToDispel))
-          {
-            //:: We don't worry about who cast it.  A person can only really have one infestation
-            //:: going on at a time, I think.
-            if(GetEffectSpellId(eToDispel) == nEffectSpellID)
-            {
-              RemoveEffect(oTarget, eToDispel);
-            }// end if effect comes from this spell
-            eToDispel = GetNextEffect(oTarget);
-          }// end of while loop
-        }// end else
-
-        //:: Since the effect has been removed, delete the references to it.
-        //:: This will help out the sweeping function when it gets called next (not now, though)
-        DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry));
-        DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
-        DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrentEntry));
-        DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nCurrentEntry));
-
-        //:: Display a message to all involved.
-        SendMessageToPC(OBJECT_SELF, sCast+SpellName);
-        if (oTarget != OBJECT_SELF) SendMessageToPC(oTarget, sSelf+SpellName);
-
-        //:: If the check was successful, then we're done.
-        return;
-      }// end if check is successful.
-    }// end if is still a valid spell.
-    else
-    {
-      // If it's not a real effect anymore, then delete the variables that refer to it.
-      DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry));
-      DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
-      DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrentEntry));
-      DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nCurrentEntry));
-    }// end of else statement.
-
-  }// end of for loop
-
-  // If we got here, the return function above never ran, so nothing got removed:
-  SendMessageToPC(OBJECT_SELF, sCast+"None");
-  if (oTarget != OBJECT_SELF) SendMessageToPC(oTarget, sSelf+"None");
+            // If it's not a real effect anymore, then delete the variables that refer to it.
+            DeleteLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nCurrentEntry));
+        }// end of else statement.
+    }// end of for loop
+    // If we got here, the return function above never ran, so nothing got removed:
+    SendMessageToPC(OBJECT_SELF, sCast+"None");
+    if (oTarget != OBJECT_SELF) 
+        SendMessageToPC(oTarget, sSelf+"None");
 } // End Of Function
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -398,7 +366,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
   int nBuffer;
   int nGirding = 0;
 
-  int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
+  int nLastEntry = GetLocalInt(oTarget, X2_EFFECT+"Index_Number");
   effect eToDispel;
   
   string sList, SpellName;
@@ -519,64 +487,42 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
 void SortAll3Arrays(object oTarget)
 {
 
-  int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
-  int nCurrEntry;
-  int nCurrEntry2;
-  int nSpellID, nSpellIDHigh, nCasterLvl, nCasterLvl2, nHighCastLvl, nHighestEntry,iWeave,iWeaveHigh;
-  object oMaker, oMakerHigh;
+    int nLastEntry = GetLocalInt(oTarget, X2_EFFECT+"Index_Number");
+    int nCurrEntry, nCurrEntry2, nCasterLvl, nCasterLvl2, nHighCastLvl, nHighestEntry;
+    struct PRCeffect eTest;
+    struct PRCeffect eTest2;
+    struct PRCeffect eHigh;
 
-  for(nCurrEntry = 0; nCurrEntry <= nLastEntry; nCurrEntry++)
-  {
-    nCasterLvl = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrEntry));
-    nHighCastLvl = nCasterLvl;
-
-    for(nCurrEntry2 = nCurrEntry + 1; nCurrEntry2 <= nLastEntry; nCurrEntry2++)
+    for(nCurrEntry = 0; nCurrEntry <= nLastEntry; nCurrEntry++)
     {
-      nCasterLvl2 = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrEntry2));
+        eTest = GetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nCurrEntry));
+        nCasterLvl = eTest.nCasterLevel;
+        nHighCastLvl = nCasterLvl;
 
-      if(nCasterLvl2 >= nHighCastLvl)
-      {
-        nHighestEntry = nCurrEntry2;
-        nHighCastLvl = nCasterLvl2;
-      }
-    }// End of second for statement.
-    if(nHighCastLvl != nCasterLvl)
-    // If the entry we're currently looking at already is the highest caster level left,
-    // we leave it there.  Otherwise we swap the highest level entry with this one.
-    // nHighCastLvl will still be equal to nCasterLvl unless a higher level effect was found.
-    {
-      nSpellID = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrEntry));
-      oMaker = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrEntry));
-      iWeave = GetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nCurrEntry));
-
-      nSpellIDHigh = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nHighestEntry));
-      oMakerHigh = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nHighestEntry));
-      iWeaveHigh = GetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nHighestEntry));
-      
-      DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrEntry));
-      DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrEntry));
-      DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrEntry));
-      DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nCurrEntry));
-
-      DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nHighestEntry));
-      DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nHighestEntry));
-      DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nHighestEntry));
-      DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nHighestEntry));
-
-      ///////////////////////////////////////////////////////////////////////////////
-      SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrEntry), nHighCastLvl);
-      SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrEntry), nSpellIDHigh);
-      SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrEntry), oMakerHigh);
-      SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nCurrEntry), iWeaveHigh);
-
-      //
-      SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nHighestEntry),nCasterLvl);
-      SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nHighestEntry), nSpellID);
-      SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nHighestEntry), oMaker);
-      SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nHighestEntry), iWeave);
-
-    }  // End if the caster levels of the 2 entries are actually different.
-  }// End of first for statement.
+        for(nCurrEntry2 = nCurrEntry + 1; nCurrEntry2 <= nLastEntry; nCurrEntry2++)
+        {
+            eTest2 = GetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nCurrEntry));
+            nCasterLvl2 = eTest.nCasterLevel;
+            if(nCasterLvl2 >= nHighCastLvl)
+            {
+                nHighestEntry = nCurrEntry2;
+                nHighCastLvl = nCasterLvl2;
+            }
+        }// End of second for statement.
+        
+        if(nHighCastLvl != nCasterLvl)
+        // If the entry we're currently looking at already is the highest caster level left,
+        // we leave it there.  Otherwise we swap the highest level entry with this one.
+        // nHighCastLvl will still be equal to nCasterLvl unless a higher level effect was found.
+        {
+            eTest = GetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nCurrEntry));
+            eHigh = GetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nHighestEntry));
+            DeleteLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nCurrEntry));
+            DeleteLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nHighestEntry));
+            SetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nCurrEntry), eHigh);
+            SetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nHighestEntry), eTest);
+        }  // End if the caster levels of the 2 entries are actually different.
+    }// End of first for statement.
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -591,29 +537,25 @@ void SortAll3Arrays(object oTarget)
 /////////////////////////////////////////////////////////////////////////////////
 void HandleInfestationOfMaggots(object oTarget)
 {
-                          //:: Special to trap an infestation of maggots effect.
-  int nHasInfestationEffect = GetLocalInt(oTarget, "XP2_L_SPELL_CASTER_LVL_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
+    //:: Special to trap an infestation of maggots effect.
+    int nHasInfestationEffect = GetLocalInt(oTarget, "XP2_L_SPELL_CASTER_LVL_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
 
-  int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
-  if(nHasInfestationEffect)
-  {  
-    // If they have infestation of maggots on them, then add it to the end of the list.
-    // I would add it during the spell script itself but it might get swept up before the spell has
-    // really ended, I fear.
-    nLastEntry++;
-    DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nLastEntry));
-    DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nLastEntry));
-    DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nLastEntry));
-    DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nLastEntry));
-    DeleteLocalInt(oTarget, "X2_Effects_Index_Number");
+    int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
+    if(nHasInfestationEffect)
+    {  
+        // If they have infestation of maggots on them, then add it to the end of the list.
+        // I would add it during the spell script itself but it might get swept up before the spell has
+        // really ended, I fear.
+        nLastEntry++;
+        DeleteLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nLastEntry));
 
-    SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nLastEntry), SPELL_INFESTATION_OF_MAGGOTS);
-    SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nLastEntry), nHasInfestationEffect);
-    SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nLastEntry), GetLocalInt(oTarget, " XP2_L_SPELL_WEAVE" +IntToString (SPELL_INFESTATION_OF_MAGGOTS)));
-    //:: Won't bother with this one. I think a creature can only have one infestation at a time.
-    //SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nLastEntry));
-    SetLocalInt(oTarget, "X2_Effects_Index_Number", nLastEntry);
-  }
+        SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nLastEntry), SPELL_INFESTATION_OF_MAGGOTS);
+        SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nLastEntry), nHasInfestationEffect);
+        SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nLastEntry), GetLocalInt(oTarget, " XP2_L_SPELL_WEAVE" +IntToString (SPELL_INFESTATION_OF_MAGGOTS)));
+        //:: Won't bother with this one. I think a creature can only have one infestation at a time.
+        //SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nLastEntry));
+        SetLocalInt(oTarget, "X2_Effects_Index_Number", nLastEntry);
+    }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 //:: End of section to trap infestation of maggots.
@@ -622,6 +564,8 @@ void HandleInfestationOfMaggots(object oTarget)
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 {
+    //this should be passed in, for testing its set here
+    struct PRCeffect prceEffect;
 
     // Extraordinary/Supernatural effects are not supposed to be dispellable.
     if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY 
@@ -633,36 +577,22 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
     // Instant duration effects can use BioWare code, the PRC code doesn't care about those
     if (DURATION_TYPE_INSTANT == nDurationType)
     {
-        ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+        ApplyEffectToObject(nDurationType, prceEffect.eEffect, oTarget, fDuration);
     }
     else
     {
-//      SPApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
-        // We need the extra arguments for the PRC code, get them if defaults were passed in.
-        if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-        if (-1 == nCasterLevel) nCasterLevel = PRCGetCasterLevel(oCaster);
 
         // Invoke the PRC apply function passing the extra data.
-       int nIndex = ReorderEffects(nCasterLevel, nSpellID, oTarget, oCaster);
+       int nIndex = ReorderEffects(prceEffect, oTarget);
        // Add this new effect to the slot after the last effect already on the character.
-
-
-       ApplyEffectToObject(nDurationType, eEffect, oTarget, fDuration);
+       ApplyEffectToObject(nDurationType, prceEffect.eEffect, oTarget, fDuration);
        // may have code travers the lists right here and not add the new effect
        // if an identical one already appears in the list somewhere
-
-       SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex), nSpellID);
-       SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex), nCasterLevel);
-       SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
-       if (GetHasFeat(FEAT_SHADOWWEAVE, oCaster)) 
-         SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
-       else
-         SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), 0);
+       SetLocalPRCEffect(oTarget, X2_EFFECT+IntToString(nIndex), prceEffect);
 
        //nIndex++;
        /// Set new index number to the character.
-       DeleteLocalInt(oTarget, "X2_Effects_Index_Number");
-       SetLocalInt(oTarget, "X2_Effects_Index_Number", nIndex);
+       SetLocalInt(oTarget, X2_EFFECT+"Index_Number", nIndex);
     }
 }
 

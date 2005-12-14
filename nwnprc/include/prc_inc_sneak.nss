@@ -348,6 +348,9 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
           iUncannyDodgeLevels += 4;
           
           int iSneakAttackLevels;
+          iSneakAttackLevels = GetTotalSneakAttackDice(oAttacker);
+          /*    Primogenitor - Not sure why the overall function isnt used
+          
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ASSASSIN  , oAttacker);
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ROGUE     , oAttacker);
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_BLACKGUARD, oAttacker);
@@ -362,6 +365,7 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
           // Use template to add future classes
           // iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_*, oAttacker);
           //
+          */
           
           if(iUncannyDodgeLevels > iSneakAttackLevels)
           {

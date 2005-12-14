@@ -11,6 +11,9 @@
 //:: Created By: Andrew Nobbs
 //:: Created On: Feb 07, 2003
 //:://////////////////////////////////////////////
+// The error code 5 prevention entry. Comment out or uncomment as necessary. 
+//Part Deux, Primogenitor 14/12/05
+const int COMPILER_BREAKS_ON_ME_OR_NOT_AGAIN = 0xffffffff;
 
 //:: modified by mr_bumpkin Dec 15, 2003 for PRC stuff
 #include "prc_alterations"

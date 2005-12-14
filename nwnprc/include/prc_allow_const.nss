@@ -119,9 +119,9 @@ const string ALLOW_CLASS_DRAGONSONG_LYRIST      = "PRC_AllowDraSong";
 const string ALLOW_CLASS_FAVORED_MILIL          = "PRC_AllowFoM";
 const string ALLOW_CLASS_CEREBREMANCER          = "PRC_AllowCereb";
 const string ALLOW_CLASS_PSYCHIC_THEURGE        = "PRC_AllowPsychic";
-const string ALLOW_CLASS_NINJA			= "PRC_AllowNinjaCA";
+const string ALLOW_CLASS_NINJA          = "PRC_AllowNinjaCA";
 const string ALLOW_CLASS_GHOST_FACED_KILLER     = "PRC_AllowGhostFacedKiller";
-const string ALLOW_CLASS_COMBAT_MEDIC           = "PRC_AllowCbtMed;"
+const string ALLOW_CLASS_COMBAT_MEDIC           = "PRC_AllowCbtMed";
 
 /*
 const string ALLOW_CLASS_BRUTAL_SAVAGE          = 205;

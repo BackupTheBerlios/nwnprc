@@ -74,6 +74,12 @@ void DoFrightfulAttack(object oPC, object oTarget) {
    //What level of Power Attack did the GFK use while making this attack?
    //Not sure if this is correct.
    int iDamageBonus = GetLocalInt(oPC, "PRC_PowerAttack_Level");
+   if ( GetActionMode(oPC, ACTION_MODE_POWER_ATTACK) ) {
+      iDamageBonus = 5;
+   }
+   if ( GetActionMode(oPC, ACTION_MODE_IMPROVED_POWER_ATTACK) ) {
+      iDamageBonus = 10;
+   }
    if ( iDamageBonus <= 0 ) {
       //Replace all of these with FloatingTextStrRefOnCreature() later.
       FloatingTextStrRefOnCreature(16832362, oPC, FALSE);
@@ -178,6 +184,11 @@ void DoFrightfulAttack(object oPC, object oTarget) {
 void main() {
    object oPC = OBJECT_SELF;
    object oTarget = PRCGetSpellTargetObject();
+   //Is the player trying to Frightful Attack himself?
+   if(oPC == oTarget) {
+      IncrementRemainingFeatUses(oPC, FEAT_FRIGHTFUL_ATTACK);
+      return;
+   }
    DoFrightfulAttack(oPC, oTarget);
 }
 

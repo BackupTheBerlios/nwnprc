@@ -524,7 +524,7 @@ void CombatMedic(object oPC)
         if(iWis > 11 && GetLevelByClass(CLASS_TYPE_PALADIN) >= 4)
         {
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
-            return
+            return;
         }
         else if (GetLevelByClass(CLASS_TYPE_PALADIN) >= 6)
         {
@@ -557,13 +557,13 @@ void CombatMedic(object oPC)
      || GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT))
     {
         if (iWis > 11 && (GetLevelByClass(CLASS_TYPE_BLACKGUARD) || GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT)
-           || GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE))
+          || GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE)))
         {
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
             return;
         }
-        else if ((GetLevelByClass(CLASS_TYPE_BLACKGUARD) >= 2|| GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT >= 2)
-           || GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE) >= 3)
+        else if (GetLevelByClass(CLASS_TYPE_BLACKGUARD) >= 2 || GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT >= 2)
+               || GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE) >= 3)
         {
             SetLocalInt(oPC, "PRC_PrereqCbtMed", 0);
         }

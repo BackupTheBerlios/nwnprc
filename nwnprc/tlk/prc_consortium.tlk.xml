@@ -5022,82 +5022,88 @@ You psychoportively disperse miniscule portions of the target, dealing 9d6 point
 Augment: For every additional power point spend, this power's damage increases by 1d6. For each extra 2d6 points of damage, this power's save DC increases by 1, and your manifester level increases by 1.</entry>
   <entry id="46377" lang="en" sex="m">Egoist (Psychometabolism)</entry>
   <entry id="46378" lang="en" sex="m">Egoist Discipline Powers:
-Put powers here when the list is confirmed.
 Level:
-1 -
-2 -
-3 -
-4 -
-5 -
-6 -
+1 - Thicken Skin
+2 - Animal Affinity
+    Chameleon
+    Empathic Transfer
+3 - Ectoplasmic Form
+    Hustle
+4 - Psychic Vampire
+5 - Psionic Revivify
+    Psychofeedback
+6 - Psionic Restoration
 7 -
 8 -
 9 - </entry>
   <entry id="46379" lang="en" sex="m">Kineticist (Psychokinesis)</entry>
   <entry id="46380" lang="en" sex="m">Kineticist Discipline Powers:
-Put powers here when the list is confirmed.
 Level:
-1 -
-2 -
-3 -
-4 -
-5 -
-6 -
-7 -
+1 - Control Object
+2 - Control Air
+    Energy Missle
+3 - Energy Cone
+4 - Energy Ball
+    Inertial Barrier
+5 - Energy Current
+6 - Dispelling Buffer
+    Null Psionics Field
+7 - Reddopsi
 8 -
-9 - </entry>
+9 - Tornado Blast</entry>
   <entry id="46381" lang="en" sex="m">Nomad (Psychoportation)</entry>
   <entry id="46382" lang="en" sex="m">Nomad Discipline Powers:
-Put powers here when the list is confirmed.
 Level:
-1 -
-2 -
+1 - Burst
+2 - Dimension Swap
 3 -
-4 -
-5 - Baleful Teleport (A) - Deals 9d6 Damage to a single creature.
-6 -
-7 -
-8 -
-9 - </entry>
+4 - Dimensional Anchor
+    Dismissal
+5 - Baleful Teleport
+    Teleport
+6 - Psionic Banishment
+7 - Ethereal Jaunt 
+8 - Time Hop, Mass
+9 - Teleportation Circle</entry>
   <entry id="46383" lang="en" sex="m">Seer (Clairsentience)</entry>
   <entry id="46384" lang="en" sex="m">Seer Discipline Powers:
-Put powers here when the list is confirmed.
 Level:
-1 -
-2 -
-3 -
+1 - Destiny Dissonance
+    Precognition
+2 - 
+3 - Fate Link
 4 -
-5 -
-6 -
+5 - Second Chance
+6 - Precognition, Greater
 7 -
 8 -
 9 - </entry>
   <entry id="46385" lang="en" sex="m">Shaper (Metacreativity)</entry>
   <entry id="46386" lang="en" sex="m">Shaper Discipline Powers:
-Put powers here when the list is confirmed.
 Level:
-1 -
-2 -
-3 -
+1 - Astral Construct
+2 - Psionic Repair Damage
+3 - Concealing Amorpha, Greater
+    Ectoplasmic Cocoon
 4 -
-5 -
-6 -
-7 -
-8 -
-9 - </entry>
+5 - Hail of Crystals
+6 - Crystallize
+7 - Ectoplasmic Cocoon, Mass
+8 - Astral Seed
+9 - Genesis</entry>
   <entry id="46387" lang="en" sex="m">Telepath (Telepathy)</entry>
   <entry id="46388" lang="en" sex="m">Telepath Discipline Powers:
-Put powers here when the list is confirmed.
 Level:
-1 -
-2 -
-3 -
-4 -
-5 -
+1 - Psionic Charm
+2 - Aversion
+    Brain Lock
+3 - Crisis of Breath
+4 - Empathic Transfer, Hostile
+5 - Psionic Dominate
 6 -
-7 -
+7 - Crisis of Life
 8 -
-9 - </entry>
+9 - Psychic Chirurgery</entry>
   <entry id="46389" lang="en" sex="m">Wild Surge 1</entry>
   <entry id="46390" lang="en" sex="m">Wild Surge 2</entry>
   <entry id="46391" lang="en" sex="m">Wild Surge 3</entry>

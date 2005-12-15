@@ -240,6 +240,12 @@ void main()
     {
         ExecuteScript("psi_truvenom_hit", oSpellOrigin);
     }
+    
+    // Strength of my Enemy OnHit
+    if(GetLocalInt(oSpellOrigin, "StrengthEnemyActive"))
+    {
+        StrengthEnemy(oSpellOrigin, oSpellTarget);
+    }    
 
     // Astral Construct's Poison Touch special ability
     if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))

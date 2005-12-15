@@ -30,6 +30,7 @@ const int AOE_PER_SHAMBLER          = 132;
 const int AOE_MOB_ENERGYWALL        = 133;
 const int AOE_MOB_CATAPSI           = 134;
 const int AOE_PER_NULL_PSIONICS_FIELD = 135;
+const int AOE_MOB_FORM_DOOM	    = 136;
 
 // Level 1 Powers
 const int POWER_BOLT                        = 14001;

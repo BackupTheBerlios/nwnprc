@@ -1,41 +1,10 @@
 #include "prc_inc_clsfunc"
-#include "prc_class_const"
-#include "prc_feat_const"
 
 void main()
 {
 object oPC = OBJECT_SELF;
 
-//see if player already has rage effects from another class:
-if (GetHasSpellEffect(307, oPC))
-{
-    FloatingTextStringOnCreature("You are already raging from another class ability.", oPC);
-    return;
-}
 
-//see if player is already in a drunken rage:
-if(GetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE") != 0)
-    {
-    FloatingTextStringOnCreature("You are already in a Drunken Rage", oPC);
-    return;
-    }
-
-float fSec;
-
-if(GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC) > 9)
-    {
-    // Set duration to 3 hours:
-    fSec = HoursToSeconds(3);
-    SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 1);
-    DelayCommand(fSec, SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0));
-    }
-else
-    {
-    // Otherwise set duration to 1 hour:
-    fSec = HoursToSeconds(1);
-    SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 1);
-    DelayCommand(fSec, SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0));
-    }
 
 //Bonuses:
 effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
@@ -59,7 +28,7 @@ eLink = EffectLinkEffects(eLink, eVFX3);
 
 eLink = ExtraordinaryEffect(eLink);
 
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fSec);
+ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, HoursToSeconds(1));
 
 FloatingTextStringOnCreature("Drunken Rage Activated", oPC);
 }

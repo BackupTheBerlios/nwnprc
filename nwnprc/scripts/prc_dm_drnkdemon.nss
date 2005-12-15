@@ -1,30 +1,11 @@
 #include "prc_inc_clsfunc"
-#include "prc_class_const"
-#include "prc_feat_const"
 
 void main()
 {
     object oPC = OBJECT_SELF;
-
-    //see if player is already Drunk Like a Demon:
-    if(GetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON") != 0)
-    {
-        // PC already has Drink Like a Demon effects, exit:
-        FloatingTextStringOnCreature("You're already Drunk Like a Demon", oPC);
-        return;
-    }
-
     float fSec = HoursToSeconds(1);
 
-    // Set the int so effects don't stack:
-    SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 1);
-    DelayCommand(fSec, SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0));
-
     // A Drunken Master has had a drink. Add effects:
-    //effect eWis = EffectAbilityDecrease(ABILITY_WISDOM, 1);
-    //effect eInt = EffectAbilityDecrease(ABILITY_INTELLIGENCE, 1);
-    //effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, 1);
-
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 1);
     effect eCns = EffectAbilityIncrease(ABILITY_CONSTITUTION, 1);
 
@@ -37,9 +18,6 @@ void main()
     int nRSAfter, nTumbleAfter, nDexModAfter;
 
     //Apply the major bonuses:
-    //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWis, oPC, fSec);
-    //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInt, oPC, fSec);
-    //ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex, oPC, fSec);
     ApplyAbilityDamage(oPC, ABILITY_WISDOM,       1, DURATION_TYPE_TEMPORARY, TRUE, fSec);
     ApplyAbilityDamage(oPC, ABILITY_INTELLIGENCE, 1, DURATION_TYPE_TEMPORARY, TRUE, fSec);
     ApplyAbilityDamage(oPC, ABILITY_DEXTERITY,    1, DURATION_TYPE_TEMPORARY, TRUE, fSec);

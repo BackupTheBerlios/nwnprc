@@ -66,7 +66,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
 	float fWidth = DoWiden(20.0, nMetaPsi);
 	
     	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, GetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
 
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))

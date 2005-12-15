@@ -83,7 +83,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     	effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
     	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
 
-    	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
+    	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
 
     	while(GetIsObjectValid(oTarget))
     	{

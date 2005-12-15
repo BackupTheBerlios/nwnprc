@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 	if (nMetaPsi == 2)	nDur *= 2;   
 	
 	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fWidth, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    	oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
 
     	//Cycle through the targets within the spell shape until an invalid object is captured.
     	while(GetIsObjectValid(oTarget))

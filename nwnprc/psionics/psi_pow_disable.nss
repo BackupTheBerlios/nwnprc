@@ -52,7 +52,7 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     int nAugCost = 2;
     int nAugment = GetAugmentLevel(oCaster);
     int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 20.0, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
     int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
     
     if (nSurge > 0)

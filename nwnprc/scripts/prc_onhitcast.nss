@@ -134,7 +134,7 @@ void main()
     }
 
     // Warsling Sniper Improved Ricochet
-    if ((GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oSpellOrigin) == 6) > 0 && GetLocalInt(oSpellOrigin, "CanRicochet") != 2 && GetBaseItemType(oItem) == BASE_ITEM_BULLET)
+    if ((GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oSpellOrigin) == 6) && GetLocalInt(oSpellOrigin, "CanRicochet") != 2 && GetBaseItemType(oItem) == BASE_ITEM_BULLET)
     {
         DoImprovedRicochet(oSpellOrigin, oSpellTarget);
 
@@ -226,25 +226,34 @@ void main()
 
     if (GetIsObjectValid(GetLocalObject(oSpellOrigin, "FatedPartner")))
     {
-        DelayCommand(0.01, FateLink(oSpellOrigin));
+    	if (GetBaseItemType(oItem) == BASE_ITEM_ARMOR || GetBaseItemType(oItem) == BASE_ITEM_CREATUREITEM)
+    	{
+        	DelayCommand(0.01, FateLink(oSpellOrigin));
+        }
     }
 
     // Prevenom OnHit
-    if(GetLocalInt(oItem, "Prevenom"))
+    if(GetLocalInt(oItem, "Prevenom") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         ExecuteScript("psi_prevenom_hit", oSpellOrigin);
     }
 
     // Truevenom OnHit
-    if(GetLocalInt(oItem, "Truevenom"))
+    if(GetLocalInt(oItem, "Truevenom") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         ExecuteScript("psi_truvenom_hit", oSpellOrigin);
     }
     
     // Strength of my Enemy OnHit
-    if(GetLocalInt(oSpellOrigin, "StrengthEnemyActive"))
+    if(GetLocalInt(oSpellOrigin, "StrengthEnemyActive") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         StrengthEnemy(oSpellOrigin, oSpellTarget);
+    }    
+    
+    // SweepingStrike OnHit
+    if(GetLocalInt(oItem, "SweepingStrike") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    {
+        SweepingStrike(oSpellOrigin, oSpellTarget);
     }    
 
     // Astral Construct's Poison Touch special ability

@@ -16,7 +16,7 @@
 
 void RemoveImprovedRicochet(object oPC, object oWeap)
 {
-    FloatingTextStringOnCreature("Remove ImprovedRicochet is run", oPC);
+    if (DEBUG) FloatingTextStringOnCreature("Remove ImprovedRicochet is run", oPC);
 
     RemoveSpecificProperty(oWeap,ITEM_PROPERTY_ONHITCASTSPELL,IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER,0);
     DeleteLocalInt(oWeap, "ImprovedRicochet");
@@ -26,7 +26,7 @@ void ImprovedRicochet(object oPC, object oWeap)
 {
     if(GetLocalInt(oWeap, "ImprovedRicochet") == TRUE) return;
 
-    FloatingTextStringOnCreature("Add ImprovedRicochet is run", oPC);
+    if (DEBUG) FloatingTextStringOnCreature("Add ImprovedRicochet is run", oPC);
 
     RemoveImprovedRicochet(oPC, oWeap);
     DelayCommand(0.1, IPSafeAddItemProperty(oWeap, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));

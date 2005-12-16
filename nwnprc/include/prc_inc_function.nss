@@ -145,6 +145,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_LASHER,oPC) > 0)               /*DelayCommand(0.1,*/ExecuteScript("prc_lasher", oPC)/*)*/;
     if(GetLevelByClass(CLASS_TYPE_WARCHIEF,oPC) > 0)             ExecuteScript("prc_warchief", oPC);
     if(GetLevelByClass(CLASS_TYPE_GHOST_FACED_KILLER,oPC) > 0)   ExecuteScript("prc_gfkill", oPC);
+    if(GetLevelByClass(CLASS_TYPE_WARMIND,oPC) > 0)              ExecuteScript("psi_warmind", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -667,7 +668,7 @@ void DeletePRCLocalInts(object oSkin)
     // Blood Magus
     //DeleteLocalInt(oSkin, "DurableCasting");
     //DeleteLocalInt(oSkin, "BloodMagusInfusion");
-    //DeleteLocalInt(oSkin, "ThickerThanWater");
+    DeleteLocalInt(oSkin, "ThickerThanWater");
 
     // Feats
     DeleteLocalInt(oPC, "ForceOfPersonalityWis");
@@ -681,6 +682,9 @@ void DeletePRCLocalInts(object oSkin)
 
     // Warchief
     //DeleteLocalInt(oPC, "WarchiefCha");
+    
+    // Warmind
+    DeleteLocalInt(oSkin, "EnduringBody");
 
     // future PRCs Go below here
 }

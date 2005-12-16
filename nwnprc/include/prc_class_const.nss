@@ -146,3 +146,4 @@ const int CLASS_TYPE_PURPLE_DRAGON_KNIGHT    = 157;
 const int CLASS_TYPE_LASHER                  = 160;
 const int CLASS_TYPE_WARCHIEF                = 217;
 const int CLASS_TYPE_WAYFARER_GUIDE          = 142;
+const int CLASS_TYPE_WARMIND	             = 218;

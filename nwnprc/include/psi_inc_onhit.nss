@@ -31,6 +31,9 @@ void EnergyCurrent(object oCaster);
 // Does the strength drain and application for Strength of my Enemy
 void StrengthEnemy(object oCaster, object oTarget);
 
+// Swings at the target closest to the one hit
+void SweepingStrike(object oCaster, object oTarget);
+
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
@@ -237,4 +240,16 @@ void StrengthEnemy(object oCaster, object oTarget)
 		
 	// Clean up all ints on the target when the power is over
 	DelayCommand(RoundsToSeconds(nDur), DeleteLocalInt(oTarget, "StrengthEnemyDamage"));
+}
+
+void SweepingStrike(object oCaster, object oTarget)
+{
+	// Use the function to get the closest creature as a target
+	object oStrikeTarget = GetNearestCreatureToLocation(CREATURE_TYPE_IS_ALIVE, TRUE, GetLocation(oTarget));
+	// If he's in a place that can be reached
+	if (GetIsInMeleeRange(oStrikeTarget, oCaster))
+	{
+		effect eVis = EffectVisualEffect(VFX_IMP_STUN);
+		PerformAttack(oStrikeTarget, oCaster, eVis, 0.0, 0, 0, 0, "Sweeping Strike Hit", "Sweeping Strike Hit");
+	}
 }

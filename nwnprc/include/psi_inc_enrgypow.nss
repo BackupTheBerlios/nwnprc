@@ -103,16 +103,16 @@ struct energy_adjustments EvaluateEnergy(int nSpellID, int nSpellID_Cold, int nS
         eaRet.nDCMod       = 0;
         eaRet.nPenMod      = 0;
         eaRet.nVFX1        = VFX_IMP_SONIC;
-        eaRet.nVFX2        = nVFX2_Fire;
+        eaRet.nVFX2        = nVFX2_Sonic;
     }
     else
     {
         string sErr = "EvaluateEnergy(): ERROR: SpellID does not match any of the given IDs\n"
-                    + "Given ID: " + IntToString(nSpellID) + "\n"
-                    + "Cold ID: " + IntToString(nSpellID_Cold) + "\n"
-                    + "Electricity ID: " + IntToString(nSpellID_Elec) + "\n"
-                    + "Fire ID: " + IntToString(nSpellID_Fire) + "\n"
-                    + "Sonic ID: " + IntToString(nSpellID_Sonic) + "\n"
+                    + "Given ID: "       + IntToString(nSpellID)       + "\n"
+                    + "Cold ID: "        + IntToString(nSpellID_Cold)  + "\n"
+                    + "Electricity ID: " + IntToString(nSpellID_Elec)  + "\n"
+                    + "Fire ID: "        + IntToString(nSpellID_Fire)  + "\n"
+                    + "Sonic ID: "       + IntToString(nSpellID_Sonic) + "\n"
                       ;
         if(DEBUG) DoDebug(sErr);
         else      WriteTimestampedLogEntry(sErr);

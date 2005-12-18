@@ -156,16 +156,19 @@ int RedWizRestrictedSchool()
 
 int EShamConc()
 {
-    int nConc = GetLocalInt(OBJECT_SELF, "EShamConc");
-    string nSpellLevel = lookup_spell_level(PRCGetSpellId());
-    int nTest = TRUE;
-
-    if (nConc)
+    object oCaster     = OBJECT_SELF;
+    int bInShambler    = GetLocalInt(oCaster, "PRC_IsInEctoplasmicShambler");
+    int bReturn        = TRUE;
+    if(bInShambler)
     {
-         nTest = GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
-         if (!nTest)  FloatingTextStringOnCreature("Ectoplasmic Shambler has disrupted your concentration.", OBJECT_SELF, FALSE);
+        string nSpellLevel = lookup_spell_level(PRCGetSpellId());
+
+        bReturn = GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
+        if(!bReturn)
+            FloatingTextStrRefOnCreature(16824061, oCaster, FALSE); // "Ectoplasmic Shambler has disrupted your concentration."
     }
-    return nTest;
+
+    return bReturn;
 }
 
 int NullPsionicsField()

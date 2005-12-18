@@ -14,15 +14,15 @@
 
 void main()
 {
-    SetListening(OBJECT_SELF, TRUE);
-    //FloatingTextStringOnCreature("Running prc_glist_onspwn", OBJECT_SELF, FALSE);
+    object oListener = OBJECT_SELF;
+    SetListening(oListener, TRUE);
 
-    if(!GetLocalInt(OBJECT_SELF, "PRC_GenericListener_NoNotification"))
+    if(!GetLocalInt(oListener, "PRC_GenericListener_NoNotification"))
     {
-        if(GetLocalInt(OBJECT_SELF, "PRC_GenericListener_ListenToSingle"))
+        if(GetLocalInt(oListener, "PRC_GenericListener_ListenToSingle"))
             // "Listener ready. Due to some detail of how the NWN engine handles listening, the listener may only actually start listening during the next 3 seconds."
-            AssignCommand(OBJECT_SELF, SendMessageToPCByStrRef(GetLocalObject(OBJECT_SELF, "PRC_GenericListener_ListeningTo"), 16825209));
+            AssignCommand(oListener, SendMessageToPCByStrRef(GetLocalObject(oListener, "PRC_GenericListener_ListeningTo"), 16825209));
         else
-            FloatingTextStrRefOnCreature(16825209, OBJECT_SELF, FALSE);
+            AssignCommand(oListener, FloatingTextStrRefOnCreature(16825209, oListener, FALSE));
     }
 }

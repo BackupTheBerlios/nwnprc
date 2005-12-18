@@ -16,13 +16,14 @@
 
 void main()
 {
-//SendMessageToPC(GetFirstPC(), "Running prc_glist_onconv");
+    object oListener = OBJECT_SELF;
+
     // If listening to a single creature, check whether it was the one speaking
-    if(GetLocalInt(OBJECT_SELF, "PRC_GenericListener_ListenToSingle") &&
-       GetLastSpeaker() != GetLocalObject(OBJECT_SELF, "PRC_GenericListener_ListeningTo"))
+    if(GetLocalInt(oListener, "PRC_GenericListener_ListenToSingle") &&
+       GetLastSpeaker() != GetLocalObject(oListener, "PRC_GenericListener_ListeningTo"))
         return;
 
     // Run the script defined for this pattern
     int nPattern = GetListenPatternNumber();
-    ExecuteScript(GetLocalString(OBJECT_SELF, "PRC_GenericListener_ListenScript_" + IntToString(nPattern)), OBJECT_SELF);
+    ExecuteScript(GetLocalString(oListener, "PRC_GenericListener_ListenScript_" + IntToString(nPattern)), oListener);
 }

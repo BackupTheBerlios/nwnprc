@@ -1019,13 +1019,18 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
      int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 
-     // Second Chance power in psionics
-     if (nSaveRoll == 0 && GetLocalInt(oTarget, "SecondChance") && !GetLocalInt(oTarget, "SecondChanceTimer"))
+     // Second Chance power reroll
+     if(nSaveRoll == 0                                        &&     // Failed the save
+        GetLocalInt(oTarget, "PRC_Power_SecondChance_Active") &&     // Second chance is active
+        !GetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound") // And hasn't yet been used for this round
+        )
      {
-        // Can't use this ability again for a round
-        SetLocalInt(oTarget, "SecondChanceTimer", TRUE);
+        // Reroll
         nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
-        DelayCommand(6.0, DeleteLocalInt(oTarget, "SecondChanceTimer"));
+
+        // Can't use this ability again for a round
+        SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
+        DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
      }
      return nSaveRoll;
 }
@@ -1033,35 +1038,48 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
 int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF)
 {
+    int nSpell = PRCGetSpellId();
+    int nOriginalDamage = nDamage;
 
-     int iShadow = GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oTarget);
-     int iRedWizard = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oTarget);
-     int nSpell = PRCGetSpellId();
-
-
-     //racial pack code
-    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
-    { nDC -= 1+(GetHitDice(oTarget)/5); }
-    else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
-    {    nDC -= 1+(GetHitDice(oTarget)/5);  }
-    else if(nSaveType == SAVING_THROW_TYPE_SONIC && GetHasFeat(FEAT_HARD_AIR, oTarget) )
-    {    nDC -= 1+(GetHitDice(oTarget)/5);  }
-    else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
+    // Racial ability adjustments
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget))
+        nDC -= 1 + (GetHitDice(oTarget) / 5);
+    else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget))
+        nDC -= 1 + (GetHitDice(oTarget) / 5);
+    else if(nSaveType == SAVING_THROW_TYPE_SONIC && GetHasFeat(FEAT_HARD_AIR, oTarget))
+        nDC -= 1 + (GetHitDice(oTarget) / 5);
+    else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY)
     {
         if(GetHasFeat(FEAT_HARD_AIR, oTarget))
-            nDC -= 1+(GetHitDice(oTarget)/5);
+            nDC -= 1 + (GetHitDice(oTarget) / 5);
         else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
             nDC -= 2;
     }
-    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_4, oTarget) )
-    {   nDC -= 4;  }
-    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
-    {   nDC -= 3;  }
-    else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
-    {   nDC -= 1+(GetHitDice(oTarget)/5);  }
+    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_4, oTarget))
+        nDC -= 4;
+    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget))
+        nDC -= 3;
+    else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
+        nDC -= 1+(GetHitDice(oTarget)/5);
 
+    // Do save
+    nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
 
-    return GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
+    // Second Chance power reroll
+    if(nDamage == nOriginalDamage                            &&     // Failed the save
+       GetLocalInt(oTarget, "PRC_Power_SecondChance_Active") &&     // Second chance is active
+       !GetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound") // And hasn't yet been used for this round
+       )
+    {
+        // Reroll
+        nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
+
+        // Can't use this ability again for a round
+        SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
+        DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
+    }
+
+    return nDamage;
 }
 
 int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)

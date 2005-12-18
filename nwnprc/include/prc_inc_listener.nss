@@ -140,7 +140,15 @@ object SpawnListener(string sScriptToCall, location lSpawnAt,
     // Paranoia check
     if(!GetIsObjectValid(oListener))
     {
-        WriteTimestampedLogEntry("Error in SpawnListener(" + sScriptToCall + ", " + LocationToString(lSpawnAt) + ", " + sPattern + ", " + ObjectToString(oListenTo) + "-" + GetName(oListenTo) + FloatToString(fTTL) + ") - created listener is invalid!");
+        string sErr = "prc_inc_listener: SpawnListener(): ERROR: created listener is invalid!\n"
+                    + "sScriptToCall = '" + sScriptToCall + "'\n"
+                    + "lSpawnAt = " + DebugLocation2Str(lSpawnAt) + "\n"
+                    + "sPattern = '" + sPattern + "'\n"
+                    + "oListenTo = " + DebugObject2Str(oListenTo) + "\n"
+                    + "fTTL = " + FloatToString(fTTL) + "\n"
+                    + "bNotify = " + BooleanToString(bNotify) + "\n";
+        if(DEBUG) DoDebug(sErr);
+        else      WriteTimestampedLogEntry(sErr);
         return OBJECT_INVALID;
     }
 

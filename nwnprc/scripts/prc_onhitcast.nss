@@ -31,7 +31,6 @@
 
 
 void SetRancorVar(object oPC);
-void SetPsiEnRetortVar(object oPC);
 void SetImprovedRicochetVar(object oPC);
 void DoImprovedRicochet(object oPC, object oTarget);
 
@@ -209,21 +208,6 @@ void main()
     //////////////// PSIONICS //////////////////////////
     //////////////////////////////////////////////////*/
 
-    if (GetLocalInt(oSpellOrigin, "PsiEnRetort") > 0 && GetLocalInt(oSpellOrigin, "PsiCanRetort") != 2 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
-    {
-        PsiEnergyRetort(oSpellOrigin, oSpellTarget);
-
-        // Deactivates Ability
-        SetLocalInt(oSpellOrigin, "PsiCanRetort", 2);
-
-        // Prevents the heartbeat script from running multiple times
-        if(GetLocalInt(oSpellOrigin, "PsiRetortVarRunning") != 1)
-        {
-            DelayCommand(6.0, SetPsiEnRetortVar(oSpellOrigin) );
-            SetLocalInt(oSpellOrigin, "PsiRetortVarRunning", 1);
-        }
-    }
-
     if (GetIsObjectValid(GetLocalObject(oSpellOrigin, "FatedPartner")))
     {
     	if (GetBaseItemType(oItem) == BASE_ITEM_ARMOR || GetBaseItemType(oItem) == BASE_ITEM_CREATUREITEM)
@@ -243,18 +227,18 @@ void main()
     {
         ExecuteScript("psi_truvenom_hit", oSpellOrigin);
     }
-    
+
     // Strength of my Enemy OnHit
     if(GetLocalInt(oSpellOrigin, "StrengthEnemyActive") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         StrengthEnemy(oSpellOrigin, oSpellTarget);
-    }    
-    
+    }
+
     // SweepingStrike OnHit
     if(GetLocalInt(oItem, "SweepingStrike") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         SweepingStrike(oSpellOrigin, oSpellTarget);
-    }    
+    }
 
     // Astral Construct's Poison Touch special ability
     if(GetLocalInt(oSpellOrigin, ASTRAL_CONSTRUCT_POISON_TOUCH))
@@ -412,28 +396,6 @@ void SetRancorVar(object oPC)
         DelayCommand(2.0, SetLocalInt(oPC, "PRC_CanUseRancor", 1));
         DelayCommand(2.1, SetLocalInt(oPC, "PRC_RancorVarRunning", 2));
         //DelayCommand(2.2, FloatingTextStringOnCreature("Rancor Enabled After Combat", oPC, FALSE));
-    }
-}
-
-void SetPsiEnRetortVar(object oPC)
-{
-    // Turn Retort on
-    SetLocalInt(oPC, "PsiCanRetort", 1);
-
-    // Turn Retort off after one attack is made
-    DelayCommand(0.01, SetLocalInt(oPC, "PsiCanRetort", 0));
-
-    // Call again if the character is still in combat.
-    // this allows the ability to keep running even if the
-    // player does not score a retort hit during the allotted time
-    if( GetIsFighting(oPC) )
-    {
-        DelayCommand(6.0, SetPsiEnRetortVar(oPC) );
-    }
-    else
-    {
-        DelayCommand(2.0, SetLocalInt(oPC, "PsiCanRetort", 1));
-        DelayCommand(2.1, SetLocalInt(oPC, "PsiRetortVarRunning", 2));
     }
 }
 

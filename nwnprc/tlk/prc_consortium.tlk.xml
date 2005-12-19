@@ -5008,19 +5008,20 @@ Prerequisite: None.
 Specifics: Turns Augmentation off.
 Use: Selected. </entry>
   <entry id="46375" lang="en" sex="m">Baleful Teleport</entry>
-  <entry id="46376" lang="en" sex="m">Class: Psion (Nomad)
-Power Level: 5
-Range: Short
-Target: One Creature
+  <entry id="46376" lang="en" sex="m">Psychoportation (Teleportation)
+Level: Nomad 5
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One corporeal creature
 Duration: Instantaneous
 Saving Throw: Fortitude half
 Power Resistance: Yes
-Power Point Cost: 9
+Power Points: 9
 Metapsionics: Empower, Maximize, Twin
 
-You psychoportively disperse miniscule portions of the target, dealing 9d6 points of damage.
+You psychoportively disperse minuscule portions of the subject, dealing 9d6 points of damage. Targets can be protected from the effects of baleful teleport by dimensional anchor.
 
-Augment: For every additional power point spend, this power's damage increases by 1d6. For each extra 2d6 points of damage, this power's save DC increases by 1, and your manifester level increases by 1.</entry>
+Augment: For every additional power point you spend, this power’s damage increases by 1d6 points. For each extra 2d6 points of damage, this power’s save DC increases by 1 and your manifester level increases by 1 for the purpose of overcoming power resistance.</entry>
   <entry id="46377" lang="en" sex="m">Egoist (Psychometabolism)</entry>
   <entry id="46378" lang="en" sex="m">Egoist Discipline Powers:
 Level:
@@ -5240,19 +5241,18 @@ You interrupt the subject’s autonomic heart rhythm, killing it instantly on a fa
 
 Augment: For every additional power point you spend, this power can kill a subject that has Hit Dice equal to 11 + the number of additional points spent.</entry>
   <entry id="46419" lang="en" sex="m">Body Adjustment</entry>
-  <entry id="46420" lang="en" sex="m">Class: Psion / Wilder, Psychic Warrior
-Power Level: Psion/Wilder 3, Psychic Warrior 2
+  <entry id="46420" lang="en" sex="m">Psychometabolism (Healing)
+Level: Psion/wilder 3, psychic warrior 2
+Manifesting Time: 1 round
 Range: Personal
-Target: Caster
+Target: You
 Duration: Instantaneous
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: Psion/Wilder 5, PW 3
+Power Points: Psion/wilder 5, psychic warrior 3
 Metapsionics: Empower, Maximize, Twin
 
-When you manifest this power, you heal 1d12 hitpoints.
+You take control of your body’s healing process, curing yourself of 1d12 points of damage.
 
-Augment: For every 2 additional power points spent, you heal 1d12 hitpoints.</entry>
+Augment: For every 2 additional power points you spend, this power heals an additional 1d12 points of damage.</entry>
   <entry id="46421" lang="en" sex="m">Elude Touch</entry>
   <entry id="46422" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Wilder 2nd
@@ -5295,17 +5295,16 @@ Augment: You can augment this power in one or more of the following ways.
 3. If you spend 4 additional power points, this power’s duration increases to one day per level.
 In addition, for every 2 additional power points you spend to achieve any of these effects, this power’s save DC increases by 1.</entry>
   <entry id="46427" lang="en" sex="m">Concealing Amorpha</entry>
-  <entry id="46428" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 2
+  <entry id="46428" lang="en" sex="m">Metacreativity (Creation)
+Level: Psion/wilder 2, psychic warrior 2
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Minute/Level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 3
+Target: You
+Duration: 1 min./level
+Power Points: 3
 Metapsionics: Extend
 
-When you manifest this power, you weave a quasi-real membrane around yourself. This distortion grants you 20% concealment.</entry>
+Using concealing amorpha, you weave a quasi-real membrane around yourself. You remain visible within the translucent, amorphous enclosure. This distortion grants you concealment (opponents have a 20% miss chance), thanks to the rippling membrane encasing your form. You can pick up or drop objects, easily reaching through the film. Anything you hold is enveloped by the amorpha. Likewise, you can engage in melee, make ranged attacks, and manifest powers without hindrance.</entry>
   <entry id="46429" lang="en" sex="m">Greater Concealing Amorpha</entry>
   <entry id="46430" lang="en" sex="m">Class: Psion (Shaper), Psychic Warrior
 Power Level: 3
@@ -5655,18 +5654,20 @@ Augment: For every additional power point you spend, this power’s damage increas
   <entry id="46481" lang="en" sex="m">Energy Ray, Fire</entry>
   <entry id="46482" lang="en" sex="m">Energy Ray, Sonic</entry>
   <entry id="46483" lang="en" sex="m">Entangling Ectoplasm</entry>
-  <entry id="46484" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 1
-Range: Short
-Target: One Medium or smaller Creature
-Duration: 5 Rounds
+  <entry id="46484" lang="en" sex="m">Metacreativity (Creation)
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One Medium or smaller creature
+Duration: 5 rounds
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Extend, Twin
 
-You draw forth a glob of ectoplasmic goo from the Astral Plane and throw it at a creature as a ranged touch attack. On a succesful hit, the subject is covered in goo and becomes entangled.
+You draw forth a glob of ectoplasmic goo from the Astral Plane and immediately throw it as a ranged touch attack at any creature in range. On a successful hit, the subject is covered in goo and becomes entangled. The goo evaporates at the end of the power’s duration.
 
-Augment: For every 2 additional power points spent, this power can affect a target that is one size larger.</entry>
+Augment: For every 2 additional power points you spend, this power can affect a target one size category larger.</entry>
   <entry id="46485" lang="en" sex="m">Ectoplasmic Sheen</entry>
   <entry id="46486" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 1
@@ -5846,23 +5847,27 @@ Augment: For every 2 additional power points you spend, this power’s damage incr
   <entry id="46516" lang="en" sex="m">Energy Push, Fire</entry>
   <entry id="46517" lang="en" sex="m">Energy Push, Sonic</entry>
   <entry id="46518" lang="en" sex="m">Energy Stun</entry>
-  <entry id="46519" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 2
-Range: Short
-Area: 5 ft burst
+  <entry id="46519" lang="en" sex="m">Psychokinesis [see text]
+Level: Psion/wilder 2
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Area: 5-ft.-radius burst
 Duration: Instantaneous
-Saving Throw: Reflex or Fortitude half.
+Saving Throw: Reflex half or Fortitude half; see text
 Power Resistance: Yes
-Power Point Cost: 3
+Power Points: 3
+Metapsionics: Empower, Maximize, Twin, Widen
 
-You release a power stroke of energy that encircles all creatures in the area, dealing 1d6 points of damage to them. In addition, any creature that fails its save for half damage must succeed on a will save or be stunned for 1 round.
+Upon manifesting this power, you choose cold, electricity, fire, or sonic. You release a powerful stroke of the chosen energy type that encircles all creatures in the area, dealing 1d6 points of damage to each of them. In addition, any creature that fails its save for half damage must succeed on a Will save or be stunned for 1 round.
 
-Cold: Fort Save, +1 damage a die.
-Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-Fire: Reflex Save, +1 damage a die.
-Sonic: Reflex Save, -1 damage a die.
+Cold: A stroke of this energy type deals +1 point of damage per die. The saving throw to reduce damage from a cold stun is a Fortitude save instead of a Reflex save.
+Electricity: Manifesting a stroke of this energy type provides a +2 bonus to the save DC and a +2 bonus on manifester level checks for the purpose of overcoming power resistance.
+Fire: A stroke of this energy type deals +1 point of damage per die.
+Sonic: A stroke of this energy type deals -1 point of damage per die and ignores an object’s hardness.
 
-Augment: For every additional power point spent, this power's damage increases by 1d6, and the DC increases by 1. </entry>
+This power’s subtype is the same as the type of energy you manifest.
+
+Augment: For every additional power point you spend, this power’s damage increases by one die (d6) and its save DC increases by 1.</entry>
   <entry id="46520" lang="en" sex="m">Energy Stun, Cold</entry>
   <entry id="46521" lang="en" sex="m">Energy Stun, Electricity</entry>
   <entry id="46522" lang="en" sex="m">Energy Stun, Fire</entry>
@@ -5966,14 +5971,13 @@ Power Point Cost: 1
 
 Using this power lets you feel sound and light upon your face, giving you a +4 bonus to Search, Spot, and List, as well as making you immune to blindness and deafness.</entry>
   <entry id="46540" lang="en" sex="m">Body Equilibrium</entry>
-  <entry id="46541" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: Psion/Wilder 2, Psychic Warrior 2
+  <entry id="46541" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 2, psychic warrior 2
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 10 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 3
+Target: You
+Duration: 10 min./level
+Power Points: 3
 Metapsionics: Extend
 
 You adjust your bodies equilibrium to correspond with the surface you are walking on, making you able to move easily across unusual and unstable surfaces. This makes you immune to entangle.</entry>
@@ -6142,23 +6146,27 @@ Augment: For every additional power point you spend, this power’s damage increas
   <entry id="46570" lang="en" sex="m">Energy Burst, Fire</entry>
   <entry id="46571" lang="en" sex="m">Energy Burst, Sonic</entry>
   <entry id="46572" lang="en" sex="m">Energy Retort</entry>
-  <entry id="46573" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 3
-Range: Personal
-Target: Self
-Duration: 1 min/level
-Saving Throw: Reflex or Fortitude half.
+  <entry id="46573" lang="en" sex="m">Psychokinesis [see text]
+Level: Psion/wilder 3
+Manifesting Time: 1 standard action
+Range: Personal and close (25 ft. + 5 ft./2 levels); see text
+Targets: You and creature or object attacking you; see text
+Duration: 1 min./level
+Saving Throw: Reflex half or Fortitude half; see text
 Power Resistance: Yes
-Power Point Cost: 5
+Power Points: 5
+Metapsionics: Chain, Empower, Extend, Maximize
 
-You weave a potential energy field around your body. The first successful attack made against you in each round prompts a response from the field, dealing 4d6 damage of the appropriate element. To deal the damage, you must hit on a ranged touch attack. The target then gets power resistance and a save for half.
+Upon manifesting this power, you choose cold, electricity, fire, or sonic. You weave a field of potential energy of the chosen type around your body. The first successful attack made against you in each round during the power’s duration prompts a response from the field without any effort on your part. The attack may be physical, the effect of a power, or the effect of a spell (including spell-like, supernatural, and extraordinary abilities). An “ectoburst” discharges from the field, targeting the source of the attack and dealing 4d6 points of damage of the chosen energy type. To be affected, a target must be within close range. The ectoburst is a ranged touch attack.
 
-Cold: Fort Save, +1 damage a die.
-Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-Fire: Reflex Save, +1 damage a die.
-Sonic: Reflex Save, -1 damage a die.
+Cold: A field of this energy type deals +1 point of damage per die. The saving throw to reduce damage from a cold retort is a Fortitude save instead of a Reflex save.
+Electricity: Manifesting a field of this energy type provides a +2 bonus to the save DC and a +2 bonus on manifester level checks for the purpose of overcoming power resistance.
+Fire: A field of this energy type deals +1 point of damage per die.
+Sonic: A field of this energy type deals -1 point of damage per die and ignores an object’s hardness.
 
-Augment: For every additional power point spent, this power's duration increases by 1 minute.</entry>
+This power’s subtype is the same as the type of energy you manifest.
+
+Augment: For every additional power point you spend, this power’s duration increases by 1 minute.</entry>
   <entry id="46574" lang="en" sex="m">Energy Retort, Cold</entry>
   <entry id="46575" lang="en" sex="m">Energy Retort, Electricity</entry>
   <entry id="46576" lang="en" sex="m">Energy Retort, Fire</entry>
@@ -6337,16 +6345,20 @@ Power Point Cost: 5
 
 You generate a subtle telekinetic field of mental contact, allowing you to "feel" your surroundings. You can spot creatures hidden, even by magical means. </entry>
   <entry id="46606" lang="en" sex="m">Ectoplasmic Shambler</entry>
-  <entry id="46607" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 5
-Range: Long
-Area: Colossal
-Duration: 1 Min/level
+  <entry id="46607" lang="en" sex="m">Metacreativity (Creation)
+Level: Psion/wilder 5
+Manifesting Time: 1 round
+Range: Long (400 ft. + 40 ft./level)
+Effect: One ectoplasmic manifestation of 10m radius
+Duration: 1 min./level
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 9
+Power Points: 9
+Metapsionics: Extend, Twin, Widen
 
-You fashion an ephemeral mass of psedu-living ectoplasm called an ectoplasmic shambler. Anything caught within the shambler is blinded, and takes 1 point of damage for every 2 manifester levels of the caster.</entry>
+You fashion an ephemeral mass of pseudo-living ectoplasm called an ectoplasmic shambler. As the consistency of the ectoplasmic shambler is that of thick mist, those within the shambler are blinded. In addition, manifesting powers (or casting spells) within the shambler is difficult due to the constant turbulence felt by those caught in the shambler’s form.
+
+Creatures enveloped by the shambler, regardless of Armor Class, take 1 point of damage for every two manifester levels you have in each round they become or remain within the roiling turbulence of the shambler. Anyone trying to manifest a power must make a Concentration check (DC 15 + power’s or spell’s level) to successfully manifest a power or cast a spell inside the shambler.</entry>
   <entry id="46608" lang="en" sex="m">Power Resistance</entry>
   <entry id="46609" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 5
@@ -6422,23 +6434,27 @@ Metapsionics: Twin
 
 With decerebrate, you selectively remove a portion of the creatures brain stem. The creature loses all cerebral functions, vision, hearing, and the ability to move. If greater restoration is cast on the target within 1 hour, the target lives. Otherwise, the target will die from the brain damage.</entry>
   <entry id="46620" lang="en" sex="m">Energy Wave</entry>
-  <entry id="46621" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 7
-Range: Long
-Area: 120 ft Cone
+  <entry id="46621" lang="en" sex="m">Psychokinesis [see text]
+Level: Psion/wilder 7
+Manifesting Time: 1 standard action
+Range: 120 ft.
+Area: Cone-shaped spread
 Duration: Instantaneous
-Saving Throw: Reflex or Fortitude half.
+Saving Throw: Reflex half or Fortitude half; see text
 Power Resistance: Yes
-Power Point Cost: 13
+Power Points: 13
+Metapsionics: Empower, Maximize, Twin, Widen
 
-You create a flood of energy that deals 13d6 to anything in a 120' cone.
+Upon manifesting this power, you choose cold, electricity, fire, or sonic. You create a flood of energy of the chosen type out of unstable ectoplasm that deals 13d6 points of damage to each creature and object in the area. This power originates at your hand and extends outward in a cone.
 
-Cold: Fort Save, +1 damage a die.
-Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-Fire: Reflex Save, +1 damage a die.
-Sonic: Reflex Save, -1 damage a die.
+Cold: A wave of this energy type deals +1 point of damage per die. The saving throw to reduce damage from a cold wave is a Fortitude save instead of a Reflex save.
+Electricity: Manifesting a wave of this energy type provides a +2 bonus to the save DC and a +2 bonus on manifester level checks for the purpose of overcoming power resistance.
+Fire: A wave of this energy type deals +1 point of damage per die.
+Sonic: A wave of this energy type deals -1 point of damage per die and ignores an object’s hardness.
 
-Augment: For every additional power point spent, this power's damage increases by 1d6. For every two additional power points spent the DC increases by 1. </entry>
+This power’s subtype is the same as the type of energy you manifest.
+
+Augment: For every additional power point you spend, this power’s damage increases by one die (d6). For each extra two dice of damage, this power’s save DC increases by 1.</entry>
   <entry id="46622" lang="en" sex="m">Energy Wave, Cold</entry>
   <entry id="46623" lang="en" sex="m">Energy Wave, Electricity</entry>
   <entry id="46624" lang="en" sex="m">Energy Wave, Fire</entry>
@@ -6527,17 +6543,22 @@ Power Point Cost: 15
 
 Your metabolism operates at a greatly increased rate, healing in minutes what it would take days normally. You regenerate at the rate of 10 hitpoints a round.</entry>
   <entry id="46640" lang="en" sex="m">Assimilate</entry>
-  <entry id="46641" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 9
+  <entry id="46641" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 9
+Manifesting Time: 1 standard action
 Range: Touch
-Target: One Creature
-Duration: Instantaneous
-Saving Throw: Fortitude half.
+Target: One living creature touched
+Duration: Instantaneous and 1 hour; see text
+Saving Throw: Fortitude half
 Power Resistance: Yes
-Power Point Cost: 17
+Power Points: 17
 Metapsionics: Empower, Maximize, Twin
 
-Your pointing finger turns black as obsidian. A creature touched by you is partially assimilated into your form and takes 20d6 points of damage. If the creature survives this damage, you gain half of the damage dealt as temporary hitpoints. If the creature dies, you gain all of the damage dealt as temporary hitpoints, and +4 to all stats. All bonuses last for 1 hour.</entry>
+Your pointing finger turns black as obsidian. A creature touched by you is partially assimilated into your form and takes 20d6 points of damage. Any creature reduced to 0 or fewer hit points by this power is killed, entirely assimilated into your form, leaving behind only a trace of fine dust. An assimilated creature’s equipment is unaffected.
+
+A creature that is partially assimilated into your form (that is, a creature that has at least 1 hit point following your use of this power) grants you a number of temporary hit points equal to half the damage you dealt for 1 hour.
+
+A creature that is completely assimilated grants you a number of temporary hit points equal to the damage you dealt and a +4 bonus to each of your ability scores for 1 hour. If the assimilated creature knows psionic powers, you gain knowledge of one of its powers for 1 hour.</entry>
   <entry id="46642" lang="en" sex="m">Etherealness</entry>
   <entry id="46643" lang="en" sex="m">Class: Psion/Wilder
 Power Level: 9
@@ -6572,14 +6593,13 @@ Power Point Cost: 17
 
 Your body ignores all harmful effects, making you invulnerable to all spells, powers, damage, or any other damaging effect.</entry>
   <entry id="46648" lang="en" sex="m">Body Purification</entry>
-  <entry id="46649" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: Psion/Wilder 3, Psychic Warrior 2
+  <entry id="46649" lang="en" sex="m">Psychometabolism (Healing)
+Level: Psion/wilder 3, psychic warrior 2
+Manifesting Time: 1 round
 Range: Personal
-Target: Caster
+Target: You
 Duration: Instantaneous
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: Psion/Wilder 5, PW 3
+Power Points: Psion/wilder 5, psychic warrior 3
 Metapsionics: None
 
 When you manifest this power, you cleanse your body of all ability damage.</entry>
@@ -6648,21 +6668,27 @@ This power attempts to strip all magical effects from a single target. It can al
 
 Augment: For every additional power point spent, the manifester level limit on your dispel check increases by 2 (to a maximum bonus of +20 for a 5-point expenditure).</entry>
   <entry id="46660" lang="en" sex="m">Energy Wall</entry>
-  <entry id="46661" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 3
-Range: Medium
-Target: Self
-Duration: Instant
-Saving Throw: None
+  <entry id="46661" lang="en" sex="m">Metacreativity (Creation) [see text]
+Level: Psion/wilder 3
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./ level)
+Area: An opaque sheet of energy 10m long and 2m wide
+Duration: 1d4 rounds + 1 round/level
+Saving Throw: Reflex half or Fortitude half; see text
 Power Resistance: No
-Power Point Cost: 5
+Power Points: 5
+Metapsionics: Extend, Empower, Maximize, Twin, Widen
 
-Upon manifesting this power, you create an immobile sheet of energy of the chosen type. All creatures in the wall take 2d6 + 1 per manifester level, to a max of +20. This stacks with the extra damage provided by certain damage types.
+Upon manifesting this power, you choose cold, electricity, fire, or sonic. You create an immobile sheet of energy of the chosen type formed out of unstable ectoplasm. The wall sends forth waves of energy, dealing 2d6 points of damage to creatures entering the wall. In addition, anyone that remains within the energy wall takes 2d6 points of damage +1 point per manifester level (maximum +20).
 
-Cold: Fort Save, +1 damage a die.
-Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-Fire: Reflex Save, +1 damage a die.
-Sonic: Reflex Save, -1 damage a die.</entry>
+If you manifest the wall so that it appears where creatures are, each creature takes damage as if passing through the wall.
+
+Cold: A sheet of this energy type deals +1 point of damage per die. The saving throw to reduce damage from a cold wall is a Fortitude save instead of a Reflex save.
+Electricity: Manifesting a sheet of this energy type provides a +2 bonus to the save DC and a +2 bonus on manifester level checks for the purpose of overcoming power resistance.
+Fire: A sheet of this energy type deals +1 point of damage per die.
+Sonic: A sheet of this energy type deals -1 point of damage per die and ignores an object’s hardness.
+
+This power’s subtype is the same as the type of energy you manifest.</entry>
   <entry id="46662" lang="en" sex="m">Energy Wall, Cold</entry>
   <entry id="46663" lang="en" sex="m">Energy Wall, Electricity</entry>
   <entry id="46664" lang="en" sex="m">Energy Wall, Fire</entry>
@@ -6841,14 +6867,15 @@ BONUS CASTING AND MANIFESTING
 
 Upon gaining a level in Cerebremancer, the character gains new spells, powers, and power points as if he had also gained a level in his highest caster class and manifester class.</entry>
   <entry id="46700" lang="en" sex="m">Astral Seed</entry>
-  <entry id="46701" lang="en" sex="m">Class: Psion (Shaper)
-Power Level: 8
-Range: Close
-Target: Ground
+  <entry id="46701" lang="en" sex="m">Metacreativity
+Level: Shaper 8
+Manifesting Time: 10 minutes
+Range: 0 ft.
+Effect: One storage crystal
 Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 15
+Power Points: 15
 Metapsionics: None
 
 This power weaves strands of ectoplasm into a crystal containing the seed of your living mind. You may have only one seed in existence at any one time. Until such time as you perish, the astral seed is totally inert. Upon dying, you are transported to the location of your astral seed, where you will spend a day regrowing a body. Respawning in this manner will cost a level. If your astral seed is destroyed, the power will fail. </entry>
@@ -7192,19 +7219,20 @@ Str +8, Con +4, AC (natural) +5, AC (dodge) -2, AB -2, Hide -4.</entry>
   <entry id="46765" lang="en" sex="m">Size Decrease -5</entry>
   <entry id="46766" lang="en" sex="m">Size Decrease -6</entry>
   <entry id="46767" lang="en" sex="m">Aversion</entry>
-  <entry id="46768" lang="en" sex="m">Class: Psion (Telepath)
-Power Level: 2
-Range: Close
-Target: One Creature
-Duration: 1 Hour/level
+  <entry id="46768" lang="en" sex="m">Telepathy (Compulsion) [Mind-Affecting]
+Level: Telepath 2
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One creature
+Duration: 1 hour/level
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 3
-Metapsionics: Extend
+Power Points: 3
+Metapsionics: Extend, Twin
 
 You plant a powerful aversion in the mind of the subject. The target flees from you at every opportunity.
 
-Augment: For every 2 additional power points spent, this power's save DC increases by 1 and the duration by 1 hour.</entry>
+Augment: For every 2 additional power points you spend, this power’s save DC increases by 1 and the duration increases by 1 hour.</entry>
   <entry id="46769" lang="en" sex="m">Crisis of Breath</entry>
   <entry id="46770" lang="en" sex="m">Telepathy (Compulsion) [Mind-Affecting]
 Level: Telepath 3
@@ -7320,17 +7348,16 @@ You temporarily link the fate of any two enemy creatures, if both fail their sav
 
 Augment: For every 2 additional power points spent, this power's DC increases by 1.</entry>
   <entry id="46783" lang="en" sex="m">Second Chance</entry>
-  <entry id="46784" lang="en" sex="m">Class: Psion (Seer)
-Power Level: 5
+  <entry id="46784" lang="en" sex="m">Clairsentience
+Level: Seer 5
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Round/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 9
+Target: You
+Duration: 1 round/level
+Power Points: 9
 Metapsionics: Extend
 
-You can influence the probable outcomes of your environment, allowing you to reroll the first failed save a round. Because of Bioware Hardcoding, this does not affect spells with Reflex saves that deal damage.</entry>
+You take a hand in influencing the probable outcomes of your immediate environment. You see the many alternative branches that reality could take in the next few seconds, and with this foreknowledge you gain the ability to reroll the first failed saving throw each round. You must take the result of the reroll, even if it’s worse than the original roll.</entry>
   <entry id="46785" lang="en" sex="m">Precognition, Greater</entry>
   <entry id="46786" lang="en" sex="m">Class: Psion (Seer)
 Power Level: 6
@@ -7495,6 +7522,7 @@ Implementation: At this time, the circle does not act as a trap, merely as a nor
   <entry id="46842" lang="en" sex="m">Total Power Points Stored: 15</entry>
   <entry id="46843" lang="en" sex="m">Total Power Points Stored: 16</entry>
   <entry id="46844" lang="en" sex="m">Total Power Points Stored: 17</entry>
+  <entry id="46845" lang="en" sex="m">Ectoplasmic Shambler has disrupted your concentration.</entry>
   <entry id="46964" lang="en" sex="m">Empty Quickselection</entry>
   <entry id="46965" lang="en" sex="m">Power Points Remaining:</entry>
   <entry id="46966" lang="en" sex="m">Quickselection set to</entry>

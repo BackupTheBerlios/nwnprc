@@ -36,7 +36,6 @@
 32 BodyEquilibrium           16823756 2     21779  12792    15145   14065       0          
 33 ThoughtShield             16823752 2     21789  12802    15162   14082       0          
 34 DissolvingWeapon          16823770 2     21790  12803    15163   14083       0          
-35 EmpathicTransferHostile   16823987 2     21780  12793    15146   14136       0          
 36 **Level_3_PsyWar_Powers** ****     ****  ****   ****     ****    ****        0          
 37 GreaterAmorpha            16823645 3     21821  12835    15182   14102       0          
 38 Exhale_BlackDrag          16823794 3     21822  12836    15198   14118       0          
@@ -47,6 +46,7 @@
 43 EvadeBurst                16823882 3     21827  12841    15186   14281       0          
 44 UbiqVision                16823906 3     21828  12842    15188   14133       0          
 45 DimensionSlide            16824013 3     21829  12843    15189   14138       0          
+35 EmpathicTransferHostile   16823987 3     21830  12844    15187   14136       0          
 46 **Level_4_PsyWar_Powers** ****     ****  ****   ****     ****    ****        0          
 47 InertialBarrier           16823661 4     21871  12885    15231   14151       0          
 48 SteadfastPerception       16823679 4     21872  12886    15232   14152       0          

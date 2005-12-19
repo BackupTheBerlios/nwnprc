@@ -5522,18 +5522,20 @@ Your touch, claw, or bite is corrosive, and sizzling moisture visibly oozes from
 
 Augment: For every 2 additional power points you spend, this power’s damage increases by 1d6 points.</entry>
   <entry id="46461" lang="en" sex="m">Exhalation of the Black Dragon</entry>
-  <entry id="46462" lang="en" sex="m">Class: Psychic Warrior
-Power Level: 3
-Range: Short
-Target: One Creature
+  <entry id="46462" lang="en" sex="m">Psychometabolism [Acid]
+Level: Psychic warrior 3
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Effect: Ray
 Duration: Instantaneous
 Saving Throw: None
 Power Resistance: Yes
-Power Point Cost: 5
+Power Points: 5
+Metapsionics: Chain, Empower, Maximize, Split Psionic Ray, Twin
 
-You spit forth vitriolic acid at your target, dealing 3d6 points of acid damage on a successful ranged touch attack.
+You spit forth vitriolic acid, originating from your mouth, at your target. If you succeed on a ranged touch attack, the target takes 3d6 points of acid damage.
 
-Augment: For every 2 additional power points spent, this power's damage increases by 1d6. </entry>
+Augment: For every 2 additional power points you spend, this power’s damage increases by 1d6 points.</entry>
   <entry id="46463" lang="en" sex="m">Steadfast Perception</entry>
   <entry id="46464" lang="en" sex="m">Class: Psychic Warrior
 Power Level: 4
@@ -6709,18 +6711,18 @@ This power’s subtype is the same as the type of energy you manifest.</entry>
   <entry id="46664" lang="en" sex="m">Energy Wall, Fire</entry>
   <entry id="46665" lang="en" sex="m">Energy Wall, Sonic</entry>
   <entry id="46666" lang="en" sex="m">Evade Burst</entry>
-  <entry id="46667" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: Psion/Wilder 7, PsyWar 3
+  <entry id="46667" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 7, psychic warrior 3
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Round/Level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: Psion/Wilder 13, PsyWar 5
+Target: You
+Duration: 1 round/Level
+Power Points: Psion/wilder 13, psychic warrior 5
+Metapsionics: Extend
 
-When you manifest this power, you gain the effect of evasion.
+For the duration of the power, you gain the ability to throw off faux ectoplasmic shells that allow you to slide out of range of a damaging effects that allow a Reflex save. This is equivalent to possessing the Evasion ability.
 
-Augment: If you spend 4 additional points, you gain improved evasion. Augmenting this power beyond level 1 does nothing.</entry>
+Augment: If you spend 4 additional power points, the effect is instead equivalent to Improved Evasion, meaning you take only half damage on a failed Reflex save.</entry>
   <entry id="46668" lang="en" sex="m">Hustle</entry>
   <entry id="46669" lang="en" sex="m">Class: Psion (Egoist), Psychic Warrior
 Power Level: Psion 3, Psychic Warrior 2
@@ -6982,17 +6984,20 @@ Metapsionics: Extend, Twin, Widen
 You draw writhing strands of ectoplasm from the Astral Plane that wrap up the subjects in the area like mummies. The subjects can still breathe but are otherwise helpless, unable to see outside the cocoon, speak, or take any physical actions. The subjects’s nostrils are clear (air passes through the cocoon normally).
 
 Augment: For every 2 additional power points you spend, the radius of this power’s area increases by 5 feet.</entry>
-  <entry id="46714" lang="en" sex="m">Ethereal Jaunt</entry>
-  <entry id="46715" lang="en" sex="m">Class: Psion (Nomad)
-Power Level: 7
+  <entry id="46714" lang="en" sex="m">Ethereal Jaunt, Psionic</entry>
+  <entry id="46715" lang="en" sex="m">Psychoportation
+Level: Nomad 7
+Display: Visual
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Round/level
-Saving Throw: None
-Power Resistance: Yes
-Power Point Cost: 13
+Target: You
+Duration: 1 round/level
+Power Points: 13
+Metapsionics: Extend
 
-You go to the Ethereal Plane. Taking any hostile action will end the power.</entry>
+You become ethereal, along with your equipment. For the duration of the power, you are in a place called the Ethereal Plane, which overlaps the normal, physical, Material Plane. When the power expires, you return to material existence.
+
+Taking any hostile actions will force the power to expire immediately.</entry>
   <entry id="46716" lang="en" sex="m">Genesis</entry>
   <entry id="46717" lang="en" sex="m">Class: Psion (Shaper)
 Power Level: 9

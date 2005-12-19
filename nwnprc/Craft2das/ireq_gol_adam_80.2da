@@ -1,0 +1,11 @@
+2DA V2.0
+
+      LABEL                              ReqType     ReqParam1        ReqParam2   
+0     Golem  	                         RESULT      prc_con_result   prc_con_adam_80       
+1     Caster_Level_30th                  CASTERLVL      30            ****        
+2     CraftConstruct                     FEAT         2920            ****     
+3     GoldCost                           EXTRAGOLD  337500            ****
+4     XPCost                             EXTRAXP     24000            ****        
+5     BigsbysCrushingHand                SPELL         463            ****         
+6     PowerWordKill(Wish)                SPELL         131            ****         
+7     GreaterStoneskin(Geas)             SPELL          74            ****    

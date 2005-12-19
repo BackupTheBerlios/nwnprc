@@ -1,0 +1,12 @@
+2DA V2.0
+
+      LABEL                              ReqType     ReqParam1        ReqParam2   
+0     Golem  	                         RESULT      prc_con_result   prc_con_mith_37 
+1     Caster_Level_25th                  CASTERLVL      25            ****        
+2     CraftConstruct                     FEAT         2920            ****     
+3     GoldCost                           EXTRAGOLD  130000            ****
+4     XPCost                             EXTRAXP      9800            ****        
+5     Cloudkill                          SPELL          23            ****         
+6     GreaterSpellmantle(Wish)           SPELL          73            ****         
+7     Haste                              SPELL          78            ****         
+8     MassBullsStrength(Geas)            SPELL        3119            ****    

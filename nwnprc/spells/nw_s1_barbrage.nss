@@ -73,8 +73,8 @@ void main()
 
         //Determine the duration by getting the con modifier after being modified
         int nCon = 3 + GetAbilityModifier(ABILITY_CONSTITUTION) + iCon;
-        effect eStr = EffectAbilityIncrease(ABILITY_CONSTITUTION, iCon);
-        effect eCon = EffectAbilityIncrease(ABILITY_STRENGTH, iStr);
+        effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, iCon);
+        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, iStr);
         effect eSave = EffectSavingThrowIncrease(SAVING_THROW_WILL, nSave);
         effect eAC = EffectACDecrease(iAC, AC_DODGE_BONUS);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

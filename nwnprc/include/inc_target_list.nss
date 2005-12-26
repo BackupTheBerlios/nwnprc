@@ -56,6 +56,9 @@ const int INSERTION_BIAS_HP_RATIO = 3;
 /// Inserts based on distance from the object list is being built on
 const int INSERTION_BIAS_DISTANCE = 4;
 
+/// Inserts based on the current amount of HP
+const int INSERTION_BIAS_HP       = 5;
+
 //////////////////////////////////////////////////
 /* Public functions                             */
 //////////////////////////////////////////////////
@@ -223,6 +226,9 @@ int GetIsInsertPosition(object oInsert, object oCompare, object oCaster, int nIn
             break;
         case INSERTION_BIAS_DISTANCE:
             bReturn = GetDistanceBetween(oInsert, oCaster) > GetDistanceBetween(oCompare, oCaster);
+            break;
+        case INSERTION_BIAS_HP:
+            bReturn = GetCurrentHitPoints(oInsert) > GetCurrentHitPoints(oCompare);
             break;
         default:
             WriteTimestampedLogEntry("Invalid target selection bias given. Value: " + IntToString(nInsertionBias));

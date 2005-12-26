@@ -13,9 +13,6 @@
 
 
 
-// Applies the effects to the target from the Fate Link power
-void FateLink(object oCaster);
-
 // Applies the effects to the target from the Share Pain, and Share Pain, Forced powers
 void SharePain(object oCaster);
 
@@ -31,34 +28,6 @@ void SweepingStrike(object oCaster, object oTarget);
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
-
-void FateLink(object oCaster)
-{
-	object oTarget = GetLocalObject(oCaster, "FatedPartner");
-	int nDam = GetTotalDamageDealt();
-	int nDC;
-	effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
-	ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-
-	if (GetIsDead(oCaster))
-	{
-		nDC = GetLocalInt(oTarget, "FateLinkDC");
-		effect eDrain = EffectNegativeLevel(2);
-		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-		{
-			ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oTarget);
-		}
-	}
-	if (GetIsDead(oTarget))
-	{
-		nDC = GetLocalInt(oCaster, "FateLinkDC");
-		effect eDrain = EffectNegativeLevel(2);
-		if (!PRCMySavingThrow(SAVING_THROW_WILL, oCaster, nDC, SAVING_THROW_TYPE_NONE))
-		{
-			ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oCaster);
-		}
-	}
-}
 
 void SharePain(object oCaster)
 {

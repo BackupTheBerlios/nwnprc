@@ -208,13 +208,6 @@ void main()
     //////////////// PSIONICS //////////////////////////
     //////////////////////////////////////////////////*/
 
-    if (GetIsObjectValid(GetLocalObject(oSpellOrigin, "FatedPartner")))
-    {
-    	if (GetBaseItemType(oItem) == BASE_ITEM_ARMOR || GetBaseItemType(oItem) == BASE_ITEM_CREATUREITEM)
-    	{
-        	DelayCommand(0.01, FateLink(oSpellOrigin));
-        }
-    }
 
     // Prevenom OnHit
     if(GetLocalInt(oItem, "Prevenom") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)

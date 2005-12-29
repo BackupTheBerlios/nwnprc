@@ -11,7 +11,6 @@
 
 
 #include "spinc_common"
-#include "psi_inc_onhit"
 #include "inc_utility"
 
 void RemoveImprovedRicochet(object oPC, object oWeap)

@@ -18,15 +18,18 @@
 
 void PrcFeats(object oPC)
 {
-     SetLocalInt(oPC,"ONREST",1);
-     DeletePRCLocalIntsT(oPC);
-     EvalPRCFeats(oPC);
-     DelayCommand(1.0, DeleteLocalInt(oPC,"ONREST"));
-     FeatSpecialUsePerDay(oPC);
+    if(DEBUG) DoDebug("prc_rest: Evaluating PC feats for " + DebugObject2Str(oPC));
+
+    SetLocalInt(oPC,"ONREST",1);
+    DeletePRCLocalIntsT(oPC);
+    EvalPRCFeats(oPC);
+    DelayCommand(1.0, DeleteLocalInt(oPC,"ONREST"));
+    FeatSpecialUsePerDay(oPC);
 }
 
 void RestCancelled(object oPC)
 {
+    if(DEBUG) DoDebug("prc_rest: Rest cancelled for " + DebugObject2Str(oPC));
     DelayCommand(1.0,PrcFeats(oPC));
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_CANCELLED);
@@ -34,6 +37,8 @@ void RestCancelled(object oPC)
 
 void RestStarted(object oPC)
 {
+    if(DEBUG) DoDebug("prc_rest: Rest started for " + DebugObject2Str(oPC));
+
     if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
         SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
         SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
@@ -68,12 +73,19 @@ void RestStarted(object oPC)
         AssignCommand(oEle, SetIsDestroyable(TRUE));
         DestroyObject(oEle);
     }
+    // Remove Psionic Focus
+    if(GetIsPsionicallyFocused(oPC))
+    {
+        LosePsionicFocus(oPC);
+    }
+
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
 }
 
 void RestFinished(object oPC)
 {
+    if(DEBUG) DoDebug("prc_rest: Rest finished for for " + DebugObject2Str(oPC));
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
     BonusDomainRest(oPC);
@@ -169,6 +181,8 @@ void main()
 {
     object oPC = GetLastBeingRested();
 
+    if(DEBUG) DoDebug("prc_rest: Running for " + DebugObject2Str(oPC));
+
     //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onrest", OBJECT_SELF);
@@ -176,6 +190,7 @@ void main()
     // Handle the PRCForceRest() wrapper
     if(GetLocalInt(oPC, "PRC_ForceRested"))
     {
+        if(DEBUG) DoDebug("prc_rest: Handling forced rest");
         RestStarted(oPC);
         // A minor delay to break the script association and to lessen TMI chances
         DelayCommand(0.1f, RestFinished(oPC));

@@ -239,13 +239,6 @@ void main()
         ExecuteScript("psi_ast_con_ptch", oSpellOrigin);
     }
 
-
-    // Share Pain and Share Pain, Forced
-    if(GetLocalInt(oSpellOrigin, "SharePain") == TRUE && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
-    {
-        DelayCommand(0.01, SharePain(oSpellOrigin));
-    }
-
     // Energy Current
     if(GetLocalInt(oSpellOrigin, "PsiEnCurrent") > 0 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {

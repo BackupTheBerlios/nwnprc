@@ -56,12 +56,6 @@ int PsiPrePowerCastCode()
         }
     }
 
-    // Mind Trap power
-    if(GetLocalInt(oTarget, "MindTrap") == TRUE && GetIsTelepathyPower())
-    {
-        int nPPLoss = d6();
-        DelayCommand(1.0, LosePowerPoints(oManifester, nPPLoss));
-    }
     // Ectoplasmic Form conc check
     if (GetLocalInt(oTarget, "EctoForm"))
     {

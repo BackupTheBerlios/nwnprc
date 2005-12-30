@@ -13,9 +13,6 @@
 
 
 
-// Applies the effects to the target from the Share Pain, and Share Pain, Forced powers
-void SharePain(object oCaster);
-
 // Does the concentration check on damage for the Energy Current power.
 void EnergyCurrent(object oCaster);
 
@@ -28,25 +25,6 @@ void SweepingStrike(object oCaster, object oTarget);
 // ---------------
 // BEGIN FUNCTIONS
 // ---------------
-
-void SharePain(object oCaster)
-{
-     int iDamageTaken = GetTotalDamageDealt();
-     int iHalf = iDamageTaken/2;
-     object oTarget = GetLocalObject(oCaster, "SharePainTarget");
-
-     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_L);
-     effect eHeal = EffectHeal(iHalf);
-     ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oCaster);
-     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oCaster);
-
-     effect eDam = EffectDamage(iHalf, DAMAGE_TYPE_POSITIVE);
-     effect eVisHarm = EffectVisualEffect(VFX_IMP_HARM);
-     ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHarm, oTarget);
-
-     if (GetIsDead(oTarget))	DeleteLocalInt(oCaster, "SharePain");
-}
 
 void EnergyCurrent(object oCaster)
 {

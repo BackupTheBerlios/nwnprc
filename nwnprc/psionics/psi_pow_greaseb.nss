@@ -1,65 +1,56 @@
 /*
    ----------------
-   Ectoplasmic Sheen
-   
-   prc_all_greaseb
+   Ectoplasmic Sheen, OnExit
+
+   psi_pow_greaseb
    ----------------
 
    30/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: Short
-   Area: 10' square
-   Duration: 1 Round/level
-   Saving Throw: Reflex negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You create a pool of ectoplasm across the floor that inhibits motion and can cause people to slow down.
-   This functions as the spell grease.
+    Ectoplasmic Sheen, OnExit
+
+    Metacreativity (Creation)
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target or Area: 10-ft. square
+    Duration: 1 round/level
+    Saving Throw: See text
+    Power Resistance: No
+    Power Points: 1
+    Metapsionics: Extend
+
+    You create a pool of ectoplasm across the floor that inhibits motion and can cause people to slow down.
+    This functions as the spell grease.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
-
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
- ActionDoCommand(SetAllAoEInts(SPELL_GREASE,OBJECT_SELF, GetSpellSaveDC()));
+    object oCreator = GetAreaOfEffectCreator();
+    object oTarget  = GetExitingObject();
 
-    //Declare major variables
-    //Get the object that is exiting the AOE
-    object oTarget = GetExitingObject();
-    int bValid = FALSE;
+    // Loop over effects, removing the ones from this power
     effect eAOE;
     if(GetHasSpellEffect(POWER_GREASE, oTarget))
     {
-        //Search through the valid effects on the target.
         eAOE = GetFirstEffect(oTarget);
-        while (GetIsEffectValid(eAOE) && bValid == FALSE)
+        while(GetIsEffectValid(eAOE))
         {
-            if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
+            if(GetEffectCreator(eAOE) == oCreator                            &&
+               GetEffectType(eAOE)    == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE &&
+               GetEffectSpellId(eAOE) == POWER_GREASE
+               )
             {
-                if(GetEffectType(eAOE) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE)
-                {
-                    //If the effect was created by the Acid_Fog then remove it
-                    if(GetEffectSpellId(eAOE) == POWER_GREASE)
-                    {
-                        RemoveEffect(oTarget, eAOE);
-                        bValid = TRUE;
-                    }
-                }
+                RemoveEffect(oTarget, eAOE);
             }
-            //Get next effect on the target
+            // Get next effect on the target
             eAOE = GetNextEffect(oTarget);
-        }
-    }
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+        }// end while - Effect loop
+    }// end if - Target has been affected at all
 }

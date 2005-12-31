@@ -1,37 +1,50 @@
 /*
    ----------------
    Concussion Blast
-   
-   prc_all_concblst
+
+   psi_pow_concblst
    ----------------
 
    6/11/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 2
-   Range: Medium
-   Target: One Creature + Augmentation
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 3
-   
-   A subject you select is pummeled with telekinetic force for 1d6 of bludgeoning damage.
-   
-   Augment: For every 4 additional power points spent, this power's damage increases by 1d6,
-   and affects another hostile creature within 15 feet of the first. 
+    Concussion Blast
+
+    Psychokinesis [Force]
+    Level: Psion/wilder 2
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One creature
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 3
+    Metapsionics: Empower, Maximize, Twin
+
+    A subject you select is pummeled with telekinetic force for 1d6 points of
+    force damage. Concussion blast always affects a subject within range that
+    you can see, even if the subject is in melee or has cover or concealment
+    (you cannot use this power against creatures with total cover or total
+    concealment).
+
+    Augment: You can augment this power in one or both of the following ways.
+    1. For every 2 additional power points you spend, this power’s damage
+       increases by 1d6 points.
+    2. For every 2 additional power points you spend, this power can affect an
+       additional target. Any additional target cannot be more than 15 feet
+       from another target of the power.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
+
+void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, int nExtraTargets,
+             int nNumberOfDice, int nDieSize, effect eVis);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,81 +61,85 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-	object oCaster = OBJECT_SELF;
-	int nAugCost = 4;
-	int nAugment = GetAugmentLevel(oCaster);
-	int nSurge = GetLocalInt(oCaster, "WildSurge");
-	object oFirstTarget = GetSpellTargetObject();
-	int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oMainTarget = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oMainTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
+    if(manif.bCanManifest)
+    {
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        int nExtraTargets = manif.nTimesAugOptUsed_2;
+        int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
 
-	if (nSurge > 0)
-	{
-		PsychicEnervation(oCaster, nSurge);
-	}
+        // Hit the main target
+        SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
 
-	if (nMetaPsi > 0)
-	{
-		int nDC = GetManifesterDC(oCaster);
-		int nCaster = GetManifesterLevel(oCaster);
-		int nPen = GetPsiPenetration(oCaster);
-		effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
-		int nTargetCount = 1;
-		int nDice = 1;
-		int nDiceSize = 6;
+        DoPower(manif, oMainTarget, nDC, nPen, nExtraTargets, nNumberOfDice, nDieSize, eVis);
+        if(manif.bTwin)
+            DoPower(manif, oMainTarget, nDC, nPen, nExtraTargets, nNumberOfDice, nDieSize, eVis);
+    }
+}
 
-		if (nSurge > 0) nAugment += nSurge;
+void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, int nExtraTargets,
+             int nNumberOfDice, int nDieSize, effect eVis)
+{
+    int nDamage;
+    effect eDamage;
 
-		//Augmentation effects to Damage
-		if (nAugment > 0)
-		{
-			nDice += nAugment;
-			nTargetCount += nAugment;
-		}
+    //Check for Power Resistance
+    if(PRCMyResistPower(manif.oManifester, oMainTarget, nPen))
+    {
+        // Roll damage
+        nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+        // Target-specific stuff
+        nDamage = GetTargetSpecificChangesToDamage(oMainTarget, manif.oManifester, nDamage, TRUE, FALSE);
+        eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 
-		int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
+        // Apply damage
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oMainTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oMainTarget);
+    }
 
-		effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+    if(nExtraTargets > 0)
+    {
+        location lTarget = PRCGetSpellTargetLocation();
 
-		SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        //Cycle through the targets within the spell shape until you run out of targets.
+        object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        while(GetIsObjectValid(oAreaTarget) && nExtraTargets > 0)
+        {
+            if(oAreaTarget != manif.oManifester && spellsIsTarget(oAreaTarget, SPELL_TARGET_SELECTIVEHOSTILE, manif.oManifester))
+            {
+                //Fire cast spell at event for the specified target
+                SPRaiseSpellCastAt(oAreaTarget, TRUE, manif.nSpellID, manif.oManifester);
 
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oFirstTarget, nPen))
-		{
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oFirstTarget);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);
-		}
+                if(PRCMyResistPower(manif.oManifester, oAreaTarget, nPen))
+                {
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oAreaTarget, manif.oManifester, nDamage, TRUE, FALSE);
+                    eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
 
-		if (nTargetCount > 1)
-		{
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oAreaTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
+                }
 
-			location lTarget = GetSpellTargetLocation();
-			int nTargetsLeft = nTargetCount - 1;
-			//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-			object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                // Use up a target slot only if we actually did something to it
+                nExtraTargets -= 1;
+            }
 
-			//Cycle through the targets within the spell shape until you run out of targets.
-			while (GetIsObjectValid(oAreaTarget) && nTargetsLeft > 0)
-			{
-				if (spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oAreaTarget != OBJECT_SELF)
-				{
-					//Fire cast spell at event for the specified target
-					SignalEvent(oAreaTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-					if (PRCMyResistPower(oCaster, oAreaTarget, nPen))
-					{
-						nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-						eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-						SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oAreaTarget);
-						SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
-					}
-					
-					 // Use up a target slot only if we actually did something to it
-					nTargetsLeft -= 1;
-				}
-				
-				//Select the next target within the spell shape.
-				oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-			}
-		}
-	}
+            //Select the next target within the spell shape.
+            oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        }
+    }
 }

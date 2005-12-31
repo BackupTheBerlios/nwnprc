@@ -1,24 +1,44 @@
 /*
    ----------------
    Assimilate
-   
-   prc_pow_assim
+
+   psi_pow_assim
    ----------------
 
    26/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 9
-   Range: Touch
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: Fortitude half.
-   Power Resistance: Yes
-   Power Point Cost: 17
-   
-   Your pointing finger turns black as obsidian. A creature touched by you is partially assimilated into your form and takes
-   20d6 points of damage. If the creature survives this damage, you gain half of the damage dealt as temporary hitpoints. If the 
-   creature dies, you gain all of the damage dealt as temporary hitpoints, and +4 to all stats. All bonuses last for 1 hour.
+    Assimilate
+
+    Psychometabolism
+    Level: Psion/wilder 9
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: One living creature touched
+    Duration: Instantaneous and 1 hour; see text
+    Saving Throw: Fortitude half
+    Power Resistance: Yes
+    Power Points: 17
+    Metapsionics: Empower, Maximize, Twin
+
+    Your pointing finger turns black as obsidian. A creature touched by you is
+    partially assimilated into your form and takes 20d6 points of damage. Any
+    creature reduced to 0 or fewer hit points by this power is killed, entirely
+    assimilated into your form, leaving behind only a trace of fine dust. An
+    assimilated creature’s equipment is unaffected.
+
+    A creature that is partially assimilated into your form (that is, a creature
+    that has at least 1 hit point following your use of this power) grants you a
+    number of temporary hit points equal to half the damage you dealt for 1
+    hour.
+
+    A creature that is completely assimilated grants you a number of temporary
+    hit points equal to the damage you dealt and a +4 bonus to each of your
+    ability scores for 1 hour. If the assimilated creature knows psionic powers,
+    you gain knowledge of one of its powers for 1 hour.
+
+
+    @todo Gaining a temporary power
 */
 
 #include "psi_inc_psifunc"
@@ -26,11 +46,48 @@
 #include "psi_spellhook"
 #include "prc_alterations"
 
+
+void DoPower(struct manifestation manif, object oTarget, int nDC, int nPen, effect eVis, effect eLink)
+{
+    // Roll touch
+    int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
+    if(nTouchAttack > 0)
+    {
+        //Check for Power Resistance
+        if(PRCMyResistPower(manif.oManifester, oTarget, nPen))
+        {
+            // Determine damage
+            int nNumberOfDice = 20;
+            int nDieSize      = 6;
+            int nDamage       = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+            // Fort save for half
+            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                nDamage /= 2;
+
+            nDamage = GetTargetSpecificChangesToDamage(oTarget, manif.oManifester, nDamage);
+
+            // Apply damage and the accompanying VFX
+            ApplyTouchAttackDamage(manif.oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_MAGICAL, TRUE);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+
+            // Give the temp HP, and if the target was dead, the stat boosts
+            effect eTempHP;
+            if(GetIsDead(oTarget))
+            {
+                eTempHP = EffectTemporaryHitpoints(nDamage);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, manif.oManifester, HoursToSeconds(1), TRUE, -1, manif.nManifesterLevel);
+            }
+            else
+                eTempHP = EffectTemporaryHitpoints(nDamage / 2);
+
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTempHP, manif.oManifester, HoursToSeconds(1), TRUE, -1, manif.nManifesterLevel);
+        }// end if - resist failed
+    }// end if - touch attack succeeded
+}
+
+
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,66 +104,36 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        effect eVis = EffectVisualEffect(VFX_COM_HIT_NEGATIVE);
-        effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR);
-        int nDice = 20;
-        int nDiceSize = 6;
+        // Get some more data
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
 
-        // Stat boosts
-        effect eCha = EffectAbilityIncrease(ABILITY_CHARISMA, 4);
-        effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, 4);
-        effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, 4);
-        effect eInt = EffectAbilityIncrease(ABILITY_INTELLIGENCE, 4);
-        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
-        effect eWis = EffectAbilityIncrease(ABILITY_WISDOM, 4);
+        // Build effects
+        effect eVis  = EffectVisualEffect(VFX_COM_HIT_NEGATIVE);
+        effect eLink =                          EffectAbilityIncrease(ABILITY_CHARISMA,     4);
+               eLink = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_CONSTITUTION, 4));
+               eLink = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_DEXTERITY,    4));
+               eLink = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_INTELLIGENCE, 4));
+               eLink = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_STRENGTH,     4));
+               eLink = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_WISDOM,       4));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
 
-        effect eLink = EffectLinkEffects(eCha, eCon);
-        eLink = EffectLinkEffects(eLink, eDex);
-        eLink = EffectLinkEffects(eLink, eInt);
-        eLink = EffectLinkEffects(eLink, eStr);
-        eLink = EffectLinkEffects(eLink, eWis);
-        eLink = EffectLinkEffects(eLink, eDur);
-
+        // Let the target know
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-        
-        int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
-        if (nTouchAttack > 0)
-        {
-            //Check for Power Resistance
-            if (PRCMyResistPower(oCaster, oTarget, nPen))
-            {
-                int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-                nDamage += nDice;
-    
-                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-                {
-                    nDamage /= 2;
-                }
-    
-                effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    
-                effect eHP = EffectTemporaryHitpoints(nDamage/2);
-                if (GetIsDead(oTarget))
-                {
-                    eHP = EffectTemporaryHitpoints(nDamage);
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, HoursToSeconds(1),TRUE,-1,nCaster);
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oCaster, HoursToSeconds(1),TRUE,-1,nCaster);
-                }
-                else    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oCaster, HoursToSeconds(1),TRUE,-1,nCaster);
-            }// end if - resist failed
-        }// end if - touch attack succeeded
+
+        DoPower(manif, oTarget, nDC, nPen, eVis, eLink);
+        // If the target dies on the first attempt, a Twin Power will be wasted
+        if(manif.bTwin && !GetIsDead(oTarget))
+            DoPower(manif, oTarget, nDC, nPen, eVis, eLink);
     }// end if - could manifest
 }

@@ -1,25 +1,30 @@
 /*
    ----------------
    Astral Seed
-   
-   prc_pow_astseed
+
+   psi_pow_astseed
    ----------------
 
    9/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Shaper)
-   Power Level: 8
-   Range: Close
-   Target: Ground
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 15
-   
-   This power weaves strands of ectoplasm into a crystal containing the seed of your living mind. You may have only one seed in 
-   existence at any one time. Until such time as you perish, the astral seed is totally inert. Upon dying, you are transported
-   to the location of your astral seed, where you will spend a day regrowing a body. Respawning in this manner will cost a level. 
-   If your astral seed is destroyed, the power will fail. 
+    Astral Seed
+
+    Metacreativity
+    Level: Shaper 8
+    Manifesting Time: 10 minutes
+    Range: 0 ft.
+    Effect: One storage crystal
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 15
+    Metapsionics: None
+
+    This power weaves strands of ectoplasm into a crystal containing the seed of your living mind. You may have only one seed in
+    existence at any one time. Until such time as you perish, the astral seed is totally inert. Upon dying, you are transported
+    to the location of your astral seed, where you will spend a day regrowing a body. Respawning in this manner will cost a level.
+    If your astral seed is destroyed, the power will fail.
 */
 
 #include "psi_inc_psifunc"
@@ -29,9 +34,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,21 +50,29 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-	object oCaster = OBJECT_SELF;
-	int nAugCost = 0;
-	int nAugment = GetAugmentLevel(oCaster);
-	object oFirstTarget = PRCGetSpellTargetObject();
-	int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, 0, 0, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_NONE
+                              );
 
-	if (nMetaPsi > 0)
-	{
-		if (!GetLocalInt(oCaster, "AstralSeed"))
-		{
-			object oSeed = CreateObject(OBJECT_TYPE_PLACEABLE, "x2_plc_phylact", PRCGetSpellTargetLocation());
-			effect eVis = EffectVisualEffect(VFX_IMP_DEATH_WARD);
-			DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSeed));
-			SetLocalInt(oCaster, "AstralSeed", TRUE);
-			SetLocalObject(oCaster, "ASTRAL_SEED", oSeed);
-		}
-	}
+    if(manif.bCanManifest)
+    {
+        // Destroy old seed, if any
+        object oSeed = GetLocalObject(oManifester, "PRC_AstralSeed_SeedObject");
+        if(GetIsObjectValid(oSeed))
+            MyDestroyObject(oSeed);
+
+        // Create new seed and do some VFX
+        oSeed = CreateObject(OBJECT_TYPE_PLACEABLE, "x2_plc_phylact", PRCGetSpellTargetLocation());
+        effect eVis = EffectVisualEffect(VFX_IMP_DEATH_WARD);
+        DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSeed));
+
+        // Store a reference to the seed on the manifester
+        SetLocalObject(oManifester, "PRC_AstralSeed_SeedObject", oSeed);
+
+        // Add a hook to OnDeath event for the manifester
+        AddEventScript(oManifester, EVENT_NPC_ONDEATH, "psi_astseed_resp", FALSE, FALSE);
+    }
 }

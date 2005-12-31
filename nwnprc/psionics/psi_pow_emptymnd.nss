@@ -1,24 +1,30 @@
 /*
    ----------------
    Empty Mind
-   
-   prc_all_emptymnd
+
+   psi_pow_emptymnd
    ----------------
 
    29/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   You empty your mind of all transitory and distracting thoughts, gaining a +2 bonus to will saves.
-   
-   Augment: For every 2 additional power points you spend, the will save bonus improves by 1.
+    Empty Mind
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 1
+    Metapsionics: Extend
+
+    You empty your mind of all transitory and distracting thoughts, improving
+    your self-control. You gain a +2 bonus on all Will saves for the duration
+    of the power.
+
+    Augment: For every 2 additional power points you spend, the bonus on your
+             Will saves increases by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -28,9 +34,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,37 +50,26 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nSurge > 0)
-    {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nBonus = 2;
-    	int nDur = nCaster;
-    	if (nMetaPsi == 2)	nDur *= 2;     	
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-    	if (nSurge > 0) nAugment += nSurge;
-		
-	// Augmentation effects to armour class
-	if (nAugment > 0)	nBonus += nAugment;
-	
-	effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eSave = EffectSavingThrowIncrease(SAVING_THROW_WILL, nBonus);
-    	effect eLink = EffectLinkEffects(eSave, eDur);
+    if(manif.bCanManifest)
+    {
+        int nBonus = 2 + manif.nTimesAugOptUsed_1;
+        effect eLink =                          EffectSavingThrowIncrease(SAVING_THROW_WILL, nBonus);
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eVis  = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
+        float fDuration = RoundsToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

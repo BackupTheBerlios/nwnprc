@@ -1,37 +1,41 @@
 /*
     ----------------
-    Crystal Swarm
-    
-    psi_all_crysswrm
+    Swarm of Crystals
+
+    psi_pow_crysswrm
     ----------------
 
     9/11/04 by Stratovarius
+*/ /** @file
 
-    Class: Psion/Wilder
-    Power Level: 2
-    Range: Short
-    Shape: 15' Cone
+    Swarm of Crystals
+
+    Metacreativity (Creation)
+    Level: Psion/wilder 2
+    Manifesting Time: 1 standard action
+    Range: 15 ft.
+    Area: Cone-shaped spread
     Duration: Instantaneous
     Saving Throw: None
     Power Resistance: No
-    Power Point Cost: 3
- 
-    Thousands of tiny crystal shards spray forth in an arc from your hand. These razorlike crystals
-    slice anything in their path. Anything caught in the cone takes 3d4 points of slashing damage. 
+    Power Points: 3
+    Metapsionics: Empower, Maximize, Twin, Widen
 
-    Augment: For every additional power point spend, this power's damage increases by 1d4. 
+    Thousands of tiny crystal shards spray forth in an arc from your hand. These
+    razorlike crystals slice everything in their path. Anyone caught in the cone
+    takes 3d4 points of slashing damage.
+
+    Augment: For every additional power point you spend, this power’s damage
+             increases by 1d4 points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,50 +52,68 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = OBJECT_SELF;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
-        
-    if (nSurge > 0)
-    {
-       	
-       	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDice = 3;
-	int nDiceSize = 4;
-	float fDelay;
-	float fWidth = DoWiden(15.0, nMetaPsi);
-	location lTargetLocation = GetSpellTargetLocation();
-	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0)	nDice += nAugment;
-	
-    	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-    	//Cycle through the targets within the spell shape until an invalid object is captured.
-    	while(GetIsObjectValid(oTarget))
-    	{
-	    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	    
-	    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-	    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
-	    effect eVis = EffectVisualEffect(VFX_IMP_WALLSPIKE);	    
-	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
-    	    //Select the next target within the spell shape.
-    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-    	}
-    
-    }
+
+    if(manif.bCanManifest)
+    {
+        int nNumberOfDice = 3 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 4;
+        int nDamage, i;
+        effect eDamage;
+        effect eSpikes    = EffectVisualEffect(VFX_IMP_WALLSPIKE);
+        effect eDart      = EffectVisualEffect(NORMAL_DART);
+        float fWidth      = EvaluateWidenPower(manif, FeetToMeters(15.0f));
+        float fDelay;
+        location lTarget  = PRCGetSpellTargetLocation();
+        object oTarget;
+
+        vector vOrigin = GetPosition(oManifester);
+        vector vTarget = GetPositionFromLocation(lTarget);
+        float fAngle   = acos((vTarget.x - vOrigin.x) / GetDistanceBetweenLocations(GetLocation(oManifester), lTarget));
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Do VFX - Doesn't seem to work with darts
+            //DrawLinesInACone(10, fWidth, lTarget, fAngle, DURATION_TYPE_INSTANT, NORMAL_DART, 0.0f, 20, 1.5f);
+
+            // Loop over targets
+            oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE,
+                                           OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+            while(GetIsObjectValid(oTarget))
+            {
+                if(oTarget != oManifester &&                                          // No hurting self
+                   spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oManifester) // Game difficulty limitations
+                   )
+                {
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, FALSE);
+                    eDamage = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
+
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+    	            //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSpikes, oTarget);
+    	            if(GetObjectType(oTarget) != OBJECT_TYPE_PLACEABLE) // Placeables do not like the VFX, either
+        	            for(i = 0; i < 15; i++)
+        	                ApplyEffectToObject(DURATION_TYPE_INSTANT, eDart, oTarget);
+    	        }// end if - Targeting check
+
+    	        oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE,
+    	                                      OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+            }// end while - Target loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

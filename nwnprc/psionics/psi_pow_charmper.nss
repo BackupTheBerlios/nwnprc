@@ -1,42 +1,51 @@
 /*
    ----------------
-   Charm Person
-   
-   prc_psi_charmper
+   Charm, Psionic
+
+   psi_pow_charmper
    ----------------
 
    21/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Telepath)
-   Power Level: 1
-   Range: Short
-   Target: One Humanoid
-   Duration: 1 Hour/Level
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You charm the spells target, as per charm person. 
-   
-   Augment: If you augment this power 1 time, this power also affects Animal, Fey, Giant, Magical Beast
-   or Monstrous Humanoid. If you augment this power 3 times, this power also affects Aberration, Dragon, Outsider
-   and Elementals. If you augment this power 5 times, duration increases to 1 day/level. It costs 2 power 
-   points to augment once, 6 to augment 3 times, and 10 to augment 5 times. For every 2 power points spent
-   this way, the DC increases by 1.
+    Charm, Psionic
+
+    Telepathy (Charm) [Mind-Affecting]
+    Level: Telepath 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One humanoid
+    Duration: 1 hour/level
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Extend, Twin
+
+    In the eyes of the target humanoid, the personal reputation of the
+    manifester is improved by 50%.
+
+    Augment: You can augment this power in one or more of the following ways.
+
+    1. If you spend 2 additional power points, this power can also affect an
+       animal, fey, giant, magical beast, or monstrous humanoid.
+    2. If you spend 4 additional power points, this power can also affect an
+       aberration, dragon, elemental, or outsider in addition to the creature
+       types mentioned above.
+    3. If you spend 4 additional power points, this power’s duration
+       increases to one day per level.
+    In addition, for every 2 additional power points you spend to achieve any
+    of these effects, this power’s save DC increases by 1.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
-int CheckRace(int nAugment, object oTarget, object oCaster);
+int CheckRace(struct manifestation manif, object oTarget);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -53,77 +62,108 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(2,
+                                                       2, 1,
+                                                       4, 1,
+                                                       4, 1
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	float fDuration = HoursToSeconds(nCaster);
-	int nTargetRace = CheckRace(nAugment, oTarget, oCaster);
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0)	nDC += nAugment;
-	
-	// Duration boost
-	if (nAugment >= 5)	fDuration = HoursToSeconds((nCaster * 24));
-	if (nMetaPsi == 2)	fDuration *= 2;
-	
-	if (nTargetRace)
-	{
-		effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-		effect eCharm = EffectCharmed();
-		eCharm = GetScaledEffect(eCharm, oTarget);
-		effect eLink = EffectLinkEffects(eMind, eCharm);
-		
-		
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-		
-		    //Fire cast spell at event for the specified target
-        	    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-        	    
-        	        //Make a saving throw check
-        	        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-        	        {
-        		        //Apply VFX Impact and daze effect
-        	                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,nCaster);
-        	        }
-		}
-	}
-    }
+        int nDC        = GetManifesterDC(oManifester) + manif.nTimesGenericAugUsed;
+        int nPen       = GetPsiPenetration(oManifester);
+        int bValidType = CheckRace(manif, oTarget);
+
+        // Determine duration
+        float fDuration;
+        if(manif.nTimesAugOptUsed_3 == 1)
+            fDuration = HoursToSeconds(24 * manif.nManifesterLevel);
+        else
+            fDuration = HoursToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
+
+        // If the target is of valid type
+        if(bValidType)
+        {
+            // Create effects
+            effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+            effect eCharm = EffectCharmed();
+                   eCharm = GetScaledEffect(eCharm, oTarget); // Game difficulty adjustments
+            effect eLink = EffectLinkEffects(eMind, eCharm);
+
+            // Fire cast spell at event for the specified target
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+            // Handle Twin Power
+            int nRepeats = manif.bTwin ? 2 : 1;
+            for(; nRepeats > 0; nRepeats--)
+            {
+                // Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
+                {
+                    // Make a saving throw check
+                    if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                    {
+                        //Apply VFX Impact and daze effect
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+                    }// end if - Failed save
+                }// end if - SR check
+            }// end for - Twin Power
+        }// end if - Target is of correct type
+    }// end if - Successfull manifestation
 }
 
-int CheckRace(int nAugment, object oTarget, object oCaster)
+int CheckRace(struct manifestation manif, object oTarget)
 {
+    int nRacial     = MyPRCGetRacialType(oTarget);
+    int bTargetRace = FALSE;
+    // Check if the target is a humanoid
+    if(nRacial == RACIAL_TYPE_DWARF              ||
+       nRacial == RACIAL_TYPE_ELF                ||
+       nRacial == RACIAL_TYPE_GNOME              ||
+       nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID ||
+       nRacial == RACIAL_TYPE_HALFLING           ||
+       nRacial == RACIAL_TYPE_HUMAN              ||
+       nRacial == RACIAL_TYPE_HALFELF            ||
+       nRacial == RACIAL_TYPE_HALFORC            ||
+       nRacial == RACIAL_TYPE_HUMANOID_ORC       ||
+       nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN
+       )
+    {
+        bTargetRace = TRUE;
+    }
+    // First augmentation option adds animal, fey, giant, magical beast, and monstrous humanoid to possible target types
+    if((manif.nTimesAugOptUsed_1 == 1             ||
+        GetLevelByClass(CLASS_TYPE_THRALLHERD, manif.oManifester) >= 7
+        ) &&
+       (nRacial == RACIAL_TYPE_ANIMAL             ||
+        nRacial == RACIAL_TYPE_FEY                ||
+        nRacial == RACIAL_TYPE_GIANT              ||
+        nRacial == RACIAL_TYPE_MAGICAL_BEAST      ||
+        nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS ||
+        nRacial == RACIAL_TYPE_BEAST
+      ))
+    {
+        bTargetRace = TRUE;
+    }
+    // First augmentation option adds aberration, dragon, elemental, and outsider to possible target types
+    if((manif.nTimesAugOptUsed_2 == 1     ||
+        GetLevelByClass(CLASS_TYPE_THRALLHERD, manif.oManifester) >= 9
+        ) &&
+       (nRacial == RACIAL_TYPE_ABERRATION ||
+        nRacial == RACIAL_TYPE_DRAGON     ||
+        nRacial == RACIAL_TYPE_ELEMENTAL  ||
+        nRacial == RACIAL_TYPE_OUTSIDER
+       ))
+    {
+        bTargetRace = TRUE;
+    }
 
-	int nRacial = MyPRCGetRacialType(oTarget);
-	int nTargetRace = FALSE;
-	//Verify that the Racial Type is humanoid
-	if((nRacial == RACIAL_TYPE_DWARF) || (nRacial == RACIAL_TYPE_ELF) || (nRacial == RACIAL_TYPE_GNOME) || (nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID) || (nRacial == RACIAL_TYPE_HALFLING) || (nRacial == RACIAL_TYPE_HUMAN) || (nRacial == RACIAL_TYPE_HALFELF) || (nRacial == RACIAL_TYPE_HALFORC) || (nRacial == RACIAL_TYPE_HUMANOID_ORC) || (nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN))
-        {
-		nTargetRace = TRUE;
-	}
-	if (nAugment >= 1 || GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF) >= 7)
-	{
-		if (nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS || nRacial == RACIAL_TYPE_FEY || nRacial == RACIAL_TYPE_GIANT || nRacial == RACIAL_TYPE_ANIMAL || nRacial == RACIAL_TYPE_MAGICAL_BEAST || nRacial == RACIAL_TYPE_BEAST)
-		{
-			nTargetRace = TRUE;
-		}
-	}
-	if (nAugment >= 3 || GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF) >= 9)
-	{
-		if (nRacial == RACIAL_TYPE_ABERRATION || nRacial == RACIAL_TYPE_DRAGON || nRacial == RACIAL_TYPE_OUTSIDER || nRacial == RACIAL_TYPE_ELEMENTAL)
-		{
-			nTargetRace = TRUE;
-		}
-	}
-	
-	return nTargetRace;
+    return bTargetRace;
 }

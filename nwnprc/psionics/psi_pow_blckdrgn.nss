@@ -1,37 +1,40 @@
 /*
     ----------------
     Breath of the Black Dragon
-    
-    psi_all_blckdrgn
+
+    psi_pow_blckdrgn
     ----------------
 
     21/10/04 by Stratovarius
+*/ /** @file
 
-    Class: Psion/Wilder 6, Psychic Warrior 6
-    Power Level: 6
-    Range: Short
-    Target: AoE
-    Shape: Cone
+    Breath of the Black Dragon
+
+    Psychometabolism [Acid]
+    Level: Psion/wilder 6, psychic warrior 6
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Area: Cone-shaped burst centered on you
     Duration: Instantaneous
     Saving Throw: Reflex half
     Power Resistance: Yes
-    Power Point Cost: 11
- 
-    Your mouth spews forth vitriolic acid that deals 11d6 damage to any targets in the area
+    Power Points: 11
+    Metapsionics: Empower, Maximize, Twin, Widen
 
-    Augment: For every additional power point spend, this power's damage increases by 1d6. 
+    Your mouth spews forth vitriolic acid that deals 11d6 points of acid damage
+    to any targets in the area.
+
+    Augment: For every additional power point you spend, this power’s damage
+             increases by 1d6 points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,69 +51,74 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = OBJECT_SELF;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
-        
-    if (nSurge > 0)
-    {
-       	
-       	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	float fDelay;
-	location lTargetLocation = GetSpellTargetLocation();
-    	int nDice = 11;
-	int nDiceSize = 6;
-	float fWidth = DoWiden(11.0, nMetaPsi);
-	
-	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0)	nDice += nAugment;
-	
-	
-    	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-    	//Cycle through the targets within the spell shape until an invalid object is captured.
-    	while(GetIsObjectValid(oTarget))
-    	{
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
-	        //Fire cast spell at event for the specified target
-    	        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    	        //Get the distance between the target and caster to delay the application of effects
-    	        fDelay = GetDistanceBetween(OBJECT_SELF, oTarget)/20.0;
-    	        //Make SR check, and appropriate saving throw(s).
-    	        if(PRCMyResistPower(OBJECT_SELF, oTarget,nPen, fDelay) && (oTarget != OBJECT_SELF))
-    	        {    	     
-    	        
-    	            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-    	            
-    	            //Adjust damage according to Reflex Save, Evasion or Improved Evasion
-    	            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);
-	
-    	            if(nDamage > 0)
-    	            {
-	                // Apply effects to the currently selected target.
-	    	        effect eAcid = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-	            	effect eVis = EffectVisualEffect(VFX_IMP_ACID_L);    	            
-    	                //Apply delayed effects
-    	                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-    	                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eAcid, oTarget));
-    	            }
-    	        }
-    	    //Select the next target within the spell shape.
-    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-    	}
-    
-    }
+    if(manif.bCanManifest)
+    {
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 11 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        int nDamage;
+        effect eAcid, eVis = EffectVisualEffect(VFX_IMP_ACID_L);
+        float fWidth = EvaluateWidenPower(manif, FeetToMeters(25.0f + (5.0f * (manif.nManifesterLevel / 2))));
+        float fDelay;
+        location lTargetLocation = GetSpellTargetLocation();
+        object oTarget;
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Cone, all damageable objects
+            oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE,
+                                           OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE
+                                           );
+            while(GetIsObjectValid(oTarget))
+            {
+                // Does not affect the user
+                if(oTarget != oManifester)
+                {
+                    //Fire cast spell at event for the specified target
+                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+                    //Get the distance between the target and caster to delay the application of effects
+                    fDelay = GetDistanceBetween(oManifester, oTarget) / 20.0;
+
+                    //Make SR check, and appropriate saving throw(s).
+                    if(PRCMyResistPower(oManifester, oTarget, nPen, fDelay))
+                    {
+                        // Roll damage
+                        nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                        //Adjust damage according to Reflex Save, Evasion or Improved Evasion
+                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);
+                        // Target-specific stuff
+                        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
+
+                        // If there's still any damage left to be dealt, deal it
+                        if(nDamage > 0)
+                        {
+                            // Apply effects to the currently selected target.
+                            eAcid = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
+                            //Apply delayed effects
+                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,  oTarget));
+                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eAcid, oTarget));
+                        }
+                    }// end if - SR check
+                }// end if - The target gotten is someone else than the manifester
+
+                //Select the next target within the spell shape.
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTargetLocation, TRUE,
+                                              OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE
+                                              );
+            }// end while - Target getting loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

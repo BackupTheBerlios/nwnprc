@@ -2,12 +2,9 @@
 //:: Augment Psionics - Quickselect
 //:: psi_aug_qslot
 //:://////////////////////////////////////////////
-/*
+/** @file
     Sets augmentation to the value of the selected
     quickselection.
-    Or stores the current augmentation level in
-    the selected quickselection if Change Quickselect
-    has been used.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
@@ -15,31 +12,39 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_utility"
+#include "psi_inc_augment"
 
-/*
+
 const int SLOT_1 = 2356;
 const int SLOT_2 = 2357;
 const int SLOT_3 = 2358;
-*/
+
 
 void main()
 {
     object oPC = OBJECT_SELF;
-    
-    // Check what we are supposed to do
-    if(GetLocalInt(oPC, "ChangeAugmentQuickselect"))
-    {// Change the quickselection
-        int nVal = GetLocalInt(oPC, "Augment");
-        SetPersistantLocalInt(oPC, "AugmentQuickselect_" + IntToString(PRCGetSpellId()), nVal);
-        DeleteLocalInt(oPC, "ChangeAugmentQuickselect");
-        SendMessageToPC(oPC, GetStringByStrRef(16824182) + " " + IntToString(nVal));
-    }
-    // Change the augmentation level
-    else
+
+    // Determine which quickslot was used
+    int nSpellID = PRCGetSpellId();
+    int nSlot;
+    switch(nSpellID)
     {
-        int nVal = GetPersistantLocalInt(oPC, "AugmentQuickselect_" + IntToString(PRCGetSpellId()));
-        SetLocalInt(oPC, "Augment", nVal);
-        FloatingTextStringOnCreature(GetStringByStrRef(16823589) + " " + IntToString(nVal), oPC, FALSE);
+        case SLOT_1: nSlot = 1; break;
+        case SLOT_2: nSlot = 2; break;
+        case SLOT_3: nSlot = 3; break;
+
+        default: nSlot = -1;
     }
+
+    if(nSlot == -1)
+    {
+        if(DEBUG) DoDebug("prc_aug_qslot: ERROR: Unknown spellID - " + IntToString(nSpellID));
+        return;
+    }
+
+    // The quickslot indexes are stored as negative to differentiate them from normal slots
+    SetLocalInt(oPC, PRC_CURRENT_AUGMENT_PROFILE, -nSlot);
+
+    //                           "Current augmentation"
+    FloatingTextStringOnCreature(GetStringByStrRef(16823589) + " - " + UserAugmentationProfileToString(GetUserAugmentationProfile(oPC, nSlot)), oPC, FALSE);
 }

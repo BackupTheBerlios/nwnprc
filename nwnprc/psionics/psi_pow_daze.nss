@@ -1,37 +1,39 @@
 /*
    ----------------
-   Daze
-   
-   prc_all_daze
+   Daze, Psionic
+
+   psi_pow_daze
    ----------------
 
    25/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: Short
-   Target: One Creature
-   Duration: 2 Rounds
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You daze a single creature with 4 HD or less.
-   
-   Augment: For every additional power point spent, this power can affect a target
-   that has HD equal to 4 + the additional power points spent.
+    Daze, Psionic
+
+    Telepathy (Compulsion) [Mind-Affecting]
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One humanoid creature that has 4 HD or less
+    Duration: 1 round
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Extend, Twin
+
+    You daze a single creature with 4 HD or less.
+
+    Augment: For every additional power point you spend, this power can affect a
+             target that has Hit Dice equal to 4 + the additional points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,60 +50,55 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nTargetHD = 4;
-	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-	effect eDaze = EffectDazed();
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eLink = EffectLinkEffects(eMind, eDaze);
-    	eLink = EffectLinkEffects(eLink, eDur);
-    	effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
-    	int nDur = 2;
-    	if (nMetaPsi > 0)	nDur *= 2;
-		
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to HD
-	if (nAugment > 0) nTargetHD += nAugment;
-	
-    	//Make sure the target is a humaniod
-    	if (AmIAHumanoid(oTarget) == TRUE)
-    	{
-    	    if(GetHitDice(oTarget) <= nTargetHD)
-    	    {
-			//Check for Power Resistance
-			if (PRCMyResistPower(oCaster, oTarget, nPen))
-			{
-			
-			    //Fire cast spell at event for the specified target
-		            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		            
-		                //Make a saving throw check
-		                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-		                {
-		                        //Apply VFX Impact and daze effect
-		                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-                        		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-		                }
-			}
-		}
-	}
-    }
+        int nDC      = GetManifesterDC(oManifester);
+        int nPen     = GetPsiPenetration(oManifester);
+        int nMaxHD   = 4 + manif.nTimesAugOptUsed_1;
+        effect eLink =                          EffectDazed();
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+        effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
+
+        float fDuration = 6.0f;
+        if(manif.bExtend) fDuration *= 2;
+
+        //Make sure the target is a humaniod
+        if(AmIAHumanoid(oTarget))
+        {
+            // Hit Dice check
+            if(GetHitDice(oTarget) <= nMaxHD)
+            {
+                // Let the AI know
+                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+                // Handle Twin Power
+                int nRepeats = manif.bTwin ? 2 : 1;
+                for(; nRepeats > 0; nRepeats--)
+                {
+                    //Check for Power Resistance
+                    if(PRCMyResistPower(oManifester, oTarget, nPen))
+                    {
+                        //Make a saving throw check
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                        {
+                            //Apply VFX Impact and daze effect
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                        }// end if - Failed save
+                    }// end if - SR check
+                }// end for - Twin Power
+            }// end if - HD check
+        }// end if - Humanoidity check
+    }// end if - Successfull manifestation
 }

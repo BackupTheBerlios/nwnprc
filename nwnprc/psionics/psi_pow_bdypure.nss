@@ -1,22 +1,25 @@
 /*
    ----------------
    Body Purification
-   
-   prc_pow_bdypure
+
+   psi_pow_bdypure
    ----------------
 
    26/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: Psion/Wilder 3, Psychic Warrior 2
-   Range: Personal
-   Target: Caster
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: Psion/Wilder 5, PW 3
-   
-   When you manifest this power, you cleanse your body of all ability damage.
+    Body Purification
+
+    Psychometabolism (Healing)
+    Level: Psion/wilder 3, psychic warrior 2
+    Manifesting Time: 1 round
+    Range: Personal
+    Target: You
+    Duration: Instantaneous
+    Power Points: Psion/wilder 5, psychic warrior 3
+    Metapsionics: None
+
+    When you manifest this power, you cleanse your body of all ability damage.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +29,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,26 +45,26 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_NONE
+                              );
+
+    if(manif.bCanManifest)
     {
-    	effect eVisual = EffectVisualEffect(VFX_IMP_RESTORATION_LESSER);
-    	effect eBad = GetFirstEffect(oTarget);
-    	//Search for negative effects
-    	while(GetIsEffectValid(eBad))
-    	{
-    	    if (GetEffectType(eBad) == EFFECT_TYPE_ABILITY_DECREASE)
-    	    {
-	            RemoveEffect(oTarget, eBad);
-    	    }
-    	    eBad = GetNextEffect(oTarget);
-    	}
-	
+        effect eVisual = EffectVisualEffect(VFX_IMP_RESTORATION_LESSER);
+        effect eEffect = GetFirstEffect(oTarget);
+        //Search for ability decrease
+        while(GetIsEffectValid(eEffect))
+        {
+            if(GetEffectType(eEffect) == EFFECT_TYPE_ABILITY_DECREASE)
+            {
+                RemoveEffect(oTarget, eEffect);
+            }
+            eEffect = GetNextEffect(oTarget);
+        }
     }
 }

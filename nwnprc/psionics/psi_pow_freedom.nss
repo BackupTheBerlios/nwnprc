@@ -1,23 +1,27 @@
 /*
    ----------------
-   Freedom of Movement
-   
-   prc_pow_freedom
+   Freedom of Movement, Psionic
+
+   psi_pow_freedom
    ----------------
 
    19/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 4
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 7
-   
-   When you manifest this power, you may move as normal, even under the influence of magic
-   that would normally impede movement.
+    Freedom of Movement, Psionic
+
+    Psychoportation
+    Level: Psion/wilder 4, psychic warrior 4
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 7
+    Metapsionics: Extend
+
+    This power enables you to move and attack normally for the duration of the
+    power, even under the influence of magic that usually impedes movement, such
+    as paralysis, solid fog, slow, and web.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +31,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,49 +47,41 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;     	
-    	
-    	effect eParal = EffectImmunity(IMMUNITY_TYPE_PARALYSIS);
-    	effect eEntangle = EffectImmunity(IMMUNITY_TYPE_ENTANGLE);
-    	effect eSlow = EffectImmunity(IMMUNITY_TYPE_SLOW);
-    	effect eMove = EffectImmunity(IMMUNITY_TYPE_MOVEMENT_SPEED_DECREASE);
-    	effect eVis = EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	
-    	//Link effects
-    	effect eLink = EffectLinkEffects(eParal, eEntangle);
-    	eLink = EffectLinkEffects(eLink, eSlow);
-    	eLink = EffectLinkEffects(eLink, eVis);
-    	eLink = EffectLinkEffects(eLink, eDur);
-    	eLink = EffectLinkEffects(eLink, eMove);
-	
-    	//Fire cast spell at event for the specified target
-    	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
-	
-    	//Search for and remove the above negative effects
-    	effect eLook = GetFirstEffect(oTarget);
-    	while(GetIsEffectValid(eLook))
-    	{
-    	    if(GetEffectType(eLook) == EFFECT_TYPE_PARALYZE ||
-    	        GetEffectType(eLook) == EFFECT_TYPE_ENTANGLE ||
-    	        GetEffectType(eLook) == EFFECT_TYPE_SLOW ||
-    	        GetEffectType(eLook) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE)
-    	    {
-    	        RemoveEffect(oTarget, eLook);
-    	    }
-    	    eLook = GetNextEffect(oTarget);
-    	}
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-        //Apply the VFX impact and effects
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+    if(manif.bCanManifest)
+    {
+        effect eLink =                          EffectImmunity(IMMUNITY_TYPE_PARALYSIS);
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ENTANGLE));
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SLOW));
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_MOVEMENT_SPEED_DECREASE));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Search and remove effects of the types the target is being granted immunity to
+    	effect eLook = GetFirstEffect(oTarget);
+        while(GetIsEffectValid(eLook))
+        {
+            if(GetEffectType(eLook) == EFFECT_TYPE_PARALYZE ||
+               GetEffectType(eLook) == EFFECT_TYPE_ENTANGLE ||
+               GetEffectType(eLook) == EFFECT_TYPE_SLOW     ||
+               GetEffectType(eLook) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE
+               )
+            {
+                RemoveEffect(oTarget, eLook);
+            }
+            eLook = GetNextEffect(oTarget);
+        }
+
+        // Apply the effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
     }
 }

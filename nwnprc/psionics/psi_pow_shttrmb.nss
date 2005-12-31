@@ -1,36 +1,42 @@
 /*
     ----------------
     Shatter Mind Blank
-    
+
     psi_pow_shttrmb
     ----------------
 
     27/3/05 by Stratovarius
+*/ /** @file
 
-    Class: Psion/Wilder
-    Power Level: 5
-    Range: Personal
-    Target: 30' Radius
+    Shatter Mind Blank
+
+    Telepathy
+    Level: Psion/wilder 5
+    Manifesting Time: 1 standard action
+    Range: 30 ft.
+    Area: 30-ft.-radius burst centered on you
     Duration: Instantaneous
-    Saving Throw: Will Negates
+    Saving Throw: Will negates
     Power Resistance: Yes
-    Power Point Cost: 9
- 
-    This power can negate a Personal Mind Blank or Psionic Mind Blank affecting the targets. If the target fails its save and you 
-    overcome its power resistance, you can shatter the mind blank by making a check of 1d20 + Manifester level against a DC of
-    11 + targets manifester level.
+    Power Points: 9
+    Metapsionics: Twin, Widen
+
+    This power can negate a mind blank affecting the target. If the target fails
+    its save and does not overcome your attempt with its power resistance, you
+    can shatter the mind blank by making a successful check (1d20 + your
+    manifester level, maximum +20) against a DC equal to 11 + the manifester
+    level of the creator of the mind blank effect. If you succeed, the psionic
+    mind blank or personal mind blank ends, allowing you to affect the target
+    thereafter with mind-affecting powers.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,57 +53,78 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCasterLevel = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-    	effect    eVis         = EffectVisualEffect(VFX_IMP_BREACH);
-    	effect    eImpact      = EffectVisualEffect(VFX_FNF_DISPEL);
-    	effect	  eLink        = EffectLinkEffects(eVis, eImpact);
-    	location  lTarget      = PRCGetSpellTargetLocation();
-    	float fWidth = DoWiden(10.0, nMetaPsi);
+        int nDC          = GetManifesterDC(oManifester);
+        int nPen         = GetPsiPenetration(oManifester);
+        int nDispelLevel = max(manif.nManifesterLevel, 20);
+        int nEffectSID, nRemoveDC;
+        effect eVisLink  =                             EffectVisualEffect(VFX_IMP_BREACH);
+               eVisLink  = EffectLinkEffects(eVisLink, EffectVisualEffect(VFX_FNF_DISPEL));
+        effect eTest;
+        float fRadius    = EvaluateWidenPower(manif, FeetToMeters(30.0f));
+        location lTarget = PRCGetSpellTargetLocation();
+        object oTarget, oCreator;
 
-	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	while (GetIsObjectValid(oTarget))
-	{
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		float fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-		int bValid = FALSE;
-		
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-			if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-			{
-				if (GetHasSpellEffect(POWER_MINDBLANKPERSONAL, oTarget) || GetHasSpellEffect(POWER_PSIMINDBLANK, oTarget))
-				{
-				        //Search through the valid effects on the target.
-				        effect eAOE = GetFirstEffect(oTarget);
-				        while (GetIsEffectValid(eAOE) && bValid == FALSE)
-				        {
-			                    //If the effect was created by the Acid_Fog then remove it
-			                    if(GetEffectSpellId(eAOE) == POWER_MINDBLANKPERSONAL || GetEffectSpellId(eAOE) == POWER_PSIMINDBLANK)
-			                    {
-			                        RemoveEffect(oTarget, eAOE);
-			                        bValid = TRUE;
-			                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget));
-			                    }
-				            //Get next effect on the target
-				            eAOE = GetNextEffect(oTarget);
-        				}
-				}
-			}
-		}
-		//Select the next target within the spell shape.
-		oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	}
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oTarget))
+            {
+                // Let the AI know
+                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-    }
+                // Check Power Resistance
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
+                {
+                    // Save - Will negates
+                    if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+                        eTest = GetFirstEffect(oTarget);
+                        while(GetIsEffectValid(eTest))
+                        {
+                            nEffectSID = GetEffectSpellId(eTest);
+                            oCreator   = GetEffectCreator(eTest);
+                            nRemoveDC  = 0; // Reset DC
+                            // Spells, get caster level
+                            if(nEffectSID == SPELL_MIND_BLANK ||
+                               nEffectSID == SPELL_LESSER_MIND_BLANK
+                               )
+                            {
+                                nRemoveDC = 11 + GetLevelByTypeArcane(oCreator); // Assume the mind blanks are always arcane.
+                            }
+                            // Powers, get manifester level
+                            else if(nEffectSID == POWER_MINDBLANKPERSONAL ||
+                                    nEffectSID == POWER_PSIMINDBLANK
+                                    )
+                            {
+                                nRemoveDC = 11 + GetHighestManifesterLevel(oCreator);
+                            }
+
+                            // Check if the effect is of a removable type
+                            if(nRemoveDC)
+                            {
+                                if((d20() + nDispelLevel) >= nRemoveDC)
+                                    RemoveEffect(oTarget, eTest);
+                            }
+
+                            // Get next effect
+                            eTest = GetNextEffect(oTarget);
+                        }// end while - Effect loop
+                    }// end if - Save
+                }// end if - SR check
+                // Select the next target
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }// end while - Target loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

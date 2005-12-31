@@ -1,45 +1,52 @@
 /*
    ----------------
-   Greater Precognition
-   
-   prc_pow_gprecog
+   Precognition, Greater
+
+   psi_pow_gprecog
    ----------------
 
    15/7/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Seer)
-   Power Level: 6
-   Range: Personal
-   Target: Self
-   Duration: 1 Hour/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 11
-   
-Precognition allows your mind to glimpse fragments of potential future events - what you see will probably happen if no one takes 
-action to change it. However, your vision is incomplete, and it makes no real sense until the actual events you glimpsed begin to 
-unfold. That’s when everything begins to come together, and you can act, if you act swiftly, on the information you previously 
-received when you manifested this power.
+    Precognition, Greater
 
-In practice, manifesting this power grants you a precognitive edge. Normally, you can have only a single precognitive edge at one 
-time. You must use your edge within a period of no more than 10 minutes per level, at which time your preknowledge fades and you 
-lose your edge.
+    Clairsentience
+    Level: Seer 6
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 hour/level
+    Power Points: 11
+    Metapsionics: Extend
 
-You can use your precognitive edge in a variety of ways. Essentially, the edge translates into a +4 insight bonus that you can 
-apply at any time to either an attack roll, a damage roll, a saving throw, or a skill check. To apply this bonus for one round, 
-press either the Attack, Save, Skill, or Damage option on the radial menu.
+    Precognition allows your mind to glimpse fragments of potential future
+    events - what you see will probably happen if no one takes action to change
+    it. However, your vision is incomplete, and it makes no real sense until the
+    actual events you glimpsed begin to unfold. That’s when everything begins to
+    come together, and you can act, if you act swiftly, on the information you
+    previously received when you manifested this power.
+
+    In practice, manifesting this power grants you a “precognitive edge.”
+    Normally, you can have only a single precognitive edge at one time. You must
+    use your edge within a period of no more than 1 hour per level, at which
+    time your preknowledge fades and you lose your edge.
+
+    You can use your precognitive edge in a variety of ways. Essentially, the
+    edge translates into a +4 insight bonus that you can apply at any time to
+    either an attack roll, a damage roll, a saving throw, or a skill check. To
+    apply this bonus for one round, press either the Attack, Save, Skill, or
+    Damage option on the radial menu.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -56,22 +63,43 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);         
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;     	
-	
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	
-	SetLocalInt(oTarget, "GreaterPrecognition", TRUE);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
-	DelayCommand(HoursToSeconds(nDur), DeleteLocalInt(oTarget, "GreaterPrecognition"));
+        effect eDur     = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        float fDuration = HoursToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
+
+        // Set the marker local
+        SetLocalInt(oTarget, "PRC_Power_GreaterPrecognition_Active", TRUE);
+
+        // Set a VFX for the monitor to watch
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+        // Start the monitor
+        DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6);
     }
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0)                                         ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
+    {
+        if(DEBUG) DoDebug("psi_pow_gprecog: Power expired, clearing");
+
+        // Clear the marker
+        DeleteLocalInt(oTarget, "PRC_Power_GreaterPrecognition_Active");
+    }
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));
 }

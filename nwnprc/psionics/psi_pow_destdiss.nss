@@ -1,35 +1,38 @@
 /*
    ----------------
    Destiny Dissonance
-   
-   prc_pow_destdiss
+
+   psi_pow_destdiss
    ----------------
 
    15/7/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Seer)
-   Power Level: 1
-   Range: Touch
-   Target: Creature Touched
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   Your mere touch grants your foe an imperfect, unfocused glimpse of the many possible futures in store. Unaccustomed to and 
-   unable process this information, the subject becomes sickened.
+    Destiny Dissonance
+
+    Clairsentience
+    Level: Seer 1
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Creature touched
+    Duration: 1 round/level
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Extend, Twin
+
+    Your mere touch grants your foe an imperfect, unfocused glimpse of the many
+    possible futures in store. Unaccustomed to and unable to process the information,
+    the subject becomes sickened for 1 round per level of the manifester.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,33 +49,42 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-   
-    
-    if (nMetaPsi > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;
+        int nDC         = GetManifesterDC(oManifester);
+        int nPen        = GetPsiPenetration(oManifester);
+        effect eShaken  = CreateDoomEffectsLink();
+	    effect eImpact  = EffectVisualEffect(VFX_IMP_DOOM);
+	    float fDuration = RoundsToSeconds(manif.nManifesterLevel);
+	    if(manif.bExtend) fDuration *= 2;
 
-	effect eLink = CreateDoomEffectsLink();
-	effect eImpact = EffectVisualEffect(VFX_IMP_DOOM);
+	    // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Let the AI know
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-	    //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-			            
-            //Apply VFX Impact and daze effect
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
-	}
+            // Touch attack
+            int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
+            if(nTouchAttack > 0)
+            {
+                //Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
+                {
+                    //Apply VFX Impact and shaken effect
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShaken, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
+                }
+            }
+        }
     }
 }

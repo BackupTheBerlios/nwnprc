@@ -1,28 +1,40 @@
 /*
    ----------------
-   Etherealness
+   Etherealness, Psionic
 
-   prc_pow_ethereal
+   psi_pow_ethereal
    ----------------
 
    26/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 9
-   Range: 5' Radius
-   Target: Caster + 1 Target/3 levels
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 17
+    Etherealness, Psionic
 
-   You and 1 friend per 3 levels go to the Ethereal Plane. Once there, you may split up. Taking any hostile action will end the power.
+    Psychoportation
+    Level: Psion/wilder 9
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Targets: You and one other touched willing creature/three levels
+    Duration: 1 min./level
+    Saving Throw: None
+    Power Resistance: Yes (harmless)
+    Power Points: 17
+    Metapsionics: Extend
+
+    You and other willing creatures joined by linked hands (along with their
+    equipment) become ethereal. Besides yourself, you can bring one creature per
+    three manifester levels to the Ethereal Plane. Once ethereal, the subjects
+    need not stay together.
+
+    When the power expires, all affected creatures on the Ethereal Plane return
+    to material existence. Taking any hostile actions will force immediate
+    return to material existence for the creature taking the hostile action.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 #include "prc_inc_teleport"
 
 void main()
@@ -43,54 +55,51 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oFirstTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester  = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        effect eVis = EffectVisualEffect(VFX_DUR_SANCTUARY);
-        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eSanc = EffectEthereal();
-        effect eLink = EffectLinkEffects(eDur, eSanc);
-        int nTargetCount = nCaster/3;
-        float fDur = (60.0 * nCaster);
-        if (nMetaPsi == 2) fDur *= 2;
+        int nTargetCount = manif.nManifesterLevel / 3;
+        effect eLink     =                          EffectEthereal();
+               eLink     = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SANCTUARY));
+               eLink     = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        location lTarget = PRCGetSpellTargetLocation();
+        float fDuration  = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-        SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFirstTarget, fDur,TRUE,-1,nCaster);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);
-
-        location lTarget = GetSpellTargetLocation();
-        //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-        object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-
-        //Cycle through the targets within the spell shape until you run out of targets.
-        while (GetIsObjectValid(oTarget) && nTargetCount > 0)
+        // Make sure the manifester is not prevented from extra-dimensional movement. If it can't go, no-one goes
+        if(GetCanTeleport(oManifester, GetLocation(oManifester), TRUE))
         {
-            if (GetIsFriend(oTarget, oCaster))
+            // Apply effect to self
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oManifester, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+            // Determine willing friends in touch range and affect them.
+            object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oTarget) && nTargetCount > 0)
             {
-                //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-                // Make sure the target is not prevented from extra-dimensional movement
-                if(GetCanTeleport(oFirstTarget, GetLocation(oFirstTarget), TRUE))
+                if(GetIsFriend(oTarget, oManifester))
                 {
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                }
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
 
-                // Use up a target slot only if we actually did something to it
-                nTargetCount -= 1;
-            }
+                    // Make sure the target is not prevented from extra-dimensional movement
+                    if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE))
+                    {
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                    }
 
-            //Select the next target within the spell shape.
-            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        }
-    }
+                    // Use up a target slot only if we actually did something to it
+                    nTargetCount -= 1;
+                }// end if - Target is friendly (considered willing)
+
+                // Get next target
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }// end while - Target loop
+        }// end if - Manifester can move extra-dimensionally
+    }// end if - Successfull manifestation
 }

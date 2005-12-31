@@ -1,25 +1,30 @@
 /*
    ----------------
-   Offensive Precognition
-   
-   prc_all_offpre
+   Precognition, Offensive
+
+   psi_pow_offpre
    ----------------
 
    31/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   Your awareness extends a fraction of a second into the future, allowing you to 
-   better land blows against an opponent. You gain a +1 bonus to your attack rolls.
-   
-   Augment: For every 3 additional power points you spend, the bonus improves by 1.
+    Precognition, Offensive
+
+    Clairsentience
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: 1
+    Metapsionics: Extend
+
+    Your awareness extends a fraction of a second into the future, allowing you
+    to better land blows against your opponent. You gain a +1 insight bonus on
+    your attack rolls.
+
+    Augment: For every 3 additional power points you spend, the insight bonus
+             gained on your attack rolls increases by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -29,9 +34,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,27 +50,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 3;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       3, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nBonus = 1;
-    	float fDur = 60.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;    	
+        int nBonus      = 1 + manif.nTimesAugOptUsed_1;
+        effect eLink    = EffectLinkEffects(EffectAttackIncrease(nBonus),
+                                            EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE)
+                                            );
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-
-    	// Augmentation effects to armour class
-	if (nAugment > 0)	nBonus += nAugment;
-	
-   	effect eAttack = EffectAttackIncrease(nBonus);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	effect eLink = EffectLinkEffects(eAttack, eDur);
-
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
     }
 }

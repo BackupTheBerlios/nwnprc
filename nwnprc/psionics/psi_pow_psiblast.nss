@@ -1,37 +1,41 @@
 /*
    ----------------
    Psionic Blast
-   
-   prc_all_psiblast
+
+   psi_pow_psiblast
    ----------------
 
    28/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 3
-   Range: Medium
-   Target: 30' Cone
-   Duration: Instantaneous
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 5
-   
-   The air ripples with the force of your mental attack, which blasts the minds of all creatures
-   in range. Psionic Blast stuns all affect creatures for 1 round.
-   
-   Augment: For every 2 additional power points spent, the duration increases by 1 round.
+    Psionic Blast
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 3
+    Manifesting Time: 1 standard action
+    Range: 30 ft.
+    Area: 30-ft. cone-shaped burst
+    Duration: Instantaneous
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 5
+    Metapsionics: Twin, Widen
+
+    The air ripples with the force of your mental attack, which blasts the minds
+    of all creatures in range. Psionic blast stuns all affected creatures for 1
+    round.
+
+    Augment: For every 2 additional power points you spend, the duration of the
+             stun effect increases by 1 round.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,51 +52,58 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, METAPSIONIC_WIDEN);  
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
-    
-    if (nMetaPsi > 0) 
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	effect eStun = EffectStunned();
-	int nDur = 1;
-	float fWidth = DoWiden(30.0, nMetaPsi);
-	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
-	effect eLink = EffectLinkEffects(eStun, eMind);
-	float fDist;
-			
-	//Augmentation effects to Duration
-	if (nAugment > 0) nDur += nAugment;
-	
-	if (nMetaPsi == 2)	nDur *= 2;   
-	
-	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-    	oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        effect eLink      = EffectLinkEffects(EffectStunned(),
+                                              EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED)
+                                              );
+        float fWidth      = EvaluateWidenPower(manif, FeetToMeters(30.0f));
+        float fDuration   = 6.0f * (1 + manif.nTimesAugOptUsed_1);
+        float fDelay;
+        location lTarget  = PRCGetSpellTargetLocation();
+        object oTarget;
 
-    	//Cycle through the targets within the spell shape until an invalid object is captured.
-    	while(GetIsObjectValid(oTarget))
-    	{
-    	        //Signal spell cast at event to fire.
-    	        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    	        //Calculate the delay time on the application of effects based on the distance
-    	        //between the caster and the target
-    	        fDist = GetDistanceBetween(OBJECT_SELF, oTarget)/20;
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oTarget))
+            {
+                // Target validity check
+                if(oTarget != oManifester                                            && // Cones have a bug where they can include the user in the area. Workaround
+                   spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oManifester)   // Difficulty and faction dependent targeting limits, because people whine if they are missing
+                   )
+                {
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-    	            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-    	            {
-    	                // Apply effects to the currently selected target. 
-    	                DelayCommand(fDist, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster));
-    	            }
-    	    //Select the next target within the spell shape.
-    	    oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, PRCGetSpellTargetLocation(), TRUE, OBJECT_TYPE_CREATURE);
-    	}
-
-	
-
-    }
+                    // Check for Power Resistance
+                    if(PRCMyResistPower(oManifester, oTarget, nPen))
+                    {
+                        // Save - Will negates
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+    	                {
+    	                    // Apply effect, delayed according to distance from manifester
+    	                    fDelay = GetDistanceBetween(oManifester, oTarget) / 20.0f;
+    	                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
+    	                }// end if - Save
+                    }// end if - SR check
+                }// end if - Target is valid
+                // Get next target
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }// end while - Target loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

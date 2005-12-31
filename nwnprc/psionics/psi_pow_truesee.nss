@@ -1,35 +1,34 @@
 /*
    ----------------
-   True Seeing
-   
-   prc_pow_truesee
+   True Seeing, Psionic
+
+   psi_pow_truesee
    ----------------
 
    23/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 5
-   Range: Personal
-   Target: Caster
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: None
-   Power Point Cost: 9
-   
-   You magically enhance your sight, revealing everything as it truly is.
+    True Seeing, Psionic
+
+    Clairsentience
+    Level: Psion/wilder 5
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: 9
+    Metapsionics: Extend
+
+    As the true seeing spell, except as noted here.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
-#include "inc_utility"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,35 +45,39 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-	int nCaster = GetManifesterLevel(oCaster);
-	
-	effect eVis = EffectVisualEffect(VFX_DUR_ULTRAVISION);
-	effect eVis2 = EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	effect eUltra = EffectTrueSeeing();
-      if(GetPRCSwitch(PRC_PNP_TRUESEEING))
-      {
-          eUltra = EffectSeeInvisible();
-          int nSpot = GetPRCSwitch(PRC_PNP_TRUESEEING_SPOT_BONUS);
-          if(nSpot == 0)
-              nSpot = 15;
-          effect eSpot = EffectSkillIncrease(SKILL_SPOT, nSpot);
-          eUltra = EffectLinkEffects(eUltra , eSpot);
-      }
-	effect eLink = EffectLinkEffects(eVis, eDur);
-	eLink = EffectLinkEffects(eLink, eVis2);
-    	eLink = EffectLinkEffects(eLink, eUltra);
-    	float fDur = (nCaster * 60.0);
-    	if (nMetaPsi == 2)	fDur *= 2;
-    	
-    	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    }
+    if(manif.bCanManifest)
+    {
+        effect eLink    =                          EffectVisualEffect(VFX_DUR_ULTRAVISION);
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eTrueSee = EffectTrueSeeing();
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Adjust to PnP-like True Seeing
+        if(GetPRCSwitch(PRC_PNP_TRUESEEING))
+        {
+            eTrueSee  = EffectSeeInvisible();
+            int nSpot = GetPRCSwitch(PRC_PNP_TRUESEEING_SPOT_BONUS);
+            // Default to 15
+            if(nSpot == 0)
+                nSpot = 15;
+            effect eSpot = EffectSkillIncrease(SKILL_SPOT, nSpot);
+            eTrueSee     = EffectLinkEffects(eTrueSee , eSpot);
+        }
+
+        // Finish the effect link
+        eLink = EffectLinkEffects(eLink, eTrueSee);
+
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

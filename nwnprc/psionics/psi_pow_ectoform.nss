@@ -1,36 +1,41 @@
 /*
    ----------------
    Ectoplasmic Form
-   
-   prc_pow_ectoform
+
+   psi_pow_ectoform
    ----------------
 
    14/5/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Egoist), PsyWar
-   Power Level: 3
-   Range: Personal
-   Target: Self
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   You and all your gear become a partially translucent rippling mass of ectoplasm in your general shape. You gain damage reduction
-   10/+2, and immunity to poison, critical hits, and sneak attacks. You lose all AC from your shield and armour, and cannot physically
-   attack a target. You can manifest powers, but must make a Concentration check at a DC of 20 + Power Level. 
+    Ectoplasmic Form
+
+    Psychometabolism
+    Level: Egoist 3, psychic warrior 3
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: 5
+    Metapsionics: Extend
+
+    You and all your gear become a partially translucent mass of rippling ectoplasm that generally conforms to your normal shape. You gain damage reduction 10/+2, and you gain immunity to poison and critical hits. Your material armor becomes meaningless, although your size, Dexterity, deflection bonuses, and armor bonuses from force effects (such as those gained by inertial armor) still apply to your Armor Class.
+
+    You can manifest powers while in ectoplasmic form, but you must make a Concentration check (DC 20 + power level) for each power you attempt to manifest.
+
+
+    @todo 2da & TLK entries
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,34 +52,49 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nCaster = GetManifesterLevel(oCaster);
-        float fDur = (nCaster * 60.0);
-        if (nMetaPsi == 2)	fDur *= 2;
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-        //Massive effect linkage, go me
-        effect eCrit = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
-        effect eSneak = EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK);
-        effect ePoison = EffectImmunity(IMMUNITY_TYPE_POISON);
-        effect eDR = EffectDamageReduction(10, DAMAGE_POWER_PLUS_TWO);
+        // Create effects
+        effect eLink =                          EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK));
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_POISON));
+               eLink = EffectLinkEffects(eLink, EffectDamageReduction(10, DAMAGE_POWER_PLUS_TWO));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_BLUR));
+        effect eVis  = EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION);
 
-        effect eVis1 = EffectVisualEffect(VFX_DUR_BLUR);
-        effect eVis2 = EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION);
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
-        effect eLink = EffectLinkEffects(eCrit, eSneak);
-        eLink = EffectLinkEffects(eLink, ePoison);
-        eLink = EffectLinkEffects(eLink, eDR);
-        eLink = EffectLinkEffects(eLink, eVis1);
-
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+        // Set marker for use in powerhook
         SetLocalInt(oTarget, "EctoForm", TRUE);
-        DelayCommand(fDur, DeleteLocalInt(oTarget, "EctoForm"));
+        // Start effect end monitor
+        DelayCommand(6.0f, DispelMonitor(manif.oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6));
     }
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0) ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
+    {
+        if(DEBUG) DoDebug("psi_pow_ectoform: Removing marker");
+        // Clear the effect presence marker
+        DeleteLocalInt(oTarget, "EctoForm");
+    }
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));
 }

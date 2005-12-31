@@ -1,30 +1,57 @@
 /*
    ----------------
-   Crisis of Breathe
+   Crisis of Breath
 
    psi_pow_crsbrth
    ----------------
 
    19/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Telepath)
-   Power Level: 3
-   Range: Medium
-   Target: One Living Humanoid
-   Duration: 1 Round/level
-   Saving Throw: Will negates, Fort partial
-   Power Resistance: Yes
-   Power Point Cost: 5
+    Crisis of Breath
 
-   You compel the subject to purge its entire store of air in one explosive exhalation, and thereby disrupt the subject's autonomic
-   breathing cycle. If the target succeeds on a Will save when target by this power, it is unaffected. Otherwise, it must succeed on
-   a Fortitude save every round or black out. If the target succeeds on the Fortitude save, nothing happens. If it fails, it blacks
-   out and falls down. For every round it fails the Fort save, the DC increases by 1. If it fails the Fort save for 3 consecutive
-   rounds, it dies from lack of air.
+    Telepathy (Compulsion) [Mind-Affecting]
+    Level: Telepath 3
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One breathing humanoid
+    Duration: 1 round/level
+    Saving Throw: Will negates, Fortitude partial; see text
+    Power Resistance: Yes
+    Power Points: 5
+    Metapsionics: Extend, Twin, Widen
 
-   Augment: If you augment this power 1 time, this power also affects Animal, Fey, Giant, Magical Beast
-   or Monstrous Humanoid. If you augment this power 3 times, this power also affects Aberration, Dragon and Outsiders.
-   It costs 2 power points to augment once and 6 to augment 3 times. For every 2 power points spent this way, the DC increases by 1.
+    You compel the subject to purge its entire store of air in one explosive
+    exhalation, and thereby disrupt the subject’s autonomic breathing cycle.
+    The subject’s lungs do not automatically function again while the power’s
+    duration lasts.
+
+    If the target succeeds on a Will save when crisis of breath is manifested,
+    it is unaffected by this power. If it fails its Will save, it can still
+    continue to breathe by remaining in place and gasping for breath.
+
+    An affected creature can attempt to take actions normally (instead of
+    consciously controlling its breathing), but each round it does so, beginning
+    in the round when it failed its Will save, the subject risks blacking out
+    from lack of oxygen. It must succeed on a Fortitude save at the end of any
+    of its turns in which it did not consciously take a breath. The DC of this
+    save increases by 1 in every consecutive round after the first one that goes
+    by without a breath; the DC drops back to its original value if the subject
+    spends an action to take a breath.
+
+    If a subject fails a Fortitude save, it falls to 1 HP. In the following
+    round, it drops to -1 hit points and is dying.
+
+    Augment: You can augment this power in one or more of the following ways.
+    1. If you spend 2 additional power points, this power can also affect an
+       animal, fey, giant, magical beast, or monstrous humanoid.
+    2. If you spend 4 additional power points, this power can also affect an
+       aberration, dragon, elemental, or outsider in addition to the creature
+       types mentioned above.
+    3. If you spend 6 additional power points, this power can affect up to
+       four creatures all within a 20-ft.-radius burst.
+    In addition, for every 2 additional power points you spend to achieve any of
+    these effects, this power’s save DC increases by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -34,77 +61,114 @@
 
 
 
-void RunImpact(object oTarget, object oCaster, int nSpell, int nDC, int nRound)
+void RunImpact(object oTarget, location lTarget, object oManifester, int nSpellID, int nDC, int nRound = 0, int bGoingToDie = FALSE)
 {
-    //--------------------------------------------------------------------------
-    // Check if the spell has expired (check also removes effects)
-    //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(nSpell,oTarget,oCaster))
+    // Check if the power has been dispelled or the manifester has died in the meantime
+    if(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester))
     {
         return;
     }
 
-    if (GetIsDead(oTarget) == FALSE)
+    // Make sure the target is still alive
+    if(!GetIsDead(oTarget))
     {
-    	int nDCTemp = nDC;
-    	if (nRound > 0) nDCTemp += nRound;
+        // Did the target start choking to death last round?
+        if(bGoingToDie = TRUE)
+        {
+            // HP goes to -1 and we end the effect. The target may or may not have a
+            // chance of survival depending on how well a module follows PnP dying rules
+            int nCurHP = GetCurrentHitPoints(oTarget);
+            effect eDam = EffectDamage(nCurHP + 1);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 
-	if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDCTemp))
-	{
-		nRound += 1;
-		effect eKnock = EffectKnockdown();
-		effect ePara = EffectCutsceneParalyze();
-		effect eLink = EffectLinkEffects(eKnock, ePara);
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink,oTarget,6.0,FALSE);
-	}
-	else //Made saving throw, reset round counter
-	{
-		nRound = 0;
-	}
-	// Run out of breath
-	if (nRound >= 3)
-	{
-		effect eDeath = EffectDeath();
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
-	}
+            // DR can go screw itself
+            if(GetCurrentHitPoints(oTarget) != -1)
+            {
+                int nDamageReduction = GetCurrentHitPoints(oTarget) + 1;
+                while(GetCurrentHitPoints(oTarget) > -1)
+                {
+                    eDam = EffectDamage(nDamageReduction + GetCurrentHitPoints(oTarget) + 1);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 
-        DelayCommand(6.0f,RunImpact(oTarget, oCaster, nSpell, nDC, nRound));
+                    // And in case there is a next iteration
+                    nDamageReduction += 1;
+                }
+            }
+
+            return;
+        }
+        // Has the target moved?
+        else if(GetLocation(oTarget) != lTarget)
+        {
+            // Adjust save by amount of rounds spent without breath
+            int nDCTemp = nDC + nRound;
+            nRound += 1;
+
+            // Roll fortitude
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDCTemp, SAVING_THROW_TYPE_MIND_SPELLS))
+            {
+                int nCurHP = GetCurrentHitPoints(oTarget);
+                effect eDam = EffectDamage(nCurHP - 1);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                bGoingToDie = TRUE;
+            }
+        }
+        // Not moved, reset counter
+        else
+            nRound = 0;
+
+        // Schedule next check
+        DelayCommand(6.0f, RunImpact(oTarget, GetLocation(oTarget), oManifester, nSpellID, nDC, nRound, bGoingToDie));
     }
 }
 
-int CheckRace(int nAugment, object oTarget, object oCaster)
+int CheckRace(struct manifestation manif, object oTarget)
 {
-
 	int nRacial = MyPRCGetRacialType(oTarget);
-	int nTargetRace = FALSE;
+	int bTargetRace = FALSE;
 	//Verify that the Racial Type is humanoid
-	if((nRacial == RACIAL_TYPE_DWARF) || (nRacial == RACIAL_TYPE_ELF) || (nRacial == RACIAL_TYPE_GNOME) || (nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID) || (nRacial == RACIAL_TYPE_HALFLING) || (nRacial == RACIAL_TYPE_HUMAN) || (nRacial == RACIAL_TYPE_HALFELF) || (nRacial == RACIAL_TYPE_HALFORC) || (nRacial == RACIAL_TYPE_HUMANOID_ORC) || (nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN))
-        {
-		nTargetRace = TRUE;
-	}
-	if (nAugment >= 1 || GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF) >= 7)
-	{
-		if (nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS || nRacial == RACIAL_TYPE_FEY || nRacial == RACIAL_TYPE_GIANT || nRacial == RACIAL_TYPE_ANIMAL || nRacial == RACIAL_TYPE_MAGICAL_BEAST || nRacial == RACIAL_TYPE_BEAST)
-		{
-			nTargetRace = TRUE;
-		}
-	}
-	if (nAugment >= 3 || GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF) >= 9)
-	{
-		if (nRacial == RACIAL_TYPE_ABERRATION || nRacial == RACIAL_TYPE_DRAGON || nRacial == RACIAL_TYPE_OUTSIDER)
-		{
-			nTargetRace = TRUE;
-		}
-	}
+	if(nRacial == RACIAL_TYPE_DWARF              ||
+       nRacial == RACIAL_TYPE_ELF                ||
+       nRacial == RACIAL_TYPE_GNOME              ||
+       nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID ||
+       nRacial == RACIAL_TYPE_HALFLING           ||
+       nRacial == RACIAL_TYPE_HUMAN              ||
+       nRacial == RACIAL_TYPE_HALFELF            ||
+       nRacial == RACIAL_TYPE_HALFORC            ||
+       nRacial == RACIAL_TYPE_HUMANOID_ORC       ||
+       nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN
+       )
+    {
+        bTargetRace = TRUE;
+    }
+    // First augmentation option adds animal, fey, giant, magical beast, and monstrous humanoid to possible target types
+    if(manif.nTimesAugOptUsed_1 == 1 &&
+       (nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS ||
+        nRacial == RACIAL_TYPE_FEY                ||
+        nRacial == RACIAL_TYPE_GIANT              ||
+        nRacial == RACIAL_TYPE_ANIMAL             ||
+        nRacial == RACIAL_TYPE_MAGICAL_BEAST      ||
+        nRacial == RACIAL_TYPE_BEAST
+      ))
+    {
+        bTargetRace = TRUE;
+    }
+    // First augmentation option adds aberration, dragon, elemental, and outsider to possible target types
+    if(manif.nTimesAugOptUsed_2 == 1 &&
+       (nRacial == RACIAL_TYPE_ABERRATION ||
+        nRacial == RACIAL_TYPE_DRAGON     ||
+        nRacial == RACIAL_TYPE_OUTSIDER   ||
+        nRacial == RACIAL_TYPE_ELEMENTAL
+       ))
+    {
+        bTargetRace = TRUE;
+    }
 
-	return nTargetRace;
+	return bTargetRace;
 }
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -121,42 +185,107 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oMainTarget = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oMainTarget,
+                              PowerAugmentationProfile(2,
+                                                       2, 1,
+                                                       4, 1,
+                                                       6, 1
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    	effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
-    	int nDur = nCaster;
-    	int nRound = 0;
-    	int nSpell = GetSpellId();
+        int nDC      = GetManifesterDC(oManifester) + manif.nTimesGenericAugUsed;
+        int nPen     = GetPsiPenetration(oManifester);
+        int bValidTarget;
+        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+        effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
+        float fDur = 6.0f * manif.nManifesterLevel;
 
-	int nTargetRace = CheckRace(nAugment, oTarget, oCaster);
+        if(manif.bExtend) fDur *= 2;
 
-	if (nTargetRace)
-	{
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		if(PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-			if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-        	    	{
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,eDur,oTarget,RoundsToSeconds(nDur),FALSE);
-				RunImpact(oTarget, oCaster, nSpell, nDC, nRound);
-			}
-		}
-		else
-		{
-			effect eSmoke = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT,eSmoke,oTarget);
-		}
-	}
-    }
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Do the primary target if it hasn't been already affected in the previous iteration
+            if(!GetLocalInt(oMainTarget, "PRC_CrisisOfBreathMarker"))
+            {
+                if(CheckRace(manif, oMainTarget))
+                {
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+
+                    if(PRCMyResistPower(oManifester, oMainTarget, nPen))
+                    {
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oMainTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                        {
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oMainTarget);
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oMainTarget, fDur, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                            RunImpact(oMainTarget, GetLocation(oMainTarget), oManifester, manif.nSpellID, nDC);
+
+                            // Set a marker on the target for next iteration, so the heartbeat won't get run twice
+                            SetLocalInt(oMainTarget, "PRC_CrisisOfBreathMarker", TRUE);
+                            DeleteLocalInt(oMainTarget, "PRC_CrisisOfBreathMarker");
+                        }
+                    }
+                    else
+                    {
+                        effect eSmoke = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSmoke, oMainTarget);
+                    }
+                }// end if - Target is of an affectable type
+            }// end if - Target has no been affected yet
+
+            if(manif.nTimesAugOptUsed_3 == 1)
+            {
+                location lTarget = PRCGetSpellTargetLocation();
+                float fRadius = EvaluateWidenPower(manif, FeetToMeters(20.0f));
+                int nExtraTargets = 4;
+
+                //Cycle through the targets within the spell shape until you run out of targets.
+                object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                while(GetIsObjectValid(oAreaTarget) && nExtraTargets > 0)
+                {
+                    if(oAreaTarget != manif.oManifester                                             &&
+                       spellsIsTarget(oAreaTarget, SPELL_TARGET_STANDARDHOSTILE, manif.oManifester) &&
+                       !GetLocalInt(oAreaTarget, "PRC_CrisisOfBreathMarker")                        &&
+                       CheckRace(manif, oAreaTarget))
+                    {
+                        // Let the AI know
+                        SPRaiseSpellCastAt(oAreaTarget, TRUE, manif.nSpellID, oManifester);
+
+                        if(PRCMyResistPower(oManifester, oAreaTarget, nPen))
+                        {
+                            if(!PRCMySavingThrow(SAVING_THROW_WILL, oAreaTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                            {
+                                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oAreaTarget);
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oAreaTarget, fDur, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                                RunImpact(oAreaTarget, GetLocation(oAreaTarget), oManifester, manif.nSpellID, nDC);
+
+                                // Set a marker on the target for next iteration, so the heartbeat won't get run twice
+                                SetLocalInt(oAreaTarget, "PRC_CrisisOfBreathMarker", TRUE);
+                                DeleteLocalInt(oAreaTarget, "PRC_CrisisOfBreathMarker");
+                            }
+                        }
+                        else
+                        {
+                            effect eSmoke = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSmoke, oAreaTarget);
+                        }
+
+                        // Use up a target slot only if we actually did something to it
+                        nExtraTargets -= 1;
+                    }// end if - Target validity
+
+                    //Select the next target within the spell shape.
+                    oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                }// end while - Get targest
+            }// end if - The augmentation for extra targets was used
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

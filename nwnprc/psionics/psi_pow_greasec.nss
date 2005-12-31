@@ -1,23 +1,28 @@
 /*
    ----------------
-   Ectoplasmic Sheen
-   
-   prc_all_greasec
+   Ectoplasmic Sheen, OnHeartbeat
+
+   psi_pow_greasec
    ----------------
 
    30/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: Short
-   Area: 10' square
-   Duration: 1 Round/level
-   Saving Throw: Reflex negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You create a pool of ectoplasm across the floor that inhibits motion and can cause people to slow down.
-   This functions as the spell grease.
+    Ectoplasmic Sheen, OnHeartbeat
+
+    Metacreativity (Creation)
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target or Area: 10-ft. square
+    Duration: 1 round/level
+    Saving Throw: See text
+    Power Resistance: No
+    Power Points: 1
+    Metapsionics: Extend
+
+    You create a pool of ectoplasm across the floor that inhibits motion and can cause people to slow down.
+    This functions as the spell grease.
 */
 
 #include "psi_inc_psifunc"
@@ -27,37 +32,29 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
- ActionDoCommand(SetAllAoEInts(SPELL_GREASE,OBJECT_SELF, GetManifesterDC(GetAreaOfEffectCreator())));
-
-    //Declare major variables
+    object oCreator = GetAreaOfEffectCreator();
+    object oAoE     = OBJECT_SELF;
     object oTarget;
-    effect eFall = EffectKnockdown();
+    int nDC         = GetLocalInt(oAoE, "PRC_EctoSheen_DC");
+    effect eFall    = EffectKnockdown();
     float fDelay;
 
-    //Get first target in spell area
+    // Loop over objects in the AoE
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
     {
-        if(!GetHasFeat(FEAT_WOODLAND_STRIDE, oTarget) &&(GetCreatureFlag(OBJECT_SELF, CREATURE_VAR_IS_INCORPOREAL) != TRUE) )
+        if(!GetHasFeat(FEAT_WOODLAND_STRIDE, oTarget) && (GetCreatureFlag(oTarget, CREATURE_VAR_IS_INCORPOREAL) != TRUE))
         {
-            if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+            if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCreator))
             {
-                int nDC = GetManifesterDC(GetAreaOfEffectCreator());
-
                 fDelay = GetRandomDelay(0.0, 2.0);
-                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
+                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE, oCreator, fDelay))
                 {
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFall, oTarget, 4.0,FALSE));
-                }
-            }
-        }
-        //Get next target in spell area
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFall, oTarget, 4.0, FALSE));
+                }// end if - Reflex to not fall down
+            }// end if - Difficulty limitations
+        }// end if - Immunity check
+        // Get next target
         oTarget = GetNextInPersistentObject();
-    }
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    }// end while - Target loop
 }
-

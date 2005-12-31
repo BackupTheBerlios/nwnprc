@@ -6,55 +6,37 @@
    ----------------
 
    19/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 4
-   Range: Short
-   Target: One Psionic Creature
-   Duration: 1 Round/Level
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 7
+    Telepathy (Compulsion) [Mind-Affecting]
+    Level: Psion/wilder 4
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: Any psionic creature
+    Duration: Concentration, up to 1 round/level; see text
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 7
+    Metapsionics: Empower, Extend, Maximize
 
-   Your brow erupts with an arc of dark crackling energy that connects with your foe, draining it of 1d6
-   power points and adding 1 point to your reserve. If the subject is drained of points, the power ends.
+    Your brow erupts with an arc of crackling dark energy that connects with
+    your foe, draining it of 1d6 power points and adding 1 of those points to
+    your reserve (unless that gain would cause you to exceed your maximum).
+
+    The drain continues in each round you maintain concentration while the
+    subject of the drain remains in range. If the subject is drained to 0 power
+    points, this power ends.
+
+    Concentrating to maintain power leech is a full-round action (you can take
+    no other actions aside from a 5-foot step).
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
-void DoDrain(object oTarget, object oCaster, int nMetaPsi)
-{
-    int nTargetPP = GetCurrentPowerPoints(oTarget);
-    // No need to the rest if the target has already run out of PP
-    if(nTargetPP == 0)
-    {
-        DeleteLocalInt(oCaster, "PowerLeechDur");
-        return;
-    }
-
-    effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-    int nDice = 1;
-    int nDiceSize = 6;
-    int nDrain = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster);
-    effect eRay = EffectBeam(VFX_BEAM_MIND, OBJECT_SELF, BODY_NODE_HAND);
-
-    LosePowerPoints(oTarget, nDrain, TRUE);
-    GainPowerPoints(oCaster, 1, TRUE, TRUE);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
-
-    int nDur = GetLocalInt(oCaster, "PowerLeechDur");
-    if(nDur > 0 && GetCurrentPowerPoints(oTarget) > 0)
-    {
-        SetLocalInt(oCaster, "PowerLeechDur", (nDur - 1));
-        DelayCommand(6.0, DoDrain(oTarget, oCaster, nMetaPsi));
-    }
-    else
-        DeleteLocalInt(oCaster, "PowerLeechDur");
-}
+void DoDrain(struct manifestation manif, location lManifesterOld, object oTarget);
 
 void main()
 {
@@ -74,38 +56,68 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 3;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge   = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_EXTEND | METAPSIONIC_MAXIMIZE
+                              );
 
-    if(nSurge > 0)
+    if(manif.bCanManifest)
     {
-        PsychicEnervation(oCaster, nSurge);
-    }
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        effect eLink      = EffectLinkEffects(EffectBeam(VFX_BEAM_BLACK, oManifester, BODY_NODE_CHEST),
+                                              EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE)
+                                              );
+        float fDuration   = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-    if(nMetaPsi > 0)
-    {
-        int nTargetPP = GetCurrentPowerPoints(oTarget);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        int nDC = GetManifesterDC(oCaster);
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-        //Check for Power Resistance
-        if(PRCMyResistPower(oCaster, oTarget, nPen))
+        // Check for Power Resistance
+        if(PRCMyResistPower(oManifester, oTarget, nPen))
         {
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-            //Make a saving throw check
+            // Save - Will negates
             if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
             {
-                SetLocalInt(oCaster, "PowerLeechDur", nCaster);
-                if(nTargetPP > 0)
-                    DoDrain(oTarget, oCaster, nMetaPsi);
-            }
-        }
+                // Apply the visuals. Used for power expiration tracking
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+                // Start the drain HB
+                DoDrain(manif, GetLocation(oManifester), oTarget);
+            }// end if - Save
+        }// end if - SR check
+    }// end if - Successfull manifestation
+}
+
+void DoDrain(struct manifestation manif, location lManifesterOld, object oTarget)
+{
+    // Check expiration
+    if(!GZGetDelayedSpellEffectsExpired(manif.nSpellID, oTarget, manif.oManifester)                     && // No dispel or duration expiration
+       GetCurrentPowerPoints(oTarget) != 0                                                              && // The target hasn't run out of PP yet
+       !GetBreakConcentrationCheck(manif.oManifester)                                                   && // The manifester's concentration hasn't been broken
+       GetDistanceBetweenLocations(lManifesterOld, GetLocation(manif.oManifester)) <= FeetToMeters(5.0f)   // And the manifester hasn't moved too far to break concentration
+       )
+    {
+        // Determine amount of PP drained
+        int nNumberOfDice = 1;
+        int nDieSize      = 6;
+        int nDrain        = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, FALSE, FALSE);
+
+        // Apply drain
+        LosePowerPoints(oTarget, nDrain, TRUE);
+        GainPowerPoints(manif.oManifester, 1, FALSE, TRUE);
+
+        // Schedule next HB
+        DelayCommand(6.0f, DoDrain(manif, GetLocation(manif.oManifester), oTarget));
+    }
+    // Power expired for some reason, make sure VFX are gone
+    else
+    {
+        if(DEBUG) DoDebug("psi_pow_pwrleech: Power expired, clearing VFX");
+        RemoveSpellEffects(manif.nSpellID, manif.oManifester, oTarget);
     }
 }

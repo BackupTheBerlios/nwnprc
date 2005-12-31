@@ -8,14 +8,14 @@
 
     Psychoportation (Teleportation)
     Level: Nomad 9
-    Display: Mental
     Manifesting Time: 10 minutes
     Range: 0 ft.
     Effect: 5-ft.-radius circle that teleports those who activate it
-    Duration: 10 min./level (D)
+    Duration: 10 min./level
     Saving Throw: None
     Power Resistance: Yes
     Power Points: 17
+    Metapsionics: Extend
 
     You create a circle on the floor or other horizontal surface that teleports,
     as greater teleport, any creature who stands on it to a designated spot.
@@ -57,14 +57,16 @@ void main()
 
     /* Main script */
     object oManifester = OBJECT_SELF;
-    int nManifesterLvl = GetManifesterLevel(oManifester);
-    int nSpellID       = PRCGetSpellId();
-    int bVisible       = nSpellID == POWER_TELEPORTATIONCIRCLE_VISIBLE;
-    int bExtended      = TRUE; ///FIXME
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    // Check if can manifest
-    if(!GetCanManifest(oManifester, 0, OBJECT_INVALID, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0))
-        return;
+    if(manif.bCanManifest)
+    {
+        int bVisible = manif.nSpellID == POWER_TELEPORTATIONCIRCLE_VISIBLE;
 
-    TeleportationCircle(oManifester, nManifesterLvl, bVisible, bExtended);
+        TeleportationCircle(oManifester, manif.nManifesterLevel, bVisible, manif.bExtend);
+    }// end if - Successfull manifestation
 }

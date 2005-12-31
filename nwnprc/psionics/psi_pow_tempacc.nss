@@ -2,31 +2,44 @@
    ----------------
    Temporal Acceleration
 
-   prc_pow_tempacc
+   psi_pow_tempacc
    ----------------
 
    27/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 6
-   Range: Personal
-   Target: Caster
-   Duration: 1 Round
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 11
+    Temporal Acceleration
 
-   You enter another time frame, speeding up so greatly that all other creatures seem frozen, though they are still actually
-   moving at normal speed. You are free to act for 1 round of apparent time. This is an instant power.
+    Psychoportation
+    Level: Psion/wilder 6
+    Manifesting Time: 1 swift action
+    Range: Personal
+    Target: You
+    Duration: 1 round (in apparent time); see text
+    Power Points: 11
+    Metapsionics: Extend
 
-   Augment: For every 4 additional power points spent, the duration increases by 1 round.
+    You enter another time frame, speeding up so greatly that all other
+    creatures seem frozen, though they are actually still moving at normal
+    speed. You are free to act for 1 round of apparent time. You can manifest
+    powers, cast spells, move, or perform other types of actions.
+
+    When your temporal acceleration expires, you resume acting during your
+    current turn in the standard time frame. You are shaken for 1 round upon
+    your return to the standard time frame.
+
+    Manifesting this power is a swift action, like manifesting a quickened
+    power, and it counts toward the normal limit of one quickened power per
+    round. You cannot manifest this power when it isn’t your turn.
+
+    Augment: For every 4 additional power points you spend, this power’s
+             duration (in apparent time) increases by 1 round.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
-#include "inc_utility"
+#include "spinc_common"
 #include "inc_timestop"
 
 void main()
@@ -47,64 +60,55 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nAugCost = 4;
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       4, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
 
-        PsychicEnervation(oCaster, nSurge);
-    }
+        location lTarget = PRCGetSpellTargetLocation();
+        effect eImpact   = EffectVisualEffect(VFX_FNF_TIME_STOP);
+        effect eTStop    = EffectTimeStop();
+        float fDuration  = 6.0f * (1 + manif.nTimesAugOptUsed_1);
+        if(manif.bExtend) fDuration *= 2;
 
-    if (nMetaPsi > 0)
-    {
-    int nCaster = GetManifesterLevel(oCaster);
-    int nDC = GetManifesterDC(oCaster);
-    int nDur = 1;
-
-    if (nSurge > 0) nAugment += nSurge;
-
-    //Augmentation effects to Duration
-    if (nAugment > 0) nDur += nAugment;
-
-    if (nMetaPsi == 2)  nDur *= 2;
-
-    location lTarget = GetSpellTargetLocation();
-    effect eVis = EffectVisualEffect(VFX_FNF_TIME_STOP);
-    effect eTime = EffectTimeStop();
-    if(GetPRCSwitch(PRC_TIMESTOP_LOCAL))
-    {
-        eTime = EffectAreaOfEffect(VFX_PER_NEW_TIMESTOP);
-        eTime = EffectLinkEffects(eTime, EffectEthereal());
-        if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE))
+        // Local timestop modifications
+        if(GetPRCSwitch(PRC_TIMESTOP_LOCAL))
         {
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_LEFTHAND,  oCaster), RoundsToSeconds(nDur));
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster), RoundsToSeconds(nDur));
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BULLETS,   oCaster), RoundsToSeconds(nDur));
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_ARROWS,    oCaster), RoundsToSeconds(nDur));
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BOLTS,     oCaster), RoundsToSeconds(nDur));
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oCaster), RoundsToSeconds(nDur));
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster), RoundsToSeconds(nDur));
-            AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oCaster), RoundsToSeconds(nDur));
-            /*
-            DelayCommand(RoundsToSeconds(nDur), RemoveTimestopEquip());
-            string sSpellscript = PRCGetUserSpecificSpellScript();
-            DelayCommand(RoundsToSeconds(nDur), PRCSetUserSpecificSpellScript(sSpellscript));
-            PRCSetUserSpecificSpellScript("tsspellscript");
-            now in main spellhook */
+            eTStop = EffectAreaOfEffect(VFX_PER_NEW_TIMESTOP);
+            eTStop = EffectLinkEffects(eTStop, EffectEthereal());
+            if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE))
+            {
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_LEFTHAND,  oManifester), fDuration);
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oManifester), fDuration);
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BULLETS,   oManifester), fDuration);
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_ARROWS,    oManifester), fDuration);
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_BOLTS,     oManifester), fDuration);
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oManifester), fDuration);
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oManifester), fDuration);
+                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oManifester), fDuration);
+                /*
+                DelayCommand(RoundsToSeconds(nDur), RemoveTimestopEquip());
+                string sSpellscript = PRCGetUserSpecificSpellScript();
+                DelayCommand(RoundsToSeconds(nDur), PRCSetUserSpecificSpellScript(sSpellscript));
+                PRCSetUserSpecificSpellScript("tsspellscript");
+                now in main spellhook */
+            }
         }
-    }
 
-    //Fire cast spell at event for the specified target
-    SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TIME_STOP, FALSE));
+        // Let the AI know - Special handling
+        SPRaiseSpellCastAt(oTarget, FALSE, SPELL_TIME_STOP, oManifester);
 
-    //Apply the VFX impact and effects
-    DelayCommand(0.75, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTime, oCaster, RoundsToSeconds(nDur),TRUE,-1,nCaster));
-    //DelayCommand(0.8f, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oCaster, RoundsToSeconds(nDur)));
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lTarget);
-    }
+        // Apply the VFX impact and effects
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
+        // Delayed a bit to let the VFX start
+        DelayCommand(0.75f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTStop, oManifester, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
+    }// end if - Successfull manifestation
 }

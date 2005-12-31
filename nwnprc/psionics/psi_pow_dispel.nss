@@ -1,39 +1,42 @@
 /*
     ----------------
     Dispel Psionics
-    
+
     psi_pow_dispel
     ----------------
 
     26/3/05 by Stratovarius
+*/ /** @file
 
-    Class: Psion/Wilder
-    Power Level: 3
-    Range: Medium
-    Target: One Creature or 20' Radius
+    Dispel Psionics
+
+    Psychokinesis
+    Level: Psion/wilder 3
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./level)
+    Target or Area: One creature; or 20-ft.-radius burst
     Duration: Instantaneous
     Saving Throw: None
     Power Resistance: No
-    Power Point Cost: 5
- 
-    This spell attempts to strip all magical effects from a single target. It can also target a group of creatures, 
-    attempting to remove the most powerful spell effect from each creature. To remove an effect, the manifester makes a dispel 
-    check of 1d20 +1 per manifester level (to a maximum of +10) against a DC of 11 + the spell effect's manifester level.
+    Power Points: 5
+    Metapsionics: Twin, Widen
 
-    Augment: For every additional power point spent, the manifester level limit on your dispel check increases by 2, up to a maximum
-    of +20 at Augment 5.
+    This power attempts to strip all magical effects from a single target. It can also target a group of creatures,
+    attempting to remove the most powerful spell effect from each creature. To remove an effect, the manifester makes a dispel
+    check of 1d20 +1 per manifester level (to a maximum of +10) against a DC of 11 + the power effect's manifester level.
+
+    Augment: For every additional power point spent, the manifester level limit
+             on your dispel check increases by 2 (to a maximum bonus of +20 for
+             a 5-point expenditure).
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -50,90 +53,78 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
-    
-    if (nSurge > 0)
-    {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCasterLevel = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-    	effect    eVis         = EffectVisualEffect(VFX_IMP_BREACH);
-    	effect    eImpact      = EffectVisualEffect(VFX_FNF_DISPEL);
-    	object    oTarget      = PRCGetSpellTargetObject();
-    	location  lLocal       = PRCGetSpellTargetLocation();
-    	int iTypeDispel = GetLocalInt(GetModule(),"BIODispel");
-    	int nCap = 10;
-	
-			
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) nCap += (nAugment * 2);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, 5
+                                                       ),
+                              METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
+    if(manif.bCanManifest)
+    {
+        int bIsBioDispel = GetLocalInt(GetModule(),"BIODispel");
+        int nMLCap       = min(10 + (2 * manif.nTimesAugOptUsed_1), manif.nManifesterLevel);
+        effect eVis      = EffectVisualEffect(VFX_IMP_BREACH);
+        effect eImpact   = EffectVisualEffect(VFX_FNF_DISPEL);
+        location lTarget = PRCGetSpellTargetLocation();
+        float fRadius    = EvaluateWidenPower(manif, FeetToMeters(20.0f));
 
-    if(nCasterLevel > nCap)
-    {
-        nCasterLevel = nCap;
-    }
-    
-    if (GetIsObjectValid(oTarget))
-    {
-        //----------------------------------------------------------------------
-        // Targeted Dispel - Dispel all
-        //----------------------------------------------------------------------
-          if (iTypeDispel)
-             spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact);
-           else
-             spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact);
-  
-    }
-    else
-    {
-        //----------------------------------------------------------------------
-        // Area of Effect - Only dispel best effect
-        //----------------------------------------------------------------------
-
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
-        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE );
-        while (GetIsObjectValid(oTarget))
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            if(GetObjectType(oTarget) == OBJECT_TYPE_AREA_OF_EFFECT)
+            // Targeted dispel - Remove all effects
+            if(GetIsObjectValid(oTarget))
             {
-                //--------------------------------------------------------------
-                // Handle Area of Effects
-                //--------------------------------------------------------------
-                if (iTypeDispel)
-                   spellsDispelAoE(oTarget, OBJECT_SELF,nCasterLevel);
+                if(bIsBioDispel)
+                    spellsDispelMagic(oTarget, manif.nManifesterLevel, eVis, eImpact);
                 else
-                   spellsDispelAoEMod(oTarget, OBJECT_SELF,nCasterLevel);
-
+                    spellsDispelMagicMod(oTarget, manif.nManifesterLevel, eVis, eImpact);
             }
-            else if (GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
-            {
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            }
+            // Dispel in an area - Only remove single effect from each target
             else
             {
+                // Do area VFX
+                ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
 
-                  if (iTypeDispel)
-                     spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact, FALSE);
-                  else
-                     spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact, FALSE);
-            }
+                // Target loop
+                oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE,
+                                               OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE
+                                               );
+                while(GetIsObjectValid(oTarget))
+                {
+                    // Area of Effects are handled using a separate function
+                    if(GetObjectType(oTarget) == OBJECT_TYPE_AREA_OF_EFFECT)
+                    {
+                        if(bIsBioDispel)
+                            spellsDispelAoE(oTarget, oManifester, manif.nManifesterLevel);
+                        else
+                            spellsDispelAoEMod(oTarget, oManifester, manif.nManifesterLevel);
+                    }
+                    // Placeables just have their AI informed
+                    // Why? - Ornedan
+                    else if(GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
+                    {
+                        SignalEvent(oTarget, EventSpellCastAt(oManifester, SPELL_DISPEL_MAGIC));//PRCGetSpellId()));
+                    }
+                    // It's a creature, take out the highest caster/manifester level effect on it
+                    else
+                    {
+                        if(bIsBioDispel)
+                            spellsDispelMagic(oTarget, manif.nManifesterLevel, eVis, eImpact, FALSE);
+                        else
+                            spellsDispelMagicMod(oTarget, manif.nManifesterLevel, eVis, eImpact, FALSE);
+                    }
 
-           oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE,lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE);
-        }
-    }
-    }
+                    // Get next target
+                    oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE,
+                                                  OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE
+                                                  );
+                }// end while - Target loop
+            }// end else - Area dispel
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

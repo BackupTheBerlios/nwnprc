@@ -1,22 +1,31 @@
 /*
    ----------------
-   Ethereal Jaunt
+   Ethereal Jaunt, Psionic
 
-   prc_pow_ethjaunt
+   psi_pow_ethjaunt
    ----------------
 
    8/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Nomad)
-   Power Level: 7
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 13
+    Ethereal Jaunt, Psionic
 
-   You go to the Ethereal Plane. Taking any hostile action will end the power.
+    Psychoportation
+    Level: Nomad 7
+    Display: Visual
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 13
+    Metapsionics: Extend
+
+    You become ethereal, along with your equipment. For the duration of the
+    power, you are in a place called the Ethereal Plane, which overlaps the
+    normal, physical, Material Plane. When the power expires, you return to
+    material existence.
+
+    Taking any hostile actions will force the power to expire immediately.
 */
 
 #include "psi_inc_psifunc"
@@ -43,31 +52,26 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oFirstTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oFirstTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester  = OBJECT_SELF;
+    object oTarget      = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        effect eVis = EffectVisualEffect(VFX_DUR_SANCTUARY);
-        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eSanc = EffectEthereal();
-        effect eLink = EffectLinkEffects(eDur, eSanc);
-        int nDur = nCaster;
-        if (nMetaPsi == 2) nDur *= 2;
+        effect eLink     =                          EffectEthereal();
+               eLink     = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SANCTUARY));
+               eLink     = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        float fDuration  = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-        SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-        // Make sure the target is not prevented from extra-dimensional movement
-        if(GetCanTeleport(oFirstTarget, GetLocation(oFirstTarget), TRUE))
+        // Check ability to move extra-dimensionally
+        if(GetCanTeleport(oManifester, GetLocation(oManifester), TRUE))
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFirstTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oFirstTarget);¨
-        }
-    }
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+        }// end if - Manifester can move extra-dimensionally
+    }// end if - Successfull manifestation
 }

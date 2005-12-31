@@ -6,26 +6,34 @@
    ----------------
 
    25/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 7
-   Range: 15
-   Area: 15 ft burst centered on caster
-   Duration: Instantaneous
-   Saving Throw: Will half.
-   Power Resistance: Yes
-   Power Point Cost: 13
+    Ultrablast
 
-   You grumble psychically, then release a horrid shriek from your subconcious that disrupts the brains of all enemies in the power's
-   area, dealing 13d6 to each enemy.
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 7
+    Manifesting Time: 1 standard action
+    Range: 15 ft.
+    Area: 15-ft.-radius spread centered on you
+    Duration: Instantaneous
+    Saving Throw: Will half
+    Power Resistance: Yes
+    Power Points: 13
+    Metapsionics: Empower, Maximize, Twin, Widen
 
-   Augment: For every additional power point spent, this power's damage increases by 1d6.
+    You “grumble” psychically (which both psionic and nonpsionic creatures can
+    detect), then release a horrid shriek from your subconscious that disrupts
+    the brains of all enemies in the power’s area, dealing 13d6 points of damage
+    to each enemy.
+
+    Augment: For every additional power point you spend, this power’s damage
+             increases by 1d6 points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
@@ -45,62 +53,76 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = OBJECT_SELF;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
-
-        PsychicEnervation(oCaster, nSurge);
-    }
-
-    if (nMetaPsi > 0)
-    {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        location lTarget = GetSpellTargetLocation();
-        effect eVis = EffectVisualEffect(PSI_IMP_ULTRABLAST);
-        int nDiceSize = 6;
-        float fWidth = DoWiden(15.0, nMetaPsi);
-
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 13 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        int nDamage;
+        effect eFNF       = EffectVisualEffect(VFX_FNF_HOWL_MIND);
+        effect eVis       = EffectVisualEffect(PSI_IMP_ULTRABLAST);
+        effect eDamage;
+        float fRadius     = EvaluateWidenPower(manif, FeetToMeters(15.0f));
         float fDelay;
+        location lTarget  = PRCGetSpellTargetLocation();
+        object oTarget;
 
-        if (nSurge > 0) nAugment += nSurge;
-
-        effect eFNF = EffectVisualEffect(VFX_FNF_HOWL_MIND);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
-
-        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-        while (GetIsObjectValid(oTarget))
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
+            // Apply area VFX
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, lTarget);
+
+            // Loop over targets
+            oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oTarget))
             {
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-                fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-
-                if (PRCMyResistPower(oCaster, oTarget, nPen))
+                // Targeting limitations
+                if(oTarget != oManifester                                            && // Don't hit self
+                   spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oManifester)   // Difficulty limits
+                   )
                 {
-                    int nDice = 13;
-                    if (nAugment > 0) nDice += nAugment;
-                    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-                    nDamage += nDice;
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-                    if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                    // Check Immunity and Power Resistance
+                    if(PRCMyResistPower(oManifester, oTarget, nPen)                 &&
+                       !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS, oManifester)
+                       )
                     {
-                        nDamage /= 2;
-                    }
-                    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                }
-            }
-            //Select the next target within the spell shape.
-            oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-        }
-    }
+                        // Roll damage
+                        nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                        // Target-specific stuff
+                        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, FALSE);
+
+                        // Save - Will half
+                        if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                        {
+                            nDamage /= 2;
+                        }
+
+                        // Create effect, calculate delay and apply
+                        eDamage = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+                        fDelay  = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget)) / 20.0f;
+                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
+                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    }// end if - SR check
+                }// end if - Targeting check
+
+                // Get next target
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }// end while - Target loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

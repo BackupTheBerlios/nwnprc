@@ -1,35 +1,37 @@
 /*
    ----------------
-   Dismissal
-   
-   prc_pow_dismiss
+   Dismissal, Psionic
+
+   psi_pow_dismiss
    ----------------
 
    28/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Nomad)
-   Power Level: 4
-   Range: Close
-   Target: One Extraplanar Creature
-   Duration: Instantaneous
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 7
-   
-   This spell forces an extraplanar creature back to its home plane if it fails a save. Extraplanar creatures are outsiders and 
-   elementals. This spell does not work on summons that are not of these races. 
+    Dismissal, Psionic
+
+    Psychoportation
+    Level: Nomad 4
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One extraplanar creature
+    Duration: Instantaneous
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 7
+    Metapsionics: Twin
+
+   This spell forces an extraplanar creature back to its home plane if it fails a save. Extraplanar creatures are outsiders and
+   elementals. This spell does not work on summons that are not of these races.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,35 +48,43 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
-    effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
-    
-    if (nMetaPsi) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	
-	if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER || MyPRCGetRacialType(oTarget) == RACIAL_TYPE_ELEMENTAL)
-	{
-		//Check for Power Resistance
-		if (PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-		
-		    //Fire cast spell at event for the specified target
-        	    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-        	    
-        	        //Make a saving throw check
-        	        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-        	        {
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        	        }
-		}
-	}
-    }
+        int nDC  = GetManifesterDC(oManifester);
+    	int nPen = GetPsiPenetration(oManifester);
+    	effect eVis = EffectVisualEffect(VFX_IMP_UNSUMMON);//VFX_IMP_DEATH_L);
+
+    	// Target type check
+    	if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER  ||
+    	   MyPRCGetRacialType(oTarget) == RACIAL_TYPE_ELEMENTAL
+    	   )
+        {
+            // Let the AI know
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+            // Handle Twin Power
+            int nRepeats = manif.bTwin ? 2 : 1;
+            for(; nRepeats > 0; nRepeats--)
+            {
+                //Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
+                {
+                    // Will negates
+                    if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    }// end if - Failed save
+                }// end if - SR check
+            }// end for - Twin Power
+        }// end if - Target is of correct type
+    }// end if - Successfull manifestation
 }

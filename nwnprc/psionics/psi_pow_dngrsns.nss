@@ -1,26 +1,32 @@
 /*
    ----------------
    Danger Sense
-   
-   prc_all_dngrsns
+
+   psi_pow_dngrsns
    ----------------
 
    12/12/04 by Stratovarius
+*/ /**
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 3
-   Range: Personal
-   Target: Self
-   Duration: 1 Hour/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   You can sense the prescence of danger before your senses would normally allow it. Your intuitive sense
-   alerts you to danger from traps, granting a +4 bonus to reflex saves and armour class vs traps.
-   
-   Augment: For 3 additional power points spent, gain the +2 to each bonus.
-   
+    Danger Sense
+
+    Clairsentience
+    Level: Psion/wilder 3, psychic warrior 3
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 hour/level
+    Power Points: 5
+    Metapsionics: Extend
+
+    You can sense the presence of danger before your senses would normally allow
+    it. Your intuitive sense alerts you to danger from traps, giving you a +4
+    insight bonus on Reflex saves to avoid traps and a +4 insight bonus to
+    Armor Class against attacks by traps.
+
+    Augment: If you spend 3 additional power points, this power also gives
+             you the uncanny dodge ability
+
 */
 
 #include "psi_inc_psifunc"
@@ -30,9 +36,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,38 +52,40 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 3;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       3, 1
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-       	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nBonus = 4;
-    	int nDur = nCaster;
-    	if (nMetaPsi == 2)	nDur *= 2;
-    	
-    	if (nSurge > 0) nAugment += nSurge;
-    	
-    	//Augmentation effects to Saves/AC
-    	if (nAugment > 0) nBonus += (nAugment * 2);
-    
-    	effect eReflex = EffectSavingThrowIncrease(SAVING_THROW_REFLEX, nBonus, SAVING_THROW_TYPE_TRAP);
-    	effect eAC = VersusTrapEffect(EffectACIncrease(nBonus));
-        effect eVis = EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eVis, eReflex);
-        eLink = EffectLinkEffects(eLink, eDur);
-        eLink = EffectLinkEffects(eLink, eAC);
-    	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
+        int nBonus = 4;
+        float fDuration = HoursToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
+
+        // Create effect
+        effect eReflex = EffectSavingThrowIncrease(SAVING_THROW_REFLEX, nBonus, SAVING_THROW_TYPE_TRAP);
+    	effect eAC     = VersusTrapEffect(EffectACIncrease(nBonus));
+        effect eVis    = EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT);
+    	effect eDur    = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    	effect eLink   = EffectLinkEffects(eVis, eReflex);
+               eLink   = EffectLinkEffects(eLink, eDur);
+               eLink   = EffectLinkEffects(eLink, eAC);
+
+        // Apply effect
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+
+        // If augmented, give Uncanny Dodge
+        if(manif.nTimesAugOptUsed_1 == 1)
+        {
+            itemproperty ipUD = ItemPropertyBonusFeat(IP_CONST_FEAT_UNCANNY_DODGE1);
+            object oSkin = GetPCSkin(oTarget);
+            IPSafeAddItemProperty(oSkin, ipUD, fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        }
     }
 }

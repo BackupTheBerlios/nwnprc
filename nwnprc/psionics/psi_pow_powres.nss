@@ -1,22 +1,27 @@
 /*
    ----------------
    Power Resistance
-   
-   prc_pow_powres
+
+   psi_pow_powres
    ----------------
 
    23/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 5
-   Range: Touch
-   Target: Creature Touched
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 9
-   
-   Target creature gains power resistance of 12 + your manifester level.
+    Power Resistance
+
+    Clairsentience
+    Level: Psion/wilder 5
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Creature touched
+    Duration: 1 min./level
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 9
+    Metapsionics: Extend
+
+    The creature gains power resistance equal to 12 + your manifester level.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +31,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,27 +47,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);      
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nSR = nCaster + 12;
-	float fDur = (nCaster * 60.0);
-	if (nMetaPsi == 2)	fDur *= 2;        	
-	
-	//Massive effect linkage, go me
-    	effect eSR = EffectSpellResistanceIncrease(nSR);
-    	effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eDur2 = EffectVisualEffect(249);
-    	effect eLink = EffectLinkEffects(eSR, eDur);
-    	eLink = EffectLinkEffects(eLink, eDur2);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    if(manif.bCanManifest)
+    {
+        int nSR         = 12 + manif.nManifesterLevel;
+        effect eLink    =                          EffectSpellResistanceIncrease(nSR);
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE));
+        effect eVis     = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

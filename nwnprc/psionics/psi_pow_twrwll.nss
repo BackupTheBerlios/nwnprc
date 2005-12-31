@@ -1,38 +1,49 @@
 /*
    ----------------
    Tower of Iron Will
-   
+
    prc_pow_twrwll
    ----------------
 
    23/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 5
-   Range: 10 ft
-   Area: 10 ft burst centered on caster
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 9
-   
-   You generate a bastion of thought so strong it offers protection to you and everyone around you, improving the self control of all.
-   You and all creatures in the area gain power resistance 19. 
-   
-   Augment: For every additional power point spent, this power's duration increases by 1 round, 
-   and the power resistance it grants is increased by 1
+    Tower of Iron Will
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 5
+    Manifesting Time: 1 swift action
+    Range: 10 ft.
+    Area: 10-ft.-radius emanation centered on you
+    Duration: 1 round
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 9
+    Metapsionics: Extend, Widen
+
+    You generate a bastion of thought so strong that it offers protection to you
+    and everyone around you, improving the self-control of all. You and all
+    creatures in the power’s area gain power resistance 19 against all
+    mind-affecting powers.
+
+    Manifesting this power is a swift action, like manifesting a quickened
+    power, and it counts toward the normal limit of one quickened power per
+    round. You cannot manifest this power when it isn’t your turn.
+
+    Augment: For every additional power point you spend, this power’s duration
+             increases by 1 round and the power resistance it provides increases
+             by 1 point.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,52 +60,66 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = OBJECT_SELF;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);      
-    
-    if (nSurge > 0)
-    {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDur = nCaster;
-	int nPen = GetPsiPenetration(oCaster);
-	location lTarget = PRCGetSpellTargetLocation();
-	effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
-	int nSR = 19;
-	float fWidth = DoWiden(10.0, nMetaPsi);
-	
-    	float fDelay;
-		
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) 
-	{
-		nSR += nAugment;
-		nDur += nAugment;
-	}
-	if (nMetaPsi == 2)	nDur *= 2;  
-	
-    	effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_10);
-    	effect eSR = EffectSpellResistanceIncrease(nSR);
-    	effect eLink = EffectLinkEffects(eSR, eVis);
-    	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_WIDEN
+                              );
 
-    	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-	while (GetIsObjectValid(oTarget))
-	{
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-		oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-	}
+    if(manif.bCanManifest)
+    {
+        int nPowRes      = 19 + manif.nTimesAugOptUsed_1;
+        effect eDur      = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE),
+                                             EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE)
+                                             );
+        effect eVis      = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
+        effect eFNF      = EffectVisualEffect(VFX_FNF_LOS_NORMAL_10);
+        location lTarget = PRCGetSpellTargetLocation();
+        object oTarget;
+        float fRadius    = EvaluateWidenPower(manif, FeetToMeters(10.0f));
+        float fDuration  = 6.0f * (1 + manif.nTimesAugOptUsed_1);
+        if(manif.bExtend) fDuration *= 2;
+
+        // Apply area VFX
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, lTarget);
+
+        // Loop over targets
+        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        while(GetIsObjectValid(oTarget))
+        {
+            // Store the PR amount
+            SetLocalInt(oTarget, "PRC_Power_TowerOfIronWill_PR", nPowRes);
+
+            // Apply impact VFX
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+
+            // Set a VFX for the monitor to watch
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+            // Start the monitor
+            DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6);
+
+            // Get next target
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        }// end while - Target loop
+    }// end if - Successfull manifestation
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0)                                         ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
+    {
+        if(DEBUG) DoDebug("psi_pow_twrwll: Power expired, clearing");
+
+        // Clear the marker
+        DeleteLocalInt(oTarget, "PRC_Power_TowerOfIronWill_PR");
     }
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));
 }

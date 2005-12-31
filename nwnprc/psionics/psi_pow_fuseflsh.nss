@@ -1,37 +1,47 @@
 /*
    ----------------
    Fuse Flesh
-   
-   prc_pow_fuseflsh
+
+   psi_pow_fuseflsh
    ----------------
 
    24/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 6
-   Range: Touch
-   Target: One Creature
-   Duration: 1 Round/level
-   Saving Throw: Fortitude Negates, Fortitude Partial
-   Power Resistance: Yes
-   Power Point Cost: 11
-   
-   You cause the victims flesh to ripple, grow together, and fuse into a nearly seamless whole, paralyzing the creature. If the target fails its
-   saving throw, it must attempt another fortitude save or be blinded and deafened for the duration of the power.
-   
-   Augment: For every 2 additional power points spent, this power's DC increases by 1.
+    Fuse Flesh
+
+    Psychometabolism
+    Level: Psion/wilder 6
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Creature touched
+    Duration: 1 round/level
+    Saving Throw: Fortitude negates and Fortitude partial; see text
+    Power Resistance: Yes
+    Power Points: 11
+    Metapsionics: Extend, Twin
+
+    You cause the touched subject’s flesh to ripple, grow together, and fuse
+    into a nearly seamless whole. The subject is forced into a fetal position
+    (if humanoid), with only the vaguest outline of its folded arms and legs
+    visible below the all-encompassing wave of flesh.
+
+    If the target fails its Fortitude save to avoid the power’s effect, the
+    subject must immediately attempt a second Fortitude save. If this second
+    save is failed, the creature’s eyes and ears fuse over, effectively blinding
+    and deafening it.
+
+    Augment: For every 2 additional power points you spend, this power’s save DC
+             increases by 1.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,61 +58,52 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
+    object oManifester = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);  
-    
-    if (nSurge > 0)
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDur = nCaster;
-	effect eParal = EffectParalyze();
-	effect eVis = EffectVisualEffect(82);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eDur2 = EffectVisualEffect(VFX_DUR_PARALYZED);
-	effect eDur3 = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
-	
-	effect eLink = EffectLinkEffects(eDur2, eDur);
-	eLink = EffectLinkEffects(eLink, eParal);
-	eLink = EffectLinkEffects(eLink, eVis);
-    	eLink = EffectLinkEffects(eLink, eDur3);
-    	
-        effect eBlind =  EffectBlindness();
-	effect eDeaf = EffectDeaf();
-	effect eVis2 = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
-	
-	effect eLink2 = EffectLinkEffects(eBlind, eDeaf);
-    	eLink2 = EffectLinkEffects(eLink, eVis2);
-			
-	//Augmentation effects to Damage
-	if (nAugment > 0) nDC += nAugment;
-	if (nMetaPsi == 2)	nDur *= 2;   
-	
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-	       	if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-	      	{
-	       		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-	       	
-	       		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-		      	{
-		       		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-               		}
-               	}
-	}
-    }
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        effect ePrimary   =                             EffectParalyze();
+               ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_PARALYZED));
+               ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_PARALYZE_HOLD));
+               ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+        effect eSecondary =                               EffectBlindness();
+               eSecondary = EffectLinkEffects(eSecondary, EffectDeaf());
+               eSecondary = EffectLinkEffects(eSecondary, EffectVisualEffect(VFX_IMP_BLIND_DEAF_M));
+        float fDuration   = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            if(PRCDoMeleeTouchAttack(oTarget))
+            {
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
+                {
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePrimary, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                        {
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSecondary, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                        }// end if - Save vs secondary effect
+                    }// end if - Save vs primary effect
+                }// end if - SR check
+            }// end if - Touch attack hit
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

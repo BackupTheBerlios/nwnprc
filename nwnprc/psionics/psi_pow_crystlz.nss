@@ -1,36 +1,42 @@
 /*
     ----------------
     Crystallize
-    
-    psi_psi_crystlz
+
+    psi_pow_crystlz
     ----------------
 
     25/10/04 by Stratovarius
+*/ /** @file
 
-    Class: Psion (Shaper)
-    Power Level: 6
-    Range: Medium
-    Target: One Creature
+    Crystallize
+
+    Metacreativity
+    Level: Shaper 6
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One living creature
     Duration: Permanent
     Saving Throw: Fortitude negates
     Power Resistance: Yes
-    Power Point Cost: 11
- 
-    You seed the subject's flesh with super-saturated crystal. In an eyeblink, the subjects
-    form seems to freeze over, as its flesh and fuilds are instantly crystallized. This has 
-    the effect of petrifying the target permanently. 
+    Power Points: 11
+    Metapsionics: Twin
+
+    You seed the subject’s flesh with supersaturated crystal. In an eyeblink,
+    the subject’s form seems to freeze over, as its flesh and fluids are
+    instantly crystallized. Following the application of this power, the subject
+    appears lifeless. In fact, it is not dead (though no life can be detected
+    with powers or spells that detect such).
+
+    Implementation note: The effect is equivalent to standard petrification.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,36 +53,42 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
+        int nDC      = GetManifesterDC(oManifester);
+        int nPen     = GetPsiPenetration(oManifester);
 
-        //Check for Power Resistance
-        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            //use bioware petrify effect instead
-            //that works better for henchmen, DMs, etc
-            //as well as not petrifying undead, constructs, etc
-            //and putting all petrification code in one place, so builder hooks can work
-            DoPetrification(nCaster, oCaster, oTarget, GetSpellId(), nDC);
-
-            /*
-            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+            //Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
             {
-                //SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectPetrify(), oTarget);
+                //use bioware petrify effect instead
+                //that works better for henchmen, DMs, etc
+                //as well as not petrifying undead, constructs, etc
+                //and putting all petrification code in one place, so builder hooks can work
+                DoPetrification(manif.nManifesterLevel, oManifester, oTarget, manif.nSpellID, nDC);
+
+                /*
+                if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+                {
+                    //SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectPetrify(), oTarget);
+                }
+                */
             }
-            */
         }
     }
 }

@@ -1,36 +1,41 @@
 /*
    ----------------
    Demoralize
-   
-   prc_all_demoral
+
+   psi_pow_demoral
    ----------------
 
    29/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: 30 ft
-   Area: 30 ft radius centered on caster
-   Duration: 1 Min/level
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You fill your enemies with self doubt. Any enemy in the area that fails its save becomes shaken.
-   
-   Augment: For every 2 additional power points spent, the DC on this power increases by 1.
+    Demoralize
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: 30 ft.
+    Area: 30-ft.-radius spread centered on you
+    Duration: 1 min./level
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Extend, Twin, Widen
+
+    You fill your enemies with self-doubt. Any enemy in the area that fails its
+    save becomes shaken for the duration of the power. Allies are unaffected.
+
+    Augment: For every 2 additional power points you spend, this power’s range
+             and the radius of its area both increase by 5 feet, and the power’s
+             save DC increases by 1.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,62 +52,62 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetLocation(OBJECT_SELF));
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
+
+    if(manif.bCanManifest)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0)
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	float fDur = 60.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;
+        int nDC         = GetManifesterDC(oManifester) + manif.nTimesAugOptUsed_1;
+        int nPen        = GetPsiPenetration(oManifester);
+        effect eDoom    = CreateDoomEffectsLink();
+    	effect eImpact  = EffectVisualEffect(VFX_IMP_DOOM);
+    	effect eFNF     = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+        float fWidth    = EvaluateWidenPower(manif, FeetToMeters(30.0f + (5.0f * manif.nTimesAugOptUsed_1)));
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+        location lTarget = GetLocation(oManifester);
+        object oTarget;
 
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Size
-	if (nAugment > 0) 	nDC += nAugment;
-	
-	effect eLink = CreateDoomEffectsLink();
-	effect eImpact = EffectVisualEffect(VFX_IMP_DOOM);
-    	effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-    	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Do VFX
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, lTarget);
 
-    	while(GetIsObjectValid(oTarget))
-    	{
-		if (oTarget != OBJECT_SELF)
-		{
-			//Check for Power Resistance
-			if (PRCMyResistPower(oCaster, oTarget, nPen))
-			{
-					
-			    //Fire cast spell at event for the specified target
-		            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-			            
-		                //Make a saving throw check
-		                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-		                {
-		                        //Apply VFX Impact and daze effect
-		                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-		               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
-		                }
-			}
-		}
+            // Target loop
+            oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oTarget))
+            {
+                // No scaring self or non-hostiles
+                if(oTarget != oManifester &&
+                   spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, oManifester)
+                   )
+                {
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetLocation(OBJECT_SELF));
-    	}	
-	
-	
+                    // Check for Power Resistance
+                    if(PRCMyResistPower(oManifester, oTarget, nPen))
+                    {
+                        // Will negates
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                        {
+                            // Apply effect and visuals
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDoom, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
+                        }// end if - Failed save
+                    }// end if - SR check
+                }// end if - Target is someone we don't want to skip
 
-    }
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, lTarget, OBJECT_TYPE_CREATURE);
+            }// end while - Target loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

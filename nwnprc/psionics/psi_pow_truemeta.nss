@@ -1,23 +1,31 @@
 /*
    ----------------
    True Metabolism
-   
-   prc_pow_truemeta
+
+   psi_pow_truemeta
    ----------------
 
    25/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 8
-   Range: Personal
-   Target: Self
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 15
-   
-   Your metabolism operates at a greatly increased rate, healing in minutes what it would take days normally. 
-   You regenerate at the rate of 10 hitpoints a round.
+    True Metabolism
+
+    Psychometabolism
+    Level: Psion/wilder 8
+    Manifesting Time: 1 round
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: 15
+    Metapsionics: Extend
+
+    You are difficult to kill while this power persists. You automatically heal
+    damage at the rate of 10 hit points per round.
+
+    This power is not effective against damage from starvation, thirst, or
+    suffocation. Also, attack forms that don’t deal hit point damage (for
+    example, most poisons) ignore true metabolism. You must have a Constitution
+    score to gain any of this power’s benefits.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +35,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,24 +51,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);      
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-	float fDur = (nCaster * 60.0);
-	if (nMetaPsi == 2)	fDur *= 2;
-	
-	//Massive effect linkage, go me
-    	effect eRegen = EffectRegenerate(10, 6.0);
-    	effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eRegen, eDur);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    }
+    if(manif.bCanManifest)
+    {
+        effect eLink    =                          EffectRegenerate(10, 6.0f);
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROT_ACIDSHIELD));
+        effect eVis     = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    }// end if - Successfull manifestation
 }

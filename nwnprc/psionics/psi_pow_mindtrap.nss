@@ -1,37 +1,46 @@
 /*
    ----------------
    Mind Trap
-   
-   prc_pow_mindtrap
+
+   psi_pow_mindtrap
    ----------------
 
    17/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 3
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   You set up a trap in your mind against psionic intruders. Anyone who attacks you with a telepathy power immediately loses
-   1d6 power points. This does not negate the power being cast.
-   
-   Augment: For every additional power point spent, the duration increases by 1 round.
+    Mind Trap
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 3
+    Manifesting Time: 1 swift action
+    Range: Personal
+    Target: You
+    Duration: 1 round
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 5
+    Metapsionics: Extend
+
+    You set up a trap in your mind against psionic intruders. Anyone who attacks
+    you with a telepathy power immediately loses 1d6 power points. This power’s
+    effect does not negate a power being used against you.
+
+    Manifesting the power is a swift action, like manifesting a quickened power,
+    and it counts toward the normal limit of one quickened power per round.
+
+    Augment: For every additional power point you spend, this power’s duration
+             increases by 1 round.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,30 +57,45 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 3;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
+        effect eDur     = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        float fDuration = 6.0f * (1 + manif.nTimesAugOptUsed_1);
+        if(manif.bExtend) fDuration *= 2;
+
+        // Set the marker local
+        SetLocalInt(oTarget, "PRC_Power_MindTrap_Active", TRUE);
+
+        // Set a VFX for the monitor to watch
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+        // Start the monitor
+        DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6);
     }
-    
-    if (nMetaPsi > 0) 
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0)                                         ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
     {
-	SetLocalInt(oTarget, "MindTrap", TRUE);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDur = nCaster;
-	
-	if (nSurge > 0) nAugment += nSurge;
-			
-	// Augmentation effects to armour class
-	if (nAugment > 0)	nDur += nAugment;
-	if (nMetaPsi == 2)	nDur *= 2;  
-	DelayCommand(RoundsToSeconds(nDur), SetLocalInt(oTarget, "MindTrap", FALSE));
+        if(DEBUG) DoDebug("psi_pow_mindtrap: Power expired, clearing");
+
+        // Clear the marker
+        DeleteLocalInt(oTarget, "PRC_Power_MindTrap_Active");
     }
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));
 }

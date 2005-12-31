@@ -6,27 +6,40 @@
     ----------------
 
     23/2/04 by Stratovarius
+*/ /** @file
 
-    Class: Psion/Wilder
-    Power Level: 5
-    Range: Close
-    Target: One Creature
+    Psychic Crush
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 5
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. +5 ft./2 levels)
+    Target: One creature
     Duration: Instantaneous
-    Saving Throw: Will partial, see text.
+    Saving Throw: Will partial; see text
     Power Resistance: Yes
-    Power Point Cost: 9
+    Power Points: 9
+    Metapsionics: Empower, Maximize, Twin
 
-    Your will abruptly and brutally crushes the essence of any one creature. The target must make a will save
-    with a +4 bonus or be stunned for 1 round and reduced to 1 hit point. If the target makes the save, it takes
-    3d6 points of damage.
+    Your will abruptly and brutally crushes the mental essence of any one
+    creature, debilitating its acumen. The target must make a Will save with a
+    +4 bonus* or collapse unconscious and dying at -1 hit points. If the target
+    succeeds on the save, it takes 3d6 points of damage.
 
-    Augment: For every 2 additional power points spend, this power's damage on a made save increases by 1d6.
+    Augment: For every 2 additional power points you spend, this power’s damage
+             increases by 1d6 points.
+
+
+    * Due to the way saves are handled in NWN, this has been implemented as a
+      lowered DC instead.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
+
+void AvoidDR(object oTarget, int nDamage);
 
 void main()
 {
@@ -46,51 +59,94 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nDC     = GetManifesterDC(oCaster) - 4;
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen    = GetPsiPenetration(oCaster);
-        int nCrush  = GetCurrentHitPoints(oTarget) - 1;
-        int nDamage = d6(3);
-        effect eStun = EffectStunned();
-        effect eVis  = EffectVisualEffect(PSI_FNF_PSYCHIC_CRUSH);//VFX_IMP_DEATH_L);
-        //effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+        int nDC           = GetManifesterDC(oManifester) - 4;
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 3 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        int nDamage;
+        effect eStun      = EffectStunned();
+        effect eVis       = EffectVisualEffect(PSI_FNF_PSYCHIC_CRUSH);
 
-        //Augmentation effects to DC/Damage/Caster Level
-        if (nAugment > 0) nDamage += d6(nAugment);
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-        effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-        effect eCrush = EffectDamage(nCrush, DAMAGE_TYPE_POSITIVE);
-
-        //Check for Power Resistance
-        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-
-            //why would it be death type?
-            //if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
-            if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+            // Check for immunity and Power Resistance
+            if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS, oManifester) &&
+               PRCMyResistPower(oManifester, oTarget, nPen)
+               )
             {
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eCrush, oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, RoundsToSeconds(1),TRUE,-1,nCaster);
+                // Apply VFX
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            }
-            else
-            {
-                //Apply the VFX impact and effects
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            }
+
+                // Save - Will partial. On fail stun and HP set to 1
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                {
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, 6.0f, FALSE);
+                    nDamage = GetCurrentHitPoints(oTarget) + 1;
+                }
+                // On success 3 + augmentation d6 damage
+                else
+                {
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, FALSE);
+                }
+
+                // Apply damage
+                AvoidDR(oTarget, nDamage);
+            }// end if - Immunity and SR check
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
+}
+
+void AvoidDR(object oTarget, int nDamage)
+{
+    int nCurHP         = GetCurrentHitPoints(oTarget);
+    int nTargetHP      = nCurHP - nDamage;
+    int nDamageToApply = nDamage;
+    effect eDamage;
+
+    // Try magical damage
+    eDamage = EffectDamage(nDamageToApply, DAMAGE_TYPE_MAGICAL);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+
+    // Check if the target's HP dropped enough. Skip if the target died on the way
+    if(GetCurrentHitPoints(oTarget) > nTargetHP && !GetIsDead(oTarget))
+    {
+        // Didn't, try again, this time with Divine damage
+        nDamageToApply = GetCurrentHitPoints(oTarget) - nTargetHP;
+
+        eDamage = EffectDamage(nDamageToApply, DAMAGE_TYPE_DIVINE);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+
+        // Check if the target's HP dropped enough. Skip if the target died on the way
+        if(GetCurrentHitPoints(oTarget) > nTargetHP && !GetIsDead(oTarget))
+        {
+            // Didn't, try again, this time with Positive damage
+            nDamageToApply = GetCurrentHitPoints(oTarget) - nTargetHP;
+
+            eDamage = EffectDamage(nDamageToApply, DAMAGE_TYPE_POSITIVE);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+
+            // If it still didn't work, just give up. The blighter probably has immunities to everything else, too, anyway
+            return;
         }
     }
 }

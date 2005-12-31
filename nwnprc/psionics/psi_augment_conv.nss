@@ -22,12 +22,13 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_ENTRY        = 0;
-const int STAGE_PROFILES     = 1;
-const int STAGE_QUICKS       = 2;
-const int STAGE_MISC         = 3;
-const int STAGE_LEV_OR_PP    = 4;
-const int STAGE_SET_DEFAULTS = 5;
+const int STAGE_ENTRY          = 0;
+const int STAGE_PROFILES       = 1;
+const int STAGE_QUICKS         = 2;
+const int STAGE_MISC           = 3;
+const int STAGE_LEV_OR_PP      = 4;
+const int STAGE_SET_DEFAULTS   = 5;
+const int STAGE_MODIFY_PROFILE = 6;
 
 const int CHOICE_BACK_TO_MAIN = -1;
 
@@ -63,7 +64,7 @@ void ClearLocals(object oPC)
 /* Main function                                */
 //////////////////////////////////////////////////
 
-void foo()//main()
+void main()
 {
     object oPC = GetPCSpeaker();
     /* Get the value of the local variable set by the conversation script calling
@@ -192,11 +193,11 @@ void foo()//main()
                 struct user_augment_profile uapTemp = _DecodeProfile(GetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile"));
 
                 SetHeader("Set the profile's values. Current:" + "\n"
-                        + "Option " + "1: " + IntToString(uapTemp.nOption1) + "\n"
-                        + "Option " + "2: " + IntToString(uapTemp.nOption2) + "\n"
-                        + "Option " + "3: " + IntToString(uapTemp.nOption3) + "\n"
-                        + "Option " + "4: " + IntToString(uapTemp.nOption4) + "\n"
-                        + "Option " + "5: " + IntToString(uapTemp.nOption5)
+                        + "Option " + "1: " + IntToString(uapTemp.nOption_1) + "\n"
+                        + "Option " + "2: " + IntToString(uapTemp.nOption_2) + "\n"
+                        + "Option " + "3: " + IntToString(uapTemp.nOption_3) + "\n"
+                        + "Option " + "4: " + IntToString(uapTemp.nOption_4) + "\n"
+                        + "Option " + "5: " + IntToString(uapTemp.nOption_5)
                           );
 
                 // The modification choices
@@ -295,15 +296,16 @@ void foo()//main()
             {
                 // Loop over all profiles and set them to a new value
                 struct user_augment_profile uapTemp;
-                uapTemp.nOption1 = 0;
-                uapTemp.nOption2 = 0;
-                uapTemp.nOption3 = 0;
-                uapTemp.nOption4 = 0;
-                uapTemp.nOption5 = 0;
+                uapTemp.nOption_1 = 0;
+                uapTemp.nOption_2 = 0;
+                uapTemp.nOption_3 = 0;
+                uapTemp.nOption_4 = 0;
+                uapTemp.nOption_5 = 0;
 
+                int i;
                 for(i = PRC_AUGMENT_PROFILE_INDEX_MIN; i <= PRC_AUGMENT_PROFILE_INDEX_MAX; i++)
                 {
-                    uapTemp.nOption1 = i;
+                    uapTemp.nOption_1 = i;
                     StoreUserAugmentationProfile(oPC, i, uapTemp, FALSE);
                 }
             }
@@ -322,25 +324,25 @@ void foo()//main()
                 {
                     switch(nChoice)
                     {
-                        case CHOICE_RAISE_1: uapTemp.nOption1++; break;
-                        case CHOICE_LOWER_1: uapTemp.nOption1--; break;
-                        case CHOICE_RAISE_2: uapTemp.nOption1++; break;
-                        case CHOICE_LOWER_2: uapTemp.nOption1--; break;
-                        case CHOICE_RAISE_3: uapTemp.nOption1++; break;
-                        case CHOICE_LOWER_3: uapTemp.nOption1--; break;
-                        case CHOICE_RAISE_4: uapTemp.nOption1++; break;
-                        case CHOICE_LOWER_4: uapTemp.nOption1--; break;
-                        case CHOICE_RAISE_5: uapTemp.nOption1++; break;
-                        case CHOICE_LOWER_5: uapTemp.nOption1--; break;
+                        case CHOICE_RAISE_1: uapTemp.nOption_1++; break;
+                        case CHOICE_LOWER_1: uapTemp.nOption_1--; break;
+                        case CHOICE_RAISE_2: uapTemp.nOption_2++; break;
+                        case CHOICE_LOWER_2: uapTemp.nOption_2--; break;
+                        case CHOICE_RAISE_3: uapTemp.nOption_3++; break;
+                        case CHOICE_LOWER_3: uapTemp.nOption_3--; break;
+                        case CHOICE_RAISE_4: uapTemp.nOption_4++; break;
+                        case CHOICE_LOWER_4: uapTemp.nOption_4--; break;
+                        case CHOICE_RAISE_5: uapTemp.nOption_5++; break;
+                        case CHOICE_LOWER_5: uapTemp.nOption_5--; break;
                     }
                 }
                 else if(nChoice == CHOICE_CLEAR)
                 {
-                    uapTemp.nOption1 = 0;
-                    uapTemp.nOption2 = 0;
-                    uapTemp.nOption3 = 0;
-                    uapTemp.nOption4 = 0;
-                    uapTemp.nOption5 = 0;
+                    uapTemp.nOption_1 = 0;
+                    uapTemp.nOption_2 = 0;
+                    uapTemp.nOption_3 = 0;
+                    uapTemp.nOption_4 = 0;
+                    uapTemp.nOption_5 = 0;
                 }
                 else
                 {

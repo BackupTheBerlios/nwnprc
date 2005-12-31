@@ -2,25 +2,40 @@
    ----------------
    Oak Body
 
-   prc_pow_oakbody
+   psi_pow_oakbody
    ----------------
 
    25/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 7 P/W, 5 PsyWar
-   Range: Personal
-   Target: Self
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: P/W 13, PsyWar 9
+    Oak Body
 
-   You gain the advantages of a living oak. This grants you Damage Reduction 10/+2, +5 Natural Armour, Immunity to Blindness, Deafness,
-   Disease, Poison, Stunning, 50% Cold Immunity, +4 to Strength, Immunity to Drown, 50% Fire Vulnerability, -2 Dexterity,
-   25% Arcane Spell Failure and 50% movement speed.
+    Psychometabolism
+    Level: Psion/wilder 7, psychic warrior 5
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: Psion/wilder 13, psychic warrior 9
+    Metapsionics: Extend
 
-   Augment: For every additional power point spent, this power's duration increases by 1 minute.
+    This power transforms your body into living oak, which grants you several
+    advantages.
+
+    You gain damage reduction 10/ slashing and a +5 bonus to natural armor that
+    overlaps (does not stack with) any natural armor bonus you may already have.
+    You are immune to ability damage, blindness, deafness, disease, drowning,
+    poison and stunning.
+
+    You take only half damage from cold effects of all kinds. However, you gain
+    vulnerability to fire.
+
+    You gain a +4 enhancement bonus to Strength, but you take a -2 penalty to
+    Dexterity (to a minimum Dexterity score of 1), and your speed is reduced to
+    half normal. You have arcane spell failure chance of 25%.
+
+    Augment: For every additional power point you spend, this power’s duration
+             increases by 1 minute.
 */
 
 #include "psi_inc_psifunc"
@@ -30,9 +45,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,65 +61,44 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nCaster = GetManifesterLevel(oCaster);
-        float fDur = (nCaster * 60.0);
-        if (nMetaPsi == 2)	fDur *= 2;
+        effect eLink    =                          EffectDamageResistance(DAMAGE_TYPE_SLASHING, 10);
+               eLink    = EffectLinkEffects(eLink, EffectACIncrease(5, AC_NATURAL_BONUS));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_BLINDNESS));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEAFNESS));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DISEASE));
+               eLink    = EffectLinkEffects(eLink, EffectSpellImmunity(SPELL_DROWN));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_POISON));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_STUN));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 50));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityDecrease(DAMAGE_TYPE_FIRE, 50));
+               eLink    = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_STRENGTH, 4));
+               eLink    = EffectLinkEffects(eLink, EffectMovementSpeedDecrease(50));
+               eLink    = EffectLinkEffects(eLink, EffectSpellFailure(25, SPELL_SCHOOL_GENERAL));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS));
+        effect eVis     =                         EffectVisualEffect(VFX_IMP_HEAD_NATURE);
+               eVis     = EffectLinkEffects(eVis, EffectVisualEffect(VFX_FNF_NATURES_BALANCE));
+               eVis     = EffectLinkEffects(eVis, EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE));
+        float fDuration = 60.0f * (manif.nManifesterLevel + manif.nTimesAugOptUsed_1);
+        if(manif.bExtend) fDuration *= 2;
 
-        //Massive effect linkage, go me
-        effect eBlind = EffectImmunity(IMMUNITY_TYPE_BLINDNESS);
-        effect eDeaf = EffectImmunity(IMMUNITY_TYPE_DEAFNESS);
-        effect eDisease = EffectImmunity(IMMUNITY_TYPE_DISEASE);
-        effect ePoison = EffectImmunity(IMMUNITY_TYPE_POISON);
-        effect eStun = EffectImmunity(IMMUNITY_TYPE_STUN);
-        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
-        //effect eDex = EffectAbilityDecrease(ABILITY_DEXTERITY, 2);
-        effect eCold = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 50);
-        effect eFire = EffectDamageImmunityDecrease(DAMAGE_TYPE_FIRE, 50);
-        effect eMove = EffectMovementSpeedDecrease(50);
-        effect eDR = EffectDamageReduction(10, DAMAGE_POWER_PLUS_TWO);
-        effect eDrown = EffectSpellImmunity(SPELL_DROWN);
-        effect eAC = EffectACIncrease(5, AC_NATURAL_BONUS);
-        effect eSpell = EffectSpellFailure(25,SPELL_SCHOOL_GENERAL);
-
-        effect eVis1 = EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT);
-        effect eVis2 = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-        effect eVis3 = EffectVisualEffect(VFX_DUR_PROT_BARKSKIN);
-        effect eVis4 = EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS);
-        // Apply as instant
-        effect eVis5 = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
-        effect eVis6 = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);
-        effect eVis7 = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-
-        effect eLink = EffectLinkEffects(eBlind, eDeaf);
-        eLink = EffectLinkEffects(eLink, eDisease);
-        eLink = EffectLinkEffects(eLink, ePoison);
-        eLink = EffectLinkEffects(eLink, eStun);
-        eLink = EffectLinkEffects(eLink, eStr);
-        //eLink = EffectLinkEffects(eLink, eDex);
-        eLink = EffectLinkEffects(eLink, eCold);
-        eLink = EffectLinkEffects(eLink, eFire);
-        eLink = EffectLinkEffects(eLink, eMove);
-        eLink = EffectLinkEffects(eLink, eDR);
-        eLink = EffectLinkEffects(eLink, eDrown);
-        eLink = EffectLinkEffects(eLink, eAC);
-        eLink = EffectLinkEffects(eLink, eSpell);
-        eLink = EffectLinkEffects(eLink, eVis1);
-        eLink = EffectLinkEffects(eLink, eVis2);
-        eLink = EffectLinkEffects(eLink, eVis3);
-        eLink = EffectLinkEffects(eLink, eVis4);
-
-        effect eLink2 = EffectLinkEffects(eVis5, eVis6);
-        eLink2 = EffectLinkEffects(eLink2, eVis7);
-
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink2, oTarget);
-        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, FALSE, fDur, TRUE, -1, nCaster);
-    }
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, FALSE, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

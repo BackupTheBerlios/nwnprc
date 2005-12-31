@@ -1,33 +1,42 @@
 /*
    ----------------
    Eradicate Invisibility
-   
-   prc_all_neginvis
+
+   psi_pow_neginvis
    ----------------
 
    11/12/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 3
-   Area: Colossal burst centered on caster
-   Duration: Instantaneous
-   Saving Throw: Reflex negates.
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   You radiate a psychokinetic burst that disrupts and negates all invisibility in the area.
+    Eradicate Invisibility
+
+    Psychokinesis
+    Level: Psion/wilder 3
+    Manifesting Time: 1 standard action
+    Range: 50 ft.
+    Targets: You and all invisible creatures and objects in a 50-ft.-radius burst centered on you
+    Duration: Instantaneous
+    Saving Throw: Reflex negates
+    Power Resistance: No
+    Power Points: 5
+    Metapsionics: Twin, Widen
+
+    You radiate a psychokinetic burst that disrupts and negates all types of
+    invisibility. Any creature that fails its save to avoid the effect loses its
+    invisibility.
+
+    Augment: For every additional power point you spend, this power’s range and
+             the radius of the burst in which it functions both increase by 5
+             feet.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -44,74 +53,63 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, METAPSIONIC_WIDEN);        
-    
-    if (nSurge > 0)
-    {
-        
-        PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        location lTarget = GetSpellTargetLocation();
-        float fWidth = DoWiden(RADIUS_SIZE_COLOSSAL, nMetaPsi);
-        float fDelay;
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_TWIN |METAPSIONIC_WIDEN
+                              );
 
-        effect eFNF = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetLocation(OBJECT_SELF));
+    if(manif.bCanManifest)
+    {
+        int nDC          = GetManifesterDC(oManifester);
+        effect eImpact   = EffectVisualEffect(VFX_FNF_LOS_NORMAL_30);
+        effect eTest;
+        float fRadius    = EvaluateWidenPower(manif, FeetToMeters(50.0f + (5.0f * manif.nTimesAugOptUsed_1)));
+        location lTarget = PRCGetSpellTargetLocation();
+        object oTarget;
 
-        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));
-        while (GetIsObjectValid(oTarget))
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
+            // Apply impact VFX
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
 
-            if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+            // Loop over targets in the area
+            oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE);
+            while(GetIsObjectValid(oTarget))
             {
-
-                if (GetHasSpellEffect(SPELL_IMPROVED_INVISIBILITY, oTarget) == TRUE)
+                // Difficulty check
+                if(oTarget == oManifester                                            || // Despite usual limitations, this power explicitly hits self
+                   spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oManifester)
+                   )
                 {
-                    RemoveAnySpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget);
-                }
-                else
-                if (GetHasSpellEffect(SPELL_INVISIBILITY, oTarget) == TRUE)
-                {
-                    RemoveAnySpellEffects(SPELL_INVISIBILITY, oTarget);
-                }
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-                effect eInvis = GetFirstEffect(oTarget);
-
-                int bIsImprovedInvis = FALSE;
-                while(GetIsEffectValid(eInvis))
-                {
-                    if (GetEffectType(eInvis) == EFFECT_TYPE_IMPROVEDINVISIBILITY)
+                    // Save - Reflex negates
+                    if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                     {
-                        bIsImprovedInvis = TRUE;
-                    }
-                    //check for invisibility
-                    if(GetEffectType(eInvis) == EFFECT_TYPE_INVISIBILITY || bIsImprovedInvis)
-                    {
-                        //remove invisibility
-                        RemoveEffect(oTarget, eInvis);
-                        if (bIsImprovedInvis)
+                        // Loop over effects and remove all (non-cutscene) invisibility ones
+                        eTest = GetFirstEffect(oTarget);
+                        while(GetIsEffectValid(eTest))
                         {
-                            RemoveSpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget, oTarget);
-                        }
-                    }
-                    //Get Next Effect
-                    eInvis = GetNextEffect(oTarget);
-                }
-            }   
-            //Select the next target within the spell shape.
-            oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, GetLocation(OBJECT_SELF));    
-        }
-    }
+                            if(GetEffectType(eTest) == EFFECT_TYPE_INVISIBILITY         ||
+                               GetEffectType(eTest) == EFFECT_TYPE_IMPROVEDINVISIBILITY
+                               )
+                                RemoveEffect(oTarget, eTest);
+
+                            eTest = GetNextEffect(oTarget);
+                        }// end while - Effect loop
+                    }// end if - Save
+                }// end if - Targeting limitations
+
+                // Get next target
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE);
+            }// end while - Target Loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

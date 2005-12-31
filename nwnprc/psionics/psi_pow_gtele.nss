@@ -15,8 +15,9 @@
     Saving Throw: None or Will negates (object)
     Power Resistance: No or Yes (object)
     Power Points: 15
+    Metapsionics: None
 
-    This powerinstantly transports you to a designated destination. You may also bring one additional
+    This power instantly transports you to a designated destination. You may also bring one additional
     willing Medium or smaller creature or its equivalent per three manifester levels. A Large creature
     counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All
     creatures to be transported must be in contact with you. *
@@ -41,12 +42,14 @@ void main()
 
     /* Main script */
     object oManifester = OBJECT_SELF;
-    int nManifesterLvl = GetManifesterLevel(oManifester);
-    int nSpellID       = PRCGetSpellId();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_NONE
+                              );
 
-    // Check if can manifest
-    if(!GetCanManifest(oManifester, 0, OBJECT_INVALID, 0, 0, 0, 0, 0, 0, 0))
-        return;
-
-    Teleport(oManifester, nManifesterLvl, nSpellID == POWER_GREATER_TELEPORT_PARTY, TRUE, "");
+    if(manif.bCanManifest)
+    {
+        Teleport(oManifester, manif.nManifesterLevel, manif.nSpellID == POWER_GREATER_TELEPORT_PARTY, TRUE, "");
+    }
 }

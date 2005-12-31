@@ -1,24 +1,27 @@
 /*
    ----------------
    Steadfast Perception
-   
-   prc_war_stdfstpr
+
+   psi_pow_stdfstpr
    ----------------
 
    28/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 4
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 4
-   
-   Your vision cannot be distracted or mislead, granting you immunity to all figments and glamers,
-   such as invisibility. Moreover, your Spot and Search skills gain +6 for the duration of the spell,
-   as well as See Invisibility.
+    Steadfast Perception
+
+    Clairsentience
+    Level: Psychic warrior 4
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 7
+    Metapsionics: Extend
+
+    Your vision cannot be distracted or misled, granting you immunity to all
+    figments and glamers (such as invisibility). Moreover, your Spot and Search
+    checks receive a +6 enhancement bonus for the duration of this power.
 */
 
 #include "psi_inc_psifunc"
@@ -28,9 +31,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,28 +47,26 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;     	
-    	
-    	effect eSpot = EffectSkillIncrease(SKILL_SPOT, 6);
-    	effect eSearch = EffectSkillIncrease(SKILL_SEARCH, 6);
-	effect eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	effect eSight = EffectSeeInvisible();
-	effect eLink = EffectLinkEffects(eVis, eDur);
-    	eLink = EffectLinkEffects(eLink, eSearch);
-    	eLink = EffectLinkEffects(eLink, eSpot);
-    	eLink = EffectLinkEffects(eLink, eSight);
+        effect eLink    =                          EffectSeeInvisible();
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_SPOT,   6));
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_SEARCH, 6));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eVis     = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-    }
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

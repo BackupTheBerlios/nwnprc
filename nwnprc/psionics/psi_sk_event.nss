@@ -126,7 +126,7 @@ void main()
     else */
     if(nEvent == EVENT_ONPLAYERREST_FINISHED)
     {
-        if(LOCAL_DEBUG) DoDebug("Rest finished, applying new mindblade settings");
+        if(LOCAL_DEBUG) DoDebug("psi_sk_event: Rest finished, applying new mindblade settings");
         oPC = GetLastBeingRested();
         SetPersistantLocalInt(oPC, MBLADE_FLAGS, GetLocalInt(oPC, MBLADE_FLAGS + "_Q"));
 
@@ -135,7 +135,7 @@ void main()
     }
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {
-        if(LOCAL_DEBUG) DoDebug("Equip");
+        if(LOCAL_DEBUG) DoDebug("psi_sk_event: Equip");
         oPC = GetItemLastEquippedBy();
         object oItem   = GetItemLastEquipped(),
                oRightH = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
@@ -205,7 +205,7 @@ void main()
     }
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
-        if(LOCAL_DEBUG) DoDebug("OnUnequip");
+        if(LOCAL_DEBUG) DoDebug("psi_sk_event: OnUnequip");
         object oItem = GetItemLastUnequipped();
         oPC = GetItemLastUnequippedBy();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
@@ -219,7 +219,7 @@ void main()
     }
     else if(nEvent == EVENT_ONUNAQUIREITEM)
     {
-        if(LOCAL_DEBUG) DoDebug("OnAcquire");
+        if(LOCAL_DEBUG) DoDebug("psi_sk_event: OnAcquire");
         object oItem = GetModuleItemLost();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
@@ -229,7 +229,7 @@ void main()
     }
     else if(nEvent == EVENT_ONPLAYERDEATH)
     {
-        if(LOCAL_DEBUG) DoDebug("OnDeath");
+        if(LOCAL_DEBUG) DoDebug("psi_sk_event: OnDeath");
         object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, GetLastBeingDied());
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {
@@ -242,5 +242,28 @@ void main()
             if(LOCAL_DEBUG) DoDebug("Destroying mindblade from left hand");
             MyDestroyObject(oItem);
         }
+    }
+    else if(nEvent == EVENT_ONPLAYERLEVELDOWN)
+    {
+        oPC = OBJECT_SELF;
+        if(DEBUG) DoDebug("psi_sk_event: OnLevelDown, deleting mindblade settings and existing blades");
+
+        SendMessageToPCByStrRef(oPC, 16824530); // "Your mindblade enhancements have been reset and your mindblades destroyed due to level loss."
+
+        SetPersistantLocalInt(oPC, MBLADE_FLAGS, 0x00000000);
+
+        object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+        if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying mindblade from right hand");
+            MyDestroyObject(oItem);
+        }
+        oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+        if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
+        {
+            if(LOCAL_DEBUG) DoDebug("Destroying mindblade from left hand");
+            MyDestroyObject(oItem);
+        }
+
     }
 }

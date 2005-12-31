@@ -1,24 +1,29 @@
 /*
    ----------------
    Thicken Skin
-   
-   prc_all_thickskn
+
+   psi_pow_thickskn
    ----------------
 
    28/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Egoist), Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   Your skin thickens and spreads across your body, providing a +1 bonus to your armour class.
-   
-   Augment: For every 3 additional power points you spend, the AC bonus improves by 1.
+    Thicken Skin
+
+    Psychometabolism
+    Level: Egoist 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 1
+    Metapsionics: Extend
+
+    Your skin or natural armor thickens and spreads across your body, providing
+    a +1 natural enhancement bonus to your Armor Class.
+
+    Augment: For every 3 additional power points you spend, the natural
+             enhancement bonus increases by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -28,9 +33,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,26 +49,26 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 3;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);         
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       3, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nAC = 1;
-    	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;       	
+        int nACBonus    = 1 + manif.nTimesAugOptUsed_1;
+        effect eLink    = EffectLinkEffects(EffectACIncrease(nACBonus, AC_NATURAL_BONUS),
+                                            EffectVisualEffect(VFX_DUR_PROT_BARKSKIN)
+                                            );
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-    	// Augmentation effects to armour class
-	if (nAugment > 0)	nAC += nAugment;
-	
-	effect eArmor = EffectACIncrease(nAC, AC_NATURAL_BONUS);
-	effect eDur = EffectVisualEffect(VFX_DUR_GLOBE_MINOR);
-	effect eLink = EffectLinkEffects(eArmor, eDur);
-
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-    }
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

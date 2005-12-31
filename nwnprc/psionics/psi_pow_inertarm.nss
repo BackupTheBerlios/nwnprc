@@ -1,25 +1,33 @@
 /*
    ----------------
    Inertial Armour
-   
-   prc_all_inertarm
+
+   psi_pow_inertarm
    ----------------
 
    28/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 1 Hour/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   Your mind generates a tangible field of force that provides a +4 bonus to AC.
-   This bonus does not stack with that provided by armour enchantments.
-   
-   Augment: For every 2 additional power points you spend, the AC bonus improves by 1.
+    Inertial Armour
+
+    Psychokinesis
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 hour/level
+    Power Points: 1
+    Metapsionics: Extend
+
+    Your mind generates a tangible field of force that provides a +4 armor bonus
+    to Armor Class. Unlike mundane armor, inertial armor entails no armor check
+    penalty or speed reduction.
+
+    The armor bonus provided by inertial armor does not stack with bonuses
+    provided by armor enhancements.
+
+    Augment: For every 2 additional power points you spend, the armor bonus to
+             Armor Class increases by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -29,9 +37,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,35 +53,24 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nSurge > 0)
-    {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nAC = 4;    	
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;    	
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-    	if (nSurge > 0) nAugment += nSurge;
-		
-	// Augmentation effects to armour class
-	if (nAugment > 0)	nAC += nAugment;
-	
-	effect eArmor = EffectACIncrease(nAC, AC_ARMOUR_ENCHANTMENT_BONUS);
-	effect eDur = EffectVisualEffect(VFX_DUR_GLOBE_MINOR);
-	effect eLink = EffectLinkEffects(eArmor, eDur);
+    if(manif.bCanManifest)
+    {
+        int nBonus      = 4 + manif.nTimesAugOptUsed_1;
+        effect eLink    =                          EffectACIncrease(nBonus, AC_ARMOUR_ENCHANTMENT_BONUS);
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOBE_MINOR));
+        float fDuration = HoursToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
     }
 }

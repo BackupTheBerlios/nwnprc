@@ -1,22 +1,28 @@
 /*
    ----------------
    Hustle
-   
-   prc_pow_hustle
+
+   psi_pow_hustle
    ----------------
 
    26/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Egoist), Psychic Warrior
-   Power Level: Psion 3, Psychic Warrior 2
-   Range: Personal
-   Target: Self
-   Duration: 1 Round
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: Psion 5, PW 3
-   
-   When you manifest this power, you gain all the benefits of haste for one round. This is an instant power. 
+    Hustle
+
+    Psychometabolism
+    Level: Egoist 3, psychic warrior 2
+    Manifesting Time: 1 swift action
+    Range: Personal
+    Target: You
+    Power Points: Egoist 5, psychic warrior 3
+    Metapsionics: Extend
+
+    You gain the effect of Haste for one round.
+
+    You can manifest this power with an instant thought. Manifesting the power
+    is a swift action, like manifesting a quickened power, and it counts toward
+    the normal limit of one quickened power per round.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +32,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,19 +48,21 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-        int nCaster = GetManifesterLevel(oCaster);
-        effect eHaste = EffectHaste();
-	effect eVis = EffectVisualEffect(VFX_IMP_HASTE);
-    	effect eLink = EffectLinkEffects(eHaste, eVis);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1),TRUE,-1,nCaster);
+        effect eLink    = EffectLinkEffects(EffectHaste(),
+                                            EffectVisualEffect(VFX_IMP_HASTE)
+                                            );
+        float fDuration = manif.bExtend ? 12.0f : 6.0f;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
     }
 }

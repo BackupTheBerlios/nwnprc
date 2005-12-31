@@ -1,23 +1,32 @@
 /*
    ----------------
    Ubiquitous Vision
-   
-   prc_pow_ubiqvis
+
+   psi_pow_ubiqvis
    ----------------
 
    25/3/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 3
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   You have metaphoric "eyes in the back of your head", and on the sides and top as well, granting you benefits. These include
-   rogues being unable to sneak you due to flanking, and a +4 bonus to spot and search.
+    Ubiquitous Vision
+
+    Clairsentience
+    Level: Psion/wilder 3, psychic warrior 3
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 5
+    Metapsionics: Extend
+
+    You have metaphoric “eyes in the back of your head,” and on the sides and
+    top as well, granting you benefits in specific situations. In effect, you
+    have a 360-degree sphere of sight, allowing you a perfect view of creatures
+    that might otherwise flank you. Thus, flanking opponents gain no bonus on
+    their attack rolls, and rogues are denied their sneak attack ability because
+    you do not lose your Dexterity bonus (but they may still sneak attack you if
+    you are caught flat-footed). Your Spot and Search checks gain a +4
+    enhancement bonus.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +36,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,28 +52,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;     	
-	
-	//Massive effect linkage, go me
-	effect eVis2 = EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	effect eSpot = EffectSkillIncrease(SKILL_SPOT, 4);
-	effect eSearch = EffectSkillIncrease(SKILL_SEARCH, 4);
-	effect eSneak = EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK)	;
-	effect eLink = EffectLinkEffects(eVis2, eDur);
-    	eLink = EffectLinkEffects(eLink, eSpot);
-    	eLink = EffectLinkEffects(eLink, eSearch);
-    	eLink = EffectLinkEffects(eLink, eSneak);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-    }
+    if(manif.bCanManifest)
+    {
+        effect eLink    =                          EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK);
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_SPOT,   4));
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_SEARCH, 4));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

@@ -1,37 +1,41 @@
 /*
    ----------------
    Empathic Transfer
-   
+
    psi_pow_emptrn
    ----------------
 
    11/5/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Egoist), PsyWar
-   Power Level: 2
-   Range: Touch
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 3
-   
-   You transfer another creature's wounds to yourself. When you manifest this, you can heal as much as 2d10 damage. The target gains
-   hitpoints equal to the amount, and you lose hitpoints equal to half that amount. 
-   
-   Augment: For every additional power point spent, you can transfer an additional 2d10 points of damage (maximum of 10d10)
+    Empathic Transfer
+
+Psychometabolism
+Level: Egoist 2, psychic warrior 2
+Manifesting Time: 1 standard action
+Range: Touch
+Target: Willing creature touched
+Duration: Instantaneous
+Power Points: 3
+Metapsionics: Empower, Maximize, Twin
+
+You heal another creature’s wounds, transferring some of its damage to yourself. When you manifest this power, you can heal as much as 2d10 points of damage. The target regains a number of hit points equal to the dice result, and you lose hit points equal to half of that amount. (This loss can bring you to 0 or fewer hit points.) Powers and abilities you may have such as damage damage reduction and regeneration do not lessen or change this damage, since you are taking the target’s pain into yourself in an empathic manner. The damage transferred by this power has no type, so even if you have immunity to the type of damage the target originally took, the transfer occurs normally and deals hit point damage to you.
+
+Augment: For every additional power point you spend, you can heal an additional 2d10 points of damage (to a maximum of 10d10 points per manifestation).
+
+
+    @todo 2da & TLK entries
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void AvoidDR(object oTarget, int nDamage);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,31 +52,75 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, 0, 0);
-   
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDice = 2;
-	int nDiceSize = 10;
-	
-	//Augmentation effects to HD
-	if (nAugment > 0) nDice += (nAugment * 2);
-	if (nDice > 10) nDice = 10;
-	
-	int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, 4
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
 
-	//Fire cast spell at event for the specified target
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	effect eHeal = EffectHeal(nDamage);
-	effect eDam = EffectDamage((nDamage/2), DAMAGE_TYPE_POSITIVE);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oCaster);
+    if(manif.bCanManifest)
+    {
+        // Target needs to be willing
+        if(!GetIsEnemy(oTarget))
+        {
+            int nNumberOfDice = 2 + (2 * manif.nTimesAugOptUsed_1);
+            int nDieSize      = 10;
+            int nHeal;
+            effect eHeal, eDam;
+
+            // Let the AI know
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+            // Handle Twin Power
+            int nRepeats = manif.bTwin ? 2 : 1;
+            for(; nRepeats > 0; nRepeats--)
+            {
+                nHeal = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, FALSE, FALSE);
+                eHeal = EffectHeal(nHeal);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
+
+                // Apply damage to manifester
+                AvoidDR(oManifester, nHeal/2);
+            }
+        }
+    }
+}
+
+void AvoidDR(object oTarget, int nDamage)
+{
+    int nCurHP         = GetCurrentHitPoints(oTarget);
+    int nTargetHP      = nCurHP - nDamage;
+    int nDamageToApply = nDamage;
+    effect eDamage;
+
+    // Try magical damage
+    eDamage = EffectDamage(nDamageToApply, DAMAGE_TYPE_MAGICAL);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+
+    // Check if the target's HP dropped enough. Skip if the target died on the way
+    if(GetCurrentHitPoints(oTarget) > nTargetHP && !GetIsDead(oTarget))
+    {
+        // Didn't, try again, this time with Divine damage
+        nDamageToApply = GetCurrentHitPoints(oTarget) - nTargetHP;
+
+        eDamage = EffectDamage(nDamageToApply, DAMAGE_TYPE_DIVINE);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+
+        // Check if the target's HP dropped enough. Skip if the target died on the way
+        if(GetCurrentHitPoints(oTarget) > nTargetHP && !GetIsDead(oTarget))
+        {
+            // Didn't, try again, this time with Positive damage
+            nDamageToApply = GetCurrentHitPoints(oTarget) - nTargetHP;
+
+            eDamage = EffectDamage(nDamageToApply, DAMAGE_TYPE_POSITIVE);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+
+            // If it still didn't work, just give up. The blighter probably has immunities to everything else, too, anyway
+            return;
+        }
     }
 }

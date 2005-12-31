@@ -125,6 +125,7 @@ void main()
     AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONUNAQUIREITEM,      "psi_sk_event", TRUE, FALSE);
     AddEventScript(oPC, EVENT_ONPLAYERDEATH,       "psi_sk_event", TRUE, FALSE);
+    AddEventScript(oPC, EVENT_ONPLAYERLEVELDOWN,   "psi_sk_event", TRUE, FALSE);
     if(LOCAL_DEBUG) DelayCommand(0.01f, DoDebug("Finished psi_sk_manifmbld")); // Wrap in delaycommand so that the game clock gets to update for the purposes of WriteTimestampedLogEntry
 }
 

@@ -9,13 +9,19 @@
    05.07.2005 by Ornedan
 */
 /** @file
-    Level: Psion/Wilder 4, Psychic Warrior 4
+
+    Dimension Door, Psionic
+
+    Psychoportation (Teleportation)
+    Level: Psion/wilder 4, psychic warrior 4
+    Manifesting Time: 1 standard action
     Range: Long (400 ft. + 40 ft./level)
     Target or Targets: You and touched objects or other touched willing creatures
     Duration: Instantaneous
     Saving Throw: None
     Power Resistance: No
-    Power Point Cost: 7
+    Power Points: 7
+    Metapsionics: None
 
     You instantly transfer yourself from your current location to any other spot within range.
     You always arrive at exactly the spot desired—whether by simply visualizing the area or by
@@ -42,17 +48,20 @@ void main()
 
     /* Main spellscript */
     object oManifester = OBJECT_SELF;
-    int nAugCost       = 0;
-    int nMetaPsi       = GetCanManifest(oManifester, nAugCost, OBJECT_INVALID, 0, 0, 0, 0, 0, 0, 0);
-    int nManifesterLvl = GetManifesterLevel(oManifester);
-    int nSpellID       = PRCGetSpellId();
-    int bSelfOrParty   = ((nSpellID == POWER_DIMENSIONDOOR_PARTY) || (nSpellID == POWER_DIMENSIONDOOR_PARTY_DIRDIST)) ?
-                          DIMENSIONDOOR_PARTY :
-                          DIMENSIONDOOR_SELF;
-    int bUseDirDist    = (nSpellID == POWER_DIMENSIONDOOR_SELFONLY_DIRDIST) ||
-                         (nSpellID == POWER_DIMENSIONDOOR_PARTY_DIRDIST);
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_NONE
+                              );
 
-    if(!nMetaPsi) return;
+    if(manif.bCanManifest)
+    {
+        int bSelfOrParty   = ((manif.nSpellID == POWER_DIMENSIONDOOR_PARTY) || (manif.nSpellID == POWER_DIMENSIONDOOR_PARTY_DIRDIST)) ?
+                              DIMENSIONDOOR_PARTY :
+                              DIMENSIONDOOR_SELF;
+        int bUseDirDist    = (manif.nSpellID == POWER_DIMENSIONDOOR_SELFONLY_DIRDIST) ||
+                             (manif.nSpellID == POWER_DIMENSIONDOOR_PARTY_DIRDIST);
 
-    DimensionDoor(oManifester, nManifesterLvl, nSpellID, "", bSelfOrParty, bUseDirDist);
+        DimensionDoor(oManifester, manif.nManifesterLevel, manif.nSpellID, "", bSelfOrParty, bUseDirDist);
+    }
 }

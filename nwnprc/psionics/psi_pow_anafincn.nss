@@ -1,7 +1,7 @@
 /*
    ----------------
    Animal Affinity, Constitution
-   
+
    prc_pow_anafincn
    ----------------
 
@@ -15,9 +15,9 @@
    Saving Throw: None
    Power Resistance: No
    Power Point Cost: 3
-   
+
    You forge an affinity with an idealized animal form, thereby boosting one of your ability scores. You gain a +4 bonus to the
-   chosen ability score.    
+   chosen ability score.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +27,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,25 +43,24 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+            EvaluateManifestation(oManifester, oTarget,
+                                  PowerAugmentationProfile(),
+                                  METAPSIONIC_EXTEND
+                              );
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	
-    	effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eStr = EffectAbilityIncrease(ABILITY_CONSTITUTION,4);
-    	effect eLink = EffectLinkEffects(eStr, eDur);
-        float fDur = 60.0 * nCaster;
-        
-        if (nMetaPsi == 2)	fDur *= 2;
-    	
-    	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-    	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        effect eVis  = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
+        effect eDur  = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        effect eAbi  = EffectAbilityIncrease(ABILITY_CONSTITUTION, 4);
+        effect eLink = EffectLinkEffects(eAbi, eDur);
+
+        float fDur = 60.0 * manif.nManifesterLevel;
+        if(manif.bExtend) fDur *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, -1, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

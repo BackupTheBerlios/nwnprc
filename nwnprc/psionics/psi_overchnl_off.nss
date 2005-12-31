@@ -2,7 +2,7 @@
 //:: Overchannel - off
 //:: psi_overchnl_off
 //:://////////////////////////////////////////////
-/*
+/** @file
     Turns Overchannel off.
 */
 //:://////////////////////////////////////////////
@@ -10,9 +10,12 @@
 //:: Created On: 21.03.2005
 //:://////////////////////////////////////////////
 
+#include "psi_inc_psifunc"
+
+
 void main()
 {
-    object oCaster = OBJECT_SELF;
-    SetLocalInt(oCaster, "Overchannel", 0);
-    FloatingTextStringOnCreature("Overchannel Off", oCaster, FALSE);
+    object oPC = OBJECT_SELF;
+    SetLocalInt(oPC, PRC_OVERCHANNEL, 0);
+    FloatingTextStrRefOnCreature(16824034, oPC, FALSE); // "Overchannel Off"
 }

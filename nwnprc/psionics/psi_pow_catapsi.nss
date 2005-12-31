@@ -1,24 +1,39 @@
 /*
    ----------------
    Catapsi
-   
-   prc_pow_catapsi
+
+   psi_pow_catapsi
    ----------------
 
    27/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 5
-   Range: Personal
-   Area: 30' radius
-   Duration: 1 Round/level
-   Saving Throw: Will Negates
-   Power Resistance: Yes
-   Power Point Cost: 9
-   
-   By manifesting this power, you generate an aura of mental static, interfering with the ability of other psionic characters 
-   to manifest their powers. All psionic powers cost 4 more points to manifest while in the area of the catapsi field. These 4 points
-   count towards the manifester limit, reducing the powers other psions can cast. You are not affected by your own catapsi field.
+    Catapsi
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 5, psychic warrior 5
+    Manifesting Time: 1 standard action
+    Range: 30 ft.
+    Area: 30-ft.-radius emanation centered on you
+    Duration: 1 round/level
+    Saving Throw: Will negates; see text
+    Power Resistance: Yes
+    Power Points: 9
+    Metapsionics: Extend
+
+    By manifesting this power, you generate psychic static, interfering with the
+    ability of other psionic characters to manifest their powers or use psi-like
+    abilities (you are not affected by your own catapsi manifestation). All
+    psionic activity within the area requires 4 more power points to manifest
+    than normal, unless a character makes a Will save each time he attempts to
+    manifest a power. If two or more fields of catapsi overlap, the effects are
+    not cumulative.
+
+    The limit on the number of power points a subject can spend on a power
+    remains in effect; thus, a subject may not be able to manifest its highest-
+    level powers. If manifesting a power would cause the manifester to exceed
+    his available power points or his spending limits, the manifestation fails
+    automatically, but no power points are expended.
 */
 
 #include "psi_inc_psifunc"
@@ -28,9 +43,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,23 +59,45 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;	
-		
-    	//Declare major variables including Area of Effect Object
-    	effect eAOE = EffectAreaOfEffect(AOE_MOB_CATAPSI);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, RoundsToSeconds(nDur));
-    }
-    	
+        int nDC  = GetManifesterDC(GetAreaOfEffectCreator());
+        int nPen = GetPsiPenetration(GetAreaOfEffectCreator());
+        float fDur = RoundsToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDur *= 2;
+
+        effect eAOE = EffectAreaOfEffect(AOE_MOB_CATAPSI, "psi_pow_catapsia", "", "psi_pow_catapsib");
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, fDur, TRUE, -1, manif.nManifesterLevel);
+
+        // Get an object reference to the newly created AoE
+        location lTarget = GetLocation(oTarget);
+        object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        while(GetIsObjectValid(oAoE))
+        {
+            // Test if we found the correct AoE
+            if(GetTag(oAoE) == Get2DACache("vfx_persistent", "LABEL", AOE_MOB_CATAPSI) &&
+               !GetLocalInt(oAoE, "PRC_Catapsi_Inited")
+               )
+            {
+                break;
+            }
+            // Didn't find, get next
+            oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        }
+        if(DEBUG) if(!GetIsObjectValid(oAoE)) DoDebug("ERROR: Can't find area of effect for Catapsi!");
+
+        // Store DC and manifester level in regards to power penetration
+        SetLocalInt(oAoE, "PRC_Catapsi_DC", nDC);
+        SetLocalInt(oAoE, "PRC_Catapsi_PowerPenetration", nPen);
+
+        SetLocalInt(oAoE, "PRC_Catapsi_Inited", TRUE);
+    }// end if - Successfull manifestation
 }

@@ -1,23 +1,26 @@
 /*
    ----------------
    My Light
-   
-   prc_all_mylight
+
+   psi_pow_mylight
    ----------------
 
    31/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   When you manifest this power, your body begins to glow with bright white light,
-   allowing you to see clearly even in the night.
+    My Light
+
+    Psychokinesis [Light]
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Effect: 20 m spread of light emanating from you
+    Duration: 10 min./level
+    Power Points: 1
+    Metapsionics: Extend
+
+    When you manifest this power, your body begins to glow with bright white
+    light, allowing you and others to see clearly even in the night.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +30,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,22 +46,21 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;     	
-    	
-        effect eVis = EffectVisualEffect(VFX_DUR_LIGHT_WHITE_20);
-        effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eLink = EffectLinkEffects(eVis, eDur);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-        //Apply the VFX impact and effects
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+    if(manif.bCanManifest)
+    {
+        effect eLink    = EffectLinkEffects(EffectVisualEffect(VFX_DUR_LIGHT_WHITE_20),
+                                            EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
     }
 }

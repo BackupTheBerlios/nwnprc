@@ -1,38 +1,53 @@
 /*
    ----------------
    Time Hop
-   
-   prc_pow_timehop
+
+   psi_pow_timehop
    ----------------
 
    27/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 3
-   Range: Close
-   Target: One Object
-   Duration: 1 Round/level
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 5
-   
-   The subject of the power hops forward in time. In effect, the subject disappears in a shimmer, then reappears when the power
-   expires. No change has taken place to the object. The creature must be of medium size or smaller. 
-   
-   Augment: For every 2 additional power points spent, this power's can affect 1 more target within 15 feet of the original, and
-   the size category it can effect increases by 1 step.
+    Time Hop
+
+    Psychoportation
+    Level: Psion/wilder 3
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Targets: One Medium or smaller creature
+    Duration: 1 round/level; see text
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 5
+    Metapsionics: Extend, Twin, Widen
+
+    The subject of the power hops forward in time 1 round for every manifester
+    level you have. In effect, the subject seems to disappear in a shimmer of
+    silver energy, then reappear after the duration of this power expires. The
+    subject reappears in exactly the same orientation and condition as before.
+    From the subject’s point of view, no time has passed at all.
+
+    In each round of the power’s duration, it can attempt a DC 15 Wisdom check.
+    Success allows the subject to return. The subject can act normally on its
+    next turn after this power ends.
+
+    Augment: You can augment this power in one or both of the following ways.
+    1. For every 2 additional power points you spend, you can affect a creature
+       of one size category larger.
+    2. For every 2 additional power points you spend, this power can affect an
+       additional target. Any additional target cannot be more than 15 feet from
+       another target of the power.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void WisCheck(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,133 +64,125 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, METAPSIONIC_TWIN, 0);  
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oMainTarget = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oMainTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, 4,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
+
+    if(manif.bCanManifest)
     {
-        
-        PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    int nDC = GetManifesterDC(oCaster);
-    int nCaster = GetManifesterLevel(oCaster);
-    int nPen = GetPsiPenetration(oCaster);
-    int nDur = nCaster;
-    int nSize = GetCreatureSize(oTarget);
-    int nTargetCount = 1;
-    int nAllowedSize = CREATURE_SIZE_MEDIUM;
-    if (nMetaPsi == 2)  nDur *= 2;   
-    
-    // effect set
-    effect ePara = EffectCutsceneParalyze();
-    effect eGhost = EffectCutsceneGhost();
-    effect eEth = EffectEthereal();
-    
-    //Massive effect linkage, go me
-        effect eSpell = EffectSpellImmunity(SPELL_ALL_SPELLS);
-        effect eDam1 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 100);
-        effect eDam2 = EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100);
-        effect eDam3 = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
-        effect eDam4 = EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE, 100);
-        effect eDam5 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 100);
-        effect eDam6 = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
-        effect eDam7 = EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL, 100);
-        effect eDam8 = EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE, 100);
-        effect eDam9 = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 100);
-        effect eDam10 = EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE, 100);
-        effect eDam11 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 100);
-        effect eDam12 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC, 100);
-        
-        effect eLink = EffectLinkEffects(eSpell, eDam1);
-        eLink = EffectLinkEffects(eLink, eDam2);
-        eLink = EffectLinkEffects(eLink, eDam3);
-        eLink = EffectLinkEffects(eLink, eDam4);
-        eLink = EffectLinkEffects(eLink, eDam5);
-        eLink = EffectLinkEffects(eLink, eDam6);
-        eLink = EffectLinkEffects(eLink, eDam7);
-        eLink = EffectLinkEffects(eLink, eDam8);
-        eLink = EffectLinkEffects(eLink, eDam9);
-        eLink = EffectLinkEffects(eLink, eDam10);
-        eLink = EffectLinkEffects(eLink, eDam11);
-        eLink = EffectLinkEffects(eLink, eDam12);
-        eLink = EffectLinkEffects(eLink, ePara);
-        eLink = EffectLinkEffects(eLink, eGhost);
-        eLink = EffectLinkEffects(eLink, eEth);
-    
-    
-    if (nSurge > 0) nAugment += nSurge;
-    
-    //Augmentation effects to Size
-    if (nAugment > 0) 
-    {
-        nAllowedSize += nAugment;
-        //Max size of creature
-        if (nAllowedSize > 5) nAllowedSize = 5;
-        nTargetCount += nAugment;
-    }   
-    
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
-    
-    if(!GetIsFriend(oTarget) && oTarget != OBJECT_SELF)
-    {
-        if(nSize <= nAllowedSize)
-            {
-            //Check for Power Resistance
-            if (PRCMyResistPower(oCaster, oTarget, nPen))
-            {
-                    if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-                    {
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-                        }
-            }
-            }
-        }
-        else if(nSize <= nAllowedSize)
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        int nMaxSize      = CREATURE_SIZE_MEDIUM + manif.nTimesAugOptUsed_1;
+        int nExtraTargets = manif.nTimesAugOptUsed_2;
+        int nTargetsLeft;
+        effect eLink      =                          EffectCutsceneParalyze();
+               eLink      = EffectLinkEffects(eLink, EffectCutsceneGhost());
+               eLink      = EffectLinkEffects(eLink, EffectEthereal());
+               eLink      = EffectLinkEffects(eLink, EffectSpellImmunity(SPELL_ALL_SPELLS));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID,        100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD,        100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE,      100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL,  100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE,        100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL,     100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC,       100));
+        object oExtraTarget;
+        location lTarget  = GetLocation(oMainTarget);
+        float fRadius     = EvaluateWidenPower(manif, FeetToMeters(15.0f));
+        float fDuration   = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-        }
-        
-    if (nTargetCount > 1)
-    {
-        location lTarget = PRCGetSpellTargetLocation();
-        int nTargetsLeft = nTargetCount - 1;
-        
-        //Declare the spell shape, size and the location.  Capture the first target object in the shape.
-        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 15.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        
-        //Cycle through the targets within the spell shape until you run out of targets.
-        while (GetIsObjectValid(oTarget) && nTargetsLeft > 0)
-        {
-            if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
+            // Main target
+            // Target size check
+            if(PRCGetCreatureSize(oMainTarget) <= nMaxSize)
             {
-                //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
-                if(nSize <= nAllowedSize)
+                // Let the AI know
+                SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+
+                // Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oMainTarget, nPen))
+                {
+                    // Save - Will negates
+                    if(!PRCMySavingThrow(SAVING_THROW_WILL, oMainTarget, nDC, SAVING_THROW_TYPE_NONE))
                     {
-                    //Check for Power Resistance
-                    if (PRCMyResistPower(oCaster, oTarget, nPen))
+                        // Apply effect. Not dispellable
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oMainTarget, fDuration, FALSE);
+                        // Start Wis check HB
+                        DelayCommand(6.0f, WisCheck(oManifester, oMainTarget, manif.nSpellID, (FloatToInt(fDuration) / 6) - 1));
+                    }// end if - Save
+                }// end if - SR check
+            }// end if - Target size check
+
+            // Additional targets
+            if(nExtraTargets)
+            {
+                // Get targets until out of potential targets or cannot affect any more
+                int nTargetsLeft = nExtraTargets;
+                oExtraTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                while(nTargetsLeft > 0 && GetIsObjectValid(oExtraTarget))
+                {
+                    if(oExtraTarget != oManifester                                              && // Does not affect the manifester
+                       oExtraTarget != oMainTarget                                              && // Does not affect the same target twice
+                       spellsIsTarget(oExtraTarget, SPELL_TARGET_SELECTIVEHOSTILE, oManifester) && // User gets to pick targets
+                       PRCGetCreatureSize(oExtraTarget) <= nMaxSize                                // Target size check
+                       )
                     {
-                            if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                        // Let the AI know
+                        SPRaiseSpellCastAt(oExtraTarget, TRUE, manif.nSpellID, oManifester);
+
+                        // Check for Power Resistance
+                        if(PRCMyResistPower(oManifester, oExtraTarget, nPen))
+                        {
+                            // Save - Will negates
+                            if(!PRCMySavingThrow(SAVING_THROW_WILL, oExtraTarget, nDC, SAVING_THROW_TYPE_NONE))
                             {
-                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-                                }
-                    }
-                    }
-                     // Use up a target slot only if we actually did something to it
-                nTargetsLeft -= 1;
-            }
-            //Select the next target within the spell shape.
-            oTarget = MyNextObjectInShape(SHAPE_SPHERE, 15.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        }
-    }       
+                                // Apply effect. Not dispellable
+                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oExtraTarget, fDuration, FALSE);
+                                // Start Wis check HB
+                                DelayCommand(6.0f, WisCheck(oManifester, oExtraTarget, manif.nSpellID, (FloatToInt(fDuration) / 6) - 1));
+                            }// end if - Save
+                        }// end if - SR check
+
+                        // Use up a target slot only if we actually did something to it
+                        nTargetsLeft -= 1;
+                    }// end if - Targeting check
+
+                    //Select the next target within the spell shape.
+                    oExtraTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                }// end while - Target loop
+            }// end if - More than one target
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
+}
+
+void WisCheck(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    if((--nBeatsRemaining == 0)                                         || // Is the power expiring now
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Or has it expired already
+       ((d20() + GetAbilityModifier(ABILITY_WISDOM, oTarget)) >= 15)       // Or does the creature succeed at it's Wis check
+       )
+    {
+        if(DEBUG) DoDebug("psi_pow_timehop: Power expired or Wis check succeeded, clearing");
+
+        // Remove the effects
+        RemoveSpellEffects(nSpellID, oManifester, oTarget);
     }
+    else
+       DelayCommand(6.0f, WisCheck(oManifester, oTarget, nSpellID, nBeatsRemaining));
 }

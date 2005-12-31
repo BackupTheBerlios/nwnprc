@@ -1,38 +1,55 @@
 /*
    ----------------
-   Disintegrate
+   Disintegrate, Psionic
 
-   prc_all_disin
+   psi_pow_disin
    ----------------
 
    27/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 6
-   Range: Long
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: Fortitude partial
-   Power Resistance: Yes
-   Power Point Cost: 11
+    Disintegrate, Psionic
 
-   A thin ray springs from your fingers at the target. You must succeed on a ranged touch attack
-   to deal damage to the target. The ray deals 22d6 points of damage.
+    Psychoportation
+    Level: Psion/wilder 6
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Effect: Ray
+    Duration: Instantaneous
+    Saving Throw: Fortitude partial
+    Power Resistance: Yes
+    Power Points: 11
+    Metapsionics: Empower, Maximize, Split Psionic Ray, Twin
 
-   Augment: For every additional power point spend, the target takes an additional
-   2d6 points of damage if it fails its save.
+    A thin, green ray springs from your pointing finger. You must make a
+    successful ranged touch attack to hit. Any creature struck by the ray
+    takes 22d6 points of damage. Any creature reduced to 0 or fewer hit points
+    by this power is entirely disintegrated, leaving behind only a trace of
+    fine dust. A disintegrated creature’s equipment is unaffected.
+
+    A creature or object that makes a successful Fortitude save is partially
+    affected, taking only 5d6 points of damage. If this damage reduces the
+    creature or object to 0 or fewer hit points, it is entirely disintegrated.
+
+    Only the first creature or object struck can be affected; that is, the ray
+    affects only one target per manifestation.
+
+    Augment: For every additional power point you spend, the damage this power
+             deals to a subject that fails its saving throw increases by 2d6 points.
+             Augmenting this power does not change the amount of damage the target
+             takes if it succeeds on its saving throw.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+
+void DoPower(struct manifestation manif, object oTarget, int nDC, int nPen, int nNumberOfDice, int nDieSize);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,53 +66,68 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_SPLIT | METAPSIONIC_TWIN
+                              );
 
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 22 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        object oSecondaryTarget = GetSplitPsionicRayTarget(manif, oTarget);
 
-        PsychicEnervation(oCaster, nSurge);
-    }
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        if(GetIsObjectValid(oSecondaryTarget))
+            SPRaiseSpellCastAt(oSecondaryTarget, TRUE, manif.nSpellID, oManifester);
 
-    if (nMetaPsi > 0)
-    {
-    int nDC = GetManifesterDC(oCaster);
-    int nCaster = GetManifesterLevel(oCaster);
-    int nPen = GetPsiPenetration(oCaster);
-    int nDice = 22;
-    int nDiceSize = 6;
 
-    effect eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            DoPower(manif, oTarget, nDC, nPen, nNumberOfDice, nDieSize);
+            if(GetIsObjectValid(oSecondaryTarget))
+                DoPower(manif, oSecondaryTarget, nDC, nPen, nNumberOfDice, nDieSize);
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
+}
 
-    if (nSurge > 0) nAugment += nSurge;
+void DoPower(struct manifestation manif, object oTarget, int nDC, int nPen, int nNumberOfDice, int nDieSize)
+{
+    // Perform the Touch Attack
+    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
 
-    //Augmentation effects to Damage
-    if (nAugment > 0) nDice += (2 * nAugment);
+    // Shoot the ray
+    effect eRay = EffectBeam(VFX_BEAM_DISINTEGRATE, manif.oManifester, BODY_NODE_HAND, !(nTouchAttack > 0));
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7, FALSE);
 
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-    // Perform the Touch Attach
-    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
-    if (nTouchAttack > 0)
+    if(nTouchAttack > 0)
     {
         //Check for Power Resistance
-        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        if(PRCMyResistPower(manif.oManifester, oTarget, nPen))
         {
-            if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
+            // Fort save partial
+            if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
             {
-                nDice = 5;
+                nNumberOfDice = 5;
             }
-            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-            ApplyTouchAttackDamage(oCaster, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_MAGICAL);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
-        }
-    }
 
+            // Roll damage
+            int nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, TRUE);
+            // Target-specific stuff
+            nDamage = GetTargetSpecificChangesToDamage(oTarget, manif.oManifester, nDamage, TRUE, FALSE);
 
-    }
+            // Apply the damage
+            ApplyTouchAttackDamage(manif.oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_MAGICAL);
+        }// end if - SR check
+    }// end if - Touch attack hit
 }

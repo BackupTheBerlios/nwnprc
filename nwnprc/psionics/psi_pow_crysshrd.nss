@@ -2,36 +2,40 @@
    ----------------
    Crystal Shard
 
-   prc_all_crysshrd
+   psi_pow_crysshrd
    ----------------
 
    21/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion / Wilder
-   Power Level: 1
-   Range: Short
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
+    Crystal Shard
 
-   You propel a razor-sharp crystal shard at your target. You must succeed on a ranged touch attack
-   to deal damage to the target. The shard deals 1d6 of piercing damage.
+    Metacreativity (Creation)
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Effect: Ray
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 1
+    Metapsionics: Empower, Maximize, Split Psionic Ray, Twin
 
-   Augment: For every additional power point spend, this power's damage increases by 1d6.
+    Upon manifesting this power, you propel a razor-sharp crystal shard at your target.
+    You must succeed on a ranged touch attack with the ray to deal damage to a target.
+    The ray deals 1d6 points of piercing damage.
+
+    Augment: For every additional power point you spend, this power’s damage increases
+            by 1d6 points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,47 +52,67 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_SPLIT | METAPSIONIC_TWIN
+                              );
 
-
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
+        int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        int nDamage;
+        effect eShard = EffectVisualEffect(VFX_IMP_FROST_S); // NORMAL_DART
+        effect eDamage;
+        object oSecondaryTarget = GetSplitPsionicRayTarget(manif, oTarget);
 
-        PsychicEnervation(oCaster, nSurge);
-    }
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+        if(GetIsObjectValid(oSecondaryTarget))
+            SPRaiseSpellCastAt(oSecondaryTarget, TRUE, manif.nSpellID, oManifester);
 
-    if (nMetaPsi > 0)
-    {
-    int nDC = GetManifesterDC(oCaster);
-    int nCaster = GetManifesterLevel(oCaster);
-    int nDice = 1;
-    int nDiceSize = 6;
-    effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Shoot the visual effect
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eShard, oTarget);
 
-    if (nSurge > 0) nAugment += nSurge;
+            // Do touch attack
+            int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
+            if(nTouchAttack)
+            {
+                 // Roll damage
+                nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, TRUE);
+                // Target-specific stuff
+                nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, FALSE);
 
-    //Augmentation effects to Damage
-    if (nAugment > 0) nDice += nAugment;
+                ApplyTouchAttackDamage(oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_PIERCING, TRUE);
+            }
 
-    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
+            // Is there a secondary target?
+            if(GetIsObjectValid(oSecondaryTarget))
+            {
+                // Shoot the visual effect
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eShard, oSecondaryTarget);
 
-    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_PIERCING);
+                // Do touch attack
+                int nTouchAttack = PRCDoRangedTouchAttack(oSecondaryTarget);
+                if(nTouchAttack)
+                {
+                     // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, TRUE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oSecondaryTarget, oManifester, nDamage, TRUE, FALSE);
 
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-    // Perform the Touch Attach
-    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
-    if (nTouchAttack > 0)
-    {
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    }
-
-
-    }
+                    ApplyTouchAttackDamage(oManifester, oSecondaryTarget, nTouchAttack, nDamage, DAMAGE_TYPE_PIERCING, TRUE);
+                }
+            }// end if - Split Psionic Ray target check
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

@@ -1,37 +1,49 @@
 /*
    ----------------
    Retrieve
-   
-   prc_pow_retrieve
+
+   psi_pow_retrieve
    ----------------
 
    27/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 6
-   Range: Medium
-   Target: One Item of 10 pounds/level
-   Duration: Instantaneous
-   Saving Throw: Will negates
-   Power Resistance: No
-   Power Point Cost: 11
-   
-   You teleport an item you can see to you. If the object is possessed by an opponent, they get a will save to prevent it.
-   This power will take the opponents weapon, if it is disarmable.
-   
-   Augment: For every additional power point spent, the weight of the item you can pick up increases by 10 pounds.
+    Retrieve
+
+    Psychoportation (Teleportation)
+    Level: Psion/wilder 6
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One object you can hold or carry in one hand, weighing up to 10 lb./level
+    Duration: Instantaneous
+    Saving Throw: Will negates; see text
+    Power Resistance: No
+    Power Points: 11
+    Metapsionics: None
+
+    You automatically teleport an item you can see within range directly to your
+    hand. If the object is in the possession of an opponent, it comes to your
+    hand if your opponent fails a Will save. *
+
+    Augment: For every additional power point you spend, the weight limit of the
+             target increases by 10 pounds.
+
+
+    Implementation notes:
+    WARNING: The method used for moving the object involves creating a copy and
+             destroying the original. This may break some modules.
+    * The power will only take a weapon from the main hand if targeted at a
+      creature, and only if that creature is set to be disarmable.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+#include "prc_inc_teleport"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,60 +60,67 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nAugCost = 0;
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
-        
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_NONE
+                              );
+
+    if(manif.bCanManifest)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDC = GetManifesterDC(oCaster);
-	// Weight is tenths of a pound
-	int nWeight = (100 * nCaster);
-	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) 
-	{
-		nWeight += (nAugment * 100);
-	}
-	
-	
-	if (GetWeight(oTarget) <= nWeight && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
-	{
-		CopyItem(oTarget, oCaster, FALSE);
-		DestroyObject(oTarget);
-	}
-	else if (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
-	{
-		if (GetIsCreatureDisarmable(oTarget))
-		{
-			if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-			{
-				object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oTarget);
-				CopyItem(oItem, oCaster, FALSE);
-				DestroyObject(oItem);
-				
-				if (GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oCaster) == OBJECT_INVALID)
-				{
-					ActionEquipItem(oItem, INVENTORY_SLOT_RIGHTHAND);
-				}
-			}
-		}
-	}
-	else
-	{
-		FloatingTextStringOnCreature("This item is too heavy for you to pick up", oCaster, FALSE);
-	}	
-    }
+        int nDC        = GetManifesterDC(oManifester);
+        int nMaxWeight = 100 * (manif.nManifesterLevel + manif.nTimesAugOptUsed_1); // Weight is tenths of a pound
+
+        // Make sure the target can be teleported
+        if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE))
+        {
+            // If target is an item
+            if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
+            {
+                // And light enough
+                if(GetWeight(oTarget) <= nMaxWeight)
+                {
+                    // Copy it
+                    CopyItem(oTarget, oManifester, FALSE);
+                    MyDestroyObject(oTarget); // Make sure the item does get destroyed
+                }
+                else
+                    FloatingTextStrRefOnCreature(16824062, oManifester, FALSE); // "This item is too heavy for you to pick up"
+            }// end if - Target is an item
+            else if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+            {
+                // Check disarmability
+                if(GetIsCreatureDisarmable(oTarget))
+                {
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+                    // Save - Will negates
+                    if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+                        // Target the creature's mainhand weapon
+                        oTarget = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+
+                        // Check that there was anything in the slot
+                        if(GetIsObjectValid(oTarget))
+                        {
+                            // Make sure it's light enough
+                            if(GetWeight(oTarget) <= nMaxWeight)
+                            {
+                                // Copy it and destroy the original
+                                CopyItem(oTarget, oManifester, FALSE);
+                                MyDestroyObject(oTarget); // Make sure the item does get destroyed
+                            }
+                            else
+                                FloatingTextStrRefOnCreature(16824062, oManifester, FALSE); // "This item is too heavy for you to pick up"
+                        }// end if - There is a weapon to yoink
+                    }// end if - Save
+                }// end if - Target is disarmable
+            }// end else - Target is a creature
+        }// end if - Teleportability check
+    }// end if - Successfull manifestation
 }

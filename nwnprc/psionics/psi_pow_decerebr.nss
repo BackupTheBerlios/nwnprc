@@ -6,15 +6,20 @@
     ----------------
 
     25/2/05 by Stratovarius
+*/ /** @file
 
-    Class: Psion/Wilder
-    Power Level: 7
-    Range: Close
-    Target: One Creature
+    Decerebrate
+
+    Psychoportation [Teleportation]
+    Level: Psion/wilder 7
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./level)
+    Target: One living creature
     Duration: Instantaneous
     Saving Throw: Fortitude negates
     Power Resistance: Yes
-    Power Point Cost: 13
+    Power Points: 13
+    Metapsionics: Twin
 
     With decerebrate, you selectively remove a portion of the creatures brain stem. The creature loses all cerebral functions,
     vision, hearing, and the ability to move. If greater restoration is cast on the target within 1 hour, the target lives.
@@ -27,16 +32,16 @@
 #include "spinc_common"
 #include "prc_inc_teleport"
 
-void DieMaggot(int nSpellID, object oCaster, object oTarget)
+void DieMaggot(int nSpellID, object oManifester, object oTarget)
 {
     // If the target hasn't been hit with restorative effects by now, kill it
-    if(!(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oCaster) &&
+    if(!(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester) &&
          GetLocalInt(oTarget, "WasRestored")
          )
        )
     {
-        effect eVis = EffectVisualEffect(VFX_IMP_DEATH_L);
-        effect eVis2 = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+        effect eVis   = EffectVisualEffect(VFX_IMP_DEATH_L);
+        effect eVis2  = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
         effect eDeath = EffectDeath();
         effect eLink2 = EffectLinkEffects(eVis, eVis2);
         eLink2 = EffectLinkEffects(eLink2, eDeath);
@@ -62,53 +67,54 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_TWIN
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-    	int nDC = GetManifesterDC(oCaster);
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nPen = GetPsiPenetration(oCaster);
+        int nDC      = GetManifesterDC(oManifester);
+        int nPen     = GetPsiPenetration(oManifester);
 
-    	// spam those effect chains, weee
-        effect eParal = GetIsImmune(oTarget, IMMUNITY_TYPE_PARALYSIS) ?  // If the target is immune to normal paralysis
+        // Create effects
+        effect eLink = GetIsImmune(oTarget, IMMUNITY_TYPE_PARALYSIS) ?  // If the target is immune to normal paralysis
                          EffectCutsceneParalyze() :                      // use cutscene paralysis
                          EffectParalyze();                               // Otherwise, normal paralysis
-        effect eBlind = EffectBlindness();
-        effect eDeaf  = EffectDeaf();
-        effect eVis   = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
-        effect eVis2  = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
-        effect eDur   = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-        effect eDur2  = EffectVisualEffect(VFX_DUR_PARALYZED);
-        effect eDur3  = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
-        effect eLink  = EffectLinkEffects(eParal, eBlind);
-        eLink = EffectLinkEffects(eLink, eDeaf);
-        eLink = EffectLinkEffects(eLink, eVis);
-        eLink = EffectLinkEffects(eLink, eVis2);
-        eLink = EffectLinkEffects(eLink, eDur);
-        eLink = EffectLinkEffects(eLink, eDur2);
-        eLink = EffectLinkEffects(eLink, eDur3);
+        eLink = EffectLinkEffects(eLink, EffectBlindness());
+        eLink = EffectLinkEffects(eLink, EffectDeaf());
+        eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_BLIND_DEAF_M));
+        eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PARALYZE_HOLD));
+        eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+        eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PARALYZED));
+        eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PARALYZE_HOLD));
 
-        //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
-        //Check for Power Resistance
-        if(PRCMyResistPower(oCaster, oTarget, nPen))
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) &&   // Check if the target has a brain to mess with
-               GetCanTeleport(oTarget, GetLocation(oTarget), FALSE)  // And that the target can be teleported at all
-               )
+            //Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
             {
-                if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS) &&   // Check if the target has a brain to mess with
+                   GetCanTeleport(oTarget, GetLocation(oTarget), FALSE)  // And that the target can be teleported at all
+                   )
                 {
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1),TRUE,-1,nCaster);
-                    DelayCommand((HoursToSeconds(1) + 1.0), DieMaggot(GetSpellId(), oCaster, oTarget));
-                }
-            }
-        }
-    }
+                    // Fort negates
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1), TRUE, manif.nSpellID, manif.nManifesterLevel);
+                        DelayCommand((HoursToSeconds(1) + 1.0), DieMaggot(manif.nSpellID, oManifester, oTarget));
+                    }// end if - Failed save
+                }// end if - Has a brain, and can be teleported
+            }// end if - SR check
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

@@ -6,25 +6,35 @@
    ----------------
 
    17/5/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Egoist), Psychic Warrior
-   Power Level: 4
-   Range: Touch
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: Fortitude negates
-   Power Resistance: Yes
-   Power Point Cost: 7
+    Psychic Vampire
 
-   This power shrouds your hand in with a darkness you can use to drain an opponent's power. If you make a successful melee touch
-   attack and the victim fails its save, you drain 2 power points for every manifester level you have. These points are simply lost.
-   Against a creature with no power points or one that is not psionic, you deal 2 damage to Int, Wis, and Cha.
+Psychometabolism
+Level: Egoist 4, psychic warrior 4
+Manifesting Time: 1 standard action
+Range: Touch
+Target: Creature touched
+Duration: Instantaneous
+Saving Throw: Fortitude negates
+Power Resistance: Yes
+Power Points: 7
+Metapsionics: Twin
+
+This power shrouds your hand with darkness that you can use to drain an opponent’s power.
+
+If you make a successful melee touch attack (if the victim fails its Fortitude save), the darkness drains 2 power points from your foe for every manifester level you have. The drained points simply dissipate.
+
+Against a psionic being that has no power points or a nonpsionic foe, your attack instead deals 2 points of Intelligence, Wisdom, and Charisma damage.
+
+
+    @todo 2da and TLK
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
@@ -44,46 +54,54 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_TWIN
+                              );
 
-
-    if(nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nDC            = GetManifesterDC(oCaster);
-        int nManifesterLvl = GetManifesterLevel(oCaster);
-        int nPen           = GetPsiPenetration(oCaster);
+        int nDC         = GetManifesterDC(oManifester);
+        int nPen        = GetPsiPenetration(oManifester);
+        effect eVis     = EffectVisualEffect(VFX_IMP_HARM);
 
-        effect eVis = EffectVisualEffect(VFX_IMP_HARM);
-        int nTargetPP = GetCurrentPowerPoints(oTarget);
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-        // Perform the Touch Attach
-        int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
-        if(nTouchAttack > 0)
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            //Check for Power Resistance
-            if(PRCMyResistPower(oCaster, oTarget, nPen))
+            // Perform the Touch Attach
+            if(PRCDoMeleeTouchAttack(oTarget) > 0)
             {
-                //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(oCaster, PRCGetSpellId()));
-                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                // Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
                 {
-                    if(nTargetPP != 0)
+                    // Save - Fortitude negates
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                     {
-                        LosePowerPoints(oTarget, 2 * nManifesterLvl, TRUE);
-                    }
-                    else
-                    {
-                        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA,     2, DURATION_TYPE_PERMANENT);
-                        ApplyAbilityDamage(oTarget, ABILITY_WISDOM,       2, DURATION_TYPE_PERMANENT);
-                        ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, 2, DURATION_TYPE_PERMANENT);
-                    }
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                }
-            }
-        }
-    }
+                        // Check if the target has PP to lose
+                        if(GetCurrentPowerPoints(oTarget) != 0)
+                        {
+                            LosePowerPoints(oTarget, 2 * manif.nManifesterLevel, TRUE);
+                        }
+                        // No PP, do ability damage
+                        else
+                        {
+                            ApplyAbilityDamage(oTarget, ABILITY_CHARISMA,     2, DURATION_TYPE_PERMANENT);
+                            ApplyAbilityDamage(oTarget, ABILITY_WISDOM,       2, DURATION_TYPE_PERMANENT);
+                            ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, 2, DURATION_TYPE_PERMANENT);
+                        }
+
+                        // Do VFX
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    }// end if - Save
+                }// end if - SR check
+            }// end if - Touch attack
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

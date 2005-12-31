@@ -1,34 +1,37 @@
 /*
    ----------------
    Distract
-   
-   prc_all_distract
+
+   psi_pow_distract
    ----------------
 
    25/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Short
-   Target: One Creature
-   Duration: 1 Min/level
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You cause your subjects mind to wander, applying a -4 penalty to Spot, Search, and Listen.
+    Distract
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One creature
+    Duration: 1 min./level
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Extend, Twin
+
+    You cause your subject’s mind to wander, distracting her. Subjects under the
+    effect of distract make all Listen, Spot and Search checks at a -4 penalty.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,43 +48,44 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
+    object oManifester = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    struct manifestation manif =
+            EvaluateManifestation(oManifester, oTarget,
+                                  PowerAugmentationProfile(),
+                                  METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
 
-    
-    if (nMetaPsi > 0) 
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	float fDur = 60.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;
-	
-	effect eSpot = EffectSkillDecrease(SKILL_SPOT, 4);
-	effect eSearch = EffectSkillDecrease(SKILL_SEARCH, 4);
-	effect eListen = EffectSkillDecrease(SKILL_LISTEN, 4);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eLink = EffectLinkEffects(eSpot, eDur);
-	eLink = EffectLinkEffects(eSearch, eLink);
-	eLink = EffectLinkEffects(eListen, eLink);
-	effect eVis = EffectVisualEffect(VFX_IMP_SLOW);
-		
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-		
-	    //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            
+        int nDC      = GetManifesterDC(oManifester);
+        int nPen     = GetPsiPenetration(oManifester);
+        effect eLink =                          EffectSkillDecrease(SKILL_SPOT,   4);
+               eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_SEARCH, 4));
+               eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_LISTEN, 4));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+        effect eVis  = EffectVisualEffect(VFX_IMP_SLOW);
+        float fDur   = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDur *= 2;
+
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            //Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
+            {
                 //Make a saving throw check
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
-                        //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    //Apply VFX Impact and daze effect
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
-	}
+            }
+        }
     }
 }

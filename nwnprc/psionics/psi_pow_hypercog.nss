@@ -1,34 +1,45 @@
 /*
    ----------------
    Hypercognition
-   
-   prc_pow_hypercog
+
+   psi_pow_hypercog
    ----------------
 
    17/7/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Seer)
-   Power Level: 8
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 15
-   
-   When you manifest this power, you gain a bonus to lore equal to 20 + two times your caster level.
+    Hypercognition
+
+    Clairsentience
+    Level: Seer 8
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 15
+    Metapsionics: Extend
+
+    You make lightning-fast deductions based on only the slightest clue,
+    pattern, or scrap of memory resident in your mind. You can make reasonable
+    statements about a person, place, or object, seemingly from very little
+    knowledge. However, your knowledge is in fact the result of a rigorously
+    logical process that you force your mind to undertake, digging up and
+    correlating every possible piece of knowledge bearing on the topic (possibly
+    even extracting echoes of knowledge from the Astral Plane).
+
+    The knowledge you gain manifests as a +20 enhancement bonus to Lore skill.
+
+    Augmentation: For each additional power point, the enhancement bonus to Lore
+                  skill increases by +2.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,24 +56,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nBonus = 20 + (2 * nCaster);
-    	effect eLore = EffectSkillIncrease(SKILL_LORE, nBonus);
-    	effect eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eVis, eDur);
-    	eLink = EffectLinkEffects(eLink, eLore);
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;    	
+    object oManifester = OBJECT_SELF;
+    object oTarget     = GetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    if(manif.bCanManifest)
+    {
+        int nBonus      = 20 + (2 * manif.nTimesAugOptUsed_1);
+        effect eLink    =                          EffectSkillIncrease(SKILL_LORE, nBonus);
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_MAGICAL_VISION));
+        float fDuration = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
     }
 }

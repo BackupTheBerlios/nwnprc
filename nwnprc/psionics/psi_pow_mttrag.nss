@@ -2,24 +2,36 @@
    ----------------
    Matter Agitation
 
-   prc_all_mttrag
+   psi_pow_mttrag
    ----------------
 
    6/12/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: Short
-   Target: One Creature
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 1
+    Matter Agitation
 
-   You excite the structure of an object, heating it to the point of combustion over time.
-   First Round: 1 point of fire damage.
-   Second Round: 1d4 points of fire damage.
-   All following rounds: 1d6 points of fire damage.
+    Psychokinesis
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One object or creature
+    Duration: 1 round/level
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Extend
+
+    You can excite the structure of an object, heating it to the point of
+    combustion over time. The agitation grows more intense in the second and
+    third rounds after you manifest the power, as described below.
+
+    1st Round: Readily flammable material (paper, dry grass, tinder, torches)
+               ignites. Skin reddens. (1 point of fire damage)
+    2nd Round: Wood smolders and smokes, metal becomes hot to the touch, skin
+               blisters, hair smolders, paint shrivels, water boils. (1d4 points
+               of fire damage)
+    3rd and Subsequent Rounds: Wood ignites, metal scorches. Skin burns and hair
+                               ignites, lead melts. (1d6 points of fire damage)
 */
 
 #include "psi_inc_psifunc"
@@ -27,58 +39,10 @@
 #include "psi_spellhook"
 #include "spinc_common"
 
-
-
-void RunImpact1(object oTarget, object oCaster, int nSpell)
-{
-    //--------------------------------------------------------------------------
-    // Check if the spell has expired (check also removes effects)
-    //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(nSpell,oTarget,oCaster))
-    {
-        return;
-    }
-
-    if (GetIsDead(oTarget) == FALSE)
-    {
-        //----------------------------------------------------------------------
-        // Calculate Damage
-        //----------------------------------------------------------------------
-        effect eDam = EffectDamage(d4(), DAMAGE_TYPE_FIRE);
-        effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
-        eDam = EffectLinkEffects(eVis,eDam); // flare up
-        SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
-    }
-}
-
-void RunImpact2(object oTarget, object oCaster, int nSpell)
-{
-    //--------------------------------------------------------------------------
-    // Check if the spell has expired (check also removes effects)
-    //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(nSpell,oTarget,oCaster))
-    {
-        return;
-    }
-
-    if (GetIsDead(oTarget) == FALSE)
-    {
-        //----------------------------------------------------------------------
-        // Calculate Damage
-        //----------------------------------------------------------------------
-        effect eDam = EffectDamage(d6(), DAMAGE_TYPE_FIRE);
-        effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
-        eDam = EffectLinkEffects(eVis,eDam); // flare up
-        SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
-        DelayCommand(6.0f,RunImpact2(oTarget, oCaster, nSpell));
-    }
-}
+void RunImpact(object oManifester, object oTarget, int nSpellID, int nLastBeat, int nCurrentBeat = 0);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -95,44 +59,70 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
+        int nPen        = GetPsiPenetration(oManifester);
+        int nBeats      = manif.nManifesterLevel;
+        if(manif.bExtend) nBeats *= 2;
+        effect eVis     = EffectVisualEffect(VFX_IMP_FLAME_S);
+        effect eDur     = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+        float fDuration = 6.0f * nBeats;
 
-    	PsychicEnervation(oCaster, nSurge);
-    }
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-    if (nMetaPsi > 0)
+        // SR check
+        if(PRCMyResistPower(oManifester, oTarget, nPen))
+        {
+            // Apply impact VFX
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+
+            // Apply an effect for the heartbeat to track
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+            // Start impact heartbeat
+            RunImpact(oManifester, oTarget, manif.nSpellID, nBeats);
+        }// end if - SR check
+    }// end if - Successfull manifestation
+}
+
+void RunImpact(object oManifester, object oTarget, int nSpellID, int nLastBeat, int nCurrentBeat = 0)
+{
+    // Check for expiration
+    if(nCurrentBeat++ <= nLastBeat &&
+       !GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
     {
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	int nSpell = GetSpellId();
+        // Determine damage
+        int nDamage;
+        switch(nCurrentBeat)
+        {
+            case 0:  nDamage = 1;    break;
+            case 1:  nDamage = d4(); break;
+            default: nDamage = d6(); break;
+        }
 
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        // Create effects
+        effect eFlame = EffectVisualEffect(VFX_IMP_FLAME_S);
+        effect eSmoke = EffectVisualEffect(VFX_DUR_SMOKE);
+        effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_FIRE);
 
-	if(PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-		SPApplyEffectToObject (DURATION_TYPE_INSTANT,EffectDamage(1, DAMAGE_TYPE_FIRE),oTarget);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,eDur,oTarget,RoundsToSeconds(nCaster),FALSE);
-		object oSelf = OBJECT_SELF; // because OBJECT_SELF is a function
-		// d4 damage
-		DelayCommand(6.0f,RunImpact1(oTarget, oSelf, nSpell));
-		// d6 and so on.
-		DelayCommand(12.0f,RunImpact2(oTarget, oSelf, nSpell));
-	}
-	else
-	{
-		effect eSmoke = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT,eSmoke,oTarget);
-	}
+        // Apply VFX
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFlame, oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSmoke, oTarget, 6.0f, FALSE);
+
+        // Apply damage
+        SPApplyEffectToObject (DURATION_TYPE_INSTANT, eDam, oTarget);
+
+        // Schedule next impact
+        DelayCommand(6.0f, RunImpact(oManifester, oTarget, nSpellID, nLastBeat, nCurrentBeat));
     }
 }

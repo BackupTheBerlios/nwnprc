@@ -1,22 +1,27 @@
 /*
    ----------------
    Call to Mind
-   
-   prc_all_clltomnd
+
+   psi_pow_clltomnd
    ----------------
 
    22/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion / Wilder
-   Power Level: 1
-   Range: Short
-   Target: Self
-   Duration: 2 Rounds
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   When you manifest this power, you gain a bonus to lore equal to 4 + caster level.
+    Call to Mind
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 2 rounds
+    Power Points: 1
+    Metapsionics: Extend
+
+    When you manifest this power, you gain +5 bonus to the Lore skill.
+
+    Augment: For every additional power point you spend, the skill bonus gained increases by +1.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +31,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,25 +47,28 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int CasterLvl = GetManifesterLevel(oCaster);
-    	int nBonus = 4 + CasterLvl;
-    	effect eLore = EffectSkillIncrease(SKILL_LORE, nBonus);
-    	effect eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eVis, eDur);
-    	eLink = EffectLinkEffects(eLink, eLore);
-    	int nDur = 2;
-    	
-    	if (nMetaPsi == 2)	nDur *= 2;
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, RoundsToSeconds(nDur),TRUE,-1,CasterLvl);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
+    if(manif.bCanManifest)
+    {
+        int nBonus = 5 + manif.nTimesAugOptUsed_1;
+        float fDur = 12.0f;
+        if(manif.bExtend) fDur *= 2;
+
+        effect eLink =                          EffectSkillIncrease(SKILL_LORE, nBonus);
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_IMP_MAGICAL_VISION));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eVis  = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, -1, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

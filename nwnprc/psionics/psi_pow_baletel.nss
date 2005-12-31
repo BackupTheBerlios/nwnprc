@@ -2,38 +2,43 @@
     ----------------
     Baleful Teleport
 
-    psi_psi_baletel
+    psi_pow_baletel
     ----------------
 
     21/10/04 by Stratovarius
+*/ /** @file
 
-    Class: Psion (Nomad)
-    Power Level: 5
-    Range: Short
-    Target: One Creature
+    Baleful Teleport
+
+    Psychoportation (Teleportation)
+    Level: Nomad 5
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One corporeal creature
     Duration: Instantaneous
     Saving Throw: Fortitude half
     Power Resistance: Yes
-    Power Point Cost: 9
+    Power Points: 9
+    Metapsionics: Empower, Maximize, Twin
 
-    You psychoportively disperse miniscule portions of the target, dealing 9d6 points of damage.
+    You psychoportively disperse minuscule portions of the subject, dealing 9d6
+    points of damage. Targets can be protected from the effects of baleful
+    teleport by dimensional anchor.
 
-    Augment: For every additional power point spend, this power's damage increases by 1d6.
-    For each extra 2d6 points of damage, this power's save DC increases by 1,
-    and your manifester level increases by 1.
+    Augment: For every additional power point you spend, this power’s damage
+             increases by 1d6 points. For each extra 2d6 points of damage, this
+             power’s save DC increases by 1 and your manifester level increases
+             by 1 for the purpose of overcoming power resistance.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 #include "prc_inc_teleport"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -50,54 +55,60 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
     // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(2,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
+        // Get more data
+        int nDC           = GetManifesterDC(oManifester);
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 9;
+        int nDieSize      = 6;
+        int nDamage;
 
-        int nDice = 9;
-        int nDiceSize = 6;
+        // Apply augmentation
+        nDC           += manif.nTimesGenericAugUsed;
+        nPen          += manif.nTimesGenericAugUsed;
+        nNumberOfDice += manif.nTimesAugOptUsed_1;
 
-        //Augmentation effects to DC/Damage/Caster Level
-        if (nAugment > 0)
+        // Let the target know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            nDC += (nAugment/2);
-            nPen += (nAugment/2);
-            nDice += nAugment;
-        }
-
-        int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-
-        effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-        effect eRay = EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND);
-
-        //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, POWER_BALEFULTEL));
-
-
-        //Check for Power Resistance
-        if(PRCMyResistPower(oCaster, oTarget, nPen))
-        {
-            // The power has the Teleportation descriptor, so the target has to be teleportable for it to be affected
-            if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE))
+            // Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
             {
-                //Make a saving throw check
-                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                // The power has the Teleportation descriptor, so the target has to be teleportable for it to be affected
+                if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE))
                 {
-                    nDamage /= 2;
-                }
-                effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-                //Apply the VFX impact and effects
-                DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-            }
-        }
-    }
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                    // Fort save for half
+                    if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                        nDamage /= 2;
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage);
+
+                    //Apply the damage and some VFX
+                    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+
+                                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_NORMAL_10), oTarget);
+                    DelayCommand(0.75f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_NORMAL_20), oTarget));
+                    DelayCommand(1.5f,  SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_NORMAL_30), oTarget));
+                }// end if - the target can be teleported
+            }// end if - SR check
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

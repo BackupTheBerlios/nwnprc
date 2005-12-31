@@ -1,35 +1,38 @@
 /*
    ----------------
    Time Hop, Mass
-   
-   prc_pow_timehopm
+
+   psi_pow_timehopm
    ----------------
 
    8/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Nomad)
-   Power Level: 8
-   Range: Personal
-   Target: 25' Burst
-   Duration: 1 Hour/level
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 15
-   
-   The subjects of the power hop forward in time. In effect, the subjects disappear in a shimmer, then reappear when the power
-   expires. No change has taken place to the objects. Friendly targets get no saving throw. 
+    Time Hop, Mass
+
+    Psychoportation
+    Level: Nomad 8
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Targets: All willing creatures in range
+    Duration: 1 hour; see text
+    Power Points: 15
+    Metapsionics: None
+
+    As time hop, except you affect all willing subjects in range, including
+    yourself.
+
+    Augment: For each additional power point spent, the duration of this power
+             increases by 1 hour.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,85 +49,55 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, METAPSIONIC_TWIN, 0);  
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oMainTarget = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_NONE
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;   
-	
-	// effect set
-	effect ePara = EffectCutsceneParalyze();
-	effect eGhost = EffectCutsceneGhost();
-	effect eEth = EffectEthereal();
-	
-	//Massive effect linkage, go me
-    	effect eSpell = EffectSpellImmunity(SPELL_ALL_SPELLS);
-    	effect eDam1 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 100);
-    	effect eDam2 = EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100);
-    	effect eDam3 = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD, 100);
-    	effect eDam4 = EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE, 100);
-    	effect eDam5 = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 100);
-    	effect eDam6 = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 100);
-    	effect eDam7 = EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL, 100);
-    	effect eDam8 = EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE, 100);
-    	effect eDam9 = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING, 100);
-    	effect eDam10 = EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE, 100);
-    	effect eDam11 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING, 100);
-    	effect eDam12 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC, 100);
-    	
-    	effect eLink = EffectLinkEffects(eSpell, eDam1);
-    	eLink = EffectLinkEffects(eLink, eDam2);
-    	eLink = EffectLinkEffects(eLink, eDam3);
-    	eLink = EffectLinkEffects(eLink, eDam4);
-    	eLink = EffectLinkEffects(eLink, eDam5);
-    	eLink = EffectLinkEffects(eLink, eDam6);
-    	eLink = EffectLinkEffects(eLink, eDam7);
-    	eLink = EffectLinkEffects(eLink, eDam8);
-    	eLink = EffectLinkEffects(eLink, eDam9);
-    	eLink = EffectLinkEffects(eLink, eDam10);
-    	eLink = EffectLinkEffects(eLink, eDam11);
-    	eLink = EffectLinkEffects(eLink, eDam12);
-    	eLink = EffectLinkEffects(eLink, ePara);
-    	eLink = EffectLinkEffects(eLink, eGhost);
-    	eLink = EffectLinkEffects(eLink, eEth);
-	
-	
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-	
-	location lTarget = PRCGetSpellTargetLocation();
-	
-	//Declare the spell shape, size and the location.  Capture the first target object in the shape.
-	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, 25.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-		
-	//Cycle through the targets within the spell shape until you run out of targets.
-	while (GetIsObjectValid(oTarget))
-	{
-		if(!GetIsFriend(oTarget))
-		{
-			//Check for Power Resistance
-			if (PRCMyResistPower(oCaster, oTarget, nPen))
-			{
-			       	if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-			      	{
-					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
-        		       	}
-			}
-	    	}
-	    	else 
-	    	{
-	    		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
-	    	}
-		//Select the next target within the spell shape.
-	oTarget = MyNextObjectInShape(SHAPE_SPHERE, 25.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	}
-    }
+        effect eLink      =                          EffectCutsceneParalyze();
+               eLink      = EffectLinkEffects(eLink, EffectCutsceneGhost());
+               eLink      = EffectLinkEffects(eLink, EffectEthereal());
+               eLink      = EffectLinkEffects(eLink, EffectSpellImmunity(SPELL_ALL_SPELLS));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID,        100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD,        100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE,      100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL,  100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE,        100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL,     100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING,    100));
+               eLink      = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC,       100));
+        object oTarget;
+        location lTarget  = PRCGetSpellTargetLocation();
+        float fRadius     = FeetToMeters(25.0f + (5.0f * (manif.nManifesterLevel / 2)));
+        float fDuration   = HoursToSeconds(1 + manif.nTimesAugOptUsed_1);
+
+        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        while(GetIsObjectValid(oTarget))
+        {
+            if(oTarget == oManifester                                      || // Target self
+               spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oManifester)   // Only target allies
+               )
+            {
+                // Let the AI know
+                SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+
+                // Apply effect. Not dispellable
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, FALSE);
+            }// end if - Targeting check
+
+            // Select the next target within the spell shape.
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        }// end while - Target loop
+    }// end if - Successfull manfiestation
 }

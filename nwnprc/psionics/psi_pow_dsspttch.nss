@@ -2,30 +2,37 @@
    ----------------
    Dissipating Touch
 
-   prc_all_dsspttch
+   psi_pow_dsspttch
    ----------------
 
    27/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Touch
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 1
+    Dissipating Touch
 
-   Your mere touch can dispere the surface material of a foe, sending a tiny portion
-   of it far away. This effect is disruptive; thus your melee touch attack deals 1d6 damage.
+    Psychoportation (Teleportation)
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Creature touched
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Empower, Maximize, Twin
 
-   Augment: For every additional power point spent, this power's damage increases by 1d6.
+    Your mere touch can disperse the surface material of a foe, sending a tiny
+    portion of it far away. This effect is disruptive; thus, your successful
+    melee touch attack deals 1d6 points of damage.
+
+    Augment: For every additional power point you spend, this power’s damage
+             increases by 1d6 points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 #include "prc_inc_teleport"
 
 void main()
@@ -46,50 +53,50 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
 
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        int nTouchAttack, nDamage;
+        effect eVis = EffectVisualEffect(VFX_FNF_LOS_NORMAL_10);
 
-        PsychicEnervation(oCaster, nSurge);
-    }
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-    if (nMetaPsi > 0)
-    {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        int nDice = 1;
-        int nDiceSize = 6;
-        effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-
-        if (nSurge > 0) nAugment += nSurge;
-
-        //Augmentation effects to Damage
-        if (nAugment > 0) nDice += nAugment;
-
-        int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-        effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-        // Perform the Touch Attach
-        int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
-        if (nTouchAttack > 0)
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            //Check for Power Resistance
-            if (PRCMyResistPower(oCaster, oTarget, nPen))
+            // Perform the Touch Attach
+            nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
+            if(nTouchAttack > 0)
             {
-                // Check if the target can be teleported
-                if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE))
+                //Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
                 {
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    // Check if the target can be teleported
+                    if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE))
+                    {
+                        // Roll damage
+                        nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, TRUE);
+                        // Target-specific stuff
+                        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, FALSE);
+
+                        // Apply VFX and damage
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                        ApplyTouchAttackDamage(oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_MAGICAL);
+                    }
                 }
             }
         }

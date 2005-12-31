@@ -1,23 +1,26 @@
 /*
    ----------------
    Elf Sight
-   
-   prc_all_elfsight
+
+   psi_pow_elfsight
    ----------------
 
    6/11/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: Psion/Wilder 2, Psychic Warrior 1
-   Range: Personal
-   Target: Self
-   Duration: 1 Hour/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: Psion/Wilder 3, Psychic Warrior 1
-   
-   When you manifest this power, you gain a +2 bonus to spot and search, and gain low light
-   vision as an elf.
+    Elf Sight
+
+    Psychometabolism
+    Level: Psion/wilder 2, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 hour/level
+    Power Points: Psion/wilder 3, psychic warrior 1
+    Metapsionics: Extend
+
+    You gain low-light vision (as an elf) for the duration of the power, as
+    well as a +2 bonus on Search and Spot checks.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +30,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,25 +46,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nDur = nCaster;
-    	if (nMetaPsi == 2)	nDur *= 2;    	
-    	effect eSpot = EffectSkillIncrease(SKILL_SPOT, 2);
-    	effect eSearch = EffectSkillIncrease(SKILL_SEARCH, 2);
-    	effect eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eVis, eDur);
-    	eLink = EffectLinkEffects(eLink, eSpot);
-    	eLink = EffectLinkEffects(eLink, eSearch);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
+    if(manif.bCanManifest)
+    {
+        effect eLink =                          EffectSkillIncrease(SKILL_SPOT,   2);
+               eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_SEARCH, 2));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
+        float fDuration = HoursToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
+
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

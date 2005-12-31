@@ -1,23 +1,26 @@
 /*
    ----------------
    Inertial Barrier
-   
-   prc_all_inertbar
+
+   psi_pow_inertbar
    ----------------
 
    28/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Kineticist), Psychic Warrior
-   Power Level: 4
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 7
-   
-   You create a skin-tight psychokinetic barrier around you that resists cuts, slashes, stabs and blows.
-   This provides 5/- Damage Resistance to all physical damage.
+    Inertial Barrier
+
+    Psychokinesis
+    Level: Kineticist 4, psychic warrior 4
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 7
+    Metapsionics: Extend
+
+    You create a skin-tight psychokinetic barrier around yourself that resists
+    blows, cuts, stabs, and slashes. You gain damage reduction 5/-.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +30,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,25 +46,23 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;    	
-    	
-    	effect eShadow = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
-    	effect eSlash = EffectDamageResistance(DAMAGE_TYPE_SLASHING, 5);
-    	effect ePierce = EffectDamageResistance(DAMAGE_TYPE_PIERCING, 5);
-    	effect eBludge = EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 5);
-	effect eLink = EffectLinkEffects(eSlash, ePierce);
-	eLink = EffectLinkEffects(eLink, eBludge);
-	eLink = EffectLinkEffects(eLink, eShadow);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+    if(manif.bCanManifest)
+    {
+        effect eLink    =                          EffectDamageResistance(DAMAGE_TYPE_SLASHING,    5);
+               eLink    = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_PIERCING,    5));
+               eLink    = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 5));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR));
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
     }
 }

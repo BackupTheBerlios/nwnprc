@@ -2,35 +2,40 @@
    ----------------
    Exhalation of the Black Dragon
 
-   prc_all_exhalebd
+   psi_pow_exhalebd
    ----------------
 
    28/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 3
-   Range: Short
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 5
+    Exhalation of the Black Dragon
 
-   You spit forth vitriolic acid at your target, dealing 3d6 points of acid damage on a successful ranged touch attack.
+    Psychometabolism [Acid]
+    Level: Psychic warrior 3
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Effect: Ray
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 5
+    Metapsionics: Chain, Empower, Maximize, Split Psionic Ray, Twin
 
-   Augment: For every 2 additional power points spent, this power's damage increases by 1d6.
+    You spit forth vitriolic acid, originating from your mouth, at your target.
+    If you succeed on a ranged touch attack, the target takes 3d6 points of
+    acid damage.
+
+    Augment: For every 2 additional power points you spend, this power’s damage
+             increases by 1d6 points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,42 +52,98 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 3);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oMainTarget = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oMainTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_CHAIN | METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_SPLIT | METAPSIONIC_TWIN
+                              );
 
-
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-    int nDC = GetManifesterDC(oCaster);
-    int nCaster = GetManifesterLevel(oCaster);
-    int nPen = GetPsiPenetration(oCaster);
-    effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
-    int nDice = 3;
-    int nDiceSize = 6;
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 3 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 6;
+        int nTouchAttack, i, nDamage;
+        effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
+        object oSecondaryTarget = GetSplitPsionicRayTarget(manif, oMainTarget);
+        object oChainTarget;
 
-    //Augmentation effects to Damage
-    if (nAugment > 0) nDice += nAugment;
+        // Determine Chain Power targets
+        if(manif.bChain)
+            EvaluateChainPower(manif, oMainTarget, TRUE);
 
-    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
+        // Let the AI know
+        SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
+        if(GetIsObjectValid(oSecondaryTarget))
+            SPRaiseSpellCastAt(oSecondaryTarget, TRUE, manif.nSpellID, oManifester);
+        if(manif.bChain)
+            for(i = 0; i < array_get_size(oManifester, PRC_CHAIN_POWER_ARRAY); i++)
+                SPRaiseSpellCastAt(array_get_object(oManifester, PRC_CHAIN_POWER_ARRAY, i), TRUE, manif.nSpellID, oManifester);
 
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-    // Perform the Touch Attach
-    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
-    if (nTouchAttack > 0)
-    {
-        //Check for Power Resistance
-        if (PRCMyResistPower(oCaster, oTarget, nPen))
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        }
-    }
+            // Perform the Touch Attack on the main target
+            nTouchAttack = PRCDoRangedTouchAttack(oMainTarget);
+            if(nTouchAttack > 0)
+            {
+                //Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oMainTarget, nPen))
+                {
+                    // Calculate damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, TRUE);
 
+                    // Apply VFX and damage to main target
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oMainTarget);
+                    ApplyTouchAttackDamage(oManifester, oMainTarget, nTouchAttack,
+                                           GetTargetSpecificChangesToDamage(oMainTarget, oManifester, nDamage, TRUE, TRUE),
+                                           DAMAGE_TYPE_ACID, TRUE
+                                           );
+                    // Apply damage to Chain targets
+                    if(manif.bChain)
+                    {
+                        // Halve the damage
+                        nDamage /= 2;
 
-    }
+                        for(i = 0; i < array_get_size(oManifester, PRC_CHAIN_POWER_ARRAY); i++)
+                        {
+                           oChainTarget = array_get_object(oManifester, PRC_CHAIN_POWER_ARRAY, i);
+                            // Apply VFX and damage to chained target. No criticals or precision-based damage here
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oChainTarget);
+                            SPApplyEffectToObject(DURATION_TYPE_INSTANT,
+                                                  EffectDamage(GetTargetSpecificChangesToDamage(oChainTarget, oManifester, nDamage, TRUE, TRUE),
+                                                               DAMAGE_TYPE_ACID
+                                                               ),
+                                                  oChainTarget
+                                                  );
+                        }// end for - Chain targets
+                    }// end if - Chain Power
+                }// end if - SR check
+            }// end if - Touch attack hit main target
+
+            // Perform the Touch Attack on the split ray target
+            nTouchAttack = PRCDoRangedTouchAttack(oSecondaryTarget);
+            if(nTouchAttack > 0)
+            {
+                //Check for Power Resistance
+                if(PRCMyResistPower(oManifester, oSecondaryTarget, nPen))
+                {
+                    // Calculate damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, TRUE);
+
+                    // Apply VFX and damage to main target
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSecondaryTarget);
+                    ApplyTouchAttackDamage(oManifester, oMainTarget, nTouchAttack,
+                                           GetTargetSpecificChangesToDamage(oSecondaryTarget, oManifester, nDamage, TRUE, TRUE),
+                                           DAMAGE_TYPE_ACID, TRUE
+                                           );
+                }// end if - SR check
+            }// end if - Touch attack hit split ray target
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

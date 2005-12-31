@@ -1,35 +1,38 @@
 /*
     ----------------
     Control Sound
-    
+
     psi_pow_ctrlsnd
     ----------------
 
     26/3/05 by Stratovarius
+*/ /** @file
 
-    Class: Psion/Wilder
-    Power Level: 2
-    Range: Medium
-    Target: One Creature
-    Duration: 1 Round/level
+    Control Sound
+
+    Psychokinesis [Sonic]
+    Level: Psion/wilder 2
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One creature or object
+    Duration: 1 round/level
     Saving Throw: Will negates
     Power Resistance: Yes
-    Power Point Cost: 3
- 
-    You shape and alter existing sounds, creating a zone of silence around the target. If the target is hostile, it recieves a will
-    save and power resistance, otherwise the effect automatically takes place.
+    Power Points: 3
+    Metapsionics: Extend, Twin
+
+    You shape and alter existing sounds, creating a zone of silence around the
+    target. If the target is hostile, it recieves a will save and power
+    resistance, otherwise the effect automatically takes place.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,37 +49,41 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, METAPSIONIC_WIDEN);
-        
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eAOE = EffectAreaOfEffect(AOE_MOB_SILENCE);
-	int nDuration = nCaster;
-	if (nMetaPsi == 2)	nDuration *= 2;
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
 
-	if(!GetIsFriend(oTarget))
-	{
-		if(PRCMyResistPower(oCaster, oTarget, nPen))
-		{
-			if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-			{
-				SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SILENCE));
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, RoundsToSeconds(nDuration));
-			}
-		}
-	}
-	else
-	{
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SILENCE, FALSE));
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, RoundsToSeconds(nDuration));
-	}
-     }
+    if(manif.bCanManifest)
+    {
+        int nDC         = GetManifesterDC(oManifester);
+        int nPen        = GetPsiPenetration(oManifester);
+        effect eAOE     = EffectAreaOfEffect(AOE_MOB_SILENCE);
+        float fDuration = RoundsToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
+
+        // Friendly targets are considered willing. They do not get SR / save and the power is not considered hostile towards them
+        if(GetIsFriend(oTarget))
+        {
+            SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+        }
+        else
+        {
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+            // SR check
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
+            {
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
+                {
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                }
+            }
+
+        }
+    }
 }

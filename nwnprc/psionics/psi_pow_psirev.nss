@@ -1,35 +1,45 @@
 /*
    ----------------
    Psionic Revivify
-   
-   prc_pow_psirev
+
+   psi_pow_psirev
    ----------------
 
    17/5/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Egoist)
-   Power Level: 5
-   Range: Touch
-   Target: One Dead Creature
-   Duration: Instantaneous
-   Saving Throw: No
-   Power Resistance: No
-   Power Point Cost: 9, XP
-   
-   Psionic Revivify lets a manifester reconnect a corpse with its body, restoring life to a recently deceased creature. This power
-   functions like the raise dead spell, except that it costs the manifester 200 XP to manifest.
+Psionic Revivify
+
+Psychometabolism (Healing) [Good]
+Level: Egoist 5
+Manifesting Time: 1 standard action
+Range: Touch
+Target: Dead creature touched
+Duration: Instantaneous
+Saving Throw: None
+Power Resistance: No
+Power Points: 9, XP
+Metapsionics: None
+
+Psionic revivify lets a manifester reconnect a corpse’s psyche with its body, restoring life to a recently deceased creature.
+
+This power functions like the raise dead spell, except that the affected creature receives no level loss, no Constitution loss, and no loss of powers.
+
+The creature has -1 hit points (but is stable) after being restored to life.
+
+XP Cost: 200 XP.
+
+
+    @todo 2da & TLK
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,33 +56,36 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_NONE
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eRaise = EffectResurrection();
-	effect eVis = EffectVisualEffect(VFX_IMP_RAISE_DEAD);
+        effect eResurrect = EffectResurrection();
+        effect eVis       = EffectVisualEffect(VFX_IMP_RAISE_DEAD);
 
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RAISE_DEAD, FALSE));
-	if(GetIsDead(oTarget))
-	{
-		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eRaise, oTarget); 
-		ExecuteScript("prc_pw_raisedead", OBJECT_SELF);
+        // Make sure the target is in fact dead
+        if(GetIsDead(oTarget))
+        {
+            // Let the AI know - Special handling
+            SPRaiseSpellCastAt(oTarget, FALSE, SPELL_RAISE_DEAD, oManifester);
 
-		if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
-			SetPersistantLocalInt(oTarget, "persist_dead", FALSE);    
-			
-	        int nXP = GetXP(oCaster);
-	        nXP -= 200;
-	        SetXP(oCaster,nXP);
-	}
-    }
+            // Apply effects
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eResurrect, oTarget);
+
+            // Pay the XP cost
+            SetXP(oManifester, GetXP(oManifester) - 200);
+
+            // Do special stuff
+            ExecuteScript("prc_pw_raisedead", oManifester);
+            if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
+                SetPersistantLocalInt(oTarget, "persist_dead", FALSE);
+        }// end if - Deadness check
+    }// end if - Successfull manifestation
 }

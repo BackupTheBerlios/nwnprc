@@ -33,9 +33,9 @@ void main()
 
     if(nWildSurge <= nMaxSurge)
     {
-        if(!GetLocalInt(oPC, "Overchannel"))
+        if(!GetLocalInt(oPC, PRC_OVERCHANNEL))
         {
-            SetLocalInt(oPC, "WildSurge", nWildSurge);
+            SetLocalInt(oPC, PRC_WILD_SURGE, nWildSurge);
             FloatingTextStringOnCreature(GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID))), oPC, FALSE);
         }
         else

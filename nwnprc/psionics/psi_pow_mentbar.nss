@@ -1,25 +1,35 @@
 /*
    ----------------
    Mental Barrier
-   
-   prc_pow_mentbar
+
+   psi_pow_mentbar
    ----------------
 
    17/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 3
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   Your mind generates a tangible field of force that provides a +4 bonus to AC.
-   This is a deflection bonus.
-   
-   Augment: For every 4 additional power points you spend, the AC bonus improves by 1 and the duration increases by 4 rounds.
+    Mental Barrier
+
+    Clairsentience
+    Level: Psion/wilder 3, psychic warrior 3
+    Manifesting Time: 1 swift action
+    Range: Personal
+    Target: You
+    Duration: 1 round
+    Power Points: 5
+    Metapsionics: Extend
+
+    You project a field of improbability around yourself, creating a fleeting
+    protective shell. You gain a +4 deflection bonus to Armor Class.
+
+    Manifesting the power is a swift action, like manifesting a quickened power,
+    and it counts toward the normal limit of one quickened power per round.
+
+    Augment: You can augment this power in one or both of the following ways.
+    1. If you spend 4 additional power points, the deflection bonus to Armor
+       Class increases by 1.
+    2. For every additional power point you spend, this power’s duration
+       increases by 1 round.
 */
 
 #include "psi_inc_psifunc"
@@ -29,9 +39,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,41 +55,26 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 4;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nSurge > 0)
-    {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nAC = 4;    	
-	int nDur = nCaster;
-	
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       4, PRC_UNLIMITED_AUGMENTATION,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-    	if (nSurge > 0) nAugment += nSurge;
-		
-	// Augmentation effects to armour class
-	if (nAugment > 0)	
-	{
-		nAC += nAugment;
-		nDur += (nAugment * 4);
-	}
-	
-	if (nMetaPsi == 2)	nDur *= 2;    	
-	
-	effect eArmor = EffectACIncrease(nAC, AC_DEFLECTION_BONUS);
-	effect eDur = EffectVisualEffect(VFX_DUR_GLOBE_MINOR);
-	effect eLink = EffectLinkEffects(eArmor, eDur);
+    if(manif.bCanManifest)
+    {
+        int nBonus      = 4 + manif.nTimesAugOptUsed_1;
+        effect eLink    = EffectLinkEffects(EffectACIncrease(nBonus, AC_DEFLECTION_BONUS),
+                                            EffectVisualEffect(VFX_DUR_GLOBE_MINOR)
+                                            );
+        float fDuration = 6.0f * (1 + manif.nTimesAugOptUsed_2);
+        if(manif.bExtend) fDuration *= 2;
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-    }
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

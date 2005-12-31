@@ -2,21 +2,25 @@
    ----------------
    Timeless Body
 
-   prc_pow_timebody
+   psi_pow_timebody
    ----------------
 
    26/2/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 9
-   Range: Personal
-   Target: Self
-   Duration: 1 Round
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 17
+    Timeless Body
 
-   Your body ignores all harmful effects, making you invulnerable to all spells, powers, damage, or any other damaging effect.
+    Psychoportation
+    Level: Psion/wilder 9
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round
+    Power Points: 17
+    Metapsionics: Extend
+
+    Your body ignores all harmful (and helpful) effects. While timeless body is
+    in effect, you are invulnerable to all attacks and powers.
 */
 
 #include "psi_inc_psifunc"
@@ -42,82 +46,55 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nCaster = GetManifesterLevel(oCaster);
-        int nDur = 1;
-        if (nMetaPsi == 2)	nDur *= 2;
+        effect eLink    = EffectSpellImmunity(SPELL_ALL_SPELLS);
+        // Damage immunities
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID,        100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD,        100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE,      100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL,  100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE,        100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL,     100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE,    100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING,    100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE,    100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING,    100));
+               eLink    = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC,       100));
+        // Specific immunities
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_BLINDNESS));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEAFNESS));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEATH));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DISEASE));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ENTANGLE));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SLOW));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_KNOCKDOWN));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_NEGATIVE_LEVEL));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_PARALYSIS));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SILENCE));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_TRAP));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS));
+        // Visuals
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_TIMELESS_BODY));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eVis     = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
+        float fDuration = 6.0f;
+        if(manif.bExtend) fDuration *= 2;
 
-        //Massive effect linkage, go me
-        effect eSpell = EffectSpellImmunity(SPELL_ALL_SPELLS);
-        effect eDam1  = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID,        100);
-        effect eDam2  = EffectDamageImmunityIncrease(DAMAGE_TYPE_BLUDGEONING, 100);
-        effect eDam3  = EffectDamageImmunityIncrease(DAMAGE_TYPE_COLD,        100);
-        effect eDam4  = EffectDamageImmunityIncrease(DAMAGE_TYPE_DIVINE,      100);
-        effect eDam5  = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL,  100);
-        effect eDam6  = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE,        100);
-        effect eDam7  = EffectDamageImmunityIncrease(DAMAGE_TYPE_MAGICAL,     100);
-        effect eDam8  = EffectDamageImmunityIncrease(DAMAGE_TYPE_NEGATIVE,    100);
-        effect eDam9  = EffectDamageImmunityIncrease(DAMAGE_TYPE_PIERCING,    100);
-        effect eDam10 = EffectDamageImmunityIncrease(DAMAGE_TYPE_POSITIVE,    100);
-        effect eDam11 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SLASHING,    100);
-        effect eDam12 = EffectDamageImmunityIncrease(DAMAGE_TYPE_SONIC,       100);
-
-        effect eAbil  = EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE);
-        effect eBlind = EffectImmunity(IMMUNITY_TYPE_BLINDNESS);
-        effect eDeaf  = EffectImmunity(IMMUNITY_TYPE_DEAFNESS);
-        effect eCrit  = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
-        effect eDeath = EffectImmunity(IMMUNITY_TYPE_DEATH);
-        effect eDis   = EffectImmunity(IMMUNITY_TYPE_DISEASE);
-        effect eEnt   = EffectImmunity(IMMUNITY_TYPE_ENTANGLE);
-        effect eSlow  = EffectImmunity(IMMUNITY_TYPE_SLOW);
-        effect eKD    = EffectImmunity(IMMUNITY_TYPE_KNOCKDOWN);
-        effect eNeg   = EffectImmunity(IMMUNITY_TYPE_NEGATIVE_LEVEL);
-        effect ePara  = EffectImmunity(IMMUNITY_TYPE_PARALYSIS);
-        effect eSil   = EffectImmunity(IMMUNITY_TYPE_SILENCE);
-        effect eSneak = EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK);
-        effect eTrap  = EffectImmunity(IMMUNITY_TYPE_TRAP);
-        effect eMind  = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
-
-        effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
-        effect eDur = EffectVisualEffect(PSI_DUR_TIMELESS_BODY);//VFX_DUR_CESSATE_POSITIVE);
-        //effect eDur2 = EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE);
-        effect eLink = EffectLinkEffects(eMind, eDur);
-        //eLink = EffectLinkEffects(eLink, eDur2);
-        eLink = EffectLinkEffects(eLink, eSpell);
-        eLink = EffectLinkEffects(eLink, eDam1);
-        eLink = EffectLinkEffects(eLink, eDam2);
-        eLink = EffectLinkEffects(eLink, eDam3);
-        eLink = EffectLinkEffects(eLink, eDam4);
-        eLink = EffectLinkEffects(eLink, eDam5);
-        eLink = EffectLinkEffects(eLink, eDam6);
-        eLink = EffectLinkEffects(eLink, eDam7);
-        eLink = EffectLinkEffects(eLink, eDam8);
-        eLink = EffectLinkEffects(eLink, eDam9);
-        eLink = EffectLinkEffects(eLink, eDam10);
-        eLink = EffectLinkEffects(eLink, eDam11);
-        eLink = EffectLinkEffects(eLink, eDam12);
-        eLink = EffectLinkEffects(eLink, eAbil);
-        eLink = EffectLinkEffects(eLink, eBlind);
-        eLink = EffectLinkEffects(eLink, eDeaf);
-        eLink = EffectLinkEffects(eLink, eCrit);
-        eLink = EffectLinkEffects(eLink, eDeath);
-        eLink = EffectLinkEffects(eLink, eDis);
-        eLink = EffectLinkEffects(eLink, eEnt);
-        eLink = EffectLinkEffects(eLink, eSlow);
-        eLink = EffectLinkEffects(eLink, eKD);
-        eLink = EffectLinkEffects(eLink, eNeg);
-        eLink = EffectLinkEffects(eLink, ePara);
-        eLink = EffectLinkEffects(eLink, eSil);
-        eLink = EffectLinkEffects(eLink, eSneak);
-        eLink = EffectLinkEffects(eLink, eTrap);
-
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    }
+    }// end if - Successfull manifestation
 }

@@ -1,109 +1,102 @@
 /*
    ----------------
    Energy Wall, OnHeartBeat
-   
-   prc_pow_enwall2
+
+   psi_pow_enwall2
    ----------------
 
    26/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 3
-   Range: Medium
-   Target: Self
-   Duration: Instant
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   Upon manifesting this power, you create an immobile sheet of energy of the chosen type. All creatures within 10 feet of the wall
-   take 2d6 damage, while those actually in the wall take 2d6 + 1 per manifester level, to a max of +20. This stacks with the extra
-   damage provided by certain damage types.
-   
-   Cold: Fort Save, +1 damage a die.
-   Electricity: Reflex Save, DC +2, Caster level check to overcome Power Resistance +2.
-   Fire: Reflex Save, +1 damage a die.
-   Sonic: Reflex Save, -1 damage a die.
+    Energy Wall, OnHeartBeat
+
+    Metacreativity (Creation) [see text]
+    Level: Psion/wilder 3
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Area: An opaque sheet of energy 10m long and 2m wide
+    Duration: 1d4 rounds + 1 round/level
+    Saving Throw: Reflex half or Fortitude half; see text
+    Power Resistance: No
+    Power Points: 5
+    Metapsionics: Extend, Empower, Maximize, Twin, Widen
+
+    Upon manifesting this power, you choose cold, electricity, fire, or sonic.
+    You create an immobile sheet of energy of the chosen type formed out of
+    unstable ectoplasm. The wall sends forth waves of energy, dealing 2d6 points
+    of damage to creatures entering the wall. In addition, anyone that remains
+    within the energy wall takes 2d6 points of damage +1 point per manifester
+    level (maximum +20).
+
+    If you manifest the wall so that it appears where creatures are, each
+    creature takes damage as if passing through the wall.
+
+    Cold: A sheet of this energy type deals +1 point of damage per die. The
+          saving throw to reduce damage from a cold wall is a Fortitude save
+          instead of a Reflex save.
+    Electricity: Manifesting a sheet of this energy type provides a +2 bonus to
+                 the save DC.
+    Fire: A sheet of this energy type deals +1 point of damage per die.
+    Sonic: A sheet of this energy type deals -1 point of damage per die
+           and ignores an object’s hardness.
+
+    This power’s subtype is the same as the type of energy you manifest.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+#include "psi_inc_enrgypow"
 
 void main()
 {
-	int nDC = GetManifesterDC(GetAreaOfEffectCreator());
-	int nCaster = GetManifesterLevel(GetAreaOfEffectCreator());
-	int nPen = GetPsiPenetration(GetAreaOfEffectCreator());
-		
-	int nDamage;
-	effect eVis;
-	effect eRay;
-	int nSavingThrow;
-	int nSaveType;
-	int nDamageType;
-	int nElement = GetLocalInt(GetAreaOfEffectCreator(), "PsiEnWall");
-	
-	if (nElement == 1)
-	{
-		nDamage = (d6(2) + 2);
-		eVis = EffectVisualEffect(VFX_IMP_FROST_S);
-		nSavingThrow = SAVING_THROW_FORT;
-		nSaveType = SAVING_THROW_TYPE_COLD;
-		nDamageType = DAMAGE_TYPE_COLD;
-	}
-	else if (nElement == 2)
-	{
-		nDamage = d6(2);
-		eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
-		nSavingThrow = SAVING_THROW_REFLEX;
-		nSaveType = SAVING_THROW_TYPE_ELECTRICITY;
-		nDamageType = DAMAGE_TYPE_ELECTRICAL;
-		nDC += 2;
-		nPen += 2;
-	}
-	else if (nElement == 3)
-	{
-		nDamage = (d6(2) + 2);
-		eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
-		nSavingThrow = SAVING_THROW_REFLEX;
-		nSaveType = SAVING_THROW_TYPE_FIRE;
-		nDamageType = DAMAGE_TYPE_FIRE;
-	}
-	else if (nElement == 4)
-	{
-		nDamage = (d6(2) - 2);
-		eVis = EffectVisualEffect(VFX_IMP_SONIC);
-		nSavingThrow = SAVING_THROW_REFLEX;
-		nSaveType = SAVING_THROW_TYPE_SONIC;
-		nDamageType = DAMAGE_TYPE_SONIC;
-	}
+    object oAoE    = OBJECT_SELF;
+    struct manifestation manif      = GetLocalManifestation(oAoE, "PRC_Power_EnergyWall_Manifestation");
+    struct energy_adjustments enAdj =
+        EvaluateEnergy(manif.nSpellID, POWER_ENERGYWALL_COLD, POWER_ENERGYWALL_ELEC, POWER_ENERGYWALL_FIRE, POWER_ENERGYWALL_SONIC);
+    int nDC                         = GetLocalInt(oAoE, "PRC_Power_EnergyWall_DC") + enAdj.nDCMod;
+    int nNumberOfDice               = 2;
+    int nDieSize                    = 6;
+    int nDamage;
+    effect eVis                     = EffectVisualEffect(enAdj.nVFX1);
+    effect eDamage;
 
-
-
-
-    object oTarget = GetFirstInPersistentObject(OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-    //Declare the spell shape, size and the location.
+    // Loop over AoE contents
+    object oTarget = GetFirstInPersistentObject(oAoE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     while(GetIsObjectValid(oTarget))
     {
-        if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+        if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, manif.oManifester))
         {
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            //Make SR check, and appropriate saving throw(s).
-            if(PRCMyResistPower(GetAreaOfEffectCreator(), oTarget, nPen))
+            // Let the AI know
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, manif.oManifester);
+
+            // Roll damage
+            nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, min(manif.nManifesterLevel, 20), enAdj.nBonusPerDie, TRUE, FALSE);
+            // Target-specific stuff
+            nDamage = GetTargetSpecificChangesToDamage(oTarget, manif.oManifester, nDamage, TRUE, TRUE);
+
+            // Do save
+            if(enAdj.nSaveType == SAVING_THROW_TYPE_COLD)
             {
-		if(PRCMySavingThrow(nSavingThrow, oTarget, nDC, nSaveType))
-		{
-			nDamage /= 2;
-		}
-		effect eDam = EffectDamage(nDamage, nDamageType);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                // Cold has a fort save for half
+                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, enAdj.nSaveType))
+                    nDamage /= 2;
             }
-        }
-        //Select the next target within the spell shape.
-        oTarget = GetNextInPersistentObject(OBJECT_SELF,OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
-    }
+            else
+                // Adjust damage according to Reflex Save, Evasion or Improved Evasion
+                nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, enAdj.nSaveType);
+
+            // Apply VFX and damage the target, assuming there is still damage left to deal after modification
+            if(nDamage > 0)
+            {
+                eDamage = EffectDamage(nDamage, enAdj.nDamageType);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+            }// end if - Damage left to be dealt
+        }// end if - Difficulty level-related targeting limitations
+
+        // Get next target
+        oTarget = GetNextInPersistentObject(oAoE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+    }// end while - Target loop
 }

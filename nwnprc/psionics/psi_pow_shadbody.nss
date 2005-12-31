@@ -2,24 +2,37 @@
    ----------------
    Shadow Body
 
-   prc_pow_shadbody
+   psi_pow_shadbody
    ----------------
 
    27/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 8
-   Range: Personal
-   Target: Self
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 15
+    Shadow Body
 
-   Your body and all equipment become a living shadow. You cannot harm anyone physically, but can manifest powers as normal.
-   You gain 10/+3 DR, Immunity to Critical Hits, Ability Damage, Disease, and Poison. You take half damage from Fire, Electricity
-   and Acid. You also gain Darkvision. You drift in and out of the shadow plane, giving you 50% concealment and causing you
-   to disappear, although this is negated should you attack anyone.
+    Psychometabolism
+    Level: Psion/wilder 8
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: 15
+    Metapsionics: Extend
+
+    Your body and all your equipment are subsumed by your shadow. As a living
+    shadow, you drift in and out of the shadow plane, giving you total
+    concealement (50% miss chance).
+
+    While in your shadow body, you gain damage reduction 10/+1 and darkvision.
+    You are immune to extra damage from critical hits, ability damage, disease,
+    drowning, and poison. You take only half damage from acid, electricity, and
+    fire of all kinds.
+
+    While affected by this power, you can be detected by powers that read
+    thoughts, life, or presences (including true seeing).
+
+    If you take any hostile actions, you will return fully to the Prime Material
+    plane for a round.
 */
 
 #include "psi_inc_psifunc"
@@ -28,23 +41,16 @@
 #include "spinc_common"
 #include "prc_inc_teleport"
 
-void GoInvis(object oTarget, object oCaster, int nCaster, int nSpell)
+void GoInvis(struct manifestation manif, object oTarget)
 {
-    //--------------------------------------------------------------------------
-    // Check if the spell has expired (check also removes effects)
-    //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(nSpell,oTarget,oCaster))
+    // Check for effect expiration
+    if(!GZGetDelayedSpellEffectsExpired(manif.nSpellID, oTarget, manif.oManifester))
     {
-        return;
-    }
-
-    if (GetIsDead(oTarget) == FALSE)
-    {
-        effect eInvis = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
-       	effect eCover = EffectConcealment(50);
-       	effect eLink1 = EffectLinkEffects(eInvis, eCover);
-       	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink1, oTarget, 6.0,TRUE,-1,nCaster);
-        DelayCommand(6.0f,GoInvis(oTarget, oCaster, nCaster, nSpell));
+        effect eInvis   = EffectInvisibility(INVISIBILITY_TYPE_NORMAL);
+       	effect eConceal = EffectConcealment(50);
+       	effect eLink    = EffectLinkEffects(eInvis, eConceal);
+       	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0f, TRUE, manif.nSpellID, manif.nManifesterLevel);
+        DelayCommand(6.0f, GoInvis(manif, oTarget));
     }
 }
 
@@ -66,47 +72,37 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nCaster = GetManifesterLevel(oCaster);
-        float fDur = 60.0 * nCaster;
-        int nSpell = GetSpellId();
-        if (nMetaPsi == 2)	fDur *= 2;
-
-        //Massive effect linkage, go me
-        effect eAcid   = EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID, 50);
-        effect eElec   = EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 50);
-        effect eFire   = EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE, 50);
-        effect eAbil   = EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE);
-        effect eCrit   = EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT);
-        effect eDis    = EffectImmunity(IMMUNITY_TYPE_DISEASE);
-        effect ePoison = EffectImmunity(IMMUNITY_TYPE_POISON);
-        effect eDR     = EffectDamageReduction(10, DAMAGE_POWER_PLUS_THREE);
-        effect eDark   = EffectUltravision();
-
+        effect eLink =                          EffectDamageReduction(10, DAMAGE_POWER_PLUS_ONE);
+               eLink = EffectLinkEffects(eLink, EffectUltravision());
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_CRITICAL_HIT));
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE));
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DISEASE));
+               eLink = EffectLinkEffects(eLink, EffectSpellImmunity(SPELL_DROWN));
+               eLink = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_POISON));
+               eLink = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID,       50));
+               eLink = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 50));
+               eLink = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE,       50));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_SHADOW_BODY));
         effect eVis  = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
-        effect eDur  = EffectVisualEffect(PSI_DUR_SHADOW_BODY);//VFX_DUR_PROT_SHADOW_ARMOR);
-        effect eLink = EffectLinkEffects(eAcid, eElec);
-        eLink = EffectLinkEffects(eLink, eFire);
-        eLink = EffectLinkEffects(eLink, eAbil);
-        eLink = EffectLinkEffects(eLink, eCrit);
-        eLink = EffectLinkEffects(eLink, eDis);
-        eLink = EffectLinkEffects(eLink, ePoison);
-        eLink = EffectLinkEffects(eLink, eDur);
-        eLink = EffectLinkEffects(eLink, eDR);
-        eLink = EffectLinkEffects(eLink, eDark);
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
         // Make sure the target is not prevented from extra-dimensional movement
         if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE))
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            GoInvis(oTarget, oCaster, nCaster, nSpell);
-        }
-    }
+            GoInvis(manif, oTarget);
+        }// end if - The target can move extradimensionally
+    }// end if - Successfull manifestation
 }

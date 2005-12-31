@@ -1,36 +1,40 @@
 /*
    ----------------
    Aversion
-   
-   prc_all_daze
+
+   psi_pow_aversion
    ----------------
 
    19/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Telepath)
-   Power Level: 2
-   Range: Close
-   Target: One Creature
-   Duration: 1 Hour/level
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 3
-   
-   You plant a powerful aversion in the mind of the subject. The target flees from you at every opportunity.
-   
-   Augment: For every 2 additional power points spent, this power's save DC increases by 1 and the duration by 1 hour.
+    Aversion
+
+    Telepathy (Compulsion) [Mind-Affecting]
+    Level: Telepath 2
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One creature
+    Duration: 1 hour/level
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 3
+    Metapsionics: Extend, Twin
+
+    You plant a powerful aversion in the mind of the subject. The target flees
+    from you at every opportunity.
+
+    Augment: For every 2 additional power points you spend, this power’s save DC
+             increases by 1 and the duration increases by 1 hour.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,48 +51,49 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-   
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-	effect eDaze = EffectFrightened();
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eLink = EffectLinkEffects(eMind, eDaze);
-    	eLink = EffectLinkEffects(eLink, eDur);
-    	effect eVis = EffectVisualEffect(VFX_IMP_DAZED_S);
-    	int nDur = 2;
-    			
-	//Augmentation effects to HD
-	if (nAugment > 0) 
-	{
-		nDC += nAugment;
-		nDur += nAugment;
-	}
-	
-	if (nMetaPsi > 0)	nDur *= 2;
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-			
-	    //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            
-            //Make a saving throw check
-            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+        // Get some more data
+        int nDC  = GetManifesterDC(oManifester) + manif.nTimesAugOptUsed_1;
+	    int nPen = GetPsiPenetration(oManifester);
+
+	    float fDur = HoursToSeconds(manif.nManifesterLevel + manif.nTimesAugOptUsed_1);
+	    if(manif.bExtend) fDur *= 2;
+
+	    // Build effects
+	    effect eVis  = EffectVisualEffect(VFX_IMP_DAZED_S);
+	    effect eLink =                          EffectFrightened();
+	           eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE));
+	           eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+
+        // Let the target know a power was used on it
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            //Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
             {
-	        //Apply VFX Impact and daze effect
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	    }
-	}
-    }
+                //Make a saving throw check
+                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                {
+                    //Apply VFX Impact and fear effect
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                }// end if - Save to negate
+            }// end if - SR check
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

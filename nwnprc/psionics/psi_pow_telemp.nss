@@ -1,22 +1,28 @@
 /*
    ----------------
    Telempathic Projection
-   
-   prc_all_telemp
+
+   psi_pow_telemp
    ----------------
 
    12/12/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: Medium
-   Target: One Creature
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   You grant a +4 Perform and Persuade bonus to the affected creature.
+    Telempathic Projection
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One creature
+    Duration: 1 min./level
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 1
+    Metapsionics: Extend
+
+    Using this power, you can grant a +4 bonus on your own (or others’) Bluff,
+    Intimidate, Perform, and Persuade checks.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +32,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,23 +48,26 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	float fDur = 60.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;       	
-    	
-    	effect ePersuade = EffectSkillIncrease(SKILL_PERSUADE, 4);
-    	effect ePerform = EffectSkillIncrease(SKILL_PERFORM, 4);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(ePerform, eDur);
-    	eLink = EffectLinkEffects(eLink, ePersuade);
-    	
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-    }
+        effect eLink    =                          EffectSkillIncrease(SKILL_BLUFF,      4);
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_INTIMIDATE, 4));
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERFORM,    4));
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERSUADE,   4));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eTest;
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

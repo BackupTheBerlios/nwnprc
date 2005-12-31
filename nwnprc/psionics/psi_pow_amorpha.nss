@@ -1,23 +1,31 @@
 /*
    ----------------
    Concealing Amorpha
-   
-   prc_all_amorpha
+
+   psi_pow_amorpha
    ----------------
 
    22/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 2
-   Range: Personal
-   Target: Self
-   Duration: 1 Minute/Level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 3
-   
-   When you manifest this power, you weave a quasi-real membrane around yourself. 
-   This distortion grants you 20% concealment.
+    Concealing Amorpha
+
+    Metacreativity (Creation)
+    Level: Psion/wilder 2, psychic warrior 2
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: 3
+    Metapsionics: Extend
+
+    Using concealing amorpha, you weave a quasi-real membrane around yourself.
+    You remain visible within the translucent, amorphous enclosure. This
+    distortion grants you concealment (opponents have a 20% miss chance), thanks
+    to the rippling membrane encasing your form. You can pick up or drop objects,
+    easily reaching through the film. Anything you hold is enveloped by the
+    amorpha. Likewise, you can engage in melee, make ranged attacks, and manifest
+    powers without hindrance.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +35,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,26 +50,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     }
 
 // End of Spell Cast Hook
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, 0, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    
-    if (nMetaPsi > 0) 
+    if(manif.bCanManifest)
     {
-    	int CasterLvl = GetManifesterLevel(oCaster);
-    	effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
-	effect eConceal = EffectConcealment(20);
-	effect eDur = EffectVisualEffect(VFX_DUR_GHOSTLY_VISAGE);
-	effect eLink = EffectLinkEffects(eDur, eConceal);
-	float fDuration = 60.0 * CasterLvl;
-	
-	// Apply MetaPsi Extend
-	if (nMetaPsi == 2)	fDuration *= 2;
+    	effect eVis     = EffectVisualEffect(VFX_DUR_INVISIBILITY);
+        effect eConceal = EffectConcealment(20);
+        effect eDur     = EffectVisualEffect(VFX_DUR_GHOSTLY_VISAGE);
+        effect eLink    = EffectLinkEffects(eDur, eConceal);
 
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,CasterLvl);
+        float fDuration = 60.0 * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

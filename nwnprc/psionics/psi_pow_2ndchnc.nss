@@ -1,37 +1,38 @@
 /*
    ----------------
    Second Chance
-   
-   prc_pow_2ndchnc
+
+   psi_pow_2ndchnc
    ----------------
 
    16/7/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Seer)
-   Power Level: 5
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 9
-   
-   You take a hand in influencing the probable outcomes of your immediate environment. You see the many alternative branches that 
-   reality could take in the next few seconds, and with this foreknowledge you gain the ability to reroll the first failed saving throw
-   each round. You must take the result of the reroll, even if it’s worse than the original roll. (Because of Bioware Hardcoding, this
-   will not work on reflex saves vs damage dealing spells).
+    Second Chance
+
+    Clairsentience
+    Level: Seer 5
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 9
+    Metapsionics: Extend
+
+    You take a hand in influencing the probable outcomes of your immediate
+    environment. You see the many alternative branches that reality could take
+    in the next few seconds, and with this foreknowledge you gain the ability to
+    reroll the first failed saving throw each round. You must take the result of
+    the reroll, even if it’s worse than the original roll.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,22 +49,23 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);         
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;     	
-	
-    	effect eDur = EffectVisualEffect(VFX_DUR_SPELLTURNING);
-    	
-	SetLocalInt(oTarget, "SecondChance", TRUE);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-	DelayCommand(RoundsToSeconds(nDur), DeleteLocalInt(oTarget, "SecondChance"));
+        float fDur = RoundsToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDur *= 2;
+
+        effect eDur = EffectVisualEffect(VFX_DUR_SPELLTURNING);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDur, TRUE, -1, manif.nManifesterLevel);
+
+        SetLocalInt(oTarget, "PRC_Power_SecondChance_Active", TRUE);
+        DelayCommand(fDur, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_Active"));
     }
 }

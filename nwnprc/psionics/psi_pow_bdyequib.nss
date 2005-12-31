@@ -1,25 +1,27 @@
 /*
    ----------------
    Body Equilibrium
-   
-   prc_all_bdyequib
+
+   psi_pow_bdyequib
    ----------------
 
    6/12/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: Psion/Wilder 2, Psychic Warrior 2
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 3
-   
-   You adjust your bodies equilibrium to correspond with the surface you are walking on,
-   making you able to move easily across unusual and unstable surfaces. This makes you
-   immune to entangle.
-   
+    Body Equilibrium
+
+    Psychometabolism
+    Level: Psion/wilder 2, psychic warrior 2
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 3
+    Metapsionics: Extend
+
+    You adjust your bodies equilibrium to correspond with the surface you are walking on,
+    making you able to move easily across unusual and unstable surfaces. This makes you
+    immune to entangle.
 */
 
 #include "psi_inc_psifunc"
@@ -29,9 +31,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,31 +47,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-       	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    	int CasterLvl = GetManifesterLevel(oCaster);
-    	
-    	effect eEntangle = EffectImmunity(IMMUNITY_TYPE_ENTANGLE);
-        effect eVis = EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eVis, eEntangle);
-        eLink = EffectLinkEffects(eLink, eDur);
-        float fDur = 600.0 * CasterLvl;
-        
-        if (nMetaPsi == 2)	fDur *= 2;
-    	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,CasterLvl);
+        effect eEntangle = EffectImmunity(IMMUNITY_TYPE_ENTANGLE);
+        effect eVis      = EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT);
+        effect eDur      = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        effect eLink     = EffectLinkEffects(eVis, eEntangle);
+               eLink     = EffectLinkEffects(eLink, eDur);
+
+        float fDur = 600.0 * manif.nManifesterLevel;
+        if(manif.bExtend) fDur *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, -1, manif.nManifesterLevel);
     }
 }

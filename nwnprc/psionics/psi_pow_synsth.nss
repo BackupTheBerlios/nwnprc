@@ -1,23 +1,43 @@
 /*
    ----------------
    Synesthete
-   
-   prc_all_synsth
+
+   psi_pow_synsth
    ----------------
 
    1/11/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   Using this power lets you feel sound and light upon your face, giving you a +4 bonus to Search, Spot, and List,
-   as well as making you immune to blindness and deafness.
+    Synesthete
+
+    Psychometabolism
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 1
+    Metapsionics: Extend
+
+    You receive one kind of sensory input when a different sense is stimulated.
+    In particular, you can feel light and sound on the skin of your face. Your
+    senses continue to work normally as well, unless they are impaired for some
+    reason.
+
+    By feeling light by absorbing ambient light onto your skin, you have your
+    normal visual abilities, even if your eyes are closed or you are blinded.
+    You gain a +4 circumstance bonus on all Spot and Search checks.
+
+    By feeling sound by absorbing sound onto your skin, the expanded audio input
+    provides you with a +4 circumstance bonus on Listen checks.
+
+    Psionic or magical displacement effects, invisibility effects, illusions,
+    and other similar effects confuse your synesthete senses just as they would
+    your normal senses.
+
+    You can also use this power to see sound if you are deafened, or hear light
+    if you are blinded, thus removing all penalties associated with either
+    condition.
 */
 
 #include "psi_inc_psifunc"
@@ -25,11 +45,17 @@
 #include "psi_spellhook"
 #include "prc_alterations"
 
+// Checks if the effect is specific to a plot and should not be removed normally
+int GetShouldNotBeRemoved(effect eEff)
+{
+    object oCreator = GetEffectCreator(eEff);
+    if(GetTag(oCreator) == "q6e_ShaorisFellTemple")
+        return TRUE;
+    return FALSE;
+}
+
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,35 +72,43 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2)	fDur *= 2;     	
-	
-	//Massive effect linkage, go me
-	effect eVis = EffectVisualEffect(VFX_DUR_ULTRAVISION);
-	effect eVis2 = EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	effect eSpot = EffectSkillIncrease(SKILL_SPOT, 4);
-	effect eSearch = EffectSkillIncrease(SKILL_SEARCH, 4);
-	effect eListen = EffectSkillIncrease(SKILL_LISTEN, 4);
-	effect eBlind = EffectImmunity(IMMUNITY_TYPE_BLINDNESS);
-	effect eDeaf = EffectImmunity(IMMUNITY_TYPE_DEAFNESS);
-	effect eLink = EffectLinkEffects(eVis, eDur);
-	eLink = EffectLinkEffects(eLink, eVis2);
-    	eLink = EffectLinkEffects(eLink, eSpot);
-    	eLink = EffectLinkEffects(eLink, eSearch);
-    	eLink = EffectLinkEffects(eLink, eListen);
-    	eLink = EffectLinkEffects(eLink, eBlind);
-    	eLink = EffectLinkEffects(eLink, eDeaf);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    }
+    if(manif.bCanManifest)
+    {
+        effect eLink    =                          EffectSkillIncrease(SKILL_SPOT,   4);
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_SEARCH, 4));
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_LISTEN, 4));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_BLINDNESS));
+               eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEAFNESS));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ULTRAVISION));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eTest;
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Remove existing blindness / deafness
+        eTest = GetFirstEffect(oTarget);
+        while(GetIsEffectValid(eTest))
+        {
+            if(GetEffectType(eTest) == EFFECT_TYPE_BLINDNESS          ||
+               GetEffectType(eTest) == EFFECT_TYPE_DEAF
+               )
+            {
+                if(!GetShouldNotBeRemoved(eTest))
+                    RemoveEffect(oTarget, eTest);
+            }
+
+            eTest = GetNextEffect(oTarget);
+        }
+
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    }// end if - Successfull manifestation
 }

@@ -1,23 +1,26 @@
 /*
    ----------------
    Psionic Lock
-   
-   prc_all_lock
+
+   psi_pow_lock
    ----------------
 
    7/12/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 2
-   Range: Medium
-   Target: One Chest or Door
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 3
-   
-   You lock and trap a chest or door. This will prevent anyone from opening the chest without harm. Be careful
-   as the trap will target anyone attempting to open the chest.
+    Psionic Lock
+
+    Psychoportation
+    Level: Psion/wilder 2
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Door or chest touched
+    Duration: Permanent
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 3
+
+    A psionic lock manifested upon a door, chest, or portal psionically locks it.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +30,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,35 +46,23 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    int nAugCost = 0;
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_NONE
+                              );
+
+    if(manif.bCanManifest)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-	
-	 if (GetObjectType(oTarget) == OBJECT_TYPE_DOOR || GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
-	 {
-		if (GetLockLockable(oTarget))
-		{
-			SetLocked(oTarget, TRUE);
-			itemproperty iTrap = ItemPropertyTrap(IP_CONST_TRAPSTRENGTH_STRONG, TRAP_BASE_TYPE_STRONG_SONIC);
-			AddItemProperty(DURATION_TYPE_PERMANENT, iTrap, oTarget);
-		}
-		else
-		{
-			FloatingTextStringOnCreature("This item is cannot be locked", oCaster, FALSE);
-		}	
-	 }
-    }
+        if(GetLockLockable(oTarget))
+        {
+        	SetLocked(oTarget, TRUE);
+        }
+        else
+        {
+        	FloatingTextStrRefOnCreature(16824064, oManifester, FALSE); // "This item is cannot be locked"
+        }
+    }// end if - Successfull manifestation
 }

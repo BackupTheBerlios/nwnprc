@@ -1,38 +1,41 @@
 /*
    ----------------
    Telekinetic Maneuver
-   
+
    prc_pow_tkmove
    ----------------
 
    26/3/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 4
-   Range: Medium
-   Target: One Creature
-   Duration: 1 Round/2 levels
-   Saving Throw: None
-   Power Resistance: Yes
-   Power Point Cost: 7
-   
-   You mentally push your foe or his weapon, attempting to knock him down and disarm him. The DC of the discipline check
-   to knock him down and disarm is your manifester level plus your intelligence modifier. The target gets a seperate check
-   for knockdown and for disarm.
-   
-   Augment: For every 2 additional power points spent, the DC of the discipline check goes up by 1.
+    Psychokinesis [Force]
+    Level: Psion/wilder 4
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One creature
+    Duration: 1 round / 2 levels
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 7
+    Metapsionics: Extend, Twin
+
+    You mentally push a foe, attempting to knock it prone and disarm it. The DC
+    of the discipline check for the target to resist being knocked down or
+    disarmed is equal to your manifester level + you ability modified in your
+    manifesting stat. The Discipline checks to avoid being knocked down and
+    disarmed are rolled separately.
+
+    Augment: For every 2 additional power points spent, the DC of the Discipline
+             check is increased by 1.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,45 +52,54 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);    
-    
-    if (nSurge > 0) PsychicEnervation(oCaster, nSurge);
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	effect eKnock = EffectKnockdown();
-	int nDur = nCaster/2;
-	int nDC = nCaster + GetAbilityModifier(ABILITY_INTELLIGENCE, oCaster);
-	object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
-		
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) nDC += nAugment;
-	
-	SignalEvent(oTarget, EventSpellCastAt(oTarget, GetSpellId()));
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-		if(!GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nDC))
-		{
-			AssignCommand(oTarget,ClearAllActions());
-			AssignCommand(oTarget,ActionPutDownItem(oItem));
-			FloatingTextStringOnCreature("*Target disarmed!*", OBJECT_SELF, FALSE);
-   		}
-	
-		if(!GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nDC))
-		{               	
-	               	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-	        }               	
-	}
-    }
+        int nPen        = GetPsiPenetration(oManifester);
+        int nDC         = manif.nManifesterLevel
+                         + GetAbilityModifier(GetAbilityOfClass(GetManifestingClass(oManifester)), oManifester)
+                         + manif.nTimesAugOptUsed_1;
+        int nDisarmed   = FALSE;
+        effect eKnock   = EffectKnockdown();
+        object oWeapon  = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+        float fDuration = 6.0f * (manif.nManifesterLevel / 2);
+        if(manif.bExtend) fDuration *= 2;
+
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
+            {
+                // Roll to avoid disarm, if wielding anything
+                if(GetIsObjectValid(oWeapon)                            &&
+                   !GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nDC)
+                   )
+                {
+                    AssignCommand(oTarget, ClearAllActions(TRUE));
+                    AssignCommand(oTarget, ActionPutDownItem(oWeapon));
+                    FloatingTextStrRefOnCreature(16824069, oManifester, FALSE); // "* Target disarmed! *"
+                }
+
+                // Roll to avoid knockdown
+                if(!GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nDC))
+                {
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnock, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                }
+            }// end if - SR check
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

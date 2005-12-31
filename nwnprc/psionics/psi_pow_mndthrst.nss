@@ -1,38 +1,41 @@
 /*
    ----------------
    Mind Thrust
-   
-   prc_all_mndthrst
+
+   psi_pow_mndthrst
    ----------------
 
    21/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion / Wilder
-   Power Level: 1
-   Range: Short
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: Will negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You instantly deliver a massive assault on the thought pathways of any 
-   one creature, dealing 1d10 points of damage to it.
-   
-   Augment: For every additional power point spend, this power's damage increases by 1d10. 
-   For each extra 2d10 points of damage, this power's save DC increases by 1.
+    Mind Thrust
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One creature
+    Duration: Instantaneous
+    Saving Throw: Will negates
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Empower, Maximize, Twin
+
+    You instantly deliver a massive assault on the thought pathways of any one
+    creature, dealing 1d10 points of damage to it.
+
+    Augment: For every additional power point you spend, this power’s damage
+             increases by 1d10 points. For each extra 2d10 points of damage,
+             this power’s save DC increases by 1.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "X0_I0_SPELLS"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,56 +52,50 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = GetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(2,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
 
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
+        int nDC           = GetManifesterDC(oManifester) + manif.nTimesGenericAugUsed;
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 10;
+        int nDamage;
+        effect eVis       = EffectVisualEffect(VFX_IMP_HEAD_MIND);
+        effect eLink;
 
-        PsychicEnervation(oCaster, nSurge);
-    }
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
-    if (nMetaPsi > 0)
-    {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nPen = GetPsiPenetration(oCaster);
-        int nDice = 1;
-        int nDiceSize = 10;
-
-        //Augmentation effects to Damage
-        if (nAugment > 0)
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-            nDice += nAugment;
-            nDC += nAugment/2;
-        }
-        
-        int i;
-        for(i = 0; i < (GetLocalInt(oCaster, "PsiMetaTwin") ? 2 : 1); i++)
-        {
-            int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-    
-            effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-            effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-            effect eLink = EffectLinkEffects(eMind, eDam);
-    
-            //Check for Power Resistance
-            if (PRCMyResistPower(oCaster, oTarget, nPen))
+            // Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
             {
-                //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_NEGATIVE_ENERGY_RAY));
-    
-                //Make a saving throw check
+                // Save - Will negates
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
-                    //Apply VFX Impact and daze effect
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oTarget, manif.oManifester, nDamage, TRUE, FALSE);
+
+                    // Generate damage effect
+                    eLink = EffectLinkEffects(eVis, EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL));
+                    // Apply effect
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
-                }
-            }
-        }
-    }
+                }// end if - Save
+            }// end if - SR check
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

@@ -1,23 +1,34 @@
 /*
    ----------------
-   Energy Adaption
+   Energy Adaptation
 
-   prc_pow_enadapt
+   psi_pow_enadapt
    ----------------
 
    19/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 4
-   Range: Personal
-   Target: Self
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 7
+    Energy Adaptation
 
-   When you manifest this power, you gain 10 resistance to acid, cold, electricity, fire and sonic damage.
-   This increases to 20 at manifester level 9, and 30 at manifester level 13.
+    Psychometabolism [Acid, Cold, Electricity, Fire, Sonic]
+    Level: Psion/wilder 4, psychic warrior 4
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 7
+    Metapsionics: Extend
+
+    Your body assimilates some of the effect of an energy attack and converts it
+    to harmless light. You gain resistance 10 against any attack that deals
+    acid, cold, electricity, fire, or sonic damage.
+
+    When you absorb damage, you radiate visible light that illuminates a 60-foot
+    radius for a number of rounds equal to the points of damage you successfully
+    resisted.
+
+    The energy resistance provided by this power increases to 20 points at 9th
+    manifester level and to a maximum of 30 points at 13th level.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +38,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,37 +54,32 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-        int nResist = 10;
-        float fDur = 600.0 * nCaster;
-        if (nMetaPsi == 2)	fDur *= 2;
+        float fDuration = 600.0 * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+        int nResist;
+        if     (manif.nManifesterLevel < 9)  nResist = 10;
+        else if(manif.nManifesterLevel < 13) nResist = 20;
+        else                                 nResist = 30;
 
-        if (nCaster >= 13)	nResist = 30;
-        else if (nCaster >= 9)	nResist = 20;
+        effect eLink =                          EffectDamageResistance(DAMAGE_TYPE_ACID,       nResist);
+               eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_COLD,       nResist));
+               eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_ELECTRICAL, nResist));
+               eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_FIRE,       nResist));
+               eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_SONIC,      nResist));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_ENERGY_ADAPTATION_ALL));
+        effect eVis  = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
 
-        effect eResistA = EffectDamageResistance(DAMAGE_TYPE_ACID, nResist);
-        effect eResistC = EffectDamageResistance(DAMAGE_TYPE_COLD, nResist);
-        effect eResistE = EffectDamageResistance(DAMAGE_TYPE_ELECTRICAL, nResist);
-        effect eResistF = EffectDamageResistance(DAMAGE_TYPE_FIRE, nResist);
-        effect eResistS = EffectDamageResistance(DAMAGE_TYPE_SONIC, nResist);
-        effect eDur     = EffectVisualEffect(PSI_DUR_ENERGY_ADAPTATION_ALL);//VFX_DUR_PROTECTION_ELEMENTS);
-        effect eVis     = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
-        //effect eDur2    = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eLink    = EffectLinkEffects(eResistA, eDur);
-        eLink = EffectLinkEffects(eLink, eResistC);
-        eLink = EffectLinkEffects(eLink, eResistE);
-        eLink = EffectLinkEffects(eLink, eResistF);
-        eLink = EffectLinkEffects(eLink, eResistS);
-        //eLink = EffectLinkEffects(eLink, eDur2);
-
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur,TRUE,-1,nCaster);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

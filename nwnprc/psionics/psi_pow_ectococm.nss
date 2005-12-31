@@ -1,37 +1,43 @@
 /*
    ----------------
    Ectoplasmic Cocoon, Mass
-   
-   prc_pow_ectococm
+
+   psi_pow_ectococm
    ----------------
 
    9/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Shaper)
-   Power Level: 7
-   Range: Medium
-   Target: 20' Burst
-   Duration: 1 Hour/level
-   Saving Throw: Reflex negates
-   Power Resistance: No
-   Power Point Cost: 13
-   
-   You draw writhing strands of ectoplasm from the Astral Plane that wrap the subjects up like a mummy. The subjects can still
-   breathe but are otherwise helpless. 
-   
-   Augment: For every 2 additional power points spent, this power's radius increases by 5 feet.
+    Ectoplasmic Cocoon, Mass
+
+    Metacreativity
+    Level: Shaper 7
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./level)
+    Area: 20-ft.-radius burst
+    Duration: 1 hour/level
+    Saving Throw: Reflex negates
+    Power Resistance: No
+    Power Points: 13
+    Metapsionics: Extend, Twin, Widen
+
+    You draw writhing strands of ectoplasm from the Astral Plane that wrap up
+    the subjects in the area like mummies. The subjects can still breathe but
+    are otherwise helpless, unable to see outside the cocoon, speak, or take any
+    physical actions. The subjects’s nostrils are clear (air passes through the
+    cocoon normally).
+
+    Augment: For every 2 additional power points you spend, the radius of this
+             power’s area increases by 5 feet.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,54 +54,47 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, METAPSIONIC_WIDEN);
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;	
-	float fSize = RADIUS_SIZE_LARGE;
-	location lTarget = PRCGetSpellTargetLocation();
-	
-   			
-	//Augmentation effects to Size
-	if (nAugment > 0) 
-	{
-		//Max size of creature
-		fSize += (1.5 * nAugment);
-	}
-	
-	float fWidth = DoWiden(RADIUS_SIZE_SMALL, nMetaPsi);
-	effect ePara = EffectCutsceneParalyze();
-	effect eDur = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-	effect eVis = EffectVisualEffect(VFX_DUR_TENTACLE);
-	effect eLink = EffectLinkEffects(ePara, eDur);
-	
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
-	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	while (GetIsObjectValid(oTarget))
-	{
-		SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-		float fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget))/20;
-		
-                //Make a saving throw check
+    if(manif.bCanManifest)
+    {
+        int nDC         = GetManifesterDC(oManifester);
+        effect eLink    = EffectCutsceneParalyze();
+    	       eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY));
+        effect eVis     = EffectVisualEffect(VFX_DUR_TENTACLE);
+        float fRadius   = EvaluateWidenPower(manif, FeetToMeters(20.0f + (5.0f * manif.nTimesAugOptUsed_1)));
+        float fDuration = RoundsToSeconds(manif.nManifesterLevel);
+        object oTarget;
+        location lTarget = PRCGetSpellTargetLocation();
+        if(manif.bExtend) fDuration *= 2;
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while (GetIsObjectValid(oTarget))
+            {
+                // Let the AI know
+                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+                // Reflex negates
                 if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                 {
-                        //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                }		
-	//Select the next target within the spell shape.
-	oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-	}
-	
+                    // Apply effects
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, 4.5f, FALSE);
+                }// end if - Save
 
-    }
+                oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }// end while - Target loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

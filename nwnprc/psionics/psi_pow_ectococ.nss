@@ -1,37 +1,46 @@
 /*
    ----------------
    Ectoplasmic Cocoon
-   
-   prc_pow_ectococ
+
+   psi_pow_ectococ
    ----------------
 
    9/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Shaper)
-   Power Level: 3
-   Range: Medium
-   Target: One Medium or smaller creature
-   Duration: 1 Round/level
-   Saving Throw: Reflex negates
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   You draw writhing strands of ectoplasm from the Astral Plane that wrap the subject up like a mummy. The subject can still
-   breathe but is otherwise helpless. 
-   
-   Augment: For every 4 additional power points spent, this power can affect a creature one size larger and its DC increases by 1. 
+    Ectoplasmic Cocoon
+
+    Metacreativity
+    Level: Shaper 3
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Target: One Medium or smaller creature
+    Duration: 1 round/level
+    Saving Throw: Reflex negates
+    Power Resistance: No
+    Power Points: 5
+    Metapsionics: Extend, Twin
+
+    You draw writhing strands of ectoplasm from the Astral Plane that wrap up
+    the subject like a mummy. The subject can still breathe but is otherwise
+    helpless, unable to see outside the cocoon, speak, or take any physical
+    actions. The subject’s nostrils are clear (air passes through the cocoon
+    normally).
+
+    Augment: You can augment this power in one or both of the following ways.
+    1. For every 2 additional power points you spend, this power’s save DC
+       increases by 1.
+    2. For every 2 additional power points you spend, this power can affect a
+       target one size category larger.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,52 +57,45 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 4;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDur = nCaster;
-	int nAllowedSize = CREATURE_SIZE_MEDIUM;
-	int nSize = GetCreatureSize(oTarget);
-	if (nMetaPsi == 2)	nDur *= 2;	
-	
-   			
-	//Augmentation effects to Size
-	if (nAugment > 0) 
-	{
-		nAllowedSize += nAugment;
-		//Max size of creature
-		if (nAllowedSize > 5) nAllowedSize = 5;
-		nDC += nAugment;
-	}
-	
-	effect ePara = EffectCutsceneParalyze();
-	effect eDur = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-	effect eVis = EffectVisualEffect(VFX_DUR_TENTACLE);
-	effect eLink = EffectLinkEffects(ePara, eDur);
-	
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION,
+                                                       2, 4
+                                                       ),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
 
- 	if(nSize <= nAllowedSize)
-    	{
-	 	//Fire cast spell at event for the specified target
-         	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            
-                //Make a saving throw check
+    if(manif.bCanManifest)
+    {
+        int nDC      = GetManifesterDC(oManifester) + manif.nTimesAugOptUsed_1;
+        int nMaxSize = CREATURE_SIZE_MEDIUM + manif.nTimesAugOptUsed_2;
+    	effect eLink =                          EffectCutsceneParalyze();
+    	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY));
+        effect eVis  = EffectVisualEffect(VFX_DUR_TENTACLE);
+        float fDuration = RoundsToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
+
+        // Target size check
+        if(PRCGetCreatureSize(oTarget) <= nMaxSize)
+        {
+            // Let the AI know
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+            // Handle Twin Power
+            int nRepeats = manif.bTwin ? 2 : 1;
+            for(; nRepeats > 0; nRepeats--)
+            {
+                // Reflex negates
                 if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                 {
-                        //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
-               		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                }
-	}
-	
-
-    }
+                    // Apply effects
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, 4.5f, FALSE);
+                }// end if - Save
+            }// end for - Twin Power
+        }// end if - Size check
+    }// end if - Successfull manifestation
 }

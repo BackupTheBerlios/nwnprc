@@ -1,37 +1,69 @@
 /*
    ----------------
-   Psychic Chirurgery
-   
-   prc_psi_psychir
+   Psychic Chirurgery - Repair Psychic Damage
+
+   psi_pow_psychir
    ----------------
 
    11/5/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Telepath)
-   Power Level: 9
-   Range: Close
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 17
-   
-   The target has all negative effects removed from it, including level drain and ability damage.
+    Psychic Chirurgery - Repair Psychic Damage
+
+    Telepathy [Mind-Affecting]
+    Level: Telepath 9
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One creature
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 17, XP; see text
+    Metapsionics: None
+
+    You can repair psychic damage or grant another creature knowledge of powers
+    you know, depending on the version of this power you manifest.
+
+    Repair Psychic Damage:
+    You can remove any compulsions and charms affecting the subject.
+
+    You can remove all negative levels affecting the subject.
+
+    You can also remove all effects penalizing the subject’s ability scores,
+    heal all ability damage, and remove any ability drain affecting the subject.
+    Psychic chirurgery negates all forms of insanity, confusion, the effect of
+    such powers as microcosm, and so on.
+
+    Transfer Knowledge:
+    If desired, you can use this power to directly transfer knowledge of a power
+    you know to another psionic character. You can give a character knowledge of
+    a power of any level that she can manifest, even if the power is not
+    normally on the character’s power list. Knowledge of powers gained through
+    psychic chirurgery does not count toward the maximum number of powers a
+    character can know per level.
+
+    XP Cost: Each time you use psychic chirurgery to implant knowledge of a
+             power in another creature, you pay an XP cost equal to 1,000 x the
+             level of the power implanted. If you and the subject are both
+             willing to do so, you can split this cost evenly.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
-// return TRUE if the effect created by a supernatural force and can't be dispelled by spells
-int GetIsSupernaturalCurse(effect eEff);
+// Checks if the effect is specific to a plot and should not be removed normally
+int GetShouldNotBeRemoved(effect eEff)
+{
+    object oCreator = GetEffectCreator(eEff);
+    if(GetTag(oCreator) == "q6e_ShaorisFellTemple")
+        return TRUE;
+    return FALSE;
+}
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,63 +80,72 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 1);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-    
-    if (nMetaPsi) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_NONE
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nCaster = GetManifesterLevel(oCaster);
-	effect eVisual = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER);
-	effect eBad = GetFirstEffect(oTarget);
-    	//Search for negative effects
-    	while(GetIsEffectValid(eBad))
-    	{
-    		if (GetEffectType(eBad) == EFFECT_TYPE_ABILITY_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_AC_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_ATTACK_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_DAMAGE_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_DAMAGE_IMMUNITY_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_SAVING_THROW_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_SPELL_RESISTANCE_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_SKILL_DECREASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_BLINDNESS ||
-    		GetEffectType(eBad) == EFFECT_TYPE_DEAF ||
-    		GetEffectType(eBad) == EFFECT_TYPE_CURSE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_DISEASE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_POISON ||
-    		GetEffectType(eBad) == EFFECT_TYPE_PARALYZE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_CHARMED ||
-    		GetEffectType(eBad) == EFFECT_TYPE_DOMINATED ||
-    		GetEffectType(eBad) == EFFECT_TYPE_DAZED ||
-    		GetEffectType(eBad) == EFFECT_TYPE_CONFUSED ||
-    		GetEffectType(eBad) == EFFECT_TYPE_FRIGHTENED ||
-    		GetEffectType(eBad) == EFFECT_TYPE_NEGATIVELEVEL ||
-    		GetEffectType(eBad) == EFFECT_TYPE_PARALYZE ||
-    		GetEffectType(eBad) == EFFECT_TYPE_SLOW ||
-    		GetEffectType(eBad) == EFFECT_TYPE_STUNNED)
-    		{
-    			//Remove effect if it is negative.
-        		if(!GetIsSupernaturalCurse(eBad))
-        			RemoveEffect(oTarget, eBad);
-        	}
-        	eBad = GetNextEffect(oTarget);
-    	}
-    	//Fire cast spell at event for the specified target
-    	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GREATER_RESTORATION, FALSE));
+        int nEffectType;
+        effect eVis = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER);
+        effect eTest;
 
-    	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, oTarget);
-    	SetLocalInt(oTarget, "WasRestored", TRUE);
+        // Let the AI know - Special handling
+        SPRaiseSpellCastAt(oTarget, FALSE, SPELL_GREATER_RESTORATION, oManifester);
+
+        // Check for some specific stuff and remove if present
+        if(GetHasSpellEffect(POWER_DECEREBRATE, oTarget))
+            RemoveAnySpellEffects(POWER_DECEREBRATE, oTarget);
+        if(GetHasSpellEffect(POWER_INSANITY, oTarget))
+            RemoveAnySpellEffects(POWER_INSANITY, oTarget);
+        if(GetHasSpellEffect(POWER_MICROCOSM, oTarget))
+            RemoveAnySpellEffects(POWER_MICROCOSM, oTarget);
+
+        // Loop over remaining effects, remove any negative ones
+        eTest = GetFirstEffect(oTarget);
+        while(GetIsEffectValid(eTest))
+        {
+            nEffectType = GetEffectType(eTest);
+            if(nEffectType == EFFECT_TYPE_ABILITY_DECREASE          ||
+               nEffectType == EFFECT_TYPE_AC_DECREASE               ||
+               nEffectType == EFFECT_TYPE_ATTACK_DECREASE           ||
+               nEffectType == EFFECT_TYPE_DAMAGE_DECREASE           ||
+               nEffectType == EFFECT_TYPE_DAMAGE_IMMUNITY_DECREASE  ||
+               nEffectType == EFFECT_TYPE_SAVING_THROW_DECREASE     ||
+               nEffectType == EFFECT_TYPE_SPELL_RESISTANCE_DECREASE ||
+               nEffectType == EFFECT_TYPE_SKILL_DECREASE            ||
+               nEffectType == EFFECT_TYPE_BLINDNESS                 ||
+               nEffectType == EFFECT_TYPE_DEAF                      ||
+               nEffectType == EFFECT_TYPE_CURSE                     ||
+               nEffectType == EFFECT_TYPE_DISEASE                   ||
+               nEffectType == EFFECT_TYPE_POISON                    ||
+               nEffectType == EFFECT_TYPE_PARALYZE                  ||
+               nEffectType == EFFECT_TYPE_CHARMED                   ||
+               nEffectType == EFFECT_TYPE_DOMINATED                 ||
+               nEffectType == EFFECT_TYPE_DAZED                     ||
+               nEffectType == EFFECT_TYPE_CONFUSED                  ||
+               nEffectType == EFFECT_TYPE_FRIGHTENED                ||
+               nEffectType == EFFECT_TYPE_NEGATIVELEVEL             ||
+               nEffectType == EFFECT_TYPE_SLOW                      ||
+               nEffectType == EFFECT_TYPE_STUNNED
+               )
+            {
+                if(!GetShouldNotBeRemoved(eTest))
+                    RemoveEffect(oTarget, eTest);
+            }
+
+            eTest = GetNextEffect(oTarget);
+        }// end while - Effect loop
+
+        // Apply visuals
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+
+        // Set a marker local and schedule it's removal
+        SetLocalInt(oTarget, "WasRestored", TRUE);
     	DelayCommand(HoursToSeconds(1), DeleteLocalInt(oTarget, "WasRestored"));
-     }
-}
-
-int GetIsSupernaturalCurse(effect eEff)
-{
-    object oCreator = GetEffectCreator(eEff);
-    if(GetTag(oCreator) == "q6e_ShaorisFellTemple")
-        return TRUE;
-    return FALSE;
+    }// end if - Successfull manifestation
 }

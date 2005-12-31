@@ -6,33 +6,46 @@
    ----------------
 
    9/4/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Shaper)
-   Power Level: 5
-   Range: Medium
-   Target: 20' Burst
-   Duration: Instantaneous
-   Saving Throw: Reflex half
-   Power Resistance: No
-   Power Point Cost: 9
+    Hail of Crystals
 
-   An ectoplasmic crystal emanates from your outstretched hand and expands into a two foot ball as it hurtles towards the chosen target.
-   You must make a ranged touch attack to strike the target of the spell, who takes 5d4 bludgeoning damage. All those who are in the
-   area of effect take 9d4 slashing with a reflex save for half.
+    Metacreativity (Creation)
+    Level: Shaper 5
+    Manifesting Time: 1 standard action
+    Range: Medium (100 ft. + 10 ft./ level)
+    Area: 20-ft.-radius burst
+    Duration: Instantaneous
+    Saving Throw: Reflex half
+    Power Resistance: No
+    Power Points: 9
+    Metapsionics: Empower, Maximize, Twin, Widen
 
-   Augment: For every additional power point spent, all those in the area of effect take another 1d4.
+    A tiny ectoplasmic crystal emanates from your outstretched hand and rapidly
+    expands to a 2-foot-diameter ball of crystal as it speeds toward the
+    location you designate. You can choose to aim this crystal at a single
+    target or at a specific point in space.
+
+    If you aim the crystal at a single target, you must make a ranged touch
+    attack to strike the target. Any creature or object struck by the ball of
+    crystal takes 5d4 points of bludgeoning damage.
+
+    Whether the crystal hits its target, misses, or was aimed at a point in
+    space, it explodes upon arrival at the location you designated. Anyone
+    within 20 feet of the explosion takes 9d4 points of slashing damage from the
+    thousands of crystal shards that spray forth.
+
+    Augment: For every additional power point you spend, this power’s damage
+             from the explosion of the crystal increases by 1d4 points.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -49,62 +62,84 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, METAPSIONIC_WIDEN);
+    object oManifester = OBJECT_SELF;
+    object oBallTarget = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oBallTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_SPLIT | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-    int nDC = GetManifesterDC(oCaster);
-    int nCaster = GetManifesterLevel(oCaster);
-    int nPen = GetPsiPenetration(oCaster);
-    int nDiceTarget = 5;
-    int nDiceBurst = 5;
-    int nDiceSize = 4;
-    float fWidth = DoWiden(RADIUS_SIZE_LARGE, nMetaPsi);
-    location lTarget = PRCGetSpellTargetLocation();
-    effect eTarget = EffectVisualEffect(VFX_IMP_DUST_EXPLOSION);
-    int nDamage;
+        int nDC                   = GetManifesterDC(oManifester);
+        int nPen                  = GetPsiPenetration(oManifester);
+        int nNumberOfDice_Explode = 9 + manif.nTimesAugOptUsed_1;
+        int nNumberOfDice_Ball    = 5;
+        int nDieSize              = 6;
+        int nDamage, nTouchAttack;
+        location lTarget          = PRCGetSpellTargetLocation();
+        effect eImpact            = EffectVisualEffect(VFX_IMP_DUST_EXPLOSION);
+        effect eDamage;
+        float fRadius             = EvaluateWidenPower(manif, FeetToMeters(20.0f));
+        object oExplodeTarget;
 
-    //Augmentation effects to Damage
-    if (nAugment > 0) nDiceBurst += nAugment;
 
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-    // Perform the Touch Attach
-    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
-    if (nTouchAttack > 0)
-    {
-        if (nTouchAttack == 2) nDiceTarget *= 2;
-        nDamage = MetaPsionics(nDiceSize, nDiceTarget, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-        effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eTarget, oTarget);
-    }
-
-    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        //Cycle through the targets within the spell shape until an invalid object is captured.
-        while(GetIsObjectValid(oTarget))
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
         {
-        //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+            // Check if a particular creature was targeted
+            if(GetIsObjectValid(oBallTarget))
+            {
+                // Let the AI know
+                SPRaiseSpellCastAt(oBallTarget, TRUE, manif.nSpellID, oManifester);
 
-        nDamage = MetaPsionics(nDiceSize, nDiceBurst, nMetaPsi, oCaster, TRUE, oTarget, TRUE);
-                //Make a saving throw check
-                if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                // Roll touch attack
+                nTouchAttack = PRCDoRangedTouchAttack(oBallTarget);
+                if(nTouchAttack > 0)
                 {
-                    nDamage /= 2;
-                }
-        effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eTarget, oTarget);
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice_Ball, 0, 0, TRUE, TRUE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oBallTarget, oManifester, nDamage, TRUE, FALSE);
 
-        //Select the next target within the spell shape.
-        oTarget = MyNextObjectInShape(SHAPE_SPHERE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        }
+                    // Apply the damage and VFX. No Reflex save here, they got hit by a touch attack
+                    ApplyTouchAttackDamage(oManifester, oBallTarget, nTouchAttack, nDamage, DAMAGE_TYPE_BLUDGEONING);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oBallTarget);
+                }// end if - Touch attack hit
+            }// end if - A creature was targeted with the ball
 
+            // Either way, shrapnel time
+            oExplodeTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+            while(GetIsObjectValid(oExplodeTarget))
+            {
+                if(spellsIsTarget(oExplodeTarget, SPELL_TARGET_STANDARDHOSTILE, oManifester))
+                {
+                    // Let the AI know
+                    SPRaiseSpellCastAt(oExplodeTarget, TRUE, manif.nSpellID, oManifester);
 
-    }
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice_Explode, 0, 0, TRUE, TRUE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oExplodeTarget, oManifester, nDamage, TRUE, FALSE);
+                    // Adjust damage according to Reflex Save, Evasion or Improved Evasion
+                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oExplodeTarget, nDC, SAVING_THROW_TYPE_NONE);
+
+                    // Apply effects if the target didn't Evade
+                    if(nDamage > 0)
+                    {
+                        eDamage = EffectDamage(nDamage, DAMAGE_TYPE_SLASHING);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oExplodeTarget);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oExplodeTarget);
+                    }// end if - There was still damage remaining to be dealt after adjustments
+                }// end if - Difficulty check
+
+                // Get next target
+                oExplodeTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+            }// end while - Explosion target loop
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

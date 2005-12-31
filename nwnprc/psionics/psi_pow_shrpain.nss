@@ -1,74 +1,111 @@
 /*
    ----------------
    Share Pain
-   
-   prc_pow_shrpain
+
+   psi_pow_shrpain
    ----------------
 
    19/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 2
-   Range: Touch
-   Target: One Willing Creature
-   Duration: 1 Hour/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 3
-   
-   This power creates a psychometabolic connection between you and a willing subject so that some of your wounds
-   are transferred to the subject. You take half damage from all attacks that deal hitpoint damage to you
-   and the willing subject takes the remainder. 
+    Share Pain
+
+    Psychometabolism
+    Level: Psion/wilder 2
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Targets: You and one willing creature
+    Duration: 1 hour/level
+    Power Points: 3
+    Metapsionics: Extend
+
+    This power creates a psychometabolic connection between you and a willing
+    subject so that some of your wounds are transferred to the subject. You take
+    half damage from all attacks that deal hit point damage to you, and the
+    subject takes the remainder. The amount of damage not taken by you is taken
+    by the subject. If your hit points are reduced by a lowered Constitution
+    score, that reduction is not shared with the subject because it is not a
+    form of hit point damage. When this power ends, subsequent damage is no
+    longer divided between the subject and you, but damage already shared is not
+    reassigned.
+
+    If you and the subject move farther away from each other than close range,
+    the power ends.
+
+
+    Implementation notes:
+    You may not have more than one Share Pain or Share Pain, Forced active at
+    any one time. Any subsequent uses override the previous.
+    We're lazy bastards :P
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManifesterLevel, int nBeatsRemaining);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
+    // Power use hook
+    if(!PsiPrePowerCastCode()) return;
 
-/*
-  Spellcast Hook Code
-  Added 2004-11-02 by Stratovarius
-  If you want to make changes to all powers,
-  check psi_spellhook to find out more
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-*/
-
-    if (!PsiPrePowerCastCode())
+    if(manif.bExtend)
     {
-    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
+        effect eDur     = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
+        float fDuration = HoursToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
 
-// End of Spell Cast Hook
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
+        // Get the OnHitCast: Unique on the manifester's armor / hide
+        ExecuteScript("prc_keep_onhit_a", oManifester);
+
+        // Hook eventscript
+        AddEventScript(oManifester, EVENT_ONHIT, "psi_pow_shrpnaux", TRUE, FALSE);
+
+        // Store the target for use in the damage script
+        SetLocalObject(oManifester, "PRC_Power_SharePain_Target", oTarget);
+
+        // Do VFX for the monitor to look for
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget,     fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oManifester, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+        // Start effect end monitor
+        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID, manif.nManifesterLevel, FloatToInt(fDuration) / 6));
+    }// end if - Successfull manifestation
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManifesterLevel, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0)                                            ||
+       GetIsDead(oTarget)                                                  ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)     ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oManifester, oManifester) ||
+       GetDistanceBetween(oManifester, oTarget) > FeetToMeters(25.0f + (5.0f * (nManifesterLevel / 2)))
+       )
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCaster);
-    	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2; 
-    	
-	if (GetIsFriend(oTarget) && GetIsObjectValid(oTarget))
-	{
-		SetLocalInt(oCaster, "SharePain", TRUE);
-		SetLocalObject(oCaster, "SharePainTarget", oTarget);
-		IPSafeAddItemProperty(oArmor, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), HoursToSeconds(nDur), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-				
-		effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-		DelayCommand(HoursToSeconds(nDur), DeleteLocalInt(oCaster, "SharePain"));
-		DelayCommand(HoursToSeconds(nDur), DeleteLocalObject(oCaster, "SharePainTarget"));
-	}
+        if(DEBUG) DoDebug("psi_pow_shrpain: Effect expired, clearing");
+        // Clear the target local
+        DeleteLocalObject(oManifester, "PRC_Power_SharePain_Target");
+        // Remove the eventscript
+        RemoveEventScript(oManifester, EVENT_ONHIT, "psi_pow_shrpnaux", TRUE, FALSE);
+
+        // Remove remaining effects
+        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        RemoveSpellEffects(nSpellID, oManifester, oManifester);
     }
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nManifesterLevel, nBeatsRemaining));
 }

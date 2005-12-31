@@ -1,37 +1,41 @@
 /*
    ----------------
    Hammer
-   
-   prc_all_hammer
+
+   psi_pow_hammer
    ----------------
 
    31/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: 1
-   Range: Touch
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   This power charges your touch with the force of a sledgehammer. A successful melee
-   touch attack deals 1d8 bludgeoning damage.
-   
-   Augment: For every additional power point spent, this power's damage increases by 1d8. 
+    Hammer
+
+    Psychometabolism
+    Level: Psion/wilder 1, psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: One creature or object
+    Duration: Instantenous
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Empower, Maximize, Twin
+
+    This power charges your touch with the force of a sledgehammer. A successful
+    melee touch attack deals 1d8 points of bludgeoning damage. This damage is
+    not increased or decreased by your Strength modifier.
+
+    Augment: For every additional power point spent, this power's damage
+             increases by 1d8.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,43 +52,49 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 1;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, METAPSIONIC_EMPOWER, 0, METAPSIONIC_MAXIMIZE, 0, METAPSIONIC_TWIN, 0);
-    
-    if (nSurge > 0)
-    {
-        
-        PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-    int nDC = GetManifesterDC(oCaster);
-    int nCaster = GetManifesterLevel(oCaster);
-    effect eVis = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
-    int nDice = 1;
-    int nDiceSize = 8;
-            
-    //Augmentation effects to Damage
-    if (nAugment > 0) nDice += nAugment;
-    
-    int nDamage = MetaPsionics(nDiceSize, nDice, nMetaPsi, oCaster, TRUE);
-    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
-    
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    
-    // Perform the Touch Attach
-    int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
-    if (nTouchAttack > 0)
-    {
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    }
-    
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_SPLIT | METAPSIONIC_TWIN
+                              );
 
-    }
+    if(manif.bCanManifest)
+    {
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
+        int nDieSize      = 8;
+        int nDamage, nTouchAttack;
+        effect eVis       = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
+        effect eDamage;
+
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Perform the Touch Attach
+            nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
+            if(nTouchAttack > 0)
+            {
+                // Roll against SR
+                if(PRCMyResistPower(oManifester, oTarget, nPen))
+                {
+                    // Roll damage
+                    nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                    // Target-specific stuff
+                    nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, FALSE);
+
+                    // Apply the damage and VFX
+                    ApplyTouchAttackDamage(oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_BLUDGEONING);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                }// end if - SR check
+            }// end if - Touch attack hit
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

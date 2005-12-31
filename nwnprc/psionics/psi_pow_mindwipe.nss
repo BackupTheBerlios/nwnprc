@@ -1,37 +1,48 @@
 /*
    ----------------
    Mindwipe
-   
-   prc_pow_mindwipe
+
+   psi_pow_mindwipe
    ----------------
 
    19/2/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 4
-   Range: Short
-   Target: One Creature
-   Duration: Instantaneous
-   Saving Throw: Fortitude negates
-   Power Resistance: Yes
-   Power Point Cost: 7
-   
-   You partially wipe your victim's mind of past experiences, bestowing two negative levels.
-   
-   Augment: For every 3 additional power points spend, this power bestows an extra negative level.
-   For every 2 additional power points spent in this way, the DC increases by 1.
+    Mindwipe
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 4
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One creature
+    Duration: Instantaneous
+    Saving Throw: Fortitude negates
+    Power Resistance: Yes
+    Power Points: 7
+    Metapsionics: Twin
+
+    You partially wipe your victim’s mind of past experiences, bestowing two
+    negative levels upon it. If the subject has at least as many negative levels
+    as Hit Dice, it dies. The effects of multiple negative levels stack.
+
+    If the subject survives, it loses these two negative levels after 1 hour.
+    (No Fortitude save is necessary to avoid gaining the negative level
+    permanently.)
+
+    Augment: You can manifest this power in one or both of the following ways.
+    1. For every 2 additional power points you spend, this power’s save DC
+       increases by 1.
+    2. For every 3 additional power points you spend, this power bestows an
+       additional negative level on the subject.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -48,51 +59,43 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 3;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, METAPSIONIC_TWIN, 0);
-    
-    if (nSurge > 0)
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       2, PRC_UNLIMITED_AUGMENTATION,
+                                                       3, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_TWIN
+                              );
+
+    if(manif.bCanManifest)
     {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nPen = GetPsiPenetration(oCaster);
-	int nDrain = 2;
-	
-	if (nSurge > 0) nAugment += nSurge;
-	
-	//Augmentation effects to Damage
-	if (nAugment > 0) 
-	{
-		nDrain += nAugment;
-		nDC += (nAugment * 3)/2;
-	}
-	
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    	effect eDrain = EffectNegativeLevel(nDrain);
-    	effect eLink = EffectLinkEffects(eDrain, eDur);
-	
-	//Check for Power Resistance
-	if (PRCMyResistPower(oCaster, oTarget, nPen))
-	{
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-            
-                //Make a saving throw check
+        int nDC           = GetManifesterDC(oManifester) + manif.nTimesAugOptUsed_1;
+        int nPen          = GetPsiPenetration(oManifester);
+        int nNegLevels    = 2 + manif.nTimesAugOptUsed_2;
+        effect eLink      = EffectLinkEffects(EffectNegativeLevel(nNegLevels),
+                                              EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE)
+                                              );
+
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            // Check for Power Resistance
+            if(PRCMyResistPower(oManifester, oTarget, nPen))
+            {
+                // Save - Fort negates
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE))
                 {
-                        //Apply VFX Impact and daze effect
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(2),TRUE,-1,nCaster);
-                }
-	}
-    }
+                    // Delayed to make sure the negative levels stack
+                    DelayCommand(0.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(1), TRUE, manif.nSpellID, manif.nManifesterLevel));
+                }// end if - Save
+            }// end if - SR
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

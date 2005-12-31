@@ -1,23 +1,26 @@
 /*
    ----------------
    Empathy
-   
-   prc_all_empathy
+
+   psi_pow_empathy
    ----------------
 
    6/12/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   You detect the surface emotions of creatures around you, giving you a +2 bonus to Bluff,
-   Intimidate, and Persuade when interacting with them.
+    Empathy
+
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 1
+    Metapsionics: Extend
+
+    You detect the surface emotions of creatures around you, giving you a +2 bonus to Bluff,
+    Intimidate, and Persuade when interacting with them.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +30,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,26 +46,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nAugCost = 0;
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
-    {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nDur = nCaster;
-    	if (nMetaPsi == 2)	nDur *= 2;    	
-    	effect eBluff = EffectSkillIncrease(SKILL_BLUFF, 2);
-    	effect ePersuade = EffectSkillIncrease(SKILL_PERSUADE, 2);
-    	effect eIntim = EffectSkillIncrease(SKILL_INTIMIDATE, 2);
-    	effect eVis = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eVis, eDur);
-    	eLink = EffectLinkEffects(eLink, eBluff);
-    	eLink = EffectLinkEffects(eLink, ePersuade);
-    	eLink = EffectLinkEffects(eLink, eIntim);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
+    if(manif.bCanManifest)
+    {
+        effect eLink =                          EffectSkillIncrease(SKILL_BLUFF,      2);
+               eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERSUADE,   2));
+               eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_INTIMIDATE, 2));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        effect eVis  = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
+        float fDuration = RoundsToSeconds(manif.nManifesterLevel);
+        if(manif.bExtend) fDuration *= 2;
+
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
 }

@@ -1,23 +1,28 @@
 /*
    ----------------
    Ectoplasmic Sheen
-   
-   prc_all_grease
+
+   psi_pow_grease
    ----------------
 
    30/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder
-   Power Level: 1
-   Range: Short
-   Area: 10' square
-   Duration: 1 Round/level
-   Saving Throw: Reflex negates
-   Power Resistance: Yes
-   Power Point Cost: 1
-   
-   You create a pool of ectoplasm across the floor that inhibits motion and can cause people to slow down.
-   This functions as the spell grease.
+    Ectoplasmic Sheen
+
+    Metacreativity (Creation)
+    Level: Psion/wilder 1
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target or Area: 10-ft. square
+    Duration: 1 round/level
+    Saving Throw: See text
+    Power Resistance: No
+    Power Points: 1
+    Metapsionics: Extend
+
+    You create a pool of ectoplasm across the floor that inhibits motion and can cause people to slow down.
+    This functions as the spell grease.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +32,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,34 +48,49 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nSurge > 0)
-    {
-    	
-    	PsychicEnervation(oCaster, nSurge);
-    }
-    
-    if (nMetaPsi > 0) 
-    {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDur = nCaster;
-	if (nMetaPsi == 2)	nDur *= 2;	
-		
-    	//Declare major variables including Area of Effect Object
-    	effect eAOE = EffectAreaOfEffect(AOE_PER_PSIGREASE);
-    	location lTarget = PRCGetSpellTargetLocation();
-    	effect eImpact = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
-    	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
+    object oManifester = OBJECT_SELF;
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, OBJECT_INVALID,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
 
-    	//Create an instance of the AOE Object using the Apply Effect function
-    	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDur));
-    }
-    	
+    if(manif.bCanManifest)
+    {
+        int nDC          = GetManifesterDC(oManifester);
+        location lTarget = PRCGetSpellTargetLocation();
+        effect eImpact   = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
+        effect eAoE;
+        object oAoE;
+        float fDuration  = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Do impact VFX
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
+
+        // Create AoE
+        eAoE = EffectAreaOfEffect(AOE_PER_PSIGREASE);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAoE, lTarget, fDuration);
+
+        // Get an object reference to the newly created AoE
+        oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        while(GetIsObjectValid(oAoE))
+        {
+            // Test if we found the correct AoE
+            if(GetTag(oAoE) == Get2DACache("vfx_persistent", "LABEL", AOE_PER_PSIGREASE) &&
+               !GetLocalInt(oAoE, "PRC_EctoSheen_Inited")
+               )
+            {
+                break;
+            }
+            // Didn't find, get next
+            oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        }
+        if(DEBUG) if(!GetIsObjectValid(oAoE)) DoDebug("ERROR: Can't find area of effect for Ectoplasmic Sheen!");
+
+        // Store data for use in the AoE scripts
+        SetLocalInt(oAoE, "PRC_EctoSheen_DC", nDC);
+
+        SetLocalInt(oAoE, "PRC_EctoSheen_Inited", TRUE);
+    }// end if - Successfull manifestation
 }

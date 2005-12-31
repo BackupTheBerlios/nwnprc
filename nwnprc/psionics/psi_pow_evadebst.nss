@@ -6,19 +6,27 @@
    ----------------
 
    22/10/04 by Stratovarius
+*/ /** @file
 
-   Class: Psion/Wilder, Psychic Warrior
-   Power Level: Psion/Wilder 7, PsyWar 3
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/Level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: Psion/Wilder 13, PsyWar 5
+    Evade Burst
 
-   When you manifest this power, you gain the effect of evasion.
+    Psychometabolism
+    Level: Psion/wilder 7, psychic warrior 3
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/Level
+    Power Points: Psion/wilder 13, psychic warrior 5
+    Metapsionics: Extend
 
-   Augment: If you spend 4 additional points, you gain improved evasion. Augmenting this power beyond level 1 does nothing.
+    For the duration of the power, you gain the ability to throw off faux
+    ectoplasmic shells that allow you to slide out of range of a damaging
+    effects that allow a Reflex save. This is equivalent to possessing the
+    Evasion ability.
+
+    Augment: If you spend 4 additional power points, the effect is instead
+             equivalent to Improved Evasion, meaning you take only half damage
+             on a failed Reflex save.
 */
 
 #include "psi_inc_psifunc"
@@ -28,9 +36,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -47,32 +52,25 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       4, 1
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 4;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nSurge = GetLocalInt(oCaster, "WildSurge");
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
-
-    if (nSurge > 0)
+    if(manif.bCanManifest)
     {
+        int nIPFeat     = manif.nTimesAugOptUsed_1 == 1 ?
+                           IP_CONST_FEAT_IMPEVASION :      // Augmented
+                           IP_CONST_FEAT_EVASION;          // Not augmented
+        object oSkin    = GetPCSkin(oManifester);
+        float fDuration = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
 
-        PsychicEnervation(oCaster, nSurge);
-    }
-
-    if (nMetaPsi > 0)
-    {
-        int nDC = GetManifesterDC(oCaster);
-        int nCaster = GetManifesterLevel(oCaster);
-        int nFeat = IP_CONST_FEAT_EVASION;
-
-        //Augmentation effects to Damage
-        if (nAugment > 0) nFeat = IP_CONST_FEAT_IMPEVASION;
-
-        int CasterLvl = GetManifesterLevel(oCaster);
-        object oSkin = GetPCSkin(oCaster);
-        //AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyBonusFeat(nFeat), oSkin, RoundsToSeconds(nCaster));
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nFeat), RoundsToSeconds(nCaster), X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nIPFeat), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 }

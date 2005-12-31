@@ -5476,31 +5476,31 @@ Metapsionics: Empower, Maximize, Twin
 
 As recall agony, except the wounds revealed by folding the fourth dimension are potentially fatal. If the target fails its Will save, it dies. If the save succeeds, the target instead takes 5d6 points of damage.</entry>
   <entry id="46453" lang="en" sex="m">Thicken Skin</entry>
-  <entry id="46454" lang="en" sex="m">Class: Psion (Egoist), Psychic Warrior
-Power Level: 1
+  <entry id="46454" lang="en" sex="m">Psychometabolism
+Level: Egoist 1, psychic warrior 1
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 10 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 1
+Target: You
+Duration: 10 min./level
+Power Points: 1
+Metapsionics: Extend
 
-Your skin thickens and spreads across your body, providing a +1 bonus to your armour class.
+Your skin or natural armor thickens and spreads across your body, providing a +1 natural enhancement bonus to your Armor Class.
 
-Augment: For every 3 additional power points you spend, the AC bonus improves by 1.</entry>
+Augment: For every 3 additional power points you spend, the natural enhancement bonus increases by 1.</entry>
   <entry id="46455" lang="en" sex="m">Vigor</entry>
-  <entry id="46456" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 1
+  <entry id="46456" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 1, psychic warrior 1
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 1
+Target: You
+Duration: 1 min./level
+Power Points: 1
+Metapsionics: Extend
 
-You suffuse yourself with power, gaining 5 temporary hit points.
+You suffuse yourself with power, gaining 5 temporary hit points. Using this power again when an earlier manifestation has not expired merely replaces the older temporary hit points (if any remain) with the newer ones.
 
-Augment: For every additional power point you spend, gain an additional 5 temporary HP.</entry>
+Augment: For every additional power point you spend, the number of temporary hit points you gain increases by 5.</entry>
   <entry id="46457" lang="en" sex="m">Crystallize</entry>
   <entry id="46458" lang="en" sex="m">Metacreativity
 Level: Shaper 6
@@ -5558,18 +5558,20 @@ Metapsionics: Extend
 
 Your vision cannot be distracted or misled, granting you immunity to all figments and glamers (such as invisibility). Moreover, your Spot and Search checks receive a +6 enhancement bonus for the duration of this power.</entry>
   <entry id="46465" lang="en" sex="m">Stomp</entry>
-  <entry id="46466" lang="en" sex="m">Class: Psychic Warrior
-Power Level: 1
-Range: Short
-Target: 20' Cone
+  <entry id="46466" lang="en" sex="m">Psychokinesis
+Level: Psychic warrior 1
+Manifesting Time: 1 standard action
+Range: 20 ft.
+Area: Cone-shaped spread
 Duration: Instantaneous
 Saving Throw: Reflex negates
 Power Resistance: No
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Empower, Maximize, Twin, Widen
 
-Your stomp precipitates a psychokinetic shockwave that travels along the ground, toppling creatures. Creatures that fail their save are knocked down and take 1d4 points of bludgeoning damage.
+Your foot stomp precipitates a psychokinetic shock wave that travels along the ground, toppling creatures and loose objects. The shock wave affects only creatures standing on the ground within the power’s area. Creatures that fail their saves are thrown to the ground, become prone, and take 1d2 points of bludgeoning damage.
 
-Augment: For every additional power point spent, this power's damage increases by 1d4. </entry>
+Augment: For every additional power point you spend, this power’s bludgeoning damage increases by 1d2 points.</entry>
   <entry id="46467" lang="en" sex="m">Bolt</entry>
   <entry id="46468" lang="en" sex="m">Metacreativity (Creation)
 Level: Psion/wilder 1
@@ -5982,27 +5984,39 @@ Thousands of tiny crystal shards spray forth in an arc from your hand. These raz
 
 Augment: For every additional power point you spend, this power’s damage increases by 1d4 points.</entry>
   <entry id="46536" lang="en" sex="m">Thought Shield</entry>
-  <entry id="46537" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 2
+  <entry id="46537" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 2, psychic warrior 2
+Manifesting Time: 1 swift action
 Range: Personal
-Target: Self
-Duration: 1 Round/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 3
+Target: You
+Duration: 1 round
+Power Points: 3
+Metapsionics: Extend
 
-Your fortify your mind against intrusion, gaining 13 Power Resistance.</entry>
+You fortify your mind against intrusions, gaining power resistance 13 against all mind-affecting powers.
+
+Manifesting this power is a swift action, like manifesting a quickened power, and it counts toward the normal limit of one quickened power per round. You cannot manifest this power when it isn’t your turn.
+
+Augment: For every additional power point you spend, this power’s duration increases by 1 round, and the power resistance it provides increases by 1 point.</entry>
   <entry id="46538" lang="en" sex="m">Synesthete</entry>
-  <entry id="46539" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 1
+  <entry id="46539" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 1, psychic warrior 1
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 10 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 1
+Target: You
+Duration: 10 min./level
+Power Points: 1
+Metapsionics: Extend
 
-Using this power lets you feel sound and light upon your face, giving you a +4 bonus to Search, Spot, and List, as well as making you immune to blindness and deafness.</entry>
+You receive one kind of sensory input when a different sense is stimulated. In particular, you can feel light and sound on the skin of your face. Your senses continue to work normally as well, unless they are impaired for some reason.
+
+By feeling light by absorbing ambient light onto your skin, you have your normal visual abilities, even if your eyes are closed or you are blinded. You gain a +4 circumstance bonus on all Spot and Search checks.
+
+By feeling sound by absorbing sound onto your skin, the expanded audio input provides you with a +4 circumstance bonus on Listen checks.
+
+Psionic or magical displacement effects, invisibility effects, illusions, and other similar effects confuse your synesthete senses just as they would your normal senses.
+
+You can also use this power to see sound if you are deafened, or hear light if you are blinded, thus removing all penalties associated with either condition.</entry>
   <entry id="46540" lang="en" sex="m">Body Equilibrium</entry>
   <entry id="46541" lang="en" sex="m">Psychometabolism
 Level: Psion/wilder 2, psychic warrior 2
@@ -6087,16 +6101,18 @@ Metapsionics: Extend
 
 You or another willing creature can slide along solid ground as if on smooth ice. If you manifest skate on yourself or another creature, the subject of the power retains equilibrium by mental desire alone, allowing her to gracefully skate along the ground, turn, or stop suddenly as desired. The skater’s speed increases by 50%.</entry>
   <entry id="46552" lang="en" sex="m">Telempathic Projection</entry>
-  <entry id="46553" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 1
-Range: Medium
-Target: One Creature
-Duration: 1 Min/level
+  <entry id="46553" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 1
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./ level)
+Target: One creature
+Duration: 1 min./level
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 1
+Power Points: 1
+Metapsionics: Extend
 
-You grant a +4 Perform and Persuade bonus to the affected creature.</entry>
+Using this power, you can grant a +4 bonus on your own (or others’) Bluff, Intimidate, Perform, and Persuade checks.</entry>
   <entry id="46554" lang="en" sex="m">Dissolving Weapon</entry>
   <entry id="46555" lang="en" sex="m">Psychometabolism [Acid]
 Level: Psychic warrior 2
@@ -6421,16 +6437,16 @@ Manifesting the power is a swift action, like manifesting a quickened power, and
 
 Augment: For every additional power point you spend, this power’s duration increases by 1 round.</entry>
   <entry id="46604" lang="en" sex="m">Touchsight</entry>
-  <entry id="46605" lang="en" sex="m">Class: Psion/Wilder
-Power Level: Psion/Wilder 3
+  <entry id="46605" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 3
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Caster
-Duration: 1 Min/level
-Saving Throw: None
-Power Resistance: None
-Power Point Cost: 5
+Target: You
+Duration: 1 min./level
+Power Points: 5
+Metapsionics: Extend
 
-You generate a subtle telekinetic field of mental contact, allowing you to "feel" your surroundings. You can spot creatures hidden, even by magical means. </entry>
+You generate a subtle telekinetic field of mental contact, allowing you to “feel” your surroundings even in total darkness or when your sight would otherwise be obscured by your physical environment. You ignore invisibility, darkness, and concealment. You do not need to make Spot or Listen checks to notice creatures; you can detect and pinpoint all creatures within 60 feet. In many circumstances, comparing your regular senses to what you learn with touchsight is enough to tell you the difference between visible, invisible, hiding, and concealed creatures.</entry>
   <entry id="46606" lang="en" sex="m">Ectoplasmic Shambler</entry>
   <entry id="46607" lang="en" sex="m">Metacreativity (Creation)
 Level: Psion/wilder 5
@@ -6478,29 +6494,33 @@ Augment: For every 2 additional power points you spend, this power’s damage incr
 
 * Due to the way saves are handled in NWN, this has been implemented as a lowered DC instead.</entry>
   <entry id="46612" lang="en" sex="m">Tower of Iron Will</entry>
-  <entry id="46613" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 5
-Range: 10 ft
-Area: 10 ft burst centered on caster
-Duration: 1 Round/level
+  <entry id="46613" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 5
+Manifesting Time: 1 swift action
+Range: 10 ft.
+Area: 10-ft.-radius emanation centered on you
+Duration: 1 round
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 9
+Power Points: 9
+Metapsionics: Extend, Widen
 
-You generate a bastion of thought so strong it offers protection to you and everyone around you, improving the self control of all. You and all creatures in the area gain power resistance 19.
+You generate a bastion of thought so strong that it offers protection to you and everyone around you, improving the self-control of all. You and all creatures in the power’s area gain power resistance 19 against all mind-affecting powers.
 
-   Augment: For every additional power point spent, this power's duration increases by 1 round, and the power resistance it grants is increased by 1</entry>
-  <entry id="46614" lang="en" sex="m">True Seeing</entry>
-  <entry id="46615" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 5
+Manifesting this power is a swift action, like manifesting a quickened power, and it counts toward the normal limit of one quickened power per round. You cannot manifest this power when it isn’t your turn.
+
+Augment: For every additional power point you spend, this power’s duration increases by 1 round and the power resistance it provides increases by 1 point.</entry>
+  <entry id="46614" lang="en" sex="m">True Seeing, Psionic</entry>
+  <entry id="46615" lang="en" sex="m">Clairsentience
+Level: Psion/wilder 5
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Caster
-Duration: 1 Min/level
-Saving Throw: None
-Power Resistance: None
-Power Point Cost: 9
+Target: You
+Duration: 1 min./level
+Power Points: 9
+Metapsionics: Extend
 
-You magically enhance your sight, revealing everything as it truly is.</entry>
+As the true seeing spell, except as noted here.</entry>
   <entry id="46616" lang="en" sex="m">Fuse Flesh</entry>
   <entry id="46617" lang="en" sex="m">Psychometabolism
 Level: Psion/wilder 6
@@ -6603,18 +6623,20 @@ You gain a +4 enhancement bonus to Strength, but you take a -2 penalty to Dexter
 
 Augment: For every additional power point you spend, this power’s duration increases by 1 minute.</entry>
   <entry id="46632" lang="en" sex="m">Ultrablast</entry>
-  <entry id="46633" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 7
-Range: 15
-Area: 15 ft burst centered on caster
+  <entry id="46633" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 7
+Manifesting Time: 1 standard action
+Range: 15 ft.
+Area: 15-ft.-radius spread centered on you
 Duration: Instantaneous
-Saving Throw: Will half.
+Saving Throw: Will half
 Power Resistance: Yes
-Power Point Cost: 13
+Power Points: 13
+Metapsionics: Empower, Maximize, Twin, Widen
 
-You grumble psychically, then release a horrid shriek from your subconcious that disrupts the brains of all enemies in the power's area, dealing 13d6 to each enemy.
+You “grumble” psychically (which both psionic and nonpsionic creatures can detect), then release a horrid shriek from your subconscious that disrupts the brains of all enemies in the power’s area, dealing 13d6 points of damage to each enemy.
 
-Augment: For every additional power point spent, this power's damage increases by 1d6. </entry>
+Augment: For every additional power point you spend, this power’s damage increases by 1d6 points.</entry>
   <entry id="46634" lang="en" sex="m">Iron Body, Psionic</entry>
   <entry id="46635" lang="en" sex="m">Metacreativity (Creation)
 Level: Psion/wilder 8
@@ -6644,16 +6666,18 @@ Metapsionics: Extend
 
 The subject is protected from all devices, powers, and spells that detect, influence, or read emotions or thoughts. This power protects against powers with the mind-affecting or scrying descriptors. Psionic mind blank even foils bend reality, limited wish, miracle, reality revision, and wish when they are used in such a way as to affect the subject’s mind or to gain information about it (however, metafaculty can pierce the protective quality of psionic mind blank). Remote viewing (scrying) attempts that are targeted specifically at the subject do not work at all.</entry>
   <entry id="46638" lang="en" sex="m">True Metabolism</entry>
-  <entry id="46639" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 8
+  <entry id="46639" lang="en" sex="m">Psychometabolism
+Level: Psion/wilder 8
+Manifesting Time: 1 round
 Range: Personal
-Target: Self
-Duration: 1 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 15
+Target: You
+Duration: 1 min./level
+Power Points: 15
+Metapsionics: Extend
 
-Your metabolism operates at a greatly increased rate, healing in minutes what it would take days normally. You regenerate at the rate of 10 hitpoints a round.</entry>
+You are difficult to kill while this power persists. You automatically heal damage at the rate of 10 hit points per round.
+
+This power is not effective against damage from starvation, thirst, or suffocation. Also, attack forms that don’t deal hit point damage (for example, most poisons) ignore true metabolism. You must have a Constitution score to gain any of this power’s benefits.</entry>
   <entry id="46640" lang="en" sex="m">Assimilate</entry>
   <entry id="46641" lang="en" sex="m">Psychometabolism
 Level: Psion/wilder 9
@@ -6708,16 +6732,16 @@ Manifesting microcosm a second time on an affected creature turns its sensory pa
 
 Augment: For every additional power point you spend, the number of individual and group hit points the power can affect increases by 10.</entry>
   <entry id="46646" lang="en" sex="m">Timeless Body</entry>
-  <entry id="46647" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 9
+  <entry id="46647" lang="en" sex="m">Psychoportation
+Level: Psion/wilder 9
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 1 Round
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 17
+Target: You
+Duration: 1 round
+Power Points: 17
+Metapsionics: Extend
 
-Your body ignores all harmful effects, making you invulnerable to all spells, powers, damage, or any other damaging effect.</entry>
+Your body ignores all harmful (and helpful) effects. While timeless body is in effect, you are invulnerable to all attacks and powers.</entry>
   <entry id="46648" lang="en" sex="m">Body Purification</entry>
   <entry id="46649" lang="en" sex="m">Psychometabolism (Healing)
 Level: Psion/wilder 3, psychic warrior 2
@@ -6928,55 +6952,67 @@ Metapsionics: Twin, Widen
 
 This power can negate a mind blank affecting the target. If the target fails its save and does not overcome your attempt with its power resistance, you can shatter the mind blank by making a successful check (1d20 + your manifester level, maximum +20) against a DC equal to 11 + the manifester level of the creator of the mind blank effect. If you succeed, the psionic mind blank or personal mind blank ends, allowing you to affect the target thereafter with mind-affecting powers.</entry>
   <entry id="46684" lang="en" sex="m">Temporal Acceleration</entry>
-  <entry id="46685" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 6
+  <entry id="46685" lang="en" sex="m">Psychoportation
+Level: Psion/wilder 6
+Manifesting Time: 1 swift action
 Range: Personal
-Target: Caster
-Duration: 1 Round
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 11
+Target: You
+Duration: 1 round (in apparent time); see text
+Power Points: 11
+Metapsionics: Extend
 
-You enter another time frame, speeding up so greatly that all other creatures seem frozen, though they are still actually moving at normal speed. You are free to act for 1 round of apparent time. This is an instant power.
+You enter another time frame, speeding up so greatly that all other creatures seem frozen, though they are actually still moving at normal speed. You are free to act for 1 round of apparent time. You can manifest powers, cast spells, move, or perform other types of actions.
 
-Augment: For every 4 additional power points spent, the duration increases by 1 round.</entry>
+When your temporal acceleration expires, you resume acting during your current turn in the standard time frame. You are shaken for 1 round upon your return to the standard time frame.
+
+Manifesting this power is a swift action, like manifesting a quickened power, and it counts toward the normal limit of one quickened power per round. You cannot manifest this power when it isn’t your turn.
+
+Augment: For every 4 additional power points you spend, this power’s duration (in apparent time) increases by 1 round.</entry>
   <entry id="46686" lang="en" sex="m">Time Hop</entry>
-  <entry id="46687" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 3
-Range: Close
-Target: One Object
-Duration: 1 Round/level
+  <entry id="46687" lang="en" sex="m">Psychoportation
+Level: Psion/wilder 3
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Targets: One Medium or smaller creature
+Duration: 1 round/level; see text
 Saving Throw: Will negates
 Power Resistance: Yes
-Power Point Cost: 5
+Power Points: 5
+Metapsionics: Extend, Twin, Widen
 
-The subject of the power hops forward in time. In effect, the subject disappears in a shimmer, then reappears when the power expires. No change has taken place to the object. The creature must be of medium size or smaller. Friendly targets do not need to make a will save.
+The subject of the power hops forward in time 1 round for every manifester level you have. In effect, the subject seems to disappear in a shimmer of silver energy, then reappear after the duration of this power expires. The subject reappears in exactly the same orientation and condition as before. From the subject’s point of view, no time has passed at all.
 
-Augment: For every 2 additional power points spent, this power's can affect 1 more target within 15 feet of the original, and the size category it can effect increases by 1 step.</entry>
+In each round of the power’s duration, it can attempt a DC 15 Wisdom check. Success allows the subject to return. The subject can act normally on its next turn after this power ends.
+
+Augment: You can augment this power in one or both of the following ways.
+1. For every 2 additional power points you spend, you can affect a creature of one size category larger.
+2. For every 2 additional power points you spend, this power can affect an additional target. Any additional target cannot be more than 15 feet from another target of the power.</entry>
   <entry id="46688" lang="en" sex="m">Telekinetic Maneuver</entry>
-  <entry id="46689" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 4
-Range: Medium
-Target: One Creature
-Duration: 1 Round/2 levels
+  <entry id="46689" lang="en" sex="m">Psychokinesis [Force]
+Level: Psion/wilder 4
+Manifesting Time: 1 standard action
+Range: Medium (100 ft. + 10 ft./ level)
+Target: One creature
+Duration: 1 round / 2 levels
 Saving Throw: None
 Power Resistance: Yes
-Power Point Cost: 7
+Power Points: 7
+Metapsionics: Extend, Twin
 
-You mentally push your foe or his weapon, attempting to knock him down and disarm him. The DC of the discipline check to knock him down and disarm is your manifester level plus your intelligence modifier. The target gets a seperate check for knockdown and for disarm.
+You mentally push a foe, attempting to knock it prone and disarm it. The DC of the discipline check for the target to resist being knocked down or disarmed is equal to your manifester level + you ability modified in your manifesting stat. The Discipline checks to avoid being knocked down and disarmed are rolled separately.
 
-Augment: For every 2 additional power points spent, the DC of the discipline check goes up by 1.</entry>
+Augment: For every 2 additional power points spent, the DC of the Discipline check is increased by 1.</entry>
   <entry id="46690" lang="en" sex="m">Ubiquitous Vision</entry>
-  <entry id="46691" lang="en" sex="m">Class: Psion/Wilder, Psychic Warrior
-Power Level: 3
+  <entry id="46691" lang="en" sex="m">Clairsentience
+Level: Psion/wilder 3, psychic warrior 3
+Manifesting Time: 1 standard action
 Range: Personal
-Target: Self
-Duration: 10 Min/level
-Saving Throw: None
-Power Resistance: No
-Power Point Cost: 5
+Target: You
+Duration: 10 min./level
+Power Points: 5
+Metapsionics: Extend
 
-You have metaphoric "eyes in the back of your head", and on the sides and top as well, granting you benefits. These include rogues being unable to sneak you due to flanking, and a +4 bonus to spot and search.</entry>
+You have metaphoric “eyes in the back of your head,” and on the sides and top as well, granting you benefits in specific situations. In effect, you have a 360-degree sphere of sight, allowing you a perfect view of creatures that might otherwise flank you. Thus, flanking opponents gain no bonus on their attack rolls, and rogues are denied their sneak attack ability because you do not lose your Dexterity bonus (but they may still sneak attack you if you are caught flat-footed). Your Spot and Search checks gain a +4 enhancement bonus.</entry>
   <entry id="46692" lang="en" sex="m">Psychic Theurge</entry>
   <entry id="46693" lang="en" sex="m">Psychic Theurges</entry>
   <entry id="46694" lang="en" sex="m">psychic theurge</entry>
@@ -7179,16 +7215,18 @@ When laying your hands upon a construct that has at least 1 hit point remaining,
 
 Augment: For every 2 additional power points you spend, this power repairs an additional 1d8 points of damage.</entry>
   <entry id="46722" lang="en" sex="m">Time Hop, Mass</entry>
-  <entry id="46723" lang="en" sex="m">Class: Psion (Nomad)
-Power Level: 8
-Range: Personal
-Target: 25' Burst
-Duration: 1 Hour/level
-Saving Throw: Will negates
-Power Resistance: Yes
-Power Point Cost: 15
+  <entry id="46723" lang="en" sex="m">Psychoportation
+Level: Nomad 8
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Targets: All willing creatures in range
+Duration: 1 hour; see text
+Power Points: 15
+Metapsionics: None
 
-The subjects of the power hop forward in time. In effect, the subjects disappear in a shimmer, then reappear when the power expires. No change has taken place to the objects. Friendly targets get no saving throw. </entry>
+As time hop, except you affect all willing subjects in range, including yourself.
+
+Augment: For each additional power point spent, the duration of this power increases by 1 hour.</entry>
   <entry id="46724" lang="en" sex="m">Thrallherd</entry>
   <entry id="46725" lang="en" sex="m">Thrallherds</entry>
   <entry id="46726" lang="en" sex="m">thrallherd</entry>
@@ -7597,8 +7635,8 @@ Manifesting Time: 1 standard action
 Range: Personal and touch
 Target or Targets: You and touched objects or other touched willing creatures
 Duration: Instantaneous
-Saving Throw: None or Will negates (object)
-Power Resistance: No or Yes (object)
+Saving Throw: None
+Power Resistance: No
 Power Points: 15
 Metapsionics: None
 
@@ -7629,6 +7667,7 @@ Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
 Power Points: 9
+Metapsionics: None
 
 This power instantly transports you to a designated destination, which may be as distant as 100 miles per manifester level. Interplanar travel is not possible. You may also bring one additional willing Medium or smaller creature or its equivalent (see below) per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with one another, and at least one of those creatures must be in contact with you. *
 
@@ -7659,10 +7698,11 @@ Level: Nomad 9
 Manifesting Time: 10 minutes
 Range: 0 ft.
 Effect: 5-ft.-radius circle that teleports those who activate it
-Duration: 10 min./level (D)
+Duration: 10 min./level
 Saving Throw: None
 Power Resistance: Yes
 Power Points: 17
+Metapsionics: Extend
 
 You create a circle on the floor or other horizontal surface that teleports, as greater teleport, any creature who stands on it to a designated spot. Once you designate the destination for the circle, you cant change it. The power fails if you attempt to set the circle to teleport creatures into a solid object, to a place with which you are not familiar and have no clear description, or to another plane.
 
@@ -7722,6 +7762,7 @@ Implementation: At this time, the circle does not act as a trap, merely as a nor
   <entry id="46850" lang="en" sex="m">You are now Psionically Focused.</entry>
   <entry id="46851" lang="en" sex="m">You failed to become Psionically Focused.</entry>
   <entry id="46852" lang="en" sex="m">You do not have any Power Points, you cannot become Psionically Focused</entry>
+  <entry id="46853" lang="en" sex="m">* Target disarmed! *</entry>
   <entry id="46964" lang="en" sex="m">Empty Quickselection</entry>
   <entry id="46965" lang="en" sex="m">Power Points Remaining:</entry>
   <entry id="46966" lang="en" sex="m">Quickselection set to</entry>

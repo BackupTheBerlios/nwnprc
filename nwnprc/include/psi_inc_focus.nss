@@ -129,11 +129,12 @@ void GainPsionicFocus(object oGainee = OBJECT_SELF)
     SetLocalInt(oGainee, PSIONIC_FOCUS, TRUE);
 
     // Speed Of Thought
-    if(GetHasFeat(FEAT_SPEED_OF_THOUGHT, oGainee) &&
-       GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oGainee)) < 6 // Check for heavy armor
-      )
+    if(GetHasFeat(FEAT_SPEED_OF_THOUGHT, oGainee))
     {
-        AssignCommand(oGainee, ActionCastSpellAtObject(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oGainee, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        // Check for heavy armor before adding the bonus now
+        if(GetBaseAC(GetItemInSlot(INVENTORY_SLOT_CHEST, oGainee)) < 6)
+            AssignCommand(oGainee, ActionCastSpellAtObject(SPELL_FEAT_SPEED_OF_THOUGHT_BONUS, oGainee, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+
         // Schedule a script to remove the bonus should they equip heavy armor
         AddEventScript(oGainee, EVENT_ONPLAYEREQUIPITEM, "psi_spdfthgt_oeq", TRUE, FALSE);
         // Schedule another script to add the bonus back if the unequip the armor
@@ -152,7 +153,7 @@ int UsePsionicFocus(object oUser = OBJECT_SELF)
     {
         SetLocalInt(oUser, "PsionicFocusUses", GetPsionicFocusUsesPerExpenditure(oUser) - 1);
         DelayCommand(0.5f, DeleteLocalInt(oUser, "PsionicFocusUses"));
-        SendMessageToPC(oUser, "You have used your Psionic Focus");
+        SendMessageToPCByStrRef(oUser, 16826414); // "You have used your Psionic Focus"
 
         bToReturn = TRUE;
     }
@@ -205,7 +206,7 @@ void LosePsionicFocus(object oLoser = OBJECT_SELF)
         SetCompositeBonus(GetPCSkin(oLoser), "PsionicDodge", 0, ITEM_PROPERTY_AC_BONUS);
 
         // Inform oLoser about the event
-        FloatingTextStringOnCreature("You have lost your Psionic Focus", oLoser, FALSE);
+        FloatingTextStrRefOnCreature(16826415, oLoser, FALSE); // "You have lost your Psionic Focus"
     }
 }
 

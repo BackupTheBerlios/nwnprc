@@ -34,9 +34,17 @@ const string PRC_AUGMENT_QUICKSELECTION  = "PRC_Augment_Quickselection_";
 const int PRC_AUGMENT_QUICKSELECTION_MIN = 1;
 /// The highest value the quickslot index can have
 const int PRC_AUGMENT_QUICKSELECTION_MAX = 3;
+/// An index that should never contain a profile
+const int PRC_AUGMENT_PROFILE_NONE = 0;
 
 /// The value of an empty profile. Also known as zero
 const int PRC_AUGMENT_NULL_PROFILE = 0x00000000;
+
+/// The special value for nGenericAugCost in power augmentation profile that means the power has no generic augmentation.
+const int PRC_NO_GENERIC_AUGMENTS    = -1;
+/// The special value for nMaxAugs_* that means there is no limit to the times that option may be used.
+const int PRC_UNLIMITED_AUGMENTATION = -1;
+
 
 //////////////////////////////////////////////////
 /*                 Structures                   */
@@ -193,7 +201,7 @@ struct user_augment_profile{
  * @return                The parameters compiled into a power_augment_profile
  *                        structure.
  */
-struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
+struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = PRC_NO_GENERIC_AUGMENTS,
                                                       int nAugCost_1 = 0, int nMaxAugs_1 = 0,
                                                       int nAugCost_2 = 0, int nMaxAugs_2 = 0,
                                                       int nAugCost_3 = 0, int nMaxAugs_3 = 0,
@@ -237,7 +245,7 @@ void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_
  * @return      A string of format:
  *              Option 1: N [times|PP], Option 2: N [times|PP], Option 2: N [times|PP], Option 4: N [times|PP], Option 5: N [times|PP]
  */
-string UserAugmentationProfileToString(struct user_augmentation_profile uap);
+string UserAugmentationProfileToString(struct user_augment_profile uap);
 
 /**
  * Calculates how many times each augmentation option of a power is used and
@@ -282,7 +290,7 @@ void SetAugmentationOverride(object oCreature, struct user_augment_profile uap);
  */
 struct user_augment_profile _DecodeProfile(int nToDecode)
 {
-    struct user_augmentation_profile uap;
+    struct user_augment_profile uap;
 
     // The augmentation profile is stored in one integer, with 6 bits per option.
     // MSB -> [xx555555444444333333222222111111] <- LSB
@@ -292,13 +300,15 @@ struct user_augment_profile _DecodeProfile(int nToDecode)
     uap.nOption_3 = (nToDecode >>> 12) & nMask;
     uap.nOption_4 = (nToDecode >>> 18) & nMask;
     uap.nOption_5 = (nToDecode >>> 24) & nMask;
+
+    return uap;
 }
 
 /** Internal function.
  * @param uapToEncode An user augmentation profile to encode into a single integer
  * @return            Integer built from values in uapToEncode
  */
-int _EncodeProfile(struct user_augmentation_profile uapToEncode)
+int _EncodeProfile(struct user_augment_profile uapToEncode)
 {
     // The augmentation profile is stored in one integer, with 6 bits per option.
     // MSB -> [xx555555444444333333222222111111] <- LSB
@@ -310,6 +320,8 @@ int _EncodeProfile(struct user_augmentation_profile uapToEncode)
     nProfile |= (uapToEncode.nOption_3 & nMask) << 12;
     nProfile |= (uapToEncode.nOption_4 & nMask) << 18;
     nProfile |= (uapToEncode.nOption_5 & nMask) << 24;
+
+    return nProfile;
 }
 
 
@@ -318,7 +330,7 @@ int _EncodeProfile(struct user_augmentation_profile uapToEncode)
 //////////////////////////////////////////////////
 
 
-struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = -1,
+struct power_augment_profile PowerAugmentationProfile(int nGenericAugCost = PRC_NO_GENERIC_AUGMENTS,
                                                       int nAugCost_1 = 0, int nMaxAugs_1 = 0,
                                                       int nAugCost_2 = 0, int nMaxAugs_2 = 0,
                                                       int nAugCost_3 = 0, int nMaxAugs_3 = 0,
@@ -362,11 +374,11 @@ struct user_augment_profile GetUserAugmentationProfile(object oUser, int nIndex,
        )
     {
         // Null the profile, just in case
-        uap.nOption1 = 0;
-        uap.nOption2 = 0;
-        uap.nOption3 = 0;
-        uap.nOption4 = 0;
-        uap.nOption5 = 0;
+        uap.nOption_1 = 0;
+        uap.nOption_2 = 0;
+        uap.nOption_3 = 0;
+        uap.nOption_4 = 0;
+        uap.nOption_5 = 0;
     }
 
     return uap;
@@ -391,12 +403,12 @@ struct user_augment_profile GetCurrentUserAugmentationProfile(object oUser)
     // It wasn't, so get normally
     else
     {
-        int nIndex = GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE);
+        int nIndex = GetLocalInt(oUser, PRC_CURRENT_AUGMENT_PROFILE);
         int bQuick = nIndex < 0 ? TRUE : FALSE;
 
         if(bQuick) nIndex = -nIndex;
 
-        uap_ret = GetUserAugmentationProfile(manif.oManifester, nIndex, bQuick);
+        uap_ret = GetUserAugmentationProfile(oUser, nIndex, bQuick);
     }
 
     return uap_ret;
@@ -421,22 +433,22 @@ void StoreUserAugmentationProfile(object oUser, int nIndex, struct user_augment_
     SetPersistantLocalInt(oUser, (bQuickSelection ? PRC_AUGMENT_QUICKSELECTION : PRC_AUGMENT_PROFILE) + IntToString(nIndex), _EncodeProfile(uap));
 }
 
-string UserAugmentationProfileToString(struct user_augmentation_profile uap)
+string UserAugmentationProfileToString(struct user_augment_profile uap)
 {
     string sBegin = GetStringByStrRef(16823498) + " "; // "Option"
     string sEnd   = " " + (uap.bValueIsPP ? "PP" : GetStringByStrRef(16823499)); // "times"
 
-    return sBegin + "1: " + IntToString(uap.nOption1) + sEnd
-         + sBegin + "2: " + IntToString(uap.nOption2) + sEnd
-         + sBegin + "3: " + IntToString(uap.nOption3) + sEnd
-         + sBegin + "4: " + IntToString(uap.nOption4) + sEnd
-         + sBegin + "5: " + IntToString(uap.nOption5) + sEnd;
+    return sBegin + "1: " + IntToString(uap.nOption_1) + sEnd
+         + sBegin + "2: " + IntToString(uap.nOption_2) + sEnd
+         + sBegin + "3: " + IntToString(uap.nOption_3) + sEnd
+         + sBegin + "4: " + IntToString(uap.nOption_4) + sEnd
+         + sBegin + "5: " + IntToString(uap.nOption_5) + sEnd;
 }
 
 struct manifestation EvaluateAugmentation(struct manifestation manif, struct power_augment_profile pap)
 {
     // Get the user's augmentation profile - will be all zeroes if no profile is active
-    struct user_augment_profile uap = GetUserAugmentationProfile(manif.oManifester, GetLocalInt(manif.oManifester, PRC_CURRENT_AUGMENT_PROFILE));
+    struct user_augment_profile uap = GetCurrentUserAugmentationProfile(manif.oManifester);
     int nSurge            = GetWildSurge(manif.oManifester);
     int nAugPPCost        = 0;
 
@@ -459,7 +471,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
                                     uap.nOption_1 / pap.nAugCost_1 : // as static PP costs
                                     uap.nOption_1;                   // or as number of times to use
         // Make sure the number of times the option is used does not exceed the maximum
-        if(pap.nMaxAugs_1 != -1 && manif.nTimesAugOptUsed_1 > pap.nMaxAugs_1)
+        if(pap.nMaxAugs_1 != PRC_UNLIMITED_AUGMENTATION && manif.nTimesAugOptUsed_1 > pap.nMaxAugs_1)
             manif.nTimesAugOptUsed_1 = pap.nMaxAugs_1;
         // Calculate the amount of PP the augmentation will cost
         nAugPPCost += manif.nTimesAugOptUsed_1 * pap.nAugCost_1;
@@ -472,7 +484,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
                                     uap.nOption_2 / pap.nAugCost_2 : // as static PP costs
                                     uap.nOption_2;                   // or as number of times to use
         // Make sure the number of times the option is used does not exceed the maximum
-        if(pap.nMaxAugs_2 != -1 && manif.nTimesAugOptUsed_2 > pap.nMaxAugs_2)
+        if(pap.nMaxAugs_2 != PRC_UNLIMITED_AUGMENTATION && manif.nTimesAugOptUsed_2 > pap.nMaxAugs_2)
             manif.nTimesAugOptUsed_2 = pap.nMaxAugs_2;
         // Calculate the amount of PP the augmentation will cost
         nAugPPCost += manif.nTimesAugOptUsed_2 * pap.nAugCost_2;
@@ -485,7 +497,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
                                     uap.nOption_3 / pap.nAugCost_3 : // as static PP costs
                                     uap.nOption_3;                   // or as number of times to use
         // Make sure the number of times the option is used does not exceed the maximum
-        if(pap.nMaxAugs_3 != -1 && manif.nTimesAugOptUsed_3 > pap.nMaxAugs_3)
+        if(pap.nMaxAugs_3 != PRC_UNLIMITED_AUGMENTATION && manif.nTimesAugOptUsed_3 > pap.nMaxAugs_3)
             manif.nTimesAugOptUsed_3 = pap.nMaxAugs_3;
         // Calculate the amount of PP the augmentation will cost
         nAugPPCost += manif.nTimesAugOptUsed_3 * pap.nAugCost_3;
@@ -498,7 +510,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
                                     uap.nOption_4 / pap.nAugCost_4 : // as static PP costs
                                     uap.nOption_4;                   // or as number of times to use
         // Make sure the number of times the option is used does not exceed the maximum
-        if(pap.nMaxAugs_4 != -1 && manif.nTimesAugOptUsed_4 > pap.nMaxAugs_4)
+        if(pap.nMaxAugs_4 != PRC_UNLIMITED_AUGMENTATION && manif.nTimesAugOptUsed_4 > pap.nMaxAugs_4)
             manif.nTimesAugOptUsed_4 = pap.nMaxAugs_4;
         // Calculate the amount of PP the augmentation will cost
         nAugPPCost += manif.nTimesAugOptUsed_4 * pap.nAugCost_4;
@@ -511,14 +523,14 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
                                     uap.nOption_5 / pap.nAugCost_5 : // as static PP costs
                                     uap.nOption_5;                   // or as number of times to use
         // Make sure the number of times the option is used does not exceed the maximum
-        if(pap.nMaxAugs_5 != -1 && manif.nTimesAugOptUsed_5 > pap.nMaxAugs_5)
+        if(pap.nMaxAugs_5 != PRC_UNLIMITED_AUGMENTATION && manif.nTimesAugOptUsed_5 > pap.nMaxAugs_5)
             manif.nTimesAugOptUsed_5 = pap.nMaxAugs_5;
         // Calculate the amount of PP the augmentation will cost
         nAugPPCost += manif.nTimesAugOptUsed_5 * pap.nAugCost_5;
     }
 
     // Calculate number of times a generic augmentation happens with this number of PP
-    if(pap.nGenericAugCost != -1)
+    if(pap.nGenericAugCost != PRC_NO_GENERIC_AUGMENTS)
         manif.nTimesGenericAugUsed = nAugPPCost / pap.nGenericAugCost;
 
 
@@ -540,15 +552,15 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(nToAutodistribute > 0 && pap.nMaxAugs_1)
         {
             // Determine how many times this option could be used
-            if(pap.nMaxAugs_1 == -1)
-                nTimesCanAug = -1;
+            if(pap.nMaxAugs_1 == PRC_UNLIMITED_AUGMENTATION)
+                nTimesCanAug = PRC_UNLIMITED_AUGMENTATION;
             else
                 nTimesCanAug = pap.nMaxAugs_1 - manif.nTimesAugOptUsed_1;
 
             if(nTimesCanAug)
             {
                 // Determine how many times it can be used and how much it costs
-                nTimesAugd = nTimesCanAug == -1 ?
+                nTimesAugd = nTimesCanAug == PRC_UNLIMITED_AUGMENTATION ?
                               nToAutodistribute / pap.nAugCost_1 :
                               min(nToAutodistribute / pap.nAugCost_1, nTimesCanAug);
                 nToAutodistribute -= nTimesAugd * pap.nAugCost_1;
@@ -559,15 +571,15 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(nToAutodistribute > 0 && pap.nMaxAugs_2)
         {
             // Determine how many times this option can be used
-            if(pap.nMaxAugs_2 == -1)
-                nTimesCanAug = -1;
+            if(pap.nMaxAugs_2 == PRC_UNLIMITED_AUGMENTATION)
+                nTimesCanAug = PRC_UNLIMITED_AUGMENTATION;
             else
                 nTimesCanAug = pap.nMaxAugs_2 - manif.nTimesAugOptUsed_2;
 
             if(nTimesCanAug)
             {
                 // Determine how many times it can be used and how much it costs
-                nTimesAugd = nTimesCanAug == -1 ?
+                nTimesAugd = nTimesCanAug == PRC_UNLIMITED_AUGMENTATION ?
                               nToAutodistribute / pap.nAugCost_2 :
                               min(nToAutodistribute / pap.nAugCost_2, nTimesCanAug);
                 nToAutodistribute -= nTimesAugd * pap.nAugCost_2;
@@ -578,15 +590,15 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(nToAutodistribute > 0 && pap.nMaxAugs_3)
         {
             // Determine how many times this option can be used
-            if(pap.nMaxAugs_3 == -1)
-                nTimesCanAug = -1;
+            if(pap.nMaxAugs_3 == PRC_UNLIMITED_AUGMENTATION)
+                nTimesCanAug = PRC_UNLIMITED_AUGMENTATION;
             else
                 nTimesCanAug = pap.nMaxAugs_3 - manif.nTimesAugOptUsed_3;
 
             if(nTimesCanAug)
             {
                 // Determine how many times it can be used and how much it costs
-                nTimesAugd = nTimesCanAug == -1 ?
+                nTimesAugd = nTimesCanAug == PRC_UNLIMITED_AUGMENTATION ?
                               nToAutodistribute / pap.nAugCost_3 :
                               min(nToAutodistribute / pap.nAugCost_3, nTimesCanAug);
                 nToAutodistribute -= nTimesAugd * pap.nAugCost_3;
@@ -597,15 +609,15 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(nToAutodistribute > 0 && pap.nMaxAugs_4)
         {
             // Determine how many times this option can be used
-            if(pap.nMaxAugs_4 == -1)
-                nTimesCanAug = -1;
+            if(pap.nMaxAugs_4 == PRC_UNLIMITED_AUGMENTATION)
+                nTimesCanAug = PRC_UNLIMITED_AUGMENTATION;
             else
                 nTimesCanAug = pap.nMaxAugs_4 - manif.nTimesAugOptUsed_4;
 
             if(nTimesCanAug)
             {
                 // Determine how many times it can be used and how much it costs
-                nTimesAugd = nTimesCanAug == -1 ?
+                nTimesAugd = nTimesCanAug == PRC_UNLIMITED_AUGMENTATION ?
                               nToAutodistribute / pap.nAugCost_4 :
                               min(nToAutodistribute / pap.nAugCost_4, nTimesCanAug);
                 nToAutodistribute -= nTimesAugd * pap.nAugCost_4;
@@ -616,15 +628,15 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         if(nToAutodistribute > 0 && pap.nMaxAugs_5)
         {
             // Determine how many times this option can be used
-            if(pap.nMaxAugs_5 == -1)
-                nTimesCanAug = -1;
+            if(pap.nMaxAugs_5 == PRC_UNLIMITED_AUGMENTATION)
+                nTimesCanAug = PRC_UNLIMITED_AUGMENTATION;
             else
                 nTimesCanAug = pap.nMaxAugs_5 - manif.nTimesAugOptUsed_5;
 
             if(nTimesCanAug)
             {
                 // Determine how many times it can be used and how much it costs
-                nTimesAugd = nTimesCanAug == -1 ?
+                nTimesAugd = nTimesCanAug == PRC_UNLIMITED_AUGMENTATION ?
                               nToAutodistribute / pap.nAugCost_5 :
                               min(nToAutodistribute / pap.nAugCost_5, nTimesCanAug);
                 nToAutodistribute -= nTimesAugd * pap.nAugCost_5;
@@ -634,7 +646,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         }
 
         // Calculate increase to generic augmentation
-        if(pap.nGenericAugCost != -1)
+        if(pap.nGenericAugCost != PRC_NO_GENERIC_AUGMENTS)
             manif.nTimesGenericAugUsed += (nAugPPCost - nToAutodistribute) / pap.nGenericAugCost;
 
         // All PP unused at this point are dumped and the total augmentation cost is zero

@@ -17,6 +17,10 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
+const string PRC_MANIFESTING_CLASS = "PRC_CurrentManifest_ManifestingClass";
+const string PRC_POWER_LEVEL       = "PRC_CurrentManifest_PowerLevel";
+const string PRC_IS_PSILIKE        = "PRC_CurrentManifest_IsPsiLikeAbility";
+
 
 //////////////////////////////////////////////////
 /*                 Structures                   */
@@ -37,6 +41,8 @@ struct manifestation{
     int nPsiFocUsesRemain;
     /// The creature's manifester level in regards to this power
     int nManifesterLevel;
+    /// The power's spell ID
+    int nSpellID;
 
     /* Augmentation */
     /// How many times the first augmentation option of the power is used
@@ -73,7 +79,10 @@ struct manifestation{
 /*             Function prototypes              */
 //////////////////////////////////////////////////
 
-struct manifestation EvaluateManifestation(object oManifester, object oTarget, int nMetaPsiFlags);
+/**
+ * @todo Write
+ */
+struct manifestation EvaluateManifestation(object oManifester, object oTarget, struct power_augment_profile pap, int nMetaPsiFlags);
 
 /**
  * Causes OBJECT_SELF to use the given power.
@@ -98,14 +107,42 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
  */
 string DebugManifestation2Str(struct manifestation manif);
 
+/**
+ * Stores a manifestation structure as a set of local variables. If
+ * a structure was already stored with the same name on the same object,
+ * it is overwritten.
+ *
+ * @param oObject The object on which to store the structure
+ * @param sName   The name under which to store the structure
+ * @param manif   The manifestation structure to store
+ */
+void SetLocalManifestation(object oObject, string sName, struct manifestation manif);
+
+/**
+ * Retrieves a previously stored manifestation structure. If no structure is stored
+ * by the given name, the structure returned is empty.
+ *
+ * @param oObject The object from which to retrieve the structure
+ * @param sName   The name under which the structure is stored
+ * @return        The structure built from local variables stored on oObject under sName
+ */
+struct manifestation GetLocalManifestation(object oObject, string sName);
+
+/**
+ * Deletes a stored manifestation structure.
+ *
+ * @param oObject The object on which the structure is stored
+ * @param sName   The name under which the structure is stored
+ */
+void DeleteLocalManifestation(object oObject, string sName);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
+#include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
 #include "psi_inc_augment" // Provides inc_utility
 #include "psi_inc_metapsi"
-#include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
 
 
 //////////////////////////////////////////////////
@@ -131,7 +168,7 @@ struct manifestation _GetPPCostReduced(struct manifestation manif)
             DeleteLocalInt(manif.oManifester, "ThrallCharm");
             manif.nPPCost -= nThrall;
         }
-        if(GetLocalInt(oCaster, "ThrallDom") && nSpell == POWER_DOMINATE)
+        if(GetLocalInt(manif.oManifester, "ThrallDom") && nSpell == POWER_DOMINATE)
         {
             DeleteLocalInt(manif.oManifester, "ThrallDom");
             manif.nPPCost -= nThrall;
@@ -237,7 +274,7 @@ void _HostileMind(object oManifester, object oTarget)
  */
 void _DoOverchannelDamage(object oManifester, int bIsPsiLike)
 {
-    int nOverchannel = GetLocalInt(oManifester, "Overchannel");
+    int nOverchannel = GetLocalInt(oManifester, PRC_OVERCHANNEL);
     if(nOverchannel > 0 && !bIsPsiLike)
     {
         int nDam = d8(nOverchannel * 2 - 1);
@@ -306,6 +343,23 @@ void _SurgingEuphoriaOrPsychicEnervation(object oManifester, int nWildSurge)
 }
 
 /** Internal function.
+ * Applies the PP loss caused by the target having Mind Trap active.
+ *
+ * @param oManifester A creature currently manifesting a power at oTarget
+ * @param oTarget     The target of the power being manifested
+ */
+void _DoMindTrapPPLoss(object oManifester, object oTarget)
+{
+    if(oManifester != oTarget                            && // Does not apply to own powers
+       GetLocalInt(oTarget, "PRC_Power_MindTrap_Active") && // The target does have Mind Trap active
+       GetIsTelepathyPower()                                // And the power being used is a telepathy power
+       )
+    {
+        LosePowerPoints(oManifester, d6());
+    }
+}
+
+/** Internal function.
  * Deletes manifestation-related local variables.
  *
  * @param oManifester The creature currently manifesting a power
@@ -338,17 +392,18 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     int nPsionicHoleCost  = _PsionicHole(oTarget);
 
     /* Initialise the manifestation structure */
-    struct manifest manif;
+    struct manifestation manif;
     manif.oManifester       = oManifester;
-    manif.bCanManifest      = TRUE;            // Assume successfull manifestation by default
-    manif.nPPCost           = nLevel * 2 - 1;  // Initialise the cost to the base cost of the power
-    manif.nPsiFocUsesRemain = GetPsionicFocusesAvailable(oManifester);
-    manif.nManifesterLevel  = GetManifesterLevel(oManifester);
+    manif.bCanManifest      = TRUE;                                   // Assume successfull manifestation by default
+    manif.nPPCost           = nPowerLevel * 2 - 1;                    // Initialise the cost to the base cost of the power
+    manif.nPsiFocUsesRemain = GetPsionicFocusesAvailable(oManifester);// Determine how many times psionic focus could be used
+    manif.nManifesterLevel  = nManifesterLevel;
+    manif.nSpellID          = PRCGetSpellId();
 
     // Run an ability score check to see if the manifester can manifest the power at all
     if(GetAbilityScoreOfClass(oManifester, nClass) - 10 < nPowerLevel)
     {
-        FloatingTextStrRefOnCreature(, oManifester, FALSE); // "You do not have a high enough ability score to manifest this power"
+        FloatingTextStrRefOnCreature(16826411, oManifester, FALSE); // "You do not have a high enough ability score to manifest this power"
         manif.bCanManifest = FALSE;
         return manif;
     }
@@ -362,9 +417,15 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
 
 
     //* APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE *//
-    // Catapsi added cost
-    if(GetLocalInt(oManifester, "Catapsi"))
-        manif.nPPCost += 4;
+    // Catapsi check
+    if(GetLocalInt(oManifester, "PRC_IsInCatapsi") &&                                                // Manifester is in Catapsi field
+       !PRCMySavingThrow(SAVING_THROW_WILL, oManifester, GetLocalInt(oManifester, "PRC_Catapsi_DC"), // And fails the will save VS it
+                         SAVING_THROW_TYPE_MIND_SPELLS, GetLocalObject(oManifester, "PRC_Catapsi_Manifester")
+                         )
+       )
+    {
+       manif.nPPCost += 4;
+    }
 
     //* APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE ABOVE *//
 
@@ -381,7 +442,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
         //If the manifester does not have enough points before hostile modifiers, cancel power
         if(manif.nPPCost > nManifesterPP && !bIsPsiLike)
         {
-            FloatingTextStrRefOnCreature(, oManifester, FALSE); // "You do not have enough Power Points to manifest this power"
+            FloatingTextStrRefOnCreature(16826412, oManifester, FALSE); // "You do not have enough Power Points to manifest this power"
             manif.bCanManifest = FALSE;
         }
         // The manifester has enough power points that they would be able to use the power, barring extra costs
@@ -396,7 +457,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
 
             if(manif.nPPCost > nManifesterPP && !bIsPsiLike)
             {
-                FloatingTextStrRefOnCreature(, oManifester, FALSE); // "Your target's abilities cause you to use more Power Points than you have. The power fails"
+                FloatingTextStrRefOnCreature(16826413, oManifester, FALSE); // "Your target's abilities cause you to use more Power Points than you have. The power fails"
                 manif.bCanManifest = FALSE;
             }
 
@@ -417,13 +478,15 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
             _HostileMind(oManifester, oTarget);
             // Apply Wild Surge side-effects
             _SurgingEuphoriaOrPsychicEnervation(oManifester, nWildSurge);
+            // Apply Mind Trap PP loss
+            _DoMindTrapPPLoss(oManifester, oTarget);
             //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
         }
     }
     // Cost was over the manifester cap
     else
     {// "Your manifester level is not high enough to spend X Power Points"
-        FloatingTextStringOnCreature(GetStringByStrRef() + " " + IntToString(manif.nPPCost) + " " + GetStringByStrRef(), oManifester, FALSE);
+        FloatingTextStringOnCreature(GetStringByStrRef(16826410) + " " + IntToString(manif.nPPCost) + " " + GetStringByStrRef(16826409), oManifester, FALSE);
         manif.bCanManifest = FALSE;
     }
 
@@ -446,7 +509,7 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
                       );
 
     // Set the class to manifest as
-    SetLocalInt(oManifester, PRC_MANIFESTING_CLASS, nClass);
+    SetLocalInt(oManifester, PRC_MANIFESTING_CLASS, nClass + 1);
 
     // Set the power's level
     SetLocalInt(oManifester, PRC_POWER_LEVEL, StringToInt(lookup_spell_innate(PRCGetSpellId())));
@@ -470,24 +533,108 @@ string DebugManifestation2Str(struct manifestation manif)
 {
     string sRet;
 
-    sRet += "oManifester = " DebugObject2Str(oManifester) + "\n";
-    sRet += "bCanManifest = " + BooleanToString(bCanManifest) + "\n";
-    sRet += "nPPCost = " + IntToString(nPPCost) + "\n";
-    sRet += "nPsiFocUsesRemain = " + IntToString(nPsiFocUsesRemain) + "\n";
-    sRet += "nManifesterLevel = " + IntToString(nManifesterLevel) + "\n";
+    sRet += "oManifester = " + DebugObject2Str(manif.oManifester) + "\n";
+    sRet += "bCanManifest = " + BooleanToString(manif.bCanManifest) + "\n";
+    sRet += "nPPCost = "           + IntToString(manif.nPPCost) + "\n";
+    sRet += "nPsiFocUsesRemain = " + IntToString(manif.nPsiFocUsesRemain) + "\n";
+    sRet += "nManifesterLevel = "  + IntToString(manif.nManifesterLevel) + "\n";
 
-    sRet += "nTimesAugOptUsed_1 = " + IntToString(nTimesAugOptUsed_1) + "\n";
-    sRet += "nTimesAugOptUsed_2 = " + IntToString(nTimesAugOptUsed_2) + "\n";
-    sRet += "nTimesAugOptUsed_3 = " + IntToString(nTimesAugOptUsed_3) + "\n";
-    sRet += "nTimesAugOptUsed_4 = " + IntToString(nTimesAugOptUsed_4) + "\n";
-    sRet += "nTimesAugOptUsed_5 = " + IntToString(nTimesAugOptUsed_5) + "\n";
-    sRet += "nTimesGenericAugUsed = " + IntToString(nTimesGenericAugUsed) + "\n";
+    sRet += "nTimesAugOptUsed_1 = " + IntToString(manif.nTimesAugOptUsed_1) + "\n";
+    sRet += "nTimesAugOptUsed_2 = " + IntToString(manif.nTimesAugOptUsed_2) + "\n";
+    sRet += "nTimesAugOptUsed_3 = " + IntToString(manif.nTimesAugOptUsed_3) + "\n";
+    sRet += "nTimesAugOptUsed_4 = " + IntToString(manif.nTimesAugOptUsed_4) + "\n";
+    sRet += "nTimesAugOptUsed_5 = " + IntToString(manif.nTimesAugOptUsed_5) + "\n";
+    sRet += "nTimesGenericAugUsed = " + IntToString(manif.nTimesGenericAugUsed) + "\n";
 
-    sRet += "bChain    = " + BooleanToString(bChain)    + "\n";
-    sRet += "bEmpower  = " + BooleanToString(bEmpower)  + "\n";
-    sRet += "bExtend   = " + BooleanToString(bExtend)   + "\n";
-    sRet += "bMaximize = " + BooleanToString(bMaximize) + "\n";
-    sRet += "bSplit    = " + BooleanToString(bSplit)    + "\n";
-    sRet += "bTwin     = " + BooleanToString(bTwin)     + "\n";
-    sRet += "bWiden    = " + BooleanToString(bWiden);//    + "\n";
+    sRet += "bChain    = " + BooleanToString(manif.bChain)    + "\n";
+    sRet += "bEmpower  = " + BooleanToString(manif.bEmpower)  + "\n";
+    sRet += "bExtend   = " + BooleanToString(manif.bExtend)   + "\n";
+    sRet += "bMaximize = " + BooleanToString(manif.bMaximize) + "\n";
+    sRet += "bSplit    = " + BooleanToString(manif.bSplit)    + "\n";
+    sRet += "bTwin     = " + BooleanToString(manif.bTwin)     + "\n";
+    sRet += "bWiden    = " + BooleanToString(manif.bWiden);//    + "\n";
+
+    return sRet;
+}
+
+void SetLocalManifestation(object oObject, string sName, struct manifestation manif)
+{
+    //SetLocal (oObject, sName + "_", );
+    SetLocalObject(oObject, sName + "_oManifester", manif.oManifester);
+
+    SetLocalInt(oObject, sName + "_bCanManifest",      manif.bCanManifest);
+    SetLocalInt(oObject, sName + "_nPPCost",           manif.nPPCost);
+    SetLocalInt(oObject, sName + "_nPsiFocUsesRemain", manif.nPsiFocUsesRemain);
+    SetLocalInt(oObject, sName + "_nManifesterLevel",  manif.nManifesterLevel);
+    SetLocalInt(oObject, sName + "_nSpellID",          manif.nSpellID);
+
+    SetLocalInt(oObject, sName + "_nTimesAugOptUsed_1", manif.nTimesAugOptUsed_1);
+    SetLocalInt(oObject, sName + "_nTimesAugOptUsed_2", manif.nTimesAugOptUsed_2);
+    SetLocalInt(oObject, sName + "_nTimesAugOptUsed_3", manif.nTimesAugOptUsed_3);
+    SetLocalInt(oObject, sName + "_nTimesAugOptUsed_4", manif.nTimesAugOptUsed_4);
+    SetLocalInt(oObject, sName + "_nTimesAugOptUsed_5", manif.nTimesAugOptUsed_5);
+    SetLocalInt(oObject, sName + "_nTimesGenericAugUsed", manif.nTimesGenericAugUsed);
+
+    SetLocalInt(oObject, sName + "_bChain",    manif.bChain);
+    SetLocalInt(oObject, sName + "_bEmpower",  manif.bEmpower);
+    SetLocalInt(oObject, sName + "_bExtend",   manif.bExtend);
+    SetLocalInt(oObject, sName + "_bMaximize", manif.bMaximize);
+    SetLocalInt(oObject, sName + "_bSplit",    manif.bSplit);
+    SetLocalInt(oObject, sName + "_bTwin",     manif.bTwin);
+    SetLocalInt(oObject, sName + "_bWiden",    manif.bWiden);
+}
+
+struct manifestation GetLocalManifestation(object oObject, string sName)
+{
+    struct manifestation manif;
+    manif.oManifester = GetLocalObject(oObject, sName + "_oManifester");
+
+    manif.bCanManifest      = GetLocalInt(oObject, sName + "_bCanManifest");
+    manif.nPPCost           = GetLocalInt(oObject, sName + "_nPPCost");
+    manif.nPsiFocUsesRemain = GetLocalInt(oObject, sName + "_nPsiFocUsesRemain");
+    manif.nManifesterLevel  = GetLocalInt(oObject, sName + "_nManifesterLevel");
+    manif.nSpellID          = GetLocalInt(oObject, sName + "_nSpellID");
+
+    manif.nTimesAugOptUsed_1 = GetLocalInt(oObject, sName + "_nTimesAugOptUsed_1");
+    manif.nTimesAugOptUsed_2 = GetLocalInt(oObject, sName + "_nTimesAugOptUsed_2");
+    manif.nTimesAugOptUsed_3 = GetLocalInt(oObject, sName + "_nTimesAugOptUsed_3");
+    manif.nTimesAugOptUsed_4 = GetLocalInt(oObject, sName + "_nTimesAugOptUsed_4");
+    manif.nTimesAugOptUsed_5 = GetLocalInt(oObject, sName + "_nTimesAugOptUsed_5");
+    manif.nTimesGenericAugUsed = GetLocalInt(oObject, sName + "_nTimesGenericAugUsed");
+
+    manif.bChain    = GetLocalInt(oObject, sName + "_bChain");
+    manif.bEmpower  = GetLocalInt(oObject, sName + "_bEmpower");
+    manif.bExtend   = GetLocalInt(oObject, sName + "_bExtend");
+    manif.bMaximize = GetLocalInt(oObject, sName + "_bMaximize");
+    manif.bSplit    = GetLocalInt(oObject, sName + "_bSplit");
+    manif.bTwin     = GetLocalInt(oObject, sName + "_bTwin");
+    manif.bWiden    = GetLocalInt(oObject, sName + "_bWiden");
+
+    return manif;
+}
+
+void DeleteLocalManifestation(object oObject, string sName)
+{
+    DeleteLocalObject(oObject, sName + "_oManifester");
+
+    DeleteLocalInt(oObject, sName + "_bCanManifest");
+    DeleteLocalInt(oObject, sName + "_nPPCost");
+    DeleteLocalInt(oObject, sName + "_nPsiFocUsesRemain");
+    DeleteLocalInt(oObject, sName + "_nManifesterLevel");
+    DeleteLocalInt(oObject, sName + "_nSpellID");
+
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_1");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_2");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_3");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_4");
+    DeleteLocalInt(oObject, sName + "_nTimesAugOptUsed_5");
+    DeleteLocalInt(oObject, sName + "_nTimesGenericAugUsed");
+
+    DeleteLocalInt(oObject, sName + "_bChain");
+    DeleteLocalInt(oObject, sName + "_bEmpower");
+    DeleteLocalInt(oObject, sName + "_bExtend");
+    DeleteLocalInt(oObject, sName + "_bMaximize");
+    DeleteLocalInt(oObject, sName + "_bSplit");
+    DeleteLocalInt(oObject, sName + "_bTwin");
+    DeleteLocalInt(oObject, sName + "_bWiden");
 }

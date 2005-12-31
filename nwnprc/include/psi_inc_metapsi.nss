@@ -66,13 +66,13 @@ const int METAPSIONIC_MAX           = 0x80;
  * Determines the metapsionics used in this manifestation of a power
  * and the cost added by their use.
  *
- * @param manif         The manifestation data relating to this particular manifesation
+ * @param manif         The manifestation data related to this particular manifesation
  * @param nMetaPsiFlags An integer containing a set of bitflags that determine
  *                      which metapsionic powers may be used with the power being manifested
  *
  * @return              The manifestation data, modified to account for the metapsionics
  */
-struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPsiFlags);
+struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaPsiFlags);
 
 /**
  * Calls UsePsionicFocus() on the manifester to pay for psionics focus
@@ -81,7 +81,7 @@ struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPs
  * Also informs the manifester which metapsionics were actually used
  * if the manifestation was successfull.
  *
- * @param manif The manifestation data relating to this particular manifesation
+ * @param manif The manifestation data related to this particular manifesation
  * @return      The manifestation data, modified to turn off those metapsionics
  *              the manifester could not pay focus for
  */
@@ -92,7 +92,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif);
  *
  * @param nDieSize            Size of the dice to use
  * @param nNumberOfDice       Amount of dice to roll
- * @param manif               The manifestation data relating to this particular manifesation
+ * @param manif               The manifestation data related to this particular manifesation
  * @param nBonus              A bonus amount of damage to add into the total once
  * @param nBonusPerDie        A bonus amount of damage to add into the total for each die rolled
  * @param bDoesHPDamage       Whether the power deals hit point damage, or some other form of point damage
@@ -107,7 +107,7 @@ int MetaPsionicsDamage(struct manifestation manif, int nDieSize, int nNumberOfDi
  * of a power, if it is active.
  *
  * @param fBase The base value of the power's area size variable
- * @param manif The manifestation data relating to this particular manifesation
+ * @param manif The manifestation data related to this particular manifesation
  * @return      The base modified by whether Widen Power was active.
  *              If it was, the returned value is twice fBase, otherwise
  *              it's fBase
@@ -115,9 +115,8 @@ int MetaPsionicsDamage(struct manifestation manif, int nDieSize, int nNumberOfDi
 float EvaluateWidenPower(struct manifestation manif, float fBase);
 
 /**
- * Builds the list of a power's targets, accounting for the effects
- * of Chain Power. If it is not active, the target list only contains the
- * primary target.
+ * Builds the list of a power's secondary targets for Chain Power.
+ * The list will be empty if Chain Power is not active.
  * The list is stored in a local array on the manifester named
  * PRC_CHAIN_POWER_ARRAY. It will be automatically deleted at the end of
  * current script unless otherwise specified.
@@ -125,11 +124,25 @@ float EvaluateWidenPower(struct manifestation manif, float fBase);
  * NOTE: This only builds the list of targets, all effects have to be
  * applied by the powerscript.
  *
- * @param manif
- * @param oPrimaryTarget
- * @param bAutoDelete
+ * @param manif          The manifestation data related to this particular manifesation
+ * @param oPrimaryTarget The main target of the power
+ * @param bAutoDelete    Whether the targets array should be automatically cleared via a
+ *                       DelayCommand(0.0f) call.
  */
 void EvaluateChainPower(struct manifestation manif, object oPrimaryTarget, int bAutoDelete = TRUE);
+
+/**
+ * Determines the target the second ray fired by a split psionic ray strikes.
+ * The target is the one with the highest HD among eligible targets, ie, ones
+ * withing 30' of the main target.
+ *
+ * @param manif          The manifestation data related to this particular manifesation
+ * @param oPrimaryTarget The target of the main ray
+ *
+ * @return               The secondary target the power should affect. OBJECT_INVALID, if
+ *                       none were found, or if Split Psionic Ray was not active.
+ */
+object GetSplitPsionicRayTarget(struct manifestation manif, object oPrimaryTarget);
 
 
 //////////////////////////////////////////////////
@@ -151,6 +164,17 @@ int _GetMetaPsiPPCost(int nCost, int nIMPsiRed, int bUseSum)
              max(nCost - nIMPsiRed, 1);
 }
 
+/** Internal function.
+ * A void wrapper for array_delete.
+ *
+ * @param oManifester A creature that just manifested a power that determined
+ *                    it's targets using EvaluateChainPower
+ */
+void _DeleteChainArray(object oManifester)
+{
+    array_delete(oManifester, PRC_CHAIN_POWER_ARRAY);
+}
+
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -164,7 +188,7 @@ int _GetMetaPsiPPCost(int nCost, int nIMPsiRed, int bUseSum)
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPsiFlags)
+struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaPsiFlags)
 {
     // Total PP cost of metapsionics used
     int nMetaPsiPP = 0;
@@ -245,6 +269,8 @@ struct manifesation EvaluateMetapsionics(struct manifestation manif, int nMetaPs
 
     // Add in the cost of the metapsionics uses
     manif.nPPCost += _GetMetaPsiPPCost(nMetaPsiPP, nImpMetapsiReduction, !bUseSum); // A somewhat hacky use of the function, but eh, it works
+
+    return manif;
 }
 
 
@@ -256,58 +282,79 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     // manifester cannot pay focus, deactivate the metapsionic. No PP refunds, though, since
     // the system attempts to keep track of how many focuses the user has available
     // and shouldn't allow them to exceed that count. It happening is therefore a bug.
-    if(manif.bChain && !UsePsionicFocus(manif.oManifester))
+    if(manif.bChain)
     {
-        if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Chain Power!");
-        manif.bChain = FALSE;
+        if(!UsePsionicFocus(manif.oManifester))
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Chain Power!");
+            manif.bChain = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826631); // "Chained"
     }
-    else
-        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826631); // "Chained"
-    if(manif.bEmpower && !UsePsionicFocus(manif.oManifester))
+    if(manif.bEmpower)
     {
-        if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Empower Power!");
-        manif.bEmpower = FALSE;
+        if(!UsePsionicFocus(manif.oManifester))
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Empower Power!");
+            manif.bEmpower = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826632); // "Empowered"
     }
-    else
-        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826632); // "Empowered"
-    if(manif.bExtend && !UsePsionicFocus(manif.oManifester))
+    if(manif.bExtend)
     {
-        if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Extend Power!");
-        manif.bExtend = FALSE;
+        if(!UsePsionicFocus(manif.oManifester))
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Extend Power!");
+            manif.bExtend = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826633); // "Extended"
     }
-    else
-        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826633); // "Extended"
-    if(manif.bMaximize && !UsePsionicFocus(manif.oManifester))
+    if(manif.bMaximize)
     {
-        if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Maximize Power!");
-        manif.bMaximize = FALSE;
+        if(!UsePsionicFocus(manif.oManifester))
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Maximize Power!");
+            manif.bMaximize = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826634); // "Maximized"
     }
-    else
-        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826634); // "Maximized"
-    if(manif.bSplit && !UsePsionicFocus(manif.oManifester))
+    if(manif.bSplit)
     {
-        if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Split Psionic Ray!");
-        manif.bSplit = FALSE;
+        if(!UsePsionicFocus(manif.oManifester))
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Split Psionic Ray!");
+            manif.bSplit = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826635); // "Split"
     }
-    else
-        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826635); // "Split"
-    if(manif.bTwin && !UsePsionicFocus(manif.oManifester))
+    if(manif.bTwin)
     {
-        if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Twin Power!");
-        manif.bTwin = FALSE;
+        if(!UsePsionicFocus(manif.oManifester))
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Twin Power!");
+            manif.bTwin = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826636); // "Twinned"
     }
-    else
-        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826636); // "Twinned"
-    if(manif.bWiden && !UsePsionicFocus(manif.oManifester))
+    if(manif.bWiden)
     {
-        if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Widen Power!");
-        manif.bWiden = FALSE;
+        if(!UsePsionicFocus(manif.oManifester))
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Widen Power!");
+            manif.bWiden = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826637); // "Widened"
     }
-    else
-        sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826637); // "Widened"
 
     // Finalise and display the information string if the manifestation was successfull
-    if(manif.bCanManifest)
+    if(manif.bCanManifest && sInform != "")
     {
         // Determine the index of the last comma
         /// @todo This is badly structured, rewrite
@@ -353,7 +400,7 @@ int MetaPsionicsDamage(struct manifestation manif, int nDieSize, int nNumberOfDi
     // Calculate the base damage
     int i;
     for (i = 0; i < nNumberOfDice; i++)
-        nBaseDamage += Random(nDiceSize) + 1;
+        nBaseDamage += Random(nDieSize) + 1;
 
 
     // Apply general modifying effects
@@ -367,24 +414,18 @@ int MetaPsionicsDamage(struct manifestation manif, int nDieSize, int nNumberOfDi
             else
                 nBonusDamage += 2;
        }
-        /// @todo Farm out to a separate function that accounts for a single target's modifications. That one should handle all the other target specific stuff, too
-        /*
-        if(GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION, manif.oManifester) &&
-           GetDistanceBetween(oTarget, manif.oManifester) <= 9.144f)
-            nBonusDamage += 2;
-        */
     }
 
     // Apply metapsionics
     // Both empower & maximize
     if(manif.bEmpower && manif.bMaximize)
-        nBaseDamage = nBaseDamage / 2 + nDiceSize * nNumberOfDice;
+        nBaseDamage = nBaseDamage / 2 + nDieSize * nNumberOfDice;
     // Just empower
     else if(manif.bEmpower)
         nBaseDamage += nBaseDamage / 2;
     // Just maximize
     else if(manif.bMaximize)
-        nBaseDamage = nDiceSize * nNumberOfDice;
+        nBaseDamage = nDieSize * nNumberOfDice;
 
 
     return nBaseDamage + nBonusDamage;
@@ -413,7 +454,7 @@ void EvaluateChainPower(struct manifestation manif, object oPrimaryTarget, int b
                           );
 
 	// Add the primary target to the array
-	array_set_object(manif.oManifester, PRC_CHAIN_POWER_ARRAY, 0, oPrimaryTarget);
+	//array_set_object(manif.oManifester, PRC_CHAIN_POWER_ARRAY, 0, oPrimaryTarget);  Bad idea, on a second though - Ornedan
 
 	// Determine if Chain Power is active at all
 	if(manif.bChain)
@@ -426,18 +467,18 @@ void EvaluateChainPower(struct manifestation manif, object oPrimaryTarget, int b
 
 	    // Build the target list as a linked list
 	    oSecondaryTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRange, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-    	while(GetIsObjectValid(oTarget))
+        while(GetIsObjectValid(oSecondaryTarget))
     	{
     		if(oSecondaryTarget != manif.oManifester &&     // Not the manifester
                oSecondaryTarget != oPrimaryTarget    &&     // Not the main target
                spellsIsTarget(oSecondaryTarget,             // Chain Power allows one to avoid hitting friendlies
-                              SPELL_TARGET_STANDARDHOSTILE, // and we assume the manifester does so
+                              SPELL_TARGET_SELECTIVEHOSTILE, // and we assume the manifester does so
                               manif.oManifester))
     		{
-    			AddToTargetList(oSecondaryTarget, manif.oManifester, INSERTION_BIAS_CR, TRUE);
+                AddToTargetList(oSecondaryTarget, manif.oManifester, INSERTION_BIAS_HD, TRUE);
     		}// end if - target is valid for this
 
-    		oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRange, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            oSecondaryTarget = GetNextObjectInShape(SHAPE_SPHERE, fRange, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     	}// end while - loop through all potential targets
 
     	// Extract the linked list into the array
@@ -450,5 +491,40 @@ void EvaluateChainPower(struct manifestation manif, object oPrimaryTarget, int b
 
 	// Schedule array deletion if so specified
 	if(bAutoDelete)
-	    DelayCommand(0.0f, array_delete(manif.oManifester, PRC_CHAIN_POWER_ARRAY));
+	    DelayCommand(0.0f, _DeleteChainArray(manif.oManifester));
+}
+
+object GetSplitPsionicRayTarget(struct manifestation manif, object oPrimaryTarget)
+{
+    object oReturn = OBJECT_INVALID;
+
+    // Determine if Split Psionic Ray is active at all
+    if(manif.bSplit)
+    {
+        // It is, determine amount of secondary targets and range to look for the over
+        float fRange = FeetToMeters(30.0f);
+        location lTarget = GetLocation(oPrimaryTarget);
+        object oPotentialTarget;
+
+        // Build the target list as a linked list
+        oPotentialTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRange, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        while(GetIsObjectValid(oPotentialTarget))
+        {
+            if(oPotentialTarget != manif.oManifester &&     // Not the manifester
+               oPotentialTarget != oPrimaryTarget    &&     // Not the main target
+               spellsIsTarget(oPotentialTarget,             // Split Psionic Ray allows one to avoid hitting friendlies
+                              SPELL_TARGET_SELECTIVEHOSTILE, // and we assume the manifester does so
+                              manif.oManifester))
+            {
+                AddToTargetList(oPotentialTarget, manif.oManifester, INSERTION_BIAS_HD, TRUE);
+            }// end if - target is valid for this
+
+            oPotentialTarget = GetNextObjectInShape(SHAPE_SPHERE, fRange, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        }// end while - loop through all potential targets
+
+        // The chosen target is the first in the list
+        oReturn = GetTargetListHead(manif.oManifester);
+    }// end if - is Split Psionic Ray active in this manifestation
+
+    return oReturn;
 }

@@ -4,10 +4,25 @@
  * but aren't numerous enough to warrant their own.
  */
 
+//:://////////////////////////////////////////////
+//:: Area of Effect Const
+//:://////////////////////////////////////////////
+
 const int AOE_MOB_PESTILENCE                    = 150;
 const int AOE_PER_TELEPORTATIONCIRCLE           = 151;
 const int AOE_PER_DEEPER_DARKNESS               = 100;
 
+// Psionic Area of Effects
+const int AOE_PER_PSIGREASE                     = 131;
+const int AOE_PER_ESHAMBLER                     = 132;
+const int AOE_PER_ENERGYWALL                    = 133;
+const int AOE_MOB_CATAPSI                       = 134;
+const int AOE_PER_NULL_PSIONICS_FIELD           = 135;
+const int AOE_MOB_FORM_DOOM                     = 136;
+const int AOE_PER_ENERGYWALL_WIDENED            = 137;
+const int AOE_PER_ESHAMBLER_WIDENED             = 138;
+
+// Invisible Area of Effects
 const int VFX_PER_5_FT_INVIS                    = 184;
 const int VFX_PER_10_FT_INVIS                   = 185;
 const int VFX_PER_15_FT_INVIS                   = 186;
@@ -26,6 +41,10 @@ const int VFX_PER_45M_INVIS                     = 198;
 const int VFX_PER_50M_INVIS                     = 199;
 
 
+//:://////////////////////////////////////////////
+//:: Disease Const
+//:://////////////////////////////////////////////
+
 const int DISEASE_CONTAGION_BLINDING_SICKNESS   = 20;
 const int DISEASE_CONTAGION_CACKLE_FEVER        = 21;
 const int DISEASE_CONTAGION_FILTH_FEVER         = 22;
@@ -35,6 +54,10 @@ const int DISEASE_CONTAGION_SHAKES              = 25;
 const int DISEASE_CONTAGION_SLIMY_DOOM          = 26;
 const int DISEASE_PESTILENCE                    = 51;
 
+
+//:://////////////////////////////////////////////
+//:: Poison Const
+//:://////////////////////////////////////////////
 
 const int POISON_TINY_CENTIPEDE_POISON          = 122;
 const int POISON_MEDIUM_CENTIPEDE_POISON        = 123;
@@ -95,3 +118,17 @@ const int CREATURE_SIZE_COLOSSAL        =  7;
 //:://////////////////////////////////////////////
 
 const int SAVING_THROW_NONE = 4;
+
+
+//:://////////////////////////////////////////////
+//:: Psionic Discipline Const
+//:://////////////////////////////////////////////
+
+// Psionic Disciplines
+const int DISCIPLINE_NONE             = 0;
+const int DISCIPLINE_PSYCHOMETABOLISM = 1;
+const int DISCIPLINE_PSYCHOKINESIS    = 2;
+const int DISCIPLINE_PSYCHOPORTATION  = 3;
+const int DISCIPLINE_CLAIRSENTIENCE   = 4;
+const int DISCIPLINE_METACREATIVITY   = 5;
+const int DISCIPLINE_TELEPATHY        = 6;

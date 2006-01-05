@@ -6891,16 +6891,24 @@ Manifesting the power is a swift action, like manifesting a quickened power, and
   <entry id="46674" lang="en" sex="m">Moment of Prescience, Save Bonus</entry>
   <entry id="46675" lang="en" sex="m">Moment of Prescience, Skill Bonus</entry>
   <entry id="46676" lang="en" sex="m">Psychic Reformation</entry>
-  <entry id="46677" lang="en" sex="m">Class: Psion/Wilder
-Power Level: 4
-Range: Personal
-Target: Self
-Duration: Instant
+  <entry id="46677" lang="en" sex="m">Telepathy [Mind-Affecting]
+Level: Psion/wilder 4
+Manifesting Time: 1 standard action
+Range: Close (25 ft. + 5 ft./2 levels)
+Target: One creature
+Duration: Instantaneous
 Saving Throw: None
 Power Resistance: No
-Power Point Cost: 7
+Power Points: 7, XP; see text
+Metapsionics: None
 
-You delevel yourself down to level 1, and then back up to your current level, allowing you to repick all feats, powers, and skill assignments from those levels. You lose XP equal to 50 times the number of levels changed. A level 11 using this power would pay a cost of 500 XP. This XP loss can cause you to be deleveled.</entry>
+When this power is manifested, the subject can choose to make again all the decisions related to the latest level it has gained.
+
+The subject can undo decisions of these sorts that were made at lower levels, if both the subject and the manifester agree to pay the necessary XP before this power is manifested (see below).
+
+XP Cost: This power costs 50 XP to manifest to reformat choices made when the character reached her current level. For each additional previous level into which the revision reaches, the power costs an additional 50 XP. The manifester and subject split all XP costs evenly.
+
+Augmentation: For every additional power point you spend, the revision reaches one level further. The XP cost is accordingly increased, as specified above.</entry>
   <entry id="46678" lang="en" sex="m">Retrieve</entry>
   <entry id="46679" lang="en" sex="m">Psychoportation (Teleportation)
 Level: Psion/wilder 6

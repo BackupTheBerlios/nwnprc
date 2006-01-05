@@ -7,49 +7,44 @@
 
    25/3/05 by Stratovarius
 */ /** @file
-@todo Later. Check whether we really should allow changing all level-up decisions
-
 
     Psychic Reformation
 
-Telepathy [Mind-Affecting]
-Level: Psion/wilder 4
-Manifesting Time: 10 minutes
-Range: Close (25 ft. + 5 ft./2 levels)
-Target: One creature
-Duration: Instantaneous
-Saving Throw: None
-Power Resistance: No
-Power Points: 7, XP; see text
-Metapsionics: None
+    Telepathy [Mind-Affecting]
+    Level: Psion/wilder 4
+    Manifesting Time: 1 standard action
+    Range: Close (25 ft. + 5 ft./2 levels)
+    Target: One creature
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 7, XP; see text
+    Metapsionics: None
 
-When this power is manifested, the subject can choose to spend its most recently gained skill points differently (picking new skills and abandoning old ones if it chooses) and to choose a different feat from the one it selected when advancing from its previous level to its current level.
+    When this power is manifested, the subject can choose to make again all the
+    decisions related to the latest level it has gained.
 
-The subject can also choose to forget powers it acquired when advancing to its current level, replacing them with new ones.
+    The subject can undo decisions of these sorts that were made at lower
+    levels, if both the subject and the manifester agree to pay the necessary XP
+    before this power is manifested (see below).
 
-The subject can undo decisions of these sorts that were made at lower levels, if both the subject and the manifester agree to pay the necessary XP before this power is manifested (see below). The subject must abide by the standard rules for selecting skills and feats, and so it cannot take feats for which it doesn’t qualify or take crossclass skills as class skills.
+    XP Cost: This power costs 50 XP to manifest to reformat choices made when
+    the character reached her current level. For each additional previous level
+    into which the revision reaches, the power costs an additional 50 XP. The
+    manifester and subject split all XP costs evenly.
 
-XP Cost: This power costs 50 XP to manifest to reformat choices made when the character reached her current level. For each additional previous level into which the revision reaches, the power costs an additional 50 XP. The manifester and subject split all XP costs evenly.
-
-
-   Class: Psion/Wilder
-   Power Level: 4
-   Range: Personal
-   Target: Self
-   Duration: Instant
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 7
-
-   You delevel yourself down to level 1, and then back up to your current level, allowing you to repick all feats, powers,
-   and skill assignments from those levels. You lose XP equal to 50 times the number of levels changed. A level 11 using
-   this power would pay a cost of 500 XP. This XP loss can cause you to be deleveled.
+    Augmentation: For every additional power point you spend, the revision
+                  reaches one level further. The XP cost is accordingly
+                  increased, as specified above.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "prc_alterations"
+
+/// Determines how long to wait before restoring the target's XP value
+const float XP_RESTORE_DELAY = 1.0f;
 
 void main()
 {
@@ -60,7 +55,7 @@ void main()
   check psi_spellhook to find out more
 
 */
-/*
+
     if (!PsiPrePowerCastCode())
     {
     // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
@@ -69,18 +64,40 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
 
-    if (nMetaPsi > 0)
+    if(manif.bCanManifest)
     {
-        int nHD = GetHitDice(oCaster);
-        int nXP = (GetXP(oCaster) - (50 * nHD - 1));
-        SetXP(oCaster,1);
-        DelayCommand(1.0, SetXP(oCaster,nXP));
-    }
-*/
+        int nLevels = 1 + manif.nTimesAugOptUsed_1;
+        int nOrigXP = GetXP(oTarget);
+        int nXPCost = 50 * nLevels;
+
+        // Level the target down
+        SetXP(oTarget, 1);
+
+        // Schedule the OnLevelDown virtual event to be run
+        DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oTarget));
+
+        // Pay the XP cost and schedule the restoration of original XP - cost
+        if(oManifester == oTarget)
+        {
+            // Targeted self, pay full cost
+            DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - nXPCost));
+        }
+        else
+        {
+            // Targeted other, manifester pays half
+            DelayCommand(XP_RESTORE_DELAY, SetXP(oManifester, GetXP(oManifester) - (nXPCost / 2)));
+            // Target pays other half
+            DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - (nXPCost / 2)));
+        }
+    }// end if - Successfull manifestation
 }

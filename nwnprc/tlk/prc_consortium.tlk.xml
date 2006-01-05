@@ -14786,7 +14786,6 @@ Special Abilities:
 - Darkvision: Gray Orcs are able to see in the dark.
 - Track: +1 racial bonus to Spot, Search and Listen checks.
 - Base movement of 40.
-- Weapon Proficiency (Martial): All gray orcs are proficient with Martial Weapons.
 - Light Sensitivity: Gray Orcs suffer -2 penalty to attack rolls, saves and checks while operating in bright light.
 - Orcish: Gray Orcs are considered Orcish for the purpose of spells.</entry>
   <entry id="49594" lang="en" sex="m">Orog</entry>
@@ -14800,7 +14799,6 @@ Favored Class (Fighter): A multiclass orog's fighter class does not count when d
 Special Abilities:
 
 - Darkvision: Orogs are able to see in the dark.
-- Weapon Proficiency (Martial): All orogs are proficient with Martial Weapons.
 - Skill Affinity (Craft): +2 racial bonus to Craft Armor and Craft Weapon checks.
 - Natural Armor Bonus: Racial natural armor bonus of 2.
 - Resist Cold: Innate cold resistance of 5.
@@ -14880,12 +14878,14 @@ Favored Class (Paladin): A multiclass aasimars paladin class does not count when
 Air Genasi Ability Adjustments: +2 Dex, +2 Int, -2 Cha, -2 Wis.
 Favored Class (Fighter): A multiclass air genasi's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
 
+Note: Genasi clerics must have the relevant elemental domain.
+
 Special Abilities:
 
 - Darkvision: Air Genasi can see in the dark.
-- Hardiness vs. Air: +2 racial bonus on saving throws against air, sonic and electricity spells (additional +1 for every 5 levels).
+- Hardiness vs. Air: +1 racial bonus on saving throws against air, sonic and electricity spells (additional +1 for every 5 levels).
 - Breathless: Immune to spells affecting breathing.
-- Elemental: Air Genasi are considered Elementals for the purpose of spells.
+- Outsider: Air Genasi are considered Outsiders for the purpose of spells.
 - Human: Air Genasi are considered Human for the purpose of spells.</entry>
   <entry id="49616" lang="en" sex="m">Earth Genasi</entry>
   <entry id="49617" lang="en" sex="m">earth genasi</entry>
@@ -14894,11 +14894,13 @@ Special Abilities:
 Earth Genasi Ability Adjustments: +2 Str, +2 Con, -2 Cha, -2 Wis.
 Favored Class (Fighter): A multiclass earth genasis fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
 
+Note: Genasi clerics must have the relevant elemental domain.
+
 Special Abilities:
 
 - Darkvision: Earth Genasi can see in the dark.
-- Hardiness vs. Earth: +2 racial bonus on saving throws against earth and acid spells (additional +1 for every 5 levels).
-- Elemental: Earth Genasi are considered Elementals for the purpose of spells.
+- Hardiness vs. Earth: +1 racial bonus on saving throws against earth and acid spells (additional +1 for every 5 levels).
+- Outsider: Earth Genasi are considered Outsiders for the purpose of spells.
 - Human: Earth Genasi are considered Human for the purpose of spells.F</entry>
   <entry id="49619" lang="en" sex="m">Fey'ri</entry>
   <entry id="49620" lang="en" sex="m">fey'ri</entry>
@@ -14921,7 +14923,6 @@ Special Abilities:
 - Damage Reduction: Innate damage reduction of 10/+1.
 - Epic Fire Resistance: Innate fire resistance of 10.
 - Low-Light Vision: Allows them to see better than normal in the dark.
-- Bonus Proficiencies (Longsword, Rapier, Shortbow, Longbow)
 - Spell Ability - Darkness: Can cast once per day as 3rd level.
 - Spell Ability - Charm Person: Can cast once per day as 3rd level.
 - Spell Ability - Enervation: Can cast once per day as 3rd level.
@@ -14936,11 +14937,13 @@ Special Abilities:
 Fire Genasi Ability Adjustments: +2 Int, -2 Cha.
 Favored Class (Fighter): A multiclass fire genasi's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
 
+Note: Genasi clerics must have the relevant elemental domain.
+
 Special Abilities:
 
 - Darkvision: Fire Genasi can see in the dark.
-- Hardiness vs. Fire: +2 racial bonus on saving throws against fire spells (additional +1 for every 5 levels).
-- Elemental: Fire Genasi are considered Elementals for the purpose of spells.
+- Hardiness vs. Fire: +1 racial bonus on saving throws against fire spells (additional +1 for every 5 levels).
+- Outsider: Fire Genasi are considered Outsiders for the purpose of spells.
 - Human: Fire Genasi are considered Human for the purpose of spells.</entry>
   <entry id="49625" lang="en" sex="m">Tanarukk</entry>
   <entry id="49626" lang="en" sex="m">tanarukk</entry>
@@ -14982,12 +14985,14 @@ Favored Class (Rogue): A multiclass tieflings rogue class does not count when de
 Air Genasi Ability Adjustments: +2 Con. -2 Cha.
 Favored Class (Fighter): A multiclass water genasi's fighter class does not count when determining whether he suffers an XP penalty for multiclassing.
 
+Note: Genasi clerics must have the relevant elemental domain.
+
 Special Abilities:
 
 - Darkvision: Water Genasi can see in the dark.
-- Hardiness vs. Water: +2 racial bonus on saving throws against water and cold spells (additional +1 for every 5 levels).
+- Hardiness vs. Water: +1 racial bonus on saving throws against water and cold spells (additional +1 for every 5 levels).
 - Water Breathing: Creature can breath water and is therefore immune to the effects of Drown and Mass Drown.
-- Elemental: Water Genasi are considered Elementals for the purpose of spells.
+- Outsider: Water Genasi are considered Outsiders for the purpose of spells.
 - Human: Water Genasi are considered Human for the purpose of spells.</entry>
   <entry id="49634" lang="en" sex="m">ogre</entry>
   <entry id="49635" lang="en" sex="m">Ogres are hulking monsters standing over 9 feet tall with a thick, tough hide. The skin on their 650-pund frame ranges from yellow to brown. They are known for being violent and bad-tempered and tend to keep company with trolls, giants and ogre mages. Although living in small, tribal communities, it is not unheard of for an ogre to accept mercenary work among humans. Their bent toward chaos makes them ideal barbarian. A raging ogre barbarian is an inspiration to other ogres.
@@ -15033,7 +15038,6 @@ Special Abilities:
 
 - Darkvision: Orcs are able to see in the dark.
 - Light Sensitivity: Orcs suffer -2 penalty to attack rolls, saves and checks while operating in bright light.
-- Weapon Proficiency (Martial): All orcs are proficient with Martial Weapons.
 - Orcish: Orcs are considered Orcish for the purpose of spells.</entry>
   <entry id="49642" lang="en" sex="m">kobold</entry>
   <entry id="49643" lang="en" sex="m">Kobolds</entry>
@@ -15121,7 +15125,7 @@ Special Abilities:
   <entry id="49657" lang="en" sex="m">Yuan-ti are descended from humans whose bloodlines have been mixed with those of snakes. Their cunning and ruthlessness are legendary, as are their ability to allied with any race as the situation suits. In Yuan-ti society, Purebloods comprise the nobility while Abominations are the fighting force. All yuan-ti exhibit snake-like features in varying degrees, and all yuan-ti are able to speak Abyssal. Because of their intelligence, yuan-ti purebloods are able to organize themselves and fight with skill comparable to that of any race. The prefer ranged attacks and spells to melee and will sacrifice the least desirable members of the community in hand-to-hand combat. Yuan-ti purebloods appear human at first glance, with only very subtle snakelike features.
 
 Yuan-ti Pureblood Ability Adjustments: +2 Dex, +2 Int, +2 Cha.
-Favored Class (Cleric): A multiclass yuan-ti's cleric class does not count when determining whether he suffers an XP penalty for multiclassing.
+Favored Class (Ranger): A multiclass yuan-ti's ranger class does not count when determining whether he suffers an XP penalty for multiclassing.
 
 Special Abilities:
 

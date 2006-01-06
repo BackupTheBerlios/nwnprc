@@ -2,7 +2,7 @@
    ----------------
    Psychic Reformation
 
-   prc_pow_psyref
+   psi_pow_psyref
    ----------------
 
    25/3/05 by Stratovarius
@@ -80,24 +80,30 @@ void main()
         int nOrigXP = GetXP(oTarget);
         int nXPCost = 50 * nLevels;
 
-        // Level the target down
-        SetXP(oTarget, 1);
-
-        // Schedule the OnLevelDown virtual event to be run
-        DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oTarget));
-
-        // Pay the XP cost and schedule the restoration of original XP - cost
-        if(oManifester == oTarget)
+        // Targeting restrictions. Reforming your opponent mid-battle would be quite nasty, so you only get to do it to allies :P
+        if(oTarget == oManifester ||
+           GetIsFriend(oTarget)
+           )
         {
-            // Targeted self, pay full cost
-            DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - nXPCost));
-        }
-        else
-        {
-            // Targeted other, manifester pays half
-            DelayCommand(XP_RESTORE_DELAY, SetXP(oManifester, GetXP(oManifester) - (nXPCost / 2)));
-            // Target pays other half
-            DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - (nXPCost / 2)));
-        }
+            // Level the target down
+            SetXP(oTarget, 1);
+
+            // Schedule the OnLevelDown virtual event to be run
+            DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oTarget));
+
+            // Pay the XP cost and schedule the restoration of original XP - cost
+            if(oManifester == oTarget)
+            {
+                // Targeted self, pay full cost
+                DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - nXPCost));
+            }
+            else
+            {
+                // Targeted other, manifester pays half
+                DelayCommand(XP_RESTORE_DELAY, SetXP(oManifester, GetXP(oManifester) - (nXPCost / 2)));
+                // Target pays other half
+                DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - (nXPCost / 2)));
+            }
+        }// end if - Targeting restrictions
     }// end if - Successfull manifestation
 }

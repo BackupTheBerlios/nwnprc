@@ -9308,28 +9308,9 @@ Use: Automatic</entry>
   <entry id="47673" lang="en" sex="m">Epic Leadership</entry>
   <entry id="47674" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Cha 25, Leadership, Leadership score 25.
-Specifics: You attract a cohort and followers as shown on table below. In all other ways Epic Leadership functions as the Leadership feat. Normally the Leadership feat provides no benefit for leadership scores beyond 25.
+Specifics: You attract a cohort with a level equal to (Leadership/2)+5. In all other ways Epic Leadership functions as the Leadership feat. Normally the Leadership feat provides no benefit for leadership scores beyond 25.
 
-Use: Automatic
-
-Leadership\tCohort
-25\t17th
-26\t18th
-27\t18th
-28\t19th
-29\t19th
-30\t20th
-31\t20th
-32\t21th
-33\t21th
-34\t22th
-35\t22th
-36\t23th
-37\t23th
-38\t24th
-39\t24th
-40\t25th
-per +1\t+1/2</entry>
+Use: Automatic</entry>
   <entry id="47675" lang="en" sex="m">Leadership</entry>
   <entry id="47676" lang="en" sex="m">Type of Feat: General
 Prerequisite: Character level 6th
@@ -9347,32 +9328,32 @@ If a cohort gains enough XP to bring it to a level one lower than the associated
 
 Use: Selected (through PRC Options)
 
-Leadership\tCohort
-1\t
-2\t1st
-3\t2nd
-4\t3rd
-5\t3rd
-6\t4th
-7\t5th
-8\t5th
-9\t6th
-10\t7th
-11\t7th
-12\t8th
-13\t9th
-14\t10th
-15\t10th
-16\t11th
-17\t12th
-18\t12th
-19\t13th
-20\t14th
-21\t15th
-22\t15th
-23\t16th
-24\t17th
-25 or higher\t17thThis feat </entry>
+Leadership - Cohort
+1 - none
+2 - 1st
+3 - 2nd
+4 - 3rd
+5 - 3rd
+6 - 4th
+7 - 5th
+8 - 5th
+9 - 6th
+10 - 7th
+11 - 7th
+12 - 8th
+13 - 9th
+14 - 10th
+15 - 10th
+16 - 11th
+17 - 12th
+18 - 12th
+19 - 13th
+20 - 14th
+21 - 15th
+22 - 15th
+23 - 16th
+24 - 17th
+25 or higher - 17th</entry>
   <entry id="47677" lang="en" sex="m">This feat is used to signal to your familiar that they should hide somewhere on your person, in a pocket or similar place. While they are hidden, they cannot be damaged or killed.</entry>
   <entry id="47678" lang="en" sex="m">Hide familiar</entry>
   <entry id="47679" lang="en" sex="m">Cowardly but cunning, these small, demonic humanoids are often bound to the will of sorcerers and wizards and made to do their bidding.

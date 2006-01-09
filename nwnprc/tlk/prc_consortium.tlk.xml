@@ -9314,11 +9314,13 @@ Use: Automatic</entry>
   <entry id="47675" lang="en" sex="m">Leadership</entry>
   <entry id="47676" lang="en" sex="m">Type of Feat: General
 Prerequisite: Character level 6th
-Specifics: Having this feat enables the character to attract loyal companions and devoted followers, subordinates who assist her. See the table below for what sort of cohort  the character can recruit.
+Specifics: Having this feat enables the character to attract a loyal companion and devoted follower, a subordinate who assist her. See the table below for what level of cohort the character can recruit.
 
 A characters base Leadership score equals his level plus any Charisma modifier. In order to take into account negative Charisma modifiers, this table allows for very low Leadership scores, but the character must still be 6th level or higher in order to gain the Leadership feat.
 
-The character can attract a cohort of up to this level. Regardless of a characters Leadership score, he can only recruit a cohort who is two or more levels lower than himself. The cohort should be equipped with gear appropriate for its level. A character can try to attract a cohort of a particular race, class, and alignment. The cohorts alignment may not be opposed to the leaders alignment on either the law-vs-chaos or good-vs-evil axis, and the leader takes a Leadership penalty if he recruits a cohort of an alignment different from his own.
+The character can attract a single cohort of up to this level. Regardless of a characters Leadership score, he can only recruit a cohort who is two or more levels lower than himself. The cohort does not have any equipment of their own, that must be provided for them A character can try to attract a cohort of a particular race, class, and alignment. The cohorts alignment may not be opposed to the leaders alignment on either the law-vs-chaos or good-vs-evil axis, and the leader takes a Leadership penalty if he recruits a cohort of an alignment different from his own.
+
+Note: Due to implementation issues, before any cohorts can be recruited, at least one character must be stored as a cohort via the PRC Options conversation. Stored cohorts are global across different modules and characters.
 
 Cohorts earn XP as follows:
 The cohort does not count as a party member when determining the partys XP.

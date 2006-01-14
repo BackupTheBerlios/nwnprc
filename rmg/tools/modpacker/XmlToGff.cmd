@@ -1,1 +1,1 @@
-@java -cp C:\NeverwinterNights\prc\rmg\modpacker\nwn-tools.jar org.progeeks.nwn.XmlToGff %1 %2
+@java -cp "C:\Documents and Settings\user\Desktop\PRC Stuff\rmg\tools\modpacker\nwn-tools.jar" org.progeeks.nwn.XmlToGff %1 %2

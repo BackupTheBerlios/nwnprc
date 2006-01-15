@@ -69,7 +69,10 @@ void main()
         if(GetHitDice(oPC) != GetLocalInt(oPC, "PRC_HitDiceTracking"))
         {
             if(GetHitDice(oPC) < GetLocalInt(oPC, "PRC_HitDiceTracking"))
+            {
+                SetLocalInt(oPC, "PRC_OnLevelDown_OldLevel", GetLocalInt(oPC, "PRC_HitDiceTracking"));
                 DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oPC));
+            }
 
             SetLocalInt(oPC, "PRC_HitDiceTracking", GetHitDice(oPC));
         }
@@ -121,14 +124,14 @@ void main()
             }
             SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
         }
-        
+
         //crafting base items
         if(bCraftingBaseItems)
         {
-            int bHasPotion, 
+            int bHasPotion,
                 bHasScroll,
                 bHasWand;
-            int bHasPotionFeat, 
+            int bHasPotionFeat,
                 bHasScrollFeat,
                 bHasWandFeat;
             if(GetHasFeat(FEAT_BREW_POTION, oPC))
@@ -160,7 +163,7 @@ void main()
                         DestroyObject(oTest); //not enough room in inventory
                     else
                         SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
-                }   
+                }
                 if(bHasScrollFeat && !bHasScroll)
                 {
                     oTest = CreateItemOnObject("x2_it_cfm_bscrl", oPC);
@@ -168,7 +171,7 @@ void main()
                         DestroyObject(oTest); //not enough room in inventory
                     else
                         SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
-                }  
+                }
                 if(bHasWandFeat && !bHasWand)
                 {
                     oTest = CreateItemOnObject("x2_it_cfm_wand", oPC);
@@ -176,10 +179,10 @@ void main()
                         DestroyObject(oTest); //not enough room in inventory
                     else
                         SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
-                }  
-            }   
+                }
+            }
         }
-        
+
         //cohort XP gain
         if(GetHasFeat(FEAT_LEADERSHIP, oPC))
         {
@@ -199,13 +202,13 @@ void main()
                         while(GetECL(oCohort)>(GetECL(oPC)-2))
                         {
                             SetXP(oCohort, (GetHitDice(oCohort)*(GetHitDice(oCohort)-1)*500)-1);
-                        }    
+                        }
                     }
                 }
-            
+
             }
         }
-        
+
         // Get the next PC for the loop
         oPC = GetNextPC();
     }

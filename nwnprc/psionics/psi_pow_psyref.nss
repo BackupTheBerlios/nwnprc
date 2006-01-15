@@ -78,6 +78,7 @@ void main()
     {
         int nLevels = 1 + manif.nTimesAugOptUsed_1;
         int nOrigXP = GetXP(oTarget);
+        int nOrigHD = GetHitDice(oTarget);
         int nXPCost = 50 * nLevels;
 
         // Targeting restrictions. Reforming your opponent mid-battle would be quite nasty, so you only get to do it to allies :P
@@ -89,6 +90,7 @@ void main()
             SetXP(oTarget, 1);
 
             // Schedule the OnLevelDown virtual event to be run
+            SetLocalInt(oTarget, "PRC_OnLevelDown_OldLevel", nOrigHD);
             DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oTarget));
 
             // Pay the XP cost and schedule the restoration of original XP - cost

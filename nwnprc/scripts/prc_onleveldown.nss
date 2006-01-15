@@ -14,9 +14,10 @@
 //:: Created By: Ornedan
 //:: Created On: 09.06.2005
 //:://////////////////////////////////////////////
+
 #include "prc_alterations"
 #include "inc_utility"
-
+#include "psi_inc_psifunc"
 
 void PrcFeats(object oPC)
 {
@@ -29,7 +30,8 @@ void PrcFeats(object oPC)
 
 void main()
 {
-    object oPC = OBJECT_SELF;
+    object oPC    = OBJECT_SELF;
+    int nOldLevel = GetLocalInt(oPC, "PRC_OnLevelDown_OldLevel");
 
     //Used to determine what the last levelled class was
     if(GetLevelByClass(PRCGetClassByPosition(1, oPC), oPC) != PRCGetLevelByPosition(1, oPC))
@@ -50,10 +52,23 @@ void main()
     //  - Aaon Graywolf
     PrcFeats(oPC);
 
+    // For psionics characters, remove powers known on all lost levels
+    int bPsionic = GetIsPsionicCharacter(oPC);
+    if(DEBUG) DoDebug("prc_onleveldown: Psionic powers removal section, character is psionic: " + BooleanToString(bPsionic));
+    if(bPsionic)
+    {
+        int i = nOldLevel;
+        for(; i > GetHitDice(oPC); i--)
+            RemovePowersKnownOnLevel(oPC, i);
+    }
+
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.
     ExecuteScript("prc_prereq", oPC);
 
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERLEVELDOWN);
+
+    // Clear the old level value
+    DeleteLocalInt(oPC, "PRC_OnLevelDown_OldLevel");
 }

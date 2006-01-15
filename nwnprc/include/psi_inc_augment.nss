@@ -438,10 +438,10 @@ string UserAugmentationProfileToString(struct user_augment_profile uap)
     string sBegin = GetStringByStrRef(16823498) + " "; // "Option"
     string sEnd   = " " + (uap.bValueIsPP ? "PP" : GetStringByStrRef(16823499)); // "times"
 
-    return sBegin + "1: " + IntToString(uap.nOption_1) + sEnd
-         + sBegin + "2: " + IntToString(uap.nOption_2) + sEnd
-         + sBegin + "3: " + IntToString(uap.nOption_3) + sEnd
-         + sBegin + "4: " + IntToString(uap.nOption_4) + sEnd
+    return sBegin + "1: " + IntToString(uap.nOption_1) + sEnd + "; "
+         + sBegin + "2: " + IntToString(uap.nOption_2) + sEnd + "; "
+         + sBegin + "3: " + IntToString(uap.nOption_3) + sEnd + "; "
+         + sBegin + "4: " + IntToString(uap.nOption_4) + sEnd + "; "
          + sBegin + "5: " + IntToString(uap.nOption_5) + sEnd;
 }
 

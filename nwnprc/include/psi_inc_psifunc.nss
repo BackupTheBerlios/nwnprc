@@ -150,28 +150,6 @@ int GetIsTelepathyPower(int nSpellID = -1);
 int CheckPowerPrereqs(int nFeat, object oPC);
 
 /**
- * Gets the number of powers a character character possesses from a
- * specific class.
- *
- * @param oPC    The PC whose powers to check
- * @param nClass The class to check
- * @return       The number of powers oPC has that have been provided by levels
- *               in nClass
- */
-int GetPowerCount(object oPC, int nClass);
-
-/**
- * Gets the maximum number of powers a character may posses from a given class
- * at this time based on it's levels in that class.
- *
- * @param oPC    Character to determine maximum powers for
- * @param nClass CLASS_TYPE_* of the class to determine maximum powers for
- * @return       Maximum number of powers that oPC may know based on it's levels
- *               in nClass. 0 if the character has no levels in nClass.
- */
-int GetMaxPowerCount(object oPC, int nClass);
-
-/**
  * Determines the manifester's level in regards to manifester checks to overcome
  * spell resistance.
  *
@@ -233,16 +211,6 @@ int GetFirstPsionicClass(object oCreature = OBJECT_SELF);
  */
 int GetFirstPsionicClassPosition(object oCreature = OBJECT_SELF);
 
-/**
- * Determines whether a character has a given power, gained via class
- * abilities. Psi-like abilities do not count.
- *
- * @param nPower POWER_* of the power to test
- * @param oPC    Character to test for the possession of the power
- * @return       TRUE if the character has the power, FALSE otherwise
- */
-int GetHasPower(int nPower, object oPC = OBJECT_SELF);
-
 // Does all the appropriate functions for Psy Warrior unarmed powers.
 void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration);
 
@@ -283,6 +251,7 @@ int GetTargetSpecificChangesToDamage(object oTarget, object oManifester, int nDa
 #include "prc_power_const"
 #include "prc_alterations"
 #include "psi_inc_manifest" // Provides psi_inc_augment, psi_inc_focus, psi_inc_metapsi and psi_inc_ppoints
+#include "psi_inc_powknown"
 
 
 //////////////////////////////////////////////////
@@ -538,49 +507,6 @@ int CheckPowerPrereqs(int nFeat, object oPC)
     return TRUE;
 }
 
-int GetPowerCount(object oPC, int nClass)
-{
-    if(!persistant_array_exists(oPC, "PsiPowerCount"))
-        return 0;
-    return persistant_array_get_int(oPC, "PsiPowerCount", nClass);
-}
-
-int GetMaxPowerCount(object oPC, int nClass)
-{
-    int nLevel = GetLevelByClass(nClass, oPC);
-        nLevel += GetFirstPsionicClass(oPC) == nClass ? GetPsionicPRCLevels(oPC) : 0;
-    if(!nLevel)
-        return 0;
-    string sPsiFile = GetPsionicFileName(nClass);
-    int nMaxPowers = StringToInt(Get2DACache(sPsiFile, "PowersKnown", nLevel-1));
-
-    // Apply the epic feat Power Knowledge - +2 powers known per
-    int nFeat;
-    switch(nClass)
-    {
-        case CLASS_TYPE_PSION:
-            nFeat = FEAT_POWER_KNOWLEDGE_PSION_1;
-            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSION_10 &&
-                  GetHasFeat(nFeat, oPC))
-                { nMaxPowers += 2; nFeat++; }
-            break;
-        case CLASS_TYPE_WILDER:
-            nFeat = FEAT_POWER_KNOWLEDGE_WILDER_1;
-            while(nFeat <= FEAT_POWER_KNOWLEDGE_WILDER_10 &&
-                  GetHasFeat(nFeat, oPC))
-                { nMaxPowers += 2; nFeat++; }
-            break;
-        case CLASS_TYPE_PSYWAR:
-            nFeat = FEAT_POWER_KNOWLEDGE_PSYWAR_1;
-            while(nFeat <= FEAT_POWER_KNOWLEDGE_PSYWAR_10 &&
-                  GetHasFeat(nFeat, oPC))
-                { nMaxPowers += 2; nFeat++; }
-            break;
-    }
-
-    return nMaxPowers;
-}
-
 int GetPsiPenetration(object oManifester = OBJECT_SELF)
 {
     int nPen = GetManifesterLevel(oManifester);
@@ -629,10 +555,11 @@ int GetPsionicPRCLevels(object oCreature)
 
 int GetIsPsionicClass(int nClass)
 {
-    return (nClass==CLASS_TYPE_PSION  ||
-            nClass==CLASS_TYPE_PSYWAR ||
-            nClass==CLASS_TYPE_WILDER ||
-            nClass==CLASS_TYPE_FIST_OF_ZUOKEN);
+    return (nClass==CLASS_TYPE_PSION          ||
+            nClass==CLASS_TYPE_PSYWAR         ||
+            nClass==CLASS_TYPE_WILDER         ||
+            nClass==CLASS_TYPE_FIST_OF_ZUOKEN
+            );
 }
 
 int GetFirstPsionicClass(object oCreature = OBJECT_SELF)
@@ -643,7 +570,7 @@ int GetFirstPsionicClass(object oCreature = OBJECT_SELF)
     return PRCGetClassByPosition(iPsionicPos, oCreature);
 }
 
-int GetFirstPsionicClassPosition (object oCreature = OBJECT_SELF)
+int GetFirstPsionicClassPosition(object oCreature = OBJECT_SELF)
 {
     if (GetIsPsionicClass(PRCGetClassByPosition(1, oCreature)))
         return 1;
@@ -653,22 +580,6 @@ int GetFirstPsionicClassPosition (object oCreature = OBJECT_SELF)
         return 3;
 
     return 0;
-}
-
-int GetHasPower(int nPower, object oPC = OBJECT_SELF)
-{
-    if((GetLevelByClass(CLASS_TYPE_PSION, oPC)
-            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_PSION), oPC))
-        ||(GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)
-            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_PSYWAR), oPC))
-        ||(GetLevelByClass(CLASS_TYPE_WILDER, oPC)
-            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_WILDER), oPC))
-        ||(GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC)
-            && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_FIST_OF_ZUOKEN), oPC))
-        //add new psionic classes here
-        )
-        return TRUE;
-    return FALSE;
 }
 
 void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
@@ -768,7 +679,7 @@ int GetWildSurge(object oManifester)
                       0 :                                       // Wild Surge does not apply to psi-like abilities
                       GetLocalInt(oManifester, PRC_WILD_SURGE);
 
-    if(DEBUG) DoDebug("GetWildSurge():\n"
+    if(FALSE) DoDebug("GetWildSurge():\n"
                     + "oManifester = " + DebugObject2Str(oManifester) + "\n"
                     + "nWildSurge = " + IntToString(nWildSurge) + "\n"
                       );

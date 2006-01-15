@@ -169,7 +169,12 @@ void main()
             }
             else if(nStage == STAGE_LEV_OR_PP)
             {
-                SetHeader("You may define how your personal augmentation profiles are treated. The option values may either mean how many times to use that option, or how many power points to use for that option. In the latter case, the number of times the option is used is the number of power points divided by the cost of the option, rounded down.\nCurrent setting: ");
+                SetHeader("You may define how your personal augmentation profiles are treated. The option values may either mean how many times to use that option, or how many power points to use for that option. In the latter case, the number of times the option is used is the number of power points divided by the cost of the option, rounded down.\nCurrent setting: "
+                        + (GetPersistantLocalInt(oPC, PRC_PLAYER_SWITCH_AUGMENT_IS_PP) ?
+                           "Power Points" :
+                           "Levels"
+                           )
+                          );
 
                 // Back to main choice
                 AddChoice("Return to main menu", CHOICE_BACK_TO_MAIN, oPC);
@@ -216,6 +221,8 @@ void main()
                 AddChoice("Clear profile", CHOICE_CLEAR, oPC);
                 AddChoice("Save profile", CHOICE_SAVE, oPC);
                 AddChoice("Return to main menu without saving", CHOICE_BACK_TO_MAIN, oPC);
+
+                MarkStageSetUp(nStage, oPC);
             }
         }
 
@@ -335,6 +342,9 @@ void main()
                         case CHOICE_RAISE_5: uapTemp.nOption_5++; break;
                         case CHOICE_LOWER_5: uapTemp.nOption_5--; break;
                     }
+
+                    SetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile", _EncodeProfile(uapTemp));
+                    ClearCurrentStage(oPC);
                 }
                 else if(nChoice == CHOICE_CLEAR)
                 {
@@ -343,24 +353,16 @@ void main()
                     uapTemp.nOption_3 = 0;
                     uapTemp.nOption_4 = 0;
                     uapTemp.nOption_5 = 0;
+
+                    ClearCurrentStage(oPC);
                 }
-                else
+                else if(nChoice == CHOICE_SAVE)
                 {
-                    if(nChoice == CHOICE_SAVE)
-                    {
-                        StoreUserAugmentationProfile(oPC, GetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile_Index"),
-                                                     uapTemp, GetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile_IsQuickSelection")
-                                                     );
-                        nStage = STAGE_ENTRY;
-                    }
-                    else
-                    {
-                        SetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile", _EncodeProfile(uapTemp));
-                        ClearCurrentStage(oPC);
-                    }
+                    StoreUserAugmentationProfile(oPC, GetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile_Index"),
+                                                 uapTemp, GetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile_IsQuickSelection")
+                                                 );
+                    nStage = STAGE_ENTRY;
                 }
-
-
             }
         }
 

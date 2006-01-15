@@ -77,7 +77,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Create an instance of the AOE Object using the Apply Effect function
     //placeables get an effect
     //or if no equipment
-    if(GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE
+    if(!GetPRCSwitch(PRC_PNP_DARKNESS))
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, GetLocation(oTarget), RoundsToSeconds(nDuration));
+    else if(GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE
         || !GetIsObjectValid(oItemTarget))
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, HoursToSeconds(nDuration),TRUE,-1,nCasterLvl);
     else

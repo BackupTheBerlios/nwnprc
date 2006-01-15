@@ -24,6 +24,21 @@
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 
+void CheckStillUnarmed(object oTarget)
+{
+    //only works if you have nothing in right & left hands
+    if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget))
+        || GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)))
+    {
+        FloatingTextStrRefOnCreature(8962, oTarget, FALSE);
+        //remove other magic fang effects
+        RemoveSpellEffects(452, OBJECT_SELF, oTarget);
+        RemoveSpellEffects(453, OBJECT_SELF, oTarget);
+        return; // has neither an animal companion
+    }
+    DelayCommand(1.0, CheckStillUnarmed(oTarget));    
+}
+
 void main()
 {
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
@@ -97,6 +112,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Apply VFX impact and bonus effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+    DelayCommand(1.0, CheckStillUnarmed(oTarget));
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Erasing the variable used to store the spell's spell school

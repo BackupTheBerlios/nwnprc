@@ -25,6 +25,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     object oTarget = GetExitingObject();
     object oCreator = GetAreaOfEffectCreator();
+DoDebug(GetName(oTarget)+" is leaving "+GetName(oCreator)+"'s darkness effect");
 
     int bValid = FALSE;
     effect eAOE;
@@ -40,19 +41,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 || nID == 688 //bioware SLA darkness 
                 || nID == SHADOWLORD_DARKNESS 
                 || nID == SPELL_RACE_DARKNESS)
-            && (GetEffectCreator(eAOE) == oCreator
-                || GetEffectCreator(eAOE) == OBJECT_SELF))
+            && (GetEffectCreator(eAOE) == oCreator)
+            && nType != EFFECT_TYPE_AREA_OF_EFFECT
+                )
         {
-            if(!GetPRCSwitch(PRC_PNP_DARKNESS_35ED)
-                && nType == EFFECT_TYPE_DARKNESS)
-            {
-                  RemoveEffect(oTarget, eAOE);
-            }
-            if(GetPRCSwitch(PRC_PNP_DARKNESS_35ED)
-                && nType == EFFECT_TYPE_CONCEALMENT)
-            {
-                  RemoveEffect(oTarget, eAOE);            
-            }
+DoDebug(GetName(oTarget)+" has an effect from "+GetName(oCreator)+"'s darkness effect");
+            RemoveEffect(oTarget, eAOE);
         }
 
         //Get next effect on the target

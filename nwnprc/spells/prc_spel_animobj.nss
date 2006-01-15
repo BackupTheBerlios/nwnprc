@@ -11,6 +11,8 @@ void AddWeaponHardness(object oHide, object oWeapon, object oAnimate);
 const int SIZE_SMALL = 1;
 const int SIZE_MEDIUM = 2;
 
+const int ERROR_CODE_5_AGAIN = 1;
+
 int GetWeaponAnimateSize(object oTarget)
 {
     int iBaseItemType = GetBaseItemType(oTarget);

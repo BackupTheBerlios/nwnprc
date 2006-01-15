@@ -7,15 +7,26 @@
 
 void main()
 {
-    //this triggers NWNX on Linux
-    SetLocalInt(GetModule(), "NWNX!INIT", 1);
-    //looks like there is some sort of issue with reloading a saved game
-    //this shold stop this event firing for reloads
-    if(GetLocalInt(GetModule(), "prc_mod_load_done"))
-        return;
-    SetLocalInt(GetModule(), "prc_mod_load_done", TRUE);
+    object oModule = GetModule();
 
-    SetModuleSwitch (MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS, TRUE);
+    //this triggers NWNX on Linux
+    SetLocalInt(oModule, "NWNX!INIT", 1);
+
+    // Loading a saved game runs the module load event, but since the point of the stuff
+    // we do here is to set local variables and those don't get cleared over saved games,
+    // there is no point in wasting (a massive load of) CPU on doing it all over again.
+    if(GetLocalInt(oModule, "prc_mod_load_done"))
+        return;
+    else
+        SetLocalInt(oModule, "prc_mod_load_done", TRUE);
+
+
+    // Set PRC presence & version marker. If plugins ever happen, this would be useful.
+    SetLocalString(oModule, "PRC_VERSION", PRC_VERSION);
+
+    SetModuleSwitch(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS, TRUE); /// @todo This is somewhat intrusive, make it unnecessary and remove
+
+    // Run a script to determine if the PRC Companion is present
     ExecuteScript("prc_companion", OBJECT_SELF);
 
     CreateSwitchNameArray();
@@ -36,7 +47,7 @@ void main()
         {
             DestroyCampaignDatabase("prc_data");
             DestroyCampaignDatabase(COHORT_DATABASE);
-        }    
+        }
         SetCampaignString("prc_data", "version", PRC_VERSION);
 
         location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
@@ -57,11 +68,11 @@ void main()
     }
 
     //check for letoscript dir
-    if(GetLocalString(GetModule(), PRC_LETOSCRIPT_NWN_DIR) == "")
+    if(GetLocalString(oModule, PRC_LETOSCRIPT_NWN_DIR) == "")
     {
         string sDir = Get2DACache("directory", "Dir", 0);
         if(sDir != "")
-            SetLocalString(GetModule(), PRC_LETOSCRIPT_NWN_DIR, sDir);
+            SetLocalString(oModule, PRC_LETOSCRIPT_NWN_DIR, sDir);
     }
 
     //delay the 2da lookup stuff

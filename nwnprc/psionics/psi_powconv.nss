@@ -355,6 +355,10 @@ void main()
             {
                 if(DEBUG) DoDebug("psi_powconv: Adding power");
                 int nPower = GetLocalInt(oPC, "nPower");
+
+                AddPowerKnown(oPC, nClass, nPower, TRUE, GetHitDice(oPC));
+
+                /*
                 object oSkin = GetPCSkin(oPC);
 
                 // Add the power feat(s) to the PC's hide
@@ -373,7 +377,7 @@ void main()
                 if(!persistant_array_exists(oPC, "PsiPowerCount"))
                     persistant_array_create(oPC, "PsiPowerCount");
                 persistant_array_set_int(oPC, "PsiPowerCount", nClass, persistant_array_get_int(oPC, "PsiPowerCount", nClass) + 1);
-
+                */
                 // Delete the stored offset
                 DeleteLocalInt(oPC, "PowerListChoiceOffset");
             }

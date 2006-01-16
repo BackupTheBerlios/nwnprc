@@ -53,9 +53,7 @@ void main()
     PrcFeats(oPC);
 
     // For psionics characters, remove powers known on all lost levels
-    int bPsionic = GetIsPsionicCharacter(oPC);
-    if(DEBUG) DoDebug("prc_onleveldown: Psionic powers removal section, character is psionic: " + BooleanToString(bPsionic));
-    if(bPsionic)
+    if(GetIsPsionicCharacter(oPC))
     {
         int i = nOldLevel;
         for(; i > GetHitDice(oPC); i--)

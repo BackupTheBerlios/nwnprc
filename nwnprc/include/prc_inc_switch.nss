@@ -842,6 +842,20 @@ const string PRC_PRGT_XP_AWARD_FOR_DISARMED          = "PRC_PRGT_XP_AWARD_FOR_DI
 const string PRC_PSI_ASTRAL_CONSTRUCT_USE_2DA        = "ASTRAL_CONSTRUCT_USE_2DA";
 
 /**
+ * Setting this switch active makes Psychic Reformation only allow one to
+ * reselect psionic powers instead of fully rebuilding their character.
+ *
+ * Possible values:
+ * 0              = Off, Psychic Reformation behaves as specified in the power
+ *                  description. That is, the target is deleveled by a certain
+ *                  amount and then releveled back to where they were.
+ * Nonzero, not 2 = On, Psychic Reformation only nulls a selected number of
+ *                  the target's selected powers and allows reselection.
+ * 2              = On, and the XP cost is reduced to 25 per level reformed.
+ */
+const string PRC_PSI_PSYCHIC_REFORMATION_NERF        = "PRC_PSI_PSYCHIC_REFORMATION_NERF";
+
+/**
  * Determines how Rapid Metabolism works.
  * When set, heals the feat possessor by their Hit Dice + Constitution modifier
  * every 24h.

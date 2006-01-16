@@ -6908,7 +6908,10 @@ The subject can undo decisions of these sorts that were made at lower levels, if
 
 XP Cost: This power costs 50 XP to manifest to reformat choices made when the character reached her current level. For each additional previous level into which the revision reaches, the power costs an additional 50 XP. The manifester and subject split all XP costs evenly.
 
-Augmentation: For every additional power point you spend, the revision reaches one level further. The XP cost is accordingly increased, as specified above.</entry>
+Augmentation: For every additional power point you spend, the revision reaches one level further. The XP cost is accordingly increased, as specified above.
+
+
+Implementation Note: This power may optionally be nerfed via a switch, changing it's behaviour to only allow reselection of psionic powers gained in the reformed levels.</entry>
   <entry id="46678" lang="en" sex="m">Retrieve</entry>
   <entry id="46679" lang="en" sex="m">Psychoportation (Teleportation)
 Level: Psion/wilder 6

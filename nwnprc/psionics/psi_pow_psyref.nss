@@ -36,6 +36,11 @@
     Augmentation: For every additional power point you spend, the revision
                   reaches one level further. The XP cost is accordingly
                   increased, as specified above.
+
+
+    Implementation Note: This power may optionally be nerfed via a switch,
+                         changing it's behaviour to only allow reselection of
+                         psionic powers gained in the reformed levels.
 */
 
 #include "psi_inc_psifunc"
@@ -76,35 +81,51 @@ void main()
 
     if(manif.bCanManifest)
     {
-        int nLevels = 1 + manif.nTimesAugOptUsed_1;
-        int nOrigXP = GetXP(oTarget);
-        int nOrigHD = GetHitDice(oTarget);
-        int nXPCost = 50 * nLevels;
+        int nLevels   = 1 + manif.nTimesAugOptUsed_1;
+        int nOrigXP   = GetXP(oTarget);
+        int nOrigHD   = GetHitDice(oTarget);
+        int nTargetHD = max(1, nOrigHD - nLevels);
+        int nXPCost   = nLevels *
+                         (GetPRCSwitch(PRC_PSI_PSYCHIC_REFORMATION_NERF) == 2 ?
+                           25 : // If nerf is set, the XP cost may also be reduced to 25 per level
+                           50   // Default is 50 per level
+                          );
 
         // Targeting restrictions. Reforming your opponent mid-battle would be quite nasty, so you only get to do it to allies :P
         if(oTarget == oManifester ||
            GetIsFriend(oTarget)
            )
         {
-            // Level the target down
-            SetXP(oTarget, 1);
+            // Check whether a behaviour changing switch has been set
+            if(!GetPRCSwitch(PRC_PSI_PSYCHIC_REFORMATION_NERF))
+            {
+                // Level the target down
+                SetXP(oTarget, ((nTargetHD * (nTargetHD - 1)) / 2) * 1000);
 
-            // Schedule the OnLevelDown virtual event to be run
-            SetLocalInt(oTarget, "PRC_OnLevelDown_OldLevel", nOrigHD);
-            DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oTarget));
+                // Schedule the OnLevelDown virtual event to be run right away
+                SetLocalInt(oTarget, "PRC_OnLevelDown_OldLevel", nOrigHD);
+                DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oTarget));
+            }// end if - Default behaviour
+            else
+            {
+                // Nerfed - Only remove powers known tied to the reformed levels
+                int i = nOrigHD;
+                for(; i > nTargetHD; i--)
+                    RemovePowersKnownOnLevel(oPC, i);
+            }// end else - Only reform powers
 
-            // Pay the XP cost and schedule the restoration of original XP - cost
+            // Level reduction is immediate, so restore XP right away to avoid mess with HB detecting level loss
             if(oManifester == oTarget)
             {
                 // Targeted self, pay full cost
-                DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - nXPCost));
+                SetXP(oTarget, nOrigXP - nXPCost);
             }
             else
             {
                 // Targeted other, manifester pays half
-                DelayCommand(XP_RESTORE_DELAY, SetXP(oManifester, GetXP(oManifester) - (nXPCost / 2)));
+                SetXP(oManifester, GetXP(oManifester) - (nXPCost / 2));
                 // Target pays other half
-                DelayCommand(XP_RESTORE_DELAY, SetXP(oTarget, nOrigXP - (nXPCost / 2)));
+                SetXP(oTarget, nOrigXP - (nXPCost / 2));
             }
         }// end if - Targeting restrictions
     }// end if - Successfull manifestation

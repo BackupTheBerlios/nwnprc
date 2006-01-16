@@ -67,9 +67,11 @@ vector ornHack_RotateVectorInSpace(vector v, float fRotate)
     return v;
 }
 */
-vector gao_RotateVector_Hackd(vector vCenter, string sAxis, float x, float y, float z, float fRotateXZ)
+float EPSILON_LIMIT = 0.01f;
+
+vector gao_RotateVector_Mod(vector vCenter, string sAxis, float x, float y, float z, float fRotateXZ, float fRotateYZ)
 {
-    // Heavyish operation, so avoid if unnecessary
+    // Avoiding these if unnecessary should lower the CPU usage per call a fair bit. Not that it seems to be noticeable, but eh :P
     if(fRotateXZ != 0.0f)
     {
         // Determine the length of the vector
@@ -84,7 +86,22 @@ vector gao_RotateVector_Hackd(vector vCenter, string sAxis, float x, float y, fl
         x = fLength * sin(fAngle);
         z = fLength * cos(fAngle);
     }
+    if(fRotateYZ != 0.0f)
+    {
+        // Determine the length of the vector
+        float fLength = sqrt((y * y) + (z * z));
+        // Determine the angle of the vector relative to the Z axle
+        float fAngle  = acos(z / fLength);
+        // Adjust for arcuscosine ambiquity
+        if(y < 0.0f) fAngle = 360.0f - fAngle;
 
+        // Add in the new angle to rotate by and calculate new coordinates
+        fAngle += fRotateYZ;
+        y = fLength * sin(fAngle);
+        z = fLength * cos(fAngle);
+    }
+
+    // Determine the final vector
     vector vPos;
     if (sAxis == "x") vPos = Vector(y, z, x) ;
     else if (sAxis == "y") vPos = Vector(z, x, y) ;
@@ -92,7 +109,7 @@ vector gao_RotateVector_Hackd(vector vCenter, string sAxis, float x, float y, fl
     return vPos + vCenter ;
 }
 
-object LocalObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate = 0.0f, float fTwist=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_GENGON", float fDirection = 0.0f)
+object ObjectBeamGengon_Mod(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate = 0.0f, float fTwist=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_GENGON", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -120,24 +137,26 @@ object LocalObjectBeamGengon(int nDurationType, int nVFX, location lCenter, floa
         if (i<nSides)
         {
             fAngle = fEta*f + fRotate;
-            lPos = Location(oArea, gao_RotateVector_Hackd(vCenter, sAxis,
-                                                          fRadiusStart * cos(fAngle),
-                                                          fRadiusStart * sin(fAngle),
-                                                          fHeightStart,
-                                                          fDirection
-                                                          ),
+            lPos = Location(oArea, gao_RotateVector_Mod(vCenter, sAxis,
+                                                        fRadiusStart * cos(fAngle),
+                                                        fRadiusStart * sin(fAngle),
+                                                        fHeightStart,
+                                                        fDirectionXZ,
+                                                        fDirectionYZ
+                                                        ),
                             fAngle
                             );
         }
         else
         {
             fAngle = fEta*f + fTwist;
-            lPos = Location(oArea, gao_RotateVector_Hackd(vCenter, sAxis,
-                                                          fRadiusEnd * cos(fAngle),
-                                                          fRadiusEnd * sin(fAngle),
-                                                          fHeightEnd,
-                                                          fDirection
-                                                          ),
+            lPos = Location(oArea, gao_RotateVector_Mod(vCenter, sAxis,
+                                                        fRadiusEnd * cos(fAngle),
+                                                        fRadiusEnd * sin(fAngle),
+                                                        fHeightEnd,
+                                                        fDirectionXZ,
+                                                        fDirectionYZ
+                                                        ),
                             fAngle
                             );
         }
@@ -168,7 +187,7 @@ object LocalObjectBeamGengon(int nDurationType, int nVFX, location lCenter, floa
     return oData;
 }
 
-object LocalObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALSPRING", float fDirection = 0.0f)
+object ObjectBeamPolygonalSpring_Mod(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALSPRING", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -198,12 +217,13 @@ object LocalObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCen
     {
         f = IntToFloat(i);
         fAngle = fEta*f + fRotate;
-        lPos = Location(oArea, gao_RotateVector_Hackd(vCenter, sAxis,
-                                                      (fRadiusStart - fDecay * f) * cos(fAngle),
-                                                      (fRadiusStart - fDecay * f) * sin(fAngle),
-                                                      fHeightStart - fGrowth * f,
-                                                      fDirection
-                                                      ),
+        lPos = Location(oArea, gao_RotateVector_Mod(vCenter, sAxis,
+                                                    (fRadiusStart - fDecay * f) * cos(fAngle),
+                                                    (fRadiusStart - fDecay * f) * sin(fAngle),
+                                                    fHeightStart - fGrowth * f,
+                                                    fDirectionXZ,
+                                                    fDirectionYZ
+                                                    ),
                         fAngle
                         );
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
@@ -219,6 +239,32 @@ object LocalObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCen
 }
 
 float GetVFXLength(location lManifester, float fLength, float fAngle);
+
+void VFXHB(location loc, int nXZ, int nYZ)
+{
+    float fRadius    = 1.0f;  // 1 meter
+    float fVFXLength = 10.0f; // 10 meters, 1 tile
+    float fDuration  = 3.0f;
+    float fHB        = 1.0f / 3.0f;
+
+    ObjectBeamGengon_Mod(DURATION_TYPE_TEMPORARY, VFX_BEAM_DISINTEGRATE, loc, fRadius, fRadius,
+                         1.0f, fVFXLength, // Start 1m from the manifester, end at LOS end
+                         8, // 8 sides
+                         fDuration, "prc_invisobj",
+                         0.0f, // Drawn instantly
+                         0.0f, 0.0f, 0.0f, "z",
+                         -1, -1, 0.0f, 1.0f, // No secondary VFX
+                         fDuration, "PRC_EnergyBolt_VFX",
+                         1.0f * nXZ, 1.0f * nYZ
+                         );
+
+    // Progress the angle counters
+    if((nXZ = (nXZ + 10) % 360) == 0)
+        nYZ = (nYZ + 10) % 360;
+
+    // Schedule next beat
+    DelayCommand(fHB, VFXHB(loc, nXZ, nYZ));
+}
 
 void main()
 {
@@ -265,32 +311,32 @@ void main()
         effect eVis          = EffectVisualEffect(enAdj.nVFX1);
         effect eDamage;
         object oTarget;
-
+VFXHB(lManifester, 0, 0); return;
         // Do VFX. This is moderately heavy, so it isn't duplicated by Twin Power
         float fAngle             = GetRelativeAngleBetweenLocations(lManifester, lTarget);
         float fSpiralStartRadius = FeetToMeters(1.0f);
         float fRadius            = FeetToMeters(5.0f);
         float fDuration          = 4.5f;
         float fVFXLength         = GetVFXLength(lManifester, fLength, GetRelativeAngleBetweenLocations(lManifester, lTarget));
-        LocalObjectBeamGengon(DURATION_TYPE_TEMPORARY, enAdj.nVFX2, lManifester, fRadius, fRadius,
-                              1.0f, fVFXLength, // Start 1m from the manifester, end at LOS end
-                              8, // 8 sides
-                              fDuration, "prc_invisobj",
-                              0.0f, // Drawn instantly
-                              0.0f, 0.0f, 45.0f, "y",
-                              -1, -1, 0.0f, 1.0f, // No secondary VFX
-                              fDuration, "PRC_EnergyBolt_VFX", fAngle
-                              );
-        LocalObjectBeamPolygonalSpring(DURATION_TYPE_TEMPORARY, enAdj.nVFX2, lManifester, fSpiralStartRadius, fRadius,
-                                       0.0f, fVFXLength, // Start at the manifester, end at LOS end
-                                       5, // 5 sides per revolution
-                                       fDuration, "prc_invisobj",
-                                       fVFXLength / 5, // Revolution per 5 meters
-                                       0.0f, // Drawn instantly
-                                       0.0f, "y",
-                                       -1, -1, 0.0f, 1.0f, // No secondary VFX
-                                       fDuration, "PRC_EnergyBolt_VFX", fAngle
-                                       );
+        ObjectBeamGengon_Mod(DURATION_TYPE_TEMPORARY, enAdj.nVFX2, lManifester, fRadius, fRadius,
+                             1.0f, fVFXLength, // Start 1m from the manifester, end at LOS end
+                             8, // 8 sides
+                             fDuration, "prc_invisobj",
+                             0.0f, // Drawn instantly
+                             0.0f, 0.0f, 45.0f, "y",
+                             -1, -1, 0.0f, 1.0f, // No secondary VFX
+                             fDuration, "PRC_EnergyBolt_VFX", fAngle
+                             );
+        ObjectBeamPolygonalSpring_Mod(DURATION_TYPE_TEMPORARY, enAdj.nVFX2, lManifester, fSpiralStartRadius, fRadius,
+                                      0.0f, fVFXLength, // Start at the manifester, end at LOS end
+                                      5, // 5 sides per revolution
+                                      fDuration, "prc_invisobj",
+                                      fVFXLength / 5, // Revolution per 5 meters
+                                      0.0f, // Drawn instantly
+                                      0.0f, "y",
+                                      -1, -1, 0.0f, 1.0f, // No secondary VFX
+                                      fDuration, "PRC_EnergyBolt_VFX", fAngle
+                                      );
         /*
         // A tube of beams, radius 5ft, starting 1m from manifester and running for the length of the line
         LocalObjectBeamGengon(DURATION_TYPE_TEMPORARY, enAdj.nVFX2, lManifester, fRadius, fRadius,

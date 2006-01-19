@@ -657,9 +657,10 @@ void Thrallherd(object oPC)
 {
     SetLocalInt(oPC, "PRC_PrereqThrallherd", 1);
 
+    // @todo Replace with some mechanism that is not dependent on power enumeration. Maybe a set of variables that tell how many powers of each discipline a character knows <- requires hooking to power gain / loss
     if (GetHasPower(POWER_CHARMPERSON, oPC) || GetHasPower(POWER_AVERSION, oPC) || GetHasPower(POWER_BRAINLOCK, oPC) ||
         GetHasPower(POWER_CRISISBREATH, oPC) || GetHasPower(POWER_EMPATHICTRANSFERHOSTILE, oPC) || GetHasPower(POWER_DOMINATE, oPC) ||
-        GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR, oPC))
+        GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR_REPAIR, oPC))
     {
         SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
     }

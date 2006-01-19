@@ -109,6 +109,17 @@ void GainTemporaryPowerPoints(object oChar, int nGain, float fDuration, int bInf
  */
 void LosePowerPoints(object oChar, int nLoss, int bInform = TRUE);
 
+/**
+ * Unconditionally sets the given character's power point count to 0.
+ * This causes psionic focus loss as normal.
+ *
+ * @param oChar   Character whose power points to null
+ * @param bInform If TRUE, runs TellCharacterPowerPointStatus() on oChar
+ *                after making the modification.
+ */
+void LoseAllPowerPoints(object oChar, int bInform = TRUE);
+
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -296,6 +307,16 @@ void LosePowerPoints(object oChar, int nLoss, int bInform = TRUE)
 
     if(GetCurrentPowerPoints(oChar) == 0)
         LosePsionicFocus(oChar);
+
+    if(bInform)
+        TellCharacterPowerPointStatus(oChar);
+}
+
+void LoseAllPowerPoints(object oChar, int bInform = TRUE)
+{
+    SetLocalInt(oChar, POWER_POINT_VARNAME, 0);
+
+    LosePsionicFocus(oChar);
 
     if(bInform)
         TellCharacterPowerPointStatus(oChar);

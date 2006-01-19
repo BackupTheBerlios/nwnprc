@@ -1,46 +1,48 @@
 /*
    ----------------
-   Energy Stun
+   Energy Cone
 
-   psi_pow_enstun
+   psi_pow_encone
    ----------------
 
-   6/11/04 by Stratovarius
+   31/7/05 by Stratovarius
 */ /** @file
 
-    Energy Stun
+    Energy Cone
 
     Psychokinesis [see text]
-    Level: Psion/wilder 2
+    Level: Kineticist 3
     Manifesting Time: 1 standard action
-    Range: Close (25 ft. + 5 ft./2 levels)
-    Area: 5-ft.-radius burst
+    Range: 60 ft.
+    Area: Cone-shaped spread
     Duration: Instantaneous
     Saving Throw: Reflex half or Fortitude half; see text
     Power Resistance: Yes
-    Power Points: 3
+    Power Points: 5
     Metapsionics: Empower, Maximize, Twin, Widen
 
     Upon manifesting this power, you choose cold, electricity, fire, or sonic.
-    You release a powerful stroke of the chosen energy type that encircles all
-    creatures in the area, dealing 1d6 points of damage to each of them. In
-    addition, any creature that fails its save for half damage must succeed on
-    a Will save or be stunned for 1 round.
+    You create a cone of energy of the chosen type, extending outward from your
+    hand, that deals 5d6 points of damage to every creature or object within the
+    area.
 
-    Cold: A stroke of this energy type deals +1 point of damage per die. The
-          saving throw to reduce damage from a cold stun is a Fortitude save
+    Cold: A cone of this energy type deals +1 point of damage per die. The
+          saving throw to reduce damage from a cold cone is a Fortitude save
           instead of a Reflex save.
-    Electricity: Manifesting a stroke of this energy type provides a +2 bonus to
+    Electricity: Manifesting a cone of this energy type provides a +2 bonus to
                  the save DC and a +2 bonus on manifester level checks for the
                  purpose of overcoming power resistance.
-    Fire: A stroke of this energy type deals +1 point of damage per die.
-    Sonic: A stroke of this energy type deals -1 point of damage per die and
+    Fire: A cone of this energy type deals +1 point of damage per die.
+    Sonic: A cone of this energy type deals -1 point of damage per die and
            ignores an object’s hardness.
 
     This power’s subtype is the same as the type of energy you manifest.
 
     Augment: For every additional power point you spend, this power’s damage
-             increases by one die (d6) and its save DC increases by 1.
+             increases by one die (d6). For each extra two dice of damage, this
+             power’s save DC increases by 1.
+
+    @todo 2da
 */
 
 #include "psi_inc_psifunc"
@@ -67,10 +69,10 @@ void main()
 
 // End of Spell Cast Hook
 
-    object oManifester = OBJECT_SELF;
+object oManifester = OBJECT_SELF;
     struct manifestation manif =
         EvaluateManifestation(oManifester, OBJECT_INVALID,
-                              PowerAugmentationProfile(1,
+                              PowerAugmentationProfile(2,
                                                        1, PRC_UNLIMITED_AUGMENTATION
                                                        ),
                               METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
@@ -79,21 +81,17 @@ void main()
     if(manif.bCanManifest)
     {
         struct energy_adjustments enAdj =
-            EvaluateEnergy(manif.nSpellID, POWER_ENERGYSTUN_COLD, POWER_ENERGYSTUN_ELEC, POWER_ENERGYSTUN_FIRE, POWER_ENERGYSTUN_SONIC,
-                           VFX_FNF_ICESTORM, VFX_FNF_ELECTRIC_EXPLOSION, VFX_FNF_FIREBALL, VFX_FNF_SOUND_BURST);
-        int nDC           = GetManifesterDC(oManifester) + manif.nTimesGenericAugUsed + enAdj.nDCMod;
-        int nPen          = GetPsiPenetration(oManifester) + enAdj.nPenMod;
-        int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
-        int nDieSize      = 6;
-        int nDamage, bStun;
-        location lTarget  = PRCGetSpellTargetLocation();
-        float fRadius     = EvaluateWidenPower(manif, FeetToMeters(5.0f));
+            EvaluateEnergy(manif.nSpellID, POWER_ENERGYCONE_COLD, POWER_ENERGYCONE_ELEC, POWER_ENERGYCONE_FIRE, POWER_ENERGYCONE_SONIC);
+        int nDC              = GetManifesterDC(oManifester) + manif.nTimesGenericAugUsed + enAdj.nDCMod;
+        int nPen             = GetPsiPenetration(oManifester) + enAdj.nPenMod;
+        int nNumberOfDice    = 5 + manif.nTimesAugOptUsed_1;
+        int nDieSize         = 6;
+        int nDamage;
+        location lManifester = GetLocation(oManifester);
+        location lTarget     = PRCGetSpellTargetLocation();
+        float fWidth         = EvaluateWidenPower(manif, FeetToMeters(60.0f));
         float fDelay;
-        effect eVis       = EffectVisualEffect(enAdj.nVFX1);
-        effect eExplode   = EffectVisualEffect(enAdj.nVFX2);
-        effect eLink      =                          EffectStunned();
-               eLink      = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE));
-        effect eStun      = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+        effect eVis          = EffectVisualEffect(enAdj.nVFX1);
         effect eDamage;
         object oTarget;
 
@@ -101,11 +99,8 @@ void main()
         int nRepeats = manif.bTwin ? 2 : 1;
         for(; nRepeats > 0; nRepeats--)
         {
-            // Do area VFX
-            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
-
-            // Loop over targets in the line shape
-            oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            // Loop over targets in the cone shape
+            oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
             while(GetIsObjectValid(oTarget))
             {
                 if(oTarget != oManifester &&
@@ -117,8 +112,6 @@ void main()
                     // Make an SR check
                     if(PRCMyResistPower(oManifester, oTarget, nPen))
                     {
-                        // Reset stun marker
-                        bStun = FALSE;
                         // Roll damage
                         nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, enAdj.nBonusPerDie, TRUE, FALSE);
                         // Target-specific stuff
@@ -130,33 +123,24 @@ void main()
                             // Cold has a fort save for half
                             if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, enAdj.nSaveType))
                                 nDamage /= 2;
-                            // Failed save, now Will save vs Stun
-                            else if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-                                bStun = TRUE;
                         }
                         else
                             // Adjust damage according to Reflex Save, Evasion or Improved Evasion
-                            if(nDamage == (nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, enAdj.nSaveType)))
-                                // Failed save, now Will save vs Stun
-                                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-                                    bStun = TRUE;
+                            nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, enAdj.nSaveType);
 
-                        // Damage, VFX and stun if the target didn't manage to avoid the whole thing (Evasion)
                         if(nDamage > 0)
                         {
+                            fDelay = GetDistanceBetweenLocations(lManifester, GetLocation(oTarget)) / 20.0f;
                             eDamage = EffectDamage(nDamage, enAdj.nDamageType);
-                            fDelay = GetDistanceBetweenLocations(lTarget, GetLocation(oTarget)) / 20.0f;
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                            if(bStun)
-                                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0f, FALSE));
                         }// end if - There was still damage remaining to be dealt after adjustments
                     }// end if - SR check
                 }// end if - Target validity check
 
                 // Get next target
-                oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+                oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
             }// end while - Target loop
-        }// end if - Twin Power
+        }// end for - Twin Power
     }// end if - Successfull manifestation
 }

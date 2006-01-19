@@ -10,21 +10,20 @@
 
     Restoration, Psionic
 
-Psychometabolism (Healing)
-Level: Egoist 6
-Display: Material
-Manifesting Time: 3 rounds
-Range: Touch
-Target: Creature touched
-Duration: Instantaneous
-Saving Throw: None
-Power Resistance: No
-Power Points: 11
-Metapsionics: None
+    Psychometabolism (Healing)
+    Level: Egoist 6
+    Manifesting Time: 3 rounds
+    Range: Touch
+    Target: Creature touched
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 11
+    Metapsionics: None
 
-As the restoration spell, except as noted here.
+    As the restoration spell, except as noted here.
 
-    @todo 2da & TLK
+    @todo 2da
 */
 
 #include "psi_inc_psifunc"

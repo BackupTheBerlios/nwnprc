@@ -8,29 +8,32 @@
    17/5/05 by Stratovarius
 */ /** @file
 
-Psionic Revivify
+    Psionic Revivify
 
-Psychometabolism (Healing) [Good]
-Level: Egoist 5
-Manifesting Time: 1 standard action
-Range: Touch
-Target: Dead creature touched
-Duration: Instantaneous
-Saving Throw: None
-Power Resistance: No
-Power Points: 9, XP
-Metapsionics: None
+    Psychometabolism (Healing) [Good]
+    Level: Egoist 5
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Dead creature touched
+    Duration: Instantaneous
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 9, XP
+    Metapsionics: None
 
-Psionic revivify lets a manifester reconnect a corpse’s psyche with its body, restoring life to a recently deceased creature.
+    Psionic revivify lets a manifester reconnect a corpse’s psyche with its
+    body, restoring life to a recently deceased creature.
 
-This power functions like the raise dead spell, except that the affected creature receives no level loss, no Constitution loss, and no loss of powers.
+    This power functions like the raise dead spell, except that the affected
+    creature receives no level loss, no Constitution loss, and no loss of
+    powers.
 
-The creature has -1 hit points (but is stable) after being restored to life.
+    The creature has -1 hit points (but is stable) after being restored to life.
 
-XP Cost: 200 XP.
+    XP Cost: 200 XP.
 
 
-    @todo 2da & TLK
+    @todo 2da
 */
 
 #include "psi_inc_psifunc"

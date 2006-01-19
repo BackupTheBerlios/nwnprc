@@ -140,6 +140,6 @@ void main()
                 // Get next target
                 oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, fWidth, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
             }// end while - Target loop
-        }
-    }
+        }// end for - Twin Power
+    }// end if - Successfull manifestation
 }

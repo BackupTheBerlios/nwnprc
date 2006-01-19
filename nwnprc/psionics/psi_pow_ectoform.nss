@@ -19,12 +19,19 @@
     Power Points: 5
     Metapsionics: Extend
 
-    You and all your gear become a partially translucent mass of rippling ectoplasm that generally conforms to your normal shape. You gain damage reduction 10/+2, and you gain immunity to poison and critical hits. Your material armor becomes meaningless, although your size, Dexterity, deflection bonuses, and armor bonuses from force effects (such as those gained by inertial armor) still apply to your Armor Class.
+    You and all your gear become a partially translucent mass of rippling
+    ectoplasm that generally conforms to your normal shape. You gain damage
+    reduction 10/+2, and you gain immunity to poison and critical hits. Your
+    material armor becomes meaningless, although your size, Dexterity,
+    deflection bonuses, and armor bonuses from force effects (such as those
+    gained by inertial armor) still apply to your Armor Class.
 
-    You can manifest powers while in ectoplasmic form, but you must make a Concentration check (DC 20 + power level) for each power you attempt to manifest.
+    You can manifest powers while in ectoplasmic form, but you must make a
+    Concentration check (DC 20 + power level) for each power you attempt to
+    manifest.
 
 
-    @todo 2da & TLK entries
+    @todo 2da entries
 */
 
 #include "psi_inc_psifunc"

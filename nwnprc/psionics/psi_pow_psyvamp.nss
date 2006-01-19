@@ -10,25 +10,29 @@
 
     Psychic Vampire
 
-Psychometabolism
-Level: Egoist 4, psychic warrior 4
-Manifesting Time: 1 standard action
-Range: Touch
-Target: Creature touched
-Duration: Instantaneous
-Saving Throw: Fortitude negates
-Power Resistance: Yes
-Power Points: 7
-Metapsionics: Twin
+    Psychometabolism
+    Level: Egoist 4, psychic warrior 4
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Creature touched
+    Duration: Instantaneous
+    Saving Throw: Fortitude negates
+    Power Resistance: Yes
+    Power Points: 7
+    Metapsionics: Twin
 
-This power shrouds your hand with darkness that you can use to drain an opponent’s power.
+    This power shrouds your hand with darkness that you can use to drain an
+    opponent’s power.
 
-If you make a successful melee touch attack (if the victim fails its Fortitude save), the darkness drains 2 power points from your foe for every manifester level you have. The drained points simply dissipate.
+    If you make a successful melee touch attack (if the victim fails its
+    Fortitude save), the darkness drains 2 power points from your foe for every
+    manifester level you have. The drained points simply dissipate.
 
-Against a psionic being that has no power points or a nonpsionic foe, your attack instead deals 2 points of Intelligence, Wisdom, and Charisma damage.
+    Against a psionic being that has no power points or a nonpsionic foe, your
+    attack instead deals 2 points of Intelligence, Wisdom, and Charisma damage.
 
 
-    @todo 2da and TLK
+    @todo 2da
 */
 
 #include "psi_inc_psifunc"

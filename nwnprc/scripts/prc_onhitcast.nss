@@ -239,11 +239,6 @@ void main()
         ExecuteScript("psi_ast_con_ptch", oSpellOrigin);
     }
 
-    // Energy Current
-    if(GetLocalInt(oSpellOrigin, "PsiEnCurrent") > 0 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
-    {
-        DelayCommand(0.01, EnergyCurrent(oSpellOrigin));
-    }
     /*//////////////////////////////////////////////////
     //////////////// END PSIONICS //////////////////////
     //////////////////////////////////////////////////*/

@@ -91,6 +91,11 @@ const int POWER_CONTROLSOUND                    = 14086;
 const int POWER_REPAIRDAMAGE                    = 14087;
 const int POWER_AVERSION                        = 14088;
 const int POWER_DIMENSIONSWAP                   = 14089;
+const int POWER_EMPATHICTRANSFER                = 14090;
+const int POWER_ENERGYMISSILE_COLD              = 14091;
+const int POWER_ENERGYMISSILE_ELEC              = 14092;
+const int POWER_ENERGYMISSILE_FIRE              = 14093;
+const int POWER_ENERGYMISSILE_SONIC             = 14094;
 
 // Level 3 Powers
 const int POWER_BODYADJUST                      = 14101;
@@ -131,7 +136,11 @@ const int POWER_CRISISBREATH                    = 14135;
 const int POWER_EMPATHICTRANSFERHOSTILE         = 14136;
 const int POWER_FATELINK                        = 14137;
 const int POWER_DIMENSION_SLIDE                 = 14138;
-
+const int POWER_ECTOPLASMICFORM                 = 14139;
+const int POWER_ENERGYCONE_COLD                 = 14140;
+const int POWER_ENERGYCONE_ELEC                 = 14141;
+const int POWER_ENERGYCONE_FIRE                 = 14142;
+const int POWER_ENERGYCONE_SONIC                = 14143;
 
 // Level 4 Powers
 const int POWER_INERTBARRIER                    = 14151;
@@ -150,6 +159,11 @@ const int POWER_DIMENSIONDOOR_PARTY             = 14164;
 const int POWER_DIMENSIONDOOR_SELFONLY_DIRDIST  = 14167;
 const int POWER_DIMENSIONDOOR_PARTY_DIRDIST     = 14168;
 const int POWER_DOMINATE                        = 14165;
+const int POWER_ENERGYBALL_COLD                 = 14169;
+const int POWER_ENERGYBALL_ELEC                 = 14170;
+const int POWER_ENERGYBALL_FIRE                 = 14171;
+const int POWER_ENERGYBALL_SONIC                = 14172;
+const int POWER_PSYCHICVAMPIRE                  = 14173;
 
 // Level 5 Powers
 const int POWER_BALEFULTEL                      = 14191;
@@ -164,6 +178,11 @@ const int POWER_HAILCRYSTALS                    = 14199;
 const int POWER_SECONDCHANCE                    = 14200;
 const int POWER_TELEPORT_SELFONLY               = 14201;
 const int POWER_TELEPORT_PARTY                  = 14202;
+const int POWER_ENERGYCURRENT_COLD              = 14203;
+const int POWER_ENERGYCURRENT_ELEC              = 14204;
+const int POWER_ENERGYCURRENT_FIRE              = 14205;
+const int POWER_ENERGYCURRENT_SONIC             = 14206;
+const int POWER_PSIONICREVIVIFY                 = 14207;
 
 // Level 6 Powers
 const int POWER_BREATHBLACKDRAGON               = 14231;
@@ -178,6 +197,7 @@ const int POWER_GREATERPRECOGNITION_ATTACK      = 14239;
 const int POWER_GREATERPRECOGNITION_DAMAGE      = 14240;
 const int POWER_GREATERPRECOGNITION_SAVES       = 14241;
 const int POWER_GREATERPRECOGNITION_SKILLS      = 14242;
+const int POWER_PSIONICRESTORATION              = 14243;
 
 // Level 7 Powers
 const int POWER_CRISISLIFE                      = 14271;
@@ -216,6 +236,7 @@ const int POWER_ETHEREALNESS                    = 14332;
 const int POWER_MICROCOSM                       = 14333;
 const int POWER_TIMELESSBODY                    = 14334;
 const int POWER_GENESIS                         = 14335;
-const int POWER_PSYCHICCHIR                     = 14336;
+const int POWER_PSYCHICCHIR_REPAIR              = 14336;
+const int POWER_PSYCHICCHIR_TRANSFER            = 14339;
 const int POWER_TELEPORTATIONCIRCLE_VISIBLE     = 14337;
 const int POWER_TELEPORTATIONCIRCLE_HIDDEN      = 14338;

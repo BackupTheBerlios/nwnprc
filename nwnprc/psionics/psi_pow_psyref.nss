@@ -111,7 +111,7 @@ void main()
                 // Nerfed - Only remove powers known tied to the reformed levels
                 int i = nOrigHD;
                 for(; i > nTargetHD; i--)
-                    RemovePowersKnownOnLevel(oPC, i);
+                    RemovePowersKnownOnLevel(oTarget, i);
             }// end else - Only reform powers
 
             // Level reduction is immediate, so restore XP right away to avoid mess with HB detecting level loss

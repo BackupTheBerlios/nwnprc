@@ -8,13 +8,16 @@
 #include "prc_alterations"
 #include "inc_utility"
 #include "prc_inc_clsfunc"
+#include "psi_inc_psifunc"
 
 void main()
 {
+    object oDead   = GetLastBeingDied();
+    object oKiller = MyGetLastKiller();
+
     // Unsummon the bonded summoner familiar
     //not needed now that its a summon (hopefully!)
-    object oPlayer = GetLastBeingDied();
-    /*object Asso = GetLocalObject(oPlayer, "BONDED");
+    /*object Asso = GetLocalObject(oDead, "BONDED");
     if (GetIsObjectValid(Asso))
     {
         effect eVis = EffectVisualEffect(VFX_IMP_UNSUMMON);
@@ -23,8 +26,7 @@ void main()
     }*/
 
     // Do Lolth's Meat for the killer
-    object oKiller = MyGetLastKiller();
-    if(GetAbilityScore(oPlayer, ABILITY_INTELLIGENCE)>4)
+    if(GetAbilityScore(oDead, ABILITY_INTELLIGENCE)>4)
     {
         LolthMeat(oKiller);
     }
@@ -33,25 +35,31 @@ void main()
     {
         if(GetObjectType(oKiller) == OBJECT_TYPE_TRIGGER)
             oKiller = GetTrapCreator(oKiller);
-        if(oKiller != oPlayer
+        if(oKiller != oDead
             && GetIsObjectValid(oKiller)
-            && !GetIsFriend(oKiller, oPlayer)
+            && !GetIsFriend(oKiller, oDead)
             && (GetIsObjectValid(GetFirstFactionMember(oKiller, TRUE))
                 || GetPRCSwitch(PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS)))
         {
-            GiveXPRewardToParty(oKiller, oPlayer);
+            GiveXPRewardToParty(oKiller, oDead);
             //bypass bioware XP system
-            AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oPlayer));
-            //AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10000, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPlayer));
-            AssignCommand(oPlayer, ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oPlayer));
+            AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oDead));
+            //AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10000, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oDead));
+            AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oDead));
         }
     }
 
 
-    if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oPlayer))
-        SetPersistantLocalInt(oPlayer, "persist_dead", TRUE);
+    if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oDead))
+        SetPersistantLocalInt(oDead, "persist_dead", TRUE);
+
+    // Psionic creatures lose all PP on death
+    if(GetIsPsionicCharacter(oDead))
+    {
+        LoseAllPowerPoints(oDead, TRUE);
+    }
 
     // Execute scripts hooked to this event for the player triggering it
-    ExecuteAllScriptsHookedToEvent(oPlayer, EVENT_ONPLAYERDEATH);
+    ExecuteAllScriptsHookedToEvent(oDead, EVENT_ONPLAYERDEATH);
 }
 

@@ -311,7 +311,7 @@ void main()
         effect eVis          = EffectVisualEffect(enAdj.nVFX1);
         effect eDamage;
         object oTarget;
-VFXHB(lManifester, 0, 0); return;
+//VFXHB(lManifester, 0, 0); return;
         // Do VFX. This is moderately heavy, so it isn't duplicated by Twin Power
         float fAngle             = GetRelativeAngleBetweenLocations(lManifester, lTarget);
         float fSpiralStartRadius = FeetToMeters(1.0f);

@@ -163,11 +163,11 @@ void main()
                 for(i = 0; i < 71; i++)
                 {
                     int nResearchedFeat = StringToInt(Get2DACache("epicspells", "ResFeatID", i));
-                    if(GetHasFeat(nResearchedFeat, oPC))
+                    int nSpellFeat = StringToInt(Get2DACache("epicspells", "SpellFeatID", i));
+                    if(GetHasFeat(nResearchedFeat, oPC) && !GetHasFeat(nSpellFeat, oPC))
                     {
                         string sName = GetStringByStrRef(
-                            StringToInt(Get2DACache("feat", "FEAT", StringToInt(
-                                Get2DACache("epicspells", "FeatID", i)))));
+                            StringToInt(Get2DACache("feat", "FEAT", nSpellFeat)));
                         AddChoice(sName, i, oPC);
                     }
                 }
@@ -181,12 +181,12 @@ void main()
                 int i;
                 for(i = 0; i < 71; i++)
                 {
-                    int nFeat = StringToInt(Get2DACache("epicspells", "FeatID", i));
+                    int nFeat = StringToInt(Get2DACache("epicspells", "SpellFeatID", i));
                     if(GetHasFeat(nFeat, oPC))
                     {
                         string sName = GetStringByStrRef(
                             StringToInt(Get2DACache("feat", "FEAT", StringToInt(
-                                Get2DACache("epicspells", "FeatID", i)))));
+                                Get2DACache("epicspells", "SpellFeatID", i)))));
                         AddChoice(sName, i, oPC);
                     }
                 }
@@ -408,17 +408,23 @@ void main()
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_ENTRY;
             else if (nChoice == 1)
-                nStage = STAGE_EPIC_SPELLS_ADD;
-            else if (nChoice == 2)
                 nStage = STAGE_EPIC_SPELLS_REMOVE;
+            else if (nChoice == 2)
+                nStage = STAGE_EPIC_SPELLS_ADD;
             else if (nChoice == 3)
                 nStage = STAGE_EPIC_SPELLS_CONTING;
             else if (nChoice == 4)
             {
                 //research an epic spell
                 object oPlaceable = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_ess_research", GetLocation(oPC));
+                if(!GetIsObjectValid(oPlaceable))
+                    DoDebug("Research placeable not valid.");
+                AssignCommand(oPC, ClearAllActions());
                 AssignCommand(oPC, DoPlaceableObjectAction(oPlaceable, PLACEABLE_ACTION_USE));
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oPlaceable);
                 DestroyObject(oPlaceable, 60.0);
+                //end the conversation
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
 
             MarkStageNotSetUp(nStage, oPC);
@@ -447,6 +453,7 @@ void main()
         }
         else if(nStage == STAGE_EPIC_SPELLS_CONTING)
         {
+            DoDebug("Contingencies not setup yet");
             //contingencies
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;

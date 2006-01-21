@@ -16,11 +16,6 @@ void main()
         return;
 //if(DEBUG) DoDebug("Running OnUnaquireItem, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
-    if (GetResRef(oItem) == AA_IMBUED_ARROW)
-    {
-        DestroyObject(oItem);
-    }
-
 
     // Remove all temporary item properties when dropped/given away/stolen/sold.
     if(GetIsObjectValid(oItem))//needed for last of stack etc items

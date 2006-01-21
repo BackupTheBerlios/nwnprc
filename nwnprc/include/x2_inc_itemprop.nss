@@ -162,7 +162,7 @@ int   IPGetItemHasProperty(object oItem, itemproperty ipCompareTo, int nDuration
 
 // *  returns FALSE it the item has no sequencer property
 // *  returns number of spells that can be stored in any other case
-int   IPGetItemSequencerProperty(object oItem);
+int IPGetItemSequencerProperty(object oItem, object oPC = OBJECT_SELF);
 
 // *  returns TRUE if the item has the OnHit:IntelligentWeapon property.
 int   IPGetIsIntelligentWeapon(object oItem);
@@ -204,7 +204,6 @@ int   IPGetHasItemPropertyOnCharacter(object oPC, int nItemPropertyConst);
 // *  Returns an integer with the number of properties present oItem
 int   IPGetNumberOfItemProperties(object oItem);
 
-//#include "inc_utility" //Supplied by prc_alterations
 #include "prc_alterations"
 
 //------------------------------------------------------------------------------
@@ -1166,38 +1165,66 @@ object IPGetTargetedOrEquippedArmor(int bAllowShields = FALSE)
 // Returns FALSE it the item has no sequencer property
 // Returns number of spells that can be stored in any other case
 // ----------------------------------------------------------------------------
-int IPGetItemSequencerProperty(object oItem)
+int IPGetItemSequencerProperty(object oItem, object oPC = OBJECT_SELF)
 {
-    if (!GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL))
-    {
-        return FALSE;
-    }
-
     int nCnt;
-    itemproperty ip;
-
-    ip = GetFirstItemProperty(oItem);
-
-    while (GetIsItemPropertyValid(ip) && nCnt ==0)
+    if (GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL))
     {
-        if (GetItemPropertyType(ip) ==ITEM_PROPERTY_CAST_SPELL)
-        {
-            if(GetItemPropertySubType(ip) == 523) // sequencer 3
-            {
-                nCnt =  3;
-            }
-            else if(GetItemPropertySubType(ip) == 522) // sequencer 2
-            {
-                nCnt =  2;
-            }
-            else if(GetItemPropertySubType(ip) == 521) // sequencer 1
-            {
-                nCnt =  1;
-            }
-        }
-        ip = GetNextItemProperty(oItem);
-    }
 
+        itemproperty ip = GetFirstItemProperty(oItem);
+        while (GetIsItemPropertyValid(ip) && nCnt ==0)
+        {
+            if (GetItemPropertyType(ip) ==ITEM_PROPERTY_CAST_SPELL)
+            {
+                if(GetItemPropertySubType(ip) == 523) // sequencer 3
+                    nCnt =  3;
+                else if(GetItemPropertySubType(ip) == 522) // sequencer 2
+                    nCnt =  2;
+                else if(GetItemPropertySubType(ip) == 521) // sequencer 1
+                    nCnt =  1;
+            }
+            ip = GetNextItemProperty(oItem);
+        }
+    }
+    //arcane archer check
+    else if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
+        && GetPRCSwitch(PRC_USE_NEW_IMBUE_ARROW)
+        && GetBaseItemType(oItem) == BASE_ITEM_ARROW)
+    {
+        FloatingTextStringOnCreature("* Imbue Arrow success *", oPC);
+        nCnt = 1;
+    }
+    //spellsword
+    else if(GetLevelByClass(CLASS_TYPE_SPELLSWORD, oPC) >= 4
+        && IPGetIsMeleeWeapon(oItem))
+    {
+        //These are the channel spell charges for the day
+        int nUses = GetPersistantLocalInt(oPC,"spellswordchannelcharges");
+        if(nUses == 0)
+        {
+            FloatingTextStringOnCreature("* You have no Channel Spell uses remaining *",oPC);
+        }
+        else
+        {
+            int iLevel = GetLevelByClass(CLASS_TYPE_SPELLSWORD,oPC);
+            //Here we check if the spellsword has the multiple channel spell ability
+            //and store the spell on the weapon with the StoreSpells function.
+            //If there are multiple channels, we inform the function in which order
+            //they are stored with the help of a local integer.
+            if(iLevel >= 4 && iLevel < 10)
+                nCnt = 1;
+            else if(iLevel >= 10 && iLevel < 20)
+                nCnt = 2;
+            else if(iLevel >= 20 && iLevel < 30)
+                nCnt = 3;
+            else if(iLevel >= 30)
+                nCnt = 4;
+                
+            nUses -= 1;
+            FloatingTextStringOnCreature(IntToString(nUses)+" uses of Channel Spell remaining",oPC);
+            SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);        
+        }
+    }    
     return nCnt;
 }
 

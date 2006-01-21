@@ -426,14 +426,20 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     if(nSpellID == -1)
         nSpellID = PRCGetSpellId();
     //10+spelllevel+stat(cha default)
-    int nDC = GetSpellSaveDC();
+    int nDC = GetSpellSaveDC();    
+    // For when you want to assign the caster DC
+    //this does not take feat/race/class into account, it is an absolute override
+    if (GetLocalInt(oCaster, PRC_DC_TOTAL_OVERRIDE) != 0)
+    {
+        nDC = GetLocalInt(oCaster, PRC_DC_TOTAL_OVERRIDE);
+        DoDebug("Forced-DC PRC_DC_TOTAL_OVERRIDE casting at DC " + IntToString(nDC));
+    }
     // For when you want to assign the caster DC
     //this does take feat/race/class into account, it only overrides the baseDC
-    if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
+    else if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
     {
         nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
-        if(DEBUG)
-            DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
+        DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
         if(!GetIsObjectValid(oItem)
             || (GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF
                 && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)))
@@ -512,8 +518,9 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                     nDC+=2;
             }
         }
+        nDC += GetChangesToSaveDC(oTarget, oCaster, nSpellID);
     }
-    if(GetIsObjectValid(oItem)
+    else if(GetIsObjectValid(oItem)
         && !(GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF
                 && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)))
     {

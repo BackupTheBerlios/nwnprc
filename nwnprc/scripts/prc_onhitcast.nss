@@ -151,18 +151,18 @@ void main()
     // Warchief Devoted Bodyguards
     if(GetLevelByClass(CLASS_TYPE_WARCHIEF, oSpellOrigin) >= 8 && GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
-    	// Warchief must make a reflex save
-    	if (!GetLocalInt(oSpellOrigin, "WarChiefDelay"))
-    	{
-    		// Done this way for formatting reasons in game
-    		if (ReflexSave(oSpellOrigin, 15) > 0) DelayCommand(0.01, ExecuteScript("prc_wchf_bodygrd",oSpellOrigin));
+        // Warchief must make a reflex save
+        if (!GetLocalInt(oSpellOrigin, "WarChiefDelay"))
+        {
+            // Done this way for formatting reasons in game
+            if (ReflexSave(oSpellOrigin, 15) > 0) DelayCommand(0.01, ExecuteScript("prc_wchf_bodygrd",oSpellOrigin));
         }
         // He can only do this once a round, so put a limit on it
         // Also have to make sure its only set once a round
         if (!GetLocalInt(oSpellOrigin, "WarChiefDelay"))
         {
-        	SetLocalInt(oSpellOrigin, "WarChiefDelay", TRUE);
-        	DelayCommand(6.0, DeleteLocalInt(oSpellOrigin, "WarChiefDelay"));
+            SetLocalInt(oSpellOrigin, "WarChiefDelay", TRUE);
+            DelayCommand(6.0, DeleteLocalInt(oSpellOrigin, "WarChiefDelay"));
         }
     }
 
@@ -252,60 +252,11 @@ void main()
     }
 
     //spellsword & arcane archer
-    if(GetLocalInt(oItem, "spell") == 1
-        && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    //will also fire for other OnHit:UniquePower items that have a SpellSequencer property
+    if(GetLocalInt(oItem, "X2_L_NUMTRIGGERS"))
     {
-
-        object oPC = oSpellOrigin;
-        //Arcane Archer uses same code, but can do AoE damage
-        if(GetBaseItemType(oItem) != BASE_ITEM_ARROW)
-            SetLocalInt(oPC,"spellswd_aoe",1);
-
-        SetLocalInt(oPC, "AttackHasHit", TRUE);
-
-        int nSpellMetamagic1 = GetLocalInt(oItem,"metamagic_feat_1")+1; //offset by 1
-        int nSpellMetamagic2 = GetLocalInt(oItem,"metamagic_feat_2")+1;
-        int nSpellMetamagic3 = GetLocalInt(oItem,"metamagic_feat_3")+1;
-        int nSpellMetamagic4 = GetLocalInt(oItem,"metamagic_feat_4")+1;
-        DeleteLocalString(oItem,"metamagic_feat_1");
-        DeleteLocalString(oItem,"metamagic_feat_2");
-        DeleteLocalString(oItem,"metamagic_feat_3");
-        DeleteLocalString(oItem,"metamagic_feat_4");
-        string sSpellString1 = GetLocalString(oItem,"spellscript1");
-        string sSpellString2 = GetLocalString(oItem,"spellscript2");
-        string sSpellString3 = GetLocalString(oItem,"spellscript3");
-        string sSpellString4 = GetLocalString(oItem,"spellscript4");
-        DeleteLocalString(oItem,"spellscript1");
-        DeleteLocalString(oItem,"spellscript2");
-        DeleteLocalString(oItem,"spellscript3");
-        DeleteLocalString(oItem,"spellscript4");
-
-        DeleteLocalInt(oItem,"spell");
-
-        if(sSpellString1 != "")
-        {
-            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic1);
-            ExecuteScript(sSpellString1,oPC);
-        }
-        if(sSpellString2 != "")
-        {
-            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic2);
-            ExecuteScript(sSpellString2,oPC);
-        }
-        if(sSpellString3 != "")
-        {
-            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic3);
-            ExecuteScript(sSpellString3,oPC);
-        }
-        if(sSpellString4 != "")
-        {
-            SetLocalInt(oPC,"spell_metamagic",nSpellMetamagic4);
-            ExecuteScript(sSpellString4,oPC);
-        }
-
-        DeleteLocalInt(oPC,"spellswd_aoe");
-        DeleteLocalInt(oPC,"spell_metamagic");
-        DeleteLocalInt(oPC, "AttackHasHit");
+        DoDebug("Triggering Sequencer Discharge");
+        ExecuteScript("x2_s3_sequencer", OBJECT_SELF);
     }
 
     // Handle Rend. Creature weapon damage + 1.5x STR bonus.

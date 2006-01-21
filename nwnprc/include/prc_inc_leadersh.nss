@@ -51,6 +51,28 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
     DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
 
+    //strip its equipment & inventory
+    object oTest = GetFirstItemInInventory(oCohort);
+    while(GetIsObjectValid(oTest))
+    {
+        if(GetHasInventory(oTest))
+        {
+            object oTest2 = GetFirstItemInInventory(oTest);
+            while(GetIsObjectValid(oTest2))
+            {
+                DestroyObject(oTest2);
+                oTest = GetNextItemInInventory(oTest);
+            }
+        }
+        DestroyObject(oTest);
+        oTest = GetNextItemInInventory(oCohort);
+    }
+    int nSlot;
+    for(nSlot = 0;nSlot<14;nSlot++)
+    {
+         DestroyObject(oTest);
+    }
+
     //DEBUG
     //various tests
     DoDebug("Cohort Name="+GetName(oCohort));

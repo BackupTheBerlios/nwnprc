@@ -43,11 +43,6 @@ void RestStarted(object oPC)
         SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
         SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
     }
-    if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
-    {
-        //Destroy imbued arrows.
-        AADestroyAllImbuedArrows(oPC);
-    }
     /* Left here in case the multisummon trick is ever broken. In that case, use this to make Astral Constructs get unsummoned properly
     if(GetHasFeat(whatever feat determines if the PC can manifest Astral Construct here)){
         int i = 1;

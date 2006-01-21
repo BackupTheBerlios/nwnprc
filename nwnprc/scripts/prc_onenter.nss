@@ -52,11 +52,6 @@ void main()
     // through the .2da's, the entering player already meets.
     ExecuteScript("prc_prereq", oPC);
     ExecuteScript("prc_psi_ppoints", oPC);
-    if (GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW))
-    {
-        //Destroy imbued arrows.
-        AADestroyAllImbuedArrows(oPC);
-    }
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
 
     //remove effects from hides, can stack otherwise

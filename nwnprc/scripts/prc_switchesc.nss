@@ -428,8 +428,10 @@ void main()
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;
             else
+            {
                 GiveFeat(oPC, StringToInt(Get2DACache("epicspells", "SpellFeatIPID", nChoice)));
-
+                ClearCurrentStage();
+            }    
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_EPIC_SPELLS_REMOVE)
@@ -437,7 +439,10 @@ void main()
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;
             else
+            {
                 TakeFeat(oPC, StringToInt(Get2DACache("epicspells", "SpellFeatIPID", nChoice)));
+                ClearCurrentStage();
+            }    
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_EPIC_SPELLS_CONTING)

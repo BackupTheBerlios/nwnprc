@@ -435,7 +435,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
     }
 
     int nMaxSeqSpells = IPGetItemSequencerProperty(oItem); // get number of maximum spells that can be stored
-    if (nMaxSeqSpells <1)
+    if(nMaxSeqSpells <1)
     {
         return FALSE;
     }
@@ -453,7 +453,25 @@ int X2GetSpellCastOnSequencerItem(object oItem)
 
     // Check if the spell is marked as hostile in spells.2da
     int nHostile = StringToInt(Get2DACache("spells","HostileSetting",PRCGetSpellId()));
-    if(nHostile ==1)
+    //spellswords and AAs can store hostile spells
+    int bIsSSorAA = FALSE;
+    if(nHostile
+        && GetLevelByClass(CLASS_TYPE_SPELLSWORD, OBJECT_SELF) >= 4
+        && IPGetIsMeleeWeapon(oItem))
+    {    
+        nHostile = FALSE;
+        bIsSSorAA = TRUE;
+    }    
+    if(nHostile
+        && GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, OBJECT_SELF) >= 2
+        && GetPRCSwitch(PRC_USE_NEW_IMBUE_ARROW)
+        && GetBaseItemType(oItem) == BASE_ITEM_ARROW)
+    {    
+        nHostile = FALSE;
+        bIsSSorAA = TRUE;
+    }    
+        
+    if(nHostile)
     {
         FloatingTextStrRefOnCreature(83885,OBJECT_SELF);
         return TRUE; // no hostile spells on sequencers, sorry ya munchkins :)
@@ -468,16 +486,22 @@ int X2GetSpellCastOnSequencerItem(object oItem)
         nNumberOfTriggers++;
         //NOTE: I add +1 to the SpellId to spell 0 can be used to trap failure
         int nSID = PRCGetSpellId()+1;
-        SetLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(nNumberOfTriggers), nSID);
-        SetLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(nNumberOfTriggers), PRCGetCasterLevel(OBJECT_SELF));
+        SetLocalInt(oItem, "X2_L_SPELLTRIGGER"  +IntToString(nNumberOfTriggers), nSID);
+        SetLocalInt(oItem, "X2_L_SPELLTRIGGER_L"+IntToString(nNumberOfTriggers), PRCGetCasterLevel(OBJECT_SELF));
+        SetLocalInt(oItem, "X2_L_SPELLTRIGGER_M"+IntToString(nNumberOfTriggers), PRCGetMetaMagicFeat());
+        SetLocalInt(oItem, "X2_L_SPELLTRIGGER_D"+IntToString(nNumberOfTriggers), PRCGetSaveDC(OBJECT_INVALID, OBJECT_SELF));
         SetLocalInt(oItem, "X2_L_NUMTRIGGERS", nNumberOfTriggers);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, OBJECT_SELF);
+        //arcane archers and spellswords add an OnHit:DischargeSequencer property
+        if(bIsSSorAA)
+        {
+            itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+            IPSafeAddItemProperty(oItem ,ipTest, 99999999.9);
+        }    
         FloatingTextStrRefOnCreature(83884, OBJECT_SELF);
     }
     else
-    {
         FloatingTextStrRefOnCreature(83859,OBJECT_SELF);
-    }
 
     return TRUE; // in any case, spell is used up from here, so do not fire regular spellscript
 }
@@ -814,14 +838,14 @@ int X2PreSpellCastCode()
         //-----------------------------------------------------------------------
         // Check if spell was used for Arcane Archer Imbue Arrow
         //-----------------------------------------------------------------------
-        if (nContinue)
-            nContinue = !ExecuteScriptAndReturnInt("aa_spellhook",OBJECT_SELF);
+//        if (nContinue)
+//            nContinue = !ExecuteScriptAndReturnInt("aa_spellhook",OBJECT_SELF);
 
         //-----------------------------------------------------------------------
         // Check if spell was used for Spellsword ChannelSpell
         //-----------------------------------------------------------------------
-        if (nContinue)
-            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel",OBJECT_SELF);
+//        if (nContinue)
+//            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel",OBJECT_SELF);
 
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated

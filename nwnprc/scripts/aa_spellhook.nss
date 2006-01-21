@@ -31,6 +31,7 @@
 
 void main()
 {
+/*
     //check it its supposed to run
     //is AA, switch is on, not cast from item
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, OBJECT_SELF) < 2
@@ -60,4 +61,5 @@ void main()
         FloatingTextStringOnCreature("* Imbue Arrow failure *", OBJECT_SELF);
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
     }
+    */
 }

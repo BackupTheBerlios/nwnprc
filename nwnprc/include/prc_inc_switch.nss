@@ -211,6 +211,12 @@ const string PRC_METAMAGIC_ADJUSTMENT                 = "PRC_METAMAGIC_ADJUSTMEN
 */
 const string PRC_METAMAGIC_OVERRIDE                   = "PRC_METAMAGIC_OVERRIDE";
 
+/*
+ * Override for SpellID for PRCGetSpellID()
+ * Doesnt effect spellID from effects, or automatic 2da reads
+ */
+const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
+
 /******************************************************************************\
 *                                  Class switches                              *
 \******************************************************************************/

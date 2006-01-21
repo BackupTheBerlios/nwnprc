@@ -771,27 +771,13 @@ int FireAdept (object oCaster, int iSpellID)
 
 int BWSavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
-
-    // For when you want to assign the caster DC
-    //this does not take feat/race/class into account, it is an absolute override
-    if (GetLocalInt(oSaveVersus, PRC_DC_TOTAL_OVERRIDE) != 0)
-    {
-        nDC = GetLocalInt(oSaveVersus, PRC_DC_TOTAL_OVERRIDE);
-        if(DEBUG)
-            DoDebug("Forced-DC PRC_DC_TOTAL_OVERRIDE casting at DC " + IntToString(nDC));
-    }
-
     // -------------------------------------------------------------------------
     // GZ: sanity checks to prevent wrapping around
     // -------------------------------------------------------------------------
     if (nDC<1)
-    {
        nDC = 1;
-    }
     else if (nDC > 255)
-    {
       nDC = 255;
-    }
 
     effect eVis;
     int bValid = FALSE;
@@ -1249,40 +1235,17 @@ int CheckMetaMagic(int nMeta,int nMMagic)
 {
     return nMeta & nMMagic;
 }
-    /*
-    int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
-    int nFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
-    int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
-    if(nChannel == 1)
-    {
-        if(nFeat == nMMagic)
-            return TRUE;
-        else
-            return FALSE;
-    }
-    else if(nNewSpellMetamagic != 0)
-    {
-        if(nNewSpellMetamagic == nMMagic)
-            return TRUE;
-        else
-            return FALSE;
-    }
-    else
-    {
-        if(nMeta == nMMagic)
-            return TRUE;
-        else
-            return FALSE;
-    }
-}
-*/
+
 int PRCGetMetaMagicFeat()
 {
     int nFeat = GetMetaMagicFeat();
     if(GetIsObjectValid(GetSpellCastItem()))
         nFeat = 0;//biobug, this isn't reset to zero by casting from an item
 
-    int nSSFeat = GetLocalInt(OBJECT_SELF,"spell_metamagic");
+    int nOverride = GetLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE);
+    if(nOverride)
+        return nOverride;
+    int nSSFeat = GetLocalInt(OBJECT_SELF, PRC_METAMAGIC_ADJUSTMENT);
     int nNewSpellMetamagic = GetLocalInt(OBJECT_SELF, "NewSpellMetamagic");
     if(nNewSpellMetamagic)
         nFeat = nNewSpellMetamagic-1;
@@ -1372,7 +1335,7 @@ int PRCMaximizeOrEmpower(int nDice, int nNumberOfDice, int nMeta, int nBonus = 0
 
 int PRCGetSpellId()
 {
-    int nID = GetLocalInt(OBJECT_SELF, "SpellIDOverride");
+    int nID = GetLocalInt(OBJECT_SELF, PRC_SPELLID_OVERRIDE);
     if(nID == 0)
         return GetSpellId();
     if(nID == -1)

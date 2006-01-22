@@ -9,7 +9,7 @@
 
  /* This variable MUST be updated with every new version of the PRC!!! */
 
- const string PRC_VERSION                           = "PRC 2.3 alpha 15";
+ const string PRC_VERSION                           = "PRC 2.3 alpha 18";
 
 
 /******************************************************************************\

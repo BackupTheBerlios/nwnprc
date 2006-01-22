@@ -1,2 +1,3 @@
-dialog.tlk
-prc_consortium.tlk
+*.tlk
+*.xml
+.cvsignore

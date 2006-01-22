@@ -1,0 +1,24 @@
+2DA V2.0
+
+   Label                        Level SpellID   
+0  CureLightWounds              1     32                
+1  Doom                         1     46                
+2  InflictLightWounds           1     432               
+3  MagicWeapon                  1     544               
+4  SummonCreatureI              1     174               
+5  BullsStrength                2     9                 
+6  CureModerateWounds           2     34                
+7  Darkness                     2     36                
+8  EaglesSplendor               2     354               
+9  InflictModerateWounds        2     433               
+10 SummonCreatureII             2     175               
+11 Contagion                    3     27                
+12 CureSeriousWounds            3     35                
+13 InflictSeriousWounds         3     434               
+14 ProtectionFromElements       3     150               
+15 SummonCreatureIII            3     176               
+16 CureCriticalWounds           4     31              
+17 FreedomOfMovement            4     62              
+18 InflictCriticalWounds        4     435             
+19 Poison                       4     129             
+20 SummonCreatureIV             4     177             

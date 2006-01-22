@@ -26,10 +26,7 @@ public class main {
 		String[] paramsToPass = new String[args.length - 1];
 		System.arraycopy(args, 1, paramsToPass, 0, paramsToPass.length);
 
-		if(toCall.equals("-rig")){
-			//random item generator
-			rmg.rig.rig.main(paramsToPass);
-		}else if(toCall.equals("-rwg")){
+		if(toCall.equals("-rwg")){
 			//random world (map) generator
 			rmg.rwg.rwg.main(paramsToPass);
 		}

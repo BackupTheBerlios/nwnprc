@@ -7,3 +7,4 @@ copy mod\rmg.mod rmg.mod
 del mod\rmg.mod
 del mod\erf.exe
 del System.out
+pause

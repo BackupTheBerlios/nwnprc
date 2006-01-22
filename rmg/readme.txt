@@ -80,6 +80,8 @@ Multiple Planes. Following the traditional D&D cosmology, there are 27 major pla
 
 Race and Class Unlocking. This is another controversial topic, but one that helps promote a sense of achievement and goals. It operates on two levels, firstly as per PnP certain classes have additional entry requirements usually relating to a specific deed or society. For example, a character wishing to become a Champion of Torm would have to perform a service to the church of Torm before they could take levels in that class. On the other level, SEED restricts the avaliability of new recruits and training to those groups who have proven they deserve them. For example, if a player wishes to have an Ogre character, they must have at least 3 characters of ECL 7 or higher. Additionally, there may be costs for specific races or classes, such as paying 10,000 GP before you can take the Psion class. The two levels of these restrictions are distinguished because the first is on a per-character basis, wheras the second is on a per-team basis.
 
+Mission-based play. At any one time, a party can always select a SEED mission avaliable from the nearest SEED offices. These are all time-limited. There is a range of mission types, for example courier/escort jobs, defense, assassination. Within each type, there is a lot of randomisation for example, you may have to courier a small package very quickly over a long distance, or a large shipment a short distance against opposition.
+
 
 Component systems
 =================
@@ -87,22 +89,7 @@ Component systems
 
 RIG (Random Item Generator)
 
-Loop over each base item{
-    For each prefix{
-        For each suffix{
-  	    if prefix is equal to suffix, and they are non-zero, abort combination
-            Generate Name
-            Generate Tag
-            Generate ResRef
-            Construct properties list
-                if two itemproperties have same type & subtype, abort combination
-		if any itemproperty does not apply to that item, abort combination
-            Make XML file
-        }
-    }
-}
-
-(NOTE: This approach is not practical due to the total size of all the required blueprints)
+This is now entirely scripted thanks to biowares release of SetName in v1.67 :)
 
 RAG (Random Area Generator)
 

@@ -1,6 +1,6 @@
 2DA V2.0
 
-   Label                       Level FeatID IPFeatID SpellID ReallSpellID ReqFeat 
+   Label                       Level FeatID IPFeatID SpellID RealSpellID ReqFeat 
 0  ****                        ****  ****   ****     ****    ****         ****    
 1  KMCBless                    1     20194  10593    13194   6            ****    
 2  KMCBlessStill               2     20195  10594    13195   6            37      

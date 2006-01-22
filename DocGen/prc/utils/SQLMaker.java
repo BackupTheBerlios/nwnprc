@@ -3,6 +3,7 @@ package prc.utils;
 import prc.autodoc.*;
 
 import java.io.*;
+import java.math.*;
 //import java.util.*;
 //import java.util.regex.*;
 
@@ -34,11 +35,11 @@ public final class SQLMaker{
     	sql.append("CREATE TABLE prc_cached2da_ireq (rowid varchar(255), "                   +
     	           "file varchar(255), LABEL varchar(255), ReqType varchar(255), "           +
     	           "ReqParam1 varchar(255), ReqParam2 varchar(255));\n"                      +
-    	           
+
     	           "CREATE TABLE prc_cached2da_cls_feat (rowid varchar(255), "               +
     	           "file varchar(255), FeatLabel varchar(255), FeatIndex varchar(255), "     +
     	           "List varchar(255), GrantedOnLevel varchar(255), OnMenu varchar(255));\n" +
-    	           
+
     	           "CREATE TABLE prc_cached2da (name varchar(255), "                         +
     		       "columnid varchar(255), rowid varchar(255), data varchar(255));\n"
     	           );
@@ -136,7 +137,7 @@ public final class SQLMaker{
 		writer.close();
 		// Allocate a new buffer - 1Mb this time, since the strings following the first are likely to be larger
 		sql = new StringBuilder(0xFFFFF);
-		
+
 		// Force garbage collection
 		System.gc();
 	}

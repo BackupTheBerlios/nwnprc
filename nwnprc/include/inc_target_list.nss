@@ -35,6 +35,7 @@
     @author Ornedan
     @date   Created  - 18.01.2005
     @date   Modified - 26.06.2005
+    @date   Modified - 21.01.2006
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -101,7 +102,7 @@ object GetTargetListHead(object oCaster);
 //////////////////////////////////////////////////
 
 const string TARGET_LIST_HEAD         = "TargetListHead";
-const string TARGET_LIST_NEXT         = "TargetListNext";
+const string TARGET_LIST_NEXT         = "TargetListNext_";
 const string TARGET_LIST_PURGE_CALLED = "TargetListPurgeCalled";
 
 
@@ -132,38 +133,31 @@ void AddToTargetList(object oInsert, object oCaster, int nInsertionBias = INSERT
     if(GetIsInsertPosition(oInsert, oCurrent, oCaster, nInsertionBias, bDescendingOrder))
     {
         SetLocalObject(oCaster, TARGET_LIST_HEAD, oInsert);
-        SetLocalObject(oInsert, TARGET_LIST_NEXT, oCurrent);
-        /*
-        // Schedule deletions
-        DelayCommand(0.0f, DeleteLocalObject(oCaster, TARGET_LIST_HEAD));
-        DelayCommand(0.0f, DeleteLocalObject(oInsert, TARGET_LIST_NEXT));
-        */
+        SetLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oInsert), oCurrent);
     }// end if - insertable is the new head of the list
     else
     {
-        object oNext = GetLocalObject(oCurrent, TARGET_LIST_NEXT);
+        object oNext = GetLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oCurrent));
         int bDone = FALSE;
         while(!bDone)
         {
             if(GetIsInsertPosition(oInsert, oNext, oCaster, nInsertionBias, bDescendingOrder))
             {
-                SetLocalObject(oCurrent, TARGET_LIST_NEXT, oInsert);
-                //DelayCommand(0.0f, DeleteLocalObject(oCurrent, TARGET_LIST_NEXT));
+                SetLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oCurrent), oInsert);
                 // Some paranoia to make sure the last element of the list always points
                 // to invalid
                 if(GetIsObjectValid(oNext)){
-                    SetLocalObject(oInsert, TARGET_LIST_NEXT, oNext);
-                    //DelayCommand(0.0f, DeleteLocalObject(oInsert, TARGET_LIST_NEXT));
+                    SetLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oInsert), oNext);
                 }
                 else
-                    DeleteLocalObject(oInsert, TARGET_LIST_NEXT);
+                    DeleteLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oInsert));
 
                 bDone = TRUE;
             }// end if - this is the place to insert
             else
             {
                 oCurrent = oNext;
-                oNext = GetLocalObject(oCurrent, TARGET_LIST_NEXT);
+                oNext = GetLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oCurrent));
             }// end else - get next object in the list
         }// end while - loop through the list, looking for the position to insert this creature
     }// end else - the insertable creature is to be in a position other than the head
@@ -181,8 +175,8 @@ void AddToTargetList(object oInsert, object oCaster, int nInsertionBias = INSERT
 object GetTargetListHead(object oCaster)
 {
     object oReturn = GetLocalObject(oCaster, TARGET_LIST_HEAD);
-    SetLocalObject(oCaster, TARGET_LIST_HEAD, GetLocalObject(oReturn, TARGET_LIST_NEXT));
-    DeleteLocalObject(oReturn, TARGET_LIST_NEXT);
+    SetLocalObject(oCaster, TARGET_LIST_HEAD, GetLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oReturn)));
+    DeleteLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oReturn));
 
     return oReturn;
 }
@@ -194,21 +188,27 @@ object GetTargetListHead(object oCaster)
  */
 void PurgeTargetList(object oCaster)
 {
-        object oCurrent = GetLocalObject(oCaster, TARGET_LIST_HEAD);
-        DeleteLocalObject(oCaster, TARGET_LIST_HEAD);
-        object oNext;
-        while(GetIsObjectValid(oCurrent))
-        {
-                oNext = GetLocalObject(oCurrent, TARGET_LIST_NEXT);
-                DeleteLocalObject(oCurrent, TARGET_LIST_NEXT);
-                oCurrent = oNext;
-        }// end while - loop through the list erasing the links
+    object oCurrent = GetLocalObject(oCaster, TARGET_LIST_HEAD);
+    DeleteLocalObject(oCaster, TARGET_LIST_HEAD);
+    object oNext;
+    while(GetIsObjectValid(oCurrent))
+    {
+        oNext = GetLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oCurrent));
+        DeleteLocalObject(oCaster, TARGET_LIST_NEXT + ObjectToString(oCurrent));
+        oCurrent = oNext;
+    }// end while - loop through the list erasing the links
+
+    DeleteLocalInt(oCaster, TARGET_LIST_PURGE_CALLED);
 }
 
 
 // This is an internal function intended only for use in inc_target_list.nss
 int GetIsInsertPosition(object oInsert, object oCompare, object oCaster, int nInsertionBias, int bDescendingOrder)
 {
+    // Special case - A valid object is always inserted before an invalid one
+    if(!GetIsObjectValid(oCompare))
+        return TRUE;
+
     int bReturn;
 
     switch(nInsertionBias)

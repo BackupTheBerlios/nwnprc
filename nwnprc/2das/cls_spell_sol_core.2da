@@ -1,0 +1,25 @@
+2DA V2.0
+
+   Label                              Level SpellID            
+0  SOLCureLightWounds                 1     32                
+1  SOLBless_Weapon                    1     537               
+2  SOLBless                           1     6                 
+3  SOLMagicWeapon                     1     109               
+4  SOLShield_of_Faith                 1     450               
+5  SOLProtection_from_Evil            1     138               
+6  SOLLight                           1     100               
+7  SOLCureModerateWounds              2     34                
+8  SOLAid                             2     1                 
+9  SOLConsecrate                      2     2167              
+10 SOLLesserRestoration               2     97                
+11 SOLCureSeriousWounds               3     35                
+12 SOLGreaterMagicWeapon              3     545               
+13 SOLMagic_Circle_against_Evil       3     104               
+14 SOLSearing_Light                   3     156               
+15 SOLNegativeEnergyProtection        3     125               
+16 SOLPrayer                          3     133               
+17 SOLRemoveDisease                   3     147               
+18 SOLCureCriticalWounds              4     31              
+19 SOLDeathWard                       4     38              
+20 SOLHolySword                       4     538              
+21 SOLRestoration                     4     152             

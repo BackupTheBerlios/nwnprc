@@ -18491,7 +18491,7 @@ Epic Levels:
 20: Multiple Channel Spell 1 :Can channel three spells.
 30: Multiple Channel Spell 1 :Can channel four spells.
 </entry>
-  <entry id="53317" lang="en" sex="m">Spell Channeling Activator</entry>
+  <entry id="53317" lang="en" sex="m">####START_OF_NEW_SPELLBOOK_RESERVE</entry>
   <entry id="53318" lang="en" sex="m">Blackguard Cure Light Wounds</entry>
   <entry id="53319" lang="en" sex="m">Blackguard Cure Light Wounds (empowered)</entry>
   <entry id="53320" lang="en" sex="m">Blackguard Cure Light Wounds (maximised)</entry>
@@ -19325,6 +19325,7 @@ Epic Levels:
   <entry id="54148" lang="en" sex="m">Occular Adept Righteous Might</entry>
   <entry id="54149" lang="en" sex="m">Occular Adept Legion's Curse of Petty Failing</entry>
   <entry id="54150" lang="en" sex="m">Occular Adept Soul Scour</entry>
+  <entry id="54699" lang="en" sex="m">####END_OF_NEW_SPELLBOOK_RESERVE</entry>
   <entry id="54700" lang="en" sex="m">Inscribe Rune</entry>
   <entry id="54701" lang="en" sex="m">Type of Feat: Item Creation
 Prerequisite: Intelligence 13, Divine Spells level 2.

@@ -14125,6 +14125,14 @@ Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spe
 Prerequisite: Can only take this feat at 1st-level.
 Specifics: This feat qualifies you to take the Dragon Disciple Prestige Class, even if you are not a Sorcerer or Bard.  You must still meet all other requirements.
 Use: Automatic.</entry>
+  <entry id="49150" lang="en" sex="m">3d8</entry>
+  <entry id="49151" lang="en" sex="m">4d8</entry>
+  <entry id="49152" lang="en" sex="m">5d8</entry>
+  <entry id="49153" lang="en" sex="m">6d8</entry>
+  <entry id="49154" lang="en" sex="m">7d8</entry>
+  <entry id="49155" lang="en" sex="m">8d8</entry>
+  <entry id="49156" lang="en" sex="m">9d8</entry>
+  <entry id="49157" lang="en" sex="m">10d8</entry>
   <entry id="49193" lang="en" sex="m">Power Points</entry>
   <entry id="49194" lang="en" sex="m">Your manifester level is not high enough to spend</entry>
   <entry id="49195" lang="en" sex="m">You do not have a high enough ability score to manifest this power</entry>
@@ -14173,7 +14181,7 @@ Use: Automatic</entry>
   <entry id="49215" lang="en" sex="m">Type of Feat: General
 Prerequisite: Con 15, Non-psionic (no power point reserve or psi-like abilities)
 Specifics: When a foe strikes you in melee combat, the foe immediately loses psionic focus, if any.
-Also, if you are the target of a power, the manifester of the power must spend an additional number of power points equal to your Wisdom bonus, or the power fails (all the power points spent on the power are still lost).  This extra cost does not count toward the maximum power points a manifester can spend on a single power.
+Also, if you are the target of a power, the manifester of the power must spend an additional number of power points equal to your Wisdom bonus, or the power fails (all the power points spent on the power are still lost). This extra cost does not count toward the maximum power points a manifester can spend on a single power.
 Use: Automatic</entry>
   <entry id="49216" lang="en" sex="m">Combat Manifestation</entry>
   <entry id="49217" lang="en" sex="m">Type of Feat: Psionic
@@ -20280,7 +20288,7 @@ At level 24, the Ninja is capable of enhanced acrobatics gaining a +8 bonus to T
 Prerequisite: Ninja level 1.
 Specifics: Ninjas add their Wisdom modifier to their Armor Class.
 Use: Automatic.</entry>
-<entry id="55136" lang="en" sex="m">Ghost-Faced Killer</entry>
+  <entry id="55136" lang="en" sex="m">Ghost-Faced Killer</entry>
   <entry id="55137" lang="en" sex="m">Ghost-Faced Killers</entry>
   <entry id="55138" lang="en" sex="m">ghost-faced killer</entry>
   <entry id="55139" lang="en" sex="m">(PRESTIGE CLASS)

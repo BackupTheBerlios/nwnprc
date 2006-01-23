@@ -1,4 +1,5 @@
 This file lists the versions/revisions of the files used in the merge hak.
+Note: racialtypes.2da overwrites - but does not merge - the CEP files
 
 CEP Version 1.52
 
@@ -19,3 +20,12 @@ itemprops.2da		1.15
 racialtypes.2da		1.41
 vfx_persistent.2da	1.42	! (line 112 changed)
 prc_consortium.tlk.xml	1.24	! (note: changed to XML storage format before A16
+-----
+PRC a17
+-----
+baseitems.2da		1.12
+itempropdef.2da		1.10 	
+itemprops.2da		1.15
+racialtypes.2da		1.42	!
+vfx_persistent.2da	1.45	!
+prc_consortium.tlk.xml	1.46	! (note: changed to XML storage format before A16

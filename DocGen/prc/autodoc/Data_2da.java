@@ -102,7 +102,7 @@ public class Data_2da implements Cloneable{
 
 		File file = new File(path + name + ".2da");
 		if(file.exists() && !allowOverWrite)
-			throw new IOException("File existst already: " + file.getAbsolutePath());
+			throw new IOException("File exists already: " + file.getAbsolutePath());
 
 		// Inform user
 		if(verbose) System.out.print("Saving 2da file: " + name + " ");

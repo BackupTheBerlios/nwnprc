@@ -11,8 +11,9 @@ import static prc.Main.*;
  */
 public class Data_TLK{
 	private HashMap<Integer, String> mainData = new HashMap<Integer, String>();
-	
-	
+	private int highestEntry = 0;
+
+
 	/**
 	 * Creates a new Data_TLK on the TLK file specified.
 	 *
@@ -25,14 +26,14 @@ public class Data_TLK{
 		// Some paranoia checking for bad parameters
 		if(!filePath.toLowerCase().endsWith("tlk"))
 			throw new IllegalArgumentException("Non-tlk filename passed to Data_TLK: " + filePath);
-		
+
 		File baseFile = new File(filePath);
 		if(!baseFile.exists())
 			throw new IllegalArgumentException("Nonexistent file passed to Data_TLK: " + filePath);
 		if(!baseFile.isFile())
 			throw new IllegalArgumentException("Nonfile passed to Data_TLK: " + filePath);
-		
-		
+
+
 		// Create a RandomAccessFile for reading the TLK. Read-only
 		RandomAccessFile reader = null;
 		try{
@@ -42,24 +43,24 @@ public class Data_TLK{
 		}
 		byte[] bytes4 = new byte[4],
 		       bytes8 = new byte[8];
-		
+
 		// Drop the path from the filename
 		String fileName = baseFile.getName();
-		
+
 		// Tell the user what we are doing
 		if(verbose) System.out.print("Reading TLK file: " + fileName + " ");
-		
+
 		try{
 			// Check the header
 			reader.readFully(bytes4);
 			if(!new String(bytes4).equals("TLK "))
 				throw new TLKReadException("Wrong file type field in: " + fileName);
-			
+
 			// Check the version
 			reader.readFully(bytes4);
 			if(!new String(bytes4).equals("V3.0"))
 				throw new TLKReadException("Wrong TLK version number in: " + fileName);
-			
+
 			// Skip the language ID
 			reader.skipBytes(4);
 
@@ -69,22 +70,25 @@ public class Data_TLK{
 
 			// Read the entry lengths
 			int[] stringLengths = readStringLengths(reader, stringCount);
-		
+
 			// Read the strings themselves
 			readStrings(reader, stringLengths, stringOffset);
+
+			// Store the highest string for writing back later
+			highestEntry = stringLengths.length;
 		}catch(IOException e){
 			throw new TLKReadException("IOException while reading TLK file: " + fileName, e);
 		}
-		
+
 		if(verbose) System.out.println("- Done");
 	}
-	
-	
+
+
 	/**
 	 * Get the given TLK entry.
 	 *
 	 * @param strRef  the number of the entry to get
-	 * 
+	 *
 	 * @return the entry string or "Bad StrRef" if the entry wasn't in the TLK
 	 */
 	public String getEntry(int strRef){
@@ -93,13 +97,13 @@ public class Data_TLK{
 		if(toReturn == null) toReturn = Main.badStrRef;
 		return toReturn;
 	}
-	
-	
+
+
 	/**
 	 * Get the given TLK entry.
 	 *
 	 * @param strRef  the number of the entry to get as a string
-	 * 
+	 *
 	 * @return the entry string or "Bad StrRef" if the entry wasn't in the TLK
 	 *
 	 * @throws NumberFormatException if <code>strRef</code> cannot be converted to an integer
@@ -109,20 +113,88 @@ public class Data_TLK{
 			return getEntry(Integer.parseInt(strRef));
 		}catch(NumberFormatException e){ return Main.badStrRef; }
 	}
-	
+
+	/**
+	 * Set the given TLK entry.
+	 *
+	 * @param strRef  the number of the entry to set
+	 * @param value   the value of the entry to set
+	 */
+	public void setEntry(int strRef, String value){
+		if(strRef > 0x01000000) strRef -= 0x01000000;
+		mainData.put(strRef, value);
+		if(strRef > highestEntry)
+			highestEntry = strRef;
+	}
+
+	/**
+	 * Saves the tlk file to the given XML.
+	 *
+	 * @param name      the name of the resulting file, without extensions
+	 * @param path      the path to the directory to save the file to
+	 *
+	 * @throws IOException if cannot overwrite, or the underlying IO throws one
+	 */
+	public void saveAsXML(String name, String path, boolean allowOverWrite) throws IOException{
+		String CRLF = "\r\n";
+		if(path == null || path.equals(""))
+			path = "." + File.separator;
+		if(!path.endsWith(File.separator))
+			path += File.separator;
+
+		File file = new File(path + name + ".tlk.xml");
+		if(file.exists() && !allowOverWrite)
+			throw new IOException("File exists already: " + file.getAbsolutePath());
+
+		// Inform user
+		if(verbose) System.out.print("Saving tlk file: " + name + " ");
+
+		FileWriter fw = new FileWriter(file, false);
+
+		//write the header
+		fw.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"+CRLF);
+		fw.write("<!DOCTYPE tlk SYSTEM \"tlk2xml.dtd\">"+CRLF);
+		fw.write("<tlk>"+CRLF);
+
+		//loop over each row and write it
+		for(int row = 0; row < highestEntry; row++){
+			String data = mainData.get(row);
+			if(data != null){
+				//replace with paired characters
+				data.replace("<", "&lt;");
+				data.replace(">", "&gt;");
+				data.replace("'", "?");
+				fw.write("  <entry id=\""+row+"\" lang=\"en\" sex=\"m\">"+data+"</entry>"+CRLF);
+			}
+			if(verbose) spinner.spin();
+		}
+
+		//write the footer
+		fw.write("</tlk>"+CRLF);
+
+		fw.flush();
+		fw.close();
+
+		if(verbose) System.out.println("- Done");
+	}
+
+
+
+
+
 	/**
 	 * Reads the string lengths from this TLK's string data elements.
 	 *
 	 * @param reader       RandomAccessFile read from
 	 * @param stringCount  number of strings in the TLK
 	 * @return             an array of integers containing the lengths of the strings in this TLK
-	 * @throws IOException if there is an error while reading from <code>reader</code> 
+	 * @throws IOException if there is an error while reading from <code>reader</code>
 	 */
 	private int[] readStringLengths(RandomAccessFile reader, int stringCount) throws IOException{
 		int[] toReturn = new int[stringCount];
 		byte[] bytes4 = new byte[4];
 		int curOffset = 20; // The number of bytes in the TLK header section
-		
+
 		for(int i = 0; i < stringCount; i++){
 			// Skip everything up to the length
 			curOffset += 32;
@@ -131,24 +203,24 @@ public class Data_TLK{
 			toReturn[i] = readLittleEndianInt(reader, bytes4);
 			// Skip to the end of the record
 			curOffset += 8;
-			
+
 			if(verbose) spinner.spin();
 		}
 		return toReturn;
 	}
-	
+
 	/**
 	 * Reads the strings from the TLK into the hashmap.
 	 *
 	 * @param reader         RandomAccessFile read from
 	 * @param stringLengths  an array of integers containing the lengths of the strings in this TLK
 	 * @param curOffset      the offset to start reading from in the file
-	 * @throws IOException   if there is an error while reading from <code>reader</code> 
+	 * @throws IOException   if there is an error while reading from <code>reader</code>
 	 */
 	private void readStrings(RandomAccessFile reader, int[] stringLengths, int curOffset) throws IOException{
 		StringBuffer buffer = new StringBuffer(200);
 		reader.seek(curOffset);
-		
+
 		for(int i = 0; i < stringLengths.length; i++){
 			if(stringLengths[i] > 0){
 				// Read the specified number of bytes, convert them into chars
@@ -161,9 +233,9 @@ public class Data_TLK{
 				buffer.delete(0, buffer.length());
 			}
 			if(verbose) spinner.spin();
-		}	
+		}
 	}
-	
+
 	/**
 	 * Reads the next 4 bytes into the given array from the TLK and then
 	 * writes them into an integer in inverse order.
@@ -171,7 +243,7 @@ public class Data_TLK{
 	 * @param reader       RandomAccessFile read from
 	 * @param readArray    array of bytes read to. For efficiency of not having to create a new array every time
 	 * @return             integer read
-	 * @throws IOException if there is an error while reading from <code>reader</code> 
+	 * @throws IOException if there is an error while reading from <code>reader</code>
 	 */
 	private int readLittleEndianInt(RandomAccessFile reader, byte[] readArray) throws IOException{
 		int toReturn = 0;
@@ -179,14 +251,14 @@ public class Data_TLK{
 		for(int i = readArray.length - 1; i >= 0; i--){
 			// What's missing here is the implicit promotion of readArray[i] to
 			// int. A byte is a signed element, and as such, has max value of 0x7f.
-			toReturn = (toReturn << 8) | readArray[i] & 0xff; 
+			toReturn = (toReturn << 8) | readArray[i] & 0xff;
 		}
 		return toReturn;
 	}
-	
+
 	/**
 	 * The main method, as usual
-	 * 
+	 *
 	 * @param args
 	 * @throws Exception
 	 */

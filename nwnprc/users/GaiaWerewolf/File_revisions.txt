@@ -28,4 +28,4 @@ itempropdef.2da		1.10
 itemprops.2da		1.15
 racialtypes.2da		1.42	!
 vfx_persistent.2da	1.45	!
-prc_consortium.tlk.xml	1.46	! (note: changed to XML storage format before A16
+prc_consortium.tlk.xml	1.46	!

@@ -6,11 +6,11 @@
 2   FEAT_LASHER_SNEAK3D6                 4077      3    9              0      
 3   FEAT_LASHER_IMPROVED_KNOCKDOWN_WHIP  4078      3    2              0      
 4   FEAT_LASHER_THIRD_HAND               4079      3    2              1      
-5   FEAT_LASHER_CRACK_FATE               4080      3    3              0      
+5   FEAT_LASHER_CRACK_FATE               4080      3    3              1      
 6   FEAT_LASHER_LASHING_WHIP             4081      3    4              0      
 7   FEAT_LASHER_IMPROVED_DISARM_WHIP     4082      3    6              0      
 8   FEAT_LASHER_STUNNING_SAP             4083      3    7              1      
-9   FEAT_LASHER_CRACK_DOOM               4084      3    8              0      
+9   FEAT_LASHER_CRACK_DOOM               4084      3    8              1      
 10  FEAT_LASHER_DEATH_SPIRAL             4085      3    10             1      
 11  FEAT_EPIC_LASHER                     4086      3    11             0      
 12  FEAT_LASHER_SNEAK4D6                 4087      3    13             0      

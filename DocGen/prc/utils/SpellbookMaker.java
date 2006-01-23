@@ -207,6 +207,7 @@ public final class SpellbookMaker{
 		spells2da.save2da("2das", true, true);
 		feat2da.save2da("2das", true, true);
 		iprp_feats2da.save2da("2das", true, true);
+		customtlk.saveAsXML("prc_consortium", "tlk", true);
 	}
 
 	private static void addNewSpellbookData(int spellID,
@@ -220,7 +221,7 @@ public final class SpellbookMaker{
 											String label,
 											int subradialMaster){
 		//set the next tlk line to the name
-			//need to implement tlk writing
+		customtlk.setEntry(tlkRow, name);
 		//copy the original spells.2da line to the next free spells.2da line
 		String[] originalSpellRow = spells2da.getRow(spellID);
 		for(int i=0; i<originalSpellRow.length; i++){

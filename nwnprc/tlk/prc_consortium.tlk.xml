@@ -9067,7 +9067,7 @@ Use: Selected.</entry>
   <entry id="47413" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Lasher level 3.
 Specifics: At 3rd level, a lasher can take one extra attack per round with a whip. The attack is at the lasher's highest base attack bonus, but each attack (the extra one and the normal ones) suffers a -2 penalty.
-Use: Automatic.</entry>
+Use: Selected.</entry>
   <entry id="47414" lang="en" sex="m">Lashing Whip</entry>
   <entry id="47415" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Lasher level 4.
@@ -9087,7 +9087,7 @@ Use: Selected.</entry>
   <entry id="47421" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Lasher level 8.
 Specifics: At 8th level, a lasher can take two extra attacks per round with a whip. This ability supersedes crack of fate (the abilities do not stack). The attack is at the lasher's highest base attack bonus, but each attack (the extra ones and the normal ones) suffers a -4 penalty.
-Use: Automatic.</entry>
+Use: Selected.</entry>
   <entry id="47422" lang="en" sex="m">Death Spiral</entry>
   <entry id="47423" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Lasher level 10.
@@ -9112,6 +9112,126 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   <entry id="47431" lang="en" sex="m">Sanctify Martial Strike (Mindblade)</entry>
   <entry id="47432" lang="en" sex="m">Vile Martial Strike (Mindblade)</entry>
   <entry id="47433" lang="en" sex="m">Weapon of Tempus (Mindblade)</entry>
+  <entry id="47434" lang="en" sex="m">Spellfire Wielder</entry>
+  <entry id="47435" lang="en" sex="m">Type of Feat: General
+  Prerequisite: Can only take this feat at 1st-level.
+  Specifics: You can use spellfire to absorb spell energy, fire destructive blasts, or heal others.
+  A spellfire wielder can ready an action to absorb spells targeted at her as if she were a rod of absorption. She gains one level of spellfire energy for every spell level absorbed and can store a number of spellfire energy levels equal to her Constitution. If she has reached her limit, she cannot absorb spells until she expends some of her stored spellfire levels. If her Constitution decreases so that her number of stored spellfire levels is greater than her current Constitution, the excess levels discharge at a random creature in range as destructive spellfire.
+  As a standard action, a spellfire wielder may expend stored spellfire energy as a melee or ranged touch attack (maximum range 400 feet), dealing 1d6 points of spellfire damage per level expended (Reflex half, DC 20). Spellfire damage is half fire damage and half raw magical power. Creatures with immunity, resistance, or protection against fire effects apply these to only half the damage, but not the other half. A creature can also choose "spellfire" as a weapon for the purpose of the Weapon Focus feat.
+  A spellfire wielder can heal a target by touch, restoring 2 hitpoints per spellfire energy level expended for this purpose. This is not considered positive energy, so it does not injure undead.
+  Use: Selected.</entry>
+    <entry id="47436" lang="en" sex="m">Spellfire</entry>
+    <entry id="47437" lang="en" sex="m">Increase Spellfire Levels Expended</entry>
+    <entry id="47438" lang="en" sex="m">Decrease Spellfire Levels Expended</entry>
+    <entry id="47439" lang="en" sex="m">Check Spellfire Level</entry>
+    <entry id="47440" lang="en" sex="m">-20</entry>
+    <entry id="47441" lang="en" sex="m">Check Spellfire Levels Expended</entry>
+    <entry id="47442" lang="en" sex="m">Spellfire Quickselect</entry>
+    <entry id="47443" lang="en" sex="m">Change Quickselect</entry>
+    <entry id="47444" lang="en" sex="m">Quickselect 1</entry>
+    <entry id="47445" lang="en" sex="m">Quickselect 2</entry>
+    <entry id="47446" lang="en" sex="m">Quickselect 3</entry>
+    <entry id="47447" lang="en" sex="m">Type of Feat: General
+  Prerequisite: Can only take this feat at 1st-level.
+  Specifics: This set of feats allows the player to set the number of spellfire levels expended in the next use of a spellfire ability.
+  Use: Selected.</entry>
+    <entry id="47448" lang="en" sex="m">Spellfire Channeler</entry>
+    <entry id="47449" lang="en" sex="m">Spellfire Channelers</entry>
+    <entry id="47450" lang="en" sex="m">spellfire channeler</entry>
+    <entry id="47451" lang="en" sex="m">(PRESTIGE CLASS)
+  Spellfire is the raw energy of the Weave. Most who bear this gift never have the time or opportunity to develop these skills. Those who do practice their spellfire are able to hone their talent into a tool with fantastic abilities that most dabblers can only dream of.
+  
+  - Hit Die: d4.
+  - Proficiencies: Spellfire channelers are proficient with all simple weapons.
+  - Skill Points: 2 + Int Modifier.
+  
+  REQUIREMENTS:
+  
+  Feats: Endurance, Spellfire Wielder.
+  Skills: Concentration 8 ranks, Lore 2 ranks, Spellcraft 2 ranks.
+  
+  Use: Selected.
+  
+  ABILITIES:
+  
+  Level
+  1: Drain charged item, increased storage 2
+  2: Improved healing
+  3: Weapon Focus (spellfire), increased storage 3
+  4: Rapid Blast 2
+  5: Drain permanent item, increased storage 4
+  6: Charge item*
+  7: Deflect Arrows**, increased storage 5
+  8: Rapid Blast 3
+  9: Crown of fire
+  10: Maelstrom of fire
+  
+  *Replacing flight, due to popular demand
+  **Using Bioware deflect arrows, doesn't drain levels</entry>
+    <entry id="47452" lang="en" sex="m">Drain Charged Item</entry>
+    <entry id="47453" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 1.
+  Specifics: As a standard action, a spellfire channeler can drain charges from a touched charged item (including single-use items such as potions and scrolls), converting the energy into stored spellfire energy levels. A creature gets to make a Will save (DC 10) to prevent one of its held or carried items from being drained.
+  Use: Selected.</entry>
+    <entry id="47454" lang="en" sex="m">Increased Storage</entry>
+    <entry id="47455" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 1.
+  Specifics: The channeler's capacity for storing spellfire energy levels is multiplied by the listed value. However, spellfire energy levels in excess of the channeler's Constitution score is dangerous, with different effects depending upon the number of levels stored:
+  Constitution +1 to Constitution X2:
+  The channeler's eyes glow brightly, and any creature, magic item or spell effect that touches the channeler causes 1 spellfire energy level to be discharged as a harmless burst of light. Once per day, the channeler must make a constitution check (DC 10) or take 1d6 points of damage as one of her spellfire energy level backfires.
+  Constitution X2+1 to Constitution X3:
+  As above, except a touch releases 1d4 spellfire energy levels as light, and the channeler must make the backfire Constitution check every hour.
+  Constitution X3+1 to Constitution X4:
+  As above, except the channeler feels a burning sensation within her body (treat as if distracted by a nondamaging spell, DC 20 to concentrate), and must make the backfire Constitution check every minute. A touch releases 1d6 spellfire energy levels as a flare spell (DC 10 + number of spellfire energy levels expended) against the channeler and all creatures within 5 feet of her.
+  Constitution X4+1 to Constitution X5:
+  As above, except the character is in pain (treat as if distracted by a nondamaging spell, DC 25 to concentrate), and must make the backfire Constitution check every round. A touch releases 2d6 energy levels as a flare spell (DC 10 + number of spellfire energy levels expended) against the channeler and all creatures within 5 feet of her. The channeler must make a Will save (DC 25) every round or be forced to expend a maximum-strength blast of energy at a random target within 30 feet in preference to any other action.
+  Regardless of the number of spellfire energy levels stored, a channeler can voluntarily expend only a number of spellfire energy levels per round equal to her Constitution score. (Involuntary expenditure, such as that noted above, isn't limited in this way.)
+  Use: Automatic.</entry>
+    <entry id="47456" lang="en" sex="m">Improved Healing</entry>
+    <entry id="47457" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 2.
+  Specifics: At 2nd level, the spellfire channeler can release stored spellfire energy levels to heal by touch. This restores 1d4+1 hit points per spellfire energy level expended (rather than the normal 2 points per spellfire energy level).
+  Use: Automatic.</entry>
+    <entry id="47458" lang="en" sex="m">Weapon Focus (spellfire)</entry>
+    <entry id="47459" lang="en" sex="m">Rapid Blast</entry>
+    <entry id="47460" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 4.
+  Specifics: At 4th level, the spellfire channeler can release two blasts of spellfire as a standard action. This increases to three blasts per standard action at 8th level. Each blast after the first suffers a cumulative -2 penalty to attack rolls (-0 for the first blast, -2 for the second, and -4 for the third).
+  Use: Selected.</entry>
+    <entry id="47461" lang="en" sex="m">Drain Permanent item</entry>
+    <entry id="47462" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 5.
+  Specifics: The channeler can drain power from permanent magic items by touch as a standard action. An item that creates spell effects loses that function for 24 hours, and the channeler gains spellfire energy levels equal to half the caster lever of the item. A creature gets to make a Will save (DC 10) to prevent one of its held or carried items from being drained.
+  Use: Selected.</entry>
+    <entry id="47463" lang="en" sex="m">Charge Item</entry>
+    <entry id="47464" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 6.
+  Specifics: As a standard action, a spellfire channeler can expend stored spellfire energy level to add charges to a charged item.
+  Use: Selected.</entry>
+    <entry id="47465" lang="en" sex="m">Crown of Fire</entry>
+    <entry id="47466" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 9.
+  Specifics: By expending 10 spellfire energy levels, a channeler can manifest the crown of fire, which appears as a halo of spellfire around her head and provides light equal to a daylight spell. The crown of fire gives her damage reduction 10/+1 and automatically melts all non-magical weapons that strike her (after inflicting damage, if any). The crown of fire grants the channeler spell resistance 32 (as the spell resistance spell). Maintaining the crown of fire requires expending 10 spellfire energy levels each round, which can be done as a free action. The crown of fire does not interfere with the channeler's actions, including using other spellfire abilities.
+  Use: Selected.</entry>
+    <entry id="47467" lang="en" sex="m">Maelstrom of Fire</entry>
+    <entry id="47468" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Spellfire Channeler level 10.
+  Specifics: The channeler can release spellfire energy in all directions as a 20-foot-radius spread, dealing 1d6 damage per spellfire energy level expended to all creatures in the area (Reflex half, DC 10 + class level + Charisma modifier).
+  Use: Selected.</entry>
+    <entry id="47469" lang="en" sex="m">Epic Weapon Focus (spellfire)</entry>
+    <entry id="47470" lang="en" sex="m">Type of Feat: General
+  Prerequisite: Spellfire Wielder and base attack bonus +1 or higher, or Spellfire Channeler level 3.
+  Specifics: The character gains a +1 bonus to all attack rolls with spellfire.
+  Use: Automatic.</entry>
+    <entry id="47471" lang="en" sex="m">Type of Feat: Epic, Combat
+  Prerequisite: 21st level, Weapon Focus with chosen weapon.
+  Specifics: The character gains a +2 bonus to all attack rolls with spellfire.
+  Use: Automatic.</entry>
+    <entry id="47472" lang="en" sex="m">&lt;CUSTOM0&gt; uses Spellfire</entry>
+    <entry id="47473" lang="en" sex="m">&lt;CUSTOM0&gt; attempts to drain an item</entry>
+    <entry id="47474" lang="en" sex="m">Rapid Blast 2</entry>
+    <entry id="47475" lang="en" sex="m">Rapid Blast 3</entry>
+  <entry id="47476" lang="en" sex="m">Absorb Friendly Spells</entry>
   <entry id="47500" lang="en" sex="m">Werewolf</entry>
   <entry id="47501" lang="en" sex="m">Werewolves</entry>
   <entry id="47502" lang="en" sex="m">werewolf</entry>

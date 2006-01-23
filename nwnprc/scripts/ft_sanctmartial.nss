@@ -244,7 +244,7 @@ void Vile()
         if(nAlign > 7)
             AdjustAlignment(oPC, ALIGNMENT_EVIL, 7);
 
-        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+        AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
         AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
         SetLocalInt(oItem,"USanctMar",1);
     }
@@ -280,7 +280,7 @@ void Vile()
 
         if ( GetLocalInt(oItem,"USanctMar"))
         {
-            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
+            RemoveSpecificProperty(oItem,ITEM_PROPERTY_DAMAGE_BONUS,IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1,1,"",-1,DURATION_TYPE_TEMPORARY);
             RemoveSpecificProperty(oItem,ITEM_PROPERTY_VISUALEFFECT,ITEM_VISUAL_EVIL,-1,1,"",-1,DURATION_TYPE_TEMPORARY);
             DeleteLocalInt(oItem,"USanctMar");
         }
@@ -314,7 +314,7 @@ void Vile()
 
         if (Vile_Feat_Wrapper(iType, oPC, oItem) && (!GetLocalInt(oItem,"USanctMar")))
         {
-            AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+            AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
             AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
             SetLocalInt(oItem,"USanctMar",1);
             int nAlign = GetGoodEvilValue(OBJECT_SELF);
@@ -327,7 +327,7 @@ void Vile()
         iType= GetBaseItemType(oItem);
         if(Vile_Feat_Wrapper(iType, oPC, oItem) && (!GetLocalInt(oItem,"USanctMar")))
         {
-            AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_VILE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
+            AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_DIVINE,IP_CONST_DAMAGEBONUS_1),oItem,9999.0);
             AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_EVIL),oItem,9999.0);
             SetLocalInt(oItem,"USanctMar",1);
             int nAlign = GetGoodEvilValue(OBJECT_SELF);

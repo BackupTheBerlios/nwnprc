@@ -364,3 +364,8 @@ const int PSI_DUR_SHADOW_BODY           = 816;
 const int PSI_FNF_PSYCHIC_CRUSH         = 817;
 const int EPIC_DUR_FLEETNESS_OF_FOOT    = 818;
 const int PSI_DUR_ENERGY_ADAPTATION_ALL = 819;
+//Spellfire
+const int VFX_FNF_SPELLF_EXP   =  820;
+const int VFX_IMP_SPELLF_FLAME =  821;
+const int VFX_IMP_SPELLF_HEAL  =  822;
+const int VFX_BEAM_SPELLFIRE   =  823;

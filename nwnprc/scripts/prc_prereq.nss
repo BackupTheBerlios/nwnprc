@@ -807,7 +807,7 @@ void main2()
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
@@ -830,7 +830,7 @@ void main2()
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);

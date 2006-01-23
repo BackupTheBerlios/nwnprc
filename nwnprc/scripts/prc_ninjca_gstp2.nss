@@ -29,6 +29,57 @@ void main()
   check x2_inc_spellhook.nss to find out more
 
 */
+	int iContinue = 0;
+	object oCaster = OBJECT_SELF;
+	if ( GetHasEffect( EFFECT_TYPE_CHARMED, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_CONFUSED, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_CUTSCENE_PARALYZE, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_CUTSCENEIMMOBILIZE, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_DAZED, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_DOMINATED, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_FRIGHTENED, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_PARALYZE, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_PETRIFY, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_SLEEP, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( GetHasEffect( EFFECT_TYPE_STUNNED, oCaster ) ) 
+	{
+		iContinue++;
+	}
+	if ( iContinue > 0 ) 
+	{
+		IncrementRemainingFeatUses(oCaster, FEAT_GFKILL_GHOST_STEP);
+		return;
+	}
 	if (!Ninja_AbilitiesEnabled(OBJECT_SELF))
 	{
 		IncrementRemainingFeatUses(OBJECT_SELF, FEAT_GHOST_STEP);

@@ -36,6 +36,15 @@ void main()
     sWolf += sLevel;
 
     //Apply the VFX impact and summon effect
-    MultisummonPreSummon(OBJECT_SELF);
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSummonCreature(sWolf, VFX_FNF_NATURES_BALANCE, 0.0, 1), oPC);
+    //MultisummonPreSummon(OBJECT_SELF);
+    //ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSummonCreature(sWolf, VFX_FNF_NATURES_BALANCE, 0.0, 1), oPC);
+
+    int iHench = GetMaxHenchmen();
+    SetMaxHenchmen(iHench + 1);
+    object oWolf;
+    effect eVis = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);
+    oWolf = CreateObject(OBJECT_TYPE_CREATURE, sWolf, GetSpellTargetLocation());
+    AddHenchman(OBJECT_SELF, oWolf);
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+    SetMaxHenchmen(iHench);
 }

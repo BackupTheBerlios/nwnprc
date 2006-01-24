@@ -1,6 +1,6 @@
 // The error code 5 prevention entry. Comment out or uncomment as necessary. 
 //Part Deux, Primogenitor 05/07/05
-const int COMPILER_BREAKS_ON_ME_OR_NOT_AGAIN = 0xffffffff;
+//const int COMPILER_BREAKS_ON_ME_OR_NOT_AGAIN = 0xffffffff;
 
 //:://////////////////////////////////////////////
 //:: FileName: "ss_ep_alliedmart"
@@ -31,7 +31,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, AL_MART_DC, AL_MART_S, AL_MART_XP))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         // Twice per round, for 20 hours.
         int nDuration = FloatToInt(HoursToSeconds(20) / 3);
         // Is the target an ally (in the caster's party)?

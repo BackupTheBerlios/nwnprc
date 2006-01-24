@@ -17,9 +17,10 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const string PRC_MANIFESTING_CLASS = "PRC_CurrentManifest_ManifestingClass";
-const string PRC_POWER_LEVEL       = "PRC_CurrentManifest_PowerLevel";
-const string PRC_IS_PSILIKE        = "PRC_CurrentManifest_IsPsiLikeAbility";
+const string PRC_MANIFESTING_CLASS        = "PRC_CurrentManifest_ManifestingClass";
+const string PRC_POWER_LEVEL              = "PRC_CurrentManifest_PowerLevel";
+const string PRC_IS_PSILIKE               = "PRC_CurrentManifest_IsPsiLikeAbility";
+const string PRC_DEBUG_IGNORE_CONSTRAINTS = "PRC_Debug_Ignore_Constraints";
 
 
 //////////////////////////////////////////////////
@@ -153,6 +154,16 @@ struct manifestation GetLocalManifestation(object oObject, string sName);
  * @param sName   The name under which the structure is stored
  */
 void DeleteLocalManifestation(object oObject, string sName);
+
+/**
+ * Sets the evaluation functions to ignore constraints on manifesting.
+ * Call this just prior to EvaluateManifestation() in a power script.
+ * That evaluation will then ignore lacking manifestation ability score,
+ * Power Points and Psionic Focuses.
+ *
+ * @param oManifester A creature attempting to manifest a power at this moment.
+ */
+void DebugIgnoreConstraints(object oManifester);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -398,6 +409,7 @@ void _CleanManifestationVariables(object oManifester)
 struct manifestation EvaluateManifestation(object oManifester, object oTarget, struct power_augment_profile pap, int nMetaPsiFlags)
 {
     /* Get some data */
+    int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
     // Manifester-related stuff
     int nManifesterLevel = GetManifesterLevel(oManifester);
     int nPowerLevel      = GetPowerLevel(oManifester);
@@ -419,7 +431,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     manif.nSpellID          = PRCGetSpellId();
 
     // Run an ability score check to see if the manifester can manifest the power at all
-    if(GetAbilityScoreOfClass(oManifester, nClass) - 10 < nPowerLevel)
+    if(GetAbilityScoreOfClass(oManifester, nClass) - 10 < nPowerLevel && (!bIgnoreConstraints))
     {
         FloatingTextStrRefOnCreature(16826411, oManifester, FALSE); // "You do not have a high enough ability score to manifest this power"
         manif.bCanManifest = FALSE;
@@ -451,14 +463,14 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
      * Wild Surge, but since the calculated cost already contains the augmentation
      * cost reduction provided by Wild Surge, it should not apply here.
      */
-    if((nManifesterLevel - nWildSurge) >= manif.nPPCost || bIsPsiLike)
+    if((nManifesterLevel - nWildSurge) >= manif.nPPCost || bIsPsiLike || bIgnoreConstraints)
     {
         // Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
         if(!bIsPsiLike) // Skipped for psi-like abilities
             manif = _GetPPCostReduced(manif);
 
         //If the manifester does not have enough points before hostile modifiers, cancel power
-        if(manif.nPPCost > nManifesterPP && !bIsPsiLike)
+        if(manif.nPPCost > nManifesterPP && !bIsPsiLike && !bIgnoreConstraints)
         {
             FloatingTextStrRefOnCreature(16826412, oManifester, FALSE); // "You do not have enough Power Points to manifest this power"
             manif.bCanManifest = FALSE;
@@ -473,7 +485,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
             manif.nPPCost += nVolatileMindCost;
             //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL ABOVE *//
 
-            if(manif.nPPCost > nManifesterPP && !bIsPsiLike)
+            if(manif.nPPCost > nManifesterPP && !bIsPsiLike && !bIgnoreConstraints)
             {
                 FloatingTextStrRefOnCreature(16826413, oManifester, FALSE); // "Your target's abilities cause you to use more Power Points than you have. The power fails"
                 manif.bCanManifest = FALSE;
@@ -655,4 +667,10 @@ void DeleteLocalManifestation(object oObject, string sName)
     DeleteLocalInt(oObject, sName + "_bSplit");
     DeleteLocalInt(oObject, sName + "_bTwin");
     DeleteLocalInt(oObject, sName + "_bWiden");
+}
+
+void DebugIgnoreConstraints(object oManifester)
+{
+    SetLocalInt(oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS, TRUE);
+    DelayCommand(0.0f, DeleteLocalInt(oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS));
 }

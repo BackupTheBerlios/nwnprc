@@ -192,6 +192,8 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
 {
     // Total PP cost of metapsionics used
     int nMetaPsiPP = 0;
+    // A debug variable to make a power ignore normal use constraints
+    int bIgnoreConstr = (DEBUG) ? GetLocalInt(manif.oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
     // A switch value that governs how Improved Metapsionics epic feat works
     int bUseSum = GetPRCSwitch(PRC_PSI_IMP_METAPSIONICS_USE_SUM);
     // Epic feat Improved Metapsionics - 2 PP per.
@@ -205,61 +207,61 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
     // Calculate the added cost from metapsionics and set the use markers for the powers used
     if((nMetaPsiFlags & METAPSIONIC_CHAIN)            && // The power allows this metapsionic to apply
        GetLocalInt(manif.oManifester, "PsiMetaChain") && // The manifester is using the metapsionic
-       manif.nPsiFocUsesRemain > 0                       // The manifester can pay the psionic focus expenditure
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)    // The manifester can pay the psionic focus expenditure
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_CHAIN_COST, nImpMetapsiReduction, bUseSum);
         manif.bChain = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_EMPOWER)   &&
+    if((nMetaPsiFlags & METAPSIONIC_EMPOWER)             &&
         GetLocalInt(manif.oManifester, "PsiMetaEmpower") &&
-        manif.nPsiFocUsesRemain > 0
+        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
         )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_EMPOWER_COST, nImpMetapsiReduction, bUseSum);
         manif.bEmpower = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_EXTEND)  &&
+    if((nMetaPsiFlags & METAPSIONIC_EXTEND)            &&
        GetLocalInt(manif.oManifester, "PsiMetaExtend") &&
-       manif.nPsiFocUsesRemain > 0
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_EXTEND_COST, nImpMetapsiReduction, bUseSum);
         manif.bExtend = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_MAXIMIZE) &&
-       GetLocalInt(manif.oManifester, "PsiMetaMax")     &&
-       manif.nPsiFocUsesRemain > 0
+    if((nMetaPsiFlags & METAPSIONIC_MAXIMIZE)       &&
+       GetLocalInt(manif.oManifester, "PsiMetaMax") &&
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_MAXIMIZE_COST, nImpMetapsiReduction, bUseSum);
         manif.bMaximize = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_SPLIT)  &&
+    if((nMetaPsiFlags & METAPSIONIC_SPLIT)            &&
        GetLocalInt(manif.oManifester, "PsiMetaSplit") &&
-       manif.nPsiFocUsesRemain > 0
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_SPLIT_COST, nImpMetapsiReduction, bUseSum);
         manif.bSplit = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_TWIN)  &&
+    if((nMetaPsiFlags & METAPSIONIC_TWIN)            &&
        GetLocalInt(manif.oManifester, "PsiMetaTwin") &&
-       manif.nPsiFocUsesRemain > 0
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_TWIN_COST, nImpMetapsiReduction, bUseSum);
         manif.bTwin = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_WIDEN)  &&
+    if((nMetaPsiFlags & METAPSIONIC_WIDEN)            &&
        GetLocalInt(manif.oManifester, "PsiMetaWiden") &&
-       manif.nPsiFocUsesRemain > 0
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_WIDEN_COST, nImpMetapsiReduction, bUseSum);
@@ -276,6 +278,10 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
 
 struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
 {
+    // A debug variable to make a power ignore normal use constraints
+    int bIgnoreConstraints = (DEBUG) ? GetLocalInt(manif.oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
+
+    // The string to send to the user
     string sInform = "";
 
     // Check each of the metapsionics and pay focus for each active one. If for some reason the
@@ -284,7 +290,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     // and shouldn't allow them to exceed that count. It happening is therefore a bug.
     if(manif.bChain)
     {
-        if(!UsePsionicFocus(manif.oManifester))
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
         {
             if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Chain Power!");
             manif.bChain = FALSE;
@@ -294,7 +300,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     }
     if(manif.bEmpower)
     {
-        if(!UsePsionicFocus(manif.oManifester))
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
         {
             if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Empower Power!");
             manif.bEmpower = FALSE;
@@ -304,7 +310,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     }
     if(manif.bExtend)
     {
-        if(!UsePsionicFocus(manif.oManifester))
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
         {
             if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Extend Power!");
             manif.bExtend = FALSE;
@@ -314,7 +320,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     }
     if(manif.bMaximize)
     {
-        if(!UsePsionicFocus(manif.oManifester))
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
         {
             if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Maximize Power!");
             manif.bMaximize = FALSE;
@@ -324,7 +330,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     }
     if(manif.bSplit)
     {
-        if(!UsePsionicFocus(manif.oManifester))
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
         {
             if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Split Psionic Ray!");
             manif.bSplit = FALSE;
@@ -334,7 +340,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     }
     if(manif.bTwin)
     {
-        if(!UsePsionicFocus(manif.oManifester))
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
         {
             if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Twin Power!");
             manif.bTwin = FALSE;
@@ -344,7 +350,7 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     }
     if(manif.bWiden)
     {
-        if(!UsePsionicFocus(manif.oManifester))
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
         {
             if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Widen Power!");
             manif.bWiden = FALSE;

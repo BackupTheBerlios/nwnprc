@@ -114,7 +114,7 @@ void SetShift_02(object oPC, object oTarget);
 #include "prcsp_reputation"
 #include "prcsp_archmaginc"
 #include "prcsp_spell_adjs"
-#include "prc_inc_clsfunc"
+//#include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
 #include "NW_I0_GENERIC"

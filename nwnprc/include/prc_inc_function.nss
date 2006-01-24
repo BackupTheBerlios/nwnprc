@@ -48,7 +48,7 @@ void DeletePRCLocalInts(object oSkin);
 #include "prcsp_reputation"
 #include "prcsp_archmaginc"
 #include "prcsp_spell_adjs"
-#include "prc_inc_clsfunc"
+//#include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
 #include "NW_I0_GENERIC"
@@ -682,7 +682,7 @@ void DeletePRCLocalInts(object oSkin)
 
     // Warchief
     //DeleteLocalInt(oPC, "WarchiefCha");
-    
+
     // Warmind
     DeleteLocalInt(oSkin, "EnduringBody");
 

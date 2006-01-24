@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "spinc_function"
+#include "spinc_common"
 #include "prc_inc_clsfunc"
 
 void DeathKnellCheck(object oPC)

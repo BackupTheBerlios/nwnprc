@@ -1,6 +1,6 @@
 /*
   Iron Body
-  
+
 Iron Body
 Transmutation
 Level: Earth 8, Sor/Wiz 8
@@ -10,36 +10,36 @@ Range: Personal
 Target: You
 Duration: 1 min./level (D)
 
-This spell transforms your body into living iron, which grants you several 
+This spell transforms your body into living iron, which grants you several
 powerful resistances and abilities.
 
-You gain damage reduction 15/adamantine. You are immune to blindness, critical hits, 
-ability score damage, deafness, disease, drowning, electricity, poison, stunning, 
-and all spells or attacks that affect your physiology or respiration, because you 
-have no physiology or respiration while this spell is in effect. You take only half 
-damage from acid and fire of all kinds. However, you also become vulnerable to all 
+You gain damage reduction 15/adamantine. You are immune to blindness, critical hits,
+ability score damage, deafness, disease, drowning, electricity, poison, stunning,
+and all spells or attacks that affect your physiology or respiration, because you
+have no physiology or respiration while this spell is in effect. You take only half
+damage from acid and fire of all kinds. However, you also become vulnerable to all
 special attacks that affect iron golems.
 
-You gain a +6 enhancement bonus to your Strength score, but you take a -6 penalty to 
-Dexterity as well (to a minimum Dexterity score of 1), and your speed is reduced to 
-half normal. You have an arcane spell failure chance of 50% and a -8 armor check 
-penalty, just as if you were clad in full plate armor. You cannot drink (and thus 
+You gain a +6 enhancement bonus to your Strength score, but you take a -6 penalty to
+Dexterity as well (to a minimum Dexterity score of 1), and your speed is reduced to
+half normal. You have an arcane spell failure chance of 50% and a -8 armor check
+penalty, just as if you were clad in full plate armor. You cannot drink (and thus
 can’t use potions) or play wind instruments.
 
-Your unarmed attacks deal damage equal to a club sized for you (1d4 for Small 
-characters or 1d6 for Medium characters), and you are considered armed when making 
+Your unarmed attacks deal damage equal to a club sized for you (1d4 for Small
+characters or 1d6 for Medium characters), and you are considered armed when making
 unarmed attacks.
 
-Your weight increases by a factor of ten, causing you to sink in water like a stone. 
-However, you could survive the crushing pressure and lack of air at the bottom of 
+Your weight increases by a factor of ten, causing you to sink in water like a stone.
+However, you could survive the crushing pressure and lack of air at the bottom of
 the ocean at least until the spell duration expires.
 Arcane Material Component
 
 A small piece of iron that was once part of either an iron golem, a hero’s armor, or a war machine.
-  
+
 */
 
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
@@ -126,5 +126,5 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,OBJECT_SELF);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink,OBJECT_SELF, RoundsToSeconds(nDuration), TRUE, -1, nLevel);
     ApplyAbilityDamage(OBJECT_SELF, ABILITY_DEXTERITY, 6, DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(nDuration));
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");  
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

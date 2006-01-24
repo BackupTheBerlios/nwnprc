@@ -8,7 +8,7 @@
 #include "inc_utility"
 #include "prc_class_const"
 #include "prc_misc_const"
-#include "prc_inc_clsfunc"
+#include "prc_inc_clsfunc" // Rework if this file (prc_inc_skills) is ever included to the massive include complex
 #include "x0_i0_spells"
 
 //:://////////////////////////////////////////////
@@ -26,7 +26,7 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
           SendMessageToPC(oPC, "Jumping is not allowed in this area.");
           return FALSE;
      }
-     
+
     // Immobilized creatures can't jump
     effect eCheck = GetFirstEffect(oPC);
     int nCheck;
@@ -38,7 +38,7 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
             SendMessageToPC(oPC, "You cannot move.");
             return FALSE;
         }
-        
+
         eCheck = GetNextEffect(oPC);
     }
 
@@ -49,17 +49,17 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      int iDivisor = 1;
      int iJumpDistance = 0;
      int bIsInHeavyArmor = FALSE;
-     
+
      int iDistance = FloatToInt(MetersToFeet(GetDistanceBetweenLocations(GetLocation(oPC), lLoc ) ) );
-     
+
      object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
      int AC = GetBaseAC(oArmor);
      if(AC >= 6) bIsInHeavyArmor = TRUE;
-    
+
      // Jump check rules depend on a running jump or standing jump
      // running jumps require at least 20 feet run length
      if (iDistance >= 18 && !bIsInHeavyArmor)  bIsRunningJump = TRUE;
-     
+
      int iBonus = 0;
      if (GetHasFeat(FEAT_GREAT_LEAP, oPC))
      {
@@ -79,37 +79,37 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
           iDivisor = 1;
           iMaxJumpDistance *= 6;
      }
-     else 
+     else
      {
           iMinJumpDistance = 3;
           iDivisor = 2;
           iMaxJumpDistance *= 3;
      }
-       
+
      // Simulate "leap of the clouds", or RDD's having wings can "fly"
      if(GetLevelByClass(CLASS_TYPE_MONK, oPC) >= 7
         || GetLevelByClass(CLASS_TYPE_NINJA_SPY, oPC) >= 3
-        || spellsIsFlying(oPC)) 
+        || spellsIsFlying(oPC))
             iMaxJumpDistance *= 100;
-      
+
      // skill 28 = jump
      int iJumpRoll = d20() + GetSkillRank(SKILL_JUMP, oPC) + iBonus + GetAbilityModifier(ABILITY_STRENGTH, oPC);
-     
+
      if(GetRacialType(oPC) == RACIAL_TYPE_HALFLING) iJumpRoll += 2;
      if(GetSkillRank(SKILL_TUMBLE, oPC) >= 5) iJumpRoll += 2;
-     
+
      // Jump distance is determined by the number exceeding 10
      // divided based on running or standing jump.
      iJumpRoll -= 10;
      if(iJumpRoll < 1) iJumpRoll = 1;
      iJumpRoll /= iDivisor;
      iJumpDistance = iMinJumpDistance + iJumpRoll;
-       
+
      if(iJumpDistance >= iDistance && iDistance <= iMaxJumpDistance)
      {
           // they passed jump check
           bPassedJumpCheck = TRUE;
-          
+
           effect eJump = EffectDisappearAppear(lLoc);
           ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eJump, oPC, 3.1);
      }
@@ -118,13 +118,13 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
           // they failed jump check
           FloatingTextStringOnCreature("Jump check failed.", oPC);
           bPassedJumpCheck = FALSE;
-          
+
           if(bDoKnockDown)
           {
                effect eKnockDown = EffectKnockdown();
                ApplyEffectToObject(DURATION_TYPE_INSTANT, eKnockDown, oPC);
           }
      }
-       
+
      return bPassedJumpCheck;
 }

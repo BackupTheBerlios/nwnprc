@@ -22,6 +22,30 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+// Avoids adding passive spellcasting to the character's action queue by
+// creating an object specifically to cast the spell on the character.
+//
+// NOTE: The spell script must refer to the PC as PRCGetSpellTargetObject()
+// otherwise this function WILL NOT WORK.  Do not make any assumptions
+// about the PC being OBJECT_SELF.
+void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE);
+
+// This is a wrapper function that causes OBJECT_SELF to fire the defined spell
+// at the defined level.  The target is automatically the object or location
+// that the user selects. Useful for SLA's to perform the casting of a true
+// spell.  This is useful because:
+//
+// 1) If the original's spell script is updated, so is this one.
+// 2) The spells are identified as the true spell.  That is, they ARE the true spell.
+// 3) Spellhooks (such as item crafting) that can only identify true spells
+//    will easily work.
+//
+// This function should only be used when SLA's are meant to simulate true
+// spellcasting abilities, such as those seen when using feats with subradials
+// to simulate spellbooks.
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0,
+    int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
+    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oOverrideTarget=OBJECT_INVALID);
 
 /**
  * Checks if target is a Frenzied Bersker with Deathless Frenzy Active
@@ -78,10 +102,9 @@ int GetBreakConcentrationCheck(object oConcentrator);
 //////////////////////////////////////////////////
 
 // Generic includes
+#include "inc_utility"
 #include "prc_inc_spells"
 #include "prcsp_engine"
-#include "inc_utility"
-#include "x2_inc_itemprop"
 #include "x2_inc_switches"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -98,7 +121,7 @@ int GetBreakConcentrationCheck(object oConcentrator);
 #include "prcsp_reputation"
 #include "prcsp_archmaginc"
 #include "prcsp_spell_adjs"
-#include "prc_inc_clsfunc"
+//#include "prc_inc_clsfunc"
 #include "prc_inc_racial"
 #include "inc_abil_damage"
 #include "NW_I0_GENERIC"
@@ -113,6 +136,97 @@ int GetBreakConcentrationCheck(object oConcentrator);
 //////////////////////////////////////////////////
 /* Function Definitions                         */
 //////////////////////////////////////////////////
+
+void ActionCastSpellOnSelf(int iSpell, int nMetaMagic = METAMAGIC_NONE)
+{
+    object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(OBJECT_SELF));
+    object oTarget = OBJECT_SELF;
+
+    AssignCommand(oCastingObject, ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+
+    DestroyObject(oCastingObject, 6.0);
+}
+
+void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotalDC = 0,
+    int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
+    int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oOverrideTarget=OBJECT_INVALID)
+{
+    //if its a hostile spell, clear the action queue
+    //this stops people stacking hostile spells to be instacast
+    //at the end, for example when coming out of invisibility
+    if(Get2DACache("spells", "HostileSetting", iSpell) == "1")
+        ClearAllActions();
+
+    object oTarget = PRCGetSpellTargetObject();
+    location lLoc = PRCGetSpellTargetLocation();
+
+    //set the overriding values
+    if (iCasterLev != 0)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE, iCasterLev));
+    if (iTotalDC != 0)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE, iTotalDC));
+    if (iBaseDC != 0)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, iBaseDC));
+    if (nClass != CLASS_TYPE_INVALID)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE, nClass));
+    if (nMetaMagic != METAMAGIC_NONE)
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE, nMetaMagic));
+    if (bUseOverrideTargetLocation)
+    {
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE, TRUE));
+        //location must be set outside of this function at the moment
+        //cant pass a location into a function as an optional parameter
+        //go bioware for not defining an invalid location constant
+    }
+    if (bUseOverrideTargetObject)
+    {
+        ActionDoCommand(SetLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE, TRUE));
+        ActionDoCommand(SetLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE, oTarget));
+    }
+    SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
+    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
+
+    //cast the spell
+    if (GetIsObjectValid(oOverrideTarget))
+        ActionCastSpellAtObject(iSpell, oOverrideTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+    else if (GetIsObjectValid(oTarget))
+        ActionCastSpellAtObject(iSpell, oTarget, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+    else
+        ActionCastSpellAtLocation(iSpell, lLoc, nMetaMagic, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+
+    //clean up afterwards
+    if (iCasterLev != 0)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
+    if (iTotalDC != 0)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE));
+    if (iBaseDC != 0)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
+    if (nClass != CLASS_TYPE_INVALID)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE));
+    if (nMetaMagic != METAMAGIC_NONE)
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE));
+    if (bUseOverrideTargetLocation)
+    {
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE));
+        //location must be set outside of this function at the moment
+        //cant pass a location into a function as an optional parameter
+        //go bioware for not defining an invalid location constant
+    }
+    if (bUseOverrideTargetObject)
+    {
+        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
+        ActionDoCommand(DeleteLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
+    }
+
+
+/*
+//The problem with this approace is that the effects are then applies by the original spell, which could go wrong. What to do?
+    SetLocalInt(OBJECT_SELF, PRC_SPELLID_OVERRIDE, GetSpellId());
+    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, PRC_SPELLID_OVERRIDE));
+    string sScript = Get2DACache("spells", "ImpactScript", iSpell);
+    ExecuteScript(sScript, OBJECT_SELF);
+*/
+}
 
 // Added by Oni5115
 void DeathlessFrenzyCheck(object oTarget)

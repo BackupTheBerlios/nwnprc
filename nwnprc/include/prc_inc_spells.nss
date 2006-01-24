@@ -177,12 +177,14 @@ const int  TYPE_DIVINE   = -2;
 //const int  TYPE_RANGER   = 13;
 //const int  TYPE_PALADIN  = 14;
 
+#include "x2_inc_itemprop"
 #include "prc_inc_sneak"
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "lookup_2da_spell"
 #include "inc_utility"
 #include "inc_vfx_const"
+#include "prc_inc_newip"
 #include "prc_alterations"
 
 // ---------------

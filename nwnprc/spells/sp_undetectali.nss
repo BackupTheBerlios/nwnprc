@@ -14,7 +14,7 @@ Conceals the alignment of an object or a creature from all forms of divination.
 
 */
 
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
@@ -27,7 +27,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
         return;
     }
-    
+
     object oTarget = PRCGetSpellTargetObject();
     //VFX alone cant be gotten later, so incrase & decrases a minor skill by 1 point
     effect eEffect = EffectLinkEffects(EffectSkillIncrease(SKILL_HEAL, 1), EffectSkillDecrease(SKILL_HEAL, 1));
@@ -38,8 +38,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     float fDuration = HoursToSeconds(24);
     if(PRCGetMetaMagicFeat() & METAMAGIC_EXTEND)
         fDuration *= 2.0;
-    //apply the effect    
+    //apply the effect
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, fDuration);
-    
+
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

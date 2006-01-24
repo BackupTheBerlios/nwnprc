@@ -1,7 +1,7 @@
 #include "x2_inc_itemprop"
 #include "inc_utility"
 #include "prc_inc_spells"
-#include "prc_inc_clsfunc"
+//#include "prc_inc_clsfunc"
 
 const int SPELLBOOK_ROW_COUNT = 410;
 const int SPELLBOOK_IPRP_FEATS_START = 10400;
@@ -103,16 +103,16 @@ void WipeSpellbookHideFeats(object oPC)
             DelayCommand(0.01, RemoveItemProperty(oHide, ipTest));
         ipTest = GetNextItemProperty(oHide);
     }
-    //remove persistant locals used to track when all spells cast 
+    //remove persistant locals used to track when all spells cast
     int i;
     for(i=1;i<=3;i++)
-    {   
+    {
         if(persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(PRCGetClassByPosition(i, oPC))))
         {
             persistant_array_delete(oPC, "NewSpellbookMem_"+IntToString(PRCGetClassByPosition(i, oPC)));
             persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(PRCGetClassByPosition(i, oPC)));
-        }    
-    }    
+        }
+    }
 }
 
 int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
@@ -142,7 +142,7 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     {
         nSlots = -1;
 //DoDebug("Problem getting slot numbers for "+IntToString(nSpellLevel)+" "+IntToString(nLevel)+" "+sFile);
-    }    
+    }
     else
         nSlots = StringToInt(sSlots);
     if(nSlots == -1)
@@ -170,19 +170,19 @@ void AddSpellUse(object oPC, int nSpellbookID, int nClass)
     if(DEBUG
         && !persistant_array_exists(oPC, sArrayName))
         DoDebug("Error: "+sArrayName+" array does not exist");
-//DoDebug("Adding nSpellbookID="+IntToString(nSpellbookID));        
-//DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID))); 
+//DoDebug("Adding nSpellbookID="+IntToString(nSpellbookID));
+//DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID)));
     if(!persistant_array_exists(oPC, sArrayName))
     {
-//DoDebug(sArrayName+" does not exist, creating."); 
+//DoDebug(sArrayName+" does not exist, creating.");
         persistant_array_create(oPC, sArrayName);
-    }    
+    }
     int nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
-//DoDebug("nUses="+IntToString(nUses)); 
+//DoDebug("nUses="+IntToString(nUses));
     nUses++;
-//DoDebug("nUses="+IntToString(nUses)); 
+//DoDebug("nUses="+IntToString(nUses));
     persistant_array_set_int(oPC, sArrayName, nSpellbookID,nUses);
-//DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID)));        
+//DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID)));
 }
 
 void RemoveSpellUse(object oPC, int nSpellID, int nClass)
@@ -193,14 +193,14 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
     {
         DoDebug("Unable to resolve spell to spellbookID: "+IntToString(nSpellID)+" "+sFile);
         return;
-    }    
+    }
 
     //get uses remaining
     if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
     {
-//DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creating."); 
+//DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creating.");
         persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
-    }    
+    }
     int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
     //reduce by 1
     if(nCount > 0)
@@ -264,9 +264,9 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
     {
 //DoDebug("Error: NewSpellbookMem_"+IntToString(nClass)+" array does not exist");
         persistant_array_create(oPC,  "NewSpellbookMem_"+IntToString(nClass));
-    }    
+    }
     int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
-//DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));        
+//DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));
     if(nCount < 1)
     {
         string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));

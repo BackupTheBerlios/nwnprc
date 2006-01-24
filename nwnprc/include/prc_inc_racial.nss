@@ -5,7 +5,7 @@
 //includes shifter changed forms
 int MyPRCGetRacialType(object oTarget);
 
-//routes to action cast spell, but puts a wrapper around to tell other functions its a 
+//routes to action cast spell, but puts a wrapper around to tell other functions its a
 //SLA, so dont craft etc
 //also defaults th totalDC to 10+spellevel+chamod
 void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
@@ -13,8 +13,7 @@ void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "prc_racial_const"
-#include "prc_inc_clsfunc"
-#include "inc_utility"
+#include "prc_alterations"
 
 
 int MyPRCGetRacialType(object oCreature)
@@ -24,7 +23,7 @@ int MyPRCGetRacialType(object oCreature)
     if (GetLevelByClass(CLASS_TYPE_MONK,oCreature) >= 20)
         return RACIAL_TYPE_OUTSIDER;
     if (GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oCreature) >= 10)
-        return RACIAL_TYPE_OUTSIDER;        
+        return RACIAL_TYPE_OUTSIDER;
     if (GetLevelByClass(CLASS_TYPE_OOZEMASTER,oCreature) >= 10)
         return RACIAL_TYPE_OOZE;
     if (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oCreature) >= 10)
@@ -101,7 +100,7 @@ int MyPRCGetRacialType(object oCreature)
 }
 
 
-//routes to action cast spell, but puts a wrapper around to tell other functions its a 
+//routes to action cast spell, but puts a wrapper around to tell other functions its a
 //SLA, so dont craft etc
 //also defaults th totalDC to 10+spellevel+chamod
 //this is Base DC, not total DC. SLAs are still spells, so spell focus should still apply.
@@ -109,9 +108,9 @@ void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
 {
     if(nTotalDC == 0)
         nTotalDC = 10
-            +StringToInt(Get2DACache("spells", "Innate", nSpellID))   
+            +StringToInt(Get2DACache("spells", "Innate", nSpellID))
             +GetAbilityModifier(ABILITY_CHARISMA);
-            
+
     ActionDoCommand(SetLocalInt(OBJECT_SELF, "SpellIsSLA", TRUE));
     ActionCastSpell(nSpellID, nCasterlevel, nTotalDC);
     ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "SpellIsSLA"));

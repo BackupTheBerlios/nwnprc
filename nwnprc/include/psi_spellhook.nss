@@ -14,6 +14,7 @@
 //:://////////////////////////////////////////////
 
 #include "x2_inc_craft"
+#include "x2_inc_spellhook"
 #include "prc_inc_spells"
 #include "inc_utility"
 #include "prc_inc_itmrstr"

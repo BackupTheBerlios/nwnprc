@@ -13,7 +13,7 @@ Duration: 1 min/level
 Save: harmless
 Spell Resistance: harmless
 
-The subject’s outline appears blurred, shifting and wavering. 
+The subject’s outline appears blurred, shifting and wavering.
 This distortion grants the subject concealment (20% miss chance).
 
 */
@@ -22,7 +22,7 @@ This distortion grants the subject concealment (20% miss chance).
 //:: Created On: August 20, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
 
 
 
@@ -51,7 +51,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     int nDuration = PRCGetCasterLevel(OBJECT_SELF);
     int CasterLvl = nDuration;
     effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
-    
+
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
 

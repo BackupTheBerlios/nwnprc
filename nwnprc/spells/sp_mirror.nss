@@ -13,27 +13,27 @@ Duration: 1 min/level
 Save: harmless
 Spell Resistance: harmless
 
- Several illusory duplicates of you pop into being, making it 
- difficult for enemies to know which target to attack. The 
+ Several illusory duplicates of you pop into being, making it
+ difficult for enemies to know which target to attack. The
  figments stay near you and disappear when struck.
 
-Mirror image creates 1d4 images plus one image per three 
-caster levels (maximum eight images total). These figments 
-separate from you and remain in a cluster, each within 5 feet 
-of at least one other figment or you. You can move into and 
-through a mirror image. When you and the mirror image separate, 
-observers can’t use vision or hearing to tell which one is you 
-and which the image. The figments may also move through each 
-other. The figments mimic your actions, pretending to cast spells 
-when you cast a spell, drink potions when you drink a potion, 
+Mirror image creates 1d4 images plus one image per three
+caster levels (maximum eight images total). These figments
+separate from you and remain in a cluster, each within 5 feet
+of at least one other figment or you. You can move into and
+through a mirror image. When you and the mirror image separate,
+observers can’t use vision or hearing to tell which one is you
+and which the image. The figments may also move through each
+other. The figments mimic your actions, pretending to cast spells
+when you cast a spell, drink potions when you drink a potion,
 levitate when you levitate, and so on.
 
-Enemies attempting to attack you or cast spells at you must 
-select from among indistinguishable targets. Any successful 
-attack against an image destroys it. An image’s AC is 10 + 
-your size modifier + your Dex modifier. Figments seem to react 
-normally to area spells (such as looking like they’re burned or 
-dead after being hit by a fireball). 
+Enemies attempting to attack you or cast spells at you must
+select from among indistinguishable targets. Any successful
+attack against an image destroys it. An image’s AC is 10 +
+your size modifier + your Dex modifier. Figments seem to react
+normally to area spells (such as looking like they’re burned or
+dead after being hit by a fireball).
 
 */
 //:://////////////////////////////////////////////
@@ -41,7 +41,7 @@ dead after being hit by a fireball).
 //:: Created On: August 20, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
 
 
 void CleanCopy(object oImage)
@@ -110,10 +110,10 @@ void main2()
     {
         nDuration = nDuration *2; //Duration is +100%
     }
-    
+
     int iCon = GetAbilityScore(OBJECT_SELF, ABILITY_CONSTITUTION) - 1;
     if (iCon > 10) iCon = 10;
-    
+
     string sImage = "PC_IMAGE"+ObjectToString(OBJECT_SELF)+"mirror";
 
     effect eImage = EffectCutsceneParalyze();
@@ -169,7 +169,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     DelayCommand(0.0, RemoveExtraImages());
     DelayCommand(0.1, main2());
-    
+
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
 }

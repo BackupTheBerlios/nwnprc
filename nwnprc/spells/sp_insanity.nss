@@ -1,7 +1,7 @@
 /*
    ----------------
    Insanity
-   
+
    sp_insanity
    ----------------
 
@@ -14,13 +14,13 @@
    Duration: Permanent
    Saving Throw: Will negates
    Spell Resistance: Yes
-   
+
    Creatures affected by this power are permanently confused, as the spell.
-   
+
     Modifed from psionic version by Primogenitor
 */
 
-#include "prc_alterations"
+#include "spinc_common"
 
 void main()
 {
@@ -68,7 +68,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }
         }
-    }   
-            
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");        
+    }
+
+DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

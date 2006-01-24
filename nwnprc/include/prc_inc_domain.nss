@@ -43,7 +43,8 @@ int GetBurnableSpell(object oPC, int nLevel);
 // Cleans the ints that limit the domain spells to being cast 1/day
 void BonusDomainRest(object oPC);
 
-#include "prc_inc_clsfunc"
+//#include "prc_inc_clsfunc"
+#include "prc_alterations"
 #include "prc_getbest_inc"
 
 //::///////////////////
@@ -193,7 +194,7 @@ int GetDomainSpell(int nDomain, int nLevel, object oPC)
         int nFeat = SpellLevelToFeat(nLevel);
         IncrementRemainingFeatUses(oPC, nFeat);
     }
-    else 
+    else
     {
         nSpell = StringToInt(sSpell);
     }

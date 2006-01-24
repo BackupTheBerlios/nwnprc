@@ -416,33 +416,41 @@ const int IP_CONST_CASTSPELL_CLEAN_POISON_OFF   = 1144;
 
 
 //  IP_CONST_ONHIT_CASTSPELL
-
+// Note: Do not add anything to this section, since multiple onhit properties conflict with each other. Instead implement your stuff via eventhook to EVENT_ONHIT.
 const int IP_CONST_ONHIT_CASTSPELL_RAVAGEGOLDENICE = 200;
 const int IP_CONST_ONHIT_CASTSPELL_NIGHTSHADEPOISON = 201;
 const int IP_CONST_ONHIT_CASTSPELL_LINGDMG = 202;
 
 //  IP_CONST_DAMAGEBONUS
 
-const int IP_CONST_DAMAGEBONUS_11 = 21;
-const int IP_CONST_DAMAGEBONUS_12 = 22;
-const int IP_CONST_DAMAGEBONUS_13 = 23;
-const int IP_CONST_DAMAGEBONUS_14 = 24;
-const int IP_CONST_DAMAGEBONUS_15 = 25;
-const int IP_CONST_DAMAGEBONUS_16 = 26;
-const int IP_CONST_DAMAGEBONUS_17 = 27;
-const int IP_CONST_DAMAGEBONUS_18 = 28;
-const int IP_CONST_DAMAGEBONUS_19 = 29;
-const int IP_CONST_DAMAGEBONUS_20 = 30;
-const int IP_CONST_DAMAGEBONUS_3D6 = 71;
-const int IP_CONST_DAMAGEBONUS_4D6 = 72;
-const int IP_CONST_DAMAGEBONUS_5D6 = 73;
-const int IP_CONST_DAMAGEBONUS_6D6 = 74;
-const int IP_CONST_DAMAGEBONUS_7D6 = 75;
-const int IP_CONST_DAMAGEBONUS_8D6 = 76;
-const int IP_CONST_DAMAGEBONUS_3D4 = 77;
-const int IP_CONST_DAMAGEBONUS_4D4 = 78;
-const int IP_CONST_DAMAGEBONUS_5D4 = 79;
-const int IP_CONST_DAMAGEBONUS_6D4 = 80;
+const int IP_CONST_DAMAGEBONUS_11               = 21;
+const int IP_CONST_DAMAGEBONUS_12               = 22;
+const int IP_CONST_DAMAGEBONUS_13               = 23;
+const int IP_CONST_DAMAGEBONUS_14               = 24;
+const int IP_CONST_DAMAGEBONUS_15               = 25;
+const int IP_CONST_DAMAGEBONUS_16               = 26;
+const int IP_CONST_DAMAGEBONUS_17               = 27;
+const int IP_CONST_DAMAGEBONUS_18               = 28;
+const int IP_CONST_DAMAGEBONUS_19               = 29;
+const int IP_CONST_DAMAGEBONUS_20               = 30;
+const int IP_CONST_DAMAGEBONUS_3d6              = 71;
+const int IP_CONST_DAMAGEBONUS_4d6              = 72;
+const int IP_CONST_DAMAGEBONUS_5d6              = 73;
+const int IP_CONST_DAMAGEBONUS_6d6              = 74;
+const int IP_CONST_DAMAGEBONUS_7d6              = 75;
+const int IP_CONST_DAMAGEBONUS_8d6              = 76;
+const int IP_CONST_DAMAGEBONUS_3d4              = 77;
+const int IP_CONST_DAMAGEBONUS_4d4              = 78;
+const int IP_CONST_DAMAGEBONUS_5d4              = 79;
+const int IP_CONST_DAMAGEBONUS_6d4              = 80;
+const int IP_CONST_DAMAGEBONUS_3d8              = 81;
+const int IP_CONST_DAMAGEBONUS_4d8              = 82;
+const int IP_CONST_DAMAGEBONUS_5d8              = 83;
+const int IP_CONST_DAMAGEBONUS_6d8              = 84;
+const int IP_CONST_DAMAGEBONUS_7d8              = 85;
+const int IP_CONST_DAMAGEBONUS_8d8              = 86;
+const int IP_CONST_DAMAGEBONUS_9d8              = 87;
+const int IP_CONST_DAMAGEBONUS_10d8             = 88;
 
 // IP_CONST_IMMUNITYSPELL
 

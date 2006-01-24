@@ -3187,41 +3187,44 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
         iWeaponType == BASE_ITEM_INVALID && GetLevelByClass(CLASS_TYPE_MONK, oAttacker) )
      {
           int iDamage = FindUnarmedDamage(oAttacker);
+          iNumSides = StringToInt(Get2DACache("iprp_monstcost", "Die", iDamage));
+          iNumDice  = StringToInt(Get2DACache("iprp_monstcost", "NumDice", iDamage));
+          /*
           switch(iDamage)
           {
-               case MONST_DAMAGE_1D2:
+               case IP_CONST_MONSTERDAMAGE_1d2:
                     iNumSides = 2;
                     iNumDice = 1;
                     break;
-               case MONST_DAMAGE_1D3:
+               case IP_CONST_MONSTERDAMAGE_1d3:
                     iNumSides = 3;
                     iNumDice = 1;
                     break;
-               case MONST_DAMAGE_1D4:
+               case IP_CONST_MONSTERDAMAGE_1d4:
                     iNumSides = 4;
                     iNumDice  = 1;
                     break;
-               case MONST_DAMAGE_1D6:
+               case IP_CONST_MONSTERDAMAGE_1d6:
                     iNumSides = 6;
                     iNumDice  = 1;
                     break;
-               case MONST_DAMAGE_1D8:
+               case IP_CONST_MONSTERDAMAGE_1d8:
                     iNumSides = 8;
                     iNumDice  = 1;
                     break;
-               case MONST_DAMAGE_1D10:
+               case IP_CONST_MONSTERDAMAGE_1d10:
                     iNumSides = 10;
                     iNumDice  = 1;
                     break;
-               case MONST_DAMAGE_1D12:
+               case IP_CONST_MONSTERDAMAGE_1d12:
                     iNumSides = 12;
                     iNumDice  = 1;
                     break;
-               case MONST_DAMAGE_1D20:
+               case IP_CONST_MONSTERDAMAGE_1d20:
                     iNumSides = 20;
                     iNumDice  = 1;
                     break;
-               case MONST_DAMAGE_2D6:
+               case IP_CONST_MONSTERDAMAGE_2D6:
                     iNumSides = 6;
                     iNumDice  = 2;
                     break;
@@ -3265,7 +3268,7 @@ effect GetAttackDamage(object oDefender, object oAttacker, object oWeapon, struc
                     iNumSides = 12;
                     iNumDice  = 4;
                     break;
-          }
+          }*/
      }
      else if(iWeaponType == BASE_ITEM_INVALID)
      {
@@ -4423,6 +4426,9 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
         bIsUnarmed && GetLevelByClass(CLASS_TYPE_MONK, oAttacker) )
      {
           int iDamage = FindUnarmedDamage(oAttacker);
+          sAttackVars.iMainNumSides = StringToInt(Get2DACache("iprp_monstcost", "Die", iDamage));
+          sAttackVars.iMainNumDice  = StringToInt(Get2DACache("iprp_monstcost", "NumDice", iDamage));
+          /*
           switch(iDamage)
           {
                case MONST_DAMAGE_1D2:
@@ -4501,7 +4507,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
                     sAttackVars.iMainNumSides = 12;
                     sAttackVars.iMainNumDice  = 4;
                     break;
-          }
+          }*/
      }
      else if(bIsUnarmed)
      {
@@ -4764,6 +4770,9 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
         bIsUnarmed && GetLevelByClass(CLASS_TYPE_MONK, oAttacker) )
      {
           int iDamage = FindUnarmedDamage(oAttacker);
+          sAttackVars.iMainNumSides = StringToInt(Get2DACache("iprp_monstcost", "Die", iDamage));
+          sAttackVars.iMainNumDice  = StringToInt(Get2DACache("iprp_monstcost", "NumDice", iDamage));
+          /*
           switch(iDamage)
           {
                case MONST_DAMAGE_1D2:
@@ -4842,7 +4851,7 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
                     sAttackVars.iMainNumSides = 12;
                     sAttackVars.iMainNumDice  = 4;
                     break;
-          }
+          }*/
      }
      else if(bIsUnarmed)
      {

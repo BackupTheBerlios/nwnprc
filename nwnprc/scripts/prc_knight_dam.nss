@@ -5,10 +5,10 @@ int GetDSWeaponAttackBonus(object oWeap)
 {
     object oPC = GetItemPossessor(oWeap);
     itemproperty ip = GetFirstItemProperty(oWeap);
-    
+
     int iTotal = 0;
     int iValue = 0;
-    
+
     while (GetIsItemPropertyValid(ip))
     {
         if (GetItemPropertyType(ip) == ITEM_PROPERTY_ATTACK_BONUS ||
@@ -41,8 +41,8 @@ void main()
     // you can apply non-bioware damage bonuses as defined in the 2da.
     int iDivBonus = GetHasFeat(DEMONSLAYING_1, oPC) ? IP_CONST_DAMAGEBONUS_1d6 : 0;
         iDivBonus = GetHasFeat(DEMONSLAYING_2, oPC) ? IP_CONST_DAMAGEBONUS_2d6 : iDivBonus;
-        iDivBonus = GetHasFeat(DEMONSLAYING_3, oPC) ? IP_CONST_DAMAGEBONUS_3D6 : iDivBonus;
-        iDivBonus = GetHasFeat(DEMONSLAYING_4, oPC) ? IP_CONST_DAMAGEBONUS_4D6 : iDivBonus;
+        iDivBonus = GetHasFeat(DEMONSLAYING_3, oPC) ? IP_CONST_DAMAGEBONUS_3d6 : iDivBonus;
+        iDivBonus = GetHasFeat(DEMONSLAYING_4, oPC) ? IP_CONST_DAMAGEBONUS_4d6 : iDivBonus;
 
     int iAttBonus = GetHasFeat(DEMONSLAYING_1, oPC) ? 1 : 0;
         iAttBonus = GetHasFeat(DEMONSLAYING_2, oPC) ? 2 : iAttBonus;
@@ -58,7 +58,7 @@ void main()
 
     effect eLink = EffectLinkEffects(eAttR, eAttL);
            eLink = EffectLinkEffects(eLink, eDam);
-    
+
            eLink = SupernaturalEffect(eLink);
 
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);

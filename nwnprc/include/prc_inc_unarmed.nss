@@ -16,29 +16,6 @@
 /* Constant declarations                        */
 //////////////////////////////////////////////////
 
-const int MONST_DAMAGE_1D2   = 1;
-const int MONST_DAMAGE_1D3   = 2;
-const int MONST_DAMAGE_1D4   = 3;
-const int MONST_DAMAGE_1D6   = 8;
-const int MONST_DAMAGE_1D8   = 18;
-const int MONST_DAMAGE_1D10  = 28;
-const int MONST_DAMAGE_1D12  = 38;
-const int MONST_DAMAGE_1D20  = 48;
-const int MONST_DAMAGE_2D6   = 9;
-const int MONST_DAMAGE_2D8   = 19;
-const int MONST_DAMAGE_2D10  = 29;
-const int MONST_DAMAGE_2D12  = 39;
-const int MONST_DAMAGE_3D6   = 10;
-const int MONST_DAMAGE_3D8   = 20;
-const int MONST_DAMAGE_3D10  = 30;
-const int MONST_DAMAGE_3D12  = 40;
-const int MONST_DAMAGE_4D6   = 11;
-const int MONST_DAMAGE_4D8   = 21;
-const int MONST_DAMAGE_4D10  = 31;
-const int MONST_DAMAGE_4D12  = 41;
-const int MONST_DAMAGE_5D6   = 12;
-const int MONST_DAMAGE_5D8   = 22;
-
 const int ITEM_PROPERTY_WOUNDING = 69;
 
 const string CALL_UNARMED_FEATS = "CALL_UNARMED_FEATS";
@@ -55,8 +32,7 @@ const string UNARMED_CALLBACK   = "UNARMED_CALLBACK";
 // oCreature    a creature whose unarmed damage dice are
 //              being evaluated
 //
-// Returns one of the MONST_DAMAGE_* constants defined in
-// this file.
+// Returns one of the IP_CONST_MONSTERDAMAGE_* constants
 int FindUnarmedDamage(object oCreature);
 
 // Adds appropriate unarmed feats to the skin. Goes with UnarmedFists()
@@ -343,82 +319,82 @@ int FindUnarmedDamage(object oCreature)
     switch (iDamageToUse)
     {
         case -1:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D4;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D3;
-            else                            iDamage = MONST_DAMAGE_1D2;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d4;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d3;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d2;
             break;
         case 0:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D6;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D4;
-            else                            iDamage = MONST_DAMAGE_1D3;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d6;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d4;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d3;
             break;
         case 1:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D8;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D6;
-            else                            iDamage = MONST_DAMAGE_1D4;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d8;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d6;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d4;
             break;
         case 2:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D10;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D8;
-            else                            iDamage = MONST_DAMAGE_1D6;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d10;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d8;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d6;
             break;
         case 3:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_1D12;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D10;
-            else                            iDamage = MONST_DAMAGE_1D8;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d12;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d10;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d8;
             break;
         case 4:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_2D8;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_1D12;
-            else                            iDamage = MONST_DAMAGE_1D10;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_2d8;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d12;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d10;
             break;
         case 5:
             if (bUseMonkAlt && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) )
             {
-                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_1D20;
-                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
-                else                        iDamage = MONST_DAMAGE_1D12;
+                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_1d20;
+                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d8;
+                else                        iDamage = IP_CONST_MONSTERDAMAGE_1d12;
             }
             else
             {
-                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_2D10;
-                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D8;
-                else                        iDamage = MONST_DAMAGE_2D6;
+                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_2d10;
+                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d8;
+                else                        iDamage = IP_CONST_MONSTERDAMAGE_2d6;
             }
             break;
         case 6:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_2D12;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_2D10;
-            else                            iDamage = MONST_DAMAGE_2D8;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_2d12;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_2d10;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_2d8;
             break;
         case 7:
             if (bUseMonkAlt && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE))
             {
-                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10;
-                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;
-                else                        iDamage = MONST_DAMAGE_1D20;
+                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_3d10;
+                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d12;
+                else                        iDamage = IP_CONST_MONSTERDAMAGE_1d20;
             }
             else
             {
-                if      (iDieIncrease == 2) iDamage = MONST_DAMAGE_3D10;
-                else if (iDieIncrease == 1) iDamage = MONST_DAMAGE_2D12;
-                else                        iDamage = MONST_DAMAGE_2D10;
+                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_3d10;
+                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d12;
+                else                        iDamage = IP_CONST_MONSTERDAMAGE_2d10;
             }
             break;
         case 8:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_3D12;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_3D10;
-            else                            iDamage = MONST_DAMAGE_3D8;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_3d12;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_3d10;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_3d8;
             break;
         case 9:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_4D10;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_3D12;
-            else                            iDamage = MONST_DAMAGE_3D10;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_4d10;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_3d12;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_3d10;
             break;
         case 10:
-            if      (iDieIncrease == 2)     iDamage = MONST_DAMAGE_4D12;
-            else if (iDieIncrease == 1)     iDamage = MONST_DAMAGE_4D10;
-            else                            iDamage = MONST_DAMAGE_3D12;
+            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_4d12;
+            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_4d10;
+            else                            iDamage = IP_CONST_MONSTERDAMAGE_3d12;
             break;
 
         default:

@@ -46,5 +46,5 @@ void main()
     SetLocalInt(oPC, PRC_CURRENT_AUGMENT_PROFILE, -nSlot);
 
     //                           "Current augmentation"
-    FloatingTextStringOnCreature(GetStringByStrRef(16823589) + " - " + UserAugmentationProfileToString(GetUserAugmentationProfile(oPC, nSlot)), oPC, FALSE);
+    FloatingTextStringOnCreature(GetStringByStrRef(16823589) + " - " + UserAugmentationProfileToString(GetUserAugmentationProfile(oPC, nSlot, TRUE)), oPC, FALSE);
 }

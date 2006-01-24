@@ -211,8 +211,25 @@ int GetFirstPsionicClass(object oCreature = OBJECT_SELF);
  */
 int GetFirstPsionicClassPosition(object oCreature = OBJECT_SELF);
 
-// Does all the appropriate functions for Psy Warrior unarmed powers.
-void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration);
+/**
+ * Creates the creature weapon for powers like Bite of the Wolf and Claws of the
+ * Beast. If a creature weapon of the correct type is already present, it is
+ * used instead of a new one.
+ *
+ * Preserving existing weapons may cause problems, if so, make the function instead delete the old object - Ornedan
+ *
+ * @param oCreature     Creatue whose creature weapons to mess with.
+ * @param sResRef       Resref of the creature weapon. Assumed to be one of the
+ *                      PRC creature weapons, so this considered to is also be
+ *                      the tag.
+ * @param nIventorySlot Inventory slot where the creature weapon is to be equipped.
+ * @param fDuration     If a new weapon is created, it will be destroyed after
+ *                      this duration.
+ *
+ * @return              The newly created creature weapon. Or an existing weapon,
+ *                      if there was one.
+ */
+object CreatePsionicCreatureWeapon(object oCreature, string sResRef, int nInventorySlot, float fDuration);
 
 /**
  * Gets the amount of manifester levels the given creature is Wild Surging by.
@@ -582,95 +599,83 @@ int GetFirstPsionicClassPosition(object oCreature = OBJECT_SELF)
     return 0;
 }
 
-void DoPsyWarUnarmed(object oCaster, int nPower, int nAugment, float fDuration)
+object GetPsionicCreatureWeapon(object oCreature, string sResRef, int nInventorySlot, float fDuration)
 {
-	int nPsyWar = GetLevelByClass(CLASS_TYPE_PSYWAR, oCaster) + GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCaster);
-	int nDamage;
-	int nEnhance = 0;
-	string sWeapType;
+    int bCreatedWeapon = FALSE;
+    object oCWeapon = GetItemInSlot(nInventorySlot, oCreature);
 
-	RemoveUnarmedAttackEffects(oCaster);
-	// Make sure they can actually equip them
-	UnarmedFeats(oCaster);
+    RemoveUnarmedAttackEffects(oCreature);
+    // Make sure they can actually equip them
+    UnarmedFeats(oCreature);
 
-	object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
-	object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCaster);
-	object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster);
+/*
+    else if (nPower == POWER_CLAWS_BEAST)
+    {
+        // Number of times the power has been augmented determines the damage.
+        if (nAugment >= 9) nDamage = MONST_DAMAGE_5D6;
+        else if (nAugment >= 7) nDamage = MONST_DAMAGE_4D6;
+        else if (nAugment >= 5) nDamage = MONST_DAMAGE_3D6;
+        else if (nAugment >= 3) nDamage = MONST_DAMAGE_2D6;
+        else if (nAugment >= 2) nDamage = MONST_DAMAGE_1D8;
+        else if (nAugment >= 1) nDamage = MONST_DAMAGE_1D6;
+        else nDamage = MONST_DAMAGE_1D4;
+        // Bite attack
+        sWeapType = "PRC_UNARMED_S";
+    }
 
-	if (nPower == POWER_BITE_WOLF)
-	{
-		if (nPsyWar >= 20) nDamage = MONST_DAMAGE_5D8;
-		else if (nPsyWar >= 15) nDamage = MONST_DAMAGE_4D8;
-		else if (nPsyWar >= 10) nDamage = MONST_DAMAGE_3D8;
-		else if (nPsyWar >= 5) nDamage = MONST_DAMAGE_2D8;
-		else nDamage = MONST_DAMAGE_1D8;
-		// Bite attack
-		sWeapType = "PRC_UNARMED_P";
-	}
+    else if (nPower == POWER_METAPHYSICAL_CLAW)
+    {
+        // Number of times the power has been augmented determines the enhancement bonus.
+        if (nAugment >= 5) nEnhance = 5;
+        else if (nAugment >= 4) nEnhance = 4;
+        else if (nAugment >= 3) nEnhance = 3;
+        else if (nAugment >= 2) nEnhance = 2;
+        else nEnhance = 1;
+    }
+*/
+    // Determine if a creature weapon of the proper type already exists in the slot
+    if(!GetIsObjectValid(oCWeapon)                                       ||
+       GetStringUpperCase(GetTag(oCWeapon)) != GetStringUpperCase(sResRef) // Hack: The resref's and tags of the PRC creature weapons are the same
+       )
+    {
+        if (GetHasItem(oCreature, sResRef))
+        {
+            oCWeapon = GetItemPossessedBy(oCreature, sResRef);
+            SetIdentified(oCWeapon, TRUE);
+            //AssignCommand(oCreature, ActionEquipItem(oCWeapon, INVENTORY_SLOT_CWEAPON_L));
+            ForceEquip(oCreature, oCWeapon, nInventorySlot);
+        }
+        else
+        {
+            oCWeapon = CreateItemOnObject(sResRef, oCreature);
+            SetIdentified(oCWeapon, TRUE);
+            //AssignCommand(oCreature, ActionEquipItem(oCWeapon, INVENTORY_SLOT_CWEAPON_L));
+            ForceEquip(oCreature, oCWeapon, nInventorySlot);
+            bCreatedWeapon = TRUE;
+        }
+    }
 
-	else if (nPower == POWER_CLAWS_BEAST)
-	{
-		// Number of times the power has been augmented determines the damage.
-		if (nAugment >= 9) nDamage = MONST_DAMAGE_5D6;
-		else if (nAugment >= 7) nDamage = MONST_DAMAGE_4D6;
-		else if (nAugment >= 5) nDamage = MONST_DAMAGE_3D6;
-		else if (nAugment >= 3) nDamage = MONST_DAMAGE_2D6;
-		else if (nAugment >= 2) nDamage = MONST_DAMAGE_1D8;
-		else if (nAugment >= 1) nDamage = MONST_DAMAGE_1D6;
-		else nDamage = MONST_DAMAGE_1D4;
-		// Bite attack
-		sWeapType = "PRC_UNARMED_S";
-	}
 
-else if (nPower == POWER_METAPHYSICAL_CLAW)
-	{
-		// Number of times the power has been augmented determines the enhancement bonus.
-		if (nAugment >= 5) nEnhance = 5;
-		else if (nAugment >= 4) nEnhance = 4;
-		else if (nAugment >= 3) nEnhance = 3;
-		else if (nAugment >= 2) nEnhance = 2;
-		else nEnhance = 1;
-	}
+    // Clean up the mess of extra fists made on taking first level.
+    DelayCommand(1.0, CleanExtraFists(oCreature));
 
-	// Only create a new creature weapon if one of those powers is called
-	if (nPower = POWER_BITE_WOLF || nPower == POWER_CLAWS_BEAST)
-	{
-		// Equip the creature weapon.
-		if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
-		{
-			if (GetHasItem(oCaster, sWeapType))
-			{
-				oWeapL = GetItemPossessedBy(oCaster, sWeapType);
-				SetIdentified(oWeapL, TRUE);
-				AssignCommand(oCaster, ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
-			}
-			else
-			{
-				oWeapL = CreateItemOnObject(sWeapType, oCaster);
-				SetIdentified(oWeapL, TRUE);
-				AssignCommand(oCaster,ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
-			}
-		}
-	}
+    // Weapon finesse or intuitive attack?
+    SetLocalInt(oCreature, "UsingCreature", TRUE);
+    ExecuteScript("prc_intuiatk", oCreature);
+    DelayCommand(1.0f, DeleteLocalInt(oCreature, "UsingCreature"));
 
-	// Clean up the mess of extra fists made on taking first level.
-	DelayCommand(1.0,CleanExtraFists(oCaster));
+    // Add OnHitCast: Unique if necessary
+    if(GetHasFeat(FEAT_REND, oCreature))
+        IPSafeAddItemProperty(oCWeapon, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
-	// Weapon finesse or intuitive attack?
-	SetLocalInt(oCaster, "UsingCreature", TRUE);
-	ExecuteScript("prc_intuiatk", oCaster);
-	DelayCommand(1.0f, DeleteLocalInt(oCaster, "UsingCreature"));
+    // This adds creature weapon finesse
+    ApplyUnarmedAttackEffects(oCreature);
 
-	// Add the appropriate damage to the fist.
-	AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyMonsterDamage(nDamage),oWeapL, fDuration);
-	// Enhancement bonus from Metaphsyical Claw
-	AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyEnhancementBonus(nEnhance),oWeapL, fDuration);
+    // Destroy the weapon if it was created by this function
+    if(bCreatedWeapon)
+        DestroyObject(oCWeapon, (fDuration + 6.0));
 
-	// This adds creature weapon finesse
-	ApplyUnarmedAttackEffects(oCaster);
-
-	// This is so you dont keep the claws after the duration ends
-	DestroyObject(oWeapL, (fDuration + 6.0));
+    return oCWeapon;
 }
 
 int GetWildSurge(object oManifester)

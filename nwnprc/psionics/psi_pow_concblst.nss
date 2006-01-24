@@ -78,7 +78,7 @@ void main()
         int nExtraTargets = manif.nTimesAugOptUsed_2;
         int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
         int nDieSize      = 6;
-        effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
+        effect eVis       = EffectVisualEffect(VFX_IMP_SONIC);
 
         // Hit the main target
         SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);
@@ -86,7 +86,7 @@ void main()
         DoPower(manif, oMainTarget, nDC, nPen, nExtraTargets, nNumberOfDice, nDieSize, eVis);
         if(manif.bTwin)
             DoPower(manif, oMainTarget, nDC, nPen, nExtraTargets, nNumberOfDice, nDieSize, eVis);
-    }
+    }// end if - Successfull manifestation
 }
 
 void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, int nExtraTargets,
@@ -117,7 +117,10 @@ void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, 
         object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         while(GetIsObjectValid(oAreaTarget) && nExtraTargets > 0)
         {
-            if(oAreaTarget != manif.oManifester && spellsIsTarget(oAreaTarget, SPELL_TARGET_SELECTIVEHOSTILE, manif.oManifester))
+            if(oAreaTarget != manif.oManifester                                             && // Do not affect self
+               oAreaTarget != oMainTarget                                                   && // Do not affect the main target twice
+               spellsIsTarget(oAreaTarget, SPELL_TARGET_SELECTIVEHOSTILE, manif.oManifester)   // Pick only hostiles
+               )
             {
                 //Fire cast spell at event for the specified target
                 SPRaiseSpellCastAt(oAreaTarget, TRUE, manif.nSpellID, manif.oManifester);
@@ -140,6 +143,6 @@ void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, 
 
             //Select the next target within the spell shape.
             oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-        }
-    }
+        }// end while - Target loop
+    }// end if - The power has other targets besides the primary one
 }

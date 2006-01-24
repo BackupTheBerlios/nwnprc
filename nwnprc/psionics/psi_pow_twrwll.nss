@@ -100,7 +100,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
 
             // Start the monitor
-            DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6);
+            DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6));
 
             // Get next target
             oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);

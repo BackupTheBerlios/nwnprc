@@ -64,7 +64,7 @@
        additional secondary target. Any additional secondary target cannot be
        more than 15 feet from another target of the power.
 
-    @todo 2da, adjust based on replies in http://boards1.wizards.com/showthread.php?t=571712
+    @todo 2da
 */
 
 #include "psi_inc_psifunc"
@@ -73,17 +73,27 @@
 #include "spinc_common"
 #include "psi_inc_enrgypow"
 
+
 const string SECONDARY_TARGETS_ARRAY = "PRC_Power_EnergyCurrent_SecondaryTargets";
+
+
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
 
 void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj,
                      object oMainTarget, int nDC, int nPen, int nNumberOfDice, int nSecondaryTargets, float fRange,
-                     location lManifesterOld, int nBeatsRemaining);
+                     location lManifesterOld, int nBeatsRemaining, int bFirst);
 
-void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondaryTargets);
+void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondaryTargets, int nPen);
 
 void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments enAdj,
                            object oMainTarget, int nDC, int nPen, int nNumberOfDice);
 
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
 
 void main()
 {
@@ -135,7 +145,7 @@ void main()
             }
 
             // Start the heartbeat
-            EnergyCurrentHB(manif, enAdj, oMainTarget, nDC, nPen, nNumberOfDice, nSecondaryTargets, fRange, GetLocation(oManifester), FloatToInt(fDuration) / 6);
+            EnergyCurrentHB(manif, enAdj, oMainTarget, nDC, nPen, nNumberOfDice, nSecondaryTargets, fRange, GetLocation(oManifester), FloatToInt(fDuration) / 6, TRUE);
         }// end if - Successfull manifestation
     }// end if - Manifesting the power
     else
@@ -148,19 +158,19 @@ void main()
            GetBaseItemType(oItem) == BASE_ITEM_CREATUREITEM
            )
         {
-        	// DC 10 + damage dealt to keep the Energy Current running
-        	if(!GetIsSkillSuccessful(oManifester, SKILL_CONCENTRATION, (10 + GetTotalDamageDealt())))
-        	{
-        		// Set a marker that tells the HB to stop
-        		SetLocalInt(oManifester, "PRC_Power_EnergyCurrent_ConcentrationBroken", TRUE);
-        	}
+            // DC 10 + damage dealt to keep the Energy Current running
+            if(!GetIsSkillSuccessful(oManifester, SKILL_CONCENTRATION, (10 + GetTotalDamageDealt())))
+            {
+                // Set a marker that tells the HB to stop
+                SetLocalInt(oManifester, "PRC_Power_EnergyCurrent_ConcentrationBroken", TRUE);
+            }
         }// end if - Manifester was the one hit in the triggering attack
     }// end else - Running eventhook
 }
 
 void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj,
                      object oMainTarget, int nDC, int nPen, int nNumberOfDice, int nSecondaryTargets, float fRange,
-                     location lManifesterOld, int nBeatsRemaining)
+                     location lManifesterOld, int nBeatsRemaining, int bFirst)
 {
     // Check expiration
     if(!GetLocalInt(manif.oManifester, "PRC_Power_EnergyCurrent_ConcentrationBroken")                   && // The manifester's concentration hasn't been broken due to damage
@@ -172,9 +182,11 @@ void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj
     {
         location lManifester = GetLocation(manif.oManifester);
         // First, check if the primary target needs to be switched
-        if(!GetIsObjectValid(oMainTarget)                              || // The creature no longer exists
-           GetCurrentHitPoints(oMainTarget) < 0                        || // The creature's HP has gone under zero
-           GetDistanceBetween(manif.oManifester, oMainTarget) > fRange    // The creature is out of the power's range
+        if(!bFirst                                                     &&  // Don't reselect even if the original primary target succeeded at it's PR
+           (!GetIsObjectValid(oMainTarget)                              || // The creature no longer exists
+            GetCurrentHitPoints(oMainTarget) < 0                        || // The creature's HP has gone under zero
+            GetDistanceBetween(manif.oManifester, oMainTarget) > fRange    // The creature is out of the power's range
+            )
            )
         {
             // Select a new main target
@@ -198,6 +210,13 @@ void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj
             // Select the hostile creature closest to the manifester
             oMainTarget = GetTargetListHead(manif.oManifester);
 
+            // Power resistance
+            if(!PRCMyResistPower(manif.oManifester, oMainTarget, nPen))
+            {
+                // Set the target to be invalid - No current this round
+                oMainTarget = OBJECT_INVALID;
+            }
+
             // Nuke the secondary targets array so we are forced to fully recalculate it
             array_delete(manif.oManifester, SECONDARY_TARGETS_ARRAY);
         }// end if - Main target selection
@@ -210,7 +229,7 @@ void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj
                 array_create(manif.oManifester, SECONDARY_TARGETS_ARRAY);
 
             // If the array contains empty slots or slots with creatures that are now outside the range, reselect secondary targets
-            SecondaryTargetsCheck(manif.oManifester, oMainTarget, nSecondaryTargets);
+            SecondaryTargetsCheck(manif.oManifester, oMainTarget, nSecondaryTargets, nPen);
 
             // Run the actual damage dealing
             DoEnergyCurrentDamage(manif, enAdj, oMainTarget, nDC, nPen, nNumberOfDice);
@@ -218,9 +237,9 @@ void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj
 
         // Schedule next HB
         DelayCommand(6.0f, EnergyCurrentHB(manif, enAdj, oMainTarget, nDC, nPen, nNumberOfDice,
-                                           nSecondaryTargets, fRange, lManifester, nBeatsRemaining
+                                           nSecondaryTargets, fRange, lManifester, nBeatsRemaining, FALSE
                                            )
-                      );
+                     );
     }
     // Power expired for some reason, make sure VFX are gone
     else
@@ -232,7 +251,7 @@ void EnergyCurrentHB(struct manifestation manif, struct energy_adjustments enAdj
     }
 }
 
-void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondaryTargets)
+void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondaryTargets, int nPen)
 {
     int i, nFirstEmpty = -1;
     float fRange = FeetToMeters(15.0f);
@@ -242,11 +261,17 @@ void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondar
     {
         // Check if each of the secondary targets still qualifies
         oTest = array_get_object(oManifester, SECONDARY_TARGETS_ARRAY, i);
+//DoDebug("SecondaryTargetsCheck(): Testing if needs replacement: " + DebugObject2Str(oTest));
         if(!GetIsObjectValid(oTest)                              || // The creature no longer exists
            GetCurrentHitPoints(oTest) < 0                        || // The creature's HP has gone under zero
            GetDistanceBetween(oTest, oMainTarget) > fRange          // The creature is out of the power's range
            )
         {
+/*DoDebug("SecondaryTargetsCheck(): Needs replacement\n"
+      + "!GetIsObjectValid(oTest) = " + BooleanToString(!GetIsObjectValid(oTest)) + "\n"
+      + "GetCurrentHitPoints(oTest) < 0 = " + BooleanToString(GetCurrentHitPoints(oTest) < 0) + "\n"
+      + "GetDistanceBetween(oTest, oMainTarget) > fRange = " + BooleanToString(GetDistanceBetween(oTest, oMainTarget) > fRange) + "\n"
+        );*/
             // If one doesn't, clear the array entry and set the return value to indicate that secondary targets need to be reselected
             array_set_object(oManifester, SECONDARY_TARGETS_ARRAY, i, OBJECT_INVALID);
 
@@ -259,12 +284,23 @@ void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondar
     // If the secondary targets need reselection, do so
     if(nFirstEmpty != -1)
     {
+        // An array to store names of temporary variables in
+        if(array_exists(oManifester, "PRC_Power_EnCur_Temp"))
+            array_delete(oManifester, "PRC_Power_EnCur_Temp");
+        array_create(oManifester, "PRC_Power_EnCur_Temp");
+
+        string sName;
+
         // Store the UIDs (memory address) of the current valid secondary targets into a hash table
         for(i = 0; i < nSecondaryTargets; i++)
         {
             oTest = array_get_object(oManifester, SECONDARY_TARGETS_ARRAY, i);
             if(oTest != OBJECT_INVALID)// Do not store OBJECT_INVALID, since it wouldn't get cleared after reselection
-                SetLocalInt(oManifester, "PRC_Power_EnCur_Target_" + ObjectToString(oTest), TRUE );
+            {
+                sName = "PRC_Power_EnCur_Target_" + ObjectToString(oTest);
+                SetLocalInt(oManifester, sName, TRUE);
+                array_set_string(oManifester, "PRC_Power_EnCur_Temp", array_get_size(oManifester, "PRC_Power_EnCur_Temp"), sName);
+            }
         }
 
         // Get creatures that are eligible for secondary targethood until all slots are filled
@@ -281,11 +317,18 @@ void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondar
                spellsIsTarget(oTest, SPELL_TARGET_SELECTIVEHOSTILE, oManifester)               // And the target is hostile
                )
             {
+                // Power resistance
+                if(!PRCMyResistPower(oManifester, oTest, nPen))
+                {
+                    // Set the target to be invalid - The slot will be left empty this round
+                    oTest = OBJECT_INVALID;
+                }
+
                 // Store the target in the secondary target array
                 array_set_object(oManifester, SECONDARY_TARGETS_ARRAY, i, oTest);
 
                 // Find next empty slot
-                while(GetIsObjectValid(array_get_object(oManifester, SECONDARY_TARGETS_ARRAY, ++i)))
+                while(array_get_object(oManifester, SECONDARY_TARGETS_ARRAY, ++i) != OBJECT_INVALID)
                     ;
             }
 
@@ -294,12 +337,16 @@ void SecondaryTargetsCheck(object oManifester, object oMainTarget, int nSecondar
         }// end while - Target selection loop
 
         // Remove the UID locals
-        for(i = 0; i < nSecondaryTargets; i++)
+        int nMax = nSecondaryTargets;//array_get_size(oManifester, "PRC_Power_EnCur_Temp");
+        for(i = 0; i < nMax; i++)
         {
+            DeleteLocalInt(oManifester, array_get_string(oManifester, "PRC_Power_EnCur_Temp", i));
             DeleteLocalInt(oManifester, "PRC_Power_EnCur_Target_"
                          + ObjectToString(array_get_object(oManifester, SECONDARY_TARGETS_ARRAY, i))
                            );
         }
+
+        array_delete(oManifester, "PRC_Power_EnCur_Temp");
     }// end if - Reselect secondary targets
 }
 
@@ -339,6 +386,9 @@ void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oMainTarget);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oMainTarget);
 
+        // Secondary targets take half the amount the primary took
+        nDamage /= 2;
+
         // Deal with the secondary targets
         for(i = 0; i < array_get_size(manif.oManifester, SECONDARY_TARGETS_ARRAY); i++)
         {
@@ -354,17 +404,17 @@ void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments
             {
                 // Cold has a fort save for half
                 if(PRCMySavingThrow(SAVING_THROW_FORT, oSecondaryTarget, nDC, enAdj.nSaveType))
-                    nDamage /= 2;
+                    nSecondaryDamage /= 2;
             }
             else
                 // Adjust damage according to Reflex Save, Evasion or Improved Evasion
-                nDamage = PRCGetReflexAdjustedDamage(nDamage, oSecondaryTarget, nDC, enAdj.nSaveType);
+                nSecondaryDamage = PRCGetReflexAdjustedDamage(nSecondaryDamage, oSecondaryTarget, nDC, enAdj.nSaveType);
 
             // Fire the ray
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(enAdj.nVFX2, oMainTarget, BODY_NODE_CHEST, nDamage == 0), oSecondaryTarget, 1.7f, FALSE);
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(enAdj.nVFX2, oMainTarget, BODY_NODE_CHEST, nSecondaryDamage == 0), oSecondaryTarget, 1.7f, FALSE);
 
             // Deal damage if the target didn't Evade it
-            if(nDamage > 0)
+            if(nSecondaryDamage > 0)
             {
                 eDamage = EffectDamage(nSecondaryDamage, enAdj.nDamageType);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oSecondaryTarget);

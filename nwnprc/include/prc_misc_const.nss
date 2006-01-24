@@ -132,3 +132,29 @@ const int DISCIPLINE_PSYCHOPORTATION  = 3;
 const int DISCIPLINE_CLAIRSENTIENCE   = 4;
 const int DISCIPLINE_METACREATIVITY   = 5;
 const int DISCIPLINE_TELEPATHY        = 6;
+
+
+//:://////////////////////////////////////////////
+//:: Polymorph Const
+//:://////////////////////////////////////////////
+
+const int POLYMORPH_TYPE_WOLF_0                    = 133;
+const int POLYMORPH_TYPE_WOLF_1                    = 134;
+const int POLYMORPH_TYPE_WOLF_2                    = 135;
+const int POLYMORPH_TYPE_WEREWOLF_0                = 136;
+const int POLYMORPH_TYPE_WEREWOLF_1                = 137;
+const int POLYMORPH_TYPE_WEREWOLF_2                = 138;
+
+const int POLYMORPH_TYPE_WOLF_0s                   = 139;
+const int POLYMORPH_TYPE_WOLF_1s                   = 140;
+const int POLYMORPH_TYPE_WOLF_2s                   = 141;
+const int POLYMORPH_TYPE_WEREWOLF_0s               = 142;
+const int POLYMORPH_TYPE_WEREWOLF_1s               = 143;
+const int POLYMORPH_TYPE_WEREWOLF_2s               = 144;
+
+const int POLYMORPH_TYPE_WOLF_0l                   = 145;
+const int POLYMORPH_TYPE_WOLF_1l                   = 146;
+const int POLYMORPH_TYPE_WOLF_2l                   = 147;
+const int POLYMORPH_TYPE_WEREWOLF_0l               = 148;
+const int POLYMORPH_TYPE_WEREWOLF_1l               = 149;
+const int POLYMORPH_TYPE_WEREWOLF_2l               = 150;

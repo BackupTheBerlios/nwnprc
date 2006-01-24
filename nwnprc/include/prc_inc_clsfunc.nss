@@ -171,9 +171,6 @@ void CreateBottleOnObject(object oPC, string sTag);
 // damage effect.
 int GetCreatureDamage(object oTarget = OBJECT_SELF);
 
-// See if oTarget has a free hand to weild an empty bottle with.
-int GetHasFreeHand(object oTarget = OBJECT_SELF);
-
 // Have non-drunken masters burp after drinking alcohol.
 void DrinkIt(object oTarget);
 
@@ -275,7 +272,10 @@ void RemoveDrunkenRageEffects(object oTarget = OBJECT_SELF)
     SetLocalInt(oTarget, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
 }
 
-
+/**
+ * @deprecated Use prc_inc_combat stuff instead
+ * @todo Remove
+ */
 int GetCreatureDamage(object oTarget = OBJECT_SELF)
 {
 int nDamage = 0;
@@ -534,23 +534,6 @@ if(nDamage == 0)//oItem =='d OBJECT_INVALID
 return nDamage;
 }
 
-int GetHasFreeHand(object oTarget = OBJECT_SELF)
-{
-// Check to see if one hand is free:
-if(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget) == OBJECT_INVALID)
-    {
-    return TRUE;
-    }
-else if(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget) == OBJECT_INVALID)
-    {
-    return TRUE;
-    }
-else
-    {
-    return FALSE;
-    }
-}
-
 void DrinkIt(object oTarget)
 {
    AssignCommand(oTarget, ActionSpeakStringByStrRef(10499));
@@ -647,7 +630,7 @@ int AddDrunkenMasterSkinProperties(object oPC, object oSkin)
 
 ////////////////Begin Samurai//////////////////
 
-
+// This function is probably utterly broken: the match found variable is not reset in the loop and the returned value will be equal to the last match - Ornedan
 int GetPropertyValue(object oWeapon, int iType, int iSubType = -1, int bDebug = FALSE);
 
 int GetPropertyValue(object oWeapon, int iType, int iSubType = -1, int bDebug = FALSE)
@@ -1363,7 +1346,7 @@ void UnholyStrike()
 ////////////////End Martial Strike//////////////////
 
 ////////////////Begin Soldier of Light Spells//////////////////
-
+/* As far as I can tell, not used at all - Ornedan
 void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID)
 {
     //Declare major variables
@@ -1442,7 +1425,7 @@ void spellsCureMod(int nCasterLvl ,int nDamage, int nMaxExtraDamage, int nMaximi
         }
     }
 }
-
+*/
 ////////////////End Soldier of Light Spells//////////////////
 
 ////////////////Begin Master Harper Instruments//////////////////
@@ -1483,29 +1466,6 @@ void UnactiveModeCIMM(object oTarget)
 ////////////////End Master Harper Instruments//////////////////
 
 ////////////////Begin Werewolf//////////////////
-
-// polymorph.2da
-
-const int POLYMORPH_TYPE_WOLF_0                    = 133;
-const int POLYMORPH_TYPE_WOLF_1                    = 134;
-const int POLYMORPH_TYPE_WOLF_2                    = 135;
-const int POLYMORPH_TYPE_WEREWOLF_0                = 136;
-const int POLYMORPH_TYPE_WEREWOLF_1                = 137;
-const int POLYMORPH_TYPE_WEREWOLF_2                = 138;
-
-const int POLYMORPH_TYPE_WOLF_0s                   = 139;
-const int POLYMORPH_TYPE_WOLF_1s                   = 140;
-const int POLYMORPH_TYPE_WOLF_2s                   = 141;
-const int POLYMORPH_TYPE_WEREWOLF_0s               = 142;
-const int POLYMORPH_TYPE_WEREWOLF_1s               = 143;
-const int POLYMORPH_TYPE_WEREWOLF_2s               = 144;
-
-const int POLYMORPH_TYPE_WOLF_0l                   = 145;
-const int POLYMORPH_TYPE_WOLF_1l                   = 146;
-const int POLYMORPH_TYPE_WOLF_2l                   = 147;
-const int POLYMORPH_TYPE_WEREWOLF_0l               = 148;
-const int POLYMORPH_TYPE_WEREWOLF_1l               = 149;
-const int POLYMORPH_TYPE_WEREWOLF_2l               = 150;
 
 // Used to polymorph characters to lycanthrope shapes
 // Merges Weapons, Armors, Items if told to by 2da.
@@ -1813,16 +1773,6 @@ void CorpseCrafter(object oPC, object oSummon)
 
 ////////////////Begin Ninja//////////////
 
-int GetIsEncumbered (object oPC)
-{
-    // FIXME: 2da lookups are SLOW.
-    int iStrength = GetAbilityScore(oPC, ABILITY_STRENGTH);
-    if (iStrength > 50)
-        return FALSE; // encumbrance.2da doesn't go that high, so automatic success
-    if (GetWeight(oPC) > StringToInt(Get2DACache("encumbrance", "Normal", iStrength)))
-        return TRUE;
-    return FALSE;
-}
 void Ninja_DecrementKi (object oPC, int iExcept = -1)
 {
     if (iExcept != FEAT_KI_POWER)

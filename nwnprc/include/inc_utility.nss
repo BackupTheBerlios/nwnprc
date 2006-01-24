@@ -286,6 +286,22 @@ void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0);
 void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE);
 
 /**
+ * Checks either of the given creature's hand slots are empty.
+ *
+ * @param oCreature Creature whose hand slots to check
+ * @return          TRUE if either hand slot is empty, FALSE otherwise
+ */
+int GetHasFreeHand(object oCreature);
+
+/**
+ * Determines whether the creature is encumbered by it's carried items.
+ *
+ * @param oCreature Creature whose encumberment to determine
+ * @return          TRUE if the creature is encumbered, FALSE otherwise
+ */
+int GetIsEncumbered(object oCreature);
+
+/**
  * Try to identify all unidentified objects within the given creature's inventory
  * using it's skill ranks in lore.
  *
@@ -773,6 +789,22 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0)
 
     // Loop
     DelayCommand(fDelay, ForceUnequip(oPC, oItem, nSlot, ++nThCall));
+}
+
+int GetHasFreeHand(object oCreature)
+{
+    return GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature) == OBJECT_INVALID ||
+           GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature)  == OBJECT_INVALID;
+}
+
+int GetIsEncumbered(object oCreature)
+{
+    int iStrength = GetAbilityScore(oCreature, ABILITY_STRENGTH);
+    if (iStrength > 50)
+        return FALSE; // encumbrance.2da doesn't go that high, so automatic success
+    if (GetWeight(oCreature) > StringToInt(Get2DACache("encumbrance", "Normal", iStrength)))
+        return TRUE;
+    return FALSE;
 }
 
 void TryToIDItems(object oPC = OBJECT_SELF)

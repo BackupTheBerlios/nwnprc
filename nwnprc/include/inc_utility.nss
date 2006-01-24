@@ -381,7 +381,15 @@ string DebugIProp2Str(itemproperty iprop);
  */
 float GetRelativeAngleBetweenLocations(location lFrom, location lTo);
 
-
+/**
+ * Returns the same string you would get if you examined the item in-game
+ * Uses 2da & tlk lookups and should work for custom itemproperties too
+ *
+ * @param ipTest Itemproperty you want to get the string of
+ *
+ * @return       A string of the itemproperty, including spaces and bracket where appropriate
+ */
+string ItemPropertyToString(itemproperty ipTest);
 //////////////////////////////////////////////////
 /* Include section                              */
 //////////////////////////////////////////////////
@@ -968,4 +976,35 @@ float GetRelativeAngleBetweenLocations(location lFrom, location lTo)
         fAngle = 360.0f -fAngle;
 
     return fAngle;
+}
+
+string ItemPropertyToString(itemproperty ipTest)
+{
+    int nIPType = GetItemPropertyType(ipTest);
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "GameStrRef", nIPType)));
+    if(GetItemPropertySubType(ipTest) != -1)//nosubtypes
+    {
+        string sSubTypeResRef =Get2DACache("itempropdef", "SubTypeResRef", nIPType);
+        int nTlk = StringToInt(Get2DACache(sSubTypeResRef, "Name", GetItemPropertySubType(ipTest)));
+        if(nTlk > 0)
+            sName += " "+GetStringByStrRef(nTlk);
+    }
+    if(GetItemPropertyParam1(ipTest) != -1)
+    {
+        string sParamResRef =Get2DACache("iprp_paramtable", "TableResRef", GetItemPropertyParam1(ipTest));
+        if(Get2DACache("itempropdef", "SubTypeResRef", nIPType) != ""
+            && Get2DACache(Get2DACache("itempropdef", "SubTypeResRef", nIPType), "TableResRef", GetItemPropertyParam1(ipTest)) != "")
+            sParamResRef =Get2DACache(Get2DACache("itempropdef", "SubTypeResRef", nIPType), "TableResRef", GetItemPropertyParam1(ipTest));
+        int nTlk = StringToInt(Get2DACache(sParamResRef, "Name", GetItemPropertyParam1Value(ipTest)));
+        if(nTlk > 0)
+            sName += " "+GetStringByStrRef(nTlk);
+    }
+    if(GetItemPropertyCostTable(ipTest) != -1)
+    {
+        string sCostResRef =Get2DACache("iprp_costtable", "Name", GetItemPropertyCostTable(ipTest));
+        int nTlk = StringToInt(Get2DACache(sCostResRef, "Name", GetItemPropertyCostTableValue(ipTest)));
+        if(nTlk > 0)
+            sName += " "+GetStringByStrRef(nTlk);
+    }
+    return sName;
 }

@@ -30,7 +30,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ANARCHY_DC, ANARCHY_S, ANARCHY_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ANARCHY))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
         float fDuration = RoundsToSeconds(20);

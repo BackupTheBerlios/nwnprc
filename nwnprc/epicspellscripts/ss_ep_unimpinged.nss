@@ -8,7 +8,7 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 //#include "prc_alterations"
 #include "x2_inc_spellhook"
@@ -23,9 +23,9 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, UNIMPIN_DC, UNIMPIN_S, UNIMPIN_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_UNIMPIN))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
         int nDuration = nCasterLvl + 10;
         float fDuration = RoundsToSeconds(nDuration);

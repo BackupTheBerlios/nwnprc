@@ -24,7 +24,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ORDER_R_DC, ORDER_R_S, ORDER_R_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ORDER_R))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
 

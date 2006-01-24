@@ -23,7 +23,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, RUIN_DC, RUIN_S, RUIN_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_RUIN))
     {
         //Declare major variables
         object oTarget = PRCGetSpellTargetObject();

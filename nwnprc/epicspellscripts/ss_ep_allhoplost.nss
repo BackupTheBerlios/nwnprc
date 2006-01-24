@@ -28,7 +28,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ALLHOPE_DC, ALLHOPE_S, ALLHOPE_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ALLHOPE))
     {
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
         float fDuration = RoundsToSeconds(20);

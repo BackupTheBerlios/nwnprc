@@ -2,7 +2,7 @@
 //:: Epic Spell: Superb Dispelling
 //:: Author: Boneshank (Don Armstrong)
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "inc_dispel"
@@ -18,13 +18,13 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, SUP_DIS_DC, SUP_DIS_S, SUP_DIS_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_SUP_DIS))
     {
         effect   eVis         = EffectVisualEffect(VFX_IMP_BREACH);
         effect   eImpact      = EffectVisualEffect(VFX_FNF_DISPEL_GREATER);
         int      nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
-        object   oTarget      = GetSpellTargetObject();
-        location lLocal       = GetSpellTargetLocation();
+        object   oTarget      = PRCGetSpellTargetObject();
+        location lLocal       = PRCGetSpellTargetLocation();
         // If this option has been enabled, the caster will take the damage
         // as he/she should in accordance with the ELHB.
         if (GetPRCSwitch(PRC_EPIC_BACKLASH_DAMAGE) == TRUE)
@@ -47,7 +47,7 @@ void main()
         // Area of Effect - Only dispel best effect
         else
         {
-            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
             oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE);
             while (GetIsObjectValid(oTarget))
             {

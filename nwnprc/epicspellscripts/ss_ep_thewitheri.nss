@@ -24,7 +24,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, THEWITH_DC, THEWITH_S, THEWITH_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_THEWITH))
     {
         object oTarget = PRCGetSpellTargetObject();
         int nDuration = 60; // Lasts 20 rounds, but fires thrice per round.

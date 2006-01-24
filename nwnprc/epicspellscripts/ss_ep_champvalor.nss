@@ -7,7 +7,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
@@ -22,9 +22,9 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, CHAMP_V_DC, CHAMP_V_S, CHAMP_V_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_CHAMP_V))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
         int nDuration = nCasterLvl / 4;
         if (nDuration < 5)

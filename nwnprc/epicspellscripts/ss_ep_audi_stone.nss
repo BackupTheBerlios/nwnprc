@@ -21,7 +21,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, A_STONE_DC, A_STONE_S, A_STONE_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_A_STONE))
     {
         float fDelay;
         effect eExplode = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);

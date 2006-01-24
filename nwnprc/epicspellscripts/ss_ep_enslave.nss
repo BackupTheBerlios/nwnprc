@@ -34,7 +34,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ENSLAVE_DC, ENSLAVE_S, ENSLAVE_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ENSLAVE))
     {
         //Declare major variables
         object oTarget = PRCGetSpellTargetObject();

@@ -24,7 +24,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, DWEO_TH_DC, DWEO_TH_S, DWEO_TH_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_DWEO_TH))
     {
         object oTarget = PRCGetSpellTargetObject();
         int nTargetSpell;

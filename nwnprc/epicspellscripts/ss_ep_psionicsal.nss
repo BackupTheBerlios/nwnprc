@@ -24,7 +24,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, PSION_S_DC, PSION_S_S, PSION_S_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_PSION_S))
     {
         object oTarget = PRCGetSpellTargetObject();
         //Fire cast spell at event for the specified target

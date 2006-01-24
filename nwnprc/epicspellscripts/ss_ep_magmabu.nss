@@ -29,7 +29,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, MAGMA_B_DC, MAGMA_B_S, MAGMA_B_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_MAGMA_B))
     {
         // Declare major variables
         object oCaster = OBJECT_SELF;

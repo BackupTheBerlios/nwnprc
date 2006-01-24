@@ -23,7 +23,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ARMY_UN_DC, ARMY_UN_S, ARMY_UN_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ARMY_UN))
     {
         effect eRez, eHeal, eBLD, eLink;
         effect eVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_10);

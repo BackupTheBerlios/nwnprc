@@ -18,7 +18,7 @@
 #include "inc_epicspells"
 #include "inc_dispel"
 #include "x2_inc_spellhook"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void RunHeel(object oTarget, int nDuration);
 
@@ -32,7 +32,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ACHHEEL_DC, ACHHEEL_S, ACHHEEL_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ACHHEEL))
     {
         //Declare major variables
         object oPC = OBJECT_SELF;

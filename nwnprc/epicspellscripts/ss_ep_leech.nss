@@ -10,27 +10,27 @@
 // Last Updated: 03/16/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, LEECH_F_DC, LEECH_F_S, LEECH_F_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_LEECH_F))
     {
 
         //Declare variables
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
         int nToAffect = nCasterLevel;
-        location lTarget = GetSpellTargetLocation();
+        location lTarget = PRCGetSpellTargetLocation();
 
         // Visual effect creations
         effect eImpact = EffectVisualEffect( VFX_FNF_GAS_EXPLOSION_EVIL );
@@ -50,5 +50,5 @@ void main()
         ApplyEffectAtLocation( DURATION_TYPE_TEMPORARY, eAOE,
             lTarget, RoundsToSeconds(nCasterLevel) );
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

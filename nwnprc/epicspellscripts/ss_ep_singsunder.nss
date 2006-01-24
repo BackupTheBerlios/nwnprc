@@ -24,13 +24,13 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, SINGSUN_DC, SINGSUN_S, SINGSUN_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_SINGSUN))
     {
         object oTarget = PRCGetSpellTargetObject();
         effect eImp = EffectVisualEffect(VFX_IMP_BREACH);
         effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
         object oItem = GetSunderTarget(oTarget);
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
         // Does the target have an equipped item to sunder?
         if (oItem != OBJECT_INVALID)
         {

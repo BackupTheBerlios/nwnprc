@@ -9,27 +9,27 @@
 // Last Updated: 03/16/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 #include "inc_epicspells"
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, TOLO_KW_DC, TOLO_KW_S, TOLO_KW_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_TOLO_KW))
     {
         //Declare variables
         int nCasterLevel = GetTotalCastingLevel(OBJECT_SELF);
         int nToAffect = nCasterLevel;
-        location lTarget = GetSpellTargetLocation();
+        location lTarget = PRCGetSpellTargetLocation();
 
         // Visual effect creations
         effect eImpact = EffectVisualEffect( 262 );
@@ -48,5 +48,5 @@ void main()
         //Create an instance of the AOE Object
         ApplyEffectAtLocation( DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(10) );
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

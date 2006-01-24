@@ -24,7 +24,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ANBLAST_DC, ANBLAST_S, ANBLAST_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ANBLAST))
     {
         float fDelay;
         int nDam;

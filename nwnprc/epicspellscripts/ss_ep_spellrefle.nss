@@ -23,7 +23,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, EP_SP_R_DC, EP_SP_R_S, EP_SP_R_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_EP_SP_R))
     {
         object oTarget = GetSpellTargetObject();
         //object oSkin;

@@ -51,7 +51,7 @@ void main()
     // HUMANOID SPELL ONLY!!!!
     if (AmIAHumanoid(oTarget))
     {
-        if (GetCanCastSpell(OBJECT_SELF, NAILSKY_DC, NAILSKY_S, NAILSKY_XP))
+        if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_NAILSKY))
         {
             //Declare major variables
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));

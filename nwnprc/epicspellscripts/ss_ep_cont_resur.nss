@@ -9,7 +9,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "inc_dispel"
@@ -28,10 +28,10 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    object oTarget = GetSpellTargetObject();
-    if (GetCanCastSpell(OBJECT_SELF, CON_RES_DC, CON_RES_S, CON_RES_XP))
+    object oTarget = PRCGetSpellTargetObject();
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_CON_RES))
     {
-        object oTarget = GetSpellTargetObject();
+        object oTarget = PRCGetSpellTargetObject();
         effect eVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_20);
         effect eVisFail = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
         // If the target is of a race that could be resurrected, go ahead.

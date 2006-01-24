@@ -11,15 +11,15 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, GR_SP_RE_DC, GR_SP_RE_S, GR_SP_RE_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_GR_SP_RE))
     {
         object oTarget = PRCGetSpellTargetObject();
         effect eSR = EffectSpellResistanceIncrease(35);
@@ -34,5 +34,5 @@ void main()
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(20), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF));
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

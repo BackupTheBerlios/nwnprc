@@ -33,7 +33,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, GR_TIME_DC, GR_TIME_S, GR_TIME_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_GR_TIME))
     {
         location lTarget = GetSpellTargetLocation();
         effect eVis = EffectVisualEffect(VFX_FNF_TIME_STOP);

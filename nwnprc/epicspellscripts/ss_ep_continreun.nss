@@ -9,25 +9,25 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, CON_REU_DC, CON_REU_S, CON_REU_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_CON_REU))
     {
         // Is the target a place, creature, or object?
-        object oTarget = GetSpellTargetObject();
-        location lTarget = GetSpellTargetLocation();
+        object oTarget = PRCGetSpellTargetObject();
+        location lTarget = PRCGetSpellTargetLocation();
         effect eVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_20);
         if (oTarget != OBJECT_INVALID)
         {
@@ -52,6 +52,6 @@ void main()
         AssignCommand(OBJECT_SELF, ActionStartConversation(OBJECT_SELF,
             "ss_cont_reunion", TRUE, FALSE));
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

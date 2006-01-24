@@ -24,7 +24,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, PLANCEL_DC, PLANCEL_S, PLANCEL_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_PLANCEL))
     {
         object oTarget = PRCGetSpellTargetObject();
         location lTarget = PRCGetSpellTargetLocation();

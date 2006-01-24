@@ -9,15 +9,15 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, ET_FREE_DC, ET_FREE_S, ET_FREE_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ET_FREE))
     {
         //Declare major variables
         object oTarget = PRCGetSpellTargetObject();
@@ -67,9 +67,9 @@ void main()
 
         DelayCommand(6.0, GiveFeat(oTarget, 398));
         FloatingTextStringOnCreature("You have gained the ability " +
-	                             "to move freely at all times!", oTarget, FALSE);
+                                 "to move freely at all times!", oTarget, FALSE);
 
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

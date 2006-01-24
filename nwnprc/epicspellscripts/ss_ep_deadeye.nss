@@ -6,28 +6,28 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"
 //#include "prc_alterations"
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, DEADEYE_DC, DEADEYE_S, DEADEYE_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_DEADEYE))
     {
-        object oTarget = GetSpellTargetObject();
-	  int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
+        object oTarget = PRCGetSpellTargetObject();
+      int nCasterLvl = GetTotalCastingLevel(OBJECT_SELF);
         int nDuration = nCasterLvl / 4;
-	  if (nDuration < 5)
-		nDuration = 5;
+      if (nDuration < 5)
+        nDuration = 5;
 
         effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
@@ -35,7 +35,7 @@ void main()
         effect eAttack = EffectAttackIncrease(20);
         effect eLink = EffectLinkEffects(eAttack, eDur);
         float fDelay;
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
         if(GetIsReactionTypeFriendly(oTarget) || GetFactionEqual(oTarget))
         {
             fDelay = GetRandomDelay(0.4, 1.1);
@@ -45,6 +45,6 @@ void main()
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration), TRUE, -1, GetTotalCastingLevel(OBJECT_SELF)));
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

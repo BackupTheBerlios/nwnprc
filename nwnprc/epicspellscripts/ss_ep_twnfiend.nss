@@ -17,7 +17,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, TWINF_DC, TWINF_S, TWINF_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_TWINF))
     {
         //Declare major variables
         float fDuration = RoundsToSeconds(20);

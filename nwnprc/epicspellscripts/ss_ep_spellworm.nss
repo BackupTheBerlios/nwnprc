@@ -26,7 +26,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, SP_WORM_DC, SP_WORM_S, SP_WORM_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_SP_WORM))
     {
         object oTarget = PRCGetSpellTargetObject();
         int nDuration = FloatToInt(HoursToSeconds(20) / 6);

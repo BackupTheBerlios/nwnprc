@@ -26,7 +26,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, HELBALL_DC, HELBALL_S, HELBALL_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_HELBALL))
     {
         //Declare major variables
         int nDamage1, nDamage2, nDamage3, nDamage4;

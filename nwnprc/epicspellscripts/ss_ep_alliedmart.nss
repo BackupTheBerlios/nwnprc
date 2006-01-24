@@ -29,7 +29,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, AL_MART_DC, AL_MART_S, AL_MART_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_AL_MART))
     {
         object oTarget = PRCGetSpellTargetObject();
         // Twice per round, for 20 hours.

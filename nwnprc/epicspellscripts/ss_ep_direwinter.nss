@@ -53,15 +53,15 @@ void TLChangeAreaGroundTiles(object oArea, int nGroundTileConst, int nColumns, i
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, DIREWIN_DC, DIREWIN_S, DIREWIN_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_DIREWIN))
     {
         object oArea = GetArea(OBJECT_SELF);
         float fDuration = HoursToSeconds(20) - 6.0;
@@ -84,7 +84,7 @@ void main()
         DelayCommand(6.0, DoWinterCheck(oArea, fDuration));
         DelayCommand(fDuration, SetWeather(oArea, WEATHER_USE_AREA_SETTINGS));
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
 void DoWinterCheck(object oArea, float fDuration)

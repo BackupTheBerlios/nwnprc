@@ -18,15 +18,15 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     if( !X2PreSpellCastCode() )
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }  // End of Spell Cast Hook
-    if (GetCanCastSpell(OBJECT_SELF, STORM_M_DC, STORM_M_S, STORM_M_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_STORM_M))
     {
         //Declare major variables
         object oTarget = GetFirstObjectInShape( SHAPE_SPHERE,
@@ -60,6 +60,6 @@ void main()
                 RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation() );
         }
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

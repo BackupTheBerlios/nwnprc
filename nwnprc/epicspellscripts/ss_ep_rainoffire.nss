@@ -8,7 +8,7 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 
@@ -16,15 +16,15 @@ int VFX_PER_RAIN_OF_FIRE = 100;
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, RAINFIR_DC, RAINFIR_S, RAINFIR_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_RAINFIR))
     {
         effect eAOE = EffectAreaOfEffect(VFX_PER_RAIN_OF_FIRE);
         location lTarget = GetLocation(OBJECT_SELF);
@@ -36,6 +36,6 @@ void main()
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,
             eAOE, lTarget, HoursToSeconds(nDuration));
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

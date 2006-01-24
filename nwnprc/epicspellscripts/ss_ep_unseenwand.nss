@@ -14,12 +14,12 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     if (!X2PreSpellCastCode())
     {
-		DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+        DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
     object oTarget = PRCGetSpellTargetObject();
@@ -27,7 +27,7 @@ void main()
         !GetHasFeat(5028, oTarget) && // Does the target not already have the feat?
         GetIsPC(oTarget))             // Is the target a player?
     {
-        if (GetCanCastSpell(OBJECT_SELF, UNSEENW_DC, UNSEENW_S, UNSEENW_XP))
+        if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_UNSEENW))
         {
             int nY;
             effect eVis = EffectVisualEffect(VFX_IMP_AC_BONUS);
@@ -61,6 +61,6 @@ void main()
         FloatingTextStringOnCreature("Spell failed - target already has this " +
             "ability.", OBJECT_SELF, FALSE);
 
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 

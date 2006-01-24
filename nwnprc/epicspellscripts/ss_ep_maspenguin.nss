@@ -25,7 +25,7 @@ void main()
         DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
         return;
     }
-    if (GetCanCastSpell(OBJECT_SELF, MASSPEN_DC, MASSPEN_S, MASSPEN_XP))
+    if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_MASSPEN))
     {
         float fDelay;
         int nDuration = 20;

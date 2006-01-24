@@ -87,6 +87,9 @@ int AmIAHumanoid(object oTarget);
 // * is used
 void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
 
+void RemoveEffectsFromSpell(object oTarget, int SpellID);
+
+
 
 #include "prcsp_engine"
 #include "prc_inc_function"

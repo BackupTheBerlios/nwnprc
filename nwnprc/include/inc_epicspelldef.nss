@@ -1,7 +1,130 @@
-///////////////////////////////////////////////////////////////////////////////
-/*
-CONSTANTS FOR THE SEEDS
+
+//CONSTANTS FOR MESSAGES.
+//reesearch
+const string MES_LEARN_SPELL            = "has gained the knowledge and use of this epic spell!";
+const string MES_KNOW_SPELL             = "has already researched this spell";
+const string MES_NOT_ENOUGH_GOLD        = "does not have the required gold";
+const string MES_NOT_ENOUGH_XP          = "does not have the required experience";
+const string MES_NOT_ENOUGH_SKILL       = "does not have the required skill";
+const string MES_NOT_HAVE_REQ_FEATS     = "does not have the required knowledge";
+const string MES_CANNOT_RESEARCH_HERE   = "is not allowed to pursue magical research here.";
+const string MES_RESEARCH_SUCCESS       = "has successfully researched an Epic spell!Congratulations! ";
+const string MES_RESEARCH_FAILURE       = "has not found success in their research...";
+//seeds
+const string MES_CLASS_NOT_ALLOWED      = "Your magical teachings do not seem to allow the learning of this epic spell seed.";
+const string MES_LEARN_SEED             = "You have gained the knowledge of this epic spell seed!";
+const string MES_KNOW_SEED              = "You already have knowledge of this epic spell seed.";
+const string MES_BOOK_DESTROYED         = "The handling of this book has caused it to disintegrate!";
+//spellcraft
+const string MES_SPELLCRAFT_CHECK_PASS  = "Spellcraft check: Success!";
+const string MES_SPELLCRAFT_CHECK_FAIL  = "Spellcraft check: Failed!";
+//errors
+const string MES_CANNOT_CAST_SLOTS      = "Spell failed! You do not have any epic spell slots remaining.";
+const string MES_CANNOT_CAST_XP         = "Spell failed! You do not have enough experience to cast this spell.";
+//contingencies
+const string MES_CONTINGENCIES_YES1     = "You have contingencies active, therefore you do not have your full complement of spell slots.";
+const string MES_CONTINGENCIES_YES2     = "The contingencies must expire to allow you to regain the spell slots.";
+/* DEFAULTS
+const string MES_LEARN_SEED             = "You have gained the knowledge of this epic spell seed!";
+const string MES_KNOW_SEED              = "You already have knowledge of this epic spell seed.";
+const string MES_LEARN_SPELL            = "You have gained the knowledge and use of this epic spell!";
+const string MES_KNOW_SPELL             = "You have already researched this spell.";
+const string MES_CLASS_NOT_ALLOWED      = "Your magical teachings do not seem to allow the learning of this epic spell seed.";
+const string MES_BOOK_DESTROYED         = "The handling of this book has caused it to disintegrate!";
+const string MES_CANNOT_RESEARCH_HERE   = "You are not allowed to pursue magical research here.";
+const string MES_RESEARCH_SUCCESS       = "Congratulations! You have successfully researched an Epic spell!";
+const string MES_RESEARCH_FAILURE       = "Failure! You have not found success in your research...";
+const string MES_SPELLCRAFT_CHECK_PASS  = "Spellcraft check: Success!";
+const string MES_SPELLCRAFT_CHECK_FAIL  = "Spellcraft check: Failed!";
+const string MES_NOT_ENOUGH_GOLD        = "You do not have the required gold.";
+const string MES_NOT_ENOUGH_XP          = "You do not have the required experience.";
+const string MES_NOT_ENOUGH_SKILL       = "You do not have the required skill.";
+const string MES_NOT_HAVE_REQ_FEATS     = "You cannot research this, since you do not have the required knowledge.";
+const string MES_CANNOT_CAST_SLOTS      = "Spell failed! You do not have any epic spell slots remaining.";
+const string MES_CANNOT_CAST_XP         = "Spell failed! You do not have enough experience to cast this spell.";
+const string MES_CONTINGENCIES_YES1     = "You have contingencies active, therefore you do not have your full complement of spell slots.";
+const string MES_CONTINGENCIES_YES2     = "The contingencies must expire to allow you to regain the spell slots.";
 */
+
+//Primogenitors SpellID constants
+const int SPELL_EPIC_A_STONE = 0;//4007;
+const int SPELL_EPIC_ACHHEEL = 1;//4000;
+const int SPELL_EPIC_AL_MART = 2;//4002;
+const int SPELL_EPIC_ALLHOPE = 3;//4001;
+const int SPELL_EPIC_ANARCHY = 4;//4003;
+const int SPELL_EPIC_ANBLAST = 5;//4004;
+const int SPELL_EPIC_ANBLIZZ = 6;//4005;
+const int SPELL_EPIC_ARMY_UN = 7;//4006;
+const int SPELL_EPIC_BATTLEB = 8;//4008;
+const int SPELL_EPIC_CELCOUN = 9;//4009;
+const int SPELL_EPIC_CHAMP_V =10;//4010;
+const int SPELL_EPIC_CON_RES =11;//4011;
+const int SPELL_EPIC_CON_REU =12;//4012;
+const int SPELL_EPIC_DEADEYE =13;//4013;
+const int SPELL_EPIC_DIREWIN =14;//4015;
+const int SPELL_EPIC_DREAMSC =15;//4017;
+const int SPELL_EPIC_DRG_KNI =16;//4016;
+const int SPELL_EPIC_DTHMARK =17;//4014;
+const int SPELL_EPIC_DULBLAD =18;//4018;
+const int SPELL_EPIC_DWEO_TH =19;//4019;
+const int SPELL_EPIC_ENSLAVE =20;//4020;
+const int SPELL_EPIC_EP_M_AR =21;//4021;
+const int SPELL_EPIC_EP_RPLS =22;//4022;
+const int SPELL_EPIC_EP_SP_R =23;//4023;
+const int SPELL_EPIC_EP_WARD =24;//4024;
+const int SPELL_EPIC_ET_FREE =25;//4025;
+const int SPELL_EPIC_FIEND_W =26;//4026;
+const int SPELL_EPIC_FLEETNS =27;//4027;
+const int SPELL_EPIC_GEMCAGE =28;//4028;
+const int SPELL_EPIC_GODSMIT =29;//4029;
+const int SPELL_EPIC_GR_RUIN =30;//4030;
+const int SPELL_EPIC_GR_SP_RE=31;//4031;
+const int SPELL_EPIC_GR_TIME =32;//4032;
+const int SPELL_EPIC_HELBALL =33;//4034;
+const int SPELL_EPIC_HELSEND =34;//4033;
+const int SPELL_EPIC_HERCALL =35;//4035;
+const int SPELL_EPIC_HERCEMP =36;//4036;
+const int SPELL_EPIC_IMPENET =37;//4037;
+const int SPELL_EPIC_LEECH_F =38;//4038;
+const int SPELL_EPIC_LEG_ART =39;//4039;
+const int SPELL_EPIC_LIFE_FT =40;//4040;
+const int SPELL_EPIC_MAGMA_B =41;//4041;
+const int SPELL_EPIC_MASSPEN =42;//4042;
+const int SPELL_EPIC_MORI =   43;//4043;
+const int SPELL_EPIC_MUMDUST =44;//4044;
+const int SPELL_EPIC_NAILSKY =45;//4045;
+const int SPELL_EPIC_NIGHTSU =46;//4046;
+const int SPELL_EPIC_ORDER_R =47;//4047;
+const int SPELL_EPIC_PATHS_B =48;//4048;
+const int SPELL_EPIC_PEERPEN =49;//4049;
+const int SPELL_EPIC_PESTIL = 50;//4050;
+const int SPELL_EPIC_PIOUS_P =51;//4051;
+const int SPELL_EPIC_PLANCEL =52;//4052;
+const int SPELL_EPIC_PSION_S =53;//4053;
+const int SPELL_EPIC_RAINFIR =54;//4054;
+const int SPELL_EPIC_RISEN_R =55;//4055;
+const int SPELL_EPIC_RUINN =  56;//4056; //NON_STANDARD
+const int SPELL_EPIC_SINGSUN =57;//4057;
+const int SPELL_EPIC_SP_WORM =58;//4058;
+const int SPELL_EPIC_STORM_M =59;//4059;
+const int SPELL_EPIC_SUMABER =60;//4060;
+const int SPELL_EPIC_SUP_DIS =61;//4061;
+const int SPELL_EPIC_SYMRUST =62;//4062;
+const int SPELL_EPIC_THEWITH =63;//4063;
+const int SPELL_EPIC_TOLO_KW =64;//4064;
+const int SPELL_EPIC_TRANVIT =65;//4065;
+const int SPELL_EPIC_TWINF =  66;//4066;
+const int SPELL_EPIC_UNHOLYD =67;//4067;
+const int SPELL_EPIC_UNIMPIN =68;//4068;
+const int SPELL_EPIC_UNSEENW =69;//4069;
+const int SPELL_EPIC_WHIP_SH =70;//4070;
+
+
+/* 
+this stuff is no longer neeed as constants
+instead its defined in epicspells.2da and epicspellseeds.2da
+///////////////////////////////////////////////////////////////////////////////
+//CONSTANTS FOR THE SEEDS
 ///////////////////////////////////////////////////////////////////////////////
 // const int SEEDNAME_DC is the base DC for learning an Epic Spell Seed
 // const int SEEDNAME_FE is for the line number in the feat.2da file
@@ -129,9 +252,7 @@ const int WARD_FE       = 5027;
 const int WARD_IP       = 427;
 const int WARD_XX       = 15;
 
-/*
-CONSTANTS FOR EACH EPIC SPELL
-*/
+//CONSTANTS FOR EACH EPIC SPELL
 ///////////////////////////////////////////////////////////////////////////////
 // EXAMPLE EPIC SPELL: "BLAH"
 // const int BLAH_DC is for the DC of the spell for casting and researching.
@@ -1089,130 +1210,7 @@ const string WHIP_SH_S  = "V";
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-
-/*
-CONSTANTS FOR MESSAGES.
-*/
-//reesearch
-const string MES_LEARN_SPELL            = "has gained the knowledge and use of this epic spell!";
-const string MES_KNOW_SPELL             = "has already researched this spell";
-const string MES_NOT_ENOUGH_GOLD        = "does not have the required gold";
-const string MES_NOT_ENOUGH_XP          = "does not have the required experience";
-const string MES_NOT_ENOUGH_SKILL       = "does not have the required skill";
-const string MES_NOT_HAVE_REQ_FEATS     = "does not have the required knowledge";
-const string MES_CANNOT_RESEARCH_HERE   = "is not allowed to pursue magical research here.";
-const string MES_RESEARCH_SUCCESS       = "has successfully researched an Epic spell!Congratulations! ";
-const string MES_RESEARCH_FAILURE       = "has not found success in their research...";
-//seeds
-const string MES_CLASS_NOT_ALLOWED      = "Your magical teachings do not seem to allow the learning of this epic spell seed.";
-const string MES_LEARN_SEED             = "You have gained the knowledge of this epic spell seed!";
-const string MES_KNOW_SEED              = "You already have knowledge of this epic spell seed.";
-const string MES_BOOK_DESTROYED         = "The handling of this book has caused it to disintegrate!";
-//spellcraft
-const string MES_SPELLCRAFT_CHECK_PASS  = "Spellcraft check: Success!";
-const string MES_SPELLCRAFT_CHECK_FAIL  = "Spellcraft check: Failed!";
-//errors
-const string MES_CANNOT_CAST_SLOTS      = "Spell failed! You do not have any epic spell slots remaining.";
-const string MES_CANNOT_CAST_XP         = "Spell failed! You do not have enough experience to cast this spell.";
-//contingencies
-const string MES_CONTINGENCIES_YES1     = "You have contingencies active, therefore you do not have your full complement of spell slots.";
-const string MES_CONTINGENCIES_YES2     = "The contingencies must expire to allow you to regain the spell slots.";
-/* DEFAULTS
-const string MES_LEARN_SEED             = "You have gained the knowledge of this epic spell seed!";
-const string MES_KNOW_SEED              = "You already have knowledge of this epic spell seed.";
-const string MES_LEARN_SPELL            = "You have gained the knowledge and use of this epic spell!";
-const string MES_KNOW_SPELL             = "You have already researched this spell.";
-const string MES_CLASS_NOT_ALLOWED      = "Your magical teachings do not seem to allow the learning of this epic spell seed.";
-const string MES_BOOK_DESTROYED         = "The handling of this book has caused it to disintegrate!";
-const string MES_CANNOT_RESEARCH_HERE   = "You are not allowed to pursue magical research here.";
-const string MES_RESEARCH_SUCCESS       = "Congratulations! You have successfully researched an Epic spell!";
-const string MES_RESEARCH_FAILURE       = "Failure! You have not found success in your research...";
-const string MES_SPELLCRAFT_CHECK_PASS  = "Spellcraft check: Success!";
-const string MES_SPELLCRAFT_CHECK_FAIL  = "Spellcraft check: Failed!";
-const string MES_NOT_ENOUGH_GOLD        = "You do not have the required gold.";
-const string MES_NOT_ENOUGH_XP          = "You do not have the required experience.";
-const string MES_NOT_ENOUGH_SKILL       = "You do not have the required skill.";
-const string MES_NOT_HAVE_REQ_FEATS     = "You cannot research this, since you do not have the required knowledge.";
-const string MES_CANNOT_CAST_SLOTS      = "Spell failed! You do not have any epic spell slots remaining.";
-const string MES_CANNOT_CAST_XP         = "Spell failed! You do not have enough experience to cast this spell.";
-const string MES_CONTINGENCIES_YES1     = "You have contingencies active, therefore you do not have your full complement of spell slots.";
-const string MES_CONTINGENCIES_YES2     = "The contingencies must expire to allow you to regain the spell slots.";
 */
 
-
-/*
-Primogenitors SpellID constants
-*/
-const int SPELL_EPIC_A_STONE = 4007;
-const int SPELL_EPIC_ACHHEEL = 4000;
-const int SPELL_EPIC_AL_MART = 4002;
-const int SPELL_EPIC_ALLHOPE = 4001;
-const int SPELL_EPIC_ANARCHY = 4003;
-const int SPELL_EPIC_ANBLAST = 4004;
-const int SPELL_EPIC_ANBLIZZ = 4005;
-const int SPELL_EPIC_ARMY_UN = 4006;
-const int SPELL_EPIC_BATTLEB = 4008;
-const int SPELL_EPIC_CELCOUN = 4009;
-const int SPELL_EPIC_CHAMP_V = 4010;
-const int SPELL_EPIC_CON_RES = 4011;
-const int SPELL_EPIC_CON_REU = 4012;
-const int SPELL_EPIC_DEADEYE = 4013;
-const int SPELL_EPIC_DIREWIN = 4015;
-const int SPELL_EPIC_DREAMSC = 4017;
-const int SPELL_EPIC_DRG_KNI = 4016;
-const int SPELL_EPIC_DTHMARK = 4014;
-const int SPELL_EPIC_DULBLAD = 4018;
-const int SPELL_EPIC_DWEO_TH = 4019;
-const int SPELL_EPIC_ENSLAVE = 4020;
-const int SPELL_EPIC_EP_M_AR = 4021;
-const int SPELL_EPIC_EP_RPLS = 4022;
-const int SPELL_EPIC_EP_SP_R = 4023;
-const int SPELL_EPIC_EP_WARD = 4024;
-const int SPELL_EPIC_ET_FREE = 4025;
-const int SPELL_EPIC_FIEND_W = 4026;
-const int SPELL_EPIC_FLEETNS = 4027;
-const int SPELL_EPIC_GEMCAGE = 4028;
-const int SPELL_EPIC_GODSMIT = 4029;
-const int SPELL_EPIC_GR_RUIN = 4030;
-const int SPELL_EPIC_GR_SP_RE = 4031;
-const int SPELL_EPIC_GR_TIME = 4032;
-const int SPELL_EPIC_HELBALL = 4034;
-const int SPELL_EPIC_HELSEND = 4033;
-const int SPELL_EPIC_HERCALL = 4035;
-const int SPELL_EPIC_HERCEMP = 4036;
-const int SPELL_EPIC_IMPENET = 4037;
-const int SPELL_EPIC_LEECH_F = 4038;
-const int SPELL_EPIC_LEG_ART = 4039;
-const int SPELL_EPIC_LIFE_FT = 4040;
-const int SPELL_EPIC_MAGMA_B = 4041;
-const int SPELL_EPIC_MASSPEN = 4042;
-const int SPELL_EPIC_MORI = 4043;
-const int SPELL_EPIC_MUMDUST = 4044;
-const int SPELL_EPIC_NAILSKY = 4045;
-const int SPELL_EPIC_NIGHTSU = 4046;
-const int SPELL_EPIC_ORDER_R = 4047;
-const int SPELL_EPIC_PATHS_B = 4048;
-const int SPELL_EPIC_PEERPEN = 4049;
-const int SPELL_EPIC_PESTIL = 4050;
-const int SPELL_EPIC_PIOUS_P = 4051;
-const int SPELL_EPIC_PLANCEL = 4052;
-const int SPELL_EPIC_PSION_S = 4053;
-const int SPELL_EPIC_RAINFIR = 4054;
-const int SPELL_EPIC_RISEN_R = 4055;
-const int SPELL_EPIC_RUINN = 4056; //NON_STANDARD
-const int SPELL_EPIC_SINGSUN = 4057;
-const int SPELL_EPIC_SP_WORM = 4058;
-const int SPELL_EPIC_STORM_M = 4059;
-const int SPELL_EPIC_SUMABER = 4060;
-const int SPELL_EPIC_SUP_DIS = 4061;
-const int SPELL_EPIC_SYMRUST = 4062;
-const int SPELL_EPIC_THEWITH = 4063;
-const int SPELL_EPIC_TOLO_KW = 4064;
-const int SPELL_EPIC_TRANVIT = 4065;
-const int SPELL_EPIC_TWINF = 4066;
-const int SPELL_EPIC_UNHOLYD = 4067;
-const int SPELL_EPIC_UNIMPIN = 4068;
-const int SPELL_EPIC_UNSEENW = 4069;
-const int SPELL_EPIC_WHIP_SH = 4070;
 
 

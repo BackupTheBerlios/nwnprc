@@ -165,7 +165,7 @@ int GetResearchResult(object oPC, int nSpellDC);
 void TakeResourcesFromPC(object oPC, int nSpellDC, int nSuccess);
 
 // Returns TRUE if oPC can cast the spell.
-int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP);
+int GetCanCastSpell(object oPC, int nEpicSpell);
 
 // Returns the adjusted DC of a spell that takes into account oPC's Spell Foci.
 int GetDCSchoolFocusAdjustment(object oPC, string sChool);
@@ -411,8 +411,11 @@ void TakeResourcesFromPC(object oPC, int nSpellDC, int nSuccess)
     }
 }
 
-int GetCanCastSpell(object oPC, int nSpellDC, string sChool, int nSpellXP)
+int GetCanCastSpell(object oPC, int nEpicSpell)
 {
+    int nSpellDC  = GetDCForSpell(nEpicSpell);
+    string sChool = GetSchoolForSpell(nEpicSpell);
+    int nSpellXP  =GetCastXPForSpell(nEpicSpell);
     // Adjust the DC to account for Spell Foci feats.
     nSpellDC -= GetDCSchoolFocusAdjustment(oPC, sChool);
     int nCheck = GetSpellcraftCheck(oPC);
@@ -460,7 +463,7 @@ int GetHasXPToSpend(object oPC, int nCost)
     int nHitDice = GetHitDice(oPC);
     int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
     int nXP = GetXP(oPC);
-    if(!GetIsPC(oPC))
+    if(!GetXP(oPC))
         nXP = GetLocalInt(oPC, "NPC_XP");
     if (nXP >= (nHitDiceXP + nCost))
         return TRUE;
@@ -471,7 +474,7 @@ void SpendXP(object oPC, int nCost)
 {
     if (nCost > 0)
     {
-        if(GetIsPC(oPC))
+        if(GetXP(oPC))
             SetXP(oPC, GetXP(oPC) - nCost);
         else
             SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nCost);
@@ -508,77 +511,15 @@ void TakeFeat(object oPC, int nFeatIP)
 int GetCastableFeatCount(object oPC)
 {
     int nX = 0;
-    if (GetHasFeat(A_STONE_FE, oPC)) nX += 1;
-    if (GetHasFeat(ACHHEEL_FE, oPC)) nX += 1;
-    if (GetHasFeat(AL_MART_FE, oPC)) nX += 1;
-    if (GetHasFeat(ALLHOPE_FE, oPC)) nX += 1;
-    if (GetHasFeat(ANARCHY_FE, oPC)) nX += 1;
-    if (GetHasFeat(ANBLAST_FE, oPC)) nX += 1;
-    if (GetHasFeat(ANBLIZZ_FE, oPC)) nX += 1;
-    if (GetHasFeat(ARMY_UN_FE, oPC)) nX += 1;
-    if (GetHasFeat(BATTLEB_FE, oPC)) nX += 1;
-    if (GetHasFeat(CELCOUN_FE, oPC)) nX += 1;
-    if (GetHasFeat(CHAMP_V_FE, oPC)) nX += 1;
-    if (GetHasFeat(CON_RES_FE, oPC)) nX += 1;
-    if (GetHasFeat(CON_REU_FE, oPC)) nX += 1;
-    if (GetHasFeat(DEADEYE_FE, oPC)) nX += 1;
-    if (GetHasFeat(DIREWIN_FE, oPC)) nX += 1;
-    if (GetHasFeat(DREAMSC_FE, oPC)) nX += 1;
-    if (GetHasFeat(DRG_KNI_FE, oPC)) nX += 1;
-    if (GetHasFeat(DTHMARK_FE, oPC)) nX += 1;
-    if (GetHasFeat(DULBLAD_FE, oPC)) nX += 1;
-    if (GetHasFeat(DWEO_TH_FE, oPC)) nX += 1;
-    if (GetHasFeat(ENSLAVE_FE, oPC)) nX += 1;
-    if (GetHasFeat(EP_M_AR_FE, oPC)) nX += 1;
-    if (GetHasFeat(EP_RPLS_FE, oPC)) nX += 1;
-    if (GetHasFeat(EP_SP_R_FE, oPC)) nX += 1;
-    if (GetHasFeat(EP_WARD_FE, oPC)) nX += 1;
-    if (GetHasFeat(ET_FREE_FE, oPC)) nX += 1;
-    if (GetHasFeat(FIEND_W_FE, oPC)) nX += 1;
-    if (GetHasFeat(FLEETNS_FE, oPC)) nX += 1;
-    if (GetHasFeat(GEMCAGE_FE, oPC)) nX += 1;
-    if (GetHasFeat(GODSMIT_FE, oPC)) nX += 1;
-    if (GetHasFeat(GR_RUIN_FE, oPC)) nX += 1;
-    if (GetHasFeat(GR_SP_RE_FE, oPC)) nX += 1;
-    if (GetHasFeat(GR_TIME_FE, oPC)) nX += 1;
-    if (GetHasFeat(HELBALL_FE, oPC)) nX += 1;
-    if (GetHasFeat(HELSEND_FE, oPC)) nX += 1;
-    if (GetHasFeat(HERCALL_FE, oPC)) nX += 1;
-    if (GetHasFeat(HERCEMP_FE, oPC)) nX += 1;
-    if (GetHasFeat(IMPENET_FE, oPC)) nX += 1;
-    if (GetHasFeat(LEECH_F_FE, oPC)) nX += 1;
-    if (GetHasFeat(LEG_ART_FE, oPC)) nX += 1;
-    if (GetHasFeat(LIFE_FT_FE, oPC)) nX += 1;
-    if (GetHasFeat(MAGMA_B_FE, oPC)) nX += 1;
-    if (GetHasFeat(MASSPEN_FE, oPC)) nX += 1;
-    if (GetHasFeat(MORI_FE, oPC)) nX += 1;
-    if (GetHasFeat(MUMDUST_FE, oPC)) nX += 1;
-    if (GetHasFeat(NAILSKY_FE, oPC)) nX += 1;
-    if (GetHasFeat(NIGHTSU_FE, oPC)) nX += 1;
-    if (GetHasFeat(ORDER_R_FE, oPC)) nX += 1;
-    if (GetHasFeat(PATHS_B_FE, oPC)) nX += 1;
-    if (GetHasFeat(PEERPEN_FE, oPC)) nX += 1;
-    if (GetHasFeat(PESTIL_FE, oPC)) nX += 1;
-    if (GetHasFeat(PIOUS_P_FE, oPC)) nX += 1;
-    if (GetHasFeat(PLANCEL_FE, oPC)) nX += 1;
-    if (GetHasFeat(PSION_S_FE, oPC)) nX += 1;
-    if (GetHasFeat(RAINFIR_FE, oPC)) nX += 1;
-    if (GetHasFeat(RISEN_R_FE, oPC)) nX += 1;
-    if (GetHasFeat(RUIN_FE, oPC)) nX += 1;
-    if (GetHasFeat(SINGSUN_FE, oPC)) nX += 1;
-    if (GetHasFeat(SP_WORM_FE, oPC)) nX += 1;
-    if (GetHasFeat(STORM_M_FE, oPC)) nX += 1;
-    if (GetHasFeat(SUMABER_FE, oPC)) nX += 1;
-    if (GetHasFeat(SUP_DIS_FE, oPC)) nX += 1;
-    if (GetHasFeat(SYMRUST_FE, oPC)) nX += 1;
-    if (GetHasFeat(THEWITH_FE, oPC)) nX += 1;
-    if (GetHasFeat(TOLO_KW_FE, oPC)) nX += 1;
-    if (GetHasFeat(TRANVIT_FE, oPC)) nX += 1;
-    if (GetHasFeat(TWINF_FE, oPC)) nX += 1;
-    if (GetHasFeat(UNHOLYD_FE, oPC)) nX += 1;
-    if (GetHasFeat(UNIMPIN_FE, oPC)) nX += 1;
-    if (GetHasFeat(UNSEENW_FE, oPC)) nX += 1;
-    if (GetHasFeat(WHIP_SH_FE, oPC)) nX += 1;
+    int i = 0;
+    int nFeat = GetFeatForSpell(i);
+    while(nFeat != 0)
+    {
+        if(GetHasFeat(nFeat, oPC))
+            nX += 1;
+        i++;
+        nFeat = GetFeatForSpell(i);
+    }
     return nX;
 }
 

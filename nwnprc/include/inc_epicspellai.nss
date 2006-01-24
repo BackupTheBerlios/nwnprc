@@ -46,10 +46,12 @@ int DoEpicSpells()
         oTarget = GetSuitableTaget(nSpellID);
         if(GetIsObjectValid(oTarget)
             && TestConditions(nSpellID)
-            && GetCanCastSpell(OBJECT_SELF, GetDCForSpell(nSpellID), GetSchoolForSpell(nSpellID), GetCastXPForSpell(nSpellID)))
+            && GetCanCastSpell(OBJECT_SELF, nSpellID))
         {
             ClearAllActions();
-            ActionCastSpellAtObject(nSpellID,oTarget, METAMAGIC_NONE, TRUE);
+            int nRealSpellID = StringToInt(Get2DACache("feats", "SpellID", 
+                StringToInt(Get2DACache("EpicSpells", "SpellFeatID", nSpellID))));
+            ActionCastSpellAtObject(nRealSpellID,oTarget, METAMAGIC_NONE, TRUE);
             return TRUE;
         }
     }
@@ -79,7 +81,11 @@ int TestConditions(int nSpellID)
             break;
         //timestop checks if already cast
         case SPELL_EPIC_GR_TIME:
-            if(GetHasSpellEffect(SPELL_EPIC_GR_TIME))
+            if(GetHasSpellEffect(
+                StringToInt(Get2DACache("feats", "SpellID", 
+                    StringToInt(Get2DACache("EpicSpells", "SpellFeatID", nSpellID)))
+                    ))
+                )
                 return FALSE;
             else
                 return TRUE;
@@ -90,7 +96,8 @@ int TestConditions(int nSpellID)
         case SPELL_EPIC_TWINF:
         case SPELL_EPIC_MUMDUST:
         case SPELL_EPIC_DRG_KNI:
-            if(GetIsObjectValid(GetAssociate(ASSOCIATE_TYPE_SUMMONED)))
+            if(GetIsObjectValid(GetAssociate(ASSOCIATE_TYPE_SUMMONED))
+                && !GetPRCSwitch(PRC_MULTISUMMON))
                 return FALSE;
             else
                 return TRUE;
@@ -199,6 +206,8 @@ object GetSuitableTaget(int nSpellID)
     object oTest;
     int i;
     float fDist;
+    int nRealSpellID = StringToInt(Get2DACache("feats", "SpellID", 
+        StringToInt(Get2DACache("EpicSpells", "SpellFeatID", nSpellID))));
     switch(nSpellID)
     {
         //personal spells always target self
@@ -239,7 +248,7 @@ object GetSuitableTaget(int nSpellID)
                 return oTarget;
             break;
         //touchbuffs target self, or nearest ally without the effect
-        //maximum 55m distance, dont want to wander too far
+        //maximum 5m distance, dont want to wander too far
         //will separate those best cast on others laters
         case SPELL_EPIC_HERCALL:
         case SPELL_EPIC_CHAMP_V:
@@ -258,13 +267,13 @@ object GetSuitableTaget(int nSpellID)
         case SPELL_EPIC_UNSEENW:
         case SPELL_EPIC_CON_RES:
             fDist = 5.0;
-            if(!GetHasSpellEffect(nSpellID))
+            if(!GetHasSpellEffect(nRealSpellID))
                 return OBJECT_SELF;
             else
             {
                 oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
                     REPUTATION_TYPE_FRIEND,OBJECT_SELF, i);
-                while(!GetHasSpellEffect(nSpellID, oTarget)
+                while(!GetHasSpellEffect(nRealSpellID, oTarget)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10)
                 {
@@ -284,7 +293,7 @@ object GetSuitableTaget(int nSpellID)
             fDist = 5.0;
                 oTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION,
                     REPUTATION_TYPE_FRIEND,OBJECT_SELF, i);
-                while(!GetHasSpellEffect(nSpellID, oTarget)
+                while(!GetHasSpellEffect(nRealSpellID, oTarget)
                     && GetCurrentHitPoints(oTarget) > GetCurrentHitPoints(OBJECT_SELF)
                     && GetDistanceToObject(oTarget) < fDist
                     && i < 10)
@@ -640,13 +649,12 @@ void DoEpicSpellcasterSpawn()
     //This stuff gives them some Epic Spells for free
     if(!GetCastableFeatCount(OBJECT_SELF))
     {
-        GiveFeat(OBJECT_SELF, Random(71)+429);
-        GiveFeat(OBJECT_SELF, Random(71)+429);
-        GiveFeat(OBJECT_SELF, Random(71)+429);
-        GiveFeat(OBJECT_SELF, Random(71)+429);
-        GiveFeat(OBJECT_SELF, Random(71)+429);
-        GiveFeat(OBJECT_SELF, Random(71)+429);
-        GiveFeat(OBJECT_SELF, Random(71)+429);
+        int nSlots = GetEpicSpellSlotLimit(OBJECT_SELF)+3;
+        int i;
+        for(i=0;i<nSlots;i++)
+        {
+            GiveFeat(OBJECT_SELF, Random(71)+429);
+        }
     }
     //setup AI list
     DelayCommand(1.0, ActionDoCommand(MakeEpicSpellsKnownAIList()));
@@ -663,12 +671,15 @@ void MakeEpicSpellsKnownAIList()
     array_create(OBJECT_SELF, "AI_KnownEpicSpells");
     //record what spells in an array
 //    array_create(OBJECT_SELF, "AI_KnownEpicSpells");
-    for (j = 4000; j <= 4070; j++)
+    string sLabel = Get2DACache("epicspellseeds", "LABEL", i);
+    while(sLabel != "")
     {
-        if(GetHasFeat(GetFeatForSpell(j)))
+        if(GetHasFeat(GetFeatForSpell(i)))
         {
-            array_set_int(OBJECT_SELF, "AI_KnownEpicSpells",array_get_size(OBJECT_SELF, "AI_KnownEpicSpells") ,j);
+            array_set_int(OBJECT_SELF, "AI_KnownEpicSpells",array_get_size(OBJECT_SELF, "AI_KnownEpicSpells") ,i);
         }
+        i++;
+        sLabel = Get2DACache("epicspellseeds", "LABEL", i);
     }
 //    DoDebug("Finished recording known spells");
     //sort spells into descending DC order

@@ -28,6 +28,8 @@ const int STAGE_IMPROVE_VALUE       = 5;
 const int STAGE_IMPROVE_ADD         = 6;
 
 
+const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
+
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
@@ -80,12 +82,14 @@ void main()
                 SetHeader("Which type of weapon would you like to improve?");
                 AddChoice("[Katana]", 1, oPC);
                 AddChoice("[Wakizashi (short sword)]", 2, oPC);
+                AddChoice("Go back.", CHOICE_RETURN_TO_PREVIOUS, oPC);
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
             else if(nStage == STAGE_IMPROVE_TYPE)
             {
                 SetHeader("Which type of itemproperty do you wish to add?");
+                AddChoice("Go back.", CHOICE_RETURN_TO_PREVIOUS, oPC);
                 int nRow      = 0;
                 string sLabel = Get2DACache("itempropdef", "Label", nRow);
                 while(sLabel != "")
@@ -104,6 +108,7 @@ void main()
             {
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
                 SetHeader("Which subtype of itemproperty do you wish to add?");
+                AddChoice("Go back.", CHOICE_RETURN_TO_PREVIOUS, oPC);
                 string sSubTypeResRef = Get2DACache("itempropdef", "SubTypeResRef", nType);
                 int i;
                 for(i=0;i<200;i++)
@@ -120,6 +125,7 @@ void main()
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
                 int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
                 SetHeader("Which variation of itemproperty do you wish to add?");
+                AddChoice("Go back.", CHOICE_RETURN_TO_PREVIOUS, oPC);
                 string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
                 //may depend on subtype
                 if(sParam1ResRef == "")
@@ -149,6 +155,7 @@ void main()
                 int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
                 int nParam1 = GetLocalInt(oPC, "codi_ancdai_param1");
                 SetHeader("Which value of itemproperty do you wish to add?");
+                AddChoice("Go back.", CHOICE_RETURN_TO_PREVIOUS, oPC);
                 string sCostResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
                 //lookup the number to get the real filename
                 sCostResRef = Get2DACache("iprp_costtable", "Name", StringToInt(sCostResRef));
@@ -168,7 +175,84 @@ void main()
                 int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
                 int nParam1 = GetLocalInt(oPC, "codi_ancdai_param1");
                 int nValue = GetLocalInt(oPC, "codi_ancdai_value");
+                int nVar2;
+                int nVar3;
+                int nVar4;
+                //assign then in order
+                string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
+                string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
+                string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
+                if(sParam1ResRef == "")
+                {
+                    //if there is a subtype, param1 may be defined there
+                    if(sSubType != "")
+                        sParam1ResRef = Get2DACache(sSubType, "Param1ResRef", nSubType);
+                }   
                 
+                if(sSubType != "")
+                {
+                    nVar2 = nSubType;
+                    if(sParam1ResRef != "")
+                    {
+                        nVar3 = nParam1;
+                        if(sValueResRef != "")
+                            nVar4 = nValue;
+                    }   
+                    else if(sValueResRef != "")
+                        nVar3 = nValue;
+                }    
+                else if(sParam1ResRef != "")
+                {
+                    nVar2 = nParam1;
+                    if(sValueResRef != "")
+                        nVar3 = nValue;
+                }    
+                else if(sValueResRef != "")
+                    nVar2 = nValue;
+                //fudges to turn types into vars
+                if(nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP
+                    || nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP
+                    || nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT)
+                {
+                    int nTemp = nVar3;
+                    nVar3 = nVar4;
+                    nVar4 = nTemp;
+                }
+                //get the itemproperty
+                itemproperty ipToAdd = IPGetItemPropertyByID(nType, nVar2, nVar3, nVar4);
+                if(!GetIsItemPropertyValid(ipToAdd))
+                    DoDebug("Itemproperty Not Valid");
+                    
+                //set the header
+                SetHeader("You are attempting to add "+ItemPropertyToString(ipToAdd));
+                    
+                //work out cost
+                object oItem = GetLocalObject(oPC, "codi_ancdai"); 
+                object oCopy = CopyItem(oItem, GetObjectByTag("HEARTOFCHAOS"), TRUE);
+                if(!GetIsObjectValid(oCopy))
+                    DoDebug("Copy not valid");
+                SetIdentified(oCopy, TRUE);
+                int nOldValue = GetGoldPieceValue(oCopy);
+                IPSafeAddItemProperty(oCopy, ipToAdd);
+                int nNewValue = GetGoldPieceValue(oCopy);
+                int nIPCost = nNewValue-nOldValue;
+                //sanity check for infinite gold
+                if(nIPCost < 0)
+                {
+                    AddChoice("You cannot add this because it would lower the value of your weapon.", CHOICE_RETURN_TO_PREVIOUS, oPC);
+                }
+                else
+                {
+                    int nSacrificed = GetPersistantLocalInt(oPC, "CODI_SAMURAI");
+                    if(nIPCost > nSacrificed)
+                        AddChoice("You cannot add this because it would cost more than you have sacrificed ("+
+                            IntToString(nIPCost)+" vs "+IntToString(nSacrificed)+")", CHOICE_RETURN_TO_PREVIOUS, oPC);
+                    else
+                    {
+                        AddChoice("This will cost "+IntToString(nIPCost)+" from your sacrificed total of "+IntToString(nSacrificed), TRUE, oPC);
+                        AddChoice("This cost is too great at the moment", CHOICE_RETURN_TO_PREVIOUS, oPC);
+                    }
+                }
             }
         }
 
@@ -263,18 +347,59 @@ void main()
                 SetLocalObject(oPC, "codi_ancdai", oWakizashi); 
                 nStage = STAGE_IMPROVE_TYPE;            
             }
+            else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_ENTRY;
         }
         else if(nStage == STAGE_IMPROVE_TYPE)
         {
-            SetLocalInt(oPC, "codi_ancdai_type", nChoice);
-            int nType = nChoice;
-            //look for subtype
-            string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
-            if(sSubType != "")
-                nStage = STAGE_IMPROVE_SUB_TYPE;
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_IMPROVE;
             else
             {
-                //no subtype
+                int nType = nChoice;
+                SetLocalInt(oPC, "codi_ancdai_type", nChoice);
+                //look for subtype
+                string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
+                if(sSubType != "")
+                    nStage = STAGE_IMPROVE_SUB_TYPE;
+                else
+                {
+                    //no subtype
+                    //check param1
+                    string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
+                    if(sParam1ResRef != "")
+                    {
+                        nStage = STAGE_IMPROVE_PARAM1;                
+                    }
+                    else
+                    {
+                        //no param1
+                        //check value
+                        string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
+                        if(sValueResRef != "")
+                        {
+                            nStage = STAGE_IMPROVE_VALUE;                     
+                        }
+                        else
+                        {
+                            //no value
+                            //proceed to add
+                            nStage = STAGE_IMPROVE_ADD; 
+                        }
+                    }
+                }
+            }
+            
+        }
+        else if(nStage == STAGE_IMPROVE_SUB_TYPE)
+        {
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_IMPROVE_TYPE;
+            else
+            {
+                SetLocalInt(oPC, "codi_ancdai_subtype", nChoice);
+                int nType = GetLocalInt(oPC, "codi_ancdai_type");
+                int nSubType = nChoice;
                 //check param1
                 string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
                 if(sParam1ResRef != "")
@@ -283,95 +408,139 @@ void main()
                 }
                 else
                 {
-                    //no param1
-                    //check value
-                    string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
-                    if(sValueResRef != "")
+                    //if there is a subtype, param1 may be defined there
+                    string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
+                    if(sSubType != "")
                     {
-                        nStage = STAGE_IMPROVE_VALUE;                     
+                        sParam1ResRef = Get2DACache(sSubType, "Param1ResRef", nSubType);
+                        if(sParam1ResRef != "")
+                        {
+                            nStage = STAGE_IMPROVE_PARAM1;                
+                        }
+                        else
+                        {
+                            //certainly no param1 now
+                            //cheat a bit and pretend no subtype to get into the next if statement
+                            sSubType = "";
+                        }
                     }
-                    else
+                    if(sSubType == "")
                     {
-                        //no value
-                        //proceed to add
-                        nStage = STAGE_IMPROVE_ADD; 
-                    }
-                }
-                
-            }
-            
-        }
-        else if(nStage == STAGE_IMPROVE_SUB_TYPE)
-        {
-            SetLocalInt(oPC, "codi_ancdai_subtype", nChoice);
-            int nType = GetLocalInt(oPC, "codi_ancdai_type");
-            int nSubType = nChoice;
-            //check param1
-            string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
-            if(sParam1ResRef != "")
-            {
-                nStage = STAGE_IMPROVE_PARAM1;                
-            }
-            else
-            {
-                //if there is a subtype, param1 may be defined there
-                string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
-                if(sSubType != "")
-                {
-                    sParam1ResRef = Get2DACache(sSubType, "Param1ResRef", nSubType);
-                    if(sParam1ResRef != "")
-                    {
-                        nStage = STAGE_IMPROVE_PARAM1;                
-                    }
-                    else
-                    {
-                        //certainly no param1 now
-                        //cheat a bit and pretend no subtype to get into the next if statement
-                        sSubType = "";
-                    }
-                }
-                if(sSubType == "")
-                {
-                    //no param1
-                    //check value
-                    string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
-                    if(sValueResRef != "")
-                    {
-                        nStage = STAGE_IMPROVE_VALUE;                     
-                    }
-                    else
-                    {
-                        //no value
-                        //proceed to add
-                        nStage = STAGE_IMPROVE_ADD; 
+                        //no param1
+                        //check value
+                        string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
+                        if(sValueResRef != "")
+                        {
+                            nStage = STAGE_IMPROVE_VALUE;                     
+                        }
+                        else
+                        {
+                            //no value
+                            //proceed to add
+                            nStage = STAGE_IMPROVE_ADD; 
+                        }
                     }
                 }
             }
         }
         else if(nStage == STAGE_IMPROVE_PARAM1)
         {
-            SetLocalInt(oPC, "codi_ancdai_param1", nChoice);
-            int nType = GetLocalInt(oPC, "codi_ancdai_type");
-            int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
-            //check value
-            string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
-            if(sValueResRef != "")
-            {
-                nStage = STAGE_IMPROVE_VALUE;                     
-            }
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_IMPROVE_TYPE;
             else
             {
-                //no value
-                //proceed to add
-                nStage = STAGE_IMPROVE_ADD; 
-            }
+                SetLocalInt(oPC, "codi_ancdai_param1", nChoice);
+                int nType = GetLocalInt(oPC, "codi_ancdai_type");
+                int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
+                //check value
+                string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
+                if(sValueResRef != "")
+                {
+                    nStage = STAGE_IMPROVE_VALUE;                     
+                }
+                else
+                {
+                    //no value
+                    //proceed to add
+                    nStage = STAGE_IMPROVE_ADD; 
+                }
+            }   
         }
         else if(nStage == STAGE_IMPROVE_VALUE)
         {
-            SetLocalInt(oPC, "codi_ancdai_value", nChoice);
-            int nType = GetLocalInt(oPC, "codi_ancdai_type");
-            //proceed to add
-            nStage = STAGE_IMPROVE_ADD; 
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_IMPROVE_TYPE;
+            else
+            {
+                SetLocalInt(oPC, "codi_ancdai_value", nChoice);
+                int nType = GetLocalInt(oPC, "codi_ancdai_type");
+                //proceed to add
+                nStage = STAGE_IMPROVE_ADD; 
+            }   
+        }
+        else if(nStage == STAGE_IMPROVE_ADD)
+        {
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_ENTRY;
+            else if(nChoice == TRUE)
+            {
+                //add the itemproperty
+                int nType = GetLocalInt(oPC, "codi_ancdai_type");
+                int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
+                int nParam1 = GetLocalInt(oPC, "codi_ancdai_param1");
+                int nValue = GetLocalInt(oPC, "codi_ancdai_value");
+                int nVar2;
+                int nVar3;
+                int nVar4;
+                //assign then in order
+                string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
+                string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
+                string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
+                if(sParam1ResRef == "")
+                {
+                    //if there is a subtype, param1 may be defined there
+                    if(sSubType != "")
+                        sParam1ResRef = Get2DACache(sSubType, "Param1ResRef", nSubType);
+                }   
+                
+                if(sSubType != "")
+                {
+                    nVar2 = nSubType;
+                    if(sParam1ResRef != "")
+                    {
+                        nVar3 = nParam1;
+                        if(sValueResRef != "")
+                            nVar4 = nValue;
+                    }   
+                    else if(sValueResRef != "")
+                        nVar3 = nValue;
+                }    
+                else if(sParam1ResRef != "")
+                {
+                    nVar2 = nParam1;
+                    if(sValueResRef != "")
+                        nVar3 = nValue;
+                }    
+                else if(sValueResRef != "")
+                    nVar2 = nValue;
+                //fudges to turn types into vars
+                if(nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP
+                    || nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP
+                    || nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT)
+                {
+                    int nTemp = nVar3;
+                    nVar3 = nVar4;
+                    nVar4 = nTemp;
+                }
+                //get the itemproperty
+                itemproperty ipToAdd = IPGetItemPropertyByID(nType, nVar2, nVar3, nVar4);
+                if(!GetIsItemPropertyValid(ipToAdd))
+                    DoDebug("Itemproperty Not Valid");
+                object oItem = GetLocalObject(oPC, "codi_ancdai"); 
+                IPSafeAddItemProperty(oItem, ipToAdd);
+                //go back to start
+                nStage = STAGE_ENTRY;
+            }
         }
 
         // Store the stage value. If it has been changed, this clears out the choices

@@ -249,8 +249,46 @@ void main()
                             IntToString(nIPCost)+" vs "+IntToString(nSacrificed)+")", CHOICE_RETURN_TO_PREVIOUS, oPC);
                     else
                     {
-                        AddChoice("This will cost "+IntToString(nIPCost)+" from your sacrificed total of "+IntToString(nSacrificed), TRUE, oPC);
-                        AddChoice("This cost is too great at the moment", CHOICE_RETURN_TO_PREVIOUS, oPC);
+                        int nMaxValue;
+                        //get maxvalue based on class level & Epic Ancestral Daisho feats
+                        object oKatana;
+                        object oWakizashi;
+                        object oTest = GetFirstItemInInventory(OBJECT_SELF);
+                        while(GetIsObjectValid(oTest))
+                        {
+                            if(GetTag(oTest) == "codi_katana")
+                                oKatana = oTest;
+                            if(GetTag(oTest) == "codi_wakizashi")
+                                oWakizashi = oTest;
+                            oTest = GetNextItemInInventory(OBJECT_SELF);
+                        }
+                        int i;
+                        for(i=0;i<14;i++)
+                        {
+                            oTest = GetItemInSlot(i, OBJECT_SELF);
+                            if(GetTag(oTest) == "codi_katana")
+                                oKatana = oTest;
+                            if(GetTag(oTest) == "codi_wakizashi")
+                                oWakizashi = oTest;
+                        }
+                        int nCurrentValue = nNewValue;
+                        if(oWakizashi == oItem)
+                        {
+                            nCurrentValue += GetGoldPieceValue(oKatana);
+                        }    
+                        else
+                            nCurrentValue += GetGoldPieceValue(oWakizashi);
+                            
+                        if(nCurrentValue > nMaxValue)
+                        {
+                            AddChoice("You cannot add this because it would bring the total value above your limit ("+
+                                IntToString(nCurentValue)+" vs "+IntToString(nMaxValue)+")", CHOICE_RETURN_TO_PREVIOUS, oPC);
+                        }
+                        else
+                        {
+                            AddChoice("This will cost "+IntToString(nIPCost)+" from your sacrificed total of "+IntToString(nSacrificed), TRUE, oPC);
+                            AddChoice("This cost is too great at the moment", CHOICE_RETURN_TO_PREVIOUS, oPC);
+                        }    
                     }
                 }
             }

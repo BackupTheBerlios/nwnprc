@@ -364,9 +364,10 @@ void main()
             else if(nChoice == 3)
                 nStage = STAGE_SHOPS;
             else if(nChoice == 4)
-                // Does not abort the conversation, it seems
-                // Not supposed to, you can abort manually afterwards
+            {
                 AssignCommand(oPC, TryToIDItems(oPC));
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+            }    
             else if(nChoice == 5)
                 nStage = STAGE_TEFLAMMAR_SHADOWLORD;
             else if(nChoice == 6)

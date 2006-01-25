@@ -267,9 +267,9 @@
 263   16825258 Teleport_Management_Radial              0.01 4235      
 264   212      ImpKnock                                1    17        
 265   211      ImpDis                                  1    16        
-266   16824653 FEAT_SPELLFIRE_INCREASE                 0.01 4369
-267   16824654 FEAT_SPELLFIRE_DECREASE                 0.01 4370
-268   16824658 FEAT_SPELLFIRE_QUICKSELECT              0.01 4371
+266   16824653 FEAT_SPELLFIRE_INCREASE                 0.01 4369      
+267   16824654 FEAT_SPELLFIRE_DECREASE                 0.01 4370      
+268   16824658 FEAT_SPELLFIRE_QUICKSELECT              0.01 4371      
 269   ****     ****                                    **** ****      
 270   ****     ****                                    **** ****      
 271   3946     DevCritCreature                         0.01 532       
@@ -11401,7 +11401,7 @@
 11397 ****     ****                                    **** ****      
 11398 ****     ****                                    **** ****      
 11399 ****     ****                                    **** ****      
-11400 ****     ####END_OF_NEW_SPELLBOOK_RESERVE      **** ****      
+11400 ****     ####END_OF_NEW_SPELLBOOK_RESERVE        **** ****      
 11401 ****     ****                                    **** ****      
 11402 ****     ****                                    **** ****      
 11403 ****     ****                                    **** ****      
@@ -12737,8 +12737,8 @@
 12733 16823713 Biofeedback                             0.01 21721     
 12734 16823719 ElfSight                                0.01 21722     
 12735 16823758 ConcealThought                          0.01 21723     
-12736 ****     ****                                    **** ****      
-12737 ****     ****                                    **** ****      
+12736 16824104 BiteOfTheWolf                           0.01 21725     
+12737 16824106 ClawsOfTheBeast                         0.01 21726     
 12738 ****     ****                                    **** ****      
 12739 ****     ****                                    **** ****      
 12740 16823707 DefPrecog                               0.01 21728     

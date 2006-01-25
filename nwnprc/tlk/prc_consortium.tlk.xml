@@ -7946,6 +7946,58 @@ As the restoration spell, except as noted here.</entry>
   <entry id="46885" lang="en" sex="m">Energy Missile, Electricity</entry>
   <entry id="46886" lang="en" sex="m">Energy Missile, Fire</entry>
   <entry id="46887" lang="en" sex="m">Energy Missile, Sonic</entry>
+  <entry id="46888" lang="en" sex="m">Bite of the Wolf</entry>
+  <entry id="46889" lang="en" sex="m">Psychometabolism
+Level: Psychic warrior 1
+Manifesting Time: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 min./level
+Power Points: 1
+Metapsioncs: Extend
+
+Your posture becomes stooped forward, and you grow a muzzle complete with fangs. You gain a bite attack, that deals 1d8 points of damage (assuming you are a Medium creature) when it hits.
+
+Your bite attack is a natural weapon, so you are considered armed when attacking with it, and it can be affected by powers, spells, and effects that enhance or improve natural weapons.
+
+If you are not a Medium creature, your bite attack’s base damage varies as follows: Fine 1d2, Diminutive 1d3, Tiny 1d4, Small 1d6, Large 2d6, Huge 2d8, Gargantuan 4d6, Colossal 6d6.
+
+Based on your psychic warrior level, your bite increases in ferocity as noted here: at 5th level your bite deals an extra 1d8 points of damage, at 10th level an extra 2d8, at 15th level an extra 3d8, and at 20th level an extra 4d8 points.</entry>
+  <entry id="46890" lang="en" sex="m">Claws of the Beast</entry>
+  <entry id="46891" lang="en" sex="m">Psychometabolism
+Level: Psychic warrior 1
+Manifesting Time: 1 swift action
+Range: Personal
+Target: You
+Duration: 1 hour/level
+Power Points: see text
+Metapsionics: Extend
+
+You call forth the aggressive nature of the beast inherent in yourself, psionically transforming your hands into deadly claws. You gain two natural attacks with your claws, each dealing 1d4 points of damage (1d6 if you are Large or larger, or 1d3 if you are Small or smaller) plus your Strength bonus.
+
+Your claws are natural weapons, so you are considered armed when attacking with them, and they can be affected by powers, spells, and effects that enhance or improve natural.
+
+Your claws work just like the natural weapons of many monsters. You can make an attack with one claw or a full attack with two claws at your normal attack bonus, replacing your normal attack routine. You take no penalties for two-weapon fighting, and neither attack is a secondary attack. If your base attack bonus is +6 or higher, you do not gain any additional attacks-you simply have two claw attacks at your normal attack bonus.
+
+You can manifest this power with an instant thought, quickly enough to gain the benefit of the power on your turn before you attack. Manifesting this power is a swift action, like manifesting a quickened power, and it counts toward the normal limit of one quickened power per round.
+
+You can still hold and manipulate items with your claws or cast spells just as well as you could with your hands.
+
+Augment: If you spend additional power points, you can create larger, sharper, and more deadly claws, as shown on the table below.
+
+Power Points    Claw Damage
+                Small   Medium  Large
+1               1d3     1d4     1d6
+3               1d4     1d6     1d8
+5               1d6     1d8     2d6
+7               1d8     2d6     3d6
+11              2d6     3d6     4d6
+15              3d6     4d6     5d6
+19              4d6     5d6     6d6
+
+This augmentation is implemented as the following two augmentation options:
+1. For every 2 power points spent, the size of the claws increases by one step on the table above. This increase may be used up to 3 times.
+2. For every 4 power points spent, the size of the claws increases by one step on the table above. This increase may be used up to 3 times.</entry>
   <entry id="46964" lang="en" sex="m">Empty Quickselection</entry>
   <entry id="46965" lang="en" sex="m">Power Points Remaining:</entry>
   <entry id="46966" lang="en" sex="m">Quickselection set to</entry>
@@ -9140,20 +9192,20 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
     <entry id="47450" lang="en" sex="m">spellfire channeler</entry>
     <entry id="47451" lang="en" sex="m">(PRESTIGE CLASS)
   Spellfire is the raw energy of the Weave. Most who bear this gift never have the time or opportunity to develop these skills. Those who do practice their spellfire are able to hone their talent into a tool with fantastic abilities that most dabblers can only dream of.
-  
+
   - Hit Die: d4.
   - Proficiencies: Spellfire channelers are proficient with all simple weapons.
   - Skill Points: 2 + Int Modifier.
-  
+
   REQUIREMENTS:
-  
+
   Feats: Endurance, Spellfire Wielder.
   Skills: Concentration 8 ranks, Lore 2 ranks, Spellcraft 2 ranks.
-  
+
   Use: Selected.
-  
+
   ABILITIES:
-  
+
   Level
   1: Drain charged item, increased storage 2
   2: Improved healing
@@ -9165,7 +9217,7 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   8: Rapid Blast 3
   9: Crown of fire
   10: Maelstrom of fire
-  
+
   *Replacing flight, due to popular demand
   **Using Bioware deflect arrows, doesn't drain levels</entry>
     <entry id="47452" lang="en" sex="m">Drain Charged Item</entry>

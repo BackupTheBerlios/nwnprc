@@ -151,7 +151,7 @@ void main()
                     AddChoice("Remove an Epic Spell from the radial menu.", 1);
                 if(GetCastableFeatCount(oPC)<7)
                     AddChoice("Add an Epic Spell to the radial menu.", 2);
-                //AddChoice("Manage any active contingencies.", 3);
+                AddChoice("Manage any active contingencies.", 3);
                 AddChoice("Research an Epic Spell.", 4);
 
                 MarkStageSetUp(nStage, oPC);
@@ -197,6 +197,8 @@ void main()
             else if(nStage == STAGE_EPIC_SPELLS_CONTING)
             {
                 SetHeader("Choose an active contingency to dispel. Dispelling will pre-emptively end the contingency and restore the reserved epic spell slot for your use.");
+                if(GetLocalInt(oPC, "nContingentRez"))
+                    AddChoice("Dispel any contingent resurrections.", 1);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
@@ -368,9 +370,10 @@ void main()
             else if(nChoice == 5)
                 nStage = STAGE_TEFLAMMAR_SHADOWLORD;
             else if(nChoice == 6)
-                // Does not abort the conversation, it seems
-                //any way to fix this because here it really should
+            {
                 RegisterAsCohort(oPC);
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+            }    
             else if(nChoice == 7)
                 nStage = STAGE_LEADERSHIP;
 
@@ -453,10 +456,11 @@ void main()
         }
         else if(nStage == STAGE_EPIC_SPELLS_CONTING)
         {
-            DoDebug("Contingencies not setup yet");
             //contingencies
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_EPIC_SPELLS;
+            else if(nChoice == 1) //contingent resurrection
+                SetLocalInt(oPC, "nContingentRez", 0);
 
             MarkStageNotSetUp(nStage, oPC);
         }

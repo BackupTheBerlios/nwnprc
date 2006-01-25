@@ -214,9 +214,9 @@ void main()
                     || nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP
                     || nType == ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT)
                 {
-                    int nTemp = nVar3;
-                    nVar3 = nVar4;
-                    nVar4 = nTemp;
+//                    int nTemp = nVar3;
+//                    nVar3 = nVar4;
+//                    nVar4 = nTemp;
                 }
                 //get the itemproperty
                 itemproperty ipToAdd = IPGetItemPropertyByID(nType, nVar2, nVar3, nVar4);
@@ -251,21 +251,43 @@ void main()
                     {
                         int nMaxValue;
                         //get maxvalue based on class level & Epic Ancestral Daisho feats
+                        int nSamuraiLevel = GetLevelByClass(CLASS_TYPE_SAMURAI, oPC);
+                        if(nSamuraiLevel >=4 && nSamuraiLevel < 7)
+                            nMaxValue =     2000;
+                        else if(nSamuraiLevel >=7 && nSamuraiLevel < 9)
+                            nMaxValue =     8000;
+                        else if(nSamuraiLevel >=9 && nSamuraiLevel < 11)
+                            nMaxValue =    18000;
+                        else if(nSamuraiLevel >=11 && nSamuraiLevel < 13)
+                            nMaxValue =    32000;
+                        else if(nSamuraiLevel >=13 && nSamuraiLevel < 14)
+                            nMaxValue =    50000;
+                        else if(nSamuraiLevel >=14 && nSamuraiLevel < 15)
+                            nMaxValue =    72000;
+                        else if(nSamuraiLevel >=15 && nSamuraiLevel < 16)
+                            nMaxValue =    98000;
+                        else if(nSamuraiLevel >=16 && nSamuraiLevel < 17)
+                            nMaxValue =   126000;
+                        else if(nSamuraiLevel >=17 && nSamuraiLevel < 18)
+                            nMaxValue =   162000;
+                        else if(nSamuraiLevel >= 18)
+                            nMaxValue =   200000;
+                        //get the items
                         object oKatana;
                         object oWakizashi;
-                        object oTest = GetFirstItemInInventory(OBJECT_SELF);
+                        object oTest = GetFirstItemInInventory(oPC);
                         while(GetIsObjectValid(oTest))
                         {
                             if(GetTag(oTest) == "codi_katana")
                                 oKatana = oTest;
                             if(GetTag(oTest) == "codi_wakizashi")
                                 oWakizashi = oTest;
-                            oTest = GetNextItemInInventory(OBJECT_SELF);
+                            oTest = GetNextItemInInventory(oPC);
                         }
                         int i;
                         for(i=0;i<14;i++)
                         {
-                            oTest = GetItemInSlot(i, OBJECT_SELF);
+                            oTest = GetItemInSlot(i, oPC);
                             if(GetTag(oTest) == "codi_katana")
                                 oKatana = oTest;
                             if(GetTag(oTest) == "codi_wakizashi")
@@ -386,12 +408,18 @@ void main()
                 nStage = STAGE_IMPROVE_TYPE;            
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+            {
                 nStage = STAGE_ENTRY;
+                MarkStageNotSetUp(nStage, oPC);
+            }    
         }
         else if(nStage == STAGE_IMPROVE_TYPE)
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+            {
                 nStage = STAGE_IMPROVE;
+                MarkStageNotSetUp(nStage, oPC);
+            }    
             else
             {
                 int nType = nChoice;
@@ -432,7 +460,10 @@ void main()
         else if(nStage == STAGE_IMPROVE_SUB_TYPE)
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+            {
                 nStage = STAGE_IMPROVE_TYPE;
+                MarkStageNotSetUp(nStage, oPC);
+            }    
             else
             {
                 SetLocalInt(oPC, "codi_ancdai_subtype", nChoice);
@@ -484,7 +515,10 @@ void main()
         else if(nStage == STAGE_IMPROVE_PARAM1)
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+            {
                 nStage = STAGE_IMPROVE_TYPE;
+                MarkStageNotSetUp(nStage, oPC);
+            }
             else
             {
                 SetLocalInt(oPC, "codi_ancdai_param1", nChoice);
@@ -507,7 +541,10 @@ void main()
         else if(nStage == STAGE_IMPROVE_VALUE)
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+            {
                 nStage = STAGE_IMPROVE_TYPE;
+                MarkStageNotSetUp(nStage, oPC);
+            }
             else
             {
                 SetLocalInt(oPC, "codi_ancdai_value", nChoice);
@@ -519,7 +556,10 @@ void main()
         else if(nStage == STAGE_IMPROVE_ADD)
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+            {
                 nStage = STAGE_ENTRY;
+                MarkStageNotSetUp(nStage, oPC);
+            }
             else if(nChoice == TRUE)
             {
                 //add the itemproperty

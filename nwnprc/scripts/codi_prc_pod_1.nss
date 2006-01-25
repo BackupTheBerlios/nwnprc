@@ -9,13 +9,13 @@ void main()
         ActionGiveItem(oItem, oPC);
         return;
     }
-    if(GetIdentified(oItem))
+    if(!GetIdentified(oItem))
     {
         FloatingTextStringOnCreature("You cannot sacrifice unidentified items.", oPC, FALSE);
         ActionGiveItem(oItem, oPC);
         return;
     }
-    int iValue = GetGoldPieceValue(oItem)/2;
+    int iValue = GetGoldPieceValue(oItem);
     DestroyObject(oItem);
     if (iValue > 0)
     {

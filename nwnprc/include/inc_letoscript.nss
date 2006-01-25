@@ -460,7 +460,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
             {
                 if(GetPRCSwitch(PRC_LETOSCRIPT_GETNEWESTBIC))
                 {
-                    sScript  = "%"+sLetoTag+" =  FindNewestBic('"+GetNWNDir()+"servervault/"+GetLocalString(oObject, "PCPlayerName")+"'); ";
+                    sCommand  = "%"+sLetoTag+" =  FindNewestBic('"+GetNWNDir()+"servervault/"+GetLocalString(oObject, "PCPlayerName")+"'); ";
                 }
                 else
                 {

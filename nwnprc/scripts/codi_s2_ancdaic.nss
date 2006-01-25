@@ -282,7 +282,7 @@ void main()
                         if(nCurrentValue > nMaxValue)
                         {
                             AddChoice("You cannot add this because it would bring the total value above your limit ("+
-                                IntToString(nCurentValue)+" vs "+IntToString(nMaxValue)+")", CHOICE_RETURN_TO_PREVIOUS, oPC);
+                                IntToString(nCurrentValue)+" vs "+IntToString(nMaxValue)+")", CHOICE_RETURN_TO_PREVIOUS, oPC);
                         }
                         else
                         {

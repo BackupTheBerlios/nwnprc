@@ -100,7 +100,7 @@ void GoDirection(object oCreature, int nDirection)
 
 void DoMazeVFX(location lLoc)
 {
-    DrawSpiral(DURATION_TYPE_INSTANT, VFX_IMP_HEAD_SONIC, lLoc, 1.0, 3.0, 0.0, 60, 2.5, 2.0, GetFacingFromLocation(lLoc), "x");
+    DrawSpiral(DURATION_TYPE_INSTANT, VFX_IMP_HEAD_SONIC, lLoc, 1.0, 3.0, 0.0, 60, 2.5, 2.0, 0.0f, "z"/*, GetFacingFromLocation(lLoc)*/);
 }
 
 void ReturnFromMaze(object oCreature)

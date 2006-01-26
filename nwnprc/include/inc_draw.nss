@@ -32,7 +32,7 @@
 // fTime = time in seconds taken to draw the circle.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawCircle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawCircle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a spiral around lCenter
 // =============================
@@ -49,7 +49,7 @@ void DrawCircle(int nDurationType, int nVFX, location lCenter, float fRadius, fl
 // fTime = time in seconds taken to draw the spiral.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a spring around lCenter
 // =============================
@@ -68,7 +68,7 @@ void DrawSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStar
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a line towards lCenter
 // ============================
@@ -83,7 +83,7 @@ void DrawSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStar
 //              generated and the closer they are to each other.   DEFAULT : 90
 // fTime = time in seconds taken to draw the line.                DEFAULT : 6.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z");
+void DrawLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a line from lCenter
 // =========================
@@ -98,7 +98,7 @@ void DrawLineToCenter(int nDurationType, int nVFX, location lCenter, float fLeng
 //              generated and the closer they are to each other.   DEFAULT : 90
 // fTime = time in seconds taken to draw the line.                DEFAULT : 6.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z");
+void DrawLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a polygonal spring around lCenter
 // =======================================
@@ -118,7 +118,7 @@ void DrawLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLe
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a polygonal spiral around lCenter
 // =======================================
@@ -136,7 +136,7 @@ void DrawPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fR
 // fTime = time in seconds taken to draw the spiral.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a polygon around lCenter
 // ==============================
@@ -153,7 +153,7 @@ void DrawPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fR
 // fTime = time in seconds taken to draw the polygon.             DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a pentacle (five-pointed star) around lCenter
 // ===================================================
@@ -169,7 +169,7 @@ void DrawPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, i
 // fTime = time in seconds taken to draw the pentacle.            DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a pentaclic spiral around lCenter
 // =======================================
@@ -186,7 +186,7 @@ void DrawPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, 
 // fTime = time in seconds taken to draw the spiral.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a pentaclic spring around lCenter
 // =======================================
@@ -205,7 +205,7 @@ void DrawPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fR
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a star spring around lCenter
 // ==================================
@@ -227,7 +227,7 @@ void DrawPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fR
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a star spiral around lCenter
 // ==================================
@@ -247,7 +247,7 @@ void DrawStarSpring(int nDurationType, int nVFX, location lCenter, float fRadius
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a star around lCenter
 // ===========================
@@ -265,7 +265,7 @@ void DrawStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadius
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a hemisphere around lCenter
 // =================================
@@ -284,7 +284,7 @@ void DrawStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter,
 // fTime = time in seconds taken to draw the sphere.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the central/normal axis.             DEFAULT : "z"
-void DrawHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a perfect sphere around lCenter
 // =====================================
@@ -300,7 +300,7 @@ void DrawHemisphere(int nDurationType, int nVFX, location lCenter, float fRadius
 // fTime = time in seconds taken to draw the sphere.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the central/normal axis.             DEFAULT : "z"
-void DrawSphere(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawSphere(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a polygonal hemisphere around lCenter
 // ===========================================
@@ -320,7 +320,7 @@ void DrawSphere(int nDurationType, int nVFX, location lCenter, float fRadius, fl
 // fTime = time in seconds taken to draw the sphere.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the central/normal axis.             DEFAULT : "z"
-void DrawPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a toroidal spring around lCenter
 // ======================================
@@ -342,7 +342,7 @@ void DrawPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, floa
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawToroidalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawToroidalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a toroidal spiral around lCenter
 // ======================================
@@ -362,7 +362,7 @@ void DrawToroidalSpring(int nDurationType, int nVFX, location lCenter, float fRa
 // fTime = time in seconds taken to draw the spiral.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawToroidalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawToroidalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a standard torus around lCenter
 // =====================================
@@ -380,7 +380,7 @@ void DrawToroidalSpiral(int nDurationType, int nVFX, location lCenter, float fRa
 // fTime = time in seconds taken to draw the torus.               DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawTorus(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawTorus(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a sinusoidal curve from lCenter
 // =====================================
@@ -398,7 +398,7 @@ void DrawTorus(int nDurationType, int nVFX, location lCenter, float fRadiusOuter
 // fTime = time in seconds taken to draw the torus.               DEFAULT : 6.0
 // fRotate = the shift in phase in degrees.                       DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawSinusoid(int nDurationType, int nVFX, location lCenter, float fRadius, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawSinusoid(int nDurationType, int nVFX, location lCenter, float fRadius, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws an elliptical spring around lCenter
 // =========================================
@@ -419,7 +419,7 @@ void DrawSinusoid(int nDurationType, int nVFX, location lCenter, float fRadius, 
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawEllipticalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawEllipticalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws an elliptical spiral around lCenter
 // =========================================
@@ -438,7 +438,7 @@ void DrawEllipticalSpring(int nDurationType, int nVFX, location lCenter, float f
 // fTime = time in seconds taken to draw the spiral.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawEllipticalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawEllipticalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws an ellipse around lCenter
 // ===============================
@@ -455,7 +455,7 @@ void DrawEllipticalSpiral(int nDurationType, int nVFX, location lCenter, float f
 // fTime = time in seconds taken to draw the ellipse.             DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawEllipse(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawEllipse(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a rhodonea helix around lCenter
 // =====================================
@@ -474,7 +474,7 @@ void DrawEllipse(int nDurationType, int nVFX, location lCenter, float fRadiusOut
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawRhodoneaSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawRhodoneaSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a rhodonea around lCenter
 // ===============================
@@ -491,7 +491,7 @@ void DrawRhodoneaSpring(int nDurationType, int nVFX, location lCenter, float fRa
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawRhodonea(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawRhodonea(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a hypocycloid helix around lCenter
 // ========================================
@@ -510,7 +510,7 @@ void DrawRhodonea(int nDurationType, int nVFX, location lCenter, float fRadius, 
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawHypocycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawHypocycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a hypocycloid around lCenter
 // ==================================
@@ -527,7 +527,7 @@ void DrawHypocycloidSpring(int nDurationType, int nVFX, location lCenter, float 
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawHypocycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawHypocycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a epicycloid helix around lCenter
 // =======================================
@@ -546,7 +546,7 @@ void DrawHypocycloid(int nDurationType, int nVFX, location lCenter, float fRadiu
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawEpicycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawEpicycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Draws a epicycloid around lCenter
 // =================================
@@ -563,7 +563,7 @@ void DrawEpicycloidSpring(int nDurationType, int nVFX, location lCenter, float f
 // fTime = time in seconds taken to draw the spring.              DEFAULT : 6.0
 // fRotate = the angle of rotation respective to normal.          DEFAULT : 0.0
 // sAxis = ("x", "y" or "z") the normal axis.                     DEFAULT : "z"
-void DrawEpicycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z");
+void DrawEpicycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f);
 
 // Places a circle around lCenter
 // ==============================
@@ -585,7 +585,7 @@ void DrawEpicycloid(int nDurationType, int nVFX, location lCenter, float fRadius
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceCircle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceCircle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a spiral around lCenter
 // ==============================
@@ -608,7 +608,7 @@ void PlaceCircle(string sTemplate, location lCenter, float fRadius, int nFrequen
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a spring around lCenter
 // ==============================
@@ -633,7 +633,7 @@ void PlaceSpiral(string sTemplate, location lCenter, float fRadiusStart, float f
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a line towards lCenter
 // =============================
@@ -654,7 +654,7 @@ void PlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float f
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceLineToCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceLineToCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a line from lCenter
 // ==========================
@@ -675,7 +675,7 @@ void PlaceLineToCenter(string sTemplate, location lCenter, float fLength, float 
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceLineFromCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceLineFromCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a polygonal spring around lCenter
 // ========================================
@@ -701,7 +701,7 @@ void PlaceLineFromCenter(string sTemplate, location lCenter, float fLength, floa
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a polygonal spiral around lCenter
 // ========================================
@@ -725,7 +725,7 @@ void PlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlacePolygonalSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlacePolygonalSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a polygon around lCenter
 // ===============================
@@ -748,7 +748,7 @@ void PlacePolygonalSpiral(string sTemplate, location lCenter, float fRadiusStart
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlacePolygon(string sTemplate, location lCenter, float fRadius, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlacePolygon(string sTemplate, location lCenter, float fRadius, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a pentacle (five-pointed star) around lCenter
 // ====================================================
@@ -770,7 +770,7 @@ void PlacePolygon(string sTemplate, location lCenter, float fRadius, int nSides=
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlacePentacle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlacePentacle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a pentaclic spiral around lCenter
 // ========================================
@@ -793,7 +793,7 @@ void PlacePentacle(string sTemplate, location lCenter, float fRadius, int nFrequ
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlacePentaclicSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlacePentaclicSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a pentaclic spring around lCenter
 // ========================================
@@ -818,7 +818,7 @@ void PlacePentaclicSpiral(string sTemplate, location lCenter, float fRadiusStart
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a star spring around lCenter
 // ===================================
@@ -846,7 +846,7 @@ void PlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a star spiral around lCenter
 // ===================================
@@ -872,7 +872,7 @@ void PlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceStarSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceStarSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a star around lCenter
 // ============================
@@ -896,7 +896,7 @@ void PlaceStarSpiral(string sTemplate, location lCenter, float fRadiusStartOuter
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceStar(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceStar(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a hemisphere around lCenter
 // ==================================
@@ -921,7 +921,7 @@ void PlaceStar(string sTemplate, location lCenter, float fRadiusOuter, float fRa
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a perfect sphere around lCenter
 // ======================================
@@ -943,7 +943,7 @@ void PlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, flo
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceSphere(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceSphere(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a polygonal hemisphere around lCenter
 // ============================================
@@ -969,7 +969,7 @@ void PlaceSphere(string sTemplate, location lCenter, float fRadius, int nFrequen
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a toroidal spring around lCenter
 // =======================================
@@ -997,7 +997,7 @@ void PlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusS
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a toroidal spiral around lCenter
 // =======================================
@@ -1023,7 +1023,7 @@ void PlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartO
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceToroidalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceToroidalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a standard torus around lCenter
 // ======================================
@@ -1047,7 +1047,7 @@ void PlaceToroidalSpiral(string sTemplate, location lCenter, float fRadiusStartO
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceTorus(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceTorus(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a sinusoidal curve from lCenter
 // ======================================
@@ -1071,7 +1071,7 @@ void PlaceTorus(string sTemplate, location lCenter, float fRadiusOuter, float fR
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places an elliptical spring around lCenter
 // ==========================================
@@ -1098,7 +1098,7 @@ void PlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLen
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places an elliptical spiral around lCenter
 // ==========================================
@@ -1123,7 +1123,7 @@ void PlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStar
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceEllipticalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceEllipticalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places an ellipse around lCenter
 // ================================
@@ -1146,7 +1146,7 @@ void PlaceEllipticalSpiral(string sTemplate, location lCenter, float fRadiusStar
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceEllipse(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceEllipse(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a stella octangula above lCenter
 // =======================================
@@ -1167,7 +1167,7 @@ void PlaceEllipse(string sTemplate, location lCenter, float fRadiusOuter, float 
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a regular icosahedron above lCenter
 // ==========================================
@@ -1188,7 +1188,7 @@ void PlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a rhodonea helix around lCenter
 // ======================================
@@ -1213,7 +1213,7 @@ void PlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFr
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a rhodonea around lCenter
 // ================================
@@ -1236,7 +1236,7 @@ void PlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, floa
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceRhodonea(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceRhodonea(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a hypocycloid helix around lCenter
 // =========================================
@@ -1261,7 +1261,7 @@ void PlaceRhodonea(string sTemplate, location lCenter, float fRadius, float fRou
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a hypocycloid around lCenter
 // ===================================
@@ -1284,7 +1284,7 @@ void PlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, f
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceHypocycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceHypocycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a epicycloid helix around lCenter
 // ========================================
@@ -1309,7 +1309,7 @@ void PlaceHypocycloid(string sTemplate, location lCenter, float fRadius, float f
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Places a epicycloid around lCenter
 // ==================================
@@ -1332,7 +1332,7 @@ void PlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, fl
 // fWait = time in seconds to wait before applying visual effect. DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeables get destroyed.                          DEFAULT : 0.0
-void PlaceEpicycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
+void PlaceEpicycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f);
 
 // Beams a polygonal hemisphere around lCenter
 // ===========================================
@@ -1360,7 +1360,7 @@ void PlaceEpicycloid(string sTemplate, location lCenter, float fRadius, float fR
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a polygonal spring around lCenter
 // =======================================
@@ -1388,7 +1388,7 @@ void BeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, floa
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a polygonal spiral around lCenter
 // =======================================
@@ -1414,7 +1414,7 @@ void BeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fR
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a polygon around lCenter
 // ==============================
@@ -1439,7 +1439,7 @@ void BeamPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fR
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a star around lCenter
 // ===========================
@@ -1466,7 +1466,7 @@ void BeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, i
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a star spring around lCenter
 // ==================================
@@ -1497,7 +1497,7 @@ void BeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter,
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a star spiral around lCenter
 // ==================================
@@ -1526,7 +1526,7 @@ void BeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadius
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a pentacle around lCenter
 // ===============================
@@ -1550,7 +1550,7 @@ void BeamStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadius
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a pentaclic spiral around lCenter
 // =======================================
@@ -1575,7 +1575,7 @@ void BeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, 
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a pentaclic spring around lCenter
 // =======================================
@@ -1602,7 +1602,7 @@ void BeamPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fR
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a line from lCenter
 // =========================
@@ -1625,7 +1625,7 @@ void BeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fR
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a line to lCenter
 // =======================
@@ -1648,7 +1648,7 @@ void BeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLe
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a stella octangula above lCenter
 // ======================================
@@ -1672,7 +1672,7 @@ void BeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLeng
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a regular icosahedron above lCenter
 // =========================================
@@ -1696,7 +1696,7 @@ void BeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fR
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a regular dodecahedron above lCenter
 // =========================================
@@ -1720,7 +1720,7 @@ void BeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadiu
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a rhombic triacontahedron above lCenter
 // =============================================
@@ -1744,7 +1744,7 @@ void BeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadi
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a cuboctahedron above lCenter
 // =============================================
@@ -1768,7 +1768,7 @@ void BeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fR
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a small rhombicuboctahedron above lCenter
 // =============================================
@@ -1792,7 +1792,7 @@ void BeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRad
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 // Beams a gengon above lCenter
 // ============================
@@ -1821,7 +1821,7 @@ void BeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter,
 // fWait2 = time in seconds to wait before applying nVFX2.        DEFAULT : 1.0
 // fLifetime = if fLifetime is not 0.0, then this is time in seconds before the
 //             placeable nodes get destroyed.                     DEFAULT : 0.0
-void BeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
+void BeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f);
 
 /*
    =============================================
@@ -1831,36 +1831,36 @@ void BeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStar
 // Object-returning equivalent of the void-returning functions
 // sTag = tag of oData (the data storage invisible object)
 
-object ObjectPlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SPRING");
-object ObjectPlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALSPRING");
-object ObjectPlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_PENTACLICSPRING");
-object ObjectPlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STARSPRING");
-object ObjectPlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HEMISPHERE");
-object ObjectPlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALHEMISPHERE");
-object ObjectPlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SINUSOID");
-object ObjectPlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_TOROIDALSPRING");
-object ObjectPlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ELLIPTICALSPRING");
-object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STELLAOCTANGULA");
-object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ICOSAHEDRON");
-object ObjectPlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_RHODONEASPRING");
-object ObjectPlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HYPOCYCLOIDSPRING");
-object ObjectPlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_EPICYCLOIDSPRING");
-object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALHEMISPHERE");
-object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALSPRING");
-object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGON");
-object ObjectBeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STAR");
-object ObjectBeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STARSPRING");
-object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLE");
-object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLICSPRING");
-object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINEFROM");
-object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINETO");
-object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STELLAOCTANGULA");
-object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_ICOSAHEDRON");
-object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_DODECAHEDRON");
-object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_TRIACONTAHEDRON");
-object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_CUBOCTAHEDRON");
-object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_SMALLRHOMBICUBOCTAHEDRON");
-object ObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_GENGON");
+object ObjectPlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SPRING");
+object ObjectPlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALSPRING");
+object ObjectPlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_PENTACLICSPRING");
+object ObjectPlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STARSPRING");
+object ObjectPlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HEMISPHERE");
+object ObjectPlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALHEMISPHERE");
+object ObjectPlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SINUSOID");
+object ObjectPlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_TOROIDALSPRING");
+object ObjectPlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ELLIPTICALSPRING");
+object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STELLAOCTANGULA");
+object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ICOSAHEDRON");
+object ObjectPlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_RHODONEASPRING");
+object ObjectPlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HYPOCYCLOIDSPRING");
+object ObjectPlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_EPICYCLOIDSPRING");
+object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALHEMISPHERE");
+object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALSPRING");
+object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGON");
+object ObjectBeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STAR");
+object ObjectBeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STARSPRING");
+object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLE");
+object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLICSPRING");
+object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINEFROM");
+object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINETO");
+object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STELLAOCTANGULA");
+object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_ICOSAHEDRON");
+object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_DODECAHEDRON");
+object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_TRIACONTAHEDRON");
+object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_CUBOCTAHEDRON");
+object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_SMALLRHOMBICUBOCTAHEDRON");
+object ObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_GENGON");
 
 /*
    =============================================
@@ -1883,7 +1883,7 @@ object ObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRa
 // void gao_ActionApplyLocalBeamEffect(object oData, string sNumber1, string sNumber2, int nDurationType, int nVFX, float fDuration);
 
 // Return properly rotated vector
-// vector gao_RotateVector(vector vCenter, string sAxis, float x, float y, float z);
+//vector gao_RotateVector(vector vCenter, string sAxis, float x, float y, float z, float fRotateXZ, float fRotateYZ);
 
 /*
    =============================================
@@ -1966,9 +1966,39 @@ void PlaceLineFromVectorToVector(string sTemplate, object oArea, vector vOne, ve
     }
 }
 
-vector gao_RotateVector(vector vCenter, string sAxis, float x, float y, float z)
+vector gao_RotateVector(vector vCenter, string sAxis, float x, float y, float z, float fRotateXZ, float fRotateYZ)
 {
+    // Avoiding these if unnecessary should lower the CPU usage per call a fair bit. Not that it seems to be noticeable, but eh :P
+    if(fRotateXZ != 0.0f)
+    {
+        // Determine the length of the vector
+        float fLength = sqrt((x * x) + (z * z));
+        // Determine the angle of the vector relative to the Z axle
+        float fAngle  = acos(z / fLength);
+        // Adjust for arcuscosine ambiquity
+        if(x < 0.0f) fAngle = 360.0f - fAngle;
 
+        // Add in the new angle to rotate by and calculate new coordinates
+        fAngle += fRotateXZ;
+        x = fLength * sin(fAngle);
+        z = fLength * cos(fAngle);
+    }
+    if(fRotateYZ != 0.0f)
+    {
+        // Determine the length of the vector
+        float fLength = sqrt((y * y) + (z * z));
+        // Determine the angle of the vector relative to the Z axle
+        float fAngle  = acos(z / fLength);
+        // Adjust for arcuscosine ambiquity
+        if(y < 0.0f) fAngle = 360.0f - fAngle;
+
+        // Add in the new angle to rotate by and calculate new coordinates
+        fAngle += fRotateYZ;
+        y = fLength * sin(fAngle);
+        z = fLength * cos(fAngle);
+    }
+
+    // Determine the final vector
     vector vPos;
     if (sAxis == "x") vPos = Vector(y, z, x) ;
     else if (sAxis == "y") vPos = Vector(z, x, y) ;
@@ -1982,7 +2012,7 @@ vector gao_RotateVector(vector vCenter, string sAxis, float x, float y, float z)
    =============================================
 */
 
-void DrawEllipticalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawEllipticalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2009,23 +2039,23 @@ void DrawEllipticalSpring(int nDurationType, int nVFX, location lCenter, float f
         fRadiusOuter = fRadiusStartOuter - fOuterDecay*f;
         fEccentric = 1 - (pow(fRadiusStartInner - fInnerDecay*f, 2.0)/pow(fRadiusOuter, 2.0));
         fElliRadius =  fRadiusOuter*sqrt((1 - fEccentric)/(1 - fEccentric*pow(cos(fElliAngle), 2.0)));
-        vPos = gao_RotateVector(vCenter, sAxis, fElliRadius*cos(fAngle), fElliRadius*sin(fAngle), fHeightStart - fGrowth*f);
+        vPos = gao_RotateVector(vCenter, sAxis, fElliRadius*cos(fAngle), fElliRadius*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
         lPos = Location(oArea, vPos, fAngle);
         DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
     }
 }
 
-void DrawEllipticalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawEllipticalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawEllipticalSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawEllipticalSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawEllipse(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawEllipse(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawEllipticalSpring(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawEllipticalSpring(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2043,33 +2073,33 @@ void DrawSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStar
     {
         f = IntToFloat(i);
         fAngle = fTheta*f + fRotate;
-        vPos = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f);
+        vPos = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
         lPos = Location(oArea, vPos, fAngle);
         DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
     }
 }
 
-void DrawSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawCircle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawCircle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawSpring(nDurationType, nVFX, lCenter, fRadius, fRadius, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawSpring(nDurationType, nVFX, lCenter, fRadius, fRadius, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z")
+void DrawLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawSpring(nDurationType, nVFX, lCenter, fLength, 0.0, 0.0, 0.0, fDuration, nFrequency, 0.0, fTime, fDirection, sAxis);
+    DrawSpring(nDurationType, nVFX, lCenter, fLength, 0.0, 0.0, 0.0, fDuration, nFrequency, 0.0, fTime, fDirection, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z")
+void DrawLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawSpring(nDurationType, nVFX, lCenter, 0.0, fLength, 0.0, 0.0, fDuration, nFrequency, 0.0, fTime, fDirection, sAxis);
+    DrawSpring(nDurationType, nVFX, lCenter, 0.0, fLength, 0.0, 0.0, fDuration, nFrequency, 0.0, fTime, fDirection, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=5, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=5, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -2093,23 +2123,23 @@ void DrawPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fR
         g = IntToFloat(i+1);
         fAngle1 = fEta*f + fRotate;
         fAngle2 = fEta*g + fRotate;
-        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle1), (fRadiusStart - fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*g)*cos(fAngle2), (fRadiusStart - fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle1), (fRadiusStart - fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*g)*cos(fAngle2), (fRadiusStart - fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         DelayCommand(f*fDelayPerSide, DrawLineFromVectorToVector(nDurationType, nVFX, oArea, vPos1, vPos2, fDuration, nFrequencyPerSide, fDelayPerSide));
     }
 }
 
-void DrawPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawPolygonalSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawPolygonalSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawPolygonalSpring(nDurationType, nVFX, lCenter, fRadius, fRadius, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawPolygonalSpring(nDurationType, nVFX, lCenter, fRadius, fRadius, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2132,23 +2162,23 @@ void DrawPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fR
         g = IntToFloat(i+1);
         fAngle1 = fStarangle*f + fRotate;
         fAngle2 = fStarangle*g + fRotate;
-        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle1), (fRadiusStart - fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*g)*cos(fAngle2), (fRadiusStart - fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle1), (fRadiusStart - fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*g)*cos(fAngle2), (fRadiusStart - fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         DelayCommand(f*fDelayPerSide, DrawLineFromVectorToVector(nDurationType, nVFX, oArea, vPos1, vPos2, fDuration, nFrequencyPerSide, fDelayPerSide));
     }
 }
 
-void DrawPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawPentaclicSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawPentaclicSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawPentaclicSpring(nDurationType, nVFX, lCenter, fRadius, fRadius, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawPentaclicSpring(nDurationType, nVFX, lCenter, fRadius, fRadius, 0.0, 0.0, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i, toggle;
     if (nSides < 2) nSides = 3;
@@ -2176,29 +2206,29 @@ void DrawStarSpring(int nDurationType, int nVFX, location lCenter, float fRadius
         fAngle2 = fStarangle*g + fRotate;
         if (!toggle)
         {
-            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*f)*cos(fAngle1), (fRadiusStartInner - fDecayInner*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*g)*cos(fAngle2), (fRadiusStartOuter - fDecayOuter*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*f)*cos(fAngle1), (fRadiusStartInner - fDecayInner*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*g)*cos(fAngle2), (fRadiusStartOuter - fDecayOuter*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         }
         else
         {
-            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*f)*cos(fAngle1), (fRadiusStartOuter - fDecayOuter*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*g)*cos(fAngle2), (fRadiusStartInner - fDecayInner*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*f)*cos(fAngle1), (fRadiusStartOuter - fDecayOuter*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*g)*cos(fAngle2), (fRadiusStartInner - fDecayInner*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         }
         DelayCommand(f*fDelayPerSide, DrawLineFromVectorToVector(nDurationType, nVFX, oArea, vPos1, vPos2, fDuration, nFrequencyPerSide, fDelayPerSide));
     }
 }
 
-void DrawStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawStarSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawStarSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawStarSpring(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawStarSpring(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nSides, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2217,20 +2247,20 @@ void DrawHemisphere(int nDurationType, int nVFX, location lCenter, float fRadius
         fAngle = fTheta*f + fRotate;
         fSphereAngle = fTheta*f*0.25/fRev;
         fSphereRadius = fRadiusStart*cos(fSphereAngle) + fRadiusEnd*sin(fSphereAngle);
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSphereRadius*cos(fAngle), fSphereRadius*sin(fAngle), fEffectiveHeight*sin(fSphereAngle) + fHeightStart), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSphereRadius*cos(fAngle), fSphereRadius*sin(fAngle), fEffectiveHeight*sin(fSphereAngle) + fHeightStart, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
     }
 }
 
-void DrawSphere(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawSphere(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     if (nFrequency < 1) nFrequency = 90;
     if (fRev == 0.0) fRev = 5.0;
-    DrawHemisphere(nDurationType, nVFX, lCenter, fRadius, 0.0, fRadius, 0.0, fDuration, nFrequency/2, fRev/2.0, fTime, fRotate, sAxis);
-    DrawHemisphere(nDurationType, nVFX, lCenter, fRadius, 0.0, fRadius, 2.0*fRadius, fDuration, nFrequency/2, -fRev/2.0, fTime, fRotate, sAxis);
+    DrawHemisphere(nDurationType, nVFX, lCenter, fRadius, 0.0, fRadius, 0.0, fDuration, nFrequency/2, fRev/2.0, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
+    DrawHemisphere(nDurationType, nVFX, lCenter, fRadius, 0.0, fRadius, 2.0*fRadius, fDuration, nFrequency/2, -fRev/2.0, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -2257,13 +2287,13 @@ void DrawPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, floa
         fAngle2 = fEta*g + fRotate;
         fSphereAngle2 = fEta*g*0.25/fRev;
         fSphereRadius2 = fRadiusStart*cos(fSphereAngle2) + fRadiusEnd*sin(fSphereAngle2);
-        vPos1 = gao_RotateVector(vCenter, sAxis, fSphereRadius1*cos(fAngle1), fSphereRadius1*sin(fAngle1), fEffectiveHeight*sin(fSphereAngle1) + fHeightStart);
-        vPos2 = gao_RotateVector(vCenter, sAxis, fSphereRadius2*cos(fAngle2), fSphereRadius2*sin(fAngle2), fEffectiveHeight*sin(fSphereAngle2) + fHeightStart);
+        vPos1 = gao_RotateVector(vCenter, sAxis, fSphereRadius1*cos(fAngle1), fSphereRadius1*sin(fAngle1), fEffectiveHeight*sin(fSphereAngle1) + fHeightStart, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, fSphereRadius2*cos(fAngle2), fSphereRadius2*sin(fAngle2), fEffectiveHeight*sin(fSphereAngle2) + fHeightStart, fDirectionXZ, fDirectionYZ);
         DelayCommand(f*fDelayPerSide, DrawLineFromVectorToVector(nDurationType, nVFX, oArea, vPos1, vPos2, fDuration, nFrequencyPerSide, fDelayPerSide));
     }
 }
 
-void DrawToroidalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawToroidalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2287,22 +2317,22 @@ void DrawToroidalSpring(int nDurationType, int nVFX, location lCenter, float fRa
         fAngle = fTheta*f + fRotate;
         fToricAngle = fLoopsPerRev*fAngle;
         fToricRadius = (fToricRadiusStart - fToricDecay*f);
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle) + fToricRadius*cos(fToricAngle)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle) + fToricRadius*cos(fToricAngle)*sin(fAngle), fHeightStart - fGrowth*f + fToricRadius*sin(fToricAngle)), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle) + fToricRadius*cos(fToricAngle)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle) + fToricRadius*cos(fToricAngle)*sin(fAngle), fHeightStart - fGrowth*f + fToricRadius*sin(fToricAngle), fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
     }
 }
 
-void DrawToroidalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawToroidalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawToroidalSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, fDuration, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis);
+    DrawToroidalSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, fDuration, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawTorus(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawTorus(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, float fDuration=0.0f, int nFrequency=90, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawToroidalSpring(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, fDuration, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis);
+    DrawToroidalSpring(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, fDuration, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawRhodoneaSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawRhodoneaSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2320,17 +2350,17 @@ void DrawRhodoneaSpring(int nDurationType, int nVFX, location lCenter, float fRa
         fAngle = fTheta*f;
         fDist = fRadius*sin(fRoulette*fAngle);
         fAngle += fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
     }
 }
 
-void DrawRhodonea(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawRhodonea(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawRhodoneaSpring(nDurationType, nVFX, lCenter, fRadius, 0.0, 0.0, fRoulette, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawRhodoneaSpring(nDurationType, nVFX, lCenter, fRadius, 0.0, 0.0, fRoulette, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawHypocycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawHypocycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2354,17 +2384,17 @@ void DrawHypocycloidSpring(int nDurationType, int nVFX, location lCenter, float 
       x = fAlpha*cos(fAngle) + fRoulette*cos(fBeta*fAngle);
       fDist = sqrt(pow(y, 2.0) + pow(x, 2.0));     // x -> 0; atan(y/x) -> 90;
       fAngle = (x == 0.0 && y < 0.0) ? 270.0 + fRotate : (x==0.0) ? 90.0 + fRotate : (x < 0.0) ? 180.0 + atan(y/x) + fRotate : atan(y/x) + fRotate;
-      lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+      lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
       DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
    }
 }
 
-void DrawHypocycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawHypocycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawHypocycloidSpring(nDurationType, nVFX, lCenter, fRadius, 0.0, 0.0, fRoulette, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawHypocycloidSpring(nDurationType, nVFX, lCenter, fRadius, 0.0, 0.0, fRoulette, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawEpicycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawEpicycloidSpring(int nDurationType, int nVFX, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2388,17 +2418,17 @@ void DrawEpicycloidSpring(int nDurationType, int nVFX, location lCenter, float f
         x = (fAlpha*cos(fAngle) - fRoulette*cos(fBeta*fAngle));
         fDist = sqrt(pow(y, 2.0) + pow(x, 2.0));
         fAngle = (x == 0.0 && y < 0.0) ? 270.0 + fRotate : (x==0.0) ? 90.0 + fRotate : (x < 0.0) ? 180.0 + atan(y/x) + fRotate : atan(y/x) + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
     }
 }
 
-void DrawEpicycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawEpicycloid(int nDurationType, int nVFX, location lCenter, float fRadius, float fRoulette=3.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
-    DrawEpicycloidSpring(nDurationType, nVFX, lCenter, fRadius, 0.0, 0.0, fRoulette, fDuration, nFrequency, fRev, fTime, fRotate, sAxis);
+    DrawEpicycloidSpring(nDurationType, nVFX, lCenter, fRadius, 0.0, 0.0, fRoulette, fDuration, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ);
 }
 
-void DrawSinusoid(int nDurationType, int nVFX, location lCenter, float fRadius, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z")
+void DrawSinusoid(int nDurationType, int nVFX, location lCenter, float fRadius, float fLength, float fDirection=0.0f, float fDuration=0.0f, int nFrequency=90, float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f)
 {
     int i;
     if (nFrequency < 1) nFrequency = 90;
@@ -2420,7 +2450,7 @@ void DrawSinusoid(int nDurationType, int nVFX, location lCenter, float fRadius, 
         v = Vector(fEta*f, fRadius*fSine, 0.0);
         vTemp = VectorMagnitude(v)*AngleToVector(VectorToAngle(v) + fDirection);
         fAngle = (fSine > 0.0) ? 360.0 - fAngle : fAngle ;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, vTemp.x, vTemp.y, 0.0), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, vTemp.x, vTemp.y, 0.0, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, ApplyEffectAtLocation(nDurationType, EffectVisualEffect(nVFX), lPos, fDuration));
     }
 }
@@ -2431,7 +2461,7 @@ void DrawSinusoid(int nDurationType, int nVFX, location lCenter, float fRadius, 
    =============================================
 */
 
-object ObjectPlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ELLIPTICALSPRING")
+object ObjectPlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ELLIPTICALSPRING")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -2463,29 +2493,29 @@ object ObjectPlaceEllipticalSpring(string sTemplate, location lCenter, float fRa
         fRadiusOuter = fRadiusStartOuter - fOuterDecay*f;
         fEccentric = 1 - (pow(fRadiusStartInner - fInnerDecay*f, 2.0)/pow(fRadiusOuter, 2.0));
         fElliRadius =  fRadiusOuter*sqrt((1 - fEccentric)/(1 - fEccentric*pow(cos(fElliAngle), 2.0)));
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fElliRadius*cos(fAngle), fElliRadius*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fElliRadius*cos(fAngle), fElliRadius*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceEllipticalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceEllipticalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceEllipticalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceEllipticalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceEllipticalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceEllipticalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_ELLIPTICALSPIRAL");
+    ObjectPlaceEllipticalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_ELLIPTICALSPIRAL");
 }
 
-void PlaceEllipse(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceEllipse(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceEllipticalSpring(sTemplate, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_ELLIPSE");
+    ObjectPlaceEllipticalSpring(sTemplate, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_ELLIPSE");
 }
 
-object ObjectPlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SPRING")
+object ObjectPlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SPRING")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -2508,39 +2538,39 @@ object ObjectPlaceSpring(string sTemplate, location lCenter, float fRadiusStart,
     {
         f = IntToFloat(i);
         fAngle = fTheta*f + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_SPIRAL");
+    ObjectPlaceSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_SPIRAL");
 }
 
-void PlaceCircle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceCircle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceSpring(sTemplate, lCenter, fRadius, fRadius, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_CIRCLE");
+    ObjectPlaceSpring(sTemplate, lCenter, fRadius, fRadius, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_CIRCLE");
 }
 
-void PlaceLineToCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceLineToCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceSpring(sTemplate, lCenter, fLength, 0.0, 0.0, 0.0, nFrequency, 0.0, fTime, fDirection, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_LINETO");
+    ObjectPlaceSpring(sTemplate, lCenter, fLength, 0.0, 0.0, 0.0, nFrequency, 0.0, fTime, fDirection, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_LINETO");
 }
 
-void PlaceLineFromCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceLineFromCenter(string sTemplate, location lCenter, float fLength, float fDirection=0.0f, int nFrequency=60, float fTime=12.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceSpring(sTemplate, lCenter, 0.0, fLength, 0.0, 0.0, nFrequency, 0.0, fTime, fDirection, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_LINEFROM");
+    ObjectPlaceSpring(sTemplate, lCenter, 0.0, fLength, 0.0, 0.0, nFrequency, 0.0, fTime, fDirection, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_LINEFROM");
 }
 
-object ObjectPlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALSPRING")
+object ObjectPlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALSPRING")
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -2570,30 +2600,30 @@ object ObjectPlacePolygonalSpring(string sTemplate, location lCenter, float fRad
         g = IntToFloat(i+1);
         fAngle1 = fEta*f + fRotate;
         fAngle2 = fEta*g + fRotate;
-        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle1), (fRadiusStart - fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*g)*cos(fAngle2), (fRadiusStart - fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle1), (fRadiusStart - fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*g)*cos(fAngle2), (fRadiusStart - fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         DelayCommand(f*fDelayPerSide, PlaceLineFromVectorToVector(sTemplate, oArea, vPos1, vPos2, nFrequencyPerSide, fDelayPerSide, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlacePolygonalSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlacePolygonalSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlacePolygonalSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlacePolygonalSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlacePolygonalSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlacePolygonalSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_POLYGONALSPIRAL");
+    ObjectPlacePolygonalSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_POLYGONALSPIRAL");
 }
 
-void PlacePolygon(string sTemplate, location lCenter, float fRadius, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlacePolygon(string sTemplate, location lCenter, float fRadius, int nSides=3, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlacePolygonalSpring(sTemplate, lCenter, fRadius, fRadius, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_POLYGON");
+    ObjectPlacePolygonalSpring(sTemplate, lCenter, fRadius, fRadius, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_POLYGON");
 }
 
-object ObjectPlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_PENTACLICSPRING")
+object ObjectPlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_PENTACLICSPRING")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -2622,30 +2652,30 @@ object ObjectPlacePentaclicSpring(string sTemplate, location lCenter, float fRad
         g = IntToFloat(i+1);
         fAngle1 = fStarangle*f + fRotate;
         fAngle2 = fStarangle*g + fRotate;
-        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*f)*cos(fAngle1), (fRadiusStart-fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*g)*cos(fAngle2), (fRadiusStart-fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+        vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*f)*cos(fAngle1), (fRadiusStart-fDecay*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*g)*cos(fAngle2), (fRadiusStart-fDecay*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         DelayCommand(f*fDelayPerSide, PlaceLineFromVectorToVector(sTemplate, oArea, vPos1, vPos2, nFrequencyPerSide, fDelayPerSide, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlacePentaclicSpring(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlacePentaclicSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlacePentaclicSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlacePentaclicSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlacePentaclicSpiral(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlacePentaclicSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_PENTACLICSPIRAL");
+    ObjectPlacePentaclicSpring(sTemplate, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_PENTACLICSPIRAL");
 }
 
-void PlacePentacle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlacePentacle(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlacePentaclicSpring(sTemplate, lCenter, fRadius, fRadius, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_PENTACLE");
+    ObjectPlacePentaclicSpring(sTemplate, lCenter, fRadius, fRadius, 0.0, 0.0, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_PENTACLE");
 }
 
-object ObjectPlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STARSPRING")
+object ObjectPlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STARSPRING")
 {
     int i, toggle;
     if (nSides < 2) nSides = 3;
@@ -2679,13 +2709,13 @@ object ObjectPlaceStarSpring(string sTemplate, location lCenter, float fRadiusSt
         fAngle2 = fStarangle*g + fRotate;
         if (!toggle)
         {
-            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*f)*cos(fAngle1), (fRadiusStartInner - fDecayInner*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*g)*cos(fAngle2), (fRadiusStartOuter - fDecayOuter*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*f)*cos(fAngle1), (fRadiusStartInner - fDecayInner*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*g)*cos(fAngle2), (fRadiusStartOuter - fDecayOuter*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         }
         else
         {
-            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*f)*cos(fAngle1), (fRadiusStartOuter - fDecayOuter*f)*sin(fAngle1), fHeightStart - fGrowth*f);
-            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*g)*cos(fAngle2), (fRadiusStartInner - fDecayInner*g)*sin(fAngle2), fHeightStart - fGrowth*g);
+            vPos1 = gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*f)*cos(fAngle1), (fRadiusStartOuter - fDecayOuter*f)*sin(fAngle1), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ);
+            vPos2 = gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*g)*cos(fAngle2), (fRadiusStartInner - fDecayInner*g)*sin(fAngle2), fHeightStart - fGrowth*g, fDirectionXZ, fDirectionYZ);
         }
         DelayCommand(f*fDelayPerSide, PlaceLineFromVectorToVector(sTemplate, oArea, vPos1, vPos2, nFrequencyPerSide, fDelayPerSide, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
@@ -2693,22 +2723,22 @@ object ObjectPlaceStarSpring(string sTemplate, location lCenter, float fRadiusSt
     return oData;
 }
 
-void PlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceStarSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceStarSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nSides, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceStarSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nSides, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceStarSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceStarSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceStarSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_STARSPIRAL");
+    ObjectPlaceStarSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_STARSPIRAL");
 }
 
-void PlaceStar(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceStar(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceStarSpring(sTemplate, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_STAR");
+    ObjectPlaceStarSpring(sTemplate, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nSides, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_STAR");
 }
 
-object ObjectPlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HEMISPHERE")
+object ObjectPlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HEMISPHERE")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -2733,27 +2763,27 @@ object ObjectPlaceHemisphere(string sTemplate, location lCenter, float fRadiusSt
         fAngle = fTheta*f + fRotate;
         fSphereAngle = fTheta*f*0.25/fRev;
         fSphereRadius = fRadiusStart*cos(fSphereAngle) + fRadiusEnd*sin(fSphereAngle);
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSphereRadius*cos(fAngle), fSphereRadius*sin(fAngle), fEffectiveHeight*sin(fSphereAngle) + fHeightStart), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSphereRadius*cos(fAngle), fSphereRadius*sin(fAngle), fEffectiveHeight*sin(fSphereAngle) + fHeightStart, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceHemisphere(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceHemisphere(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceSphere(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceSphere(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
     if (nFrequency < 1) nFrequency = 60;
     if (fRev == 0.0) fRev = 5.0;
-    ObjectPlaceHemisphere(sTemplate, lCenter, fRadius, 0.0, fRadius, 0.0, nFrequency/2, fRev/2.0, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
-    ObjectPlaceHemisphere(sTemplate, lCenter, fRadius, 0.0, fRadius, 2.0*fRadius, nFrequency/2, -fRev/2.0, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceHemisphere(sTemplate, lCenter, fRadius, 0.0, fRadius, 0.0, nFrequency/2, fRev/2.0, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceHemisphere(sTemplate, lCenter, fRadius, 0.0, fRadius, 2.0*fRadius, nFrequency/2, -fRev/2.0, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-object ObjectPlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALHEMISPHERE")
+object ObjectPlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_POLYGONALHEMISPHERE")
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -2785,20 +2815,20 @@ object ObjectPlacePolygonalHemisphere(string sTemplate, location lCenter, float 
         fAngle2 = fEta*g + fRotate;
         fSphereAngle2 = fEta*g*0.25/fRev;
         fSphereRadius2 = fRadiusStart*cos(fSphereAngle2) + fRadiusEnd*sin(fSphereAngle2);
-        vPos1 = gao_RotateVector(vCenter, sAxis, fSphereRadius1*cos(fAngle1), fSphereRadius1*sin(fAngle1), fEffectiveHeight*sin(fSphereAngle1) + fHeightStart);
-        vPos2 = gao_RotateVector(vCenter, sAxis, fSphereRadius2*cos(fAngle2), fSphereRadius2*sin(fAngle2), fEffectiveHeight*sin(fSphereAngle2) + fHeightStart);
+        vPos1 = gao_RotateVector(vCenter, sAxis, fSphereRadius1*cos(fAngle1), fSphereRadius1*sin(fAngle1), fEffectiveHeight*sin(fSphereAngle1) + fHeightStart, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, fSphereRadius2*cos(fAngle2), fSphereRadius2*sin(fAngle2), fEffectiveHeight*sin(fSphereAngle2) + fHeightStart, fDirectionXZ, fDirectionYZ);
         DelayCommand(f*fDelayPerSide, PlaceLineFromVectorToVector(sTemplate, oArea, vPos1, vPos2, nFrequencyPerSide, fDelayPerSide, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlacePolygonalHemisphere(string sTemplate, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlacePolygonalHemisphere(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlacePolygonalHemisphere(sTemplate, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-object ObjectPlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SINUSOID")
+object ObjectPlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_SINUSOID")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -2825,19 +2855,19 @@ object ObjectPlaceSinusoid(string sTemplate, location lCenter, float fRadius, fl
         v = Vector(fEta*f, fRadius*fSine, 0.0);
         vTemp = VectorMagnitude(v)*AngleToVector(VectorToAngle(v) + fDirection);
         fAngle = (fSine > 0.0) ? 360.0 - fAngle : fAngle ;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, vTemp.x, vTemp.y, 0.0), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, vTemp.x, vTemp.y, 0.0, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceSinusoid(string sTemplate, location lCenter, float fRadius, float fLength, float fDirection=0.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceSinusoid(sTemplate, lCenter, fRadius, fLength, fDirection, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceSinusoid(sTemplate, lCenter, fRadius, fLength, fDirection, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-object ObjectPlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_TOROIDALSPRING")
+object ObjectPlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_TOROIDALSPRING")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -2867,29 +2897,29 @@ object ObjectPlaceToroidalSpring(string sTemplate, location lCenter, float fRadi
         fAngle = fTheta*f + fRotate;
         fToricAngle = fLoopsPerRev*fAngle;
         fToricRadius = fToricRadiusStart - fToricDecay*f;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle) + fToricRadius*cos(fToricAngle)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle) + fToricRadius*cos(fToricAngle)*sin(fAngle), fHeightStart - fGrowth*f + fToricRadius*sin(fToricAngle)), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart - fDecay*f)*cos(fAngle) + fToricRadius*cos(fToricAngle)*cos(fAngle), (fRadiusStart - fDecay*f)*sin(fAngle) + fToricRadius*cos(fToricAngle)*sin(fAngle), fHeightStart - fGrowth*f + fToricRadius*sin(fToricAngle), fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceToroidalSpring(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceToroidalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceToroidalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceToroidalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceToroidalSpiral(string sTemplate, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceToroidalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_TOROIDALSPIRAL");
+    ObjectPlaceToroidalSpring(sTemplate, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_TOROIDALSPIRAL");
 }
 
-void PlaceTorus(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceTorus(string sTemplate, location lCenter, float fRadiusOuter, float fRadiusInner, int nFrequency=60, float fLoopsPerRev=36.0f, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceToroidalSpring(sTemplate, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_TORUS");
+    ObjectPlaceToroidalSpring(sTemplate, lCenter, fRadiusOuter, fRadiusInner, fRadiusOuter, fRadiusInner, 0.0, 0.0, nFrequency, fLoopsPerRev, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_TORUS");
 }
 
-object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STELLAOCTANGULA")
+object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_STELLAOCTANGULA")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -2905,7 +2935,7 @@ object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRad
     float fDelayPerSide = fTime/12.0;
     float f, z1, fAngle1, g, z2, fAngle2;
     vector vPos1, vPos2, vTop;
-    vTop = gao_RotateVector(vCenter, sAxis, 0.0, 0.0, 3.0*fSigma);
+    vTop = gao_RotateVector(vCenter, sAxis, 0.0, 0.0, 3.0*fSigma, fDirectionXZ, fDirectionYZ);
 
     object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
@@ -2927,8 +2957,8 @@ object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRad
             z1 = fSigma;
             z2 = fSigma;
         }
-        vPos1 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle1), fEpsilon*sin(fAngle1), z1);
-        vPos2 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle2), fEpsilon*sin(fAngle2), z2);
+        vPos1 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle1), fEpsilon*sin(fAngle1), z1, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle2), fEpsilon*sin(fAngle2), z2, fDirectionXZ, fDirectionYZ);
 
         if (i<3) DelayCommand(fDelayPerSide*f, PlaceLineFromVectorToVector(sTemplate, oArea, vCenter, vPos1, nFrequencyPerSide, fDelayPerSide, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
         else     DelayCommand(fDelayPerSide*(f+6.0), PlaceLineFromVectorToVector(sTemplate, oArea, vTop, vPos1, nFrequencyPerSide, fDelayPerSide, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
@@ -2938,12 +2968,12 @@ object ObjectPlaceStellaOctangula(string sTemplate, location lCenter, float fRad
     return oData;
 }
 
-void PlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceStellaOctangula(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceStellaOctangula(sTemplate, lCenter, fRadius, nFrequency, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceStellaOctangula(sTemplate, lCenter, fRadius, nFrequency, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ICOSAHEDRON")
+object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_ICOSAHEDRON")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -2960,7 +2990,7 @@ object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius,
     float fDelayPerSide = fTime/30.0;
     float f, z1, fAngle1, g, z2, fAngle2;
     vector vPos1, vPos2, vTop;
-    vTop = gao_RotateVector(vCenter, sAxis, 0.0, 0.0, 2.0*fSigma1 + fSigma2);
+    vTop = gao_RotateVector(vCenter, sAxis, 0.0, 0.0, 2.0*fSigma1 + fSigma2, fDirectionXZ, fDirectionYZ);
 
     object oData = (fLifetime > 0.0) ? OBJECT_INVALID : CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
 
@@ -2996,8 +3026,8 @@ object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius,
             z1 = fSigma1 + fSigma2;
             z2 = fSigma1 + fSigma2;
         }
-        vPos1 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle1), fEpsilon*sin(fAngle1), z1);
-        vPos2 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle2), fEpsilon*sin(fAngle2), z2);
+        vPos1 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle1), fEpsilon*sin(fAngle1), z1, fDirectionXZ, fDirectionYZ);
+        vPos2 = gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle2), fEpsilon*sin(fAngle2), z2, fDirectionXZ, fDirectionYZ);
 
         if (i < 5)
         {
@@ -3022,12 +3052,12 @@ object ObjectPlaceIcosahedron(string sTemplate, location lCenter, float fRadius,
     return oData;
 }
 
-void PlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceIcosahedron(string sTemplate, location lCenter, float fRadius, int nFrequency=60, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceIcosahedron(sTemplate, lCenter, fRadius, nFrequency, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceIcosahedron(sTemplate, lCenter, fRadius, nFrequency, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-object ObjectPlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_RHODONEASPRING")
+object ObjectPlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_RHODONEASPRING")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -3051,24 +3081,24 @@ object ObjectPlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadi
         fAngle = fTheta*f;
         fDist = fRadius*sin(fRoulette*fAngle);
         fAngle += fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceRhodoneaSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceRhodoneaSpring(sTemplate, lCenter, fRadius, fHeightStart, fHeightEnd, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceRhodoneaSpring(sTemplate, lCenter, fRadius, fHeightStart, fHeightEnd, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceRhodonea(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceRhodonea(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceRhodoneaSpring(sTemplate, lCenter, fRadius, 0.0, 0.0, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_RHODONEA");
+    ObjectPlaceRhodoneaSpring(sTemplate, lCenter, fRadius, 0.0, 0.0, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_RHODONEA");
 }
 
-object ObjectPlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HYPOCYCLOIDSPRING")
+object ObjectPlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_HYPOCYCLOIDSPRING")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -3097,24 +3127,24 @@ object ObjectPlaceHypocycloidSpring(string sTemplate, location lCenter, float fR
         x = (fAlpha*cos(fAngle) + fRoulette*cos(fBeta*fAngle));
         fDist = sqrt(pow(y, 2.0) + pow(x, 2.0));
         fAngle = (x == 0.0 && y < 0.0) ? 270.0 + fRotate : (x==0.0) ? 90.0 + fRotate : (x < 0.0) ? 180.0 + atan(y/x) + fRotate : atan(y/x) + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceHypocycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceHypocycloidSpring(sTemplate, lCenter, fRadius, fHeightStart, fHeightEnd, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceHypocycloidSpring(sTemplate, lCenter, fRadius, fHeightStart, fHeightEnd, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceHypocycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceHypocycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceHypocycloidSpring(sTemplate, lCenter, fRadius, 0.0, 0.0, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_HYPOCYCLOID");
+    ObjectPlaceHypocycloidSpring(sTemplate, lCenter, fRadius, 0.0, 0.0, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_HYPOCYCLOID");
 }
 
-object ObjectPlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_EPICYCLOIDSPRING")
+object ObjectPlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f, string sTag="PSC_P_EPICYCLOIDSPRING")
 {
     int i;
     if (nFrequency < 1) nFrequency = 60;
@@ -3143,21 +3173,21 @@ object ObjectPlaceEpicycloidSpring(string sTemplate, location lCenter, float fRa
         x = (fAlpha*cos(fAngle) - fRoulette*cos(fBeta*fAngle));
         fDist = sqrt(pow(y, 2.0) + pow(x, 2.0));
         fAngle = (x == 0.0 && y < 0.0) ? 270.0 + fRotate : (x==0.0) ? 90.0 + fRotate : (x < 0.0) ? 180.0 + atan(y/x) + fRotate : atan(y/x) + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fDist*cos(fAngle), fDist*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelay, gao_ActionCreateObject(sTemplate, lPos, nDurationType, nVFX, fDuration, fWait, fLifetime, oData));
     }
 
     return oData;
 }
 
-void PlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceEpicycloidSpring(string sTemplate, location lCenter, float fRadius, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fRoulette=3.0f, int nFrequency=60, float fRev=5.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceEpicycloidSpring(sTemplate, lCenter, fRadius, fHeightStart, fHeightEnd, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime);
+    ObjectPlaceEpicycloidSpring(sTemplate, lCenter, fRadius, fHeightStart, fHeightEnd, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime);
 }
 
-void PlaceEpicycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
+void PlaceEpicycloid(string sTemplate, location lCenter, float fRadius, float fRoulette=3.0f, int nFrequency=60, float fRev=1.0f, float fTime=12.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType=-1, int nVFX=-1, float fDuration=0.0f, float fWait=1.0f, float fLifetime=0.0f)
 {
-    ObjectPlaceEpicycloidSpring(sTemplate, lCenter, fRadius, 0.0, 0.0, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_EPICYCLOID");
+    ObjectPlaceEpicycloidSpring(sTemplate, lCenter, fRadius, 0.0, 0.0, fRoulette, nFrequency, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType, nVFX, fDuration, fWait, fLifetime, "PSC_P_EPICYCLOID");
 }
 
 /*
@@ -3166,7 +3196,7 @@ void PlaceEpicycloid(string sTemplate, location lCenter, float fRadius, float fR
    =============================================
 */
 
-object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALSPRING")
+object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALSPRING")
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -3195,7 +3225,7 @@ object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, 
     {
         f = IntToFloat(i);
         fAngle = fEta*f + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*f)*cos(fAngle), (fRadiusStart-fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*f)*cos(fAngle), (fRadiusStart-fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
         if (i > 0) DelayCommand(f*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i-1), "store" + IntToString(i), nDurationType, nVFX, fDuration));
     }
@@ -3208,17 +3238,17 @@ object ObjectBeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, 
     return oData;
 }
 
-void BeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamPolygonalSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamPolygonalSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamPolygonalSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-void BeamPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamPolygonalSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamPolygonalSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime, "PSC_B_POLYGONALSPIRAL");
+    ObjectBeamPolygonalSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime, "PSC_B_POLYGONALSPIRAL");
 }
 
-object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGON")
+object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGON")
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -3246,7 +3276,7 @@ object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fR
     {
         f = IntToFloat(i);
         fAngle = fEta*f + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadius*cos(fAngle), fRadius*sin(fAngle), 0.0), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadius*cos(fAngle), fRadius*sin(fAngle), 0.0, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
         if (i>0) DelayCommand(f*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i-1), "store" + IntToString(i), nDurationType, nVFX, fDuration));
         if (fRev == 1.0 && i == nSidesToDraw-1) DelayCommand(fSidesToDraw*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i), "store0", nDurationType, nVFX, fDuration));
@@ -3260,12 +3290,12 @@ object ObjectBeamPolygon(int nDurationType, int nVFX, location lCenter, float fR
     return oData;
 }
 
-void BeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamPolygon(int nDurationType, int nVFX, location lCenter, float fRadius, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamPolygon(nDurationType, nVFX, lCenter, fRadius, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamPolygon(nDurationType, nVFX, lCenter, fRadius, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLICSPRING")
+object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLICSPRING")
 {
     int i;
     if (fWait2 < 1.0) fWait2 = 1.0;
@@ -3293,7 +3323,7 @@ object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, 
     {
         f = IntToFloat(i);
         fAngle = fStarangle*f + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*f)*cos(fAngle), (fRadiusStart-fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStart-fDecay*f)*cos(fAngle), (fRadiusStart-fDecay*f)*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
         if (i > 0) DelayCommand(f*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i-1), "store" + IntToString(i), nDurationType, nVFX, fDuration));
     }
@@ -3306,17 +3336,17 @@ object ObjectBeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, 
     return oData;
 }
 
-void BeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamPentaclicSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamPentaclicSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamPentaclicSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-void BeamPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamPentaclicSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamPentaclicSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime, "PSC_B_PENTACLICSPIRAL");
+    ObjectBeamPentaclicSpring(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, 0.0, 0.0, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime, "PSC_B_PENTACLICSPIRAL");
 }
 
-object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLE")
+object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_PENTACLE")
 {
     int i;
     if (fWait2 < 1.0) fWait2 = 1.0;
@@ -3343,7 +3373,7 @@ object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float f
     {
         f = IntToFloat(i);
         fAngle = fStarangle*f + fRotate;
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadius*cos(fAngle), fRadius*sin(fAngle), 0.0), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadius*cos(fAngle), fRadius*sin(fAngle), 0.0, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
         if (i>0) DelayCommand(f*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i-1), "store" + IntToString(i), nDurationType, nVFX, fDuration));
         if (fRev == 1.0 && i == nSidesToDraw-1) DelayCommand(fSidesToDraw*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i), "store0", nDurationType, nVFX, fDuration));
@@ -3357,12 +3387,12 @@ object ObjectBeamPentacle(int nDurationType, int nVFX, location lCenter, float f
     return oData;
 }
 
-void BeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamPentacle(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamPentacle(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamPentacle(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STARSPRING")
+object ObjectBeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STARSPRING")
 {
     int i, toggle;
     if (nSides < 2) nSides = 3;
@@ -3393,8 +3423,8 @@ object ObjectBeamStarSpring(int nDurationType, int nVFX, location lCenter, float
         toggle ^= 1;
         f = IntToFloat(i);
         fAngle = fStarangle*f + fRotate;
-        if (!toggle) lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*f)*cos(fAngle), (fRadiusStartInner - fDecayInner*f)*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
-        else         lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*f)*cos(fAngle), (fRadiusStartOuter - fDecayOuter*f)*sin(fAngle), fHeightStart - fGrowth*f), fAngle);
+        if (!toggle) lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStartInner - fDecayInner*f)*cos(fAngle), (fRadiusStartInner - fDecayInner*f)*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
+        else         lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, (fRadiusStartOuter - fDecayOuter*f)*cos(fAngle), (fRadiusStartOuter - fDecayOuter*f)*sin(fAngle), fHeightStart - fGrowth*f, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
         if (i>0) DelayCommand(f*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i-1), "store" + IntToString(i), nDurationType, nVFX, fDuration));
     }
@@ -3407,17 +3437,17 @@ object ObjectBeamStarSpring(int nDurationType, int nVFX, location lCenter, float
     return oData;
 }
 
-void BeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamStarSpring(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-     ObjectBeamStarSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fRev, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+     ObjectBeamStarSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fRev, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-void BeamStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamStarSpiral(int nDurationType, int nVFX, location lCenter, float fRadiusStartOuter, float fRadiusStartInner, float fRadiusEndOuter=0.0f, float fRadiusEndInner=0.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-     ObjectBeamStarSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nSides, fDuration, sTemplate, fRev, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime, "PSC_B_STARSPIRAL");
+     ObjectBeamStarSpring(nDurationType, nVFX, lCenter, fRadiusStartOuter, fRadiusStartInner, fRadiusEndOuter, fRadiusEndInner, 0.0, 0.0, nSides, fDuration, sTemplate, fRev, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime, "PSC_B_STARSPIRAL");
 }
 
-object ObjectBeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STAR")
+object ObjectBeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STAR")
 {
     int i, toggle;
     if (nSides < 2) nSides = 3;
@@ -3446,8 +3476,8 @@ object ObjectBeamStar(int nDurationType, int nVFX, location lCenter, float fRadi
         f = IntToFloat(i);
         toggle ^= 1;
         fAngle = fStarangle*f + fRotate;
-        if (!toggle) lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusInner*cos(fAngle), fRadiusInner*sin(fAngle), 0.0), fAngle);
-        else         lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusOuter*cos(fAngle), fRadiusOuter*sin(fAngle), 0.0), fAngle);
+        if (!toggle) lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusInner*cos(fAngle), fRadiusInner*sin(fAngle), 0.0, fDirectionXZ, fDirectionYZ), fAngle);
+        else         lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusOuter*cos(fAngle), fRadiusOuter*sin(fAngle), 0.0, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
         if (i > 0) DelayCommand(f*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i-1), "store" + IntToString(i), nDurationType, nVFX, fDuration));
         if (fRev == 1.0 && i == nSidesToDraw-1) DelayCommand(fSidesToDraw*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i), "store0", nDurationType, nVFX, fDuration));
@@ -3461,12 +3491,12 @@ object ObjectBeamStar(int nDurationType, int nVFX, location lCenter, float fRadi
     return oData;
 }
 
-void BeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamStar(int nDurationType, int nVFX, location lCenter, float fRadiusOuter, float fRadiusInner, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=1.0f, float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamStar(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, nSides, fDuration, sTemplate, fRev, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamStar(nDurationType, nVFX, lCenter, fRadiusOuter, fRadiusInner, nSides, fDuration, sTemplate, fRev, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINEFROM")
+object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINEFROM")
 {
     if (fWait2 < 1.0) fWait2 = 1.0;
     if (fTime < 0.0) fTime = 6.0;
@@ -3478,7 +3508,7 @@ object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, f
     vector vPos2;
     float fWait = 1.0;
 
-    vPos2 = gao_RotateVector(vCenter, sAxis, vPos.x, vPos.y, vPos.z);
+    vPos2 = gao_RotateVector(vCenter, sAxis, vPos.x, vPos.y, vPos.z, fDirectionXZ, fDirectionYZ);
 
     object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
     AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 2)));
@@ -3496,12 +3526,12 @@ object ObjectBeamLineFromCenter(int nDurationType, int nVFX, location lCenter, f
     return oData;
 }
 
-void BeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamLineFromCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamLineFromCenter(nDurationType, nVFX, lCenter, fLength, fDirection, fDuration, sTemplate, fTime, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamLineFromCenter(nDurationType, nVFX, lCenter, fLength, fDirection, fDuration, sTemplate, fTime, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINETO")
+object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_LINETO")
 {
     if (fWait2 < 1.0) fWait2 = 1.0;
     if (fTime < 0.0) fTime = 6.0;
@@ -3513,7 +3543,7 @@ object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, flo
     vector vPos2;
     float fWait = 1.0;
 
-    vPos2 = gao_RotateVector(vCenter, sAxis, vPos.x, vPos.y, vPos.z);
+    vPos2 = gao_RotateVector(vCenter, sAxis, vPos.x, vPos.y, vPos.z, fDirectionXZ, fDirectionYZ);
 
     object oData = CreateObject(OBJECT_TYPE_PLACEABLE, "prc_invisobj", lCenter, FALSE, sTag);
     AssignCommand(oData, ActionDoCommand(SetLocalInt(oData, "storetotal", 2)));
@@ -3531,12 +3561,12 @@ object ObjectBeamLineToCenter(int nDurationType, int nVFX, location lCenter, flo
     return oData;
 }
 
-void BeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamLineToCenter(int nDurationType, int nVFX, location lCenter, float fLength, float fDirection=0.0f, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamLineToCenter(nDurationType, nVFX, lCenter, fLength, fDirection, fDuration, sTemplate, fTime, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamLineToCenter(nDurationType, nVFX, lCenter, fLength, fDirection, fDuration, sTemplate, fTime, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALHEMISPHERE")
+object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_POLYGONALHEMISPHERE")
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -3566,7 +3596,7 @@ object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCent
         fAngle = fEta*f + fRotate;
         fSphereAngle = fEta*f*0.25/fRev;
         fSphereRadius = fRadiusStart*cos(fSphereAngle) + fRadiusEnd*sin(fSphereAngle);
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSphereRadius*cos(fAngle), fSphereRadius*sin(fAngle), fEffectiveHeight*sin(fSphereAngle) + fHeightStart), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSphereRadius*cos(fAngle), fSphereRadius*sin(fAngle), fEffectiveHeight*sin(fSphereAngle) + fHeightStart, fDirectionXZ, fDirectionYZ), fAngle);
         DelayCommand(f*fDelayPerSide, gao_ActionCreateLocalObject(sTemplate, lPos, "store" + IntToString(i), oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
         if (i > 0) DelayCommand(f*fDelayPerSide+fWait, gao_ActionApplyLocalBeamEffect(oData, "store" + IntToString(i-1), "store" + IntToString(i), nDurationType, nVFX, fDuration));
     }
@@ -3579,12 +3609,12 @@ object ObjectBeamPolygonalHemisphere(int nDurationType, int nVFX, location lCent
     return oData;
 }
 
-void BeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamPolygonalHemisphere(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fRev=5.0f, float fTime=6.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamPolygonalHemisphere(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamPolygonalHemisphere(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fRev, fTime, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STELLAOCTANGULA")
+object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_STELLAOCTANGULA")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -3625,7 +3655,7 @@ object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, 
             z = 3.0*fSigma;
             fEpsilon = 0.0;
         }
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), z), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), z, fDirectionXZ, fDirectionYZ), fAngle);
         sNumber = "store"+IntToString(i);
         DelayCommand(fDelay*(f+1.0), gao_ActionCreateLocalObject(sTemplate, lPos, sNumber, oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
     }
@@ -3661,12 +3691,12 @@ object ObjectBeamStellaOctangula(int nDurationType, int nVFX, location lCenter, 
     return oData;
 }
 
-void BeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamStellaOctangula(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamStellaOctangula(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamStellaOctangula(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_ICOSAHEDRON")
+object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_ICOSAHEDRON")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -3709,7 +3739,7 @@ object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, floa
             z = 2.0*fSigma1 + fSigma2;
             fEpsilon = 0.0;
         }
-        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), z), fAngle);
+        lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), z, fDirectionXZ, fDirectionYZ), fAngle);
         sNumber = "store"+IntToString(i);
         DelayCommand(fDelay*(f+1.0), gao_ActionCreateLocalObject(sTemplate, lPos, sNumber, oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
     }
@@ -3757,12 +3787,12 @@ object ObjectBeamIcosahedron(int nDurationType, int nVFX, location lCenter, floa
     return oData;
 }
 
-void BeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamIcosahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamIcosahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamIcosahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_DODECAHEDRON")
+object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_DODECAHEDRON")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -3791,22 +3821,22 @@ object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, flo
         if (i<5)
         {
             fAngle = fRotate + f*72.0 - 36.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma3*cos(fAngle), fSigma3*sin(fAngle), fSigma1), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma3*cos(fAngle), fSigma3*sin(fAngle), fSigma1, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<10)
         {
             fAngle = fRotate + f*72.0 - 36.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), fSigma1 + fSigma3), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), fSigma1 + fSigma3, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<15)
         {
             fAngle = fRotate + f*72.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), fSigma1 + fEpsilon), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon*cos(fAngle), fEpsilon*sin(fAngle), fSigma1 + fEpsilon, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else
         {
             fAngle = fRotate + f*72.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma3*cos(fAngle), fSigma3*sin(fAngle), fSigma1 + 2.0*fSigma2), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma3*cos(fAngle), fSigma3*sin(fAngle), fSigma1 + 2.0*fSigma2, fDirectionXZ, fDirectionYZ), fAngle);
         }
         sNumber1 = "store"+IntToString(i);
         DelayCommand(fDelay*f, gao_ActionCreateLocalObject(sTemplate, lPos, sNumber1, oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
@@ -3849,12 +3879,12 @@ object ObjectBeamDodecahedron(int nDurationType, int nVFX, location lCenter, flo
     return oData;
 }
 
-void BeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamDodecahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamDodecahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamDodecahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_TRIACONTAHEDRON")
+object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_TRIACONTAHEDRON")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -3888,37 +3918,37 @@ object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, 
         if (i<5)
         {
             fAngle = fRotate + f*72.0 + 36.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma5*cos(fAngle), fSigma5*sin(fAngle), fSigma3), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma5*cos(fAngle), fSigma5*sin(fAngle), fSigma3, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<10)
         {
             fAngle = fRotate + f*72.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon1*cos(fAngle), fEpsilon1*sin(fAngle), fSigma1), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon1*cos(fAngle), fEpsilon1*sin(fAngle), fSigma1, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<15)
         {
             fAngle = fRotate + f*72.0 + 36.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon2*cos(fAngle), fEpsilon2*sin(fAngle), fSigma3 + fSigma5), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon2*cos(fAngle), fEpsilon2*sin(fAngle), fSigma3 + fSigma5, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<20)
         {
             fAngle = fRotate + f*72.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon2*cos(fAngle), fEpsilon2*sin(fAngle), fSigma3 + fEpsilon2), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon2*cos(fAngle), fEpsilon2*sin(fAngle), fSigma3 + fEpsilon2, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<25)
         {
             fAngle = fRotate + f*72.0 + 36.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon1*cos(fAngle), fEpsilon1*sin(fAngle), fSigma1 + fSigma2), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fEpsilon1*cos(fAngle), fEpsilon1*sin(fAngle), fSigma1 + fSigma2, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<30)
         {
             fAngle = fRotate + f*72.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma5*cos(fAngle), fSigma5*sin(fAngle), fSigma3 + 2.0*fSigma4), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma5*cos(fAngle), fSigma5*sin(fAngle), fSigma3 + 2.0*fSigma4, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else
         {
             fAngle = fRotate;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, 0.0, 0.0, 2.0*fSigma1 + fSigma2), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, 0.0, 0.0, 2.0*fSigma1 + fSigma2, fDirectionXZ, fDirectionYZ), fAngle);
         }
         sNumber1 = "store"+IntToString(i);
         DelayCommand(fDelay*(f+1.0), gao_ActionCreateLocalObject(sTemplate, lPos, sNumber1, oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
@@ -3968,12 +3998,12 @@ object ObjectBeamTriacontahedron(int nDurationType, int nVFX, location lCenter, 
     return oData;
 }
 
-void BeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamTriacontahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamTriacontahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamTriacontahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_CUBOCTAHEDRON")
+object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_CUBOCTAHEDRON")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -4000,17 +4030,17 @@ object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, fl
         if (i<4)
         {
             fAngle = fRotate + f*90.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma*cos(fAngle), fSigma*sin(fAngle), fEpsilon), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma*cos(fAngle), fSigma*sin(fAngle), fEpsilon, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<8)
         {
             fAngle = fRotate + f*90.0 + 45.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadius*cos(fAngle), fRadius*sin(fAngle), fRadius), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadius*cos(fAngle), fRadius*sin(fAngle), fRadius, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else
         {
             fAngle = fRotate + f*90.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma*cos(fAngle), fSigma*sin(fAngle), fRadius + fSigma), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma*cos(fAngle), fSigma*sin(fAngle), fRadius + fSigma, fDirectionXZ, fDirectionYZ), fAngle);
         }
         sNumber1 = "store"+IntToString(i);
         DelayCommand(fDelay*f, gao_ActionCreateLocalObject(sTemplate, lPos, sNumber1, oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
@@ -4053,12 +4083,12 @@ object ObjectBeamCuboctahedron(int nDurationType, int nVFX, location lCenter, fl
     return oData;
 }
 
-void BeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamCuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamCuboctahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamCuboctahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_SMALLRHOMBICUBOCTAHEDRON")
+object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_SMALLRHOMBICUBOCTAHEDRON")
 {
     int i;
     if (fWait < 1.0) fWait = 1.0;
@@ -4087,18 +4117,18 @@ object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location 
         if (i<4)
         {
             fAngle = fRotate + f*90.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma1*cos(fAngle), fSigma1*sin(fAngle), fEpsilon1), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma1*cos(fAngle), fSigma1*sin(fAngle), fEpsilon1, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else if (i<20)
         {
             fAngle = fRotate + 27.5 + (f-4.0)*45.0;
             z = (i<12) ? fEpsilon1 + fSigma1 : fEpsilon1 + fEpsilon2 + fSigma1;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma2*cos(fAngle), fSigma2*sin(fAngle), z), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma2*cos(fAngle), fSigma2*sin(fAngle), z, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else
         {
             fAngle = fRotate + f*90.0;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma1*cos(fAngle), fSigma1*sin(fAngle), fEpsilon1 + 2.0*fSigma1 + fEpsilon2), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fSigma1*cos(fAngle), fSigma1*sin(fAngle), fEpsilon1 + 2.0*fSigma1 + fEpsilon2, fDirectionXZ, fDirectionYZ), fAngle);
         }
         sNumber1 = "store"+IntToString(i);
         DelayCommand(fDelay*f, gao_ActionCreateLocalObject(sTemplate, lPos, sNumber1, oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
@@ -4134,12 +4164,12 @@ object ObjectBeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location 
     return oData;
 }
 
-void BeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamSmallRhombicuboctahedron(int nDurationType, int nVFX, location lCenter, float fRadius, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-    ObjectBeamSmallRhombicuboctahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+    ObjectBeamSmallRhombicuboctahedron(nDurationType, nVFX, lCenter, fRadius, fDuration, sTemplate, fTime, fWait, fRotate, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }
 
-object ObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_GENGON")
+object ObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f, string sTag="PSC_B_GENGON")
 {
     int i;
     if (nSides < 3) nSides = 3;
@@ -4168,12 +4198,12 @@ object ObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRa
         if (i<nSides)
         {
             fAngle = fEta*f + fRotate;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusStart*cos(fAngle), fRadiusStart*sin(fAngle), fHeightStart), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusStart*cos(fAngle), fRadiusStart*sin(fAngle), fHeightStart, fDirectionXZ, fDirectionYZ), fAngle);
         }
         else
         {
             fAngle = fEta*f + fTwist;
-            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusEnd*cos(fAngle), fRadiusEnd*sin(fAngle), fHeightEnd), fAngle);
+            lPos = Location(oArea, gao_RotateVector(vCenter, sAxis, fRadiusEnd*cos(fAngle), fRadiusEnd*sin(fAngle), fHeightEnd, fDirectionXZ, fDirectionYZ), fAngle);
         }
         sNumber1 = "store"+IntToString(i);
         DelayCommand(fDelay*f, gao_ActionCreateLocalObject(sTemplate, lPos, sNumber1, oData, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime));
@@ -4202,7 +4232,7 @@ object ObjectBeamGengon(int nDurationType, int nVFX, location lCenter, float fRa
     return oData;
 }
 
-void BeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
+void BeamGengon(int nDurationType, int nVFX, location lCenter, float fRadiusStart, float fRadiusEnd=0.0f, float fHeightStart=0.0f, float fHeightEnd=5.0f, int nSides=3, float fDuration=0.0f, string sTemplate="", float fTime=6.0f, float fWait=1.0f, float fRotate=0.0f, float fTwist=0.0f, string sAxis="z", float fDirectionXZ = 0.0f, float fDirectionYZ = 0.0f, int nDurationType2=-1, int nVFX2=-1, float fDuration2=0.0f, float fWait2=1.0f, float fLifetime=0.0f)
 {
-     ObjectBeamGengon(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fTime, fWait, fRotate, fTwist, sAxis, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
+     ObjectBeamGengon(nDurationType, nVFX, lCenter, fRadiusStart, fRadiusEnd, fHeightStart, fHeightEnd, nSides, fDuration, sTemplate, fTime, fWait, fRotate, fTwist, sAxis, fDirectionXZ, fDirectionYZ, nDurationType2, nVFX2, fDuration2, fWait2, fLifetime);
 }

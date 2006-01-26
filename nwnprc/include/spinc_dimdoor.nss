@@ -292,7 +292,10 @@ void DoDimensionDoorTeleport(object oCaster, location lTarget, int bTeleportingP
         BeamPolygon(DURATION_TYPE_PERMANENT, VFX_BEAM_LIGHTNING, lCaster,
                     bTeleportingParty ? FeetToMeters(10.0) : FeetToMeters(3.0), // Single TP: 3ft radius; Party TP: 10ft radius
                     bTeleportingParty ? 15 : 10, // More nodes for the group VFX
-                    1.5, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
+                    1.5f, "prc_invisobj", 1.0f, 0.0f, 0.0f, "z", 0.0f, 0.0f,
+                    -1, -1, 0.0f, 1.0f, // No secondary VFX
+                    2.0f // Non-zero lifetime, so the placeables eventually get removed
+                    );
 
 
         //BeamPolygon(1, 73, lCaster, 5.0, 8, 3.0, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
@@ -305,7 +308,7 @@ void DoDimensionDoorTeleport(object oCaster, location lTarget, int bTeleportingP
         DelayCommand(0.5, BeamPolygon(DURATION_TYPE_TEMPORARY, VFX_BEAM_LIGHTNING, lTarget,
                           bTeleportingParty ? FeetToMeters(10.0) : FeetToMeters(3.0),
                           bTeleportingParty ? 15 : 10,
-                          1.5, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0));
+                          1.5, "prc_invisobj", 1.0, 0.0, 0.0, "z", 0.0f, 0.0f, -1, -1, 0.0, 1.0, 2.0));
     }
 
     // Cleanup

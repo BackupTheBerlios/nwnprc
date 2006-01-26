@@ -525,7 +525,7 @@ void UnarmedFists(object oCreature)
     }
 
     // Clean up the mess of extra fists made on taking first level.
-    DelayCommand(1.0,CleanExtraFists(oCreature));
+    DelayCommand(6.0f, CleanExtraFists(oCreature));
 
     // Determine the character's capacity to pierce DR.
     int iKi = (iMonkEq > 9)  ? 1 : 0;

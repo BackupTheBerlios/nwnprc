@@ -161,6 +161,7 @@ public class Data_TLK{
 			String data = mainData.get(row);
 			if(data != null){
 				//replace with paired characters
+				data = data.replace("&", "&amp;"); //this must be before the others
 				data = data.replace("<", "&lt;");
 				data = data.replace(">", "&gt;");
 				data = data.replace("'", "?");

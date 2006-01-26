@@ -368,10 +368,13 @@ public final class SpellbookMaker{
 	}
 
 	private static void getFirstSpells2daRow(){
+		System.out.print("Finding start of spells.2da ");
 		while(!spells2da.getEntry("Label", spells2daRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
 			spells2daRow++;
+			spinner.spin();
 		}
 		spells2daRow++;
+		System.out.println("- Done");
 	}
 	private static void getNextSpells2daRow(){
 		spells2daRow++;
@@ -381,10 +384,13 @@ public final class SpellbookMaker{
 	}
 
 	private static void getFirstFeat2daRow(){
+		System.out.print("Finding start of feat.2da ");
 		while(!feat2da.getEntry("Label", feat2daRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
 			feat2daRow++;
+			spinner.spin();
 		}
 		feat2daRow++;
+		System.out.println("- Done");
 	}
 	private static void getNextFeat2daRow(){
 		feat2daRow++;
@@ -394,10 +400,13 @@ public final class SpellbookMaker{
 	}
 
 	private static void getFirstIPRPFeats2daRow(){
+		System.out.print("Finding start of iprp_spells.2da ");
 		while(!iprp_feats2da.getEntry("Label", iprp_feats2daRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
 			iprp_feats2daRow++;
+			spinner.spin();
 		}
 		iprp_feats2daRow++;
+		System.out.println("- Done");
 	}
 	private static void getNextIPRPFeats2daRow(){
 		iprp_feats2daRow++;
@@ -407,10 +416,13 @@ public final class SpellbookMaker{
 	}
 
 	private static void getFirstTlkRow(){
+		System.out.print("Finding start of prc_consortium.tlk ");
 		while(!customtlk.getEntry(tlkRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
 			tlkRow++;
+			spinner.spin();
 		}
 		tlkRow++;
+		System.out.println("- Done");
 	}
 	private static void getNextTlkRow(){
 		tlkRow++;

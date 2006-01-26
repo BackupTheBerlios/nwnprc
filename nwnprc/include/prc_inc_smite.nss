@@ -187,7 +187,7 @@ void DoSmite(object oPC, object oTarget, int nType)
             sMiss = "Smite Infidel Missed";
             if(GetStringLowerCase(GetDeity(oTarget))== GetStringLowerCase(GetDeity(oPC)))
                 nTargetInvalid = TRUE;
-            if(GetStringLowerCase(GetDeity(oPC))    == GetStringLowerCase(sDeity))
+            if(GetStringLowerCase(GetDeity(oPC))    != GetStringLowerCase(sDeity))
                 nSmiterInvalid = TRUE;
         }    
         break;

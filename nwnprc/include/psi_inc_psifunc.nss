@@ -598,7 +598,28 @@ int GetFirstPsionicClassPosition(object oCreature = OBJECT_SELF)
 
     return 0;
 }
+void LocalCleanExtraFists(object oCreature)
+{
+    int iIsCWeap, iIsEquip;
 
+    object oClean = GetFirstItemInInventory(oCreature);
+
+    while (GetIsObjectValid(oClean))
+    {
+        iIsCWeap = GetIsPRCCreatureWeapon(oClean);
+
+        iIsEquip = oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_L) ||
+                   oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_R) ||
+                   oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_B);
+
+        if (iIsCWeap && !iIsEquip)
+        {
+            DestroyObject(oClean);
+        }
+
+        oClean = GetNextItemInInventory(oCreature);
+    }
+}
 object GetPsionicCreatureWeapon(object oCreature, string sResRef, int nInventorySlot, float fDuration)
 {
     int bCreatedWeapon = FALSE;
@@ -657,7 +678,7 @@ object GetPsionicCreatureWeapon(object oCreature, string sResRef, int nInventory
 
 
     // Clean up the mess of extra fists made on taking first level.
-    DelayCommand(1.0, CleanExtraFists(oCreature));
+    DelayCommand(6.0f, LocalCleanExtraFists(oCreature));
 
     // Weapon finesse or intuitive attack?
     SetLocalInt(oCreature, "UsingCreature", TRUE);

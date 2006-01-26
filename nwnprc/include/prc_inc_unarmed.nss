@@ -59,6 +59,16 @@ void UnarmedFeats(object oCreature);
 // set on OBJECT_SELF
 void UnarmedFists(object oCreature);
 
+/**
+ * Determines whether the given object is one of the PRC creature weapons based
+ * on it's resref and tag. Resref is tested first, then tag.
+ *
+ * @param oTest Object to test
+ * @return      TRUE if the object is a PRC creature weapon, FALSE otherwise
+ */
+int GetIsPRCCreatureWeapon(object oTest);
+
+
 #include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
@@ -80,10 +90,7 @@ void CleanExtraFists(object oCreature)
 
     while (GetIsObjectValid(oClean))
     {
-        iIsCWeap = GetTag(oClean) == "PRC_UNARMED_B"   ||
-                   GetTag(oClean) == "PRC_UNARMED_S"   ||
-                   GetTag(oClean) == "PRC_UNARMED_P"   ||
-                   GetTag(oClean) == "NW_IT_CREWPB010"; //legacy unarmed fist
+        iIsCWeap = GetIsPRCCreatureWeapon(oClean);
 
         iIsEquip = oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_L) ||
                    oClean == GetItemInSlot(INVENTORY_SLOT_CWEAPON_R) ||
@@ -96,6 +103,25 @@ void CleanExtraFists(object oCreature)
 
         oClean = GetNextItemInInventory(oCreature);
     }
+}
+
+int GetIsPRCCreatureWeapon(object oTest)
+{
+    string sTest = GetStringUpperCase(GetResRef(oTest));
+
+    return // First, test ResRef
+           sTest == "PRC_UNARMED_B"   ||
+           sTest == "PRC_UNARMED_S"   ||
+           sTest == "PRC_UNARMED_P"   ||
+           sTest == "PRC_UNARMED_SP"  ||
+           sTest == "NW_IT_CREWPB010" || // Legacy item, should not be used anymore
+           // If resref doesn't match, try tag
+           (sTest = GetStringUpperCase(GetTag(oTest))) == "PRC_UNARMED_B" ||
+           sTest == "PRC_UNARMED_S"   ||
+           sTest == "PRC_UNARMED_P"   ||
+           sTest == "PRC_UNARMED_SP"  ||
+           sTest == "NW_IT_CREWPB010"
+           ;
 }
 
 // Determine whether the character is polymorphed or shfited.

@@ -49,24 +49,15 @@ void main()
         // Add damage to natural weapons in the callback
 
         object oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
-        if( GetTag(oItem) == "PRC_UNARMED_B" ||
-            GetTag(oItem) == "PRC_UNARMED_S" ||
-            GetTag(oItem) == "PRC_UNARMED_P" ||
-            GetTag(oItem) == "NW_IT_CREWPB010")
-                SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+        if(GetIsPRCCreatureWeapon(oItem))
+            SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
 
         oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
-        if( GetTag(oItem) == "PRC_UNARMED_B" ||
-            GetTag(oItem) == "PRC_UNARMED_S" ||
-            GetTag(oItem) == "PRC_UNARMED_P" ||
-            GetTag(oItem) == "NW_IT_CREWPB010")
-                SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+        if(GetIsPRCCreatureWeapon(oItem))
+            SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
 
         oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
-        if( GetTag(oItem) == "PRC_UNARMED_B" ||
-            GetTag(oItem) == "PRC_UNARMED_S" ||
-            GetTag(oItem) == "PRC_UNARMED_P" ||
-            GetTag(oItem) == "NW_IT_CREWPB010")
-                SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
+        if(GetIsPRCCreatureWeapon(oItem))
+            SetCompositeDamageBonusT(oItem, "AzerFlameDamage", 1, IP_CONST_DAMAGETYPE_FIRE);
     }
 }

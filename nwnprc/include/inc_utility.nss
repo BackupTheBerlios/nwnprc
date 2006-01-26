@@ -921,7 +921,9 @@ int StringCompare(string s1, string s2)
 
 string DebugObject2Str(object o)
 {
-    return "'" + GetName(o) + "' - '" + GetTag(o) + "' - '" + GetResRef(o) + "' - " + ObjectToString(o);
+    return o == OBJECT_INVALID ?
+            "OBJECT_INVALID" :   // Special case
+            "'" + GetName(o) + "' - '" + GetTag(o) + "' - '" + GetResRef(o) + "' - " + ObjectToString(o);
 }
 
 string DebugLocation2Str(location loc)

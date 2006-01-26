@@ -1669,6 +1669,16 @@ const int SPELLABILITY_SM_ANCESTDAISHO           = 1548;
 
 const int FEAT_EPIC_SAMURAI                      = 3416;
 const int FEAT_ANCESTRAL_DAISHO                  = 3417;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_1           = 1950;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_2           = 1951;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_3           = 1952;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_4           = 1953;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_5           = 1954;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_6           = 1955;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_7           = 1956;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_8           = 1957;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_9           = 1958;
+const int FEAT_EPIC_ANCESTRAL_DAISHO_10          = 1959;
 
 //Battlerager
 const int FEAT_BATTLE_RAGE1                      = 3413;

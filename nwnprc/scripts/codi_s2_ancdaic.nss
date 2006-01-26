@@ -271,7 +271,29 @@ void main()
                         else if(nSamuraiLevel >=17 && nSamuraiLevel < 18)
                             nMaxValue =   162000;
                         else if(nSamuraiLevel >= 18)
+                        {
                             nMaxValue =   200000;
+                            if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_10))
+                                nMaxValue =  8000000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_9))
+                                nMaxValue =  7220000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_8))
+                                nMaxValue =  6480000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_7))
+                                nMaxValue =  5780000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_6))
+                                nMaxValue =  5120000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_5))
+                                nMaxValue =  4500000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_4))
+                                nMaxValue =  3920000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_3))
+                                nMaxValue =  3380000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_2))
+                                nMaxValue =  2880000;
+                            else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_1))
+                                nMaxValue =  2420000;
+                        }    
                         //get the items
                         object oKatana;
                         object oWakizashi;

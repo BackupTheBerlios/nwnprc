@@ -349,6 +349,56 @@ Use: Automatic.</entry>
 Prerequisite: Strength 21+, Constitution 21+ and Greater Rage ability. (NOTE: This feat does not actually require greater rage for purposes of selecting, only normal rage. HOWEVER, THIS FEAT WILL DO NOTHING if you do not have 15+ added barbarian/battlerager/&lt;barbarian PrC&gt; together.)
 Specifics: When the character enters a battle rage, they gain +8 to Strength and Constitution and a +4 morale bonus to Will saves. These bonuses replace the normal rage bonuses.
 Use: Automatic when rage.</entry>
+  <entry id="12388" lang="en" sex="m">Epic Ancestral Daisho I</entry>
+  <entry id="12389" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: 21 Samurai Levels, 19 Wisdom
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 2,420,000 gp.
+Use: Automatic</entry>
+  <entry id="12390" lang="en" sex="m">Epic Ancestral Daisho II</entry>
+  <entry id="12391" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho I
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 2,880,000 gp.
+Use: Automatic</entry>
+  <entry id="12392" lang="en" sex="m">Epic Ancestral Daisho III</entry>
+  <entry id="12393" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho II
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 3,380,000 gp.
+Use: Automatic</entry>
+  <entry id="12394" lang="en" sex="m">Epic Ancestral Daisho IV</entry>
+  <entry id="12395" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho III
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 3,920,000 gp.
+Use: Automatic</entry>
+  <entry id="12396" lang="en" sex="m">Epic Ancestral Daisho V</entry>
+  <entry id="12397" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho IV
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 4,500,000 gp.
+Use: Automatic</entry>
+  <entry id="12398" lang="en" sex="m">Epic Ancestral Daisho VI</entry>
+  <entry id="12399" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho V
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 5,120,000 gp.
+Use: Automatic</entry>
+  <entry id="12400" lang="en" sex="m">Epic Ancestral Daisho VII</entry>
+  <entry id="12401" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho VI
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 5,780,000 gp.
+Use: Automatic</entry>
+  <entry id="12402" lang="en" sex="m">Epic Ancestral Daisho VIII</entry>
+  <entry id="12403" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho VII
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 6,480,000 gp.
+Use: Automatic</entry>
+  <entry id="12404" lang="en" sex="m">Epic Ancestral Daisho IX</entry>
+  <entry id="12405" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho VIII
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 7,220,000 gp.
+Use: Automatic</entry>
+  <entry id="12406" lang="en" sex="m">Epic Ancestral Daisho X</entry>
+  <entry id="12407" lang="en" sex="m">Type of Feat: Epic
+Prerequisite: Epic Ancestral Daisho VII
+Specifics: This increases the maximum total value of the samurai's ancestral weapons to 8,000,000 gp.
+Use: Automatic</entry>
   <entry id="16390" lang="en" sex="m">
 </entry>
   <entry id="16396" lang="en" sex="m">
@@ -9172,25 +9222,25 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   As a standard action, a spellfire wielder may expend stored spellfire energy as a melee or ranged touch attack (maximum range 400 feet), dealing 1d6 points of spellfire damage per level expended (Reflex half, DC 20). Spellfire damage is half fire damage and half raw magical power. Creatures with immunity, resistance, or protection against fire effects apply these to only half the damage, but not the other half. A creature can also choose "spellfire" as a weapon for the purpose of the Weapon Focus feat.
   A spellfire wielder can heal a target by touch, restoring 2 hitpoints per spellfire energy level expended for this purpose. This is not considered positive energy, so it does not injure undead.
   Use: Selected.</entry>
-    <entry id="47436" lang="en" sex="m">Spellfire</entry>
-    <entry id="47437" lang="en" sex="m">Increase Spellfire Levels Expended</entry>
-    <entry id="47438" lang="en" sex="m">Decrease Spellfire Levels Expended</entry>
-    <entry id="47439" lang="en" sex="m">Check Spellfire Level</entry>
-    <entry id="47440" lang="en" sex="m">-20</entry>
-    <entry id="47441" lang="en" sex="m">Check Spellfire Levels Expended</entry>
-    <entry id="47442" lang="en" sex="m">Spellfire Quickselect</entry>
-    <entry id="47443" lang="en" sex="m">Change Quickselect</entry>
-    <entry id="47444" lang="en" sex="m">Quickselect 1</entry>
-    <entry id="47445" lang="en" sex="m">Quickselect 2</entry>
-    <entry id="47446" lang="en" sex="m">Quickselect 3</entry>
-    <entry id="47447" lang="en" sex="m">Type of Feat: General
+  <entry id="47436" lang="en" sex="m">Spellfire</entry>
+  <entry id="47437" lang="en" sex="m">Increase Spellfire Levels Expended</entry>
+  <entry id="47438" lang="en" sex="m">Decrease Spellfire Levels Expended</entry>
+  <entry id="47439" lang="en" sex="m">Check Spellfire Level</entry>
+  <entry id="47440" lang="en" sex="m">-20</entry>
+  <entry id="47441" lang="en" sex="m">Check Spellfire Levels Expended</entry>
+  <entry id="47442" lang="en" sex="m">Spellfire Quickselect</entry>
+  <entry id="47443" lang="en" sex="m">Change Quickselect</entry>
+  <entry id="47444" lang="en" sex="m">Quickselect 1</entry>
+  <entry id="47445" lang="en" sex="m">Quickselect 2</entry>
+  <entry id="47446" lang="en" sex="m">Quickselect 3</entry>
+  <entry id="47447" lang="en" sex="m">Type of Feat: General
   Prerequisite: Can only take this feat at 1st-level.
   Specifics: This set of feats allows the player to set the number of spellfire levels expended in the next use of a spellfire ability.
   Use: Selected.</entry>
-    <entry id="47448" lang="en" sex="m">Spellfire Channeler</entry>
-    <entry id="47449" lang="en" sex="m">Spellfire Channelers</entry>
-    <entry id="47450" lang="en" sex="m">spellfire channeler</entry>
-    <entry id="47451" lang="en" sex="m">(PRESTIGE CLASS)
+  <entry id="47448" lang="en" sex="m">Spellfire Channeler</entry>
+  <entry id="47449" lang="en" sex="m">Spellfire Channelers</entry>
+  <entry id="47450" lang="en" sex="m">spellfire channeler</entry>
+  <entry id="47451" lang="en" sex="m">(PRESTIGE CLASS)
   Spellfire is the raw energy of the Weave. Most who bear this gift never have the time or opportunity to develop these skills. Those who do practice their spellfire are able to hone their talent into a tool with fantastic abilities that most dabblers can only dream of.
 
   - Hit Die: d4.
@@ -9220,13 +9270,13 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
 
   *Replacing flight, due to popular demand
   **Using Bioware deflect arrows, doesn't drain levels</entry>
-    <entry id="47452" lang="en" sex="m">Drain Charged Item</entry>
-    <entry id="47453" lang="en" sex="m">Type of Feat: Class
+  <entry id="47452" lang="en" sex="m">Drain Charged Item</entry>
+  <entry id="47453" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 1.
   Specifics: As a standard action, a spellfire channeler can drain charges from a touched charged item (including single-use items such as potions and scrolls), converting the energy into stored spellfire energy levels. A creature gets to make a Will save (DC 10) to prevent one of its held or carried items from being drained.
   Use: Selected.</entry>
-    <entry id="47454" lang="en" sex="m">Increased Storage</entry>
-    <entry id="47455" lang="en" sex="m">Type of Feat: Class
+  <entry id="47454" lang="en" sex="m">Increased Storage</entry>
+  <entry id="47455" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 1.
   Specifics: The channeler's capacity for storing spellfire energy levels is multiplied by the listed value. However, spellfire energy levels in excess of the channeler's Constitution score is dangerous, with different effects depending upon the number of levels stored:
   Constitution +1 to Constitution X2:
@@ -9239,50 +9289,50 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   As above, except the character is in pain (treat as if distracted by a nondamaging spell, DC 25 to concentrate), and must make the backfire Constitution check every round. A touch releases 2d6 energy levels as a flare spell (DC 10 + number of spellfire energy levels expended) against the channeler and all creatures within 5 feet of her. The channeler must make a Will save (DC 25) every round or be forced to expend a maximum-strength blast of energy at a random target within 30 feet in preference to any other action.
   Regardless of the number of spellfire energy levels stored, a channeler can voluntarily expend only a number of spellfire energy levels per round equal to her Constitution score. (Involuntary expenditure, such as that noted above, isn't limited in this way.)
   Use: Automatic.</entry>
-    <entry id="47456" lang="en" sex="m">Improved Healing</entry>
-    <entry id="47457" lang="en" sex="m">Type of Feat: Class
+  <entry id="47456" lang="en" sex="m">Improved Healing</entry>
+  <entry id="47457" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 2.
   Specifics: At 2nd level, the spellfire channeler can release stored spellfire energy levels to heal by touch. This restores 1d4+1 hit points per spellfire energy level expended (rather than the normal 2 points per spellfire energy level).
   Use: Automatic.</entry>
-    <entry id="47458" lang="en" sex="m">Weapon Focus (spellfire)</entry>
-    <entry id="47459" lang="en" sex="m">Rapid Blast</entry>
-    <entry id="47460" lang="en" sex="m">Type of Feat: Class
+  <entry id="47458" lang="en" sex="m">Weapon Focus (spellfire)</entry>
+  <entry id="47459" lang="en" sex="m">Rapid Blast</entry>
+  <entry id="47460" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 4.
   Specifics: At 4th level, the spellfire channeler can release two blasts of spellfire as a standard action. This increases to three blasts per standard action at 8th level. Each blast after the first suffers a cumulative -2 penalty to attack rolls (-0 for the first blast, -2 for the second, and -4 for the third).
   Use: Selected.</entry>
-    <entry id="47461" lang="en" sex="m">Drain Permanent item</entry>
-    <entry id="47462" lang="en" sex="m">Type of Feat: Class
+  <entry id="47461" lang="en" sex="m">Drain Permanent item</entry>
+  <entry id="47462" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 5.
   Specifics: The channeler can drain power from permanent magic items by touch as a standard action. An item that creates spell effects loses that function for 24 hours, and the channeler gains spellfire energy levels equal to half the caster lever of the item. A creature gets to make a Will save (DC 10) to prevent one of its held or carried items from being drained.
   Use: Selected.</entry>
-    <entry id="47463" lang="en" sex="m">Charge Item</entry>
-    <entry id="47464" lang="en" sex="m">Type of Feat: Class
+  <entry id="47463" lang="en" sex="m">Charge Item</entry>
+  <entry id="47464" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 6.
   Specifics: As a standard action, a spellfire channeler can expend stored spellfire energy level to add charges to a charged item.
   Use: Selected.</entry>
-    <entry id="47465" lang="en" sex="m">Crown of Fire</entry>
-    <entry id="47466" lang="en" sex="m">Type of Feat: Class
+  <entry id="47465" lang="en" sex="m">Crown of Fire</entry>
+  <entry id="47466" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 9.
   Specifics: By expending 10 spellfire energy levels, a channeler can manifest the crown of fire, which appears as a halo of spellfire around her head and provides light equal to a daylight spell. The crown of fire gives her damage reduction 10/+1 and automatically melts all non-magical weapons that strike her (after inflicting damage, if any). The crown of fire grants the channeler spell resistance 32 (as the spell resistance spell). Maintaining the crown of fire requires expending 10 spellfire energy levels each round, which can be done as a free action. The crown of fire does not interfere with the channeler's actions, including using other spellfire abilities.
   Use: Selected.</entry>
-    <entry id="47467" lang="en" sex="m">Maelstrom of Fire</entry>
-    <entry id="47468" lang="en" sex="m">Type of Feat: Class
+  <entry id="47467" lang="en" sex="m">Maelstrom of Fire</entry>
+  <entry id="47468" lang="en" sex="m">Type of Feat: Class
   Prerequisite: Spellfire Channeler level 10.
   Specifics: The channeler can release spellfire energy in all directions as a 20-foot-radius spread, dealing 1d6 damage per spellfire energy level expended to all creatures in the area (Reflex half, DC 10 + class level + Charisma modifier).
   Use: Selected.</entry>
-    <entry id="47469" lang="en" sex="m">Epic Weapon Focus (spellfire)</entry>
-    <entry id="47470" lang="en" sex="m">Type of Feat: General
+  <entry id="47469" lang="en" sex="m">Epic Weapon Focus (spellfire)</entry>
+  <entry id="47470" lang="en" sex="m">Type of Feat: General
   Prerequisite: Spellfire Wielder and base attack bonus +1 or higher, or Spellfire Channeler level 3.
   Specifics: The character gains a +1 bonus to all attack rolls with spellfire.
   Use: Automatic.</entry>
-    <entry id="47471" lang="en" sex="m">Type of Feat: Epic, Combat
+  <entry id="47471" lang="en" sex="m">Type of Feat: Epic, Combat
   Prerequisite: 21st level, Weapon Focus with chosen weapon.
   Specifics: The character gains a +2 bonus to all attack rolls with spellfire.
   Use: Automatic.</entry>
-    <entry id="47472" lang="en" sex="m">&lt;CUSTOM0&gt; uses Spellfire</entry>
-    <entry id="47473" lang="en" sex="m">&lt;CUSTOM0&gt; attempts to drain an item</entry>
-    <entry id="47474" lang="en" sex="m">Rapid Blast 2</entry>
-    <entry id="47475" lang="en" sex="m">Rapid Blast 3</entry>
+  <entry id="47472" lang="en" sex="m">&lt;CUSTOM0&gt; uses Spellfire</entry>
+  <entry id="47473" lang="en" sex="m">&lt;CUSTOM0&gt; attempts to drain an item</entry>
+  <entry id="47474" lang="en" sex="m">Rapid Blast 2</entry>
+  <entry id="47475" lang="en" sex="m">Rapid Blast 3</entry>
   <entry id="47476" lang="en" sex="m">Absorb Friendly Spells</entry>
   <entry id="47500" lang="en" sex="m">Werewolf</entry>
   <entry id="47501" lang="en" sex="m">Werewolves</entry>

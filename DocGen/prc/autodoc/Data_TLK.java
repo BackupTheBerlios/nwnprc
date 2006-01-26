@@ -161,9 +161,9 @@ public class Data_TLK{
 			String data = mainData.get(row);
 			if(data != null){
 				//replace with paired characters
-				data.replace("<", "&lt;");
-				data.replace(">", "&gt;");
-				data.replace("'", "?");
+				data = data.replace("<", "&lt;");
+				data = data.replace(">", "&gt;");
+				data = data.replace("'", "?");
 				fw.write("  <entry id=\""+row+"\" lang=\"en\" sex=\"m\">"+data+"</entry>"+CRLF);
 			}
 			if(verbose) spinner.spin();

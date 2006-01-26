@@ -294,11 +294,24 @@ void main()
                             else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_1))
                                 nMaxValue =  2420000;
                         }    
+                        if(GetPRCSwitch(PRC_SAMURAI_VALUE_SCALAR_x100))
+                            nMaxValue *= FloatToInt(IntToFloat(nMaxValue)*(IntToFloat(GetPRCSwitch(PRC_SAMURAI_VALUE_SCALAR_x100))/100.0));
                         //get the items
                         object oKatana;
                         object oWakizashi;
+                        int i;
+                        for(i=0;i<14;i++)
+                        {
+                            object oTest = GetItemInSlot(i, oPC);
+                            if(GetTag(oTest) == "codi_katana")
+                                oKatana = oTest;
+                            if(GetTag(oTest) == "codi_wakizashi")
+                                oWakizashi = oTest;
+                        }
                         object oTest = GetFirstItemInInventory(oPC);
-                        while(GetIsObjectValid(oTest))
+                        while(GetIsObjectValid(oTest)
+                            && (!GetIsObjectValid(oKatana) 
+                                || !GetIsObjectValid(oWakizashi)))
                         {
                             if(GetTag(oTest) == "codi_katana")
                                 oKatana = oTest;
@@ -306,15 +319,7 @@ void main()
                                 oWakizashi = oTest;
                             oTest = GetNextItemInInventory(oPC);
                         }
-                        int i;
-                        for(i=0;i<14;i++)
-                        {
-                            oTest = GetItemInSlot(i, oPC);
-                            if(GetTag(oTest) == "codi_katana")
-                                oKatana = oTest;
-                            if(GetTag(oTest) == "codi_wakizashi")
-                                oWakizashi = oTest;
-                        }
+                        //get the value
                         int nCurrentValue = nNewValue;
                         if(oWakizashi == oItem)
                         {
@@ -383,7 +388,9 @@ void main()
             }
             else if(nChoice == 2) //improve weapon
             {
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_IMPROVE;
+                MarkStageNotSetUp(nStage, oPC);
             }
             
         }
@@ -392,13 +399,7 @@ void main()
             if(nChoice == 1) //katana
             {
                 object oKatana;
-                object oTest = GetFirstItemInInventory(OBJECT_SELF);
-                while(GetIsObjectValid(oTest))
-                {
-                    if(GetTag(oTest) == "codi_katana")
-                        oKatana = oTest;
-                    oTest = GetNextItemInInventory(OBJECT_SELF);
-                }
+                object oTest;
                 int i;
                 for(i=0;i<14;i++)
                 {
@@ -406,19 +407,23 @@ void main()
                     if(GetTag(oTest) == "codi_katana")
                         oKatana = oTest;
                 }
+                oTest = GetFirstItemInInventory(OBJECT_SELF);
+                while(GetIsObjectValid(oTest) 
+                    && !GetIsObjectValid(oKatana))
+                {
+                    if(GetTag(oTest) == "codi_katana")
+                        oKatana = oTest;
+                    oTest = GetNextItemInInventory(OBJECT_SELF);
+                }
                 SetLocalObject(oPC, "codi_ancdai", oKatana); 
-                nStage = STAGE_IMPROVE_TYPE;            
+                MarkStageNotSetUp(nStage, oPC);
+                nStage = STAGE_IMPROVE_TYPE;   
+                MarkStageNotSetUp(nStage, oPC);         
             }
             else if(nChoice == 2) //wakizashi
             {
                 object oWakizashi;
-                object oTest = GetFirstItemInInventory(OBJECT_SELF);
-                while(GetIsObjectValid(oTest))
-                {
-                    if(GetTag(oTest) == "codi_wakizashi")
-                        oWakizashi = oTest;
-                    oTest = GetNextItemInInventory(OBJECT_SELF);
-                }
+                object oTest;
                 int i;
                 for(i=0;i<14;i++)
                 {
@@ -426,11 +431,22 @@ void main()
                     if(GetTag(oTest) == "codi_wakizashi")
                         oWakizashi = oTest;
                 }
+                oTest = GetFirstItemInInventory(OBJECT_SELF);
+                while(GetIsObjectValid(oTest) 
+                    && !GetIsObjectValid(oWakizashi))
+                {
+                    if(GetTag(oTest) == "codi_wakizashi")
+                        oWakizashi = oTest;
+                    oTest = GetNextItemInInventory(OBJECT_SELF);
+                }
                 SetLocalObject(oPC, "codi_ancdai", oWakizashi); 
-                nStage = STAGE_IMPROVE_TYPE;            
+                MarkStageNotSetUp(nStage, oPC);
+                nStage = STAGE_IMPROVE_TYPE;      
+                MarkStageNotSetUp(nStage, oPC);      
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_ENTRY;
                 MarkStageNotSetUp(nStage, oPC);
             }    
@@ -439,6 +455,7 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_IMPROVE;
                 MarkStageNotSetUp(nStage, oPC);
             }    
@@ -472,7 +489,9 @@ void main()
                         {
                             //no value
                             //proceed to add
+                            MarkStageNotSetUp(nStage, oPC);
                             nStage = STAGE_IMPROVE_ADD; 
+                            MarkStageNotSetUp(nStage, oPC);
                         }
                     }
                 }
@@ -483,6 +502,7 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_IMPROVE_TYPE;
                 MarkStageNotSetUp(nStage, oPC);
             }    
@@ -528,7 +548,9 @@ void main()
                         {
                             //no value
                             //proceed to add
+                            MarkStageNotSetUp(nStage, oPC);
                             nStage = STAGE_IMPROVE_ADD; 
+                            MarkStageNotSetUp(nStage, oPC);
                         }
                     }
                 }
@@ -538,6 +560,7 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_IMPROVE_TYPE;
                 MarkStageNotSetUp(nStage, oPC);
             }
@@ -556,7 +579,9 @@ void main()
                 {
                     //no value
                     //proceed to add
+                    MarkStageNotSetUp(nStage, oPC);
                     nStage = STAGE_IMPROVE_ADD; 
+                    MarkStageNotSetUp(nStage, oPC);
                 }
             }   
         }
@@ -564,6 +589,7 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_IMPROVE_TYPE;
                 MarkStageNotSetUp(nStage, oPC);
             }
@@ -579,6 +605,7 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_ENTRY;
                 MarkStageNotSetUp(nStage, oPC);
             }
@@ -639,7 +666,9 @@ void main()
                 object oItem = GetLocalObject(oPC, "codi_ancdai"); 
                 IPSafeAddItemProperty(oItem, ipToAdd);
                 //go back to start
+                MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_ENTRY;
+                MarkStageNotSetUp(nStage, oPC);
             }
         }
 

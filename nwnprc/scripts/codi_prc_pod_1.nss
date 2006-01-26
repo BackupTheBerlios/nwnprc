@@ -9,13 +9,22 @@ void main()
         ActionGiveItem(oItem, oPC);
         return;
     }
-    if(!GetIdentified(oItem))
+    if(!GetIdentified(oItem) && !GetPRCSwitch(PRC_SAMURAI_ALLOW_UNIDENTIFIED_SACRIFICE))
     {
         FloatingTextStringOnCreature("You cannot sacrifice unidentified items.", oPC, FALSE);
         ActionGiveItem(oItem, oPC);
         return;
     }
+    if(GetStolenFlag(oItem) && !GetPRCSwitch(PRC_SAMURAI_ALLOW_STOLEN_SACRIFICE))
+    {
+        FloatingTextStringOnCreature("You cannot sacrifice stolen items.", oPC, FALSE);
+        ActionGiveItem(oItem, oPC);
+        return;
+    }
+    SetIdentified(oItem, TRUE);
     int iValue = GetGoldPieceValue(oItem);
+    if(GetPRCSwitch(PRC_SAMURAI_SACRIFICE_SCALAR_x100))
+        iValue *= FloatToInt(IntToFloat(iValue)*(IntToFloat(GetPRCSwitch(PRC_SAMURAI_SACRIFICE_SCALAR_x100))/100.0));
     DestroyObject(oItem);
     if (iValue > 0)
     {

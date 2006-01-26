@@ -2,15 +2,16 @@
 
    LABEL         ReqType ReqParam1       ReqParam2 
 0  Base_Attack   BAB     5               ****      
-1  Orc           RACE    214             ****      
-2  HalfOrc       RACE    5               ****      
-3  Gray_Orc      RACE    184             ****      
-4  Orog          RACE    187             ****      
-5  Tanarukk      RACE    203             ****      
-6  Blood_warlord FEAT    4608            ****      
-7  Intimidate    SKILL   24              8         
-8  Discipline    SKILL   3               5         
-9  Taunt         SKILL   18              5         
-10 Rage          FEAT    293             ****       
-11 Leadership    FEAT    4365            ****     
-12 ScriptVar     VAR     PRC_AllowOrcWar 0         
+1  Humanoid_Orc  RACE    14              ****       
+2  Orc  RACE    214             ****      
+3  HalfOrc       RACE    5               ****      
+4  Gray_Orc      RACE    184             ****      
+5  Orog          RACE    187             ****      
+6  Tanarukk      RACE    203             ****      
+7  Blood_warlord FEAT    4608            ****      
+8  Intimidate    SKILL   24              8         
+9  Discipline    SKILL   3               5         
+10 Taunt         SKILL   18              5         
+11 Rage          FEAT    293             ****       
+12 Leadership    FEAT    4365            ****     
+13 ScriptVar     VAR     PRC_AllowOrcWar 0         

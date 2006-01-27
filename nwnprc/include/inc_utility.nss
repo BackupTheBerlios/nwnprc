@@ -61,15 +61,6 @@ float fmax(float a, float b);
 float fmin(float a, float b);
 
 /**
- * Gets the absolute value of a float
- *
- * @param f  A float value
- * @return   f if it's 0 or greater, -f otherwise
- */
-//No longer needed, its a bioware function
-//float fabs(float f);
-
-/**
  * Takes a string in the standard hex number format (0x####) and converts it
  * into an integer type value. Only the last 8 characters are parsed in order
  * to avoid overflows.
@@ -394,7 +385,7 @@ string ItemPropertyToString(itemproperty ipTest);
 /* Include section                              */
 //////////////////////////////////////////////////
 
-// No dependecies outiside their own loops -section
+// The following files have no dependecies, or self-contained dependencies that do not require looping via this file
 #include "inc_draw"       // includes inc_draw_text and inc_draw_tools
 #include "inc_draw_prc"
 #include "inc_debug"
@@ -404,7 +395,9 @@ string ItemPropertyToString(itemproperty ipTest);
 #include "inc_time"
 #include "inc_rand_equip"
 #include "inc_class_by_pos"
+#include "prc_inc_actions"
 
+// The following includes have dependencies on files linked via this file
 #include "inc_pers_array"   // includes inc_array, inc_persist_loca, inc_item_props, inc_prc_npc and inc_2dacache
 #include "inc_eventhook"    // Should be after inc_pers_array, which it is dependent on
 #include "inc_heap"         // Should be after inc_pers_array, as it needs inc_array
@@ -425,8 +418,6 @@ int min(int a, int b) {return (a < b ? a : b);}
 float fmax(float a, float b) {return (a > b ? a : b);}
 
 float fmin(float a, float b) {return (a < b ? a : b);}
-
-//float fabs(float f) {return (f < 0.0f ? -f : f);}
 
 int HexToInt(string sHex)
 {

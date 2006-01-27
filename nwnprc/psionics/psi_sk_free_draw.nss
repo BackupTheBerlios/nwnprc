@@ -21,6 +21,10 @@ void main()
 {
     object oPC = OBJECT_SELF;
 
+    // Check whether the PC can take a free action and is commandable
+    if(!(GetCanTakeFreeAction(oPC, TRUE) && GetCommandable(oPC)))
+        return;
+
     if(!GetLocalInt(oPC, FREEDRAW_USED))
     {
         // Mark the Free Draw attempt for this round used

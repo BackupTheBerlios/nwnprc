@@ -16,6 +16,7 @@ public final class SpellbookMaker{
 	private static int iprp_feats2daRow   = 0;
 	private static int tlkRow       = 0;
 	private static int classSpellRow= 0;
+	private static int classFeatRow = 0;
 	private static Data_2da classes2da;
 	private static Data_2da spells2da;
 	private static Data_2da feat2da;
@@ -23,6 +24,7 @@ public final class SpellbookMaker{
 	private static Data_TLK customtlk;
 	private static Data_TLK dialogtlk;
 	private static Data_2da classSpell2da;
+	private static Data_2da classFeat2da;
 	private static String[] spellLabels;
 
 	private static int MAGIC_TLK = 16777216;
@@ -62,7 +64,7 @@ public final class SpellbookMaker{
 				&& classfilename != ""
 				&& classfilename.length() > 9){
 				classfilename = classfilename.substring(9, classfilename.length());
-				String classCoreFilename = "cls_spell_"+classfilename+"_core";
+				String classCoreFilename = "cls_spcr_"+classfilename;
 				//check the file exists
 				File classCoreFile = new File("2das\\"+classCoreFilename+".2da");
 				if(classCoreFile.exists()){
@@ -71,6 +73,9 @@ public final class SpellbookMaker{
 					//get the new filename
 					String classSpellFilename = "cls_spell_"+classfilename;
 					classSpell2da = Data_2da.load2da("2das\\"+classSpellFilename+".2da", true);
+					String classFeatFilename = "cls_feat_"+classfilename;
+					classFeat2da = Data_2da.load2da("2das\\"+classFeatFilename+".2da", true);
+					getFirstClassFeat2daRow();
 					//get the class name
 					String className = getCheckedTlkEntry(classes2da.getBiowareEntryAsInt("Name", classRow))+" ";
 					String classLabel = classes2da.getEntry("Label", classRow)+"_";
@@ -198,6 +203,7 @@ public final class SpellbookMaker{
 					}//end of cls_spells_*_core.2da loop
 					//save the new cls_spell_*.2da file
 					classSpell2da.save2da("2das", true, true);
+					classFeat2da.save2da("2das", true, true);
 				} else {
 					//System.out.println(classfilename+" does not exist.");
 				}
@@ -222,6 +228,7 @@ public final class SpellbookMaker{
 											int subradialMaster){
 		//set the next tlk line to the name
 		customtlk.setEntry(tlkRow, name);
+
 		//copy the original spells.2da line to the next free spells.2da line
 		String[] originalSpellRow = spells2da.getRow(spellID);
 		for(int i=0; i<originalSpellRow.length; i++){
@@ -342,11 +349,20 @@ public final class SpellbookMaker{
 		}
 		subradialMaster = spells2daRow;
 
+		//cls_feat_*.2da
+		classFeat2da.setEntry("FeatLabel", classFeatRow, label);
+		classFeat2da.setEntry("FeatIndex", classFeatRow, Integer.toString(feat2daRow));
+		classFeat2da.setEntry("List", classFeatRow, Integer.toString(0));
+		classFeat2da.setEntry("GrantedOnLevel", classFeatRow, Integer.toString(99));
+		classFeat2da.setEntry("OnMenu", classFeatRow, Integer.toString(1));
+
+
 		//move to next file lines
 		getNextSpells2daRow();
 		getNextFeat2daRow();
 		getNextIPRPFeats2daRow();
 		getNextTlkRow();
+		getNextClassFeat2daRow();
 		classSpellRow++;
 
 		//add subradial spells
@@ -371,6 +387,10 @@ public final class SpellbookMaker{
 		System.out.print("Finding start of spells.2da ");
 		while(!spells2da.getEntry("Label", spells2daRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
 			spells2daRow++;
+			if(spells2daRow> spells2da.getEntryCount()){
+				System.out.println("Spells.2da reached the end of the file.");
+				System.exit(1);
+			}
 			spinner.spin();
 		}
 		spells2daRow++;
@@ -387,6 +407,10 @@ public final class SpellbookMaker{
 		System.out.print("Finding start of feat.2da ");
 		while(!feat2da.getEntry("Label", feat2daRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
 			feat2daRow++;
+			if(feat2daRow> feat2da.getEntryCount()){
+				System.out.println("Feat.2da reached the end of the file.");
+				System.exit(1);
+			}
 			spinner.spin();
 		}
 		feat2daRow++;
@@ -403,6 +427,10 @@ public final class SpellbookMaker{
 		System.out.print("Finding start of iprp_spells.2da ");
 		while(!iprp_feats2da.getEntry("Label", iprp_feats2daRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
 			iprp_feats2daRow++;
+			if(iprp_feats2daRow> iprp_feats2da.getEntryCount()){
+				System.out.println("iprp_feats.2da reached the end of the file.");
+				System.exit(1);
+			}
 			spinner.spin();
 		}
 		iprp_feats2daRow++;
@@ -412,6 +440,27 @@ public final class SpellbookMaker{
 		iprp_feats2daRow++;
 		if(iprp_feats2da.getEntry("Label", iprp_feats2daRow).equals("####END_OF_NEW_SPELLBOOK_RESERVE")){
 			getFirstIPRPFeats2daRow();
+		}
+	}
+
+	private static void getFirstClassFeat2daRow(){
+		classFeatRow = 0;
+		System.out.print("Finding start of cls_feat_*.2da ");
+		while(!classFeat2da.getEntry("FeatLabel", classFeatRow).equals("####START_OF_NEW_SPELLBOOK_RESERVE")){
+			classFeatRow++;
+			if(classFeatRow >= classFeat2da.getEntryCount()){
+				System.out.println("cls_feat_*.2da reached the end of the file.");
+				System.exit(1);
+			}
+			spinner.spin();
+		}
+		getNextClassFeat2daRow();
+		System.out.println("- Done");
+	}
+	private static void getNextClassFeat2daRow(){
+		classFeatRow++;
+		if(classFeat2da.getEntry("FeatLabel", classFeatRow).equals("####END_OF_NEW_SPELLBOOK_RESERVE")){
+			classFeat2da.insertRow(classFeatRow);
 		}
 	}
 

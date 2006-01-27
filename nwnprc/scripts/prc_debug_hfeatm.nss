@@ -25,13 +25,17 @@ void Recurse(object oPC, object oSkin)
     int bFeat = GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT;
     string sLocal;
     if(bFeat)
-        if(!GetLocalInt(oPC, (sLocal = "prc_debug_hfeatm_" + IntToString(GetItemPropertySubType(ip)))))
+    {
+        int nIndex = GetItemPropertySubType(ip);
+        sLocal = "prc_debug_hfeatm_" + IntToString(nIndex);
+        if(!GetLocalInt(oPC, sLocal))
             SetLocalInt(oPC, sLocal, TRUE);
         else
         {
-            DoDebug("prc_debug_hfeatm: Duplicate bonus feat on the hide: " + IntToString(GetItemPropertySubType(ip)));
+            DoDebug("prc_debug_hfeatm: Duplicate bonus feat on the hide: " + IntToString(nIndex) + " - '" + GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nIndex))) + "'");
             nErrorFound = TRUE;
         }
+    }
     // Test next ip
     Recurse(oPC, oSkin);
     // All ips checked, clean up

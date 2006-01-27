@@ -150,15 +150,19 @@ void main()
                 string sFile = GetFileForClass(nSpellClass);
                 int i;
                 //this may cause a TMI, dont have time to fix it now
-                for(i = 1; i < 410; i++)
+                for(i = 0; i < 410; i++)
                 {
                     if(StringToInt(Get2DACache(sFile, "Level", i)) == nSpellLevel               // Correct spell level
                         && Get2DACache(sFile, "Level", i) != ""                                 // And not undefined spell level in case of SL 0
                         && (Get2DACache(sFile, "ReqFeat", i)==""                                // Has no prerequisites
                             || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", i)), oPC))) // Or has prerequisites which the PC posseses
-                    {
+                    {                  
                         int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", i));
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), i, oPC);
+DoDebug("PRC_S_spellb i="+IntToString(i));                    
+DoDebug("PRC_S_spellb sFile="+sFile);
+DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));  
+DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));  
                     }
                 }
                 MarkStageSetUp(STAGE_SELECT_SPELL, oPC);

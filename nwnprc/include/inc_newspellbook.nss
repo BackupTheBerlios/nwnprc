@@ -16,6 +16,7 @@ string GetFileForClass(int nClass)
 {
     string sFile = Get2DACache("classes", "FeatsTable", nClass);
     sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+DoDebug("GetFileForClass("+IntToString(nClass)+") = "+sFile);
     return sFile;
 }
 

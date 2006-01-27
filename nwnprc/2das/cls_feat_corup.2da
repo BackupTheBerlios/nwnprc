@@ -364,4 +364,7 @@
 360 FEAT_TYRANNY_DOMAIN                            4062      0    99             1      
 361 FEAT_OCEAN_DOMAIN                              4063      0    99             1      
 362 FEAT_BLIGHTBRINGER                             2250      0    99             1      
-363 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
+363 ###cls_feat_allBaseClasses_END###              ****      **** ****           **** 
+364 ####START_OF_NEW_SPELLBOOK_RESERVE             ****      **** ****           ****
+365 ####END_OF_NEW_SPELLBOOK_RESERVE               ****      **** ****           ****      
+

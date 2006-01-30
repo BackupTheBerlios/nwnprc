@@ -1,5 +1,5 @@
 //real power spell constants
-
+ 
 // Level 1 Powers
 const int POWER_BOLT                            = 14001;
 const int POWER_CALLTOMIND                      = 14002;
@@ -74,8 +74,8 @@ const int POWER_ENERGYADAPTCOLD                 = 14061;
 const int POWER_ENERGYADAPTELEC                 = 14062;
 const int POWER_ENERGYADAPTFIRE                 = 14063;
 const int POWER_ENERGYADAPTSONIC                = 14064;
-const int POWER_PAINFUL_STRIKE                  = 14065;
-const int POWER_ENERGYPUSH_COLD                 = 14066;
+const int POWER_BODY_EQUILIBRIUM                = 14065;
+const int POWER_PAINFUL_STRIKE                  = 14066;
 const int POWER_ENERGYPUSH_COLD                 = 14067;
 const int POWER_ENERGYPUSH_ELEC                 = 14068;
 const int POWER_ENERGYPUSH_FIRE                 = 14069;

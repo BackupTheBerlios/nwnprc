@@ -32,8 +32,7 @@
     - It may be possible to restore charges to items using projection
 
 
-    @author Written By: Tenjac & Primogenitor
-    @author Modified By: Ornedan
+    @author Written By: Ornedan, Tenjac, and Primogenitor
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -85,7 +84,6 @@ void main()
         RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
         EndPosses(oPC, oCopy);
         IncrementRemainingFeatUses(oPC, FEAT_PROJECTION);
-
         return;
     }
 
@@ -222,9 +220,13 @@ void EndPosses(object oPC, object oCopy)
 
     // Schedule deletion of the copy
     DelayCommand(0.3f, MyDestroyObject(oCopy));
+    
+    //Delete the object reference
+    DeleteLocalObject(oPC, COPY_LOCAL_NAME);
 
     // VFX
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eLight, lCopy, 3.0);
+    DestroyObject(oCopy);
 }
 
 //Runs tests to see if the projection effect can still continue.

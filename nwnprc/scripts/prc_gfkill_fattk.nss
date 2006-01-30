@@ -36,11 +36,20 @@ void DelayFrightfulAttackCheck(object oPC, object oTarget) {
       float fGFKSize = StringToFloat(Get2DACache("appearance","PREFATCKDIST",GetAppearanceType(oPC)));
       object oNewTarget;
       oNewTarget = MyFirstObjectInShape(SHAPE_SPHERE, fGFKSize, GetLocation(oPC), TRUE);
-      if ( GetCanSneakAttack(oNewTarget,oPC)) {
-         DoFrightfulAttack(oPC, oNewTarget);
-      } else {
-         effect eEffect;
-         PerformAttack(oNewTarget,oPC,eEffect);
+      if ( GetIsObjectValid(oNewTarget) ) {
+         if ( oNewTarget == oPC ) {
+            oNewTarget = MyNextObjectInShape(SHAPE_SPHERE, fGFKSize, GetLocation(oPC), TRUE);
+         }
+      }
+      if ( GetIsObjectValid(oNewTarget) ) {
+         if ( oNewTarget != oPC ) {
+            if ( GetCanSneakAttack(oNewTarget,oPC)) {
+               DoFrightfulAttack(oPC, oNewTarget);
+            } else {
+               effect eEffect;
+               PerformAttack(oNewTarget,oPC,eEffect);
+            }
+         }
       }
    }	
 }
@@ -152,21 +161,17 @@ void DoFrightfulAttack(object oPC, object oTarget) {
       //Get first target in the spell cone
       oCurrentTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation(), TRUE);
       while(GetIsObjectValid(oCurrentTarget)) {
-         if (spellsIsTarget(oCurrentTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)) {
-            fDelay = GetRandomDelay();
-            //Fire cast spell at event for the specified target
-            //SignalEvent(oCurrentTarget, EventSpellCastAt(OBJECT_SELF, SPELL_FEAR));
-            //The victim (oTarget) the Ghost-Faced Killer (oPC), and allies of the Ghost-Faced Killer are unaffected.
-            if((oCurrentTarget != oTarget) && (!GetIsFriend(oCurrentTarget, oPC)) && (oCurrentTarget != oPC)) {
-               //Make a will save
-               if(!PRCMySavingThrow(SAVING_THROW_WILL, oCurrentTarget, 10 + iGFKClassLevel + iGFKCharModifier + iDamageBonus, SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay)) {
-                  //Apply the linked effects and the VFX impact
-                  int iCurrentHD = GetHitDice( oCurrentTarget );
-                  if ( iCurrentHD < ( iGFKClassLevel + iGFKCharModifier ) ) {
-                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFear, oCurrentTarget, fDuration, TRUE, -1, -1));
-                  } else {
-                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShaken, oCurrentTarget, fDuration, TRUE, -1, -1));
-                  }
+         fDelay = GetRandomDelay();
+         //The victim (oTarget) the Ghost-Faced Killer (oPC), and allies of the Ghost-Faced Killer are unaffected.
+         if((oCurrentTarget != oTarget) && (!GetIsFriend(oCurrentTarget, oPC)) && (oCurrentTarget != oPC)) {
+            //Make a will save
+            if(!PRCMySavingThrow(SAVING_THROW_WILL, oCurrentTarget, 10 + iGFKClassLevel + iGFKCharModifier + iDamageBonus, SAVING_THROW_TYPE_FEAR, OBJECT_SELF, fDelay)) {
+               //Apply the linked effects and the VFX impact
+               int iCurrentHD = GetHitDice( oCurrentTarget );
+               if ( iCurrentHD < ( iGFKClassLevel + iGFKCharModifier ) ) {
+                  DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFear, oCurrentTarget, fDuration, TRUE, -1, -1));
+               } else {
+                  DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShaken, oCurrentTarget, fDuration, TRUE, -1, -1));
                }
             }
          }

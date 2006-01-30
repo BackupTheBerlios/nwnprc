@@ -1,26 +1,20 @@
-2DA V2.0                                                         
-                                                                 
-           LABEL          ReqType   ReqParam1        ReqParam2   
-0       WIZARD          CLASSOR       10               ****      
-1       SORC            CLASSOR       9                ****
-2       CLERIC          CLASSOR       2                ****
-3       ScriptVar       VAR           prc_AllowBaeln   0           
-4       Concentrate     SKILL         1                5
-5       Elf             RACE          1                ****
-5       Aquatic-Elf     RACE          161              ****  
-5       Avariel         RACE          162              ****       
-5       Drow_female     RACE          163              **** 
-5       Drow_male       RACE          164              ****  
-5       Sun-Elf         RACE          166              ****            
-5       wild-Elf        RACE          167              ****    
-5       wood-Elf        RACE          168              ****    
-5       dark-Elf        RACE          169              **** 
-6       NoLichLevels    VAR           prc_NoLich       0 
-7       Spellcraft      SKILL         16                14                                                                 
+2DA V2.0
 
-                                                                 
-                                                                 
-                                                                 
-                                                                 
-                                                                 
-                                                                 
+  LABEL        ReqType ReqParam1      ReqParam2 
+0 WIZARD       CLASSOR 10             ****      
+1 SORC         CLASSOR 9              ****      
+2 CLERIC       CLASSOR 2              ****      
+3 ScriptVar    VAR     prc_AllowBaeln 0         
+4 Concentrate  SKILL   1              5         
+5 Elf          RACE    1              ****      
+5 Aquatic-Elf  RACE    161            ****      
+5 Avariel      RACE    162            ****      
+5 Drow_female  RACE    163            ****      
+5 Drow_male    RACE    164            ****      
+5 Sun-Elf      RACE    166            ****      
+5 wild-Elf     RACE    167            ****      
+5 wood-Elf     RACE    168            ****      
+5 dark-Elf     RACE    169            ****      
+6 NoLichLevels VAR     prc_NoLich     0         
+7 Spellcraft   SKILL   16             14        
+8 ScriptVar    VAR     PRC_AllSpell6  0         

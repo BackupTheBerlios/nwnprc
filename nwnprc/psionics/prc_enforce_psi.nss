@@ -7,8 +7,8 @@
 
    This script is used to enforce the proper selection of bonus feats
    so that people cannot use epic bonus feats and class bonus feats to
-   select feats they should not be allowed to. 
-   
+   select feats they should not be allowed to.
+
    Is also used to enforce the proper discipline selection.
 */
 
@@ -89,7 +89,7 @@ int PsionDiscipline(object oPC = OBJECT_SELF)
                return TRUE;
           }
      }
-     
+
      return FALSE;
 }
 
@@ -153,8 +153,18 @@ int PsionicFeats(object oPC)
     if(GetHasFeat(FEAT_WOUNDING_ATTACK))              { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826510); }
     if(GetHasFeat(FEAT_DEEP_IMPACT))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826514); }
     if(GetHasFeat(FEAT_FELL_SHOT))                    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826516); }
-    // Only check for the first Expanded Knowledge feat - NOT IN YET
-    //if(GetHasFeat(FEAT_EXPANDED_KNOWLEDGE_1))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826520); }
+    // Only check for the first Expanded Knowledge feat
+    if(GetHasFeat(FEAT_EXPANDED_KNOWLEDGE_1))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826520); }
+
+    // Metapsionic feats
+    if(GetHasFeat(FEAT_CHAIN_POWER,       oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826532); }
+    if(GetHasFeat(FEAT_EMPOWER_POWER,     oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826534); }
+    if(GetHasFeat(FEAT_EXTEND_POWER,      oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826536); }
+    if(GetHasFeat(FEAT_MAXIMIZE_POWER,    oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826538); }
+    if(GetHasFeat(FEAT_SPLIT_PSIONIC_RAY, oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826540); }
+    if(GetHasFeat(FEAT_TWIN_POWER,        oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826542); }
+    if(GetHasFeat(FEAT_WIDEN_POWER,       oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826544); }
+    if(GetHasFeat(FEAT_QUICKEN_POWER,     oPC)) { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826651); }
 
     if(bRelevel)
     {
@@ -177,19 +187,19 @@ int EpicPsionicFeats(object oPC)
         bFirst   = 1;
     string sManifLimitedFeats = "";
 
-    // Not in yet
-    //if(GetHasFeat(FEAT_EPIC_EXPANDED_KNOWLEDGE_1)) sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826522);
-    if(GetHasFeat(FEAT_IMPROVED_MANIFESTATION_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826526);
-    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSION_1))   sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826528);
-    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSYWAR_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826529);
-    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_WILDER_1))  sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826530);
+    if(GetHasFeat(FEAT_EPIC_EXPANDED_KNOWLEDGE_1))        sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826522);
+    if(GetHasFeat(FEAT_IMPROVED_MANIFESTATION_1))         sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826526);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSION_1))          sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826528);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSYWAR_1))         sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826529);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_WILDER_1))         sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826530);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_1)) sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826640);
 
     if(GetHasFeat(FEAT_EPIC_PSIONIC_FOCUS_1))      sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826518);
 
 
     if(!bCanManifMax && bFirst < 1)
     {
-        bRelevel = TRUE;           //You do not have the ability to manifest powers of the normal maximum power level in at least one psionic class and may not take 
+        bRelevel = TRUE;           //You do not have the ability to manifest powers of the normal maximum power level in at least one psionic class and may not take
         FloatingTextStringOnCreature(GetStringByStrRef(16826469) + " " + sManifLimitedFeats + ". " + PLEASE_RESELECT, oPC, FALSE);
     }
 
@@ -201,13 +211,14 @@ int EpicPsionicFeats(object oPC)
                       GetHasFeat(FEAT_MAXIMIZE_POWER,    oPC) +
                       GetHasFeat(FEAT_SPLIT_PSIONIC_RAY, oPC) +
                       GetHasFeat(FEAT_TWIN_POWER,        oPC) +
-                      GetHasFeat(FEAT_WIDEN_POWER,       oPC);
+                      GetHasFeat(FEAT_WIDEN_POWER,       oPC) +
+                      GetHasFeat(FEAT_QUICKEN_POWER,     oPC);
 
         if(nMetaPsi < 4)
         {
             bRelevel = TRUE;           //You do not posses 4 metapsionic feats and may not take Improved Metapsionics.
             FloatingTextStringOnCreature(GetStringByStrRef(16826468) + " " + PLEASE_RESELECT, oPC, FALSE);
-        }        
+        }
     }
 
 
@@ -222,7 +233,8 @@ int SplitPsionicRay(object oPC)
                    GetHasFeat(FEAT_EXTEND_POWER,      oPC) +
                    GetHasFeat(FEAT_MAXIMIZE_POWER,    oPC) +
                    GetHasFeat(FEAT_TWIN_POWER,        oPC) +
-                   GetHasFeat(FEAT_WIDEN_POWER,       oPC);
+                   GetHasFeat(FEAT_WIDEN_POWER,       oPC) +
+                   GetHasFeat(FEAT_QUICKEN_POWER,     oPC);
 
     if(nMetaPsi < 1)
     {                              //You do not have at least one other metapsionic feat besides Split Psionic Ray, so you may not take it.

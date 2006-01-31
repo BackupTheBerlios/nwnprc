@@ -101,6 +101,7 @@ const string PRC_PNP_FIND_TRAPS                      = "PRC_PNP_FIND_TRAPS";
  * Is a mobile AOE based off an item
  */
 const string PRC_PNP_DARKNESS                        = "PRC_PNP_DARKNESS";
+
 /**
  * 3.5ed Darkness
  * Gives 20% concelement rather than bioware darkness
@@ -133,6 +134,12 @@ const string PRC_CREATE_UNDEAD_UNCONTROLLED          = "PRC_CREATE_UNDEAD_UNCONT
  * not removed on resting etc
  */
 const string PRC_CREATE_UNDEAD_PERMANENT             = "PRC_CREATE_UNDEAD_PERMANENT";
+
+/*
+ * Sleep and Deep Slumber dont have a limit on the
+ * HD of a target to be effected.
+ */
+const string PRC_SLEEP_NO_HD_CAP                     = "PRC_SLEEP_NO_HD_CAP";
 
 /**
  * By request, set this to use the 1.65 behaviour for implosion, phantasmal killer,
@@ -1996,6 +2003,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_PERMANENT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CREATE_UNDEAD_UNCONTROLLED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_35ED_WORD_OF_FAITH);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SLEEP_NO_HD_CAP);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_165_DEATH_IMMUNITY);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_USE_NEW_IMBUE_ARROW);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DRAGON_DISCIPLE_SIZE_CHANGES);

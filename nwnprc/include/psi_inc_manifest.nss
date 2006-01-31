@@ -705,11 +705,19 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     int nManifDur      = StringToInt(Get2DACache("spells", "ConjTime", nPower)) + StringToInt(Get2DACache("spells", "CastTime", nPower));
     int bQuicken       = FALSE;
 
-    // Quicken Power check
-    if(nManifDur <= 6000                                 && // If the power could be quickened by having manifesting time of 1 round or less
-       GetLocalInt(oManifester, METAPSIONIC_QUICKEN_VAR) && // And the manifester has Quicken Power active
-       GetIsPsionicallyFocused(oManifester)                 // And might be able to pay the psionic focus for it
+    // Normally swift action powers check
+    if(Get2DACache("feat", "ReqAction", GetClassFeatFromPower(nPower, nClass)) == "0" && // The power is swift action to use
+       TakeSwiftAction(oManifester)                                                      // And the manifester can take a swift action now
        )
+    {
+        nManifDur = 0;
+    }
+    // Quicken Power check
+    else if(nManifDur <= 6000                                 && // If the power could be quickened by having manifesting time of 1 round or less
+            GetLocalInt(oManifester, METAPSIONIC_QUICKEN_VAR) && // And the manifester has Quicken Power active
+            GetIsPsionicallyFocused(oManifester)              && // And might be able to pay the psionic focus for it
+            TakeSwiftAction(oManifester)                         // And the manifester can take a swift action
+            )
     {
         // Set the manifestation time to 0 to skip VFX
         nManifDur = 0;

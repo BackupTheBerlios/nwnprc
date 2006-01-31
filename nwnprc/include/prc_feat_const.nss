@@ -1900,7 +1900,7 @@ const int FEAT_MAXIMIZE_POWER                       = 4940;
 const int FEAT_SPLIT_PSIONIC_RAY                    = 4941;
 const int FEAT_TWIN_POWER                           = 4942;
 const int FEAT_WIDEN_POWER                          = 4943;
-const int FEAT_QUICKEN_POW                          = 4944;
+const int FEAT_QUICKEN_POWER                        = 4944;
 
 
 /*//////////////////////////////////////////////////

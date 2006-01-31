@@ -13,8 +13,8 @@
 #include "prc_inc_domain"
 #include "inc_newspellbook"
 #include "prc_power_const"
-#include "psi_inc_ac_manif"
 #include "inc_utility"
+#include "psi_inc_psifunc"
 
 void PrcFeats(object oPC)
 {

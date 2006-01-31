@@ -17,13 +17,13 @@ void main()
     object oPC = OBJECT_SELF;
 
     // Can't activate too many feats
-    if(!GetLocalInt(oPC, "PsiMetaTwin") &&
+    if(!GetLocalInt(oPC, METAPSIONIC_TWIN_VAR) &&
        GetPsionicFocusUsingFeatsActive(oPC) >= GetPsionicFocusUsesPerExpenditure(oPC))
     {
         FloatingTextStringOnCreature(GetStringByStrRef(16826549/*You already have the maximum amount of psionic focus expending feats active.*/), oPC, FALSE);
         return;
     }
 
-    SetLocalInt(oPC, "PsiMetaTwin", !GetLocalInt(oPC, "PsiMetaTwin"));
-    FloatingTextStringOnCreature(GetStringByStrRef(16826542) + " " + (GetLocalInt(oPC, "PsiMetaTwin") ? GetStringByStrRef(63798/*Activated*/):GetStringByStrRef(63799/*Deactivated*/)), oPC, FALSE);
+    SetLocalInt(oPC, METAPSIONIC_TWIN_VAR, !GetLocalInt(oPC, METAPSIONIC_TWIN_VAR));
+    FloatingTextStringOnCreature(GetStringByStrRef(16826542) + " " + (GetLocalInt(oPC, METAPSIONIC_TWIN_VAR) ? GetStringByStrRef(63798/*Activated*/):GetStringByStrRef(63799/*Deactivated*/)), oPC, FALSE);
 }

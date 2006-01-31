@@ -9,6 +9,7 @@ const int FEAT_EPIC_PLANAR_TURNING = 854;
 const int FEAT_JUMP = 2884;
 
 // Racial Feats
+const int FEAT_WEMIC_JUMP_8        = 4518;
 const int FEAT_URDINNIR_STONESKIN  = 4644;
 const int FEAT_AVARIEL_DIVE        = 4645;
 const int FEAT_AYUAN_FEAR          = 4646;

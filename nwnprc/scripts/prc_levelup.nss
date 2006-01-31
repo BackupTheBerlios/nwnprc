@@ -59,6 +59,8 @@ void main()
     ExecuteScript("prc_enforce_psi", oPC);
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
+    //select new spells if applicable
+    DelayCommand(0.5, ExecuteScript("prc_spellgain", oPC));
 
     DelayCommand(1.0, FeatSpecialUsePerDay(oPC));
 

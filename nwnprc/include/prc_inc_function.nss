@@ -243,11 +243,13 @@ void EvalPRCFeats(object oPC)
     }
 
     // Switch convo feat
+    /*
     if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
     {///TODO: Constantify these. Or make granted to all base classes level 1, which might be better since it's used for more than code switches now
         if(!GetHasFeat(2285, oPC))
             IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-   }
+    }*/
+    //Now everyone gets it at level 1
 
     // Size changes
     int nBiowareSize = GetCreatureSize(oPC);
@@ -282,7 +284,24 @@ void EvalPRCFeats(object oPC)
     // Miscellaneous
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
-    ExecuteScript("race_unarmed", oPC);
+    //ExecuteScript("race_unarmed", oPC);
+    //moved here by Primogenitor
+    int iRace = GetRacialType(OBJECT_SELF);
+
+    if (iRace == RACIAL_TYPE_MINOTAUR   ||
+        iRace == RACIAL_TYPE_TANARUKK   ||
+        iRace == RACIAL_TYPE_TROLL      ||
+        iRace == RACIAL_TYPE_RAKSHASA   ||
+        iRace == RACIAL_TYPE_CENTAUR    ||
+        iRace == RACIAL_TYPE_ILLITHID   ||
+        iRace == RACIAL_TYPE_WEMIC      ||
+        iRace == RACIAL_TYPE_LIZARDFOLK)
+    {
+         //UnarmedFeats(OBJECT_SELF);
+         //UnarmedFists(OBJECT_SELF);
+         SetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS, TRUE);
+         SetLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS, TRUE);
+    }
 
     if(GetLevelByClass(CLASS_TYPE_PSION, oPC)
         || GetLevelByClass(CLASS_TYPE_WILDER, oPC)

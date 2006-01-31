@@ -519,4 +519,11 @@ void main()
             AssignCommand(oPC, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSilence, oPC));
         }
     }
+    
+    //Wemic
+    // Skill Bonus, +8 to jump
+    if(GetHasFeat(FEAT_WEMIC_JUMP_8))
+    {
+        SetCompositeBonus(oSkin, "WEMIC_JUMP_8", 8, ITEM_PROPERTY_SKILL_BONUS, 28);
+    }    
 }

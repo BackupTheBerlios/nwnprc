@@ -3,14 +3,86 @@
 #include "prc_inc_spells"
 //#include "prc_inc_clsfunc"
 
-const int SPELLBOOK_ROW_COUNT = 410;
+/* Steps for adding a new spellbook
+
+Prepared:
+Make cls_spbk_*.2da
+Make cls_spcr_*.2da
+Add the spellbook feat to cls_feat_*.2da at the appropriate level
+Add class to GetSpellbookTypeForClass() below
+Add class to GetAbilityForClass() below
+Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
+Add class to GetCasterLvl() in prc_inc_spells
+Add class to MakeLookupLoopMaster() in inc_lookups
+Run the assemble_spellbooks.bat file
+
+*/
+
 const int SPELLBOOK_IPRP_FEATS_START = 10400;
-const int SPELLBOOK_IPRP_FEATS_END = 11196;
+const int SPELLBOOK_IPRP_FEATS_END = 11400;
+const int SPELLBOOK_TYPE_PREPARED = 1;
+const int SPELLBOOK_TYPE_SPONTANEOUS = 2;
+const int SPELLBOOK_TYPE_INVALID = 0;
 
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
 int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1);
 string GetFileForClass(int nClass);
 
+
+int GetSpellbookTypeForClass(int nClass)
+{
+    switch(nClass)
+    {
+        case CLASS_TYPE_BLACKGUARD:
+        case CLASS_TYPE_VASSAL:
+        case CLASS_TYPE_SOLDIER_OF_LIGHT:
+        case CLASS_TYPE_KNIGHT_MIDDLECIRCLE:
+        case CLASS_TYPE_KNIGHT_CHALICE:
+        case CLASS_TYPE_VIGILANT:
+        case CLASS_TYPE_CLERIC:
+        case CLASS_TYPE_DRUID:
+        case CLASS_TYPE_RANGER:
+        case CLASS_TYPE_ANTI_PALADIN:
+        case CLASS_TYPE_OCULAR:
+        case CLASS_TYPE_WIZARD:
+            return SPELLBOOK_TYPE_PREPARED;
+        case CLASS_TYPE_SORCERER:
+        case CLASS_TYPE_BARD:
+        case CLASS_TYPE_ASSASSIN:
+            return SPELLBOOK_TYPE_SPONTANEOUS;
+    }
+    return SPELLBOOK_TYPE_INVALID;
+}
+
+int GetAbilityForClass(int nClass, object oPC)
+{
+    switch(nClass)
+    {
+        case CLASS_TYPE_BLACKGUARD:
+        case CLASS_TYPE_VASSAL:
+        case CLASS_TYPE_SOLDIER_OF_LIGHT:
+        case CLASS_TYPE_KNIGHT_MIDDLECIRCLE:
+        case CLASS_TYPE_KNIGHT_CHALICE:
+        case CLASS_TYPE_VIGILANT:
+        case CLASS_TYPE_CLERIC:
+        case CLASS_TYPE_DRUID:
+        case CLASS_TYPE_RANGER:
+        case CLASS_TYPE_PALADIN:
+        case CLASS_TYPE_PSYWAR:
+        case CLASS_TYPE_ANTI_PALADIN:
+        case CLASS_TYPE_OCULAR:
+            return GetAbilityScore(oPC, ABILITY_WISDOM);
+        case CLASS_TYPE_ASSASSIN:
+        case CLASS_TYPE_WIZARD:
+        case CLASS_TYPE_PSION:
+            return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
+        case CLASS_TYPE_SORCERER:
+        case CLASS_TYPE_BARD:
+        case CLASS_TYPE_WILDER:
+            return GetAbilityScore(oPC, ABILITY_CHARISMA);
+    }
+    return 0;
+}
 
 string GetFileForClass(int nClass)
 {
@@ -26,7 +98,7 @@ int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1)
         sFile = GetFileForClass(nClass);
 
     int i;
-    for(i=1; i<SPELLBOOK_ROW_COUNT; i++)
+    for(i=0; i<GetPRCSwitch(FILE_END_CLASS_SPELLBOOK); i++)
     {
         if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpell)
         {
@@ -63,36 +135,6 @@ int GetSpellslotLevel(int nClass, object oPC)
         nLevel += nDivSpellslotLevel;
 DoDebug("GetSpellslotLevel("+IntToString(nClass)+", "+GetName(oPC)+") = "+IntToString(nLevel));        
     return nLevel;
-}
-
-int GetAbilityForClass(int nClass, object oPC)
-{
-    switch(nClass)
-    {
-        case CLASS_TYPE_BLACKGUARD:
-        case CLASS_TYPE_VASSAL:
-        case CLASS_TYPE_SOLDIER_OF_LIGHT:
-        case CLASS_TYPE_KNIGHT_MIDDLECIRCLE:
-        case CLASS_TYPE_KNIGHT_CHALICE:
-        case CLASS_TYPE_VIGILANT:
-        case CLASS_TYPE_CLERIC:
-        case CLASS_TYPE_DRUID:
-        case CLASS_TYPE_RANGER:
-        case CLASS_TYPE_PALADIN:
-        case CLASS_TYPE_PSYWAR:
-        case CLASS_TYPE_ANTI_PALADIN:
-        case CLASS_TYPE_OCULAR:
-            return GetAbilityScore(oPC, ABILITY_WISDOM);
-        case CLASS_TYPE_ASSASSIN:
-        case CLASS_TYPE_WIZARD:
-        case CLASS_TYPE_PSION:
-            return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
-        case CLASS_TYPE_SORCERER:
-        case CLASS_TYPE_BARD:
-        case CLASS_TYPE_WILDER:
-            return GetAbilityScore(oPC, ABILITY_CHARISMA);
-    }
-    return 0;
 }
 
 void WipeSpellbookHideFeats(object oPC)
@@ -161,33 +203,134 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     return nSlots;
 }
 
+int GetSpellKnownMaxCount(int nLevel, int nSpellLevel, int nClass, object oPC)
+{
+    int nKnown = 0;
+    //no slots = no knowns
+    if(!GetSlotCount(nLevel, nSpellLevel, GetAbilityForClass(nClass, oPC), nClass))
+        return 0;
+    string sFile;
+    if(nClass == CLASS_TYPE_WIZARD
+        || nClass == CLASS_TYPE_SORCERER
+        || nClass == CLASS_TYPE_BARD
+        || nClass == CLASS_TYPE_CLERIC
+        || nClass == CLASS_TYPE_DRUID
+        || nClass == CLASS_TYPE_PALADIN
+        || nClass == CLASS_TYPE_RANGER)
+    {
+        sFile = Get2DACache("classes", "SpellKnownTable", nClass);
+    }
+    else
+    {
+        sFile = Get2DACache("classes", "FeatsTable", nClass);
+        sFile = GetStringLeft(sFile, 4)+"spkn"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    }
+    string sSlots = Get2DACache(sFile, "SpellLevel"+IntToString(nSpellLevel), nLevel);
+    if(sSlots == "")
+    {
+        nKnown = -1;
+//DoDebug("Problem getting known numbers for "+IntToString(nSpellLevel)+" "+IntToString(nLevel)+" "+sFile);
+    }
+    else
+        nKnown = StringToInt(sSlots);
+    if(nKnown == -1)
+        return 0;
+    return nKnown;
+}
+
+int GetSpellKnownCurrentCount(object oPC, int nSpellLevel, int nClass)
+{
+DoDebug("GetSpellKnownCurrentCount("+GetName(oPC)+", "+IntToString(nSpellLevel)+", "+IntToString(nClass)+")");
+    int nKnown = GetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel));
+DoDebug("SpellKnownCurrentCount = "+IntToString(nKnown));
+    if(nKnown != 0)
+    {
+        if(nKnown == -1)
+            nKnown = 0;
+        return nKnown;
+    }    
+    string sFile = GetFileForClass(nClass);
+    int i;
+    for(i=0;i<=9;i++)
+    {
+        //mark them all as knowning none
+        SetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel),
+            -1);
+        SetPersistantLocalInt(oPC, "SpellUnknownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel),
+            -2);
+    }
+    for(i=0; i<GetPRCSwitch(FILE_END_CLASS_SPELLBOOK); i++)
+    {
+        if(Get2DACache(sFile, "ReqFeat ", i) == "")
+        {
+            int nLevel = StringToInt(Get2DACache(sFile, "Level", i));
+            if(GetHasFeat(StringToInt(Get2DACache(sFile, "FeatID", i)), oPC))
+            {
+                int nTestKnown = GetLocalInt(oPC, "SpellKnownCurrentCount"+IntToString(nLevel));
+                //if knowing none, know zero
+                if(nTestKnown == -1)
+                    nTestKnown = 0;
+                SetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nLevel),
+                    nTestKnown+1);
+            }
+            else
+            {
+                int nTestKnown = GetLocalInt(oPC, "SpellUnknownCurrentCount"+IntToString(nLevel));
+                //if knowing none, know zero
+                if(nTestKnown == -1)
+                    nTestKnown = 0;
+                SetPersistantLocalInt(oPC, "SpellUnknownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nLevel),
+                    nTestKnown+1);
+            
+            }
+        }
+    }
+    nKnown = GetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel));
+    if(nKnown == -1)
+        nKnown = 0;
+    return nKnown;
+}
+
 void AddSpellUse(object oPC, int nSpellbookID, int nClass)
 {
     string sFile = GetFileForClass(nClass);
     string sArrayName = "NewSpellbookMem_"+IntToString(nClass);
+    int nSpellbookType = GetSpellbookTypeForClass(nClass);
     object oSkin = GetPCSkin(oPC);
     int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID));
+    //add the feat only if they dont already have it
     if(!GetHasFeat(nFeatID, oPC))
     {
         int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin);
     }
+    //DEBUG test
     if(DEBUG
         && !persistant_array_exists(oPC, sArrayName))
         DoDebug("Error: "+sArrayName+" array does not exist");
 DoDebug("Adding nSpellbookID="+IntToString(nSpellbookID));
 DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID)));
+    //sanity test
     if(!persistant_array_exists(oPC, sArrayName))
     {
 DoDebug(sArrayName+" does not exist, creating.");
         persistant_array_create(oPC, sArrayName);
     }
-    int nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
+    //Increase the corrent number of uses 
+    if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
+    {
+        int nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
 DoDebug("nUses="+IntToString(nUses));
-    nUses++;
+        nUses++;
 DoDebug("nUses="+IntToString(nUses));
-    persistant_array_set_int(oPC, sArrayName, nSpellbookID,nUses);
+        persistant_array_set_int(oPC, sArrayName, nSpellbookID,nUses);
 DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID)));
+    }
+    else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
+    {
+        //spont casters are sorted in SetupSpells which is the only function that should call this
+DoDebug("Spontaneous class calling AddSpellUse()");
+    }
 }
 
 void RemoveSpellUse(object oPC, int nSpellID, int nClass)
@@ -199,22 +342,28 @@ void RemoveSpellUse(object oPC, int nSpellID, int nClass)
         DoDebug("Unable to resolve spell to spellbookID: "+IntToString(nSpellID)+" "+sFile);
         return;
     }
-
-    //get uses remaining
     if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
     {
 DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creating.");
         persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
     }
-    int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
-    //reduce by 1
-    if(nCount > 0)
-        persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID, nCount-1);
-
-    nCount--;
-    string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
-    string sMessage = "You have "+IntToString(nCount)+" castings of "+sSpellName+" left.";
-    SendMessageToPC(oPC, sMessage);
+    int nSpellbookType = GetSpellbookTypeForClass(nClass);
+    //get uses remaining
+    if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
+    {
+        int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
+        //reduce by 1
+        if(nCount > 0)
+            persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID, nCount-1);
+    }
+    else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
+    {
+        int nSpellLevel = StringToInt(Get2DACache(sFile, "Level", nSpellbookID));
+        int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel);
+        //reduce by 1
+        if(nCount > 0)
+            persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel, nCount-1);
+    }
 }
 
 void SetupSpells(object oPC, int nClass)
@@ -222,20 +371,29 @@ void SetupSpells(object oPC, int nClass)
     int nLevel = GetLevelByClass(nClass, oPC);
     int nAbility = GetAbilityForClass(nClass, oPC);
     int nSpellLevel;
+    int nSpellbookType = GetSpellbookTypeForClass(nClass);
     for(nSpellLevel = 1; nSpellLevel <=9; nSpellLevel++)
     {
-        int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
-        int nSlot;
-        for(nSlot = 0; nSlot < nSlots; nSlot++)
+        if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
         {
-            //done when spells are added to it
-            //doesnt do any harm to make it twice
-            persistant_array_create(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass));
-            int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass), nSlot);
-            if(nSpellbookID != 0)
+            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+            int nSlot;
+            for(nSlot = 0; nSlot < nSlots; nSlot++)
             {
-                AddSpellUse(oPC, nSpellbookID, nClass);
+                //done when spells are added to it
+                //doesnt do any harm to make it twice
+                persistant_array_create(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass));
+                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass), nSlot);
+                if(nSpellbookID != 0)
+                {
+                    AddSpellUse(oPC, nSpellbookID, nClass);
+                }
             }
+        }
+        else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
+        {
+            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+            persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel, nSlots);
         }
     }
 }
@@ -263,21 +421,51 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
 {
     object oPC = OBJECT_SELF;
     //get the spellbook ID
-    int nSpellbookID = SpellToSpellbookID(PRCGetSpellId(), GetFileForClass(nClass));
-    //check if all cast
+    string sFile = GetFileForClass(nClass);
+    int nSpellbookID = SpellToSpellbookID(PRCGetSpellId(), sFile);
     if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
     {
 DoDebug("Error: NewSpellbookMem_"+IntToString(nClass)+" array does not exist");
         persistant_array_create(oPC,  "NewSpellbookMem_"+IntToString(nClass));
     }
-    int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
-DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));
-    if(nCount < 1)
+    //check if all cast
+    int nSpellbookType = GetSpellbookTypeForClass(nClass);
+    if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
     {
-        string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
-        string sMessage = "You have no castings of "+sSpellName+" remaining";
-        SendMessageToPC(oPC, sMessage);
-        return;
+        int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
+DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));
+        if(nCount < 1)
+        {
+            string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
+            string sMessage = "You have no castings of "+sSpellName+" remaining";
+            SendMessageToPC(oPC, sMessage);
+            return;
+        }
+        else
+        {
+            string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
+            string sMessage = "You have "+IntToString(nCount-1)+" castings of "+sSpellName+" remaining";
+            SendMessageToPC(oPC, sMessage);
+        }
+    } 
+    else  if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
+    {
+        int nSpellLevel = StringToInt(Get2DACache(sFile, "Level", nSpellbookID));
+        int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel);
+DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));
+        if(nCount < 1)
+        {
+            string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
+            string sMessage = "You have no castings of spells of "+IntToString(nSpellLevel)+" remaining";
+            SendMessageToPC(oPC, sMessage);
+            return;
+        }
+        else
+        {
+            string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
+            string sMessage = "You have "+IntToString(nCount-1)+" castings of spells of "+IntToString(nSpellLevel)+" remaining";
+            SendMessageToPC(oPC, sMessage);
+        }    
     }
     //uses GetSpellId to get the fake spellID not the real one
     //this is only the BASE DC, feats etc are added on top of this

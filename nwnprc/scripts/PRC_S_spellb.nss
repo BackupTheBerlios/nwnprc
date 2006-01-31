@@ -68,6 +68,7 @@ void main()
                 for(i = 12; i <= 255; i++)
                 {
                     if(GetLevelByClass(i, oPC)
+                        && GetSpellbookTypeForClass(i) == SPELLBOOK_TYPE_PREPARED
                         && GetSlotCount(GetLevelByClass(i, oPC), 1, GetAbilityForClass(i, oPC), i))
                     {
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", i))), i, oPC);

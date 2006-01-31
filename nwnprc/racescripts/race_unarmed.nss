@@ -2,6 +2,8 @@
 // :: by WodahsEht 9/27/04
 // ::
 // :: Determines the appropriate natural attacks for races.
+// :: moved to prc_inc_function to avoid unnessecary script overheads by Primogenitor
+
 
 #include "prc_alterations"
 
@@ -15,6 +17,7 @@ void main ()
         iRace == RACIAL_TYPE_RAKSHASA   ||
         iRace == RACIAL_TYPE_CENTAUR    ||
         iRace == RACIAL_TYPE_ILLITHID   ||
+        iRace == RACIAL_TYPE_WEMIC      ||
         iRace == RACIAL_TYPE_LIZARDFOLK)
     {
          //UnarmedFeats(OBJECT_SELF);

@@ -287,6 +287,7 @@ int FindUnarmedDamage(object oCreature)
     else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL)      iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_RAKSHASA)   iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR)    iRacialDamage = 2;
+    else if (GetRacialType(oCreature) == RACIAL_TYPE_WEMIC)      iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_ILLITHID)   iRacialDamage = 1;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_LIZARDFOLK) iRacialDamage = 1;
 
@@ -490,7 +491,8 @@ void UnarmedFists(object oCreature)
     if (GetHasFeat(FEAT_CLAWDRAGON, oCreature) ||
         iRace == RACIAL_TYPE_TROLL             ||
         iRace == RACIAL_TYPE_RAKSHASA          ||
-        iRace == RACIAL_TYPE_LIZARDFOLK)
+        iRace == RACIAL_TYPE_LIZARDFOLK        ||
+        iRace == RACIAL_TYPE_WEMIC)
     {
         sWeapType = "PRC_UNARMED_S";
     }

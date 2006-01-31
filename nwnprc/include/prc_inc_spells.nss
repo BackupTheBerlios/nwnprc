@@ -1079,6 +1079,15 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iDru = GetLevelByClass(CLASS_TYPE_DRUID, oCaster);
     int iPal = GetLevelByClass(CLASS_TYPE_PALADIN, oCaster);
     int iRan = GetLevelByClass(CLASS_TYPE_RANGER, oCaster);
+    int iAss = GetLevelByClass(CLASS_TYPE_ASSASSIN, oCaster);
+    int iBlk = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oCaster);
+    int iVob = GetLevelByClass(CLASS_TYPE_VASSAL, oCaster);
+    int iSol = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oCaster);
+    int iKMc = GetLevelByClass(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, oCaster);
+    int iKCh = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
+    int iVig = GetLevelByClass(CLASS_TYPE_VIGILANT, oCaster);
+    int iAPl = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, oCaster);
+    int iOcu = GetLevelByClass(CLASS_TYPE_OCULAR, oCaster);
     int iArc = GetLevelByTypeArcane(oCaster);
     int iDiv = GetLevelByTypeDivine(oCaster);
 
@@ -1139,6 +1148,70 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iDiv;
              else
                  iTemp = iPal / 2;
+             return iTemp;
+             break;
+        //new spellbook classes         
+        case CLASS_TYPE_ASSASSIN:
+             if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_ASSASSIN)
+                 iTemp = iArc;
+             else
+                 iTemp = iAss;
+             return iTemp;
+             break;
+        case CLASS_TYPE_BLACKGUARD:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_BLACKGUARD)
+                 iTemp = iDiv;
+             else
+                 iTemp = iBlk;
+             return iTemp;
+             break;
+        case CLASS_TYPE_VASSAL:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_VASSAL)
+                 iTemp = iDiv;
+             else
+                 iTemp = iVob;
+             return iTemp;
+             break;
+        case CLASS_TYPE_SOLDIER_OF_LIGHT:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_SOLDIER_OF_LIGHT)
+                 iTemp = iDiv;
+             else
+                 iTemp = iSol;
+             return iTemp;
+             break;
+        case CLASS_TYPE_KNIGHT_MIDDLECIRCLE:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_KNIGHT_MIDDLECIRCLE)
+                 iTemp = iDiv;
+             else
+                 iTemp = iKMc;
+             return iTemp;
+             break;
+        case CLASS_TYPE_KNIGHT_CHALICE:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_KNIGHT_CHALICE)
+                 iTemp = iDiv;
+             else
+                 iTemp = iKCh;
+             return iTemp;
+             break;
+        case CLASS_TYPE_VIGILANT:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_VIGILANT)
+                 iTemp = iDiv;
+             else
+                 iTemp = iVig;
+             return iTemp;
+             break;
+        case CLASS_TYPE_ANTI_PALADIN:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_ANTI_PALADIN)
+                 iTemp = iDiv;
+             else
+                 iTemp = iAPl / 2;
+             return iTemp;
+             break;
+        case CLASS_TYPE_OCULAR:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_OCULAR)
+                 iTemp = iDiv;
+             else
+                 iTemp = iOcu;
              return iTemp;
              break;
         default:

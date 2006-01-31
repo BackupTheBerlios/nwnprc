@@ -104,7 +104,7 @@
 100 FEAT_PRC_POWER_ATTACK_QUICKS_RADIAL  3179      0    99             1      
 101 ACP_FEAT                             2892      0    99             1      
 102 TeleportManagementRadial             4235      3    1              1      
-103 SWITCH_FEAT                          2285      0    99             1      
+103 SWITCH_FEAT                          2285      3    1              1      
 104 FEAT_READ_RECIPE                     2919      3    1              1      
 105 ****                                 ****      **** ****           ****   
 106 **GeneralActivatableFeats**          ****      **** ****           ****   

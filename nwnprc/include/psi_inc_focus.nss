@@ -224,13 +224,14 @@ int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF)
     if(GetLocalInt(oCreature, "PowerPenetrationActive"))    nFeats++;
     if(GetLocalInt(oCreature, "PsionicEndowmentActive"))    nFeats++;
 
-    if(GetLocalInt(oCreature, "PsiMetaChain"))   nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaEmpower")) nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaExtend"))  nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaMax"))     nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaSplit"))   nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaTwin"))    nFeats++;
-    if(GetLocalInt(oCreature, "PsiMetaWiden"))   nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_CHAIN_VAR))   nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_EMPOWER_VAR)) nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_EXTEND_VAR))  nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_MAXIMIZE_VAR))nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_SPLIT_VAR))   nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_TWIN_VAR))    nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_WIDEN_VAR))   nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_QUICKEN_VAR)) nFeats++;
 
     return nFeats;
 }

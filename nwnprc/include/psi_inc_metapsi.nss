@@ -246,7 +246,7 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
     }
 
     if((nMetaPsiFlags & METAPSIONIC_CHAIN)            && // The power allows this metapsionic to apply
-       GetLocalInt(manif.oManifester, "PsiMetaChain") && // The manifester is using the metapsionic
+       GetLocalInt(manif.oManifester, METAPSIONIC_CHAIN_VAR) && // The manifester is using the metapsionic
        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)    // The manifester can pay the psionic focus expenditure
        )
     {
@@ -255,7 +255,7 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         manif.nPsiFocUsesRemain--;
     }
     if((nMetaPsiFlags & METAPSIONIC_EMPOWER)             &&
-        GetLocalInt(manif.oManifester, "PsiMetaEmpower") &&
+        GetLocalInt(manif.oManifester, METAPSIONIC_EMPOWER_VAR) &&
         (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
         )
     {
@@ -264,7 +264,7 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         manif.nPsiFocUsesRemain--;
     }
     if((nMetaPsiFlags & METAPSIONIC_EXTEND)            &&
-       GetLocalInt(manif.oManifester, "PsiMetaExtend") &&
+       GetLocalInt(manif.oManifester, METAPSIONIC_EXTEND_VAR) &&
        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
@@ -273,7 +273,7 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         manif.nPsiFocUsesRemain--;
     }
     if((nMetaPsiFlags & METAPSIONIC_MAXIMIZE)       &&
-       GetLocalInt(manif.oManifester, "PsiMetaMax") &&
+       GetLocalInt(manif.oManifester, METAPSIONIC_MAXIMIZE_VAR) &&
        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
@@ -282,7 +282,7 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         manif.nPsiFocUsesRemain--;
     }
     if((nMetaPsiFlags & METAPSIONIC_SPLIT)            &&
-       GetLocalInt(manif.oManifester, "PsiMetaSplit") &&
+       GetLocalInt(manif.oManifester, METAPSIONIC_SPLIT_VAR) &&
        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
@@ -291,7 +291,7 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         manif.nPsiFocUsesRemain--;
     }
     if((nMetaPsiFlags & METAPSIONIC_TWIN)            &&
-       GetLocalInt(manif.oManifester, "PsiMetaTwin") &&
+       GetLocalInt(manif.oManifester, METAPSIONIC_TWIN_VAR) &&
        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {
@@ -300,7 +300,7 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         manif.nPsiFocUsesRemain--;
     }
     if((nMetaPsiFlags & METAPSIONIC_WIDEN)            &&
-       GetLocalInt(manif.oManifester, "PsiMetaWiden") &&
+       GetLocalInt(manif.oManifester, METAPSIONIC_WIDEN_VAR) &&
        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
        )
     {

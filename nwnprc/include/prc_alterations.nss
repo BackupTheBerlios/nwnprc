@@ -276,39 +276,48 @@ effect EffectShaken()
 int PRCGetCreatureSize(object oObject = OBJECT_SELF)
 {
     int nSize = GetCreatureSize(oObject);
-    if(GetHasFeat(FEAT_SIZE_DECREASE_6))
+    if(GetHasFeat(FEAT_SIZE_DECREASE_6, oObject))
         nSize += -6;
-    else if(GetHasFeat(FEAT_SIZE_DECREASE_5))
+    else if(GetHasFeat(FEAT_SIZE_DECREASE_5, oObject))
         nSize += -5;
-    else if(GetHasFeat(FEAT_SIZE_DECREASE_4))
+    else if(GetHasFeat(FEAT_SIZE_DECREASE_4, oObject))
         nSize += -4;
-    else if(GetHasFeat(FEAT_SIZE_DECREASE_3))
+    else if(GetHasFeat(FEAT_SIZE_DECREASE_3, oObject))
         nSize += -3;
-    else if(GetHasFeat(FEAT_SIZE_DECREASE_2))
+    else if(GetHasFeat(FEAT_SIZE_DECREASE_2, oObject))
         nSize += -2;
-    else if(GetHasFeat(FEAT_SIZE_DECREASE_1))
+    else if(GetHasFeat(FEAT_SIZE_DECREASE_1, oObject))
         nSize += -1;
 
-    if(GetHasFeat(FEAT_SIZE_INCREASE_6))
+    if(GetHasFeat(FEAT_SIZE_INCREASE_6, oObject))
         nSize +=  6;
-    else if(GetHasFeat(FEAT_SIZE_INCREASE_5))
+    else if(GetHasFeat(FEAT_SIZE_INCREASE_5, oObject))
         nSize +=  5;
-    else if(GetHasFeat(FEAT_SIZE_INCREASE_4))
+    else if(GetHasFeat(FEAT_SIZE_INCREASE_4, oObject))
         nSize +=  4;
-    else if(GetHasFeat(FEAT_SIZE_INCREASE_3))
+    else if(GetHasFeat(FEAT_SIZE_INCREASE_3, oObject))
         nSize +=  3;
-    else if(GetHasFeat(FEAT_SIZE_INCREASE_2))
+    else if(GetHasFeat(FEAT_SIZE_INCREASE_2, oObject))
         nSize +=  2;
-    else if(GetHasFeat(FEAT_SIZE_INCREASE_1))
+    else if(GetHasFeat(FEAT_SIZE_INCREASE_1, oObject))
         nSize +=  1;
 
     if(!GetPRCSwitch(PRC_DRAGON_DISCIPLE_SIZE_CHANGES))
     {
-        if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_2))
+        if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_2, oObject))
             nSize +=  2;
-        else if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_1))
+        else if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_1, oObject))
             nSize +=  1;
     }
+
+    // Size changing powers
+    // Compression: Size decreased by one or two categories, depending on augmentation
+    if(GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction"))
+        nSize -= GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction");
+    // Expansion: Size increase by one or two categories, depending on augmentation
+    if(GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease"))
+        nSize -= GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
+
 
     if(nSize < CREATURE_SIZE_FINE)
         nSize = CREATURE_SIZE_FINE;

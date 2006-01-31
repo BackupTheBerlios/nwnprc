@@ -1,26 +1,39 @@
 /*
    ----------------
    Call Weaponry
-   
+
    psi_pow_callweap
    ----------------
 
    29/10/05 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Caster
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   You call a weapon from thin air into your waiting hand. You don't have to see or know of a weapon to call it - in fact, you
-   can't call a specific weapon, you just specify the type. If you call a projectile weapon, it comes with 3d6 bolts, arrows or
-   bullets as appropriate. 
-   
-   Augment: For every 4 power points spent to augment this power, the weapon gains a +1 Enhancement bonus
+    Call Weaponry
+
+    Psychoportation (Teleportation)
+    Level: Psychic warrior 1
+    Manifesting Time: 1 round
+    Range: 0 ft.
+    Effect: One weapon; see text
+    Duration: 1 min./level; see text
+    Saving Throw: None
+    Power Resistance: No
+    Power Points: 1
+    Metapsionics: Extend
+
+    You call a weapon “from thin air” into your waiting hand (actually, it is a
+    real weapon hailing from another location in space and time). You don’t have
+    to see or know of a weapon to call it-in fact, you can’t call a specific
+    weapon; you just specify the kind. If you call a projectile weapon, it comes
+    with 3d6 bolts, arrows, or sling bullets, as appropriate. The weapon is made
+    of ordinary materials as appropriate for its kind.
+
+    Weapons gained by call weaponry are distinctive due to their astral glimmer.
+    They are considered magic weapons and thus are effective against damage
+    reduction that requires a magic weapon to overcome.
+
+    Augment: For every 4 additional power points you spend, this power improves
+             the weapon’s enhancement bonus on attack rolls and damage rolls by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -28,12 +41,10 @@
 #include "psi_spellhook"
 #include "prc_alterations"
 #include "inc_dynconv"
+#include "prc_inc_teleport"
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -54,19 +65,22 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
     object oTarget     = PRCGetSpellTargetObject();
     struct manifestation manif =
         EvaluateManifestation(oManifester, oTarget,
-                              PowerAugmentationProfile(),
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       4, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
                               METAPSIONIC_EXTEND
                               );
 
     if(manif.bCanManifest)
     {
-	int nCaster = GetManifesterLevel(oCaster);
-	float fDur = 60.0 * nCaster;
-	
-	if (nAugment > 0) SetLocalInt(oCaster, "CallWeaponEnhancement", nAugment);
-	if (nMetaPsi == 2) fDur *= 2;
-	SetLocalFloat(oCaster, "CallWeaponDuration", fDur);
-	
-	StartDynamicConversation("psi_callweapon", oCaster, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oCaster);
+        float fDuration = 60.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+	SetLocalInt(oManifester, "PRC_Power_CallWeapon_Augment", manif.nTimesAugOptUsed_1);
+	SetLocalFloat(oManifester, "PRC_Power_CallWeapon_Duration", fDuration);
+
+        // Dimensional travel prevention check
+        if(GetCanTeleport(oManifester, GetLocation(oManifester), TRUE))
+	    StartDynamicConversation("psi_callweapon", oManifester, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oManifester);
     }
 }

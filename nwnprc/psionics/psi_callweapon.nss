@@ -66,7 +66,7 @@ void main()
                 // Set the header
                 SetHeader("Select the Weapon Type you would like to call.");
                 // Add responses for the PC
-                
+
                 // This reads all of the legal choices from baseitems.2da
                 int i;
 		for(i = 0; i < 112; i++) //Total rows in baseitems.2da
@@ -77,8 +77,8 @@ void main()
 				AddChoice(GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i))), i, oPC);
 			}
                 }
-                
-/*                
+
+/*
                 AddChoice("Bastard Sword", BASE_ITEM_BASTARDSWORD, oPC);
                 AddChoice("Battle Axe", BASE_ITEM_BATTLEAXE, oPC);
                 AddChoice("Club", BASE_ITEM_CLUB, oPC);
@@ -93,7 +93,7 @@ void main()
             }
             else if(nStage == STAGE_CONFIRMATION)//confirmation
             {
-                int nChoice = GetLocalInt(oPC, "WeaponChosenToCall");
+                int nChoice = GetLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
                 AddChoice(GetStringByStrRef(4752), TRUE); // "Yes"
                 AddChoice(GetStringByStrRef(4753), FALSE); // "No"
 
@@ -113,7 +113,9 @@ void main()
     else if(nValue == DYNCONV_EXITED)
     {
         // End of conversation cleanup
-        DeleteLocalInt(oPC, "WeaponChosenToCall");
+        DeleteLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
+        DeleteLocalInt(oPC, "PRC_Power_CallWeapon_Augment");
+        DeleteLocalFloat(oPC, "PRC_Power_CallWeapon_Duration");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -122,7 +124,9 @@ void main()
     else if(nValue == DYNCONV_ABORTED)
     {
         // End of conversation cleanup
-        DeleteLocalInt(oPC, "WeaponChosenToCall");
+        DeleteLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
+        DeleteLocalInt(oPC, "PRC_Power_CallWeapon_Augment");
+        DeleteLocalFloat(oPC, "PRC_Power_CallWeapon_Duration");
     }
     // Handle PC responses
     else
@@ -134,62 +138,69 @@ void main()
         {
             // Go to this stage next
             nStage = STAGE_CONFIRMATION;
-            SetLocalInt(oPC, "WeaponChosenToCall", nChoice);
+            SetLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn", nChoice);
         }
         else if(nStage == STAGE_CONFIRMATION)//confirmation
         {
             if(nChoice == TRUE)
             {
                 // This is what the basic non-magical version of bioware weapons use as a resref
-                string sWeaponTemplate = "nw_" + Get2DACache("baseitems", "ItemClass", GetLocalInt(oPC, "WeaponChosenToCall")) + "001"; 
+                string sWeaponTemplate = "nw_" + Get2DACache("baseitems", "ItemClass", GetLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn")) + "001";
                 string sAmmo = "";
                 object oAmmo;
-                int nEnhance = GetLocalInt(oPC, "CallWeaponEnhancement");
-                float fDur = GetLocalFloat(oPC, "CallWeaponDuration");
-                
+                int nEnhance = GetLocalInt(oPC, "PRC_Power_CallWeapon_Augment");
+                int nBaseType;
+                float fDur = GetLocalFloat(oPC, "PRC_Power_CallWeapon_Duration");
+
                 object oItem = CreateItemOnObject(sWeaponTemplate, oPC);
-                
-		if (BASE_ITEM_LONGBOW == GetBaseItemType(oItem) || BASE_ITEM_SHORTBOW == GetBaseItemType(oItem))
+                nBaseType = GetBaseItemType(oItem);
+
+		if(nBaseType == BASE_ITEM_LONGBOW || nBaseType == BASE_ITEM_SHORTBOW)
 		{
 			sAmmo = "nw_wamar001";
 			oAmmo = CreateItemOnObject(sAmmo, oPC, d6(3));
 			AssignCommand(oPC, ActionEquipItem(oAmmo, INVENTORY_SLOT_ARROWS));
 			// Ammoed weapons get their ammo enhanced as well
-			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyEnhancementBonus(nEnhance),oAmmo, fDur);
+			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oAmmo, fDur);
 		}
-		if (BASE_ITEM_HEAVYCROSSBOW == GetBaseItemType(oItem) || BASE_ITEM_LIGHTCROSSBOW == GetBaseItemType(oItem))
+		if(nBaseType == BASE_ITEM_HEAVYCROSSBOW || nBaseType == BASE_ITEM_LIGHTCROSSBOW)
 		{
 			sAmmo = "nw_wambo001";
 			oAmmo = CreateItemOnObject(sAmmo, oPC, d6(3));
 			AssignCommand(oPC, ActionEquipItem(oAmmo, INVENTORY_SLOT_BOLTS));
 			// Ammoed weapons get their ammo enhanced as well
-			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyEnhancementBonus(nEnhance),oAmmo, fDur);			
+			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oAmmo, fDur);
 		}
-		if (BASE_ITEM_SLING == GetBaseItemType(oItem))
+		if(nBaseType == BASE_ITEM_SLING)
 		{
 			sAmmo = "nw_wambu001";
 			oAmmo = CreateItemOnObject(sAmmo, oPC, d6(3));
 			AssignCommand(oPC, ActionEquipItem(oAmmo, INVENTORY_SLOT_BULLETS));
 			// Ammoed weapons get their ammo enhanced as well
-			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyEnhancementBonus(nEnhance),oAmmo, fDur);			
+			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oAmmo, fDur);
 		}
-                
-                if (IPGetIsMeleeWeapon(oItem)) AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyVisualEffect(ITEM_VISUAL_HOLY),oItem, fDur);
-                if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyEnhancementBonus(nEnhance),oItem, fDur);
+
+                if (IPGetIsMeleeWeapon(oItem)) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyVisualEffect(ITEM_VISUAL_HOLY), oItem, fDur);
+
+                // If the power was augmented, add a straight enhancement bonus equivalent to the augmentation value
+                if(nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oItem, fDur);
+                // Otherwise add +1 enhancement bonus and -1 to attack and damage. This is to simulate the fact that the weapon can always pierce DR X/+1
+                else
+                {
+                    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(1), oItem, fDur);
+                    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyAttackPenalty(1), oItem, fDur);
+                    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamagePenalty(1), oItem, fDur);
+                }
                 // No dropping and no selling the item
                 SetPlotFlag(oItem, TRUE);
-                SetDroppableFlag(oItem, FALSE); 
-                
+                SetDroppableFlag(oItem, FALSE);
+
                 // Equip the weapon
                 AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_RIGHTHAND));
-                
+
                 // Remove the item when the duration is over.
                 DestroyObject(oItem, fDur);
-		
-		// Clean the locals
-		DeleteLocalInt(oPC, "CallWeaponEnhancement");
-                DeleteLocalFloat(oPC, "CallWeaponDuration");                
-                
+
                 // And we're all done
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
@@ -200,8 +211,8 @@ void main()
                 MarkStageNotSetUp(STAGE_CONFIRMATION, oPC);
             }
 
-            DeleteLocalInt(oPC, "WeaponChosenToCall");
-        }        
+            DeleteLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
+        }
 
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);

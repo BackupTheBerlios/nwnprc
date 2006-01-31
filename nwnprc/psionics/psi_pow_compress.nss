@@ -1,39 +1,54 @@
 /*
    ----------------
    Compression
-   
+
    psi_pow_compress
    ----------------
 
    4/12/05 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Self
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   This power causes instant diminution, giving you the benefits of a small size. This grants you +2 Dexterity, -2 Strength, +1 
-   to attack, and +1 Armour class.
-   
-   Augment: Augment this power 3 times and all numerical changes double (+4 dex, -4 str, and so on)
-   	    Augment this power 4 times and the duration changes to 1 minute a level.
-   
+    Compression
+
+    Psychometabolism
+    Level: Psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 1
+    Metapsionics: Extend
+
+    This power causes instant diminution, halving your height, length, and width
+    and dividing your weight by 8. This decrease changes your size category to
+    the next smaller one. You gain a +2 size bonus to Dexterity, a -2 size
+    penalty to Strength (to a minimum effective Strength score of 1), a +1 size
+    bonus on attack rolls, and a +1 size bonus to Armor Class due to your
+    reduced size. This power doesn’t change your speed.
+
+    Multiple effects that reduce size do not stack, which means (among other
+    things) that you can’t use a second manifestation of this power to further
+    reduce yourself.
+
+    Augment: You can augment this power in one or more of the following ways.
+    1. If you spend 6 additional power points, this power decreases your size by
+       two size categories. You gain a +4 size bonus to Dexterity, a -4 size
+       penalty to Strength (to a minimum effective Strength score of 1), a +2
+       size bonus on attack rolls, and a +2 size bonus to Armor Class due to
+       your reduced size.
+    2. If you spend 2 additional power points, this power’s duration is 1 minute
+       per level rather than 1 round per level.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -50,37 +65,60 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 2;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       6, 1,
+                                                       2, 1
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	// Amount to add/remove
-    	int nBonus = 2;
-    	// If he's compressed twice
-    	if (nAugment >= 3) nBonus = 4;
-    	
-    	int nDur = nCaster;
-    	if (nMetaPsi == 2)	nDur *= 2;
-    	// If duration is increased
-    	if (nAugment >= 4) nDur *= 10; // number of rounds in a minute
-    	
-    	effect eAC = EffectACIncrease(nBonus/2); //Half the str/dex bonus
-    	effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nBonus);
-    	effect eStr = EffectAbilityDecrease(ABILITY_STRENGTH, nBonus);
-    	effect eAB = EffectAttackIncrease(nBonus/2);
-        effect eVis = EffectVisualEffect(VFX_DUR_SANCTUARY);
-    	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    	effect eLink = EffectLinkEffects(eVis, eDex);
-        eLink = EffectLinkEffects(eLink, eDur);
-        eLink = EffectLinkEffects(eLink, eAC);
-        eLink = EffectLinkEffects(eLink, eStr);
-        eLink = EffectLinkEffects(eLink, eAB);
-    	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCaster);
+        int nCategories = 1 + manif.nTimesAugOptUsed_1;
+        effect eLink    =                          EffectACIncrease(nCategories);
+               eLink    = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_DEXTERITY, nCategories * 2));
+               eLink    = EffectLinkEffects(eLink, EffectAbilityDecrease(ABILITY_STRENGTH,  nCategories * 2));
+               eLink    = EffectLinkEffects(eLink, EffectAttackIncrease(nCategories));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SANCTUARY));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        float fDuration = (manif.nTimesAugOptUsed_2 == 1 ? 60.0f : 6.0f) * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Fail to do anything if the target is already under the effects of Compression
+        if(GetLocalInt(oTarget, "PRC_Power_Compression_SizeReduction"))
+        {
+            // "Target is already under effect of the Compression power!"
+            FloatingTextStrRefOnCreature(16826654, oManifester, FALSE);
+            return;
+        }
+
+        // Apply effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+        // Set local int for PRCGetCreatureSize()
+        SetLocalInt(oTarget, "PRC_Power_Compression_SizeReduction", nCategories);
+
+        // Start power end monitor HB
+        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6));
+    }// end if - Successfull manifestation
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0)                                         ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
+    {
+        if(DEBUG) DoDebug("psi_pow_compress: Power expired, clearing");
+
+        // Clear the marker
+        DeleteLocalInt(oTarget, "PRC_Power_Compression_SizeReduction");
     }
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));
 }

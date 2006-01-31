@@ -20171,6 +20171,21 @@ You gain a +6 enhancement bonus to your Strength score, but you take a -6 penalt
   <entry id="54848" lang="en" sex="m">PnP Holy Avenger</entry>
   <entry id="54849" lang="en" sex="m">PnP Holy Avenger. When wielded by a paladin this weapon becomes a +5 enhancement weapon that does +2d6 divine damage vs evil, grants 15 SR, and can cast Dispel Magic at will with the same caster level as the paladin It can only be used as the area form of Dispel Magic centred on the wielder.
 When wielded by a non-paladin, this weapon is treated as +2 enhancement.</entry>
+  <entry id="54850" lang="en" sex="m">Deep Slumber</entry>
+  <entry id="54851" lang="en" sex="m">Caster Level(s): Bard 3, Wizard / Sorcerer 3
+Innate Level: 3
+School: Enchantment
+Descriptor(s): Mind-Affecting
+Component(s): Verbal, Somatic
+Range: Short
+Area of Effect / Target: Huge
+Duration: 3 Rounds + 1 / Caster Level
+Additional Counter Spells: Clarity
+Save: Will Negates
+Spell Resistance: Yes
+
+Causes 10 + 1d10 HD of creatures to fall into a comatose slumber, beginning with those with the fewest HD. Creatures with 11 or more HD are unaffected.</entry>
+  <entry id="54852" lang="en" sex="m">DeepSlumber (5)</entry>
   <entry id="54900" lang="en" sex="m">Soul Eater</entry>
   <entry id="54901" lang="en" sex="m">Soul Eaters</entry>
   <entry id="54902" lang="en" sex="m">soul eater</entry>

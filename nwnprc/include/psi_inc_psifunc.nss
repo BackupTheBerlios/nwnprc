@@ -629,31 +629,6 @@ object GetPsionicCreatureWeapon(object oCreature, string sResRef, int nInventory
     // Make sure they can actually equip them
     UnarmedFeats(oCreature);
 
-/*
-    else if (nPower == POWER_CLAWS_BEAST)
-    {
-        // Number of times the power has been augmented determines the damage.
-        if (nAugment >= 9) nDamage = MONST_DAMAGE_5D6;
-        else if (nAugment >= 7) nDamage = MONST_DAMAGE_4D6;
-        else if (nAugment >= 5) nDamage = MONST_DAMAGE_3D6;
-        else if (nAugment >= 3) nDamage = MONST_DAMAGE_2D6;
-        else if (nAugment >= 2) nDamage = MONST_DAMAGE_1D8;
-        else if (nAugment >= 1) nDamage = MONST_DAMAGE_1D6;
-        else nDamage = MONST_DAMAGE_1D4;
-        // Bite attack
-        sWeapType = "PRC_UNARMED_S";
-    }
-
-    else if (nPower == POWER_METAPHYSICAL_CLAW)
-    {
-        // Number of times the power has been augmented determines the enhancement bonus.
-        if (nAugment >= 5) nEnhance = 5;
-        else if (nAugment >= 4) nEnhance = 4;
-        else if (nAugment >= 3) nEnhance = 3;
-        else if (nAugment >= 2) nEnhance = 2;
-        else nEnhance = 1;
-    }
-*/
     // Determine if a creature weapon of the proper type already exists in the slot
     if(!GetIsObjectValid(oCWeapon)                                       ||
        GetStringUpperCase(GetTag(oCWeapon)) != GetStringUpperCase(sResRef) // Hack: The resref's and tags of the PRC creature weapons are the same

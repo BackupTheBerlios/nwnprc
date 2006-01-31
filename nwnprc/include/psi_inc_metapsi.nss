@@ -32,30 +32,54 @@ const int METAPSIONIC_SPLIT         = 0x20;
 const int METAPSIONIC_TWIN          = 0x40;
 /// Widen Power
 const int METAPSIONIC_WIDEN         = 0x80;
+/// Quicken Power
+const int METAPSIONIC_QUICKEN       = 0x100;
 
-/// The name of the array targets returned by EvaluateChainPower will be stored in
-const string PRC_CHAIN_POWER_ARRAY  = "PRC_ChainPowerTargets";
-
-
-/// Internal constant. How much PP Chain Power costs to use
+/// How much PP Chain Power costs to use
 const int METAPSIONIC_CHAIN_COST    = 6;
-/// Internal constant. How much PP Empower Power costs to use
+/// How much PP Empower Power costs to use
 const int METAPSIONIC_EMPOWER_COST  = 2;
-/// Internal constant. How much PP Extend Power costs to use
+/// How much PP Extend Power costs to use
 const int METAPSIONIC_EXTEND_COST   = 2;
-/// Internal constant. How much PP Maximize Power costs to use
+/// How much PP Maximize Power costs to use
 const int METAPSIONIC_MAXIMIZE_COST = 4;
-/// Internal constant. How much PP Split Psionic Ray costs to use
+/// How much PP Split Psionic Ray costs to use
 const int METAPSIONIC_SPLIT_COST    = 2;
-/// Internal constant. How much PP Twin Power costs to use
+/// How much PP Twin Power costs to use
 const int METAPSIONIC_TWIN_COST     = 6;
-/// Internal constant. How much PP Widen Power costs to use
+/// How much PP Widen Power costs to use
 const int METAPSIONIC_WIDEN_COST    = 4;
+/// How much PP Quicken Power costs to use
+const int METAPSIONIC_QUICKEN_COST  = 6;
 
 /// Internal constant. Value is equal to the lowest metapsionic constant. Used when looping over metapsionic flag variables
 const int METAPSIONIC_MIN           = 0x2;
 /// Internal constant. Value is equal to the highest metapsionic constant. Used when looping over metapsionic flag variables
-const int METAPSIONIC_MAX           = 0x80;
+const int METAPSIONIC_MAX           = 0x100;
+
+/// Chain Power variable name
+const string METAPSIONIC_CHAIN_VAR     = "PsiMetaChain";
+/// Empower Power variable name
+const string METAPSIONIC_EMPOWER_VAR   = "PsiMetaEmpower";
+/// Extend Power variable name
+const string METAPSIONIC_EXTEND_VAR    = "PsiMetaExtend";
+/// Maximize Power variable name
+const string METAPSIONIC_MAXIMIZE_VAR  = "PsiMetaMax";
+/// Split Psionic Ray variable name
+const string METAPSIONIC_SPLIT_VAR     = "PsiMetaSplit";
+/// Twin Power variable name
+const string METAPSIONIC_TWIN_VAR      = "PsiMetaTwin";
+/// Widen Power variable name
+const string METAPSIONIC_WIDEN_VAR     = "PsiMetaWiden";
+/// Quicken Power variable name
+const string METAPSIONIC_QUICKEN_VAR   = "PRC_PsiMeta_Quicken";
+
+/// The name of the array targets returned by EvaluateChainPower will be stored in
+const string PRC_CHAIN_POWER_ARRAY  = "PRC_ChainPowerTargets";
+
+/// The name of a marker variable that tells that the power being manifested had Quicken Power used on it
+const string PRC_POWER_IS_QUICKENED = "PRC_PowerIsQuickened";
+
 
 
 //////////////////////////////////////////////////
@@ -204,7 +228,23 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         i++;
     }
 
-    // Calculate the added cost from metapsionics and set the use markers for the powers used
+    /* Calculate the added cost from metapsionics and set the use markers for the powers used */
+
+    // Quicken Power - special handling
+    if(GetLocalInt(manif.oManifester, PRC_POWER_IS_QUICKENED))
+    {
+        // If Quicken could not have been used, the manifestation fails
+        if(!(manif.nPsiFocUsesRemain > 0 || bIgnoreConstr))
+            manif.bCanManifest = FALSE;
+
+        nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_QUICKEN_COST, nImpMetapsiReduction, bUseSum);
+        manif.bQuicken = TRUE;
+        manif.nPsiFocUsesRemain--;
+
+        // Delete the marker var
+        DeleteLocalInt(manif.oManifester, PRC_POWER_IS_QUICKENED);
+    }
+
     if((nMetaPsiFlags & METAPSIONIC_CHAIN)            && // The power allows this metapsionic to apply
        GetLocalInt(manif.oManifester, "PsiMetaChain") && // The manifester is using the metapsionic
        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)    // The manifester can pay the psionic focus expenditure
@@ -284,10 +324,24 @@ struct manifestation PayMetapsionicsFocuses(struct manifestation manif)
     // The string to send to the user
     string sInform = "";
 
-    // Check each of the metapsionics and pay focus for each active one. If for some reason the
-    // manifester cannot pay focus, deactivate the metapsionic. No PP refunds, though, since
-    // the system attempts to keep track of how many focuses the user has available
-    // and shouldn't allow them to exceed that count. It happening is therefore a bug.
+    /* Check each of the metapsionics and pay focus for each active one. If for some reason the
+     * manifester cannot pay focus, deactivate the metapsionic. No PP refunds, though, since
+     * the system attempts to keep track of how many focuses the user has available
+     * and shouldn't allow them to exceed that count. It happening is therefore a bug.
+     */
+
+    // Quicken Power, special handling
+    if(manif.bQuicken)
+    {
+        if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)
+        {
+            if(DEBUG) DoDebug(DebugObject2Str(manif.oManifester) + " unable to pay psionic focus for Quicken Power!");
+            // If Quicken could not have been used, the manifestation fails
+            manif.bCanManifest = FALSE;
+        }
+        else
+            sInform += (sInform == "" ? "": ", ") + GetStringByStrRef(16826650); // "Quickened"
+    }
     if(manif.bChain)
     {
         if(!UsePsionicFocus(manif.oManifester) && !bIgnoreConstraints)

@@ -22,6 +22,15 @@ const string PRC_POWER_LEVEL              = "PRC_CurrentManifest_PowerLevel";
 const string PRC_IS_PSILIKE               = "PRC_CurrentManifest_IsPsiLikeAbility";
 const string PRC_DEBUG_IGNORE_CONSTRAINTS = "PRC_Debug_Ignore_Constraints";
 
+/**
+ * The variable in which the manifestation token is stored. If no token exists,
+ * the variable is set to point at the manifester itself. That way OBJECT_INVALID
+ * means the variable is unitialised.
+ */
+const string PRC_MANIFESTATION_TOKEN_VAR  = "PRC_ManifestationToken";
+const string PRC_MANIFESTATION_TOKEN_NAME = "PRC_MANIFTOKEN";
+const float PRC_MANIFESTATION_HB_DELAY    = 0.5f;
+
 
 //////////////////////////////////////////////////
 /*                 Structures                   */
@@ -74,6 +83,8 @@ struct manifestation{
     int bTwin;
     /// Whether Widen Power was used with this manifestation
     int bWiden;
+    /// Whether Quicken Power was used with this manifestation
+    int bQuicken;
 };
 
 //////////////////////////////////////////////////
@@ -401,6 +412,158 @@ void _CleanManifestationVariables(object oManifester)
     DeleteLocalInt(oManifester, PRC_AUGMENT_OVERRIDE);
 }
 
+/** Internal function.
+ * Determines whether a manifestation token exists. If one does, returns it.
+ *
+ * @param oManifester A creature whose manifestation token to get
+ * @return            The manifestation token if it exists, OBJECT_INVALID otherwise.
+ */
+object _GetManifestationToken(object oManifester)
+{
+    object oMfToken = GetLocalObject(oManifester, PRC_MANIFESTATION_TOKEN_VAR);
+
+    // Special case - variable not set up yet, so this is the characters first manifestation since entering the module
+    if(oMfToken == OBJECT_INVALID)
+    {
+        object oSkin = GetPCSkin(oManifester);
+        object oTest = GetFirstItemInInventory(oSkin);
+
+        // Seek for tokens in the creature's inventory and destroy them
+        while(GetIsObjectValid(oTest))
+        {
+            if(GetTag(oTest) != PRC_MANIFESTATION_TOKEN_NAME)
+                DestroyObject(oTest);
+            oTest = GetNextItemInInventory(oSkin);
+        }
+/*
+        // Check if we found a token
+        if(oTest != OBJECT_INVALID)
+            oMfToken = oTest;
+        // We didn't, set the token to the special value indicating no token - the manifester itself
+        else
+            oMfToken = oManifester;
+
+        // Store it
+        SetLocalObject(oManifester, PRC_MANIFESTATION_TOKEN_VAR, oMfToken);
+*/
+    }
+
+    // If the token object is no longer valid, set the variable to point at manifester
+    if(!GetIsObjectValid(oMfToken))
+    {
+        oMfToken = oManifester;
+        SetLocalObject(oManifester, PRC_MANIFESTATION_TOKEN_VAR, oMfToken);
+    }
+
+
+    // Check if there is no token
+    if(oMfToken == oManifester)
+        oMfToken = OBJECT_INVALID;
+
+    return oMfToken;
+}
+
+/** Internal function.
+ * Destroys the given manifestation token and sets the creature's manifestation token variable
+ * to point at itself.
+ *
+ * @param oManifester The manifester whose token to destroy
+ * @param oMfToken    The token to destroy
+ */
+void _DestroyManifestationToken(object oManifester, object oMfToken)
+{
+    DestroyObject(oMfToken);
+    SetLocalObject(oManifester, PRC_MANIFESTATION_TOKEN_VAR, oManifester);
+}
+
+/** Internal function.
+ * Destroys the previous manifestation token, if any, and creates a new one.
+ *
+ * @param oManifester A creature for whom to create a manifestation token
+ * @return            The newly created token
+ */
+object _CreateManifestationToken(object oManifester)
+{
+    object oMfToken = _GetManifestationToken(oManifester);
+    object oSkin    = GetPCSkin(oManifester);
+
+    // Delete any previous tokens
+    if(GetIsObjectValid(oMfToken))
+        _DestroyManifestationToken(oManifester, oMfToken);
+
+    oMfToken = CreateItemOnObject(PRC_MANIFESTATION_TOKEN_NAME, oSkin);
+
+    return oMfToken;
+}
+
+/**
+ * Runs while the given creature is manifesting. If they move, take other actions
+ * that would cause them to interrupt manifesting the power or are affected by an
+ * effect that would cause such interruption, deletes the manifestation token.
+ * Stops if such condition occurs or something else destroys the token.
+ *
+ * @param oManifester A creature manifesting a power
+ * @param lManifester The location where the manifester was when starting the manifestation
+ * @param oMfToken    The manifestation token that controls the ongoing manifestation
+ */
+void _ManifestationHB(object oManifester, location lManifester, object oMfToken)
+{
+    if(GetIsObjectValid(oMfToken))
+    {
+        // Continuance check
+        if(GetDistanceBetweenLocations(lManifester, GetLocation(oManifester)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
+           GetBreakConcentrationCheck(oManifester)                                      // Action and effect check
+           )
+        {
+            _DestroyManifestationToken(oManifester, oMfToken);
+        }
+        // Schedule next HB
+        else
+            DelayCommand(PRC_MANIFESTATION_HB_DELAY, _ManifestationHB(oManifester, lManifester, oMfToken));
+    }
+}
+
+/** Internal function.
+ * Places the cheatcasting of the real power into the manifester's action queue.
+ */
+void _UsePowerAux(object oManifester, object oMfToken, int nSpellId,
+                  object oTarget, location lTarget,
+                  int nPower, int nClass, int bIsPsiLike, int nLevelOverride,
+                  int bQuickened
+                  )
+{
+    // Make sure nothing has interrupted this manifestation
+    if(GetIsObjectValid(oMfToken))
+    {
+        // Set the class to manifest as
+        SetLocalInt(oManifester, PRC_MANIFESTING_CLASS, nClass + 1);
+
+        // Set the power's level
+        SetLocalInt(oManifester, PRC_POWER_LEVEL, StringToInt(lookup_spell_innate(nSpellId)));
+
+        // Set whether the power is to run as a psi-like ability
+        SetLocalInt(oManifester, PRC_IS_PSILIKE, bIsPsiLike);
+
+        // Set whether the power was quickened
+        SetLocalInt(oManifester, PRC_POWER_IS_QUICKENED, bQuickened);
+
+        // Queue the real manifestation
+        //ActionCastSpell(nPower, nLevelOverride, 0, 0, METAMAGIC_NONE, CLASS_TYPE_INVALID, TRUE, TRUE, oTarget);
+
+        if(nLevelOverride != 0)
+            AssignCommand(oManifester, ActionDoCommand(SetLocalInt(oManifester, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride)));
+        if(GetIsObjectValid(oTarget))
+            AssignCommand(oManifester, ActionCastSpellAtObject(nPower, oTarget, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        else
+            AssignCommand(oManifester, ActionCastSpellAtLocation(nPower, lTarget, METAMAGIC_NONE, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        if(nLevelOverride != 0)
+            AssignCommand(oManifester, ActionDoCommand(DeleteLocalInt(oManifester, PRC_CASTERLEVEL_OVERRIDE)));
+
+        // Destroy the manifestation token for this manifestation
+        _DestroyManifestationToken(oManifester, oMfToken);
+    }
+}
+
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -435,7 +598,6 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     {
         FloatingTextStrRefOnCreature(16826411, oManifester, FALSE); // "You do not have a high enough ability score to manifest this power"
         manif.bCanManifest = FALSE;
-        return manif;
     }
 
     // Account for augmentation. This factors in Wild Surge cost reduction
@@ -459,66 +621,70 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
 
     //* APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE ABOVE *//
 
-    /* The manifester level value includes the manifester level increase from
-     * Wild Surge, but since the calculated cost already contains the augmentation
-     * cost reduction provided by Wild Surge, it should not apply here.
-     */
-    if((nManifesterLevel - nWildSurge) >= manif.nPPCost || bIsPsiLike || bIgnoreConstraints)
+    // Skip paying anything if something has prevented successfull manifestation already by this point
+    if(!manif.bCanManifest)
     {
-        // Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
-        if(!bIsPsiLike) // Skipped for psi-like abilities
-            manif = _GetPPCostReduced(manif);
-
-        //If the manifester does not have enough points before hostile modifiers, cancel power
-        if(manif.nPPCost > nManifesterPP && !bIsPsiLike && !bIgnoreConstraints)
+        /* The manifester level value includes the manifester level increase from
+         * Wild Surge, but since the calculated cost already contains the augmentation
+         * cost reduction provided by Wild Surge, it should not apply here.
+         */
+        if((nManifesterLevel - nWildSurge) >= manif.nPPCost || bIsPsiLike || bIgnoreConstraints)
         {
-            FloatingTextStrRefOnCreature(16826412, oManifester, FALSE); // "You do not have enough Power Points to manifest this power"
-            manif.bCanManifest = FALSE;
-        }
-        // The manifester has enough power points that they would be able to use the power, barring extra costs
-        else
-        {
-            //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL HERE *//
-            // Psionic Hole does not count against manifester level cap, but causes the power to fail if the manifester can't pay
-            manif.nPPCost += nPsionicHoleCost;
-            // Volatile Mind behaves the same
-            manif.nPPCost += nVolatileMindCost;
-            //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL ABOVE *//
+            // Reduced cost of manifesting a power, but does not allow you to exceed the manifester level cap
+            if(!bIsPsiLike) // Skipped for psi-like abilities
+                manif = _GetPPCostReduced(manif);
 
+            //If the manifester does not have enough points before hostile modifiers, cancel power
             if(manif.nPPCost > nManifesterPP && !bIsPsiLike && !bIgnoreConstraints)
             {
-                FloatingTextStrRefOnCreature(16826413, oManifester, FALSE); // "Your target's abilities cause you to use more Power Points than you have. The power fails"
+                FloatingTextStrRefOnCreature(16826412, oManifester, FALSE); // "You do not have enough Power Points to manifest this power"
                 manif.bCanManifest = FALSE;
             }
-
-            // Psi-like abilities ignore PP costs and metapsi
-            if(!bIsPsiLike)
+            // The manifester has enough power points that they would be able to use the power, barring extra costs
+            else
             {
-                // Set the power points to their new value and inform the manifester
-                LosePowerPoints(oManifester, manif.nPPCost, TRUE);
+                //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL HERE *//
+                // Psionic Hole does not count against manifester level cap, but causes the power to fail if the manifester can't pay
+                manif.nPPCost += nPsionicHoleCost;
+                // Volatile Mind behaves the same
+                manif.nPPCost += nVolatileMindCost;
+                //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE POWER FAIL ABOVE *//
 
-                // Psionic focus loss from using metapsionics. Has a side effect of telling the manifester which metapsionics were actually active
-                PayMetapsionicsFocuses(manif);
+                if(manif.nPPCost > nManifesterPP && !bIsPsiLike && !bIgnoreConstraints)
+                {
+                    FloatingTextStrRefOnCreature(16826413, oManifester, FALSE); // "Your target's abilities cause you to use more Power Points than you have. The power fails"
+                    manif.bCanManifest = FALSE;
+                }
+
+                // Psi-like abilities ignore PP costs and metapsi
+                if(!bIsPsiLike)
+                {
+                    // Set the power points to their new value and inform the manifester
+                    LosePowerPoints(oManifester, manif.nPPCost, TRUE);
+
+                    // Psionic focus loss from using metapsionics. Has a side effect of telling the manifester which metapsionics were actually active
+                    PayMetapsionicsFocuses(manif);
+                }
+
+                //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//
+                // Damage from overchanneling happens only if one actually spends PP
+                _DoOverchannelDamage(oManifester, bIsPsiLike);
+                // Apply Hostile Mind damage, as necessary
+                _HostileMind(oManifester, oTarget);
+                // Apply Wild Surge side-effects
+                _SurgingEuphoriaOrPsychicEnervation(oManifester, nWildSurge);
+                // Apply Mind Trap PP loss
+                _DoMindTrapPPLoss(oManifester, oTarget);
+                //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
             }
-
-            //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//
-            // Damage from overchanneling happens only if one actually spends PP
-            _DoOverchannelDamage(oManifester, bIsPsiLike);
-            // Apply Hostile Mind damage, as necessary
-            _HostileMind(oManifester, oTarget);
-            // Apply Wild Surge side-effects
-            _SurgingEuphoriaOrPsychicEnervation(oManifester, nWildSurge);
-            // Apply Mind Trap PP loss
-            _DoMindTrapPPLoss(oManifester, oTarget);
-            //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
         }
-    }
-    // Cost was over the manifester cap
-    else
-    {// "Your manifester level is not high enough to spend X Power Points"
-        FloatingTextStringOnCreature(GetStringByStrRef(16826410) + " " + IntToString(manif.nPPCost) + " " + GetStringByStrRef(16826409), oManifester, FALSE);
-        manif.bCanManifest = FALSE;
-    }
+        // Cost was over the manifester cap
+        else
+        {// "Your manifester level is not high enough to spend X Power Points"
+            FloatingTextStringOnCreature(GetStringByStrRef(16826410) + " " + IntToString(manif.nPPCost) + " " + GetStringByStrRef(16826409), oManifester, FALSE);
+            manif.bCanManifest = FALSE;
+        }
+    }//end if - Something hadn't prevented successfull manifestation already before paying the power costs
 
     if(DEBUG) DoDebug("EvaluateManifestation(): Final result:\n" + DebugManifestation2Str(manif));
 
@@ -531,32 +697,60 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
 void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride = 0)
 {
     object oManifester = OBJECT_SELF;
+    object oSkin       = GetPCSkin(oManifester);
+    object oTarget     = PRCGetSpellTargetObject();
+    object oMfToken;
+    location lTarget   = PRCGetSpellTargetLocation();
+    int nSpellID       = PRCGetSpellId();
+    int nManifDur      = StringToInt(Get2DACache("spells", "ConjTime", nPower)) + StringToInt(Get2DACache("spells", "CastTime", nPower));
+    int bQuicken       = FALSE;
+
+    // Quicken Power check
+    if(nManifDur <= 6000                                 && // If the power could be quickened by having manifesting time of 1 round or less
+       GetLocalInt(oManifester, METAPSIONIC_QUICKEN_VAR) && // And the manifester has Quicken Power active
+       GetIsPsionicallyFocused(oManifester)                 // And might be able to pay the psionic focus for it
+       )
+    {
+        // Set the manifestation time to 0 to skip VFX
+        nManifDur = 0;
+        // And set the Quicken Power used marker to TRUE
+        bQuicken = TRUE;
+    }
+
     if(DEBUG) DoDebug("UsePower(): Manifester is " + DebugObject2Str(oManifester) + "\n"
                     + "nPower = " + IntToString(nPower) + "\n"
                     + "nClass = " + IntToString(nClass) + "\n"
                     + "bIsPsiLike = " + BooleanToString(bIsPsiLike) + "\n"
-                    + "nLevelOverride = " + IntToString(nLevelOverride)
+                    + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
+                    + "Manifestation duration = " + IntToString(nManifDur) + "ms \n"
+                    + "bQuicken = " + BooleanToString(bQuicken) + "\n"
+                    //+ "Token exists = " + BooleanToString(GetIsObjectValid(oMfToken))
                       );
 
-    // Set the class to manifest as
-    SetLocalInt(oManifester, PRC_MANIFESTING_CLASS, nClass + 1);
+    // Create the manifestation token. Deletes any old tokens and cancels corresponding manifestations as a side effect
+    oMfToken = _CreateManifestationToken(oManifester);
 
-    // Set the power's level
-    SetLocalInt(oManifester, PRC_POWER_LEVEL, StringToInt(lookup_spell_innate(PRCGetSpellId())));
+    // Start the manifestation monitor HB
+    DelayCommand(PRC_MANIFESTATION_HB_DELAY, _ManifestationHB(oManifester, GetLocation(oManifester), oMfToken));
 
-    /* Unnecessary, since this is already done by ActionCastSpell
-    //override level
-    if(nLevelOverride != 0)
-        SetLocalInt(oManifester, PRC_CASTERLEVEL_OVERRIDE, nLevelOverride);*/
+    /// @todo Hook to the manifester's OnDamaged event for the concentration checks to avoid losing the power
 
-    // Set whether the power is to run as a psi-like ability
-    SetLocalInt(oManifester, PRC_IS_PSILIKE, bIsPsiLike);
-
-    // Nuke action queue to prevent cheating with creative power stacking
+    // Nuke action queue to prevent cheating with creative power stacking.
+    // Probably not necessary anymore - Ornedan
     if(DEBUG) SendMessageToPC(oManifester, "Clearing all actions in preparation for second stage of the power.");
     ClearAllActions();
 
-    ActionCastSpell(nPower, nLevelOverride);
+    // Assuming the spell isn't used as a swift action, fakecast for visuals
+    if(nManifDur > 0)
+    {
+        if(GetIsObjectValid(oTarget))
+            ActionCastFakeSpellAtObject(nSpellID, oTarget, PROJECTILE_PATH_TYPE_DEFAULT);
+        else
+            ActionCastFakeSpellAtLocation(nSpellID, lTarget, PROJECTILE_PATH_TYPE_DEFAULT);
+    }
+
+    // Action queue the function that will cheatcast the actual power
+    ActionDoCommand(_UsePowerAux(oManifester, oMfToken, nSpellID, oTarget, lTarget, nPower, nClass, bIsPsiLike, nLevelOverride, bQuicken));
 }
 
 string DebugManifestation2Str(struct manifestation manif)

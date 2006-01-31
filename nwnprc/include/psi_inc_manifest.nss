@@ -431,7 +431,7 @@ object _GetManifestationToken(object oManifester)
         // Seek for tokens in the creature's inventory and destroy them
         while(GetIsObjectValid(oTest))
         {
-            if(GetTag(oTest) != PRC_MANIFESTATION_TOKEN_NAME)
+            if(GetTag(oTest) == PRC_MANIFESTATION_TOKEN_NAME)
                 DestroyObject(oTest);
             oTest = GetNextItemInInventory(oSkin);
         }
@@ -496,7 +496,48 @@ object _CreateManifestationToken(object oManifester)
     return oMfToken;
 }
 
-/**
+/** Internal function.
+ * Determines whether the given manifester is doing something that would
+ * interrupt manifesting a power or affected by an effect that would do
+ * the same.
+ *
+ * @param oManifester A creature on which _ManifestationHB() is running
+ * @return            TRUE if the creature can continue manifesting,
+ *                    FALSE otherwise
+ */
+int _ManifestationStateCheck(object oManifester)
+{
+    int nAction = GetCurrentAction(oManifester);
+    // If the current action is not among those that could either be used to manifest the power or movement, the power fails
+    if(!(nAction || ACTION_CASTSPELL     || nAction == ACTION_INVALID      ||
+         nAction || ACTION_ITEMCASTSPELL || nAction == ACTION_MOVETOPOINT  ||
+         nAction || ACTION_USEOBJECT     || nAction == ACTION_WAIT
+       ) )
+        return FALSE;
+
+    // Affected by something that prevents one from manifesting
+    effect eTest = GetFirstEffect(oManifester);
+    int nEType;
+    while(GetIsEffectValid(eTest))
+    {
+        nEType = GetEffectType(eTest);
+        if(nEType == EFFECT_TYPE_CUTSCENE_PARALYZE ||
+           nEType == EFFECT_TYPE_DAZED             ||
+           nEType == EFFECT_TYPE_PARALYZE          ||
+           nEType == EFFECT_TYPE_PETRIFY           ||
+           nEType == EFFECT_TYPE_SLEEP             ||
+           nEType == EFFECT_TYPE_STUNNED
+           )
+            return FALSE;
+
+        // Get next effect
+        eTest = GetNextEffect(oManifester);
+    }
+
+    return TRUE;
+}
+
+/** Internal function.
  * Runs while the given creature is manifesting. If they move, take other actions
  * that would cause them to interrupt manifesting the power or are affected by an
  * effect that would cause such interruption, deletes the manifestation token.
@@ -508,13 +549,19 @@ object _CreateManifestationToken(object oManifester)
  */
 void _ManifestationHB(object oManifester, location lManifester, object oMfToken)
 {
+    if(DEBUG) DoDebug("_ManifestationHB() running:\n"
+                    + "oManifester = " + DebugObject2Str(oManifester) + "\n"
+                    + "lManifester = " + DebugLocation2Str(lManifester) + "\n"
+                    + "oMfToken = " + DebugObject2Str(oMfToken) + "\n"
+                      );
     if(GetIsObjectValid(oMfToken))
     {
         // Continuance check
         if(GetDistanceBetweenLocations(lManifester, GetLocation(oManifester)) > 2.0f || // Allow some variance in the location to account for dodging and random fidgeting
-           GetBreakConcentrationCheck(oManifester)                                      // Action and effect check
+           !_ManifestationStateCheck(oManifester)                                       // Action and effect check
            )
         {
+            if(DEBUG) DoDebug("_ManifestationHB(): Manifester moved or lost concentration, destroying token");
             _DestroyManifestationToken(oManifester, oMfToken);
         }
         // Schedule next HB
@@ -532,9 +579,23 @@ void _UsePowerAux(object oManifester, object oMfToken, int nSpellId,
                   int bQuickened
                   )
 {
+    if(DEBUG) DoDebug("_UsePowerAux() running:\n"
+                    + "oManifester = " + DebugObject2Str(oManifester) + "\n"
+                    + "oMfToken = " + DebugObject2Str(oMfToken) + "\n"
+                    + "nSpellId = " + IntToString(nSpellId) + "\n"
+                    + "oTarget = " + DebugObject2Str(oTarget) + "\n"
+                    + "lTarget = " + DebugLocation2Str(lTarget) + "\n"
+                    + "nPower = " + IntToString(nPower) + "\n"
+                    + "nClass = " + IntToString(nClass) + "\n"
+                    + "bIsPsiLike = " + BooleanToString(bIsPsiLike) + "\n"
+                    + "nLevelOverride = " + IntToString(nLevelOverride) + "\n"
+                    + "bQuickened = " + BooleanToString(bQuickened) + "\n"
+                      );
+
     // Make sure nothing has interrupted this manifestation
     if(GetIsObjectValid(oMfToken))
     {
+        if(DEBUG) DoDebug("_UsePowerAux(): Token was valid, queueing actual manifestation");
         // Set the class to manifest as
         SetLocalInt(oManifester, PRC_MANIFESTING_CLASS, nClass + 1);
 
@@ -758,7 +819,7 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     }
 
     // Action queue the function that will cheatcast the actual power
-    ActionDoCommand(_UsePowerAux(oManifester, oMfToken, nSpellID, oTarget, lTarget, nPower, nClass, bIsPsiLike, nLevelOverride, bQuicken));
+    DelayCommand(nManifDur / 1000.0f, AssignCommand(oManifester, ActionDoCommand(_UsePowerAux(oManifester, oMfToken, nSpellID, oTarget, lTarget, nPower, nClass, bIsPsiLike, nLevelOverride, bQuicken))));
 }
 
 string DebugManifestation2Str(struct manifestation manif)

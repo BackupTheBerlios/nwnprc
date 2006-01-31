@@ -9,14 +9,26 @@ int PRCDoRangedTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object o
 {
     if(GetLocalInt(oCaster, "AttackHasHit"))
         return GetLocalInt(oCaster, "AttackHasHit");
-    return GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, 0,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    string sCacheName = "AttackHasHit_"+ObjectToString(oTarget);
+    if(GetLocalInt(oCaster, sCacheName))
+        return GetLocalInt(oCaster, sCacheName);
+    int nResult = GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, 0,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_RANGED_SPELL);
+    SetLocalInt(oCaster, sCacheName, nResult);
+    DelayCommand(1.0, DeleteLocalInt(oCaster, sCacheName));
+    return nResult;
 }
 
 int PRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
 {
     if(GetLocalInt(oCaster, "AttackHasHit"))
         return GetLocalInt(oCaster, "AttackHasHit");
-    return GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, 0,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+    string sCacheName = "AttackHasHit_"+ObjectToString(oTarget);
+    if(GetLocalInt(oCaster, sCacheName))
+        return GetLocalInt(oCaster, sCacheName);
+    int nResult = GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, 0,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
+    SetLocalInt(oCaster, sCacheName, nResult);
+    DelayCommand(1.0, DeleteLocalInt(oCaster, sCacheName));
+    return nResult;
 }
 
 // return sneak attack damage for a spell

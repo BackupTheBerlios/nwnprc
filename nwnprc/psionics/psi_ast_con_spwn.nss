@@ -11,12 +11,11 @@
 #include "psi_inc_ac_spawn"
 #include "psi_inc_ac_manif"
 
+
 void BiobugsSuck(object oSpawn){
     // Grab the locals for the slot manifested from and copy them onto the construct
     object oManifester = GetMaster(oSpawn);
-    PrintString("oManifester: " + GetName(oManifester) + "; " + (oManifester == OBJECT_INVALID ? "INVALID":""));
-    string sSlot = GetLocalString(oManifester, MANIFESTED_SLOT);
-    PrintString("sSlot: " + sSlot);
+    string sSlot       = GetLocalString(oManifester, MANIFESTED_SLOT);
     int nACLevel       = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_LEVEL              + sSlot);
     int nOptionFlags   = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_OPTION_FLAGS       + sSlot);
     int nResElemFlags  = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_RESISTANCE_FLAGS   + sSlot);
@@ -27,30 +26,30 @@ void BiobugsSuck(object oSpawn){
     SetLocalInt(oSpawn, ASTRAL_CONSTRUCT_RESISTANCE_FLAGS,   nResElemFlags);
     SetLocalInt(oSpawn, ASTRAL_CONSTRUCT_ENERGY_TOUCH_FLAGS, nETchElemFlags);
     SetLocalInt(oSpawn, ASTRAL_CONSTRUCT_ENERGY_BOLT_FLAGS,  nEBltElemFlags);
-    
+
     // Do appearance switching
     int nCraft = GetHighestCraftSkillValue(oManifester);
     int nCheck = d20() + nCraft;
-    
+
     int nAppearance = GetAppearanceForConstruct(nACLevel, nOptionFlags, nCheck);
     SetCreatureAppearanceType(oSpawn, nAppearance);
-    
+
     HandleAstralConstructSpawn(oSpawn);
 }
 
 void main()
 {
     //SpawnScriptDebugger();
-    
+
     object oSpawn = OBJECT_SELF;
-    
+
     DelayCommand(0.05f, BiobugsSuck(oSpawn));
 
     // Handle the main Astral Construct spawn stuff
     // Farmed out to an include file. This one is just to link it
     // and the default spawn handling
     //HandleAstralConstructSpawn(oSpawn);
-    
+
     // Execute other OnSpawn stuff
     ExecuteScript("nw_ch_acani9", OBJECT_SELF);
 }

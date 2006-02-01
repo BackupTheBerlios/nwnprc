@@ -876,6 +876,7 @@ void SetLocalManifestation(object oObject, string sName, struct manifestation ma
     SetLocalInt(oObject, sName + "_bSplit",    manif.bSplit);
     SetLocalInt(oObject, sName + "_bTwin",     manif.bTwin);
     SetLocalInt(oObject, sName + "_bWiden",    manif.bWiden);
+    SetLocalInt(oObject, sName + "_bQuicken",  manif.bQuicken);
 }
 
 struct manifestation GetLocalManifestation(object oObject, string sName)
@@ -903,6 +904,7 @@ struct manifestation GetLocalManifestation(object oObject, string sName)
     manif.bSplit    = GetLocalInt(oObject, sName + "_bSplit");
     manif.bTwin     = GetLocalInt(oObject, sName + "_bTwin");
     manif.bWiden    = GetLocalInt(oObject, sName + "_bWiden");
+    manif.bQuicken  = GetLocalInt(oObject, sName + "_bQuicken");
 
     return manif;
 }
@@ -931,6 +933,7 @@ void DeleteLocalManifestation(object oObject, string sName)
     DeleteLocalInt(oObject, sName + "_bSplit");
     DeleteLocalInt(oObject, sName + "_bTwin");
     DeleteLocalInt(oObject, sName + "_bWiden");
+    DeleteLocalInt(oObject, sName + "_bQuicken");
 }
 
 void DebugIgnoreConstraints(object oManifester)

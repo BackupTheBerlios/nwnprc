@@ -767,15 +767,24 @@ void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV,
 
                         if(i == 1)
                         {
-                        	nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                        	DelayCommand(fDelay, PRCBonusDamage(oTarget));
+                            nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                            DelayCommand(fDelay, PRCBonusDamage(oTarget));
                         }
 
                         // Jan. 29, 2004 - Jonathan Epp
                         // Reflex save was not being calculated for Firebrand
                         if(nReflexSave)
                         {
-                            nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
+                            if(nDAMAGETYPE == DAMAGE_TYPE_FIRE)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_ELECTRICAL)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_ELECTRICITY);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_COLD)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_COLD);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_ACID)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_ACID);
+                            else if(nDAMAGETYPE == DAMAGE_TYPE_SONIC)
+                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_SONIC);
                         }
 
                         fTime = fDelay;

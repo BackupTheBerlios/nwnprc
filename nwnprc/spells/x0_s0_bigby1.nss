@@ -15,7 +15,7 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 
@@ -41,10 +41,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
 
     if(!GetIsReactionTypeFriendly(oTarget))
@@ -61,7 +61,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl+ SPGetPenetr()))
         {
 
-        effect eAC1 = EffectAttackDecrease(10, AC_DODGE_BONUS);
+        effect eAC1 = EffectAttackDecrease(10);
         effect eVis = EffectVisualEffect(VFX_DUR_BIGBYS_INTERPOSING_HAND);
         effect eLink = EffectLinkEffects(eAC1, eVis);
 

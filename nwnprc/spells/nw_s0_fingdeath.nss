@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
@@ -75,23 +75,27 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                  }
                  else
                  {
-                    //Roll damage
-                    nDamage = d6(3) + nCasterLvl;
-                    //Make metamagic checks
-                    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+                    // Target shouldn't take damage if they are immune to death magic.
+                    if (!GetIsImmune( oTarget, IMMUNITY_TYPE_DEATH))
                     {
-                        nDamage = 18 + nCasterLvl;
+                        //Roll damage
+                        nDamage = d6(3) + nCasterLvl;
+                        //Make metamagic checks
+                        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+                        {
+                            nDamage = 18 + nCasterLvl;
+                        }
+                        if ((nMetaMagic & METAMAGIC_EMPOWER))
+                        {
+                            nDamage = nDamage + (nDamage/2);
+                        }
+                        nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+                        //Set damage effect
+                        eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
+                        //Apply damage effect and VFX impact
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                     }
-                    if ((nMetaMagic & METAMAGIC_EMPOWER))
-                    {
-                        nDamage = nDamage + (nDamage/2);
-                    }
-                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                    //Set damage effect
-                    eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
-                    //Apply damage effect and VFX impact
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                 }
             }
         }

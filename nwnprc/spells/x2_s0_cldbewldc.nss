@@ -16,8 +16,8 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
-#include "x0_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -66,15 +66,17 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUD_OF_BEWILDERMENT,OBJECT_SELF, GetSpellS
                 if (!GetHasSpellEffect(SPELL_CLOUD_OF_BEWILDERMENT,oTarget))
                 {
                        int nDC = PRCGetSaveDC(oTarget,GetAreaOfEffectCreator());
-
                     //Make a Fort Save
                     if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_POISON))
                     {
-                       nRounds = d6(1);
-                       fDelay = GetRandomDelay(0.75, 1.75);
-                       //Apply the VFX impact and linked effects
-                       DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                       DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, RoundsToSeconds(nRounds),FALSE));
+                        if (!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON))
+                        {
+                           nRounds = d6(1);
+                           fDelay = GetRandomDelay(0.75, 1.75);
+                           //Apply the VFX impact and linked effects
+                           DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                           DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStun, oTarget, RoundsToSeconds(nRounds),FALSE));
+                       }
                     }
                 }
             }

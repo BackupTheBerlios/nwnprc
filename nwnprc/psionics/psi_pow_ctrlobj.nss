@@ -99,11 +99,33 @@ void main()
 
         int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE, oManifester);
         // Work around for the damage bonus
-        string sDam = "DAMAGE_BONUS_" + IntToString(nInt);
-        FloatingTextStringOnCreature("Your Damage Bonus is " + sDam, oManifester, FALSE);
+        int nDam;
+	if (nInt >= 20) nDam = DAMAGE_BONUS_20;
+	else if (nInt == 19) nDam = DAMAGE_BONUS_19;
+	else if (nInt == 18) nDam = DAMAGE_BONUS_18;
+	else if (nInt == 17) nDam = DAMAGE_BONUS_17;
+	else if (nInt == 16) nDam = DAMAGE_BONUS_16;
+	else if (nInt == 15) nDam = DAMAGE_BONUS_15;
+	else if (nInt == 14) nDam = DAMAGE_BONUS_14;
+	else if (nInt == 13) nDam = DAMAGE_BONUS_13;
+	else if (nInt == 12) nDam = DAMAGE_BONUS_12;
+	else if (nInt == 11) nDam = DAMAGE_BONUS_11;
+	else if (nInt == 10) nDam = DAMAGE_BONUS_10;
+	else if (nInt == 9) nDam = DAMAGE_BONUS_9;
+	else if (nInt == 8) nDam = DAMAGE_BONUS_8;
+	else if (nInt == 7) nDam = DAMAGE_BONUS_7;
+	else if (nInt == 6) nDam = DAMAGE_BONUS_6;
+	else if (nInt == 5) nDam = DAMAGE_BONUS_5;
+	else if (nInt == 4) nDam = DAMAGE_BONUS_4;
+	else if (nInt == 3) nDam = DAMAGE_BONUS_3;
+	else if (nInt == 2) nDam = DAMAGE_BONUS_2;
+	else if (nInt == 1) nDam = DAMAGE_BONUS_1;
+	// Null line in the 2da
+	else nDam = 0;
+
 
         effect eAttack = EffectAttackIncrease(nInt);
-        effect eDam = EffectDamageIncrease(StringToInt(sDam), DAMAGE_TYPE_BASE_WEAPON);
+        effect eDam = EffectDamageIncrease(nDam, DAMAGE_TYPE_BASE_WEAPON);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAttack, oHench);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDam, oHench);
     }// end if - Successfull manifestation

@@ -663,3 +663,6 @@ void SetAugmentationOverride(object oCreature, struct user_augment_profile uap)
 {
     SetLocalInt(oCreature, PRC_AUGMENT_OVERRIDE, _EncodeProfile(uap));
 }
+
+// Test main
+//void main(){}

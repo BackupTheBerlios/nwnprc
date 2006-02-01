@@ -180,9 +180,9 @@ void DebugIgnoreConstraints(object oManifester);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
+#include "psi_inc_metapsi"
 #include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
 #include "psi_inc_augment" // Provides inc_utility
-#include "psi_inc_metapsi"
 
 
 //////////////////////////////////////////////////
@@ -845,7 +845,8 @@ string DebugManifestation2Str(struct manifestation manif)
     sRet += "bMaximize = " + BooleanToString(manif.bMaximize) + "\n";
     sRet += "bSplit    = " + BooleanToString(manif.bSplit)    + "\n";
     sRet += "bTwin     = " + BooleanToString(manif.bTwin)     + "\n";
-    sRet += "bWiden    = " + BooleanToString(manif.bWiden);//    + "\n";
+    sRet += "bWiden    = " + BooleanToString(manif.bWiden)    + "\n";
+    sRet += "bQuicken  = " + BooleanToString(manif.bQuicken);//    + "\n";
 
     return sRet;
 }
@@ -937,3 +938,6 @@ void DebugIgnoreConstraints(object oManifester)
     SetLocalInt(oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS, TRUE);
     DelayCommand(0.0f, DeleteLocalInt(oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS));
 }
+
+// Test main
+//void main(){}

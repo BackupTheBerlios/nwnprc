@@ -706,3 +706,6 @@ int GetTargetSpecificChangesToDamage(object oTarget, object oManifester, int nDa
 
     return nDamage;
 }
+
+// Test main
+//void main(){}

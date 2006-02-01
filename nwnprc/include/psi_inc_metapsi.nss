@@ -58,19 +58,19 @@ const int METAPSIONIC_MIN           = 0x2;
 const int METAPSIONIC_MAX           = 0x100;
 
 /// Chain Power variable name
-const string METAPSIONIC_CHAIN_VAR     = "PsiMetaChain";
+const string METAPSIONIC_CHAIN_VAR     = "PRC_PsiMeta_Chain";
 /// Empower Power variable name
-const string METAPSIONIC_EMPOWER_VAR   = "PsiMetaEmpower";
+const string METAPSIONIC_EMPOWER_VAR   = "PRC_PsiMeta_Empower";
 /// Extend Power variable name
-const string METAPSIONIC_EXTEND_VAR    = "PsiMetaExtend";
+const string METAPSIONIC_EXTEND_VAR    = "PRC_PsiMeta_Extend";
 /// Maximize Power variable name
-const string METAPSIONIC_MAXIMIZE_VAR  = "PsiMetaMax";
+const string METAPSIONIC_MAXIMIZE_VAR  = "PRC_PsiMeta_Maximize";
 /// Split Psionic Ray variable name
-const string METAPSIONIC_SPLIT_VAR     = "PsiMetaSplit";
+const string METAPSIONIC_SPLIT_VAR     = "PRC_PsiMeta_Split";
 /// Twin Power variable name
-const string METAPSIONIC_TWIN_VAR      = "PsiMetaTwin";
+const string METAPSIONIC_TWIN_VAR      = "PRC_PsiMeta_Twin";
 /// Widen Power variable name
-const string METAPSIONIC_WIDEN_VAR     = "PsiMetaWiden";
+const string METAPSIONIC_WIDEN_VAR     = "PRC_PsiMeta_Widen";
 /// Quicken Power variable name
 const string METAPSIONIC_QUICKEN_VAR   = "PRC_PsiMeta_Quicken";
 
@@ -170,6 +170,15 @@ object GetSplitPsionicRayTarget(struct manifestation manif, object oPrimaryTarge
 
 
 //////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "inc_utility"
+#include "psi_inc_focus"
+#include "psi_inc_manifest"
+
+
+//////////////////////////////////////////////////
 /*             Internal functions               */
 //////////////////////////////////////////////////
 
@@ -198,14 +207,6 @@ void _DeleteChainArray(object oManifester)
 {
     array_delete(oManifester, PRC_CHAIN_POWER_ARRAY);
 }
-
-
-//////////////////////////////////////////////////
-/*                  Includes                    */
-//////////////////////////////////////////////////
-
-//#include "inc_utility"
-#include "psi_inc_manifest"
 
 
 //////////////////////////////////////////////////
@@ -588,3 +589,6 @@ object GetSplitPsionicRayTarget(struct manifestation manif, object oPrimaryTarge
 
     return oReturn;
 }
+
+// Test main
+//void main(){}

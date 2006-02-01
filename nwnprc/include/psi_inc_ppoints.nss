@@ -321,3 +321,6 @@ void LoseAllPowerPoints(object oChar, int bInform = TRUE)
     if(bInform)
         TellCharacterPowerPointStatus(oChar);
 }
+
+// Test main
+//void main(){}

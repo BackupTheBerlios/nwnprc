@@ -104,6 +104,7 @@ int GetIsPsionicallyFocused(object oCreature = OBJECT_SELF);
  *  Split Psionic Ray
  *  Twin Power
  *  Widen Power
+ *  Quicken Power
  *
  * @param oCreature Creature whose feats to examine
  * @return          How many of the listed feats are active
@@ -116,7 +117,6 @@ int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF);
 //////////////////////////////////////////////////
 
 #include "psi_inc_psifunc"
-
 
 
 //////////////////////////////////////////////////
@@ -224,14 +224,17 @@ int GetPsionicFocusUsingFeatsActive(object oCreature = OBJECT_SELF)
     if(GetLocalInt(oCreature, "PowerPenetrationActive"))    nFeats++;
     if(GetLocalInt(oCreature, "PsionicEndowmentActive"))    nFeats++;
 
-    if(GetLocalInt(oCreature, METAPSIONIC_CHAIN_VAR))   nFeats++;
-    if(GetLocalInt(oCreature, METAPSIONIC_EMPOWER_VAR)) nFeats++;
-    if(GetLocalInt(oCreature, METAPSIONIC_EXTEND_VAR))  nFeats++;
-    if(GetLocalInt(oCreature, METAPSIONIC_MAXIMIZE_VAR))nFeats++;
-    if(GetLocalInt(oCreature, METAPSIONIC_SPLIT_VAR))   nFeats++;
-    if(GetLocalInt(oCreature, METAPSIONIC_TWIN_VAR))    nFeats++;
-    if(GetLocalInt(oCreature, METAPSIONIC_WIDEN_VAR))   nFeats++;
-    if(GetLocalInt(oCreature, METAPSIONIC_QUICKEN_VAR)) nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_CHAIN_VAR))       nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_EMPOWER_VAR))     nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_EXTEND_VAR))      nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_MAXIMIZE_VAR))    nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_SPLIT_VAR))       nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_TWIN_VAR))        nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_WIDEN_VAR))       nFeats++;
+    if(GetLocalInt(oCreature, METAPSIONIC_QUICKEN_VAR))     nFeats++;
 
     return nFeats;
 }
+
+// Test main
+//void main(){}

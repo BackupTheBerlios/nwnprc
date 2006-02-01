@@ -57,6 +57,13 @@ struct energy_adjustments EvaluateEnergy(int nSpellID, int nSpellID_Cold, int nS
 
 
 //////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "inc_utility"
+
+
+//////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
@@ -120,3 +127,6 @@ struct energy_adjustments EvaluateEnergy(int nSpellID, int nSpellID_Cold, int nS
 
     return eaRet;
 }
+
+// Test main
+//void main(){}

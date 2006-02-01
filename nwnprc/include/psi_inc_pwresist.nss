@@ -135,3 +135,6 @@ PRCMyResistPower(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
 
     return nResist;
 }
+
+// Test main
+//void main(){}

@@ -42,7 +42,7 @@ void main()
         nAssassinScore += GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
 
         nBarbarianScore += GetLevelByClass(CLASS_TYPE_BARBARIAN, oPC);
-        nBarbarianScore += GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oPC);
+        nBarbarianScore += GetLevelByClass(CLASS_TYPE_PRC_EYE_OF_GRUUMSH, oPC);
         nBarbarianScore += GetLevelByClass(CLASS_TYPE_ORC_WARLORD, oPC);
         nBarbarianScore += GetLevelByClass(CLASS_TYPE_FRE_BERSERKER, oPC);
         nBarbarianScore += GetLevelByClass(CLASS_TYPE_BATTLERAGER, oPC);

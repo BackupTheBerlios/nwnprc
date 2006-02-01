@@ -21,7 +21,7 @@ void main()
             GetAlignmentGoodEvil(oTarget) != ALIGNMENT_GOOD &&
             !GetHasSpellEffect(SPELL_COMMAND_THE_HORDE, oTarget) )
          {
-              int iEOGLevel = GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH, oCaster);
+              int iEOGLevel = GetLevelByClass(CLASS_TYPE_PRC_EYE_OF_GRUUMSH, oCaster);
               effect eWill = EffectSavingThrowIncrease(SAVING_THROW_WILL, 2, SAVING_THROW_TYPE_ALL);
               ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWill, oTarget, HoursToSeconds(iEOGLevel) );
               

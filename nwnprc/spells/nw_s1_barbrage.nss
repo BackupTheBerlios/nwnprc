@@ -24,7 +24,10 @@ void main()
     if(!GetHasFeatEffect(FEAT_BARBARIAN_RAGE) && !GetHasSpellEffect(GetSpellId()))
     {
         //Declare major variables
-        int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) + GetLevelByClass(CLASS_TYPE_RUNESCARRED) + GetLevelByClass(CLASS_TYPE_BATTLERAGER) + GetLevelByClass(CLASS_TYPE_EYE_OF_GRUUMSH);
+        int nLevel = GetLevelByClass(CLASS_TYPE_BARBARIAN) 
+            + GetLevelByClass(CLASS_TYPE_RUNESCARRED) 
+            + GetLevelByClass(CLASS_TYPE_BATTLERAGER) 
+            + GetLevelByClass(CLASS_TYPE_PRC_EYE_OF_GRUUMSH);
         int iStr, iCon, iAC;
         int nSave;
 
@@ -37,12 +40,12 @@ void main()
             iCon = 8;
             nSave = 4;
         }
-	else if(nLevel >= 15)
-	{
+    else if(nLevel >= 15)
+    {
             iStr = 6;
             iCon = 6;
             nSave = 3;
-	}
+    }
         else
         {
             iStr = 4;
@@ -116,7 +119,7 @@ void main()
             // 2004-2-24 Oni5115: Intimidating Rage
             if(GetHasFeat(FEAT_INTIMIDATING_RAGE, OBJECT_SELF) ) // 4312
             {
-		 // Finds nearest visible enemy within 30 ft.
+         // Finds nearest visible enemy within 30 ft.
                  object oTarget = GetNearestSeenOrHeardEnemy();
                  float distance = GetDistanceBetween(OBJECT_SELF, oTarget);
 
@@ -125,18 +128,18 @@ void main()
                        // Will save DC 10 + 1/2 Char level + Cha mod
                        int charLevel = GetHitDice(OBJECT_SELF);
                        int saveDC = 10 + (charLevel/2) + GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
-		       int nResult = WillSave(oTarget, saveDC, SAVING_THROW_TYPE_NONE);
+               int nResult = WillSave(oTarget, saveDC, SAVING_THROW_TYPE_NONE);
 
-		       if(nResult == 0)
-		       {
+               if(nResult == 0)
+               {
                             // Same effect as Doom Spell
                             effect eLink = CreateDoomEffectsLink();
                             effect eVis = EffectVisualEffect(VFX_IMP_DOOM);
                             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink , oTarget, TurnsToSeconds(nCon));
                             ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-		       }
-		 }
-	    }
+               }
+         }
+        }
         }
     }
 }

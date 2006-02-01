@@ -4,7 +4,7 @@
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
-    Goes through the area and sleeps the lowest 2d4
+    Goes through the area and sleeps the lowest 4+d4
     HD of creatures first.
 */
 //:://////////////////////////////////////////////
@@ -17,7 +17,7 @@
 //:: modified by mr_bumpkin  Dec 4, 2003
 #include "spinc_common"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()
@@ -71,7 +71,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     nDuration = 3 + GetScaledDuration(nDuration, oTarget);
     int nPenetr = CasterLvl + SPGetPenetr();
 
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
     string sSpellLocal = "BIOWARE_SPELL_LOCAL_SLEEP_" + ObjectToString(OBJECT_SELF);
     //Enter Metamagic conditions
     if ((nMetaMagic & METAMAGIC_MAXIMIZE))
@@ -88,7 +88,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     }
     nDuration += 2;
     //Get the first target in the spell area
-    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
+    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation());
     //If no valid targets exists ignore the loop
     if (GetIsObjectValid(oTarget))
     {
@@ -100,12 +100,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         nLow = nMax;
         bContinueLoop = FALSE;
         //Get the first creature in the spell area
-        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetSpellTargetLocation());
+        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, PRCGetSpellTargetLocation());
         while (GetIsObjectValid(oTarget))
         {
             //Make faction check to ignore allies
             if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF)
-                && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+                && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT 
+                && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
             {
                 //Get the local variable off the target and determined if the spell has already checked them.
                 bAlreadyAffected = GetLocalInt(oTarget, sSpellLocal);
@@ -115,7 +116,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                      nCurrentHD = GetHitDice(oTarget);
                      //Check to see if the HD are lower than the current Lowest HD stored and that the
                      //HD of the monster are lower than the number of HD left to use up.
-                     if(nCurrentHD < nLow && nCurrentHD <= nHD && nCurrentHD < 6)
+                     if(nCurrentHD < nLow 
+                        && nCurrentHD <= nHD 
+                        && (nCurrentHD < 5 || GetPRCSwitch(PRC_SLEEP_NO_HD_CAP)))
                      {
                          nLow = nCurrentHD;
                          oLowest = oTarget;
@@ -124,7 +127,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                 }
             }
             //Get the next target in the shape
-            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, PRCGetSpellTargetLocation());
         }
         //Check to see if oLowest returned a valid object
         if(oLowest != OBJECT_INVALID)

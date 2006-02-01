@@ -1,25 +1,59 @@
 Psionics:
 
-Psywarrior powers needing scripts:
+Powers that need Icons:
+Control Object
+Empathic Transfer
+Animal Affinity
+Energy Missle
+Ecto Form
+Energy Cone
+Energy Ball
+Psychic Vampire
+Teleport
+Energy Current
+Psionic Revivify
+PsychoFeedback
+Restoration
+Dispelling Buffer
+Null Psionics
+Reddopsi
+Ultrablast
+Moment of Prescience
+Psychic Chirurgery
+Teleport Circle
+Tornado Blast
+Bite of the Wolf
+Claws of the Beast
+Call Weaponry
+Meta Claw
+Meta Weapon
+Prevenom
+Prevenom Weapon
+Painful Strike
 Strength of my Enemy
-Graft Weapon (might drop this)
-Immovability
-Form of Doom (toughie)
-
-Psionics needing 2das:
-Kineticist
-Egoist
-Psywarrior
+Claw of the Vampire
+Vampiric Weapon
+Duodimensional Claw
+Claw of Energy
+Weapon of Energy
+Immove
+Truevenom
+Truevenom Weapon
+Form of Doom
 
 Psionic PrCs:
-Warmind
-Metamind
-Uncarnate
-FoZ (needs powers)
-Pyro
+Warmind (2da/Powers)
+FoZ (Powers)
 
-True Necromancer:
-Create Undead summons previous Create Greater Undead after level 10
+
+-----------------------------------------------------
+Everything Below this line is pushed back to 3.1
+-----------------------------------------------------
+
+Psionic PrCs:
+Metamind
+Psion Uncarnate
+Pyro
 
 Pale master -> 3.0:
 Fighter vassal

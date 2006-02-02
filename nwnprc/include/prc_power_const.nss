@@ -106,6 +106,7 @@ const int POWER_ENERGYMISSILE_FIRE              = 14093;
 const int POWER_ENERGYMISSILE_SONIC             = 14094;
 const int POWER_ANIMAL_AFFINITY                 = 14095;
 const int POWER_STRENGTH_OF_MY_ENEMY            = 14096;
+const int POWER_CHAMELEON                       = 14097;
 
 // Level 3 Powers
 const int POWER_BODYADJUST                      = 14101;

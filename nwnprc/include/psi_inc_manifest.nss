@@ -767,8 +767,8 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     int bQuicken       = FALSE;
 
     // Normally swift action powers check
-    if(Get2DACache("feat", "ReqAction", GetClassFeatFromPower(nPower, nClass)) == "0" && // The power is swift action to use
-       TakeSwiftAction(oManifester)                                                      // And the manifester can take a swift action now
+    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nPower, nClass)) == "SWIFT_ACTION" && // The power is swift action to use
+       TakeSwiftAction(oManifester)                                                                // And the manifester can take a swift action now
        )
     {
         nManifDur = 0;

@@ -12,7 +12,7 @@
 
     Psychometabolism
     Level: Psion/wilder 1, psychic warrior 1
-    Manifesting Time: 1 standard action
+    Manifesting Time: 1 swift action
     Range: Touch
     Target: One creature or object
     Duration: Instantenous
@@ -24,6 +24,10 @@
     This power charges your touch with the force of a sledgehammer. A successful
     melee touch attack deals 1d8 points of bludgeoning damage. This damage is
     not increased or decreased by your Strength modifier.
+
+    Manifesting this power is a swift action, like manifesting a quickened
+    power, and it counts toward the normal limit of one quickened power per
+    round. You cannot manifest this power when it isn't your turn.
 
     Augment: For every additional power point spent, this power's damage
              increases by 1d8.

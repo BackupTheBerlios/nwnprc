@@ -1,22 +1,28 @@
 /*
    ----------------
    Duodimensional Claw
-   
+
    psi_pow_duoclaw
    ----------------
 
    5/11/05 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 3
-   Range: Personal
-   Target: Caster
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   If you have a claw attack, or a bite attack, you can use this power to provide a keen enhancement to your attack.
+    Duodimensional Claw
+
+    Psychometabolism
+    Level: Psychic warrior 3
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 5
+    Metapsionics: Extend
+
+    If you have a claw attack (either from an actual natural weapon or from an
+    effect such as claws of the beast), you can use this power to improve that
+    weapon. Your claws become two-dimensional, making them razorsharp. The
+    weapon is now psionically keen, doubling it's threat range.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +32,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,33 +48,40 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster);
-    if (!GetIsObjectValid(oTarget))
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	FloatingTextStringOnCreature("You do not have a valid target for Duodimensional Claw", oCaster, FALSE);
-    	return;
-    }
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-	int nCaster = GetManifesterLevel(oCaster);
-	float fDur = 600.0 * nCaster;
-	if (nMetaPsi == 2) fDur *= 2;
-	
-	effect eVis = EffectVisualEffect(VFX_IMP_PULSE_WIND);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	
-	AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyKeen(), oTarget, fDur);
-	
-	// Pulsing effect on the target
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDur, oTarget, fDur);
-	
-    }
+        object oLClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget);
+        object oRClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget);
+        effect eDur         = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        effect eVis         = EffectVisualEffect(VFX_IMP_PULSE_WIND);
+        itemproperty ipKeen = ItemPropertyKeen();
+        float fDuration = 600.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Must have claws check
+        if(!(GetIsObjectValid(oLClaw) || GetIsObjectValid(oRClaw)))
+        {
+            // "Target does not posses a claw attack!"
+            FloatingTextStrRefOnCreature(16826653, oManifester, FALSE);
+            return;
+        }
+
+        // Apply the itemproperties
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipKeen, oLClaw, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipKeen, oRClaw, fDuration);
+
+        // Do some VFX
+                           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        DelayCommand(1.0f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        DelayCommand(2.0f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration);
+    }// end if - Successfull manifestation
 }

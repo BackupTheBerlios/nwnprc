@@ -12,7 +12,7 @@
 
     Telepathy [Mind-Affecting]
     Level: Psion/wilder 1, psychic warrior 1
-    Manifesting Time: 1 standard action
+    Manifesting Time: 1 swift action
     Range: Personal
     Target: You
     Duration: 1 round/level
@@ -22,6 +22,10 @@
     You empty your mind of all transitory and distracting thoughts, improving
     your self-control. You gain a +2 bonus on all Will saves for the duration
     of the power.
+
+    Manifesting this power is a swift action, like manifesting a quickened
+    power, and it counts toward the normal limit of one quickened power per
+    round. You cannot manifest this power when it isn't your turn.
 
     Augment: For every 2 additional power points you spend, the bonus on your
              Will saves increases by 1.

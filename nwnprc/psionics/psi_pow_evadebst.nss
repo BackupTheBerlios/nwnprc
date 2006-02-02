@@ -12,7 +12,7 @@
 
     Psychometabolism
     Level: Psion/wilder 7, psychic warrior 3
-    Manifesting Time: 1 standard action
+    Manifesting Time: 1 swift action
     Range: Personal
     Target: You
     Duration: 1 round/Level
@@ -23,6 +23,10 @@
     ectoplasmic shells that allow you to slide out of range of a damaging
     effects that allow a Reflex save. This is equivalent to possessing the
     Evasion ability.
+
+    Manifesting this power is a swift action, like manifesting a quickened
+    power, and it counts toward the normal limit of one quickened power per
+    round. You cannot manifest this power when it isn't your turn.
 
     Augment: If you spend 4 additional power points, the effect is instead
              equivalent to Improved Evasion, meaning you take only half damage

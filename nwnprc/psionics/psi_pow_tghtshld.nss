@@ -24,7 +24,7 @@
 
     Manifesting this power is a swift action, like manifesting a quickened
     power, and it counts toward the normal limit of one quickened power per
-    round. You cannot manifest this power when it isn’t your turn.
+    round.
 
     Augment: For every additional power point you spend, this power’s duration
              increases by 1 round, and the power resistance it provides

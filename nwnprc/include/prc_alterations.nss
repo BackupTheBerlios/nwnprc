@@ -316,7 +316,7 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF)
         nSize -= GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction");
     // Expansion: Size increase by one or two categories, depending on augmentation
     if(GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease"))
-        nSize -= GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
+        nSize += GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
 
 
     if(nSize < CREATURE_SIZE_FINE)

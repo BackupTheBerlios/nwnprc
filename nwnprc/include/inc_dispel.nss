@@ -63,7 +63,7 @@ int AoECasterLevel(object oAoE = OBJECT_SELF);
 
 float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1);
 
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
+void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f,
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF);
 
 
@@ -165,7 +165,7 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
     // creatures. Also creature can be scripted to be immune to dispel
     // magic as well.
     //--------------------------------------------------------------------------
-    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE 
+    if (GetHasEffect(EFFECT_TYPE_PETRIFY, oTarget) == TRUE
         || GetLocalInt(oTarget, "X1_L_IMMUNE_TO_DISPEL") == 10)
     {
         return;
@@ -178,8 +178,8 @@ void spellsDispelMagicMod(object oTarget, int nCasterLevel, effect eVis, effect 
     //--------------------------------------------------------------------------
     // Fire hostile event only if the target is hostile...
     //--------------------------------------------------------------------------
-    
-    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))    
+
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nId));
     else
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nId, FALSE));
@@ -239,7 +239,7 @@ void spellsDispelAoEMod(object oTargetAoE, object oCaster, int nCasterLevel)
    int Weave = GetHasFeat(FEAT_SHADOWWEAVE,oCaster)+ GetLocalInt(oCaster, "X2_AoE_SpecDispel");
    if (GetLocalInt(oTargetAoE, " X2_Effect_Weave_ID_") && !Weave) ModWeave = 4;
    if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
-   if (GetLocalInt(oTargetAoE, "DispellingBuffer")) nBuffer = 5;
+   if (GetLocalInt(oTargetAoE, "PRC_Power_DispellingBuffer_Active")) nBuffer = 5;
    if (GetHasFeat(FEAT_SPELL_GIRDING, oTargetAoE)) nGirding = 2;
 
    int iDice = d20(1);
@@ -289,10 +289,10 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
 
   string sSelf = "Dispelled: ";
   string sCast = "Dispelled on "+GetName(oTarget)+": ";
- 
+
  int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
 // SendMessageToPC(GetFirstPC(), "DispelMagicBestMod Weave Caster:"+ IntToString(Weave));
-  if (GetLocalInt(oTarget, "DispellingBuffer")) nBuffer = 5;
+  if (GetLocalInt(oTarget, "PRC_Power_DispellingBuffer_Active")) nBuffer = 5;
 
   for(nCurrentEntry = 0; nCurrentEntry <= nLastEntry; nCurrentEntry++)
   {
@@ -400,14 +400,14 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
 
   int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
   effect eToDispel;
-  
+
   string sList, SpellName;
   string sSelf = "Dispelled: ";
-  string sCast = "Dispelled on "+GetName(oTarget)+": ";  
+  string sCast = "Dispelled on "+GetName(oTarget)+": ";
 
   int Weave = GetHasFeat(FEAT_SHADOWWEAVE,OBJECT_SELF)+ GetLocalInt(OBJECT_SELF, "X2_AoE_SpecDispel");
 //  SendMessageToPC(GetFirstPC(), "DispelMagicAllMod Weave Caster:"+ IntToString(Weave));
-  if (GetLocalInt(oTarget, "DispellingBuffer")) nBuffer = 5;
+  if (GetLocalInt(oTarget, "PRC_Power_DispellingBuffer_Active")) nBuffer = 5;
 
   //:: Do the dispel check for each and every spell in effect on oTarget.
   for(nIndex; nIndex <= nLastEntry; nIndex++)
@@ -422,7 +422,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
       if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nIndex)) && !Weave) ModWeave = 4;
       if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
       if (GetHasFeat(FEAT_SPELL_GIRDING, oTarget)) nGirding = 2;
-      
+
       int iDice = d20(1);
  //     SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nEffectSpellID)+" T "+GetName(oTarget)+" C "+GetName(GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex))));
  //     SendMessageToPC(GetFirstPC(), "Dispell :"+IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + nEffectCasterLevel+ModWeave)+" Weave :"+IntToString(ModWeave)+" "+SchoolWeave);
@@ -477,7 +477,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
   {
     ModWeave =0;
     if (GetLocalInt(oTarget, " XP2_L_SPELL_WEAVE" +IntToString (SPELL_INFESTATION_OF_MAGGOTS)) && !Weave) ModWeave = 4;
-    
+
     if(d20(1) + nCasterLevel >= bHasInfestationEffects + 11+ModWeave+nBuffer+nGirding)
     {
       DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_INFESTATION_OF_MAGGOTS));
@@ -506,7 +506,7 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
 
   if (sList == "") sList = "None  ";
   sList = GetStringLeft(sList, GetStringLength(sList) - 2); // truncate the last ", "
-  
+
   SendMessageToPC(OBJECT_SELF, sCast+sList);
   if (oTarget != OBJECT_SELF) SendMessageToPC(oTarget, sSelf+sList);
 
@@ -552,7 +552,7 @@ void SortAll3Arrays(object oTarget)
       nSpellIDHigh = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nHighestEntry));
       oMakerHigh = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nHighestEntry));
       iWeaveHigh = GetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nHighestEntry));
-      
+
       DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrEntry));
       DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrEntry));
       DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrEntry));
@@ -596,7 +596,7 @@ void HandleInfestationOfMaggots(object oTarget)
 
   int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
   if(nHasInfestationEffect)
-  {  
+  {
     // If they have infestation of maggots on them, then add it to the end of the list.
     // I would add it during the spell script itself but it might get swept up before the spell has
     // really ended, I fear.
@@ -619,12 +619,12 @@ void HandleInfestationOfMaggots(object oTarget)
 //:: End of section to trap infestation of maggots.
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f, 
+void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f,
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 {
 
     // Extraordinary/Supernatural effects are not supposed to be dispellable.
-    if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY 
+    if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY
         || GetEffectSubType(eEffect) == SUBTYPE_SUPERNATURAL)
     {
         bDispellable = FALSE;
@@ -654,7 +654,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
        SetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex), nSpellID);
        SetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex), nCasterLevel);
        SetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex), oCaster );
-       if (GetHasFeat(FEAT_SHADOWWEAVE, oCaster)) 
+       if (GetHasFeat(FEAT_SHADOWWEAVE, oCaster))
          SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), GetHasFeat(FEAT_TENACIOUSMAGIC,oCaster));
        else
          SetLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex), 0);
@@ -687,7 +687,7 @@ void SetAllAoEInts(int SpellID, object oAoE, int nBaseSaveDC ,int SpecDispel = 0
        if (SpecDispel) ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_SpecDispel", SpecDispel));
        ActionDoCommand(SetLocalInt(oAoE, "X2_AoE_Is_Modified", 1));
     }
- 
+
 }
 
 // Just returns the stored value.

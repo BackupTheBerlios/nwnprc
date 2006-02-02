@@ -2,7 +2,6 @@ package prc;
 
 import prc.autodoc.ErrorPrinter;
 import prc.autodoc.Spinner;
-import prc.utils.LetoListsGenerator;
 
 /**
  * A menu class. Calls operations from classes in subpackages based on parameters
@@ -56,6 +55,9 @@ public class Main {
 		else if(toCall.equals("upclsfeat")){
 			prc.utils.AllClassFeatUpdater.main(paramsToPass);
 		}
+		else if(toCall.equals("lsentries")){
+			prc.utils.List2daEntries.main(paramsToPass);
+		}
 		else if(toCall.equals("dupentries")){
 			prc.utils.Duplicate2daEntryDetector.main(paramsToPass);
 		}
@@ -66,7 +68,7 @@ public class Main {
 			prc.utils.SpellbookMaker.main(paramsToPass);
 		}
 		else if(toCall.equals("letoxml")){
-			LetoListsGenerator.main(paramsToPass);
+			prc.utils.LetoListsGenerator.main(paramsToPass);
 		}
 
 		else{
@@ -92,6 +94,8 @@ public class Main {
 						   "                          containing duplicate subradial values\n"+
 						   "             makedep    - Builds include dependency lists\n" +
 						   "             upclsfeat  - Updates base cls_feat_*.2da based on given templates\n" +
+						   "             lsentries  - Lists the unique entries in given columns of a\n" +
+						   "                          given 2da\n" +
 						   "             dupentries - Seeks for duplicate entries in the given columns\n" +
 						   "                          of a given 2da\n"+
 						   "             2datosql   - Creates a SQL file from 2das\n" +

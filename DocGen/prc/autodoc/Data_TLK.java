@@ -164,7 +164,6 @@ public class Data_TLK{
 				data = data.replace("&", "&amp;"); //this must be before the others
 				data = data.replace("<", "&lt;");
 				data = data.replace(">", "&gt;");
-				data = data.replace("'", "?");
 				fw.write("  <entry id=\""+row+"\" lang=\"en\" sex=\"m\">"+data+"</entry>"+CRLF);
 			}
 			if(verbose) spinner.spin();

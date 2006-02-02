@@ -1,5 +1,5 @@
 //real power spell constants
- 
+
 // Level 1 Powers
 const int POWER_BOLT                            = 14001;
 const int POWER_CALLTOMIND                      = 14002;
@@ -187,6 +187,7 @@ const int POWER_TRUEVENOM_WEAPON                = 14179;
 const int POWER_WEAPON_ENERGY_COLD              = 14180;
 const int POWER_WEAPON_ENERGY_ELEC              = 14181;
 const int POWER_WEAPON_ENERGY_FIRE              = 14182;
+const int POWER_INTELLECTFORTRESS               = 14183;
 
 // Level 5 Powers
 const int POWER_BALEFULTEL                      = 14191;

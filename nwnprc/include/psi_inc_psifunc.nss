@@ -246,7 +246,7 @@ int GetWildSurge(object oManifester);
  * Currently accounts for:
  *  - Mental Resistance
  *  - Greater Power Specialization
- *
+ *  - Intellect Fortress
  *
  * @param oTarget     A creature being dealt damage by a power
  * @param oManifester The creature manifesting the damaging power
@@ -691,15 +691,20 @@ int GetWildSurge(object oManifester)
 int GetTargetSpecificChangesToDamage(object oTarget, object oManifester, int nDamage,
                                      int bIsHitPointDamage = TRUE, int bIsEnergyDamage = FALSE)
 {
-    // Mental Resistance - 3 damage less for all non-energy damage and ability damage
-    if(GetHasFeat(FEAT_MENTAL_RESISTANCE, oTarget) && !bIsEnergyDamage)
-        nDamage -= 3;
     // Greater Power Specialization - +2 damage on all HP-damaging powers when target is within 30ft
     if(bIsHitPointDamage                                                &&
-       GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION, oManifester) &&
+       GetHasFeat(FEAT_GREATER_POWER_SPECIALIZATION, oManifester)       &&
        GetDistanceBetween(oTarget, oManifester) <= FeetToMeters(30.0f)
        )
             nDamage += 2;
+    // Intellect Fortress - Halve damage dealt by powers that allow PR. Goes before DR (-like) reductions
+    if(GetLocalInt(oTarget, "PRC_Power_IntellectFortress_Active")    &&
+       Get2DACache("spells", "ItemImmunity", PRCGetSpellId()) == "1"
+       )
+        nDamage /= 2;
+    // Mental Resistance - 3 damage less for all non-energy damage and ability damage
+    if(GetHasFeat(FEAT_MENTAL_RESISTANCE, oTarget) && !bIsEnergyDamage)
+        nDamage -= 3;
 
     // Reasonable return values only
     if(nDamage < 0) nDamage = 0;

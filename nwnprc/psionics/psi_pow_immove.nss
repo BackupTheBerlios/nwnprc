@@ -1,66 +1,52 @@
 /*
    ----------------
    Immovability
-   
+
    psi_pow_immove
    ----------------
 
    13/12/05 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 4
-   Range: Personal
-   Target: Self
-   Duration: Concentration
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 7
-   
-   You mentally attach yourself to the underlying fabric of the plane, making you impossible to move. You gain a +20 bonus to 
-   Discipline, and damage resistance of 15/-. This power will also stop any attempt made to teleport the subject.
-   The concentration check has a DC of 14 + damage taken during the round. To cancel the power at any time, simply recast the power.
+    Immovability
+
+    Psychometabolism
+    Level: Psychic warrior 4
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: Concentration
+    Power Points: 7
+    Metapsionics: None
+
+    You are almost impossible to move. Your weight does not vary; instead, you
+    mentally attach yourself to the underlying fabric of the plane. You gain a
+    +20 bonus on Discipline skill checks. You can’t voluntarily move to a new
+    location unless you stop concentrating, which ends the power.
+
+    You cannot apply your Dexterity bonus to Armor Class; however, your anchored
+    body gains damage reduction 15/-.
+
+    You cannot make physical attacks or perform any other large-scale movements
+    (you can make smallscale movements, such as breathing, turning your head,
+    moving your eyes, talking, and so on). Powers with the teleportation
+    descriptor manifested on you automatically fail.
+
+
+    Implementation note: To end concentrating on the power, use the control feat
+    again. If the power is active, that will end it instead of manifesting it.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
 #include "prc_inc_teleport"
 
-void DoConcentrationCheck(object oCaster, int nSpell)
-{
-	// DC is 10 + power level (4) + damage taken during the round
-	int nHP = GetLocalInt(oCaster, "ConcentrationHitpoints");
-	// Check for HP lost over the previous round
-	nHP = nHP - GetCurrentHitPoints(oCaster);
-	// Base DC
-	int nDC = 14;
-	// If he lost HP, add the damage to the DC
-	if (nHP > 0) nDC += nHP;
-
-	int nCheck = GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, nDC);
-	if (!nCheck)
-	{
-		// Fail the check, get rid of the spell
-		RemoveSpellEffects(nSpell, oCaster, oCaster);
-		// Clean up the int
-		DeleteLocalInt(oCaster, "ConcentrationHitpoints");
-		// Can teleport again
-		AllowTeleport(oCaster);
-	}
-	else 
-	{
-		// Store their HP to see what happens over the next round.
-		SetLocalInt(oCaster, "ConcentrationHitpoints", GetCurrentHitPoints(oCaster));
-		DelayCommand(6.0f, DoConcentrationCheck(oCaster, nSpell));
-	}
-}
+void DispelMonitor(object oManifester, object oTarget, int nSpellID);
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -77,47 +63,65 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
 
-    // Code to cancel spell if still in effect
-    if (GetHasSpellEffect(GetSpellId(), oCaster))
+    // Special - remove effect if already active instead of manifesting
+    if(GetHasSpellEffect(PRCGetSpellId(), oTarget))
     {
-    	RemoveSpellEffects(GetSpellId(), oCaster, oCaster);
-    	// Clean up the int
-	DeleteLocalInt(oCaster, "ConcentrationHitpoints");
-	// Can teleport again
-	AllowTeleport(oCaster);
-    	return;
+        // Remove effects
+        RemoveSpellEffects(PRCGetSpellId(), oManifester, oTarget);
+        // Restore teleportability
+        AllowTeleport(oTarget);
     }
-
-    int nAugCost = 0;
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, 0, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
+    else
     {
-    	int nCaster = GetManifesterLevel(oCaster);
-    	int nDur = nCaster;
-    	
+        struct manifestation manif =
+            EvaluateManifestation(oManifester, oTarget,
+                                  PowerAugmentationProfile(),
+                                  METAPSIONIC_NONE
+                                  );
 
-        effect eVis = EffectVisualEffect(VFX_DUR_SANCTUARY);
-    	effect eDur = EffectVisualEffect(VFX_DUR_STONEHOLD);
-    	effect eImmob = EffectCutsceneImmobilize();
-    	effect eDRB = EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 15);
-	effect eDRP = EffectDamageResistance(DAMAGE_TYPE_PIERCING, 15);
-        effect eDRS = EffectDamageResistance(DAMAGE_TYPE_SLASHING, 15);
-        effect eDisc = EffectSkillIncrease(SKILL_DISCIPLINE, 20);
-    	effect eLink = EffectLinkEffects(eVis, eDur);    	
-        eLink = EffectLinkEffects(eLink, eImmob);
-        eLink = EffectLinkEffects(eLink, eDRB);
-        eLink = EffectLinkEffects(eLink, eDRP);
-        eLink = EffectLinkEffects(eLink, eDRS);
-        eLink = EffectLinkEffects(eLink, eDisc);
-    	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDur),TRUE,-1,nCaster);
-	// Start concentrating.
-	DoConcentrationCheck(oCaster, GetSpellId());
-	// Stops teleporting
-	DisallowTeleport(oTarget);
+        if(manif.bCanManifest)
+        {
+            effect eLink =                          EffectCutsceneImmobilize();
+                   eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_DISCIPLINE, 20));
+                   eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 15));
+                   eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_PIERCING,    15));
+                   eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_SLASHING,    15));
+                   eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SANCTUARY));
+                   eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_STONEHOLD));
+
+            // Apply effect link
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget, 0.0f, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+            // Forbid teleportation
+            DisallowTeleport(oTarget);
+
+            // Hook event
+
+            // Start monitor HB
+            DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID));
+        }// end if - Successfull manifestation
+    }// end else - Manifesting the power
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID)
+{
+    // Has the power been dispelled or cancelled since the last HB
+    if(GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
+    {
+        if(DEBUG) DoDebug("psi_pow_immove: Power expired, clearing");
+
+        // Unhook event
+
+        // Remove effects
+        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+
+        // Restore teleportability
+        AllowTeleport(oTarget);
     }
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID));
 }

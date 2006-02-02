@@ -8211,7 +8211,23 @@ This power functions only while you inhabit your base form (for instance, you ca
 
 Augment: For every additional power point you spend, this power’s duration increases by 2 rounds.</entry>
   <entry id="46915" lang="en" sex="m">Immovability</entry>
-  <entry id="46916" lang="en" sex="m">Description</entry>
+  <entry id="46916" lang="en" sex="m">Psychometabolism
+Level: Psychic warrior 4
+Manifesting Time: 1 standard action
+Range: Personal
+Target: You
+Duration: Concentration
+Power Points: 7
+Metapsionics: None
+
+You are almost impossible to move. Your weight does not vary; instead, you mentally attach yourself to the underlying fabric of the plane. You gain a +20 bonus on Discipline skill checks. You can’t voluntarily move to a new location unless you stop concentrating, which ends the power.
+
+You cannot apply your Dexterity bonus to Armor Class; however, your anchored body gains damage reduction 15/-.
+
+You cannot make physical attacks or perform any other large-scale movements (you can make smallscale movements, such as breathing, turning your head, moving your eyes, talking, and so on). Powers with the teleportation descriptor manifested on you automatically fail.
+
+
+Implementation note: To end concentrating on the power, use the control feat again. If the power is active, that will end it instead of manifesting it.</entry>
   <entry id="46917" lang="en" sex="m">Metaphysical Claw</entry>
   <entry id="46918" lang="en" sex="m">Description</entry>
   <entry id="46919" lang="en" sex="m">Metaphysical Weapon</entry>
@@ -8243,8 +8259,27 @@ Augment: For every additional power point you spend, this power’s duration incre
   <entry id="46945" lang="en" sex="m">Weapon of Fire</entry>
   <entry id="46946" lang="en" sex="m">Weapon of Cold</entry>
   <entry id="46947" lang="en" sex="m">Weapon of Electricity</entry>
-  <entry id="46948" lang="en" sex="m">Chameleon</entry>
-  <entry id="46949" lang="en" sex="m">Psychometabolism
+  <entry id="46948" lang="en" sex="m">Intellect Fortress</entry>
+  <entry id="46949" lang="en" sex="m">Psychokinesis
+Level: Psion/wilder 4
+Manifesting Time: 1 swift action
+Range: 20 ft.
+Area: 20-ft.-radius spread centered on you
+Duration: 1 round
+Saving Throw: None
+Power Resistance: Yes
+Power Points: 7
+Metapsionics: Extend, Widen
+
+You encase yourself and your allies in a shimmering fortress of telekinetic force. All damage from powers and psi-like abilities taken by subjects inside the area of the intellect fortress, including ability damage, is halved. This lowering takes place prior to the effects of other powers or abilities that lessen damage, such as damage reduction and evasion.
+
+Powers that are not subject to power resistance are not affected by an intellect fortress.
+
+Manifesting this power is a swift action, like manifesting a quickened power, and it counts toward the normal limit of one quickened power per round.
+
+Augment: For every additional power point you spend, this power’s duration increases by 1 round.</entry>
+  <entry id="46950" lang="en" sex="m">Chameleon</entry>
+  <entry id="46951" lang="en" sex="m">Psychometabolism
 Level: Egoist 2, Psychic Warrior 1
 Manifesting Time: 1 standard action
 Range: Personal
@@ -8253,8 +8288,7 @@ Duration: 10 min./level
 Power Points: 1
 Metapsionics: Extend
 
-Your skin and equipment take on the color and texture of nearby objects,
-including floors and walls. You receive a +10 enhancement bonus on Hide checks.</entry>
+Your skin and equipment take on the color and texture of nearby objects, including floors and walls. You receive a +10 enhancement bonus on Hide checks.</entry>
   <entry id="46964" lang="en" sex="m">Empty Quickselection</entry>
   <entry id="46965" lang="en" sex="m">Power Points Remaining:</entry>
   <entry id="46966" lang="en" sex="m">Quickselection set to</entry>

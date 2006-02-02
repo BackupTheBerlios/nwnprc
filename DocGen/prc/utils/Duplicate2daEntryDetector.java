@@ -108,10 +108,10 @@ public class Duplicate2daEntryDetector {
 	
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-                           "  [--help] | [-i] pathof2da columnlabel+\n"+
+                           "  [--help] | [-ce] pathof2da columnlabel+\n"+
                            "\n" +
                            " pathof2da   path of the 2da to check\n"+
-                           " columnlabel label of a column to test for duplicates\n" +
+                           " columnlabel label of a column to test for duplicate entries\n" +
                            "\n" +
                            "  -c      ignores case of the entries testes for duplicacy\n" +
                            "  -e      does not ignore empty entries. ie, ****\n"+

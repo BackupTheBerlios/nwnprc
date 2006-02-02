@@ -6,6 +6,7 @@
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "inc_utility"
+#include "psi_inc_manifest"
 
 void main()
 {
@@ -14,6 +15,10 @@ void main()
     // Do not run for the Ability Score clone, since it's getting destroyed in a moment anyway
     if(GetStringLeft(GetTag(oPC), 23) == "PRC_AbilityScore_Clone_")
         return;
+    // Do not run for the Manifestation tokens
+    if(GetTag(oItem) == PRC_MANIFESTATION_TOKEN_NAME)
+        return;
+
 //if(DEBUG) DoDebug("Running OnUnaquireItem, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
 

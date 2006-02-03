@@ -15,6 +15,7 @@
 
 #include "spinc_common"
 #include "x2_inc_spellhook"
+#include "spinc_remeffct"
 
 // return TRUE if the effect created by a supernatural force and can't be dispelled by spells
 int GetIsSupernaturalCurse(effect eEff);
@@ -68,10 +69,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             }
         eBad = GetNextEffect(oTarget);
     }
+            
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RESTORATION, FALSE));
 
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, oTarget); 
+    
+    //Spell Removal Check
+    SpellRemovalCheck(OBJECT_SELF, oTarget);
 }
 
 int GetIsSupernaturalCurse(effect eEff)

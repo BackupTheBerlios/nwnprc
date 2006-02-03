@@ -33,6 +33,9 @@ void main()
     int nEffect2;
     int nEffect3;
     int bAreaOfEffect = FALSE;
+    
+    //Spell Removal Check - Tenjac
+    SpellRemovalCheck(OBJECT_SELF, oTarget);
 
     effect eVis = EffectVisualEffect(VFX_IMP_REMOVE_CONDITION);
     //Check for which removal spell is being cast.

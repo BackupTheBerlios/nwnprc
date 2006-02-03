@@ -736,6 +736,7 @@ void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0)
             // First, try to do the equipping non-intrusively and give the target a reasonable amount of time to do it
             AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
             fDelay = 1.0f;
+            
             // Store the item to be equipped in a local variable to prevent contest between two different calls to ForceEquip
             SetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(nSlot), oItem);
         }

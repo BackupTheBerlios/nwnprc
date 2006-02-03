@@ -17533,6 +17533,55 @@ Description: The character is immune to sneak attacks.</entry>
 Prerequisite: Undead
 Description: You are resistant to damage from positive energy, such as cure spells.
 The first 10 points of damage are negated.</entry>
+  <entry id="52038" lang="en" sex="m">Night's Caress</entry>
+  <entry id="52039" lang="en" sex="m">School: Necromancy [Evil]
+   Level: Sorc/Wiz 5
+   Compnents: V,S
+   Range: Touch
+   Duration: Instantaneous
+   Save: Fortitude partial
+   Spell Resistance: Yes
+   
+   A touch from your hand, which sheds darkness like  the blackest of night, disrupts the life force of a living creature.  Your touch deals 1d6 points of   damage per caster level (max 15d6), and 1d6+2 points of Constituion damage (a sucessful Fortitude saving throw negates the Constitution damage.)  The spell has a special effect on an undead creature.  An undead touched by you takes no damage, but it must make a successful Will saving throw or flee as if panicked for 1d4 rounds + 1 round per caster level.</entry>
+  <entry id="52040" lang="en" sex="m">Energy Ebb</entry>
+  <entry id="52041" lang="en" sex="m">School:    Necromancy (Evil)
+Level:  Cleric 7, Sorc/Wiz 7
+Duration: 1 round/level
+Saving throw: Fortitude negates
+    
+This spell functions like enervation except that the creature struck gains negative levels over an extended period. You point your finger and utter the incantation, releasing a black needle of crackling negative energy that suppresses the life
+force of any living creature it strikes. You must make a ranged touch attack to hit. If the attack succeeds, the subject immediately gains one negative level, then continues to gain another each round thereafter as her life force slowly bleeds away. The drain can only be stopped by a successful Heal check (DC 23) or the application of a heal, restoration, or greater restoration spell.
+    
+If the black needle strikes an undead creature, that  creature gains 4d4 * 5 temporary hp that last for up to 1 hour.
+</entry>
+  <entry id="52042" lang="en" sex="m">Avasculate(13)</entry>
+  <entry id="52043" lang="en" sex="m">Avasculate(18)</entry>
+  <entry id="52044" lang="en" sex="m">Avascular Mass (15)</entry>
+  <entry id="52045" lang="en" sex="m">Avascular Mass(20)</entry>
+  <entry id="52046" lang="en" sex="m">Otiluke's Resilient Sphere(7)</entry>
+  <entry id="52047" lang="en" sex="m">Otiluke's Resilient Sphere(14)</entry>
+  <entry id="52048" lang="en" sex="m">Necrotic Awareness(1)</entry>
+  <entry id="52049" lang="en" sex="m">Necrotic Awareness(10)</entry>
+  <entry id="52050" lang="en" sex="m">Necrotic Cyst(2)</entry>
+  <entry id="52051" lang="en" sex="m">Necrotic Cyst(15)</entry>
+  <entry id="52052" lang="en" sex="m">Necrotic Bloat(3)</entry>
+  <entry id="52053" lang="en" sex="m">Necrotic Bloat(12)</entry>
+  <entry id="52054" lang="en" sex="m">Necrotic Domination(5)</entry>
+  <entry id="52055" lang="en" sex="m">Necrotic Domination(14)</entry>
+  <entry id="52056" lang="en" sex="m">Necrotic Burst(9)</entry>
+  <entry id="52057" lang="en" sex="m">Necrotic Burst(18)</entry>
+  <entry id="52058" lang="en" sex="m">Necrotic Eruption(11)</entry>
+  <entry id="52059" lang="en" sex="m">Necrotic Eruption(18)</entry>
+  <entry id="52060" lang="en" sex="m">Necrotic Empowerment(15)</entry>
+  <entry id="52061" lang="en" sex="m">Necrotic Empowerment(20)</entry>
+  <entry id="52062" lang="en" sex="m">Necrotic Termination(17)</entry>
+  <entry id="52063" lang="en" sex="m">Necrotic Termination(25)</entry>
+  <entry id="52064" lang="en" sex="m">Ghoul Gauntlet(11)</entry>
+  <entry id="52065" lang="en" sex="m">Ghoul Gauntlet(18)</entry>
+  <entry id="52066" lang="en" sex="m">Night's Caress(9)</entry>
+  <entry id="52067" lang="en" sex="m">Night's Caress(18)</entry>
+  <entry id="52068" lang="en" sex="m">Energy Ebb(13)</entry>
+  <entry id="52069" lang="en" sex="m">Energy Ebb(15)</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>
   <entry id="52103" lang="en" sex="m">You cannot cast a spell utilizing your Mother Cyst while under the effects of Necrotic Empowerment!</entry>

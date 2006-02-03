@@ -1977,6 +1977,9 @@ const int FEAT_IMMUNITY_SNEAKATTACK           = 3591;
 const int FEAT_POSITIVE_ENERGY_RESISTANCE     = 3592;
 const int FEAT_TURNING_IMMUNITY               = 3593;
 
+//Mother Cyst
+const int FEAT_MOTHER_CYST                    = 3594;
+
 //Lasher
 const int FEAT_LASHER_SNEAK1D6                = 4075;
 const int FEAT_LASHER_SNEAK2D6                = 4076;

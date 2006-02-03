@@ -111,6 +111,13 @@ location PRCGetSpellTargetLocation();
 //wrapper for getspelltargetobject
 object PRCGetSpellTargetObject();
 
+//Added by Tenjac
+//Calculates alignment change for spells with Evil descriptor
+void SPEvilShift(object oPC);
+
+//Calculates alignment change for spells with Good descriptor
+void SPGoodShift(object oPC);
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -1020,6 +1027,13 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
      }
+     // Necrotic Cyst penalty on Necromancy spells
+     if (GetPersistantLocalInt(oTarget, "HAS_NECROTIC_CYST") && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
+          
+          {
+     	     nDC += 2;
+          }
+     
      return nSaveRoll;
 }
 
@@ -1416,6 +1430,30 @@ int PRCGetSpellId()
     if(nID == -1)
         nID = 0;
     return nID;
+}
+
+void SPEvilShift(object oPC)
+{
+	//Check for alignment shift switch
+	if(GetPRCSwitch("PRC_SPELL_ALIGNMENT_SHIFT"))
+	{
+		int nShift1 = GetGoodEvilValue(oPC);
+		float fShift = sqrt(IntToFloat(nShift1));
+		int nShift = FloatToInt(fShift);		
+		AdjustAlignment(oPC, ALIGNMENT_EVIL, nShift);
+	}
+}
+
+void SPGoodShift(object oPC)
+{
+	//Check for alignment shift switch
+	if(GetPRCSwitch("PRC_SPELL_ALIGNMENT_SHIFT"))
+	{
+		int nShift1 = GetGoodEvilValue(oPC);
+		float fShift = sqrt(IntToFloat(nShift1));
+		int nShift = FloatToInt(fShift);		
+		AdjustAlignment(oPC, ALIGNMENT_GOOD, nShift);
+	}
 }
 
 

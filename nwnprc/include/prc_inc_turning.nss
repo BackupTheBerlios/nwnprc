@@ -315,8 +315,14 @@ int GetTurningClassLevel(int bUndeadOnly = FALSE)
     nLevel += GetLevelByClass(CLASS_TYPE_CLERIC);
     nLevel += GetLevelByClass(CLASS_TYPE_TRUENECRO);
     nLevel += GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT);
-    nLevel += GetLevelByClass(CLASS_TYPE_BAELNORN);
     nLevel += GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS);
+    
+    //Baelnorn adds all class levels.  Careful not to count double.
+        if(GetLevelByClass(CLASS_TYPE_BAELNORN))
+        {
+    	    nLevel == GetHitDice(OBJECT_SELF);
+        }
+        
     //offset classes
     if(GetLevelByClass(CLASS_TYPE_PALADIN)-2>0)
         nLevel += GetLevelByClass(CLASS_TYPE_PALADIN)-2;

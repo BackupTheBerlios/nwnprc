@@ -90,6 +90,7 @@ const int POISON_RAVAGE_JADE_WATER              = 144;
 const int POISON_RAVAGE_PURIFIED_COUATL_VENOM   = 145;
 const int POISON_RAVAGE_UNICORN_BLOOD           = 146;
 
+const int VFX_PER_AVASMASS                      = 141;
 
 //:://////////////////////////////////////////////
 //:: Skill Const

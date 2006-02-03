@@ -20,6 +20,7 @@
 #include "spinc_common"
 #include "x2_inc_spellhook"
 #include "inc_utility"
+#include "spinc_remeffct"
 
 
 // return TRUE if the effect created by a supernatural force and can't be dispelled by spells
@@ -45,11 +46,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
 
 // End of Spell Cast Hook
 
-
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     effect eVisual = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER);
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    
+    //Spell Removal Check - Tenjac
+    SpellRemovalCheck(OBJECT_SELF, oTarget);
 
     effect eBad = GetFirstEffect(oTarget);
     //Search for negative effects
@@ -100,10 +103,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, oTarget);
     SetLocalInt(oTarget, "WasRestored", TRUE);
     DelayCommand(HoursToSeconds(1), DeleteLocalInt(oTarget, "WasRestored"));
-
+    
+    
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
-
 
 }
 

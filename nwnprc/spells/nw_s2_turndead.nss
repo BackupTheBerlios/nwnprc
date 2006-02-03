@@ -22,7 +22,7 @@ Blackguard-2
 True Necromancer
 Soldier of Light
 Hospitalier-2
-Balenorm
+Balenorm  //Baelnorn technically doesn't stack; all levels of all classes count -Tenjac
 Drow Judicator
 */
 

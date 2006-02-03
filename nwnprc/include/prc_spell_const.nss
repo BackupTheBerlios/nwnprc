@@ -460,8 +460,27 @@ const int SPELL_LASHER_CRACK_DOOM                   = 1917;
 // Warchief
 const int SPELL_TRIBAL_FRENZY                       = 1597;
 
-// Baelnorn
+
+//Baelnorn
 const int SPELL_BAELNORN_PROJECTION                 = 2902;
+const int SPELL_BAELNORN_TOUCH                      = 2903;
+
+//Tenjac's spells
+const int SPELL_AVASCULATE                          = 2851;
+const int SPELL_AVASCULAR_MASS                      = 2852;
+const int SPELL_OTILUKES_RS                         = 2853;
+const int SPELL_NECROTIC_AWARENESS                  = 2854;
+const int SPELL_NECROTIC_CYST                       = 2855;
+const int SPELL_NECROTIC_BLOAT	                    = 2856;
+const int SPELL_NECROTIC_DOMINATION                 = 2857;
+const int SPELL_NECROTIC_BURST                      = 2858;
+const int SPELL_NECROTIC_ERUPTION                   = 2859;
+const int SPELL_NECROTIC_EMPOWERMENT                = 2860;
+const int SPELL_NECROTIC_TERMINATION                = 2861;
+const int SPELL_GHOUL_GAUNTLET                      = 2862;
+const int SPELL_ENERGY_EBB                          = 2863;
+const int SPELL_NIGHTS_CARESS                       = 2864;
+
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;
 const int SPELL_INSIGHTFUL_REFLEXES                 = 1916;

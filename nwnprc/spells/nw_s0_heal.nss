@@ -21,6 +21,7 @@
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_utility"
+#include "spinc_remeffct"
 
 void main()
 {
@@ -93,7 +94,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     //Apply damage effect and VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSun, oTarget);
-                }
+                                    }
             }
         }
     }
@@ -116,6 +117,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         SetLocalInt(oTarget, "PC_Damage", 0);
     }
 
+//Spell Removal Check
+SpellRemovalCheck(OBJECT_SELF, oTarget);
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name

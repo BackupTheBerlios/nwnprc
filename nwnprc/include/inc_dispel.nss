@@ -72,6 +72,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "lookup_2da_spell"
 #include "prcsp_spell_adjs"
 #include "nw_i0_spells"
+#include "spinc_remeffct"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -447,6 +448,10 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
             if(GetEffectCreator(eToDispel) == oEffectCaster)
             {
               RemoveEffect(oTarget, eToDispel);
+              
+              //Spell Removal Check
+              SpellRemovalCheck(oEffectCaster, oTarget);
+		      
             }// end if effect comes from this caster
           }// end if effect comes from this spell
           eToDispel = GetNextEffect(oTarget);

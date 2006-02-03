@@ -17,11 +17,11 @@ void main()
         LolthMeat(oKiller);
     }
     */
-    
+
     if (GetLocalInt(OBJECT_SELF, "DestructionRetribution"))
     {
 
-        SendMessageToPC(GetFirstPC(), "Master has Destruction Retribution");
+        if(DEBUG) DoDebug("Destruction Retribution firing. Dead creature = " + DebugObject2Str(OBJECT_SELF));
 
         int nDamage;
         int nHD = GetHitDice(OBJECT_SELF)/2;
@@ -74,7 +74,7 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget);
         }
     }
-    
+
     // Execute scripts hooked to this event for the NPC triggering it
     ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_NPC_ONDEATH);
 }

@@ -44,6 +44,15 @@ void main()
     int nDC = SPGetSpellSaveDC(oTarget, oPC);
     int nHP = GetCurrentHitPoints(oTarget);
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    
+    // Gotta be a living critter
+        int nType = MyPRCGetRacialType(oTarget);
+        if ((nType == RACIAL_TYPE_CONSTRUCT) ||
+            (nType == RACIAL_TYPE_UNDEAD) ||
+            (nType == RACIAL_TYPE_ELEMENTAL))
+            {
+		    return;
+	    }
 
     //Make touch attack
     int nTouch = PRCDoRangedTouchAttack(oTarget);

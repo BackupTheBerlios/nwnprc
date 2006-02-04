@@ -37,6 +37,15 @@ void main()
 	//Make touch attack
 	int nTouch = PRCDoMeleeTouchAttack(oTarget);
 	
+	// Gotta be a living critter
+	    int nType = MyPRCGetRacialType(oTarget);
+	    if ((nType == RACIAL_TYPE_CONSTRUCT) ||
+	        (nType == RACIAL_TYPE_UNDEAD) ||
+	        (nType == RACIAL_TYPE_ELEMENTAL))
+	        {
+			return;
+		}
+	
 	// if fails touch
 	if(!nTouch)
 	{

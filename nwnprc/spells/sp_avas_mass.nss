@@ -69,6 +69,15 @@ void main()
 	effect eHold = EffectEntangle();
 	effect eSlow = EffectSlow();
 	
+	// Gotta be a living critter
+	    int nType = MyPRCGetRacialType(oTarget);
+	    if ((nType == RACIAL_TYPE_CONSTRUCT) ||
+	        (nType == RACIAL_TYPE_UNDEAD) ||
+	        (nType == RACIAL_TYPE_ELEMENTAL))
+	        {
+			return;
+		}
+	
 	{
 		//VFX for spell when finished, commented out until done
 		

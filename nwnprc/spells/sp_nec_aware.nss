@@ -41,19 +41,12 @@ not its exact location.
 #include "spinc_common"
 #include "prc_inc_spells"
  
-void RoundThree(object oPC, location lTarget, int nRounds);
-void RoundTwo(object oPC, location lTarget, int nRounds);
-void RoundOne(object oPC, location lTarget, int nRounds);
+void RoundThree(object oPC, location lTarget);
+void RoundTwo(object oPC, location lTarget);
+void RoundOne(object oPC, location lTarget);
  
-void RoundThree(object oPC, location lTarget, int nRounds)
+void RoundThree(object oPC, location lTarget)
 {
-        if (nRounds < 1)
-        {
-                return;
-        }
-        
-        //if concentration is broken, abort
-                
         //get first 
         object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
@@ -69,21 +62,13 @@ void RoundThree(object oPC, location lTarget, int nRounds)
                 //get next
                 oTest = GetNextObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }
-        nRounds--;
-        
+                
         //Repeat from round one
-        DelayCommand(6.0f,RoundThree(oPC, lTarget, nRounds));
+        //DelayCommand(6.0f,RoundThree(oPC, lTarget));
 }
  
-void RoundTwo(object oPC, location lTarget, int nRounds)
+void RoundTwo(object oPC, location lTarget)
 {
-        if (nRounds < 1)
-        {
-                        return;
-        }
-        
-        //if concentration is broken, abort
-               
         int nCount=0;
         
         //get first 
@@ -101,24 +86,14 @@ void RoundTwo(object oPC, location lTarget, int nRounds)
                 oTest = GetNextObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         }
                                      //You detect the presence of               count                         necrotic cysts
-        FloatingTextStringOnCreature(GetStringByStrRef(16832003) + " " + IntToString(nCount) + " " + GetStringByStrRef(16829322) + ".", oPC, FALSE);
-        
-        //decrement nRounds
-        nRounds--;
-        
+        FloatingTextStringOnCreature(GetStringByStrRef(16832001) + " " + IntToString(nCount) + " " + GetStringByStrRef(16829322) + ".", oPC, FALSE);
+                       
         //Schedule next round
-        DelayCommand(6.0f, RoundThree(oPC, lTarget, nRounds));
+        DelayCommand(6.0f, RoundThree(oPC, lTarget));
 }
  
-void RoundOne(object oPC, location lTarget, int nRounds)
+void RoundOne(object oPC, location lTarget)
 {
-        if (nRounds < 1)
-        {
-                return;
-        }
-        
-        //if concentration is broken, abort
-               
         //get first 
         object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
@@ -128,24 +103,21 @@ void RoundOne(object oPC, location lTarget, int nRounds)
                 //Check for presence
                 if(GetHasNecroticCyst(oTest))
                 {
-                        FloatingTextStringOnCreature(GetStringByStrRef(16832003) + " " + GetStringByStrRef(16829322) + ".", oPC, FALSE);
+                        FloatingTextStringOnCreature(GetStringByStrRef(16832001) + " " + GetStringByStrRef(16829322) + ".", oPC, FALSE);
                         
                         //Schedule next round
-                        DelayCommand(6.0f, RoundTwo(oPC, lTarget, nRounds));
+                        DelayCommand(6.0f, RoundTwo(oPC, lTarget));
                         
                         //abort; finding one is enough.
-                        nRounds--;
                         return;
                 }
                 
         }
-        //decrement nRounds
-        nRounds--;
-        
+               
         //if concentration is broken, abort
               
         //Re-run round 1 if nothing found
-        DelayCommand(6.0f, RoundOne(oPC, lTarget, nRounds));
+        DelayCommand(6.0f, RoundOne(oPC, lTarget));
 }
  
 void main()
@@ -160,8 +132,7 @@ void main()
         }
         //vars
         object oPC = OBJECT_SELF;
-        int nRounds = 6 * (PRCGetCasterLevel(oPC));
-        
+                
         //Check for castability
         if(!GetCanCastNecroticSpells(oPC))
         {
@@ -174,7 +145,7 @@ void main()
         lTarget = GetLocation(PRCGetSpellTargetObject());
                 
         //Detect
-        RoundOne(oPC, lTarget, nRounds);
+        RoundOne(oPC, lTarget);
         
         SPSetSchool();  
 } 

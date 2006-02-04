@@ -53,12 +53,7 @@ void RoundThree(object oPC, location lTarget, int nRounds)
         }
         
         //if concentration is broken, abort
-        //if(GetBreakConcentrationCheck(oPC))
-        {//                              "Concentration broken."
-        //        FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-       //         return;
-        }
-        
+                
         //get first 
         object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
@@ -88,12 +83,7 @@ void RoundTwo(object oPC, location lTarget, int nRounds)
         }
         
         //if concentration is broken, abort
-       // if(GetBreakConcentrationCheck(oPC))
-        {//                              "Concentration broken."
-       //         FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-       //         return;
-        }
-        
+               
         int nCount=0;
         
         //get first 
@@ -128,12 +118,7 @@ void RoundOne(object oPC, location lTarget, int nRounds)
         }
         
         //if concentration is broken, abort
-       // if(GetBreakConcentrationCheck(oPC))
-        {//                              "Concentration broken."
-       //         FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-       //         return;
-        }       
-        
+               
         //get first 
         object oTest = GetFirstObjectInShape(SHAPE_SPELLCONE, 20.0, lTarget, TRUE, OBJECT_TYPE_CREATURE);
         
@@ -158,12 +143,7 @@ void RoundOne(object oPC, location lTarget, int nRounds)
         nRounds--;
         
         //if concentration is broken, abort
-      //  if(GetBreakConcentrationCheck(OBJECT_SELF))
-        {//                              "Concentration broken."
-       //         FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-        //        return;
-        }
-        
+              
         //Re-run round 1 if nothing found
         DelayCommand(6.0f, RoundOne(oPC, lTarget, nRounds));
 }

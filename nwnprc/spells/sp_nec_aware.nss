@@ -53,10 +53,10 @@ void RoundThree(object oPC, location lTarget, int nRounds)
         }
         
         //if concentration is broken, abort
-        if(GetBreakConcentrationCheck(oPC))
+        //if(GetBreakConcentrationCheck(oPC))
         {//                              "Concentration broken."
-                FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-                return;
+        //        FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
+       //         return;
         }
         
         //get first 
@@ -88,10 +88,10 @@ void RoundTwo(object oPC, location lTarget, int nRounds)
         }
         
         //if concentration is broken, abort
-        if(GetBreakConcentrationCheck(oPC))
+       // if(GetBreakConcentrationCheck(oPC))
         {//                              "Concentration broken."
-                FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-                return;
+       //         FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
+       //         return;
         }
         
         int nCount=0;
@@ -128,10 +128,10 @@ void RoundOne(object oPC, location lTarget, int nRounds)
         }
         
         //if concentration is broken, abort
-        if(GetBreakConcentrationCheck(oPC))
+       // if(GetBreakConcentrationCheck(oPC))
         {//                              "Concentration broken."
-                FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-                return;
+       //         FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
+       //         return;
         }       
         
         //get first 
@@ -158,10 +158,10 @@ void RoundOne(object oPC, location lTarget, int nRounds)
         nRounds--;
         
         //if concentration is broken, abort
-        if(GetBreakConcentrationCheck(OBJECT_SELF))
+      //  if(GetBreakConcentrationCheck(OBJECT_SELF))
         {//                              "Concentration broken."
-                FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
-                return;
+       //         FloatingTextStringOnCreature(GetStringByStrRef(16832000), OBJECT_SELF, FALSE);
+        //        return;
         }
         
         //Re-run round 1 if nothing found

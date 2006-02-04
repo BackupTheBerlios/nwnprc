@@ -78,9 +78,7 @@ void main()
 	{
 		return;
 	}
-	
-	
-		
+			
 	//Check for Protection from Evil
 	if(GetHasSpellEffect(SPELL_PROTECTION_FROM_EVIL, oTarget))
 	return;

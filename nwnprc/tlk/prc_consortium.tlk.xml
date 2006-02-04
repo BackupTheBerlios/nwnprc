@@ -17586,6 +17586,8 @@ If the black needle strikes an undead creature, that  creature gains 4d4 * 5 tem
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>
   <entry id="52103" lang="en" sex="m">You cannot cast a spell utilizing your Mother Cyst while under the effects of Necrotic Empowerment!</entry>
+  <entry id="52106" lang="en" sex="m">necrotic cysts.</entry>
+  <entry id="52107" lang="en" sex="m">has a necrotic cyst.</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

@@ -56,81 +56,118 @@
 // Module events
 
 /// Module event - On Acquire Item
-const int EVENT_ONACQUIREITEM            = 1;
+const int EVENT_ONACQUIREITEM               = 1;
 /// Module event - On Activate Item
-const int EVENT_ONACTIVATEITEM           = 2;
+const int EVENT_ONACTIVATEITEM              = 2;
 /// Module event - On Client Enter
-const int EVENT_ONCLIENTENTER            = 3;
+const int EVENT_ONCLIENTENTER               = 3;
 /// Module event - On Client Leave
-const int EVENT_ONCLIENTLEAVE            = 4;
+const int EVENT_ONCLIENTLEAVE               = 4;
 /// Module event - On Cutscene Abort
-const int EVENT_ONCUTSCENEABORT          = 5;
+const int EVENT_ONCUTSCENEABORT             = 5;
 /// Module event - On Heartbeat
-const int EVENT_ONHEARTBEAT              = 6;
+const int EVENT_ONHEARTBEAT                 = 6;
 /// Module event - On Player Death
-const int EVENT_ONPLAYERDEATH            = 9;
+const int EVENT_ONPLAYERDEATH               = 9;
 /// Module event - On Player Dying
-const int EVENT_ONPLAYERDYING            = 10;
+const int EVENT_ONPLAYERDYING               = 10;
 /// Module event - On Player Equip Item
-const int EVENT_ONPLAYEREQUIPITEM        = 11;
+const int EVENT_ONPLAYEREQUIPITEM           = 11;
 /// Module event - On Player Level Up
-const int EVENT_ONPLAYERLEVELUP          = 12;
+const int EVENT_ONPLAYERLEVELUP             = 12;
 /// Module event - On Player Rest Cancelled
-const int EVENT_ONPLAYERREST_CANCELLED   = 13;
+const int EVENT_ONPLAYERREST_CANCELLED      = 13;
 /// Module event - On Player Rest Started
-const int EVENT_ONPLAYERREST_STARTED     = 14;
+const int EVENT_ONPLAYERREST_STARTED        = 14;
 /// Module event - On Player Rest Finished
-const int EVENT_ONPLAYERREST_FINISHED    = 15;
+const int EVENT_ONPLAYERREST_FINISHED       = 15;
 /// Module event - On Player Unequip Item
-const int EVENT_ONPLAYERUNEQUIPITEM      = 16;
+const int EVENT_ONPLAYERUNEQUIPITEM         = 16;
 /// Module event - On Player Respawn
-const int EVENT_ONPLAYERRESPAWN          = 17;
+const int EVENT_ONPLAYERRESPAWN             = 17;
 /// Module event - On Unacquire Item
-const int EVENT_ONUNAQUIREITEM           = 18;
-/// Module event - On Player Level Down
-const int EVENT_ONPLAYERLEVELDOWN        = 35;
+const int EVENT_ONUNAQUIREITEM              = 18;
 
 /**
  * Module Event - On Userdefined
  * This has special handling
  * @see prc_onuserdef.nss
  */
-const int EVENT_ONUSERDEFINED            = 19;
+const int EVENT_ONUSERDEFINED               = 19;
 
 
 // Other events
 /// Virtual event - On Hit
 /// Requires OnHitCastSpell: Unique on the weapon used
-const int EVENT_ONHIT                 = 20;
+const int EVENT_ONHIT                       = 20;
 /// Virtual event - On Spell Cast
 //const int EVENT_ONSPELLCAST           = 21;
 /// Virtual event - On Power Manifest
 //const int EVENT_ONPOWERMANIFEST       = 22;
 
 
+/// Virtual event - On Player Level Down
+/// WARNING: Event detection is slightly inaccurate
+const int EVENT_ONPLAYERLEVELDOWN           = 35;
+
+/// Virtual event - On Physically Attacked
+/// WARNING: Event detection is highly inaccurate
+const int EVENT_VIRTUAL_ONPHYSICALATTACKED  = 36;
+
+/// Virtual event - On Blocked
+/// WARNING: Event detection is inaccurate
+const int EVENT_VIRTUAL_ONBLOCKED           = 37;
+
+/// Virtual event - On Combat Round End
+/// WARNING: Event detection is inaccurate
+const int EVENT_VIRTUAL_ONCOMBATROUNDEND    = 38;
+
+/// Virtual event - On Conversation
+const int EVENT_VIRTUAL_ONCONVERSATION      = 39;
+
+/// Virtual event - On Damaged
+/// WARNING: Event detection is slightly inaccurate
+const int EVENT_VIRTUAL_ONDAMAGED           = 40;
+
+/// Virtual event - On Disturbed
+/// WARNING: Event detection may be inaccurate
+const int EVENT_VIRTUAL_ONDISTURBED         = 41;
+
+/// Virtual event - On Perception
+/// WARNING: Event detection may be inaccurate
+const int EVENT_VIRTUAL_ONPERCEPTION        = 42;
+
+/// Virtual event - On Spawned
+const int EVENT_VIRTUAL_ONSPAWNED           = 43;
+
+/// Virtual event - On Spell Cast At
+/// WARNING: Event detection may be inaccurate
+const int EVENT_VIRTUAL_ONSPELLCASTAT       = 44;
+
+
 // NPC events
 /// NPC event - On Blocked
-const int EVENT_NPC_ONBLOCKED            = 23;
+const int EVENT_NPC_ONBLOCKED               = 23;
 /// NPC event - On Combat Round End
-const int EVENT_NPC_ONCOMBATROUNDEND     = 24;
+const int EVENT_NPC_ONCOMBATROUNDEND        = 24;
 /// NPC event - On Conversation
-const int EVENT_NPC_ONCONVERSATION       = 25;
+const int EVENT_NPC_ONCONVERSATION          = 25;
 /// NPC event - On Damaged
-const int EVENT_NPC_ONDAMAGED            = 26;
+const int EVENT_NPC_ONDAMAGED               = 26;
 /// NPC event - On Death
-const int EVENT_NPC_ONDEATH              = 27;
+const int EVENT_NPC_ONDEATH                 = 27;
 /// NPC event - On Disturbed
-const int EVENT_NPC_ONDISTURBED          = 28;
+const int EVENT_NPC_ONDISTURBED             = 28;
 /// NPC event - On Heartbeat
-const int EVENT_NPC_ONHEARTBEAT          = 29;
+const int EVENT_NPC_ONHEARTBEAT             = 29;
 /// NPC event - On Perception
-const int EVENT_NPC_ONPERCEPTION         = 30;
+const int EVENT_NPC_ONPERCEPTION            = 30;
 /// NPC event - On Physically Attacked
-const int EVENT_NPC_ONPHYSICALATTACKED   = 31;
+const int EVENT_NPC_ONPHYSICALATTACKED      = 31;
 /// NPC event - On Rested
-const int EVENT_NPC_ONRESTED             = 32;
+const int EVENT_NPC_ONRESTED                = 32;
 /// NPC event - On Spell Cast At
-const int EVENT_NPC_ONSPELLCASTAT        = 34;
+const int EVENT_NPC_ONSPELLCASTAT           = 34;
 
 
 /* Item events */
@@ -152,7 +189,7 @@ const int EVENT_ITEM_ONHIT                  = 1005;
 
 /* Callback hooks */
 /// Callback hook - Unarmed evaluation
-const int CALLBACKHOOK_UNARMED           = 2000;
+const int CALLBACKHOOK_UNARMED              = 2000;
 
 
 /// When TRUE, ExecuteAllScriptsHookedToEvent() will print a list of the scripts it executes.

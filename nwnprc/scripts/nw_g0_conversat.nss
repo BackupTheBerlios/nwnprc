@@ -8,16 +8,17 @@
 // Description: This is the default script that is called if
 //              no OnConversation script is specified.
 ////////////////////////////////////////////////////////////
+
 #include "prc_alterations"
 #include "prc_inc_leadersh"
+
 void main()
 {
-    if(GetLocalInt(OBJECT_SELF, PRC_PC_EXEC_DEFAULT))
+    if(GetLocalInt(OBJECT_SELF, PRC_PC_EXEC_DEFAULT) || GetIsPC(OBJECT_SELF))
     {
         SetLocalInt(OBJECT_SELF, "default_conversation_event", TRUE);
         ExecuteScript("default", OBJECT_SELF);
-        return;
     }
-    if ( GetListenPatternNumber() == -1 )
+    else if(GetListenPatternNumber() == -1)
         BeginConversation();
 }

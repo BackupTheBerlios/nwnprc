@@ -1,5 +1,6 @@
 //::///////////////////////////////////////////////
 //:: Name default.nss
+//:: Copyright (c) 2004 OldMansBeard.
 //:://////////////////////////////////////////////
 /*
    PC's and their clones are created with "default" hard-coded as
@@ -8,21 +9,38 @@
    there is no script called "default" and, although these objects
    receive event signals, the signals evoke no scripted response.
 
+   In the OHS system, however, there is an actual script called
+   "default" to respond to the event signals received by PC's
+   and clones and thereby give them behaviour. This is that script.
+
    Because the same script is called by many different event signals
    and there is no inbuilt function resembling GetLastEventSignalled()
    it attempts to distinguish them according to context. It then
    simply passes the call on to an appropriate event-handling script.
+
+   In most cases it still does nothing if the calling object is a PC
+   but calls the appropriate OHS_HEN_* script if it is a henchman.
 */
+//:://////////////////////////////////////////////
+//:: Created By:    OldMansBeard
+//:: Created On:    2004-10-14
+//:: Last Modified: 2005-03-29
+//:://////////////////////////////////////////////
+
 #include "prc_alterations"
 #include "prc_inc_leadersh"
 
+/**************************/
+/* Declarations for Tests */
+/**************************/
+
 int IsBlocked();                // test GetBlockingDoor()
 int IsCombatRoundEnd();         // Need to fake this
-int IsConversation();           // uses localint set in nw_g0_conversat
+int IsConversation();           // test a local variable
 int IsDamaged();                // test GetLastDamager()
 int IsDeath();                  // test GetIsDead(OBJECT_SELF)
 int IsDisturbed();              // test GetLastDisturbed()
-int IsHeartbeat();              // test counter
+int IsHeartbeat();              // test game time
 int IsPerception();             // test GetLastPerceived()
 int IsPhysicalAttacked();       // test GetLastAttacker()
 int IsRested();                 // test GetIsResting(GetMaster())
@@ -30,14 +48,38 @@ int IsSpawn();                  // run once, never again
 int IsSpellCastAt();            // test GetLastSpellCaster()
 int IsUserDefined();            // test GetUserDefinedEventNumber()
 
-int IsStringChanged(string sTest, string sName);
-int IsIntChanged(int iTest, string sName);
-int IsObjectChanged(object oTest, string sName);
-void ClearChangeObject(string sName);
-void ClearChangeInt(string sName);
-void ClearChangeString(string sName);
-void RunScript(string sEvent);
+/*********************************/
+/* Utility Function declarations */
+/*********************************/
 
+void ForceAddHenchman(object oHenchman);
+int IsLinkboyAttached();
+void GetLinkboy();
+int IsObjectChanged(object oTest, string sVarname);
+int IsIntChanged(int iTest, string sVarname);
+int IsStringChanged(string sTest, string sVarname);
+//void OHSExecute(string sScriptName);
+void RunScript(string sEvent);
+void SpawnRecallLocals(object oPC);
+void StartGroupDiscussion();
+
+/*****************************/
+/* Implementation of Actions */
+/*****************************/
+/*
+void OnSpawn()            { OHSExecute("ohs_hen_spawn");  }
+void OnDeath()            { OHSExecute("ohs_hen_death");  }
+void OnRested()           { OHSExecute("ohs_hen_rest");   }
+void OnHeartbeat()        { OHSExecute("ohs_hen_heart");  }
+void OnPerception()       { OHSExecute("ohs_hen_percep"); }
+void OnBlocked()          { OHSExecute("ohs_hen_block");  }
+void OnCombatRoundEnd()   { OHSExecute("ohs_hen_combat"); }
+void OnDisturbed()        { OHSExecute("ohs_hen_distrb"); }
+void OnPhysicalAttacked() { OHSExecute("ohs_hen_attack"); }
+void OnSpellCastAt()      { OHSExecute("ohs_hen_spell");  }
+void OnDamaged()          { OHSExecute("ohs_hen_damage"); }
+void OnUserDefined()      { OHSExecute("ohs_hen_usrdef"); }
+*/
 void OnSpawn()            { RunScript("spawned");   }
 void OnDeath()            { RunScript("death");     }
 void OnRested()           { RunScript("rested");    }
@@ -52,231 +94,434 @@ void OnDamaged()          { RunScript("damaged");   }
 void OnUserDefined()      { RunScript("user");      }
 void OnConversation()     { RunScript("conv");      }
 
+/******************/
+/* Main Procedure */
+/******************/
+
 void main()
 {
-    if(!GetLocalInt(OBJECT_SELF, PRC_PC_EXEC_DEFAULT))
-        return;
-    if (IsBlocked())              OnBlocked();
-    if (IsCombatRoundEnd())       OnCombatRoundEnd();
-    if (IsConversation())         OnConversation();
-    if (IsDamaged())              OnDamaged();
-    if (IsDeath())                OnDeath();
-    if (IsDisturbed())            OnDisturbed();
-    if (IsHeartbeat())            OnHeartbeat();
-    if (IsPerception())           OnPerception();
-    if (IsPhysicalAttacked())     OnPhysicalAttacked();
-    if (IsRested())               OnRested();
-    if (IsSpawn())                OnSpawn();
-    if (IsSpellCastAt())          OnSpellCastAt();
-    if (IsUserDefined())          OnUserDefined();
+    if(DEBUG) DoDebug("default running for " + DebugObject2Str(OBJECT_SELF));
+
+    // OnConversation is exclusive of everything else, since it is just routed through this script
+    if(IsConversation())             OnConversation();
+    else
+    {
+        if(IsBlocked())              OnBlocked();
+        if(IsCombatRoundEnd())       OnCombatRoundEnd();
+        if(IsDamaged())              OnDamaged();
+        if(IsDeath())                OnDeath();
+        if(IsDisturbed())            OnDisturbed();
+        if(IsHeartbeat())            OnHeartbeat();
+        if(IsPerception())           OnPerception();
+        if(IsPhysicalAttacked())     OnPhysicalAttacked();
+        if(IsRested())               OnRested();
+        if(IsSpawn())                OnSpawn();
+        if(IsSpellCastAt())          OnSpellCastAt();
+        if(IsUserDefined())          OnUserDefined();
+    }
 }
+
+/************************/
+/* Tests for conditions */
+/************************/
 
 int IsBlocked()
 {
-  DelayCommand(1.0, ClearChangeObject("BlockingDoor"));
-  return IsObjectChanged(GetBlockingDoor(),"BlockingDoor");
-}
-
-int IsConversation()
-{
-    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "default_conversation_event"));
-    return GetLocalInt(OBJECT_SELF, "default_conversation_event");
+  return IsObjectChanged(GetBlockingDoor(), "BlockingDoor");
 }
 
 int IsCombatRoundEnd()
 {
-    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "default_combat_round_end_event"));
-    return GetLocalInt(OBJECT_SELF, "default_combat_round_end_event");
+    // Need to fake this.
+    // Return TRUE iff you are in combat and not doing anything useful
+    if(GetIsInCombat() ||
+       (GetIsObjectValid(GetMaster()) &&
+        GetIsInCombat(GetMaster())
+        )
+       )
+    {
+        int nGCA = GetCurrentAction();
+        if(nGCA == ACTION_ATTACKOBJECT  ||
+           nGCA == ACTION_CASTSPELL     ||
+           nGCA == ACTION_COUNTERSPELL  ||
+           nGCA == ACTION_HEAL          ||
+           nGCA == ACTION_FOLLOW        ||
+           nGCA == ACTION_ITEMCASTSPELL ||
+           nGCA == ACTION_KIDAMAGE      ||
+           nGCA == ACTION_OPENDOOR      ||
+           nGCA == ACTION_SMITEGOOD
+           )
+        {
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+int IsConversation()
+{
+    object oCreature = OBJECT_SELF;
+    if(GetLocalInt(oCreature, "default_conversation_event"))
+    {
+        DeleteLocalInt(oCreature, "default_conversation_event");
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 int IsDamaged()
 {
-  DelayCommand(1.0, ClearChangeObject("LastDamager"));
-  return IsObjectChanged(GetLastDamager(),"LastDamager");
+    object oCreature = OBJECT_SELF;
+    object oDamager  = GetLastDamager(oCreature);
+
+    // The damage source must be valid
+    if(GetIsObjectValid(oDamager))
+    {
+        // Get previous damage data
+        string sOldDamage = GetLocalString(oCreature, "PRC_Event_OnDamaged_Data");
+
+        // Create string based on current damage values
+        // Start with the damaging object
+        string sNewDamage = ObjectToString(oDamager);
+        // Catenate amount of damage of each damage type
+        int i;
+        for(i = DAMAGE_TYPE_BLUDGEONING; i <= DAMAGE_TYPE_BASE_WEAPON; i = i << 1)
+            sNewDamage += IntToString(GetDamageDealtByType(i));
+
+        // Determine if the damage dealt has changed
+        if(sOldDamage != sNewDamage)
+        {
+            if(DEBUG) DoDebug("default: Damage has changed:\n" + sNewDamage);
+            SetLocalString(oCreature, "PRC_Event_OnDamaged_Data", sNewDamage);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 int IsDeath()
 {
-  if (GetIsDead(OBJECT_SELF))
-  {
-    return TRUE;
-  }
-  else
-  {
-    return FALSE;
-  }
+    if(GetIsDead(OBJECT_SELF))
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
 int IsDisturbed()
 {
-  DelayCommand(1.0, ClearChangeObject("LastDisturbed"));
-  return IsObjectChanged(GetLastDisturbed(),"LastDisturbed");
+    object oCreature  = OBJECT_SELF;
+    object oDisturber = GetLastDisturbed();
+
+    if(GetIsObjectValid(oDisturber)) // The creature has been disturbed at least once during the game
+    {
+        // Get previous disturb data
+        string sOldDisturb = GetLocalString(oCreature, "PRC_Event_OnDisturbed_Data");
+
+        // Create string based on current disturb values
+        string sNewDisturb  = ObjectToString(oDisturber);
+               sNewDisturb += IntToString(GetInventoryDisturbType());
+               sNewDisturb += ObjectToString(GetInventoryDisturbItem());
+
+        // Determine if the data has changed
+        if(sOldDisturb != sNewDisturb)
+        {
+            if(DEBUG) DoDebug("default: Disturbed has changed:\n" + sNewDisturb);
+            SetLocalString(oCreature, "PRC_Event_OnDisturbed_Data", sNewDisturb);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 int IsHeartbeat()
 {
-    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "default_heartbeat_event"));
-    int nReturn = GetLocalInt(OBJECT_SELF, "default_heartbeat_event");
-    if(nReturn && GetIsInCombat(OBJECT_SELF))
+    object oCreature = OBJECT_SELF;
+    // PCs use the module HB
+    if(!GetIsPC(oCreature))
     {
-        //trigger combat round end instead
-        SetLocalInt(OBJECT_SELF, "default_combat_round_end_event", TRUE);
-        ExecuteScript("default", OBJECT_SELF);
-        return FALSE;
+        // Check how long since last recorded heartbeat
+        int nSecsChange  = (GetTimeSecond() - GetLocalInt(oCreature, "PRC_LastHeartbeatSeconds") + 60) % 60;
+
+        // See if the master clock has ticked or 9 seconds have elapsed anyway
+        if(nSecsChange >= 6)
+        {
+            SetLocalInt(oCreature, "PRC_LastHeartbeatSeconds", GetTimeSecond());
+            return TRUE;
+        }
     }
-    return nReturn;
+
+    return FALSE;
 }
 
 int IsPerception()
 {
-  // Tricky. This gets called an extra time with no change
-  if (IsObjectChanged(GetLastPerceived(),"LastPerceived"))
-  {
-    SetLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+"ChangedPerception",TRUE);
-    return TRUE;
-  }
-  else if (GetLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+"ChangedPerception"))
-  {
-    SetLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+"ChangedPerception",FALSE);
-    return TRUE;
-  }
-  else
-  {
+    object oCreature  = OBJECT_SELF;
+    object oPerceived = GetLastPerceived();
+
+    if(GetIsObjectValid(oPerceived)) // The creature has perceived something at least once during the game
+    {
+        // Get previous perception data
+        string sOldPerception = GetLocalString(oCreature, "PRC_Event_OnPerception_Data");
+
+        // Create string based on current perception values
+        string sNewPerception  = ObjectToString(oPerceived);
+               sNewPerception += IntToString(GetLastPerceptionHeard());
+               sNewPerception += IntToString(GetLastPerceptionInaudible());
+               sNewPerception += IntToString(GetLastPerceptionSeen());
+               sNewPerception += IntToString(GetLastPerceptionVanished());;
+
+        // Determine if the data has changed
+        if(sOldPerception != sNewPerception)
+        {
+            if(DEBUG) DoDebug("default: Perception has changed:\n" + sNewPerception);
+            SetLocalString(oCreature, "PRC_Event_OnPerception_Data", sNewPerception);
+            return TRUE;
+        }
+    }
+
     return FALSE;
-  }
 }
 
 int IsPhysicalAttacked()
 {
-  DelayCommand(1.0, ClearChangeObject("LastAttacker"));
-  return IsObjectChanged(GetLastAttacker(),"LastAttacker");
+    object oCreature = OBJECT_SELF;
+    object oAttacker = GetLastAttacker();
+
+    // Recent enough event that the attacker is at least still valid
+    if(GetIsObjectValid(oAttacker))
+    {
+        // Get previous attack data
+        string sOldAttack = GetLocalString(oCreature, "PRC_Event_OnPhysicalAttacked_Data");
+
+        // Create string for the current attack data
+        string sNewAttack  = ObjectToString(oAttacker);
+               sNewAttack += ObjectToString(GetLastWeaponUsed(oAttacker));
+               sNewAttack += IntToString(GetLastAttackMode(oAttacker));
+               sNewAttack += IntToString(GetLastAttackType(oAttacker));
+
+        // Determine if the data has changed
+        if(sOldAttack != sNewAttack)
+        {
+            if(DEBUG) DoDebug("default: Attack has changed:\n" + sNewAttack);
+            SetLocalString(oCreature, "PRC_Event_OnPhysicalAttacked_Data", sNewAttack);
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 int IsRested()
 {
-  // Goes TRUE when Master starts resting
-  return GetIsResting(GetMaster());
-}
+    // PCs use the module OnRest events
+    if(!GetIsPC(OBJECT_SELF))
+    {
+        // Goes TRUE when Master starts resting
+        int bMasterIsResting = GetIsResting(GetMaster());
+        return IsIntChanged(bMasterIsResting,"MasterIsResting") && bMasterIsResting;
+    }
 
-void SpawnPseudoHB()
-{
-    SetLocalInt(OBJECT_SELF, "default_heartbeat_event", TRUE);
-    ExecuteScript("default", OBJECT_SELF);
-    DelayCommand(6.0, SpawnPseudoHB());
+    return FALSE;
 }
 
 int IsSpawn()
 {
-  if (!GetLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+"OnSpawn"))
-  {
-    SetLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+"OnSpawn",TRUE);
-    DelayCommand(6.0, SpawnPseudoHB());
-    return TRUE;
-  }
-  else return FALSE;
+    object oCreature = OBJECT_SELF;
+    if(!GetLocalInt(oCreature, "PRC_OnSpawn_Marker"))
+    {
+        SetLocalInt(oCreature, "PRC_OnSpawn_Marker", TRUE);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 int IsSpellCastAt()
 {
-  DelayCommand(1.0, ClearChangeObject("LastSpellCaster"));
-  return IsObjectChanged(GetLastSpellCaster(),"LastSpellCaster");
+    object oCreature = OBJECT_SELF;
+    /*
+    if(DEBUG) DoDebug("default: IsSpellCastAt():\n"
+                    + "GetLastSpellCaster() = " + DebugObject2Str(GetLastSpellCaster()) + "\n"
+                    + "GetLastSpell() = " + IntToString(GetLastSpell()) + "\n"
+                    + "GetLastSpellHarmful() = " + IntToString(GetLastSpellHarmful()) + "\n"
+                      );
+    */
+    // If the event data does not contain the fake value, a spell has been cast
+    if(GetLastSpell() != -1)
+    {
+        // Reset the event data to the fake value
+        DelayCommand(0.0f, SignalEvent(oCreature, EventSpellCastAt(oCreature, -1, FALSE)));
+
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 int IsUserDefined()
 {
-  DelayCommand(1.0, ClearChangeInt("UserDefinedEventNumber"));
-  return IsIntChanged(GetUserDefinedEventNumber(),"UserDefinedEventNumber");
+    object oCreature = OBJECT_SELF;
+    /*
+    if(DEBUG) DoDebug("default: IsUserDefined():\n"
+                    + "GetUserDefinedEventNumber() = " + GetUserDefinedEventNumber(GetLastSpell()) + "\n"
+                      );
+    */
+    if(GetUserDefinedEventNumber() != -1)
+    {
+        // Reset the event data to the fake value
+        DelayCommand(0.0f, SignalEvent(oCreature, EventUserDefined(-1)));
+
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
-void ClearChangeObject(string sName)
-{
-    DeleteLocalObject(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName);
-}
-
-void ClearChangeInt(string sName)
-{
-    DeleteLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName);
-}
-
-void ClearChangeString(string sName)
-{
-    DeleteLocalString(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName);
-}
+/*********************/
+/* Utility Functions */
+/*********************/
 
 int IsObjectChanged(object oTest, string sName)
 {
-  if (oTest != GetLocalObject(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName))
-  {
-    SetLocalObject(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName,oTest);
-    return TRUE;
-  }
-  else
-  {
-    return FALSE;
-  }
+    if(oTest != GetLocalObject(OBJECT_SELF, "PRC_Event_" + sName))
+    {
+        SetLocalObject(OBJECT_SELF, "PRC_Event_" + sName, oTest);
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
 int IsIntChanged(int iTest, string sName)
 {
-  if (iTest != GetLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName))
-  {
-    SetLocalInt(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName,iTest);
-    return TRUE;
-  }
-  else
-  {
-    return FALSE;
-  }
+    if(iTest != GetLocalInt(OBJECT_SELF, "PRC_Event_" + sName))
+    {
+        SetLocalInt(OBJECT_SELF, "PRC_Event_" + sName, iTest);
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
 int IsStringChanged(string sTest, string sName)
 {
-  if (sTest != GetLocalString(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName))
-  {
-    SetLocalString(OBJECT_SELF,CHANGE_PREFIX_LOCAL+sName,sTest);
-    return TRUE;
-  }
-  else
-  {
-    return FALSE;
-  }
+    if(sTest != GetLocalString(OBJECT_SELF, "PRC_Event_" + sName))
+    {
+        SetLocalString(OBJECT_SELF, "PRC_Event_" + sName, sTest);
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
 
 void RunScript(string sEvent)
 {
-    string sScript = GetLocalString(OBJECT_SELF, CHANGE_PREFIX_LOCAL+sEvent);
-    if(sScript != "")
+    object oSelf = OBJECT_SELF;
+    string sScript;
+DoDebug("default, event = " + sEvent);
+    // Determine NPC script name and run generic eventhook
+    if(sEvent == "attacked")
     {
-        ExecuteScript(sScript, OBJECT_SELF);
-        return;
-    }
-    //do the default script
-    else if(sEvent == "attacked")
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONPHYSICALATTACKED);
         sScript = "prc_ai_mob_attck";
+    }
     else if(sEvent == "blocked")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONBLOCKED);
         sScript = "prc_ai_mob_block";
+    }
     else if(sEvent == "combat")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONCOMBATROUNDEND);
         sScript = "prc_ai_mob_combt";
+    }
     else if(sEvent == "conv")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONCONVERSATION);
         sScript = "prc_ai_mob_conv";
+    }
     else if(sEvent == "damaged")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDAMAGED);
         sScript = "prc_ai_mob_damag";
+    }
     else if(sEvent == "death")
+    {
+        // Looks like this will always reroute to the correct scripts alredy
+        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDEATH);
+        /*
+        if(!GetIsPC(oSelf))
+            ExecuteScript("prc_ondeath", oSelf);
+        */
         sScript = "prc_ai_mob_death";
+    }
     else if(sEvent == "disturbed")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDISTURBED);
         sScript = "prc_ai_mob_distb";
+    }
     else if(sEvent == "heartbeat")
+    {
+        // No need for this, I think
+        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_ONHEARTBEAT);
         sScript = "prc_ai_mob_heart";
+    }
     else if(sEvent == "perception")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONPERCEPTION);
         sScript = "prc_ai_mob_percp";
+    }
     else if(sEvent == "rested")
+    {
+        // No need for this
+        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONRESTED);
         sScript = "prc_ai_mob_rest";
+    }
     else if(sEvent == "spawned")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONSPAWNED);
         sScript = "prc_ai_mob_spawn";
+    }
     else if(sEvent == "spellcast")
+    {
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONSPELLCASTAT);
         sScript = "prc_ai_mob_spell";
+    }
     else if(sEvent == "user")
+    {
+        // No need for this
+        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONUSERDEFINED);
         sScript = "prc_ai_mob_userd";
-    //run it
-    ExecuteScript(sScript, OBJECT_SELF);
+    }
+
+    // Execute the NPC script if that has been turned on
+    if(GetLocalInt(oSelf, PRC_PC_EXEC_DEFAULT))
+    {
+        // Determine if this creature has a script explicitly specified for this event.
+        if(GetLocalString(oSelf, CHANGE_PREFIX_LOCAL + sEvent) != "")
+            sScript = GetLocalString(oSelf, CHANGE_PREFIX_LOCAL + sEvent);
+
+        // Execute it
+        ExecuteScript(sScript, oSelf);
+    }
 }

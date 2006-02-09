@@ -7424,7 +7424,7 @@ Level  Power Points  Powers Known  Power Level
 7         31                  7                        4
 8         43                  8                        4
 9         55                  9                        5
-10       72                  10                      5</entry>
+10       71                  10                      5</entry>
   <entry id="46752" lang="en" sex="m">Empty profile</entry>
   <entry id="46753" lang="en" sex="m">This creature has a smaller size than its appearance suggests. The effects of this are shown below. They are cumulative for each decreased size category.
 
@@ -12812,166 +12812,52 @@ Prerequisite: Warchief Level 8.
 Specifics: Once per round when struck, the Warchief can attempt a DC 15 Reflex save to instead have the damage done to his nearest ally. If he succeeds, all damage is transfered and the Warchief is healed of all damage the blow caused.
 Use: Automatic.</entry>
   <entry id="48507" lang="en" sex="m">Tribal Frenzy</entry>
-  <entry id="48508" lang="en" sex="m">Scout</entry>
-  <entry id="48509" lang="en" sex="m">Scouts</entry>
-  <entry id="48510" lang="en" sex="m">scout</entry>
+  <entry id="48508" lang="en" sex="m">War mind</entry>
+  <entry id="48509" lang="en" sex="m">War minds</entry>
+  <entry id="48510" lang="en" sex="m">war mind</entry>
   <entry id="48511" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48512" lang="en" sex="m">Dragon Slayer</entry>
-  <entry id="48513" lang="en" sex="m">Dragon Slayers</entry>
-  <entry id="48514" lang="en" sex="m">dragon slayer</entry>
-  <entry id="48515" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48516" lang="en" sex="m">Holy Crusader</entry>
-  <entry id="48517" lang="en" sex="m">Holy Crusaders</entry>
-  <entry id="48518" lang="en" sex="m">holy crusader</entry>
-  <entry id="48519" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48520" lang="en" sex="m">Grey Wanderer</entry>
-  <entry id="48521" lang="en" sex="m">Grey Wanderers</entry>
-  <entry id="48522" lang="en" sex="m">grey wanderer</entry>
-  <entry id="48523" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48524" lang="en" sex="m">Protector</entry>
-  <entry id="48525" lang="en" sex="m">Protectors</entry>
-  <entry id="48526" lang="en" sex="m">protector</entry>
-  <entry id="48527" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48528" lang="en" sex="m">Summoner</entry>
-  <entry id="48529" lang="en" sex="m">Summoners</entry>
-  <entry id="48530" lang="en" sex="m">summoner</entry>
-  <entry id="48531" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48532" lang="en" sex="m">Astral Adept</entry>
-  <entry id="48533" lang="en" sex="m">Astral Adepts</entry>
-  <entry id="48534" lang="en" sex="m">astral adept</entry>
-  <entry id="48535" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48536" lang="en" sex="m">Demon Master</entry>
-  <entry id="48537" lang="en" sex="m">Demon Masters</entry>
-  <entry id="48538" lang="en" sex="m">demon master</entry>
-  <entry id="48539" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48540" lang="en" sex="m">Auramancer</entry>
-  <entry id="48541" lang="en" sex="m">Auramancers</entry>
-  <entry id="48542" lang="en" sex="m">auramancer</entry>
-  <entry id="48543" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48544" lang="en" sex="m">Disciple of Darkness</entry>
-  <entry id="48545" lang="en" sex="m">Disciples of Darkness</entry>
-  <entry id="48546" lang="en" sex="m">disciple of darkness</entry>
-  <entry id="48547" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48548" lang="en" sex="m">Abjurer</entry>
-  <entry id="48549" lang="en" sex="m">Abjurers</entry>
-  <entry id="48550" lang="en" sex="m">abjurer</entry>
-  <entry id="48551" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48552" lang="en" sex="m">Puppet Master</entry>
-  <entry id="48553" lang="en" sex="m">Puppet Masters</entry>
-  <entry id="48554" lang="en" sex="m">puppet master</entry>
-  <entry id="48555" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48556" lang="en" sex="m">Xenowizard</entry>
-  <entry id="48557" lang="en" sex="m">Xenowizards</entry>
-  <entry id="48558" lang="en" sex="m">xenowizard</entry>
-  <entry id="48559" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48560" lang="en" sex="m">Naturalist</entry>
-  <entry id="48561" lang="en" sex="m">Naturalists</entry>
-  <entry id="48562" lang="en" sex="m">naturalist</entry>
-  <entry id="48563" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48564" lang="en" sex="m">Geomancer</entry>
-  <entry id="48565" lang="en" sex="m">Geomancers</entry>
-  <entry id="48566" lang="en" sex="m">geomancer</entry>
-  <entry id="48567" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48568" lang="en" sex="m">Healer</entry>
-  <entry id="48569" lang="en" sex="m">Healers</entry>
-  <entry id="48570" lang="en" sex="m">healer</entry>
-  <entry id="48571" lang="en" sex="m">(PRESTIGE CLASS)
-The healer is a peaceful servant of the gods, dedicated to the removal of pain from others, and to their well being. The healer will usually be a selfless person, who regards all life as precious, and whose life is dedicated to others rather than to himself.
+War minds are expert fighters who claim to possess unequaled knowledge in the arts of war. Through a combination of inner contemplation and external study of an ancient text called the Talariic Codex, war minds grow in their craft of arms and war. Those who study the Talariic Codex learn several tenets, collectively known as the chains of war. As a war mind masters one chain, he opens himself to learn the next chain in the series, should he desire to continue to bend his mind to the intensive studies required to advance in this class.
 
-- Hit Die: d4.
-- Proficiencies: A Healer does not gain any additional weapon or armor proficiencies.
-- Skill Points: 2 + Int Modifier.
+- Hit Die: d10
+- Proficiencies: A War mind gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
 
 REQUIREMENTS:
 
-Divine Spellcasting: Level 3 or higher.
-Feats: Skill Focus(Healing), Healing Domain Powers
-Skills: Healing 6 or more ranks, Persuade 5 or more ranks.
+Psionics: Must possess a power point reserve of at least 1 power point.
+Skills: Lore 8 ranks.
+Base Attack Bonus: +3.
+Alignment: Non-Chaotic. 
 
 ABILITIES:
 
 Level
-1: Cure Minor Wounds at will
-2: Cure Light Wounds at will
-3: Raise Dead twice per day
-4: Cure Moderate Wounds at will
-5: Cure Serious Wounds at will
-6: Heal twice per day
-7: Resurrection twice per day
-8: Mass Heal twice per day
-9: Cure Critical Wounds at will
-10: Supreme Healing once per day
+1: Chain of Personal Superiority - +2 Str and Con for 1 minute. 3 times per day.
+2: Chain of Defensive Posture - +2 Armour Class for 1 minute. 3 times per day.
+3: Enduring Body - Damage Reduction 1.
+4:
+5: Sweeping Strike - On every attack, the Warmind swings at two creatures.
+6: Enduring Body - Damage Reduction 2.
+7: Chain of Personal Superiority - +4 Str and Con for 1 minute. 3 times per day.
+8: Chain of Defensive Posture - +4 Armour Class for 1 minute. 3 times per day.
+9: Enduring Body - Damage Reduction 3.
+10: Chain of Overwhelming Force - 10d6 Damage on a single attack. 1 time per day.
 
-BONUS SPELLS
-A healer gains levels as normal in his main divine spellcasting class.
+Manifesting: The War Mind chooses his powers from the Psychic Warrior power list. Follow the table below to determine his manifesting ability. War Minds recieve bonus power points from a high Wisdom score.
 
-NOTE
-The healer, being peaceful by nature, abhors offensive acts and therefore does acquire any new melee skills.</entry>
-  <entry id="48572" lang="en" sex="m">Prophet</entry>
-  <entry id="48573" lang="en" sex="m">Prophets</entry>
-  <entry id="48574" lang="en" sex="m">prophet</entry>
-  <entry id="48575" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48576" lang="en" sex="m">Shaman</entry>
-  <entry id="48577" lang="en" sex="m">Shamans</entry>
-  <entry id="48578" lang="en" sex="m">shaman</entry>
-  <entry id="48579" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48580" lang="en" sex="m">Witch Doctor</entry>
-  <entry id="48581" lang="en" sex="m">Witch Doctors</entry>
-  <entry id="48582" lang="en" sex="m">witch doctor</entry>
-  <entry id="48583" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48584" lang="en" sex="m">Battlemagus</entry>
-  <entry id="48585" lang="en" sex="m">Battlemagi</entry>
-  <entry id="48586" lang="en" sex="m">battlemagus</entry>
-  <entry id="48587" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48588" lang="en" sex="m">Mystical Knight</entry>
-  <entry id="48589" lang="en" sex="m">Mystical Knights</entry>
-  <entry id="48590" lang="en" sex="m">mystical knight</entry>
-  <entry id="48591" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48592" lang="en" sex="m">Arcane Theologist</entry>
-  <entry id="48593" lang="en" sex="m">Arcane Theologists</entry>
-  <entry id="48594" lang="en" sex="m">arcane theologist</entry>
-  <entry id="48595" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48596" lang="en" sex="m">Crystal Master</entry>
-  <entry id="48597" lang="en" sex="m">Crystal Masters</entry>
-  <entry id="48598" lang="en" sex="m">crystal master</entry>
-  <entry id="48599" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48600" lang="en" sex="m">Arcane Assassin</entry>
-  <entry id="48601" lang="en" sex="m">Arcane Assassins</entry>
-  <entry id="48602" lang="en" sex="m">arcane assassin</entry>
-  <entry id="48603" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48604" lang="en" sex="m">Arcane Swordsman</entry>
-  <entry id="48605" lang="en" sex="m">Arcane Swordsmen</entry>
-  <entry id="48606" lang="en" sex="m">arcane swordsman</entry>
-  <entry id="48607" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
-  <entry id="48608" lang="en" sex="m">Swashbuckler</entry>
-  <entry id="48609" lang="en" sex="m">Swashbucklers</entry>
-  <entry id="48610" lang="en" sex="m">swashbuckler</entry>
-  <entry id="48611" lang="en" sex="m">(PRESTIGE CLASS)
-</entry>
+Level  Power Points  Powers Known  Power Level
+1      2             1             1
+2      5             2             1
+3      9             2             1
+4      14            3             2
+5      20            3             2
+6      28            4             3
+7      37            4             3
+8      47            5             4
+9      58            5             4
+10     70            6             5</entry>
+
+
   <entry id="48612" lang="en" sex="m">Man at Arms</entry>
   <entry id="48613" lang="en" sex="m">Men at Arms</entry>
   <entry id="48614" lang="en" sex="m">man at arms</entry>
@@ -20075,7 +19961,7 @@ Use: Automatic.</entry>
   <entry id="54771" lang="en" sex="m">Type of Feat: Class Specific.
 Prerequisite: Runecaster Level 10.
 Specifics: The Runecaster may perform a chant to cause all divine spells he casts to be affected by his Rune Power ability. Using this ability will slow the caster.
-Use: Automatic.</entry>
+Use: Selected.</entry>
   <entry id="54772" lang="en" sex="m">Detect Evil</entry>
   <entry id="54773" lang="en" sex="m">Divination
 Level: Clr 1, Rgr 2

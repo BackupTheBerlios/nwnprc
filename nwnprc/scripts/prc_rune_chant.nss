@@ -1,5 +1,5 @@
 // Written by Stratovarius
-// Turns Blood Component on and off.
+// Turns Rune Chant on and off.
 
 #include "prc_alterations"
 
@@ -8,8 +8,15 @@ void main()
 
      object oPC = OBJECT_SELF;
      string nMes = "";
-
-     if(!GetHasSpellEffect(SPELL_RUNE_CHANT))
+     
+     if (GetIsImmune(oPC, IMMUNITY_TYPE_SLOW))
+     {
+	// Removes effects
+	RemoveSpellEffects(GetSpellId(), oPC, oPC);
+	DeleteLocalInt(oPC, "RuneChant");
+	nMes = "*Immune to Slowing - Canceling Rune Chant*";
+     }
+     else if(!GetHasSpellEffect(SPELL_RUNE_CHANT))
      {  
      	effect eSlow = EffectSlow();
      	eSlow = SupernaturalEffect(eSlow);

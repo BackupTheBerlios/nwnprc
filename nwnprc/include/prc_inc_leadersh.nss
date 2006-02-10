@@ -323,6 +323,7 @@ int GetMaximumCohortCount(object oPC)
         nCount++;
     if(GetHasFeat(FEAT_HATH_COHORT, oPC))
         nCount++;
+    nCount += GetPRCSwitch(PRC_BONUS_COHORTS);    
     return nCount;
 }
 

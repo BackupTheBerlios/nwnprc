@@ -284,9 +284,10 @@ void EvalPRCFeats(object oPC)
     // Miscellaneous
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
-    //ExecuteScript("race_unarmed", oPC);
+    ExecuteScript("race_unarmed", oPC);
     //moved here by Primogenitor
-    int iRace = GetRacialType(OBJECT_SELF);
+    //causes stack underflow error here, moved back
+    /*int iRace = GetRacialType(OBJECT_SELF);
 
     if (iRace == RACIAL_TYPE_MINOTAUR   ||
         iRace == RACIAL_TYPE_TANARUKK   ||
@@ -301,7 +302,7 @@ void EvalPRCFeats(object oPC)
          //UnarmedFists(OBJECT_SELF);
          SetLocalInt(OBJECT_SELF, CALL_UNARMED_FEATS, TRUE);
          SetLocalInt(OBJECT_SELF, CALL_UNARMED_FISTS, TRUE);
-    }
+    }*/
 
     if(GetLevelByClass(CLASS_TYPE_PSION, oPC)
         || GetLevelByClass(CLASS_TYPE_WILDER, oPC)

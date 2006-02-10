@@ -177,6 +177,8 @@ int _GetModifierPP (object oChar, int nFirstPsiClass)
                  + (nFirstPsiClass == CLASS_TYPE_WILDER ? GetPsionicPRCLevels(oChar) : 0);
     int nZuoken  = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oChar)
                  + (nFirstPsiClass == CLASS_TYPE_FIST_OF_ZUOKEN ? GetPsionicPRCLevels(oChar) : 0);
+    int nWarmind = GetLevelByClass(CLASS_TYPE_WARMIND, oChar)
+                 + (nFirstPsiClass == CLASS_TYPE_WARMIND ? GetPsionicPRCLevels(oChar) : 0);                 
 
     if(nPsion > 0)
     {
@@ -202,6 +204,12 @@ int _GetModifierPP (object oChar, int nFirstPsiClass)
         nBonus = (nZuoken * GetAbilityModifier(ABILITY_WISDOM, oChar)) / 2;
         nPP += nBonus;
     }
+    if(nWarmind > 0)
+    {
+        if(nWarmind > 10) nWarmind = 10;
+        nBonus = (nWarmind * GetAbilityModifier(ABILITY_WISDOM, oChar)) / 2;
+        nPP += nBonus;
+    }    
 
     return nPP;
 }
@@ -248,6 +256,7 @@ int GetMaximumPowerPoints(object oChar)
     nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_WILDER, nFirstPsiClass);
     nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_PSYWAR, nFirstPsiClass);
     nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_FIST_OF_ZUOKEN, nFirstPsiClass);
+    nMaxPP += _GetPPForClass(oChar, CLASS_TYPE_WARMIND, nFirstPsiClass);
 
     nMaxPP += _GetModifierPP(oChar, nFirstPsiClass);
 

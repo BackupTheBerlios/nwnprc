@@ -389,6 +389,8 @@ int GetAbilityOfClass(int nClass){
             return ABILITY_WISDOM;
         case CLASS_TYPE_FIST_OF_ZUOKEN:
             return ABILITY_WISDOM;
+        case CLASS_TYPE_WARMIND:
+            return ABILITY_WISDOM;            
         default:
             return ABILITY_CHARISMA;
     }
@@ -547,6 +549,7 @@ int GetIsPsionicCharacter(object oCreature)
               GetLevelByClass(CLASS_TYPE_PSYWAR,         oCreature) ||
               GetLevelByClass(CLASS_TYPE_WILDER,         oCreature) ||
               GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature) ||
+              GetLevelByClass(CLASS_TYPE_WARMIND,        oCreature) ||
               GetHasFeat(FEAT_WILD_TALENT, oCreature)
               // Racial psionicity signifying feats go here
              );
@@ -575,7 +578,8 @@ int GetIsPsionicClass(int nClass)
     return (nClass==CLASS_TYPE_PSION          ||
             nClass==CLASS_TYPE_PSYWAR         ||
             nClass==CLASS_TYPE_WILDER         ||
-            nClass==CLASS_TYPE_FIST_OF_ZUOKEN
+            nClass==CLASS_TYPE_FIST_OF_ZUOKEN ||
+            nClass==CLASS_TYPE_WARMIND
             );
 }
 

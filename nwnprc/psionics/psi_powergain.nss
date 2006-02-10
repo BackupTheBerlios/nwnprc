@@ -60,4 +60,6 @@ void main()
         return;
     if(CheckMissingPowers(oPC, CLASS_TYPE_FIST_OF_ZUOKEN))
         return;
+    if(CheckMissingPowers(oPC, CLASS_TYPE_WARMIND))
+        return;        
 }

@@ -306,7 +306,8 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_PSION, oPC)
         || GetLevelByClass(CLASS_TYPE_WILDER, oPC)
         || GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)
-        || GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC))
+        || GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC)
+        || GetLevelByClass(CLASS_TYPE_WARMIND, oPC))
         ExecuteScript("psi_powergain", oPC);
 
     // Gathers all the calls to UnarmedFists & Feats to one place.

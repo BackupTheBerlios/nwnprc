@@ -357,9 +357,9 @@ void RemovePowersKnownOnLevel(object oCreature, int nLevel)
     if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_FIST_OF_ZUOKEN) + sPostFix))
         _RemovePowerArray(oCreature, POWER_LIST_FIST_OF_ZUOKEN, nLevel);
 
-/*    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_WARMIND) + sPostFix))
+    if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_WARMIND) + sPostFix))
         _RemovePowerArray(oCreature, POWER_LIST_WARMIND, nLevel);
-*/
+
     if(persistant_array_exists(oCreature, _POWER_LIST_NAME_BASE + IntToString(POWER_LIST_MISC) + sPostFix))
         _RemovePowerArray(oCreature, POWER_LIST_MISC, nLevel);
 }

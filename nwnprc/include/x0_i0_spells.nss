@@ -1813,4 +1813,5 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel)
 }
 
 
-
+// Test main
+//void main(){}

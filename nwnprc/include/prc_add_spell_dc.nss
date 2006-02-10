@@ -7,13 +7,14 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1);
 //called just from above and from inc_epicspells
 int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellID = -1);
 
+#include "prc_add_spl_pen"
 #include "prc_inc_spells"
 #include "prc_class_const"
 #include "prc_feat_const"
 #include "lookup_2da_spell"
 #include "prcsp_archmaginc"
 #include "prc_alterations"
-#include "prc_add_spl_pen"
+
 
 
 
@@ -426,7 +427,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     if(nSpellID == -1)
         nSpellID = PRCGetSpellId();
     //10+spelllevel+stat(cha default)
-    int nDC = GetSpellSaveDC();    
+    int nDC = GetSpellSaveDC();
     // For when you want to assign the caster DC
     //this does not take feat/race/class into account, it is an absolute override
     if (GetLocalInt(oCaster, PRC_DC_TOTAL_OVERRIDE) != 0)
@@ -570,3 +571,6 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     return nDC;
 
 }
+
+// Test main
+//void main(){}

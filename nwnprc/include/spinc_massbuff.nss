@@ -10,6 +10,9 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 
+#include "spinc_common"
+
+
 const int MASSBUFF_STAT =			0;
 const int MASSBUFF_VISION =			1;
 
@@ -24,7 +27,7 @@ void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
 		int nSpellID = GetEffectSpellId(eEffect);
 		if (nBuffSpellID == nSpellID || nMassBuffSpellID == nBuffSpellID)
 			RemoveEffect(oTarget, eEffect);
-			
+
 		// Get the effect.
 		eEffect = GetNextEffect(oTarget);
 	}
@@ -33,13 +36,13 @@ void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
 void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID = -1)
 {
 	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
+
 	// Get the spell target location as opposed to the spell target.
 	location lTarget = PRCGetSpellTargetLocation();
 
 	// Get the spell ID if it was not given.
 	if (-1 == nSpellID) nSpellID = GetSpellId();
-	
+
 	// Get the effective caster level.
 	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
@@ -64,7 +67,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 
 	// Determine the spell's duration.
 	float fDuration = SPGetMetaMagicDuration(HoursToSeconds(PRCGetCasterLevel(OBJECT_SELF)));
-	
+
 	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
 	// Cycle through the targets within the spell shape until an invalid object is captured.
 	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
@@ -78,18 +81,18 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 
 			fDelay = GetSpellEffectDelay(lTarget, oTarget);
 
-			// Calculate stat mod and adjust for metamagic.			
+			// Calculate stat mod and adjust for metamagic.
 			int nStatMod = SPGetMetaMagicDamage(-1, 1, 4, 0, 1);
 
 			// Create the appropriate buff effect and link the duration visual fx to it.
-			effect eBuff;			
+			effect eBuff;
 			switch (nBuffType)
 			{
 			case MASSBUFF_STAT:
-				// Strip the regular or mass buff from the target before 
+				// Strip the regular or mass buff from the target before
 				// applying the new one.
 				StripBuff(oTarget, nBuffSpellID, nSpellID);
-				
+
 				eBuff = EffectLinkEffects (EffectAbilityIncrease(nBuffSubType, nStatMod), eDur);
 				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDuration,TRUE,-1,nCasterLvl));
 				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -100,9 +103,12 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 				break;
 			}
 		}
-		
+
 		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	}
 
 	SPSetSchool();
 }
+
+// Test main
+//void main(){}

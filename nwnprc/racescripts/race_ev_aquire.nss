@@ -5,6 +5,7 @@
 
 #include "prc_racial_const"
 #include "prc_alterations"
+#include "psi_inc_manifest"
 
 void main()
 {
@@ -16,6 +17,15 @@ void main()
     if(GetLocalInt(oItem, "PRC_RacialRestrictionsExpanded"))
         return;
     SetLocalInt(oItem, "PRC_RacialRestrictionsExpanded", TRUE);
+
+    // Ignore tokens and creature items
+    string sResRef = GetStringLowerCase(GetResRef(oItem));
+    if(sResRef == "base_prc_skin"                                  ||
+       sResRef == "hidetoken"                                      ||
+       sResRef == GetStringLowerCase(PRC_MANIFESTATION_TOKEN_NAME) ||
+       GetIsPRCCreatureWeapon(oItem)
+       )
+        return;
 
     itemproperty ipTest = GetFirstItemProperty(oItem);
     while(GetIsItemPropertyValid(ipTest))

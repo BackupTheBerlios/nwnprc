@@ -1,4 +1,6 @@
 
+#include "spinc_common"
+
 //
 // Returns TRUE if the greenfire heartbeat has fired at least once.
 //
@@ -45,12 +47,12 @@ void DoGreenfire(int nDamageType, object oCaster, object oTarget)
      int nCasterLevel = PRCGetCasterLevel(oCaster);
      int nBonus = nCasterLevel;
      if (nBonus > 10) nBonus = 10;
-     
+
      if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
      {
           // Fire cast spell at event for the specified target
           SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oCaster);
-          
+
           int nPenetr = nCasterLevel + SPGetPenetr();
 
           if (!SPResistSpell(oCaster, oTarget,nPenetr))
@@ -60,13 +62,16 @@ void DoGreenfire(int nDamageType, object oCaster, object oTarget)
                int nDamage = SPGetMetaMagicDamage(nDamageType, 2, 6, 0, nBonus);
                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
                if (!HasHeartbeatFired())
-                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, 
+                    nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget,
                          PRCGetSaveDC(oTarget,oCaster), SAVING_THROW_TYPE_ACID);
-                         
+
                // If we really did damage apply it to the target.
                if (nDamage > 0)
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                          SPEffectDamage(nDamage, nDamageType), oTarget);
           }
      }
 }
+
+// Test main
+//void main(){}

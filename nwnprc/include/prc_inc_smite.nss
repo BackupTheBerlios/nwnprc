@@ -27,8 +27,8 @@ CW Samurai
 const int SMITE_TYPE_GOOD       = 1;
 const int SMITE_TYPE_EVIL       = 2;
 const int SMITE_TYPE_UNDEAD     = 3;
-const int SMITE_TYPE_INFIDEL    = 4;   
-const int SMITE_TYPE_KIAI       = 5;     
+const int SMITE_TYPE_INFIDEL    = 4;
+const int SMITE_TYPE_KIAI       = 5;
 
 //this calculates damage and stuff from class and type
 //takes epic smiting feats etc into account
@@ -63,46 +63,46 @@ void DoSmite(object oPC, object oTarget, int nType)
                 +GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oPC);
             nDamageType = DAMAGE_TYPE_DIVINE;
             sFailedTarget = "Smite Failed: target is not Evil";
-            sFailedSmiter = "Smite Failed: you are not Good";    
+            sFailedSmiter = "Smite Failed: you are not Good";
             sHit =  "Smite Evil Hit";
             sMiss = "Smite Evil Missed";
             if(GetAlignmentGoodEvil(oTarget)        != ALIGNMENT_EVIL)
                 nTargetInvalid = TRUE;
             if(GetAlignmentGoodEvil(oPC)            != ALIGNMENT_GOOD)
                 nSmiterInvalid = TRUE;
-                
+
             //Fist of Raziel special stuff
             //good aligned weapon (+1 enhancement to break DR)
             if(GetHasFeat(FEAT_SMITE_GOOD_ALIGN, oPC))
-                AddItemProperty(DURATION_TYPE_TEMPORARY, 
-                    ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 1), 
+                AddItemProperty(DURATION_TYPE_TEMPORARY,
+                    ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 1),
                     oWeapon, 0.1);
-            //criticals always hit        
+            //criticals always hit
             if(GetHasFeat(FEAT_SMITE_CONFIRMING, oPC))
                 SetLocalInt(oPC, "FistOfRazielSpecialSmiteCritical", TRUE);
-            //2d8 vs outsiders or undead    
+            //2d8 vs outsiders or undead
             if(GetHasFeat(FEAT_SMITE_FIEND, oPC)
                 && (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER
                     || MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD))
-                AddItemProperty(DURATION_TYPE_TEMPORARY, 
-                    ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 
-                        DAMAGE_TYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d8), 
-                    oWeapon, 0.1);            
-            //these are either or, not both        
+                AddItemProperty(DURATION_TYPE_TEMPORARY,
+                    ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,
+                        DAMAGE_TYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d8),
+                    oWeapon, 0.1);
+            //these are either or, not both
             else if(GetHasFeat(FEAT_SMITE_HOLY, oPC))
-                AddItemProperty(DURATION_TYPE_TEMPORARY, 
-                    ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 
-                        DAMAGE_TYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d6), 
-                    oWeapon, 0.1);       
-            //chain bolt stuff    
-            if(GetHasFeat(FEAT_SMITE_CHAIN, oPC)) 
+                AddItemProperty(DURATION_TYPE_TEMPORARY,
+                    ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,
+                        DAMAGE_TYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d6),
+                    oWeapon, 0.1);
+            //chain bolt stuff
+            if(GetHasFeat(FEAT_SMITE_CHAIN, oPC))
             {
                 int nTargetCount = 5;
                 int i = 1;
                 object oSecondTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, oPC, i);
-                //GetFirstObjectInShape(SHAPE_SPHERE, 
+                //GetFirstObjectInShape(SHAPE_SPHERE,
                 //    RADIUS_SIZE_LARGE, GetLocation(oPC), TRUE, OBJECT_TYPE_CREATURE);
-                while(GetIsObjectValid(oSecondTarget) 
+                while(GetIsObjectValid(oSecondTarget)
                     && nTargetCount > 0
                     && GetDistanceBetween(oPC, oSecondTarget) < FeetToMeters(30.0))
                 {
@@ -113,9 +113,9 @@ void DoSmite(object oPC, object oTarget, int nType)
                         if(MyPRCGetRacialType(oSecondTarget) == RACIAL_TYPE_OUTSIDER
                             || MyPRCGetRacialType(oSecondTarget) == RACIAL_TYPE_UNDEAD)
                             nDamage = d8(2);
-                        else    
+                        else
                             nDamage = d6(2);
-                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oSecondTarget, 
+                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oSecondTarget,
                             15+(GetAbilityModifier(ABILITY_CHARISMA, oPC)/2),
                                 SAVING_THROW_TYPE_NONE, oPC);
                         effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
@@ -124,15 +124,15 @@ void DoSmite(object oPC, object oTarget, int nType)
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oSecondTarget);
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBeam, oSecondTarget, 0.5);
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oSecondTarget);
-                        nTargetCount --;       
+                        nTargetCount --;
                     }
                     i++;
                     oSecondTarget = GetNearestCreature(CREATURE_TYPE_REPUTATION, REPUTATION_TYPE_ENEMY, oPC, i);
                 }
             }
-        }        
+        }
         break;
-            
+
         case SMITE_TYPE_GOOD:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
@@ -141,16 +141,16 @@ void DoSmite(object oPC, object oTarget, int nType)
                 +GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
             nDamageType = DAMAGE_TYPE_DIVINE;
             sFailedTarget = "Smite Failed: target is not Good";
-            sFailedSmiter = "Smite Failed: you are not Evil";    
+            sFailedSmiter = "Smite Failed: you are not Evil";
             sHit =  "Smite Good Hit";
             sMiss = "Smite Good Missed";
             if(GetAlignmentGoodEvil(oTarget)        != ALIGNMENT_GOOD)
                 nTargetInvalid = TRUE;
             if(GetAlignmentGoodEvil(OBJECT_SELF)    != ALIGNMENT_EVIL)
                 nSmiterInvalid = TRUE;
-        }        
+        }
         break;
-            
+
         case SMITE_TYPE_UNDEAD:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
@@ -158,16 +158,16 @@ void DoSmite(object oPC, object oTarget, int nType)
             nDamage = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oPC);
             nDamageType = DAMAGE_TYPE_POSITIVE;
             sFailedTarget = "Smite Failed: target is not Undead";
-            sFailedSmiter = "Smite Failed: you are not Good";    
+            sFailedSmiter = "Smite Failed: you are not Good";
             sHit =  "Smite Undead Hit";
             sMiss = "Smite Undead Missed";
             if(MyPRCGetRacialType(oTarget)            != RACIAL_TYPE_UNDEAD)
                 nTargetInvalid = TRUE;
             if(GetAlignmentGoodEvil(OBJECT_SELF)    != ALIGNMENT_GOOD)
                 nSmiterInvalid = TRUE;
-        }        
+        }
         break;
-            
+
         case SMITE_TYPE_INFIDEL:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
@@ -177,21 +177,21 @@ void DoSmite(object oPC, object oTarget, int nType)
             //if bane levels higher, use that
             if(GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC) > nDamage)
             {
-                nDamage = GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC); 
+                nDamage = GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC);
                 sDeity = "Bane";
-            }    
+            }
             nDamageType = DAMAGE_TYPE_POSITIVE;
             sFailedTarget = "Smite Failed: target has the same deity";
-            sFailedSmiter = "Smite Failed: you do not follow your deity";    
+            sFailedSmiter = "Smite Failed: you do not follow your deity";
             sHit =  "Smite Infidel Hit";
             sMiss = "Smite Infidel Missed";
             if(GetStringLowerCase(GetDeity(oTarget))== GetStringLowerCase(GetDeity(oPC)))
                 nTargetInvalid = TRUE;
             if(GetStringLowerCase(GetDeity(oPC))    != GetStringLowerCase(sDeity))
                 nSmiterInvalid = TRUE;
-        }    
+        }
         break;
-            
+
         case SMITE_TYPE_KIAI:
         {
             eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
@@ -203,32 +203,32 @@ void DoSmite(object oPC, object oTarget, int nType)
                 nAttack = 1;
             nDamageType = DAMAGE_TYPE_DIVINE;
             sFailedTarget = "Taget cannot be invalid";
-            sFailedSmiter = "Smite Failed: you are not Lawful";    
+            sFailedSmiter = "Smite Failed: you are not Lawful";
             sHit =  "Kiai Smite Hit";
             sMiss = "Kiai Smite Missed";
             if(GetAlignmentLawChaos(OBJECT_SELF)    != ALIGNMENT_LAWFUL)
                 nSmiterInvalid = TRUE;
-        }        
+        }
         break;
     }
-    
+
     //check target is valid
     //and show message if not
     if(nTargetInvalid)
-        FloatingTextStringOnCreature(sFailedTarget, oPC);   
-        
+        FloatingTextStringOnCreature(sFailedTarget, oPC);
+
     //check smiter is valid
-    //and show message if not    
+    //and show message if not
     else if(nSmiterInvalid)
-        FloatingTextStringOnCreature(sFailedSmiter, oPC);  
-        
-    //check for ranged weapon    
+        FloatingTextStringOnCreature(sFailedSmiter, oPC);
+
+    //check for ranged weapon
     //ranged smite was never finished
     //if it was, here would be the place to put it!
     else if (GetWeaponRanged(oWeapon) && !GetHasFeat(FEAT_RANGED_SMITE, oPC))
         FloatingTextStringOnCreature("Smite Failed: cannot use ranged weapon", oPC);
-        
-    //passed checks, do the actual smite    
+
+    //passed checks, do the actual smite
     else
     {
         //add epic smiting damage
@@ -243,9 +243,9 @@ void DoSmite(object oPC, object oTarget, int nType)
             iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_9) ? 10:iEpicSmite;
             iEpicSmite = GetHasFeat(FEAT_EPIC_GREAT_SMITING_10)? 11:iEpicSmite;
         nDamage *= iEpicSmite;
-                
+
         //whew, now we can do the actual smite through the combat engine
         PerformAttackRound(oTarget, oPC, eSmite, 0.0, nAttack, nDamage, nDamageType, FALSE, sHit, sMiss);
     }
-    
+
 }

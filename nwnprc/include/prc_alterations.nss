@@ -113,7 +113,7 @@ int GetBreakConcentrationCheck(object oConcentrator);
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
 #include "inc_acp"
-#include "prc_inc_leadersh"
+//#include "prc_inc_leadersh"
 
 
 // PRC Spell Engine Utility Functions
@@ -604,3 +604,6 @@ int GetBreakConcentrationCheck(object oConcentrator)
     }
     return FALSE;
 }
+
+// Test main
+//void main(){}

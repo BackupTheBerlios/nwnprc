@@ -112,3 +112,6 @@ int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
     nClass--;
     return nClass;
 }
+
+// Test main
+//void main(){}

@@ -1,6 +1,35 @@
+//::///////////////////////////////////////////////
+//:: Spells include: Yet more Spell Penetration
+//:: prcsp_spell_adjs
+//::///////////////////////////////////////////////
+/** @file
+    Defines some Spell Penetration value getters.
+    Why do both this and prc_add_spl_pen exist? - Ornedan
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
+
+int SPGetPenetr(object oCaster = OBJECT_SELF);
+
+int SPGetPenetrAOE(object oCaster = OBJECT_SELF, int nCasterLvl = 0);
+
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
 //#include "prc_add_spl_pen"  <-- Inherited from  #prc_add_spell_dc
 #include "prc_add_spell_dc"
 #include "prc_inc_spells"
+
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
 
 //
 //  Get the Spell Penetration Bonuses
@@ -36,17 +65,20 @@ int SPGetPenetrAOE(object oCaster = OBJECT_SELF, int nCasterLvl = 0)
 {
     // Check the cache
     int nPenetr = GetLocalInt(OBJECT_SELF, "nPenetre");
-    
+
     // Compute the result
     if (!nPenetr) {
         nPenetr = (nCasterLvl) ? nCasterLvl : PRCGetCasterLevel(oCaster);
 
         // Factor in Penetration Bonuses
         nPenetr += SPGetPenetr(oCaster);
-       
+
         // Who removed this?
         SetLocalInt(OBJECT_SELF,"nPenetre",nPenetr);
     }
 
     return nPenetr;
 }
+
+// Test main
+//void main(){}

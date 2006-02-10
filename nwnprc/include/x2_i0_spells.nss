@@ -670,3 +670,6 @@ int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaste
 
 }
 
+
+// Test main
+//void main(){}

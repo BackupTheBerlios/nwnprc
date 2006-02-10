@@ -2,8 +2,10 @@
 //:: OnHeartbeat eventscript
 //:: prc_onheartbeat
 //:://////////////////////////////////////////////
+
 #include "prc_alterations"
 #include "inc_utility"
+#include "prc_inc_leadersh"
 
 void main()
 {

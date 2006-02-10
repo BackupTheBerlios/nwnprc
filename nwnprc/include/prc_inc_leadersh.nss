@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////
+/*                 Constants                    */
+//////////////////////////////////////////////////
+
 const string PRC_PC_EXEC_DEFAULT = "PRC_PC_EXEC_DEFAULT";
 const string CHANGE_PREFIX_LOCAL = "PRC_";
 const string COHORT_DATABASE     = "PRCCOHORTS";
@@ -18,6 +22,9 @@ const string COHORT_TAG          = "prc_cohort";
     string Cohort_X_cdkey   (cdkey of owning player)
 */
 
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
 
 int GetMaximumCohortCount(object oPC);
 object GetCohort(int nID, object oPC);
@@ -28,6 +35,19 @@ void AddCohortToPlayer(int nCohortID, object oPC);
 void RemoveCohortFromPlayer(object oCohort, object oPC);
 int GetLeadershipScore(object oPC = OBJECT_SELF);
 void CheckHB();
+
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "prc_feat_const"
+#include "inc_utility"
+
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
 
 void AddCohortToPlayer(int nCohortID, object oPC)
 {
@@ -130,7 +150,7 @@ int GetLeadershipScore(object oPC = OBJECT_SELF)
     //without epic leadership its capped at 25
     if(!GetHasFeat(FEAT_EPIC_LEADERSHIP, oPC) && nLeadership > 25)
         nLeadership = 25;
-    
+
     return nLeadership;
 }
 
@@ -146,7 +166,7 @@ void CheckHB()
             if(GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_deleted"))
             {
                 nCohortCount = i;
-            }        
+            }
         }
         if(GetCampaignInt(COHORT_DATABASE, "CohortCount")==nCohortCount) //no "deleted" cohorts
             nCohortCount++;
@@ -286,10 +306,10 @@ int GetCurrentCohortCount(object oPC)
     while(GetIsObjectValid(oTest) && oTest != oOldTest)
     {
         if(GetTag(oTest) == COHORT_TAG)
-            nCount++;   
+            nCount++;
         i++;
         oOldTest = oTest;
-        oTest = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, i);  
+        oTest = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, i);
     }
     return nCount;
 }
@@ -304,13 +324,13 @@ object GetCohort(int nID, object oPC)
     while(GetIsObjectValid(oTest) && oTest != oOldTest)
     {
         if(GetTag(oTest) == COHORT_TAG)
-            nCount++;   
+            nCount++;
         if(nCount == nID)
             return oTest;
         i++;
         oOldTest = oTest;
-        oTest = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, i);  
-    }   
+        oTest = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, i);
+    }
     return OBJECT_INVALID;
 }
 
@@ -353,8 +373,8 @@ int GetIsCohortChoiceValid(int nID, object oPC)
         object oCohort = GetCohort(i, oPC);
         if(GetName(oCohort) == sName)
             bIsValid = FALSE;
-    }   
-    //has been deleted    
+    }
+    //has been deleted
     if(GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_deleted"))
         bIsValid = FALSE;
     //hathran
@@ -365,19 +385,19 @@ int GetIsCohortChoiceValid(int nID, object oPC)
         {
             object oCohort = GetCohort(i, oPC);
             if(GetIsObjectValid(oCohort)
-                &&(GetHasFeat(FEAT_HATH_COHORT, oCohort) 
+                &&(GetHasFeat(FEAT_HATH_COHORT, oCohort)
                     || GetLevelByClass(CLASS_TYPE_BARBARIAN, oCohort)))
-                nEthranBarbarianCount++;    
+                nEthranBarbarianCount++;
         }
         //must have at least one ethran or barbarian
         if(!nEthranBarbarianCount
             && GetCurrentCohortCount(oPC) >= GetMaximumCohortCount(oPC)-1
-            && !nEthran 
+            && !nEthran
             && nClass1 != CLASS_TYPE_BARBARIAN
             && nClass2 != CLASS_TYPE_BARBARIAN
             && nClass3 != CLASS_TYPE_BARBARIAN)
                 bIsValid = FALSE;
-    }       
+    }
     //Undead Leadership
     //Wild Cohort
         //not implemented yet
@@ -405,3 +425,6 @@ void DeleteCohort(int nCohortID)
     //Add Cohort overwrites the first deleted cohort
     SetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_deleted", TRUE);
 }
+
+// Test main
+//void main(){}

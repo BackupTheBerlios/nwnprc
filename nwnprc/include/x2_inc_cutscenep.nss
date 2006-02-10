@@ -1,8 +1,8 @@
 //Modified by Primogenitor
 /*
 Error in bioware original due to mismatch
-betweeen CutCreateObjectCopy definition and 
-implementation. Bioware compiler doesnt see 
+betweeen CutCreateObjectCopy definition and
+implementation. Bioware compiler doesnt see
 it, but PRC one does.
 */
 
@@ -2129,3 +2129,7 @@ void CutDisableCutscene(int nCutscene, float fCleanupDelay, float fDestPCCopyDel
     }
     DelayCommand(fCleanupDelay + 0.8, CutSetActiveCutscene(-1, CUT_DELAY_TYPE_CONSTANT));
 }
+
+
+// Test main
+//void main(){}

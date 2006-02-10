@@ -17,42 +17,45 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////
 
-void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurstEffect, 
+#include "spinc_common"
+
+
+void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurstEffect,
      int nVictimEffect, float fRadius, int nDamageType, int nBonusDamageType, int nSaveType,
      int bCasterImmune = FALSE,
      int nSchool = SPELL_SCHOOL_EVOCATION, int nSpellID = -1,
      float fAOEDuration = 0.0f)
 {
      SPSetSchool(nSchool);
-     
+
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-     
+
      // Get the spell target location as opposed to the spell target.
      location lTarget = PRCGetSpellTargetLocation();
 
         int nPenetr = nCasterLvl + SPGetPenetr();
      // Get the effective caster level and hand it to the SR engine.
 
-     
+
      // Adjust the damage type of necessary, if the damage & bonus damage types are the
      // same we need to copy the adjusted damage type to the bonus damage type.
      int nSameDamageType = nDamageType == nBonusDamageType;
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
      if (nSameDamageType) nBonusDamageType = nDamageType;
-     
+
      // Apply the specified vfx to the location.  If we were given an aoe vfx then
      // fAOEDuration will be > 0.
      if (fAOEDuration > 0.0)
-          ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, 
+          ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY,
                EffectAreaOfEffect(nBurstEffect, "****", "****", "****"), lTarget, fAOEDuration);
      else
           ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(nBurstEffect), lTarget);
-     
+
      effect eVis = EffectVisualEffect(nVictimEffect);
      effect eDamage, eBonusDamage;
      float fDelay;
-     
+
      // Declare the spell shape, size and the location.  Capture the first target object in the shape.
      // Cycle through the targets within the spell shape until an invalid object is captured.
      object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
@@ -77,11 +80,11 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                          {
                               // Damage damage type is the simple case, just get the total damage
                               // of the spell's type, apply metamagic and roll the save.
-                              
+
                               // Roll damage for each target
                               nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
                               nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                                   
+
                               // Adjust damage for reflex save / evasion / imp evasion
                               nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nSaveDC, nSaveType);
                          }
@@ -92,7 +95,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                               // 1/2 or no damage, and apply appropriately to the secondary damage
                               // type.
 
-                              // Calculate base and bonus damage.                              
+                              // Calculate base and bonus damage.
                               nDam = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, 0);
                               nDam2 = nDice * nBonusDam;
 
@@ -118,11 +121,11 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                          if (nDam > 0)
                          {
                               eDamage = SPEffectDamage(nDam, nDamageType);
-                              
+
                               // Apply effects to the currently selected target.
                               DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget));
                               PRCBonusDamage(oTarget);
-                              
+
                               // This visual effect is applied to the target object not the location as above.
                               DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                          }
@@ -130,17 +133,20 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                          // Apply bonus damage if it is a different type.
                          if (nDam2 > 0)
                          {
-                              DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, 
+                              DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,
                                    SPEffectDamage(nDam2, nBonusDamageType), oTarget));
                          }
                     }
                }
           }
-                    
+
           oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      }
-     
+
      // Let the SR engine know that we are done and clear out school local var.
 
      SPSetSchool();
 }
+
+// Test main
+//void main(){}

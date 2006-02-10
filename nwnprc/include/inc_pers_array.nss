@@ -22,8 +22,6 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "inc_persist_loca"
-
 
 /////////////////////////////////////
 // Functions
@@ -174,6 +172,12 @@ int persistant_array_get_size(object store, string name);
  */
 int persistant_array_exists(object store, string name);
 
+/////////////////////////////////////
+// Includes
+/////////////////////////////////////
+
+#include "inc_persist_loca"
+
 
 /////////////////////////////////////
 // Implementation
@@ -320,3 +324,6 @@ int persistant_array_exists(object store, string name)
     else
         return TRUE;
 }
+
+// Test main
+//void main(){}

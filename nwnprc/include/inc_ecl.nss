@@ -206,7 +206,7 @@ void ApplyECLToXP(object oPC)
     int iCurXP = GetXP(oPC);
     if(!GetIsPC(oPC))
         iCurXP = GetLocalInt(oPC, "NPC_XP");
-    //if dm reduces Xp to zero, set the local to match.    
+    //if dm reduces Xp to zero, set the local to match.
     if(iCurXP == 0)
         SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, 0);
     int iLastXP = GetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT);

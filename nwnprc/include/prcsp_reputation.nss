@@ -116,7 +116,7 @@ int spellsIsTarget(object oTarget, int nTargetType, object oSource)
     // * if dead, not a valid target
     if (GetIsDead(oTarget))
         return FALSE;
-	
+
     // GZ: Creatures with the same master will never damage each other
 	object oTargetMaster = GetMaster(oTarget);
 	object oSourceMaster = GetMaster(oSource);

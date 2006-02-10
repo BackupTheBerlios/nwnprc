@@ -27,13 +27,13 @@
 // instead of GetMetaMagic() and checking flags.
 //
 //  int SPGetMetaMagic()
-//  int SPGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize, 
+//  int SPGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize,
 //      int nBonusPerDie = 0, int nBonus = 0, int nMetaMagic = -1)
 //  float SPGetMetaMagicDuration(float fDuration, int nMetaMagic = -1)
 //
 // Functions to return effects, use any here instead of standard EffectXXX() functions.
 //
-//  effect SPEffectDamage(int nDamageAmount, int nDamageType = DAMAGE_TYPE_MAGICAL, 
+//  effect SPEffectDamage(int nDamageAmount, int nDamageType = DAMAGE_TYPE_MAGICAL,
 //      int nDamagePower = DAMAGE_POWER_NORMAL)
 //  effect SPEffectDamageShield(int nDamageAmount, int nRandomAmount, int nDamageType)
 //  effect SPEffectHeal(int nAmountToHeal)
@@ -54,11 +54,11 @@
 ///////////////////////////////////////////////////////////////////////////
 #include "prc_inc_function"
 #include "X2_I0_SPELLS"
-#include "x2_inc_spellhook" 
+#include "x2_inc_spellhook"
 
 
 // Coding issues with this one, need a collection of targets for napalm effect.
-const int SPELL_LIQUID_FIRE                 = 0; 
+const int SPELL_LIQUID_FIRE                 = 0;
 
 //const int SPELL_
 
@@ -77,7 +77,7 @@ float MinutesToSeconds(int minutes)
     // on that.
     float scaledMinute = HoursToSeconds(1) / 60.0;
     float totalMinutes = minutes * scaledMinute;
-    
+
     // Return our scaled duration, but before doing so check to make sure
     // that it is at least as long as a round / level (time scale is in
     // the module properties, it's possible a minute / level could last less
@@ -98,7 +98,7 @@ float TenMinutesToSeconds(int tenMinutes)
     // on that.
     float scaledMinute = HoursToSeconds(1) / 6.0;
     float totalMinutes = tenMinutes * scaledMinute;
-    
+
     // Return our scaled duration, but before doing so check to make sure
     // that it is at least as long as a round / level (time scale is in
     // the module properties, it's possible a 10 minute / level could last less
@@ -155,7 +155,7 @@ int SPGetElementalDamageType(int nDamageType, object oCaster = OBJECT_SELF)
     case DAMAGE_TYPE_SONIC:
         nDamageType = ChangedElementalDamage(oCaster, nDamageType);
     }
-    
+
     return nDamageType;
 }
 
@@ -180,13 +180,13 @@ int SPGetMetaMagic()
 //      nBonus - Amount of overall bonus damage.
 //      nMetaMagic - metamagic constant, if -1 GetMetaMagic() is called.
 //      returns - the damage rolled with metamagic applied.
-int SPGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize, 
+int SPGetMetaMagicDamage(int nDamageType, int nDice, int nDieSize,
     int nBonusPerDie = 0, int nBonus = 0, int nMetaMagic = -1)
 {
     // If the metamagic argument wasn't given get it.
     if (-1 == nMetaMagic) nMetaMagic = SPGetMetaMagic();
 
-    // Roll the damage, applying metamagic. 
+    // Roll the damage, applying metamagic.
     int nDamage = PRCMaximizeOrEmpower(nDieSize, nDice, nMetaMagic, (nBonusPerDie * nDice) + nBonus);
     return nDamage;
 }
@@ -225,7 +225,7 @@ void SPSetSchool(int nSchool = SPELL_SCHOOL_GENERAL)
 void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, object oCaster = OBJECT_SELF)
 {
     if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-    
+
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, bHostile));
 }
@@ -235,7 +235,7 @@ void SPRaiseSpellCastAt(object oTarget, int bHostile = TRUE, int nSpellID = -1, 
 //      nDamageAmount - Amount of damage to apply.
 //      nDamageType - DAMAGE_TYPE_xxx for the type of damage.
 //      nDamagePower - DAMAGE_POWER_xxx power rating for the damage.
-effect SPEffectDamage(int nDamageAmount, int nDamageType = DAMAGE_TYPE_MAGICAL, 
+effect SPEffectDamage(int nDamageAmount, int nDamageType = DAMAGE_TYPE_MAGICAL,
     int nDamagePower = DAMAGE_POWER_NORMAL)
 {
     return EffectDamage(nDamageAmount, nDamageType, nDamagePower);

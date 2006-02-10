@@ -555,3 +555,6 @@ int array_2d_exists(object store, string name)
         return TRUE;
 }
 */
+
+// Test main
+//void main(){}

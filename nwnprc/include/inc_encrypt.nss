@@ -7,7 +7,7 @@ string Encrypt(object oPC)
     if(nKey == 0)
         nKey = 10;
     string sReturn;
-    
+
     string sPublicCDKey = GetPCPublicCDKey(oPC);
     int nKeyTotal;
     int i;

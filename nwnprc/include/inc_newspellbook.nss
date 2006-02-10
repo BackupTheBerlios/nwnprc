@@ -102,7 +102,7 @@ int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1)
     {
         if(StringToInt(Get2DACache(sFile, "SpellID", i)) == nSpell)
         {
-DoDebug("SpellToSpellbookID("+IntToString(nSpell)+", "+sFile+", "+IntToString(nClass)+") = "+IntToString(i));        
+DoDebug("SpellToSpellbookID("+IntToString(nSpell)+", "+sFile+", "+IntToString(nClass)+") = "+IntToString(i));
             return i;
         }
     }
@@ -133,7 +133,7 @@ int GetSpellslotLevel(int nClass, object oPC)
         nLevel += nArcSpellslotLevel;
     if(GetFirstDivineClass(oPC) == nClass)
         nLevel += nDivSpellslotLevel;
-DoDebug("GetSpellslotLevel("+IntToString(nClass)+", "+GetName(oPC)+") = "+IntToString(nLevel));        
+DoDebug("GetSpellslotLevel("+IntToString(nClass)+", "+GetName(oPC)+") = "+IntToString(nLevel));
     return nLevel;
 }
 
@@ -248,7 +248,7 @@ DoDebug("SpellKnownCurrentCount = "+IntToString(nKnown));
         if(nKnown == -1)
             nKnown = 0;
         return nKnown;
-    }    
+    }
     string sFile = GetFileForClass(nClass);
     int i;
     for(i=0;i<=9;i++)
@@ -281,7 +281,7 @@ DoDebug("SpellKnownCurrentCount = "+IntToString(nKnown));
                     nTestKnown = 0;
                 SetPersistantLocalInt(oPC, "SpellUnknownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nLevel),
                     nTestKnown+1);
-            
+
             }
         }
     }
@@ -316,7 +316,7 @@ DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSp
 DoDebug(sArrayName+" does not exist, creating.");
         persistant_array_create(oPC, sArrayName);
     }
-    //Increase the corrent number of uses 
+    //Increase the corrent number of uses
     if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
     {
         int nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
@@ -447,7 +447,7 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
             string sMessage = "You have "+IntToString(nCount-1)+" castings of "+sSpellName+" remaining";
             SendMessageToPC(oPC, sMessage);
         }
-    } 
+    }
     else  if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
     {
         int nSpellLevel = StringToInt(Get2DACache(sFile, "Level", nSpellbookID));
@@ -465,7 +465,7 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
             string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
             string sMessage = "You have "+IntToString(nCount-1)+" castings of spells of "+IntToString(nSpellLevel)+" remaining";
             SendMessageToPC(oPC, sMessage);
-        }    
+        }
     }
     //uses GetSpellId to get the fake spellID not the real one
     //this is only the BASE DC, feats etc are added on top of this

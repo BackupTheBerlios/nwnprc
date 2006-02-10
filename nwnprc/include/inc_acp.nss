@@ -1,3 +1,4 @@
+#include "prc_inc_switch"
 
 //object oPC = OBJECT_SELF; //this script is always called by one person.
 string sLock = "acp_fightingstyle_lock";
@@ -43,10 +44,10 @@ void SetCustomFightingStyle(int iStyle) //Sets character phenotype to 5,6,7 or 8
 
     //If we are at phenotype 0 or one of the styles themselves, we go ahead
     //and set the creature's phenotype accordingly! (safe thanks to previous 'if')
-    else if (GetPhenoType(OBJECT_SELF) == 0 
-        || GetPhenoType(OBJECT_SELF) == 5 
-        || GetPhenoType(OBJECT_SELF) == 6 
-        || GetPhenoType(OBJECT_SELF) == 7 
+    else if (GetPhenoType(OBJECT_SELF) == 0
+        || GetPhenoType(OBJECT_SELF) == 5
+        || GetPhenoType(OBJECT_SELF) == 6
+        || GetPhenoType(OBJECT_SELF) == 7
         || GetPhenoType(OBJECT_SELF) == 8)
     {
         SetPhenoType(iStyle, OBJECT_SELF);
@@ -62,3 +63,6 @@ void SetCustomFightingStyle(int iStyle) //Sets character phenotype to 5,6,7 or 8
         SendMessageToPC(OBJECT_SELF, "Your phenotype is non-standard / Unable to change style");
 
 }
+
+// Test main
+//void main(){}

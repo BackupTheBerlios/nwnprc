@@ -36,7 +36,7 @@ int GetIsFlanked(object oDefender, object oAttacker);
 // Checks if an AoE spell is flanking the defender
 int GetIsAOEFlanked(object oDefender, object oAttacker);
 
-// Determines if a creature is helpless. 
+// Determines if a creature is helpless.
 // (effective dex modifier of 0, and can be Coup De Graced).
 int GetIsHelpless(object oDefender);
 
@@ -68,7 +68,7 @@ int GetTotalSneakAttackDice(object oPC)
 int GetRogueSneak(object oPC)
 {
    object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND,oPC);
-   
+
    int iClassLevel;
    int iRogueSneak = 0;
 
@@ -83,22 +83,22 @@ int GetRogueSneak(object oPC)
    // Black Flame Zealot
    iClassLevel = GetLevelByClass(CLASS_TYPE_BFZ, oPC);
    if (iClassLevel) iRogueSneak += iClassLevel / 3;
-   
+
    // Nightshade
    iClassLevel = GetLevelByClass(CLASS_TYPE_NIGHTSHADE, oPC);
    if (iClassLevel) iRogueSneak += iClassLevel / 3;
-   
+
    //Ambush Attack
    if (GetHasFeat(FEAT_UR_SNEAKATK_3D6,oPC)) iRogueSneak += 3;
-   
+
    // Outlaw Crimson Road
    iClassLevel = GetLevelByClass(CLASS_TYPE_OUTLAW_CRIMSON_ROAD, oPC);
    if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
-   
+
    // Temple Raider
    iClassLevel = GetLevelByClass(CLASS_TYPE_TEMPLE_RAIDER, oPC);
    if (iClassLevel>= 2) iRogueSneak += (iClassLevel + 1) / 3;
-   
+
    // Ghost-Faced Killer
    iClassLevel = GetLevelByClass(CLASS_TYPE_GHOST_FACED_KILLER, oPC);
    if (iClassLevel >= 2) iRogueSneak += ((iClassLevel + 1) / 3);
@@ -106,20 +106,20 @@ int GetRogueSneak(object oPC)
    // Ninja
    iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA, oPC);
    if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
-   
+
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {
       // Peerless Archer
       iClassLevel = GetLevelByClass(CLASS_TYPE_PEERLESS, oPC);
       if (iClassLevel) iRogueSneak += (iClassLevel + 2) / 3;
-      
+
       // Blood Archer
       iClassLevel = GetLevelByClass(CLASS_TYPE_BLARCHER, oPC);
       if ((iClassLevel >= 5) && (iClassLevel < 8)) iRogueSneak++;
       if ((iClassLevel >= 8) && (iClassLevel < 10)) iRogueSneak += 2;
       if (iClassLevel >= 10) iRogueSneak += 3;
-       
-      // Order of the Bow Initiate 
+
+      // Order of the Bow Initiate
       //iClassLevel = GetLevelByClass(CLASS_TYPE_ORDER_BOW_INITIATE, oPC);
    }
    if(GetBaseItemType(oWeapon) == BASE_ITEM_SLING)
@@ -201,11 +201,11 @@ int GetAssassinSneak(object oPC)
    // Assassin
    iClassLevel = GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC);
    if (iClassLevel) iAssassinSneakDice += (iClassLevel + 1) / 2;
-   
+
    // Telflammar Shadowlord
    iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
    if (iClassLevel >= 6) iAssassinSneakDice++;
-   
+
    return iAssassinSneakDice;
 }
 
@@ -231,11 +231,11 @@ int GetEpicFeatSneak(object oPC)
 //::  Sneak Attack Function Definitions
 //:://////////////////////////////////////////////
 
-int GetIsFlanked(object oDefender, object oAttacker) 
+int GetIsFlanked(object oDefender, object oAttacker)
 {
     int bReturnVal = FALSE;
-    
-    if(GetIsObjectValid(oAttacker) && GetIsObjectValid(oDefender)) 
+
+    if(GetIsObjectValid(oAttacker) && GetIsObjectValid(oDefender))
     {
         // I am assuming that if the Defender is facing away from the
         // Attacker then the Defender is flanked, as NWN "turns" an
@@ -251,13 +251,13 @@ int GetIsFlanked(object oDefender, object oAttacker)
         // If the magnitude of the Defenders facing vector is greater than the
         // result of the magnitude of the vector addition of the Attackers and
         // Defenders facing then the Defender is flanked.
-       
+
         if(iMagDefender < iMagResult)
         {
              bReturnVal = TRUE;
         }
     }
-    
+
     return bReturnVal;
 }
 
@@ -265,7 +265,7 @@ int GetIsFlanked(object oDefender, object oAttacker)
 int GetIsAOEFlanked(object oDefender, object oAttacker)
 {
     int bReturnVal = TRUE;
-    
+
     // if they are not in combat then they are automatically flanked (surprise round)
     if(!GetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
     {
@@ -273,22 +273,22 @@ int GetIsAOEFlanked(object oDefender, object oAttacker)
          object oTarget = GetAttackTarget(oDefender);
          if(oTarget == oAttacker)  bReturnVal = FALSE;
     }
-    
+
     return bReturnVal;
 }
 
 int GetIsHelpless(object oDefender)
 {
      int bIsHelpless = FALSE;
-     
+
      // PnP describes a helpless defender as
      // A helpless foe - one who is bound, held, sleeping, paralyzed,
      // unconscious, or otherwise at your mercy - is an easy target.
      if( GetHasEffect(EFFECT_TYPE_PARALYZE, oDefender) )               bIsHelpless = TRUE;
      else if( GetHasEffect(EFFECT_TYPE_SLEEP, oDefender) )             bIsHelpless = TRUE;
-     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )           bIsHelpless = TRUE;  
+     else if( GetHasEffect(EFFECT_TYPE_PETRIFY, oDefender) )           bIsHelpless = TRUE;
      else if( GetHasEffect(EFFECT_TYPE_CUTSCENE_PARALYZE, oDefender) ) bIsHelpless = TRUE;
-     
+
      return bIsHelpless;
 }
 
@@ -298,19 +298,19 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
      int bDefenderHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
      int bDefenderCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
      int bDefenderIsKnockedDown = GetHasFeatEffect(FEAT_KNOCKDOWN, oDefender) || GetHasFeatEffect(FEAT_IMPROVED_KNOCKDOWN, oDefender);
-     
+
      // if the player is helpess, they are automatically denied dex bonus.
      if( GetIsHelpless(oDefender) ) return TRUE;
 
      // if the player is not fighting, then this is the "surprise round"
      if( !GetIsFighting(oDefender) || !GetIsInCombat(oDefender) )
-     {          
+     {
           bIsDeniedDex = TRUE;
      }
-     
+
      // In NwN, knocked down targets are counted as denied dex bonus to AC.
      if( bDefenderIsKnockedDown ) bIsDeniedDex = TRUE;
-     
+
      // if defender has spell effect on them causing them to be denied dex bonus to AC.
      if( GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender) )          bIsDeniedDex = TRUE;
      else if( GetHasEffect(EFFECT_TYPE_ENTANGLE, oDefender) )      bIsDeniedDex = TRUE;
@@ -320,8 +320,8 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
      // Note: This is wrong by PnP rules... but Bioware allows auto sneaks on Dazed targets.
      //       to keep in tune with the game engine I'll leave this active.
      else if( GetHasEffect(EFFECT_TYPE_DAZED, oDefender) )         bIsDeniedDex = TRUE;
-      
-     // if attacker is invisvisible/hiding/etc.     
+
+     // if attacker is invisvisible/hiding/etc.
      else if( GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
      {
           bIsDeniedDex = TRUE;
@@ -332,9 +332,9 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
      }
      else if( !GetObjectSeen(oAttacker, oDefender) )
      {
-          bIsDeniedDex = TRUE;    
+          bIsDeniedDex = TRUE;
      }
-     
+
      // Check for Uncanny Dodge Vs. Sneak Attack.
      if( GetHasFeat(FEAT_UNCANNY_DODGE_2, oDefender) && !nIgnoreUD )
      {
@@ -343,30 +343,30 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
           iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_ASSASSIN , oDefender);
           iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_ROGUE    , oDefender);
           iUncannyDodgeLevels += GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oDefender);
-          
+
           // +4 because a rogue has to be 4 levels higher to flank
           iUncannyDodgeLevels += 4;
-          
+
           int iSneakAttackLevels;
           iSneakAttackLevels = GetTotalSneakAttackDice(oAttacker);
           /*    Primogenitor - Not sure why the overall function isnt used
-          
+
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ASSASSIN  , oAttacker);
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ROGUE     , oAttacker);
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_BLACKGUARD, oAttacker);
-          
+
           // add other sneak attacking PrC's here
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_ARCTRICK, oAttacker);
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_SHADOWLORD, oAttacker);
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_PEERLESS, oAttacker);
           iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_BLARCHER, oAttacker);
 
-          //          
+          //
           // Use template to add future classes
           // iSneakAttackLevels += GetLevelByClass(CLASS_TYPE_*, oAttacker);
           //
           */
-          
+
           if(iUncannyDodgeLevels > iSneakAttackLevels)
           {
                bIsDeniedDex = FALSE;
@@ -374,10 +374,10 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
 
           if(GetLevelByClass(CLASS_TYPE_DWARVENDEFENDER, oDefender) > 0 )
           {
-              bIsDeniedDex = FALSE; 
-          }          
+              bIsDeniedDex = FALSE;
+          }
      }
-     
+
      return bIsDeniedDex;
 }
 
@@ -388,13 +388,13 @@ int GetIsConcealed(object oDefender, object oAttacker)
      int bAttackerHasTrueSight = GetHasEffect(EFFECT_TYPE_TRUESEEING, oAttacker);
      int bAttackerCanSeeInvisble = GetHasEffect(EFFECT_TYPE_SEEINVISIBLE, oAttacker);
      int bAttackerUltraVision = GetHasEffect(EFFECT_TYPE_ULTRAVISION, oAttacker);
-     
+
      if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_50, oDefender) )          bIsConcealed = 50;
      else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_40, oDefender) )     bIsConcealed = 40;
      else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_30, oDefender) )     bIsConcealed = 30;
      else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_20, oDefender) )     bIsConcealed = 20;
      else if(GetHasFeat(FEAT_EPIC_SELF_CONCEALMENT_10, oDefender) )     bIsConcealed = 10;
-     
+
      // darkness, invisible, imp invisible
      else if(GetStealthMode(oDefender) == STEALTH_MODE_ACTIVATED && !GetObjectSeen(oDefender, oAttacker) )  bIsConcealed = TRUE;
      else if(GetHasEffect(EFFECT_TYPE_SANCTUARY, oDefender) && !bAttackerHasTrueSight )
@@ -414,11 +414,11 @@ int GetIsConcealed(object oDefender, object oAttacker)
      }
      else if(GetHasEffect(EFFECT_TYPE_DARKNESS, oDefender) && !bAttackerHasTrueSight && !bAttackerUltraVision)
      {
-          bIsConcealed = 50; 
+          bIsConcealed = 50;
      }
      else if(GetHasFeatEffect(FEAT_EMPTY_BODY, oDefender) )
      {
-          bIsConcealed = 50;   
+          bIsConcealed = 50;
      }
      //else if(GetHasEffect(EFFECT_TYPE_ETHEREAL, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
      //{
@@ -429,11 +429,11 @@ int GetIsConcealed(object oDefender, object oAttacker)
      else if(GetHasSpellEffect(1764 , oDefender) && !bAttackerHasTrueSight) // blur spell
      {
           bIsConcealed = 20;
-     }       
+     }
      else if(GetHasSpellEffect(SPELL_DISPLACEMENT , oDefender) && !bAttackerHasTrueSight)
      {
           bIsConcealed = 50;
-     }  
+     }
      else if(GetHasSpellEffect(SPELL_SHADOW_EVADE , oDefender) && !bAttackerHasTrueSight)
      {
           int iSDlevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oDefender);
@@ -441,13 +441,13 @@ int GetIsConcealed(object oDefender, object oAttacker)
           if(iSDlevel <= 6)  bIsConcealed = 10;
           if(iSDlevel <= 8)  bIsConcealed = 15;
           if(iSDlevel <= 10) bIsConcealed = 20;
-     }  
+     }
 
      // this is the catch-all effect
      else if(GetHasEffect(EFFECT_TYPE_CONCEALMENT, oDefender) && !bAttackerHasTrueSight)
      {
           if(bIsConcealed == FALSE) bIsConcealed = TRUE;
-     }  
+     }
 
      return bIsConcealed;
 }
@@ -457,7 +457,7 @@ int GetCanSneakAttack(object oDefender, object oAttacker)
     //cant sneak non-creatures
      if(GetObjectType(oDefender) != OBJECT_TYPE_CREATURE)
         return FALSE;
-        
+
      int bReturnVal = FALSE;
      int bIsInRange = FALSE;
      int bIsFlanked = GetIsFlanked(oDefender, oAttacker);
@@ -472,19 +472,19 @@ int GetCanSneakAttack(object oDefender, object oAttacker)
      {
           // so far they can be sneaked
           bReturnVal = TRUE;
-          
+
           // checking for other factors that remove sneak attack
           if( GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )   bReturnVal = FALSE;
           if( GetIsImmune(oDefender, IMMUNITY_TYPE_SNEAK_ATTACK, OBJECT_INVALID) )   bReturnVal = FALSE;
-          
+
           if( GetIsConcealed(oDefender, oAttacker) )   bReturnVal = FALSE;
      }
-     
+
      return bReturnVal;
 }
 
 int GetSneakAttackDamage(int iSneakAttackDice)
 {
-     int iSneakAttackDamage = d6(iSneakAttackDice);     
+     int iSneakAttackDamage = d6(iSneakAttackDice);
      return iSneakAttackDamage;
 }

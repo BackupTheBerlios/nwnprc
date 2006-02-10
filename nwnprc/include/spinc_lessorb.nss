@@ -1,6 +1,7 @@
 
 #include "prc_inc_sp_tch"
 #include "prc_inc_combat"
+#include "spinc_common"
 
 void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 {
@@ -15,7 +16,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = GetSpellId();
-     
+
      // Adjust the damage type of necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
 
@@ -26,7 +27,7 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
 
           // Note that this spell has no spell resistance intentionally in the WotC Miniatures
           // Handbook, bit powerful but that's how it is in the PnP book.
-          
+
           // Make touch attack, saving result for possible critical
           int nTouchAttack = PRCDoRangedTouchAttack(oTarget);;
           if (nTouchAttack > 0)
@@ -35,13 +36,16 @@ void DoLesserOrb(effect eVis, int nDamageType, int nSpellID = -1)
                int nDamage = SPGetMetaMagicDamage(nDamageType, 1 == nTouchAttack ? nDice : (nDice * 2), 8);
                nDamage += SpellSneakAttackDamage(OBJECT_SELF, oTarget);
                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-               
-               // Apply the damage and the damage visible effect to the target.                
+
+               // Apply the damage and the damage visible effect to the target.
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, nDamageType), oTarget);
                PRCBonusDamage(oTarget);
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
           }
      }
-     
+
      SPSetSchool();
 }
+
+// Test main
+//void main(){}

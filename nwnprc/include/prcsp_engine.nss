@@ -58,7 +58,7 @@ int PRCGetSpellResistance(object oTarget, object oCaster)
             iRacialSpellRes += 5+GetHitDice(oTarget);
         if(iRacialSpellRes > iSpellRes)
             iSpellRes = iRacialSpellRes;
-            
+
         // Exalted Companion, can also be used for Celestial Template
         if (GetLocalInt(oTarget, "CelestialTemplate"))
         {
@@ -67,14 +67,14 @@ int PRCGetSpellResistance(object oTarget, object oCaster)
             if (nSR > 25) nSR = 25;
             if (nSR > iSpellRes) iSpellRes = nSR;
         }
-        
-        // Foe Hunter SR stacks with normal SR 
+
+        // Foe Hunter SR stacks with normal SR
         // when a spell is cast by their hated enemy
         if(GetHasFeat(FEAT_HATED_ENEMY_SR, oTarget) && GetLocalInt(oTarget, "HatedFoe") == MyPRCGetRacialType(oCaster) )
         {
              iSpellRes += 15 + GetLevelByClass(CLASS_TYPE_FOE_HUNTER, oTarget);
         }
-    
+
     return iSpellRes;
 }
 
@@ -96,7 +96,7 @@ void PRCShowSpellResist(object oCaster, object oTarget, int nResist, float fDela
             "You are affected by the spell." : "You resisted the spell.";
         SendMessageToPC(oTarget, message);
     }
-    
+
     if (nResist != SPELL_RESIST_FAIL) {
         // Default to a standard resistance
         int eve = VFX_IMP_MAGIC_RESISTANCE_USE;

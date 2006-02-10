@@ -57,20 +57,20 @@ const int nGaveCyst = 16829316;
 ///////////////////////////////////////
 
 
-int GetCanCastNecroticSpells(object oPC) 
+int GetCanCastNecroticSpells(object oPC)
 {
 	int bReturn = TRUE;
 	// check for Necrotic Empowerment on caster
-	if (GetHasSpellEffect(SPELL_NECROTIC_EMPOWERMENT, oPC))    
+	if (GetHasSpellEffect(SPELL_NECROTIC_EMPOWERMENT, oPC))
 	{// "You cannot cast spells utilizing your Mother Cyst while under the effect of Necrotic Empowerment."
-		
+
 		SendMessageToPCByStrRef(oPC, nNecEmpower);
 		bReturn = FALSE;
 	}
 	// check for Mother Cyst
 	if(!GetHasFeat(FEAT_MOTHER_CYST, oPC) && (!GetIsObjectValid(GetSpellCastItem())))
 	{
-		
+
 		// "You must have a Mother Cyst to cast this spell."
 		SendMessageToPCByStrRef(oPC, nNoMotherCyst);
 		bReturn = FALSE;
@@ -81,15 +81,15 @@ int GetCanCastNecroticSpells(object oPC)
 
 int GetHasNecroticCyst(object oCreature)
 {
-    return GetPersistantLocalInt(oCreature, "HAS_NECROTIC_CYST");
+    return GetPersistantLocalInt(oCreature, NECROTIC_CYST_MARKER);
 
 }
 
 void GiveNecroticCyst(object oCreature)
 {
-	
-	
-	SetPersistantLocalInt(oCreature, "HAS_NECROTIC_CYST", 1);
+
+
+	SetPersistantLocalInt(oCreature, NECROTIC_CYST_MARKER, 1);
 	SendMessageToPCByStrRef(OBJECT_SELF, nGaveCyst);
 	itemproperty iCystDam = (ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1));
 	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
@@ -98,19 +98,22 @@ void GiveNecroticCyst(object oCreature)
 		//add item prop with DURATION_TYPE_PERMANENT
 		IPSafeAddItemProperty(oArmor, iCystDam, 0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
 	}
-	
-	else 
+
+	else
 	{
 		object oSkin = GetPCSkin(oCreature);
 		IPSafeAddItemProperty(oSkin, iCystDam, 0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
 	}
-	
+
 	//Keep property on armor or hide
 	ExecuteScript ("prc_keep_onhit_a", oCreature);
 }
 
 void RemoveCyst(object oCreature)
 {
-	SetPersistantLocalInt(oCreature, "HAS_NECROTIC_CYST", 0);
-	
+	SetPersistantLocalInt(oCreature, NECROTIC_CYST_MARKER, 0);
+
 }
+
+// Test main
+//void main(){}

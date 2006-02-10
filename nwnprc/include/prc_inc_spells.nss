@@ -193,6 +193,7 @@ const int  TYPE_DIVINE   = -2;
 #include "inc_vfx_const"
 #include "prc_inc_newip"
 #include "prc_alterations"
+#include "spinc_necro_cyst"
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -1028,12 +1029,12 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
      }
      // Necrotic Cyst penalty on Necromancy spells
-     if (GetPersistantLocalInt(oTarget, "HAS_NECROTIC_CYST") && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
-          
+     if (GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
+
           {
      	     nDC += 2;
           }
-     
+
      return nSaveRoll;
 }
 
@@ -1164,7 +1165,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iPal / 2;
              return iTemp;
              break;
-        //new spellbook classes         
+        //new spellbook classes
         case CLASS_TYPE_ASSASSIN:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_ASSASSIN)
                  iTemp = iArc;
@@ -1439,7 +1440,7 @@ void SPEvilShift(object oPC)
 	{
 		int nShift1 = GetGoodEvilValue(oPC);
 		float fShift = sqrt(IntToFloat(nShift1));
-		int nShift = FloatToInt(fShift);		
+		int nShift = FloatToInt(fShift);
 		AdjustAlignment(oPC, ALIGNMENT_EVIL, nShift);
 	}
 }
@@ -1451,7 +1452,7 @@ void SPGoodShift(object oPC)
 	{
 		int nShift1 = GetGoodEvilValue(oPC);
 		float fShift = sqrt(IntToFloat(nShift1));
-		int nShift = FloatToInt(fShift);		
+		int nShift = FloatToInt(fShift);
 		AdjustAlignment(oPC, ALIGNMENT_GOOD, nShift);
 	}
 }

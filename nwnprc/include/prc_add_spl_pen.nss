@@ -1,13 +1,53 @@
+//::///////////////////////////////////////////////
+//:: Spells include: Spell Penetration
+//:: prc_add_spl_pen
+//::///////////////////////////////////////////////
+/** @file
+    Defines functions that may have something to do
+    with modifying a spell's caster level in regards
+    to Spell Resistance penetration.
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
+
+int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF);
+
+int ElementalSavantSP(int spell_id, object oCaster = OBJECT_SELF);
+
+int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF);
+
+int GetSpellPenetreFocusSchool(object oCaster = OBJECT_SELF);
+
+int GetSpellPowerBonus(object oCaster = OBJECT_SELF);
+
+int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF);
+
+int KOTCSpellPenVsDemons(object oCaster);
+
+int RunecasterRunePowerSP(object oCaster);
 
 // Use this function to get the adjustments to a spell or SLAs spell penetration
 // from the various class effects
 // Update this function if any new classes change spell pentration
 int add_spl_pen(object oCaster = OBJECT_SELF);
 
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
 #include "prc_inc_spells"
 #include "prc_alterations"
 #include "prcsp_archmaginc"
+
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
 
 int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
     // Guard Expensive Calculations
@@ -268,3 +308,6 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
 
     return nSP;
 }
+
+// Test main
+//void main(){}

@@ -383,6 +383,5 @@ void RunThread(string sName, object oRunningOn){
 }
 
 
-/* Test main
-void main(){}
-*/
+// Test main
+//void main(){}

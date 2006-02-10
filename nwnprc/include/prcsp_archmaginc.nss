@@ -10,8 +10,11 @@
 //              #include "prcsp_archmaginc"
 //
 
-#include "prcsp_reputation"
-#include "prc_inc_spells"
+//////////////////////////////////////////////////
+/*                 Constants                    */
+//////////////////////////////////////////////////
+
+/// @todo Change these to TLK reads
 
 const string MASTERY_OF_ELEMENTS_TAG = "archmage_mastery_elements";
 const string MASTERY_OF_ELEMENTS_NAME_TAG = "archmage_mastery_elements_name";
@@ -42,11 +45,46 @@ const int SPELL_MASTERY_ELEMENTS_SONIC = 2005;
 
 const int TIME_1_ROUND = 1;
 
-//
-//  Check if the Mastery of Shapes feat applies
-//
-int
-CheckMasteryOfShapes(object oCaster, object oTarget)
+
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
+
+/**
+ * Determines if Master of Shapes is active and applies in regards to the
+ * given target.
+ *
+ * @param oCaster A creature casting an area-affecting spell
+ * @param oTarget A creature that is in the affected area
+ * @return        TRUE if the creature should be exempt from the spell due to
+ *                Mastery of Shapes. FALSE otherwise
+ */
+int CheckMasteryOfShapes(object oCaster, object oTarget);
+
+void SetFeatVisualEffects(object oCaster, int nEffect, string sMessage);
+
+void ToggleMasteryOfShapes(object oCaster);
+
+void SetMasteryOfElements();
+
+int IsSpellDamageElemental(int nDamageType);
+
+string ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF);
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "lookup_2da_spell"
+#include "prcsp_reputation"
+#include "prc_inc_spells"
+
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
+
+int CheckMasteryOfShapes(object oCaster, object oTarget)
 {
     int bRetVal = FALSE;
 
@@ -56,7 +94,7 @@ CheckMasteryOfShapes(object oCaster, object oTarget)
     {
          bRetVal = TRUE;
     }
-    
+
     return bRetVal;
 }
 
@@ -170,7 +208,7 @@ ChangedElementalDamage(object oCaster, int nDamageType){
     // If so, check if the spell qualifies for a change
     if (!nNewType || !IsSpellDamageElemental(nDamageType))
         nNewType = nDamageType;
-   
+
     return nNewType;
 }
 
@@ -202,6 +240,9 @@ ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
     // If so, check if the spell qualifies for a change
     if (sType == "" || !IsSpellTypeElemental(spellType))
         sType = spellType;
-   
+
     return sType;
 }
+
+// Test main
+//void main(){}

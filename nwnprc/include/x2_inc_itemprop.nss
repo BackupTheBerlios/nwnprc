@@ -743,13 +743,13 @@ int IPGetIPConstCastSpellFromSpellID(int nSpellID)
 {
     // look up Spell Property Index
     string sTemp = Get2DACache("des_crft_spells","IPRP_SpellIndex",nSpellID);
-    
+
     if (sTemp == "") // invalid nSpellID
     {
         DoDebug("x2_inc_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
         return -1;
     }
-    
+
     int nSpellPrpIdx = StringToInt(sTemp);
     return nSpellPrpIdx;
 }
@@ -1219,12 +1219,12 @@ int IPGetItemSequencerProperty(object oItem, object oPC = OBJECT_SELF)
                 nCnt = 3;
             else if(iLevel >= 30)
                 nCnt = 4;
-                
+
             nUses -= 1;
             FloatingTextStringOnCreature(IntToString(nUses)+" uses of Channel Spell remaining",oPC);
-            SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);        
+            SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);
         }
-    }    
+    }
     return nCnt;
 }
 
@@ -1689,3 +1689,7 @@ int IPGetNumberOfItemProperties(object oItem)
     }
     return nCount;
 }
+
+
+// Test main
+//void main(){}

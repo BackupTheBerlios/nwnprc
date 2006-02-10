@@ -15,7 +15,7 @@ float MetersToFeet(float fMeters);
 float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE);
 
 /* PRC ForceRest wrapper
- * 
+ *
  * ForceRest does not trigger the module's OnRest event, nor will the targeted player show up
  * when GetLastPCRested is used. This wrapper can be used to ForceRest a target, while still
  * running the PRC's OnRest script.
@@ -36,7 +36,7 @@ int GetNumHenchmen(object oPC)
           if (GetIsObjectValid(GetHenchman(oPC, nLoop)))
           nCount++;
      }
-     
+
      return nCount;
 }
 
@@ -49,13 +49,13 @@ float MetersToFeet(float fMeters)
 float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE)
 {
      float fTime = 0.0;
-     float fSpeed = 0.0; 
-     
+     float fSpeed = 0.0;
+
      int iMoveRate = GetMovementRate(oPC);
-     
+
      switch(iMoveRate)
      {
-          case 0: 
+          case 0:
                fSpeed = 2.0;
                break;
           case 1:
@@ -83,38 +83,38 @@ float GetTimeToCloseDistance(float fMeters, object oPC, int bIsRunning = FALSE)
                fSpeed = 5.50;
                break;
      }
-     
+
      // movement speed doubled if running
      if(bIsRunning) fSpeed *= 2.0;
-     
+
      // other effects that can change movement speed
      if( GetHasEffect(EFFECT_TYPE_HASTE, oPC) ) fSpeed *= 2.0;
      if( GetHasEffect(EFFECT_TYPE_MOVEMENT_SPEED_INCREASE, oPC) ) fSpeed *= 2.0;
-     
+
      if( GetHasEffect(EFFECT_TYPE_SLOW,  oPC) ) fSpeed /= 2.0;
      if( GetHasEffect(EFFECT_TYPE_MOVEMENT_SPEED_DECREASE,  oPC) ) fSpeed /= 2.0;
-     
+
      if( GetHasFeat(FEAT_BARBARIAN_ENDURANCE, oPC) ) fSpeed *= 1.1; // 10% gain
-     if( GetHasFeat(FEAT_MONK_ENDURANCE, oPC) ) 
+     if( GetHasFeat(FEAT_MONK_ENDURANCE, oPC) )
      {
           float fBonus = 0.1 * (GetLevelByClass(CLASS_TYPE_MONK, oPC) / 3 );
           if (fBonus > 0.90) fBonus = 0.9;
-          
+
           fBonus += 1.0;
           fSpeed *= fBonus;
      }
-     
+
      // final calculation
      fTime = fMeters / fSpeed;
-     
+
      return fTime;
 }
 
 void PRCForceRest(object oPC)
 {
     ForceRest(oPC);
-    
+
     SetLocalInt(oPC, "PRC_ForceRested", 1);
-    
+
     ExecuteScript("prc_rest", oPC);
 }

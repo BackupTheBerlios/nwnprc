@@ -71,20 +71,20 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
         && sType != "float"
         && sType != "double"
         && sType != "list")
-    {            
+    {
         if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
           sValue = "<qq:"+sValue+">";
         else
             sValue = "qq{"+sValue+"}";
         //wrap strings in quotes, so it doest go awry
         //sValue = "'"+sValue+"'";
-    }        
+    }
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
     {
         string sReturn = "<gff:";
         //if(bAdd)
             sReturn +="add";
-        //else            
+        //else
         //    sReturn +="set";
         sReturn += "'"+sLocation+"' {type='"+sType+"' ";
         if(sType != "list")
@@ -93,7 +93,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
             sReturn += " setifexists=True";
         sReturn += "}> ";
         return  sReturn;
-    }        
+    }
 //unicorn
     else
     {
@@ -105,7 +105,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
             sReturn += ", SetIfExists => TRUE";
         sReturn += "; ";
         return sReturn;
-    }        
+    }
 }
 
 string LetoAdjust(string sLocation, int nValue, string sType)
@@ -133,7 +133,7 @@ string LetoDelete(string sLocation)
 // clear /Str;
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
         return "<gff:delete '"+sLocation+"'> ";
-    else        
+    else
         return "clear /"+sLocation+"; ";
 
 }
@@ -147,7 +147,7 @@ string LetoGet(string sLocation)
 // /Str;
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
         return "<"+sLocation+">";
-    else        
+    else
         return "print /"+sLocation+";";
 
 }
@@ -745,7 +745,7 @@ string AddSpellToKnown(int nClassPos, int nSpellLevel, int nSpell)
 //<gff:add 'ClassList/[0]/KnownList3/[_]/Ready'          {type='byte' value='0'   setifexists=True}>
 //<gff:add 'ClassList/[0]/KnownList3/[_]/SpellMetaMagic' {type='byte' value='0'   setifexists=True}>
 
-    string sScript = LetoAdd("ClassList/["+IntToString(nClassPos)+"]/KnownList"+IntToString(nSpellLevel)+"/Spell", IntToString(nSpell), "word");    
+    string sScript = LetoAdd("ClassList/["+IntToString(nClassPos)+"]/KnownList"+IntToString(nSpellLevel)+"/Spell", IntToString(nSpell), "word");
     return sScript;
 }
 

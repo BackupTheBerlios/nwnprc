@@ -701,3 +701,6 @@ int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INV
 
     return nDC;
 }
+
+// Test main
+//void main(){}

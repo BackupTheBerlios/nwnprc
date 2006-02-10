@@ -49,7 +49,7 @@ itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel);
 
 //returns the PRCs new PnP Holy Avenger
 //for paladins, +5 +2d6 divine vs evil, castspell:dispel magic @ casterlevel = paladinlevels
-//or non paladins, +2 
+//or non paladins, +2
 itemproperty ItemPropertyPnPHolyAvenger();
 
 //not implemented

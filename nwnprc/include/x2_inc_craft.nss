@@ -810,17 +810,17 @@ int InscribeRune()
     object oCaster = OBJECT_SELF;
     // Get the item used to cast the spell
     object oItem = GetSpellCastItem();
-    if (GetResRef(oItem) == "prc_rune_1") 
+    if (GetResRef(oItem) == "prc_rune_1")
     {
         string sName = GetName(GetItemPossessor(oItem));
         if (DEBUG) FloatingTextStringOnCreature(sName + " has just cast a rune spell", oCaster, FALSE);
         //SetLocalInt(oCaster, "PRCRuneTarget", TRUE);
         //if (GetLocalInt(GetLastSpellCaster(), "PRCRuneTarget") && DEBUG) FloatingTextStringOnCreature("GetLastSpellCaster has PRCRuneTarget set TRUE", oCaster, FALSE);
     }
-    
+
     // If Inscribing is turned off, the spell functions as normal
-    if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;    
-    
+    if(!GetLocalInt(oCaster, "InscribeRune")) return TRUE;
+
     // No point being in here if you don't have runes.
     if (!GetHasFeat(FEAT_INSCRIBE_RUNE, oCaster)) return TRUE;
 
@@ -837,7 +837,7 @@ int InscribeRune()
     int nSpell = PRCGetSpellId();
     int nSpellLevel;
     int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
-    
+
     // This accounts for the fact that there is no bonus to runecraft at level 10
     // Also adjusts it to fit the epic progression, which starts at 13
     if (nClass >= 10) nClass -= 3;
@@ -854,7 +854,7 @@ int InscribeRune()
     // This will be modified with Runecaster code later.
     int nCharges = 1;
     if (GetLocalInt(oCaster, "RuneCharges")) nCharges = nCount;
-    if (GetLocalInt(oCaster, "RuneUsesPerDay")) 
+    if (GetLocalInt(oCaster, "RuneUsesPerDay"))
     {
         // 5 is the max uses per day
         if (nCount > 5) nCount = 5;
@@ -866,7 +866,7 @@ int InscribeRune()
     FloatingTextStringOnCreature("Spell Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
     FloatingTextStringOnCreature("Caster Level: " + IntToString(nCaster), OBJECT_SELF, FALSE);
     FloatingTextStringOnCreature("Number of Charges: " + IntToString(nCharges), OBJECT_SELF, FALSE);
-    
+
     // Gold cost multipler, varies depending on the ability used to craft
     int nMultiplier = 100;
     if (nClass > 0) nMultiplier = 50;
@@ -1766,4 +1766,5 @@ int CIGetWeaponModificationCost(object oOldItem, object oNewItem)
 }
 
 
-
+// Test main
+//void main(){}

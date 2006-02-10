@@ -14,31 +14,33 @@
 //
 /////////////////////////////////////////////////////////////////////
 
-void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused */, 
+#include "spinc_common"
+
+void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused */,
      int nVictimEffect, int nDamageType, int nSaveType,
      int nSchool = SPELL_SCHOOL_EVOCATION, int nSpellID = -1)
 {
      SPSetSchool(nSchool);
-     
+
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-     
+
      // Get effective caster level and hand it to the SR engine.  Then
      // cap it at our die cap.
      int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
      int nPenetr = nCasterLvl + SPGetPenetr();
-     
+
 
      if (nCasterLvl > nDieCap) nCasterLvl = nDieCap;
-     
+
      // Figure out where the cone was targetted.
      location lTargetLocation = PRCGetSpellTargetLocation();
-     
+
      // Adjust the damage type of necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
 
-     
-     
+
+
      //Declare major variables
      int nDamage;
      float fDelay;
@@ -53,10 +55,10 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
           {
                //Fire cast spell at event for the specified target
                SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
-               
+
                //Get the distance between the target and caster to delay the application of effects
                fDelay = GetSpellEffectDelay(lTargetLocation, oTarget);
-               
+
                //Make SR check, and appropriate saving throw(s).
                if(!SPResistSpell(OBJECT_SELF, oTarget,nPenetr, fDelay) && (oTarget != OBJECT_SELF))
                {
@@ -64,7 +66,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
                     // Roll damage for each target
                     int nDamage = SPGetMetaMagicDamage(nDamageType, nCasterLvl, nDieSize, nBonusDam);
                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
-                    
+
                     // Adjust damage according to Reflex Save, Evasion or Improved Evasion
                     nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nSaveDC, nSaveType);
 
@@ -79,13 +81,16 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
                     }
                }
           }
-          
+
           //Select the next target within the spell shape.
           oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      }
-     
+
      // Let the SR engine know that we are done and clear out school local var.
 
      SPSetSchool();
 }
 
+
+// Test main
+//void main(){}

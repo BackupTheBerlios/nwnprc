@@ -144,10 +144,10 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
     effect eVis = EffectVisualEffect(vfx_impactHurt);
     effect eVis2 = EffectVisualEffect(vfx_impactHeal);
     effect eHeal, eDam;
-   
+
     int CasterLvl;
     if ( ModCasterlevel == 0)
-       CasterLvl  = PRCGetCasterLevel(OBJECT_SELF); 
+       CasterLvl  = PRCGetCasterLevel(OBJECT_SELF);
     else
        CasterLvl = ModCasterlevel;
 
@@ -166,7 +166,7 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
         nDamage = nDamage + nExtraDamage;
     }
 
-    
+
 
     //Make metamagic checks
     int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, TRUE);
@@ -183,7 +183,7 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
     {
         nDamage = nDamage + (nDamage/2);
     }
-    
+
     // The caster is the one who called the script, so OBJECT_SELF should work
     // Applies the Augment Healing feat, which adds 2 points of healing per spell level.
     if (GetHasFeat(FEAT_AUGMENT_HEALING, OBJECT_SELF)) nDamage += (StringToInt(lookup_spell_cleric_level(PRCGetSpellId())) * 2);
@@ -384,31 +384,31 @@ int CalcNumberOfAttacks()
   //  return 2; // additional attack
   //else
   //  return 1; // everything is normal
-  
-  
+
+
   // Oni5115
   // This calculates bonus attacks based on Total Hit Dice
-  // regardless of classes.  It effectively gives you 
+  // regardless of classes.  It effectively gives you
   // the proper bonus attacks based on a fighter's level.
-  
+
   int iBAB = GetBaseAttackBonus(OBJECT_SELF);
   int iCharLevel = GetHitDice(OBJECT_SELF);
   int iTemp = GetHitDice(OBJECT_SELF);
-  
+
   // if character is over 20, remove all BaB gained past level 20
   // because you do not gain more attacks after 20.
   if (iTemp > 20)
   {
        iTemp -= 20;
        iTemp /= 2;
-       
+
        iBAB -= iTemp;
        iCharLevel = 20;
   }
-  
+
   int iNormalAttacks = ( (iBAB - 1) / 5 ) + 1;
   int iFighterAttacks = ( (iCharLevel - 1) / 5 ) + 1;
-  
+
   return (iFighterAttacks - iNormalAttacks);
 }
 

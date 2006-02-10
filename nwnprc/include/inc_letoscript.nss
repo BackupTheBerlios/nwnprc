@@ -78,9 +78,9 @@ const string PRC_DB_SQLLITE                          = "PRC_DB_SQLLITE";
 
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
-// Function defintions             
+// Function defintions
 int GetPRCSwitch(string sSwitch);
-void PRC_SQLExecDirect(string sSQL);             
+void PRC_SQLExecDirect(string sSQL);
 
 
 void PRC_SQLInit()
@@ -470,9 +470,9 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 sScript = sCommand+sScript;
                 sCommand = "close %"+sLetoTag+"; ";
                 sScript = sScript+sCommand;
-            
-            
-            
+
+
+
             }
             sScriptResult = LetoScript(sScript, sType, sPollScript);
         }

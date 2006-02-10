@@ -598,3 +598,6 @@ void SetWanderingMonster2DAFile(string s2DAName = "des_restsystem")
 {
     SetLocalString(OBJECT_SELF,MODULE_VAR_WANDERING_MONSTER_2DA,s2DAName);
 }
+
+// Test main
+//void main(){}

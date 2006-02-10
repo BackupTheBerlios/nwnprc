@@ -49,7 +49,7 @@ int DoEpicSpells()
             && GetCanCastSpell(OBJECT_SELF, nSpellID))
         {
             ClearAllActions();
-            int nRealSpellID = StringToInt(Get2DACache("feats", "SpellID", 
+            int nRealSpellID = StringToInt(Get2DACache("feats", "SpellID",
                 StringToInt(Get2DACache("EpicSpells", "SpellFeatID", nSpellID))));
             ActionCastSpellAtObject(nRealSpellID,oTarget, METAMAGIC_NONE, TRUE);
             return TRUE;
@@ -82,7 +82,7 @@ int TestConditions(int nSpellID)
         //timestop checks if already cast
         case SPELL_EPIC_GR_TIME:
             if(GetHasSpellEffect(
-                StringToInt(Get2DACache("feats", "SpellID", 
+                StringToInt(Get2DACache("feats", "SpellID",
                     StringToInt(Get2DACache("EpicSpells", "SpellFeatID", nSpellID)))
                     ))
                 )
@@ -206,7 +206,7 @@ object GetSuitableTaget(int nSpellID)
     object oTest;
     int i;
     float fDist;
-    int nRealSpellID = StringToInt(Get2DACache("feats", "SpellID", 
+    int nRealSpellID = StringToInt(Get2DACache("feats", "SpellID",
         StringToInt(Get2DACache("EpicSpells", "SpellFeatID", nSpellID))));
     switch(nSpellID)
     {
@@ -706,3 +706,6 @@ void MakeEpicSpellsKnownAIList()
     }
 //    DoDebug("Finished sorting known spells");
 }
+
+// Test main
+//void main(){}

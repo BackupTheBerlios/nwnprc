@@ -35,7 +35,7 @@ lookup_and_cache_spell_field(int spell_id, string tag_base, string column, objec
 
 		SetLocalString(oModule, tag, val);
 	}
-	
+
 	// Undo the substitution, see above comments for details
 	if (val == PRC_CACHE_SUB_STRING)
 		val = "";

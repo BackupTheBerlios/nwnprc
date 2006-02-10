@@ -38,10 +38,10 @@ void DoRend(object oTarget, object oAttacker, object oWeapon)
 	// Only one rend allowed per round for the sake of clearness
 	if(GetLocalInt(oAttacker, REND_DONE))
 		return;
-	
+
 	float fDelay1 = 6.0 - (6.0 / GetMainHandAttacks(oAttacker));
 	float fDelay2 = 6.0 - 2 * (6.0 - fDelay1);
-	
+
 	if(GetLocalObject(oAttacker, REND_1ST_HIT_DONE) == oTarget)
 	{
 		// First, find the weapon base damage
@@ -56,13 +56,13 @@ void DoRend(object oTarget, object oAttacker, object oWeapon)
 			}
 			ipCheck = GetNextItemProperty(oWeapon);
 		}
-		
-		
+
+
 		int nDamage = GetDamageFromConstant(nIPConst);
 		int nStrBon = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
 		    nStrBon = nStrBon < 0  ? 0 : nStrBon;
 		    nDamage += nStrBon;
-		
+
 		int nDamageType;
 		switch(GetBaseItemType(oWeapon))
 		{
@@ -79,23 +79,23 @@ void DoRend(object oTarget, object oAttacker, object oWeapon)
 			case BASE_ITEM_CSLSHPRCWEAP:
 				nDamageType = DAMAGE_TYPE_SLASHING;
 				break;
-			
+
 			default:
 				WriteTimestampedLogEntry("Unexpected weapon type in DoRend()!");
 				return;
 		}
-		
+
 		// Apply damage and VFX
 		effect eDamage = EffectDamage(nDamage, nDamageType);
 		effect eLink = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_COM_BLOOD_CRT_RED));
-		
+
 		ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
-		
+
 		// Tell people what happened
 		FloatingTextStringOnCreature("*" + GetName(oAttacker) + " rends " + GetName(oTarget) + "*",
 		                             oAttacker,
 		                             FALSE);
-		
+
 		// Note the rend having happened in the locals
 		SetLocalInt(oAttacker, REND_DONE, TRUE);
 		DelayCommand(fDelay2, DeleteLocalInt(oAttacker, REND_DONE));
@@ -123,10 +123,10 @@ int GetDamageFromConstant(int nIPConst)
 		case IP_CONST_MONSTERDAMAGE_5d4: return d4(5);
 		case IP_CONST_MONSTERDAMAGE_7d4: return d4(7);
 	}
-	
-	
+
+
 	int nDieNum = ((nIPConst - 8) % 10) + 1;
-	
+
 	switch((nIPConst - 8) / 10)
 	{
 		case 0: return d6(nDieNum);
@@ -135,9 +135,7 @@ int GetDamageFromConstant(int nIPConst)
 		case 3: return d12(nDieNum);
 		case 4: return d20(nDieNum);
 	}
-	
+
 	WriteTimestampedLogEntry("Unknown IP_CONST_MONSTERDAMAGE_* constant passed to GetDamageFromConstant()!");
 	return 0;
 }
-	
-	

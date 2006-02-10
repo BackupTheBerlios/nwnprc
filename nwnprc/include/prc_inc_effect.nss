@@ -19,7 +19,7 @@ struct PRCeffect{
     int nVersesTraps;
     int nVersesAlignmentOrder;
     int nVersesAlignmentMoral;
-    
+
     //these are the subcomponents
     //probably more here than needed, but better safe than sorry!
     int nVar1;    object oVar1;    string sVar1;    location lVar1;    float fVar1;
@@ -281,7 +281,7 @@ struct PRCeffect PRCGetFirstEffect(object oCreature)
     string sID = GetIdentifierFromEffect(eEffect);
     struct PRCeffect prceEffect = GetLocalPRCEffect(oCreature, sID);
     prceEffect.eEffect = eEffect;
-    return prceEffect;    
+    return prceEffect;
 }
 
 // Get the next in-game effect on oCreature.
@@ -298,9 +298,9 @@ effect GetEffectOnObjectFromPRCEffect(struct PRCeffect prceEffect, object oObjec
 {
     effect eTest;
     //quick check, no loop
-    if(!GetHasSpellEffect(prceEffect.nSpellID, oObject)) 
+    if(!GetHasSpellEffect(prceEffect.nSpellID, oObject))
         return eTest;
-        
+
     eTest = GetFirstEffect(oObject);
     while(GetIsEffectValid(eTest))
     {

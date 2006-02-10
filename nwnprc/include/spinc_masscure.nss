@@ -10,14 +10,15 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 #include "prc_inc_racial"
+#include "spinc_common"
 
-int biowareSpellsCure(int nCasterLvl, object oTarget, int nDamage, int nMaxExtraDamage, int nMaximized, 
+int biowareSpellsCure(int nCasterLvl, object oTarget, int nDamage, int nMaxExtraDamage, int nMaximized,
     effect vfx_impactHurt, effect vfx_impactHeal, int nSpellID);
 
 void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
 {
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
-    
+
     // Get the spell target location as opposed to the spell target.
     location lTarget = PRCGetSpellTargetLocation();
 
@@ -27,14 +28,14 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
 
     // Get the spell ID if it was not given.
     if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-    
+
     // Apply the burst vfx.
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_LOS_HOLY_20), PRCGetSpellTargetLocation());
-    
+
     effect eVisCure = EffectVisualEffect(nHealEffect);
     effect eVisHarm = EffectVisualEffect(VFX_IMP_SUNSTRIKE);
     float fDelay;
-    
+
     // Declare the spell shape, size and the location.  Capture the first target object in the shape.
     // Cycle through the targets within the spell shape until an invalid object is captured.
     int nHealed = 0;
@@ -42,16 +43,16 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
     while (GetIsObjectValid(oTarget))
     {
         // Call our modified bioware cure logic to do the actual cure/harm effect.
-        if (biowareSpellsCure(nCasterLvl,oTarget, d8(nDice), nBonusCap, 8 * nDice, 
+        if (biowareSpellsCure(nCasterLvl,oTarget, d8(nDice), nBonusCap, 8 * nDice,
             eVisHarm, eVisCure, nSpellID))
             nHealed++;
-        
+
         // If we've healed as manay targets as we can we're done.
         if (nHealed >= nCasterLvl) break;
-        
+
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
-    
+
     SPSetSchool();
 }
 
@@ -62,7 +63,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
 // This is a copy of the spellsCure() function from nw_s0_spells.nss, with the
 // following changes:
 //
-//      - modified to accept the target of the spell as an argument 
+//      - modified to accept the target of the spell as an argument
 //      - modified to not do a touch attack to land on undead
 //      - modified to return 0 if the target was not effected, 1 if it is
 //      - modified the effect arguments to be effect objects rather than ints
@@ -73,7 +74,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
 {
     // NEW CODE
     int nEffected = 0;
-    
+
     //Declare major variables
     // COMMENT OUT BIOWARE CODE
     //object oTarget = PRCGetSpellTargetObject();
@@ -131,7 +132,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
         {
             // NEW CODE
             nEffected = 1;
-            
+
             //Figure out the amount of damage to heal
             nHeal = nDamage;
             //Set the heal effect
@@ -155,7 +156,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
             {
                 // NEW CODE
                 nEffected = 1;
-            
+
                 //Fire cast spell at event for the specified target
                 SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
                 if (!SPResistSpell(OBJECT_SELF, oTarget,nCasterLvl+SPGetPenetr()))
@@ -168,8 +169,11 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
             }
         }
     }
-    
-    
+
+
     // NEW CODE
     return nEffected;
 }
+
+// Test main
+//void main(){}

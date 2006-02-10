@@ -1,4 +1,6 @@
-#include "inc_utility"
+#include "spinc_common"
+
+
 void sp_summon(string creature, int impactVfx)
 {
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
@@ -20,3 +22,6 @@ void sp_summon(string creature, int impactVfx)
 
     SPSetSchool();
 }
+
+// Test main
+//void main(){}

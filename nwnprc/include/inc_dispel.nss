@@ -448,10 +448,10 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
             if(GetEffectCreator(eToDispel) == oEffectCaster)
             {
               RemoveEffect(oTarget, eToDispel);
-              
+
               //Spell Removal Check
               SpellRemovalCheck(oEffectCaster, oTarget);
-		      
+
             }// end if effect comes from this caster
           }// end if effect comes from this spell
           eToDispel = GetNextEffect(oTarget);
@@ -701,3 +701,7 @@ int AoECasterLevel(object oAoE = OBJECT_SELF)
    int toReturn = GetLocalInt(oAoE, "X2_AoE_Caster_Level");
    return toReturn;
 }
+
+
+// Test main
+//void main(){}

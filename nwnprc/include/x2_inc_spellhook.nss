@@ -458,19 +458,19 @@ int X2GetSpellCastOnSequencerItem(object oItem)
     if(nHostile
         && GetLevelByClass(CLASS_TYPE_SPELLSWORD, OBJECT_SELF) >= 4
         && IPGetIsMeleeWeapon(oItem))
-    {    
+    {
         nHostile = FALSE;
         bIsSSorAA = TRUE;
-    }    
+    }
     if(nHostile
         && GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, OBJECT_SELF) >= 2
         && GetPRCSwitch(PRC_USE_NEW_IMBUE_ARROW)
         && GetBaseItemType(oItem) == BASE_ITEM_ARROW)
-    {    
+    {
         nHostile = FALSE;
         bIsSSorAA = TRUE;
-    }    
-        
+    }
+
     if(nHostile)
     {
         FloatingTextStrRefOnCreature(83885,OBJECT_SELF);
@@ -497,7 +497,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
         {
             itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
             IPSafeAddItemProperty(oItem ,ipTest, 99999999.9);
-        }    
+        }
         FloatingTextStrRefOnCreature(83884, OBJECT_SELF);
     }
     else
@@ -947,3 +947,6 @@ int X2PreSpellCastCode()
     return nContinue;
 }
 
+
+// Test main
+//svoid main(){}

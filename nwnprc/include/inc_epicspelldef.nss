@@ -120,7 +120,7 @@ const int SPELL_EPIC_UNSEENW =69;//4069;
 const int SPELL_EPIC_WHIP_SH =70;//4070;
 
 
-/* 
+/*
 this stuff is no longer neeed as constants
 instead its defined in epicspells.2da and epicspellseeds.2da
 ///////////////////////////////////////////////////////////////////////////////

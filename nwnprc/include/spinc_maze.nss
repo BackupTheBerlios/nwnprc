@@ -154,3 +154,6 @@ void MazeEscapeHB(object oCreature, int nCountLeft)
     // Schedule next check
     DelayCommand(6.0f, MazeEscapeHB(oCreature, nCountLeft - 1));
 }
+
+// Test main
+//void main(){}

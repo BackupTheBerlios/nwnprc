@@ -12,6 +12,12 @@ int GetR4ForSpell(int nSpellID);
 string GetNameForSpell(int nSpellID);
 int GetSpellFromAbrev(string sAbrev);
 
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "inc_utility"
+#include "inc_epicspelldef"
 
 // SEED FUNCTIONS
 
@@ -120,6 +126,7 @@ int GetSpellFromAbrev(string sAbrev)
     return -1;
 }
 
+/// @todo These should be looked up in TLK
 string GetNameForSpell(int nSpellID)
 {
     string sReturn;
@@ -341,3 +348,6 @@ string GetNameForSpell(int nSpellID)
     }
     return sReturn;
 }
+
+// Test main
+void main(){}

@@ -127,8 +127,6 @@ void DoDexCheck(object oCreature, int bFirstPart = TRUE);
 #include "inc_utility"
 #include "inc_dispel"
 #include "prc_inc_racial"
-//#include "inc_utility"    supplied by inc_utility
-//#include "inc_utility" supplied by inc_utility
 
 
 //////////////////////////////////////////////////
@@ -511,3 +509,6 @@ void ReApplyUnhealableAbilityDamage(object oTarget)
                       GetLocalInt(oTarget, "PRC_UnhealableAbilityDamage_CHA"),
                       ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CHA);
 }
+
+// Test main
+//void main(){}

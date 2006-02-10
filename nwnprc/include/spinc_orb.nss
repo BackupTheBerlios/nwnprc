@@ -1,3 +1,5 @@
+#include "spinc_common"
+
 
 void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nSpellID = -1)
 {
@@ -8,12 +10,12 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
 
      int nDice = nCasterLvl;
      if (nDice > 15) nDice = 15;
-     
+
      int nPenetr = nCasterLvl + SPGetPenetr();
 
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-     
+
      // Adjust the damage type of necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
 
@@ -40,7 +42,7 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
                     nDamage /= 2;
                }
 
-               // Apply the damage and the damage visible effect to the target.                
+               // Apply the damage and the damage visible effect to the target.
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, nDamageType), oTarget);
                PRCBonusDamage(oTarget);
                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
@@ -50,6 +52,9 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFailSave, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
           }
      }
-     
+
      SPSetSchool();
 }
+
+// Test main
+//void main(){}

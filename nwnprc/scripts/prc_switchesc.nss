@@ -16,7 +16,7 @@
 #include "inc_dynconv"
 #include "prc_alterations"
 #include "inc_epicspells"
-
+#include "prc_inc_leadersh"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -367,14 +367,14 @@ void main()
             {
                 AssignCommand(oPC, TryToIDItems(oPC));
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
-            }    
+            }
             else if(nChoice == 5)
                 nStage = STAGE_TEFLAMMAR_SHADOWLORD;
             else if(nChoice == 6)
             {
                 RegisterAsCohort(oPC);
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
-            }    
+            }
             else if(nChoice == 7)
                 nStage = STAGE_LEADERSHIP;
 
@@ -441,7 +441,7 @@ void main()
             {
                 GiveFeat(oPC, StringToInt(Get2DACache("epicspells", "SpellFeatIPID", nChoice)));
                 ClearCurrentStage();
-            }    
+            }
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_EPIC_SPELLS_REMOVE)
@@ -452,7 +452,7 @@ void main()
             {
                 TakeFeat(oPC, StringToInt(Get2DACache("epicspells", "SpellFeatIPID", nChoice)));
                 ClearCurrentStage();
-            }    
+            }
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_EPIC_SPELLS_CONTING)

@@ -16,40 +16,42 @@
 //
 /////////////////////////////////////////////////////////////////////////
 
+#include "spinc_common"
+
 void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltEffect,
-     int nVictimEffect, int nDamageType, int nSaveType, 
+     int nVictimEffect, int nDamageType, int nSaveType,
      int nSchool = SPELL_SCHOOL_EVOCATION, int fDoKnockdown = FALSE, int nSpellID = -1)
 {
      // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
      //if (!X2PreSpellCastCode()) return;
-    
+
      SPSetSchool(nSchool);
-     
+
      // Get the spell ID if it was not given.
      if (-1 == nSpellID) nSpellID = PRCGetSpellId();
-     
+
      // Adjust the damage type of necessary.
      nDamageType = SPGetElementalDamageType(nDamageType, OBJECT_SELF);
 
     int nDamage;
-    
+
     int nPenetr = nCasterLevel + SPGetPenetr();
-    
+
     // Set the lightning stream to start at the caster's hands
     effect eBolt = EffectBeam(nBoltEffect, OBJECT_SELF, BODY_NODE_HAND);
     effect eVis  = EffectVisualEffect(nVictimEffect);
      effect eKnockdown = EffectKnockdown();
     effect eDamage;
-    
+
     object oTarget = PRCGetSpellTargetObject();
     location lTarget = GetLocation(oTarget);
     object oNextTarget, oTarget2;
     float fDelay;
     int nCnt = 1;
     int fKnockdownTarget = FALSE;
-    
-    
-    
+
+
+
     oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, OBJECT_SELF, nCnt);
     while(GetIsObjectValid(oTarget2) && GetDistanceToObject(oTarget2) <= 30.0)
     {
@@ -59,7 +61,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
         {
                // Reset the knockdown target flag.
                fKnockdownTarget = FALSE;
-               
+
                // Exclude the caster from the damage effects
                if (oTarget != OBJECT_SELF && oTarget2 == oTarget)
                {
@@ -67,14 +69,14 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
                {
                    //Fire cast spell at event for the specified target
                    SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
-                   
+
                    //Make an SR check
                    if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
                  {
                     int nSaveDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                               // Roll damage for each target
                               int nDamage = SPGetMetaMagicDamage(nDamageType, nDice, nDieSize, nBonusDam);
-                              
+
                         //Adjust damage based on Reflex Save, Evasion and Improved Evasion
                         int nFullDamage = nDamage;
                         nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
@@ -106,27 +108,30 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
                                    PRCGetCreatureSize(oTarget) <= CREATURE_SIZE_LARGE &&
                                    (nFullDamage == nDamage || (0 != nDamage && GetHasFeat(FEAT_IMPROVED_EVASION, oTarget)));
                          }
-                    
+
                          SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBolt, oTarget, 1.0,FALSE);
-                    
+
                          // If we're supposed to apply knockdown then do so for 1 round.
                          if (fKnockdownTarget)
                               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eKnockdown, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLevel);
-                         
+
                          //Set the currect target as the holder of the lightning effect
                          oNextTarget = oTarget;
                          eBolt = EffectBeam(nBoltEffect, oNextTarget, BODY_NODE_CHEST);
                     }
                }
-           
+
                //Get the next object in the lightning cylinder
                oTarget = GetNextObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
           }
-        
+
           nCnt++;
         oTarget2 = GetNearestObject(OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, OBJECT_SELF, nCnt);
      }
-     
+
      SPSetSchool();
 }
 
+
+// Test main
+//void main(){}

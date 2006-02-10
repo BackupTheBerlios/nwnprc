@@ -21,7 +21,7 @@ void DoTimestopEquip()
 {
     object oPC = GetItemLastEquippedBy();
     if(GetPRCSwitch(PRC_TIMESTOP_NO_HOSTILE)
-        && (GetHasSpellEffect(SPELL_TIME_STOP, oPC) 
+        && (GetHasSpellEffect(SPELL_TIME_STOP, oPC)
             || GetHasSpellEffect(4032, oPC)
             || GetHasSpellEffect(14236, oPC)))
         AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyNoDamage(), GetItemLastEquipped(),9999.0);

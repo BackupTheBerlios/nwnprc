@@ -163,3 +163,6 @@ void PRC_UnPolymorph(object oPC)
 	ExecuteScript("pnp_shft_true", oPC);
 }
 
+
+// Test main
+void main(){}

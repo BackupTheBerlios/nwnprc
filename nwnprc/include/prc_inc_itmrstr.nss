@@ -260,7 +260,7 @@ int CheckPRCLimitations(object oItem, object oPC)
             AssignCommand(oSkin, ApplySpeedDecrease(oPC));
         }
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_PNP_HOLY_AVENGER)
-        {            
+        {
             if(GetItemLastUnequipped() == oItem) //unequip event
             {
                 int nPaladinLevels = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
@@ -268,7 +268,7 @@ int CheckPRCLimitations(object oItem, object oPC)
                 {
                     //not a paladin? fake it
                     //not really a true PnP test
-                    //instead it sets the paladin level 
+                    //instead it sets the paladin level
                     //to the UMD ranks minus the amount required
                     //to use a class restricted item of that value
                     int nSkill = GetSkillRank(SKILL_USE_MAGIC_DEVICE, oPC);
@@ -282,27 +282,27 @@ int CheckPRCLimitations(object oItem, object oPC)
                 }
                 if(nPaladinLevels)
                 {
-                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
-                        ItemPropertyEnhancementBonus(5), 99999.9));             
-                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem,
+                        ItemPropertyEnhancementBonus(5), 99999.9));
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem,
                         ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,
                             IP_CONST_DAMAGETYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d6), 99999.9));
-                    //this is a normal dispel magic useage, should be specific    
-                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
+                    //this is a normal dispel magic useage, should be specific
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem,
                         ItemPropertyCastSpell(IP_CONST_CASTSPELL_DISPEL_MAGIC_5,
-                            IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE), 99999.9));     
-                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
-                        ItemPropertyCastSpellCasterLevel(SPELL_DISPEL_MAGIC, 
-                            nPaladinLevels), 99999.9));                          
+                            IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE), 99999.9));
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem,
+                        ItemPropertyCastSpellCasterLevel(SPELL_DISPEL_MAGIC,
+                            nPaladinLevels), 99999.9));
                 }
                 else
                 {
-                    DelayCommand(0.1, IPSafeAddItemProperty(oItem, 
-                        ItemPropertyEnhancementBonus(2), 99999.9));             
+                    DelayCommand(0.1, IPSafeAddItemProperty(oItem,
+                        ItemPropertyEnhancementBonus(2), 99999.9));
                 }
             }
             else
-            {   
+            {
                 IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS,
                     DURATION_TYPE_TEMPORARY, -1);
                 IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP,

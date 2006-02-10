@@ -24,8 +24,8 @@ int GetRavageExtraDamage(object oTarget)
     if ( nRacial == RACIAL_TYPE_ELEMENTAL) nExtra++;
     if ( nRacial ==RACIAL_TYPE_OUTSIDER)   nExtra+=2;
     if ( GetLevelByClass(CLASS_TYPE_CLERIC,oTarget))  nExtra+=2;
-    
-    
+
+
     return nExtra;
 }
 

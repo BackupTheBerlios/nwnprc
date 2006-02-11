@@ -86,7 +86,7 @@ void main()
                eLink    = EffectLinkEffects(eLink, EffectDamageImmunityDecrease(DAMAGE_TYPE_FIRE, 50));
                eLink    = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_STRENGTH, 4));
                eLink    = EffectLinkEffects(eLink, EffectMovementSpeedDecrease(50));
-               eLink    = EffectLinkEffects(eLink, EffectSpellFailure(25, SPELL_SCHOOL_GENERAL));
+//               eLink    = EffectLinkEffects(eLink, EffectSpellFailure(25, SPELL_SCHOOL_GENERAL));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_FREEDOM_OF_MOVEMENT));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
@@ -100,5 +100,8 @@ void main()
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 2, DURATION_TYPE_TEMPORARY, FALSE, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+        // Apply ASF to hide
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyArcaneSpellFailure(IP_CONST_ARCANE_SPELL_FAILURE_PLUS_25_PERCENT), GetPCSkin(oTarget), fDuration);
     }// end if - Successfull manifestation
 }

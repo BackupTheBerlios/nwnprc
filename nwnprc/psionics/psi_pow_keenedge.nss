@@ -49,7 +49,15 @@ void main()
 // End of Spell Cast Hook
 
     object oManifester = OBJECT_SELF;
-    object oTarget     = PRCGetSpellTargetObject();
+    object oTarget     = IPGetTargetedOrEquippedMeleeWeapon();
+
+    // Validity check
+    if(!GetIsObjectValid(oTarget))
+    {
+        FloatingTextStrRefOnCreature(83615, oManifester); // Item must be weapon or creature holding a weapon
+    	return;
+    }
+    	
     struct manifestation manif =
         EvaluateManifestation(oManifester, oTarget,
                               PowerAugmentationProfile(),

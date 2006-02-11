@@ -6,17 +6,23 @@
    ----------------
 
    5/11/05 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 2
-   Range: Personal
-   Target: Caster
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 3
-   
-   If you have a claw attack, or a bite attack, you can use this power to provide a 1d6 enhancement to damage.
+    Duodimensional Claw
+
+    Psychometabolism
+    Level: Psychic warrior 2
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 3
+    Metapsionics: Extend
+
+    If you have a claw attack (either from an actual natural weapon or from an
+    effect such as claws of the beast), you can use this power to improve that
+    weapon. Your claws become two-dimensional, making them razorsharp. The
+    weapon is now psionically keen, doubling it's threat range.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +32,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,34 +48,40 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster);
-    if (!GetIsObjectValid(oTarget))
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	FloatingTextStringOnCreature("You do not have a valid target for Painful Strike", oCaster, FALSE);
-    	return;
-    }
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDur = nCaster;
-	if (nMetaPsi == 2) nDur *= 2;
-	
-	effect eVis = EffectVisualEffect(VFX_IMP_PULSE_WATER);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	
-	itemproperty ipClaw = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, IP_CONST_DAMAGEBONUS_1d6);
-	AddItemProperty(DURATION_TYPE_TEMPORARY, ipClaw, oTarget, RoundsToSeconds(nDur));
-	
-	// Pulsing effect on the target
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDur, oTarget, RoundsToSeconds(nDur));
-	
-    }
+        object oLClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget);
+        object oRClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget);
+        effect eDur         = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        effect eVis         = EffectVisualEffect(VFX_IMP_PULSE_WATER);
+        itemproperty ipClaw = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, IP_CONST_DAMAGEBONUS_1d6);
+        float fDuration     = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Must have claws check
+        if(!(GetIsObjectValid(oLClaw) || GetIsObjectValid(oRClaw)))
+        {
+            // "Target does not posses a claw attack!"
+            FloatingTextStrRefOnCreature(16826653, oManifester, FALSE);
+            return;
+        }
+
+        // Apply the itemproperties
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipClaw, oLClaw, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipClaw, oRClaw, fDuration);
+
+        // Do some VFX
+                           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        DelayCommand(1.0f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        DelayCommand(2.0f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration);
+    }// end if - Successfull manifestation
 }

@@ -1,22 +1,30 @@
 /*
    ----------------
    Vampiric Blade
-   
+
    psi_pow_vampwep
    ----------------
 
    5/11/05 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 3
-   Range: Personal
-   Target: Caster
-   Duration: 1 Round/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 5
-   
-   Your weapon gains vampiric regen equal to half your caster class.
+    Vampiric Blade
+
+    Psychometabolism
+    Level: Psychic warrior 3
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 round/level
+    Power Points: 5
+    Metapsionics: Extend
+
+    When this power is manifested, your weapon takes on an
+    ominous glimmer. Each time you make a successful attack against a
+    living creature, you are healed of some amount of damage.
+
+    Your weapon attack gains the vampiric regeneration quality, with power equal
+    to half your manifester level for the duration of the power.
 */
 
 #include "psi_inc_psifunc"
@@ -26,9 +34,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -45,36 +50,37 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = IPGetTargetedOrEquippedMeleeWeapon();
-    if (!GetIsObjectValid(oTarget))
-    {
-    	FloatingTextStringOnCreature("You do not have a valid target for Vampiric Blade", oCaster, FALSE);
-    	return;
-    }
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
+    object oManifester = OBJECT_SELF;
+    object oTarget     = IPGetTargetedOrEquippedMeleeWeapon();
     
-    if (nMetaPsi > 0) 
+    // Validity check
+    if(!GetIsObjectValid(oTarget))
     {
-	int nCaster = GetManifesterLevel(oCaster);
-	int nDur = nCaster;
-	if (nMetaPsi == 2) nDur *= 2;
-	
-	effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	
-	int nClass = GetManifestingClass(oCaster);
-	int nTotal = GetLevelByClass(nClass, oCaster);
-	itemproperty ipClaw = ItemPropertyVampiricRegeneration(nTotal/2);
-	AddItemProperty(DURATION_TYPE_TEMPORARY, ipClaw, oTarget, RoundsToSeconds(nDur));
-	
-	// Pulsing effect on the target
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDur, oTarget, RoundsToSeconds(nDur));
-	
+        FloatingTextStrRefOnCreature(83615, oManifester); // Item must be weapon or creature holding a weapon
+    	return;
+    }    
+    
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
+    {
+        effect eDur         = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        effect eVis         = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
+        itemproperty ipVReg = ItemPropertyVampiricRegeneration(manif.nManifesterLevel / 2);
+        float fDuration = 6.0f * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Apply the itemproperties
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipVReg, oTarget, fDuration);
+
+        // Do some VFX
+                           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        DelayCommand(1.0f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        DelayCommand(2.0f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration);
     }
 }

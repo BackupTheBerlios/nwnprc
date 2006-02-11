@@ -78,7 +78,7 @@ void main()
         int nPen                  = GetPsiPenetration(oManifester);
         int nNumberOfDice_Explode = 9 + manif.nTimesAugOptUsed_1;
         int nNumberOfDice_Ball    = 5;
-        int nDieSize              = 6;
+        int nDieSize              = 4;
         int nDamage, nTouchAttack;
         location lTarget          = PRCGetSpellTargetLocation();
         effect eImpact            = EffectVisualEffect(VFX_IMP_DUST_EXPLOSION);

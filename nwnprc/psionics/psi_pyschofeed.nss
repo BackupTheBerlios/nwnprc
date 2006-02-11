@@ -109,7 +109,9 @@ void main()
             {
                	// Set the header
                	string sAmount = "How much would you like to burn and increase your stat by?\n";
-               	sAmount += "You current value is " + IntToString(GetLocalInt(oPC, "PsychoFeedbackAmount"));
+               	sAmount += "If you select a value higher than your manifester level, it will be set to your manifester leve.\n";
+               	sAmount += "Your manifester level is " + IntToString(GetLocalInt(oPC, "PsychoFeedManifesterLevel")) + "\n";
+               	sAmount += "Your current value is " + IntToString(GetLocalInt(oPC, "PsychoFeedbackAmount"));
                 SetHeader(sAmount);
                 
                 AddChoice("Add 1", 1);
@@ -203,6 +205,7 @@ void main()
             	int nStat = GetLocalInt(oPC, "PsychoFeedbackStat");
             	int nBurn = GetLocalInt(oPC, "PsychoFeedbackBurn");
             	int nAmount = GetLocalInt(oPC, "PsychoFeedbackAmount");
+            	if (nAmount > GetLocalInt(oPC, "PsychoFeedManifesterLevel")) nAmount = GetLocalInt(oPC, "PsychoFeedManifesterLevel");
             	
     		effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     		effect eVis2 = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);

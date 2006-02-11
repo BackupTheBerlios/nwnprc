@@ -6,18 +6,24 @@
    ----------------
 
    6/10/05 by Stratovarius
+*/ /** @file
 
-   Class: Psion (Kineticist)
-   Power Level: 7
-   Range: Personal
-   Area: You
-   Duration: 10 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 13
-   
-   An invisible barrier surrounds you and moves with you. The space within this barrier is impervious to most psionic effects, including
-   powers, psi-like abilities, and supernatural abilities. Likewise, it prevents the functioning of any psionic item.
+    Reddopsi
+
+    Psychokinesis
+    Level: Kineticist 7
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 10 min./level
+    Power Points: 13
+    Metapsionics: Extend
+
+    When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers 
+    that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can’t be 
+    reversed. 
+
+    Should you rebound a power back against a manifester who also is protected by reddopsi, the power rebounds once more upon you.
 */
 
 #include "psi_inc_psifunc"
@@ -27,9 +33,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -46,23 +49,23 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    int nAugCost = 0;
-    int nAugment = GetAugmentLevel(oCaster);
-    object oTarget = PRCGetSpellTargetObject();
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);    
-    
-    if (nMetaPsi > 0) 
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-	int nDC = GetManifesterDC(oCaster);
-	int nCaster = GetManifesterLevel(oCaster);
-	float fDur = (nCaster * 600.0);
-	if (nMetaPsi == 2)	fDur *= 2;	
+	float fDuration = 600.0 * manif.nManifesterLevel;
+	if(manif.bExtend) fDuration *= 2;	
 		
-	effect eVis = EffectVisualEffect(VFX_DUR_PROT_EPIC_ARMOR);
+	effect eDur = EffectVisualEffect(VFX_DUR_PROT_EPIC_ARMOR);
 	SetLocalInt(oTarget, "Reddopsi", TRUE);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur,TRUE,-1,nCaster);
-	DelayCommand(fDur, DeleteLocalInt(oTarget, "PsiEnRetort"));
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration);
+	DelayCommand(fDuration, DeleteLocalInt(oTarget, "Reddopsi"));
     }
     	
 }

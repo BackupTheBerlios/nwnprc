@@ -65,22 +65,34 @@ void main()
         {
             int nNumberOfDice = 4 + manif.nTimesAugOptUsed_1;
             int nDieSize      = 6;
-            effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
+            int nDamage;
+            effect eVis       = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
+            object oPossessor = GetItemPossessor(oTarget);
 
             /* Apply the VFX to whatever is wielding the target */
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, GetItemPossessor(oTarget));
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPossessor);
 
-            // Roll the damage here and store it on the weapon
-            int nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
-            if(manif.bTwin)
-                nDamage += MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
-            SetLocalInt(oTarget, "PRC_DissolvingWeaponDamage", nDamage);
+            // Create the damages array if it doesn't already exist
+            if(!array_exists(oPossessor, "PRC_Power_DissolvingWeapon_Damages"))
+                array_create(oPossessor, "PRC_Power_DissolvingWeapon_Damages");
+
+            // Handle Twin Power
+            int nRepeats = manif.bTwin ? 2 : 1;
+            for(; nRepeats > 0; nRepeats--)
+            {
+                // Roll the damage here and store it on the weapon
+                nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+                array_set_int(oPossessor, "PRC_Power_DissolvingWeapon_Damages",
+                              array_get_size(oPossessor, "PRC_Power_DissolvingWeapon_Damages"),
+                              nDamage
+                              );
+            }
 
     	    // Hook to the item's OnHit
-    	    AddEventScript(oTarget, EVENT_ITEM_ONHIT, "psi_pow_disswpn", FALSE, FALSE);
+    	    AddEventScript(oTarget, EVENT_ITEM_ONHIT, "psi_pow_disswpn", TRUE, FALSE);
 
             /* Add the onhit spell to the weapon */
-    		IPSafeAddItemProperty(oTarget, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oTarget, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }// end if - Successfull manifestation
     }// end if - Running manifestation
     else
@@ -89,14 +101,21 @@ void main()
         object oItem       = GetSpellCastItem();
         object oTarget     = PRCGetSpellTargetObject();
 
-        int nDamage = GetLocalInt(oItem, "PRC_DissolvingWeaponDamage");
+        int nDamage = array_get_int(oManifester, "PRC_Power_DissolvingWeapon_Damages",
+                                    array_get_size(oManifester, "PRC_Power_DissolvingWeapon_Damages")
+                                    );
+
         nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
 
         effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
         effect eLink = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_L));
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
 
-        // Clean up the local
-        DeleteLocalInt(oItem, "PRC_DissolvingWeaponDamage");
+        // Remove the damage value from the array
+        int nNewSize = array_get_size(oManifester, "PRC_Power_DissolvingWeapon_Damages") - 1;
+        if(nNewSize > 0)
+            array_shrink(oManifester, "PRC_Power_DissolvingWeapon_Damages", nNewSize);
+        else
+            array_delete(oManifester, "PRC_Power_DissolvingWeapon_Damages");
     }// end else - Running OnHit
 }

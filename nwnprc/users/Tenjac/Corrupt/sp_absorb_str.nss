@@ -65,21 +65,18 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oSkin = GetPCSkin(oPC);
-	object oTarget = GetSpellTargetObject();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	
-	//if corpses not targetable, oTarget will be invalid
-	if (!GetIsObjectValid(oTarget))
-	{
-		//sooo, get object closest to spell casting
-		location lLoc = GetSpellTargetLocation();
+	location lLoc = GetSpellTargetLocation();
+	object oTarget = GetFirstObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 		
-		oTarget = GetFirstObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+        while(!GetIsDead(oTarget) && GetIsObjectValid(oTarget))
+        {
+		oTarget = GetNextObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
-	//must be dead creature
-	if(GetObjectType(oTarget) != OBJECT_TYPE_CREATURE || GetCurrentHitPoints(oTarget) > 0)			
+	//must be dead creature so check again for GetSpellTargetObject
+	if(GetObjectType(oTarget) != OBJECT_TYPE_CREATURE || !GetIsDead(oTarget))			
 	{
 		return;
 	}

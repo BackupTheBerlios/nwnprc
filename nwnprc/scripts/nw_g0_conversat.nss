@@ -14,7 +14,7 @@
 
 void main()
 {
-    if(GetLocalInt(OBJECT_SELF, PRC_PC_EXEC_DEFAULT))
+    if(GetLocalInt(OBJECT_SELF, PRC_PC_EXEC_DEFAULT) && !GetIsPC(OBJECT_SELF))
     {
         SetLocalInt(OBJECT_SELF, "default_conversation_event", TRUE);
         ExecuteScript("default", OBJECT_SELF);

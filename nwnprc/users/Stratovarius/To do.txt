@@ -11,6 +11,12 @@ Psionic PrCs:
 Metamind
 Psion Uncarnate
 Pyro
+Cryo
+Sanctified Mind
+Iron Mind
+
+Normal PrCs:
+Blood Magus
 
 Pale master -> 3.0:
 Fighter vassal
@@ -21,7 +27,9 @@ Summon Greater Undead
 Poke attacks
 Death Touch -> create undead on failed save
 
-List of the feats to do
+-----------------------------------------------------
+Feats to do in spare time
+-----------------------------------------------------
 
 Complete Divine:
 

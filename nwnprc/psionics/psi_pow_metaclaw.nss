@@ -1,29 +1,35 @@
 /*
    ----------------
    Metaphysical Claw
-   
+
    psi_pow_metaclaw
    ----------------
 
    29/10/05 by Stratovarius
+*/ /** @file
 
-   Class: Psychic Warrior
-   Power Level: 1
-   Range: Personal
-   Target: Caster
-   Duration: 1 Min/level
-   Saving Throw: None
-   Power Resistance: No
-   Power Point Cost: 1
-   
-   If you have a claw attack, or a bite attack, you can use this power to provide a +1 enhancement bonus to your attacks.
-   
-   Augment: It costs 4 power points for each augmentation of this power. 
-   If you augment the power once, the duration increases to 1 Hour/level
-   If you augment the power twice, the enhancement bonus increases to +2. 
-   If you augment the power three times, the enhancement bonus increases to +3. 
-   If you augment the power four times, the enhancement bonus increases to +4. 
-   If you augment the power five times, the enhancement bonus increases to +5.
+    Metaphysical Claw
+
+    Psychometabolism
+    Level: Psychic warrior 1
+    Manifesting Time: 1 standard action
+    Range: Personal
+    Target: You
+    Duration: 1 min./level
+    Power Points: 1
+    Metapsionics: Extend
+
+    If you have a claw attack (either from an actual natural weapon or from an
+    effect such as claws of the beast) or a bite attack (which could be a
+    natural bite attack or one you gain by means of the power bite of the wolf),
+    you can use this power to provide your natural weapons a +1 enhancement
+    bonus on attack rolls and damage rolls.
+
+    Augment: If you spend 4 additional power points, this power’s duration
+             increases to 1 hour per level.
+             In addition, for every 4 additional power points you spend, this
+             power improves the natural weapon’s enhancement bonus on attack
+             rolls and damage rolls by 1.
 */
 
 #include "psi_inc_psifunc"
@@ -33,9 +39,6 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS");
-SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
-
 /*
   Spellcast Hook Code
   Added 2004-11-02 by Stratovarius
@@ -52,35 +55,46 @@ SetLocalInt(OBJECT_SELF, "PSI_MANIFESTER_CLASS", 0);
 
 // End of Spell Cast Hook
 
-    object oCaster = OBJECT_SELF;
-    object oTarget = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCaster);
-    if (!GetIsObjectValid(oTarget))
+
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(4,
+                                                       4, PRC_UNLIMITED_AUGMENTATION
+                                                       ),
+                              METAPSIONIC_EXTEND
+                              );
+
+    if(manif.bCanManifest)
     {
-    	FloatingTextStringOnCreature("You do not have a valid target for Metaphysical Claw", oCaster, FALSE);
-    	return;
-    }
-    int nAugCost = 4;
-    int nAugment = GetAugmentLevel(oCaster);
-    int nMetaPsi = GetCanManifest(oCaster, nAugCost, oTarget, 0, 0, METAPSIONIC_EXTEND, 0, 0, 0, 0);
-    
-    if (nMetaPsi > 0) 
-    {
-	int nCaster = GetManifesterLevel(oCaster);
-	float fDur = 60.0 * nCaster;
-	
-	if (nAugment > 0) fDur = HoursToSeconds(nCaster);
-	if (nMetaPsi == 2) fDur *= 2;
-	
-	effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-	
-	DoPsyWarUnarmed(oCaster, POWER_METAPHYSICAL_CLAW, nAugment, fDur);
-	
-	// Pulsing effect on the target
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDur, oTarget, fDur);
-	
-    }
+        int nBonus           = 1 + manif.nTimesAugOptUsed_1;
+        object oLClaw        = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget);
+        object oRClaw        = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget);
+        object oBite         = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTarget);
+        effect eDur          = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        effect eVis          = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
+        itemproperty ipBonus = ItemPropertyEnhancementBonus(nBonus);
+        float fDuration      = (manif.nTimesAugOptUsed_1 == 0 ? 60.0f : HoursToSeconds(1)) * manif.nManifesterLevel;
+        if(manif.bExtend) fDuration *= 2;
+
+        // Must have a natural attack
+        if(!(GetIsObjectValid(oLClaw) || GetIsObjectValid(oRClaw) || GetIsObjectValid(oBite)))
+        {
+            // "Target does not posses a natural attack!"
+            FloatingTextStrRefOnCreature(16826656, oManifester, FALSE);
+            return;
+        }
+
+        // Add the enhancement bonus
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipBonus, oLClaw, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipBonus, oRClaw, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipBonus, oBite,  fDuration);
+
+        // Do VFX
+                          SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDur, oTarget, fDuration);
+    }// end if - Successfull manifestation
 }

@@ -8230,7 +8230,19 @@ You cannot make physical attacks or perform any other large-scale movements (you
 
 Implementation note: To end concentrating on the power, use the control feat again. If the power is active, that will end it instead of manifesting it.</entry>
   <entry id="46917" lang="en" sex="m">Metaphysical Claw</entry>
-  <entry id="46918" lang="en" sex="m">Description</entry>
+  <entry id="46918" lang="en" sex="m">Psychometabolism
+Level: Psychic warrior 1
+Manifesting Time: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 min./level
+Power Points: 1
+Metapsionics: Extend
+
+If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast) or a bite attack (which could be a natural bite attack or one you gain by means of the power bite of the wolf), you can use this power to provide your natural weapons a +1 enhancement bonus on attack rolls and damage rolls.
+
+Augment: If you spend 4 additional power points, this power’s duration increases to 1 hour per level.
+In addition, for every 4 additional power points you spend, this power improves the natural weapon’s enhancement bonus on attack rolls and damage rolls by 1.</entry>
   <entry id="46919" lang="en" sex="m">Metaphysical Weapon</entry>
   <entry id="46920" lang="en" sex="m">Description</entry>
   <entry id="46921" lang="en" sex="m">Null Psionics Field</entry>
@@ -14924,6 +14936,7 @@ Use: Selected</entry>
   <entry id="49437" lang="en" sex="m">Target does not posses a claw attack!</entry>
   <entry id="49438" lang="en" sex="m">Target is already under effect of the Compression power!</entry>
   <entry id="49439" lang="en" sex="m">Target is already under effect of the Expansion power!</entry>
+  <entry id="49440" lang="en" sex="m">Target does not posses a natural attack!</entry>
   <entry id="49479" lang="en" sex="m">Area of effect</entry>
   <entry id="49480" lang="en" sex="m">Decreased Cost A</entry>
   <entry id="49481" lang="en" sex="m">Decreased Cost B</entry>
@@ -17428,17 +17441,17 @@ The first 10 points of damage are negated.</entry>
    Duration: Instantaneous
    Save: Fortitude partial
    Spell Resistance: Yes
-   
+
    A touch from your hand, which sheds darkness like  the blackest of night, disrupts the life force of a living creature.  Your touch deals 1d6 points of   damage per caster level (max 15d6), and 1d6+2 points of Constituion damage (a sucessful Fortitude saving throw negates the Constitution damage.)  The spell has a special effect on an undead creature.  An undead touched by you takes no damage, but it must make a successful Will saving throw or flee as if panicked for 1d4 rounds + 1 round per caster level.</entry>
   <entry id="52040" lang="en" sex="m">Energy Ebb</entry>
   <entry id="52041" lang="en" sex="m">School:    Necromancy (Evil)
 Level:  Cleric 7, Sorc/Wiz 7
 Duration: 1 round/level
 Saving throw: Fortitude negates
-    
+
 This spell functions like enervation except that the creature struck gains negative levels over an extended period. You point your finger and utter the incantation, releasing a black needle of crackling negative energy that suppresses the life
 force of any living creature it strikes. You must make a ranged touch attack to hit. If the attack succeeds, the subject immediately gains one negative level, then continues to gain another each round thereafter as her life force slowly bleeds away. The drain can only be stopped by a successful Heal check (DC 23) or the application of a heal, restoration, or greater restoration spell.
-    
+
 If the black needle strikes an undead creature, that  creature gains 4d4 * 5 temporary hp that last for up to 1 hour.
 </entry>
   <entry id="52042" lang="en" sex="m">Avasculate(13)</entry>

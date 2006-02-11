@@ -123,6 +123,7 @@ const int EVENT_VIRTUAL_ONBLOCKED           = 37;
 const int EVENT_VIRTUAL_ONCOMBATROUNDEND    = 38;
 
 /// Virtual event - On Conversation
+/// Does not work on PCs!
 const int EVENT_VIRTUAL_ONCONVERSATION      = 39;
 
 /// Virtual event - On Damaged

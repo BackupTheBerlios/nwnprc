@@ -69,7 +69,7 @@ void main()
                               PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
                                                        1, PRC_UNLIMITED_AUGMENTATION
                                                        ),
-                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_SPLIT | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN | METAPSIONIC_WIDEN
                               );
 
     if(manif.bCanManifest)

@@ -88,16 +88,18 @@ void main()
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC)))
 		{
 			DoCurseDam(oTarget);
-			
-			//Set local int for tracking remove curse
-			SetPersistantLocalInt(oTarget, "HAS_CURSE", 1);
+				
 		}
 	}
 	
-	//Corrupt spell cost
-	int nCorrupt = d6(1);
-	
-	ApplyAbilityDamage(oPC, ABILITY_STRENGTH, nCorrupt, DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE, SPELL_ROTTING_CURSE, -1, oPC);
+	//Corruption Cost paid when effect ends if not cast on item
+	if(GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
+	{
+		//Corrupt spell cost
+		int nCorrupt = d6(1);
+		
+		ApplyAbilityDamage(oPC, ABILITY_STRENGTH, nCorrupt, DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE, SPELL_ROTTING_CURSE, -1, oPC);
+	}
 	
 	//Alignment shift if switch set
 	SPEvilShift();

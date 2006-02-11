@@ -69,6 +69,15 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	
+	//if corpses not targetable, oTarget will be invalid
+	if (!GetIsObjectValid(oTarget))
+	{
+		//sooo, get object closest to spell casting
+		location lLoc = GetSpellTargetLocation();
+		
+		oTarget = GetFirstObjectInShape(SHAPE_CUBE, RADIUS_SIZE_SMALL, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	}
+	
 	//must be dead creature
 	if(GetObjectType(oTarget) != OBJECT_TYPE_CREATURE || GetCurrentHitPoints(oTarget) > 0)			
 	{
@@ -107,9 +116,12 @@ void main()
 	//If appropriate, expose player to disease
 	DiseaseCheck(oTarget, oPC);
 	
-	//Corruption Cost paid when effect ends
-	int nCost = d6(2);
-	DelayCommand(fDuration, ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nCost, DURATION_TYPE_TEMPORARY, -1.0));
+	//Corruption Cost paid when effect ends if not cast on item
+	if(GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
+	{
+		int nCost = d6(2);
+		DelayCommand(fDuration, ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nCost, DURATION_TYPE_TEMPORARY, -1.0));
+	}
 	
 	SPEvilShift(oPC);
 	

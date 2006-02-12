@@ -22,7 +22,7 @@ eliminate the thorns and save that creature.
 Creatures that succeed at their Fortitude saving 
 throws are still incapacitated for 1d4 rounds in 
 horrible agony, taking 1d6 points of damage per round.
-At the end of the agony, how­ever, the thorns disappear.
+At the end of the agony, however, the thorns disappear.
 
 Corruption Cost: 1d3 points of Wisdom drain.
 

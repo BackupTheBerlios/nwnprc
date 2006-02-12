@@ -423,6 +423,7 @@ object _GetManifestationToken(object oManifester)
     object oMfToken = GetLocalObject(oManifester, PRC_MANIFESTATION_TOKEN_VAR);
 
     // Special case - variable not set up yet, so this is the characters first manifestation since entering the module
+/* Obsoleted by the manifestation token chest in Limbo
     if(oMfToken == OBJECT_INVALID)
     {
         object oSkin = GetPCSkin(oManifester);
@@ -435,19 +436,8 @@ object _GetManifestationToken(object oManifester)
                 DestroyObject(oTest);
             oTest = GetNextItemInInventory(oSkin);
         }
-/*
-        // Check if we found a token
-        if(oTest != OBJECT_INVALID)
-            oMfToken = oTest;
-        // We didn't, set the token to the special value indicating no token - the manifester itself
-        else
-            oMfToken = oManifester;
-
-        // Store it
-        SetLocalObject(oManifester, PRC_MANIFESTATION_TOKEN_VAR, oMfToken);
-*/
     }
-
+*/
     // If the token object is no longer valid, set the variable to point at manifester
     if(!GetIsObjectValid(oMfToken))
     {
@@ -485,13 +475,15 @@ void _DestroyManifestationToken(object oManifester, object oMfToken)
 object _CreateManifestationToken(object oManifester)
 {
     object oMfToken = _GetManifestationToken(oManifester);
-    object oSkin    = GetPCSkin(oManifester);
+    object oStore   = GetObjectByTag("PRC_MANIFTOKEN_STORE"); //GetPCSkin(oManifester);
 
     // Delete any previous tokens
     if(GetIsObjectValid(oMfToken))
         _DestroyManifestationToken(oManifester, oMfToken);
 
-    oMfToken = CreateItemOnObject(PRC_MANIFESTATION_TOKEN_NAME, oSkin);
+    // Create new token and store a reference to it
+    oMfToken = CreateItemOnObject(PRC_MANIFESTATION_TOKEN_NAME, oStore);
+    SetLocalObject(oManifester, PRC_MANIFESTATION_TOKEN_VAR, oMfToken);
 
     return oMfToken;
 }

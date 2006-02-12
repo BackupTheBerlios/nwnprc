@@ -8244,7 +8244,25 @@ If you have a claw attack (either from an actual natural weapon or from an effec
 Augment: If you spend 4 additional power points, this power’s duration increases to 1 hour per level.
 In addition, for every 4 additional power points you spend, this power improves the natural weapon’s enhancement bonus on attack rolls and damage rolls by 1.</entry>
   <entry id="46919" lang="en" sex="m">Metaphysical Weapon</entry>
-  <entry id="46920" lang="en" sex="m">Description</entry>
+  <entry id="46920" lang="en" sex="m">Metacreativity
+Level: Psychic warrior 1
+Manifesting Time: 1 standard action
+Range: Touch
+Target: Weapon touched
+Duration: 1 min./level
+Saving Throw: None
+Power Resistance: No
+Power Points: 1
+Metapsionics: Extend
+
+Metaphysical weapon gives a weapon a +1 enhancement bonus on attack rolls and damage rolls.
+
+Alternatively, you can affect up to 99 arrows, bolts, or bullets. The projectiles must be of the same type, and they have to be together (in the same stack).
+
+You can’t manifest this power on most natural weapons, including a psychic warrior’s claw strike. This power does work on a weapon brought into being by the graft weapon power.
+
+Augment: If you spend 4 additional power points, this power’s duration increases to 1 hour per level.
+In addition, for every 4 additional power points you spend, this power improves the weapon’s enhancement bonus on attack rolls and damage rolls by 1.</entry>
   <entry id="46921" lang="en" sex="m">Null Psionics Field</entry>
   <entry id="46922" lang="en" sex="m">Psychokinesis
 Level: Kineticist 6
@@ -8328,7 +8346,18 @@ Metapsionics: Extend
 When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can’t be reversed.
 Should you rebound a power back against a manifester who also is protected by reddopsi, the power rebounds once more upon you.</entry>
   <entry id="46933" lang="en" sex="m">Strength of my Enemy</entry>
-  <entry id="46934" lang="en" sex="m">Description</entry>
+  <entry id="46934" lang="en" sex="m">Psychometabolism
+Level: Psychic warrior 2
+Manifesting Time: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 round/level
+Power Points: 3
+Metapsionics: Extend
+
+You gain the ability to siphon away your enemy’s strength for your own use. One of your natural or manufactured weapons becomes the instrument of your desire, and deals 1 point of Strength damage on each successful hit. You gain that point of Strength as an enhancement bonus to your Strength score. Strength you siphon from different foes is tracked separately - the total siphoned from each individual foe is considered a separate enhancement bonus to your Strength (maximum +8), and you gain only the highest total.
+
+Augment: For every 3 additional power points you spend, the maximum enhancement bonus you can add to your Strength increases by 2.</entry>
   <entry id="46935" lang="en" sex="m">Tornado Blast</entry>
   <entry id="46936" lang="en" sex="m">Psychokinesis
 Level: Kineticist 9
@@ -15095,6 +15124,7 @@ Use: Selected</entry>
   <entry id="49448" lang="en" sex="m">Power Knowledge - Warmind VIII</entry>
   <entry id="49449" lang="en" sex="m">Power Knowledge - Warmind IX</entry>
   <entry id="49450" lang="en" sex="m">Power Knowledge - Warmind X</entry>
+  <entry id="49451" lang="en" sex="m">Target is not a weapon!</entry>
   <entry id="49479" lang="en" sex="m">Area of effect</entry>
   <entry id="49480" lang="en" sex="m">Decreased Cost A</entry>
   <entry id="49481" lang="en" sex="m">Decreased Cost B</entry>

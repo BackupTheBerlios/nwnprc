@@ -82,9 +82,9 @@ void Die();
 
 void DoDebug(string sString, object oAdditionalRecipient = OBJECT_INVALID)
 {
-    SendMessageToPC(GetFirstPC(), sString);
+    SendMessageToPC(GetFirstPC(), "<c´jŸ>" + sString + "</c>");
     if(oAdditionalRecipient != OBJECT_INVALID)
-        SendMessageToPC(oAdditionalRecipient, sString);
+        SendMessageToPC(oAdditionalRecipient, "<c´jŸ>" + sString + "</c>");
     WriteTimestampedLogEntry(sString);
 }
 

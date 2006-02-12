@@ -113,12 +113,13 @@ void main()
 	//If appropriate, expose player to disease
 	DiseaseCheck(oTarget, oPC);
 	
-	//Corruption Cost paid when effect ends if not cast on item
-	if(GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
+	//Corruption Cost
 	{
 		int nCost = d6(2);
-		DelayCommand(fDuration, ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nCost, DURATION_TYPE_TEMPORARY, -1.0));
+		DelayCommand(fDuration, DoCorruptionCost(oPC, oTarget, ABILITY_WISDOM, nCost, 0));
 	}
+	
+	
 	
 	SPEvilShift(oPC);
 	

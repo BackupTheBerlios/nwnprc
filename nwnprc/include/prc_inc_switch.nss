@@ -1956,13 +1956,13 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_CLASS_SKILLS,    50);
     SetPRCSwitch(FILE_END_CLASS_POWER,     300);
     SetPRCSwitch(FILE_END_CLASS_SPELLBOOK, 300);
-    SetPRCSwitch(FILE_END_FEAT,            22000);
+    SetPRCSwitch(FILE_END_FEAT,            22300);
     SetPRCSwitch(FILE_END_CLASS_PREREQ,    25);
     SetPRCSwitch(FILE_END_FAMILIAR,        20);
     SetPRCSwitch(FILE_END_ANIMALCOMP,      20);
     SetPRCSwitch(FILE_END_DOMAINS,         70);
     SetPRCSwitch(FILE_END_SOUNDSET,        450);
-    SetPRCSwitch(FILE_END_SPELLS,          15400);
+    SetPRCSwitch(FILE_END_SPELLS,          16100);
     SetPRCSwitch(FILE_END_SPELLSCHOOL,     10);
     SetPRCSwitch(FILE_END_APPEARANCE,      500);
     SetPRCSwitch(FILE_END_WINGS,           10);

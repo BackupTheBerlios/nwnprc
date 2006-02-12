@@ -98,7 +98,7 @@ void main()
             // Forbid teleportation
             DisallowTeleport(oTarget);
 
-            // Hook event
+            // @todo Start concentration
 
             // Start monitor HB
             DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID));
@@ -114,7 +114,7 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID)
     {
         if(DEBUG) DoDebug("psi_pow_immove: Power expired, clearing");
 
-        // Unhook event
+        // @todo Lose concentration
 
         // Remove effects
         RemoveSpellEffects(nSpellID, oManifester, oTarget);

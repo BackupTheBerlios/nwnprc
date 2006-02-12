@@ -6,6 +6,23 @@
    ----------------
 
    14/12/05 by Stratovarius
+*/ /** @file
+
+    Strength of My Enemy
+
+Psychometabolism
+Level: Psychic warrior 2
+Manifesting Time: 1 standard action
+Range: Personal
+Target: You
+Duration: 1 round/level
+Power Points: 3
+Metapsionics: Extend
+
+You gain the ability to siphon away your enemy’s strength for your own use. One of your natural or manufactured weapons becomes the instrument of your desire, and deals 1 point of Strength damage on each successful hit. You gain that point of Strength as an enhancement bonus to your Strength score. Strength you siphon from different foes is tracked separately - the total siphoned from each individual foe is considered a separate enhancement bonus to your Strength (maximum +8), and you gain only the highest total.
+
+Augment: For every 3 additional power points you spend, the maximum enhancement bonus you can add to your Strength increases by 2.
+
 
    Class: Psychic Warrior
    Power Level: 2

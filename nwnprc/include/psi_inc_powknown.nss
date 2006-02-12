@@ -31,11 +31,11 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const int POWER_LIST_PSION          = CLASS_TYPE_PSION;//1;
-const int POWER_LIST_WILDER         = CLASS_TYPE_WILDER;//2;
-const int POWER_LIST_PSYWAR         = CLASS_TYPE_PSYWAR;//3;
-const int POWER_LIST_FIST_OF_ZUOKEN = CLASS_TYPE_FIST_OF_ZUOKEN;//;4;
-const int POWER_LIST_WARMIND        = CLASS_TYPE_WARMIND;//5;
+const int POWER_LIST_PSION          = CLASS_TYPE_PSION;
+const int POWER_LIST_WILDER         = CLASS_TYPE_WILDER;
+const int POWER_LIST_PSYWAR         = CLASS_TYPE_PSYWAR;
+const int POWER_LIST_FIST_OF_ZUOKEN = CLASS_TYPE_FIST_OF_ZUOKEN;
+const int POWER_LIST_WARMIND        = CLASS_TYPE_WARMIND;
 
 /// Special power list. Powers gained via Expanded Knowledge, Psychic Chirurgery and similar sources
 const int POWER_LIST_MISC           = CLASS_TYPE_INVALID;//-1;
@@ -330,6 +330,7 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
 
     return TRUE;
 }
+
 /** @todo If ever required
 int RemoveSpecificPowerKnown(object oCreature, int nList, int n2daRow)
 {
@@ -473,8 +474,29 @@ int GetMaxPowerCount(object oCreature, int nList)
             nMaxPowers += GetKnownPowersModifier(oCreature, nList);
             break;
         }
+        case POWER_LIST_WARMIND:{
+            // Determine base powers known
+            int nLevel = GetLevelByClass(CLASS_TYPE_WARMIND, oCreature);
+                nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_WARMIND ? GetPsionicPRCLevels(oCreature) : 0;
+            if(nLevel == 0)
+                break;
+            nMaxPowers = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_WARMIND), "PowersKnown", nLevel - 1));
 
-        case POWER_LIST_WARMIND:
+            // Calculate feats
+            // Apply the epic feat Power Knowledge - +2 powers known per
+            int nFeat = FEAT_POWER_KNOWLEDGE_WARMIND_1;
+            while(nFeat <= FEAT_POWER_KNOWLEDGE_WARMIND_10 &&
+                  GetHasFeat(nFeat, oCreature))
+            {
+                nMaxPowers += 2;
+                nFeat++;
+            }
+
+            // Add in the custom modifier
+            nMaxPowers += GetKnownPowersModifier(oCreature, nList);
+            break;
+        }
+
         case POWER_LIST_MISC:
             DoDebug("GetMaxPowerCount(): ERROR: Using unfinishes power list!");
             break;
@@ -502,6 +524,9 @@ int GetHasPower(int nPower, object oCreature = OBJECT_SELF)
         ) ||
        (GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature)
         && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_FIST_OF_ZUOKEN), oCreature)
+        ) ||
+       (GetLevelByClass(CLASS_TYPE_WARMIND, oCreature)
+        && GetHasFeat(GetClassFeatFromPower(nPower, CLASS_TYPE_WARMIND), oCreature)
         )
         // add new psionic classes here
        )

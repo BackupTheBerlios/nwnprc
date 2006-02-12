@@ -71,6 +71,8 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_PSYWAR:
         case CLASS_TYPE_ANTI_PALADIN:
         case CLASS_TYPE_OCULAR:
+        case CLASS_TYPE_FIST_OF_ZUOKEN:
+        case CLASS_TYPE_WARMIND:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_WIZARD:

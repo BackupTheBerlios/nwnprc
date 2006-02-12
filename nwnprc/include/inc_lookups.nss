@@ -105,10 +105,11 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     }
 
     string sFile;
-    if(nClass == CLASS_TYPE_PSION
-        || nClass == CLASS_TYPE_PSYWAR
-        || nClass == CLASS_TYPE_WILDER
-        || nClass == CLASS_TYPE_FIST_OF_ZUOKEN
+    if(nClass == CLASS_TYPE_PSION          ||
+       nClass == CLASS_TYPE_PSYWAR         ||
+       nClass == CLASS_TYPE_WILDER         ||
+       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
+       nClass == CLASS_TYPE_WARMIND
     //add new psionic classes here
         )
         sFile = GetPsiBookFileName(nClass);

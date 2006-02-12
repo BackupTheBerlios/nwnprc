@@ -1881,7 +1881,6 @@ const int FEAT_POWER_KNOWLEDGE_WILDER_7             = 4933;
 const int FEAT_POWER_KNOWLEDGE_WILDER_8             = 4934;
 const int FEAT_POWER_KNOWLEDGE_WILDER_9             = 4935;
 const int FEAT_POWER_KNOWLEDGE_WILDER_10            = 4936;
-
 const int FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_1     = 4945;
 const int FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_2     = 4946;
 const int FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_3     = 4947;
@@ -1892,6 +1891,16 @@ const int FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_7     = 4951;
 const int FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_8     = 4952;
 const int FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_9     = 4953;
 const int FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_10    = 4954;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_1            = 4955;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_2            = 4956;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_3            = 4957;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_4            = 4958;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_5            = 4959;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_6            = 4960;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_7            = 4961;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_8            = 4962;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_9            = 4963;
+const int FEAT_POWER_KNOWLEDGE_WARMIND_10           = 4964;
 
 // Metapsionic feats
 const int FEAT_CHAIN_POWER                          = 4937;

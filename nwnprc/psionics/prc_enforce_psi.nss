@@ -181,7 +181,8 @@ int EpicPsionicFeats(object oPC)
     int bCanManifMax = (GetLevelByClass(CLASS_TYPE_PSION, oPC)          + (CLASS_TYPE_PSION          == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 17 ||
                        (GetLevelByClass(CLASS_TYPE_WILDER, oPC)         + (CLASS_TYPE_WILDER         == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 18 ||
                        (GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)         + (CLASS_TYPE_PSYWAR         == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 16 ||
-                       (GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC) + (CLASS_TYPE_FIST_OF_ZUOKEN == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 9;
+                       (GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC) + (CLASS_TYPE_FIST_OF_ZUOKEN == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 9  ||
+                       (GetLevelByClass(CLASS_TYPE_WARMIND, oPC)        + (CLASS_TYPE_WARMIND        == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0)) >= 10;
 
     int bRelevel = FALSE,
         bFirst   = 1;
@@ -193,8 +194,9 @@ int EpicPsionicFeats(object oPC)
     if(GetHasFeat(FEAT_POWER_KNOWLEDGE_PSYWAR_1))         sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826529);
     if(GetHasFeat(FEAT_POWER_KNOWLEDGE_WILDER_1))         sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826530);
     if(GetHasFeat(FEAT_POWER_KNOWLEDGE_FIST_OF_ZUOKEN_1)) sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826640);
+    if(GetHasFeat(FEAT_POWER_KNOWLEDGE_WARMIND_1))        sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826657);
 
-    if(GetHasFeat(FEAT_EPIC_PSIONIC_FOCUS_1))      sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826518);
+    if(GetHasFeat(FEAT_EPIC_PSIONIC_FOCUS_1))             sManifLimitedFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826518);
 
 
     if(!bCanManifMax && bFirst < 1)

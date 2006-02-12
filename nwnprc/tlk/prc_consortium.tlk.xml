@@ -8269,7 +8269,7 @@ Saving Throw: None and Fortitude negates; see text
 Power Points: 1
 Metapsionics: Twin
 
-If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast), you can use this power to coat your claws in a mild venom. On your next successful melee attack, the venom deals 2 points of Constitution damage. A target struck by the poison can make a Fortitude save (DC 10 + 1/2 Manifester level + key ability modifier) to negate the damage. 
+If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast), you can use this power to coat your claws in a mild venom. On your next successful melee attack, the venom deals 2 points of Constitution damage. A target struck by the poison can make a Fortitude save (DC 10 + 1/2 Manifester level + key ability modifier) to negate the damage.
 
 Augment: For every 6 additional power points you spend, this power’s Constitution damage increases by 2 points.</entry>
   <entry id="46927" lang="en" sex="m">Prevenom Weapon</entry>
@@ -8309,7 +8309,7 @@ Duration: 10 min./level
 Power Points: 13
 Metapsionics: Extend
 
-When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can’t be reversed. 
+When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can’t be reversed.
 Should you rebound a power back against a manifester who also is protected by reddopsi, the power rebounds once more upon you.</entry>
   <entry id="46933" lang="en" sex="m">Strength of my Enemy</entry>
   <entry id="46934" lang="en" sex="m">Description</entry>
@@ -12948,7 +12948,7 @@ REQUIREMENTS:
 Psionics: Must possess a power point reserve of at least 1 power point.
 Skills: Lore 8 ranks.
 Base Attack Bonus: +3.
-Alignment: Non-Chaotic. 
+Alignment: Non-Chaotic.
 
 ABILITIES:
 
@@ -15045,6 +15045,16 @@ Use: Selected</entry>
   <entry id="49438" lang="en" sex="m">Target is already under effect of the Compression power!</entry>
   <entry id="49439" lang="en" sex="m">Target is already under effect of the Expansion power!</entry>
   <entry id="49440" lang="en" sex="m">Target does not posses a natural attack!</entry>
+  <entry id="49441" lang="en" sex="m">Power Knowledge - Warmind I</entry>
+  <entry id="49442" lang="en" sex="m">Power Knowledge - Warmind II</entry>
+  <entry id="49443" lang="en" sex="m">Power Knowledge - Warmind III</entry>
+  <entry id="49444" lang="en" sex="m">Power Knowledge - Warmind IV</entry>
+  <entry id="49445" lang="en" sex="m">Power Knowledge - Warmind V</entry>
+  <entry id="49446" lang="en" sex="m">Power Knowledge - Warmind VI</entry>
+  <entry id="49447" lang="en" sex="m">Power Knowledge - Warmind VII</entry>
+  <entry id="49448" lang="en" sex="m">Power Knowledge - Warmind VIII</entry>
+  <entry id="49449" lang="en" sex="m">Power Knowledge - Warmind IX</entry>
+  <entry id="49450" lang="en" sex="m">Power Knowledge - Warmind X</entry>
   <entry id="49479" lang="en" sex="m">Area of effect</entry>
   <entry id="49480" lang="en" sex="m">Decreased Cost A</entry>
   <entry id="49481" lang="en" sex="m">Decreased Cost B</entry>

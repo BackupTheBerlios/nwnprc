@@ -65,10 +65,10 @@ void SweepingStrike(object oCaster, object oTarget)
 {
 	// Use the function to get the closest creature as a target
 	object oStrikeTarget = GetNearestCreatureToLocation(CREATURE_TYPE_IS_ALIVE, TRUE, GetLocation(oTarget));
-	// If he's in a place that can be reached
-	if (GetIsInMeleeRange(oStrikeTarget, oCaster))
+	// If he's in a place that can be reached and he's standing adjacent to the original target
+	if (GetIsInMeleeRange(oStrikeTarget, oCaster) && GetIsInMeleeRange(oStrikeTarget, oTarget))
 	{
 		effect eVis = EffectVisualEffect(VFX_IMP_STUN);
-		PerformAttack(oStrikeTarget, oCaster, eVis, 0.0, 0, 0, 0, "Sweeping Strike Hit", "Sweeping Strike Hit");
+		PerformAttack(oStrikeTarget, oCaster, eVis, 0.0, 0, 0, 0, "Sweeping Strike Hit", "Sweeping Strike Miss");
 	}
 }

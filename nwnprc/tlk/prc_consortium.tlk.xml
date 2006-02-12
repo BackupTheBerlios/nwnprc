@@ -12993,7 +12993,31 @@ Level  Power Points  Powers Known  Power Level
 8      47            5             4
 9      58            5             4
 10     70            6             5</entry>
-
+  <entry id="48512" lang="en" sex="m">Chain of Personal Superiority</entry>
+  <entry id="48513" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Warmind Level 1.
+Specifics: Three times per day, the Warmind can grant himself +2 to Strength and Constitution as a free action. At 7th level, the bonus increases to +4. This lasts for 1 minute.
+Use: Selected.</entry>
+  <entry id="48514" lang="en" sex="m">Chain of Defensive Posture</entry>
+  <entry id="48515" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Warmind Level 2.
+Specifics: Three times per day, the Warmind can grant himself +2 to Armour Class as a free action. At 8th level, the bonus increases to +4. This lasts for 1 minute.
+Use: Selected.</entry>
+  <entry id="48516" lang="en" sex="m">Enduring Body</entry>
+  <entry id="48517" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Warmind Level 3.
+Specifics: The spirit of the ideal body transforms a War mind, granting him damage resistance 1/-. At 6th level this improves to 2/-, and to 3/- at 9th level.
+Use: Automatic.</entry>
+  <entry id="48518" lang="en" sex="m">Sweeping Strike</entry>
+  <entry id="48519" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Warmind Level 5.
+Specifics: On each melee attack a War mind makes, he also attacks one other creature within melee range of both him and his target.
+Use: Automatic.</entry>
+  <entry id="48520" lang="en" sex="m">Chain of Overwhelming Force</entry>
+  <entry id="48521" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Warmind Level 10.
+Specifics: Once per day, the Warmind can perfectly execute an attack, dealing an extra 10d6 damage on his attempt.
+Use: Selected.</entry>
 
   <entry id="48612" lang="en" sex="m">Man at Arms</entry>
   <entry id="48613" lang="en" sex="m">Men at Arms</entry>

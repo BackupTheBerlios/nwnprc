@@ -1032,7 +1032,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
      if (GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
 
           {
-     	     nDC += 2;
+             nDC += 2;
           }
 
      return nSaveRoll;
@@ -1435,26 +1435,26 @@ int PRCGetSpellId()
 
 void SPEvilShift(object oPC)
 {
-	//Check for alignment shift switch
-	if(GetPRCSwitch("PRC_SPELL_ALIGNMENT_SHIFT"))
-	{
-		int nShift1 = GetGoodEvilValue(oPC);
-		float fShift = sqrt(IntToFloat(nShift1));
-		int nShift = FloatToInt(fShift);
-		AdjustAlignment(oPC, ALIGNMENT_EVIL, nShift);
-	}
+    //Check for alignment shift switch
+    if(GetPRCSwitch(PRC_SPELL_ALIGNMENT_SHIFT))
+    {
+        int nShift1 = GetGoodEvilValue(oPC);
+        float fShift = sqrt(IntToFloat(nShift1));
+        int nShift = FloatToInt(fShift);
+        AdjustAlignment(oPC, ALIGNMENT_EVIL, nShift);
+    }
 }
 
 void SPGoodShift(object oPC)
 {
-	//Check for alignment shift switch
-	if(GetPRCSwitch("PRC_SPELL_ALIGNMENT_SHIFT"))
-	{
-		int nShift1 = GetGoodEvilValue(oPC);
-		float fShift = sqrt(IntToFloat(nShift1));
-		int nShift = FloatToInt(fShift);
-		AdjustAlignment(oPC, ALIGNMENT_GOOD, nShift);
-	}
+    //Check for alignment shift switch
+    if(GetPRCSwitch(PRC_SPELL_ALIGNMENT_SHIFT))
+    {
+        int nShift1 = GetGoodEvilValue(oPC);
+        float fShift = sqrt(IntToFloat(nShift1));
+        int nShift = FloatToInt(fShift);
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, nShift);
+    }
 }
 
 

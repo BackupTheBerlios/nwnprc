@@ -19,7 +19,7 @@ Run the assemble_spellbooks.bat file
 */
 
 const int SPELLBOOK_IPRP_FEATS_START = 10400;
-const int SPELLBOOK_IPRP_FEATS_END = 11400;
+const int SPELLBOOK_IPRP_FEATS_END = 11999;
 const int SPELLBOOK_TYPE_PREPARED = 1;
 const int SPELLBOOK_TYPE_SPONTANEOUS = 2;
 const int SPELLBOOK_TYPE_INVALID = 0;
@@ -90,7 +90,7 @@ string GetFileForClass(int nClass)
 {
     string sFile = Get2DACache("classes", "FeatsTable", nClass);
     sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-DoDebug("GetFileForClass("+IntToString(nClass)+") = "+sFile);
+//DoDebug("GetFileForClass("+IntToString(nClass)+") = "+sFile);
     return sFile;
 }
 
@@ -139,7 +139,17 @@ DoDebug("GetSpellslotLevel("+IntToString(nClass)+", "+GetName(oPC)+") = "+IntToS
     return nLevel;
 }
 
-void WipeSpellbookHideFeats(object oPC)
+void CheckAndRemoveFeat(object oHide, itemproperty ipFeat)
+{
+    int nSubType = GetItemPropertySubType(ipFeat);
+    if(!GetLocalInt(oHide, "NewSpellbookTemp_"+IntToString(nSubType)))
+        RemoveItemProperty(oHide, ipFeat);
+    else
+        DeleteLocalInt(oHide, "NewSpellbookTemp_"+IntToString(nSubType));
+
+}
+
+void WipeSpellbookHideFeats(object oPC, int nClass)
 {
     object oHide = GetPCSkin(oPC);
     itemproperty ipTest = GetFirstItemProperty(oHide);
@@ -148,19 +158,14 @@ void WipeSpellbookHideFeats(object oPC)
         if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
             && GetItemPropertySubType(ipTest) > SPELLBOOK_IPRP_FEATS_START
             && GetItemPropertySubType(ipTest) < SPELLBOOK_IPRP_FEATS_END)
-            DelayCommand(0.1, RemoveItemProperty(oHide, ipTest));
+            DelayCommand(0.5, CheckAndRemoveFeat(oHide, ipTest));
         ipTest = GetNextItemProperty(oHide);
     }
     //remove persistant locals used to track when all spells cast
-    int i;
-    for(i=1;i<=3;i++)
+    if(persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
     {
-        int nClass = PRCGetClassByPosition(i, oPC);
-        if(persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
-        {
-            persistant_array_delete(oPC, "NewSpellbookMem_"+IntToString(nClass));
-            persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
-        }
+        persistant_array_delete(oPC, "NewSpellbookMem_"+IntToString(nClass));
+        persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
     }
 }
 
@@ -186,7 +191,7 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
         sFile = Get2DACache("classes", "FeatsTable", nClass);
         sFile = GetStringLeft(sFile, 4)+"spbk"+GetStringRight(sFile, GetStringLength(sFile)-8);
     }
-    string sSlots = Get2DACache(sFile, "SpellLevel"+IntToString(nSpellLevel), nLevel);
+    string sSlots = Get2DACache(sFile, "SpellLevel"+IntToString(nSpellLevel), nLevel-1);
     if(sSlots == "")
     {
         nSlots = -1;
@@ -227,7 +232,8 @@ int GetSpellKnownMaxCount(int nLevel, int nSpellLevel, int nClass, object oPC)
         sFile = Get2DACache("classes", "FeatsTable", nClass);
         sFile = GetStringLeft(sFile, 4)+"spkn"+GetStringRight(sFile, GetStringLength(sFile)-8);
     }
-    string sSlots = Get2DACache(sFile, "SpellLevel"+IntToString(nSpellLevel), nLevel);
+    string sSlots = Get2DACache(sFile, "SpellLevel"+IntToString(nSpellLevel), nLevel-1);
+DoDebug("GetSpellKnownMaxCount("+IntToString(nLevel)+", "+IntToString(nSpellLevel)+", "+IntToString(nClass)+", "+GetName(oPC)+") = "+sSlots);
     if(sSlots == "")
     {
         nKnown = -1;
@@ -241,56 +247,37 @@ int GetSpellKnownMaxCount(int nLevel, int nSpellLevel, int nClass, object oPC)
 }
 
 int GetSpellKnownCurrentCount(object oPC, int nSpellLevel, int nClass)
-{
-DoDebug("GetSpellKnownCurrentCount("+GetName(oPC)+", "+IntToString(nSpellLevel)+", "+IntToString(nClass)+")");
-    int nKnown = GetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel));
-DoDebug("SpellKnownCurrentCount = "+IntToString(nKnown));
-    if(nKnown != 0)
-    {
-        if(nKnown == -1)
-            nKnown = 0;
-        return nKnown;
-    }
-    string sFile = GetFileForClass(nClass);
+{    
     int i;
-    for(i=0;i<=9;i++)
+    int nKnown;
+    string sFile = GetFileForClass(nClass);
+    for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
     {
-        //mark them all as knowning none
-        SetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel),
-            -1);
-        SetPersistantLocalInt(oPC, "SpellUnknownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel),
-            -2);
+        int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
+        int nLevel = StringToInt(Get2DACache(sFile, "Level", nNewSpellbookID)); 
+        if(nLevel == nSpellLevel)
+            nKnown++;
     }
-    for(i=0; i<GetPRCSwitch(FILE_END_CLASS_SPELLBOOK); i++)
-    {
-        if(Get2DACache(sFile, "ReqFeat ", i) == "")
-        {
-            int nLevel = StringToInt(Get2DACache(sFile, "Level", i));
-            if(GetHasFeat(StringToInt(Get2DACache(sFile, "FeatID", i)), oPC))
-            {
-                int nTestKnown = GetLocalInt(oPC, "SpellKnownCurrentCount"+IntToString(nLevel));
-                //if knowing none, know zero
-                if(nTestKnown == -1)
-                    nTestKnown = 0;
-                SetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nLevel),
-                    nTestKnown+1);
-            }
-            else
-            {
-                int nTestKnown = GetLocalInt(oPC, "SpellUnknownCurrentCount"+IntToString(nLevel));
-                //if knowing none, know zero
-                if(nTestKnown == -1)
-                    nTestKnown = 0;
-                SetPersistantLocalInt(oPC, "SpellUnknownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nLevel),
-                    nTestKnown+1);
-
-            }
-        }
-    }
-    nKnown = GetPersistantLocalInt(oPC, "SpellKnownCurrentCount_"+IntToString(nClass)+"_"+IntToString(nSpellLevel));
-    if(nKnown == -1)
-        nKnown = 0;
+DoDebug("GetSpellKnownCurrentCount("+GetName(oPC)+", "+IntToString(nSpellLevel)+", "+IntToString(nClass)+") = "+IntToString(nKnown));
     return nKnown;
+}
+
+int GetSpellUnknownCurrentCount(object oPC, int nSpellLevel, int nClass)
+{
+    string sTag = "SpellLvl_"+IntToString(nClass)+"_Level_"+IntToString(nSpellLevel);
+  
+    object oCache = GetObjectByTag(sTag);
+    if(!GetIsObjectValid(oCache))
+    {
+DoDebug(sTag+" is not valid");
+        return 0;
+    }    
+    int nTotal = array_get_size(oCache, sTag);    
+    int nKnown = GetSpellKnownCurrentCount(oPC, nSpellLevel, nClass);
+    int nUnknown = nTotal - nKnown;
+    
+DoDebug("GetSpellUnknownCurrentCount("+GetName(oPC)+", "+IntToString(nSpellLevel)+", "+IntToString(nClass)+") = "+IntToString(nUnknown));
+    return nUnknown;    
 }
 
 void AddSpellUse(object oPC, int nSpellbookID, int nClass)
@@ -301,36 +288,34 @@ void AddSpellUse(object oPC, int nSpellbookID, int nClass)
     object oSkin = GetPCSkin(oPC);
     int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nSpellbookID));
     //add the feat only if they dont already have it
+    int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
     if(!GetHasFeat(nFeatID, oPC))
     {
-        int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin);
+        SetLocalInt(oSkin, "NewSpellbookTemp_"+IntToString(nIPFeatID), TRUE);
     }
-    //DEBUG test
-    if(DEBUG
-        && !persistant_array_exists(oPC, sArrayName))
-        DoDebug("Error: "+sArrayName+" array does not exist");
-DoDebug("Adding nSpellbookID="+IntToString(nSpellbookID));
-DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID)));
-    //sanity test
-    if(!persistant_array_exists(oPC, sArrayName))
+    else
     {
-DoDebug(sArrayName+" does not exist, creating.");
-        persistant_array_create(oPC, sArrayName);
+        //they already have it but we need to tell the hide cleaner to keep it
+        SetLocalInt(oSkin, "NewSpellbookTemp_"+IntToString(nIPFeatID), TRUE);
     }
     //Increase the corrent number of uses
     if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
     {
+        //sanity test
+        if(!persistant_array_exists(oPC, sArrayName))
+        {
+            DoDebug("Error: "+sArrayName+" array does not exist");
+DoDebug(sArrayName+" does not exist, creating.");
+            persistant_array_create(oPC, sArrayName);
+        }
         int nUses = persistant_array_get_int(oPC, sArrayName, nSpellbookID);
-DoDebug("nUses="+IntToString(nUses));
         nUses++;
-DoDebug("nUses="+IntToString(nUses));
         persistant_array_set_int(oPC, sArrayName, nSpellbookID,nUses);
 DoDebug(sArrayName+"="+IntToString(persistant_array_get_int(oPC, sArrayName, nSpellbookID)));
     }
     else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
     {
-        //spont casters are sorted in SetupSpells which is the only function that should call this
 DoDebug("Spontaneous class calling AddSpellUse()");
     }
 }
@@ -396,13 +381,18 @@ void SetupSpells(object oPC, int nClass)
         {
             int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
             persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel, nSlots);
+            int i;
+            for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
+            {
+                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
+                AddSpellUse(oPC, nSpellbookID, nClass);
+            }    
         }
     }
 }
 
 void CheckNewSpellbooks(object oPC)
 {
-    WipeSpellbookHideFeats(oPC);
     int i;
     for(i=1;i<=3;i++)
     {
@@ -413,8 +403,10 @@ DoDebug("nClass="+IntToString(nClass));
 DoDebug("nLevel="+IntToString(nLevel));
         if(nLevel)
         {
-            //delay it so wipespellbookhidefeats has time to run
-            DelayCommand(1.0, SetupSpells(oPC, nClass));
+            WipeSpellbookHideFeats(oPC, nClass);
+            //delay it so wipespellbookhidefeats has time to start to run
+            //but before the deletes actually happen
+            DelayCommand(0.3, SetupSpells(oPC, nClass));
         }
     }
 }

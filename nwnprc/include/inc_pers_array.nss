@@ -188,7 +188,7 @@ int persistant_array_create(object store, string name)
     // error checking
     if(!GetIsObjectValid(store))
         return SDL_ERROR_NOT_VALID_OBJECT;
-    else if(GetLocalInt(store,name))
+    else if(GetPersistantLocalInt(store,name))
         return SDL_ERROR_ALREADY_EXISTS;
     else
     {

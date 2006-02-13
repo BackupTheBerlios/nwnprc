@@ -308,7 +308,9 @@ void main()
         DeleteLocalInt(oPC, "PowerListChoiceOffset");
 
         // Restart the convo to pick next power if needed
-        ExecuteScript("psi_powergain", oPC);
+        // done via EvalPRCFFeats to avoid convlicts with new spellbooks
+        //ExecuteScript("psi_powergain", oPC);
+        EvalPRCFeats(oPC);
     }
     else if(nValue == DYNCONV_ABORTED)
     {

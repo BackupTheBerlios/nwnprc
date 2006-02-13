@@ -487,7 +487,10 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
     //if no chest, use HEARTOFCHAOS in limbo as a location to make a new one
     if (!GetIsObjectValid(oCacheWP))
     {
-        oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
+        //oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
+        //    GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
+        //has to be an object, placeables cant go through the DB    
+        oCacheWP = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
             GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
 if(nDebug) DoDebug("Get2DACache: Cache chest does not exist, creating new one");
     }
@@ -496,7 +499,7 @@ if(nDebug) DoDebug("Get2DACache: Cache chest does not exist, creating new one");
     sColumn = GetStringLowerCase(sColumn);
 
     //get the token for this file
-    string sFileWPName = "CACHED_"+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
+    string sFileWPName = ""+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
 if(nDebug) DoDebug("Get2DACache: token tag is "+sFileWPName);
 /*    object oFileWP = GetFirstItemInInventory(oCacheWP);
     while(GetIsObjectValid(oFileWP)

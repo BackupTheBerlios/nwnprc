@@ -28,18 +28,20 @@ int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel)
     int i;
     for(i=0;i<=9;i++)
     {
-        int nCurrentSpells = GetSpellKnownCurrentCount(oPC, i, nClass);
         int nMaxSpells = GetSpellKnownMaxCount(nLevel, i, nClass, oPC);
-
-        if(nCurrentSpells < nMaxSpells)
+        if(nMaxSpells > 0)
         {
-            // Mark the class for which the PC is to gain powers and start the conversation
-            SetLocalInt(oPC, "SpellGainClass", nClass);
-            SetLocalInt(oPC, "SpellbookMinSpelllevel", nMinLevel);
-            SetLocalInt(oPC, "SpellbookMaxSpelllevel", nMaxLevel);
-            StartDynamicConversation("prc_s_spellgain", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+            int nCurrentSpells = GetSpellKnownCurrentCount(oPC, i, nClass);
+            if(nCurrentSpells < nMaxSpells)
+            {
+                // Mark the class for which the PC is to gain powers and start the conversation
+                SetLocalInt(oPC, "SpellGainClass", nClass);
+                SetLocalInt(oPC, "SpellbookMinSpelllevel", nMinLevel);
+                SetLocalInt(oPC, "SpellbookMaxSpelllevel", nMaxLevel);
+                StartDynamicConversation("prc_s_spellgain", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
 
-            return TRUE;
+                return TRUE;
+            }
         }
     }
     return FALSE;

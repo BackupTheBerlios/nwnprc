@@ -137,7 +137,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)                ExecuteScript("prc_ollam", oPC);
     if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)        ExecuteScript("prc_cbtmed", oPC);
     if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
-    if(GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC) > 0)        ExecuteScript("prc_warsling", oPC);
+    if(GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC) > 0) ExecuteScript("prc_warsling", oPC);
     if(GetLevelByClass(CLASS_TYPE_BAELNORN,oPC) > 0)             ExecuteScript("prc_baelnorn", oPC);
     if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));
     if(GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oPC) > 0)        ExecuteScript("prc_contemplate", oPC);
@@ -149,7 +149,7 @@ void EvalPRCFeats(object oPC)
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
-    if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0)   ExecuteScript("prc_domain_skin", oPC);
+    if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0)       ExecuteScript("prc_domain_skin", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -172,10 +172,6 @@ void EvalPRCFeats(object oPC)
     //Delays for item bonuses
     if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC) ||
         GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))               DelayCommand(0.1, ExecuteScript("prc_ft_passive", oPC));
-    /*
-    if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC))                  DelayCommand(0.1, ExecuteScript("prc_ft_forcepers", oPC));
-    if(GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))                DelayCommand(0.1, ExecuteScript("prc_ft_insghtref", oPC));
-    */
     if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  DelayCommand(0.1, ExecuteScript("prc_ft_tacttrap", oPC));
 
     //Baelnorn & Undead
@@ -310,6 +306,8 @@ void EvalPRCFeats(object oPC)
         || GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC)
         || GetLevelByClass(CLASS_TYPE_WARMIND, oPC))
         ExecuteScript("psi_powergain", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ASSASSIN, oPC))        
+        ExecuteScript("prc_spellgain", oPC);
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.

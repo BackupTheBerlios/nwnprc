@@ -55,6 +55,7 @@ void main()
         {
             object o2daCache = GetObjectByTag("Bioware2DACache");
             StoreCampaignObject("prc_data", "CacheChest", o2daCache);
+            DoDebug("Storing Bioware2DACache");
         }
     }
 

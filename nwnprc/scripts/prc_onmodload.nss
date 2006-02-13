@@ -6,6 +6,26 @@
 #include "inc_utility"
 #include "prc_inc_leadersh"
 
+void CheckDB()
+{
+    //check PRC version
+    if(GetCampaignString("prc_data", "version") != PRC_VERSION)
+    {
+        DoDebug("Removing old databases");
+        DestroyCampaignDatabase("prc_data");
+        DestroyCampaignDatabase(COHORT_DATABASE);
+    }
+    SetCampaignString("prc_data", "version", PRC_VERSION);
+
+    location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
+    //only get it if one doesnt already exist (saved games)
+    if(GetIsObjectValid(GetObjectByTag("Bioware2DACache")))
+        DestroyObject(GetObjectByTag("Bioware2DACache"));
+    object oChest = RetrieveCampaignObject("prc_data", "CacheChest", lLoc);
+    if(!GetIsObjectValid(oChest))
+        DoDebug("Unable to retieve CacheChest from prc_data");
+}
+
 void main()
 {
     object oModule = GetModule();
@@ -42,21 +62,7 @@ void main()
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE) == 0)
         SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 100);//100 HBs = 600sec = 10min
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE))
-    {
-        //check PRC version
-        if(GetCampaignString("prc_data", "version") != PRC_VERSION)
-        {
-            DestroyCampaignDatabase("prc_data");
-            DestroyCampaignDatabase(COHORT_DATABASE);
-        }
-        SetCampaignString("prc_data", "version", PRC_VERSION);
-
-        location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-        //only get it if one doesnt already exist (saved games)
-        if(GetIsObjectValid(GetObjectByTag("Bioware2DACache")))
-            DestroyObject(GetObjectByTag("Bioware2DACache"));
-        RetrieveCampaignObject("prc_data", "CacheChest", lLoc);
-    }
+        DelayCommand(5.0, CheckDB());
 
     if(GetPRCSwitch(PRC_USE_DATABASE))
     {

@@ -16,10 +16,6 @@
 ///////////////////////////////////////
 /* Function prototypes               */
 ///////////////////////////////////////
-#include "prc_alterations"
-#include "inc_utility"
-
-
 
 /**
  * Checks if the given creature may cast Necrotic Cyst spells.
@@ -55,6 +51,8 @@ const int nGaveCyst = 16829316;
 ///////////////////////////////////////
 /* Function declarations             */
 ///////////////////////////////////////
+#include "prc_alterations"
+#include "inc_utility"
 
 
 int GetCanCastNecroticSpells(object oPC)

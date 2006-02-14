@@ -24,8 +24,8 @@ void main()
      //Declare major variables
     object oTarget = OBJECT_SELF;
     int nDuration;
-    if (GetRacialType(oTarget) == RACIAL_TYPE_DEEP_GNOME) { nDuration = 3; }
-    else if (GetRacialType(oTarget) == RACIAL_TYPE_GITHYANKI) { nDuration = 3; }
+    if      (GetRacialType(oTarget) == RACIAL_TYPE_DEEP_GNOME) { nDuration = GetHitDice(oTarget); }
+    else if (GetRacialType(oTarget) == RACIAL_TYPE_GITHYANKI)  { nDuration = 3; }
     int CasterLvl = nDuration;
     effect eVis = EffectVisualEffect(VFX_DUR_BLUR);
     

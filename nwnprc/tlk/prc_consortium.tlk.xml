@@ -15195,9 +15195,8 @@ Special Abilities:
 - Darkvision: Drow can see in the dark.
 - Spell Resistance: Innate spell resistance of 11 plus 1 per level.
 - Light Blindness: Abrupt exposure to light blinds a drow for 1 round. In addition drow suffer -1 circumstance penalty to attack rolls, saves and checks while operating in bright light.
-- Spell Ability - Darkness: Can cast Darkness once per day as 3rd level.
-- Spell Ability - Faerie Fire: Can cast Faerie Fire once per day as 3rd level.
-- Elven: Drow are considered Elven for the purpose of spells.Arct</entry>
+- Spell-Like Abilities: 1/day - Darkness, Faerie Fire. Caster level 3rd.
+- Elven: Drow are considered Elven for the purpose of spells.</entry>
   <entry id="49505" lang="en" sex="m">Arctic Dwarf</entry>
   <entry id="49506" lang="en" sex="m">Arctic Dwarven</entry>
   <entry id="49507" lang="en" sex="m">arctic dwarven</entry>
@@ -15269,7 +15268,7 @@ Favored Class (Fighter): A multiclass duergar's fighter class does not count whe
 - Partial Skill Affinity (Spot): +1 racial bonus to Spot checks.
 - Immunity to Phantasms: Duergar are immune to phantasms such as Weird and Phantasmal Killer
 - Light Sensitivity: Duergar suffer -2 penalty to attack rolls, saves and checks while operating in bright light.
-- Spell Ability  Invisibility: Can cast Invisibility once per day as 3rd level.
+- Spell-Like Abilities: 1/day - Invisibility. Caster level 3rd.
 - Dwarven: Duergar count as Dwarves for the purpose of spells.S</entry>
   <entry id="49519" lang="en" sex="m">Shield Dwarf</entry>
   <entry id="49520" lang="en" sex="m">Shield Dwarven</entry>
@@ -15435,9 +15434,7 @@ Special Abilities:
 - Spell Focus (Illusion): Svirfneblin add +2 DC to any Illusion spells they cast. This is identical to the feat.
 - Very Heroic: +2 racial bonus to all saving throws.
 - Spell Resistance: Spell Resistance of 11, plus 1 per level.
-- Spell Ability - Blindness and Deafness: Can cast once per day as 3rd level.
-- Spell Ability - Blur: Can cast once per day as 3rd level.
-- Spell Ability - Disguise: Can take the form of a simple human.
+- Spell-Like Abilities: 1/day - Blindness and Deafness (DC 16), Blur, Disguise Self. Caster level is equal to the svirfneblin's character level, DC is Charisma-based with +4 racial bonus.
 - Gnomish: Svirfneblin count as Gnomes for the purpose of spells.F</entry>
   <entry id="49566" lang="en" sex="m">Forest Gnome</entry>
   <entry id="49567" lang="en" sex="m">Forest Gnomish</entry>
@@ -15613,7 +15610,7 @@ Favored Class (Paladin): A multiclass aasimars paladin class does not count when
 - Resist Cold: Innate cold resistance of 5.
 - Resist Acid: Innate acid resistance of 5.
 - Resist Electrical: Innate electrical resistance of 5.
-- Spell Ability - Light: Can cast once per day as 3rd level.
+- Spell-Like Abilities: 1/day - Light. Caster level 3rd.
 - Outsider: Aasimar are considered Outsiders for the purpose of spells.
 - Human: Aasimar are considered Human for the purpose of spells.A</entry>
   <entry id="49613" lang="en" sex="m">Air Genasi</entry>
@@ -15668,11 +15665,8 @@ Special Abilities:
 - Damage Reduction: Innate damage reduction of 10/+1.
 - Epic Fire Resistance: Innate fire resistance of 10.
 - Low-Light Vision: Allows them to see better than normal in the dark.
-- Spell Ability - Darkness: Can cast once per day as 3rd level.
-- Spell Ability - Charm Person: Can cast once per day as 3rd level.
-- Spell Ability - Enervation: Can cast once per day as 3rd level.
-- Spell Ability - Clairaudience: Can cast once per day as 3rd level.
-- Spell Ability - Alter Self: Can alter appearance to resemble a simple elf.
+- Spell-Like Abilities: 1/day - Alter Self, Charm Person, Clairaudience, Darkness, Enervation.
+  Fey'ri spell-like abilities have caster level equal to the fey'ri's character level. The DC is Charisma-based.
 - Outsider: Fey'ri are considered Outsiders for the purpose of spells.
 - Elven: Fey'ri are considered Elven for the purpose of spells.</entry>
   <entry id="49622" lang="en" sex="m">Fire Genasi</entry>
@@ -15720,7 +15714,7 @@ Favored Class (Rogue): A multiclass tieflings rogue class does not count when de
 - Resist Cold: Innate cold resistance of 5.
 - Resist Fire: Innate fire resistance of 5.
 - Resist Electrical: Innate electrical resistance of 5.
-- Spell Ability - Darkness: Can cast once per day as 3rd level.
+- Spell-Like Abilities: 1/day - Darkness. Caster level 3rd.
 - Outsider: Tieflings are considered Outsiders for the purpose of spells.
 - Human: Tieflings are considered Human for the purpose of spells.W</entry>
   <entry id="49631" lang="en" sex="m">Water Genasi</entry>
@@ -15882,10 +15876,7 @@ Special Abilities:
 - Shield: All yuan-ti are proficient with shields.
 - Spell Resistance: Innate spell resistance of 14, plus 1 per class level.
 - Natural Armor Bonus: Racial natural armor bonus of 1.
-- Spell Ability - Charm Person: Can cast once per day as 3rd level.
-- Spell Ability - Darkness: Can cast once per day as 3rd level.
-- Spell Ability - Entangle: Can cast once per day as 3rd level.
-- Spell Ability - Fear: Can cast once per day as 3rd level.
+- Spell-Like Abilities: 1/day - Charm Person, Darkness, Entangle, Fear. Caster level 3rd. The DC is Charisma-based.
 - Monstrous: Yuan-ti Purebloods count as Monstrous Humanoids for the purpose of spells.</entry>
   <entry id="49658" lang="en" sex="m">hobgoblin</entry>
   <entry id="49659" lang="en" sex="m">Hobgoblins</entry>
@@ -15910,8 +15901,7 @@ Special Abilities:
 
 - Darkvision: Githyanki are able to see in the dark.
 - Spell Resistance: Innate spell resistance of 5, plus 1 per character level.
-- Spell Ability - Daze: Can cast 3 times per day as 3rd level.
-- Spell Ability - Blur: Can cast 3 times per day as 3rd level.
+- Spell-Like Abilities: 3/day - Blur, Daze. Caster level 3rd. The DC is Charisma-based.
 - Outsider: Githyanki are considered Outsiders for the purpose of spells.
 - Human: Githyanki are considered Human for the purpose of spells.</entry>
   <entry id="49664" lang="en" sex="m">Githzerai</entry>
@@ -15925,7 +15915,7 @@ Special Abilities:
 
 - Darkvision: Githzerai are able to see in the dark.
 - Spell Resistance: Innate spell resistance of 5, plus 1 per character level.
-- Spell Ability - Daze: Can cast 3 times per day as 3rd level.
+- Spell-Like Abilities: 3/day - Daze. Caster level 3rd. The DC is Charisma-based.
 - Outsider: Githzerai are considered Outsiders for the purpose of spells.
 - Human: Githzerai are considered Human for the purpose of spells.</entry>
   <entry id="49667" lang="en" sex="m">rakshasa</entry>
@@ -15945,7 +15935,7 @@ Special Abilities:
 - Spell Resistance: Innate spell resistance of 27, plus 1 per character level.
 - Natural Armor Bonus: Racial natural armor bonus of 9.
 - Damage Reduction: Innate damage reduction of 15/+1
-- Spell Ability - Disguise: Can take the form of a simple human.
+- Spell-Like Abilities: At will - Disguise.
 - Outsider: Rakshasa are considered Outsiders for the purpose of spells.</entry>
   <entry id="49669" lang="en" sex="m">Illithid</entry>
   <entry id="49670" lang="en" sex="m">illithid</entry>
@@ -15960,8 +15950,7 @@ Special Abilities:
 - Spell Resistance: Innate spell resistance of 25, plus 1 per character level.
 - Natural Armor Bonus: Racial natural armor bonus of 3.
 - Weapon Proficiency (Creature): Illithid can make an unarmed attack with their tentacles.
-- Spell Ability - Mind Blast: Can perform as level 4 spell.
-- Spell Ability - Charm Monster: Can cast as level 8 spell.
+- Spell-Like Abilities: At will - Mind blast, Caster level 4th; 5/day - Charm Monster, Caster level 8th. The DC is Charisma-based.
 - Extract: Illithid have a chance to extract the brain of a victim on a successful hit.
 - Aberration: Illithid are considered Aberrations for the purpose of spells.</entry>
   <entry id="49672" lang="en" sex="m">pixie</entry>
@@ -15981,15 +15970,11 @@ Special Abilities:
 - Dodge: The character gains a +1 dodge bonus to AC against attacks from his current target or last attacker.
 - Spell Resistance: Innate spell resistance of 15, plus 1 per character level.
 - Natural Armor Bonus: Racial natural armor bonus of 1.
- -Skill Affinity (Spot): +2 racial bonus to Spot checks.
- -Skill Affinity (Search): +2 racial bonus to Search checks.
- -Skill Affinity (Listen): +2 racial bonus to Listen checks.
+- Skill Affinity (Spot): +2 racial bonus to Spot checks.
+- Skill Affinity (Search): +2 racial bonus to Search checks.
+- Skill Affinity (Listen): +2 racial bonus to Listen checks.
 - Damage Reduction: Innate damage reduction of 10/+1.
- -Spell Ability - Invisibility: Can cast as level 8 at will.
-- Spell Ability - Lesser Dispel: Can cast once per day as level 8 once per day.
-- Spell Ability - Entangle: Can cast once per day as level 8 once per day.
-- Spell Ability - Confusion: Can cast once per day as level 4 once per day.
-- Spell Ability - Polymorph Self: Can polymorph once per day.
+- Spell-Like Abilities: At Will - Invisibility; 1/day - Confusion, Entangle, Lesser Dispel, Polymorph Self. Caster level 8th, except Confusion, which is caster level 4th. The DC is Charisma-based.
 - Fey: Pixies count as Fey for the purpose of spells.</entry>
   <entry id="49675" lang="en" sex="m">azer</entry>
   <entry id="49676" lang="en" sex="m">Azer are dwarf-like beings native to the Elemental Plane of Fire. They wear kilts of brass, bronze or copper and speak an ancient language known as Ignan. Although unfriendly and taciturn, Azer rarely provoke a fight except to relieve a foe of much-treasured gems. Their society is a heavily-regimented one wherein everyone has a designated place. Somewhat xenophobic, only fighters among their kind are likely to venture out among the other planes.
@@ -16560,50 +16545,35 @@ Prerequisite: Race-Specific.
 Specifics: The creature receives +4 racial bonus to Spot checks.
 Use: Automatic.</entry>
   <entry id="50147" lang="en" sex="m">Special Abilities - Aasimar</entry>
-  <entry id="50148" lang="en" sex="m">Spell Ability - Light: Can cast once per day as 3rd level. </entry>
+  <entry id="50148" lang="en" sex="m">Spell-Like Abilities: 1/day - Light. Caster level 3rd.</entry>
   <entry id="50149" lang="en" sex="m">Special Abilities - Avariel</entry>
   <entry id="50150" lang="en" sex="m">Creature can perform a dive attack at +2 while suffering -2 to armor class. A successful attack does double damage if using a piercing weapon.</entry>
   <entry id="50151" lang="en" sex="m">Special Abilities - Yuan-ti Abomination</entry>
   <entry id="50152" lang="en" sex="m">**not included in this release**</entry>
   <entry id="50153" lang="en" sex="m">Special Abilities - Drow</entry>
-  <entry id="50154" lang="en" sex="m">Spell Ability - Darkness: Can cast Darkness once per day as 3rd level.
-Spell Ability - Faerie Fire: Can cast Faerie Fire once per day as 3rd level.</entry>
+  <entry id="50154" lang="en" sex="m">Spell-Like Abilities: 1/day - Darkness, Faerie Fire. Caster level 3rd.</entry>
   <entry id="50155" lang="en" sex="m">Special Abilities - Duergar</entry>
-  <entry id="50156" lang="en" sex="m">Spell Ability  Invisibility: Can cast Invisibility once per day as 3rd level.S</entry>
-  <entry id="50157" lang="en" sex="m">Special Abilities - Feyri</entry>
-  <entry id="50158" lang="en" sex="m">Spell Ability - Darkness: Can cast Darkness once per day as 3rd level.
-Spell Ability  Charm Person: Can cast Darkness once per day as 3rd level.
-Spell Ability - Enervation: Can cast Darkness once per day as 3rd level.
-Spell Ability - Clairaudience: Can cast Darkness once per day as 3rd level.
-Spell Ability - Alter Form: Can alter appearance to resemble a simple moon elf.S</entry>
+  <entry id="50156" lang="en" sex="m">Spell-Like Abilities: 1/day - Invisibility. Caster level 3rd.</entry>
+  <entry id="50157" lang="en" sex="m">Special Abilities - Fey'ri</entry>
+  <entry id="50158" lang="en" sex="m">Spell-Like Abilities: 1/day - Alter Self, Charm Person, Clairaudience, Darkness, Enervation.
+Fey'ri spell-like abilities have caster level equal to the fey'ri's character level. The DC is Charisma-based.</entry>
   <entry id="50159" lang="en" sex="m">Special Abilities - Githyanki</entry>
-  <entry id="50160" lang="en" sex="m">Spell Ability - Daze: Can cast 3 times per day as 3rd level.
-Spell Ability - Blur: Can cast 3 times per day as 3rd level.</entry>
+  <entry id="50160" lang="en" sex="m">Spell-Like Abilities: 3/day - Blur, Daze. Caster level 3rd.</entry>
   <entry id="50161" lang="en" sex="m">Special Abilities - Githzerai</entry>
-  <entry id="50162" lang="en" sex="m">Spell Ability - Daze: Can cast 3 times per day as 3rd level.</entry>
+  <entry id="50162" lang="en" sex="m">Spell-Like Abilities: 3/day - Daze. Caster level 3rd.</entry>
   <entry id="50163" lang="en" sex="m">Special Abilities - Illithid</entry>
-  <entry id="50164" lang="en" sex="m">Spell Ability - Mind Blast: Can perform as level 4 ability.
-Spell Ability - Charm Monster: Can cast as level 8 spell.
+  <entry id="50164" lang="en" sex="m">Spell-Like Abilities: At will - Mind blast, Caster level 4th; 5/day - Charm Monster, Caster level 8th. The DC is Charisma-based.
 Extract/Suck Brain: Illithid have a chance to extract the brain of a victim on a successful hit.</entry>
   <entry id="50165" lang="en" sex="m">Special Abilities - Pixie</entry>
-  <entry id="50166" lang="en" sex="m">Spell Ability - Invisibility: Can cast as level 8.
-Spell Ability - Lesser Dispel: Can cast once per day as level 8.
-Spell Ability - Entangle: Can cast once per day as level 8.
-Spell Ability - Confusion: Can cast once per day as level 4.
-Spell Ability - Polymorph Self: Can cast once per day as level 8.</entry>
+  <entry id="50166" lang="en" sex="m">Spell-Like Abilities: At Will - Invisibility; 1/day - Confusion, Entangle, Lesser Dispel, Polymorph Self. Caster level 8th, except Confusion, which is caster level 4th. The DC is Charisma-based.</entry>
   <entry id="50167" lang="en" sex="m">Special Abilities - Yuan-ti Pureblood</entry>
-  <entry id="50168" lang="en" sex="m">Spell Ability - Charm Person: Can cast once per day as 3rd level.
-Spell Ability - Darkness: Can cast once per day as 3rd level.
-Spell Ability - Entangle: Can cast once per day as 3rd level.
-Spell Ability - Fear: Can cast once per day as 3rd level.</entry>
+  <entry id="50168" lang="en" sex="m">Spell-Like Abilities: 1/day - Charm Person, Darkness, Entangle, Fear. Caster level 3rd. The DC is Charisma-based.</entry>
   <entry id="50169" lang="en" sex="m">Special Abilities - Rakshasa</entry>
-  <entry id="50170" lang="en" sex="m">Spell Ability - Disguise: Can disguise self as a lovely young woman.</entry>
+  <entry id="50170" lang="en" sex="m">Spell-Like Abilities: At will - Disguise.</entry>
   <entry id="50171" lang="en" sex="m">Special Abilities - Svirfneblin</entry>
-  <entry id="50172" lang="en" sex="m">Spell Ability - Blindness and Deafness: Can cast once per day as 3rd level.
-Spell Ability - Blur: Can cast once per day as 1st level.
-Spell Ability - Disguise: Can disguise self as a lovely young woman.</entry>
+  <entry id="50172" lang="en" sex="m">Spell-Like Abilities: 1/day - Blindness and Deafness (DC 16), Blur, Disguise Self. Caster level is equal to the svirfneblin's character level, DC is Charisma-based with +4 racial bonus.</entry>
   <entry id="50173" lang="en" sex="m">Special Abilities - Tiefling</entry>
-  <entry id="50174" lang="en" sex="m">Spell Ability - Darkness: Can cast once per day as 3rd level. </entry>
+  <entry id="50174" lang="en" sex="m">Spell-Like Abilities: 1/day - Darkness. Caster level 3rd.</entry>
   <entry id="50175" lang="en" sex="m">Special Abilities - Urdinnir</entry>
   <entry id="50176" lang="en" sex="m">Stone Shape: Urdinnir can take the shape of stone at will (using 'Stoneskin' as 4th level wizard).</entry>
   <entry id="50177" lang="en" sex="m">Detect Evil</entry>

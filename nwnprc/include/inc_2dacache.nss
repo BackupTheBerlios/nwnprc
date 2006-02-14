@@ -470,7 +470,7 @@ void PRCMakeTables()
     SQL+= "CREATE UNIQUE INDEX "+q+"soundsrowindex"+q+"  ON "+q+"prc_cached2da_soundset"+q+" ("+q+"rowid"+q+"); ";
     SQL+= "CREATE UNIQUE INDEX "+q+"datanameindex"+q+" ON "+q+"prc_data"+q+" ("+q+"name"+q+"); ";
     SQL = "CREATE        INDEX "+q+"irewfileindex"+q+" ON "+q+"prc_cached2da_ireq"+q+" ("+q+"file"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"refrindex"+q+" ON "+q+"prc_cached2da_item_to_ireq"+q+" ("+q+"l_resref"+q+"); ";
+    SQL+= "CREATE UNIQUE INDEX "+q+"refrindex"+q+" ON "+q+"prc_cached2da_item_to_ireq"+q+" ("+q+"L_RESREF"+q+"); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
 }

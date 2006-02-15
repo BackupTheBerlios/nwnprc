@@ -43,6 +43,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF);
 #include "prc_inc_spells"
 #include "prc_alterations"
 #include "prcsp_archmaginc"
+#include "prc_inc_racial"
 
 
 //////////////////////////////////////////////////

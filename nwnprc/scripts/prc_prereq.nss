@@ -807,7 +807,7 @@ void main2()
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
@@ -830,7 +830,7 @@ void main2()
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
@@ -849,15 +849,15 @@ void main2()
                 nLevel += GetPsionicPRCLevels(oPC);
                 bFirstPsiClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);
+            int nAbility    = GetAbilityForClass(nClass, oPC);
             string sPsiFile = GetPsionicFileName(nClass);
-            int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
+            int nMaxLevel   = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
 
             int nPsiHighest = min(nMaxLevel, nAbility - 10);
 
             for(nSpellLevel = 1; nSpellLevel <= nPsiHighest; nSpellLevel++)
             {
-                SetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel), 0);
+                SetLocalInt(oPC, "PRC_PsiPower" + IntToString(nSpellLevel), 0);
                 if(DEBUG) DoDebug("Psionics power level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel))), oPC);
             }
         }

@@ -712,7 +712,6 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
                 // Psi-like abilities ignore PP costs and metapsi
                 if(!bIsPsiLike)
                 {
-                    DoDebug(GetRGB(1,15,1) + "Losing power points now" + "</c>");
                     // Set the power points to their new value and inform the manifester
                     LosePowerPoints(oManifester, manif.nPPCost, TRUE);
 

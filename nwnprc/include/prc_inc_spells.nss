@@ -184,16 +184,19 @@ const int  TYPE_DIVINE   = -2;
 //const int  TYPE_RANGER   = 13;
 //const int  TYPE_PALADIN  = 14;
 
-#include "prc_alterations"
+#include "inc_utility"
+//#include "prc_alterations"
 #include "x2_inc_itemprop"
 #include "prc_inc_sneak"
 //#include "prc_feat_const"
 //#include "prc_class_const"
 #include "lookup_2da_spell"
-#include "inc_utility"
 #include "inc_vfx_const"
 #include "prc_inc_newip"
 #include "spinc_necro_cyst"
+#include "inc_abil_damage"
+
+
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -970,8 +973,8 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
      object oCaster = GetLastSpellCaster();
      int nSpell = PRCGetSpellId();
-     
-     // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day. 
+
+     // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day.
      // No point in having it trigger when its a will save.
      if (GetLocalInt(oTarget, "IronMind_MindOverBody") && nSavingThrow != SAVING_THROW_WILL)
      {
@@ -1025,7 +1028,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
      if (GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
      {
 	nDC += 2;
-     }    
+     }
 
      int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 
@@ -1042,7 +1045,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
      }
-     
+
      // Iron Mind Barbed Mind ability
      if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) == 10)
      {
@@ -1065,8 +1068,8 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 {
     int nSpell = PRCGetSpellId();
     int nOriginalDamage = nDamage;
-    
-     // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day. 
+
+     // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day.
      // For this, it lowers the DC by the difference between the Iron Mind's will save and its reflex save.
      if (GetLocalInt(oTarget, "IronMind_MindOverBody"))
      {
@@ -1078,7 +1081,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
      	// Lower the save the appropriate amount.
      	nDC -= nSaveBoost;
      	DeleteLocalInt(oTarget, "IronMind_MindOverBody");
-     }    
+     }
 
     // Racial ability adjustments
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget))

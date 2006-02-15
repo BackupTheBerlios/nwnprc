@@ -14,7 +14,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
 #include "lookup_2da_spell"
 #include "prcsp_archmaginc"
 #include "prc_alterations"
-
+#include "prc_inc_racial"
 
 
 

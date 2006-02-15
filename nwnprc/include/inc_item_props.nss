@@ -254,6 +254,14 @@ void UpdateUsedCompositeNamesList(object oItem, string sBase, string sComposite)
  */
 void DeleteNamedComposites(object oItem, string sBase);
 
+/**
+ * Determines if any of the given item's itemproperties would make it a
+ * magical item.
+ *
+ * @param oItem The item to test
+ * @return      TRUE if the item is a magical item, FALSE otherwise
+ */
+int GetIsMagicItem(object oItem);
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -1362,4 +1370,47 @@ void DeleteNamedComposites(object oItem, string sBase)
         DeleteLocalInt(oItem, sComposite);
         DeleteLocalInt(oItem, sBase + "_Exist_" + sComposite);
     }
+}
+
+int GetIsMagicItem(object oItem)
+{
+    itemproperty ip = GetFirstItemProperty(oItem);
+    int nType;
+    int nSubtype;
+    while(GetIsItemPropertyValid(ip))   //loop through item properties looking for a magical one
+    {
+        if(GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT)
+        {   //ignore temporary properties
+            nType = GetItemPropertyType(ip);
+            if((nType >= 0 && nType <= 9) ||    //read from itempropdef.2da
+                (nType >= 13 && nType <= 20) ||
+                (nType == 26) ||
+                (nType >= 32 && nType <= 46) ||
+                (nType >= 51 && nType <= 59) ||
+                (nType == 61) ||
+                (nType >= 67 && nType <= 69) ||
+                (nType >= 71 && nType <= 80) ||
+                (nType == 82) ||
+                (nType == 84) ||
+                (nType >= 100 && nType <= 101) ||
+                (nType >= 133 && nType <= 134))
+            {
+                return 1;   //magical property
+            }
+            nSubtype = GetItemPropertySubType(ip);
+
+            if(nType == ITEM_PROPERTY_BONUS_FEAT)
+            {
+                if(GetBaseItemType(oItem) == BASE_ITEM_WHIP)
+                {
+                    if(nSubtype != IP_CONST_FEAT_DISARM_WHIP)
+                        return 1;
+                }
+                else
+                    return 1;
+            }
+            ip = GetNextItemProperty(oItem);
+        }
+    }
+    return 0;
 }

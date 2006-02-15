@@ -144,6 +144,9 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 	
+	//Shift alignment if applicable
+	SPEvilShift(oPC);
+	
 	if(GetLocalInt(oTarget, "HAS_GAUNTLET"))
 	{
 		return;
@@ -173,5 +176,4 @@ void main()
 			Gauntlet(oTarget, oPC, nHP, nHD);			
 		}
 	}
-	SPEvilShift(oPC);
 }

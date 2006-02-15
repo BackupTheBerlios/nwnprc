@@ -146,6 +146,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_WARCHIEF,oPC) > 0)             ExecuteScript("prc_warchief", oPC);
     if(GetLevelByClass(CLASS_TYPE_GHOST_FACED_KILLER,oPC) > 0)   ExecuteScript("prc_gfkill", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARMIND,oPC) > 0)              ExecuteScript("psi_warmind", oPC);
+    if(GetLevelByClass(CLASS_TYPE_IRONMIND,oPC) > 0)             ExecuteScript("psi_ironmind", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -704,6 +705,9 @@ void DeletePRCLocalInts(object oSkin)
 
     // Warmind
     DeleteLocalInt(oSkin, "EnduringBody");
+    
+    // Ironmind
+    DeleteLocalInt(oSkin, "IronMind_DR");
 
     // future PRCs Go below here
 }

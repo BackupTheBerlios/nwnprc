@@ -1,26 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE tlk SYSTEM "tlk2xml.dtd">
 <tlk>
-  <entry id="1" lang="en" sex="m">Kensai</entry>
-  <entry id="2" lang="en" sex="m">Assassin</entry>
-  <entry id="3" lang="en" sex="m">Heavy</entry>
-  <entry id="4" lang="en" sex="m">Fencing</entry>
-  <entry id="5" lang="en" sex="m">Varied Fighting Styles</entry>
-  <entry id="6" lang="en" sex="m">Type of Feat: Special
-Prerequisite: Level 1.
-Specifics: You have learned to fight with your weapons in different ways. A character with this feat can, assuming he does not have an unusual phenotype, change his fighting style every so often (90 seconds).
-Use: Selected.</entry>
-  <entry id="7" lang="en" sex="m">Fighting Style: Kensai</entry>
-  <entry id="8" lang="en" sex="m">You know how to wield your weapons like a Kensai.</entry>
-  <entry id="9" lang="en" sex="m">Fighting Style: Assassin</entry>
-  <entry id="10" lang="en" sex="m">You know how to stab your opponents carefully, like an assassin.</entry>
-  <entry id="11" lang="en" sex="m">Fighting Style: Heavy</entry>
-  <entry id="12" lang="en" sex="m">You know how to hit hard with big weaponry.</entry>
-  <entry id="13" lang="en" sex="m">Fighting Style: Fencing</entry>
-  <entry id="14" lang="en" sex="m">You know how to goad your opponents on with your fencing style.</entry>
-  <entry id="15" lang="en" sex="m">Fighting Style: Normal (Reset)</entry>
-  <entry id="16" lang="en" sex="m">This is the general way most people learn to fight.</entry>
-  <entry id="17" lang="en" sex="m">&lt;CUSTOM0&gt; changes his stance.</entry>
   <entry id="12288" lang="en" sex="m">Ocular Adept</entry>
   <entry id="12289" lang="en" sex="m">Ocular Adepts</entry>
   <entry id="12290" lang="en" sex="m">ocular adepts</entry>
@@ -436,6 +416,27 @@ Description: This spell causes a pale glow to surround and outline the subjects.
 Prerequisite: 21st level or Battlerager Level 5
 Specifics: The character gains a natural +2 bonus to armor class.
 Use: Automatic.</entry>
+  <entry id="20400" lang="en" sex="m">++++++++++ ACP Styles ++++++++++</entry>
+  <entry id="20401" lang="en" sex="m">Kensai</entry>
+  <entry id="20402" lang="en" sex="m">Assassin</entry>
+  <entry id="20403" lang="en" sex="m">Heavy</entry>
+  <entry id="20404" lang="en" sex="m">Fencing</entry>
+  <entry id="20405" lang="en" sex="m">Varied Fighting Styles</entry>
+  <entry id="20406" lang="en" sex="m">Type of Feat: Special
+Prerequisite: Level 1.
+Specifics: You have learned to fight with your weapons in different ways. A character with this feat can, assuming he does not have an unusual phenotype, change his fighting style every so often (90 seconds).
+Use: Selected.</entry>
+  <entry id="20407" lang="en" sex="m">Fighting Style: Kensai</entry>
+  <entry id="20408" lang="en" sex="m">You know how to wield your weapons like a Kensai.</entry>
+  <entry id="20409" lang="en" sex="m">Fighting Style: Assassin</entry>
+  <entry id="20410" lang="en" sex="m">You know how to stab your opponents carefully, like an assassin.</entry>
+  <entry id="20411" lang="en" sex="m">Fighting Style: Heavy</entry>
+  <entry id="20412" lang="en" sex="m">You know how to hit hard with big weaponry.</entry>
+  <entry id="20413" lang="en" sex="m">Fighting Style: Fencing</entry>
+  <entry id="20414" lang="en" sex="m">You know how to goad your opponents on with your fencing style.</entry>
+  <entry id="20415" lang="en" sex="m">Fighting Style: Normal (Reset)</entry>
+  <entry id="20416" lang="en" sex="m">This is the general way most people learn to fight.</entry>
+  <entry id="20417" lang="en" sex="m">&lt;CUSTOM0&gt; changes his stance.</entry>
   <entry id="45000" lang="en" sex="m">+++++++++++++ PRC Pack Feats 45,000 - 54,999 ++++++++++++++</entry>
   <entry id="45001" lang="en" sex="m">Type of Feat: Metamagic
 Prerequisite: Ability to cast 2nd-level spells.

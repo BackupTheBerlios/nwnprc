@@ -19,7 +19,7 @@ void main()
     SetLocalInt(oItem, "PRC_RacialRestrictionsExpanded", TRUE);
 
     // Ignore tokens and creature items
-    int nBaseItem  = GetBaseItemType(oItem)
+    int nBaseItem  = GetBaseItemType(oItem);
     string sResRef = GetStringLowerCase(GetResRef(oItem));
     if(nBaseItem == BASE_ITEM_CBLUDGWEAPON                         ||
        nBaseItem == BASE_ITEM_CPIERCWEAPON                         ||

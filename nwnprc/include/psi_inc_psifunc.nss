@@ -322,12 +322,12 @@ int GetManifesterLevel(object oManifester, int nSpecificClass = CLASS_TYPE_INVAL
     else if(GetManifestingClass(oManifester) != CLASS_TYPE_INVALID)
     {
         //Gets the level of the manifesting class
-        if(DEBUG) SendMessageToPC(oManifester, "Manifesting class: " + IntToString(GetManifestingClass(oManifester)));
+//        if(DEBUG) SendMessageToPC(oManifester, "Manifesting class: " + IntToString(GetManifestingClass(oManifester)));
         int nManifestingClass = GetManifestingClass(oManifester);
         nLevel = GetLevelByClass(nManifestingClass, oManifester);
         // Add levels from +ML PrCs only for the first manifesting class
         nLevel += nManifestingClass == GetFirstPsionicClass(oManifester) ? GetPsionicPRCLevels(oManifester) : 0;
-        if(DEBUG) SendMessageToPC(oManifester, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
+//        if(DEBUG) SendMessageToPC(oManifester, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
     }
 
     // If everything else fails, use the character's first class position
@@ -355,7 +355,7 @@ int GetManifesterLevel(object oManifester, int nSpecificClass = CLASS_TYPE_INVAL
     nLevel += nAdjust;
 
     // This spam is technically no longer necessary once the manifester level getting mechanism has been confirmed to work
-    if(DEBUG) FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oManifester, FALSE);
+//    if(DEBUG) FloatingTextStringOnCreature("Manifester Level: " + IntToString(nLevel), oManifester, FALSE);
 
     return nLevel;
 }
@@ -390,7 +390,7 @@ int GetAbilityOfClass(int nClass){
         case CLASS_TYPE_FIST_OF_ZUOKEN:
             return ABILITY_WISDOM;
         case CLASS_TYPE_WARMIND:
-            return ABILITY_WISDOM;            
+            return ABILITY_WISDOM;
         default:
             return ABILITY_CHARISMA;
     }

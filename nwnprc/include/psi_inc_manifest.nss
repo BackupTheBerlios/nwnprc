@@ -540,12 +540,12 @@ int _ManifestationStateCheck(object oManifester)
  * @param oMfToken    The manifestation token that controls the ongoing manifestation
  */
 void _ManifestationHB(object oManifester, location lManifester, object oMfToken)
-{
+{/*
     if(DEBUG) DoDebug("_ManifestationHB() running:\n"
                     + "oManifester = " + DebugObject2Str(oManifester) + "\n"
                     + "lManifester = " + DebugLocation2Str(lManifester) + "\n"
                     + "oMfToken = " + DebugObject2Str(oMfToken) + "\n"
-                      );
+                      );*/
     if(GetIsObjectValid(oMfToken))
     {
         // Continuance check
@@ -675,7 +675,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
     //* APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE ABOVE *//
 
     // Skip paying anything if something has prevented successfull manifestation already by this point
-    if(!manif.bCanManifest)
+    if(manif.bCanManifest)
     {
         /* The manifester level value includes the manifester level increase from
          * Wild Surge, but since the calculated cost already contains the augmentation
@@ -712,6 +712,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
                 // Psi-like abilities ignore PP costs and metapsi
                 if(!bIsPsiLike)
                 {
+                    DoDebug(GetRGB(1,15,1) + "Losing power points now" + "</c>");
                     // Set the power points to their new value and inform the manifester
                     LosePowerPoints(oManifester, manif.nPPCost, TRUE);
 

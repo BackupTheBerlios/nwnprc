@@ -100,9 +100,9 @@ void SummonGhoul (int nHD, object oTarget, object oPC, location lCorpse)
 
 void Gauntlet(object oTarget, object oPC, int nHP, int nHD)
 {
-	int nDam = 0;
 		
-	
+	int nDam = 0;
+			
 	//deal damage
 	nDam = d6(3);
 	effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
@@ -110,16 +110,7 @@ void Gauntlet(object oTarget, object oPC, int nHP, int nHD)
 	
 	//redefine nHP after damage
 	nHP = GetCurrentHitPoints(oTarget);
-	
-	//check for removal conditions
-	if(!GetPersistantLocalInt(oTarget, "HAS_CURSE")|| !GetPersistantLocalInt(oTarget, "HAS_DISEASE"))
-	
-	{
-		RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oPC, oTarget);
-		return;
-	}
-	
-	
+			
 	//if target still has HP, run again on next round.  Avoids use of loop.
 	if (nHP > 1)
 	{		
@@ -138,6 +129,8 @@ void Gauntlet(object oTarget, object oPC, int nHP, int nHD)
 		//Summon a ghoul henchman
 		SummonGhoul(nHD, oTarget, oPC, lCorpse);
 	}
+	
+	SetLocalInt(oTarget, "HAS_GAUNTLET", 1);
 }	
 	
 void main()
@@ -150,7 +143,21 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-			
+	
+	if(GetLocalInt(oTarget, "HAS_GAUNTLET"))
+	{
+		return;
+	}
+	
+	// Gotta be a living critter
+		    int nType = MyPRCGetRacialType(oTarget);
+		    if ((nType == RACIAL_TYPE_CONSTRUCT) ||
+		        (nType == RACIAL_TYPE_UNDEAD) ||
+		        (nType == RACIAL_TYPE_ELEMENTAL))
+		        {
+				return;
+			}		
+	
 	//Spell Resistance
 	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
@@ -162,15 +169,9 @@ void main()
 			int nHP = GetCurrentHitPoints(oTarget);
 			int nHD = GetHitDice(oTarget);
 			int nDam;
-			
-			//Set persistant local to handle tracking of Remove Curse
-			SetPersistantLocalInt(oTarget, "HAS_CURSE", 1);
-			
-			//Set persistant local to handle tracking of Remove Disease
-			SetPersistantLocalInt(oTarget, "HAS_DISEASE", 1);
-						
+								
 			Gauntlet(oTarget, oPC, nHP, nHD);			
-		} 
+		}
 	}
 	SPEvilShift(oPC);
-}			
+}

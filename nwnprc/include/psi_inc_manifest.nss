@@ -540,12 +540,13 @@ int _ManifestationStateCheck(object oManifester)
  * @param oMfToken    The manifestation token that controls the ongoing manifestation
  */
 void _ManifestationHB(object oManifester, location lManifester, object oMfToken)
-{/*
+{
     if(DEBUG) DoDebug("_ManifestationHB() running:\n"
                     + "oManifester = " + DebugObject2Str(oManifester) + "\n"
                     + "lManifester = " + DebugLocation2Str(lManifester) + "\n"
                     + "oMfToken = " + DebugObject2Str(oMfToken) + "\n"
-                      );*/
+                    + "Distance between manifestation start location and current location: " + FloatToString(GetDistanceBetweenLocations(lManifester, GetLocation(oManifester))) + "\n"
+                      );
     if(GetIsObjectValid(oMfToken))
     {
         // Continuance check

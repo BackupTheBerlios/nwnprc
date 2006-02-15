@@ -1056,7 +1056,7 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
       		// Spell/Power caster takes 1d6 damage and 1 Wisdom drain
       		effect eDam = EffectDamage(d6(), DAMAGE_TYPE_MAGICAL);
       		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oCaster);
-      		//ApplyAbilityDamage(oCaster, ABILITY_WISDOM, 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
+      		ApplyAbilityDamage(oCaster, ABILITY_WISDOM, 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
       	}
      }
 

@@ -184,15 +184,15 @@ const int  TYPE_DIVINE   = -2;
 //const int  TYPE_RANGER   = 13;
 //const int  TYPE_PALADIN  = 14;
 
+#include "prc_alterations"
 #include "x2_inc_itemprop"
 #include "prc_inc_sneak"
-#include "prc_feat_const"
-#include "prc_class_const"
+//#include "prc_feat_const"
+//#include "prc_class_const"
 #include "lookup_2da_spell"
 #include "inc_utility"
 #include "inc_vfx_const"
 #include "prc_inc_newip"
-#include "prc_alterations"
 #include "spinc_necro_cyst"
 
 // ---------------
@@ -970,6 +970,14 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
 
      object oCaster = GetLastSpellCaster();
      int nSpell = PRCGetSpellId();
+     
+     // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day. 
+     // No point in having it trigger when its a will save.
+     if (GetLocalInt(oTarget, "IronMind_MindOverBody") && nSavingThrow != SAVING_THROW_WILL)
+     {
+     	nSavingThrow = SAVING_THROW_WILL;
+     	DeleteLocalInt(oTarget, "IronMind_MindOverBody");
+     }
 
      // Handle the target having Force of Will and being targeted by a psionic power
      if(nSavingThrow != SAVING_THROW_WILL        &&
@@ -1013,6 +1021,12 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
     {   nDC -= 1+(GetHitDice(oTarget)/5);  }
 
+     // Necrotic Cyst penalty on Necromancy spells
+     if (GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
+     {
+	nDC += 2;
+     }    
+
      int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 
      // Second Chance power reroll
@@ -1028,12 +1042,20 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
         SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
      }
-     // Necrotic Cyst penalty on Necromancy spells
-     if (GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
-
-          {
-             nDC += 2;
-          }
+     
+     // Iron Mind Barbed Mind ability
+     if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) == 10)
+     {
+        // Only works on Mind Spells and in Heavy Armour
+        object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST);
+      	if (nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetBaseAC(oItem) >= 6)
+      	{
+      		// Spell/Power caster takes 1d6 damage and 1 Wisdom drain
+      		effect eDam = EffectDamage(d6(), DAMAGE_TYPE_MAGICAL);
+      		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oCaster);
+      		//ApplyAbilityDamage(oCaster, ABILITY_WISDOM, 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
+      	}
+     }
 
      return nSaveRoll;
 }
@@ -1043,6 +1065,20 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
 {
     int nSpell = PRCGetSpellId();
     int nOriginalDamage = nDamage;
+    
+     // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day. 
+     // For this, it lowers the DC by the difference between the Iron Mind's will save and its reflex save.
+     if (GetLocalInt(oTarget, "IronMind_MindOverBody"))
+     {
+     	int nWill = GetWillSavingThrow(oTarget);
+     	int nRef = GetReflexSavingThrow(oTarget);
+     	int nSaveBoost = nWill - nRef;
+     	// Makes sure it does nothing if bonus would be less than 0
+     	if (nSaveBoost < 0) nSaveBoost = 0;
+     	// Lower the save the appropriate amount.
+     	nDC -= nSaveBoost;
+     	DeleteLocalInt(oTarget, "IronMind_MindOverBody");
+     }    
 
     // Racial ability adjustments
     if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget))

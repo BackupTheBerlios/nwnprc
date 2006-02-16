@@ -35,6 +35,8 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_DOMINATION, oPC);
+	
 	if(!GetCanCastNecroticSpells(oPC))
 	return;
 	

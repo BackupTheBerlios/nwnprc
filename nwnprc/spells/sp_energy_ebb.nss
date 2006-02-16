@@ -75,6 +75,8 @@ void main()
     object oTarget = GetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
  
+    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ENERGY_EBB, oPC);
+ 
     //if undead
     if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
     {

@@ -73,6 +73,8 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_CYST, oPC);
+	
 	//Check for Mother Cyst
 	if(!GetCanCastNecroticSpells(oPC))
 	{

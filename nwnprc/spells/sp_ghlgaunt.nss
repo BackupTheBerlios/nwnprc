@@ -144,6 +144,8 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_GHOUL_GAUNTLET, oPC);
+	
 	//Shift alignment if applicable
 	SPEvilShift(oPC);
 	

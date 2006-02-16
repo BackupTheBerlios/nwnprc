@@ -82,6 +82,9 @@ void main()
     object oTarget = GetSpellTargetObject();
     int nLevel = min(PRCGetCasterLevel(oPC), 25);
     int nMetaMagic = PRCGetMetaMagicFeat();
+    
+    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_TERMINATION, oPC);
+
 
     if(!GetCanCastNecroticSpells(oPC))
         return;

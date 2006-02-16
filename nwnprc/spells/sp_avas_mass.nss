@@ -69,6 +69,8 @@ void main()
 	effect eHold = EffectEntangle();
 	effect eSlow = EffectSlow();
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_AVASCULAR_MASS, oPC);
+	
 	// Gotta be a living critter
 	    int nType = MyPRCGetRacialType(oTarget);
 	    if ((nType == RACIAL_TYPE_CONSTRUCT) ||

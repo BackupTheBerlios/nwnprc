@@ -45,6 +45,8 @@ void main()
     int nHP = GetCurrentHitPoints(oTarget);
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     
+    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AVASCULATE, oPC);
+    
     // Gotta be a living critter
         int nType = MyPRCGetRacialType(oTarget);
         if ((nType == RACIAL_TYPE_CONSTRUCT) ||

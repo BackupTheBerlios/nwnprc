@@ -58,6 +58,8 @@ void main()
         int nDC = SPGetSpellSaveDC(oTarget, oPC);
         int nMetaMagic = PRCGetMetaMagicFeat();
         
+        SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NIGHTS_CARESS, oPC);
+        
 	//Make touch attack
 	int nTouch = PRCDoMeleeTouchAttack(oTarget);
 		

@@ -63,12 +63,29 @@ void StrengthEnemy(object oCaster, object oTarget)
 
 void SweepingStrike(object oCaster, object oTarget)
 {
+	int nValidTarget = FALSE;
+	location lTarget = GetLocation(oTarget);
 	// Use the function to get the closest creature as a target
-	object oStrikeTarget = GetNearestCreatureToLocation(CREATURE_TYPE_IS_ALIVE, TRUE, GetLocation(oTarget));
-	// If he's in a place that can be reached and he's standing adjacent to the original target
-	if (GetIsInMeleeRange(oStrikeTarget, oCaster) && GetIsInMeleeRange(oStrikeTarget, oTarget))
-	{
-		effect eVis = EffectVisualEffect(VFX_IMP_STUN);
-		PerformAttack(oStrikeTarget, oCaster, eVis, 0.0, 0, 0, 0, "Sweeping Strike Hit", "Sweeping Strike Miss");
-	}
+        object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        while(GetIsObjectValid(oAreaTarget) && !nValidTarget && !GetLocalInt(oCaster, "SweepingStrikeDelay"))
+        {
+            // Don't hit yourself
+            // Make sure the target is both next to the one struck and within melee range of the caster
+            // Don't hit the one already struck
+            if(oAreaTarget != oCaster && 
+               GetIsInMeleeRange(oAreaTarget, oCaster) && 
+               GetIsInMeleeRange(oAreaTarget, oTarget) &&
+               oAreaTarget != oTarget)
+            {
+                // Perform the Attack
+ 		effect eVis = EffectVisualEffect(VFX_IMP_STUN);
+		PerformAttack(oAreaTarget, oCaster, eVis, 0.0, 0, 0, 0, "Sweeping Strike Hit", "Sweeping Strike Miss");
+
+		// End the loop
+		nValidTarget = TRUE;
+            }
+
+            //Select the next target within the spell shape.
+            oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        }// end while - Target loop	
 }

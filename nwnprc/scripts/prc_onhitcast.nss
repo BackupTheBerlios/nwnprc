@@ -208,19 +208,6 @@ void main()
     //////////////// PSIONICS //////////////////////////
     //////////////////////////////////////////////////*/
 
-
-    // Prevenom OnHit
-    if(GetLocalInt(oItem, "Prevenom") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
-    {
-        ExecuteScript("psi_prevenom_hit", oSpellOrigin);
-    }
-
-    // Truevenom OnHit
-    if(GetLocalInt(oItem, "Truevenom") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
-    {
-        ExecuteScript("psi_truvenom_hit", oSpellOrigin);
-    }
-
     // Strength of my Enemy OnHit
     if(GetLocalInt(oSpellOrigin, "StrengthEnemyActive") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {

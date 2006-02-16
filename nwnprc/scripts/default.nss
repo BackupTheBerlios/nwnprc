@@ -1,34 +1,23 @@
 //::///////////////////////////////////////////////
-//:: Name default.nss
-//:: Copyright (c) 2004 OldMansBeard.
+//:: Default eventscript
+//:: default
 //:://////////////////////////////////////////////
-/*
-   PC's and their clones are created with "default" hard-coded as
-   the script name in each and every event handler slot except
-   OnConversation, which goes to nw_g0_conversat. In the normal game
-   there is no script called "default" and, although these objects
-   receive event signals, the signals evoke no scripted response.
+/** @file
+    This script is executed by the engine for events
+    when a creature does not have a script defined
+    for the event in question. This includes PCs.
 
-   In the OHS system, however, there is an actual script called
-   "default" to respond to the event signals received by PC's
-   and clones and thereby give them behaviour. This is that script.
-
-   Because the same script is called by many different event signals
-   and there is no inbuilt function resembling GetLastEventSignalled()
-   it attempts to distinguish them according to context. It then
-   simply passes the call on to an appropriate event-handling script.
-
-   In most cases it still does nothing if the calling object is a PC
-   but calls the appropriate OHS_HEN_* script if it is a henchman.
+    The purpose of this script is to determine
+    which particular event triggered it's execution
+    and to route execution to scripts dedicated to
+    that event.
 */
 //:://////////////////////////////////////////////
-//:: Created By:    OldMansBeard
-//:: Created On:    2004-10-14
-//:: Last Modified: 2005-03-29
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
 #include "prc_inc_leadersh"
+
 
 /**************************/
 /* Declarations for Tests */
@@ -58,7 +47,6 @@ void GetLinkboy();
 int IsObjectChanged(object oTest, string sVarname);
 int IsIntChanged(int iTest, string sVarname);
 int IsStringChanged(string sTest, string sVarname);
-//void OHSExecute(string sScriptName);
 void RunScript(string sEvent);
 void SpawnRecallLocals(object oPC);
 void StartGroupDiscussion();
@@ -66,20 +54,7 @@ void StartGroupDiscussion();
 /*****************************/
 /* Implementation of Actions */
 /*****************************/
-/*
-void OnSpawn()            { OHSExecute("ohs_hen_spawn");  }
-void OnDeath()            { OHSExecute("ohs_hen_death");  }
-void OnRested()           { OHSExecute("ohs_hen_rest");   }
-void OnHeartbeat()        { OHSExecute("ohs_hen_heart");  }
-void OnPerception()       { OHSExecute("ohs_hen_percep"); }
-void OnBlocked()          { OHSExecute("ohs_hen_block");  }
-void OnCombatRoundEnd()   { OHSExecute("ohs_hen_combat"); }
-void OnDisturbed()        { OHSExecute("ohs_hen_distrb"); }
-void OnPhysicalAttacked() { OHSExecute("ohs_hen_attack"); }
-void OnSpellCastAt()      { OHSExecute("ohs_hen_spell");  }
-void OnDamaged()          { OHSExecute("ohs_hen_damage"); }
-void OnUserDefined()      { OHSExecute("ohs_hen_usrdef"); }
-*/
+
 void OnSpawn()            { RunScript("spawned");   }
 void OnDeath()            { RunScript("death");     }
 void OnRested()           { RunScript("rested");    }

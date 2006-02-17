@@ -147,6 +147,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_GHOST_FACED_KILLER,oPC) > 0)   ExecuteScript("prc_gfkill", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARMIND,oPC) > 0)              ExecuteScript("psi_warmind", oPC);
     if(GetLevelByClass(CLASS_TYPE_IRONMIND,oPC) > 0)             ExecuteScript("psi_ironmind", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SANCTIFIED_MIND,oPC) > 0)      ExecuteScript("psi_sancmind", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

@@ -63,6 +63,14 @@ int PsiPrePowerCastCode()
         int nPower = GetPowerLevel(oManifester);
         nContinue = GetIsSkillSuccessful(oManifester, SKILL_CONCENTRATION, (20 + nPower));
     }
+    
+    //---------------------------------------------------------------------------
+    // Run Disrupting Strike Check
+    //---------------------------------------------------------------------------
+    if (nContinue && GetLocalInt(oManifester, "DisruptingStrike_PsionicsFail"))
+    {
+        nContinue = FALSE;
+    }
 
     //---------------------------------------------------------------------------
     // Run Ectoplasmic Shambler Concentration Check

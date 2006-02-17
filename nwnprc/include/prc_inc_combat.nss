@@ -312,6 +312,8 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
 /**
  * Performs a full attack round and can add in bonus damage damage/effects.
  * Will perform all attacks and accounts for weapontype, haste, twf, tempest twf, etc.
+ * If the first attack hits, a local int called "PRCCombat_StruckByAttack" will be TRUE
+ * on the target for 1 second.
  *
  * @param oDefender      The object being attacked.
  * @param oAttacker      The object doing the attacks.
@@ -341,6 +343,8 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
 void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE, int bInstantAttack = FALSE);
 
 // Performs a single attack and can add in bonus damage damage/effects
+// If the first attack hits, a local int called "PRCCombat_StruckByAttack" will be TRUE
+// on the target for 1 second.
 //
 // eSpecialEffect -  any special Vfx or other effects the attack should use IF successful.
 // eDuration - Changes the duration of the applied effect(s)
@@ -4117,6 +4121,15 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           // if you hit enemy
           if(iAttackRoll > 0)
           {
+          
+              // This sets a local variable on the target that is struck
+              // Allows you to apply saves and such based on the success or failure
+              if(bFirstAttack)
+              {
+                   SetLocalInt(oDefender, "PRCCombat_StruckByAttack", TRUE);
+                   DelayCommand(1.0, DeleteLocalInt(oDefender, "PRCCombat_StruckByAttack"));
+              }          
+          
               ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender);
 
               // apply any on hit abilities from attackers weapon to defender

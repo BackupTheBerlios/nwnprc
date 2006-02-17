@@ -1912,6 +1912,8 @@ const int FEAT_TWIN_POWER                           = 4942;
 const int FEAT_WIDEN_POWER                          = 4943;
 const int FEAT_QUICKEN_POWER                        = 4944;
 
+// Sanctified Mind 
+const int FEAT_SANCMIND_PARTITION_MIND              = -1;
 
 /*//////////////////////////////////////////////////
 //////////////// END PSIONICS //////////////////////

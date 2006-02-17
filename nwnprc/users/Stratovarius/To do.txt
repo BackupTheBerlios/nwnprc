@@ -12,8 +12,8 @@ Metamind
 Psion Uncarnate
 Pyro
 Cryo
-Sanctified Mind
-Iron Mind
+Sanctified Mind - 2da/TLK only
+Iron Mind - 2da/TLK + one ability
 
 Normal PrCs:
 Blood Magus

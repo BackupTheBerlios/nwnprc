@@ -26,8 +26,6 @@ At the end of the agony, however, the thorns disappear.
 
 Corruption Cost: 1d3 points of Wisdom drain.
 
-
-
 Author:    Tenjac
 Created:   
 */
@@ -35,3 +33,90 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "spinc_common"
+#include "prc_inc_spells"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nTargetCount;
+	location lTarget = GetLocation(oTarget);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nDelay;
+	float fDuration;
+	effect ePar = EffectCutsceneImmobilize();
+	effect eDeath = EffectDeath();
+			
+	//Check Spell Resistance
+	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//loop the thorn giving              max 3 targets
+		while(GetIsObjectValid(oTarget) && nTargetCount < 3)
+		{
+			nDelay = d4(1);
+			fDuration = RoundsToSeconds(nDelay);
+			
+			//Immobilize target
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, fDuration);
+			
+			//Loop torture animation
+			ActionPlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDuration);
+						
+			//Give thorns if spell if failed save
+			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))    
+			{
+				DelayCommand(fDuration, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);				
+			}
+			
+			else
+			{
+				int nCount = nDelay;
+				DamageLoop(oTarget, nCount);
+			}			
+			
+			//Increment targets
+			nTargetCount++;				
+			
+			//Get next creature within 15 ft
+			oTarget = GetNextObjectInShape(SHAPE_SPHERE, 7.5f, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+		}
+	}
+	
+	//Corruption cost
+	
+	int nCost = d3(1);
+	
+	DoCorruptionCost(oPC, ABILITY_WISDOM, nCost, 1);
+	
+	//Alignment Shift
+	SPShiftEvil(oPC);
+	
+	SPSetSchool();
+}	
+
+void DamageLoop(object oTarget, int nCount)
+{
+	effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+	nCount--;
+	
+	if(nCount > 0)
+	{
+		DelayCommand(6.0f, DamageLoop(oTarget, nCount);
+	}
+}
+	
+	
+	
+	
+
+
+
+

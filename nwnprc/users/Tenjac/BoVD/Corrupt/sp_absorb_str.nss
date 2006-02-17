@@ -117,8 +117,7 @@ void main()
 	{
 		int nCost = d6(2);
 		DelayCommand(fDuration, DoCorruptionCost(oPC, oTarget, ABILITY_WISDOM, nCost, 0));
-	}
-	
+	}	
 	
 	
 	SPEvilShift(oPC);

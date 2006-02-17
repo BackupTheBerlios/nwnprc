@@ -41,11 +41,12 @@ void main()
 	
 	//define vars
 	object oPC = OBJECT_SELF;
-	object oTarger = GetSpellTargetObject();
+	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nCasterMaxHP = GetMaxHitPoints(oPC);
 	int nCasterCurrentHP = GetCurrentHitPoints(oPC);
 	int nDam = min((nCasterMaxHP - nCasterCurrentHP), nCasterLvl);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
 	//Check Spell Resistance
 	if (MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))

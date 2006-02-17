@@ -34,27 +34,23 @@ Corruption Cost: 1d6 points of Strength damage.
 //Pseudo-heartbeat function for abil damage
 void DoCurseDam (object oTarget)
 {
-	if(GetPersistantLocalInt(oTarget, "HAS_CURSE"))
+	int nDam = d6(1);
+	//Check if spell was Maximized
+	if GetLocalInt (oPC, "MMMaximize")
 	{
-		
-		int nDam = d6(1);
-		//Check if spell was Maximized
-		if GetLocalInt (oPC, "MMMaximize")
-		{
-			nDam = 6;
-		}
-		//Check if spell was Empowered
-		if GetLocalInt (oPC, "MMEmpower")
-		{
-			nDam += (nDam / 2);
-		}
-		
-		//Ability damage
-		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, FALSE, 0.0f, FALSE, SPELL_ROTTING_CURSE, -1, oPC);
-		
-		//Delay 1 hour, then hit the poor bastard again.
-		DelayCommand(3600.0f, DoCurseDam(oTarget));
+		nDam = 6;
 	}
+	//Check if spell was Empowered
+	if GetLocalInt (oPC, "MMEmpower")
+	{
+		nDam += (nDam / 2);
+	}
+	
+	//Ability damage
+	ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, FALSE, 0.0f, FALSE, SPELL_ROTTING_CURSE, -1, oPC);
+	
+	//Delay 1 hour, then hit the poor bastard again.
+	DelayCommand(3600.0f, DoCurseDam(oTarget));
 }
 
 
@@ -94,14 +90,10 @@ void main()
 		}
 	}
 	
-	//Corruption Cost paid when effect ends if not cast on item
-	if(GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
-	{
-		//Corrupt spell cost
-		int nCorrupt = d6(1);
+	//Corrupt spell cost
+	int nCorrupt = d6(1);
 		
-		ApplyAbilityDamage(oPC, ABILITY_STRENGTH, nCorrupt, DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE, SPELL_ROTTING_CURSE, -1, oPC);
-	}
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, nCorrupt, 0);	
 	
 	//Alignment shift if switch set
 	SPEvilShift();

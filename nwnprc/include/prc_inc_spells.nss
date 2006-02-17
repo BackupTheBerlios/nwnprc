@@ -118,6 +118,14 @@ void SPEvilShift(object oPC);
 //Calculates alignment change for spells with Good descriptor
 void SPGoodShift(object oPC);
 
+//Handles Corruption costs for Corrupt spells
+//
+//object oPC - Caster
+//int nAbilty - ABILITY_* constant
+//int nCost - the amount of corruption cost
+//int nType - determines type of affect - 0 for ability damage, 1 for ability drain
+void DoCorruptionCost(object oPC, int nAbility, int nCost, int nType);
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -1496,6 +1504,28 @@ void SPGoodShift(object oPC)
     }
 }
 
+//nType = 1 for ability drain
+void DoCorruptionCost(object oPC, object oTarget, int nAbility, int nCost, int nType)
+{
+	if(GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
+	{
+		if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_UNDEAD)
+		{
+			nAbility = ABILITY_CHARISMA;
+		}
+		
+		if(nType = 1)
+		{		
+			ApplyAbilityDamage(oPC, nAbility, nCost, DURATION_TYPE_PERMANENT, TRUE, 0.0f, FALSE, -1, -1, OBJECT_SELF);
+		}
+		
+		else
+		{
+			ApplyAbilityDamage(oPC, nAbility, nCost, DURATION_TYPE_TEMPORARY,TRUE,-1.0f, FALSE, -1, -1, OBJECT_SELF);
+		}
+	}
+
+}	
 
 //This function returns 1 only if the object oTarget is the object
 //the weapon hit when it channeled the spell sSpell or if there is no

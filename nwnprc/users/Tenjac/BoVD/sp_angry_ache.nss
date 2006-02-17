@@ -42,6 +42,8 @@ void main()
 	int nPenalty = 2;
 	float fDuration = RoundsToSeconds(nCasterLvl * 10);
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ANGRY_ACHE, oPC);
+	
 	//Calculate DC
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	

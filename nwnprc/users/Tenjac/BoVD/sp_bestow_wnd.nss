@@ -48,6 +48,8 @@ void main()
 	int nDam = min((nCasterMaxHP - nCasterCurrentHP), nCasterLvl);
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_BESTOW_WOUND, oPC);
+	
 	//Check Spell Resistance
 	if (MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{

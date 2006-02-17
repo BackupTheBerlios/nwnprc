@@ -44,6 +44,8 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ABYSSAL_MIGHT, oPC);
+	
 	if(nType == RACIAL_TYPE_OUTSIDER && nAlignEvil == ALIGNMENT_EVIL && nAlignChaotic == ALIGNMENT_CHAOTIC)
 	{
 		int nBonus = 2;

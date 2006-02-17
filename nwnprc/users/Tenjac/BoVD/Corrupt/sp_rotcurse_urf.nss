@@ -71,6 +71,8 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel();
 	int nMetaMagic = PRCGetMetaMagicFeat();
         int nPenetr = nCasterLvl + SPGetPenetr();
+        
+        SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ROTTING_CURSE_OF_URFESTRA, oPC);
 	
 	if(nMetaMagic == METAMAGIC_MAXIMIZE)
 	{

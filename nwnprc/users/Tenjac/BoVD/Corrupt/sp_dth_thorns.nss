@@ -53,6 +53,8 @@ void main()
 	float fDuration;
 	effect ePar = EffectCutsceneImmobilize();
 	effect eDeath = EffectDeath();
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_DEATH_BY_THORNS, oPC);
 			
 	//Check Spell Resistance
 	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))

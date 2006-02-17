@@ -33,6 +33,10 @@ void main()
 	
 	//define vars
 	
+	
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_RED_FESTER, oPC);
+	
 	//Spell Resist
 	{
 		//Fort save

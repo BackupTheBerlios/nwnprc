@@ -33,6 +33,9 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION)
 	//define vars
 	
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_SEETHING_EYEBANE, oPC);
+	
 	//Spell Resistance
 	{
 		//Fort save

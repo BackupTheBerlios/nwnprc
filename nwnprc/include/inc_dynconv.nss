@@ -602,6 +602,16 @@ void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo
 /// @todo Rename to SetExitable
 void AllowExit(int nNewValue = DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, int bChangeExitTokenText = TRUE, object oPC = OBJECT_INVALID)
 {
+    if(DEBUG) DoDebug("AllowExit():\n"
+                    + "nNewValue = " + (nNewValue == DYNCONV_EXIT_NOT_ALLOWED         ? "DYNCONV_EXIT_NOT_ALLOWED"         :
+                                        nNewValue == DYNCONV_EXIT_FORCE_EXIT          ? "DYNCONV_EXIT_FORCE_EXIT"          :
+                                        nNewValue == DYNCONV_EXIT_ALLOWED_SHOW_CHOICE ? "DYNCONV_EXIT_ALLOWED_SHOW_CHOICE" :
+                                        "ERROR: Unsupported value: " + IntToString(nNewValue)
+                                        ) + "\n"
+                    + "bChangeExitTokenText = " + BooleanToString(bChangeExitTokenText) + "\n"
+                    + "oPC = " + DebugObject2Str(_DynConvInternal_ResolvePC(oPC)) + "\n"
+                      );
+
     SetLocalInt(_DynConvInternal_ResolvePC(oPC), "DynConv_AllowExit", nNewValue);
     if(bChangeExitTokenText)
         SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_EXIT_CONVO));

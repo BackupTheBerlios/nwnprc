@@ -1,10 +1,11 @@
-Current total: 39
+Current total: 40
 
 Absorb Strength  (Corrupt)              
 Abyssal Might                                 
 Angry Ache
 Apocolypse from the Sky                                    
 Bestow Wound                                  
+Bodak Birth
 Bone Blade (Undead)                                    
 Boneblast (Undead)
 Cloud of the Achaierai                        

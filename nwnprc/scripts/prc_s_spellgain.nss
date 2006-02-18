@@ -107,7 +107,9 @@ DoDebug("nSpellsAvaliable is TRUE");
                 {
                     SetHeader("You can select more spells when you next gain a level.");
                     SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
-                    AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);                    
+                    AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, oPC);
+                    DelayCommand(0.01, AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, oPC));
+                    DelayCommand(0.1 , AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, oPC));
                 }
                 else
                 {
@@ -141,7 +143,7 @@ DoDebug("nSpellsAvaliable is TRUE");
                         int bHas = FALSE;
                         for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass)) && !bHas;i++)
                         {
-                            int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
+                            int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i)-1;
                             if(nNewSpellbookID == nRow)
                                 bHas = TRUE;    
                         }   
@@ -193,16 +195,6 @@ DoDebug("nSpellsAvaliable is TRUE");
         DeleteLocalInt(oPC, "SelectedSpell");
         DeleteLocalInt(oPC, "SpellbookMinSpelllevel");
         DeleteLocalInt(oPC, "SpellbookMaxSpelllevel");
-        DeleteLocalInt(oPC, "NewSpellUnknown_0");
-        DeleteLocalInt(oPC, "NewSpellUnknown_1");
-        DeleteLocalInt(oPC, "NewSpellUnknown_2");
-        DeleteLocalInt(oPC, "NewSpellUnknown_3");
-        DeleteLocalInt(oPC, "NewSpellUnknown_4");
-        DeleteLocalInt(oPC, "NewSpellUnknown_5");
-        DeleteLocalInt(oPC, "NewSpellUnknown_6");
-        DeleteLocalInt(oPC, "NewSpellUnknown_7");
-        DeleteLocalInt(oPC, "NewSpellUnknown_8");
-        DeleteLocalInt(oPC, "NewSpellUnknown_9");
         EvalPRCFeats(oPC);
     }
     // Abort conversation cleanup.
@@ -217,16 +209,6 @@ DoDebug("nSpellsAvaliable is TRUE");
         DeleteLocalInt(oPC, "SpellGainClass");
         DeleteLocalInt(oPC, "SpellbookMinSpelllevel");
         DeleteLocalInt(oPC, "SpellbookMaxSpelllevel");
-        DeleteLocalInt(oPC, "NewSpellUnknown_0");
-        DeleteLocalInt(oPC, "NewSpellUnknown_1");
-        DeleteLocalInt(oPC, "NewSpellUnknown_2");
-        DeleteLocalInt(oPC, "NewSpellUnknown_3");
-        DeleteLocalInt(oPC, "NewSpellUnknown_4");
-        DeleteLocalInt(oPC, "NewSpellUnknown_5");
-        DeleteLocalInt(oPC, "NewSpellUnknown_6");
-        DeleteLocalInt(oPC, "NewSpellUnknown_7");
-        DeleteLocalInt(oPC, "NewSpellUnknown_8");
-        DeleteLocalInt(oPC, "NewSpellUnknown_9");
         EvalPRCFeats(oPC);
     }
     // Handle PC responses
@@ -266,7 +248,7 @@ DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntTo
                 persistant_array_create(oPC, "Spellbook"+IntToString(nClass));
 DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
                 persistant_array_set_int(oPC, "Spellbook"+IntToString(nClass), 
-                    persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass)), nRow);
+                    persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass)), nRow+1);
 DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
                 //this will add feat and stuff
                 AddSpellUse(oPC, nRow, nClass);

@@ -128,7 +128,7 @@ void main()
                 string sChoice, sFile;
                 for(nSlot = 0; nSlot < nSlots; nSlot++)
                 {
-                    nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass), nSlot);
+                    nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass), nSlot)-1;
                     if(nSpellbookID == 0)
                         sChoice = "Empty";
                     else
@@ -219,7 +219,7 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
             int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
             int nSpellClass = GetLocalInt(oPC, "SpellClass");
             persistant_array_create(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass));
-            persistant_array_set_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass), nSpellSlot, nChoice);
+            persistant_array_set_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nSpellClass), nSpellSlot, nChoice+1);
             MarkStageNotSetUp(STAGE_SELECT_SPELL, oPC);
             nStage = STAGE_SELECT_SPELL_LEVEL;
         }

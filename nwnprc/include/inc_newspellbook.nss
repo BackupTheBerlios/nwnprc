@@ -121,6 +121,9 @@ int GetSpellslotLevel(int nClass, object oPC)
     for(i=1;i<=3;i++)
     {
         int nTempClass = PRCGetClassByPosition(i, oPC);
+        /*1.67 code
+        int nTempClass = GetClassByPosition(i, oPC);
+        */
         //spellcasting prc
         int nArcSpellMod = StringToInt(Get2DACache("classes", "ArcSpellLvlMod", nTempClass));
         int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nTempClass));
@@ -130,6 +133,18 @@ int GetSpellslotLevel(int nClass, object oPC)
             nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
         if(nDivSpellMod)
             nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;
+        /*1.67 code
+        if(nArcSpellMod)
+            if(nArcSpellMod == 1)
+                nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC))/nArcSpellMod;
+            else    
+                nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
+        if(nDivSpellMod)
+            if(nDivSpellMod == 1)
+                nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC))/nDivSpellMod;
+            else    
+                nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;
+        */
     }
     if(GetFirstArcaneClass(oPC) == nClass)
         nLevel += nArcSpellslotLevel;
@@ -137,36 +152,6 @@ int GetSpellslotLevel(int nClass, object oPC)
         nLevel += nDivSpellslotLevel;
 DoDebug("GetSpellslotLevel("+IntToString(nClass)+", "+GetName(oPC)+") = "+IntToString(nLevel));
     return nLevel;
-}
-
-void CheckAndRemoveFeat(object oHide, itemproperty ipFeat)
-{
-    int nSubType = GetItemPropertySubType(ipFeat);
-    if(!GetLocalInt(oHide, "NewSpellbookTemp_"+IntToString(nSubType)))
-        RemoveItemProperty(oHide, ipFeat);
-    else
-        DeleteLocalInt(oHide, "NewSpellbookTemp_"+IntToString(nSubType));
-
-}
-
-void WipeSpellbookHideFeats(object oPC, int nClass)
-{
-    object oHide = GetPCSkin(oPC);
-    itemproperty ipTest = GetFirstItemProperty(oHide);
-    while(GetIsItemPropertyValid(ipTest))
-    {
-        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
-            && GetItemPropertySubType(ipTest) > SPELLBOOK_IPRP_FEATS_START
-            && GetItemPropertySubType(ipTest) < SPELLBOOK_IPRP_FEATS_END)
-            DelayCommand(0.5, CheckAndRemoveFeat(oHide, ipTest));
-        ipTest = GetNextItemProperty(oHide);
-    }
-    //remove persistant locals used to track when all spells cast
-    if(persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
-    {
-        persistant_array_delete(oPC, "NewSpellbookMem_"+IntToString(nClass));
-        persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
-    }
 }
 
 int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
@@ -253,7 +238,7 @@ int GetSpellKnownCurrentCount(object oPC, int nSpellLevel, int nClass)
     string sFile = GetFileForClass(nClass);
     for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
     {
-        int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
+        int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i)-1;
         int nLevel = StringToInt(Get2DACache(sFile, "Level", nNewSpellbookID)); 
         if(nLevel == nSpellLevel)
             nKnown++;
@@ -293,10 +278,12 @@ void AddSpellUse(object oPC, int nSpellbookID, int nClass)
     {
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin);
         SetLocalInt(oSkin, "NewSpellbookTemp_"+IntToString(nIPFeatID), TRUE);
+DoDebug("SetLocalInt(oSkin, NewSpellbookTemp_"+IntToString(nIPFeatID)+", TRUE);");
     }
     else
     {
         //they already have it but we need to tell the hide cleaner to keep it
+DoDebug("SetLocalInt(oSkin, NewSpellbookTemp_"+IntToString(nIPFeatID)+", TRUE);");
         SetLocalInt(oSkin, "NewSpellbookTemp_"+IntToString(nIPFeatID), TRUE);
     }
     //Increase the corrent number of uses
@@ -357,11 +344,26 @@ void SetupSpells(object oPC, int nClass)
 {
     int nLevel = GetLevelByClass(nClass, oPC);
     int nAbility = GetAbilityForClass(nClass, oPC);
-    int nSpellLevel;
     int nSpellbookType = GetSpellbookTypeForClass(nClass);
-    for(nSpellLevel = 1; nSpellLevel <=9; nSpellLevel++)
+    if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
     {
-        if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
+        int nSpellLevel;
+        for(nSpellLevel = 0; nSpellLevel <=9; nSpellLevel++)
+        {
+            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+            persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel, nSlots);
+        }
+        int i;
+        for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
+        {
+            int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i)-1;
+            AddSpellUse(oPC, nSpellbookID, nClass);
+        }    
+    }
+    else if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
+    {
+        int nSpellLevel;
+        for(nSpellLevel = 0; nSpellLevel <=9; nSpellLevel++)
         {
             int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
             int nSlot;
@@ -370,43 +372,72 @@ void SetupSpells(object oPC, int nClass)
                 //done when spells are added to it
                 //doesnt do any harm to make it twice
                 persistant_array_create(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass));
-                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass), nSlot);
+                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass), nSlot)-1;
                 if(nSpellbookID != 0)
                 {
                     AddSpellUse(oPC, nSpellbookID, nClass);
                 }
             }
         }
-        else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
-        {
-            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
-            persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel, nSlots);
-            int i;
-            for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
-            {
-                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
-                AddSpellUse(oPC, nSpellbookID, nClass);
-            }    
-        }
+    }
+}
+
+void CheckAndRemoveFeat(object oHide, itemproperty ipFeat)
+{
+    int nSubType = GetItemPropertySubType(ipFeat);
+    if(!GetLocalInt(oHide, "NewSpellbookTemp_"+IntToString(nSubType)))
+    {
+        RemoveItemProperty(oHide, ipFeat);
+        DeleteLocalInt(oHide, "NewSpellbookTemp_"+IntToString(nSubType));
+DoDebug("DeleteLocalInt(oHide, NewSpellbookTemp_"+IntToString(nSubType)+");");
+DoDebug("Removing item property");
+    }    
+    else
+    {
+        DeleteLocalInt(oHide, "NewSpellbookTemp_"+IntToString(nSubType));
+DoDebug("DeleteLocalInt(oHide, NewSpellbookTemp_"+IntToString(nSubType)+");");
+    }
+}
+
+void WipeSpellbookHideFeats(object oPC)
+{
+    object oHide = GetPCSkin(oPC);
+    itemproperty ipTest = GetFirstItemProperty(oHide);
+    while(GetIsItemPropertyValid(ipTest))
+    {
+        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_FEAT
+            && GetItemPropertySubType(ipTest) > SPELLBOOK_IPRP_FEATS_START
+            && GetItemPropertySubType(ipTest) < SPELLBOOK_IPRP_FEATS_END)
+            DelayCommand(0.5, CheckAndRemoveFeat(oHide, ipTest));
+        ipTest = GetNextItemProperty(oHide);
     }
 }
 
 void CheckNewSpellbooks(object oPC)
 {
+    WipeSpellbookHideFeats(oPC);
     int i;
     for(i=1;i<=3;i++)
     {
         int nClass = PRCGetClassByPosition(i, oPC);
+        /*1.67 code
+        int nClass = GetClassByPosition(i, oPC);
+        */
         int nLevel = GetLevelByClass(nClass, oPC);
 DoDebug("CheckNewSpellbooks");
 DoDebug("nClass="+IntToString(nClass));
 DoDebug("nLevel="+IntToString(nLevel));
         if(nLevel)
         {
-            WipeSpellbookHideFeats(oPC, nClass);
+            //remove persistant locals used to track when all spells cast
+            if(persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
+            {
+                persistant_array_delete(oPC, "NewSpellbookMem_"+IntToString(nClass));
+                persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
+            }
             //delay it so wipespellbookhidefeats has time to start to run
             //but before the deletes actually happen
-            DelayCommand(0.3, SetupSpells(oPC, nClass));
+            DelayCommand(0.1, SetupSpells(oPC, nClass));
         }
     }
 }
@@ -428,7 +459,7 @@ DoDebug("Error: NewSpellbookMem_"+IntToString(nClass)+" array does not exist");
     {
         int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
 DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));
-        if(nCount < 1)
+        if(nCount-1 < 1)
         {
             string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
             string sMessage = "You have no castings of "+sSpellName+" remaining";
@@ -450,14 +481,14 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
         if(nCount < 1)
         {
             string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
-            string sMessage = "You have no castings of spells of "+IntToString(nSpellLevel)+" remaining";
+            string sMessage = "You have no castings of spells of level "+IntToString(nSpellLevel)+" remaining";
             SendMessageToPC(oPC, sMessage);
             return;
         }
         else
         {
             string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
-            string sMessage = "You have "+IntToString(nCount-1)+" castings of spells of "+IntToString(nSpellLevel)+" remaining";
+            string sMessage = "You have "+IntToString(nCount-1)+" castings of spells of level "+IntToString(nSpellLevel)+" remaining";
             SendMessageToPC(oPC, sMessage);
         }
     }

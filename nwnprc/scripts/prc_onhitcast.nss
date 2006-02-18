@@ -278,6 +278,97 @@ void main()
         ipTest = GetNextItemProperty(oItem);
     }
 
+    /*//////////////////////////////////////////////////
+    ///////////////////  SPELLFIRE  ////////////////////
+    //////////////////////////////////////////////////*/
+
+    int nSpellfire = GetLevelByClass(CLASS_TYPE_SPELLFIRE, oSpellOrigin);
+    if(nSpellfire && (GetBaseItemType(oItem) == BASE_ITEM_ARMOR))
+    {
+        int nStored = GetPersistantLocalInt(oSpellOrigin, "SpellfireLevelStored");
+        int nCON = GetAbilityScore(oSpellOrigin, ABILITY_CONSTITUTION);
+        int nFlare = 0;
+        int bFlare = FALSE;
+        if(nStored > 4 * nCON)
+        {
+            nFlare = d6(2);
+            bFlare = TRUE;
+        }
+        else if(nStored > 3 * nCON)
+        {
+            nFlare = d6();
+            bFlare = TRUE;
+        }
+        else if(nStored > 2 * nCON)
+            nFlare = d4();
+        else if(nStored > nCON)
+            nFlare = 1;
+        if(nFlare)
+        {
+            nStored -= nFlare;
+            if(nStored < 0) nStored = 0;
+            SetPersistantLocalInt(oSpellOrigin, "SpellfireLevelStored", nStored);
+        }
+        if(bFlare)
+        {
+            int nDC = 10 + nFlare;
+            location lTarget = GetLocation(oSpellOrigin);
+            object oFlareTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oFlareTarget))
+            {
+                if(spellsIsTarget(oFlareTarget, SPELL_TARGET_STANDARDHOSTILE, oSpellOrigin))
+                {
+                    if(!(MyPRCResistSpell(oSpellOrigin, oFlareTarget, nSpellfire) ||
+                        PRCMySavingThrow(SAVING_THROW_FORT, oFlareTarget, nDC)))
+                    {
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_S), oFlareTarget);
+                        //EffectDazzled from race_hb
+                        effect eAttack = EffectAttackDecrease(1);
+                        effect eSearch = EffectSkillDecrease(SKILL_SEARCH, 1);
+                        effect eSpot   = EffectSkillDecrease(SKILL_SPOT,   1);
+                        effect eLink   = EffectLinkEffects(eAttack, eSearch);
+                        eLink          = EffectLinkEffects(eLink,   eSpot);
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFlareTarget, 60.0);
+                    }
+                }
+                oFlareTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            }
+        }
+        if(GetLocalInt(oSpellOrigin, "SpellfireCrown"))  //melts non-magical melee weapons
+        {   //can't really get which weapon hit you, so...
+            object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget);
+            if(GetIsObjectValid(oWeapon))
+            {
+                if(IPGetIsMeleeWeapon(oWeapon) && !GetIsMagicItem(oWeapon))
+                {
+                    DestroyObject(oWeapon);
+                    FloatingTextStringOnCreature("*Your weapon has melted!*", oSpellTarget);
+                }
+            }
+            else
+            {
+                oWeapon = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget);
+                if(GetIsObjectValid(oWeapon))
+                {
+                    if(IPGetIsMeleeWeapon(oWeapon) && !GetIsMagicItem(oWeapon))
+                    {
+                        DestroyObject(oWeapon);
+                        FloatingTextStringOnCreature("*Your weapon has melted!*", oSpellTarget);
+                    }
+                }
+                else    //You're putting your arms and legs through something that melts weapons?
+                {       //Silly monk/brawler/fool with molten weapons!
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d20()), oSpellTarget);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d20(), DAMAGE_TYPE_FIRE), oSpellTarget);
+                }
+            }
+        }
+    }
+
+    /*//////////////////////////////////////////////////
+    ////////////////// END SPELLFIRE ///////////////////
+    //////////////////////////////////////////////////*/
+
     // Handle poisoned weapons
     /*
     if(GetLocalInt(oItem, "pois_wpn_uses"))

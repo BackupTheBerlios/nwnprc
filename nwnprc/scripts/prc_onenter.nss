@@ -217,6 +217,9 @@ void main()
         SpawnNewThread("PRC_Duplicate_IPBFeat_Mon", "prc_debug_hfeatm", 30.0f, oPC);
     }
 
+    if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC) && GetThreadState("PRC_Spellfire", oPC) == THREAD_STATE_DEAD)
+        SpawnNewThread("PRC_Spellfire", "prc_spellfire_hb", 6.0f, oPC);
+
     // Execute scripts hooked to this event for the player triggering it
     //How can this work? The PC isnt a valid object before this. - Primogenitor
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);

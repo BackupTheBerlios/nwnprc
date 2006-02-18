@@ -42,3 +42,17 @@ touched.
 //  Created:  1/7/2006
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"
+#include "prc_inc_spells"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();

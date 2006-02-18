@@ -102,21 +102,27 @@ int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowText
 // Checks if a spell is a healing spell
 int GetIsHealingSpell(int nSpellId);
 
-//to override for custom spellcasting classes
+// to override for custom spellcasting classes
 int PRCGetLastSpellCastClass();
 
-//wrapper for getspelltargetlocation
+// wrapper for getspelltargetlocation
 location PRCGetSpellTargetLocation();
 
-//wrapper for getspelltargetobject
+// wrapper for getspelltargetobject
 object PRCGetSpellTargetObject();
 
-//Added by Tenjac
-//Calculates alignment change for spells with Evil descriptor
+
+// Calculates alignment change for spells with Evil descriptor
 void SPEvilShift(object oPC);
 
-//Calculates alignment change for spells with Good descriptor
+// Calculates alignment change for spells with Good descriptor
 void SPGoodShift(object oPC);
+
+// This function is used in the spellscripts
+// It functions as Evasion for Fortitude and Will partial saves
+// This means the "partial" section is ignored
+// nSavingThrow takes either SAVING_THROW_WILL or SAVING_THROW_FORT
+int GetHasMettle(object oTarget, int nSavingThrow);
 
 // -----------------
 // BEGIN SPELLSWORD
@@ -1601,4 +1607,24 @@ int GetIsHealingSpell(int nSpellId)
         return TRUE;
 
     return FALSE;
+}
+
+int GetHasMettle(object oTarget, int nSavingThrow)
+{
+	int nMettle = FALSE;
+	object oArmour = GetItemInSlot(INVENTORY_SLOT_CHEST);
+	
+	if (nSavingThrow = SAVING_THROW_WILL)
+	{
+		// Iron Mind's ability only functions in Heavy Armour
+		if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 5 && GetBaseAC(oArmour) >= 6) nMettle = TRUE;
+		// Fill out the line below to add another class with Will mettle
+		// else if (GetLevelByClass(CLASS_TYPE_X, oTarget) >= X) nMettle = TRUE;
+	}
+	if (nSavingThrow = SAVING_THROW_FORT)
+	{
+		// Add Classes with Fort mettle here
+	}
+	
+	return nMettle;
 }

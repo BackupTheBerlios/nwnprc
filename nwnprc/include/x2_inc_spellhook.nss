@@ -735,6 +735,51 @@ int X2PreSpellCastCode()
             FloatingTextStringOnCreature("You do not have any free hands.", OBJECT_SELF, FALSE);
         }
     }
+    
+    //Corrupt or Sanctified spell
+    if(nContinue)
+    {	
+	    int nClass = PRCGetLastSpellCastClass();
+	    
+	    if(nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+	    {
+		    int nSpell = PRCGetSpellId();
+		    
+		    //Check for each Corrupt and Sanctified spell
+		    if(nSpell == SPELL_ABSORB_STRENGTH ||
+		    nSpell == SPELL_APOCALYPSE_FROM_THE_SKY ||
+		    nSpell == SPELL_CLAWS_OF_THE_BEBILITH ||
+		    nSpell == SPELL_DEATH_BY_THORNS ||
+		    nSpell == SPELL_EVIL_WEATHER ||
+		    nSpell == SPELL_FANGS_OF_THE_VAMPIRE ||
+		    nSpell == SPELL_LAHMS_FINGER_DARTS ||
+		    nSpell == SPELL_POWER_LEECH ||
+		    nSpell == SPELL_RAPTURE_OF_RUPTURE ||
+		    nSpell == SPELL_RED_FESTER ||
+		    nSpell == SPELL_ROTTING_CURSE_OF_URFESTRA ||
+		    nSpell == SPELL_SEETHING_EYEBANE ||
+		    nSpell == SPELL_TOUCH_OF_JUIBLEX ||
+		    nSpell == SPELL_AYAILLAS_RADIANT_BURST ||
+		    nSpell == SPELL_BRILLIANT_EMANATION ||
+		    nSpell == SPELL_DIVINE_INSPIRATION ||
+		    nSpell == SPELL_DIAMOND_SPRAY ||
+		    nSpell == SPELL_DRAGON_CLOUD ||
+		    nSpell == SPELL_EXALTED_FURY ||
+		    nSpell == SPELL_HAMMER_OF_RIGHTEOUSNESS ||
+		    nSpell == SPELL_PHIERANS_RESOLVE ||
+		    nSpell == SPELL_PHOENIX_FIRE ||
+		    nSpell == SPELL_RAIN_OF_EMBERS ||
+		    nSpell == SPELL_SICKEN_EVIL ||
+		    nSpell == SPELL_STORM_OF_SHARDS ||
+		    nSpell == SPELL_SUNMANTLE ||
+		    nSpell == SPELL_TWILIGHT_LUCK)
+		    {
+			    nContinue == FALSE;
+		    }
+	    }
+    }
+            
+    
 
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of

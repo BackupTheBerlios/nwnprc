@@ -41,6 +41,7 @@
 #include "x0_i0_henchman"
 #include "prc_inc_combat"
 #include "prc_inc_sp_tch"
+#include "prc_spellf_inc"
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);

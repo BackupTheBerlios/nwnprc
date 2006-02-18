@@ -48,7 +48,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
 
      // Declare the spell shape, size and the location.  Capture the first target object in the shape.
      // Cycle through the targets within the spell shape until an invalid object is captured.
-     oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+     oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      while(GetIsObjectValid(oTarget))
      {
           if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
@@ -83,7 +83,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
           }
 
           //Select the next target within the spell shape.
-          oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+          oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      }
 
      // Let the SR engine know that we are done and clear out school local var.

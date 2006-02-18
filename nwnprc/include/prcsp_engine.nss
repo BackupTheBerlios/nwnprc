@@ -11,6 +11,8 @@ const int SPELL_RESIST_MANTLE = 3;
 
 int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float fDelay = 0.0);
 
+int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE);
+
 #include "prc_inc_racial"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -122,7 +124,7 @@ int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
     int nResist;
 
     // Check if the archmage shape mastery applies to this target
-    if (CheckMasteryOfShapes(oCaster, oTarget))
+    if (CheckSpellfire(oCaster, oTarget) || CheckMasteryOfShapes(oCaster, oTarget))
         nResist = SPELL_RESIST_MANTLE;
     else {
         // Check immunities and mantles, otherwise ignore the result completely

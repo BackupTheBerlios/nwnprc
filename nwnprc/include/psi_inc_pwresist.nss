@@ -8,9 +8,12 @@
    Calculates Power Resistance for Psionics and performs the checks.
 */
 
+/*
 #include "prc_inc_racial"
 #include "prc_feat_const"
 #include "prc_class_const"
+*/
+#include "prc_alterations"
 
 // Constants that dictate ResistPower results
 const int POWER_RESIST_FAIL = 1;
@@ -129,6 +132,9 @@ PRCMyResistPower(object oCaster, object oTarget, int nEffCasterLvl=0, float fDel
 
     // A tie favors the caster.
     if (nCasterCheck < nTargetPR)   nResist = POWER_RESIST_PASS;
+
+    //Spellfire - done this way because constants may change
+    if(CheckSpellfire(oCaster, oTarget))    nResist = POWER_RESIST_PASS;
 
     // Only show resistance if the target has any
     if (nTargetPR > 0)  PRCShowPowerResist(oCaster, oTarget, nResist, fDelay);

@@ -345,7 +345,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
     while(GetIsObjectValid(oTarget2) && GetDistanceToObject(oTarget2) <= 30.0)
     {
         //Get first target in the lightning area by passing in the location of first target and the casters vector (position)
-        oTarget = GetFirstObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+        oTarget = MyFirstObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
         while (GetIsObjectValid(oTarget))
         {
                // Reset the knockdown target flag.
@@ -411,7 +411,7 @@ void DoBolt(int nCasterLevel, int nDieSize, int nBonusDam, int nDice, int nBoltE
                }
            
                //Get the next object in the lightning cylinder
-               oTarget = GetNextObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
+               oTarget = MyNextObjectInShape(SHAPE_SPELLCYLINDER, 30.0, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE, GetPosition(OBJECT_SELF));
           }
         
           nCnt++;
@@ -478,7 +478,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
      
      // Declare the spell shape, size and the location.  Capture the first target object in the shape.
      // Cycle through the targets within the spell shape until an invalid object is captured.
-     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      while (GetIsObjectValid(oTarget))
      {
           // Filter out the caster if he is supposed to be immune to the burst.
@@ -560,7 +560,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                }
           }
                     
-          oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+          oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      }
      
      // Let the SR engine know that we are done and clear out school local var.
@@ -617,7 +617,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
 
      // Declare the spell shape, size and the location.  Capture the first target object in the shape.
      // Cycle through the targets within the spell shape until an invalid object is captured.
-     oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+     oTarget = MyFirstObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      while(GetIsObjectValid(oTarget))
      {
           if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
@@ -652,7 +652,7 @@ void DoCone (int nDieSize, int nBonusDam, int nDieCap, int nConeEffect /* unused
           }
           
           //Select the next target within the spell shape.
-          oTarget = GetNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+          oTarget = MyNextObjectInShape(SHAPE_SPELLCONE, 11.0, lTargetLocation, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      }
      
      // Let the SR engine know that we are done and clear out school local var.
@@ -853,7 +853,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
     
     // Declare the spell shape, size and the location.  Capture the first target object in the shape.
     // Cycle through the targets within the spell shape until an invalid object is captured.
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     while (GetIsObjectValid(oTarget))
     {
         if (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, OBJECT_SELF))
@@ -887,7 +887,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
             }
         }
         
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
     SPSetSchool();
@@ -1045,7 +1045,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
     // Declare the spell shape, size and the location.  Capture the first target object in the shape.
     // Cycle through the targets within the spell shape until an invalid object is captured.
     int nHealed = 0;
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     while (GetIsObjectValid(oTarget))
     {
         // Call our modified bioware cure logic to do the actual cure/harm effect.
@@ -1056,7 +1056,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
         // If we've healed as manay targets as we can we're done.
         if (nHealed >= nCasterLvl) break;
         
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
     
     SPSetSchool();

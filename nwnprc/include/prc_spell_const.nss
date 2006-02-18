@@ -511,3 +511,35 @@ const int SPELL_TWILIGHT_LUCK                       = 2526;
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;
 const int SPELL_INSIGHTFUL_REFLEXES                 = 1916;
+
+// Spellfire
+const int SPELL_SPELLFIRE_WIELDER                   = 3013;
+const int SPELL_SPELLFIRE_INCREASE                  = 3014;
+const int SPELL_SPELLFIRE_DECREASE                  = 3015;
+const int SPELL_SPELLFIRE_QUICKSELECT               = 3016;
+const int SPELL_SPELLFIRE_ATTACK                    = 3017;
+const int SPELL_SPELLFIRE_HEAL                      = 3018;
+const int SPELL_SPELLFIRE_CHECK                     = 3019;
+const int SPELL_SPELLFIRE_PLUS_ONE                  = 3020;
+const int SPELL_SPELLFIRE_PLUS_FIVE                 = 3021;
+const int SPELL_SPELLFIRE_PLUS_TEN                  = 3022;
+const int SPELL_SPELLFIRE_PLUS_TWENTY               = 3023;
+const int SPELL_SPELLFIRE_MINUS_ONE                 = 3024;
+const int SPELL_SPELLFIRE_MINUS_FIVE                = 3025;
+const int SPELL_SPELLFIRE_MINUS_TEN                 = 3026;
+const int SPELL_SPELLFIRE_MINUS_TWENTY              = 3027;
+const int SPELL_SPELLFIRE_CHECK_EXP                 = 3028;
+const int SPELL_SPELLFIRE_QUICKSELECT_CHANGE        = 3029;
+const int SPELL_SPELLFIRE_QUICKSELECT_1             = 3030;
+const int SPELL_SPELLFIRE_QUICKSELECT_2             = 3031;
+const int SPELL_SPELLFIRE_QUICKSELECT_3             = 3032;
+const int SPELL_SPELLFIRE_DRAIN_CHARGED             = 3033;
+const int SPELL_SPELLFIRE_RAPID_BLAST               = 3034;
+const int SPELL_SPELLFIRE_RAPID_BLAST_TWO           = 3035;
+const int SPELL_SPELLFIRE_RAPID_BLAST_THREE         = 3036;
+const int SPELL_SPELLFIRE_DRAIN_PERMANENT           = 3037;
+const int SPELL_SPELLFIRE_CHARGE_ITEM               = 3038;
+const int SPELL_SPELLFIRE_CROWN                     = 3039;
+const int SPELL_SPELLFIRE_MAELSTROM                 = 3040;
+const int SPELL_SPELLFIRE_ABSORB                    = 3041;
+

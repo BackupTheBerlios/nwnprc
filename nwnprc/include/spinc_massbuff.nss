@@ -70,7 +70,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 
 	// Declare the spell shape, size and the location.  Capture the first target object in the shape.
 	// Cycle through the targets within the spell shape until an invalid object is captured.
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+	object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	while (GetIsObjectValid(oTarget))
 	{
 		if (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, OBJECT_SELF))
@@ -104,7 +104,7 @@ void DoMassBuff (int nBuffType, int nBuffSubType, int nBuffSpellID, int nSpellID
 			}
 		}
 
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
 	}
 
 	SPSetSchool();

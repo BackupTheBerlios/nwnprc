@@ -39,7 +39,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
     // Declare the spell shape, size and the location.  Capture the first target object in the shape.
     // Cycle through the targets within the spell shape until an invalid object is captured.
     int nHealed = 0;
-    object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     while (GetIsObjectValid(oTarget))
     {
         // Call our modified bioware cure logic to do the actual cure/harm effect.
@@ -50,7 +50,7 @@ void DoMassCure (int nDice, int nBonusCap, int nHealEffect, int nSpellID = -1)
         // If we've healed as manay targets as we can we're done.
         if (nHealed >= nCasterLvl) break;
 
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE);
     }
 
     SPSetSchool();

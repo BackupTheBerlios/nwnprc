@@ -98,7 +98,7 @@ void TeleportationCircleAux(object oCaster)
                           fDuration
                           );
     // Get an object reference to the newly created AoE
-    object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    object oAoE = MyFirstObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
     while(GetIsObjectValid(oAoE))
     {
         // Test if we found the correct AoE
@@ -109,7 +109,7 @@ void TeleportationCircleAux(object oCaster)
             break;
         }
         // Didn't find, get next
-        oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+        oAoE = MyNextObjectInShape(SHAPE_SPHERE, 1.0f, lTarget, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
     }
     if(DEBUG) if(!GetIsObjectValid(oAoE)) DoDebug("ERROR: Can't find area of effect for Teleportation Circle!");
 

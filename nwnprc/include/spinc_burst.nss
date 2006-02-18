@@ -58,7 +58,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
 
      // Declare the spell shape, size and the location.  Capture the first target object in the shape.
      // Cycle through the targets within the spell shape until an invalid object is captured.
-     object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      while (GetIsObjectValid(oTarget))
      {
           // Filter out the caster if he is supposed to be immune to the burst.
@@ -140,7 +140,7 @@ void DoBurst (int nCasterLvl, int nDieSize, int nBonusDam, int nDice, int nBurst
                }
           }
 
-          oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+          oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
      }
 
      // Let the SR engine know that we are done and clear out school local var.

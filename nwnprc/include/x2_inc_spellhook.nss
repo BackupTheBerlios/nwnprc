@@ -989,6 +989,34 @@ int X2PreSpellCastCode()
         DelayCommand(0.01, DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
     }
 
+    //---------------------------------------------------------------------------
+    // Spellfire
+    //---------------------------------------------------------------------------
+    if(nContinue)
+    {
+        if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, OBJECT_SELF))
+        {
+            int nStored = GetPersistantLocalInt(OBJECT_SELF, "SpellfireLevelStored");
+            int nCON = GetAbilityScore(OBJECT_SELF, ABILITY_CONSTITUTION);
+            if(nStored > 4 * nCON)
+            {
+                if(!GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, 25)) nContinue = FALSE;
+            }
+            else if(nStored > 3 * nCON)
+            {
+                if(!GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, 20)) nContinue = FALSE;
+            }
+        }
+        if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") && GetIsFriend(oTarget, OBJECT_SELF))
+        {
+            if(CheckSpellfire(OBJECT_SELF, oTarget, TRUE))
+            {
+                PRCShowSpellResist(OBJECT_SELF, oTarget, SPELL_RESIST_MANTLE);
+                nContinue = FALSE;
+            }
+        }
+    }
+
     return nContinue;
 }
 

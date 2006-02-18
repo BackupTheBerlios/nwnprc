@@ -52,7 +52,7 @@ int SpellSneakAttackDamage(object oCaster, object oTarget)
 // the target to attack, the original damage ammount (will get doubled if critical)
 // TouchAttackType  0 = melee, 1 = ranged  , 3 non-sneak melee, 4 non-sneak ranged
 // DisplayFeedBack - default is true
-int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int iDamage, int iDamageType, int bCanSneakAttack = TRUE)
+int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int iDamage, int iDamageType, int bCanSneakAttack = TRUE, int bSpellBetrayalStrike = TRUE)
 {
      // perform critical
      if(iAttackRoll == 2)  iDamage *= 2;
@@ -62,6 +62,7 @@ int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int 
           iDamage += SpellSneakAttackDamage(oCaster, oTarget);
 
      // adds the bonus for spell bretrayal or spell strike for touch spells
+     if(bSpellBetrayalStrike)
      iDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
      // apply damage
      if(iAttackRoll > 0)

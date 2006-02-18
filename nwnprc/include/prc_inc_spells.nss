@@ -1356,6 +1356,11 @@ object MyFirstObjectInShape(int nShape,
                             int nObjectFilter = OBJECT_TYPE_CREATURE,
                             vector vOrigin=[0.0, 0.0, 0.0])
 {
+    //int on caster for the benefit of spellfire wielder resistance
+    string sName = "IsAOE_" + IntToString(GetSpellId());
+    SetLocalInt(OBJECT_SELF, sName, 1);
+    DelayCommand(0.1, DeleteLocalInt(OBJECT_SELF, sName));
+
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
     if(nChannel != 1)
     {

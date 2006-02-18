@@ -49,7 +49,7 @@ touched.
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;

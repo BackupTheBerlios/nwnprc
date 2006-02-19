@@ -41,7 +41,10 @@ void CountdownToSlime(object oTarget, int nCounter)
 	}
 	else
 	{
-		SetCreatureAppearanceType(oTarget, APPEARANCE_TYPE_OOZE);
+		effect eDeath = EffectDeath();
+		
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
+				
 }
 
 void main()

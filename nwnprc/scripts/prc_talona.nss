@@ -6,6 +6,7 @@ void main()
 {
     object oPC = OBJECT_SELF;
     string sResRef = GetResRef(oPC);
+    object oCreator = GetLocalObject(oPC, "BlightspawnCreator");
     int iPenalty = d4(1);
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
     //effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iPenalty);
@@ -34,7 +35,7 @@ void main()
         // This is to make sure its dead
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
     	object oCreature = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetLocation(oPC), FALSE, "prc_blightspawn");
-    	object oCreator = GetLocalObject(oTarget, "BlightspawnCreator");
+    	
     	// Blightspawned creatures do not normally attack Blightlords
     	SetIsTemporaryNeutral(oCreator, oCreature);
     	

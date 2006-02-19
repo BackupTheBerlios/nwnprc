@@ -23,7 +23,7 @@ points of damage.
 Corruption Cost: 1d6 points of Strength damage.
 
 Author:    Tenjac
-Created:   
+Created:   2/19/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -31,6 +31,7 @@ Created:
 #include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_spells"
+
 
 void CountdownToSlime(object oTarget, int nCounter)
 {
@@ -41,10 +42,15 @@ void CountdownToSlime(object oTarget, int nCounter)
 	}
 	else
 	{
-		effect eDeath = EffectDeath();
+		location lLoc = GetLocation(oTarget);
 		
+		//kill target
+		effect eDeath = EffectDeath();		
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
-				
+		
+		
+		CreateObject(OBJECT_TYPE_CREATURE, x2_gelcube, lLoc);
+	}
 }
 
 void main()

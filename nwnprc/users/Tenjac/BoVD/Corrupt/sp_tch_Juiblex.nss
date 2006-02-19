@@ -32,6 +32,18 @@ Created:
 #include "spinc_common"
 #include "prc_inc_spells"
 
+void CountdownToSlime(object oTarget, int nCounter)
+{
+	if(nCounter > 0)
+	{
+		nCounter--;
+		DelayCommand(6.0f, CountdownToSlime(oTarget, nCounter));
+	}
+	else
+	{
+		SetCreatureAppearanceType(oTarget, APPEARANCE_TYPE_OOZE);
+}
+
 void main()
 {
 	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
@@ -43,7 +55,30 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nCounter = 4;
 	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_TOUCH_OF_JUIBLEX, oPC);
+	
+	//Spell Resistance
+	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Save
+		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+		{
+			//Start the countdown!
+			CountdownToSlime(oTarget, nCounter);
+		}
+	}			
+	
+	//Alignment shift
+	SPEvilShift(oPC);
+	
+	//Corruption cost
+	int nCost = d6(1);	
+	DoCorruptionCost(oPC, oTarget, ABILITY_STRENGTH, nCost, 0);
+	
+	SPSetSchool();
+}
 	
 	
 	

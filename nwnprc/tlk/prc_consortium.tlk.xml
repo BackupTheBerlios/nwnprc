@@ -10466,6 +10466,11 @@ Use: Selected.</entry>
   <entry id="47776" lang="en" sex="m">Cast Spell: Metamagic</entry>
   <entry id="47777" lang="en" sex="m">Cast Spell: Metamagic:</entry>
   <entry id="47778" lang="en" sex="m">Cast Spell: Metamagic: This item property modifies the Metamagic with which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. It may stack, untested.</entry>
+  <entry id="47779" lang="en" sex="m">Blightmind</entry>
+  <entry id="47780" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Talontar Blightlord 4.
+Specifics: Once per day, the Blightlord gains the ability to dominate a blightspawned creature. The creature must make a saving throw vs 10 + Blightlord level + Wisdom modifier or be dominated for 1 minute per Blightlord level.
+Use: Selected.</entry>  
   <entry id="47784" lang="en" sex="m">Archmage</entry>
   <entry id="47785" lang="en" sex="m">Archmages</entry>
   <entry id="47786" lang="en" sex="m">archmage</entry>

@@ -27,6 +27,7 @@ void main()
             //system in place.
             SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDisease, oTarget,0.0f,TRUE,-1,iDC);
             SetLocalInt(oTarget, "BlightDC", iDC);
+            SetLocalObject(oTarget, "BlightspawnCreator", oPC);
         }
     }
 

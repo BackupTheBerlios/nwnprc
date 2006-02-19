@@ -278,6 +278,21 @@ int GetCanTurn(object oTarget)
             if(!GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER))
                 return FALSE;
             break;
+        case RACIAL_TYPE_ANIMAL:
+            // This ability comes from having the Blightbringer prestige domain
+            if(!GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER))
+                return FALSE;
+            break; 
+        case RACIAL_TYPE_MAGICAL_BEAST:
+            // This ability comes from having the Blightbringer prestige domain
+            if(!GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER))
+                return FALSE;
+            break;   
+      /*case RACIAL_TYPE_PLANT:
+            // This ability comes from having the Blightbringer prestige domain
+            if(!GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER))
+                return FALSE;
+            break;*/ // This is for when the Plant type is added.             
         default: return FALSE;
     }
 
@@ -363,6 +378,7 @@ int GetTurningClassLevel(int bUndeadOnly = FALSE)
     if(!bUndeadOnly)
     {
         nLevel += GetLevelByClass(CLASS_TYPE_JUDICATOR);
+        nLevel += GetLevelByClass(CLASS_TYPE_BLIGHTLORD);
         if(GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3>0)
             nLevel += GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3;
     }

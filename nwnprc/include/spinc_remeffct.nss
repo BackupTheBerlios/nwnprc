@@ -42,6 +42,17 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		{
 			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
+		
+		//Touch of Juiblex
+		if(GetHasSpellEffect(SPELL_TOUCH_OF_JUIBLEX, oTarget))
+		{
+			int nDam = d6(3);
+			effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+			
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+			
+			RemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
+		}
 	}
 
 	//Remove Disease
@@ -67,6 +78,17 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		if(GetHasSpellEffect(SPELL_ENERGY_EBB, oTarget))
 		{
 			RemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
+		}
+		
+		//Touch of Juiblex
+		if(GetHasSpellEffect(SPELL_TOUCH_OF_JUIBLEX, oTarget))
+		{
+			int nDam = d6(3);
+			effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+			
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+			
+			RemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
 		}
 
 	}
@@ -101,6 +123,17 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		if(GetHasSpellEffect(SPELL_ENERGY_EBB, oTarget))
 		{
 			RemoveSpellEffects(SPELL_ENERGY_EBB, oCaster, oTarget);
+		}
+		
+		//Touch of Juiblex
+		if(GetHasSpellEffect(SPELL_TOUCH_OF_JUIBLEX, oTarget))
+		{
+			int nDam = d6(3);
+			effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
+			
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+			
+			RemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
 		}
 
 	}

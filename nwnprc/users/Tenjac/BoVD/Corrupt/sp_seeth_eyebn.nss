@@ -37,41 +37,48 @@ void main()
 	location lTarget = GetLocation(oTarget);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
-	
+	int nType = MyPRCGetRacialType(oTarget);
 	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_SEETHING_EYEBANE, oPC);
 	
-	//Spell Resistance
-	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-	{		
-		//Fort save
-		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))    
-		{
-			
-			//Blind target permanently
-			effect eBlind = EffectBlindness();
-			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);
-			
-			oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
-			
-			while(GetIsObjectValid(oTarget))
+	if(nType != RACIAL_TYPE_CONSTRUCT &&
+	   nType != RACIAL_TYPE_OOZE &&
+	   nType != RACIAL_TYPE_ELEMENTAL &&
+	   nType != RACIAL_TYPE_UNDEAD)
+	{
+		//Spell Resistance
+		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{		
+			//Fort save
+			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID))    
 			{
-				//nDam = 1d6 acid
-				int nDam = d6(1);
-				effect eDam = EffectDamage(nDam, DAMAGE_TYPE_ACID);
 				
-				//apply damage
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+				//Blind target permanently
+				effect eBlind = EffectBlindness();
+				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);
 				
-				oTarget = GetNextObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+				oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+				
+				while(GetIsObjectValid(oTarget))
+				{
+					//nDam = 1d6 acid
+					int nDam = d6(1);
+					effect eDam = EffectDamage(nDam, DAMAGE_TYPE_ACID);
+					
+					//apply damage
+					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+					
+					oTarget = GetNextObjectInShape(SHAPE_SPHERE, 5.0, lTarget, FALSE, OBJECT_TYPE_CREATURE);
+				}
+				
 			}
-						
 		}
+		
+		//Corruption cost 1d6 CON regardless of success
+		int nCost = d6(1);
+		
+		DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);
+		
+		SPSetSchool();
 	}
-	//Corruption cost 1d6 CON regardless of success
-	int nCost = d6(1);
-	
-	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);
-	
-	SPSetSchool();
 }

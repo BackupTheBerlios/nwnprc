@@ -13,16 +13,16 @@ int isSimple(object oItem)
         case BASE_ITEM_MORNINGSTAR:
         case BASE_ITEM_QUARTERSTAFF:
         case BASE_ITEM_SHORTSPEAR:
-        case BASE_ITEM_HEAVYCROSSBOW:
+        //case BASE_ITEM_HEAVYCROSSBOW:
           return 1;
           break;
         case BASE_ITEM_CLUB:
         case BASE_ITEM_DAGGER:
         case BASE_ITEM_LIGHTMACE:
         case BASE_ITEM_SICKLE:
-        case BASE_ITEM_SLING:
-        case BASE_ITEM_DART:
-        case BASE_ITEM_LIGHTCROSSBOW:
+        //case BASE_ITEM_SLING:
+        //case BASE_ITEM_DART:
+        //case BASE_ITEM_LIGHTCROSSBOW:
           return 2;
           break;
 

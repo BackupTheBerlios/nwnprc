@@ -35,17 +35,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     object oTarget;
-    int nHD = GetHitDice(oTarget);
+    int nHD;
     float fDelay;
 
     //Enter Metamagic conditions
-    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+    if(nMetaMagic & METAMAGIC_MAXIMIZE)
     {
-        nDamage = 4;//Damage is at max
+        if(nMetaMagic & METAMAGIC_EMPOWER)
+            nDamage = 4 + (nDamage / 2);
+        else
+            nDamage = 4;//Damage is at max
     }
-    if ((nMetaMagic & METAMAGIC_EMPOWER))
+    else if(nMetaMagic & METAMAGIC_EMPOWER)
     {
-        nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
+       nDamage =  nDamage + (nDamage/2); //Damage/Healing is +50%
     }
 
    //--------------------------------------------------------------------------
@@ -65,7 +68,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 
     //Set damage effect
-    //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage);
     //Get the first object in the persistant AOE
     oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
@@ -75,31 +77,26 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CLOUDKILL));
-            //Cloudkill doesn't allow SR - Ornedan
-            //if(!MyPRCResistSpell(aoeCreator, oTarget,nPenetr, fDelay))
+
+            nHD = GetHitDice(oTarget);
+
+            //Apply VFX impact and damage
+            //Creatures with less than 6 HD take full damage automatically
+            //Any with more than 6 get to save (Fortitued) for half
+            if (nHD < 6)
             {
-                //Apply VFX impact and damage
-                //Creatures with less than 6 HD take full damage automatically
-                //Any with more than 6 get to save (Fortitued) for half
-                if (nHD < 6)
+                DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
+            }
+            else
+            {
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
                 {
-                    //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, TRUE));
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
                 }
                 else
                 {
-                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
-                    {
-                        //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, TRUE));
-                    }
-                    else
-                    {
-                        // Halve the damage on succesfull save.
-                        //eDam = EffectAbilityDecrease(ABILITY_CONSTITUTION, nDamage / 2);
-                        //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                        DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage / 2, DURATION_TYPE_PERMANENT, TRUE));
-                    }
+                    // Halve the damage on succesfull save.
+                    DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage / 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
                 }
             }
         }

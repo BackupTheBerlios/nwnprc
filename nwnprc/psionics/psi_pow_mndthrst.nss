@@ -79,9 +79,11 @@ void main()
         int nRepeats = manif.bTwin ? 2 : 1;
         for(; nRepeats > 0; nRepeats--)
         {
+            if(DEBUG) DoDebug("psi_pow_mndthrst: Attempting to affect " + DebugObject2Str(oTarget));
             // Check for Power Resistance
             if(PRCMyResistPower(oManifester, oTarget, nPen))
             {
+if(DEBUG) DoDebug("psi_pow_mndthrst: Power resistance failed");
                 // Save - Will negates
                 if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                 {
@@ -89,7 +91,7 @@ void main()
                     nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
                     // Target-specific stuff
                     nDamage = GetTargetSpecificChangesToDamage(oTarget, manif.oManifester, nDamage, TRUE, FALSE);
-
+if(DEBUG) DoDebug("psi_pow_mndthrst: Saving throw failed, damage = " + IntToString(nDamage));
                     // Generate damage effect
                     eLink = EffectLinkEffects(eVis, EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL));
                     // Apply effect

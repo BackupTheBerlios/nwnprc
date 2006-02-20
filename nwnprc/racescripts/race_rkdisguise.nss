@@ -23,6 +23,8 @@ void main()
     // Switch to lich
     if (nPCForm == nCurForm)
     {
+        effect eFx = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,OBJECT_SELF);
         SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_HUMAN_NPC_FEMALE_12);
     }
     else // Switch to PC

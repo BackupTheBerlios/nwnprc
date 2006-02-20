@@ -280,17 +280,17 @@ int GetCanTurn(object oTarget)
             break;
         case RACIAL_TYPE_ANIMAL:
             // This ability comes from having the Blightbringer prestige domain
-            if(!GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER))
+            if(!GetHasFeat(FEAT_DOMAIN_POWER_BLIGHTBRINGER))
                 return FALSE;
             break; 
         case RACIAL_TYPE_MAGICAL_BEAST:
             // This ability comes from having the Blightbringer prestige domain
-            if(!GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER))
+            if(!GetHasFeat(FEAT_DOMAIN_POWER_BLIGHTBRINGER))
                 return FALSE;
             break;   
       /*case RACIAL_TYPE_PLANT:
             // This ability comes from having the Blightbringer prestige domain
-            if(!GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER))
+            if(!GetHasFeat(FEAT_DOMAIN_POWER_BLIGHTBRINGER))
                 return FALSE;
             break;*/ // This is for when the Plant type is added.             
         default: return FALSE;

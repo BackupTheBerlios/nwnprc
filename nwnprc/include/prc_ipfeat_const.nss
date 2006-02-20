@@ -598,6 +598,11 @@ const int IP_CONST_FEAT_TYRANNY_DOMAIN     		=  198;
 const int IP_CONST_FEAT_OCEAN_DOMAIN       		=  199;
 const int IP_CONST_FEAT_BLIGHTBRINGER      		=  200;
 
+// Domain Feats
+const int IP_CONST_FEAT_GREAT_FORTITUDE     		=  202;
+const int IP_CONST_FEAT_SCRIBE_SCROLL     		=  203;
+
+
 // Lasher
 const int IP_CONST_FEAT_IMPROVED_KNOCKDOWN = 264;
 const int IP_CONST_FEAT_IMPROVED_DISARM = 265;

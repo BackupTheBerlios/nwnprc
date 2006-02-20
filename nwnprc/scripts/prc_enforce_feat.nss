@@ -851,7 +851,7 @@ int CasterFeats(object oPC = OBJECT_SELF)
 int Blightbringer(object oPC = OBJECT_SELF)
 {
     // You should only have the Blightbringer domain as a bonus domain
-    if (GetHasFeat(FEAT_BLIGHTBRINGER_DOMAIN_POWER, oPC) && !GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
+    if (GetHasFeat(FEAT_DOMAIN_POWER_BLIGHTBRINGER, oPC) && !GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC))
     {
             FloatingTextStringOnCreature("You may not select Blightbringer as a domain at level 1.", oPC, FALSE);
             return FALSE;

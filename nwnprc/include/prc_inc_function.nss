@@ -151,7 +151,9 @@ void EvalPRCFeats(object oPC)
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
-    if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0)       ExecuteScript("prc_domain_skin", oPC);
+    // It also runs things that clerics with those domains need
+    if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0 ||
+        GetLevelByClass(CLASS_TYPE_CLERIC, oPC))                  ExecuteScript("prc_domain_skin", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -709,6 +711,9 @@ void DeletePRCLocalInts(object oSkin)
     
     // Ironmind
     DeleteLocalInt(oSkin, "IronMind_DR");
+    
+    // Domains
+    DeleteLocalInt(oSkin, "StormDomainPower");
 
     // future PRCs Go below here
 }

@@ -176,6 +176,7 @@ object MyNextObjectInShape(int nShape, float fSize, location lTarget, int bLineO
 // Functions mostly only useful within the scope of this include
 int ArchmageSpellPower (object oCaster);
 int TrueNecromancy (object oCaster, int iSpellID, string sType);
+int DomainPower(object oCaster, int nSpellID);
 int StormMagic(object oCaster);
 int DeathKnell(object oCaster);
 int ShadowWeave (object oCaster, int iSpellID);
@@ -482,6 +483,7 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
     int iBoost = TrueNecromancy(oCaster, iSpellID, "ARCANE") +
                  ShadowWeave(oCaster, iSpellID) +
                  FireAdept(oCaster, iSpellID) +
+                 DomainPower(oCaster, iSpellID) +
                  StormMagic(oCaster);
 
     if (iClass1 == iFirstArcane) iClass1Lev += GetArcanePRCLevels(oCaster);
@@ -523,6 +525,7 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
     int iBoost = TrueNecromancy(oCaster, iSpellID, "DIVINE") +
                  ShadowWeave(oCaster, iSpellID) +
                  FireAdept(oCaster, iSpellID) +
+                 DomainPower(oCaster, iSpellID) +
                  StormMagic(oCaster);
 
     if (iClass1 == CLASS_TYPE_PALADIN
@@ -630,8 +633,10 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     iArcLevel += TrueNecromancy(oCaster, iSpellId, "ARCANE")
               +  ShadowWeave(oCaster, iSpellId)
               +  FireAdept(oCaster, iSpellId)
-              +  StormMagic(oCaster);
+              +  StormMagic(oCaster)
+              +  DomainPower(oCaster, iSpellId)
               +  DeathKnell(oCaster);
+              
     iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
 
 
@@ -645,7 +650,8 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     iDivLevel += TrueNecromancy(oCaster, iSpellId, "DIVINE")
               +  ShadowWeave(oCaster, iSpellId)
               +  FireAdept(oCaster, iSpellId)
-              +  StormMagic(oCaster);
+              +  StormMagic(oCaster)
+              +  DomainPower(oCaster, iSpellId)
               +  DeathKnell(oCaster);
     iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
 
@@ -740,6 +746,34 @@ int StormMagic(object oCaster)
         return 1;
     }
     return 0;
+}
+
+int DomainPower(object oCaster, int nSpellID)
+{
+	int nBonus = 0;
+        
+        // Boosts Caster level with the Illusion school by 1
+	if (GetHasFeat(FEAT_DOMAIN_POWER_GNOME, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_ILLUSION)
+	{
+		nBonus += 1;
+	}
+        // Boosts Caster level with the Illusion school by 1
+	if (GetHasFeat(FEAT_DOMAIN_POWER_ILLUSION, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_ILLUSION)
+	{
+		nBonus += 1;
+	}
+        // Boosts Caster level with healing spells
+	if (GetHasFeat(FEAT_HEALING_DOMAIN_POWER, oCaster) && GetIsHealingSpell(nSpellID))
+	{
+		nBonus += 1;
+	}
+        // Boosts Caster level with the Divination school by 1
+	if (GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_DIVINATION)
+	{
+		nBonus += 1;
+	}	
+	
+	return nBonus;
 }
 
 int DeathKnell(object oCaster)
@@ -1019,6 +1053,10 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
      {
           return 0;
      }
+     
+     // This is done here because it is possible to tell the saving throw type here
+     // Tyranny Domain increases the DC of mind spells by +2. 
+     if (GetHasFeat(FEAT_DOMAIN_POWER_TYRANNY, oCaster) && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS) nDC += 2;
 
     //racial pack code
     //this works by lowering the DC rather than adding to the save

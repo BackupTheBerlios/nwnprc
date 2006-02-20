@@ -34,7 +34,7 @@ void main()
     object oTarget = GetSpellTargetObject();
     int iGender = GetGender( OBJECT_SELF );
     int iFace;
-
+    StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
     int nPCForm = GetTrueForm(OBJECT_SELF);
 

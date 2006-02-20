@@ -16,6 +16,7 @@
 
 void main()
 {
+    StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
     int nPCForm = GetTrueForm(OBJECT_SELF);
 

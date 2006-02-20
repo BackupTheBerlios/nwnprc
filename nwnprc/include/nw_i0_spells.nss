@@ -179,7 +179,7 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
             nDamage = nDamage + nExtraDamage;
         }
     }
-    if ((nMetaMagic & METAMAGIC_EMPOWER) || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
+    if ((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nDamage = nDamage + (nDamage/2);
     }

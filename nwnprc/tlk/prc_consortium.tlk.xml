@@ -16661,283 +16661,251 @@ Use: Automatic.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
-Specifics:
-Hammer Mastery: The cleric recieves proficiency in martial or exotic weapons (depending on which weapon they choose to focus in), and recieve weapon focus in one of the following weapons: Heavy Flail, Warhammer, Dire Mace, Light Hammer, Mace, or the Light Flail.)
+Granted Power: Free Martial Weapon Proficiency and Weapon Focus your choice of hammer. (Not implemented yet).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Keen Edge (3), Impact (4), Blade Barrier (5), Iron Body (7)
 Use: Automatic.</entry>
   <entry id="50503" lang="en" sex="m">Metal</entry>
   <entry id="50504" lang="en" sex="m">Storm</entry>
   <entry id="50505" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Storm domain.
-Specifics:
-Electricity Resistance: The cleric recieves 5/- electricity resistance
+Granted Power: The cleric recieves 5/- electricity resistance.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Call Lightning (3), Gust of Wind (4), Ice Storm (6), Storm of Vengeance (8)
 Use: Automatic.</entry>
   <entry id="50506" lang="en" sex="m">Portal</entry>
   <entry id="50507" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Portal domain.
-Specifics:
+Granted Power: None.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Benign Transposition (2), Dimension Door (4), Banishment (5), Recall (6), Gate (8)
 Use: Automatic. </entry>
   <entry id="50508" lang="en" sex="m">Force</entry>
   <entry id="50509" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Force domain.
-Specifics:
+Granted Power: None.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Mage Armor (1), Magic Missle (2), Forceblast (3), Improved Mage Armor (4), Sphere of Ultimate Destruction (9)
 Use: Automatic.</entry>
   <entry id="50510" lang="en" sex="m">Slime</entry>
   <entry id="50511" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Slime domain.
-Specifics:
-Slime Rebuking: Able to rebuke Oozes as if they were undead.
+Granted Power: Rebuke or Command Ooze creatures as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier. (Not yet implemented).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Grease (1), Melf's Acid Arrow (2), Evard's Black Tentacles (5), Drown (6), Mass Drown (9)
 Use: Automatic.</entry>
   <entry id="50512" lang="en" sex="m">Tyranny</entry>
   <entry id="50513" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Tyranny domain.
-Specifics:
-Compulsive Power: The cleric gains a bonus of 2 to their DC when casting any spell with a compulsion effect.
+Granted Power: The cleric gains +2 to the DC of any mind spell he casts.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Bestow Curse (2), Fear (3), Bigby's Grasping Hand (7), Dominate Monster (9)
 Use: Automatic.</entry>
   <entry id="50514" lang="en" sex="m">Spider</entry>
   <entry id="50515" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Spider domain.
-Specifics:
-Spider Rebuking: Able to rebuke spiders as if they were undead.
+Granted Power: Rebuke or Command Spiders as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier. (Not yet implemented).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Web (2), Spider Skin (3), Viscid Glob (5), Creeping Doom (8)
 Use: Automatic.</entry>
   <entry id="50516" lang="en" sex="m">Undeath</entry>
   <entry id="50517" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Undeath domain.
-Specifics:
-Extra Turning: The cleric gains the Extra Turning feat for free.
+Granted Power: The cleric gains the Extra Turning feat for free.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Animate Dead (2), Control Undead (5), Create Greater Undead (7), Finger of Death (8)
 Use: Automatic.</entry>
   <entry id="50518" lang="en" sex="m">Time</entry>
   <entry id="50519" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Time domain.
-Specifics:
-Improved Initiative: The cleric gains the Improved Initiative feat for free.
+Granted Power: The cleric gains the Improved Initiative feat for free.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Expeditiuous Retreat (1), Haste (4), Mass Haste (7), Premonition (9)
 Use: Automatic.</entry>
   <entry id="50520" lang="en" sex="m">Dwarf</entry>
   <entry id="50521" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Dwarf domain.
-Specifics:
-Great Fortitude: The cleric gains the Great Fortitude feat for free.
+Granted Power: The cleric gains the Great Fortitude feat for free.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Glyph of Warding (2), Hammer of the Gods (3), Impact (4), Stoneskin (5), Protection from Spells (8)
 Use: Automatic.</entry>
   <entry id="50522" lang="en" sex="m">Charm</entry>
   <entry id="50523" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Charm domain.
-Specifics:
-Charming Presence: Boosts the Cleric's charisma score by 4 for 1 turn.
+Granted Power: You may boost your Charisma score by +4 once per day. This boost lasts for 1 minute.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Charm Monster (3), Dominate Person (5), Mass Charm (7), True Domination (9)
 Use: Once/Day.</entry>
   <entry id="50524" lang="en" sex="m">Elf</entry>
   <entry id="50525" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Elf domain.
-Specifics:
-Point Blank Shot: The cleric gains the Point Blank Shot ability for free.
+Granted Power: The cleric gains the Point Blank Shot feat.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: True Strike (1), Cat's Grace (2), Mass Cat's Grace (6), Sunburst (8)
 Use: Automatic.</entry>
   <entry id="50526" lang="en" sex="m">Family</entry>
   <entry id="50527" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Family domain.
-Specifics:
-Aura of Family: Creates an aura around themself that lasts 1 round/level and gives a bonus of 4 to their armor class as well as to all within the aura.
+Granted Power: As a free action, you may protect a number of creatures equal to your Charisma Modifier (minimum 1) with a +4 bonus to AC. This lasts 1 round per level.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Shield Other (2), Legion's Shield of Faith (3), Hero's Feast (6), Protection From Spells (7)
 Use: Once/Day.</entry>
   <entry id="50528" lang="en" sex="m">Fate</entry>
   <entry id="50529" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Fate domain.
-Specifics:
-Uncanny Dodge I: The cleric gains the Uncanny Dodge I ability for free.
+Granted Power: The cleric gains the Uncanny Dodge I ability.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Bestow Curse (2), Legion's Curse of Impending Blades (3), Premonition (8)
 Use: Automatic.</entry>
   <entry id="50530" lang="en" sex="m">Gnome</entry>
   <entry id="50531" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Gnome domain.
-Specifics:
+Granted Power: +1 Caster level to all Illusion Spells. 
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Colour Spray (1), Blur (2), Mirror Image (3), Prismatic Spray (7), Weird (9)
 Use: Automatic.</entry>
   <entry id="50532" lang="en" sex="m">Halfling</entry>
   <entry id="50533" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Halfling domain.
-Specifics:
-Skill of the Halfling: Clerics of this domain may activate its power to add their CHA modifier into their jump, climb, hide, and move silently checks for 10 minutes.
+Granted Power: You gain the ability to add your Charisma Modifier to your Jump, Hide, and Move Silently checks. It can be used once a day and lasts for 10 minutes.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Camouflage (1), Cat's Grace (2), Freedom of Movement (3), Improved Invisibility (6)
 Use: Once/Day.</entry>
   <entry id="50534" lang="en" sex="m">Illusion</entry>
   <entry id="50535" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Illusion domain.
-Specifics:
+Granted Power: +1 Caster level to all Illusion Spells. 
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Blur (2), Mirror Image (3), Phantasmal Killer (4), Shadow Shield (8)
 Use: Automatic.</entry>
   <entry id="50536" lang="en" sex="m">Hatred</entry>
   <entry id="50537" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Hatred domain.
-Specifics:
-Battle Frenzy: The cleric gains a bonus of 2 to their armor class, attack rolls, and saving throws for 1 turn.
+Granted Power: Once per day as a free action, choose 1 race. You gain +2 Attack, Saving Throw, and Armour Class vs that race. This lasts for 1 minute.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Bestow Curse (2), Blood Frenzy (3), Righteous Might (4), Wail of the Banshee (9)
 Use: Once/Day.</entry>
   <entry id="50538" lang="en" sex="m">Nobility</entry>
   <entry id="50539" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Nobility domain.
-Specifics:
-Noble Skill: The cleric gains a bonus of 2 to their armor class, attack rolls,damage, and saving throws for a number of rounds equal to their charisma modifier.
+Granted Power: You may grant allies a +2 bonus to Attack, Skills, Damage, and Saves. This does not affect you, and lasts for a number of rounds equal to your Charisma modifier. It can be used once per day.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Charm Person (2), Heroism (3), Greater Heroism (5), Dominate Monster (9)
 Use: Once/Day.</entry>
   <entry id="50540" lang="en" sex="m">Ocean</entry>
   <entry id="50541" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Ocean domain.
-Specifics:
+Granted Power: None.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Snilloc's Snowball (1), Snilloc's Snowball Swarm (2), Ice Storm (4), Drown (5),  Mass Drown (8)
 Use: Automatic.</entry>
   <entry id="50542" lang="en" sex="m">Orc</entry>
   <entry id="50543" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Orc domain.
-Specifics:
+Granted Power: Once per day, you may smite a target with a bonus to damage equal to your cleric level. If the target is an Elf or Dwarf, you gain +4 to the attack roll.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Prayer (2), Divine Power (3), Battletide (4), Dominate Monster (8), Power Word: Kill (9)
 Use: Automatic.</entry>
   <entry id="50544" lang="en" sex="m">Renewal</entry>
   <entry id="50545" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Renewal domain.
-Specifics:
+Granted Power: Once per day as a free action, you may gain 1d8 + Charisma modifier hitpoints. 
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Restoration (1), Restoration (3), Raise Dead (4), Ressurection (6), Mass Greater Restore (9)
 Use: Automatic.</entry>
   <entry id="50546" lang="en" sex="m">Retribution</entry>
   <entry id="50547" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Retribution domain.
-Specifics:
+Granted Power: 
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Death Armor (2), Elemental Shield (4), Destruction (7), Storm of Vengeance (8)
 Use: Automatic.</entry>
   <entry id="50548" lang="en" sex="m">Rune</entry>
   <entry id="50549" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Rune domain.
-Specifics:
-Scribe Scroll: The cleric gains the Scribe Scroll feat for free.
+Granted Power: The cleric gains the Scribe Scroll feat.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Glyph of Warding (3), Recall (4), Greater Glyph of Warding (6), Wall of Greater Dispelling (7)
 Use: Automatic.</entry>
   <entry id="50550" lang="en" sex="m">Scaleykind</entry>
   <entry id="50551" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Scaleykind domain.
-Specifics:
+Granted Power: Rebuke or Command Reptiles as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier. (Not yet implemented).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Magic Fang (1), Serpent's Sigh (3), Greater Magic Fang (4), Viscid Glob (5), Creeping Doom (9)
 Use: Automatic.</entry>
   <entry id="50552" lang="en" sex="m">Spells</entry>
   <entry id="50553" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Spells domain.
-Specifics:
-Intuitive Spellcasting: The cleric recieves a bonus of 2 on any spellcraft or concentration checks.
+Granted Power: You gain +2 Concentration and Spellcraft.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Spell Breach (4), Spell Mantle (5), Greater Spell Breach (9), Protection From Spells (7)
 Use: Automatic.</entry>
   <entry id="50555" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Air domain.
 Specifics:
-Elemental Power Over Air: Able to turn earth elementals and rebuke air elementals as if they were undead.
+Granted Power: Turn or Destroy Earth creatures as a good cleric turns undead. Rebuke or Command Air creatures as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Call Lightning (3), Gust of Wind (4), Chain Lightning (6), Great Thunderclap (7)
 Use: Automatic.</entry>
   <entry id="50556" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Animal domain.
 Specifics:
-Clerics who take the Animal domain are able to summon more powerful allies.
+Granted Power: Clerics who take the Animal domain are able to summon more powerful allies.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Cat's Grace (2), Hold Animal (3), Dominate Monster (8), Shapechange (9)
 Use: Automatic.</entry>
   <entry id="50557" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Destruction domain.
-Specifics:
-Weaken Constructs: Able to damage constructs while using the turn ability.
+Granted Power: Once per day, you may make a single melee attack with a +4 bonus to attack, and a damage bonus equal to your cleric level.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Slay Living (5), Crumble (6), Disintegrate (7), Implosion (8)
 Use: Automatic.</entry>
   <entry id="50558" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Earth domain.
-Specifics:
-Elemental Power Over Earth: Able to turn air elementals and rebuke earth elementals as if they were undead.
+Granted Power: Turn or Destroy Air creatures as a good cleric turns undead. Rebuke or Command Earth creatures as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Stoneskin (4), Acid Storm (6), Stonehold (7), Bombardment (8)
 Use: Automatic.</entry>
   <entry id="50559" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Evil domain.
-Specifics:
-Turn Outsiders: Able to turn outsiders as if they were undead.
+Granted Power: +1 Caster level on Evil spells (Not yet implemented).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Negative Energy Ray (1), Negative Energy Burst (3), Finger of Death (7), Energy Drain (8)
 Use: Automatic.</entry>
   <entry id="50560" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Fire domain.
-Specifics:
-Elemental Power Over Fire: Able to turn water elementals and rebuke fire elementals as if they were undead.
+Granted Power: Turn or Destroy Water creatures as a good cleric turns undead. Rebuke or Command Fire creatures as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Burning Bolts (2), Fireball (4), Firestorm (7), Delayed Blast Fireball (8)
 Use: Automatic.</entry>
   <entry id="50561" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Good domain.
-Specifics:
-Turn Outsider: Able to turn outsiders as if they were undead.
+Granted Power: +1 Caster level on Good spells (Not yet implemented).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Planar Binding (4), Stoneskin (5), Planar Binding (6), Greater Planar Binding (9)
 Use: Automatic.</entry>
   <entry id="50562" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Healing domain.
-Specifics:
-Empower Healing: The following healing spells are cast as if Empowered by the feat: Cure Light Wounds, Cure Moderate Wounds, Cure Serious Wounds, Cure Critical Wounds.
+Granted Power: +1 Caster level on Healing Spells.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Cure Serious Wounds (2), Mass Cure Serious Wounds (4), Heal(5).
 Use: Automatic.</entry>
   <entry id="50563" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Plant domain.
-Specifics:
-Turn Vermin: Able to turn vermin as if they were undead.
+Granted Power: Rebuke or Command Plant creatures as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier. (Not yet implemented).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Entangle (1), Barkskin (2), Creeping Doom (7), Unyielding Roots (9).
 Use: Automatic.</entry>
   <entry id="50564" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Sun domain.
-Specifics:
-Exceptional Turning: Add 1d6 to all turning checks to determine the maximum HD of undead turned. Also add 1d4 to the number of undead Hit Dice turned.
+Granted Power: Once per day, you can perform a greater turning. The greater turning is like a normal turning attempt, except that undead creatures that would be turned are destroyed instead.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Bless Weapon (1), Searing Light (2), Sunbeam (7), Sunburst (8)
 Use: Automatic.</entry>
   <entry id="50565" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Travel domain.
-Specifics:
+Granted Power: Once per day, you may cast Freedom of Movement on yourself. This lasts for a number of rounds equal to your cleric level.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Expeditious Retreat (1), Freedom of Movement (3), Dimension Door (4), Teleport (5), Greater Teleport (7)
 Use: Automatic.</entry>
   <entry id="50566" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Trickery domain.
-Specifics:
-Divine Trickery: Bonus to Hide, Persuade, Search, Disable Trap, Move Silently, Open Lock, and Pick Pockets checks equal to 1 per 2 levels. This effect lasts for 5 turns + the cleric's Charisma modifier.
+Granted Power: Bonus to Hide, Persuade, Search, Disable Trap, Move Silently, Open Lock, and Pick Pockets checks equal to 1 per 2 levels. This effect lasts for 5 turns + the cleric's Charisma modifier.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Invisibility (2), Invisibility Sphere (3), Mirror Image (4), Improved Invisibility (5).
 Use: Automatic.</entry>
   <entry id="50567" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Death domain.
-Specifics:
-Death Touch: The death touch deals 1d6 "false" damage per cleric level. If this adds up to the amount of the target's health or more, the target dies. Otherwise, this does nothing.
+Granted Power: You may use a death touch once per day. You must succeed at a melee touch attack. When you touch, 1d6 per cleric level is rolled. If this is equal or greater than the target's hit points, it dies.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Fear (3), Enervation (5), Slay Living (6), Wail of the Banshee (9)
 Use: Automatic.</entry>
   <entry id="50568" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Strength domain.
-Specifics:
-Divine Strength: The cleric gains a bonus to Strength equal to 2 +1 per 3 cleric levels. The effect lasts for 5 rounds + Charisma modifier.
+Granted Power: Once per day as a free action, you may gain a bonus to Strength equal to your level. This lasts for 1 round.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lionheart (1), Divine Power (3), Righteous Might (4), Stoneskin (5)
 Use: Automatic.</entry>
   <entry id="50569" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to War domain.
-Specifics:
-Battle Master: The clerics gains a bonus of 1 + 1 per 5 levels to Dexterity, Constitution, Attack Rolls and Damage. As well the cleric receives double this value as damage reduction. The effect will last for 5 rounds + charisma modifer.
+Granted Power: Free Martial Weapon Proficiency and Weapon Focus with the diety's favoured weapon. (Not implemented yet).
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Legion's Conviction (2), Legion's Shield of Faith (3), Mantle of Egregrious Might (9)
 Use: Once/Day.</entry>
   <entry id="50570" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Protection domain.
-Specifics:
-Divine Protection: Available to Clerics of the Protection Domain. The cleric is able to cast an improved form of Sanctuary that sets the save DC at 10 + Chr Modifier + Clerical Level. The effect has a duration of 1 round per caster level + Charisma modifier.
+Granted Power: Once per day as a free action, the target gains a saving throw bonus equal to your level. This lasts for 1 round.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Shield (1), Magic Vestment (2), Death Ward (3), Energy Buffer (4), Greater Stoneskin (6)
 Use: Automatic.</entry>
   <entry id="50571" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Water domain.
-Specifics:
-Turn Elementals: Able to turn elementals as if they were undead.
+Granted Power: Turn or Destroy Fire creatures as a good cleric turns undead. Rebuke or Command Water creatures as an evil cleric rebukes undead. Use these abilities a number of times per day equal to 3 + Charisma modifier
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Ice Storm (4), CoCold (5), Drown (7), Mass Drown (9)
 Use: Automatic.</entry>
   <entry id="50572" lang="en" sex="m">Domination</entry>
   <entry id="50573" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Domination domain.
-Specifics:
-Intuitive Spellcasting: The cleric recieves the Spell Focus: Enchantment feat for free.
+Granted Power: The cleric gains the Spell Focus: Enchantment feat.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Charm Person (1), Dominate Person (4), Mass Hold Person (7), Mass Hold Monster (9)
 Use: Automatic.</entry>
   <entry id="50574" lang="en" sex="m">Cast Domain Level 1</entry>
@@ -17000,6 +16968,11 @@ Use: Selected.</entry>
   <entry id="50628" lang="en" sex="m">Cast Domain Spell Level 9 Slot 5</entry>
   <entry id="50629" lang="en" sex="m">Bonus Domains</entry>
   <entry id="50630" lang="en" sex="m">Bonus Domains are granted through leveling in a class that grants them as a class bonus. They comprise all of the domains available.</entry>
+<entry id="50631" lang="en" sex="m">Type of Feat: Domain
+  Prerequisite: Access to the Knowledge domain.
+  Granted Power: +1 Caster level on all Divination spells.
+  Bonus Spells: The cleric gains access to the following spells at the specified spell level: Identify (1), Knock (2), Clairaudience and Clairvoyance (3), True Seeing (4), Legend Lore (6).
+Use: Automatic.</entry>
   <entry id="51001" lang="en" sex="m">Swashbuckler</entry>
   <entry id="51002" lang="en" sex="m">Swashbucklers</entry>
   <entry id="51003" lang="en" sex="m">swashbuckler</entry>

@@ -949,7 +949,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
             nDamage = nDamage + nExtraDamage;
         }
     }
-    if((nMetaMagic & METAMAGIC_EMPOWER) || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
+    if((nMetaMagic & METAMAGIC_EMPOWER))
     {
         nDamage = nDamage + (nDamage/2);
     }

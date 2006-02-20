@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             nDamage = nDamage + nExtraDamage;
         }
     }
-    if (nMetaMagic & METAMAGIC_EMPOWER || GetHasFeat(FEAT_HEALING_DOMAIN_POWER))
+    if (nMetaMagic & METAMAGIC_EMPOWER)
     {
         nDamage = nDamage + (nDamage/2);
     }

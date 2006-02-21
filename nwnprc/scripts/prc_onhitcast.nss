@@ -208,12 +208,6 @@ void main()
     //////////////// PSIONICS //////////////////////////
     //////////////////////////////////////////////////*/
 
-    // Strength of my Enemy OnHit
-    if(GetLocalInt(oSpellOrigin, "StrengthEnemyActive") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
-    {
-        StrengthEnemy(oSpellOrigin, oSpellTarget);
-    }
-
     // SweepingStrike OnHit
     if(GetLocalInt(oItem, "SweepingStrike") && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {

@@ -1,7 +1,7 @@
 /*
    ----------------
    Prevenom
-   
+
    psi_pow_prevnm
    ----------------
 
@@ -15,19 +15,20 @@
     Manifesting Time: 1 standard action
     Range: Personal
     Target: You
-    Duration: Instantaneous
+    Duration: 1 min./level or until discharged
     Saving Throw: None and Fortitude negates; see text
     Power Points: 1
-    Metapsionics: Twin
+    Metapsionics: Extend, Twin
 
     If you have a claw attack (either from an actual natural weapon or from an
-    effect such as claws of the beast), you can use this power to coat your claws in a mild venom.
-    On your next successful melee attack, the venom deals 2 points of Constitution damage.
-    A target struck by the poison can make a Fortitude save (DC 10 + 1/2 Manifester level +
+    effect such as claws of the beast), you can use this power to produce a mild
+    venom that coats one of your claws. On your next successful melee attack,
+    the venom deals 2 points of Constitution damage. A target struck by the
+    poison can make a Fortitude save (DC 10 + 1/2 your manifester level + your
     key ability modifier) to negate the damage.
 
-    Augment: For every 6 additional power points you spend, this power’s Constitution damage
-             increases by 2 points.
+    Augment: For every 6 additional power points you spend, this power’s
+             Constitution damage increases by 2 points.
 */
 
 
@@ -42,69 +43,62 @@ void main()
     if(GetRunningEvent() != EVENT_ITEM_ONHIT)
     {
         if (!PsiPrePowerCastCode()){ return; }
+
         object oManifester = OBJECT_SELF;
         object oTarget     = PRCGetSpellTargetObject();
-
-        // Validity check
-        if(!GetIsObjectValid(oTarget))
-        {
-            FloatingTextStrRefOnCreature(83615, oManifester); // Item must be weapon or creature holding a weapon
-    		return;
-    	}
-
         struct manifestation manif =
-            EvaluateManifestation(oManifester, OBJECT_INVALID,
+            EvaluateManifestation(oManifester, oTarget,
                                   PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
                                                            6, PRC_UNLIMITED_AUGMENTATION
                                                            ),
-                                  			   METAPSIONIC_TWIN);
+                                  METAPSIONIC_EXTEND | METAPSIONIC_TWIN);
 
         if(manif.bCanManifest)
         {
+            int nDamage     = 2 + (2 * manif.nTimesAugOptUsed_1);
+            int nDC         = 10
+                            + manif.nManifesterLevel / 2
+                            + GetAbilityModifier(GetAbilityOfClass(GetManifestingClass(oManifester)), oManifester);
+            effect eVis     = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
+            object oLClaw   = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget);
+            object oRClaw   = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget);
+            object oBite    = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTarget);
+            float fDuration = 60.0f * manif.nManifesterLevel;
+            if(manif.bExtend) fDuration *= 2;
 
-            effect eVis       = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
-            
-            object oLClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget);
-            object oRClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget);
-            object oBite        = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTarget);
-        
-            // Must have claws check
+            // Must have a natural attack
             if(!(GetIsObjectValid(oLClaw) || GetIsObjectValid(oRClaw) || GetIsObjectValid(oBite)))
             {
-                // "Target does not posses a claw attack!"
-                FloatingTextStrRefOnCreature(16826653, oManifester, FALSE);
+                // "Target does not posses a natural attack!"
+                FloatingTextStrRefOnCreature(16826656, oManifester, FALSE);
                 return;
             }
 
             /* Apply the VFX to the target */
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
-            // Create the damages array if it doesn't already exist
-            if(!array_exists(oTarget, "PRC_Power_Prevenom_Damages"))
-                array_create(oTarget, "PRC_Power_Prevenom_Damages");
+            // Create the values array if it doesn't already exist
+            if(!array_exists(oTarget, "PRC_Power_Prevenom_Values"))
+                array_create(oTarget, "PRC_Power_Prevenom_Values");
 
             // Handle Twin Power
             int nRepeats = manif.bTwin ? 2 : 1;
             for(; nRepeats > 0; nRepeats--)
             {
-                // Calculate the damage here and store it on the weapon
-                int nDamage = 2 + (2 * manif.nTimesAugOptUsed_1);
-                array_set_int(oTarget, "PRC_Power_Prevenom_Damages",
-                              array_get_size(oTarget, "PRC_Power_Prevenom_Damages"),
-                              nDamage
+                // Store the DC and the damage to be dealt on the creature
+                array_set_int(oTarget, "PRC_Power_Prevenom_Values",
+                              array_get_size(oTarget, "PRC_Power_Prevenom_Values"),
+                              (nDC << 16) | nDamage
                               );
             }
 
-    	    // Hook to the item's OnHit
-    	    AddEventScript(oTarget, EVENT_ITEM_ONHIT, "psi_pow_prevnm", TRUE, FALSE);
-    	    
-    	    // Store the Manifester level for use later
-    	    SetLocalInt(oManifester, "PRC_Power_Prevenom_ManifLevel", manif.nManifesterLevel);
+            // Hook to the creature's OnHit
+            AddEventScript(oTarget, EVENT_ITEM_ONHIT, "psi_pow_prevnm", TRUE, FALSE);
 
             /* Add the onhit spell to the weapon */
-            IPSafeAddItemProperty(oLClaw, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-            IPSafeAddItemProperty(oRClaw, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-            IPSafeAddItemProperty(oBite, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oLClaw, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oRClaw, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oBite,  ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }// end if - Successfull manifestation
     }// end if - Running manifestation
     else
@@ -112,33 +106,41 @@ void main()
         object oManifester = OBJECT_SELF;
         object oItem       = GetSpellCastItem();
         object oTarget     = PRCGetSpellTargetObject();
-        int nDC = 10 
-	        + GetLocalInt(oManifester, "PRC_Power_Prevenom_ManifLevel") / 2
-                + GetAbilityModifier(GetAbilityOfClass(GetManifestingClass(oManifester)), oManifester);
 
-        int nDamage = array_get_int(oManifester, "PRC_Power_Prevenom_Damages",
-                                    array_get_size(oManifester, "PRC_Power_Prevenom_Damages")
-                                    );
-
-        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
-
-	// First check for poison immunity, if not, make a fort save versus spells.
-	if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) &&
-	   !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON, oManifester))
-	{
-	        //Apply the poison effect and VFX impact
-		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
-		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, TRUE);
-	}
-
-        // Remove the damage value from the array
-        int nNewSize = array_get_size(oManifester, "PRC_Power_Prevenom_Damages") - 1;
-        if(nNewSize > 0)
-            array_shrink(oManifester, "PRC_Power_Prevenom_Damages", nNewSize);
-        else
+        // Make sure the event was triggered by a natural weapon
+        if(oItem == GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oManifester) ||
+           oItem == GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oManifester) ||
+           oItem == GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oManifester)
+           )
         {
-            array_delete(oManifester, "PRC_Power_Prevenom_Damages");
-            DeleteLocalInt(oManifester, "PRC_Power_Prevenom_ManifLevel");
-        }
+            int nArraySize = array_get_size(oManifester, "PRC_Power_Prevenom_Values");
+            int nValue     = array_get_int(oManifester, "PRC_Power_Prevenom_Values", nArraySize);
+            int nDamage    = nValue & 0x0000FFFF;
+            int nDC        = (nValue >>> 16 ) & 0x0000FFFF;
+
+            // Target-specific damage adjustments
+            nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
+
+            if(DEBUG) DoDebug("psi_pow_prevnm: OnHit: Damage = " + IntToString(nDamage) + "; DC = " + IntToString(nDC));
+
+            // First check for poison immunity, if not, make a fort save versus spells.
+            if(!GetIsImmune(oTarget, IMMUNITY_TYPE_POISON) &&
+               !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON, oManifester))
+            {
+                    //Apply the poison effect and VFX impact
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
+                    ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, TRUE);
+            }
+
+            // Remove the damage value from the array
+            nArraySize -= 1;
+            if(nArraySize > 0)
+                array_shrink(oManifester, "PRC_Power_Prevenom_Values", nArraySize);
+            else
+            {
+                array_delete(oManifester, "PRC_Power_Prevenom_Values");
+                RemoveEventScript(oManifester, EVENT_ITEM_ONHIT, "psi_pow_prevnm", TRUE, FALSE);
+            }
+        }// end if - Triggered by a natural weapon
     }// end else - Running OnHit
 }

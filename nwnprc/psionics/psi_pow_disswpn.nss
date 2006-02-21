@@ -44,13 +44,13 @@ void main()
     {
         if (!PsiPrePowerCastCode()){ return; }
         object oManifester = OBJECT_SELF;
-        object oTarget     = IPGetTargetedOrEquippedMeleeWeapon();
+        object oWeapon     = IPGetTargetedOrEquippedMeleeWeapon();
 
         // Validity check
-        if(!GetIsObjectValid(oTarget))
+        if(!GetIsObjectValid(oWeapon))
         {
             FloatingTextStrRefOnCreature(83615, oManifester); // Item must be weapon or creature holding a weapon
-    		return;
+            return;
     	}
 
         struct manifestation manif =
@@ -67,14 +67,14 @@ void main()
             int nDieSize      = 6;
             int nDamage;
             effect eVis       = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
-            object oPossessor = GetItemPossessor(oTarget);
+            object oPossessor = GetItemPossessor(oWeapon);
 
             /* Apply the VFX to whatever is wielding the target */
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPossessor);
 
             // Create the damages array if it doesn't already exist
-            if(!array_exists(oPossessor, "PRC_Power_DissolvingWeapon_Damages"))
-                array_create(oPossessor, "PRC_Power_DissolvingWeapon_Damages");
+            if(!array_exists(oWeapon, "PRC_Power_DissolvingWeapon_Damages"))
+                array_create(oWeapon, "PRC_Power_DissolvingWeapon_Damages");
 
             // Handle Twin Power
             int nRepeats = manif.bTwin ? 2 : 1;
@@ -82,40 +82,42 @@ void main()
             {
                 // Roll the damage here and store it on the weapon
                 nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
-                array_set_int(oPossessor, "PRC_Power_DissolvingWeapon_Damages",
-                              array_get_size(oPossessor, "PRC_Power_DissolvingWeapon_Damages"),
+                array_set_int(oWeapon, "PRC_Power_DissolvingWeapon_Damages",
+                              array_get_size(oWeapon, "PRC_Power_DissolvingWeapon_Damages"),
                               nDamage
                               );
             }
 
     	    // Hook to the item's OnHit
-    	    AddEventScript(oTarget, EVENT_ITEM_ONHIT, "psi_pow_disswpn", TRUE, FALSE);
+    	    AddEventScript(oWeapon, EVENT_ITEM_ONHIT, "psi_pow_disswpn", TRUE, FALSE);
 
             /* Add the onhit spell to the weapon */
-            IPSafeAddItemProperty(oTarget, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oWeapon, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }// end if - Successfull manifestation
     }// end if - Running manifestation
     else
     {
         object oManifester = OBJECT_SELF;
-        object oItem       = GetSpellCastItem();
+        object oWeapon     = GetSpellCastItem();
         object oTarget     = PRCGetSpellTargetObject();
 
-        int nDamage = array_get_int(oManifester, "PRC_Power_DissolvingWeapon_Damages",
-                                    array_get_size(oManifester, "PRC_Power_DissolvingWeapon_Damages")
+        int nDamage = array_get_int(oWeapon, "PRC_Power_DissolvingWeapon_Damages",
+                                    array_get_size(oWeapon, "PRC_Power_DissolvingWeapon_Damages")
                                     );
-
         nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
 
         effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-        effect eLink = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_L));
+        effect eLink   = EffectLinkEffects(eDamage, EffectVisualEffect(VFX_IMP_ACID_L));
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
 
         // Remove the damage value from the array
-        int nNewSize = array_get_size(oManifester, "PRC_Power_DissolvingWeapon_Damages") - 1;
+        int nNewSize = array_get_size(oWeapon, "PRC_Power_DissolvingWeapon_Damages") - 1;
         if(nNewSize > 0)
-            array_shrink(oManifester, "PRC_Power_DissolvingWeapon_Damages", nNewSize);
+            array_shrink(oWeapon, "PRC_Power_DissolvingWeapon_Damages", nNewSize);
         else
-            array_delete(oManifester, "PRC_Power_DissolvingWeapon_Damages");
+        {
+            array_delete(oWeapon, "PRC_Power_DissolvingWeapon_Damages");
+            RemoveEventScript(oWeapon, EVENT_ITEM_ONHIT, "psi_pow_disswpn", TRUE, FALSE);
+        }
     }// end else - Running OnHit
 }

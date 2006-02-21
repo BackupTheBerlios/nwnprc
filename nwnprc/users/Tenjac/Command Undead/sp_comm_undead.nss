@@ -69,12 +69,15 @@ void main()
 	
 	float fDuration = HoursToSeconds(24 * nCasterLvl);
 	
-	//Link domination and persistant VFX
+	//Link charm and persistant VFX
 	effect eLink = EffectLinkEffects(eMind, eCharm);
 	eLink = EffectLinkEffects(eLink, eDur);
+	eLink = SupernaturalEffect(eLink);
 	
+	//Link domination and persistant VFX
 	effect eLink2 = EffectLinkEffects(eMind, eDom);
 	eLink2 = EffectLinkEffects(eLink2, eDur);
+	eLink2 = SupernaturalEffect(eLink2);
 	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_COMMAND_UNDEAD, oPC);
 	

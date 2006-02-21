@@ -152,7 +152,7 @@ void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDuration
         if(nDurationType == DURATION_TYPE_TEMPORARY && fDuration == -1.0f)
         {
             int i;
-            for(; i < nAmount; i++)
+            for(i = 1; i < nAmount; i++)
                 DelayCommand(0.01f, SPApplyEffectToObject(nDurationType, bDispellable ?
                                                                           EffectAbilityDecrease(nAbility, 1) :
                                                                           SupernaturalEffect(EffectAbilityDecrease(nAbility, 1)),

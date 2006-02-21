@@ -1,4 +1,4 @@
-/*
+/** @file
    =============================================
    PENTAGRAMS & SUMMONING CIRCLES          v1.45
    =============================================
@@ -6,6 +6,9 @@
    #include "inc_draw"
 
    last updated on August 8, 2005
+
+   modified by Ornedan of PRC to add new parameters:
+    fDirectionXZ and fDirectionYZ
 
    Draw geometric forms using a variety of media
    =============================================

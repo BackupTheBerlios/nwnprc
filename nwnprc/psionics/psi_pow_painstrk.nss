@@ -1,14 +1,14 @@
 /*
    ----------------
    Painful Strike
-   
+
    psi_pow_painstrk
    ----------------
 
    5/11/05 by Stratovarius
 */ /** @file
 
-    Duodimensional Claw
+    Painful Strike
 
     Psychometabolism
     Level: Psychic warrior 2
@@ -19,10 +19,8 @@
     Power Points: 3
     Metapsionics: Extend
 
-    If you have a claw attack (either from an actual natural weapon or from an
-    effect such as claws of the beast), you can use this power to improve that
-    weapon. Your claws become two-dimensional, making them razorsharp. The
-    weapon is now psionically keen, doubling it's threat range.
+    Your natural weapons cause additional pain. Each successful attack you make
+    with a natural weapon deals an extra 1d4 points of damage to the target.
 */
 
 #include "psi_inc_psifunc"
@@ -58,25 +56,27 @@ void main()
 
     if(manif.bCanManifest)
     {
-        object oLClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget);
-        object oRClaw       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget);
-        effect eDur         = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eVis         = EffectVisualEffect(VFX_IMP_PULSE_WATER);
-        itemproperty ipClaw = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, IP_CONST_DAMAGEBONUS_1d6);
-        float fDuration     = 6.0f * manif.nManifesterLevel;
+        object oLClaw      = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget);
+        object oRClaw      = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTarget);
+        object oBite       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTarget);
+        effect eDur        = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        effect eVis        = EffectVisualEffect(VFX_IMP_PULSE_WATER);
+        itemproperty ipDam = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL, IP_CONST_DAMAGEBONUS_1d4);
+        float fDuration    = 6.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;
 
-        // Must have claws check
-        if(!(GetIsObjectValid(oLClaw) || GetIsObjectValid(oRClaw)))
+        // Must have a natural attack
+        if(!(GetIsObjectValid(oLClaw) || GetIsObjectValid(oRClaw) || GetIsObjectValid(oBite)))
         {
-            // "Target does not posses a claw attack!"
-            FloatingTextStrRefOnCreature(16826653, oManifester, FALSE);
+            // "Target does not posses a natural attack!"
+            FloatingTextStrRefOnCreature(16826656, oManifester, FALSE);
             return;
         }
 
         // Apply the itemproperties
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ipClaw, oLClaw, fDuration);
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ipClaw, oRClaw, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipDam, oLClaw, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipDam, oRClaw, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ipDam, oBite,  fDuration);
 
         // Do some VFX
                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

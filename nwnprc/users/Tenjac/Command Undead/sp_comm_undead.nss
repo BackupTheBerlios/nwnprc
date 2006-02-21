@@ -70,12 +70,12 @@ void main()
 	float fDuration = HoursToSeconds(24 * nCasterLvl);
 	
 	//Link charm and persistant VFX
-	effect eLink = EffectLinkEffects(eMind, eCharm);
+	effect eLink = EffectLinkEffects(eVis, eCharm);
 	eLink = EffectLinkEffects(eLink, eDur);
 	eLink = SupernaturalEffect(eLink);
 	
 	//Link domination and persistant VFX
-	effect eLink2 = EffectLinkEffects(eMind, eDom);
+	effect eLink2 = EffectLinkEffects(eVis, eDom);
 	eLink2 = EffectLinkEffects(eLink2, eDur);
 	eLink2 = SupernaturalEffect(eLink2);
 	

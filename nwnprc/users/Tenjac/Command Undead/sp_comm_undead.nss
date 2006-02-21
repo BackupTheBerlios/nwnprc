@@ -94,7 +94,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration);
 			}
 			
-			else(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE, oPC, 1.0))
+			else(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
 			{
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
 			}

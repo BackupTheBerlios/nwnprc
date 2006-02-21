@@ -89,6 +89,9 @@ void main()
             ExecuteScript("prc_pw_raisedead", oManifester);
             if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
                 SetPersistantLocalInt(oTarget, "persist_dead", FALSE);
+
+            // [Good] descriptor causes an alignent shift
+            SPGoodShift(oManifester);
         }// end if - Deadness check
     }// end if - Successfull manifestation
 }

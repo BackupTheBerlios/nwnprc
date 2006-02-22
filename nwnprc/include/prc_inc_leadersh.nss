@@ -2,8 +2,6 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const string PRC_PC_EXEC_DEFAULT = "PRC_PC_EXEC_DEFAULT";
-const string CHANGE_PREFIX_LOCAL = "PRC_";
 const string COHORT_DATABASE     = "PRCCOHORTS";
 const string COHORT_TAG          = "prc_cohort";
 
@@ -60,11 +58,20 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     SetMaxHenchmen(99);
     AddHenchman(oPC, oCohort);
     SetMaxHenchmen(nMaxHenchmen);
-    //turn on its default script
-    SetLocalInt(oCohort, "PRC_PC_EXEC_DEFAULT", TRUE);
-    //set it to a conversation
-    SetLocalString(oCohort, CHANGE_PREFIX_LOCAL+"conv", "prc_ai_coh_conv");
-    SetLocalString(oCohort, CHANGE_PREFIX_LOCAL+"heartbeat", "prc_ai_coh_hb");
+    //turn on its scripts    
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONPHYSICALATTACKED,   "prc_ai_mob_attck", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONBLOCKED,            "prc_ai_mob_block", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONCOMBATROUNDEND,     "prc_ai_mob_combt", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONDAMAGED,            "prc_ai_mob_damag", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONDISTURBED,          "prc_ai_mob_distb", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONPERCEPTION,         "prc_ai_mob_percp", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONSPAWNED,            "prc_ai_mob_spawn", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONSPELLCASTAT,        "prc_ai_mob_spell", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONDEATH,              "prc_ai_mob_death", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONRESTED,             "prc_ai_mob_rest",  TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONUSERDEFINED,        "prc_ai_mob_userd", TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_coh_hb",    TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_coh_conv",  TRUE, TRUE);
     //set it to the pcs level
     int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     SetXP(oCohort, nLevel*(nLevel-1)*500);
@@ -90,7 +97,8 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     int nSlot;
     for(nSlot = 0;nSlot<14;nSlot++)
     {
-         DestroyObject(oTest);
+        oTest = GetItemInSlot(nSlot, oCohort);  
+        DestroyObject(oTest);
     }
 
     //DEBUG

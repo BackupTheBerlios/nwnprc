@@ -412,91 +412,62 @@ int IsStringChanged(string sTest, string sName)
 void RunScript(string sEvent)
 {
     object oSelf = OBJECT_SELF;
-    string sScript;
 DoDebug("default, event = " + sEvent);
     // Determine NPC script name and run generic eventhook
     if(sEvent == "attacked")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONPHYSICALATTACKED);
-        sScript = "prc_ai_mob_attck";
     }
     else if(sEvent == "blocked")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONBLOCKED);
-        sScript = "prc_ai_mob_block";
     }
     else if(sEvent == "combat")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONCOMBATROUNDEND);
-        sScript = "prc_ai_mob_combt";
     }
     else if(sEvent == "conv")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONCONVERSATION);
-        sScript = "prc_ai_mob_conv";
     }
     else if(sEvent == "damaged")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDAMAGED);
-        sScript = "prc_ai_mob_damag";
     }
     else if(sEvent == "death")
     {
-        // Looks like this will always reroute to the correct scripts alredy
-        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDEATH);
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDEATH);
         /*
         if(!GetIsPC(oSelf))
             ExecuteScript("prc_ondeath", oSelf);
         */
-        sScript = "prc_ai_mob_death";
     }
     else if(sEvent == "disturbed")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONDISTURBED);
-        sScript = "prc_ai_mob_distb";
     }
     else if(sEvent == "heartbeat")
     {
-        // No need for this, I think
-        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_ONHEARTBEAT);
-        sScript = "prc_ai_mob_heart";
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_ONHEARTBEAT);
     }
     else if(sEvent == "perception")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONPERCEPTION);
-        sScript = "prc_ai_mob_percp";
     }
     else if(sEvent == "rested")
     {
-        // No need for this
-        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONRESTED);
-        sScript = "prc_ai_mob_rest";
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONRESTED);
     }
     else if(sEvent == "spawned")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONSPAWNED);
-        sScript = "prc_ai_mob_spawn";
     }
     else if(sEvent == "spellcast")
     {
         ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONSPELLCASTAT);
-        sScript = "prc_ai_mob_spell";
     }
     else if(sEvent == "user")
     {
-        // No need for this
-        //ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONUSERDEFINED);
-        sScript = "prc_ai_mob_userd";
-    }
-
-    // Execute the NPC script if that has been turned on
-    if(GetLocalInt(oSelf, PRC_PC_EXEC_DEFAULT))
-    {
-        // Determine if this creature has a script explicitly specified for this event.
-        if(GetLocalString(oSelf, CHANGE_PREFIX_LOCAL + sEvent) != "")
-            sScript = GetLocalString(oSelf, CHANGE_PREFIX_LOCAL + sEvent);
-
-        // Execute it
-        ExecuteScript(sScript, oSelf);
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONUSERDEFINED);
     }
 }

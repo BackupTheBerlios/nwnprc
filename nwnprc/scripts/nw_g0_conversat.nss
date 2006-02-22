@@ -14,11 +14,12 @@
 
 void main()
 {
-    if(GetLocalInt(OBJECT_SELF, PRC_PC_EXEC_DEFAULT) && !GetIsPC(OBJECT_SELF))
+    if(GetIsPC(OBJECT_SELF))
     {
         SetLocalInt(OBJECT_SELF, "default_conversation_event", TRUE);
         ExecuteScript("default", OBJECT_SELF);
     }
     else if(GetListenPatternNumber() == -1)
         BeginConversation();
+    ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_VIRTUAL_ONCONVERSATION);
 }

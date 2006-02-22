@@ -51,7 +51,8 @@ int GetECL(object oTarget)
     else
         nLevel = GetHitDice(oTarget);
     int nRace = GetRacialType(oTarget);
-    nLevel += StringToInt(Get2DACache("ECL", "LA", nRace));
+    if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
+        nLevel += StringToInt(Get2DACache("ECL", "LA", nRace));
     if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
         nLevel += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
     return nLevel;

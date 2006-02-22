@@ -145,6 +145,22 @@ const int EVENT_VIRTUAL_ONSPAWNED           = 43;
 /// WARNING: Event detection may be inaccurate
 const int EVENT_VIRTUAL_ONSPELLCASTAT       = 44;
 
+/// Virtual event - On Death
+/// WARNING: Event detection may be inaccurate
+const int EVENT_VIRTUAL_ONDEATH             = 45;
+
+/// Virtual event - On Rested
+/// WARNING: Event detection may be inaccurate
+const int EVENT_VIRTUAL_ONRESTED            = 46;
+
+/// Virtual event - On User Defined
+/// WARNING: Event detection may be inaccurate
+const int EVENT_VIRTUAL_ONUSERDEFINED       = 47;
+
+/// Virtual event - On Heartbeat
+/// WARNING: Event detection may be inaccurate
+const int EVENT_VIRTUAL_ONHEARTBEAT         = 48;
+
 
 // NPC events
 /// NPC event - On Blocked

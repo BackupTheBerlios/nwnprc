@@ -66,7 +66,7 @@ void main()
 	effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 	effect eDom = EfffectDominated();
-	
+	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDuration = HoursToSeconds(24 * nCasterLvl);
 	
 	//Link charm and persistant VFX
@@ -80,6 +80,11 @@ void main()
 	eLink2 = SupernaturalEffect(eLink2);
 	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_COMMAND_UNDEAD, oPC);
+	
+	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+	{
+		fDuration = (fDuration * 2);
+	}
 	
 	//Undead
 	if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)

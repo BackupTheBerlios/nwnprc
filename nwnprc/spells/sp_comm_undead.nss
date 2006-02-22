@@ -65,14 +65,13 @@ void main()
 	effect eCharm = EffectCharmed();
 	effect eVis = EffectVisualEffect(VFX_IMP_DOMINATE_S);
 	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eDom = EfffectDominated();
+	effect eDom = EffectDominated();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDuration = HoursToSeconds(24 * nCasterLvl);
 	
 	//Link charm and persistant VFX
-	effect eLink = EffectLinkEffects(eVis, eCharm);
-	eLink = EffectLinkEffects(eLink, eDur);
-	eLink = SupernaturalEffect(eLink);
+	effect eLink = EffectLinkEffects(eVis, eDur);
+        eLink = SupernaturalEffect(eLink);
 	
 	//Link domination and persistant VFX
 	effect eLink2 = EffectLinkEffects(eVis, eDom);
@@ -93,15 +92,19 @@ void main()
 		if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Dominate mindless
-			if(GetAbilityScore(ABILITY_INTELLIGENCE, oTarget) < 11)
+			if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) < 11)
 			
 			{
 				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, fDuration);
 			}
 			
-			else(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+			else
 			{
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+				if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+				{			
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+					SetIsTemporaryNeutral(oTarget, oPC, TRUE, fDuration);
+				}
 			}
 		}
 	}

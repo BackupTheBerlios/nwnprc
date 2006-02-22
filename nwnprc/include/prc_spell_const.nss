@@ -481,6 +481,7 @@ const int SPELL_NECROTIC_TERMINATION                = 2861;
 const int SPELL_GHOUL_GAUNTLET                      = 2862;
 const int SPELL_ENERGY_EBB                          = 2863;
 const int SPELL_NIGHTS_CARESS                       = 2864;
+const int SPELL_COMMAND_UNDEAD                      = 2499;
 const int SPELL_ABSORB_STRENGTH                     = 2500;
 const int SPELL_APOCALYPSE_FROM_THE_SKY             = 2501;
 const int SPELL_CLAWS_OF_THE_BEBILITH               = 2502;

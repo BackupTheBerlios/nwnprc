@@ -53,16 +53,18 @@ const int nGaveCyst = 16829316;
 ///////////////////////////////////////
 #include "prc_alterations"
 #include "inc_utility"
-
+#include "prc_spell_const"
 
 int GetCanCastNecroticSpells(object oPC)
-{
+{	                
 	int bReturn = TRUE;
+	
 	// check for Necrotic Empowerment on caster
 	if (GetHasSpellEffect(SPELL_NECROTIC_EMPOWERMENT, oPC))
-	{// "You cannot cast spells utilizing your Mother Cyst while under the effect of Necrotic Empowerment."
+	{
+		// "You cannot cast spells utilizing your Mother Cyst while under the effect of Necrotic Empowerment."
 
-		SendMessageToPCByStrRef(oPC, nNecEmpower);
+		FloatingTextStrRefOnCreature(nNecEmpower, oPC);
 		bReturn = FALSE;
 	}
 	// check for Mother Cyst
@@ -70,25 +72,34 @@ int GetCanCastNecroticSpells(object oPC)
 	{
 
 		// "You must have a Mother Cyst to cast this spell."
-		SendMessageToPCByStrRef(oPC, nNoMotherCyst);
+		FloatingTextStrRefOnCreature(nNoMotherCyst, oPC);
 		bReturn = FALSE;
 	}
+	
+	if(DEBUG) DoDebug("spinc_necrocyst: GetCanCastNecroticSpells():\n"
+	                    + "oPC = '" + GetName(oPC) + "'");
+	
 	return bReturn;
+	
 }
 
 
 int GetHasNecroticCyst(object oCreature)
 {
-    return GetPersistantLocalInt(oCreature, NECROTIC_CYST_MARKER);
+	
+	                    
+	return GetPersistantLocalInt(oCreature, NECROTIC_CYST_MARKER);
+	
+	if(DEBUG) DoDebug("spinc_necrocyst: GetHasNecroticCyst():\n"
+	                    + "oCreature = '" + GetName(oCreature) + "'");
 
 }
 
 void GiveNecroticCyst(object oCreature)
 {
-
-
+	
 	SetPersistantLocalInt(oCreature, NECROTIC_CYST_MARKER, 1);
-	SendMessageToPCByStrRef(OBJECT_SELF, nGaveCyst);
+	FloatingTextStrRefOnCreature(nGaveCyst, OBJECT_SELF);
 	itemproperty iCystDam = (ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1));
 	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
 	if (GetIsObjectValid(oArmor))
@@ -105,6 +116,10 @@ void GiveNecroticCyst(object oCreature)
 
 	//Keep property on armor or hide
 	ExecuteScript ("prc_keep_onhit_a", oCreature);
+	
+	if(DEBUG) DoDebug("spinc_necrocyst: GiveNecroticCyst():\n"
+		                    + "oCreature = '" + GetName(oCreature) + "'");
+
 }
 
 void RemoveCyst(object oCreature)

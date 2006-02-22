@@ -14,15 +14,16 @@
 
 #include "inc_dynconv"
 #include "prc_alterations"
+#include "prc_power_const"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
 const int STAGE_STAT_BOOST_CHOICE = 0;
-const int STAGE_CONFIRMATION  = 1;
-const int STAGE_STAT_BURN_CHOICE = 2;
-const int STAGE_STAT_AMOUNT = 3;
+const int STAGE_CONFIRMATION      = 1;
+const int STAGE_STAT_BURN_CHOICE  = 2;
+const int STAGE_STAT_AMOUNT       = 3;
 
 //////////////////////////////////////////////////
 /* Aid functions                                */
@@ -31,17 +32,16 @@ const int STAGE_STAT_AMOUNT = 3;
 // Just takes the stat and returns the name
 string StatToName(int nStat)
 {
-	if (nStat == ABILITY_STRENGTH) return "Strength";
-	else if (nStat == ABILITY_DEXTERITY) return "Dexterity";
-	else if (nStat == ABILITY_CONSTITUTION) return "Constitution";
-	else if (nStat == ABILITY_WISDOM) return "Wisdom";
-	else if (nStat == ABILITY_INTELLIGENCE) return "Intelligence";
-	else if (nStat == ABILITY_CHARISMA) return "Charisma";
-	
-	// if its not a stat
-	return "";
-}
+    if      (nStat == ABILITY_STRENGTH)     return GetStringByStrRef(135);
+    else if (nStat == ABILITY_DEXTERITY)    return GetStringByStrRef(133);
+    else if (nStat == ABILITY_CONSTITUTION) return GetStringByStrRef(132);
+    else if (nStat == ABILITY_WISDOM)       return GetStringByStrRef(136);
+    else if (nStat == ABILITY_INTELLIGENCE) return GetStringByStrRef(134);
+    else if (nStat == ABILITY_CHARISMA)     return GetStringByStrRef(131);
 
+    // if its not a stat
+    return "";
+}
 
 //////////////////////////////////////////////////
 /* Main function                                */
@@ -80,11 +80,11 @@ void main()
             {
                 // Set the header
                 SetHeader("Select the Ability Score you would like to boost.");
-                
+
                 // Add responses for the PC
-                AddChoice("Strength", ABILITY_STRENGTH, oPC);
-                AddChoice("Dexterity", ABILITY_DEXTERITY, oPC);
-                AddChoice("Constitution", ABILITY_CONSTITUTION, oPC);
+                AddChoice(StatToName(ABILITY_STRENGTH),     ABILITY_STRENGTH,     oPC);
+                AddChoice(StatToName(ABILITY_DEXTERITY),    ABILITY_DEXTERITY,    oPC);
+                AddChoice(StatToName(ABILITY_CONSTITUTION), ABILITY_CONSTITUTION, oPC);
 
                 MarkStageSetUp(STAGE_STAT_BOOST_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -93,17 +93,17 @@ void main()
             {
                 // Set the header
                 SetHeader("Select the Ability Score you would like to burn for this power.");
-                
+
                 // Add responses for the PC
-                AddChoice("Strength", ABILITY_STRENGTH, oPC);
-                AddChoice("Dexterity", ABILITY_DEXTERITY, oPC);
-                AddChoice("Constitution", ABILITY_CONSTITUTION, oPC);
-                AddChoice("Wisdom", ABILITY_WISDOM, oPC);
-                AddChoice("Intelligence", ABILITY_INTELLIGENCE, oPC);
-                AddChoice("Charisma", ABILITY_CHARISMA, oPC);
+                AddChoice(StatToName(ABILITY_STRENGTH),     ABILITY_STRENGTH,     oPC);
+                AddChoice(StatToName(ABILITY_DEXTERITY),    ABILITY_DEXTERITY,    oPC);
+                AddChoice(StatToName(ABILITY_CONSTITUTION), ABILITY_CONSTITUTION, oPC);
+                AddChoice(StatToName(ABILITY_WISDOM),       ABILITY_WISDOM,       oPC);
+                AddChoice(StatToName(ABILITY_INTELLIGENCE), ABILITY_INTELLIGENCE, oPC);
+                AddChoice(StatToName(ABILITY_CHARISMA),     ABILITY_CHARISMA,     oPC);
 
                 MarkStageSetUp(STAGE_STAT_BURN_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
-                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values            
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
             else if(nStage == STAGE_STAT_AMOUNT)//Stat to burn
             {
@@ -113,7 +113,7 @@ void main()
                	sAmount += "Your manifester level is " + IntToString(GetLocalInt(oPC, "PsychoFeedManifesterLevel")) + "\n";
                	sAmount += "Your current value is " + IntToString(GetLocalInt(oPC, "PsychoFeedbackAmount"));
                 SetHeader(sAmount);
-                
+
                 AddChoice("Add 1", 1);
                 AddChoice("Add 5", 5);
                 AddChoice("Add 10", 10);
@@ -121,9 +121,9 @@ void main()
 		AddChoice("Subtract 5", -5);
                 AddChoice("Subtract 10", -10);
                 AddChoice("Finished", 666);
-                
+
                 MarkStageSetUp(STAGE_STAT_AMOUNT, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
-                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values                        
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
             else if(nStage == STAGE_CONFIRMATION)//confirmation
             {
@@ -196,7 +196,7 @@ void main()
             	SetLocalInt(oPC, "PsychoFeedbackAmount", (nPFAmount + nChoice));
             	nStage = STAGE_STAT_AMOUNT;
             }
-        }          
+        }
         else if(nStage == STAGE_CONFIRMATION)//confirmation
         {
             // No point in letting them finish if they haven't burned anything
@@ -206,19 +206,19 @@ void main()
             	int nBurn = GetLocalInt(oPC, "PsychoFeedbackBurn");
             	int nAmount = GetLocalInt(oPC, "PsychoFeedbackAmount");
             	if (nAmount > GetLocalInt(oPC, "PsychoFeedManifesterLevel")) nAmount = GetLocalInt(oPC, "PsychoFeedManifesterLevel");
-            	
+
     		effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     		effect eVis2 = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
     		effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    		
+
 		ApplyAbilityDamage(oPC, nBurn, nAmount, DURATION_TYPE_PERMANENT, FALSE);
         	effect eStr = EffectAbilityIncrease(nStat,nAmount);
     		effect eLink = EffectLinkEffects(eStr, eDur);
-	
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, GetLocalFloat(oPC, "PsychoFeedDuration"),TRUE,-1,GetLocalInt(oPC, "PsychoFeedManifesterLevel"));
+
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, GetLocalFloat(oPC, "PsychoFeedDuration"), TRUE, POWER_PSYCHOFEEDBACK, GetLocalInt(oPC, "PsychoFeedManifesterLevel"));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oPC);    		
-            
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oPC);
+
                 // And we're all done
                	AllowExit(DYNCONV_EXIT_FORCE_EXIT);
 
@@ -235,7 +235,7 @@ void main()
             DeleteLocalInt(oPC, "PsychoFeedbackStat");
             DeleteLocalInt(oPC, "PsychoFeedbackBurn");
             DeleteLocalInt(oPC, "PsychoFeedbackAmount");
-        }        
+        }
 
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);

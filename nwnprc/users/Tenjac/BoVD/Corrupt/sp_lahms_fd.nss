@@ -48,5 +48,12 @@ or no fingers is useless.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
+#include "spinc_common"
+#include "prc_inc_spells"
+
 void main()
 {
+	SPSetSchool(SPELL_SHOOL_TRANSMUTATION);
+	
+	

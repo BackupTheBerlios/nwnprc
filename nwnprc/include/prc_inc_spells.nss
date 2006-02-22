@@ -1103,13 +1103,13 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
      if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) == 10)
      {
         // Only works on Mind Spells and in Heavy Armour
-        object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST);
+        object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
       	if (nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetBaseAC(oItem) >= 6)
       	{
-      		// Spell/Power caster takes 1d6 damage and 1 Wisdom drain
+      		// Spell/Power caster takes 1d6 damage and 1 Wisdom damage
       		effect eDam = EffectDamage(d6(), DAMAGE_TYPE_MAGICAL);
       		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oCaster);
-      		ApplyAbilityDamage(oCaster, ABILITY_WISDOM, 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
+      		ApplyAbilityDamage(oCaster, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
       	}
      }
 

@@ -666,6 +666,16 @@ void Thrallherd(object oPC)
     }
 }
 
+void PsionicCheck(object oPC)
+{
+	SetLocalInt(oPC, "PRC_IsPsionic", 1);
+	
+	if (GetIsPsionicCharacter(oPC))
+	{
+		SetLocalInt(oPC, "PRC_IsPsionic", 0);
+	}
+}
+
 void RangerURangerMutex(object oPC)
 {// Ranger and Ultimate Ranger are mutually exclusive. One can only take levels in one of them
 
@@ -894,6 +904,7 @@ void main2()
      RangerURangerMutex(oPC);
      DragonDis(oPC);
      Thrallherd(oPC);
+     PsionicCheck(oPC);
      RacialHD(oPC);
      // Truly massive debug message flood if activated.
      /*

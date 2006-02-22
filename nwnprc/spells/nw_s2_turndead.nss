@@ -30,6 +30,7 @@ Drow Judicator
 #include "inc_utility"
 #include "prc_inc_turning"
 
+/*
 //gets the number of class levels that count for turning
 int GetTurningClassLevel(int bUndeadOnly = FALSE);
 
@@ -60,7 +61,7 @@ void DoTurn(object oTarget);
 void DoDestroy(object oTarget);
 void DoRebuke(object oTarget);
 void DoCommand(object oTarget, int nLevel);
-
+*/
 void main()
 {
     //casters level for turning
@@ -138,13 +139,13 @@ void main()
     SendMessageToPC(OBJECT_SELF, "You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD));
     
     //assemble the list of targets to try to turn
-    MakeTurningTargetList(nTurningMaxHD, nTurningTotalHD);
+    MakeTurningTargetList(nTurningMaxHD, nTurningTotalHD, PRCGetSpellId());
     
     //cycle through target list
     object oTarget = GetTargetListHead(OBJECT_SELF);
     while(GetIsObjectValid(oTarget))
     {
-        DoTurnAttempt(oTarget, nTurningMaxHD, nLevel);
+        DoTurnAttempt(oTarget, nTurningMaxHD, nLevel, PRCGetSpellId());
         oTarget = GetTargetListHead(OBJECT_SELF);
     }
 }

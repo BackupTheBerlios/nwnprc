@@ -543,3 +543,18 @@ const int SPELL_SPELLFIRE_CROWN                     = 3039;
 const int SPELL_SPELLFIRE_MAELSTROM                 = 3040;
 const int SPELL_SPELLFIRE_ABSORB                    = 3041;
 
+//////////////////////////////////////////////////
+/*             Turning Constants                */
+//////////////////////////////////////////////////
+
+const int SPELL_TURN_UNDEAD 		= -1;
+const int SPELL_TURN_REPTILE 		= -1;
+const int SPELL_TURN_BLIGHTSPAWNED 	= -1;
+const int SPELL_TURN_OOZE 		= -1;
+const int SPELL_TURN_AIR 		= -1;
+const int SPELL_TURN_EARTH 		= -1;
+const int SPELL_TURN_FIRE 		= -1;
+const int SPELL_TURN_WATER 		= -1;
+const int SPELL_TURN_PLANT		= -1;
+const int SPELL_TURN_SPIDER 		= -1;
+const int SPELL_GREATER_TURNING 	= -1;

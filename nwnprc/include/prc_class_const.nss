@@ -150,3 +150,4 @@ const int CLASS_TYPE_WARMIND                 = 218;
 const int CLASS_TYPE_IRONMIND                = 219;
 const int CLASS_TYPE_SANCTIFIED_MIND         = 220;
 const int CLASS_TYPE_SPELLFIRE               =  57;
+const int CLASS_TYPE_ORDER_BOW_INITIATE      = 161;

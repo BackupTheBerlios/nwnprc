@@ -46,6 +46,7 @@ const int SPELL_MANATARMS_DAMAGE        = 2731;
 const int SPELL_KNIGHTCHALICE_DAMAGE        = 2733;
 const int SPELL_SWASH_DAMAGE                    = 3210;
 const int SPELL_SWASH_DAMAGE_B                  = 3211;
+const int SPELL_OOTBI_GREATER_WEAPON_FOCUS      = 2436;
 
 //heartwarder
 const int SPELL_LIPS_RAPTUR      = 2210;

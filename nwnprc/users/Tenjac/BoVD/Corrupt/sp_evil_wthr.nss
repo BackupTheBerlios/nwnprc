@@ -43,3 +43,24 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nSpell = GetSpellID();
+	
+	//Rain of Blood
+	if (nSpell == SPELL_RAIN_OF_BLOOD)
+	
+	//Violet Rain
+	if (nSpell == SPELL_VIOLET_RAIN)
+	
+	//Green Fog
+	if (nSpell == SPELL_GREEN_FOG)
+	
+	//Rain of Frogs or Fish
+	if (nSpell == SPELL_RAIN_OF_FISH)
+	
+	//Corruption cost
+	int nCost = d6(3);
+	
+	DoCorruptionCost(oPC, oTarget, ABILITY_CONSTITUTION, nCost 0);
+	
+	SPSetSchool();
+}

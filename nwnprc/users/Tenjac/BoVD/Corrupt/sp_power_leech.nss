@@ -22,7 +22,7 @@ the caster's choosing, and the caster gains a +1
 enhancement bonus to the same ability score per
 point drained during the casting of this spell.
 In other words, all points drained during this 
-spell stack with each other to deter­mine the
+spell stack with each other to determine the
 enhancement bonus, but they don't stack with
 other castings of power leech or with other
 enhancement bonuses.
@@ -40,3 +40,26 @@ Corruption Cost: 1 point of Wisdom drain.
 
 void main()
 {
+    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    
+    //Spellhook
+    if (!X2PreSpellCastCode()) return;
+    
+    object oPC = OBJECT_SELF;
+    object oSkin = GetPCSkin(oPC);
+    object oTarget = GetSpellTargetObject();
+    int nMetaMagic = PRCGetMetaMagicFeat();
+ 
+    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_POWER_LEECH, oPC);
+    
+    //Check for Extend
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    {
+	    fDuration = (fDuration * 2);
+    }
+    
+    
+    //Corruption Cost
+    	{
+		DelayCommand(fDuration, DoCorruptionCost(oPC, oTarget, ABILITY_WISDOM, 1, 1));
+	}

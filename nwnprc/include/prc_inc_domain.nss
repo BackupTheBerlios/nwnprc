@@ -55,6 +55,10 @@ int DecrementDomainUses(int nDomain, object oPC);
 // Returns the domain constant
 int GetTurningDomain(int nSpell);
 
+// Checks to see if the player has a domain.
+// Looks for the domain power constants since every domain has those
+int GetHasDomain(object oPC, int nDomain);
+
 // Cleans the ints that limit the domain spells to being cast 1/day
 void BonusDomainRest(object oPC);
 
@@ -327,6 +331,16 @@ int GetTurningDomain(int nSpell)
 	return nDomain;
 }
 
+int GetHasDomain(object oPC, int nDomain)
+{
+	// Get the domain power feat for the appropriate domain
+	int nFeat = GetDomainFeat(nDomain);
+	// If they have the feat, return true
+	if (GetHasFeat(nFeat, oPC)) return TRUE;
+	
+	return FALSE;
+}
+
 void BonusDomainRest(object oPC)
 {
     // Bonus Domain ints that limit you to casting 1/day per level
@@ -341,7 +355,11 @@ void BonusDomainRest(object oPC)
     // Highest domain constant is 59
     for (i2 = 1; i2 < 60; i2++)
     {
-    	// Store the number of uses a day here
-        SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(i2), GetDomainFeatUsesPerDay(GetDomainFeat(i2), oPC));
+    	// This is to ensure they only get the ints set for the domains they do have
+    	if (GetHasDomain(oPC, i2))
+    	{
+    		// Store the number of uses a day here
+        	SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(i2), GetDomainFeatUsesPerDay(GetDomainFeat(i2), oPC));
+        }
     }    
 }

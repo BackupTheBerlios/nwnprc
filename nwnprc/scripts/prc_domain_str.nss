@@ -21,10 +21,21 @@ void main()
     	object oTarget = PRCGetSpellTargetObject();
         effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eCha = EffectAbilityIncrease(ABILITY_STRENGTH, GetHitDice(oPC));
+	// Variables effected by MCoK levels
+	int nDur = 1;
+	int nBoost = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+
+	// Mighty Contender class abilities
+	if (GetLevelByClass(CLASS_TYPE_CONTENDER, oPC) > 0)
+	{
+		nBoost += GetLevelByClass(CLASS_TYPE_CONTENDER, oPC);
+		nDur = d4() + 1;
+	}
+
+        effect eCha = EffectAbilityIncrease(ABILITY_STRENGTH, nBoost);
         effect eLink = EffectLinkEffects(eCha, eDur);
 	
    	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1));
+    	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur));
 }
 

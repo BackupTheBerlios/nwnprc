@@ -8364,7 +8364,8 @@ Duration: 10 min./level
 Power Points: 13
 Metapsionics: Extend
 
-When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can’t be reversed.
+When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can’t be reversed. Reddopsi also can’t reverse any power with a range of touch.
+
 Should you rebound a power back against a manifester who also is protected by reddopsi, the power rebounds once more upon you.</entry>
   <entry id="46933" lang="en" sex="m">Strength of my Enemy</entry>
   <entry id="46934" lang="en" sex="m">Psychometabolism
@@ -14702,28 +14703,28 @@ Use: Automatic.</entry>
   <entry id="49160" lang="en" sex="m">order of the bow initiate</entry>
   <entry id="49161" lang="en" sex="m">(PRESTIGE CLASS)
 When asked, "What is Truth?", an initiate of the Order of the Bow picks up his bow, fires an arrow, and, without saying a word, lets his mastery of the weapon serve as the gauge of the archer's progress along the way. By learning the meditative art of the Way of the Bow, the archer improves his discipline, precision, and spirituality. Order of the Bow Initiates see their weapons as extensions of their being, and the use of a bow as a spiritual experience.
-  
+
 - Hit Die: d8.
 - Proficiencies: An Order of the Bow Initiate does not gain any additional weapon or armor proficiencies.
 - Skill Points: 2 + Int Modifier.
-  
+
 REQUIREMENTS:
-  
+
 Base Attack Bonus: +5
 Feats: Weapon Focus: Longbow or Weapon Focus: Shortbow, Point Blank Shot, Rapid Shot.
 Skills: Craft Weapon 5 ranks, Lore 2 ranks.
-  
+
 ABILITIES:
-  
+
 Level
 1: Ranged Precision 1d8 - An Order of the Bow Initiate can make a single attack a round with a damage bonus
-2: 
+2:
 3: Ranged Precision 2d8 - Damage increase
 4: Greater Weapon Focus - The Order of the Bow Initiate gains +1 to attack
 5: Ranged Precision 3d8 - Damage increase
 6: Sharp Shooting - Blind Fight feat.
 7: Ranged Precision 4d8 - Damage increase
-8: 
+8:
 9: Ranged Precision 5d8 - Damage increase
 10: Extended Precision - The range at which the Order of the Bow Initiate can use its Ranged Precision ability doubles
   </entry>
@@ -14740,7 +14741,7 @@ Use: Automatic.</entry>
     <entry id="49166" lang="en" sex="m">Extended Precision</entry>
     <entry id="49167" lang="en" sex="m">Type of Feat: Class Specific
   Prerequisite: Order of the Bow Initiate level 10.
-  Specifics: The range for the Order of the Bow Initiate Ranged Precision ability is increased from 30 feet to 60 feet. 
+  Specifics: The range for the Order of the Bow Initiate Ranged Precision ability is increased from 30 feet to 60 feet.
 Use: Selected.</entry>
     <entry id="49168" lang="en" sex="m">Epic Order of the Bow Initiate</entry>
     <entry id="49169" lang="en" sex="m">Your mastery of the bow is legend. You can fell foes with a single strike, and the entire Order of the Bow looks up to your mastery. You are the supreme wielder of the bow.
@@ -14752,7 +14753,7 @@ Ranged Precision: Your ranged precision damage increases to 6d8 at level 11, and
 
 Epic Order of the Bow Initiate Bonus Feats List:
 Blinding Speed, Epic Prowess, Weapon Focus: Long/Short Bow, Overwhelming Critical: Long/Short Bow, Devastating Critical: Long/Short Bow, Manyshot, Improved Manyshot, Pinpoint Accuracy, Great Dexterity, Epic Reflexes, Epic Toughness.</entry>
-  
+
   <entry id="49193" lang="en" sex="m">Power Points</entry>
   <entry id="49194" lang="en" sex="m">Your manifester level is not high enough to spend</entry>
   <entry id="49195" lang="en" sex="m">You do not have a high enough ability score to manifest this power</entry>
@@ -16802,7 +16803,7 @@ Use: Automatic.</entry>
   <entry id="50530" lang="en" sex="m">Gnome</entry>
   <entry id="50531" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Gnome domain.
-Granted Power: +1 Caster level to all Illusion Spells. 
+Granted Power: +1 Caster level to all Illusion Spells.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Colour Spray (1), Blur (2), Mirror Image (3), Prismatic Spray (7), Weird (9)
 Use: Automatic.</entry>
   <entry id="50532" lang="en" sex="m">Halfling</entry>
@@ -16814,7 +16815,7 @@ Use: Once/Day.</entry>
   <entry id="50534" lang="en" sex="m">Illusion</entry>
   <entry id="50535" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Illusion domain.
-Granted Power: +1 Caster level to all Illusion Spells. 
+Granted Power: +1 Caster level to all Illusion Spells.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Blur (2), Mirror Image (3), Phantasmal Killer (4), Shadow Shield (8)
 Use: Automatic.</entry>
   <entry id="50536" lang="en" sex="m">Hatred</entry>
@@ -16844,13 +16845,13 @@ Use: Automatic.</entry>
   <entry id="50544" lang="en" sex="m">Renewal</entry>
   <entry id="50545" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Renewal domain.
-Granted Power: Once per day as a free action, you may gain 1d8 + Charisma modifier hitpoints. 
+Granted Power: Once per day as a free action, you may gain 1d8 + Charisma modifier hitpoints.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Restoration (1), Restoration (3), Raise Dead (4), Ressurection (6), Mass Greater Restore (9)
 Use: Automatic.</entry>
   <entry id="50546" lang="en" sex="m">Retribution</entry>
   <entry id="50547" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Retribution domain.
-Granted Power: 
+Granted Power:
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Death Armor (2), Elemental Shield (4), Destruction (7), Storm of Vengeance (8)
 Use: Automatic.</entry>
   <entry id="50548" lang="en" sex="m">Rune</entry>
@@ -17025,19 +17026,19 @@ Use: Selected.</entry>
   <entry id="50629" lang="en" sex="m">Bonus Domains</entry>
   <entry id="50630" lang="en" sex="m">Bonus Domains are granted through leveling in a class that grants them as a class bonus. They comprise all of the domains available.</entry>
   <entry id="50631" lang="en" sex="m">Type of Feat: Domain
-  Prerequisite: Access to the Knowledge domain.
-  Granted Power: +1 Caster level on all Divination spells.
-  Bonus Spells: The cleric gains access to the following spells at the specified spell level: Identify (1), Knock (2), Clairaudience and Clairvoyance (3), True Seeing (4), Legend Lore (6).
+Prerequisite: Access to the Knowledge domain.
+Granted Power: +1 Caster level on all Divination spells.
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Identify (1), Knock (2), Clairaudience and Clairvoyance (3), True Seeing (4), Legend Lore (6).
 Use: Automatic.</entry>
-<entry id="50632" lang="en" sex="m"><CUSTOM0> turns reptilians.</entry>
-<entry id="50633" lang="en" sex="m"><CUSTOM0> turns oozes.</entry>
-<entry id="50634" lang="en" sex="m"><CUSTOM0> turns spiders.</entry>
-<entry id="50635" lang="en" sex="m"><CUSTOM0> turns plants.</entry>
-<entry id="50636" lang="en" sex="m"><CUSTOM0> turns earth creatures.</entry>
-<entry id="50637" lang="en" sex="m"><CUSTOM0> turns air creatures.</entry>
-<entry id="50638" lang="en" sex="m"><CUSTOM0> turns water creatures.</entry>
-<entry id="50639" lang="en" sex="m"><CUSTOM0> turns fire creatures.</entry>
-<entry id="50640" lang="en" sex="m"><CUSTOM0> turns blightspawned.</entry>
+  <entry id="50632" lang="en" sex="m">&lt;CUSTOM0&gt; turns reptilians.</entry>
+  <entry id="50633" lang="en" sex="m">&lt;CUSTOM0&gt; turns oozes.</entry>
+  <entry id="50634" lang="en" sex="m">&lt;CUSTOM0&gt; turns spiders.</entry>
+  <entry id="50635" lang="en" sex="m">&lt;CUSTOM0&gt; turns plants.</entry>
+  <entry id="50636" lang="en" sex="m">&lt;CUSTOM0&gt; turns earth creatures.</entry>
+  <entry id="50637" lang="en" sex="m">&lt;CUSTOM0&gt; turns air creatures.</entry>
+  <entry id="50638" lang="en" sex="m">&lt;CUSTOM0&gt; turns water creatures.</entry>
+  <entry id="50639" lang="en" sex="m">&lt;CUSTOM0&gt; turns fire creatures.</entry>
+  <entry id="50640" lang="en" sex="m">&lt;CUSTOM0&gt; turns blightspawned.</entry>
   <entry id="51001" lang="en" sex="m">Swashbuckler</entry>
   <entry id="51002" lang="en" sex="m">Swashbucklers</entry>
   <entry id="51003" lang="en" sex="m">swashbuckler</entry>
@@ -17349,7 +17350,7 @@ Duration: 1 day/level
 Saving Throw: See text
 Spell Resistance: Yes
 
-This spell allows you some degree of control over an undead creature. Asuming the subject is intelligent, it perceives your words and actions in the most favorable way (treat its attitude as friendly). It will not attack you while the spell lasts. 
+This spell allows you some degree of control over an undead creature. Asuming the subject is intelligent, it perceives your words and actions in the most favorable way (treat its attitude as friendly). It will not attack you while the spell lasts.
 
 A nonintelligent undead creature gets no saving throw against this spell. When you control a mindless being, you can communicate only basic commands. Nonintelligent undead won’t resist suicidal or obviously harmful orders.
 

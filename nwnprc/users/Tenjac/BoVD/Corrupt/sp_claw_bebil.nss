@@ -44,7 +44,7 @@ armor or shield is torn away and ruined.
 
                 Colossal                    2d8 
 
-Corruption Cost: 1d6 points of Dex­terity damage.
+Corruption Cost: 1d6 points of Dexterity damage.
 
 
 @author Written By: Tenjac

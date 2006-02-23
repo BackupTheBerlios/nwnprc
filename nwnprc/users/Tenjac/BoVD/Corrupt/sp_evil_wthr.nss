@@ -20,7 +20,7 @@ sacrifice 10,000 gp worth of amethysts and spend
 200 XP. Other forms of evil weather have no material
 component or experience point cost.
 
-Corruption Cost: 3d6 points of Con­stitution damage.
+Corruption Cost: 3d6 points of Constitution damage.
 
 Author:    Tenjac
 Created:   
@@ -29,3 +29,17 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "spinc_common"
+#include "prc_inc_spells"
+
+void main()
+{
+	SPSetSchool(SPELL_SHOOL_TRANSMUTATION);
+	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nCasterLvl = PRCGetCasterLevel(oPC);

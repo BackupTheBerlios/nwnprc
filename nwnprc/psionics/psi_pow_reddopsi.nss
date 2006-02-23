@@ -1,7 +1,7 @@
 /*
    ----------------
    Reddopsi
-   
+
    psi_pow_reddopsi
    ----------------
 
@@ -19,17 +19,22 @@
     Power Points: 13
     Metapsionics: Extend
 
-    When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers 
-    that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can’t be 
-    reversed. 
+    When you manifest reddopsi, powers targeted against you rebound to affect
+    the original manifester. This effect reverses powers that have only you as a
+    target (except dispel psionics and similar powers or effects). Powers that
+    affect an area can’t be reversed. Reddopsi also can’t reverse any power with
+    a range of touch.
 
-    Should you rebound a power back against a manifester who also is protected by reddopsi, the power rebounds once more upon you.
+    Should you rebound a power back against a manifester who also is protected
+    by reddopsi, the power rebounds once more upon you.
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "spinc_common"
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
 
 void main()
 {
@@ -59,13 +64,33 @@ void main()
 
     if(manif.bCanManifest)
     {
+        effect eDur     = EffectVisualEffect(VFX_DUR_PROT_EPIC_ARMOR);
 	float fDuration = 600.0 * manif.nManifesterLevel;
-	if(manif.bExtend) fDuration *= 2;	
-		
-	effect eDur = EffectVisualEffect(VFX_DUR_PROT_EPIC_ARMOR);
-	SetLocalInt(oTarget, "Reddopsi", TRUE);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration);
-	DelayCommand(fDuration, DeleteLocalInt(oTarget, "Reddopsi"));
+	if(manif.bExtend) fDuration *= 2;
+
+	// Set the marker local
+	SetLocalInt(oTarget, "PRC_Power_Reddopsi_Active", TRUE);
+
+	// Set a VFX for the monitor to watch
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+        // Start the monitor
+        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6));
+    }// end if - Successfull manifestation
+}
+
+void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
+{
+    // Has the power ended since the last beat, or does the duration run out now
+    if((--nBeatsRemaining == 0)                                         ||
+       GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)
+       )
+    {
+        if(DEBUG) DoDebug("psi_pow_reddopsi: Power expired, clearing");
+
+        // Clear the marker
+        DeleteLocalInt(oTarget, "PRC_Power_Reddopsi_Active");
     }
-    	
+    else
+       DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));
 }

@@ -38,6 +38,21 @@ Corruption Cost: 1 point of Wisdom drain.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+void DrainStat
+{
+	//Strength
+	
+	//Dexterity
+	
+	//Constitution
+	
+	//Intelligence
+	
+	//Wisdom
+	
+	//Charisma
+
+
 void main()
 {
     SPSetSchool(SPELL_SCHOOL_NECROMANCY);
@@ -48,7 +63,9 @@ void main()
     object oPC = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
     object oTarget = GetSpellTargetObject();
+    int nCasterLvl = PRCGetCasterLevel(oPC);
     int nMetaMagic = PRCGetMetaMagicFeat();
+    float fDuration = (HoursToSeconds(nCasterLvl) / 6);
  
     SPRaiseSpellCastAt(oTarget, TRUE, SPELL_POWER_LEECH, oPC);
     
@@ -59,7 +76,13 @@ void main()
     }
     
     
+    
+   
+    
+    
     //Corruption Cost
-    	{
-		DelayCommand(fDuration, DoCorruptionCost(oPC, oTarget, ABILITY_WISDOM, 1, 1));
-	}
+    {
+	    DelayCommand(fDuration, DoCorruptionCost(oPC, oTarget, ABILITY_WISDOM, 1, 1));
+    }
+    
+    SPSetSchool();

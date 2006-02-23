@@ -17029,6 +17029,15 @@ Use: Selected.</entry>
   Granted Power: +1 Caster level on all Divination spells.
   Bonus Spells: The cleric gains access to the following spells at the specified spell level: Identify (1), Knock (2), Clairaudience and Clairvoyance (3), True Seeing (4), Legend Lore (6).
 Use: Automatic.</entry>
+<entry id="50632" lang="en" sex="m"><CUSTOM0> turns reptilians.</entry>
+<entry id="50633" lang="en" sex="m"><CUSTOM0> turns oozes.</entry>
+<entry id="50634" lang="en" sex="m"><CUSTOM0> turns spiders.</entry>
+<entry id="50635" lang="en" sex="m"><CUSTOM0> turns plants.</entry>
+<entry id="50636" lang="en" sex="m"><CUSTOM0> turns earth creatures.</entry>
+<entry id="50637" lang="en" sex="m"><CUSTOM0> turns air creatures.</entry>
+<entry id="50638" lang="en" sex="m"><CUSTOM0> turns water creatures.</entry>
+<entry id="50639" lang="en" sex="m"><CUSTOM0> turns fire creatures.</entry>
+<entry id="50640" lang="en" sex="m"><CUSTOM0> turns blightspawned.</entry>
   <entry id="51001" lang="en" sex="m">Swashbuckler</entry>
   <entry id="51002" lang="en" sex="m">Swashbucklers</entry>
   <entry id="51003" lang="en" sex="m">swashbuckler</entry>

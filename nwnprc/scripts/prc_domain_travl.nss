@@ -10,10 +10,13 @@
 //:: Modified On: 19.12.2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_domain"
 
 void main()
 {
+    // Used by the uses per day check code for bonus domains
+    if (!DecrementDomainUses(DOMAIN_TRAVEL, OBJECT_SELF)) return;
+    
     //Declare major variables
     object oTarget = PRCGetSpellTargetObject();
     int nDuration = GetHitDice(oTarget);

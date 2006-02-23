@@ -40,66 +40,28 @@ void CheckBonusDomains(object oPC);
 // Returns the spell to be burned for CastDomainSpell
 int GetBurnableSpell(object oPC, int nLevel);
 
+// Returns the Domain Power feat
+int GetDomainFeat(int nDomain);
+
+// Returns the Uses per day of the feat entered
+int GetDomainFeatUsesPerDay(int nFeat, object oPC);
+
+// This counts down the number of times a domain has been used in a day
+// Returns TRUE if the domain use is valid
+// Returns FALSE if the player is out of uses per day
+int DecrementDomainUses(int nDomain, object oPC);
+
+// Used to determine which domain has cast the Turn Undead spell
+// Returns the domain constant
+int GetTurningDomain(int nSpell);
+
 // Cleans the ints that limit the domain spells to being cast 1/day
 void BonusDomainRest(object oPC);
 
 //#include "prc_inc_clsfunc"
 #include "prc_alterations"
 #include "prc_getbest_inc"
-
-//::///////////////////
-//:: DOMAIN CONSTANTS
-//:: These constants are off by 1 to allow 0 to be the FALSE return value.
-//::///////////////////
-
-const int DOMAIN_AIR           = 1;
-const int DOMAIN_ANIMAL        = 2;
-const int DOMAIN_DEATH         = 4;
-const int DOMAIN_DESTRUCTION   = 5;
-const int DOMAIN_EARTH         = 6;
-const int DOMAIN_EVIL          = 7;
-const int DOMAIN_FIRE          = 8;
-const int DOMAIN_GOOD          = 9;
-const int DOMAIN_HEALING       = 10;
-const int DOMAIN_KNOWLEDGE     = 11;
-const int DOMAIN_MAGIC         = 14;
-const int DOMAIN_PLANT         = 15;
-const int DOMAIN_PROTECTION    = 16;
-const int DOMAIN_STRENGTH      = 17;
-const int DOMAIN_SUN           = 18;
-const int DOMAIN_TRAVEL        = 19;
-const int DOMAIN_TRICKERY      = 20;
-const int DOMAIN_WAR           = 21;
-const int DOMAIN_WATER         = 22;
-const int DOMAIN_DARKNESS      = 31;
-const int DOMAIN_STORM         = 32;
-const int DOMAIN_METAL         = 33;
-const int DOMAIN_PORTAL        = 34;
-const int DOMAIN_FORCE         = 35;
-const int DOMAIN_SLIME         = 36;
-const int DOMAIN_TYRANNY       = 37;
-const int DOMAIN_DOMINATION    = 38;
-const int DOMAIN_SPIDER        = 39;
-const int DOMAIN_UNDEATH       = 40;
-const int DOMAIN_TIME          = 41;
-const int DOMAIN_DWARF         = 42;
-const int DOMAIN_CHARM         = 43;
-const int DOMAIN_ELF           = 44;
-const int DOMAIN_FAMILY        = 45;
-const int DOMAIN_FATE          = 46;
-const int DOMAIN_GNOME         = 47;
-const int DOMAIN_ILLUSION      = 48;
-const int DOMAIN_HATRED        = 49;
-const int DOMAIN_HALFLING      = 50;
-const int DOMAIN_NOBILITY      = 51;
-const int DOMAIN_OCEAN         = 52;
-const int DOMAIN_ORC           = 53;
-const int DOMAIN_RENEWAL       = 54;
-const int DOMAIN_RETRIBUTION   = 55;
-const int DOMAIN_RUNE          = 56;
-const int DOMAIN_SPELLS        = 57;
-const int DOMAIN_SCALEYKIND    = 58;
-const int DOMAIN_BLIGHTBRINGER = 59;
+#include "prc_misc_const"
 
 int GetBonusDomain(object oPC, int nSlot)
 {
@@ -114,7 +76,7 @@ int GetBonusDomain(object oPC, int nSlot)
 
 void AddBonusDomain(object oPC, int nDomain)
 {
-    FloatingTextStringOnCreature("AddBonusDomain is running.", oPC, FALSE);
+    if (DEBUG) FloatingTextStringOnCreature("AddBonusDomain is running.", oPC, FALSE);
 
     // Loop through the domain slots to see if there is an open one.
     int nSlot = 1;
@@ -284,7 +246,7 @@ void CheckBonusDomains(object oPC)
     if (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND,    oPC)) AddBonusDomain(oPC, DOMAIN_SCALEYKIND);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_BLIGHTBRINGER, oPC)) AddBonusDomain(oPC, DOMAIN_BLIGHTBRINGER);
 
-    FloatingTextStringOnCreature("Check Bonus Domains is running", oPC, FALSE);
+    if (DEBUG) FloatingTextStringOnCreature("Check Bonus Domains is running", oPC, FALSE);
 }
 
 int GetBurnableSpell(object oPC, int nLevel)
@@ -304,6 +266,67 @@ int GetBurnableSpell(object oPC, int nLevel)
     return nBurnableSpell;
 }
 
+int GetDomainFeat(int nDomain)
+{
+	// The -1 on nDomain is to adjust from a base 1 to a base 0 system.
+	// Returns the domain power feat
+	return StringToInt(Get2DACache("domains", "GrantedFeat", nDomain - 1));
+}
+
+int GetDomainFeatUsesPerDay(int nFeat, object oPC)
+{
+	int nUses = StringToInt(Get2DACache("feat", "USESPERDAY", nFeat));
+	// These are the domains that have ability based uses per day
+	if (nUses >= 20)
+	{
+		// The Strength domain, which uses Strength when the Cleric has Kord levels
+		// Without Kord levels, its 1 use per day
+		if (nFeat == FEAT_STRENGTH_DOMAIN_POWER)
+		{
+			nUses = 1;
+			if (GetLevelByClass(CLASS_TYPE_CONTENDER, oPC) > 0) nUses = 3 + GetAbilityModifier(ABILITY_STRENGTH, oPC);	
+		}
+	
+		// All other ones so far are the Charisma based turning domains
+		nUses = 3 + GetAbilityModifier(ABILITY_CHARISMA, oPC);
+	}
+	
+	return nUses;
+}
+
+int DecrementDomainUses(int nDomain, object oPC)
+{
+	int nReturn = TRUE;
+	int nUses = GetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(nDomain));
+	// If there is still a valid use left, remove it
+	if (nUses >= 1) SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(nDomain), (nUses - 1));
+	// Tell the player how many uses he has left
+	else // He has no more uses for the day
+	{
+		nReturn = FALSE;
+	}
+	
+	FloatingTextStringOnCreature("You have " + IntToString(nUses - 1) + " uses per day left of the " + GetDomainName(nDomain) + " power.", oPC, FALSE);
+
+	return nReturn;	
+}
+
+int GetTurningDomain(int nSpell)
+{
+	int nDomain;
+	if (nSpell == SPELL_TURN_REPTILE) nDomain = DOMAIN_SCALEYKIND;
+	else if (nSpell == SPELL_TURN_OOZE) nDomain = DOMAIN_SLIME;
+	else if (nSpell == SPELL_TURN_SPIDER) nDomain = DOMAIN_SPIDER;
+	else if (nSpell == SPELL_TURN_PLANT) nDomain = DOMAIN_PLANT;
+	else if (nSpell == SPELL_TURN_AIR) nDomain = DOMAIN_AIR;
+	else if (nSpell == SPELL_TURN_EARTH) nDomain = DOMAIN_EARTH;
+	else if (nSpell == SPELL_TURN_FIRE) nDomain = DOMAIN_FIRE;
+	else if (nSpell == SPELL_TURN_WATER) nDomain = DOMAIN_WATER;
+	else if (nSpell == SPELL_TURN_BLIGHTSPAWNED) nDomain = DOMAIN_BLIGHTBRINGER;
+	
+	return nDomain;
+}
+
 void BonusDomainRest(object oPC)
 {
     // Bonus Domain ints that limit you to casting 1/day per level
@@ -312,4 +335,13 @@ void BonusDomainRest(object oPC)
     {
         DeleteLocalInt(oPC, "DomainCastSpell" + IntToString(i));
     }
+    
+    // This is code to stop you from using the Domain per day abilities more than you should be able to
+    int i2;
+    // Highest domain constant is 59
+    for (i2 = 1; i2 < 60; i2++)
+    {
+    	// Store the number of uses a day here
+        SetLocalInt(oPC, "BonusDomainUsesPerDay" + GetDomainName(i2), GetDomainFeatUsesPerDay(GetDomainFeat(i2), oPC));
+    }    
 }

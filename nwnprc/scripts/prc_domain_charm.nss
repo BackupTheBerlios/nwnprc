@@ -10,9 +10,15 @@
 //:: Modified On: 19.12.2005
 //:://////////////////////////////////////////////
 
+#include "prc_inc_domain"
+
 void main()
 {
 	object oTarget = OBJECT_SELF;
+	
+	// Used by the uses per day check code for bonus domains
+        if (!DecrementDomainUses(DOMAIN_CHARM, OBJECT_SELF)) return;
+        
         effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
         effect eCha = EffectAbilityIncrease(ABILITY_CHARISMA, 4);

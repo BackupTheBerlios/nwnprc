@@ -11,10 +11,13 @@
 //:: Modified On: 19.12.2005
 //:://////////////////////////////////////////////
 
-#include "prc_misc_const"
+#include "prc_inc_domain"
 
 void main()
 {
+    // Used by the uses per day check code for bonus domains
+    if (!DecrementDomainUses(DOMAIN_HALFLING, OBJECT_SELF)) return;
+    
 	object oTarget = OBJECT_SELF;
 	int nBonus = GetAbilityModifier(ABILITY_CHARISMA, oTarget);
 	effect eJump = EffectSkillIncrease(SKILL_JUMP, nBonus);

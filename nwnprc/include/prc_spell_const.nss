@@ -549,14 +549,13 @@ const int SPELL_SPELLFIRE_ABSORB                    = 3041;
 /*             Turning Constants                */
 //////////////////////////////////////////////////
 
-const int SPELL_TURN_UNDEAD 		= -1;
-const int SPELL_TURN_REPTILE 		= -1;
-const int SPELL_TURN_BLIGHTSPAWNED 	= -1;
-const int SPELL_TURN_OOZE 		= -1;
-const int SPELL_TURN_AIR 		= -1;
-const int SPELL_TURN_EARTH 		= -1;
-const int SPELL_TURN_FIRE 		= -1;
-const int SPELL_TURN_WATER 		= -1;
-const int SPELL_TURN_PLANT		= -1;
-const int SPELL_TURN_SPIDER 		= -1;
-const int SPELL_GREATER_TURNING 	= -1;
+const int SPELL_TURN_UNDEAD 		= 308;
+const int SPELL_TURN_REPTILE 		= 1726;
+const int SPELL_TURN_OOZE 		= 1727;
+const int SPELL_TURN_SPIDER 		= 1728;
+const int SPELL_TURN_PLANT		= 1729;
+const int SPELL_TURN_AIR 		= 1730;
+const int SPELL_TURN_EARTH 		= 1731;
+const int SPELL_TURN_FIRE 		= 1732;
+const int SPELL_TURN_WATER 		= 1733;
+const int SPELL_TURN_BLIGHTSPAWNED 	= 1734;

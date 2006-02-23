@@ -26,8 +26,7 @@ Balenorm  //Baelnorn technically doesn't stack; all levels of all classes count 
 Drow Judicator
 */
 
-#include "prc_alterations"
-#include "inc_utility"
+#include "prc_inc_domain"
 #include "prc_inc_turning"
 
 /*
@@ -64,6 +63,10 @@ void DoCommand(object oTarget, int nLevel);
 */
 void main()
 {
+
+    // Used by the uses per day check code for bonus domains
+    if (!DecrementDomainUses(GetTurningDomain(GetSpellId()), OBJECT_SELF)) return;
+
     //casters level for turning
     int nLevel = GetTurningClassLevel();
         

@@ -98,7 +98,6 @@ void AddDomainFeat(object oPC, object oSkin)
     if (GetHasFeat(FEAT_BONUS_DOMAIN_EARTH, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_EARTH_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_FIRE, oPC))          IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_FIRE_DOMAIN       ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_PLANT, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_PLANT_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_SUN, oPC))           IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SUN_DOMAIN        ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_WATER, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_WATER_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     
     // Domains below here do not have possible Domain Powers in NWN

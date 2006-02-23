@@ -160,3 +160,57 @@ const int POLYMORPH_TYPE_WOLF_2l                   = 147;
 const int POLYMORPH_TYPE_WEREWOLF_0l               = 148;
 const int POLYMORPH_TYPE_WEREWOLF_1l               = 149;
 const int POLYMORPH_TYPE_WEREWOLF_2l               = 150;
+
+//::///////////////////
+//:: DOMAIN CONSTANTS
+//:: These constants are off by 1 to allow 0 to be the FALSE return value.
+//::///////////////////
+
+const int DOMAIN_AIR           = 1;
+const int DOMAIN_ANIMAL        = 2;
+const int DOMAIN_DEATH         = 4;
+const int DOMAIN_DESTRUCTION   = 5;
+const int DOMAIN_EARTH         = 6;
+const int DOMAIN_EVIL          = 7;
+const int DOMAIN_FIRE          = 8;
+const int DOMAIN_GOOD          = 9;
+const int DOMAIN_HEALING       = 10;
+const int DOMAIN_KNOWLEDGE     = 11;
+const int DOMAIN_MAGIC         = 14;
+const int DOMAIN_PLANT         = 15;
+const int DOMAIN_PROTECTION    = 16;
+const int DOMAIN_STRENGTH      = 17;
+const int DOMAIN_SUN           = 18;
+const int DOMAIN_TRAVEL        = 19;
+const int DOMAIN_TRICKERY      = 20;
+const int DOMAIN_WAR           = 21;
+const int DOMAIN_WATER         = 22;
+const int DOMAIN_DARKNESS      = 31;
+const int DOMAIN_STORM         = 32;
+const int DOMAIN_METAL         = 33;
+const int DOMAIN_PORTAL        = 34;
+const int DOMAIN_FORCE         = 35;
+const int DOMAIN_SLIME         = 36;
+const int DOMAIN_TYRANNY       = 37;
+const int DOMAIN_DOMINATION    = 38;
+const int DOMAIN_SPIDER        = 39;
+const int DOMAIN_UNDEATH       = 40;
+const int DOMAIN_TIME          = 41;
+const int DOMAIN_DWARF         = 42;
+const int DOMAIN_CHARM         = 43;
+const int DOMAIN_ELF           = 44;
+const int DOMAIN_FAMILY        = 45;
+const int DOMAIN_FATE          = 46;
+const int DOMAIN_GNOME         = 47;
+const int DOMAIN_ILLUSION      = 48;
+const int DOMAIN_HATRED        = 49;
+const int DOMAIN_HALFLING      = 50;
+const int DOMAIN_NOBILITY      = 51;
+const int DOMAIN_OCEAN         = 52;
+const int DOMAIN_ORC           = 53;
+const int DOMAIN_RENEWAL       = 54;
+const int DOMAIN_RETRIBUTION   = 55;
+const int DOMAIN_RUNE          = 56;
+const int DOMAIN_SPELLS        = 57;
+const int DOMAIN_SCALEYKIND    = 58;
+const int DOMAIN_BLIGHTBRINGER = 59;

@@ -12,10 +12,13 @@
 //:: Modified On: 19.12.2005
 //:://////////////////////////////////////////////
 
-#include "x0_i0_spells"
+#include "prc_inc_domain"
+
 void main()
 {
-
+    // Used by the uses per day check code for bonus domains
+    if (!DecrementDomainUses(DOMAIN_NOBILITY, OBJECT_SELF)) return;
+    
     if (GetHasEffect(EFFECT_TYPE_SILENCE, OBJECT_SELF))
     {
         FloatingTextStrRefOnCreature(85764,OBJECT_SELF); // not useable when silenced

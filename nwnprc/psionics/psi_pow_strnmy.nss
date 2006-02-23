@@ -102,7 +102,7 @@ void main()
             // At this point, the target should be either the weapon, or an invalid object
             if(!GetIsObjectValid(oWeapon))
             {
-                // "Target is not valid for Strength of my Enemy"
+                // "Target is not valid for Strength of my Enemy!"
                 FloatingTextStrRefOnCreature(16826668, oManifester, FALSE);
                 return;
             }

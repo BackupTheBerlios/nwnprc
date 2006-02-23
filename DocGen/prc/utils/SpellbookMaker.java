@@ -95,6 +95,26 @@ public final class SpellbookMaker{
 						}
 					}
 					classSpellRow = 0;//number of rows in the cls_spell_*.2da file
+					//add one blank row to tell which slots are blank
+					//add a cls_spell_*.2da line if needed
+					if(classSpellRow > classSpell2da.getEntryCount()){
+							classSpell2da.appendRow();
+					}
+						//set its label
+						classSpell2da.setEntry("Label", classSpellRow, "****");
+						//make it point to the new spells.2da
+						classSpell2da.setEntry("SpellID", classSpellRow, "****");
+						//make it point to the old spells.2da
+						classSpell2da.setEntry("RealSpellID", classSpellRow, "****");
+						//make it point to the new feat.2da
+						classSpell2da.setEntry("FeatID", classSpellRow, "****");
+						//make it point to the new iprp_feats.2da
+						classSpell2da.setEntry("IPFeatID", classSpellRow, "****");
+						//add the metamagic checks
+						classSpell2da.setEntry("ReqFeat", classSpellRow, "****");
+						//set its level
+						classSpell2da.setEntry("Level", classSpellRow, "****");
+					}
 					//loop over all the spells
 					for(int row = 0; row < classCoreSpell2da.getEntryCount(); row ++) {
 						//get the real spellID
@@ -309,7 +329,7 @@ public final class SpellbookMaker{
 		iprp_feats2da.setEntry("Cost", iprp_feats2daRow, "0.0");
 
 		//add a cls_spell_*.2da line if needed
-		if(classSpellRow < classSpell2da.getEntryCount()){
+		if(classSpellRow > classSpell2da.getEntryCount()){
 				classSpell2da.appendRow();
 		}
 		//set its label

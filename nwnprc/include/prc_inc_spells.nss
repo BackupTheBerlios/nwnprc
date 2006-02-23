@@ -108,24 +108,60 @@ int PRCGetLastSpellCastClass();
 // wrapper for getspelltargetlocation
 location PRCGetSpellTargetLocation();
 
-// wrapper for getspelltargetobject
+/**
+ * A wrapper for GetSpellTargetObject().
+ * Handles effects that redirect spell targeting, currently:
+ * - Reddopsi
+ * - Casting from runes
+ *
+ * NOTE: Will probably not return a sensible value outside of a spellscript. Assumes
+ *       OBJECT_SELF is the object doing the casting.
+ *
+ * @return The target for the spell whose spellscript is currently being executed.
+ */
 object PRCGetSpellTargetObject();
 
 
-// Calculates alignment change for spells with Evil descriptor
+/**
+ * Determines and applies the alignment shift for using spells/powers with the
+ * [Evil] descriptor.  The amount of adjustment is equal to the square root of
+ * the caster's distance from pure evil.
+ * In other words, the amount of shift is higher the farther the caster is from
+ * pure evil, with the extremes being 10 points of shift at pure good and 0
+ * points of shift at pure evil.
+ *
+ * Does nothing if the PRC_SPELL_ALIGNMENT_SHIFT switch is not set.
+ *
+ * @param oPC The caster whose alignment to adjust
+ */
 void SPEvilShift(object oPC);
 
-// Calculates alignment change for spells with Good descriptor
+/**
+ * Determines and applies the alignment shift for using spells/powers with the
+ * [Good] descriptor.  The amount of adjustment is equal to the square root of
+ * the caster's distance from pure good.
+ * In other words, the amount of shift is higher the farther the caster is from
+ * pure good, with the extremes being 10 points of shift at pure evil and 0
+ * points of shift at pure good.
+ *
+ * Does nothing if the PRC_SPELL_ALIGNMENT_SHIFT switch is not set.
+ *
+ * @param oPC The caster whose alignment to adjust
+ */
 void SPGoodShift(object oPC);
 
-//Handles Corruption costs for Corrupt spells
-//
-//object oPC - Caster
-//object oTarget - Target
-//int nAbilty - ABILITY_* constant
-//int nCost - the amount of corruption cost
-//int nType - determines type of affect - 0 for ability damage, 1 for ability drain
-void DoCorruptionCost(object oPC, object oTarget, int nAbility, int nCost, int nType);
+/**
+ * Applies the corruption cost for Corrupt spells.
+ *
+ * @param oCaster  The caster of the Corrupt spell
+ * @param oTarget  The target of the spell.
+ *                 Not used for anything, should probably remove - Ornedan
+ * @param nAbility ABILITY_* of the ability to apply the cost to
+ * @param nCost    The amount of stat damage or drain to apply
+ * @param bDrain   If this is TRUE, the cost is applied as ability drain.
+ *                 If FALSE, as ability damage.
+ */
+void DoCorruptionCost(object oCaster, object oTarget, int nAbility, int nCost, int bDrain);
 
 // This function is used in the spellscripts
 // It functions as Evasion for Fortitude and Will partial saves
@@ -211,7 +247,7 @@ const int  TYPE_DIVINE   = -2;
 #include "prc_inc_newip"
 #include "spinc_necro_cyst"
 #include "inc_abil_damage"
-
+#include "prc_power_const"
 
 
 // ---------------
@@ -220,38 +256,38 @@ const int  TYPE_DIVINE   = -2;
 int GetArcanePRCLevels (object oCaster)
 {
    int nArcane;
-   int nOozeMLevel = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
-   int nFirstClass = PRCGetClassByPosition(1, oCaster);
+   int nOozeMLevel  = GetLevelByClass(CLASS_TYPE_OOZEMASTER, oCaster);
+   int nFirstClass  = PRCGetClassByPosition(1, oCaster);
    int nSecondClass = PRCGetClassByPosition(2, oCaster);
-   int nThirdClass = PRCGetClassByPosition(3, oCaster);
+   int nThirdClass  = PRCGetClassByPosition(3, oCaster);
 
-   nArcane       += GetLevelByClass(CLASS_TYPE_ARCHMAGE, oCaster)
-                 +  GetLevelByClass(CLASS_TYPE_ARCTRICK, oCaster)
-              +  GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)
-                 +  GetLevelByClass(CLASS_TYPE_ES_ACID, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_ES_COLD, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_ES_ELEC, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_ES_FIRE, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_HARPERMAGE, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_MAGEKILLER, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER, oCaster)
-                 +  GetLevelByClass(CLASS_TYPE_TRUENECRO, oCaster)
-                 +  GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT, oCaster)
-              +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
-              +  GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster)
-              +  GetLevelByClass(CLASS_TYPE_DIABOLIST, oCaster)
-              +  GetLevelByClass(CLASS_TYPE_CEREBREMANCER, oCaster)
-              +  GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)
+   nArcane += GetLevelByClass(CLASS_TYPE_ARCHMAGE,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ARCTRICK,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ELDRITCH_KNIGHT, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ES_ACID,         oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ES_COLD,         oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ES_ELEC,         oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ES_FIRE,         oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HARPERMAGE,      oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MAGEKILLER,      oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER,   oCaster)
+           +  GetLevelByClass(CLASS_TYPE_TRUENECRO,       oCaster)
+           +  GetLevelByClass(CLASS_TYPE_SHADOW_ADEPT,    oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE,  oCaster)
+           +  GetLevelByClass(CLASS_TYPE_RED_WIZARD,      oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DIABOLIST,       oCaster)
+           +  GetLevelByClass(CLASS_TYPE_CEREBREMANCER,   oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MAESTER,         oCaster)
 
-                 +  (GetLevelByClass(CLASS_TYPE_ACOLYTE, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_BLADESINGER, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_PALEMASTER, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_ACOLYTE,            oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BLADESINGER,        oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER,   oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_PALEMASTER,         oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_HATHRAN,            oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD,         oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + 1) / 2
 
-                 +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
+           +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
 
    if (nOozeMLevel)
@@ -274,35 +310,35 @@ int GetDivinePRCLevels (object oCaster)
    int nThirdClass = PRCGetClassByPosition(3, oCaster);
 
    // This section accounts for full progression classes
-   nDivine       += GetLevelByClass(CLASS_TYPE_DIVESA, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_DIVESC, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_DIVESE, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_DIVESF, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_HEARTWARDER, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_HOSPITALER, oCaster)
+   nDivine += GetLevelByClass(CLASS_TYPE_DIVESA,            oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DIVESC,            oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DIVESE,            oCaster)
+           +  GetLevelByClass(CLASS_TYPE_DIVESF,            oCaster)
+           +  GetLevelByClass(CLASS_TYPE_FISTRAZIEL,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HEARTWARDER,       oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HIEROPHANT,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_HOSPITALER,        oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_OF_SHROUDS, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_STORMLORD, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_MYSTIC_THEURGE,    oCaster)
+           +  GetLevelByClass(CLASS_TYPE_STORMLORD,         oCaster)
            +  GetLevelByClass(CLASS_TYPE_MASTER_HARPER_DIV, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_ALAGHAR, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_BLIGHTLORD, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE, oCaster)
-           +  GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_PSYCHIC_THEURGE,   oCaster)
+           +  GetLevelByClass(CLASS_TYPE_ALAGHAR,           oCaster)
+           +  GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC,      oCaster)
+           +  GetLevelByClass(CLASS_TYPE_BLIGHTLORD,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,     oCaster)
+           +  GetLevelByClass(CLASS_TYPE_RUNECASTER,        oCaster)
 
-           +  (GetLevelByClass(CLASS_TYPE_OLLAM, oCaster) + 1) / 2
-           //+  (GetLevelByClass(CLASS_TYPE_OCULAR, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_TEMPUS, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_HATHRAN, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_BFZ, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_ORCUS, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_WARPRIEST, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_OLLAM,              oCaster) + 1) / 2
+           //+  (GetLevelByClass(CLASS_TYPE_OCULAR,             oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_TEMPUS,             oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_HATHRAN,            oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BFZ,                oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_ORCUS,              oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE,      oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_WARPRIEST,          oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster) + 1) / 2
-       +  (GetLevelByClass(CLASS_TYPE_CONTENDER, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_CONTENDER,          oCaster) + 1) / 2
 
            +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
@@ -636,7 +672,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
               +  StormMagic(oCaster)
               +  DomainPower(oCaster, iSpellId)
               +  DeathKnell(oCaster);
-              
+
     iArcLevel += PractisedSpellcasting(oCaster, iCastingClass, iArcLevel); //gotta be the last one
 
 
@@ -751,7 +787,7 @@ int StormMagic(object oCaster)
 int DomainPower(object oCaster, int nSpellID)
 {
 	int nBonus = 0;
-        
+
         // Boosts Caster level with the Illusion school by 1
 	if (GetHasFeat(FEAT_DOMAIN_POWER_GNOME, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_ILLUSION)
 	{
@@ -771,8 +807,8 @@ int DomainPower(object oCaster, int nSpellID)
 	if (GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_DIVINATION)
 	{
 		nBonus += 1;
-	}	
-	
+	}
+
 	return nBonus;
 }
 
@@ -1019,101 +1055,101 @@ int ApplySpellBetrayalStrikeDamage(object oTarget, object oCaster, int bShowText
 
 int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus = OBJECT_SELF, float fDelay = 0.0)
 {
+    int nSpell = PRCGetSpellId();
 
-     object oCaster = GetLastSpellCaster();
-     int nSpell = PRCGetSpellId();
+    // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day.
+    // No point in having it trigger when its a will save.
+    if (GetLocalInt(oTarget, "IronMind_MindOverBody") && nSavingThrow != SAVING_THROW_WILL)
+    {
+        nSavingThrow = SAVING_THROW_WILL;
+        DeleteLocalInt(oTarget, "IronMind_MindOverBody");
+    }
 
-     // Iron Mind's Mind Over Body, allows them to treat other saves as will saves up to 3/day.
-     // No point in having it trigger when its a will save.
-     if (GetLocalInt(oTarget, "IronMind_MindOverBody") && nSavingThrow != SAVING_THROW_WILL)
-     {
-     	nSavingThrow = SAVING_THROW_WILL;
-     	DeleteLocalInt(oTarget, "IronMind_MindOverBody");
-     }
-
-     // Handle the target having Force of Will and being targeted by a psionic power
-     if(nSavingThrow != SAVING_THROW_WILL        &&
-        nSpell > 14000 && nSpell < 14360         &&
-        GetHasFeat(FEAT_FORCE_OF_WILL, oTarget)  &&
-        !GetLocalInt(oTarget, "ForceOfWillUsed") &&
-        // Only use will save if it's better
-        (nSavingThrow == SAVING_THROW_FORT ? GetFortitudeSavingThrow(oTarget) : GetReflexSavingThrow(oTarget)) > GetWillSavingThrow(oTarget)
+    // Handle the target having Force of Will and being targeted by a psionic power
+    if(nSavingThrow != SAVING_THROW_WILL        &&
+       ((nSpell > 14000 && nSpell < 14360) ||
+        (nSpell > 15350 && nSpell < 15470)
+        )                                       &&
+       GetHasFeat(FEAT_FORCE_OF_WILL, oTarget)  &&
+       !GetLocalInt(oTarget, "ForceOfWillUsed") &&
+       // Only use will save if it's better
+       ((nSavingThrow == SAVING_THROW_FORT ? GetFortitudeSavingThrow(oTarget) : GetReflexSavingThrow(oTarget)) > GetWillSavingThrow(oTarget))
        )
-     {
+    {
         nSavingThrow = SAVING_THROW_WILL;
         SetLocalInt(oTarget, "ForceOfWillUsed", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "ForceOfWillUsed"));
-        SendMessageToPC(oTarget, "Force Of Will used");
-     }
+        // "Force of Will used for this round."
+        FloatingTextStrRefOnCreature(16826670, oTarget, FALSE);
+    }
 
-     int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oCaster);
-     int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
-     //Thayan Knights auto-fail mind spells cast by red wizards
-     if (iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
-     {
-          return 0;
-     }
-     
-     // This is done here because it is possible to tell the saving throw type here
-     // Tyranny Domain increases the DC of mind spells by +2. 
-     if (GetHasFeat(FEAT_DOMAIN_POWER_TYRANNY, oCaster) && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS) nDC += 2;
+    int iRW = GetLevelByClass(CLASS_TYPE_RED_WIZARD, oSaveVersus);
+    int iTK = GetLevelByClass(CLASS_TYPE_THAYAN_KNIGHT, oTarget);
+    //Thayan Knights auto-fail mind spells cast by red wizards
+    if(iRW > 0 && iTK > 0 && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
+    {
+        return 0;
+    }
+
+    // This is done here because it is possible to tell the saving throw type here
+    // Tyranny Domain increases the DC of mind spells by +2.
+    if(GetHasFeat(FEAT_DOMAIN_POWER_TYRANNY, oSaveVersus) && nSaveType == SAVING_THROW_TYPE_MIND_SPELLS)
+        nDC += 2;
 
     //racial pack code
     //this works by lowering the DC rather than adding to the save
     //same net effect but slightly different numbers
-    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget) )
-    { nDC -= 1+(GetHitDice(oTarget)/5); }
-    else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget) )
-    {    nDC -= 1+(GetHitDice(oTarget)/5);  }
-    else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY )
+    if(nSaveType == SAVING_THROW_TYPE_FIRE && GetHasFeat(FEAT_HARD_FIRE, oTarget))
+        nDC -= 1 + (GetHitDice(oTarget) / 5);
+    else if(nSaveType == SAVING_THROW_TYPE_COLD && GetHasFeat(FEAT_HARD_WATER, oTarget))
+        nDC -= 1 + (GetHitDice(oTarget) / 5);
+    else if(nSaveType == SAVING_THROW_TYPE_ELECTRICITY)
     {
         if(GetHasFeat(FEAT_HARD_AIR, oTarget))
-            nDC -= 1+(GetHitDice(oTarget)/5);
+            nDC -= 1 + (GetHitDice(oTarget) / 5);
         else if(GetHasFeat(FEAT_HARD_ELEC, oTarget))
             nDC -= 2;
     }
-    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget) )
-    {   nDC -= 3;  }
-    else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget) )
-    {   nDC -= 1+(GetHitDice(oTarget)/5);  }
+    else if(nSaveType == SAVING_THROW_TYPE_POISON && GetHasFeat(FEAT_POISON_3, oTarget))
+        nDC -= 3;
+    else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
+        nDC -= 1 + (GetHitDice(oTarget) / 5);
 
-     // Necrotic Cyst penalty on Necromancy spells
-     if (GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
-     {
-	nDC += 2;
-     }
+    // Necrotic Cyst penalty on Necromancy spells
+    if(GetPersistantLocalInt(oTarget, NECROTIC_CYST_MARKER) && (GetSpellSchool(nSpell) == SPELL_SCHOOL_NECROMANCY))
+        nDC += 2;
 
-     int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
+    int nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 
-     // Second Chance power reroll
-     if(nSaveRoll == 0                                        &&     // Failed the save
-        GetLocalInt(oTarget, "PRC_Power_SecondChance_Active") &&     // Second chance is active
-        !GetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound") // And hasn't yet been used for this round
-        )
-     {
+    // Second Chance power reroll
+    if(nSaveRoll == 0                                        &&     // Failed the save
+       GetLocalInt(oTarget, "PRC_Power_SecondChance_Active") &&     // Second chance is active
+       !GetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound") // And hasn't yet been used for this round
+       )
+    {
         // Reroll
         nSaveRoll = BWSavingThrow(nSavingThrow, oTarget, nDC, nSaveType, oSaveVersus, fDelay);
 
         // Can't use this ability again for a round
         SetLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound", TRUE);
         DelayCommand(6.0f, DeleteLocalInt(oTarget, "PRC_Power_SecondChance_UserForRound"));
-     }
+    }
 
-     // Iron Mind Barbed Mind ability
-     if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) == 10)
-     {
+    // Iron Mind Barbed Mind ability
+    if(GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 10)
+    {
         // Only works on Mind Spells and in Heavy Armour
         object oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
-      	if (nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetBaseAC(oItem) >= 6)
-      	{
-      		// Spell/Power caster takes 1d6 damage and 1 Wisdom damage
-      		effect eDam = EffectDamage(d6(), DAMAGE_TYPE_MAGICAL);
-      		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oCaster);
-      		ApplyAbilityDamage(oCaster, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
-      	}
-     }
+        if(nSaveType == SAVING_THROW_TYPE_MIND_SPELLS && GetBaseAC(oItem) >= 6)
+        {
+            // Spell/Power caster takes 1d6 damage and 1 Wisdom damage
+            effect eDam = EffectDamage(d6(), DAMAGE_TYPE_MAGICAL);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSaveVersus);
+            ApplyAbilityDamage(oSaveVersus, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0);
+        }
+    }
 
-     return nSaveRoll;
+    return nSaveRoll;
 }
 
 
@@ -1329,7 +1365,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
 
 
 
-//wrapper for getspelltargetlocation
+//wrapper for GetSpellTargetLocation()
 location PRCGetSpellTargetLocation()
 {
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_LOCATION_OVERRIDE))
@@ -1337,31 +1373,42 @@ location PRCGetSpellTargetLocation()
     return GetSpellTargetLocation();
 }
 
-//wrapper for getspelltargetlocation
+//wrapper for GetSpellTargetObject()
 object PRCGetSpellTargetObject()
 {
+    object oCaster   = OBJECT_SELF; // We hope this is only ever called from the spellscript
+    object oItem     = GetSpellCastItem();
+    object oBWTarget = GetSpellTargetObject();
+    int nSpellID     = PRCGetSpellId();
+
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE))
         return GetLocalObject(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE);
 
     // Reddopsi power causes spells and powers to rebound onto the caster.
-    // If the caster has it active as well, the power rebounds again and hits the target normally.
-    if (GetLocalInt(GetSpellTargetObject(), "Reddopsi") && !GetLocalInt(GetLastSpellCaster(), "Reddopsi")) return GetLastSpellCaster();
-
-    // Get the item used to cast the spell
-    object oItem = GetSpellCastItem();
+    if(GetLocalInt(oBWTarget, "PRC_Power_Reddopsi_Active")                 &&  // Reddopsi is active on the target
+       !GetLocalInt(oCaster, "PRC_Power_Reddopsi_Active")                  &&  // And not on the manifester
+       !(nSpellID == SPELL_LESSER_DISPEL             ||                        // And the spell/power is not a dispelling one
+         nSpellID == SPELL_DISPEL_MAGIC              ||
+         nSpellID == SPELL_GREATER_DISPELLING        ||
+         nSpellID == SPELL_MORDENKAINENS_DISJUNCTION ||
+         nSpellID == POWER_DISPELPSIONICS
+         )                                                                 &&
+       GetStringUpperCase(Get2DACache("spells", "Range", nSpellID)) != "T"     // And the spell/power is not touch range
+       )
+        return oCaster;
 
     // The rune always targets the one who activates it.
-    if (GetResRef(oItem) == "prc_rune_1") return GetItemPossessor(oItem);
+    if(GetResRef(oItem) == "prc_rune_1") return GetItemPossessor(oItem);
     // This check doesnt work, still need a way to find the target on one use items.
-    /*if (DEBUG) FloatingTextStringOnCreature(GetName(GetLastSpellCaster()) + " has just cast a spell", GetFirstPC(), FALSE);
-    if (GetLocalInt(GetLastSpellCaster(), "PRCRuneTarget"))
+    /*if (DEBUG) FloatingTextStringOnCreature(GetName(oCaster) + " has just cast a spell", GetFirstPC(), FALSE);
+    if (GetLocalInt(oCaster, "PRCRuneTarget"))
     {
-        if (DEBUG) FloatingTextStringOnCreature(GetName(GetLastSpellCaster()) + " has PRCRuneTarget set as true", GetLastSpellCaster(), FALSE);
-        DeleteLocalInt(GetLastSpellCaster(), "PRCRuneTarget");
+        if (DEBUG) FloatingTextStringOnCreature(GetName(oCaster) + " has PRCRuneTarget set as true", oCaster, FALSE);
+        DeleteLocalInt(oCaster, "PRCRuneTarget");
         return GetLastSpellCaster();
     }*/
 
-    return GetSpellTargetObject();
+    return oBWTarget;
 }
 
 
@@ -1532,49 +1579,40 @@ int PRCGetSpellId()
 
 void SPEvilShift(object oPC)
 {
-    //Check for alignment shift switch
+    // Check for alignment shift switch being active
     if(GetPRCSwitch(PRC_SPELL_ALIGNMENT_SHIFT))
     {
-        int nShift1 = GetGoodEvilValue(oPC);
-        float fShift = sqrt(IntToFloat(nShift1));
-        int nShift = FloatToInt(fShift);
-        AdjustAlignment(oPC, ALIGNMENT_EVIL, nShift);
+        // Amount of adjustment is equal to the square root of your distance from pure evil.
+        // In other words, the amount of shift is higher the farther you are from pure evil, with the
+        // extremes being 10 points of shift at pure good and 0 points of shift at pure evil.
+        AdjustAlignment(oPC, ALIGNMENT_EVIL,  FloatToInt(sqrt(IntToFloat(GetGoodEvilValue(oPC)))));
     }
 }
 
 void SPGoodShift(object oPC)
 {
-    //Check for alignment shift switch
+    // Check for alignment shift switch being active
     if(GetPRCSwitch(PRC_SPELL_ALIGNMENT_SHIFT))
     {
-        int nShift1 = GetGoodEvilValue(oPC);
-        float fShift = sqrt(IntToFloat(nShift1));
-        int nShift = FloatToInt(fShift);
-        AdjustAlignment(oPC, ALIGNMENT_GOOD, nShift);
+        // Amount of adjustment is equal to the square root of your distance from pure good.
+        // In other words, the amount of shift is higher the farther you are from pure good, with the
+        // extremes being 10 points of shift at pure evil and 0 points of shift at pure good.
+        AdjustAlignment(oPC, ALIGNMENT_GOOD, FloatToInt(sqrt(IntToFloat(100 - GetGoodEvilValue(oPC)))));
     }
 }
 
-//nType = 0 for ability damage
-void DoCorruptionCost(object oPC, object oTarget, int nAbility, int nCost, int nType)
+void DoCorruptionCost(object oPC, object oTarget, int nAbility, int nCost, int bDrain)
 {
-	if(GetObjectType(oTarget) != OBJECT_TYPE_ITEM)
-	{
-		if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_UNDEAD)
-		{
-			nAbility = ABILITY_CHARISMA;
-		}
-		
-		if(nType = 1)
-		{		
-			ApplyAbilityDamage(oPC, nAbility, nCost, DURATION_TYPE_PERMANENT, TRUE, 0.0f, FALSE, -1, -1, oPC);
-		}
-		
-		else
-		{
-			ApplyAbilityDamage(oPC, nAbility, nCost, DURATION_TYPE_TEMPORARY,TRUE,-1.0f, FALSE, -1, -1, oPC);
-		}
-	}
+    // Undead redirect all damage & drain to Charisma, sez http://www.wizards.com/dnd/files/BookVileFAQ12102002.zip
+    if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_UNDEAD)
+        nAbility = ABILITY_CHARISMA;
 
+    // Is it ability drain?
+    if(bDrain)
+        ApplyAbilityDamage(oPC, nAbility, nCost, DURATION_TYPE_PERMANENT, TRUE);
+    // Or damage
+    else
+        ApplyAbilityDamage(oPC, nAbility, nCost, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 }
 
 
@@ -1689,7 +1727,7 @@ int GetHasMettle(object oTarget, int nSavingThrow)
 {
 	int nMettle = FALSE;
 	object oArmour = GetItemInSlot(INVENTORY_SLOT_CHEST);
-	
+
 	if (nSavingThrow = SAVING_THROW_WILL)
 	{
 		// Iron Mind's ability only functions in Heavy Armour
@@ -1701,6 +1739,6 @@ int GetHasMettle(object oTarget, int nSavingThrow)
 	{
 		// Add Classes with Fort mettle here
 	}
-	
+
 	return nMettle;
 }

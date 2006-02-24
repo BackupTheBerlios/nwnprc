@@ -40,7 +40,7 @@
 void main()
 {
     // Are we running the manifestation part or the onhit part?
-    if(GetRunningEvent() != EVENT_ITEM_ONHIT)
+    if(GetRunningEvent() != EVENT_ONHIT)
     {
         if (!PsiPrePowerCastCode()){ return; }
 
@@ -92,8 +92,8 @@ void main()
                               );
             }
 
-            // Hook to the creature's OnHit
-            AddEventScript(oTarget, EVENT_ITEM_ONHIT, "psi_pow_prevnm", TRUE, FALSE);
+            // Hook to the weapons' OnHit
+            AddEventScript(oTarget, EVENT_ONHIT, "psi_pow_prevnm", TRUE, FALSE);
 
             /* Add the onhit spell to the weapon */
             IPSafeAddItemProperty(oLClaw, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
@@ -119,7 +119,7 @@ void main()
             int nDC        = (nValue >>> 16 ) & 0x0000FFFF;
 
             // Target-specific damage adjustments
-            nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
+            nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, FALSE, FALSE);
 
             if(DEBUG) DoDebug("psi_pow_prevnm: OnHit: Damage = " + IntToString(nDamage) + "; DC = " + IntToString(nDC));
 
@@ -129,7 +129,7 @@ void main()
             {
                     //Apply the poison effect and VFX impact
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
-                    ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, TRUE);
+                    ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
             }
 
             // Remove the damage value from the array
@@ -139,7 +139,7 @@ void main()
             else
             {
                 array_delete(oManifester, "PRC_Power_Prevenom_Values");
-                RemoveEventScript(oManifester, EVENT_ITEM_ONHIT, "psi_pow_prevnm", TRUE, FALSE);
+                RemoveEventScript(oManifester, EVENT_ONHIT, "psi_pow_prevnm", TRUE, FALSE);
             }
         }// end if - Triggered by a natural weapon
     }// end else - Running OnHit

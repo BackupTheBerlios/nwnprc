@@ -106,13 +106,13 @@ void main()
         object oManifester = OBJECT_SELF;
         object oWeapon     = GetSpellCastItem();
         object oTarget     = PRCGetSpellTargetObject();
-        int nArraySize     = array_get_size(oWeapon, "PRC_Power_Prevenom_Values");
-        int nValue         = array_get_int(oWeapon, "PRC_Power_Prevenom_Values", nArraySize);
+        int nArraySize     = array_get_size(oWeapon, "PRC_Power_PrevenomWeapon_Values");
+        int nValue         = array_get_int(oWeapon, "PRC_Power_PrevenomWeapon_Values", nArraySize);
         int nDamage        = nValue & 0x0000FFFF;
         int nDC            = (nValue >>> 16 ) & 0x0000FFFF;
 
         // Target-specific damage adjustments
-        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
+        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, FALSE, FALSE);
 
         if(DEBUG) DoDebug("psi_pow_prevnmwp: OnHit: Damage = " + IntToString(nDamage) + "; DC = " + IntToString(nDC));
 
@@ -122,7 +122,7 @@ void main()
         {
                 //Apply the poison effect and VFX impact
                 ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POISON_S), oTarget);
-                ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_PERMANENT, TRUE);
+                ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDamage, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
         }
 
         // Remove the damage value from the array

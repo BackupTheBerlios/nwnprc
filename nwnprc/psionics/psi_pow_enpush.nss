@@ -196,7 +196,6 @@ void DoPush(object oTarget, object oManifester, int nDC, int nNumberOfDice, int 
         // Check STR
         if((d20() + GetAbilityModifier(ABILITY_STRENGTH, oTarget)) < nDC)
         {
-            /// @todo Write the pushing part of Energy Push
             // Calculate how far the creature gets pushed
             float fDistance = FeetToMeters(5.0f) * (1 + (nDamageDealt / 5));
             // Determine if they hit a wall on the way
@@ -209,9 +208,10 @@ void DoPush(object oTarget, object oManifester, int nDC, int nNumberOfDice, int 
             if(!LineOfSightVector(vTargetOrigin, vTarget))
             {
                 // Hit a wall, binary search for the wall
-                float fEpsilon    = 1.0f; // Search precision
-                float fLowerBound = 0.0f;
-                float fUpperBound = fDistance;
+                float fEpsilon    = 1.0f;          // Search precision
+                float fLowerBound = 0.0f;          // The lower search bound, initialise to 0
+                float fUpperBound = fDistance;     // The upper search bound, initialise to the initial distance
+                fDistance         = fDistance / 2; // The search position, set to middle of the range
 
                 do{
                     // Create test vector for this iteration
@@ -226,20 +226,20 @@ void DoPush(object oTarget, object oManifester, int nDC, int nNumberOfDice, int 
                     // Get the new middle point
                     fDistance = (fUpperBound + fLowerBound) / 2;
                 }while(fabs(fUpperBound - fLowerBound) > fEpsilon);
-
-                // Create the final target vector
-                vTarget = vTargetOrigin + (vAngle * fDistance);
-
-                // Determine damage and apply it
-                int nDamage = d6(nNumberOfDice); // Assume the die size stays static
-                effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_ENERGY); // Slamming into a solid object
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
             }
+
+            // Create the final target vector
+            vTarget = vTargetOrigin + (vAngle * fDistance);
+
+            // Determine damage and apply it
+            int nDamage = d6(nNumberOfDice); // Assume the die size stays static
+            effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_ENERGY); // Slamming into a solid object
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
 
             // Move the target
             location lTargetDestination = Location(GetArea(oTarget), vTarget, GetFacing(oTarget));
             AssignCommand(oTarget, ClearAllActions(TRUE));
             AssignCommand(oTarget, JumpToLocation(lTargetDestination));
-        }
-    }
+        }// end if - The target failed the Strength check
+    }// end if - The target is small enough
 }

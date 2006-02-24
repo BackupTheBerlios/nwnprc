@@ -62,7 +62,7 @@ void main()
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE) == 0)
         SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 100);//100 HBs = 600sec = 10min
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE))
-        DelayCommand(5.0, CheckDB());
+        DelayCommand(1.0, CheckDB());
 
     if(GetPRCSwitch(PRC_USE_DATABASE))
     {
@@ -73,6 +73,8 @@ void main()
         if(GetPRCSwitch(PRC_DB_SQLLITE))
             DelayCommand(IntToFloat(GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL)), PRC_SQLCommit());
     }
+    //pre-made cohorts
+    DelayCommand(6.0, AddPremadeCohortsToDB());
 
     //check for letoscript dir
     if(GetLocalString(oModule, PRC_LETOSCRIPT_NWN_DIR) == "")

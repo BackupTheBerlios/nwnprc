@@ -238,7 +238,7 @@ int GetSpellKnownCurrentCount(object oPC, int nSpellLevel, int nClass)
     string sFile = GetFileForClass(nClass);
     for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
     {
-        int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i)-1;
+        int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
         int nLevel = StringToInt(Get2DACache(sFile, "Level", nNewSpellbookID)); 
         if(nLevel == nSpellLevel)
             nKnown++;
@@ -356,7 +356,7 @@ void SetupSpells(object oPC, int nClass)
         int i;
         for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
         {
-            int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i)-1;
+            int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
             AddSpellUse(oPC, nSpellbookID, nClass);
         }    
     }
@@ -372,7 +372,7 @@ void SetupSpells(object oPC, int nClass)
                 //done when spells are added to it
                 //doesnt do any harm to make it twice
                 persistant_array_create(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass));
-                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass), nSlot)-1;
+                int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nSpellLevel)+"_"+IntToString(nClass), nSlot);
                 if(nSpellbookID != 0)
                 {
                     AddSpellUse(oPC, nSpellbookID, nClass);

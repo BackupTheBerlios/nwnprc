@@ -519,8 +519,10 @@ void main()
             {
                 AssignCommand(oPC, ClearAllActions());
                 AssignCommand(oPC, TakeGoldFromCreature(10000, oPC, TRUE));
-                CreateItemOnObject("shadowwalkerstok", oPC);
-                SetLocalInt(oPC, "X1_AllowShaLow", 0);
+                //use a persistant local instead of an item
+                //CreateItemOnObject("shadowwalkerstok", oPC);
+                SetPersistantLocalInt(oPC, "shadowwalkerstok", TRUE);
+                SetLocalInt(oPC, "PRC_PrereqTelflam", 0);
             }
             MarkStageNotSetUp(nStage, oPC);
         }
@@ -530,6 +532,8 @@ void main()
                 nStage = STAGE_LEADERSHIP_ADD;
             else if(nChoice == 2)
                 nStage = STAGE_LEADERSHIP_REMOVE;
+            else if(nChoice == 3)
+                nStage = STAGE_LEADERSHIP_DELETE;
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_ENTRY;
             MarkStageNotSetUp(nStage, oPC);

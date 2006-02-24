@@ -5,11 +5,6 @@
 
 void main()
 {
-    if(GetIsObjectValid(GetMaster(OBJECT_SELF)))
-        ExecuteScript("x0_ch_hen_heart", OBJECT_SELF);
-    else
-    {
+    if(!GetIsObjectValid(GetMaster(OBJECT_SELF)))
         RemoveCohortFromPlayer(OBJECT_SELF, OBJECT_INVALID);
-    }
-    ExecuteScript("prc_npc_hb", OBJECT_SELF);
 }

@@ -226,7 +226,8 @@ void Shadowlord(object oPC, int iArcSpell)
      int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
 
      int iShadItem;
-     if(GetHasItem(oPC,"shadowwalkerstok"))
+     if(GetHasItem(oPC,"shadowwalkerstok")
+        || GetPersistantLocalInt(oPC, "shadowwalkerstok"))
      {
      iShadItem = 1;
      }
@@ -668,12 +669,12 @@ void Thrallherd(object oPC)
 
 void PsionicCheck(object oPC)
 {
-	SetLocalInt(oPC, "PRC_IsPsionic", 1);
-	
-	if (GetIsPsionicCharacter(oPC))
-	{
-		SetLocalInt(oPC, "PRC_IsPsionic", 0);
-	}
+    SetLocalInt(oPC, "PRC_IsPsionic", 1);
+    
+    if (GetIsPsionicCharacter(oPC))
+    {
+        SetLocalInt(oPC, "PRC_IsPsionic", 0);
+    }
 }
 
 void RangerURangerMutex(object oPC)

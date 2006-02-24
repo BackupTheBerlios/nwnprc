@@ -75,8 +75,9 @@ void main()
         {   //SetCommandable(TRUE);
             ClearActions(CLEAR_X0_CH_HEN_CONV_26);
 
-
+//PRC CHANGE
             BeginConversation("prc_cohort");
+//PRC CHANGE            
         }
     }
     else

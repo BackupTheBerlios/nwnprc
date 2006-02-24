@@ -33,6 +33,8 @@ void AddCohortToPlayer(int nCohortID, object oPC);
 void RemoveCohortFromPlayer(object oCohort, object oPC);
 int GetLeadershipScore(object oPC = OBJECT_SELF);
 void CheckHB();
+void AddPremadeCohortsToDB();
+void StoreCohort(object oCohort);
 
 
 //////////////////////////////////////////////////
@@ -41,6 +43,7 @@ void CheckHB();
 
 #include "prc_feat_const"
 #include "inc_utility"
+//1.67 #include "pnp_shft_poly" //for DoDisguise
 
 
 //////////////////////////////////////////////////
@@ -59,6 +62,7 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     AddHenchman(oPC, oCohort);
     SetMaxHenchmen(nMaxHenchmen);
     //turn on its scripts    
+    //normal MoB set
     AddEventScript(oCohort, EVENT_VIRTUAL_ONPHYSICALATTACKED,   "prc_ai_mob_attck", TRUE, TRUE);
     AddEventScript(oCohort, EVENT_VIRTUAL_ONBLOCKED,            "prc_ai_mob_block", TRUE, TRUE);
     AddEventScript(oCohort, EVENT_VIRTUAL_ONCOMBATROUNDEND,     "prc_ai_mob_combt", TRUE, TRUE);
@@ -70,13 +74,25 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     AddEventScript(oCohort, EVENT_VIRTUAL_ONDEATH,              "prc_ai_mob_death", TRUE, TRUE);
     AddEventScript(oCohort, EVENT_VIRTUAL_ONRESTED,             "prc_ai_mob_rest",  TRUE, TRUE);
     AddEventScript(oCohort, EVENT_VIRTUAL_ONUSERDEFINED,        "prc_ai_mob_userd", TRUE, TRUE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_coh_hb",    TRUE, TRUE);
+    //dont run this, cohort-specific script replaces it
+    //AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_mob_conv",  TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_mob_heart", TRUE, TRUE);
+    //cohort specific ones
     AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_coh_conv",  TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_coh_hb",    TRUE, TRUE);
+    
     //set it to the pcs level
     int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     SetXP(oCohort, nLevel*(nLevel-1)*500);
     DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
     DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
+    
+    //if it was a premade one, give it a random name
+    //randomize its appearance using DoDisguise
+    /* 1.67 code
+        AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName());
+        DoDisguise(PRCGetRacialType(oCohort), oCohort);
+    */
 
     //strip its equipment & inventory
     object oTest = GetFirstItemInInventory(oCohort);
@@ -162,36 +178,40 @@ int GetLeadershipScore(object oPC = OBJECT_SELF)
     return nLeadership;
 }
 
+void StoreCohort(object oCohort)
+{
+    int nCohortCount = GetCampaignInt(COHORT_DATABASE, "CohortCount");
+    int i;
+    for(i=0;i<nCohortCount;i++)
+    {
+        if(GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_deleted"))
+        {
+            nCohortCount = i;
+        }
+    }
+    if(GetCampaignInt(COHORT_DATABASE, "CohortCount")==nCohortCount) //no "deleted" cohorts
+        nCohortCount++;
+    //store the player
+    SetCampaignInt(COHORT_DATABASE, "CohortCount", nCohortCount);
+    StoreCampaignObject(COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_obj",    oCohort);
+    SetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_name",   GetName(oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_race",   GetRacialType(oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class1", PRCGetClassByPosition(1, oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class2", PRCGetClassByPosition(2, oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class3", PRCGetClassByPosition(3, oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_order",  GetLawChaosValue(oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_moral",  GetGoodEvilValue(oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_ethran", GetHasFeat(FEAT_ETHRAN, oCohort));
+    SetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_cdkey",  GetPCPublicCDKey(oCohort));
+    SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_deleted",   FALSE);
+}
+
 void CheckHB()
 {
     SetCommandable(FALSE);
     if(GetHitDice(OBJECT_SELF) == 40)
     {
-        int nCohortCount = GetCampaignInt(COHORT_DATABASE, "CohortCount");
-        int i;
-        for(i=0;i<nCohortCount;i++)
-        {
-            if(GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_deleted"))
-            {
-                nCohortCount = i;
-            }
-        }
-        if(GetCampaignInt(COHORT_DATABASE, "CohortCount")==nCohortCount) //no "deleted" cohorts
-            nCohortCount++;
-        //store the player
-        SetCampaignInt(COHORT_DATABASE, "CohortCount", nCohortCount);
-        StoreCampaignObject(COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_obj",    OBJECT_SELF);
-        SetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_name",   GetName(OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_race",   GetRacialType(OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class1", PRCGetClassByPosition(1, OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class2", PRCGetClassByPosition(2, OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_class3", PRCGetClassByPosition(3, OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_order",  GetLawChaosValue(OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_moral",  GetGoodEvilValue(OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_ethran", GetHasFeat(FEAT_ETHRAN, OBJECT_SELF));
-        SetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_cdkey",  GetPCPublicCDKey(OBJECT_SELF));
-        SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_deleted",   FALSE);
-
+        StoreCohort(OBJECT_SELF);
         //restore previous xp amound
         int nOldXP = GetLocalInt(OBJECT_SELF, "OriginalXP");
         SetXP(OBJECT_SELF, nOldXP);
@@ -370,7 +390,8 @@ int GetIsCohortChoiceValid(int nID, object oPC)
     int nCohortCount = GetMaximumCohortCount(oPC);
     int i;
     //another players cohort
-    if(GetPCPublicCDKey(oPC) != "" && GetPCPublicCDKey(oPC) != sKey)
+    if(GetPCPublicCDKey(oPC) != "" 
+        && GetPCPublicCDKey(oPC) != sKey)
         bIsValid = FALSE;
     //is character
     if(GetName(oPC) == sName)
@@ -434,5 +455,78 @@ void DeleteCohort(int nCohortID)
     SetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_deleted", TRUE);
 }
 
-// Test main
-//void main(){}
+void LevelupAndStorePremadeCohort(object oCohort)
+{
+    int i;
+    //levelup the cohort
+    //if simple racial HD on, give them racial HD
+    if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
+    {
+        //get the real race
+        int nRace = GetRacialType(oCohort);
+        int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", nRace));
+        int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRace));
+        for(i=0;i<nRacialHD;i++)
+        {
+            LevelUpHenchman(oCohort, nRacialClass, TRUE);
+        }
+    }
+    //give them their 40 levels in their class
+    for(i=0;i<40;i++)
+    {
+        LevelUpHenchman(oCohort, CLASS_TYPE_INVALID, TRUE);
+    }
+    //store them
+    StoreCohort(oCohort);
+    //destroy them to clean up afterwards
+    //clean invetory first
+    object oTest = GetFirstItemInInventory(oCohort);
+    while(GetIsObjectValid(oTest))
+    {
+        DestroyObject(oTest);
+        oTest = GetNextItemInInventory(oCohort);
+    }
+    for(i=0;i<14;i++)
+    {
+        oTest = GetItemInSlot(i, oCohort);
+        DestroyObject(oTest);
+    }
+    DestroyObject(oCohort);
+}
+
+void AddPremadeCohortsToDB()
+{
+    //check not added already
+    if(GetCampaignInt(COHORT_DATABASE, "PremadeCohorts"))
+        return;
+        
+    //get the limbo location
+    location lSpawn = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
+    //loop over the races
+    int nRace;
+    for(nRace = 0; nRace <= 255; nRace++)
+    {
+        //check its a playable race
+        if(Get2DACache("racialtypes", "PlayerRace", nRace) == "1")
+        {
+            //loop over the classes
+            int nClass;
+            for(nClass = 0; nClass <= 10; nClass++)
+            {
+                //assemble the resref
+                string sResRef = "PRC_NPC_"+IntToString(nRace)+"_"+IntToString(nClass);
+                //create the cohort
+                object oCohort = CreateObject(OBJECT_TYPE_PLACEABLE, sResRef, lSpawn);
+                //check its valid
+                if(GetIsObjectValid(oCohort))
+                {
+                    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oCohort);
+                    DelayCommand(1.0, LevelupAndStorePremadeCohort(oCohort));
+                }
+            }
+        }
+    }   
+        
+    //make sure this is only done once  
+    SetCampaignInt(COHORT_DATABASE, "PremadeCohorts", TRUE);
+}

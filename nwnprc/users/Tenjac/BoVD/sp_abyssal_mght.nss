@@ -38,6 +38,7 @@ void main()
 	
 	//define vars
 	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
 	int nAlignEvil = GetAlignmentGoodEvil(oPC);
 	int nAlignChaotic = GetAlignmentLawChaos(oPC);
 	int nType = MyPRCGetRacialType(oTarget);

@@ -5,3 +5,4 @@
 1 CraftWonder FEAT    2925          ****      
 2 ScriptVar   VAR     PRC_AllowLich 0         
 3 ScriptVar   VAR     PRC_DemiLich  0         
+4 ScriptVar   VAR     PRC_NoBaeln  0

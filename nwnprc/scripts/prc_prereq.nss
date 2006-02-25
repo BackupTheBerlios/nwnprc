@@ -709,6 +709,26 @@ void DragonDis(object oPC)
      }
 }
 
+void Baelnorn(object oPC)
+{
+	int nLich = GetLevelByClass(CLASS_TYPE_LICH, oPC);
+	
+	if (nLich >= 1)
+	{
+		SetLocalInt(oPC, "prc_NoLich", 1);
+	}
+}
+
+void Lich(object oPC)
+{
+	int nBaeln = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
+	
+	if (nBaeln >= 1)
+	{
+		SetLocalInt(oPC, "PRC_NoBaeln", 1);
+	}
+}
+
 void RacialHD(object oPC)
 {
     SetLocalInt(oPC, "PRC_PrereqAberration", 1);
@@ -906,6 +926,8 @@ void main2()
      DragonDis(oPC);
      Thrallherd(oPC);
      PsionicCheck(oPC);
+     Baelnorn(oPC);
+     Lich(oPC);
      RacialHD(oPC);
      // Truly massive debug message flood if activated.
      /*

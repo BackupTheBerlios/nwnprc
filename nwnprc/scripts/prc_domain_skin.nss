@@ -57,17 +57,20 @@ void AddDomainPower(object oPC, object oSkin)
 
 void AddDomainFeat(object oPC, object oSkin)
 {
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_DARKNESS, oPC))      IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_BLINDFIGHT        ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_DWARF, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_GREAT_FORTITUDE   ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_ELF, oPC))           IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_POINTBLANK        ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_FATE, oPC))          IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_UNCANNY_DODGE1    ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_RUNE, oPC))          IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SCRIBE_SCROLL     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_TIME, oPC))          IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_UNDEATH, oPC))       IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_EXTRA_TURNING     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_DOMINATION, oPC))    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFOCUSENC     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+
+    if(DEBUG) FloatingTextStringOnCreature("Add Domain Feat is running", oPC, FALSE);
+
+    if (GetHasFeat(FEAT_DOMAIN_POWER_DARKNESS, oPC))      IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_BLINDFIGHT        ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_DWARF, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_GREAT_FORTITUDE   ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_ELF, oPC))           IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_POINTBLANK        ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_FATE, oPC))          IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_UNCANNY_DODGE1    ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_RUNE, oPC))          IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SCRIBE_SCROLL     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_TIME, oPC))          IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_UNDEATH, oPC))       IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_EXTRA_TURNING     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_DOMINATION, oPC))    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFOCUSENC     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     
     // +2 Conc and Spellcraft
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_SPELLS, oPC))
+    if (GetHasFeat(FEAT_DOMAIN_POWER_SPELLS, oPC))
     {
     	if(GetLocalInt(oSkin, "SpellDomainPowerConc") == 2) return;
     
@@ -75,7 +78,7 @@ void AddDomainFeat(object oPC, object oSkin)
     	SetCompositeBonus(oSkin, "SpellDomainPowerSpell", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
     }
     // Electrical resist 5
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_STORM, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_STORM_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_STORM_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     {
 	if(GetLocalInt(oSkin, "StormDomainPower")) return;
 
@@ -120,6 +123,23 @@ void main()
     object oSkin = GetPCSkin(oPC);
 
     if(DEBUG) FloatingTextStringOnCreature("PRC Domain Skin is running", oPC, FALSE);
+    
+    // This is above the check to stop because AddDomainFeat needs this to run beforehand.
+    // Puts the domain power feats on the skin for the appropriate domains.
+    AddDomainPower(oPC, oSkin);    
+    
+    // This is above the check to stop because all domains, including ones pick at level of a cleric use this
+    // Puts the bonus feats that some domains grant on the skin for the appropriate domains.
+    AddDomainFeat(oPC, oSkin);    
+    
+    // Stops the script from running if the PC has no bonus domains
+    // Looks in the first slot for a bonus domain, exits if there is none
+    // The first domain begins at 1
+    if (GetBonusDomain(oPC, 1) <= 0)
+    {
+    	if(DEBUG) FloatingTextStringOnCreature("You have no bonus domains, exiting prc_domain_skin", oPC, FALSE);
+    	return;
+    }
 
     // The prereq variables use 0 as true and 1 as false, becuase they are used in class prereqs
     // It uses allspell because there are some feats that allow a wizard or other arcane caster to take domains.
@@ -146,10 +166,4 @@ void main()
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_CAST_DOMAIN_LEVEL_EIGHT),oSkin);
     if (GetLocalInt(oPC, "PRC_AllSpell9") == 0 && !GetHasFeat(FEAT_CAST_DOMAIN_LEVEL_NINE))
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_CAST_DOMAIN_LEVEL_NINE),oSkin);
-
-    // Puts the domain power feats on the skin for the appropriate domains.
-    AddDomainPower(oPC, oSkin);
-    
-    // Puts the bonus feats that some domains grant on the skin for the appropriate domains.
-    AddDomainFeat(oPC, oSkin);
 }

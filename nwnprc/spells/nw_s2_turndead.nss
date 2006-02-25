@@ -64,8 +64,12 @@ void DoCommand(object oTarget, int nLevel);
 void main()
 {
 
-    // Used by the uses per day check code for bonus domains
-    if (!DecrementDomainUses(GetTurningDomain(GetSpellId()), OBJECT_SELF)) return;
+    // Because Turn Undead isn't from a domain, skip this check
+    if (GetSpellId() != SPELL_TURN_UNDEAD)
+    {
+    	// Used by the uses per day check code for bonus domains
+    	if (!DecrementDomainUses(GetTurningDomain(GetSpellId()), OBJECT_SELF)) return;
+    }
 
     //casters level for turning
     int nLevel = GetTurningClassLevel();

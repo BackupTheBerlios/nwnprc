@@ -44,6 +44,8 @@ void main()
     // Gives people the proper spells from their bonus domains
     // This should run before EvalPRCFeats, because it sets a variable
     CheckBonusDomains(oPC);
+    // Set the uses per day for domains
+    BonusDomainRest(oPC);
 
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.
@@ -53,7 +55,7 @@ void main()
     ExecuteScript("prc_prereq", oPC);
     ExecuteScript("prc_psi_ppoints", oPC);
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
-
+    
     //remove effects from hides, can stack otherwise
     effect eTest=GetFirstEffect(oPC);
 

@@ -281,7 +281,7 @@ int GetDomainFeatUsesPerDay(int nFeat, object oPC)
 {
 	int nUses = StringToInt(Get2DACache("feat", "USESPERDAY", nFeat));
 	// These are the domains that have ability based uses per day
-	if (nUses >= 20)
+	if (nUses = -1)
 	{
 		// The Strength domain, which uses Strength when the Cleric has Kord levels
 		// Without Kord levels, its 1 use per day

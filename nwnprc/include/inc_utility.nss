@@ -29,7 +29,7 @@ const int ARMOR_TYPE_HEAVY      = 3;
  *
  * @param a An integer
  * @param b Another integer
- * @return  The greater of a and b
+ * @return  a iff a is greater than b, otherwise b
  */
 int max(int a, int b);
 
@@ -38,7 +38,7 @@ int max(int a, int b);
  *
  * @param a An integer
  * @param b Another integer
- * @return  The lesser of a and b
+ * @return  a iff a is lesser than b, otherwise b
  */
 int min(int a, int b);
 
@@ -47,7 +47,7 @@ int min(int a, int b);
  *
  * @param a A float
  * @param b Another float
- * @return  The greater of a and b
+ * @return  a iff a is greater than b, otherwise b
  */
 float fmax(float a, float b);
 
@@ -56,7 +56,7 @@ float fmax(float a, float b);
  *
  * @param a A float
  * @param b Another float
- * @return  The lesser of a and b
+ * @return  a iff a is lesser than b, otherwise b
  */
 float fmin(float a, float b);
 
@@ -422,18 +422,18 @@ float fmin(float a, float b) {return (a < b ? a : b);}
 int HexToInt(string sHex)
 {
     if(sHex == "") return 0;                            // Some quick optimisation for empty strings
-    sHex = GetStringRight(GetStringLowerCase(sHex), 8); // Trunctate to last 8 characters and convert to lowercase
-    if(GetStringLeft(sHex, 2) == "0x")                  // Cut out '0x' if it's still present
-        sHex = GetStringRight(sHex, 6);
+    sHex = GetStringRight(GetStringLowerCase(sHex), 8); // Truncate to last 8 characters and convert to lowercase
+    if(GetStringLeft(sHex, 2) == "0x")                  // Cut out '0x' if it's present
+        sHex = GetStringRight(sHex, GetStringLength(sHex) - 2);
     string sConvert = "0123456789abcdef";               // The string to index using the characters in sHex
     int nReturn, nHalfByte;
     while(sHex != "")
     {
-        nHalfByte = FindSubString(sConvert, GetStringRight(sHex, 1)); // Get the value of the next hexadecimal character
-        if(nHalfByte == -1) return 0;                                 // Invalid character in the string!
-        nReturn  = nReturn << 4;                                      // Rightshift by 4 bits
-        nReturn |= nHalfByte;                                         // OR in the next bits
-        sHex = GetStringLeft(sHex, GetStringLength(sHex) - 1);        // Remove the parsed character from the string
+        nHalfByte = FindSubString(sConvert, GetStringLeft(sHex, 1)); // Get the value of the next hexadecimal character
+        if(nHalfByte == -1) return 0;                                // Invalid character in the string!
+        nReturn  = nReturn << 4;                                     // Rightshift by 4 bits
+        nReturn |= nHalfByte;                                        // OR in the next bits
+        sHex = GetStringRight(sHex, GetStringLength(sHex) - 1);      // Remove the parsed character from the string
     }
 
     return nReturn;

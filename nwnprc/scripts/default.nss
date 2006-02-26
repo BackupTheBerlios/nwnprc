@@ -18,6 +18,7 @@
 #include "prc_alterations"
 #include "prc_inc_leadersh"
 
+const int LOCAL_DEBUG = FALSE; //DEBUG;
 
 /**************************/
 /* Declarations for Tests */
@@ -75,7 +76,7 @@ void OnConversation()     { RunScript("conv");      }
 
 void main()
 {
-    if(DEBUG) DoDebug("default running for " + DebugObject2Str(OBJECT_SELF));
+    if(LOCAL_DEBUG) DoDebug("default running for " + DebugObject2Str(OBJECT_SELF));
 
     // OnConversation is exclusive of everything else, since it is just routed through this script
     if(IsConversation())             OnConversation();
@@ -174,7 +175,7 @@ int IsDamaged()
         // Determine if the damage dealt has changed
         if(sOldDamage != sNewDamage)
         {
-            if(DEBUG) DoDebug("default: Damage has changed:\n" + sNewDamage);
+            if(LOCAL_DEBUG) DoDebug("default: Damage has changed:\n" + sNewDamage);
             SetLocalString(oCreature, "PRC_Event_OnDamaged_Data", sNewDamage);
             return TRUE;
         }
@@ -213,7 +214,7 @@ int IsDisturbed()
         // Determine if the data has changed
         if(sOldDisturb != sNewDisturb)
         {
-            if(DEBUG) DoDebug("default: Disturbed has changed:\n" + sNewDisturb);
+            if(LOCAL_DEBUG) DoDebug("default: Disturbed has changed:\n" + sNewDisturb);
             SetLocalString(oCreature, "PRC_Event_OnDisturbed_Data", sNewDisturb);
             return TRUE;
         }
@@ -262,7 +263,7 @@ int IsPerception()
         // Determine if the data has changed
         if(sOldPerception != sNewPerception)
         {
-            if(DEBUG) DoDebug("default: Perception has changed:\n" + sNewPerception);
+            if(LOCAL_DEBUG) DoDebug("default: Perception has changed:\n" + sNewPerception);
             SetLocalString(oCreature, "PRC_Event_OnPerception_Data", sNewPerception);
             return TRUE;
         }
@@ -291,7 +292,7 @@ int IsPhysicalAttacked()
         // Determine if the data has changed
         if(sOldAttack != sNewAttack)
         {
-            if(DEBUG) DoDebug("default: Attack has changed:\n" + sNewAttack);
+            if(LOCAL_DEBUG) DoDebug("default: Attack has changed:\n" + sNewAttack);
             SetLocalString(oCreature, "PRC_Event_OnPhysicalAttacked_Data", sNewAttack);
             return TRUE;
         }
@@ -328,13 +329,11 @@ int IsSpawn()
 int IsSpellCastAt()
 {
     object oCreature = OBJECT_SELF;
-    /*
-    if(DEBUG) DoDebug("default: IsSpellCastAt():\n"
+    if(LOCAL_DEBUG) DoDebug("default: IsSpellCastAt():\n"
                     + "GetLastSpellCaster() = " + DebugObject2Str(GetLastSpellCaster()) + "\n"
                     + "GetLastSpell() = " + IntToString(GetLastSpell()) + "\n"
                     + "GetLastSpellHarmful() = " + IntToString(GetLastSpellHarmful()) + "\n"
                       );
-    */
     // If the event data does not contain the fake value, a spell has been cast
     if(GetLastSpell() != -1)
     {
@@ -350,11 +349,10 @@ int IsSpellCastAt()
 int IsUserDefined()
 {
     object oCreature = OBJECT_SELF;
-    /*
-    if(DEBUG) DoDebug("default: IsUserDefined():\n"
-                    + "GetUserDefinedEventNumber() = " + GetUserDefinedEventNumber(GetLastSpell()) + "\n"
-                      );
-    */
+    if(LOCAL_DEBUG) DoDebug("default: IsUserDefined():\n"
+                          + "GetUserDefinedEventNumber() = " + IntToString(GetUserDefinedEventNumber()) + "\n"
+                            );
+
     if(GetUserDefinedEventNumber() != -1)
     {
         // Reset the event data to the fake value
@@ -412,7 +410,9 @@ int IsStringChanged(string sTest, string sName)
 void RunScript(string sEvent)
 {
     object oSelf = OBJECT_SELF;
-DoDebug("default, event = " + sEvent);
+
+    if(LOCAL_DEBUG) DoDebug("default, event = " + sEvent);
+
     // Determine NPC script name and run generic eventhook
     if(sEvent == "attacked")
     {

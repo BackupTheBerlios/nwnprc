@@ -20,7 +20,7 @@ const int RACIAL_TYPE_DERRO = 49;
 const int RACIAL_TYPE_MAZTICAN_DWARF    = 50;
 const int RACIAL_TYPE_QD_DWARF  = 150;
 const int RACIAL_TYPE_QD_ELF    = 52;
-const int RACIAL_TYPE_QD_HALFORC    = 53;
+const int RACIAL_TYPE_QD_HALFORC    = 32;
 const int RACIAL_TYPE_QD_KOBOLD =  54;
 const int RACIAL_TYPE_DIMERNESTI_ELF    = 55;
 const int RACIAL_TYPE_DJINNI    = 56;
@@ -139,7 +139,7 @@ const int RACIAL_TYPE_WOOD_ELF  = 168;
 const int RACIAL_TYPE_JARREN    = 169;
 const int RACIAL_TYPE_DS_ELF    = 170;
 const int RACIAL_TYPE_WILDREN   = 171;
-const int RACIAL_FEAT_XEPH  = 172;
+const int RACIAL_TYPE_XEPH  = 172;
 const int RACIAL_TYPE_XIXCHIL   = 173;
 const int RACIAL_TYPE_DEEP_GNOME    = 174;
 const int RACIAL_TYPE_SVIRFNEBLIN   = 174;
@@ -222,6 +222,7 @@ const int RACIAL_TYPE_NYMPH = 250;
 const int RACIAL_TYPE_DRAGON_RED    = 251;
 const int RACIAL_TYPE_DRAGON_GOLD   = 252;
 const int RACIAL_TYPE_DRAGON_COPPER = 253;
+const int RACIAL_TYPE_BROWNIE = 53;
 
 
 

@@ -60,7 +60,7 @@ void main()
 	//Corruption cost
 	int nCost = d6(3);
 	
-	DoCorruptionCost(oPC, oTarget, ABILITY_CONSTITUTION, nCost 0);
+	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost 0);
 	
 	SPSetSchool();
 }

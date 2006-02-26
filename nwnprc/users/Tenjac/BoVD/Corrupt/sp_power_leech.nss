@@ -82,7 +82,7 @@ void main()
     
     //Corruption Cost
     {
-	    DelayCommand(fDuration, DoCorruptionCost(oPC, oTarget, ABILITY_WISDOM, 1, 1));
+	    DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_WISDOM, 1, 1));
     }
     
     SPSetSchool();

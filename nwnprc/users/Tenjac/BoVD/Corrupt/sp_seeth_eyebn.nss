@@ -77,7 +77,7 @@ void main()
 	//Corruption cost 1d6 CON regardless of success
 	int nCost = d6(1);
 	
-	DoCorruptionCost(oPC, oTarget, ABILITY_CONSTITUTION, nCost, 0);
+	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);
 	
 	SPSetSchool();
 	

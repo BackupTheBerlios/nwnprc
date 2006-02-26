@@ -118,7 +118,7 @@ void main()
 	//Corruption Cost
 	{
 		int nCost = d6(2);
-		DelayCommand(fDuration, DoCorruptionCost(oPC, oTarget, ABILITY_WISDOM, nCost, 0));
+		DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_WISDOM, nCost, 0));
 	}	
 	
 	

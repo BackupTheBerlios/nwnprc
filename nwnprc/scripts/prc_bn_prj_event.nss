@@ -52,13 +52,17 @@ void main()
 {
     int nEvent = GetRunningEvent();
     object oPC, oItem;
-
+if(DEBUG) DoDebug("prc_bn_prj_event running, event = " + IntToString(nEvent));
     switch(nEvent)
     {
         // Nerf equipped weapons
         case EVENT_ONPLAYEREQUIPITEM:
             oPC   = GetItemLastEquippedBy();
             oItem = GetItemLastEquipped();
+if(DEBUG) DoDebug("Equipped item, nerfing:"
+                + "oPC = " + DebugObject2Str(oItem) + "\n"
+                + "oItem = " + DebugObject2Str(oItem) + "\n"
+                  );
             if(IPGetIsMeleeWeapon(oItem) || GetWeaponRanged(oItem))
             {
                 AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyNoDamage(), oItem);

@@ -210,6 +210,8 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FAST_HEALING_1, oPC)
         || GetHasFeat(FAST_HEALING_2, oPC)
         || GetHasFeat(FAST_HEALING_3, oPC))                      ExecuteScript("prc_fastheal", oPC);
+        
+    if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC))                  ExecuteScript("prc_spellf_eval", oPC);        
 
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)

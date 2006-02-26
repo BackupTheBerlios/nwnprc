@@ -1,4 +1,4 @@
-//const int FOOBAR = -1; // Comment or uncomment whenever the compiler croaks on an error code 5.
+const int FOOBAR = -1; // Comment or uncomment whenever the compiler croaks on an error code 5.
 
 //spell
 const int SPELL_MAJOR_MAGIC_MISSILE         = 2247;
@@ -401,6 +401,7 @@ const int SPELL_GREATER_TELEPORT                    = 2893;
 const int SPELL_TELEPORTATION_CIRCLE                = 2877;
 const int SPELL_DIMENSIONAL_LOCK                    = 2898;
 const int SPELL_TELEPORT                            = 2874;
+const int SPELL_BLOOD_OF_THE_MARTYR		    = 3099;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;

@@ -65,7 +65,7 @@ void main()
     {
         object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oManifester);
         object oAmmo;
-        float fBonusDur = IntToFloat(0xFFFFFFFF);
+        float fBonusDur = 9999.9;
 
         // Calculate the enhancement bonus
         int nBonus = 1 + manif.nTimesAugOptUsed_1;
@@ -96,17 +96,17 @@ void main()
             if(GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
             {
                 oAmmo = CreateItemOnObject("NW_WAMAR001", oTarget, 99);
-                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, nBonus), oAmmo, fBonusDur);
+                DelayCommand(1.0, AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, nBonus), oAmmo, fBonusDur));
             }
             else if(GetBaseItemType(oWeapon) == BASE_ITEM_SLING)
             {
                 oAmmo = CreateItemOnObject("NW_WAMBU001", oTarget, 99);
-                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, nBonus), oAmmo, fBonusDur);
+                DelayCommand(1.0, AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, nBonus), oAmmo, fBonusDur));
             }
-            else if(GetBaseItemType(oWeapon) == BASE_ITEM_LIGHTCROSSBOW || GetBaseItemType(oWeapon) == BASE_ITEM_HEAVYCROSSBOW)
+            else // Create crossbow stuff as default, since Psions can always wield one
             {
                 oAmmo = CreateItemOnObject("NW_WAMBO001", oTarget, 99);
-                AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, nBonus), oAmmo, fBonusDur);
+                DelayCommand(1.0, AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PIERCING, nBonus), oAmmo, fBonusDur));
             }
             // Identify the ammo
             SetIdentified(oAmmo, TRUE);

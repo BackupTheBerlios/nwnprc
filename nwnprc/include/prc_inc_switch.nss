@@ -378,6 +378,13 @@ const string PRC_COMPANION_IN_USE                    = "PRC_COMPANION_IN_USE";
  */
 const string PRC_CEP_COMPANION_IN_USE                = "PRC_CEP_COMPANION_IN_USE";
 
+
+/** DO NOT SET THIS SWITCH
+ * If CEP2 is in use, this will be set automatically
+ * It is only here to be used by other scripts
+ */
+const string CEP_IN_USE                              = "CEP_IN_USE"; 
+
 /**
  * Spells cast from magic staffs use the wielder's casterlevel rather than the
  * item's if the wielder's casterlevel is higher.
@@ -1953,6 +1960,10 @@ void DoEpicSpellDefaults()
 
 void SetDefaultFileEnds()
 {
+    //check for CEP2
+    //run the script in the CEP haks
+    ExecuteScript("zep_cepverif", OBJECT_SELF);
+   
     //there is also the fileends.2da file, but that
     //isnt read in here yet. may be later though
     if(GetPRCSwitch(FILE_END_MANUAL))

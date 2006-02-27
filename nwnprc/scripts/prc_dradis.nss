@@ -89,6 +89,30 @@ void SeeTrue(object oPC ,object oSkin ,int nLevel)
         DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyTrueSeeing(),oSkin));
 }
 
+/* 1.67 code
+void DoWing(object oPC, int nWingType)
+{
+    //wing invalid, use current
+    if(nWingType == -1) return;
+    //no CEP2, no extra wing models
+    if(!GetPRCSwitch(CEP_IN_USE)) return;
+    SetCreatureTailType(nWingType, oPC);
+    //override any stored default appearance
+    SetPersistantLocalInt(oPC,    "AppearanceStoredWing", nWingType);    
+}
+
+void DoTail(object oPC, int nTailType)
+{
+    //tail invalid, use current
+    if(nTailType == -1) return;
+    //no CEP2, no extra tail models
+    if(!GetPRCSwitch(CEP_IN_USE)) return;
+    SetCreatureTailType(nTailType, oPC);
+    //override any stored default appearance
+    SetPersistantLocalInt(oPC,    "AppearanceStoredTail", nTailType);
+}
+*/
+
 void main()
 {
 
@@ -159,7 +183,39 @@ void main()
 
     int sCale1 = GetHasFeat(FAST_HEALING_1,oPC);
     int sCale2 = GetHasFeat(FAST_HEALING_2,oPC);
-
+    
+    int nWingType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)     ? 34 :
+                    GetHasFeat(FEAT_BLUE_DRAGON, oPC)      ? 35 :
+                    GetHasFeat(FEAT_BRASS_DRAGON, oPC)     ? 36 :
+                    GetHasFeat(FEAT_BRONZE_DRAGON, oPC)    ? 37 :
+                    GetHasFeat(FEAT_COPPER_DRAGON, oPC)    ? 38 :
+                    GetHasFeat(FEAT_GOLD_DRAGON, oPC)      ? 39 :
+                    GetHasFeat(FEAT_GREEN_DRAGON, oPC)     ? 40 :
+                    GetHasFeat(FEAT_SILVER_DRAGON, oPC)    ? 41 :
+                    GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? 42 :
+                    GetHasFeat(FEAT_RED_DRAGON, oPC)       ? 4 :
+                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? 50 :
+                    GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? 52 :
+                    -1;
+    //dragon disciple lichs get draco-lich wings at lich 4
+    if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) nWingType = 51;
+    
+    int nTailType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)     ? 47 :
+                    GetHasFeat(FEAT_BLUE_DRAGON, oPC)      ? 48 :
+                    GetHasFeat(FEAT_BRASS_DRAGON, oPC)     ? 52 :
+                    GetHasFeat(FEAT_BRONZE_DRAGON, oPC)    ? 53 :
+                    GetHasFeat(FEAT_COPPER_DRAGON, oPC)    ? 54 :
+                    GetHasFeat(FEAT_GOLD_DRAGON, oPC)      ? 55 :
+                    GetHasFeat(FEAT_GREEN_DRAGON, oPC)     ? 1 :
+                    GetHasFeat(FEAT_SILVER_DRAGON, oPC)    ? 56 :
+                    GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? 49 :
+                    GetHasFeat(FEAT_RED_DRAGON, oPC)       ? 4 :
+                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? 47 : //re-use black cos no shadow
+                    GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? 50 :
+                    -1;
+    //dragon disciple lichs get bony tail at lich 4
+    if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) nTailType = 51;
+    
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC);
 
     int thickScale = -1;
@@ -180,5 +236,7 @@ void main()
     if (bResisEle>0) SmallResist(oPC,oSkin,bResisEle,sResis);
     if (bResisEle>0) LargeResist(oPC,oSkin,bResisEle,lResis);
     if (nLevel>17) SpellResis(oPC,oSkin,nLevel);
+    //1.67 code //if (nLevel>17) DoTail(oPC, nTailType);
+    //1.67 code //if (nLevel>9)  DoWings(oPC, nWingType);
     if (nLevel>19) SeeTrue(oPC,oSkin,nLevel);
 }

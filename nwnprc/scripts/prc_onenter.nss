@@ -29,6 +29,13 @@ void main()
     // cleared when the character is saved.
     else
         SetLocalInt(oPC, "PRC_ModuleOnEnterDone", TRUE);
+        
+    //if server is loading, boot player
+    if(GetLocalInt(GetModule(), PRC_PW_LOGON_DELAY+"_TIMER"))
+    {
+        BootPC(oPC);
+        return;
+    }
 
     //do this first so other things dont interfere with it
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))

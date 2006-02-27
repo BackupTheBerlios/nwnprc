@@ -1286,6 +1286,11 @@ const string PRC_PW_DEATH_TRACKING                   = "PRC_PW_DEATH_TRACKING";
  */
 const string PRC_PW_SPELL_TRACKING                   = "PRC_PW_SPELL_TRACKING";
 
+/**
+ * Players cant logon for this many minutes after a server load
+ */
+const string PRC_PW_LOGON_DELAY                      = "PRC_PW_LOGON_DELAY";
+
 
 
 /******************************************************************************\

@@ -16,29 +16,6 @@ rolls have a -2 circumstance penalty for every four
 caster levels (maximum penalty -10).
 
 
-Wrack
-Necromancy [Evil]
-Level: Clr 3, Mortal Hunter 3, Pain 3, Sor/Wiz 4
-Components: V, S 
-Casting Time: 1 action 
-Range: Close (25 ft. + 5 ft./2 levels) 
-Area: One humanoid creature 
-Duration: 1 round/level
-Saving Throw: Fortitude negates 
-Spell Resistance: Yes
-
-The subject is wracked with such pain that he doubles
-over and collapses. His face and hands blister and 
-drip fluid, and his eyes cloud with blood, rendering
-him blind. For the duration of the spell the subject
-is considered helpless and cannot take actions. The
-subject's sight returns when the spell's duration 
-expires.
-
-Even after the spell ends, the subject is still 
-visibly shaken and takes a -2 penalty on attack rolls,
-saves, and checks for 3d10 minutes. 
-
 
 Liquid Pain
 Necromancy
@@ -61,28 +38,6 @@ It can also be used as a potent drug.
 Focus: A jar, vial, or other container for the liquid pain.
 
 
-Thousand Needles
-Conjuration (Creation) [Evil] 
-Level: Pain 5, Clr 6 
-Components: V, S, M 
-Casting Time: 1 action 
-Range: Medium (100 ft. + 10 ft./levels)
-Target: One living creature 
-Duration: 1 minute/level 
-Saving Throw: Fortitude partial 
-Spell Resistance: Yes 
-
-A thousand needles surround the subject and pierce 
-his flesh, worming through armor or any type of 
-protection, although creatures with damage reduction
-are immune to this spell. The subject takes 2d6 
-points of damage immediately and takes a -4 
-circumstance penalty on attack rolls, saving throws,
-skill checks, and ability checks for the rest of the
-spell's duration. A successful Fortitude save reduces
-damage to half and negates the circum­stance penalty. 
-
-
 Pox
 Necromancy [Evil]
 Level: Corruption 6, Drd 6, Pain 6
@@ -94,7 +49,7 @@ Duration: Instantaneous
 Saving Throw: Fortitude negates
 Spell Resistance: Yes
 
-Subjects take 1d4 points of Constitu­tion drain. Their
+Subjects take 1d4 points of Constitution drain. Their
  skin breaks out in lesions and takes on a pale yellow
  pallor.
 
@@ -116,28 +71,6 @@ duration of  the spell. A creature with no
 discernible anatomy is unaffected by this spell.
 
 
-Symbol (pain only)
-Necromancy [Evil]
-Level: Clr 5, Sor/Wiz 5
-Components: V, S, M
-Casting Time: 10 minutes
-Range: 0 ft.; see text
-Effect: One symbol
-Duration: See text
-Saving Throw: Fortitude negates
-Spell Resistance: Yes
-
-This spell functions like symbol of death, except that 
-each creature within the radius of a symbol of pain 
-instead suffers wracking pains that impose a –4 penalty
- on attack rolls, skill checks, and ability checks.
- These effects last for 1 hour after the creature
- moves farther than 60 feet from the symbol.
-
-Unlike symbol of death, symbol of pain has no hit point
- limit; once triggered, a symbol of pain simply remains 
-active for 10 minutes per caster level.
-
 
 Eternity of Torture
 Necromancy [Evil]
@@ -151,8 +84,8 @@ Saving Throw: Fortitude partial
 Spell Resistance: Yes
 
 The subject's body is twisted and warped, wracked 
-forever with excru­ciating pain. The subject is 
-rendered helpless, but-as long as the spell continues
+forever with excruciating pain. The subject is 
+rendered helpless, but as long as the spell continues
 -it is sustained and has no need for food, drink, or 
 air. The subject does not age-all the better to ensure
 a true eternity of unimaginable tor­ture. The subject 

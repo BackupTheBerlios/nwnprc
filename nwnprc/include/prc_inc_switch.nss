@@ -1511,6 +1511,11 @@ const string PRC_DB_SQLLITE_INTERVAL                 = "PRC_DB_SQLLITE_INTERVAL"
  */
 const string PRC_DB_MYSQL                            = "PRC_DB_MYSQL";
 
+/**
+ * 2da caching code will use the bioware db over the nwnx-db
+ */
+const string PRC_2DA_CACHE_NOT_NWNX                  = "PRC_2DA_CACHE_NOT_NWNX"; 
+
 
 /**
  * TODO: Write description.

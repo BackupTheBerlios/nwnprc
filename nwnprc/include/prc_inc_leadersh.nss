@@ -321,6 +321,11 @@ int GetCohortMaxLevel(int nLeadership, object oPC)
     }
     if(nLevel > (GetHitDice(oPC)-2))
         nLevel = GetHitDice(oPC)-2;
+    //really, leadership should be capped at 25 / 17HD
+    //but this is a sanity check
+    if(nLevel > 20 
+        && !GetHasFeat(FEAT_EPIC_LEADERSHIP, oPC))
+        nLevel = 20;
     return nLevel;
 }
 

@@ -532,6 +532,7 @@ if(nDebug) DoDebug("Get2DACache: pushed cached value is "+sPushed);
 
     //check if we should use the database
     int nDB = GetPRCSwitch(PRC_USE_DATABASE);
+    if(GetPRCSwitch(PRC_2DA_CACHE_NOT_NWNX)) nDB = FALSE;
     string SQL;
 
 

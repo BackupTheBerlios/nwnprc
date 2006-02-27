@@ -72,6 +72,11 @@ void main()
                     SAVING_THROW_TYPE_NEGATIVE, oCaster, fDelay) )
                 {
                     nDamage /= 2;
+                    
+                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                    	{
+                		nDamage = 0;
+                    	}                     
                 }
                 //Fire cast spell at event for the specified target
                 SignalEvent( oTarget,

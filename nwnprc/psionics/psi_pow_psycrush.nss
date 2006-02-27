@@ -101,7 +101,7 @@ void main()
                     nDamage = GetCurrentHitPoints(oTarget) + 1;
                 }
                 // On success 3 + augmentation d6 damage
-                else
+                else if (!GetHasMettle(oTarget, SAVING_THROW_WILL))
                 {
                     // Roll damage
                     nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);

@@ -79,7 +79,14 @@ void main()
                 // Roll the damage (allowing for a critical) and let the target make a will save to
                 // halve the damage.
                 int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == nTouch ? 1 : 2, 8, 0, nAdd);
-                if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))) nDamage /= 2;
+                if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF))) 
+                {
+                	nDamage /= 2;
+                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                    	{
+                		nDamage = 0;
+                    	} 
+                }
                 
                 // Apply damage and VFX.
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);

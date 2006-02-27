@@ -94,6 +94,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     if(/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
                     {
                         nDamage /= 2;
+                        
+                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                    	{
+                		nDamage = 0;
+                    	}                          
                     }
                     //Apply the VFX impact and effects
                     //DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

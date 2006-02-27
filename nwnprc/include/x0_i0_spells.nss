@@ -626,6 +626,11 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
                 if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_ALL,OBJECT_SELF))
                 {
                     nDamageTotal = nDamageTotal / 2;
+                    
+                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                    	{
+                		nDamageTotal = 0;
+                    	}                     
                 }
                 effect eVis = EffectVisualEffect(vfx_impactHurt);
                 effect eDam = EffectDamage(nDamageTotal,DAMAGE_TYPE_NEGATIVE);

@@ -113,6 +113,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     if(/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
                     {
                         nDamage = nDamage/2;
+
+                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                    	{
+                		nDamage = 0;
+                    	}                          
                     }
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);

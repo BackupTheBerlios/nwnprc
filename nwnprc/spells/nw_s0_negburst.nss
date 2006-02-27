@@ -100,6 +100,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, (nDC), SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
             {
                 nDamage /= 2;
+                
+                    if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+		    {
+		            	nDamage = 0;
+                    }  
             }
             nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
             //Get the distance between the explosion and the target to calculate delay

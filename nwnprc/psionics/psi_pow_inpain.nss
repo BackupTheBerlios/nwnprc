@@ -105,7 +105,7 @@ void main()
                 {
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oMainTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
                 }// end if - Save for lesser effect
-                else
+                else if (!GetHasMettle(oMainTarget, SAVING_THROW_WILL))
                 {
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oMainTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
                 }// end else - Apply lesser effect
@@ -137,7 +137,7 @@ void main()
                             {
                                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oSecondaryTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
                             }// end if - Save for lesser effect
-                            else
+                            else if (!GetHasMettle(oSecondaryTarget, SAVING_THROW_WILL))
                             {
                                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oSecondaryTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
                             }// end else - Apply lesser effect

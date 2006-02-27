@@ -80,9 +80,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     if (nDamage > 150 && !GetPRCSwitch(PRC_BIOWARE_HEAL))
                         nDamage = 150;
 
-                    // Will save for half damage
-                    if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
-                        nDamage /= 2;
+                // Will save for half damage
+                if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
+                {
+                    nDamage /= 2;
+                    
+                    if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                    {
+                	nDamage = 0;
+                    }                    
+                }
 
                     // Cannot drop you below nModify hp
                     if (nDamage > GetCurrentHitPoints(oTarget) - nModify)

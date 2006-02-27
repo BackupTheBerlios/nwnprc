@@ -114,7 +114,13 @@ void DoFrightfulAttack(object oPC, object oTarget) {
             if ( iSave < 2 ) {
                if ( iSave == 0 ) {
                   eEffect = EffectDeath(TRUE,FALSE);
-               } else {
+               } 
+               else if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+               {
+               	  eEffect = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
+               }
+               else
+               {
                   eEffect = CreateDoomEffectsLink();
                }
                PerformAttack(oTarget, oPC, eEffect, IntToFloat(iGFKClassLevel));

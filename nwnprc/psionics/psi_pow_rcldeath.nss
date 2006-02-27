@@ -86,7 +86,7 @@ void main()
                 if(PRCMyResistPower(oManifester, oTarget, nPen))
                 {
                     // Save - Will partial for just damage
-                    if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                    if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS) && !GetHasMettle(oTarget, SAVING_THROW_WILL))
                     {
                         // Roll damage
                         nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);

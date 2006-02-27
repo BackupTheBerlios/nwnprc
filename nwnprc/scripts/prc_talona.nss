@@ -4,9 +4,12 @@ const int DISEASE_TALONAS_BLIGHT = 52;
 
 void main()
 {
-    object oPC = OBJECT_SELF;
-    string sResRef = GetResRef(oPC);
-    object oCreator = GetLocalObject(oPC, "BlightspawnCreator");
+    object oTarget = OBJECT_SELF;
+    string sResRef = GetResRef(oTarget);
+    object oCreator = GetLocalObject(oTarget, "BlightspawnCreator");
+    
+    if(DEBUG) FloatingTextStringOnCreature("Blight Touch Disease Creator is: " + GetPCPlayerName(oCreator), oTarget, FALSE);
+    
     int iPenalty = d4(1);
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
     //effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, iPenalty);
@@ -14,27 +17,29 @@ void main()
     //Make the damage supernatural
     //eCon = SupernaturalEffect(eCon);
     //eCha = SupernaturalEffect(eCha);
-    int iDC = GetLocalInt(oPC, "BlightDC");
+    int iDC = GetLocalInt(oTarget, "BlightDC");
 
     //Make a saving throw check
-    if(!FortitudeSave(oPC, iDC, SAVING_THROW_TYPE_DISEASE))
+    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iDC, SAVING_THROW_TYPE_DISEASE))
     {
         //Apply the VFX impact and effects
-        //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oPC);
-        //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCha, oPC);
-        ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, iPenalty, DURATION_TYPE_PERMANENT, TRUE);
-        ApplyAbilityDamage(oPC, ABILITY_CHARISMA,     iPenalty, DURATION_TYPE_PERMANENT, TRUE);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
+        //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCon, oTarget);
+        //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCha, oTarget);
+        ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, iPenalty, DURATION_TYPE_PERMANENT, TRUE);
+        ApplyAbilityDamage(oTarget, ABILITY_CHARISMA,     iPenalty, DURATION_TYPE_PERMANENT, TRUE);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
     
     // If the monster is dead or his stats have dropped below what the bioware engine allows
-    if (GetIsDead(oPC) || 
-       (GetAbilityScore(oPC, ABILITY_CONSTITUTION) - iPenalty) <= 3 || 
-       (GetAbilityScore(oPC, ABILITY_CHARISMA) - iPenalty) <= 3)
+    if (GetIsDead(oTarget) || 
+       (GetAbilityScore(oTarget, ABILITY_CONSTITUTION) - iPenalty) <= 3 || 
+       (GetAbilityScore(oTarget, ABILITY_CHARISMA) - iPenalty) <= 3)
     {
+    	if(DEBUG) FloatingTextStringOnCreature("Talona's Blight has killed the target", oTarget, FALSE);
+    	
         // This is to make sure its dead
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
-    	object oCreature = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetLocation(oPC), FALSE, "prc_blightspawn");
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
+    	object oCreature = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetLocation(oTarget), FALSE, "prc_blightspawn");
     	
     	// Blightspawned creatures do not normally attack Blightlords
     	SetIsTemporaryNeutral(oCreator, oCreature);

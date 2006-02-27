@@ -96,11 +96,18 @@ void main()
 
                     // Will save for half and not being dazed
                     if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                    {
                         nDamage = max(nDamage / 2, 1); // Minimum 1 damage
+                    }
+                    else if (GetHasMettle(oTarget, SAVING_THROW_WILL))
+        	    {
+        		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE), oTarget);
+        	    }
                     // Failed save, daze
                     else
+                    {
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oTarget, RoundsToSeconds(1), FALSE);
-
+		    }
                     //Apply the VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7 ,FALSE);
                     DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

@@ -112,6 +112,11 @@ void main()
                             if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                             {
                                 nMaxTran /= 2;
+                    		
+                    		if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                    		{
+                			nMaxTran = 0;
+                    		}                                  
                             }
 
                             // Apply the healing

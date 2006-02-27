@@ -105,6 +105,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                     nDamage = nDamage / 2;
                 }
+                else if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                {
+                	nDamage = 0;
+                }
                 else
                 {
                     //Apply daze effect

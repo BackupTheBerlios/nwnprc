@@ -53,12 +53,16 @@ void main()
                 {
                     //Apply the linked effects and the VFX impact
                     DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration));
-        }
+        	}
+        	else if (GetHasMettle(oTarget, SAVING_THROW_WILL))
+        	{
+        		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE), oTarget);
+        	}
                 else
-        {
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkD, oTarget, fDuration);
-                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisD, oTarget);
-        }
+        	{
+                	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkD, oTarget, fDuration);
+                	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisD, oTarget);
+        	}
         }
         //Get next target in the spell cone
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, PRCGetSpellTargetLocation(), TRUE);

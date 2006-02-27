@@ -28,9 +28,11 @@ Corruption Cost: 1d6 points of Constitution damage
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "spinc_common"
+
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION)
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	//define vars
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();

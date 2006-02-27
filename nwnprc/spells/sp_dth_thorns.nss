@@ -36,6 +36,18 @@ Created:
 #include "spinc_common"
 #include "prc_inc_spells"
 
+void DamageLoop(object oTarget, int nCount)
+{
+	effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+	nCount--;
+	
+	if(nCount > 0)
+	{
+		DelayCommand(6.0f, DamageLoop(oTarget, nCount));
+	}
+}
+
 void main()
 {
 	SPSetSchool(SPELL_SCHOOL_CONJURATION);
@@ -74,7 +86,7 @@ void main()
 			//Give thorns if spell if failed save
 			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))    
 			{
-				DelayCommand(fDuration, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);				
+				DelayCommand(fDuration, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));				
 			}
 			
 			else
@@ -98,27 +110,7 @@ void main()
 	DoCorruptionCost(oPC, ABILITY_WISDOM, nCost, 1);
 	
 	//Alignment Shift
-	SPShiftEvil(oPC);
+	SPEvilShift(oPC);
 	
 	SPSetSchool();
 }	
-
-void DamageLoop(object oTarget, int nCount)
-{
-	effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-	nCount--;
-	
-	if(nCount > 0)
-	{
-		DelayCommand(6.0f, DamageLoop(oTarget, nCount);
-	}
-}
-	
-	
-	
-	
-
-
-
-

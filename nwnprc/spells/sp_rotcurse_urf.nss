@@ -30,27 +30,28 @@ Corruption Cost: 1d6 points of Strength damage.
 #include "spinc_common"
 #include "inc_abil_damage"
 #include "prc_inc_spells"
+#include "prc_spell_const"
 
 //Pseudo-heartbeat function for abil damage
-void DoCurseDam (object oTarget)
+void DoCurseDam (object oTarget, object oPC, int nMetaMagic)
 {
 	int nDam = d6(1);
 	//Check if spell was Maximized
-	if GetLocalInt (oPC, "MMMaximize")
+	if(nMetaMagic == METAMAGIC_MAXIMIZE)
 	{
 		nDam = 6;
 	}
 	//Check if spell was Empowered
-	if GetLocalInt (oPC, "MMEmpower")
-	{
+	if (nMetaMagic == METAMAGIC_EMPOWER)
+	{	
 		nDam += (nDam / 2);
 	}
 	
 	//Ability damage
-	ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, FALSE, 0.0f, FALSE, SPELL_ROTTING_CURSE, -1, oPC);
+	ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, FALSE, 0.0f, FALSE, SPELL_ROTTING_CURSE_OF_URFESTRA, -1, oPC);
 	
 	//Delay 1 hour, then hit the poor bastard again.
-	DelayCommand(3600.0f, DoCurseDam(oTarget));
+	DelayCommand(3600.0f, DoCurseDam(oTarget, oPC, nMetaMagic));
 }
 
 
@@ -69,24 +70,13 @@ void main()
         int nPenetr = nCasterLvl + SPGetPenetr();
         
         SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ROTTING_CURSE_OF_URFESTRA, oPC);
-	
-	if(nMetaMagic == METAMAGIC_MAXIMIZE)
-	{
-		SetLocalInt (oPC, "MMMaximize", 1)
-	}
-		
-	if (nMetaMagic == METAMAGIC_EMPOWER)
-	{
-		SetLocalInt (oPC, "MMEmpower", 1)
-	}
-	
+			
 	//Spell Resistance
 	if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC)))
 		{
-			DoCurseDam(oTarget);
-				
+			DoCurseDam(oTarget, oPC, nMetaMagic);				
 		}
 	}
 	
@@ -96,7 +86,7 @@ void main()
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, nCorrupt, 0);	
 	
 	//Alignment shift if switch set
-	SPEvilShift();
+	SPEvilShift(oPC);
 		
 	SPSetSchool();
 }

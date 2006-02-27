@@ -49,7 +49,7 @@ void CountdownToSlime(object oTarget, int nCounter)
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
 		
 		
-		CreateObject(OBJECT_TYPE_CREATURE, x2_gelcube, lLoc);
+		CreateObject(OBJECT_TYPE_CREATURE, "x2_gelcube", lLoc);
 	}
 }
 
@@ -74,7 +74,7 @@ void main()
 		//Save
 		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
 		{
-			//Start the countdown!
+			//It's the final countdown
 			CountdownToSlime(oTarget, nCounter);
 		}
 	}			

@@ -41,6 +41,7 @@ Created:
 #include "prc_alterations"
 #include "spinc_common"
 #include "prc_inc_spells"
+#include "prc_spell_const"
 
 void main()
 {
@@ -54,7 +55,7 @@ void main()
 	object oArea = GetArea(oPC);
 	int nDam;
 	int nDamType;
-	int nSpell = GetSpellID();		
+	int nSpell = GetSpellId();		
 	
 	//Handle damage types
 	if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_FIRE)
@@ -78,7 +79,7 @@ void main()
 	while(GetIsObjectValid(oObject))
 	{
 		nDam = d6(10);
-		effect eDam = EffectDamage(nDam, nDamType)
+		effect eDam = EffectDamage(nDam, nDamType);
 		
 		//Apply
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oObject);

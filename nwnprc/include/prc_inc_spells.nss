@@ -161,7 +161,7 @@ void SPGoodShift(object oPC);
  * @param bDrain   If this is TRUE, the cost is applied as ability drain.
  *                 If FALSE, as ability damage.
  */
-void DoCorruptionCost(object oCaster, object oTarget, int nAbility, int nCost, int bDrain);
+void DoCorruptionCost(object oCaster, int nAbility, int nCost, int bDrain);
 
 // This function is used in the spellscripts
 // It functions as Evasion for Fortitude and Will partial saves
@@ -1601,7 +1601,7 @@ void SPGoodShift(object oPC)
     }
 }
 
-void DoCorruptionCost(object oPC, object oTarget, int nAbility, int nCost, int bDrain)
+void DoCorruptionCost(object oPC, int nAbility, int nCost, int bDrain)
 {
     // Undead redirect all damage & drain to Charisma, sez http://www.wizards.com/dnd/files/BookVileFAQ12102002.zip
     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_UNDEAD)

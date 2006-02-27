@@ -14,10 +14,10 @@
 10  FEAT_PRESTIGE_POISON_SAVE_3                  465       3    6              0      
 11  FEAT_PRESTIGE_POISON_SAVE_4                  466       3    8              0      
 12  FEAT_PRESTIGE_POISON_SAVE_5                  467       3    10             0      
-13  FEAT_PRESTIGE_SPELL_GHOSTLY_VISAGE           468       3    992              1      
-14  FEAT_PRESTIGE_DARKNESS                       469       3    995              1      
-15  FEAT_PRESTIGE_INVISIBILITY_1                 470       3    997              1      
-16  FEAT_PRESTIGE_INVISIBILITY_2                 471       3    999              1      
+13  FEAT_PRESTIGE_SPELL_GHOSTLY_VISAGE           468       3    992            1      
+14  FEAT_PRESTIGE_DARKNESS                       469       3    995            1      
+15  FEAT_PRESTIGE_INVISIBILITY_1                 470       3    997            1      
+16  FEAT_PRESTIGE_INVISIBILITY_2                 471       3    999            1      
 17  ArmProfLgt                                   3         3    1              0      
 18  WeapProfMar                                  45        0    -1             0      
 19  WeapProfSim                                  46        3    1              0      

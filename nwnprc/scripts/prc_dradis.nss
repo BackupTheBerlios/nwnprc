@@ -195,7 +195,7 @@ void main()
                     GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? 42 :
                     GetHasFeat(FEAT_RED_DRAGON, oPC)       ? 4 :
                     GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? 50 :
-                    GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? 52 :
+                    //GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? 52 :
                     -1;
     //dragon disciple lichs get draco-lich wings at lich 4
     if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) nWingType = 51;
@@ -211,7 +211,7 @@ void main()
                     GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? 49 :
                     GetHasFeat(FEAT_RED_DRAGON, oPC)       ? 4 :
                     GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? 47 : //re-use black cos no shadow
-                    GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? 50 :
+                    //GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? 50 :
                     -1;
     //dragon disciple lichs get bony tail at lich 4
     if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) nTailType = 51;

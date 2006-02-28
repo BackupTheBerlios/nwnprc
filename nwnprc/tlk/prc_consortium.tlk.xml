@@ -17328,6 +17328,11 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
 Prerequisite: Marshal
 Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to your Wisdom.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40.
 Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any given time.</entry>
+  <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
+  <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
+Prerequisite:  Baelnorn Level 4
+
+Description: The baelnorn is immune to turning attempts by good or neutral clerics. If rebuked or commanded by an evil cleric, the baelnorn is instead turned or destroyed.</entry>
   <entry id="51974" lang="en" sex="m">Command Undead</entry>
   <entry id="51975" lang="en" sex="m">School: Necromancy
 Level: Sor/Wiz 2

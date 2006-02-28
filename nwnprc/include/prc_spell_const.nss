@@ -1,4 +1,4 @@
-const int FOOBAR = -1; // Comment or uncomment whenever the compiler croaks on an error code 5.
+//const int FOOBAR = -1; // Comment or uncomment whenever the compiler croaks on an error code 5.
 
 //spell
 const int SPELL_MAJOR_MAGIC_MISSILE         = 2247;
@@ -401,7 +401,7 @@ const int SPELL_GREATER_TELEPORT                    = 2893;
 const int SPELL_TELEPORTATION_CIRCLE                = 2877;
 const int SPELL_DIMENSIONAL_LOCK                    = 2898;
 const int SPELL_TELEPORT                            = 2874;
-const int SPELL_BLOOD_OF_THE_MARTYR		    = 3099;
+const int SPELL_BLOOD_OF_THE_MARTYR         = 3099;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;
@@ -473,7 +473,7 @@ const int SPELL_AVASCULAR_MASS                      = 2852;
 const int SPELL_OTILUKES_RS                         = 2853;
 const int SPELL_NECROTIC_AWARENESS                  = 2854;
 const int SPELL_NECROTIC_CYST                       = 2855;
-const int SPELL_NECROTIC_BLOAT	                    = 2856;
+const int SPELL_NECROTIC_BLOAT                      = 2856;
 const int SPELL_NECROTIC_DOMINATION                 = 2857;
 const int SPELL_NECROTIC_BURST                      = 2858;
 const int SPELL_NECROTIC_ERUPTION                   = 2859;
@@ -557,16 +557,16 @@ const int SPELL_SPELLFIRE_ABSORB                    = 3041;
 /*             Turning Constants                */
 //////////////////////////////////////////////////
 
-const int SPELL_TURN_UNDEAD 		= 308;
-const int SPELL_TURN_REPTILE 		= 1726;
-const int SPELL_TURN_OOZE 		= 1727;
-const int SPELL_TURN_SPIDER 		= 1728;
-const int SPELL_TURN_PLANT		= 1729;
-const int SPELL_TURN_AIR 		= 1730;
-const int SPELL_TURN_EARTH 		= 1731;
-const int SPELL_TURN_FIRE 		= 1732;
-const int SPELL_TURN_WATER 		= 1733;
-const int SPELL_TURN_BLIGHTSPAWNED 	= 1734;
+const int SPELL_TURN_UNDEAD         = 308;
+const int SPELL_TURN_REPTILE        = 1726;
+const int SPELL_TURN_OOZE       = 1727;
+const int SPELL_TURN_SPIDER         = 1728;
+const int SPELL_TURN_PLANT      = 1729;
+const int SPELL_TURN_AIR        = 1730;
+const int SPELL_TURN_EARTH      = 1731;
+const int SPELL_TURN_FIRE       = 1732;
+const int SPELL_TURN_WATER      = 1733;
+const int SPELL_TURN_BLIGHTSPAWNED  = 1734;
 
 // Slayer of Domiel
 const int SPELL_SLAYER_DOMIEL_DIVINE_GRACE = -1;

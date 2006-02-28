@@ -45,10 +45,11 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_ANTI_PALADIN:
         case CLASS_TYPE_OCULAR:
         case CLASS_TYPE_WIZARD:
+        case CLASS_TYPE_SHADOWLORD:
+        case CLASS_TYPE_ASSASSIN:
             return SPELLBOOK_TYPE_PREPARED;
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
-        case CLASS_TYPE_ASSASSIN:
             return SPELLBOOK_TYPE_SPONTANEOUS;
     }
     return SPELLBOOK_TYPE_INVALID;
@@ -74,9 +75,10 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_FIST_OF_ZUOKEN:
         case CLASS_TYPE_WARMIND:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
-        case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_WIZARD:
         case CLASS_TYPE_PSION:
+        case CLASS_TYPE_ASSASSIN:
+        case CLASS_TYPE_SHADOWLORD:
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
@@ -192,6 +194,14 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     //add extra slots
     int nAbilityMod = (nAbilityScore-10)/2;
     nSlots += ((nAbilityMod-nSpellLevel)/4)+1;
+    //if its bard or sorc, remove slots from base class & bonus
+    if(nClass == CLASS_TYPE_SORCERER 
+        || nClass == CLASS_TYPE_BARD)
+    {
+        int nTestLevel = GetLevelByClass(nClass);
+        int nCoreSlots = GetSlotCount(nTestLevel, nSpellLevel, nAbilityScore, nClass);
+        nSlots -= nCoreSlots; //only get PrC slots
+    }
     return nSlots;
 }
 

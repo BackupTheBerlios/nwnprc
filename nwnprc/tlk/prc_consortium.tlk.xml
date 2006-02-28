@@ -5110,7 +5110,10 @@ Level:
 6 - Psionic Restoration
 7 -
 8 -
-9 - </entry>
+9 -
+
+
+NOTE: A Psion can only have one Discipline. Attempting to take more than one discipline feat will result in your character being forced to retake the level.</entry>
   <entry id="46379" lang="en" sex="m">Kineticist (Psychokinesis)</entry>
   <entry id="46380" lang="en" sex="m">Kineticist Discipline Powers:
 Level:
@@ -5125,7 +5128,10 @@ Level:
     Null Psionics Field
 7 - Reddopsi
 8 -
-9 - Tornado Blast</entry>
+9 - Tornado Blast
+
+
+NOTE: A Psion can only have one Discipline. Attempting to take more than one discipline feat will result in your character being forced to retake the level.</entry>
   <entry id="46381" lang="en" sex="m">Nomad (Psychoportation)</entry>
   <entry id="46382" lang="en" sex="m">Nomad Discipline Powers:
 Level:
@@ -5139,7 +5145,10 @@ Level:
 6 - Psionic Banishment
 7 - Ethereal Jaunt
 8 - Time Hop, Mass
-9 - Teleportation Circle</entry>
+9 - Teleportation Circle
+
+
+NOTE: A Psion can only have one Discipline. Attempting to take more than one discipline feat will result in your character being forced to retake the level.</entry>
   <entry id="46383" lang="en" sex="m">Seer (Clairsentience)</entry>
   <entry id="46384" lang="en" sex="m">Seer Discipline Powers:
 Level:
@@ -5152,7 +5161,10 @@ Level:
 6 - Precognition, Greater
 7 -
 8 -
-9 - </entry>
+9 -
+
+
+NOTE: A Psion can only have one Discipline. Attempting to take more than one discipline feat will result in your character being forced to retake the level.</entry>
   <entry id="46385" lang="en" sex="m">Shaper (Metacreativity)</entry>
   <entry id="46386" lang="en" sex="m">Shaper Discipline Powers:
 Level:
@@ -5165,7 +5177,10 @@ Level:
 6 - Crystallize
 7 - Ectoplasmic Cocoon, Mass
 8 - Astral Seed
-9 - Genesis</entry>
+9 - Genesis
+
+
+NOTE: A Psion can only have one Discipline. Attempting to take more than one discipline feat will result in your character being forced to retake the level.</entry>
   <entry id="46387" lang="en" sex="m">Telepath (Telepathy)</entry>
   <entry id="46388" lang="en" sex="m">Telepath Discipline Powers:
 Level:
@@ -5178,7 +5193,10 @@ Level:
 6 -
 7 - Crisis of Life
 8 -
-9 - Psychic Chirurgery</entry>
+9 - Psychic Chirurgery
+
+
+NOTE: A Psion can only have one Discipline. Attempting to take more than one discipline feat will result in your character being forced to retake the level.</entry>
   <entry id="46389" lang="en" sex="m">Wild Surge 1</entry>
   <entry id="46390" lang="en" sex="m">Wild Surge 2</entry>
   <entry id="46391" lang="en" sex="m">Wild Surge 3</entry>
@@ -8429,20 +8447,22 @@ Power Points: 5
 Metapsionics: Extend
 
 When this power is manifested, your weapon takes on an ominous glimmer. Each time you make a successful attack against a living creature, you are healed of some amount of damage.
+
 Your weapon attack gains the vampiric regeneration quality, with power equal to half your manifester level for the duration of the power.</entry>
   <entry id="46943" lang="en" sex="m">Weapon of Energy</entry>
   <entry id="46944" lang="en" sex="m">Psychokinesis [see text]
 Level: Psychic warrior 4
-Manifesting Time: 1 standard action
-Range: Personal
-Target: You
+Range: Touch
+Target: Weapon touched
 Duration: 1 round/level
 Power Points: 7
 Metapsionics: Extend
 
-If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast), you can use this power to energize that weapon. The claw attack deals an extra 1d8 points of cold, electricity, or fire damage (as chosen by you at the time of manifestation) on a successful hit.
-If this power is manifested on a claw attack already benefiting from the effect of the power, the newer manifestation supersedes the older manifestation, even if both manifestations are of different energy types.
-This power's subtype is the same as the type of energy infused in the natural weapon.</entry>
+You can use this power to energize a weapon. That weapon deals an extra 1d8 points of cold, electricity, or fire damage (as chosen by you at the time of manifestation) on a successful hit.
+
+If this power is manifested on a already benefiting from the effect of the power, the newer manifestation supersedes the older manifestation, even if both manifestations are of different energy types.
+
+This power’s subtype is the same as the type of energy infused in the touched weapon.</entry>
   <entry id="46945" lang="en" sex="m">Weapon of Fire</entry>
   <entry id="46946" lang="en" sex="m">Weapon of Cold</entry>
   <entry id="46947" lang="en" sex="m">Weapon of Electricity</entry>
@@ -14702,28 +14722,28 @@ Use: Automatic.</entry>
   <entry id="49160" lang="en" sex="m">order of the bow initiate</entry>
   <entry id="49161" lang="en" sex="m">(PRESTIGE CLASS)
 When asked, "What is Truth?", an initiate of the Order of the Bow picks up his bow, fires an arrow, and, without saying a word, lets his mastery of the weapon serve as the gauge of the archer's progress along the way. By learning the meditative art of the Way of the Bow, the archer improves his discipline, precision, and spirituality. Order of the Bow Initiates see their weapons as extensions of their being, and the use of a bow as a spiritual experience.
-  
+
 - Hit Die: d8.
 - Proficiencies: An Order of the Bow Initiate does not gain any additional weapon or armor proficiencies.
 - Skill Points: 2 + Int Modifier.
-  
+
 REQUIREMENTS:
-  
+
 Base Attack Bonus: +5
 Feats: Weapon Focus: Longbow or Weapon Focus: Shortbow, Point Blank Shot, Rapid Shot.
 Skills: Craft Weapon 5 ranks, Lore 2 ranks.
-  
+
 ABILITIES:
-  
+
 Level
 1: Ranged Precision 1d8 - An Order of the Bow Initiate can make a single attack a round with a damage bonus
-2: 
+2:
 3: Ranged Precision 2d8 - Damage increase
 4: Greater Weapon Focus - The Order of the Bow Initiate gains +1 to attack
 5: Ranged Precision 3d8 - Damage increase
 6: Sharp Shooting - Blind Fight feat.
 7: Ranged Precision 4d8 - Damage increase
-8: 
+8:
 9: Ranged Precision 5d8 - Damage increase
 10: Extended Precision - The range at which the Order of the Bow Initiate can use its Ranged Precision ability doubles
   </entry>
@@ -14740,7 +14760,7 @@ Use: Automatic.</entry>
   <entry id="49166" lang="en" sex="m">Extended Precision</entry>
   <entry id="49167" lang="en" sex="m">Type of Feat: Class Specific
   Prerequisite: Order of the Bow Initiate level 10.
-  Specifics: The range for the Order of the Bow Initiate Ranged Precision ability is increased from 30 feet to 60 feet. 
+  Specifics: The range for the Order of the Bow Initiate Ranged Precision ability is increased from 30 feet to 60 feet.
 Use: Selected.</entry>
   <entry id="49168" lang="en" sex="m">Epic Order of the Bow Initiate</entry>
   <entry id="49169" lang="en" sex="m">Your mastery of the bow is legend. You can fell foes with a single strike, and the entire Order of the Bow looks up to your mastery. You are the supreme wielder of the bow.
@@ -16801,7 +16821,7 @@ Use: Automatic.</entry>
   <entry id="50530" lang="en" sex="m">Gnome</entry>
   <entry id="50531" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Gnome domain.
-Granted Power: +1 Caster level to all Illusion Spells. 
+Granted Power: +1 Caster level to all Illusion Spells.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Colour Spray (1), Blur (2), Mirror Image (3), Prismatic Spray (7), Weird (9)
 Use: Automatic.</entry>
   <entry id="50532" lang="en" sex="m">Halfling</entry>
@@ -16813,7 +16833,7 @@ Use: Once/Day.</entry>
   <entry id="50534" lang="en" sex="m">Illusion</entry>
   <entry id="50535" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Illusion domain.
-Granted Power: +1 Caster level to all Illusion Spells. 
+Granted Power: +1 Caster level to all Illusion Spells.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Blur (2), Mirror Image (3), Phantasmal Killer (4), Shadow Shield (8)
 Use: Automatic.</entry>
   <entry id="50536" lang="en" sex="m">Hatred</entry>
@@ -16843,13 +16863,13 @@ Use: Automatic.</entry>
   <entry id="50544" lang="en" sex="m">Renewal</entry>
   <entry id="50545" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Renewal domain.
-Granted Power: Once per day as a free action, you may gain 1d8 + Charisma modifier hitpoints. 
+Granted Power: Once per day as a free action, you may gain 1d8 + Charisma modifier hitpoints.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Restoration (1), Restoration (3), Raise Dead (4), Ressurection (6), Mass Greater Restore (9)
 Use: Automatic.</entry>
   <entry id="50546" lang="en" sex="m">Retribution</entry>
   <entry id="50547" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Retribution domain.
-Granted Power: 
+Granted Power:
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Death Armor (2), Elemental Shield (4), Destruction (7), Storm of Vengeance (8)
 Use: Automatic.</entry>
   <entry id="50548" lang="en" sex="m">Rune</entry>
@@ -17344,7 +17364,7 @@ Duration: 1 day/level
 Saving Throw: See text
 Spell Resistance: Yes
 
-This spell allows you some degree of control over an undead creature. Asuming the subject is intelligent, it perceives your words and actions in the most favorable way (treat its attitude as friendly). It will not attack you while the spell lasts. 
+This spell allows you some degree of control over an undead creature. Asuming the subject is intelligent, it perceives your words and actions in the most favorable way (treat its attitude as friendly). It will not attack you while the spell lasts.
 
 A nonintelligent undead creature gets no saving throw against this spell. When you control a mindless being, you can communicate only basic commands. Nonintelligent undead won't resist suicidal or obviously harmful orders.
 

@@ -8,7 +8,8 @@ void main()
     string sResRef = GetResRef(oTarget);
     object oCreator = GetLocalObject(oTarget, "BlightspawnCreator");
     
-    if(DEBUG) FloatingTextStringOnCreature("Blight Touch Disease Creator is: " + GetPCPlayerName(oCreator), oTarget, FALSE);
+    if(DEBUG) DoDebug("Blight Touch Disease Target is: " + GetName(oTarget));
+    if(DEBUG) DoDebug("Blight Touch Disease Creator is: " + GetPCPlayerName(oCreator));
     
     int iPenalty = d4(1);
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
@@ -28,6 +29,8 @@ void main()
         ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, iPenalty, DURATION_TYPE_PERMANENT, TRUE);
         ApplyAbilityDamage(oTarget, ABILITY_CHARISMA,     iPenalty, DURATION_TYPE_PERMANENT, TRUE);
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        
+        if(DEBUG) DoDebug("Failed save vs Talona's Blight, applying penalty");
     }
     
     // If the monster is dead or his stats have dropped below what the bioware engine allows
@@ -35,19 +38,23 @@ void main()
        (GetAbilityScore(oTarget, ABILITY_CONSTITUTION) - iPenalty) <= 3 || 
        (GetAbilityScore(oTarget, ABILITY_CHARISMA) - iPenalty) <= 3)
     {
-    	if(DEBUG) FloatingTextStringOnCreature("Talona's Blight has killed the target", oTarget, FALSE);
+    	if(DEBUG) DoDebug("Talona's Blight has killed the creature");
     	
         // This is to make sure its dead
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
     	object oCreature = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetLocation(oTarget), FALSE, "prc_blightspawn");
+    	if(GetIsObjectValid(oCreature) && DEBUG) DoDebug("Created a blightspawned creature");
     	
     	// Blightspawned creatures do not normally attack Blightlords
     	SetIsTemporaryNeutral(oCreator, oCreature);
+    	
+    	if(DEBUG) DoDebug("Setting created creature neutral to the blightlord");
     	
     	// Apply the Blightspawned Template
     	
         //Get the companion's skin
         object oCreatureSkin = GetPCSkin(oCreature);
+        if(DEBUG) DoDebug("Applying Blightspawned bonuses to the creature");
         //Give the companion Str +4, Con +2, Wis -2, and Cha -2
         effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
         effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, 2);
@@ -112,6 +119,7 @@ void main()
         //Re-associate the companion
         //SetAssociateListenPatterns(oCreature);
         //effect eDominated EffectCutsceneDominated();
-        //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDominated, oCreature);    	
+        //ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDominated, oCreature);    
+        if(DEBUG) DoDebug("Done applying Blightspawned bonuses to the creature");
     }
 }

@@ -567,3 +567,9 @@ const int SPELL_TURN_EARTH 		= 1731;
 const int SPELL_TURN_FIRE 		= 1732;
 const int SPELL_TURN_WATER 		= 1733;
 const int SPELL_TURN_BLIGHTSPAWNED 	= 1734;
+
+// Slayer of Domiel
+const int SPELL_SLAYER_DOMIEL_DIVINE_GRACE = -1;
+
+// Disciple of Asmodeus
+const int SPELL_DISCIPLE_ASMODEUS_DREAD_MIGHT = -1;

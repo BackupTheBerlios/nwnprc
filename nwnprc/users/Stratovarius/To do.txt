@@ -1,7 +1,11 @@
 Psionics:
 
 Genesis Areas
-Domain Powers
+Domain Powers (4 left)
+
+Bugs:
+
+Talontar Blighttouch
 
 -----------------------------------------------------
 Everything Below this line is pushed back to 3.1
@@ -13,7 +17,9 @@ Psion Uncarnate
 Pyro
 Cryo
 Sanctified Mind - 2da/TLK only
-Iron Mind - 2da/TLK + one ability
+Iron Mind - 2da/TLK
+Slayer of Domiel - 2da/TLK, Spells, Update spell constant
+Disciple of Asmodeus - 2da/TLK, Spell Const, Command, Greater Command, Evil Authority, Summon Major Devil
 
 Normal PrCs:
 Blood Magus

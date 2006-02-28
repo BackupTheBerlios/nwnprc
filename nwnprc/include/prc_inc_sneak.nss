@@ -106,6 +106,10 @@ int GetRogueSneak(object oPC)
    // Ninja
    iClassLevel = GetLevelByClass(CLASS_TYPE_NINJA, oPC);
    if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;
+   
+   // Slayer of Domiel
+   iClassLevel = GetLevelByClass(CLASS_TYPE_SLAYER_OF_DOMIEL, oPC);
+   if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;   
 
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {

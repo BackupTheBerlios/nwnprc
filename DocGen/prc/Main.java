@@ -46,6 +46,9 @@ public class Main {
 		else if(toCall.equals("radials")){
 			prc.utils.Radials.main(paramsToPass);
 		}
+		else if(toCall.equals("lssubrad")){
+			prc.utils.ListSubradials.main(paramsToPass);
+		}
 		else if(toCall.equals("dupsubrad")){
 			prc.utils.DuplicateSubradials.main(paramsToPass);
 		}
@@ -82,6 +85,8 @@ public class Main {
 	 * Prints the use instructions for this program and kills execution.
 	 */
 	private static void readMe(){
+		//                  0        1         2         3         4         5         6         7         8
+		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890
 		System.out.println("Usage:\n"+
 		                   "  java -jar prc.jar [--help] | class [parameters]\n"+
 		                   "\n"+
@@ -90,8 +95,9 @@ public class Main {
 						   "             2da        - Either verifies a single 2da file or compares two\n"+
 						   "             codegen    - Autogenerates scripts (or other files)\n"+
 						   "             radials    - Generates subradial FeatID values\n"+
-						   "             dupsubrad  - Seeks through spells.2da and prints lines\n"+
-						   "                          containing duplicate subradial values\n"+
+						   "             lssubrad   - Lists subradial IDs used in spells.2da\n" +
+						   "             dupsubrad  - Seeks through spells.2da and prints lines containing\n"+
+						   "                          duplicate subradial values\n"+
 						   "             makedep    - Builds include dependency lists\n" +
 						   "             upclsfeat  - Updates base cls_feat_*.2da based on given templates\n" +
 						   "             lsentries  - Lists the unique entries in given columns of a\n" +

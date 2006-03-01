@@ -37,52 +37,97 @@ Corruption Cost: 1 point of Wisdom drain.
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+#include "spinc_common"
 
-void DrainStat
+void DrainStat(int nAbility, object oTarget, object oPC, int nRoundCounter)
 {
-	//Strength
-	
-	//Dexterity
-	
-	//Constitution
-	
-	//Intelligence
-	
-	//Wisdom
-	
-	//Charisma
+	if(nRoundCounter > 0)
+	{
+		//Apply Damage
+		
+		//Give bonus
+		
+		//decrement nRoundCounter
+		nRoundCounter--;
+		
+		DelayCommand(6.0f, DrainStat(nAbility, oTarget, oPC, nRoundCounter);	
+	}
+}
 
 
 void main()
 {
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-    
-    //Spellhook
-    if (!X2PreSpellCastCode()) return;
-    
-    object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
-    object oTarget = GetSpellTargetObject();
-    int nCasterLvl = PRCGetCasterLevel(oPC);
-    int nMetaMagic = PRCGetMetaMagicFeat();
-    float fDuration = (HoursToSeconds(nCasterLvl) / 6);
- 
-    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_POWER_LEECH, oPC);
-    
-    //Check for Extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-    {
-	    fDuration = (fDuration * 2);
-    }
-    
-    
-    
-   
-    
-    
-    //Corruption Cost
-    {
-	    DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_WISDOM, 1, 1));
-    }
-    
-    SPSetSchool();
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	//Spellhook
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oSkin = GetPCSkin(oPC);
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nAbility;
+	int nSpell = GetSpellId();
+	int nRoundCounter = nCasterLvl;
+	float fDuration = RoundsToSeconds(nCasterLvl);
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_POWER_LEECH, oPC);
+	
+	//Check for Extend
+	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+	{
+		fDuration = (fDuration * 2);
+	}
+	
+	//Check for ability to drain
+	
+	//Strength
+	if(nSpell == SPELL_POWER_LEECH_STR)
+	{
+		nAbility = ABILITY_STRENGTH;		
+	}
+	
+	//Dexterity
+	if(nSpell == SPELL_POWER_LEECH_DEX)
+	{
+		nAbility = ABILITY_DEXTERITY;	
+	}
+	
+	//Constitution
+	if(nSpell == SPELL_POWER_LEECH_CON)
+	{
+		nAbility = ABILITY_CONSTITUTION;
+	}
+	
+	//Intelligence
+	if(nSpell == SPELL_POWER_LEECH_INT)
+	{
+		nAbility = ABILITY_INTELLIGENCE;	
+	}
+	
+	//Wisdom
+	if(nSpell == SPELL_POWER_LEECH_WIS)
+	{
+		nAbility = ABILITY_WISDOM;
+	}
+	
+	//Charisma
+	if(nSpell == SPELL_POWER_LEECH_CHA)
+	{
+		nAbility = ABILITY_CHARISMA;
+	}
+	
+	//Start the drain
+	DrainStat(nAbility, oTarget, oPC, nRoundCounter);
+	
+	//Corruption Cost
+	{
+		DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_WISDOM, 1, 1));
+	}
+	
+	SPEvilShift(oPC);
+	
+	SPSetSchool();
+}

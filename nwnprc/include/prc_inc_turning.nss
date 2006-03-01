@@ -369,10 +369,11 @@ void DoCommand(object oTarget, int nLevel)
         //supernatural dominated vs cutscenedominated
         //supernatural will last over resting
         //Why not use both?
-        //effect eCommand = SupernaturalEffect(EffectDominated());
+        effect eCommand2 = SupernaturalEffect(EffectDominated());
         effect eCommand = SupernaturalEffect(EffectCutsceneDominated());
         eCommand = EffectLinkEffects(eCommand, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED));
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oTarget);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand2, oTarget);
     }
     //not enough commanding power left
     //rebuke instead

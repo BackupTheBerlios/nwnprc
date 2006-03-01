@@ -19,6 +19,9 @@ void main()
     eDom = GetScaledEffect(eDom, oTarget);
     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    effect eCommand = SupernaturalEffect(EffectCutsceneDominated());
+    eCommand = EffectLinkEffects(eCommand, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED));
+
 
     //Link domination and persistant VFX
     effect eLink = EffectLinkEffects(eMind, eDom);
@@ -37,10 +40,12 @@ void main()
     if (GetTag(oTarget) == "prc_blightspawn")
     {
                //Make a Will Save
-               if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+               if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_NONE))
                {
                     //Apply linked effects and VFX Impact
+                    // the double effect is to make sure
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCommand, oTarget, fDuration);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
                 }
     }

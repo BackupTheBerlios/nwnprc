@@ -7,6 +7,7 @@ void main()
     object oTarget = OBJECT_SELF;
     string sResRef = GetResRef(oTarget);
     object oCreator = GetLocalObject(oTarget, "BlightspawnCreator");
+    int nRace = MyPRCGetRacialType(oTarget);
     
     if(DEBUG) DoDebug("Blight Touch Disease Target is: " + GetName(oTarget));
     if(DEBUG) DoDebug("Blight Touch Disease Creator is: " + GetPCPlayerName(oCreator));
@@ -32,20 +33,23 @@ void main()
         
         if(DEBUG) DoDebug("Failed save vs Talona's Blight, applying penalty");
     }
-    
+
     // If the monster is dead or his stats have dropped below what the bioware engine allows
-    if (GetIsDead(oTarget) || 
-       (GetAbilityScore(oTarget, ABILITY_CONSTITUTION) - iPenalty) <= 3 || 
+    if ((GetAbilityScore(oTarget, ABILITY_CONSTITUTION) - iPenalty) <= 3 || 
        (GetAbilityScore(oTarget, ABILITY_CHARISMA) - iPenalty) <= 3)
     {
-        // This is to make sure its dead
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(GetMaxHitPoints(oTarget)), oTarget);
+    	if (!GetIsDead(oTarget))
+    	{
+        	// This is to make sure its dead, in case ability damage didn't get it
+        	DelayCommand(0.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget));
+        	//ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(GetMaxHitPoints(oTarget)), oTarget);
+        }
     	if(DEBUG && GetIsDead(oTarget)) DoDebug("Talona's Blight has killed the creature");
-    	    	
-    	if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_ANIMAL ||
-    	    MyPRCGetRacialType(oTarget) == RACIAL_TYPE_MAGICAL_BEAST /*||
-    	    MyPRCGetRacialType(oTarget) == RACIAL_TYPE_PLANT*/)
+
+
+    	if (nRace == RACIAL_TYPE_ANIMAL ||
+    	    nRace == RACIAL_TYPE_BEAST ||
+    	    nRace == RACIAL_TYPE_MAGICAL_BEAST)
     	{
     		if(DEBUG) DoDebug("Creature is a valid type for blightspawned template");
     	
@@ -56,7 +60,7 @@ void main()
     		SetIsTemporaryNeutral(oCreator, oCreature);
     		
     		if(DEBUG) DoDebug("Setting created creature neutral to the blightlord");
-    		
+		
     		// Apply the Blightspawned Template
     		
         	//Get the companion's skin
@@ -128,8 +132,10 @@ void main()
         	//effect eDominated EffectCutsceneDominated();
         	//ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDominated, oCreature);    
         	if(DEBUG) DoDebug("Done applying Blightspawned bonuses to the creature");
+        	
         }
         if(DEBUG) DoDebug("Exiting dead creature brackets");
+        
     }
     if(DEBUG) DoDebug("Exiting prc_talona.nss");
 }

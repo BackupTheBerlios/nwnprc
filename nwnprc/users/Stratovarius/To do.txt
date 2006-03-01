@@ -18,11 +18,11 @@ Pyro
 Cryo
 Sanctified Mind - 2da/TLK only
 Iron Mind - 2da/TLK
-Slayer of Domiel - 2da/TLK, Spells, Update spell constant
-Disciple of Asmodeus - 2da/TLK, Spell Const, Command, Greater Command, Evil Authority, Summon Major Devil
 
 Normal PrCs:
 Blood Magus
+Slayer of Domiel - 2da/TLK, Spells, Update spell constant
+Disciple of Asmodeus - 2da/TLK, Spell Const, Command, Greater Command
 
 Pale master -> 3.0:
 Fighter vassal

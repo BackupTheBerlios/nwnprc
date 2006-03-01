@@ -6,7 +6,7 @@
 
 void main()
 {
-DoDebug("m0q01a06jaroelc2 running");
+if(DEBUG) DoDebug("m0q01a06jaroelc2 running");
     if(GetLevelByClass(CLASS_TYPE_PSION,  GetPCSpeaker()) > 0 ||
        GetLevelByClass(CLASS_TYPE_PSYWAR, GetPCSpeaker()) > 0 ||
        GetLevelByClass(CLASS_TYPE_WILDER, GetPCSpeaker()) > 0

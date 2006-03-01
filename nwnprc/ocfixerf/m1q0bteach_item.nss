@@ -4,7 +4,7 @@
 
 void main()
 {
-DoDebug("m1q0bteach_item running");
+if(DEBUG) DoDebug("m1q0bteach_item running");
     string sItemTemplate;
     object oPC = GetPCSpeaker();
     if(GetLocalInt(oPC,"NW_L_M1Q0Item2") == FALSE)

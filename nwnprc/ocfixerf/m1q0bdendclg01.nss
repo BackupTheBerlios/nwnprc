@@ -4,7 +4,7 @@
 
 int StartingConditional()
 {
-DoDebug("m1q0bdendclg01 running");
+if(DEBUG) DoDebug("m1q0bdendclg01 running");
     int bCondition = !GetIsObjectValid(GetPCSpeaker()) &&
                       GetLocalInt(OBJECT_SELF, "Generic_Surrender") == 1 &&
                       (GetLevelByClass(CLASS_TYPE_BARBARIAN,GetPCSpeaker()) > 0 ||

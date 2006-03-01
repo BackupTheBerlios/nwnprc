@@ -4,7 +4,7 @@
 
 int StartingConditional()
 {
-DoDebug("m0q01a05herbsck3 running");
+if(DEBUG) DoDebug("m0q01a05herbsck3 running");
     return GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, GetPCSpeaker()) > 0 ||
            GetLevelByClass(CLASS_TYPE_CORRUPTER, GetPCSpeaker()) > 0 ||
            GetLevelByClass(CLASS_TYPE_SAMURAI, GetPCSpeaker()) > 0 ||

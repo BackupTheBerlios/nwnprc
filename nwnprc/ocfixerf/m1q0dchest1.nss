@@ -4,7 +4,7 @@
 
 void main()
 {
-DoDebug("m1q0dchest1 running");
+if(DEBUG) DoDebug("m1q0dchest1 running");
     string sItemTemplate;
     object oPC = GetLastOpenedBy();
     if(GetIsObjectValid(oPC) == FALSE)

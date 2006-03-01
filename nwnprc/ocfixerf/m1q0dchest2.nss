@@ -7,7 +7,7 @@ void GiveItem(string sTemplate);
 
 void main()
 {
-DoDebug("m1q0dchest2 running");
+if(DEBUG) DoDebug("m1q0dchest2 running");
     string sItemTemplate1;
     string sItemTemplate2;
     string sItemTemplate3;

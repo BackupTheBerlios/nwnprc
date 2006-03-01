@@ -4,7 +4,7 @@
 
 int StartingConditional()
 {
-DoDebug("m0q01a04guarsgk2 running");
+if(DEBUG) DoDebug("m0q01a04guarsgk2 running");
     int bCondition = GetLevelByClass(CLASS_TYPE_WIZARD, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_PSION, GetPCSpeaker()) > 0 ||
                      GetLevelByClass(CLASS_TYPE_PSYWAR, GetPCSpeaker()) > 0 ||

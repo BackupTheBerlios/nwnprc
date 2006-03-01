@@ -4,7 +4,7 @@
 
 void main()
 {
-DoDebug("m0q0_archery_2 running");
+if(DEBUG) DoDebug("m0q0_archery_2 running");
     object oAttacker = GetLastAttacker();
 
 //* Should only register if hit with a ranged weapon

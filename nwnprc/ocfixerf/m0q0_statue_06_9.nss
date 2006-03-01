@@ -5,7 +5,7 @@
 //* Check to see if a spell was cast at the statue, which will destroy it and
 void main()
 {
-DoDebug("m0q0_statue_06_9 running");
+if(DEBUG) DoDebug("m0q0_statue_06_9 running");
     object oCaster = GetLastSpellCaster();
     if(GetLevelByClass(CLASS_TYPE_BARD,oCaster) > 0 ||
        GetLevelByClass(CLASS_TYPE_SORCERER,oCaster) > 0 ||

@@ -4,7 +4,7 @@
 
 void main()
 {
-DoDebug("m1q0bdendy_5 running");
+if(DEBUG) DoDebug("m1q0bdendy_5 running");
     object oAttacker = GetLastAttacker();
     if(GetWeaponRanged(GetLastWeaponUsed(oAttacker)) == FALSE)
     {

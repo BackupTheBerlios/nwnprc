@@ -4,7 +4,7 @@
 
 void main()
 {
-DoDebug("m0q0_chest_05_7 running");
+if(DEBUG) DoDebug("m0q0_chest_05_7 running");
     object oAttacker = GetLastAttacker();
     if(GetLocalInt(GetModule(), "NW_PROLOGUE_PLOT") != 99)
     {

@@ -8,7 +8,7 @@
 
 void main()
 {
-DoDebug("m1q0dmage7 running");
+if(DEBUG) DoDebug("m1q0dmage7 running");
     string sItemTemplate;
     object oPC = GetLastKiller();
     object oMaster = GetMaster(oPC);

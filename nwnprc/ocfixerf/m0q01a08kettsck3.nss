@@ -4,7 +4,7 @@
 
 int StartingConditional()
 {
-DoDebug("m0q01a08kettsck3 running");
+if(DEBUG) DoDebug("m0q01a08kettsck3 running");
     int bCondition = GetLocalInt(OBJECT_SELF, "NW_L_TALKLEVEL") == 1 &&
                      (GetLevelByClass(CLASS_TYPE_ROGUE, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_NINJA, GetPCSpeaker()) > 0 ||

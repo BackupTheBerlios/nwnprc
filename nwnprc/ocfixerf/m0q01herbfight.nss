@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 int StartingConditional()
 {
-DoDebug("M0q01herbfight running");
+if(DEBUG) DoDebug("M0q01herbfight running");
     // Restrict based on the player's class
     if((GetLevelByClass(CLASS_TYPE_BARBARIAN, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_FIGHTER, GetPCSpeaker()) == 0) &&

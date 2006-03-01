@@ -457,20 +457,20 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     //non2dacaching table
-    SQL = "CREATE TABLE "+q+"prc_data"+q+" ("+q+"name"+q+" varchar(255) DEFAULT '_', "+q+"value"+q+" varchar(255) DEFAULT '_')";
-    PRC_SQLExecDirect(SQL); SQL = "";
+    //SQL = "CREATE TABLE "+q+"prc_data"+q+" ("+q+"name"+q+" varchar(255) DEFAULT '_', "+q+"value"+q+" varchar(255) DEFAULT '_')";
+    //PRC_SQLExecDirect(SQL); SQL = "";
 
     //indexs
-    SQL+= "CREATE UNIQUE INDEX "+q+"spellsrowindex"+q+"  ON "+q+"prc_cached2da_spells"+q+" ("+q+"rowid"+q+"); ";
-    SQL = "CREATE UNIQUE INDEX "+q+"featrowindex"+q+"  ON "+q+"prc_cached2da_feat"+q+" ("+q+"rowid"+q+"); ";
-    SQL+= "CREATE        INDEX "+q+"clsfeatindex"+q+" ON "+q+"prc_cached2da_cls_feat"+q+" ("+q+"FeatIndex"+q+"); ";
-    SQL+= "CREATE        INDEX "+q+"clsfileindex"+q+" ON "+q+"prc_cached2da_cls_feat"+q+" ("+q+"file"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"appearrowindex"+q+"  ON "+q+"prc_cached2da_appearance"+q+" ("+q+"rowid"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"portrrowindex"+q+"  ON "+q+"prc_cached2da_portrait"+q+" ("+q+"rowid"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"soundsrowindex"+q+"  ON "+q+"prc_cached2da_soundset"+q+" ("+q+"rowid"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"datanameindex"+q+" ON "+q+"prc_data"+q+" ("+q+"name"+q+"); ";
-    SQL = "CREATE        INDEX "+q+"irewfileindex"+q+" ON "+q+"prc_cached2da_ireq"+q+" ("+q+"file"+q+"); ";
-    SQL+= "CREATE UNIQUE INDEX "+q+"refrindex"+q+" ON "+q+"prc_cached2da_item_to_ireq"+q+" ("+q+"L_RESREF"+q+"); ";
+    SQL+= "CREATE UNIQUE INDEX "+q+"spellsrowindex" +q+"  ON "+q+"prc_cached2da_spells"         +q+" ("+q+"rowid"+q+"); ";
+    SQL = "CREATE UNIQUE INDEX "+q+"featrowindex"   +q+"  ON "+q+"prc_cached2da_feat"           +q+" ("+q+"rowid"+q+"); ";
+    SQL+= "CREATE        INDEX "+q+"clsfeatindex"   +q+" ON "+q+"prc_cached2da_cls_feat"        +q+" ("+q+"file"+q+", "+q+"FeatIndex"+q+"); ";
+    SQL+= "CREATE UNIQUE INDEX "+q+"appearrowindex" +q+"  ON "+q+"prc_cached2da_appearance"     +q+" ("+q+"rowid"+q+"); ";
+    SQL+= "CREATE UNIQUE INDEX "+q+"portrrowindex"  +q+"  ON "+q+"prc_cached2da_portraits"      +q+" ("+q+"rowid"+q+"); ";
+    SQL+= "CREATE UNIQUE INDEX "+q+"soundsrowindex" +q+"  ON "+q+"prc_cached2da_soundset"       +q+" ("+q+"rowid"+q+"); ";
+    //SQL+= "CREATE UNIQUE INDEX "+q+"datanameindex"  +q+" ON "+q+"prc_data"                      +q+" ("+q+"name"+q+"); ";
+    SQL+= "CREATE UNIQUE INDEX "+q+"cachedindex"    +q+" ON "+q+"prc_cached2da"                 +q+" ("+q+"file"+q+", "+q+"columnid"+q+", "+q+"rowid"+q+"); ";
+    SQL = "CREATE        INDEX "+q+"ireqfileindex"  +q+" ON "+q+"prc_cached2da_ireq"            +q+" ("+q+"file"+q+"); ";
+    SQL+= "CREATE UNIQUE INDEX "+q+"refrindex"      +q+" ON "+q+"prc_cached2da_item_to_ireq"    +q+" ("+q+"L_RESREF"+q+", "+q+"rowid"+q+"); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
 }
@@ -550,7 +550,6 @@ if(nDebug) DoDebug("Get2DACache: pushed cached value is "+sPushed);
             || s2DA == "portraits"
             || s2DA == "soundsets"
             || s2DA == "appearance"
-            || s2DA == "portraits"
             || s2DA == "classes"
             || s2DA == "racialtypes"
             || s2DA == "item_to_ireq")

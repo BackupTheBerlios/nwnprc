@@ -101,11 +101,13 @@ void ChoiceSelected(int nChoiceNo)
                 ApplyEffectAtLocation(DURATION_TYPE_INSTANT,
                     EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1),
                         GetLocation(OBJECT_SELF));
-                //set tattoos to 1 so they show
+                //set tattoos to 2 so they show
+                //1 is no tatoo
+                //0 is nothing at all
                 array_create(OBJECT_SELF, "Tattoo");
                 for(i=1;i<=18;i++)
                 {
-                    array_set_int(OBJECT_SELF, "Tattoo",  i, 1);
+                    array_set_int(OBJECT_SELF, "Tattoo",  i, 2);
                 }
                 DoCloneLetoscript();
                 DoRotatingCamera();
@@ -854,7 +856,7 @@ void ChoiceSelected(int nChoiceNo)
             if(GetChoice(OBJECT_SELF) == -1)
             {
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
-                DeleteLocalInt(OBJECT_SELF, "TattooColor1");
+                DeleteLocalInt(OBJECT_SELF, "TattooColour1");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValue");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
@@ -866,7 +868,7 @@ void ChoiceSelected(int nChoiceNo)
             }
             break;
         case STAGE_TATTOOCOLOUR2:
-            SetLocalInt(OBJECT_SELF, "TattooColor2",
+            SetLocalInt(OBJECT_SELF, "TattooColour2",
                 GetChoice(OBJECT_SELF));
             nStage++;
             DoCloneLetoscript();

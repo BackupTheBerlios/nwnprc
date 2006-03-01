@@ -520,8 +520,9 @@ void AddPremadeCohortsToDB()
             {
                 //assemble the resref
                 string sResRef = "PRC_NPC_"+IntToString(nRace)+"_"+IntToString(nClass);
+                DoDebug("AddPremadeCohortsToDB() : sResRef = "+sResRef);
                 //create the cohort
-                object oCohort = CreateObject(OBJECT_TYPE_PLACEABLE, sResRef, lSpawn);
+                object oCohort = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
                 //check its valid
                 if(GetIsObjectValid(oCohort))
                 {

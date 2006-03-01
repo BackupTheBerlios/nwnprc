@@ -485,7 +485,7 @@ void SetupStage()
         case STAGE_PORTRAIT:
             if(GetPRCSwitch(PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT))
             {
-                AddChoice("Keep exisiting portrait.", -1);
+                AddChoice("Keep existing portrait.", -1);
             }
             if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_PORTRAIT))
             {
@@ -511,7 +511,7 @@ void SetupStage()
         case STAGE_SOUNDSET:
             if(GetPRCSwitch(PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET))
             {
-                AddChoice("keep exisitng soundset.", -1);
+                AddChoice("keep existing soundset.", -1);
             }
             if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_VOICESET))
                 SetupRacialSoundset();

@@ -32,6 +32,7 @@ void main()
 
     //this triggers NWNX on Linux
     SetLocalInt(oModule, "NWNX!INIT", 1);
+    SetLocalString(oModule, "NWNX!INIT", "1");
 
     // Loading a saved game runs the module load event, but since the point of the stuff
     // we do here is to set local variables and those don't get cleared over saved games,

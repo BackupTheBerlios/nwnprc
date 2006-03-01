@@ -55,37 +55,40 @@ md raceobjs 2>nul
 md psionicsobjs 2>nul
 md spellobjs 2>nul
 md newspellbookobjs 2>nul
+md ocfixerfobjs 2>nul
 
 REM generate temporary files for each of the source sets
 REM scripts, graphics files, 2das, and misc. other files.
 REM each of these temp files will be stuffed into a macro
 REM in the makefile.
-dir /b erf | tools\ssed -R "$! {s/$/ \\/g};s/^/erf\\/g" >erffiles.temp
-dir /b scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g" >scripts.temp
-dir /b spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/spells\\/g" >spells.temp
-dir /b epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
-dir /b racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/racescripts\\/g" >racescripts.temp
-dir /b psionics\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/psionics\\/g" >psionics.temp
-dir /b newspellbook\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/^/newspellbook\\/g" >newspellbook.temp
-dir /b gfx | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g" >gfx.temp
-dir /b 2das | tools\ssed -R "$! {s/$/ \\/g};s/^/2das\\/g" >2das.temp
-dir /b race2das | tools\ssed -R "$! {s/$/ \\/g};s/^/race2das\\/g" >race2das.temp
-dir /b others | tools\ssed -R "$! {s/$/ \\/g};s/^/others\\/g" >others.temp
-dir /b craft2das | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g" >craft2das.temp
-dir /b include | tools\ssed -R "$! {s/$/ \\/g};s/^/include\\/g" >include.temp
+dir /b erf                    | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/erf\\/g"              >erffiles.temp
+dir /b scripts\*.nss          | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/scripts\\/g"          >scripts.temp
+dir /b spells\*.nss           | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/spells\\/g"           >spells.temp
+dir /b epicspellscripts\*.nss | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/epicspellscripts\\/g" >epicspellscripts.temp
+dir /b racescripts\*.nss      | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/racescripts\\/g"      >racescripts.temp
+dir /b psionics\*.nss         | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/psionics\\/g"         >psionics.temp
+dir /b gfx                    | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/gfx\\/g"              >gfx.temp
+dir /b 2das                   | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/2das\\/g"             >2das.temp
+dir /b race2das               | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/race2das\\/g"         >race2das.temp
+dir /b others                 | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/others\\/g"           >others.temp
+dir /b craft2das              | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/craft2das\\/g"        >craft2das.temp
+dir /b include                | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/include\\/g"          >include.temp
+dir /b newspellbook\*.nss     | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/newspellbook\\/g"     >newspellbook.temp
+dir /b ocfixerf               | SORT | tools\grep -E "^[^.]" | tools\ssed -R "$! {s/$/ \\/g};s/^/ocfixerf\\/g"         >ocfix.temp
 
 REM use FINDSTR to find script files with "void main()" or "int StartingConditional()"
 REM in them, these are the ones we want to compile.
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" scripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g" >objs.temp
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" spells\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/spells\\/spellobjs\\/g" >spellobjs.temp
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" racescripts\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g" >raceobjs.temp
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" psionics\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/psionics\\/psionicsobjs\\/g" >psionicsobjs.temp
-FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" newspellbook\*.nss | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/newspellbook\\/newspellbookobjs\\/g" >newspellbookobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" scripts\*.nss          | SORT | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/scripts\\/objs\\/g"                   >objs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" spells\*.nss           | SORT | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/spells\\/spellobjs\\/g"               >spellobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" epicspellscripts\*.nss | SORT | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/epicspellscripts\\/epicspellobjs\\/g" >epicspellobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" racescripts\*.nss      | SORT | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/racescripts\\/raceobjs\\/g"           >raceobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" psionics\*.nss         | SORT | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/psionics\\/psionicsobjs\\/g"          >psionicsobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" newspellbook\*.nss     | SORT | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/newspellbook\\/newspellbookobjs\\/g"  >newspellbookobjs.temp
+FINDSTR /R /M /C:"void *main *( *)" /C:"int *StartingConditional *( *)" ocfixerf\*.nss         | SORT | tools\ssed -R "$! {s/$/ \\/g};s/nss/ncs/g;s/ocfixerf\\/ocfixerfobjs\\/g"          >ocfixobjs.temp
 
 REM Now using our generic makefile as a base, glue all of the temp files into it making
 REM a fully formatted makefile we can run nmake on.
-type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~spells~~~/r spells.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~psionicsscripts~~~/r psionics.temp" | tools\ssed -R "/~~~newspellbook~~~/r newspellbook.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~spellobjs~~~/r spellobjs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "/~~~psionicsobjs~~~/r psionicsobjs.temp" | tools\ssed -R "/~~~newspellbookobjs~~~/r newspellbookobjs.temp" | tools\ssed -R "/~~~include~~~/r include.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
+type makefile.template | tools\ssed -R "/~~~erffiles~~~/r erffiles.temp" | tools\ssed -R "/~~~scripts~~~/r scripts.temp" | tools\ssed -R "/~~~spells~~~/r spells.temp" | tools\ssed -R "/~~~epicspellscripts~~~/r epicspellscripts.temp" | tools\ssed -R "/~~~racescripts~~~/r racescripts.temp" | tools\ssed -R "/~~~psionicsscripts~~~/r psionics.temp" | tools\ssed -R "/~~~newspellbook~~~/r newspellbook.temp" | tools\ssed -R "/~~~ocfix~~~/r ocfix.temp" | tools\ssed -R "/~~~2das~~~/r 2das.temp" | tools\ssed -R "/~~~craft2das~~~/r craft2das.temp" | tools\ssed -R "/~~~race2das~~~/r race2das.temp" | tools\ssed -R "/~~~gfx~~~/r gfx.temp" | tools\ssed -R "/~~~others~~~/r others.temp" | tools\ssed -R "/~~~objs~~~/r objs.temp" | tools\ssed -R "/~~~spellobjs~~~/r spellobjs.temp" | tools\ssed -R "/~~~epicspellobjs~~~/r epicspellobjs.temp" | tools\ssed -R "/~~~raceobjs~~~/r raceobjs.temp" | tools\ssed -R "/~~~psionicsobjs~~~/r psionicsobjs.temp" | tools\ssed -R "/~~~newspellbookobjs~~~/r newspellbookobjs.temp" | tools\ssed -R "/~~~ocfixobjs~~~/r ocfixobjs.temp" | tools\ssed -R "/~~~include~~~/r include.temp" | tools\ssed -R "s/~~~[a-zA-Z0-9_]+~~~/ \\/g" > makefile.temp
 
 SETLOCAL
 
@@ -108,6 +111,8 @@ SET MAKEPSIONICSOBJSPATH=psionicsobjs
 SET MAKEMISCPATH=others
 SET MAKENEWSPELLBOOKPATH=newspellbook
 SET MAKENEWSPELLBOOKOBJSPATH=newspellbookobjs
+SET MAKEOCFIXERFPATH=ocfixerf
+SET MAKEOCFIXERFOBJSPATH=ocfixerfobjs
 
 REM before doing the real build build the dependencies for include files.
 tools\nmake -NOLOGO -f makefile.temp MAKEFILE=makefile.temp depends
@@ -140,5 +145,7 @@ del psionicsobjs.temp
 del include.temp
 del newspellbook.temp
 del newspellbookobjs.temp
+del ocfix.temp
+del ocfixobjs.temp
 
 pause

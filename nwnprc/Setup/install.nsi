@@ -67,18 +67,20 @@ Section "PRC Pack" Section1
 	File "..\CompiledResources\prc_include.hak"
 	File "..\CompiledResources\prc_psionics.hak"
 	File "..\CompiledResources\prc_newspellbook.hak"
+	File "..\CompiledResources\prc_ocfix.hif"
 	SetOutPath "$NWNPATH\tlk\"
 	File "..\tlk\prc_consortium.tlk"
 	SetOutPath "$NWNPRCPATH\PRCPack\"
 	File "..\CompiledResources\PRCModuleUpdater.exe"
-	
+
 	SetOutPath "$NWNPATH\erf\"
 	File "..\CompiledResources\prc_consortium.erf"
+	File "..\CompiledResources\prc_ocfix.erf"
 	CreateShortCut "$DESKTOP\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateDirectory "$SMPROGRAMS\PRC Pack"
 	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateShortCut "$SMPROGRAMS\PRC Pack\Uninstall.lnk" "$NWNPRCPATH\PRCPack\uninstall.exe"
-	
+
 
 SectionEnd
 
@@ -131,10 +133,12 @@ Section Uninstall
 	Delete "$NWNPATH\hak\prc_include.hak"
 	Delete "$NWNPATH\hak\prc_psionics.hak"
 	Delete "$NWNPATH\hak\prc_newspellbook.hak"
+	Delete "$NWNPATH\hak\prc_ocfix.hif"
 	Delete "$NWNPATH\tlk\prc_consortium.tlk"
 	Delete "$NWNPATH\erf\prc_consortium.erf"
+	Delete "$NWNPATH\erf\prc_ocfix.erf"
 	Delete "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
-	
+
 
 	; Remove remaining directories
 	RMDir "$SMPROGRAMS\PRC Pack"
@@ -155,13 +159,13 @@ Function .onInit
 	ReadRegStr $NWNVERSION HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Neverwinter" "Version"
 	ReadRegStr $NWNPATH HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Neverwinter" "Location"
 	IfErrors noNWN
-		
+
 	; Validate that NWNMINVERSION or later of NWN is installed.
 	Push $0
 	StrCpy $0 $NWNVERSION 2 2
 	IntCmp $0 $NWNMINVERSION okNWN badNWN
 	Pop $0
-	
+
 	okNWN:
 	; Validate that XP1 and XP2 are installed
 	Push $0
@@ -172,14 +176,14 @@ Function .onInit
 	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\BioWare\NWN\Underdark" "GUID"
 	IfErrors noXP
 	Pop $0
-	
+
 	; Get the parent directory of the $NWNPATH to use for the prc pack, since
 	; the NWN install path always has the nwn\ folder which contains the game,
 	; we want the PRC installer EXE and readme's to be parallel to that.
 	Push $NWNPATH
 	Call GetParent
 	Pop $NWNPRCPATH
-	
+
 	; Make sure that 1.1 or later of the .NET framework is installed.
 	Call IsDotNETInstalled
 	Pop $0
@@ -187,20 +191,20 @@ Function .onInit
 
 	foundNETFramework:
 	Return
-	
+
 	noNETFramework:
 	MessageBox MB_OK|MB_ICONEXCLAMATION "The .NET Framework 1.1 is not installed on your PC.  The PRC pack cannot be installed until the .NET Framwwork 1.1 is installed.  Use Windows Update to install the .NET Framework 1.1 or later, or download it from the following web page."
 	ExecShell open "http://www.microsoft.com/downloads/details.aspx?FamilyID=262d25e3-f589-4842-8157-034d1e7cf3a3&DisplayLang=en"
 	Abort
-	
+
 	badNWN:
 	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires at least version 1.66 of NWN and HotU.  You must upgrade NWN before installing the PRC pack."
 	Abort
-	
+
 	noXP:
 	MessageBox MB_OK|MB_ICONEXCLAMATION "The PRC pack requires Shadows of Undrentide and Hordes of the Underdark to be installed.  You must upgrade NWN before installing the PRC pack.  If you installed the expansions by copying the files directly and did not install them using Bioware's setup applications, then you must reinstall using Bioware's setup applications."
 	Abort
-	
+
 	noNWN:
 	MessageBox MB_OK|MB_ICONEXCLAMATION "Neverwinter Nights is not installed on your PC.  The PRC pack cannot be installed until Neverwinter Nights is installed."
 	Abort
@@ -218,32 +222,32 @@ FunctionEnd
  ;   ; at this point $R0 will equal "C:\Program Files\Directory"
 
  Function GetParent
- 
+
    Exch $R0
    Push $R1
    Push $R2
    Push $R3
-   
+
    StrCpy $R1 0
    StrLen $R2 $R0
-   
+
    loop:
      IntOp $R1 $R1 + 1
      IntCmp $R1 $R2 get 0 get
      StrCpy $R3 $R0 1 -$R1
      StrCmp $R3 "\" get
      Goto loop
-   
+
    get:
      StrCpy $R0 $R0 -$R1
-     
+
      Pop $R3
      Pop $R2
      Pop $R1
      Exch $R0
-     
+
  FunctionEnd
- 
+
  ; IsDotNETInstalled
  ;
  ; Usage:
@@ -302,5 +306,5 @@ FunctionEnd
      Pop $1
      Exch $0
  FunctionEnd
- 
+
 ; eof

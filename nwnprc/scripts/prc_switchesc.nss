@@ -554,8 +554,13 @@ void main()
         }
         else if(nStage == STAGE_LEADERSHIP_ADD)
         {
-            SetLocalInt(oPC, "CohortID", nChoice);
-            nStage = STAGE_LEADERSHIP_ADD_CONFIRM;
+            if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_LEADERSHIP;
+            else
+            {
+                SetLocalInt(oPC, "CohortID", nChoice);
+                nStage = STAGE_LEADERSHIP_ADD_CONFIRM;
+            }
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)

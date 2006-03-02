@@ -204,6 +204,8 @@ int   IPGetHasItemPropertyOnCharacter(object oPC, int nItemPropertyConst);
 // *  Returns an integer with the number of properties present oItem
 int   IPGetNumberOfItemProperties(object oItem);
 
+#include "prc_class_const"
+#include "prc_inc_switch"
 #include "prc_alterations"
 
 //------------------------------------------------------------------------------
@@ -1167,6 +1169,7 @@ object IPGetTargetedOrEquippedArmor(int bAllowShields = FALSE)
 // ----------------------------------------------------------------------------
 int IPGetItemSequencerProperty(object oItem, object oPC = OBJECT_SELF)
 {
+DoDebug("IPGetItemSequencerProperty() before itemprop loop");
     int nCnt;
     if (GetItemHasItemProperty(oItem, ITEM_PROPERTY_CAST_SPELL))
     {
@@ -1225,6 +1228,7 @@ int IPGetItemSequencerProperty(object oItem, object oPC = OBJECT_SELF)
             SetPersistantLocalInt(oPC, "spellswordchannelcharges", nUses);
         }
     }
+DoDebug("IPGetItemSequencerProperty() returning");
     return nCnt;
 }
 

@@ -23,8 +23,9 @@
 19 WeapProfEx                                             44        0    -1             0      
 20 WeapProfMar                                            45        0    -1             0      
 21 FEAT_EPIC_BLINDING_SPEED                               491       0    -1             1      
-22 FEAT_LINGERING_DAMAGE                                  3099      0    -1             0      
-23 ####START_OF_NEW_SPELLBOOK_RESERVE                     ****      **** ****           ****   
+22 FEAT_LINGERING_DAMAGE                                  3099      0    -1             0   
+23 Spellbook                                              1999      3    2              1         
+24 ####START_OF_NEW_SPELLBOOK_RESERVE                     ****      **** ****           ****   
 24 Telflammar_Shadowlord_Blindness_and_Deafness           20847     0    99             1      
 25 Telflammar_Shadowlord_Exteneded_Blindness_and_Deafness 20848     0    99             1      
 26 Telflammar_Shadowlord_Silent_Blindness_and_Deafness    20849     0    99             1      

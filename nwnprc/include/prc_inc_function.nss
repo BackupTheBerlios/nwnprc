@@ -248,13 +248,9 @@ void EvalPRCFeats(object oPC)
     }
 
     // Switch convo feat
-    /*
-    if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
-    {///TODO: Constantify these. Or make granted to all base classes level 1, which might be better since it's used for more than code switches now
-        if(!GetHasFeat(2285, oPC))
-            IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-    }*/
-    //Now everyone gets it at level 1
+    //Now everyone gets it at level 1, but just to be on the safe side
+    if(!GetHasFeat(2285, oPC))
+        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
 
     // Size changes
     int nBiowareSize = GetCreatureSize(oPC);

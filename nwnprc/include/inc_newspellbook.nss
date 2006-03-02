@@ -16,6 +16,17 @@ Add class to GetCasterLvl() in prc_inc_spells
 Add class to MakeLookupLoopMaster() in inc_lookups
 Run the assemble_spellbooks.bat file
 
+Spont:
+Make cls_spbk_*.2da
+Make cls_spkn_*.2da
+Make cls_spcr_*.2da
+Add class to GetSpellbookTypeForClass() below
+Add class to GetAbilityForClass() below
+Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
+Add class to GetCasterLvl() in prc_inc_spells
+Add class to MakeLookupLoopMaster() in inc_lookups
+Run the assemble_spellbooks.bat file
+
 */
 
 const int SPELLBOOK_IPRP_FEATS_START = 10400;

@@ -22,6 +22,7 @@
 
 // Modified 2004/01/31 (Brian Greinke)
 // Reordered checks--PnP shifter as black/white slaad works now
+#include "x0_i0_spells"
 #include "NW_I0_SPELLS"
 void main()
 {
@@ -53,28 +54,31 @@ void main()
     {
         nCount = 1;
     }
-
-    int nDamage = d4(nCount);
-    //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-    //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
-
-    //Make a ranged touch attack
-    int nTouch = PRCDoRangedTouchAttack(oTarget);;
-    if(nTouch > 0)
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
-        if(nTouch == 2)
+
+        int nDamage = d4(nCount);
+        //Fire cast spell at event for the specified target
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
+
+        //Make a ranged touch attack
+        int nTouch = PRCDoRangedTouchAttack(oTarget);;
+        if(nTouch > 0)
         {
-            nDamage *= 2;
-        }
-        //Set damage effect
-        eBolt = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
-        if(nDamage > 0)
-        {
-            //Apply the VFX impact and effects
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eBolt, oTarget);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+            if(nTouch == 2)
+            {
+                nDamage *= 2;
+            }
+            //Set damage effect
+            eBolt = EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL);
+            if(nDamage > 0)
+            {
+                //Apply the VFX impact and effects
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eBolt, oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+            }
         }
     }
 }

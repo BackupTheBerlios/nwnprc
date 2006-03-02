@@ -362,7 +362,9 @@ int GetIsArcaneClass(int nClass)
 {
     return (nClass==CLASS_TYPE_WIZARD ||
             nClass==CLASS_TYPE_SORCERER ||
-            nClass==CLASS_TYPE_BARD);
+            nClass==CLASS_TYPE_BARD ||
+            nClass==CLASS_TYPE_ASSASSIN ||
+            nClass==CLASS_TYPE_SHADOWLORD);
 }
 
 int GetIsDivineClass (int nClass)
@@ -786,30 +788,30 @@ int StormMagic(object oCaster)
 
 int DomainPower(object oCaster, int nSpellID)
 {
-	int nBonus = 0;
+    int nBonus = 0;
 
         // Boosts Caster level with the Illusion school by 1
-	if (GetHasFeat(FEAT_DOMAIN_POWER_GNOME, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_ILLUSION)
-	{
-		nBonus += 1;
-	}
+    if (GetHasFeat(FEAT_DOMAIN_POWER_GNOME, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_ILLUSION)
+    {
+        nBonus += 1;
+    }
         // Boosts Caster level with the Illusion school by 1
-	if (GetHasFeat(FEAT_DOMAIN_POWER_ILLUSION, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_ILLUSION)
-	{
-		nBonus += 1;
-	}
+    if (GetHasFeat(FEAT_DOMAIN_POWER_ILLUSION, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_ILLUSION)
+    {
+        nBonus += 1;
+    }
         // Boosts Caster level with healing spells
-	if (GetHasFeat(FEAT_HEALING_DOMAIN_POWER, oCaster) && GetIsHealingSpell(nSpellID))
-	{
-		nBonus += 1;
-	}
+    if (GetHasFeat(FEAT_HEALING_DOMAIN_POWER, oCaster) && GetIsHealingSpell(nSpellID))
+    {
+        nBonus += 1;
+    }
         // Boosts Caster level with the Divination school by 1
-	if (GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_DIVINATION)
-	{
-		nBonus += 1;
-	}
+    if (GetHasFeat(FEAT_KNOWLEDGE_DOMAIN_POWER, oCaster) && GetSpellSchool(nSpellID) == SPELL_SCHOOL_DIVINATION)
+    {
+        nBonus += 1;
+    }
 
-	return nBonus;
+    return nBonus;
 }
 
 int DeathKnell(object oCaster)
@@ -1162,14 +1164,14 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
      // For this, it lowers the DC by the difference between the Iron Mind's will save and its reflex save.
      if (GetLocalInt(oTarget, "IronMind_MindOverBody"))
      {
-     	int nWill = GetWillSavingThrow(oTarget);
-     	int nRef = GetReflexSavingThrow(oTarget);
-     	int nSaveBoost = nWill - nRef;
-     	// Makes sure it does nothing if bonus would be less than 0
-     	if (nSaveBoost < 0) nSaveBoost = 0;
-     	// Lower the save the appropriate amount.
-     	nDC -= nSaveBoost;
-     	DeleteLocalInt(oTarget, "IronMind_MindOverBody");
+        int nWill = GetWillSavingThrow(oTarget);
+        int nRef = GetReflexSavingThrow(oTarget);
+        int nSaveBoost = nWill - nRef;
+        // Makes sure it does nothing if bonus would be less than 0
+        if (nSaveBoost < 0) nSaveBoost = 0;
+        // Lower the save the appropriate amount.
+        nDC -= nSaveBoost;
+        DeleteLocalInt(oTarget, "IronMind_MindOverBody");
      }
 
     // Racial ability adjustments
@@ -1223,6 +1225,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iPal = GetLevelByClass(CLASS_TYPE_PALADIN, oCaster);
     int iRan = GetLevelByClass(CLASS_TYPE_RANGER, oCaster);
     int iAss = GetLevelByClass(CLASS_TYPE_ASSASSIN, oCaster);
+    int iSha = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
     int iBlk = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oCaster);
     int iVob = GetLevelByClass(CLASS_TYPE_VASSAL, oCaster);
     int iSol = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oCaster);
@@ -1294,6 +1297,13 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
              return iTemp;
              break;
         //new spellbook classes
+        case CLASS_TYPE_SHADOWLORD:
+             if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_SHADOWLORD)
+                 iTemp = iArc;
+             else
+                 iTemp = iSha;
+             return iTemp;
+             break;
         case CLASS_TYPE_ASSASSIN:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_ASSASSIN)
                  iTemp = iArc;
@@ -1725,20 +1735,20 @@ int GetIsHealingSpell(int nSpellId)
 
 int GetHasMettle(object oTarget, int nSavingThrow)
 {
-	int nMettle = FALSE;
-	object oArmour = GetItemInSlot(INVENTORY_SLOT_CHEST);
+    int nMettle = FALSE;
+    object oArmour = GetItemInSlot(INVENTORY_SLOT_CHEST);
 
-	if (nSavingThrow = SAVING_THROW_WILL)
-	{
-		// Iron Mind's ability only functions in Heavy Armour
-		if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 5 && GetBaseAC(oArmour) >= 6) nMettle = TRUE;
-		// Fill out the line below to add another class with Will mettle
-		// else if (GetLevelByClass(CLASS_TYPE_X, oTarget) >= X) nMettle = TRUE;
-	}
-	if (nSavingThrow = SAVING_THROW_FORT)
-	{
-		// Add Classes with Fort mettle here
-	}
+    if (nSavingThrow = SAVING_THROW_WILL)
+    {
+        // Iron Mind's ability only functions in Heavy Armour
+        if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 5 && GetBaseAC(oArmour) >= 6) nMettle = TRUE;
+        // Fill out the line below to add another class with Will mettle
+        // else if (GetLevelByClass(CLASS_TYPE_X, oTarget) >= X) nMettle = TRUE;
+    }
+    if (nSavingThrow = SAVING_THROW_FORT)
+    {
+        // Add Classes with Fort mettle here
+    }
 
-	return nMettle;
+    return nMettle;
 }

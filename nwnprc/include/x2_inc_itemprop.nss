@@ -698,7 +698,8 @@ int IPGetIsMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_SHORTSPEAR) ||
       (nItem == BASE_ITEM_SHORTSWORD) ||
       (nItem == BASE_ITEM_WARHAMMER)  ||
-      (nItem == BASE_ITEM_DWARVENWARAXE)
+      (nItem == BASE_ITEM_DWARVENWARAXE) ||
+      (nItem == 95) //1.67 trident BASE_ITEM_TRIDENT
       || (nItem == 300) //CEP Trident
       || (nItem == 303) //CEP Sai
       || (nItem == 304) //CEP nunchaku

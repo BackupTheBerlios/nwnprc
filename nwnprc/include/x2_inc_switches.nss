@@ -170,6 +170,13 @@ const string MODULE_VAR_AI_STOP_EXPERTISE_ABUSE = "X2_L_STOP_EXPERTISE_ABUSE";
 const string CREATURE_VAR_CUSTOM_AISCRIPT = "X2_SPECIAL_COMBAT_AI_SCRIPT";
 
 //------------------------------------------------------------------------------
+// * Setting this variable on a creature will make its use a
+// * random name.
+// * see nw_c2_default9 for details.
+//------------------------------------------------------------------------------
+const string CREATURE_VAR_RANDOMIZE_NAME = "X2_NAME_RANDOM";
+
+//------------------------------------------------------------------------------
 // * Setting this variable on a spellcaster creature will make its spelluse a
 // * bit more random, but their spell selection may not always be appropriate
 // * to the situation anymore.

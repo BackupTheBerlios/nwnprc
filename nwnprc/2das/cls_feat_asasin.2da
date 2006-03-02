@@ -76,6 +76,7 @@
 72  FEAT_PRESTIGE_ASSN_DEATH_ATTACK              2930      3    1              1      
 73  DefArrow                                     8         0    -1             0      
 74  FEAT_LINGERING_DAMAGE                        3099      0    -1             0      
+75  Spellbook                                    1999      3    2              1    
 75  ####START_OF_NEW_SPELLBOOK_RESERVE           ****      **** ****           ****   
 76  Assassin_True_Strike                         20001     0    99             1      
 77  Assassin_Silent_True_Strike                  20002     0    99             1      

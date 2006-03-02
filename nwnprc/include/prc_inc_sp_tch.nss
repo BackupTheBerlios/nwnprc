@@ -83,6 +83,7 @@ void DoSpellRay(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
     if(nAttack)
     {
         ActionDoCommand(SetLocalInt(OBJECT_SELF, "AttackHasHit", nAttack)); //preserve crits
+        if(DEBUG) DoDebug("Spell DC passed to DoSpellRay: " + IntToString(nTotalDC));
         DoRacialSLA(nSpellID, nCasterlevel, nTotalDC);
         ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "AttackHasHit"));
     }

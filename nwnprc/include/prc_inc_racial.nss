@@ -106,12 +106,14 @@ int MyPRCGetRacialType(object oCreature)
 //this is Base DC, not total DC. SLAs are still spells, so spell focus should still apply.
 void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0)
 {
+    if(DEBUG) DoDebug("Spell DC passed to DoRacialSLA: " + IntToString(nTotalDC));
     if(nTotalDC == 0)
         nTotalDC = 10
             +StringToInt(Get2DACache("spells", "Innate", nSpellID))
             +GetAbilityModifier(ABILITY_CHARISMA);
 
     ActionDoCommand(SetLocalInt(OBJECT_SELF, "SpellIsSLA", TRUE));
-    ActionCastSpell(nSpellID, nCasterlevel, nTotalDC);
+    if(DEBUG) DoDebug("Spell DC entered in ActionCastSpell: " + IntToString(nTotalDC));
+    ActionCastSpell(nSpellID, nCasterlevel, 0, nTotalDC);
     ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "SpellIsSLA"));
 }

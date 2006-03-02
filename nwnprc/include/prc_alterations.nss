@@ -151,6 +151,14 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
     int nMetaMagic = METAMAGIC_NONE, int nClass = CLASS_TYPE_INVALID,
     int bUseOverrideTargetLocation=FALSE, int bUseOverrideTargetObject=FALSE, object oOverrideTarget=OBJECT_INVALID)
 {
+
+    if(DEBUG) DoDebug("ActionCastSpell SpellId: " + IntToString(iSpell));
+    if(DEBUG) DoDebug("ActionCastSpell Caster Level: " + IntToString(iCasterLev));
+    if(DEBUG) DoDebug("ActionCastSpell Base DC: " + IntToString(iBaseDC));
+    if(DEBUG) DoDebug("ActionCastSpell Total DC: " + IntToString(iTotalDC));
+    if(DEBUG) DoDebug("ActionCastSpell Metamagic: " + IntToString(nMetaMagic));
+    if(DEBUG) DoDebug("ActionCastSpell Caster Class: " + IntToString(nClass));
+
     //if its a hostile spell, clear the action queue
     //this stops people stacking hostile spells to be instacast
     //at the end, for example when coming out of invisibility
@@ -196,26 +204,26 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 
     //clean up afterwards
     if (iCasterLev != 0)
-        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
     if (iTotalDC != 0)
-        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE));
     if (iBaseDC != 0)
-        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
     if (nClass != CLASS_TYPE_INVALID)
-        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE));
     if (nMetaMagic != METAMAGIC_NONE)
-        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE));
     if (bUseOverrideTargetLocation)
     {
-        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE));
         //location must be set outside of this function at the moment
         //cant pass a location into a function as an optional parameter
         //go bioware for not defining an invalid location constant
     }
     if (bUseOverrideTargetObject)
     {
-        ActionDoCommand(DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
-        ActionDoCommand(DeleteLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
+        DelayCommand(2.0, DeleteLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
     }
 
 

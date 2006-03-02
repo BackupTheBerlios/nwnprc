@@ -83,6 +83,9 @@ void main()
 	
 	//Check for ability to drain
 	
+	/*  <Stratovarius> That would be easiest to do as a convo I think
+            <Stratovarius> just steal the animal affinity one from psionics and modify*/
+	
 	//Strength
 	if(nSpell == SPELL_POWER_LEECH_STR)
 	{

@@ -81,7 +81,6 @@ void main()
     // If so, end the projection.
     if(GetIsObjectValid(oCopy))
     {
-        RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
         EndPosses(oPC, oCopy);
         IncrementRemainingFeatUses(oPC, FEAT_PROJECTION);
         return;
@@ -113,11 +112,11 @@ void main()
     }
 
     // Do VFX on PC and copy
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLight, oCopy, 3.0);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLight, oPC, 3.0);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eLight, oCopy);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eLight, oPC);
 
     // Do the switching around
-    DelayCommand(0.2, PseudoPosses(oPC, oCopy));
+    PseudoPosses(oPC, oCopy);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGlow, oPC);
 }
 
@@ -188,11 +187,14 @@ void EndPosses(object oPC, object oCopy)
     if(!GetLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME))
         SetImmortal(oPC, FALSE);
 
-    // Remove the ghost VFX
+    // Remove the VFX and the attack penalty
     RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
 
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "BaelnornProjection_Active");
+
+    // Remove the local signifying projection being terminated by an external cause
+    DeleteLocalInt(oPC, "PRC_BaelnornProjection_Abort");
 
     // Remove the heartbeat HP tracking local
     DeleteLocalInt(oPC, "PRC_BealnornProjection_HB_HP");
@@ -220,7 +222,7 @@ void EndPosses(object oPC, object oCopy)
 
     // Schedule deletion of the copy
     DelayCommand(0.3f, MyDestroyObject(oCopy));
-    
+
     //Delete the object reference
     DeleteLocalObject(oPC, COPY_LOCAL_NAME);
 

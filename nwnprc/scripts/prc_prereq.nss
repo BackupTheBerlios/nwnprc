@@ -670,7 +670,7 @@ void Thrallherd(object oPC)
 void PsionicCheck(object oPC)
 {
     SetLocalInt(oPC, "PRC_IsPsionic", 1);
-    
+
     if (GetIsPsionicCharacter(oPC))
     {
         SetLocalInt(oPC, "PRC_IsPsionic", 0);
@@ -712,7 +712,7 @@ void DragonDis(object oPC)
 void Baelnorn(object oPC)
 {
 	int nLich = GetLevelByClass(CLASS_TYPE_LICH, oPC);
-	
+
 	if (nLich >= 1)
 	{
 		SetLocalInt(oPC, "prc_NoLich", 1);
@@ -722,7 +722,7 @@ void Baelnorn(object oPC)
 void Lich(object oPC)
 {
 	int nBaeln = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
-	
+
 	if (nBaeln >= 1)
 	{
 		SetLocalInt(oPC, "PRC_NoBaeln", 1);
@@ -818,69 +818,70 @@ void main2()
     int nDivHighest;
     int nPsiHighest;
     int bFirstArcClassFound, bFirstDivClassFound, bFirstPsiClassFound;
-    //for(i=1;i<3;i++)
     int nSpellLevel;
-    int nClassSlot = 1;
-    while(nClassSlot <= 3)
+    int nClassSlot;
+    int nClass, nLevel, nAbility, nSlots;
+    for(nClassSlot = 1; nClassSlot <= 3; nClassSlot++)
     {
-        int nClass = PRCGetClassByPosition(nClassSlot, oPC);
-        nClassSlot += 1;
+        nClass = PRCGetClassByPosition(nClassSlot, oPC);
         if(GetIsDivineClass(nClass))
         {
-            int nLevel = GetLevelByClass(nClass, oPC);
+            nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstDivClassFound &&
                 GetFirstDivineClass(oPC) == nClass)
             {
                 nLevel += GetDivinePRCLevels(oPC);
                 bFirstDivClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);
+            nAbility = GetAbilityForClass(nClass, oPC);
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+                nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
                     SetLocalInt(oPC, "PRC_DivSpell"+IntToString(nSpellLevel), 0);
                     if(nSpellLevel > nDivHighest)
                         nDivHighest = nSpellLevel;
+                    if(DEBUG) DoDebug("Divine spell level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_DivSpell"+IntToString(nSpellLevel))), oPC);
                 }
             }
         }
         else if(GetIsArcaneClass(nClass))
         {
-            int nLevel = GetLevelByClass(nClass, oPC);
+            nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstArcClassFound &&
                 GetFirstArcaneClass(oPC) == nClass)
             {
                 nLevel += GetArcanePRCLevels(oPC);
                 bFirstArcClassFound = TRUE;
             }
-            int nAbility = GetAbilityForClass(nClass, oPC);
+            nAbility = GetAbilityForClass(nClass, oPC);
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+                nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
                     SetLocalInt(oPC, "PRC_ArcSpell"+IntToString(nSpellLevel), 0);
                     if(nSpellLevel > nArcHighest)
                         nArcHighest = nSpellLevel;
+                    if(DEBUG) DoDebug("Arcane spell level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_ArcSpell"+IntToString(nSpellLevel))), oPC);
                 }
             }
         }
         else if(GetIsPsionicClass(nClass))
         {
-            int nLevel = GetLevelByClass(nClass, oPC);
+            nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstPsiClassFound &&
                 GetFirstPsionicClass(oPC) == nClass)
             {
                 nLevel += GetPsionicPRCLevels(oPC);
                 bFirstPsiClassFound = TRUE;
             }
-            int nAbility    = GetAbilityForClass(nClass, oPC);
+            nAbility    = GetAbilityForClass(nClass, oPC);
             string sPsiFile = GetPsionicFileName(nClass);
             int nMaxLevel   = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
 

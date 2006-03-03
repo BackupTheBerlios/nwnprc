@@ -22,11 +22,16 @@
 
 int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel)
 {
-    int nLevel = GetLevelByClass(nClass, oPC);
+    int nLevel = GetSpellslotLevel(nClass, oPC);
     if(!nLevel)
         return FALSE;
+    if(nClass == CLASS_TYPE_BARD || nClass == CLASS_TYPE_SORCERER)
+    {
+        if(GetLevelByClass(nClass, oPC) == nLevel) //no PrC
+            return FALSE;
+    }
     int i;
-    for(i=0;i<=9;i++)
+    for(i=nMinLevel; i<=nMaxLevel; i++)
     {
         int nMaxSpells = GetSpellKnownMaxCount(nLevel, i, nClass, oPC);
         if(nMaxSpells > 0)
@@ -59,6 +64,8 @@ void main()
             return;
         eTest = GetNextEffect(oPC);
     }
-    if(CheckMissingSpells(oPC, CLASS_TYPE_ASSASSIN, 1, 4))
+    if(CheckMissingSpells(oPC, CLASS_TYPE_BARD, 1, 6))
+        return;
+    if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, 0, 9))
         return;
 }

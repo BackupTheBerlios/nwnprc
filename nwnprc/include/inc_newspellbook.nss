@@ -25,6 +25,7 @@ Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
 Add class to GetCasterLvl() in prc_inc_spells
 Add class to MakeLookupLoopMaster() in inc_lookups
+Add class to prc_spellgain
 Run the assemble_spellbooks.bat file
 
 */
@@ -205,13 +206,12 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     //add extra slots
     int nAbilityMod = (nAbilityScore-10)/2;
     nSlots += ((nAbilityMod-nSpellLevel)/4)+1;
-    //if its bard or sorc, remove slots from base class & bonus
+    //if its bard or sorc, only return if has a PrC
     if(nClass == CLASS_TYPE_SORCERER 
         || nClass == CLASS_TYPE_BARD)
     {
-        int nTestLevel = GetLevelByClass(nClass);
-        int nCoreSlots = GetSlotCount(nTestLevel, nSpellLevel, nAbilityScore, nClass);
-        nSlots -= nCoreSlots; //only get PrC slots
+        if(GetLevelByClass(nClass) == nLevel)
+            return 0;
     }
     return nSlots;
 }
@@ -249,6 +249,13 @@ DoDebug("GetSpellKnownMaxCount("+IntToString(nLevel)+", "+IntToString(nSpellLeve
         nKnown = StringToInt(sSlots);
     if(nKnown == -1)
         return 0;
+    //if its bard or sorc, only return if has a PrC
+    if(nClass == CLASS_TYPE_SORCERER 
+        || nClass == CLASS_TYPE_BARD)
+    {
+        if(GetLevelByClass(nClass) == nLevel)
+            return 0;
+    }
     return nKnown;
 }
 

@@ -1976,7 +1976,7 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_CLASS_FEAT,      600);
     SetPRCSwitch(FILE_END_CLASS_SKILLS,    50);
     SetPRCSwitch(FILE_END_CLASS_POWER,     300);
-    SetPRCSwitch(FILE_END_CLASS_SPELLBOOK, 300);
+    SetPRCSwitch(FILE_END_CLASS_SPELLBOOK, 500);
     SetPRCSwitch(FILE_END_FEAT,            22300);
     SetPRCSwitch(FILE_END_CLASS_PREREQ,    25);
     SetPRCSwitch(FILE_END_FAMILIAR,        20);

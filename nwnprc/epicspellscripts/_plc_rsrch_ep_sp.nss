@@ -35,6 +35,8 @@ void main()
         object oBook = GetInventoryDisturbItem();
         object oPC = GetLastDisturbed();
         string sBook = GetTag(oBook);
+        //remove the "EPIC_SP_" part
+        sBook = GetStringRight(sBook, GetStringLength(sBook)-8);
         int nEpicSpell = GetSpellFromAbrev(sBook);       
         int nDC = GetDCForSpell(nEpicSpell);
         int nIP = GetResearchIPForSpell(nEpicSpell);

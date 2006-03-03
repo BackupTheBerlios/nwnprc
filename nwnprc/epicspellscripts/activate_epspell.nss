@@ -17,6 +17,8 @@ void main()
     object oBook = GetItemActivated();
     string sBook = GetTag(oBook);
     string sName, sDesc;
+    //remove the "EPIC_SP_" part
+    sBook = GetStringRight(sBook, GetStringLength(sBook)-8);
     int nEpicSpell = GetSpellFromAbrev(sBook);       
     int nDC = GetDCForSpell(nEpicSpell);
     int nIP = GetResearchIPForSpell(nEpicSpell);

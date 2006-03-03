@@ -111,7 +111,7 @@ void main()
       int iIABonus = 0;
       int iWFBonus = 0;
       int bHasIA = GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC);
-      int bHasWF = GetHasFeat(FEAT_WEAPON_FINESSE, oPC);
+      int bHasWF = GetHasFeat(FEAT_WEAPON_FINESSE, oPC); 
       int bUseIA = FALSE;
       int bUseWF = FALSE;
       int bIsSimpleR = isSimple(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
@@ -177,6 +177,7 @@ void main()
 
           if (bCreWeap)
           {
+              //1.67 Bioware fixed this so it should be disabled 
               if (iMod > 0)
                   SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iIABonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
               else
@@ -190,6 +191,7 @@ void main()
       // If the character has only weapon finesse and a creature weapon
       else if (bUseWF && !bUseIA && bCreWeap)
       {
+          //1.67 Bioware fixed this so it should be disabled 
           SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iWFBonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
       }
    }

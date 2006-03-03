@@ -168,7 +168,7 @@ void SetupStage()
                     IntToString(nStr)+" "+GetStringByStrRef(135)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nStr+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "StrAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_STRENGTH);
+                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_STRENGTH);
                 i++;
             }
             if(nDex < nMaxStat && nPoints >= GetCost(nDex+1))
@@ -177,7 +177,7 @@ void SetupStage()
                     IntToString(nDex)+" "+GetStringByStrRef(133)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nDex+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_DEXTERITY);
+                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_DEXTERITY);
                 i++;
             }
             if(nCon < nMaxStat && nPoints >= GetCost(nCon+1))
@@ -186,7 +186,7 @@ void SetupStage()
                     IntToString(nCon)+" "+GetStringByStrRef(132)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCon+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "ConAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_CONSTITUTION);
+                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_CONSTITUTION);
                 i++;
             }
             if(nInt < nMaxStat && nPoints >= GetCost(nInt+1))
@@ -195,7 +195,7 @@ void SetupStage()
                     IntToString(nInt)+" "+GetStringByStrRef(134)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nInt+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "IntAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_INTELLIGENCE);
+                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_INTELLIGENCE);
                 i++;
             }
             if(nWis < nMaxStat && nPoints >= GetCost(nWis+1))
@@ -204,7 +204,7 @@ void SetupStage()
                     IntToString(nWis)+" "+GetStringByStrRef(136)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nWis+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "WisAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_WISDOM);
+                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_WISDOM);
                 i++;
             }
             if(nCha < nMaxStat && nPoints >= GetCost(nCha+1))
@@ -213,7 +213,7 @@ void SetupStage()
                     IntToString(nCha)+" "+GetStringByStrRef(131)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCha+1))+"."
                         +" (Racial "+Get2DACache("racialtypes", "ChaAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValue", i, ABILITY_CHARISMA);
+                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_CHARISMA);
                 i++;
             }
             //Dont mark it as setup, needs to be recreated
@@ -553,38 +553,38 @@ void SetupStage()
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "Strength");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
+            array_set_int(OBJECT_SELF, "ChoiceValues",
+                array_get_size(OBJECT_SELF, "ChoiceValues"),
                     ABILITY_STRENGTH);
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "Dexterity");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
+            array_set_int(OBJECT_SELF, "ChoiceValues",
+                array_get_size(OBJECT_SELF, "ChoiceValues"),
                     ABILITY_DEXTERITY);
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "Constitution");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
+            array_set_int(OBJECT_SELF, "ChoiceValues",
+                array_get_size(OBJECT_SELF, "ChoiceValues"),
                     ABILITY_CONSTITUTION);
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "Intelligence");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
+            array_set_int(OBJECT_SELF, "ChoiceValues",
+                array_get_size(OBJECT_SELF, "ChoiceValues"),
                     ABILITY_INTELLIGENCE);
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "Wisdom");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
+            array_set_int(OBJECT_SELF, "ChoiceValues",
+                array_get_size(OBJECT_SELF, "ChoiceValues"),
                     ABILITY_WISDOM);
             array_set_string(OBJECT_SELF, "ChoiceTokens",
                 array_get_size(OBJECT_SELF, "ChoiceTokens"),
                     "Charisma");
-            array_set_int(OBJECT_SELF, "ChoiceValue",
-                array_get_size(OBJECT_SELF, "ChoiceValue"),
+            array_set_int(OBJECT_SELF, "ChoiceValues",
+                array_get_size(OBJECT_SELF, "ChoiceValues"),
                     ABILITY_CHARISMA);
             //Dont set it up, needs to be recreated
             //MarkStageSetUp(nStage);

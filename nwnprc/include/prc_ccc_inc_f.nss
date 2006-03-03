@@ -3,8 +3,8 @@ void AddColour(string sName, int nID)
     array_set_string(OBJECT_SELF, "ChoiceTokens",
         array_get_size(OBJECT_SELF, "ChoiceTokens"),
             sName);
-    array_set_int(OBJECT_SELF, "ChoiceValue",
-        array_get_size(OBJECT_SELF, "ChoiceValue"),
+    array_set_int(OBJECT_SELF, "ChoiceValues",
+        array_get_size(OBJECT_SELF, "ChoiceValues"),
             nID);
 }
 
@@ -245,8 +245,8 @@ void AddHead(int nHead)
     array_set_string(OBJECT_SELF, "ChoiceTokens",
         array_get_size(OBJECT_SELF, "ChoiceTokens"),
             IntToString(nHead));
-    array_set_int(OBJECT_SELF, "ChoiceValue",
-        array_get_size(OBJECT_SELF, "ChoiceValue"),
+    array_set_int(OBJECT_SELF, "ChoiceValues",
+        array_get_size(OBJECT_SELF, "ChoiceValues"),
             nHead);
 }
 
@@ -341,8 +341,8 @@ void SetupHead()
         array_set_string(OBJECT_SELF, "ChoiceTokens",
             array_get_size(OBJECT_SELF, "ChoiceTokens"),
                 "You cannot change your head");
-        array_set_int(OBJECT_SELF, "ChoiceValue",
-            array_get_size(OBJECT_SELF, "ChoiceValue"),
+        array_set_int(OBJECT_SELF, "ChoiceValues",
+            array_get_size(OBJECT_SELF, "ChoiceValues"),
                 -1);
 
     }

@@ -101,13 +101,13 @@ void SkillLoop()
     if(i==0
         && GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
     {
-        SetupSkillToken(-2, array_get_size(OBJECT_SELF, "ChoiceValue"));
-        //SetupSkillToken(-1, array_get_size(OBJECT_SELF, "ChoiceValue"));
+        SetupSkillToken(-2, array_get_size(OBJECT_SELF, "ChoiceValues"));
+        //SetupSkillToken(-1, array_get_size(OBJECT_SELF, "ChoiceValues"));
     }
     string sFile = Get2DACache("classes", "SkillsTable", nClass);
     if(i < GetPRCSwitch(FILE_END_SKILLS))
     {
-        SetupSkillToken(i, array_get_size(OBJECT_SELF, "ChoiceValue"));
+        SetupSkillToken(i, array_get_size(OBJECT_SELF, "ChoiceValues"));
         i++;
         SetLocalInt(OBJECT_SELF, "i", i);
         DelayCommand(0.01, SkillLoop());
@@ -490,9 +490,9 @@ void FeatLoop(int nClassFeatStage = FALSE)
         }
         if(sName != "")
         {   //test its not already on the list
-            for(j=0;j<array_get_size(OBJECT_SELF, "ChoiceValue");j++)
+            for(j=0;j<array_get_size(OBJECT_SELF, "ChoiceValues");j++)
             {
-                if(array_get_int(OBJECT_SELF, "ChoiceValue", j) == nRow)
+                if(array_get_int(OBJECT_SELF, "ChoiceValues", j) == nRow)
                     sName = "";
             }
         }
@@ -977,9 +977,9 @@ void BonusFeatLoop()
         }
         if(sName != "")
         {   //test its not already on the list
-            for(j=0;j<array_get_size(OBJECT_SELF, "ChoiceValue");j++)
+            for(j=0;j<array_get_size(OBJECT_SELF, "ChoiceValues");j++)
             {
-                if(array_get_int(OBJECT_SELF, "ChoiceValue", j) == nRow)
+                if(array_get_int(OBJECT_SELF, "ChoiceValues", j) == nRow)
                     sName = "";
             }
         }

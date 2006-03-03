@@ -8,8 +8,8 @@ void AddAppearance(int i)
     array_set_string(OBJECT_SELF, "ChoiceTokens",
         array_get_size(OBJECT_SELF, "ChoiceTokens"),
             sName);
-    array_set_int(OBJECT_SELF, "ChoiceValue",
-        array_get_size(OBJECT_SELF, "ChoiceValue"),
+    array_set_int(OBJECT_SELF, "ChoiceValues",
+        array_get_size(OBJECT_SELF, "ChoiceValues"),
             i);
 }
 
@@ -165,8 +165,8 @@ void AddPortrait(int i)
     array_set_string(OBJECT_SELF, "ChoiceTokens",
         array_get_size(OBJECT_SELF, "ChoiceTokens"),
             sName);
-    array_set_int(OBJECT_SELF, "ChoiceValue",
-        array_get_size(OBJECT_SELF, "ChoiceValue"),
+    array_set_int(OBJECT_SELF, "ChoiceValues",
+        array_get_size(OBJECT_SELF, "ChoiceValues"),
             i);
 }
 
@@ -194,8 +194,8 @@ void AddSoundset(int i)
     array_set_string(OBJECT_SELF, "ChoiceTokens",
         array_get_size(OBJECT_SELF, "ChoiceTokens"),
             sName);
-    array_set_int(OBJECT_SELF, "ChoiceValue",
-        array_get_size(OBJECT_SELF, "ChoiceValue"),
+    array_set_int(OBJECT_SELF, "ChoiceValues",
+        array_get_size(OBJECT_SELF, "ChoiceValues"),
             i);
 }
 

@@ -30,7 +30,7 @@ void main()
         if(DEBUG) DoDebug("prc_ccc: Setting up stage " + IntToString(nStage));
         // Check if this stage is marked as already set up
         // This stops list duplication when scrolling
-        if(GetIsStageSetUp(nStage, oPC))
+        if(!GetIsStageSetUp(nStage, oPC))
         {
             if(DEBUG) DoDebug("prc_ccc: Stage was not already set up");
             SetupStage();

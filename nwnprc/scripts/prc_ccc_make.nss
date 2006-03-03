@@ -222,6 +222,8 @@ void main()
         sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
     sScript += SetSkinColor(nSkin);
     sScript += SetHairColor(nHair);
+    sScript += LetoAdd("Wings", IntToString(nWings), "byte");
+    sScript += LetoAdd("Tail", IntToString(nTail), "byte");
     sScript += LetoAdd("Appearance_Head", IntToString(nHead), "byte");
 //NPCS have and ID, PCs have a resref. resref overrides portrait.
 //    sScript += "<gff:set 'PortraitId'   "+IntToString(nPortrait)+">";

@@ -48,7 +48,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Gender");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -68,7 +68,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Race");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -131,7 +131,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Class");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -152,7 +152,7 @@ void ChoiceSelected(int nChoiceNo)
 
         //one option stages
         case STAGE_ALIGNMENT:
-            switch(array_get_int(OBJECT_SELF, "ChoiceValue",nChoiceNo))
+            switch(array_get_int(OBJECT_SELF, "ChoiceValues",nChoiceNo))
             {
                 case 0: //lawful good
                     SetLocalInt(OBJECT_SELF, "LawfulChaotic", 85);
@@ -200,7 +200,7 @@ void ChoiceSelected(int nChoiceNo)
                 DeleteLocalInt(OBJECT_SELF, "LawfulChaotic");
                 DeleteLocalInt(OBJECT_SELF, "GoodEvil");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -262,7 +262,7 @@ void ChoiceSelected(int nChoiceNo)
                 DeleteLocalInt(OBJECT_SELF, "Cha");
                 DeleteLocalInt(OBJECT_SELF, "Points");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -302,9 +302,9 @@ void ChoiceSelected(int nChoiceNo)
                         SetupSkillToken(GetChoice(OBJECT_SELF), nChoiceNo);
                     else
                     {
-                        for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
+                        for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                         {
-                            if(!SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", i), i))
+                            if(!SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValues", i), i))
                                 i--;
                         }
                     }
@@ -320,7 +320,7 @@ void ChoiceSelected(int nChoiceNo)
                 DeleteLocalString(OBJECT_SELF, "Skills_-1");
                 array_delete(OBJECT_SELF, "Skills");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -342,7 +342,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "StartingFeat");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -372,7 +372,7 @@ void ChoiceSelected(int nChoiceNo)
                     //alows for prerequisites being met
                     array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
                     array_set_int(OBJECT_SELF, "StagesSetup", nStage-1, FALSE);
-                    array_delete(OBJECT_SELF, "ChoiceValue");
+                    array_delete(OBJECT_SELF, "ChoiceValues");
                     array_delete(OBJECT_SELF, "ChoiceTokens");
                     //slide back 2 stages, so it can be set forward and still be reduced by 1
                     nStage--;
@@ -396,7 +396,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Familiar");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -453,7 +453,7 @@ void ChoiceSelected(int nChoiceNo)
                 DeleteLocalInt(OBJECT_SELF, "Domain2");
                 nStage--;
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -483,11 +483,11 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl1"),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
-                        array_set_int(OBJECT_SELF, "ChoiceValue",i,  array_get_int(OBJECT_SELF, "ChoiceValue", i+1));
+                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                        array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
                     for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
-                    array_shrink(OBJECT_SELF, "ChoiceValue", array_get_size(OBJECT_SELF, "ChoiceValue") -1);
+                    array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
                     //decrease the number of spells avaliable
                     SetLocalInt(OBJECT_SELF, "NumberOfSpells", GetLocalInt(OBJECT_SELF, "NumberOfSpells")-1);
@@ -503,11 +503,11 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
-                        array_set_int(OBJECT_SELF, "ChoiceValue",i,  array_get_int(OBJECT_SELF, "ChoiceValue", i+1));
+                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                        array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
                     for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
-                    array_shrink(OBJECT_SELF, "ChoiceValue", array_get_size(OBJECT_SELF, "ChoiceValue") -1);
+                    array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
                     //decrease the number of spells avaliable
                     SetLocalInt(OBJECT_SELF, "NumberOfSpells", GetLocalInt(OBJECT_SELF, "NumberOfSpells")-1);
@@ -519,7 +519,7 @@ void ChoiceSelected(int nChoiceNo)
                         {
                             SetLocalInt(OBJECT_SELF, "CurrentSpellLevel", GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")+1);
                             array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
-                            array_delete(OBJECT_SELF, "ChoiceValue");
+                            array_delete(OBJECT_SELF, "ChoiceValues");
                             array_delete(OBJECT_SELF, "ChoiceTokens");
                         }
                         else//otherwise do next stage
@@ -533,11 +533,11 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
-                        array_set_int(OBJECT_SELF, "ChoiceValue",i,  array_get_int(OBJECT_SELF, "ChoiceValue", i+1));
+                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                        array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
                     for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
-                    array_shrink(OBJECT_SELF, "ChoiceValue", array_get_size(OBJECT_SELF, "ChoiceValue") -1);
+                    array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
                     //decrease the number of spells avaliable
                     SetLocalInt(OBJECT_SELF, "NumberOfSpells", GetLocalInt(OBJECT_SELF, "NumberOfSpells")-1);
@@ -549,7 +549,7 @@ void ChoiceSelected(int nChoiceNo)
                         {
                             SetLocalInt(OBJECT_SELF, "CurrentSpellLevel", GetLocalInt(OBJECT_SELF, "CurrentSpellLevel")+1);
                             array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
-                            array_delete(OBJECT_SELF, "ChoiceValue");
+                            array_delete(OBJECT_SELF, "ChoiceValues");
                             array_delete(OBJECT_SELF, "ChoiceTokens");
                         }
                         else//otherwise do next stage
@@ -571,7 +571,7 @@ void ChoiceSelected(int nChoiceNo)
                 DeleteLocalInt(OBJECT_SELF, "NumberOfSpells");
                 DeleteLocalInt(OBJECT_SELF, "CurrentSpellLevel");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -595,7 +595,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "School");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -618,7 +618,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "BonusFeat");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -636,7 +636,7 @@ void ChoiceSelected(int nChoiceNo)
                 {
                     nStage--;
                     array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
-                    array_delete(OBJECT_SELF, "ChoiceValue");
+                    array_delete(OBJECT_SELF, "ChoiceValues");
                     array_delete(OBJECT_SELF, "ChoiceTokens");
                 }
             }
@@ -648,7 +648,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Hair");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -663,7 +663,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Head");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -678,7 +678,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Portrait");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -699,7 +699,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Skin");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -714,7 +714,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Tail");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -729,7 +729,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Wings");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -744,7 +744,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Appearance");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -759,7 +759,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Soundset");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -837,7 +837,7 @@ void ChoiceSelected(int nChoiceNo)
             {
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -858,7 +858,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "TattooColour1");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -879,7 +879,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "TattooColour2");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -900,7 +900,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Ability");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -930,9 +930,9 @@ void ChoiceSelected(int nChoiceNo)
                     SetupSkillToken(GetChoice(OBJECT_SELF), nChoiceNo);
                 else
                 {
-                    for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
+                    for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                     {
-                        if(!SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValue", i), i))
+                        if(!SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValues", i), i))
                             i--;
                     }
                 }
@@ -945,7 +945,7 @@ void ChoiceSelected(int nChoiceNo)
                 DeleteLocalInt(OBJECT_SELF, "Points");
                 array_delete(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
@@ -966,7 +966,7 @@ void ChoiceSelected(int nChoiceNo)
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
                 array_delete(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Feat");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValue");
+                array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }

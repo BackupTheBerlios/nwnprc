@@ -40,7 +40,7 @@ public final class SQLMaker{
     	           "file varchar(255), FeatLabel varchar(255), FeatIndex varchar(255), "     +
     	           "List varchar(255), GrantedOnLevel varchar(255), OnMenu varchar(255));\n" +
 
-    	           "CREATE TABLE prc_cached2da (name varchar(255), "                         +
+    	           "CREATE TABLE prc_cached2da (file varchar(255), "                         +
     		       "columnid varchar(255), rowid varchar(255), data varchar(255));\n"
     	           );
 		printSQL(true); //start a new file
@@ -54,14 +54,14 @@ public final class SQLMaker{
 		//create some indexs
 		sql.append("CREATE UNIQUE INDEX spellsrowindex  ON prc_cached2da_spells (rowid);\n"       +
 		           "CREATE UNIQUE INDEX featrowindex    ON prc_cached2da_feat (rowid);\n"         +
-		           "CREATE        INDEX clsfeatindex    ON prc_cached2da_cls_feat (FeatIndex);\n" +
-		           "CREATE        INDEX clsfileindex    ON prc_cached2da_cls_feat (file);\n"      +
+		           "CREATE        INDEX clsfeatindex    ON prc_cached2da_cls_feat (file, FeatIndex);\n" +
 		           "CREATE UNIQUE INDEX appearrowindex  ON prc_cached2da_appearance (rowid);\n"   +
-		           "CREATE UNIQUE INDEX portrrowindex   ON prc_cached2da_portrait (rowid);\n"     +
+		           "CREATE UNIQUE INDEX portrrowindex   ON prc_cached2da_portraits (rowid);\n"     +
 		           "CREATE UNIQUE INDEX soundsrowindex  ON prc_cached2da_soundset (rowid);\n"     +
-		           "CREATE UNIQUE INDEX datanameindex   ON prc_data (name);\n"                    +
-		           "CREATE        INDEX irewfileindex   ON prc_cached2da_ireq (file);\n"          +
-		           "CREATE UNIQUE INDEX refrindex       ON prc_cached2da_item_to_ireq (l_resref);\n"
+		           //"CREATE UNIQUE INDEX datanameindex   ON prc_data (name);\n"                    +
+		           "CREATE UNIQUE INDEX cachedindex     ON prc_cached2da (file, columnid, rowid);\n"+
+		           "CREATE        INDEX ireqfileindex   ON prc_cached2da_ireq (file);\n"          +
+		           "CREATE UNIQUE INDEX refrindex       ON prc_cached2da_item_to_ireq (L_RESREF, rowid);\n"
 		           );
 		//complete the transaction
 		sql.append("COMMIT;\n");

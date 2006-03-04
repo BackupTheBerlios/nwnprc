@@ -31,3 +31,5 @@ diffile
 compile_errors.log
 errorlog
 ocfixerfobjs
+ocfixobjs.temp
+ocfix.temp

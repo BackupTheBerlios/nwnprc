@@ -2,6 +2,7 @@
 // Applies the cast domain feats to the hide
 
 #include "prc_inc_domain"
+#include "inc_dynconv"
 
 void AddDomainPower(object oPC, object oSkin)
 {
@@ -86,13 +87,43 @@ void AddDomainFeat(object oPC, object oSkin)
 	AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_5),oSkin);
 	SetLocalInt(oSkin, "StormDomainPower",TRUE);
     }     
+    if (GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC))
+    {
+    	int nWarFocus = GetPersistantLocalInt(oPC, "WarDomainWeaponPersistent");
+    	// If they've already chosen a weapon, reapply the feats if they dont have it
+    	if (nWarFocus > 0)
+    	{
+    		int nWarWFIprop = FeatToIprop(nWarFocus);
+    		if (!GetHasFeat(nWarFocus, oPC))    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nWarWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    		if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    	}
+    	else
+    	{
+    		 DelayCommand(1.5, StartDynamicConversation("prc_domain_war", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC));
+    	}
+    		
+    }
+    if (GetHasFeat(FEAT_DOMAIN_POWER_METAL, oPC))
+    {
+    	int nWFocus = GetPersistantLocalInt(oPC, "MetalDomainWeaponPersistent");
+    	// If they've already chosen a weapon, reapply the feats if they dont have it
+    	if (nWFocus > 0)
+    	{
+    		int nWFIprop = FeatToIprop(nWFocus);
+    		if (!GetHasFeat(nWFocus, oPC))    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    		if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_MARTIAL, oPC))    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    	}
+    	else
+    	{
+    		 DelayCommand(1.5, StartDynamicConversation("prc_domain_metal", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC));
+    	}
+    		
+    }    
 /*
     // Domain powers that need to be created
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_METAL, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_METAL_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_RETRIBUTION, oPC))   IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_RETRIBUTION_DOMAIN), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_ANIMAL, oPC))        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_ANIMAL_DOMAIN     ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    if (GetHasFeat(FEAT_BONUS_DOMAIN_WAR, oPC))           IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_WAR_DOMAIN        ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        
+            
     // Domain Powers that grant Turning or something affecting Turning
     if (GetHasFeat(FEAT_BONUS_DOMAIN_SCALEYKIND, oPC))    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SCALEYKIND_DOMAIN ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     if (GetHasFeat(FEAT_BONUS_DOMAIN_SLIME, oPC))         IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SLIME_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);

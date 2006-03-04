@@ -1,9 +1,9 @@
 //:://////////////////////////////////////////////
-//:: Call Weaponry Conversation
-//:: psi_callweapon
+//:: War Domain Conversation
+//:: prc_domain_war
 //:://////////////////////////////////////////////
 /** @file
-    This allows you to choose any weapon and summon it using the Call Weaponry power.
+    This allows you to choose the weapon for the diety
 
 
     @author Stratovarius
@@ -63,8 +63,10 @@ void main()
             // Function AddChoice to add a response option for the PC. The responses are show in order added
             if(nStage == STAGE_WEAPON_CHOICE)
             {
+            	string sHeader1 = "Select your Deity's favoured weapon.\n";
+            	sHeader1 += "This will grant you proficiency and weapon focus in that weapon.";
                 // Set the header
-                SetHeader("Select the Weapon Type you would like to call.");
+                SetHeader(sHeader1);
                 // Add responses for the PC
 
                 // This reads all of the legal choices from baseitems.2da
@@ -74,36 +76,31 @@ void main()
 			// If the selection is a legal weapon
 			if (StringToInt(Get2DACache("baseitems", "WeaponType", i)) > 0)
 			{
-				string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
-				// Just in case its a blank entry, don't put it here
-				if (sWeaponName != "")
+				// If the selection is a martial weapon
+				// Everything that needs Martial weapon pro has it in this column
+				if (StringToInt(Get2DACache("baseitems", "ReqFeat0", i)) == 45)
 				{
-					AddChoice(sWeaponName, i, oPC);
+					string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
+					// Just in case its a blank entry, don't put it here
+					if (sWeaponName != "")
+					{
+						AddChoice(sWeaponName, i, oPC);
+					}
 				}
 			}
                 }
-
-/*
-                AddChoice("Bastard Sword", BASE_ITEM_BASTARDSWORD, oPC);
-                AddChoice("Battle Axe", BASE_ITEM_BATTLEAXE, oPC);
-                AddChoice("Club", BASE_ITEM_CLUB, oPC);
-                AddChoice("Dagger", BASE_ITEM_DAGGER, oPC);
-                AddChoice("Dart", BASE_ITEM_DART, oPC);
-                AddChoice("Dire Mace", BASE_ITEM_DIREMACE, oPC);
-                AddChoice("Double Axe", BASE_ITEM_DOUBLEAXE, oPC);
-*/
 
                 MarkStageSetUp(STAGE_WEAPON_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
             else if(nStage == STAGE_CONFIRMATION)//confirmation
             {
-                int nChoice = GetLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
+                int nChoice = GetLocalInt(oPC, "WarDomainWeapon");
                 AddChoice(GetStringByStrRef(4752), TRUE); // "Yes"
                 AddChoice(GetStringByStrRef(4753), FALSE); // "No"
 
                 string sName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", nChoice)));
-                string sText = "You have selected " + sName + " as your chosen weapon.\n";
+                string sText = "You have selected " + sName + " as your deity's chosen weapon.\n";
                 sText += "Is this correct?";
 
                 SetHeader(sText);
@@ -118,9 +115,7 @@ void main()
     else if(nValue == DYNCONV_EXITED)
     {
         // End of conversation cleanup
-        DeleteLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
-        DeleteLocalInt(oPC, "PRC_Power_CallWeapon_Augment");
-        DeleteLocalFloat(oPC, "PRC_Power_CallWeapon_Duration");
+        DeleteLocalInt(oPC, "WarDomainWeapon");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -129,9 +124,7 @@ void main()
     else if(nValue == DYNCONV_ABORTED)
     {
         // End of conversation cleanup
-        DeleteLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
-        DeleteLocalInt(oPC, "PRC_Power_CallWeapon_Augment");
-        DeleteLocalFloat(oPC, "PRC_Power_CallWeapon_Duration");
+        DeleteLocalInt(oPC, "WarDomainWeapon");
     }
     // Handle PC responses
     else
@@ -143,68 +136,23 @@ void main()
         {
             // Go to this stage next
             nStage = STAGE_CONFIRMATION;
-            SetLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn", nChoice);
+            SetLocalInt(oPC, "WarDomainWeapon", nChoice);
         }
         else if(nStage == STAGE_CONFIRMATION)//confirmation
         {
             if(nChoice == TRUE)
             {
-                // This is what the basic non-magical version of bioware weapons use as a resref
-                string sWeaponTemplate = "nw_" + Get2DACache("baseitems", "ItemClass", GetLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn")) + "001";
-                string sAmmo = "";
-                object oAmmo;
-                int nEnhance = GetLocalInt(oPC, "PRC_Power_CallWeapon_Augment");
-                int nBaseType;
-                float fDur = GetLocalFloat(oPC, "PRC_Power_CallWeapon_Duration");
-
-                object oItem = CreateItemOnObject(sWeaponTemplate, oPC);
-                nBaseType = GetBaseItemType(oItem);
-
-		if(nBaseType == BASE_ITEM_LONGBOW || nBaseType == BASE_ITEM_SHORTBOW)
-		{
-			sAmmo = "nw_wamar001";
-			oAmmo = CreateItemOnObject(sAmmo, oPC, d6(3));
-			AssignCommand(oPC, ActionEquipItem(oAmmo, INVENTORY_SLOT_ARROWS));
-			// Ammoed weapons get their ammo enhanced as well
-			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oAmmo, fDur);
-		}
-		if(nBaseType == BASE_ITEM_HEAVYCROSSBOW || nBaseType == BASE_ITEM_LIGHTCROSSBOW)
-		{
-			sAmmo = "nw_wambo001";
-			oAmmo = CreateItemOnObject(sAmmo, oPC, d6(3));
-			AssignCommand(oPC, ActionEquipItem(oAmmo, INVENTORY_SLOT_BOLTS));
-			// Ammoed weapons get their ammo enhanced as well
-			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oAmmo, fDur);
-		}
-		if(nBaseType == BASE_ITEM_SLING)
-		{
-			sAmmo = "nw_wambu001";
-			oAmmo = CreateItemOnObject(sAmmo, oPC, d6(3));
-			AssignCommand(oPC, ActionEquipItem(oAmmo, INVENTORY_SLOT_BULLETS));
-			// Ammoed weapons get their ammo enhanced as well
-			if (nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oAmmo, fDur);
-		}
-
-                if (IPGetIsMeleeWeapon(oItem)) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyVisualEffect(ITEM_VISUAL_HOLY), oItem, fDur);
-
-                // If the power was augmented, add a straight enhancement bonus equivalent to the augmentation value
-                if(nEnhance > 0) AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(nEnhance), oItem, fDur);
-                // Otherwise add +1 enhancement bonus and -1 to attack and damage. This is to simulate the fact that the weapon can always pierce DR X/+1
-                else
-                {
-                    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyEnhancementBonus(1), oItem, fDur);
-                    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyAttackPenalty(1), oItem, fDur);
-                    AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamagePenalty(1), oItem, fDur);
-                }
-                // No dropping and no selling the item
-                SetPlotFlag(oItem, TRUE);
-                SetDroppableFlag(oItem, FALSE);
-
-                // Equip the weapon
-                AssignCommand(oPC, ActionEquipItem(oItem, INVENTORY_SLOT_RIGHTHAND));
-
-                // Remove the item when the duration is over.
-                DestroyObject(oItem, fDur);
+            	object oSkin = GetPCSkin(oPC);
+            	int nWeapon = GetLocalInt(oPC, "WarDomainWeapon");
+		int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
+		int nWFIprop = FeatToIprop(nWeaponFocus);
+		
+		IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+		IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+		
+		// Store the weapon feat for later reuse
+		// The reason we use the feat and not the iprop constant is so we can check using GetHasFeat whether to reapply
+		SetPersistantLocalInt(oPC, "WarDomainWeaponPersistent", nWeaponFocus);
 
                 // And we're all done
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
@@ -216,7 +164,7 @@ void main()
                 MarkStageNotSetUp(STAGE_CONFIRMATION, oPC);
             }
 
-            DeleteLocalInt(oPC, "PRC_Power_CallWeaponry_SelectedWpn");
+            DeleteLocalInt(oPC, "WarDomainWeapon");
         }
 
         // Store the stage value. If it has been changed, this clears out the choices

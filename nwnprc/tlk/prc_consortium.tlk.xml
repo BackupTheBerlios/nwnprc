@@ -16764,7 +16764,7 @@ Use: Automatic.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
-Granted Power: Free Martial Weapon Proficiency and Weapon Focus your choice of hammer. (Not implemented yet).
+Granted Power: Free Martial Weapon Proficiency and Weapon Focus your choice of hammer.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Keen Edge (3), Impact (4), Blade Barrier (5), Iron Body (7)
 Use: Automatic.</entry>
   <entry id="50503" lang="en" sex="m">Metal</entry>
@@ -16992,7 +16992,7 @@ Bonus Spells: The cleric gains access to the following spells at the specified s
 Use: Automatic.</entry>
   <entry id="50569" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to War domain.
-Granted Power: Free Martial Weapon Proficiency and Weapon Focus with the diety's favoured weapon. (Not implemented yet).
+Granted Power: Free Martial Weapon Proficiency and Weapon Focus with the diety's favoured weapon.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Legion's Conviction (2), Legion's Shield of Faith (3), Mantle of Egregrious Might (9)
 Use: Once/Day.</entry>
   <entry id="50570" lang="en" sex="m">Type of Feat: Domain

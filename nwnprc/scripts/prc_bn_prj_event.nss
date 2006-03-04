@@ -35,8 +35,11 @@ const float DROP_DELAY = 2.0f;
 // If it hasn't, clears action queue and queues another drop.
 void CheckIsDropped(object oCreature, object oItem)
 {
+	if(DEBUG) DoDebug("prc_bn_prj_event: CheckIsDropped()");
+	
     if(GetItemPossessor(oItem) == oCreature)
     {
+	    if(DEBUG) DoDebug("prc_bn_prj_event:GetItemPosessor(oItem) == oCreature");
         // No check for commandability here. Let's not break any cutscenes
         // If cheating does occur, set the char to commandable first here.
         //And remember to restore the setting.

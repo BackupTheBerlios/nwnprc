@@ -86,41 +86,7 @@ void main()
 	/*  <Stratovarius> That would be easiest to do as a convo I think
             <Stratovarius> just steal the animal affinity one from psionics and modify*/
 	
-	//Strength
-	if(nSpell == SPELL_POWER_LEECH_STR)
-	{
-		nAbility = ABILITY_STRENGTH;		
-	}
 	
-	//Dexterity
-	if(nSpell == SPELL_POWER_LEECH_DEX)
-	{
-		nAbility = ABILITY_DEXTERITY;	
-	}
-	
-	//Constitution
-	if(nSpell == SPELL_POWER_LEECH_CON)
-	{
-		nAbility = ABILITY_CONSTITUTION;
-	}
-	
-	//Intelligence
-	if(nSpell == SPELL_POWER_LEECH_INT)
-	{
-		nAbility = ABILITY_INTELLIGENCE;	
-	}
-	
-	//Wisdom
-	if(nSpell == SPELL_POWER_LEECH_WIS)
-	{
-		nAbility = ABILITY_WISDOM;
-	}
-	
-	//Charisma
-	if(nSpell == SPELL_POWER_LEECH_CHA)
-	{
-		nAbility = ABILITY_CHARISMA;
-	}
 	
 	//Start the drain
 	DrainStat(nAbility, oTarget, oPC, nRoundCounter);

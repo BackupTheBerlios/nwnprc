@@ -150,8 +150,24 @@ void main()
                 int nSpellClass = GetLocalInt(oPC, "SpellClass");
                 string sFile = GetFileForClass(nSpellClass);
                 int i;
-                //this may cause a TMI, dont have time to fix it now
-                for(i = 0; i < 410; i++)
+                string sTag = "SpellLvl_"+IntToString(nSpellClass)+"_Level_"+IntToString(nSpellLevel);
+                object oWP = GetObjectByTag(sTag);
+                for(i=0; i<array_get_size(oWP, sTag); i++)
+                {
+                    int nRow = array_get_int(oWP, sTag, i);
+                    if(Get2DACache(sFile, "ReqFeat", nRow)==""                                // Has no prerequisites
+                        || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", nRow)), oPC)) // Or has prerequisites which the PC posseses
+                    {                  
+                        int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nRow));
+                        AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), nRow, oPC);
+DoDebug("PRC_S_spellb i="+IntToString(nRow));                    
+DoDebug("PRC_S_spellb sFile="+sFile);
+DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));  
+DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));  
+                    }
+                }
+                /*
+                for(i = 0; i < SetPRCSwitch(FILE_END_CLASS_SPELLBOOK); i++)
                 {
                     if(StringToInt(Get2DACache(sFile, "Level", i)) == nSpellLevel               // Correct spell level
                         && Get2DACache(sFile, "Level", i) != ""                                 // And not undefined spell level in case of SL 0
@@ -166,6 +182,7 @@ DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
 DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));  
                     }
                 }
+                */
                 MarkStageSetUp(STAGE_SELECT_SPELL, oPC);
             }
         }

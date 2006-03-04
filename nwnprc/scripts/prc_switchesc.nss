@@ -32,11 +32,15 @@ const int STAGE_EPIC_SPELLS_CONTING         = 6;
 const int STAGE_SHOPS                       = 8;
 const int STAGE_TEFLAMMAR_SHADOWLORD        = 9;
 const int STAGE_LEADERSHIP                  =10;
-const int STAGE_LEADERSHIP_ADD              =11;
-const int STAGE_LEADERSHIP_ADD_CONFIRM      =13;
-const int STAGE_LEADERSHIP_REMOVE           =12;
-const int STAGE_LEADERSHIP_DELETE           =14;
-const int STAGE_LEADERSHIP_DELETE_CONFIRM   =15;
+const int STAGE_LEADERSHIP_ADD_STANDARD     =11;
+const int STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM=13;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_RACE  =14;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_CLASS =15;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN =16;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM=17;
+const int STAGE_LEADERSHIP_REMOVE           =18;
+const int STAGE_LEADERSHIP_DELETE           =19;
+const int STAGE_LEADERSHIP_DELETE_CONFIRM   =20;
 
 const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
 
@@ -233,16 +237,18 @@ void main()
             {
                 SetHeader("What do you want to change?");
                 if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC))
-                    AddChoice("Recruit a new cohort", 1);
+                    AddChoice("Recruit a custom cohort", 1);
+                if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC))
+                    AddChoice("Recruit a standard cohort", 4);
                 if(GetCurrentCohortCount(oPC))
                     AddChoice("Dismiss an existing cohort", 2);
                 if(GetCampaignInt(COHORT_DATABASE, "CohortCount")>0)
-                    AddChoice("Delete a stored cohort", 3);
+                    AddChoice("Delete a stored custom cohort", 3);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
             }
-            else if(nStage == STAGE_LEADERSHIP_ADD)
+            else if(nStage == STAGE_LEADERSHIP_ADD_STANDARD)
             {
                 SetHeader("Select a cohort:");
 
@@ -261,7 +267,7 @@ void main()
 
                 MarkStageSetUp(nStage, oPC);
             }
-            else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)
+            else if(nStage == STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM)
             {
                 string sHeader = "Are you sure you want this cohort?";
 
@@ -280,6 +286,118 @@ void main()
                     sHeader +=" / "+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass2)));
                 if(nClass3 != CLASS_TYPE_INVALID)
                     sHeader +=" / "+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass3)));
+                SetHeader(sHeader);
+                AddChoice("Yes", 1);
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_RACE)
+            {
+                SetHeader("Select a race for the cohort:");
+                int i;
+                for(i=0;i<256;i++)
+                {
+                    if(Get2DACache("racialtypes", "PlayerRace", i) == "1")
+                    {
+                        string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", i)));
+                        AddChoice(sName, i);
+                    }
+                }              
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_CLASS)
+            {
+                SetHeader("Select a class for the cohort:");
+                int i;
+                //only do bioware base classes for now
+                for(i=0;i<=10;i++)
+                {
+                    string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", i)));
+                    AddChoice(sName, i);
+                }              
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN)
+            {
+                SetHeader("Select an alignment for the cohort:");
+                
+                int nClass = GetLocalInt(oPC, "CustomCohortClass");
+                if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_GOOD,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(112), 0);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_GOOD,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(115), 1);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_GOOD,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(118), 2);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_NEUTRAL,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(113), 3);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_NEUTRAL,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(116), 4);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_NEUTRAL,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(119), 5);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_EVIL,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(114), 6);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_EVIL,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(117), 7);
+                }
+                if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_EVIL,
+                    HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
+                    HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
+                    HexToInt(Get2DACache("classes", "InvertRestrict",nClass))))
+                {
+                    AddChoice(GetStringByStrRef(120), 8);
+                }
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM)
+            {
+                string sHeader = "Are you sure you want this cohort?";
+                int    nRace = GetLocalInt(oPC, "CustomCohortRace");
+                int    nClass= GetLocalInt(oPC, "CustomCohortClass");
+                int    nOrder= GetLocalInt(oPC, "CustomCohortOrder");
+                int    nMoral= GetLocalInt(oPC, "CustomCohortMoral");
+                sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
+                sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
                 SetHeader(sHeader);
                 AddChoice("Yes", 1);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
@@ -341,6 +459,10 @@ void main()
         array_delete(oPC, "StagesSetup");
         DeleteLocalString(oPC, "VariableName");
         DeleteLocalInt(oPC, "CohortID");
+        DeleteLocalInt(oPC, "CustomCohortRace");
+        DeleteLocalInt(oPC, "CustomCohortClass");
+        DeleteLocalInt(oPC, "CustomCohortMoral");
+        DeleteLocalInt(oPC, "CustomCohortOrder");
     }
     else if(nValue == DYNCONV_ABORTED)
     {
@@ -348,6 +470,10 @@ void main()
         array_delete(oPC, "StagesSetup");
         DeleteLocalString(oPC, "VariableName");
         DeleteLocalInt(oPC, "CohortID");
+        DeleteLocalInt(oPC, "CustomCohortRace");
+        DeleteLocalInt(oPC, "CustomCohortClass");
+        DeleteLocalInt(oPC, "CustomCohortMoral");
+        DeleteLocalInt(oPC, "CustomCohortOrder");
     }
     else
     {
@@ -529,11 +655,13 @@ void main()
         else if(nStage == STAGE_LEADERSHIP)
         {
             if(nChoice == 1)
-                nStage = STAGE_LEADERSHIP_ADD;
+                nStage = STAGE_LEADERSHIP_ADD_STANDARD;
             else if(nChoice == 2)
                 nStage = STAGE_LEADERSHIP_REMOVE;
             else if(nChoice == 3)
                 nStage = STAGE_LEADERSHIP_DELETE;
+            else if(nChoice == 4)  
+                nStage = STAGE_LEADERSHIP_ADD_CUSTOM_RACE;
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_ENTRY;
             MarkStageNotSetUp(nStage, oPC);
@@ -552,18 +680,18 @@ void main()
             nStage = STAGE_LEADERSHIP;
             MarkStageNotSetUp(nStage, oPC);
         }
-        else if(nStage == STAGE_LEADERSHIP_ADD)
+        else if(nStage == STAGE_LEADERSHIP_ADD_STANDARD)
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_LEADERSHIP;
             else
             {
                 SetLocalInt(oPC, "CohortID", nChoice);
-                nStage = STAGE_LEADERSHIP_ADD_CONFIRM;
+                nStage = STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM;
             }
             MarkStageNotSetUp(nStage, oPC);
         }
-        else if(nStage == STAGE_LEADERSHIP_ADD_CONFIRM)
+        else if(nStage == STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM)
         {
             if(nChoice == 1)
             {
@@ -572,7 +700,94 @@ void main()
                 nStage = STAGE_LEADERSHIP;
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
-                nStage = STAGE_LEADERSHIP_ADD;
+                nStage = STAGE_LEADERSHIP_ADD_STANDARD;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_RACE)
+        {
+            SetLocalInt(oPC, "CustomCohortRace", nChoice);
+            nStage = STAGE_LEADERSHIP_ADD_CUSTOM_CLASS;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_CLASS)
+        {
+            SetLocalInt(oPC, "CustomCohortClass", nChoice);
+            nStage = STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN)
+        {
+            switch(nChoice)
+            {
+                case 0: //lawful good
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 85);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 85);
+                    break;
+                case 1: //neutral good
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 50);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 85);
+                    break;
+                case 2: //chaotic good
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 15);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 85);
+                    break;
+                case 3: //lawful neutral
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 85);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 50);
+                    break;
+                case 4: //true neutral
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 50);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 50);
+                    break;
+                case 5: //chaotic neutral
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 15);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 50);
+                    break;
+                case 6: //lawful evil
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 85);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 15);
+                    break;
+                case 7: //neutral evil
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 50);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 15);
+                    break;
+                case 8: //chaotic evil
+                    SetLocalInt(OBJECT_SELF, "CustomCohortOrder", 15);
+                    SetLocalInt(OBJECT_SELF, "CustomCohortMoral", 15);
+                    break;
+            }
+            nStage = STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM)
+        {
+            if(nChoice == 1)
+            {
+                int    nRace = GetLocalInt(oPC, "CustomCohortRace");
+                int    nClass= GetLocalInt(oPC, "CustomCohortClass");
+                int    nOrder= GetLocalInt(oPC, "CustomCohortOrder");
+                int    nMoral= GetLocalInt(oPC, "CustomCohortMoral");
+                string sResRef = "PRC_NPC_"+IntToString(nRace)+"_"+IntToString(nClass);
+                location lSpawn = GetLocation(oPC);
+                object oCohort = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn, TRUE, COHORT_TAG);
+                //change alignment
+                int nCurrentOrder = GetAlignmentLawChaos(oCohort);
+                int nCurrentMoral = GetAlignmentGoodEvil(oCohort);
+                if(nCurrentMoral < nMoral)
+                    AdjustAlignment(oCohort, ALIGNMENT_GOOD, nMoral-nCurrentMoral);
+                else if(nCurrentMoral > nMoral)
+                    AdjustAlignment(oCohort, ALIGNMENT_EVIL, nCurrentMoral-nMoral);
+                if(nCurrentOrder < nOrder)
+                    AdjustAlignment(oCohort, ALIGNMENT_LAWFUL, nOrder-nCurrentOrder);
+                else if(nCurrentOrder > nOrder)
+                    AdjustAlignment(oCohort, ALIGNMENT_CHAOTIC, nCurrentOrder-nOrder);
+                //add to player
+                //also does name/portrait/bodypart changes via DoDisguise
+                AddCohortToPlayerByObject(oCohort, oPC);
+                nStage = STAGE_LEADERSHIP;
+            }
+            else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
+                nStage = STAGE_LEADERSHIP;
             MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_LEADERSHIP_DELETE)

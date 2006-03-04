@@ -30,6 +30,7 @@ int GetCurrentCohortCount(object oPC);
 int GetCohortMaxLevel(int nLeadership, object oPC);
 void RegisterAsCohort(object oPC);
 void AddCohortToPlayer(int nCohortID, object oPC);
+void AddCohortToPlayerByObject(object oCohort, object oPC);
 void RemoveCohortFromPlayer(object oCohort, object oPC);
 int GetLeadershipScore(object oPC = OBJECT_SELF);
 void CheckHB();
@@ -56,6 +57,11 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     //give it a tag
     DestroyObject(oCohort);
     oCohort = CopyObject(oCohort, GetLocation(oPC), OBJECT_INVALID, COHORT_TAG);
+    //pass it to the next function
+    AddCohortToPlayerByObject(oCohort, oPC);
+}    
+void AddCohortToPlayerByObject(object oCohort, object oPC)
+{
     //add it to the pc
     int nMaxHenchmen = GetMaxHenchmen();
     SetMaxHenchmen(99);
@@ -90,8 +96,11 @@ void AddCohortToPlayer(int nCohortID, object oPC)
     //if it was a premade one, give it a random name
     //randomize its appearance using DoDisguise
     /* 1.67 code
+    if(GetResRef(oCohort) != "")
+    {
         AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName());
         DoDisguise(PRCGetRacialType(oCohort), oCohort);
+    }    
     */
 
     //strip its equipment & inventory

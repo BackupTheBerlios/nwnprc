@@ -132,6 +132,24 @@ DoDebug("nSpellsAvaliable is TRUE");
                 int i;
                 int nRow;
                 // Add responses for the PC
+                string sTag = "SpellLvl_"+IntToString(nClass)+"_Level_"+IntToString(nSpellLevel);
+                object oWP = GetObjectByTag(sTag);
+                for(i=0; i<array_get_size(oWP, sTag); i++)
+                {
+                    int nRow = array_get_int(oWP, sTag, i);
+                    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nRow));
+                    if(Get2DACache(sFile, "ReqFeat", nRow)==""      // Has no prerequisites
+                        && !GetHasFeat(nFeatID, oPC))               // And doesnt have it already
+                    {                  
+                        int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nRow));
+                        AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), nRow, oPC);
+DoDebug("PRC_S_spellb i="+IntToString(nRow));                    
+DoDebug("PRC_S_spellb sFile="+sFile);
+DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));  
+DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));  
+                    }
+                }
+                /*
                 for(nRow=0;nRow<GetPRCSwitch(FILE_END_CLASS_SPELLBOOK);nRow++)
                 {
                     int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nRow));
@@ -153,7 +171,7 @@ DoDebug("nSpellsAvaliable is TRUE");
                             AddChoice(sName, nRow);
                         }
                     }
-                }
+                }*/
                 sHeader += "You have "+IntToString(nSpellsKnownToSelect)+" level "+IntToString(nSpellLevel);
                 sHeader += " spells remaining to select.";
                 SetHeader(sHeader);

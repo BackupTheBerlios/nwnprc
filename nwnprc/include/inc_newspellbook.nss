@@ -110,9 +110,9 @@ string GetFileForClass(int nClass)
 
 int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1)
 {
-    if(sFile == "" && nClass != -1)
-        sFile = GetFileForClass(nClass);
-
+    return GetPowerFromSpellID(nSpell);
+    
+    /*
     int i;
     for(i=0; i<GetPRCSwitch(FILE_END_CLASS_SPELLBOOK); i++)
     {
@@ -124,6 +124,7 @@ DoDebug("SpellToSpellbookID("+IntToString(nSpell)+", "+sFile+", "+IntToString(nC
     }
 DoDebug("SpellToSpellbookID("+IntToString(nSpell)+", "+sFile+", "+IntToString(nClass)+") = "+IntToString(-1));
     return -1;
+    */
 }
 
 int GetSpellslotLevel(int nClass, object oPC)
@@ -206,13 +207,6 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
     //add extra slots
     int nAbilityMod = (nAbilityScore-10)/2;
     nSlots += ((nAbilityMod-nSpellLevel)/4)+1;
-    //if its bard or sorc, only return if has a PrC
-    if(nClass == CLASS_TYPE_SORCERER 
-        || nClass == CLASS_TYPE_BARD)
-    {
-        if(GetLevelByClass(nClass) == nLevel)
-            return 0;
-    }
     return nSlots;
 }
 

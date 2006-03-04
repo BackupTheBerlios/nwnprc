@@ -75,7 +75,8 @@ void main()
             DelayCommand(IntToFloat(GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL)), PRC_SQLCommit());
     }
     //pre-made cohorts
-    DelayCommand(6.0, AddPremadeCohortsToDB());
+    //DelayCommand(6.0, AddPremadeCohortsToDB());
+    //done differently now
 
     //check for letoscript dir
     if(GetLocalString(oModule, PRC_LETOSCRIPT_NWN_DIR) == "")

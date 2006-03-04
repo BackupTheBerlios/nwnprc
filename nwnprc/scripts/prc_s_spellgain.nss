@@ -263,10 +263,11 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
                 int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nRow));
                 int nLevel = StringToInt(Get2DACache(sFile, "Level", nRow));
 DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
-                persistant_array_create(oPC, "Spellbook"+IntToString(nClass));
+                if(!persistant_array_exists(oPC, "Spellbook"+IntToString(nClass)))
+                    persistant_array_create(oPC, "Spellbook"+IntToString(nClass));
 DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
                 persistant_array_set_int(oPC, "Spellbook"+IntToString(nClass), 
-                    persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass)), nRow+1);
+                    persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass)), nRow);
 DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
                 //this will add feat and stuff
                 AddSpellUse(oPC, nRow, nClass);

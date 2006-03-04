@@ -64,7 +64,7 @@ void main()
             return;
         eTest = GetNextEffect(oPC);
     }
-    if(CheckMissingSpells(oPC, CLASS_TYPE_BARD, 1, 6))
+    if(CheckMissingSpells(oPC, CLASS_TYPE_BARD, 0, 6))
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, 0, 9))
         return;

@@ -26,6 +26,7 @@ Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appro
 Add class to GetCasterLvl() in prc_inc_spells
 Add class to MakeLookupLoopMaster() in inc_lookups
 Add class to prc_spellgain
+Add class to ExecuteScript("prc_spellgain", oPC) list in EvalPRCFeats in prc_inc_function
 Run the assemble_spellbooks.bat file
 
 */
@@ -255,17 +256,57 @@ DoDebug("GetSpellKnownMaxCount("+IntToString(nLevel)+", "+IntToString(nSpellLeve
 
 int GetSpellKnownCurrentCount(object oPC, int nSpellLevel, int nClass)
 {    
+    //check short-term cache
+    if(GetLocalInt(oPC, "GetSKCCCache_"+IntToString(nSpellLevel)))
+        return GetLocalInt(oPC, "GetSKCCCache_"+IntToString(nSpellLevel))-1;
     int i;
     int nKnown;
+    int nKnown0, nKnown1, nKnown2, nKnown3, nKnown4;
+    int nKnown5, nKnown6, nKnown7, nKnown8, nKnown9;
     string sFile = GetFileForClass(nClass);
     for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));i++)
     {
         int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
         int nLevel = StringToInt(Get2DACache(sFile, "Level", nNewSpellbookID)); 
-        if(nLevel == nSpellLevel)
-            nKnown++;
+        switch(nLevel)
+        {
+            case 0: nKnown0++; break; case 1: nKnown1++; break;
+            case 2: nKnown2++; break; case 3: nKnown3++; break;
+            case 4: nKnown4++; break; case 5: nKnown5++; break;
+            case 6: nKnown6++; break; case 7: nKnown7++; break;
+            case 8: nKnown8++; break; case 9: nKnown9++; break;
+        }
+    }
+    switch(nSpellLevel)
+    {
+        case 0: nKnown = nKnown0; break; case 1: nKnown = nKnown1; break;
+        case 2: nKnown = nKnown2; break; case 3: nKnown = nKnown3; break;
+        case 4: nKnown = nKnown4; break; case 5: nKnown = nKnown5; break;
+        case 6: nKnown = nKnown6; break; case 7: nKnown = nKnown7; break;
+        case 8: nKnown = nKnown8; break; case 9: nKnown = nKnown9; break;
     }
 DoDebug("GetSpellKnownCurrentCount("+GetName(oPC)+", "+IntToString(nSpellLevel)+", "+IntToString(nClass)+") = "+IntToString(nKnown));
+    //cache the value for 1 second
+    SetLocalInt(oPC, "GetSKCCCache_0", nKnown0+1);
+    SetLocalInt(oPC, "GetSKCCCache_1", nKnown1+1);
+    SetLocalInt(oPC, "GetSKCCCache_2", nKnown2+1);
+    SetLocalInt(oPC, "GetSKCCCache_3", nKnown3+1);
+    SetLocalInt(oPC, "GetSKCCCache_4", nKnown4+1);
+    SetLocalInt(oPC, "GetSKCCCache_5", nKnown5+1);
+    SetLocalInt(oPC, "GetSKCCCache_6", nKnown6+1);
+    SetLocalInt(oPC, "GetSKCCCache_7", nKnown7+1);
+    SetLocalInt(oPC, "GetSKCCCache_8", nKnown8+1);
+    SetLocalInt(oPC, "GetSKCCCache_9", nKnown9+1);
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_0"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_1"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_2"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_3"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_4"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_5"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_6"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_7"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_8"));
+    DelayCommand(1.0, DeleteLocalInt(oPC, "GetSKCCCache_9"));
     return nKnown;
 }
 

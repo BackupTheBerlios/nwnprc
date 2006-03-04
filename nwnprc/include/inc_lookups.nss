@@ -76,22 +76,23 @@ void MakeLookupLoopMaster()
     DelayCommand(3.3, MakeLookupLoop(CLASS_TYPE_OCULAR,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.4, MakeLookupLoop(CLASS_TYPE_ASSASSIN,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_SHADOWLORD,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
-    DelayCommand(4.1, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
-    DelayCommand(4.2, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
-    DelayCommand(4.3, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(4.4, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
-    DelayCommand(4.5, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));
-    DelayCommand(4.6, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "6"));
-    DelayCommand(4.7, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
-    DelayCommand(4.8, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
-    DelayCommand(4.9, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
-    DelayCommand(5.0, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(5.1, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
-    DelayCommand(5.2, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));
-    DelayCommand(5.3, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "6"));
-    DelayCommand(5.4, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "7"));
-    DelayCommand(5.5, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "8"));
-    DelayCommand(5.6, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));
+    DelayCommand(4.1, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
+    DelayCommand(4.2, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
+    DelayCommand(4.3, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
+    DelayCommand(4.4, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
+    DelayCommand(4.5, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
+    DelayCommand(4.6, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));
+    DelayCommand(4.7, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "6"));
+    DelayCommand(4.8, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
+    DelayCommand(4.9, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
+    DelayCommand(5.0, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
+    DelayCommand(5.1, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
+    DelayCommand(5.2, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
+    DelayCommand(5.3, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));
+    DelayCommand(5.4, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "6"));
+    DelayCommand(5.5, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "7"));
+    DelayCommand(5.6, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "8"));
+    DelayCommand(5.7, MakeSpellbookLevelLoop(CLASS_TYPE_SORCERER,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));
 }
 
 void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase, 
@@ -135,6 +136,8 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
+    else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
+        return;
     if(!GetIsObjectValid(oWP))
     {
         DoDebug("Problem creating token for "+sTag);
@@ -153,7 +156,15 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     }
     if(i<nMax)
         DelayCommand(1.0, MakeSpellbookLevelLoop(nClass, i, nMax, sVarNameBase, sColumnName, sColumnValue, nLoopSize));
-
+DoDebug("MakeSpellbookLevelLoop("
+    +IntToString(nClass)+", "
+    +IntToString(i)+", "
+    +IntToString(nMax)+", "
+    +sVarNameBase+", "
+    +sColumnName+", "
+    +sColumnValue+", "
+    +IntToString(nLoopSize)+", "
+    +") : sTag = "+sTag);
 }
 
 void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn, 
@@ -182,6 +193,8 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
+    else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
+        return;
     if(!GetIsObjectValid(oWP))
     {
         DoDebug("Problem creating token for "+sTag);

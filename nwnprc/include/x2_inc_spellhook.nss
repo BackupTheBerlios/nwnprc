@@ -43,6 +43,11 @@ void CombatMedicHealingKicker();
 // This prevents casting spells into or out of a Null Psionics Field
 int NullPsionicsField();
 
+// Bard / Sorc PrC handling
+// returns FALSE if it is a bard or a sorcerer spell from a character
+// with an arcane PrC via bioware spellcasting rather than via PrC spellcasting
+int BardSorcPrCCheck();
+
 // Use Magic Device Check.
 // Returns TRUE if the Spell is allowed to be cast, either because the
 // character is allowed to cast it or he has won the required UMD check
@@ -184,6 +189,34 @@ int NullPsionicsField()
     }
     return nTest;
 }
+
+int BardSorcPrCCheck()
+{
+    //check they have bard/sorc levels
+    if(!GetLevelByClass(CLASS_TYPE_BARD)
+        && !GetLevelByClass(CLASS_TYPE_SORCERER))
+        return TRUE;    
+    //check its a bard/sorc spell
+    if(PRCGetLastSpellCastClass() != CLASS_TYPE_BARD
+        && PRCGetLastSpellCastClass() != CLASS_TYPE_SORCERER)
+        return TRUE;
+    //check if they are casting via new spellbook
+    if(GetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE) == CLASS_TYPE_BARD
+        || GetLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE) == CLASS_TYPE_SORCERER)
+        return TRUE;
+    //check they have bard/sorc in first arcane slot
+    if(GetFirstArcaneClass() != CLASS_TYPE_BARD
+        && GetFirstArcaneClass() != CLASS_TYPE_SORCERER)
+        return TRUE;    
+    //check they have arcane PrC
+    if(!GetArcanePRCLevels(OBJECT_SELF))
+        return TRUE;
+    //at this point, they must be using the bioware spellbook
+    //from a class that adds to sorc
+    FloatingTextStringOnCreature("You must use the new spellbook on the class radial.", OBJECT_SELF, FALSE);
+    return FALSE;
+}
+
 
 int KOTCHeavenDevotion(object oTarget)
 {
@@ -739,6 +772,7 @@ int X2PreSpellCastCode()
         }
     }
     
+    
     //Corrupt or Sanctified spell
     if(nContinue)
     {   
@@ -819,6 +853,12 @@ int X2PreSpellCastCode()
     if (nContinue)
         nContinue = KOTCHeavenDevotion(oTarget);
 
+    //---------------------------------------------------------------------------
+    // Run Bard/Sorc PrC check
+    //---------------------------------------------------------------------------
+    if(nContinue)
+        nContinue = BardSorcPrCCheck();
+        
     //---------------------------------------------------------------------------
     // Run Inscribe Rune Check
     //---------------------------------------------------------------------------

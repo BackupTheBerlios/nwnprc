@@ -27,4 +27,23 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	//define vars
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	effect eDaze = EffectDazed();
+	effect eVis
+	
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CURSE_OF_THE_PUTRID_HUSK, oPC);
+	

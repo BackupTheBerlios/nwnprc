@@ -76,6 +76,22 @@ void MakeLookupLoopMaster()
     DelayCommand(3.3, MakeLookupLoop(CLASS_TYPE_OCULAR,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(3.4, MakeLookupLoop(CLASS_TYPE_ASSASSIN,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_SHADOWLORD,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_BARD,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_SORCERER,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    
+    DelayCommand(2.6, MakeLookupLoop(CLASS_TYPE_BLACKGUARD,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(2.7, MakeLookupLoop(CLASS_TYPE_ANTI_PALADIN,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(2.8, MakeLookupLoop(CLASS_TYPE_SOLDIER_OF_LIGHT,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(2.9, MakeLookupLoop(CLASS_TYPE_KNIGHT_MIDDLECIRCLE, 0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(3.0, MakeLookupLoop(CLASS_TYPE_KNIGHT_CHALICE,      0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(3.1, MakeLookupLoop(CLASS_TYPE_VIGILANT,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(3.2, MakeLookupLoop(CLASS_TYPE_VASSAL,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(3.3, MakeLookupLoop(CLASS_TYPE_OCULAR,              0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(3.4, MakeLookupLoop(CLASS_TYPE_ASSASSIN,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_SHADOWLORD,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_BARD,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_SORCERER,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
+    
     DelayCommand(4.1, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
     DelayCommand(4.2, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(4.3, MakeSpellbookLevelLoop(CLASS_TYPE_BARD,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
@@ -193,8 +209,9 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
-    else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
-        return;
+    //else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
+    //    return;
+    //cant short-ciruit it cos it gets confused between classes
     if(!GetIsObjectValid(oWP))
     {
         DoDebug("Problem creating token for "+sTag);
@@ -219,16 +236,33 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     int i = nMin;
     for(i=nMin;i<nMin+nLoopSize;i++)
     {
-        int nSpellID = StringToInt(Get2DACache(sFile, sSourceColumn, i));
-        int nPower   = StringToInt(Get2DACache(sFile, sDestColumn,   i));
-        if(nSpellID != 0 
-            && nPower != 0)
+        int nSource;
+        if(sSourceColumn == "")
+            nSource = i;
+        else    
+            nSource = StringToInt(Get2DACache(sFile, sSourceColumn, i));
+        int nDest;
+        if(sDestColumn == "")
+            nDest = i;
+        else    
+            nDest = StringToInt(Get2DACache(sFile, sDestColumn,   i));
+        if(nSource != 0 
+            && nDest != 0)
         {   
-            SetLocalInt(oWP, sTag+"_"+IntToString(nSpellID), nPower);
+            SetLocalInt(oWP, sTag+"_"+IntToString(nSource), nDest);
         }    
     }
     if(i<nMax)
         DelayCommand(1.0, MakeLookupLoop(nClass, i, nMax, sSourceColumn, sDestColumn, sVarNameBase, nLoopSize));
+DoDebug("MakeLookupLoop("
+    +IntToString(nClass)+", "
+    +IntToString(i)+", "
+    +IntToString(nMax)+", "
+    +sSourceColumn+", "
+    +sDestColumn+", "
+    +sVarNameBase+", "
+    +IntToString(nLoopSize)+", "
+    +") : sTag = "+sTag);        
 }
 
 int GetPowerFromSpellID(int nSpellID)

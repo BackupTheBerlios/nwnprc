@@ -111,7 +111,12 @@ string GetFileForClass(int nClass)
 
 int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1)
 {
-    return GetPowerFromSpellID(nSpell);
+    object oWP = GetObjectByTag("PRC_GetRowFromSpellID");
+    int nOutSpellID = GetLocalInt(oWP, "PRC_GetRowFromSpellID_"+IntToString(nSpell));
+    if(nOutSpellID == 0)
+        nOutSpellID = -1;
+DoDebug("SpellToSpellbookID("+IntToString(nSpell)+", "+sFile+") = "+IntToString(nOutSpellID));    
+    return nOutSpellID;
     
     /*
     int i;

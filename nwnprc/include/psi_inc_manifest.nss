@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Psionics include: Metpasionics
-//:: psi_inc_metapsi
+//:: Psionics include: Manifesting
+//:: psi_inc_manifest
 //::///////////////////////////////////////////////
 /** @file
     Defines structures and functions for handling

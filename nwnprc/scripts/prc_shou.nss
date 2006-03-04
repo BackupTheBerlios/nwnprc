@@ -78,9 +78,10 @@ void main()
     {
         RemoveDodge(oPC, oSkin);
 
-        if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY, oPC) )
+        if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT, oPC) || GetHasSpellEffect(SPELL_MARTIAL_FLURRY_ALL, oPC))
         {
-            RemoveSpellEffects(SPELL_MARTIAL_FLURRY, oPC, oPC);
+          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_LIGHT, oPC, oPC);
+          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_ALL, oPC, oPC);
         }
 
         SendMessageToPC(OBJECT_SELF, "*Shou Disciple Abilities Disabled Due To Equipped Armor*");
@@ -89,9 +90,10 @@ void main()
     {
         RemoveDodge(oPC, oSkin);
 
-        if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY, oPC) )
+        if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT, oPC) || GetHasSpellEffect(SPELL_MARTIAL_FLURRY_ALL, oPC))
         {
-            RemoveSpellEffects(SPELL_MARTIAL_FLURRY, oPC, oPC);
+          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_LIGHT, oPC, oPC);
+          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_ALL, oPC, oPC);
         }
 
         SendMessageToPC(OBJECT_SELF, "*Shou Disciple Abilities Disabled Due To Equipped Shield*");

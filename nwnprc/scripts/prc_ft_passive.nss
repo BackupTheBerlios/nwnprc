@@ -28,4 +28,9 @@ void main()
         RemoveEffectsFromSpell(oPC, SPELL_INSIGHTFUL_REFLEXES);
         ActionCastSpellOnSelf(SPELL_INSIGHTFUL_REFLEXES);
     }
+    if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC))
+    {
+        RemoveEffectsFromSpell(oPC, SPELL_INTUITIVE_ATK);
+        ActionCastSpellOnSelf(SPELL_INTUITIVE_ATK);
+    }    
 }

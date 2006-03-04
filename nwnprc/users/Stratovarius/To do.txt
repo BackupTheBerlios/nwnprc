@@ -1,9 +1,5 @@
 Bugs:
 
-Force of Personality (assosciated feats)
-Intuitive Attack
-Shou Martial Flurry
-
 -----------------------------------------------------
 Everything Below this line is pushed back to 3.1
 -----------------------------------------------------

@@ -173,12 +173,12 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FEAT_BOWMASTERY, oPC)  ||
        GetHasFeat(FEAT_XBOWMASTERY, oPC) ||
        GetHasFeat(FEAT_SHURIKENMASTERY, oPC))                    ExecuteScript("prc_weapmas", oPC);
-    if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) ||
-       GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))                    ExecuteScript("prc_intuiatk", oPC);
 
     //Delays for item bonuses
     if(GetHasFeat(FEAT_FORCE_PERSONALITY, oPC) ||
-        GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC))               DelayCommand(0.1, ExecuteScript("prc_ft_passive", oPC));
+       GetHasFeat(FEAT_INSIGHTFUL_REFLEXES, oPC) ||
+       GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) ||
+       GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))                    DelayCommand(0.1, ExecuteScript("prc_ft_passive", oPC));
     if(GetHasFeat(FEAT_TACTILE_TRAPSMITH, oPC))                  DelayCommand(0.1, ExecuteScript("prc_ft_tacttrap", oPC));
 
     //Baelnorn & Undead

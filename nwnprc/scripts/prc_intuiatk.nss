@@ -1,8 +1,4 @@
 #include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-
-const int SPELL_INTUITIVE_ATK = 2090;
 
 int isSimple(object oItem)
 {

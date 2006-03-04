@@ -47,6 +47,7 @@ const int SPELL_KNIGHTCHALICE_DAMAGE        = 2733;
 const int SPELL_SWASH_DAMAGE                    = 3210;
 const int SPELL_SWASH_DAMAGE_B                  = 3211;
 const int SPELL_OOTBI_GREATER_WEAPON_FOCUS      = 2436;
+const int SPELL_INTUITIVE_ATK           = 2090;
 
 //heartwarder
 const int SPELL_LIPS_RAPTUR      = 2210;
@@ -142,8 +143,8 @@ const int SPELL_DES_100         = 1513;
 const int SPELL_TO_CARRION          = 1558;
 
 //Shou Disciple
-
-const int SPELL_MARTIAL_FLURRY  = 1505;
+const int SPELL_MARTIAL_FLURRY_LIGHT  = 2725;
+const int SPELL_MARTIAL_FLURRY_ALL    = 2726;
 
 // Sacred Fist
 const int SPELL_SACREDSPEED                  = 2123;

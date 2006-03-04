@@ -4566,7 +4566,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
           iBonusAttacks += 1;
           iAttackPenalty -= 2;
      }
-     if( GetHasSpellEffect(SPELL_MARTIAL_FLURRY, oAttacker) )
+     if( GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT || SPELL_MARTIAL_FLURRY_ALL, oAttacker) )
      {
           iBonusAttacks += 1;
           iAttackPenalty -= 2;

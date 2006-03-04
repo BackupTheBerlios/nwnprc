@@ -73,7 +73,7 @@ void main()
                    numAddAttacks += 1;
               }
               if(GetHasSpellEffect(SPELL_FURIOUS_ASSAULT, oPC)) numAddAttacks += 1;
-              if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY, oPC))  numAddAttacks += 1;
+              if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT, oPC) || GetHasSpellEffect(SPELL_MARTIAL_FLURRY_ALL, oPC))  numAddAttacks += 1;
               
               nMes = "*Perfect Two-Weapon Fighting Activated*";
           }

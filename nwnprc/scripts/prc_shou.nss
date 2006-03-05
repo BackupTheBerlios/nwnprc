@@ -65,10 +65,11 @@ void main()
     object oSkin = GetPCSkin(oPC);
     object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
 
-    object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+    object oWeapRL = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    object oWeapLL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
 
-    int iBase = GetBaseItemType(oWeapL);
+    int iBaseL = GetBaseItemType(oWeapLL);
+    int iBaseR = GetBaseItemType(oWeapRL);
     int iEquip = GetLocalInt(oPC,"ONEQUIP");
     string nMes = "";
 
@@ -80,23 +81,29 @@ void main()
 
         if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT, oPC) || GetHasSpellEffect(SPELL_MARTIAL_FLURRY_ALL, oPC))
         {
-          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_LIGHT, oPC, oPC);
-          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_ALL, oPC, oPC);
+          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
         }
 
-        SendMessageToPC(OBJECT_SELF, "*Shou Disciple Abilities Disabled Due To Equipped Armor*");
+        FloatingTextStringOnCreature("*Shou Disciple Abilities Disabled Due To Equipped Armour*", oPC);
     }
-    else if(iBase == BASE_ITEM_SMALLSHIELD || iBase == BASE_ITEM_LARGESHIELD || iBase == BASE_ITEM_TOWERSHIELD)
+    else if(iBaseL == BASE_ITEM_SMALLSHIELD || iBaseL == BASE_ITEM_LARGESHIELD || iBaseL == BASE_ITEM_TOWERSHIELD)
     {
         RemoveDodge(oPC, oSkin);
 
         if(GetHasSpellEffect(SPELL_MARTIAL_FLURRY_LIGHT, oPC) || GetHasSpellEffect(SPELL_MARTIAL_FLURRY_ALL, oPC))
         {
-          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_LIGHT, oPC, oPC);
-          RemoveSpellEffects(SPELL_MARTIAL_FLURRY_ALL, oPC, oPC);
+          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+          RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
         }
 
-        SendMessageToPC(OBJECT_SELF, "*Shou Disciple Abilities Disabled Due To Equipped Shield*");
+        FloatingTextStringOnCreature("*Shou Disciple Abilities Disabled Due To Equipped Shield*", oPC);
+    }
+    // This checks to make sure he doesnt have a non-light weapon equipped for Martial Flurry Light
+    else if(StringToInt(Get2DACache("baseitems", "WeaponSize", iBaseL)) > 2 || StringToInt(Get2DACache("baseitems", "WeaponSize", iBaseR)) > 2)
+    {
+    	RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+    	FloatingTextStringOnCreature("*Martial Flurry Light Disabled Due to Equipped Weapons*", oPC);
     }
     else
     {

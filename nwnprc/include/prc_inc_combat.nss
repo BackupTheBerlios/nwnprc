@@ -1785,7 +1785,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
                 }
 
                 int iOffHandWeapType = GetBaseItemType(oWeapL);
-                int bOffHandLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iOffHandWeapType)) <= 2 || iOffHandWeapType == BASE_ITEM_RAPIER;
+                int bOffHandLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iOffHandWeapType)) <= 2;
 
                 int iAttackPenalty;
 

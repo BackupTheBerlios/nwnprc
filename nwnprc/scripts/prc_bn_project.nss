@@ -158,6 +158,9 @@ void PseudoPosses(object oPC, object oCopy)
     DelayCommand(PROJECTION_HB_DELAY, ProjectionMonitor(oPC, oCopy));
 
     // Add eventhooks
+    
+    if(DEBUG) DoDebug("AddEventScripts");
+    
     AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_prj_event", TRUE, FALSE); // OnEquip
     //AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,  "prc_bn_prj_event", TRUE, FALSE); // OnUnEquip
     AddEventScript(oPC, EVENT_ONACQUIREITEM,        "prc_bn_prj_event", TRUE, FALSE); // OnAcquire
@@ -189,6 +192,9 @@ void EndPosses(object oPC, object oCopy)
 
     // Remove the VFX and the attack penalty
     RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
+    
+    //Remove VFX
+    DelayCommand(2.0f, RemoveSpecificEffect(EFFECT_TYPE_VISUALEFFECT, oPC));
 
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "BaelnornProjection_Active");

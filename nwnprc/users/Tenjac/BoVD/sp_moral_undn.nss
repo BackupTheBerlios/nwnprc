@@ -36,7 +36,7 @@ dominate person or suggestion is particularly useful,
 because it changes what acts are against a subject's 
 nature.
 
-Arcane Material Component: A pow­dered holy symbol.
+Arcane Material Component: A powdered holy symbol.
 
 Author:    Tenjac
 Created:   

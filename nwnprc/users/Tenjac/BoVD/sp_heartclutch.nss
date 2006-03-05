@@ -19,7 +19,7 @@ The subject dies in 1d3 rounds, and only a heal,
 regenerate, miracle, or wish spell will save it 
 during this time. The target is entitled to a 
 Fortitude saving throw to survive the attack. If the
-target suc­ceeds at the save, it instead takes 3d6 
+target succeeds at the save, it instead takes 3d6 
 points of damage +1 point per caster level from 
 general damage to the chest and internal organs. 
 (The target might die from damage even if it 

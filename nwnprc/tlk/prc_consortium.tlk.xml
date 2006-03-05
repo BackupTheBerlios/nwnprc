@@ -11088,6 +11088,7 @@ You may transfer your own hitpoints to a target creature within range. You must 
 Transferred hitpoints are damage to you. The creature takes your transferred hitpoints as if recieving a
 cure wounds spell and cannot gain more than hit points than its maximum allows; any excess hitpoints are lost.
 This spell transfers only actual hitpoints, not temporary hit points.</entry>
+  <entry id="47987" lang="en" sex="m">Blood of the Martyr(7)</entry>
   <entry id="47988" lang="en" sex="m">Mark resting locations</entry>
   <entry id="47989" lang="en" sex="m">Select whether you want that whenever you rest, the location will be automatically marked.
 WARNING: The location is always stored in the first slot, so if you delete it, next time you rest whatever is now in the first slot will be overwritten.</entry>

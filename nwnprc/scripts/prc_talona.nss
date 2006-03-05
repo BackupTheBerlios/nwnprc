@@ -56,11 +56,9 @@ void main()
     		object oCreature = CreateObject(OBJECT_TYPE_CREATURE, sResRef, GetLocation(oTarget), FALSE, "prc_blightspawn");
     		if(GetIsObjectValid(oCreature) && DEBUG) DoDebug("Created a blightspawned creature");
     		
-    		// Blightspawned creatures do not normally attack Blightlords
-    		SetIsTemporaryNeutral(oCreator, oCreature);
+    		// Try and make him non-hostile to the blightlord
+    		AssignCommand(oCreator, ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectCharmed()), oCreature));
     		
-    		if(DEBUG) DoDebug("Setting created creature neutral to the blightlord");
-		
     		// Apply the Blightspawned Template
     		
         	//Get the companion's skin
@@ -116,9 +114,7 @@ void main()
         	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_BACKSTAB), oCreatureSkin);
         	//Feat 354 is FEAT_LOWLIGHTVISION
         	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(354), oCreatureSkin);
-        	//Disassociate the companion to adjust alignment without affecting owner or other party members
-        	//RemoveSummonedAssociate(OBJECT_SELF, oCreature);
-        	//Adjust alignment to Neutral Evil
+
         	if (iCompLCA != ALIGNMENT_NEUTRAL)
         	{
         	    AdjustAlignment(oCreature, ALIGNMENT_NEUTRAL, 50);
@@ -127,10 +123,12 @@ void main()
         	{
         	    AdjustAlignment(oCreature, ALIGNMENT_EVIL, 80);
         	}
-        	//Re-associate the companion
-        	//SetAssociateListenPatterns(oCreature);
-        	//effect eDominated EffectCutsceneDominated();
-        	//ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDominated, oCreature);    
+    		// Blightspawned creatures do not normally attack Blightlords
+    		DelayCommand(2.0, SetIsTemporaryNeutral(oCreature, oCreator));
+    		DelayCommand(2.0, SetIsTemporaryFriend(oCreature, oCreator));
+    		
+    		if(DEBUG) DoDebug("Setting created creature neutral to the blightlord");        	
+
         	if(DEBUG) DoDebug("Done applying Blightspawned bonuses to the creature");
         	
         }

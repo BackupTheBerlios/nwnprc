@@ -60,17 +60,17 @@ towards the limit.
 void SummonGhoul (int nHD, object oTarget, object oPC, location lCorpse)
 {
 	
-	string sGhoul = "NW_GHOUL";
+	string sGhoul = "NW_S_GHOUL";
 	
 	//Ghast if levels 6 - 8
 	if(nHD > 5)
 	{
-		sGhoul = "NW_GHAST";
+		sGhoul = "NW_S_GHAST";
 	}
 	//Ghoul Lord if levels 9 - 11
 	if(nHD > 8) 
 	{
-		sGhoul = "NW_GHOULLORD";
+		sGhoul = "NW_S_GHOULKING";
 	}
 	//Ghoul Ravager if 12 or above
 	if (nHD > 11)

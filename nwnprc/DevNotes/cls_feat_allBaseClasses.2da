@@ -35,6 +35,7 @@
 31    FEAT_READ_RECIPE                                   2919        3      1                1        
 32    ****                                               ****        ****   ****             ****     
 33    **GeneralActivatableFeats**                        ****        ****   ****             ****     
+93    FEAT_INSCRIBE_RUNE                                 2462        0      -1               1      
 34    FEAT_THRALL_TO_DEMON                               2616        0      -1               1        
 35    FEAT_HOLYRADIANCE                                  3164        0      -1               1        
 36    FEAT_NIMBUSOFLIGHT                                 3165        0      -1               1        

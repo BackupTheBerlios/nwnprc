@@ -152,6 +152,8 @@ void main()
                 int i;
                 string sTag = "SpellLvl_"+IntToString(nSpellClass)+"_Level_"+IntToString(nSpellLevel);
                 object oWP = GetObjectByTag(sTag);
+                if(!GetIsObjectValid(oWP))
+                    DoDebug("ERROR: "+sTag+" is not valid");
                 for(i=0; i<array_get_size(oWP, sTag); i++)
                 {
                     int nRow = array_get_int(oWP, sTag, i);

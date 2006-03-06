@@ -11012,7 +11012,7 @@ Use: Automatic.</entry>
   <entry id="47936" lang="en" sex="m">Cohort</entry>
   <entry id="47937" lang="en" sex="m">Type of Feat: Class.
 Prerequisite: Hathran level 1.
-Specifics: Can call upon a Rashemen barbarian to serve as a cohort once per day. Will scale in level every 3 levels in Hathran (1, 4, 7, 10, etc).
+Specifics: The hatrhan gains a cohort as if she had the Leadership feat. This cohort is either a Raherni female with the Ethran feat or a Rachemi male with at least one level of barbarian. This cohort does not count against any cohorts the hathran may acquire by taking the Leadership feat.
 Use: Selected.</entry>
   <entry id="47938" lang="en" sex="m">Hathran Greater Command</entry>
   <entry id="47939" lang="en" sex="m">Type of Feat: Class.

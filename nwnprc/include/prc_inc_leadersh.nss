@@ -113,7 +113,7 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
             while(GetIsObjectValid(oTest2))
             {
                 DestroyObject(oTest2);
-                oTest = GetNextItemInInventory(oTest);
+                oTest2 = GetNextItemInInventory(oTest);
             }
         }
         DestroyObject(oTest);
@@ -389,39 +389,48 @@ int GetMaximumCohortCount(object oPC)
     return nCount;
 }
 
-int GetIsCohortChoiceValid(int nID, object oPC)
+int GetIsCohortChoiceValid(string sName, int nRace, int nClass1, int nClass2, int nClass3, int nOrder, int nMoral, int nEthran, string sKey, int nDeleted, object oPC)
 {
+
     int bIsValid = TRUE;
-    string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_name");
-    int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_race");
-    int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class1");
-    int    nClass2=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class2");
-    int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class3");
-    int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_order");
-    int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_moral");
-    int    nEthran=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_ethran");
-    string sKey  = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_cdkey");
     int nCohortCount = GetMaximumCohortCount(oPC);
     int i;
     //another players cohort
     if(GetPCPublicCDKey(oPC) != "" 
         && GetPCPublicCDKey(oPC) != sKey)
+    {    
+        DoDebug("GetIsCohortChoiceValid() is FALSE because cdkey is incorrect");
         bIsValid = FALSE;
+    }    
     //is character
-    if(GetName(oPC) == sName)
+    if(bIsValid
+        && GetName(oPC) == sName)
+    {    
+        DoDebug("GetIsCohortChoiceValid() is FALSE because name is in use");
         bIsValid = FALSE;
+    }    
     //is already a cohort
-    for(i=1;i<=nCohortCount;i++)
+    if(bIsValid && sName != "")
     {
-        object oCohort = GetCohort(i, oPC);
-        if(GetName(oCohort) == sName)
-            bIsValid = FALSE;
+        for(i=1;i<=nCohortCount;i++)
+        {
+            object oCohort = GetCohort(i, oPC);
+            if(GetName(oCohort) == sName)
+            {    
+                DoDebug("GetIsCohortChoiceValid() is FALSE because cohort is already in use.");
+                bIsValid = FALSE;
+            }    
+        }
     }
     //has been deleted
-    if(GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_deleted"))
+    if(bIsValid && nDeleted)
+    {    
+        DoDebug("GetIsCohortChoiceValid() is FALSE because cohort had been deleted");
         bIsValid = FALSE;
+    }    
     //hathran
-    if(GetHasFeat(FEAT_HATH_COHORT, oPC))
+    if(bIsValid
+        && GetHasFeat(FEAT_HATH_COHORT, oPC))
     {
         int nEthranBarbarianCount = 0;
         for(i=1;i<=nCohortCount;i++)
@@ -446,6 +455,21 @@ int GetIsCohortChoiceValid(int nID, object oPC)
         //not implemented yet
     //return result
     return bIsValid;
+}
+
+int GetIsCohortChoiceValidByID(int nID, object oPC)
+{
+    string sName = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_name");
+    int    nRace = GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_race");
+    int    nClass1=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class1");
+    int    nClass2=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class2");
+    int    nClass3=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_class3");
+    int    nOrder= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_order");
+    int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_moral");
+    int    nEthran=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_ethran");
+    string sKey  = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_cdkey");
+    int    nDeleted = GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_deleted"); 
+    return GetIsCohortChoiceValid(sName, nRace, nClass1, nClass2, nClass3, nOrder, nMoral, nEthran, sKey, nDeleted, oPC);
 }
 
 int GetCanRegister(object oPC)

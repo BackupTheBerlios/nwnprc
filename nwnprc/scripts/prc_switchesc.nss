@@ -49,6 +49,18 @@ const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
 /* Aid functions                                */
 //////////////////////////////////////////////////
 
+void AddCohortRaces(int nMin, int nMax, object oPC)
+{
+    int i;
+    for(i=nMin;i<nMax;i++)
+    {
+        if(Get2DACache("racialtypes", "PlayerRace", i) == "1")
+        {
+            string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", i)));
+            AddChoice(sName, i);
+        }
+    }              
+}  
 
 
 void main()
@@ -90,7 +102,7 @@ void main()
                     AddChoice("Join the Shadowlords as a prerequisited for the Teflammar Shadowlord class.", 5);
                 if(GetCanRegister(oPC))
                     AddChoice("Register this character as a cohort.", 6);
-                if(GetHasFeat(FEAT_LEADERSHIP, oPC))
+                if(GetMaximumCohortCount(oPC))
                     AddChoice("Manage cohorts.", 7);
 
                 MarkStageSetUp(nStage, oPC);
@@ -256,7 +268,7 @@ void main()
                 int i;
                 for(i=1;i<=nCohortCount;i++)
                 {
-                    if(GetIsCohortChoiceValid(i, oPC))
+                    if(GetIsCohortChoiceValidByID(i, oPC))
                     {
                         string sName = GetCampaignString(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
                         AddChoice(sName, i);
@@ -295,15 +307,9 @@ void main()
             else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_RACE)
             {
                 SetHeader("Select a race for the cohort:");
-                int i;
-                for(i=0;i<256;i++)
-                {
-                    if(Get2DACache("racialtypes", "PlayerRace", i) == "1")
-                    {
-                        string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", i)));
-                        AddChoice(sName, i);
-                    }
-                }              
+                AddCohortRaces(  0, 100, oPC);
+                DelayCommand(0.01, AddCohortRaces(101, 200, oPC));
+                DelayCommand(0.02, AddCohortRaces(201, 255, oPC));  
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -311,7 +317,7 @@ void main()
             {
                 SetHeader("Select a class for the cohort:");
                 int i;
-                //only do bioware base classes for now
+                //only do bioware base classes for now otherwise the AI will fubar
                 for(i=0;i<=10;i++)
                 {
                     string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", i)));
@@ -399,8 +405,14 @@ void main()
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
                 SetHeader(sHeader);
-                AddChoice("Yes", 1);
-                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+                // GetIsCohortChoiceValid(sName, nRace, nClass1, nClass2,            nClass3,            nOrder, nMoral, nEthran, sKey, nDeleted, oPC);
+                if(GetIsCohortChoiceValid("",    nRace, nClass,  CLASS_TYPE_INVALID, CLASS_TYPE_INVALID, nOrder, nMoral, FALSE,   "",   FALSE,    oPC))
+                {
+                    AddChoice("Yes", 1);
+                    AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+                }
+                else
+                    AddChoice("This cohort is invalid", CHOICE_RETURN_TO_PREVIOUS);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -412,7 +424,7 @@ void main()
                 int i;
                 for(i=1;i<=nCohortCount;i++)
                 {
-                    if(GetIsCohortChoiceValid(i, oPC))
+                    if(GetIsCohortChoiceValidByID(i, oPC))
                     {
                         string sName = GetCampaignString(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
                         AddChoice(sName, i);

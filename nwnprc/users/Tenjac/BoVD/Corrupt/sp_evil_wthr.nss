@@ -41,21 +41,43 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
+	object oArea = GetArea(oPC);
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nSpell = GetSpellID();
 	
 	//Rain of Blood
 	if (nSpell == SPELL_RAIN_OF_BLOOD)
+	{
+		//Change to rain
+		SetWeather(oArea, WEATHER_RAIN);
+		
+		//Change sky
+		SetSkyBox(SKYBOX_BLOOD, oArea);
+	}
 	
 	//Violet Rain
 	if (nSpell == SPELL_VIOLET_RAIN)
-	
+	{
+		//Change to rain
+		SetWeather(oArea, WEATHER_RAIN);
+		
+		//Change sky
+		SetSkyBox(SKYBOX_VIOLET, oArea);
+	}
 	//Green Fog
 	if (nSpell == SPELL_GREEN_FOG)
+	{
+		string sFog = "nw_green_fog"
+		
+	}
 	
 	//Rain of Frogs or Fish
 	if (nSpell == SPELL_RAIN_OF_FISH)
+	{
+		//Change to rain
+		SetWeather(oArea, WEATHER_RAIN);
+	}
 	
 	//Corruption cost
 	int nCost = d6(3);

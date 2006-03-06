@@ -54,7 +54,8 @@ void main()
 
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.
-    DelayCommand(0.5, ExecuteScript("prc_prereq", oPC)); // Delayed so that deleveling gets to happen before it.
+    ExecuteScript("prc_prereq", oPC);
+    // These HAVE to run after prc_prereq, they rely on variables it sets
     ExecuteScript("prc_enforce_feat", oPC);
     ExecuteScript("prc_enforce_psi", oPC);
     //Restore Power Points for Psionics

@@ -151,6 +151,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_ORDER_BOW_INITIATE,oPC) > 0)   ExecuteScript("prc_ootbi", oPC);
     if(GetLevelByClass(CLASS_TYPE_SLAYER_OF_DOMIEL,oPC) > 0)     ExecuteScript("prc_slayerdomiel", oPC);
     if(GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS,oPC) > 0) ExecuteScript("prc_discasmodeus", oPC);
+    if(GetLevelByClass(CLASS_TYPE_THRALLHERD,oPC) > 0)           ExecuteScript("psi_thrallherd", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

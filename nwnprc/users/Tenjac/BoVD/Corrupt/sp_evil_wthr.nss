@@ -53,7 +53,7 @@ void main()
 		SetWeather(oArea, WEATHER_RAIN);
 		
 		//Change sky
-		SetSkyBox(SKYBOX_BLOOD, oArea);
+		SetSkyBox(SKYBOX_GRASS_STORM, oArea);
 	}
 	
 	//Violet Rain
@@ -63,7 +63,7 @@ void main()
 		SetWeather(oArea, WEATHER_RAIN);
 		
 		//Change sky
-		SetSkyBox(SKYBOX_VIOLET, oArea);
+		SetSkyBox(SKYBOX_GRASS_STORM, oArea);
 	}
 	//Green Fog
 	if (nSpell == SPELL_GREEN_FOG)

@@ -33,8 +33,9 @@ const int STAGE_SHOPS                       = 8;
 const int STAGE_TEFLAMMAR_SHADOWLORD        = 9;
 const int STAGE_LEADERSHIP                  =10;
 const int STAGE_LEADERSHIP_ADD_STANDARD     =11;
-const int STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM=13;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_RACE  =14;
+const int STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM=12;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_RACE  =13;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_GENDER=14;
 const int STAGE_LEADERSHIP_ADD_CUSTOM_CLASS =15;
 const int STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN =16;
 const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM=17;
@@ -313,6 +314,14 @@ void main()
 
                 MarkStageSetUp(nStage, oPC);
             }
+            else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_GENDER)
+            {
+                SetHeader("Select a gender for the cohort:");
+                AddChoice("Male", GENDER_MALE);
+                AddChoice("Female", GENDER_FEMALE);
+
+                MarkStageSetUp(nStage, oPC);
+            }
             else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_CLASS)
             {
                 SetHeader("Select a class for the cohort:");
@@ -402,6 +411,7 @@ void main()
                 int    nClass= GetLocalInt(oPC, "CustomCohortClass");
                 int    nOrder= GetLocalInt(oPC, "CustomCohortOrder");
                 int    nMoral= GetLocalInt(oPC, "CustomCohortMoral");
+                int    nGender=GetLocalInt(oPC, "CustomCohortGender");
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
                 SetHeader(sHeader);
@@ -475,6 +485,7 @@ void main()
         DeleteLocalInt(oPC, "CustomCohortClass");
         DeleteLocalInt(oPC, "CustomCohortMoral");
         DeleteLocalInt(oPC, "CustomCohortOrder");
+        DeleteLocalInt(oPC, "CustomCohortGender");
     }
     else if(nValue == DYNCONV_ABORTED)
     {
@@ -486,6 +497,7 @@ void main()
         DeleteLocalInt(oPC, "CustomCohortClass");
         DeleteLocalInt(oPC, "CustomCohortMoral");
         DeleteLocalInt(oPC, "CustomCohortOrder");
+        DeleteLocalInt(oPC, "CustomCohortGender");
     }
     else
     {
@@ -718,6 +730,12 @@ void main()
         else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_RACE)
         {
             SetLocalInt(oPC, "CustomCohortRace", nChoice);
+            nStage = STAGE_LEADERSHIP_ADD_CUSTOM_GENDER;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_GENDER)
+        {
+            SetLocalInt(oPC, "CustomCohortGender", nChoice);
             nStage = STAGE_LEADERSHIP_ADD_CUSTOM_CLASS;
             MarkStageNotSetUp(nStage, oPC);
         }
@@ -779,7 +797,8 @@ void main()
                 int    nClass= GetLocalInt(oPC, "CustomCohortClass");
                 int    nOrder= GetLocalInt(oPC, "CustomCohortOrder");
                 int    nMoral= GetLocalInt(oPC, "CustomCohortMoral");
-                string sResRef = "PRC_NPC_"+IntToString(nRace)+"_"+IntToString(nClass);
+                int    nGender= GetLocalInt(oPC, "CustomCohortGender");
+                string sResRef = "prc_npc_"+IntToString(nRace)+"_"+IntToString(nClass)+"_"+IntToString(nGender);
                 location lSpawn = GetLocation(oPC);
                 object oCohort = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn, TRUE, COHORT_TAG);
                 //change alignment

@@ -53,6 +53,13 @@ void main()
         }
         if(bBiowareDBCache)
         {
+            //due to biowares piss-poor database coding, you have to destroy the old database before storing
+            //the object
+            //If you dont, the dataabse will bloat infinitely because when overriting an existing 
+            //database entry really marks the old entry as "deleted" ( but doesnt actually remove it) 
+            //and creates a new entry instead.
+            
+            DestroyCampaignDatabase("prc_data");
             object o2daCache = GetObjectByTag("Bioware2DACache");
             StoreCampaignObject("prc_data", "CacheChest", o2daCache);
             DoDebug("Storing Bioware2DACache");
@@ -185,33 +192,6 @@ void main()
                 }
             }
         }
-
-        //cohort XP gain
-        if(GetHasFeat(FEAT_LEADERSHIP, oPC))
-        {
-            int nCohortTotal = GetMaximumCohortCount(oPC);
-            int XPGained = GetXP(oPC)-GetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT);
-            if(!XPGained)
-            {
-                int i;
-                for(i=1;i<=nCohortTotal;i++)
-                {
-                    object oCohort = GetCohort(i, oPC);
-                    if(GetIsObjectValid(oCohort))
-                    {
-                        float ECLRatio = IntToFloat(GetECL(oPC))/IntToFloat(GetECL(oCohort));
-                        int CohortXPGain = FloatToInt(IntToFloat(XPGained)*ECLRatio);
-                        SetXP(oCohort, GetXP(oCohort)+CohortXPGain);
-                        while(GetECL(oCohort)>(GetECL(oPC)-2))
-                        {
-                            SetXP(oCohort, (GetHitDice(oCohort)*(GetHitDice(oCohort)-1)*500)-1);
-                        }
-                    }
-                }
-
-            }
-        }
-
         // Get the next PC for the loop
         oPC = GetNextPC();
     }

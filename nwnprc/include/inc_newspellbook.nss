@@ -15,6 +15,7 @@ Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appro
 Add class to GetCasterLvl() in prc_inc_spells
 Add class to MakeLookupLoopMaster() in inc_lookups
 Run the assemble_spellbooks.bat file
+Make the prc_* scripts in newspellbook
 
 Spont:
 Make cls_spbk_*.2da
@@ -28,6 +29,7 @@ Add class to MakeLookupLoopMaster() in inc_lookups
 Add class to prc_spellgain
 Add class to ExecuteScript("prc_spellgain", oPC) list in EvalPRCFeats in prc_inc_function
 Run the assemble_spellbooks.bat file
+Make the prc_* scripts in newspellbook
 
 */
 

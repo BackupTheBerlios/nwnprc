@@ -4927,7 +4927,7 @@ Psychic Strike (Su): As a move action, a soulknife of 3rd level or higher can im
 
 Free Draw (Su): At 5th level, a soulknife becomes able to materialize his mind blade as a free action instead of a move action. He can make only one attempt to materialize the mind blade per round, however.
 
-Shape Mind Blade (Su): At 5th level, a soulknife gains the ability to change the form of his mindblade. As a full-round action, he can change his mind blade to replicate a longsword (damage 1d8) or, if he has Exotic Weapon proficiency, a bastard sword (damage 1d10).
+Shape Mind Blade (Su): At 5th level, a soulknife gains the ability to change the form of his mindblade. As a full-round action, he can change his mind blade to replicate a longsword (damage 1d8) or a bastard sword (damage 1d10, but he must wield it as a two-handed weapon unless he knows the Exotic Weapon Proficiency feat).
  Alternatively, a soulknife can split his mind blade into two identical short swords, suitable for fighting with a weapon in each hand. (The normal penalties for fighting with two weapons apply.) However, both mind blades have an enhancement bonus 1 lower than the soulknife would otherwise create with a single mind blade. For example, a 12th-level soulknife normally creates a single +3 mind blade, but he could use this ability to instead materialize two +2 mind blades.
 
 Mind Blade Enhancement (Su): At 6th level, a soulknife gains the ability to enhance his mind blade. He can add a weapon special ability that has an enhancement bonus value of +1.
@@ -9175,7 +9175,7 @@ Use: Selected</entry>
   <entry id="47244" lang="en" sex="m">Shape Mindblade</entry>
   <entry id="47245" lang="en" sex="m">Type of Feat: Class
 Prerequisites: Soulknife 5th
-Specifics: At 5th level, a soulknife gains the ability to change the form of his mindblade. As a full-round action, he can change his mind blade to replicate a longsword (damage 1d8) or, if he has Exotic Weapon proficiency, a bastard sword (damage 1d10).
+Specifics: At 5th level, a soulknife gains the ability to change the form of his mindblade. As a full-round action, he can change his mind blade to replicate a longsword (damage 1d8) or a bastard sword (damage 1d10, but he must wield it as a two-handed weapon unless he knows the Exotic Weapon Proficiency feat).
  Alternatively, a soulknife can split his mind blade into two identical short swords, suitable for fighting with a weapon in each hand. (The normal penalties for fighting with two weapons apply.) However, both mind blades have an enhancement bonus 1 lower than the soulknife would otherwise create with a single mind blade. For example, a 12th-level soulknife normally creates a single +3 mind blade, but he could use this ability to instead materialize two +2 mind blades.
 Use: Selected</entry>
   <entry id="47246" lang="en" sex="m">Mindblade Enhancement</entry>

@@ -654,13 +654,12 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
         manif.bCanManifest = FALSE;
     }
 
-    // Account for augmentation. This factors in Wild Surge cost reduction
-    manif = EvaluateAugmentation(manif, pap);
-
     // Account for metapsionics
     if(!bIsPsiLike) // Skipped for psi-like abilities
         manif = EvaluateMetapsionics(manif, nMetaPsiFlags);
 
+    // Account for augmentation. This factors in Wild Surge cost reduction
+    manif = EvaluateAugmentation(manif, pap);
 
     //* APPLY COST INCREASES THAT DO NOT CAUSE ONE TO LOSE PP ON FAILURE HERE *//
     // Catapsi check

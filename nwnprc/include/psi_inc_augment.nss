@@ -23,6 +23,8 @@ const string PRC_AUGMENT_PROFILE         = "PRC_Augment_Profile_";
 const string PRC_CURRENT_AUGMENT_PROFILE = "PRC_Current_Augment_Profile_Index";
 /// Name of local variable where override is stored
 const string PRC_AUGMENT_OVERRIDE        = "PRC_Augment_Override";
+/// Name of local variable where the value of maximal augmentation switch is stored
+const string PRC_AUGMENT_MAXAUGMENT      = "PRC_Augment_MaxAugment";
 
 /// The lowest valid value of PRC_CURRENT_AUGMENT_PROFILE
 const int PRC_AUGMENT_PROFILE_INDEX_MIN  = 1;
@@ -449,8 +451,10 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
 {
     // Get the user's augmentation profile - will be all zeroes if no profile is active
     struct user_augment_profile uap = GetCurrentUserAugmentationProfile(manif.oManifester);
-    int nSurge            = GetWildSurge(manif.oManifester);
-    int nAugPPCost        = 0;
+    int nSurge               = GetWildSurge(manif.oManifester);
+    int nAugPPCost           = 0;
+    int nAugPPCostReductions = 0;
+    int bMaxAugment          = GetLocalInt(manif.oManifester, PRC_AUGMENT_MAXAUGMENT);
 
     // Initialise the augmentation data in the manifestation structure to zero
     /* Probably unnecessary due to auto-init
@@ -537,14 +541,27 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
     /*/ Various effects modifying the augmentation go below /*/
 
     // Account for wild surge
-    nAugPPCost -= nSurge;
+    nAugPPCostReductions += nSurge;
 
     /*/ Various effects modifying the augmentation go above /*/
 
-    // If cost modifying effects provide more PP than the augmentation has used, auto-distribute the left-overs
-    if(nAugPPCost < 0)
+    // Auto-distribution, if modifying effects provided more PP than has been used so far or
+    // the maximal augmentation switch is active
+    if((nAugPPCost - nAugPPCostReductions) < 0 || bMaxAugment)
     {
-        int nToAutodistribute = -nAugPPCost;
+        int nToAutodistribute = 0, nAutodistributed;
+
+        // Calculate autodistribution amount
+        if(bMaxAugment)
+        {
+            if(((manif.nManifesterLevel - manif.nPPCost) - nAugPPCost) > 0)
+                nToAutodistribute = (manif.nManifesterLevel - manif.nPPCost) - nAugPPCost;
+        }
+        else if((nAugPPCost - nAugPPCostReductions) < 0)
+            nToAutodistribute += -(nAugPPCost - nAugPPCostReductions);
+
+        // Store the value for use in cost calculations
+        nAutodistributed = nToAutodistribute;
 
         // Start the distribution
         int nTimesCanAug;
@@ -645,13 +662,26 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
             }
         }
 
+        // Calculate amount actually autodistributed
+        nAutodistributed = (nAutodistributed - nToAutodistribute);
+
         // Calculate increase to generic augmentation
         if(pap.nGenericAugCost != PRC_NO_GENERIC_AUGMENTS)
-            manif.nTimesGenericAugUsed += (nAugPPCost - nToAutodistribute) / pap.nGenericAugCost;
+            manif.nTimesGenericAugUsed += nAutodistributed / pap.nGenericAugCost;
 
-        // All PP unused at this point are dumped and the total augmentation cost is zero
-        nAugPPCost = 0;
+        // Determine new augmentation PP cost
+        /*if(bMaxAugment)
+        {*/
+            nAugPPCost += nAutodistributed;
+        /*}
+        // All PP autodistributed were just left-over free PP
+        else
+            // All PP unused at this point are dumped and the total augmentation cost is zero
+            nAugPPCost = 0;*/
     }
+
+    // Add in cost reduction
+    nAugPPCost = max(0, nAugPPCost - nAugPPCostReductions);
 
     // Store the PP cost increase
     manif.nPPCost += nAugPPCost;

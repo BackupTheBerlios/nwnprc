@@ -26,5 +26,5 @@ else
 
 //Remove
 	RemoveSpellEffects(SPELL_BAELNEYES, oPC)
-	RemoveEventScript onequip 
-	RemoveEventScript onunequip 
+	RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_eyes", TRUE, FALSE);
+	RemoveEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,    "prc_bn_eyes", TRUE, FALSE);

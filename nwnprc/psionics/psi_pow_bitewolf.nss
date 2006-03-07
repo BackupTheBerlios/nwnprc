@@ -117,7 +117,7 @@ void main()
         AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyMonsterDamage(nBaseDamage), oCWeapon, fDuration);
 
         // Add the bonus damage
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL, nBonusDamage), oCWeapon, fDuration);
+        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, nBonusDamage), oCWeapon, fDuration);
 
         // Do VFX
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

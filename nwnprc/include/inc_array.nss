@@ -145,13 +145,12 @@ float array_get_float(object store, string name, int i);
 object array_get_object(object store, string name, int i);
 
 /**
- * Removes all entries the array with indexes greater than
- * the new size and sets the array size to be equal to the
- * new size.
+ * Removes all entries in the array with indexes greater than or equal to
+ * the new size and sets the array size to be equal to the new size.
  *
  * @param store    The object holding the array
  * @param name     The name of the array
- * @param size_new The new highest index of elements in the array.
+ * @param size_new The new number of entries in the array
  * @return         SDL_SUCCESS on successful resize, SDL_ERROR_* on
  *                 error
  */
@@ -328,23 +327,27 @@ object array_get_object(object store, string name, int i)
 
 int array_shrink(object store, string name, int size_new)
 {
-    // error checking
-    int size = GetLocalInt(store,name);
+    // Get the current size value
+    int size = GetLocalInt(store, name);
+    // Error check - non-existent array
     if(size == 0)
         return SDL_ERROR_DOES_NOT_EXIST;
-    if(size <= size_new)
+    // If the new number of elements is equal to or greater than the current number of elements, autosuccess
+    if((size - 1) <= size_new)
         return SDL_SUCCESS;
 
+    // Delete entries that are outside the new array bounds
     int i;
     for(i = size_new; i < size; i++)
     {
-        DeleteLocalString(store,name+"_"+IntToString(i));
+        DeleteLocalString(store, name+"_"+IntToString(i));
 
         // just in case, delete possible object names
-        DeleteLocalString(store,name+"_"+IntToString(i)+"_OBJECT");
+        DeleteLocalString(store, name+"_"+IntToString(i)+"_OBJECT");
     }
 
-    SetLocalInt(store,name,size_new+1);
+    // Store the new size, with the +1 existence marker
+    SetLocalInt(store, name, size_new + 1);
 
     return SDL_SUCCESS;
 }

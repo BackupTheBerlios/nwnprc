@@ -340,6 +340,8 @@ int GetRunningEvent();
 /// Internal function. Returns the name matching the given integer constant
 string EventTypeIdToName(int nEvent);
 
+string _GetMarkerLocalName(string sScript, string sArrayName);
+
 /// Internal function. Prints a list of scripts hooked into the given event for the object.
 void DebugPrintHookedScripts(object oObject, int nEvent);
 
@@ -391,13 +393,16 @@ void AddEventScript(object oObject, int nEvent, string sScript, int bPermanent =
     int bAdd = TRUE;
     if(!bAllowDuplicate){
         // Check if a marker is present.
-        if(GetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName))
+        if(GetLocalInt(oObject, _GetMarkerLocalName(sScript, sArrayName)))
             bAdd = FALSE;
+        // Since this might be the first time it is looked up, loop through the whole list anyway
         else
         {
-            int i = 0;
-            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
+            int i, nMax = wrap_array_get_size(oObject, sArrayName);
+            for(i = 0; i < nMax; i++){
                 if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
+                    // Add a marker that the script is present
+                    SetLocalInt(oObject, _GetMarkerLocalName(sScript, sArrayName), TRUE);
                     bAdd = FALSE;
                     break;
     }   }   }   }
@@ -406,7 +411,7 @@ void AddEventScript(object oObject, int nEvent, string sScript, int bPermanent =
     {
         wrap_array_set_string(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName), sScript);
         // Add a marker that the script is present
-        SetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName, TRUE);
+        SetLocalInt(oObject, _GetMarkerLocalName(sScript, sArrayName), TRUE);
     }
 }
 
@@ -434,40 +439,14 @@ void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanen
     if(!bPermanent || bIgnorePermanency){
         sArrayName = sArrayNameBase;
         // First, check if there is an array to look through at all and that the script is in the array
-        if(wrap_array_exists(oObject, sArrayName) &&
-           GetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName)
+        if(wrap_array_exists(oObject, sArrayName)/* &&
+           GetLocalInt(oObject, _GetMarkerLocalName(sScript, sArrayName))*/
            ){
             int nMoveBackBy = 0;
             int i = 0;
+            int nArraySize = wrap_array_get_size(oObject, sArrayName);
             // Loop through the array elements
-            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
-                // See if we have an entry to remove
-                if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
-                    nMoveBackBy++;
-                }
-                // Move the entris in the array back by an amount great enough to overwrite entries containing sScript
-                else if(nMoveBackBy){
-                    wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
-                                          wrap_array_get_string(oObject, sArrayName, i));
-            }   }
-            // Shrink the array by the number of entries removed
-            wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) + 1 - nMoveBackBy);
-
-            // Remove the script presence marker
-            DeleteLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName);
-    }   }
-
-    // Go through the permanent array
-    if(bPermanent || bIgnorePermanency){
-        sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
-        // First, check if there is an array to look through at all and that the script is in the array
-        if(wrap_array_exists(oObject, sArrayName) &&
-           GetLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName)
-           ){
-            int nMoveBackBy = 0;
-            int i = 0;
-            // Loop through the array elements
-            for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
+            for(; i < nArraySize; i++){
                 // See if we have an entry to remove
                 if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
                     nMoveBackBy++;
@@ -477,11 +456,43 @@ void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanen
                     wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
                                           wrap_array_get_string(oObject, sArrayName, i));
             }   }
-            // Shrink the array by the number of entries removed
-            wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) + 1 - nMoveBackBy);
+
+            // Shrink the array by the number of entries removed, if any
+            if(nMoveBackBy)
+                wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) - nMoveBackBy);
 
             // Remove the script presence marker
-            DeleteLocalInt(oObject, "prc_eventhook_script:" + sScript + ";array:" + sArrayName);
+            DeleteLocalInt(oObject, _GetMarkerLocalName(sScript, sArrayName));
+    }   }
+
+    // Go through the permanent array
+    if(bPermanent || bIgnorePermanency){
+        sArrayName = sArrayNameBase + PERMANENCY_SUFFIX;
+        // First, check if there is an array to look through at all and that the script is in the array
+        if(wrap_array_exists(oObject, sArrayName)/* &&
+           GetLocalInt(oObject, _GetMarkerLocalName(sScript, sArrayName))*/
+           ){
+            int nMoveBackBy = 0;
+            int i = 0;
+            int nArraySize = wrap_array_get_size(oObject, sArrayName);
+            // Loop through the array elements
+            for(; i < nArraySize; i++){
+                // See if we have an entry to remove
+                if(wrap_array_get_string(oObject, sArrayName, i) == sScript){
+                    nMoveBackBy++;
+                }
+                // Move the entries in the array back by an amount great enough to overwrite entries containing sScript
+                else if(nMoveBackBy){
+                    wrap_array_set_string(oObject, sArrayName, i - nMoveBackBy,
+                                          wrap_array_get_string(oObject, sArrayName, i));
+            }   }
+
+            // Shrink the array by the number of entries removed, if any
+            if(nMoveBackBy)
+                wrap_array_shrink(oObject, sArrayName, wrap_array_get_size(oObject, sArrayName) - nMoveBackBy);
+
+            // Remove the script presence marker
+            DeleteLocalInt(oObject, _GetMarkerLocalName(sScript, sArrayName));
     }   }
 }
 
@@ -512,8 +523,7 @@ void ClearEventScriptList(object oObject, int nEvent, int bPermanent = FALSE, in
             // Remove all markers
             int i = 0;
             for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
-                DeleteLocalInt(oObject, "prc_eventhook_script:" + wrap_array_get_string(oObject, sArrayName, i)
-                                        + ";array:" + sArrayName);
+                DeleteLocalInt(oObject, _GetMarkerLocalName(wrap_array_get_string(oObject, sArrayName, i), sArrayName));
             }
             // Shrink the array to 0
             wrap_array_shrink(oObject, sArrayName, 0);
@@ -527,8 +537,7 @@ void ClearEventScriptList(object oObject, int nEvent, int bPermanent = FALSE, in
             // Remove all markers
             int i = 0;
             for(; i <= wrap_array_get_size(oObject, sArrayName); i++){
-                DeleteLocalInt(oObject, "prc_eventhook_script:" + wrap_array_get_string(oObject, sArrayName, i)
-                                        + ";array:" + sArrayName);
+                DeleteLocalInt(oObject, _GetMarkerLocalName(wrap_array_get_string(oObject, sArrayName, i), sArrayName));
             }
             // Shrink the array to 0
             wrap_array_shrink(oObject, sArrayName, 0);
@@ -758,6 +767,11 @@ string EventTypeIdToName(int nEvent){
     return "prc_event_array_" + IntToString(nEvent);
 
     //return ""; // Never going to reach this, but the compiler doesn't realize that :P
+}
+
+string _GetMarkerLocalName(string sScript, string sArrayName)
+{
+    return "prc_eventhook_script:" + sScript + ";array:" + sArrayName;
 }
 
 

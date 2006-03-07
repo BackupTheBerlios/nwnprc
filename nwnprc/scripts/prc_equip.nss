@@ -48,6 +48,12 @@ void main()
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
     //timestop noncombat equip
     DoTimestopEquip();
+    
+    //handle PnP sling switch
+    if(GetPRCSwitch(PRC_PNP_SLINGS)
+        && GetBaseItemType(oItem) == BASE_ITEM_SLING)
+        IPSafeAddItemProperty(oItem, ItemPropertyMaxRangeStrengthMod(20));
+        
 
     // Execute scripts hooked to this event for the creature and item triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);

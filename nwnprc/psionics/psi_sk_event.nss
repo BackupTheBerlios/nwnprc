@@ -49,7 +49,7 @@ void BastardSword2hHandler(object oPC)
     /// @todo Remove this once Silver finishes his weapons modification
     if(GetBaseItemType(oRightH) == BASE_ITEM_BASTARDSWORD            &&
        !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC))&& // The bsword will always be in mainhand when this applies, so just check for offhand's emptiness
-       !GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge"))             // The bonus isn't already applied
+       !GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge"))           // The bonus isn't already applied
     {
         if(LOCAL_DEBUG) DoDebug("Applying +0.5x STR for a bastard sword being wielded 2-h");
         if(LOCAL_DEBUG) DoDebug("Bonus was already applied according to local variable: " + (GetLocalInt(oRightH, "PRC_SK_BastardSword_2h_Fudge") ? "Yes":"No"));
@@ -148,9 +148,10 @@ void main()
             SendMessageToPCByStrRef(oPC, 16824510);
             ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), INVENTORY_SLOT_LEFTHAND);
         }
-
-        // Run the 2h bastard sword bonus handler
-        BastardSword2hHandler(oPC);
+        // May be wielding a bastard sword with 2 hands
+        else
+            // Run the 2h bastard sword bonus handler
+            BastardSword2hHandler(oPC);
 
         // Lacking the correct proficiency to wield non-mindblade version of a short sword
         if(GetBaseItemType(oItem) == BASE_ITEM_SHORTSWORD     &&
@@ -214,6 +215,18 @@ void main()
             MyDestroyObject(oItem);
         }
 
+        // Remove the +0.5x STR bonus for wielding bastard swords 2-handed if the sword is unequipped
+        if(GetBaseItemType(oItem) == BASE_ITEM_BASTARDSWORD  && // Unequipped a bastard sword
+           GetLocalInt(oItem, "PRC_SK_BastardSword_2h_Fudge")   // That has the 2h bonus on it
+           )
+        {
+            if(LOCAL_DEBUG) DoDebug("Removing +0.5x STR for a bastard sword being wielded 2-h due to it being unequipped");
+            if(LOCAL_DEBUG) DoDebug("Bonus was present according to local variable: " + (GetLocalInt(oItem, "PRC_SK_BastardSword_2h_Fudge") ? "Yes":"No"));
+            int nDamBon = GetLocalInt(oItem, "PRC_SK_BastardSword_2h_Fudge");
+            RemoveSpecificProperty(oItem, ITEM_PROPERTY_DAMAGE_BONUS, IP_CONST_DAMAGETYPE_SLASHING, nDamBon, 1);
+            DeleteLocalInt(oItem, "PRC_SK_BastardSword_2h_Fudge");
+        }
+
         // Run the 2h bastard sword bonus handler. Delay a bit so that the item can actually vacate the slot. Yay for firing the event before the unequipping has actually occurred
         DelayCommand(0.4f, BastardSword2hHandler(oPC));
     }
@@ -265,5 +278,14 @@ void main()
             MyDestroyObject(oItem);
         }
 
+        // If the character has lost all levels in Soulknife, remove eventhooks
+        if(GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) == 0)
+        {
+            RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "psi_sk_event", TRUE, FALSE);
+            RemoveEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "psi_sk_event", TRUE, FALSE);
+            RemoveEventScript(oPC, EVENT_ONUNAQUIREITEM,      "psi_sk_event", TRUE, FALSE);
+            RemoveEventScript(oPC, EVENT_ONPLAYERDEATH,       "psi_sk_event", TRUE, FALSE);
+            RemoveEventScript(oPC, EVENT_ONPLAYERLEVELDOWN,   "psi_sk_event", TRUE, FALSE);
+        }
     }
 }

@@ -152,6 +152,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_SLAYER_OF_DOMIEL,oPC) > 0)     ExecuteScript("prc_slayerdomiel", oPC);
     if(GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS,oPC) > 0) ExecuteScript("prc_discasmodeus", oPC);
     if(GetLevelByClass(CLASS_TYPE_THRALLHERD,oPC) > 0)           ExecuteScript("psi_thrallherd", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) > 0)           ExecuteScript("psi_sk_clseval", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -213,8 +214,8 @@ void EvalPRCFeats(object oPC)
     if(GetHasFeat(FAST_HEALING_1, oPC)
         || GetHasFeat(FAST_HEALING_2, oPC)
         || GetHasFeat(FAST_HEALING_3, oPC))                      ExecuteScript("prc_fastheal", oPC);
-        
-    if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC))                  ExecuteScript("prc_spellf_eval", oPC);        
+
+    if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC))                  ExecuteScript("prc_spellf_eval", oPC);
 
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)
@@ -313,7 +314,7 @@ void EvalPRCFeats(object oPC)
         || GetLevelByClass(CLASS_TYPE_WARMIND, oPC))
         ExecuteScript("psi_powergain", oPC);
     if(GetLevelByClass(CLASS_TYPE_BARD, oPC)
-        || GetLevelByClass(CLASS_TYPE_SORCERER, oPC))        
+        || GetLevelByClass(CLASS_TYPE_SORCERER, oPC))
         ExecuteScript("prc_spellgain", oPC);
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
@@ -711,10 +712,10 @@ void DeletePRCLocalInts(object oSkin)
 
     // Warmind
     DeleteLocalInt(oSkin, "EnduringBody");
-    
+
     // Ironmind
     DeleteLocalInt(oSkin, "IronMind_DR");
-    
+
     // Domains
     DeleteLocalInt(oSkin, "StormDomainPower");
 

@@ -92,7 +92,6 @@ void main()
 		//Restore original max henchmen
 		SetMaxHenchmen(nMax);
 		
-		
 	}
 	
 	SPEvilShift(oPC);

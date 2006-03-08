@@ -16,8 +16,8 @@ a longsword, short sword, or greatsword (caster's choice).
 This weapon has a +1 enhancement bonus on attacks and 
 damage for every five caster levels (at least +1, 
 maximum +4). Furthermore, this blade deals an extra +1d6
-points of damage to living targets and an addi­tional +1d6
-points of damage to good­-aligned targets.
+points of damage to living targets and an additional +1d6
+points of damage to good­aligned targets.
 
 This spell confers no proficiency with the blade, but the
 caster doesn't need to be the one wielding the blade for 
@@ -32,3 +32,47 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+
+void main()
+{
+	//define vars
+	object oPC = OBJECT_SELF
+	int nSpell = GetSpellId();
+	string sSword;
+	
+	
+	//Summon blade
+	if(nSpell == SPELL_BONEBLADE_GREATSWORD)
+	{
+		if("CEP")
+		{
+			sSword = "bbcepgrswrd";
+		}		
+		
+		else sSword = "bonebladegreatsw";
+	}
+	
+	if(nSpell == SPELL_BONEBLADE_LONGSWORD)
+	{
+		if("CEP")
+		{
+			sSword = "bbceplngswrd";
+		}
+		
+		else sSword = "boneblade";
+	}
+	
+	if nSpell == SPELL_BONEBLADE_SHORTSWORD)
+	{
+		if("CEP")
+		{
+			sSword = "bbcepshrtswrd";
+		}
+		
+		else sSword = "bonebladeshortsw"
+	}
+			
+	//Create sword	
+	CreateItemOnObject(sSword, oPC, 1);
+	
+	

@@ -110,7 +110,7 @@ void main()
 	//Eyes
 	
 	//local int signifying unequip event
-	//if(!PROJECTION_UNEQUIP)
+	if(!PROJECTION_UNEQUIP)
 	{
 		//set local int telling to apply vfx
 		SetLocalInt(oPC, "APPLY_BAELNORN_EYES", 1);
@@ -120,8 +120,8 @@ void main()
 	}
 	
 	//hookevent equip - permanent, no duplicates
-	AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_eyes", TRUE, FALSE); 
+	AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_eyeevent", TRUE, FALSE); 
 	
 	//hookevent unequip - permanent, no duplicates
-	AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,    "prc_bn_eyes", TRUE, FALSE);
+	AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,    "prc_bn_eyeevent", TRUE, FALSE);
 }

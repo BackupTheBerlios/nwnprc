@@ -20,14 +20,15 @@ void main ()
 			}
 		}
 		else
-		RemoveSpellEffects(SPELL_BAELNEYES, oPC)
+		RemoveSpellEffects(SPELL_BAELNEYES, oPC);
 	}
 	else
-	
-	//Remove
-	RemoveSpellEffects(SPELL_BAELNEYES, oPC)
-	RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_eyes", TRUE, FALSE);
-	RemoveEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,    "prc_bn_eyes", TRUE, FALSE);
+	{
+		//Remove
+		RemoveSpellEffects(SPELL_BAELNEYES, oPC);
+		RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_eyeevent", TRUE, FALSE);
+		RemoveEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,    "prc_bn_eyeevent", TRUE, FALSE);
+	}
 }
 	
 	

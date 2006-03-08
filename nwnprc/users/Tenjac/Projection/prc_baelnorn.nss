@@ -110,7 +110,7 @@ void main()
 	//Eyes
 	
 	//local int signifying unequip event
-	if(!PROJECTION_UNEQUIP)
+	//if(!PROJECTION_UNEQUIP)
 	{
 		//set local int telling to apply vfx
 		SetLocalInt(oPC, "APPLY_BAELNORN_EYES", 1);

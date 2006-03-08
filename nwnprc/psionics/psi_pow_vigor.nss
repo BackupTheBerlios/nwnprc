@@ -69,6 +69,16 @@ void main()
         float fDuration = 60.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;
 
+        // Remove previous Vigor
+        effect eTest = GetFirstEffect(oTarget);
+        while(GetIsEffectValid(eTest))
+        {
+            if(GetEffectSpellId(eTest) == POWER_VIGOR)
+                RemoveEffect(oTarget, eTest);
+
+            eTest = GetNextEffect(oTarget);
+        }
+
         // Apply effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

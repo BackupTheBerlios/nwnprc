@@ -70,13 +70,18 @@ void SummonGhoul (int nHD, object oTarget, object oPC, location lCorpse)
 	//Ghoul Lord if levels 9 - 11
 	if(nHD > 8) 
 	{
-		sGhoul = "NW_S_GHOULKING";
+		sGhoul = "S_GHOULLORD";
 	}
-	//Ghoul Ravager if 12 or above
+	//Ghoul Ravager if 12 - 14
 	if (nHD > 11)
 	{
-		sGhoul = "NW_GHOULBOSS";		
+		sGhoul = "S_GHOULRAVAGER";		
 	}
+	//Ghoul King if 15 or better
+	if (nHD > 14)
+	{
+		sGhoul = "X2_S_GHOUL_16";
+	}	
 	
 	//Check for controlled undead and limit
 	

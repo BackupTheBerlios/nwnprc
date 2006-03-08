@@ -35,6 +35,10 @@ void BiobugsSuck(object oSpawn){
     SetCreatureAppearanceType(oSpawn, nAppearance);
 
     HandleAstralConstructSpawn(oSpawn);
+
+
+    // Execute other OnSpawn stuff
+    ExecuteScript("nw_ch_acani9", oSpawn);
 }
 
 void main()
@@ -43,13 +47,17 @@ void main()
 
     object oSpawn = OBJECT_SELF;
 
-    DelayCommand(0.05f, BiobugsSuck(oSpawn));
+    // Set AI level
+    SetAILevel(oSpawn, AI_LEVEL_HIGH);
 
+    DelayCommand(0.05f, BiobugsSuck(oSpawn));
+/* Uncomment if AC is ever moved to be a henchman
     // Handle the main Astral Construct spawn stuff
     // Farmed out to an include file. This one is just to link it
     // and the default spawn handling
-    //HandleAstralConstructSpawn(oSpawn);
+    HandleAstralConstructSpawn(oSpawn);
 
     // Execute other OnSpawn stuff
-    ExecuteScript("nw_ch_acani9", OBJECT_SELF);
+    ExecuteScript("nw_ch_acani9", oSpawn);
+*/
 }

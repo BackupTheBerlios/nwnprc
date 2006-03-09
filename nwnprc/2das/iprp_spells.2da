@@ -109,8 +109,8 @@
 105  Finger_of_Death                   1209      13        7         68250  56         0         0       1          iss_FingDeath    
 106  Fire_Storm                        1210      13        7         68250  57         0         0       1          iss_FireStrm     
 107  Fire_Storm                        1211      18        7         94500  57         0         0       1          iss_FireStrm     
-108  Fireball                          1212      5         3         11250  2853       0         1       1          iss_Fireball     
-109  Fireball                          1213      10        3         22500  2853       0         1       1          iss_Fireball     
+108  Fireball                          1212      5         3         11250  58         0         1       1          iss_Fireball     
+109  Fireball                          1213      10        3         22500  58         0         1       1          iss_Fireball     
 110  Flame_Arrow                       1214      5         3         11250  59         0         1       1          iss_FlmArrow     
 111  Flame_Arrow                       1215      12        3         27000  59         0         1       1          iss_FlmArrow     
 112  Flame_Arrow                       1216      18        3         40500  59         0         1       1          iss_FlmArrow     

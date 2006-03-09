@@ -1,0 +1,29 @@
+[09:29] * Stratovarius smacks Tenjac, BN?
+[09:30] <Tenjac> Trying to figure things out
+[09:30] <Tenjac> tested last night be sure the VFX was still not removing
+[09:31] <Stratovarius> Whats wrong so far?
+[09:31] <Tenjac> I still need to handle the uses.  As far as I could tell, there is no GetRemainingUses() function
+[09:31] <Tenjac> i might be missing it though
+[09:32] <Stratovarius> i dont think there is, but thats just me
+[09:32] <Stratovarius> you could just local int it
+[09:32] <Tenjac> could, but how do I use that after I have the int?
+[09:32] <Stratovarius> look at domains
+[09:32] <Tenjac> ok
+[09:32] <Stratovarius> the include
+[09:32] * Tenjac makes note
+[09:33] <Tenjac> Next, VFX not removing
+[09:33] <Tenjac> I assume it's a delaycommand breaking the connection
+[09:33] <Stratovarius> most likely
+[09:33] <Stratovarius> it does that
+[09:35] <Tenjac> We dicussed some way to fix that the other day, though I didn't logging going and forgot about it.  I remember you suggesting making it its own spell effect
+[09:35] <Tenjac> *didn't have
+[09:35] <Tenjac> and I remember ornedan saying it should already be functioning that wy
+[09:35] <Tenjac> *way
+[09:35] <TigerDragon> spell effect that is just a vfx
+[09:35] <Tenjac> jep
+[09:36] <Tenjac> Other than that, I think it's good to go
+[09:36] <TigerDragon> i think primo's version was to hook it to a skill
+[09:36] <Stratovarius> dont need to
+[09:36] <TigerDragon> i was just repeating in case Tenjac was having issues with the spell effect version
+[09:37] * Tenjac nods
+

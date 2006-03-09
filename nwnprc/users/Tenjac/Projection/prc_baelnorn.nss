@@ -106,22 +106,7 @@ void main()
 	BaelnProp(oSkin, nBonus);
 	BaelnAbil(oSkin, nLevel);
 	BaelnDef(oSkin, nLevel);
-	
+				
 	//Eyes
-	
-	//local int signifying unequip event
-	if(!PROJECTION_UNEQUIP)
-	{
-		//set local int telling to apply vfx
-		SetLocalInt(oPC, "APPLY_BAELNORN_EYES", 1);
-		
-		//assigncommand cheatcasting of the 1) spell to the baelnorn char
-		AssignCommand(oPC, ActionCastSpellAtObject(SPELL_BAELN_EYES, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-	}
-	
-	//hookevent equip - permanent, no duplicates
-	AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_eyeevent", TRUE, FALSE); 
-	
-	//hookevent unequip - permanent, no duplicates
-	AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,    "prc_bn_eyeevent", TRUE, FALSE);
+	AssignCommand(oPC, ActionCastSpellAtObject(SPELL_BAELN_EYES, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
 }

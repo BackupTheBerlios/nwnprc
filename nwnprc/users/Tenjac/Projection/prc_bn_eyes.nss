@@ -14,7 +14,6 @@ void main ()
 		if(!GetHasSpellEffect(SPELL_BAELNEYES, oPC))
 		{	
 			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBaelnEyes, oPC);
-			DeleteLocalInt(oPC, "APPLY_BAELNORN_EYES");
 		}
 	}
 }

@@ -349,7 +349,7 @@ const int VFX_IMP_REDUCE_ABILITY_SCORE_PUR       = 1227;
 const int VFX_IMP_REDUCE_ABILITY_SCORE_SOUNDFX   = 1228;
 
 //Baelnorn eyes by Tenjac
-const int VFX_BAELN_EYES            = 808;
+const int VFX_DUR_BAELN_EYES            = 808;
 
 
 //Supamans Custom VFX for psionics & epic spells

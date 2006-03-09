@@ -3,7 +3,7 @@
    LABEL         ReqType ReqParam1       ReqParam2 
 0  Base_Attack   BAB     5               ****      
 1  Humanoid_Orc  RACE    14              ****       
-2  Orc  RACE    214             ****      
+2  Orc           RACE    214             ****      
 3  HalfOrc       RACE    5               ****      
 4  Gray_Orc      RACE    184             ****      
 5  Orog          RACE    187             ****      

@@ -55,8 +55,8 @@ void main()
     int nPenetr    = nCasterLvl + SPGetPenetr();
     //int nSpellID   = PRCGetSpellId();
 
-    //Fire cast spell at event for the specified target
-    SPRaiseSpellCastAt(oTarget, FALSE);
+    // Fire cast spell at event for the specified target. For friendlies, Maze is considered non-hostile
+    SPRaiseSpellCastAt(oTarget, !GetIsFriend(oTarget));
 
     // Minotaur check
     if(GetRacialType(oTarget) == RACIAL_TYPE_MINOTAUR       ||

@@ -38,41 +38,72 @@ void main()
 	//define vars
 	object oPC = OBJECT_SELF
 	int nSpell = GetSpellId();
+	int nCasterLvL = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nType = MyPRCGetRacialType(oTarget);
+	int nEnchance = 1;
 	string sSword;
 	
-	
-	//Summon blade
-	if(nSpell == SPELL_BONEBLADE_GREATSWORD)
+	//Check for undeath
+	if(nType == RACIAL_TYPE_UNDEAD)
 	{
-		if("CEP")
+		//Summon blade
+		if(nSpell == SPELL_BONEBLADE_GREATSWORD)
 		{
-			sSword = "bbcepgrswrd";
-		}		
-		
-		else sSword = "bonebladegreatsw";
-	}
-	
-	if(nSpell == SPELL_BONEBLADE_LONGSWORD)
-	{
-		if("CEP")
-		{
-			sSword = "bbceplngswrd";
-		}
-		
-		else sSword = "boneblade";
-	}
-	
-	if nSpell == SPELL_BONEBLADE_SHORTSWORD)
-	{
-		if("CEP")
-		{
-			sSword = "bbcepshrtswrd";
-		}
-		
-		else sSword = "bonebladeshortsw"
-	}
+			if("CEP")
+			{
+				sSword = "bbcepgrswrd";
+			}
 			
-	//Create sword	
-	CreateItemOnObject(sSword, oPC, 1);
+			else sSword = "bonebladegreatsw";
+		}
+		
+		if(nSpell == SPELL_BONEBLADE_LONGSWORD)
+		{
+			if("CEP")
+			{
+				sSword = "bbceplngswrd";
+			}
+			
+			else sSword = "boneblade";
+		}
+		
+		if nSpell == SPELL_BONEBLADE_SHORTSWORD)
+		{
+			if("CEP")
+			{
+				sSword = "bbcepshrtswrd";
+			}
+			
+			else sSword = "bonebladeshortsw"
+		}
+				
+		//Create sword	
+		object oSword = CreateItemOnObject(sSword, oPC, 1);
+		
+		//+1 per 5 levels
+		if(nCasterLvl > 9)
+		{
+			nEnchance = 2;
+		}
+		
+		if(nCasterLvl > 14)
+		{
+			nEnhance = 3;
+		}
+		
+		if(nCasterLvl > 19)
+		{
+			nEnhance = 4;
+		}
+		
+		IPSetWeaponEnhancementBonus(oSword, nEnhance);
+		
+		//+1d6 living
+		
+		//+1d6 good
+		itemproperty ipProp = ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_GOOD, d6(1));		
+		
+		IPSafeAddItemProperty(oItem, ipProp);
 	
 	

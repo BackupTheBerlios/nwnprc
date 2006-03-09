@@ -26,7 +26,7 @@ it to be effective.
 Focus: A 6-inch-long bone. 
 
 Author:    Tenjac
-Created:   
+Created:   3/9/2006
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -42,7 +42,10 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nType = MyPRCGetRacialType(oTarget);
 	int nEnchance = 1;
+	float fDuration = (600.0f * nCasterLvl);
 	string sSword;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	//Check for undeath
 	if(nType == RACIAL_TYPE_UNDEAD)
@@ -99,11 +102,28 @@ void main()
 		
 		IPSetWeaponEnhancementBonus(oSword, nEnhance);
 		
-		//+1d6 living
-		
 		//+1d6 good
 		itemproperty ipProp = ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_GOOD, d6(1));		
 		
-		IPSafeAddItemProperty(oItem, ipProp);
+		IPSafeAddItemProperty(oSword, ipProp);
+		
+		//+1d6 living, use onHit Unique Power
+		
+		
+		
+		//Check metamagic
+		if (nMetaMagic == METAMAGIC_EXTEND)
+		{
+			fDuration = (fDuration * 2);
+		}
+		
+		//Schedule deletion of item
+		DelayCommand(fDuration, DestroyObject(oSword));
+		
+	}
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+	
 	
 	

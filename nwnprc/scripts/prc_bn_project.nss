@@ -71,7 +71,9 @@ void main()
     location lTarget = GetSpellTargetLocation();
     effect eLight    = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER, FALSE);
     effect eGlow     = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE, FALSE);
-
+    int nFeat        = FEAT_PROJECTION;
+    float fDur       = HoursToSeconds(1);
+    
     if(DEBUG) DoDebug("prc_bn_project running.\n"
                     + "oPC = '" + GetName(oPC) + "' - '" + GetTag(oPC) + "' - " + ObjectToString(oPC)
                     + "Copy exists: " + BooleanToString(GetIsObjectValid(oCopy))
@@ -82,6 +84,7 @@ void main()
     if(GetIsObjectValid(oCopy))
     {
         EndPosses(oPC, oCopy);
+        //Increment if appropriate
         IncrementRemainingFeatUses(oPC, FEAT_PROJECTION);
         return;
     }
@@ -118,6 +121,9 @@ void main()
     // Do the switching around
     PseudoPosses(oPC, oCopy);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGlow, oPC);
+    
+    //Set up duration marker for ending effect
+    DelayCommand(fDur, SetLocalInt(oPC, "PROJECTION_EXPIRED", 1));
 }
 
 // Moves the PC's items to the copy and switches their locations around
@@ -193,9 +199,6 @@ void EndPosses(object oPC, object oCopy)
     // Remove the VFX and the attack penalty
     RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
     
-    //Remove VFX
-    DelayCommand(2.0f, RemoveSpecificEffect(EFFECT_TYPE_VISUALEFFECT, oPC));
-
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "BaelnornProjection_Active");
 
@@ -235,6 +238,9 @@ void EndPosses(object oPC, object oCopy)
     // VFX
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eLight, lCopy, 3.0);
     DestroyObject(oCopy);
+    
+    //Remove duration marker
+    DeleteLocalInt(oPC, "PROJECTION_EXPIRED");
 }
 
 //Runs tests to see if the projection effect can still continue.
@@ -291,6 +297,12 @@ void ProjectionMonitor(object oPC, object oCopy)
         }
         else
             DelayCommand(PROJECTION_HB_DELAY, ProjectionMonitor(oPC, oCopy));
+        
+        //If duration expired, end effect
+        if(GetLocalInt(oPC, "PROJECTION_EXPIRED"))
+        {
+		EndPosses(oPC, oCopy);
+	}
     }
 }
 

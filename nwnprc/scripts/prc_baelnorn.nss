@@ -96,14 +96,17 @@ void BaelnDef (object oSkin, int nLevel)
 //main method
 void main()
 {
-    //define vars
-    object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin(oPC);
-    int nLevel = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
-    int nBonus = nLevel * 2;
-
-    BaelnProp(oSkin, nBonus);
-    BaelnAbil(oSkin, nLevel);
-    BaelnDef(oSkin, nLevel);
-
+	
+	//define vars    
+	object oPC = OBJECT_SELF;
+	object oSkin = GetPCSkin(oPC);
+	int nLevel = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
+	int nBonus = nLevel * 2;
+		
+	BaelnProp(oSkin, nBonus);
+	BaelnAbil(oSkin, nLevel);
+	BaelnDef(oSkin, nLevel);
+				
+	//Eyes
+	AssignCommand(oPC, ActionCastSpellAtObject(SPELL_BAELN_EYES, oPC, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
 }

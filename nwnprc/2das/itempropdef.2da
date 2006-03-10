@@ -43,7 +43,7 @@
 39  666      ImprovedMagicResist            ****             2     11              ****         5505       1422        
 40  711      ImprovedSavingThrows           IPRP_SAVEELEMENT ****  2               ****         5506       1440        
 41  712      ImprovedSavingThrowsSpecific   IPRP_SAVINGTHROW 0.65  2               ****         5506       1441        
-42  ****     ****                           ****             ****  ****            ****         ****       ****        
+42  ****     bio_reserved                   ****             ****  ****            ****         ****       ****        
 43  713      Keen                           ****             1     0               ****         5507       1079        
 44  714      Light                          ****             1     18              9            5508       1431        
 45  1500     Mighty                         ****             0.25  2               ****         5509       ****        

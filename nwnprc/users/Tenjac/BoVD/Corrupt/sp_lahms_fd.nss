@@ -2,7 +2,7 @@
 //:: Name:     Lahm's Finger Darts
 //:: Filename: sp_lahms_fd.nss
 //::///////////////////////////////////////////////
-/**Lahm's Finger Darts
+/**@file Lahm's Finger Darts
 Transmutation [Evil] 
 Level: Corrupt 2 
 Components: V S, Corrupt 

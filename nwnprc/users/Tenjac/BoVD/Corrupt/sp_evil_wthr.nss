@@ -6,7 +6,8 @@
 Conjuration (Creation) [Evil] 
 Level: Corrupt 8
 Components: V, S, M, XP, Corrupt (see below)
-Casting Time: 1 hour Range: Personal
+Casting Time: 1 hour 
+Range: Personal
 Area: 1-mile/level radius, centered on caster
 Duration: 3d6 minutes 
 Saving Throw: None 
@@ -23,10 +24,11 @@ component or experience point cost.
 Corruption Cost: 3d6 points of Constitution damage.
 
 Author:    Tenjac
-Created:   
+Created:   3/10/2006
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
 
 #include "prc_alterations"
 #include "spinc_common"
@@ -45,26 +47,79 @@ void main()
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nSpell = GetSpellID();
+	int nWeather = GetWeather(oArea);
+	int nType;
+	float fDuration = (d6(3) * 60.0f);
 	
-	//Rain of Blood
+	//Rain of Blood  -1 to attack, damage, saves and checks living, +1 undead
 	if (nSpell == SPELL_RAIN_OF_BLOOD)
 	{
 		//Change to rain
-		SetWeather(oArea, WEATHER_RAIN);
+		SetWeather(oArea, WEATHER_RAIN);		
+		DelayCommand(fDuration, SetWeather(oArea, nWeather));
 		
-		//Change sky
-		SetSkyBox(SKYBOX_GRASS_STORM, oArea);
+		//Spell VFX
+		
+		//Define effects
+		effect eBuff = EffectAttackIncrease(1);
+		effect eBuff = EffectLinkEffects(eBuff, EffectDamageIncrease(1));
+		effect eBuff = EffectLinkEffects(eBuff, EffectSavingThrowIncrease(SAVING_THROW_ALL, 1));
+		effect eBuff = SupernaturalEffect(eBuff);
+		effect eDebuff = EffectAttackDecrease(1);
+		effect eDebuff = EffectLinkEffects(eDebuff, EffectDamageDecrease(1));
+		effect eDebuff = EffectLinkEffects(eDebuff, EffectSavingThrowDecrease(SAVING_THROW_ALL, 1));
+		effect eDebuff = SupernaturalEffect(eDebuff);
+		
+		//GetFirst
+		object oObject = GetFirstObjectInArea(oArea);
+		
+		//Loop
+		while(GetIsObjectValid(oObject))
+		{
+			nType = MyPRCGetRacialType(oObject);
+			
+			if (nType == RACIAL_TYPE_UNDEAD)
+			{
+				//Apply bonus
+				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oObject, fDuration);
+			}
+			
+			else
+			{	//Apply penalty if alive
+				if(nType != RACIAL_TYPE_CONSTRUCT && nType != RACIAL_TYPE_ELEMENTAL)
+				
+				{
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDebuff, oObject, fDuration);					   
+				}
+			}
+			
+			oObject = GetNextObjectInArea();
+		}		
 	}
 	
-	//Violet Rain
+	//Violet Rain   No divine spells/abilities for 24 hours
 	if (nSpell == SPELL_VIOLET_RAIN)
 	{
-		//Change to rain
-		SetWeather(oArea, WEATHER_RAIN);
-		
-		//Change sky
-		SetSkyBox(SKYBOX_GRASS_STORM, oArea);
+		if(HasGold(10000, oPC))
+		{
+			//Spend Gold
+			TakeGold(10000, oPC, TRUE);
+			
+			//Handle 200XP cost
+			int nXP = GetXP(oPC);
+			int nNewXP = (nXP - 200);
+			SetXP(oPC, nNewXP);
+			
+			//Set local on area
+			SetLocalInt(oArea, "VIOLET_RAIN_MARKER", 1);
+			
+			//Change to rain
+			SetWeather(oArea, WEATHER_RAIN);
+			
+			DelayCommand(fDuration, SetWeather(oArea, nWeather));
+			DelayCommand(fDuration, DeleteLocalInt(oArea, "VIOLET_RAIN_MARKER"));		
 	}
+	
 	//Green Fog
 	if (nSpell == SPELL_GREEN_FOG)
 	{
@@ -76,13 +131,17 @@ void main()
 	if (nSpell == SPELL_RAIN_OF_FISH)
 	{
 		//Change to rain
-		SetWeather(oArea, WEATHER_RAIN);
-	}
+		SetWeather(oArea, WEATHER_RAIN);		
+		DelayCommand(fDuration, SetWeather(oArea, nWeather));
+		
+	}	
+	
+	SPEvilShift(oPC);
 	
 	//Corruption cost
 	int nCost = d6(3);
 	
-	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost 0);
+	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);
 	
 	SPSetSchool();
 }

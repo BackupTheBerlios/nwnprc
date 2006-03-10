@@ -39,22 +39,6 @@ Corruption Cost: 1 point of Wisdom drain.
 //:://////////////////////////////////////////////
 #include "spinc_common"
 
-void DrainStat(int nAbility, object oTarget, object oPC, int nRoundCounter)
-{
-	if(nRoundCounter > 0)
-	{
-		//Apply Damage
-		
-		//Give bonus
-		
-		//decrement nRoundCounter
-		nRoundCounter--;
-		
-		DelayCommand(6.0f, DrainStat(nAbility, oTarget, oPC, nRoundCounter);	
-	}
-}
-
-
 void main()
 {
 	
@@ -82,15 +66,12 @@ void main()
 	}
 	
 	//Check for ability to drain
-	
+		
 	/*  <Stratovarius> That would be easiest to do as a convo I think
             <Stratovarius> just steal the animal affinity one from psionics and modify*/
 	
-	
-	
-	//Start the drain
-	DrainStat(nAbility, oTarget, oPC, nRoundCounter);
-	
+	StartDynamicConversation("power_leech", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
+				
 	//Corruption Cost
 	{
 		DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_WISDOM, 1, 1));

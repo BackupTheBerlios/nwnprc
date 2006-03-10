@@ -28,4 +28,41 @@ void main()
         SetXP(oCohort, (GetHitDice(oCohort)*(GetHitDice(oCohort)-1)*500)-1);
     }
     //handle levelup
+    if(GetXP(oCohort) >= (GetHitDice(oCohort)*(GetHitDice(oCohort)-1)*500))
+    {
+        //standard
+        if(GetResRef(oCohort) != "")
+        {
+            LevelUpHenchman(oCohort, CLASS_TYPE_INVALID, TRUE);    
+        }
+        else
+        {
+            //custom
+            //resummon it but dont decrease XP as much
+            int nCohortID = GetLocalInt(oCohort, "CohortID");
+            object oNewCohort = AddCohortToPlayer(nCohortID, oPC);
+            
+            //copy its equipment & inventory
+            object oTest = GetFirstItemInInventory(oCohort);
+            while(GetIsObjectValid(oTest))
+            {
+                if(!GetLocalInt(oTest, "CohortCopied"))
+                    object oNewTest = CopyItem(oTest, oNewCohort, TRUE);
+                SetLocalInt(oTest, "CohortCopied", TRUE);
+                DestroyObject(oTest);
+                oTest = GetNextItemInInventory(oCohort);
+            }
+            int nSlot;
+            for(nSlot = 0;nSlot<14;nSlot++)
+            {
+                oTest = GetItemInSlot(nSlot, oCohort);  
+                object oTest2 = CopyItem(oTest, oNewCohort, TRUE);
+                AssignCommand(oNewCohort, ActionEquipItem(oTest2, nSlot));
+                DestroyObject(oTest);
+            }
+            //destroy old cohort
+            SetIsDestroyable(TRUE, FALSE, FALSE);
+            DestroyObject(OBJECT_SELF);
+        }
+    }
 }   

@@ -29,7 +29,7 @@ object GetCohort(int nID, object oPC);
 int GetCurrentCohortCount(object oPC);
 int GetCohortMaxLevel(int nLeadership, object oPC);
 void RegisterAsCohort(object oPC);
-void AddCohortToPlayer(int nCohortID, object oPC);
+object AddCohortToPlayer(int nCohortID, object oPC);
 void AddCohortToPlayerByObject(object oCohort, object oPC);
 void RemoveCohortFromPlayer(object oCohort, object oPC);
 int GetLeadershipScore(object oPC = OBJECT_SELF);
@@ -51,15 +51,18 @@ void StoreCohort(object oCohort);
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-void AddCohortToPlayer(int nCohortID, object oPC)
+object AddCohortToPlayer(int nCohortID, object oPC)
 {
     object oCohort = RetrieveCampaignObject(COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_obj", GetLocation(oPC));
     //give it a tag
     DestroyObject(oCohort);
     oCohort = CopyObject(oCohort, GetLocation(oPC), OBJECT_INVALID, COHORT_TAG);
+    SetLocalInt(oCohort, "CohortID", nCohortID);
     //pass it to the next function
     AddCohortToPlayerByObject(oCohort, oPC);
+    return oCohort;
 }    
+
 void AddCohortToPlayerByObject(object oCohort, object oPC)
 {
     //add it to the pc
@@ -449,6 +452,30 @@ int GetIsCohortChoiceValid(string sName, int nRace, int nClass1, int nClass2, in
             && nClass2 != CLASS_TYPE_BARBARIAN
             && nClass3 != CLASS_TYPE_BARBARIAN)
                 bIsValid = FALSE;
+    }
+    //OrcWarlord
+    if(bIsValid
+        && GetHasFeat(FEAT_GATHER_HORDE_I, oPC))
+    {
+        int nOrcCount = 0;
+        for(i=1;i<=nCohortCount;i++)
+        {
+            object oCohort = GetCohort(i, oPC);
+            if(GetIsObjectValid(oCohort)
+                && (MyPRCGetRacialType(oCohort) == RACIAL_TYPE_HUMANOID_ORC
+                    || MyPRCGetRacialType(oCohort) == RACIAL_TYPE_HALFORC))
+                nOrcCount++;
+        }
+        //must have at least one orc
+        if(!nOrcCount
+            && GetCurrentCohortCount(oPC) >= GetMaximumCohortCount(oPC)-1
+            && nRace != RACIAL_TYPE_HUMANOID_ORC
+            && nRace != RACIAL_TYPE_HALFORC
+            && nRace != RACIAL_TYPE_GRAYORC
+            && nRace != RACIAL_TYPE_OROG
+            && nRace != RACIAL_TYPE_TANARUKK
+            )
+            bIsValid = FALSE;
     }
     //Undead Leadership
     //Wild Cohort

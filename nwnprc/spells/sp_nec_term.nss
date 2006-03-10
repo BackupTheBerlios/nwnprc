@@ -44,32 +44,6 @@
 #include "prc_inc_spells"
 
 
-//Check for XP
-int GetHasXPToSpend(object oPC, int nCost)
-{
-    // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
-    int nHitDice = GetHitDice(oPC);
-    int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
-    int nXP = GetXP(oPC);
-    if(!GetIsPC(oPC))
-        nXP = GetLocalInt(oPC, "NPC_XP");
-    if (nXP >= (nHitDiceXP + nCost))
-        return TRUE;
-    return FALSE;
-}
-
-//Spend XP
-void SpendXP(object oPC, int nCost)
-{
-    if (nCost > 0)
-    {
-        if(GetIsPC(oPC))
-            SetXP(oPC, GetXP(oPC) - nCost);
-        else
-            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nCost);
-    }
-}
-
 void main()
 {
     // Set the spellschool
@@ -101,9 +75,7 @@ void main()
           int nCost = 1000;
         //Check XP if perma-death enabled
         if(GetHasXPToSpend(oPC, nCost))
-        {
             SpendXP(oPC, nCost);
-        }
         else
         {
             SendMessageToPC(oPC, "You don't have enough experience to cast this spell");

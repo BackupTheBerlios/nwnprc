@@ -170,12 +170,6 @@ int GetCanCastSpell(object oPC, int nEpicSpell);
 // Returns the adjusted DC of a spell that takes into account oPC's Spell Foci.
 int GetDCSchoolFocusAdjustment(object oPC, string sChool);
 
-// Returns TRUE if oPC has enough excess XP to spend on the casting of a spell.
-int GetHasXPToSpend(object oPC, int nCost);
-
-// Spends oPC's XP on the casting of the spell.
-void SpendXP(object oPC, int nCost);
-
 // Checks to see if oPC has a creature hide. If not, create and equip one.
 void EnsurePCHasSkin(object oPC);
 
@@ -356,8 +350,6 @@ int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
     int nHitDice = GetHitDice(oPC);
     int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
     int nXP = GetXP(oPC);
-    if (!GetIsPC(oPC))
-        nXP = GetLocalInt(oPC, "NPC_XP");
     if (nXP >= (nHitDiceXP + (nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION))))
         return TRUE;
     return FALSE;
@@ -455,30 +447,6 @@ int GetCanCastSpell(object oPC, int nEpicSpell)
     SpendXP(oPC, nSpellXP); // Only spends the XP on a successful casting.
     DecrementSpellSlots(oPC);
     return TRUE;
-}
-
-int GetHasXPToSpend(object oPC, int nCost)
-{
-    // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
-    int nHitDice = GetHitDice(oPC);
-    int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
-    int nXP = GetXP(oPC);
-    if(!GetXP(oPC))
-        nXP = GetLocalInt(oPC, "NPC_XP");
-    if (nXP >= (nHitDiceXP + nCost))
-        return TRUE;
-    return FALSE;
-}
-
-void SpendXP(object oPC, int nCost)
-{
-    if (nCost > 0)
-    {
-        if(GetXP(oPC))
-            SetXP(oPC, GetXP(oPC) - nCost);
-        else
-            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nCost);
-    }
 }
 
 void GiveFeat(object oPC, int nFeatIP)

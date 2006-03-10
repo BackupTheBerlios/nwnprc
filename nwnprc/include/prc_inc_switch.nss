@@ -640,6 +640,12 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * Simulates PnP rules where you can add strength to damage
   */
  const string PRC_PNP_SLINGS                      = "PRC_PNP_SLINGS";
+ 
+ /*
+  * This is a local variable set on NPCs that is converted to real XP
+  * in the OnSpawn event. Used for epic spells and other XP-burning stuff
+  */  
+ const string PRC_NPC_XP                             = "PRC_NPC_XP";
 
 /******************************************************************************\
 *                               ACP switches                              *
@@ -1449,9 +1455,7 @@ const string PRC_XP_SUMMONED_PARTY_COUNT_x100        = "PRC_XP_SUMMONED_PARTY_CO
 const string PRC_XP_USE_SETXP                        = "PRC_XP_USE_SETXP";
 
 /**
- * Give XP to NPCs via a local int variable on the NPC named "NPC_XP".
- * This is used for epic spells that require XP and could also be hooked into
- * henchmen levelling systems.
+ * Give XP to NPCs
  */
 const string PRC_XP_GIVE_XP_TO_NPCS                  = "PRC_XP_GIVE_XP_TO_NPCS";
 

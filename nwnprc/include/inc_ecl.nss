@@ -46,7 +46,7 @@ int GetECL(object oTarget)
   //   level = 0.5 + sqrt(0.25 + (t/500))
   //
     if(GetPRCSwitch(PRC_ECL_USES_XP_NOT_HD)
-        && (GetIsPC(oTarget) || GetLocalInt(oTarget, "NPC_XP")))
+        && GetXP(oTarget))
         nLevel = FloatToInt(0.5 + sqrt(0.25 + ( IntToFloat(GetXP(oTarget)) / 500 )));
     else
         nLevel = GetHitDice(oTarget);
@@ -205,8 +205,6 @@ void ApplyECLToXP(object oPC)
 {
     //this is done first because leadership uses it too
     int iCurXP = GetXP(oPC);
-    if(!GetIsPC(oPC))
-        iCurXP = GetLocalInt(oPC, "NPC_XP");
     //if dm reduces Xp to zero, set the local to match.
     if(iCurXP == 0)
         SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, 0);
@@ -240,10 +238,7 @@ void ApplyECLToXP(object oPC)
         SendMessageToPC(oPC, "Real XP to level: "+IntToString(FloatToInt(fRealXPToLevel)));
         SendMessageToPC(oPC, "ECL XP to level:  "+IntToString(FloatToInt(fECLXPToLevel)));
         SendMessageToPC(oPC, "Level Adjustment +"+IntToString(iLvlAdj)+". Reducing XP by " + IntToString(iXPDif));
-        if(GetIsPC(oPC))
-            SetXP(oPC, newXP);
-        else
-            SetLocalInt(oPC, "NPC_XP", newXP);
+        SetXP(oPC, newXP);
         SetPersistantLocalInt(oPC, sXP_AT_LAST_HEARTBEAT, newXP);
     }
 }

@@ -381,6 +381,28 @@ float GetRelativeAngleBetweenLocations(location lFrom, location lTo);
  * @return       A string of the itemproperty, including spaces and bracket where appropriate
  */
 string ItemPropertyToString(itemproperty ipTest);
+
+
+/**
+ * Tests if a creature can burn the amount of XP specified without loosing a level
+ *
+ * @param oPC   Creature to test, can be an NPC or a PC
+ * @param nCost Amount of XP to chck for
+ *
+ * @return       TRUE/FALSE
+ */
+int GetHasXPToSpend(object oPC, int nCost);
+
+
+/**
+ * Removes an amount of XP via SetXP()
+ *
+ * @param oPC   Creature to remove XP from, can be an NPC or a PC
+ * @param nCost Amount of XP to remove for
+ */
+void SpendXP(object oPC, int nCost);
+
+
 //////////////////////////////////////////////////
 /* Include section                              */
 //////////////////////////////////////////////////
@@ -1001,6 +1023,27 @@ string ItemPropertyToString(itemproperty ipTest)
             sName += " "+GetStringByStrRef(nTlk);
     }
     return sName;
+}
+
+//Check for XP
+int GetHasXPToSpend(object oPC, int nCost)
+{
+    // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
+    int nHitDice = GetHitDice(oPC);
+    int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
+    int nXP = GetXP(oPC);
+    if (nXP >= (nHitDiceXP + nCost))
+        return TRUE;
+    return FALSE;
+}
+
+//Spend XP
+void SpendXP(object oPC, int nCost)
+{
+    if (nCost > 0)
+    {
+        SetXP(oPC, GetXP(oPC) - nCost);
+    }
 }
 
 // Test main

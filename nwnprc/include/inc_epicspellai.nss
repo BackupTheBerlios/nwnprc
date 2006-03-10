@@ -636,12 +636,12 @@ void DoEpicSpellcasterSpawn()
         && GetIsEpicWizard(OBJECT_SELF) ==FALSE)
         return;
     int nLevel = GetHitDice(OBJECT_SELF);
-    //give pseudoXP if not already set
-    if(!GetLocalInt(OBJECT_SELF, "NPC_XP"))
+    //give pseudoXP if not already given
+    if(!GetXP(OBJECT_SELF))
     {
         int nXP =(nLevel*(nLevel-1))*500;
         nXP = nXP + FloatToInt(IntToFloat(nLevel)*1000.0*((IntToFloat(Random(51))+25.0)/100.0));
-        SetLocalInt(OBJECT_SELF, "NPC_XP", nXP);
+        SetXP(OBJECT_SELF, nXP);
     }
     //fill slots
     ReplenishSlots(OBJECT_SELF);

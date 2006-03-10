@@ -16,7 +16,6 @@ rolls have a -2 circumstance penalty for every four
 caster levels (maximum penalty -10).
 
 
-
 Liquid Pain
 Necromancy
 Level: Pain 4, Sor/Wiz 4

@@ -580,3 +580,6 @@ const int SPELL_DISCIPLE_ASMODEUS_DEVIL_GEL   = -1;
 const int SPELL_DISCIPLE_ASMODEUS_DEVIL_GLAB  = -1;
 const int SPELL_DISCIPLE_ASMODEUS_DEVIL_HAM   = -1;
 const int SPELL_DISCIPLE_ASMODEUS_DEVIL_OSY   = -1;
+
+// Soulknife
+const int SPELL_MINDBLADE_LUCKY                     = 2429;

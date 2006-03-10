@@ -9189,14 +9189,19 @@ Use: Automatic on manifesting mindblades, select to change special abilities
 
 
 Weapon Special Ability  Enhancement Bonus Value
+Lucky                   +1
 Defending               +1
 Keen                    +1
 Vicious                 +1
+PsychoKinetic           +1
+Mighty Cleaving         +2
 Collision               +2
-Psychokinetic Burst     +2
 Mindcrusher             +2
+Psychokinetic Burst     +2
 Suppression             +2
-Wounding                +2</entry>
+Wounding                +2
+Discrupting             +3
+Soulbreaker             +4</entry>
   <entry id="47248" lang="en" sex="m">Bladewind</entry>
   <entry id="47249" lang="en" sex="m">Type of Feat: Class
 Prerequisites: Soulknife 9th
@@ -9509,7 +9514,7 @@ The mindblade is keen, doubling it's critical range.</entry>
   <entry id="47363" lang="en" sex="m">Enhancement value: +1
 A defending mindblade grants it's wielder a +2 AC bonus.</entry>
   <entry id="47364" lang="en" sex="m">Enhancement value: +1
-TODO: Fill in</entry>
+A lucky mindblade may be activated once per day to grant a +1 bonus to attack and damage rolls and all saves for 1 round per soulknife level</entry>
   <entry id="47365" lang="en" sex="m">Current selections:
 &lt;CUSTOM100&gt;
 
@@ -9791,6 +9796,8 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   <entry id="47474" lang="en" sex="m">Rapid Blast 2</entry>
   <entry id="47475" lang="en" sex="m">Rapid Blast 3</entry>
   <entry id="47476" lang="en" sex="m">Absorb Friendly Spells</entry>
+  <entry id="47477" lang="en" sex="m">Once per day, you may use the Lucky mindblade enhancement to gain +1 bonus to attack and damage rolls and saves for a duration of 1 round per soulknife level.</entry>
+  <entry id="47478" lang="en" sex="m">You have already used up the Lucky ability for today.</entry>
   <entry id="47500" lang="en" sex="m">Werewolf</entry>
   <entry id="47501" lang="en" sex="m">Werewolves</entry>
   <entry id="47502" lang="en" sex="m">werewolf</entry>

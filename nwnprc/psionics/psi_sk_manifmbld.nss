@@ -242,10 +242,10 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     int nFlags = GetPersistantLocalInt(oPC, MBLADE_FLAGS);
     int bLight = FALSE;
 
-    /*if(nFlags & MBLADE_FLAG_LUCKY)
+    if(nFlags & MBLADE_FLAG_LUCKY)
     {
-        WriteTimestampedLogEntry("Mindblade enhancement Lucky activated. Please bugreport");
-    }*/
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyCastSpell(IP_CONST_CASTSPELL_MINDBLADE_LUCKY, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY), oMbld);
+    }
     if(nFlags & MBLADE_FLAG_DEFENDING)
     {
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(2), oMbld);

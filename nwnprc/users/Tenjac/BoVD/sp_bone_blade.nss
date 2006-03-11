@@ -105,11 +105,11 @@ void main()
 		//+1d6 good
 		itemproperty ipProp = ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_GOOD, d6(1));		
 		
-		IPSafeAddItemProperty(oSword, ipProp);
+		IPSafeAddItemProperty(oSword, ipProp, 0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
 		
 		//+1d6 living, use onHit Unique Power
-		
-		
+		itemproperty ipBlade = (ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1));
+		IPSafeAddItemProperty(oSword, ipBlade, 0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
 		
 		//Check metamagic
 		if (nMetaMagic == METAMAGIC_EXTEND)

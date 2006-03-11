@@ -814,8 +814,26 @@ int InscribeRune()
     {
         string sName = GetName(GetItemPossessor(oItem));
         if (DEBUG) FloatingTextStringOnCreature(sName + " has just cast a rune spell", oCaster, FALSE);
-        //SetLocalInt(oCaster, "PRCRuneTarget", TRUE);
-        //if (GetLocalInt(GetLastSpellCaster(), "PRCRuneTarget") && DEBUG) FloatingTextStringOnCreature("GetLastSpellCaster has PRCRuneTarget set TRUE", oCaster, FALSE);
+        
+        DoDebug("Checking for One Use runes");
+        // This check is used to clear up the one use runes
+        itemproperty ip = GetFirstItemProperty(oItem);
+	while(GetIsItemPropertyValid(ip))
+	{
+	        if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL)
+	        {
+	        	DoDebug("Rune can cast spells");
+	        	if (GetItemPropertyCostTableValue(ip) == 5) // Only one use runes have 2 charges per use
+	        	{
+	        		DoDebug("Rune has 2 charges a use, marking it a one use rune");
+	        		// Give it enough time for the spell to finish casting
+	        		DestroyObject(oItem, 1.0);
+	        		DoDebug("Rune destroyed.");
+	        	}
+	        }
+
+	ip = GetNextItemProperty(oItem);
+    	}
     }
 
     // If Inscribing is turned off, the spell functions as normal
@@ -939,6 +957,16 @@ int InscribeRune()
 
             itemproperty ipProp = ItemPropertyCastSpell(nPropID,nIPUses);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
+        }
+        else if (nCharges == 1) // This is to handle one use runes so the spellhooking works
+        {
+            itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_2_CHARGES_PER_USE);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune); 
+            SetItemCharges(oRune,3); // Ensures the item isn't destroyed right away
+            //SetPlotFlag(oRune, TRUE); // Can't sell the item for money
+	    SetXP(oCaster,nNewXP);
+            TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
+            return FALSE;
         }
         else // Do the normal charges
         {

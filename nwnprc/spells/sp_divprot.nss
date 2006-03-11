@@ -9,6 +9,8 @@
 void main()
 {
 	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+	if (!X2PreSpellCastCode()) return;
 	
 	// Get the spell target location as opposed to the spell target.
 	location lTarget = GetSpellTargetLocation();

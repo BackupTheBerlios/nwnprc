@@ -56,8 +56,8 @@ void main()
     // through the .2da's, the newly leveled up player meets.
     ExecuteScript("prc_prereq", oPC);
     // These HAVE to run after prc_prereq, they rely on variables it sets
-    ExecuteScript("prc_enforce_feat", oPC);
-    ExecuteScript("prc_enforce_psi", oPC);
+    DelayCommand(0.5, ExecuteScript("prc_enforce_feat", oPC));
+    DelayCommand(0.5, ExecuteScript("prc_enforce_psi", oPC));
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
 

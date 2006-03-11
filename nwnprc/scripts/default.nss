@@ -448,7 +448,7 @@ void RunScript(string sEvent)
     }
     else if(sEvent == "heartbeat")
     {
-        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_ONHEARTBEAT);
+        ExecuteAllScriptsHookedToEvent(oSelf, EVENT_VIRTUAL_ONHEARTBEAT);
     }
     else if(sEvent == "perception")
     {

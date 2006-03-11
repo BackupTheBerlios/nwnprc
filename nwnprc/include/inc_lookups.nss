@@ -192,16 +192,20 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
-//    else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
-//        return;
+    //token exists, if starting new run abort assuming restored from database
+    if(nMin == 0
+        && array_exists(oWP, sTag))
+        return;
+        
+    if(nMin == 0)
+        array_create(oWP, sTag);  
+        
     if(!GetIsObjectValid(oWP))
     {
         DoDebug("Problem creating token for "+sTag);
         return;
     }  
     
-    if(nMin == 0)
-        array_create(oWP, sTag);  
     
     int i = nMin;
     for(i=nMin;i<nMin+nLoopSize;i++)
@@ -226,6 +230,21 @@ DoDebug("MakeSpellbookLevelLoop("
 void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn, 
     string sDestColumn, string sVarNameBase, int nLoopSize = 100)
 {
+
+    string sFile;
+    if(nClass == CLASS_TYPE_PSION          ||
+       nClass == CLASS_TYPE_PSYWAR         ||
+       nClass == CLASS_TYPE_WILDER         ||
+       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
+       nClass == CLASS_TYPE_WARMIND
+    //add new psionic classes here
+        )
+        sFile = GetPsiBookFileName(nClass);
+    else
+    {
+        sFile = Get2DACache("classes", "FeatsTable", nClass);
+        sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+    }    
     //get the token to store it on
     //this is piggybacked into 2da caching
     string sTag = "PRC_"+sVarNameBase;
@@ -250,28 +269,16 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
     //else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
-    //    return;
+    if(nMin == 0
+        && GetLocalInt(oWP, sTag+"_"+IntToString(StringToInt(Get2DACache(sFile, sSourceColumn, nMin)))))
+        return;
+        
     //cant short-ciruit it cos it gets confused between classes
     if(!GetIsObjectValid(oWP))
     {
         DoDebug("Problem creating token for "+sTag);
         return;
     }
-
-    string sFile;
-    if(nClass == CLASS_TYPE_PSION          ||
-       nClass == CLASS_TYPE_PSYWAR         ||
-       nClass == CLASS_TYPE_WILDER         ||
-       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
-       nClass == CLASS_TYPE_WARMIND
-    //add new psionic classes here
-        )
-        sFile = GetPsiBookFileName(nClass);
-    else
-    {
-        sFile = Get2DACache("classes", "FeatsTable", nClass);
-        sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-    }    
 
     int i = nMin;
     for(i=nMin;i<nMin+nLoopSize;i++)

@@ -123,7 +123,7 @@ void main()
             else if(nStage == STAGE_IMPROVE_PARAM1)
             {
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
-                int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
+                int nSubType = GetLocalInt(oPC, "codi_ancdai_subtype");
                 SetHeader("Which variation of itemproperty do you wish to add?");
                 AddChoice("Go back.", CHOICE_RETURN_TO_PREVIOUS, oPC);
                 string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
@@ -152,7 +152,7 @@ void main()
             else if(nStage == STAGE_IMPROVE_VALUE)
             {
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
-                int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
+                int nSubType = GetLocalInt(oPC, "codi_ancdai_subtype");
                 int nParam1 = GetLocalInt(oPC, "codi_ancdai_param1");
                 SetHeader("Which value of itemproperty do you wish to add?");
                 AddChoice("Go back.", CHOICE_RETURN_TO_PREVIOUS, oPC);
@@ -172,7 +172,7 @@ void main()
             else if(nStage == STAGE_IMPROVE_ADD)
             {
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
-                int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
+                int nSubType = GetLocalInt(oPC, "codi_ancdai_subtype");
                 int nParam1 = GetLocalInt(oPC, "codi_ancdai_param1");
                 int nValue = GetLocalInt(oPC, "codi_ancdai_value");
                 int nVar2;
@@ -480,8 +480,8 @@ void main()
                     {
                         //no param1
                         //check value
-                        string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
-                        if(sValueResRef != "")
+                        int nValueResRef = StringToInt(Get2DACache("itempropdef", "CostTableResRef", nType));
+                        if(nValueResRef)
                         {
                             nStage = STAGE_IMPROVE_VALUE;                     
                         }
@@ -535,12 +535,13 @@ void main()
                             sSubType = "";
                         }
                     }
+                    //this is not an else statement
                     if(sSubType == "")
                     {
                         //no param1
                         //check value
-                        string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
-                        if(sValueResRef != "")
+                        int nValueResRef = StringToInt(Get2DACache("itempropdef", "CostTableResRef", nType));
+                        if(nValueResRef)
                         {
                             nStage = STAGE_IMPROVE_VALUE;                     
                         }
@@ -568,7 +569,7 @@ void main()
             {
                 SetLocalInt(oPC, "codi_ancdai_param1", nChoice);
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
-                int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
+                int nSubType = GetLocalInt(oPC, "codi_ancdai_subtype");
                 //check value
                 string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
                 if(sValueResRef != "")
@@ -613,7 +614,7 @@ void main()
             {
                 //add the itemproperty
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
-                int nSubType = GetLocalInt(oPC, "codi_ancdai_sub_type");
+                int nSubType = GetLocalInt(oPC, "codi_ancdai_subtype");
                 int nParam1 = GetLocalInt(oPC, "codi_ancdai_param1");
                 int nValue = GetLocalInt(oPC, "codi_ancdai_value");
                 int nVar2;

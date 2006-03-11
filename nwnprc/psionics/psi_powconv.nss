@@ -310,7 +310,7 @@ void main()
         // Restart the convo to pick next power if needed
         // done via EvalPRCFFeats to avoid convlicts with new spellbooks
         //ExecuteScript("psi_powergain", oPC);
-        EvalPRCFeats(oPC);
+        DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     else if(nValue == DYNCONV_ABORTED)
     {

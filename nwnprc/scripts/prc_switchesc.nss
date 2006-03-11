@@ -53,12 +53,22 @@ const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
 void AddCohortRaces(int nMin, int nMax, object oPC)
 {
     int i;
+    int nMaxHD = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     for(i=nMin;i<nMax;i++)
     {
         if(Get2DACache("racialtypes", "PlayerRace", i) == "1")
         {
             string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", i)));
-            AddChoice(sName, i);
+            //if using racial HD, dont add them untill they can afford the minimum racial hd
+            if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
+            {
+                //get the real race
+                int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", i));
+                if(nMaxHD > nRacialHD)
+                    AddChoice(sName, i);
+            }
+            else
+                AddChoice(sName, i);
         }
     }              
 }  
@@ -812,6 +822,26 @@ void main()
                     AdjustAlignment(oCohort, ALIGNMENT_LAWFUL, nOrder-nCurrentOrder);
                 else if(nCurrentOrder > nOrder)
                     AdjustAlignment(oCohort, ALIGNMENT_CHAOTIC, nCurrentOrder-nOrder);
+                //level it up
+                int i;
+                //if simple racial HD on, give them racial HD
+                if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
+                {
+                    //get the real race
+                    int nRace = GetRacialType(oCohort);
+                    int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", nRace));
+                    int nRacialClass = StringToInt(Get2DACache("ECL", "RaceClass", nRace));
+                    for(i=0;i<nRacialHD;i++)
+                    {
+                        LevelUpHenchman(oCohort, nRacialClass, TRUE);
+                    }
+                }
+                //give them their levels in their class
+                int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
+                for(i=GetHitDice(oCohort);i<nLevel;i++)
+                {
+                    LevelUpHenchman(oCohort, CLASS_TYPE_INVALID, TRUE);
+                }
                 //add to player
                 //also does name/portrait/bodypart changes via DoDisguise
                 AddCohortToPlayerByObject(oCohort, oPC);

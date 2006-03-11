@@ -213,7 +213,7 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
         DeleteLocalInt(oPC, "SelectedSpell");
         DeleteLocalInt(oPC, "SpellbookMinSpelllevel");
         DeleteLocalInt(oPC, "SpellbookMaxSpelllevel");
-        EvalPRCFeats(oPC);
+        DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -227,7 +227,7 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
         DeleteLocalInt(oPC, "SpellGainClass");
         DeleteLocalInt(oPC, "SpellbookMinSpelllevel");
         DeleteLocalInt(oPC, "SpellbookMaxSpelllevel");
-        EvalPRCFeats(oPC);
+        DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     // Handle PC responses
     else

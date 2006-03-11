@@ -18,7 +18,7 @@
 #include "prc_alterations"
 #include "prc_inc_leadersh"
 
-const int LOCAL_DEBUG = FALSE; //DEBUG;
+const int LOCAL_DEBUG = TRUE; //DEBUG;
 
 /**************************/
 /* Declarations for Tests */

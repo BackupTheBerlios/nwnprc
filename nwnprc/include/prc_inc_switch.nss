@@ -282,6 +282,12 @@ const string PRC_SAMURAI_SACRIFICE_SCALAR_x100       = "PRC_SAMURAI_SACRIFICE_SC
  */
 const string PRC_SAMURAI_VALUE_SCALAR_x100           = "PRC_SAMURAI_VALUE_SCALAR_x100";
 
+/*
+ * Orc Warlord gets a single additional cohort that must be an orc of some sort instead 
+ * of multiple summons
+ */
+const string PRC_ORC_WARLORD_COHORT                  = "PRC_ORC_WARLORD_COHORT";
+
 /******************************************************************************\
 *                               Epic Spell switches                            *
 \******************************************************************************/
@@ -2061,6 +2067,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SAMURAI_ALLOW_UNIDENTIFIED_SACRIFICE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SAMURAI_SACRIFICE_SCALAR_x100);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SAMURAI_VALUE_SCALAR_x100);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ORC_WARLORD_COHORT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_EPIC_XP_COSTS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_EPIC_TAKE_TEN_RULE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE);

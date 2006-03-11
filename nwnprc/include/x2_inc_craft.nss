@@ -548,7 +548,15 @@ These dont work as IPs since they are hardcoded */
         SetXP(oCaster, nNewXP);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
+        //if time is enabled, fast forward
         AdvanceTimeForPlayer(oCaster, HoursToSeconds(24));
+        //1.67 code
+        /*
+        string sName;
+        sName = Get2DACache("spells", "Name", nID);
+        sName = "Potion of "+GetStringByStrRef(StringToInt(sName));
+        SetName(oPotion, sName);
+        */
         return TRUE;
      }
      else
@@ -791,7 +799,15 @@ These dont work as IPs since they are hardcoded */
         SetXP(oCaster, nNewXP);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
+        //if time is enabled, fast forward
         AdvanceTimeForPlayer(oCaster, HoursToSeconds((nGoldCost/5000)*24));
+        //1.67 code
+        /*
+        string sName;
+        sName = Get2DACache("spells", "Name", nID);
+        sName = "Wand of "+GetStringByStrRef(StringToInt(sName));
+        SetName(oPotion, sName);
+        */
         return TRUE;
      }
      else
@@ -989,6 +1005,15 @@ int InscribeRune()
         SetItemCharges(oRune,nCharges);
         SetXP(oCaster,nNewXP);
         TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
+        //1.67 code
+        /*
+        string sName;
+        sName = Get2DACache("spells", "Name", nID);
+        sName = "Rune of "+GetStringByStrRef(StringToInt(sName));
+        if(GetLocalInt(oCaster, "MaximizeRune"))
+            sName = "Maximized "+sName;
+        SetName(oRune, sName);
+        */
     }
 
     // If we have made it this far, they have crafted the rune and the spell has been used up, so it returns false.

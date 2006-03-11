@@ -60,6 +60,11 @@ int GetCanSummonOrc(object oPC, string sCreatureResRef)
 
 void main()
 {
+    if(GetPRCSwitch(PRC_ORC_WARLORD_COHORT))
+    {
+        FloatingTextStringOnCreature("This has been disabled.", OBJECT_SELF);
+        return;
+    }    
     object oPC = OBJECT_SELF;
     int iOrcWarlordLevel = GetLevelByClass(CLASS_TYPE_ORC_WARLORD, oPC);
     int iHD = GetHitDice(oPC);

@@ -39,6 +39,31 @@ Corruption Cost: 1 point of Wisdom drain.
 //:://////////////////////////////////////////////
 #include "spinc_common"
 
+
+void DrainLoop(object oTarget, object oPC, float fRemove, int nRoundCounter)
+{
+	if (nRoundCounter > 0)
+	{
+		effect eDex  = EffectAbilityIncrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
+		effect eDex2 = EffectAbilityDecrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
+		
+		//Impact VFX
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE), oPC);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
+		
+		//Drain
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex, oPC, fRemove);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex2, oTarget, fRemove);
+		
+		fRemove = (fRemove - 6.0f);
+		nRoundCounter--;
+		
+		DelayCommand(6.0f, DrainLoop(oTarget, oPC, fRemove, nRoundCounter));
+				
+	}
+	else DeleteLocalInt(oPC, "PRC_Power_Leech_Stat");
+}
+
 void main()
 {
 	
@@ -55,14 +80,16 @@ void main()
 	int nAbility;
 	int nSpell = GetSpellId();
 	int nRoundCounter = nCasterLvl;
-	float fDuration = RoundsToSeconds(nCasterLvl);
+	float fRemove = (nCasterLvl * 600.0f);
+	effect eDur  = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+	effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_POWER_LEECH, oPC);
 	
 	//Check for Extend
 	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
 	{
-		fDuration = (fDuration * 2);
+		fRemove = (fDuration * 2);
 	}
 	
 	//Check for ability to drain
@@ -71,10 +98,12 @@ void main()
             <Stratovarius> just steal the animal affinity one from psionics and modify*/
 	
 	StartDynamicConversation("power_leech", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
-				
+	
+	DrainLoop(oTarget, oPC, fRemove, nRoundCounter);
+					
 	//Corruption Cost
 	{
-		DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_WISDOM, 1, 1));
+		DelayCommand(fRemove, DoCorruptionCost(oPC, ABILITY_WISDOM, 1, 1));
 	}
 	
 	SPEvilShift(oPC);

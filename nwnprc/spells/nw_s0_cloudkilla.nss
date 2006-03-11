@@ -29,6 +29,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
 
+
+
     //Declare major variables
     object oTarget  = GetEnteringObject();
     int nHD         = GetHitDice(oTarget);
@@ -39,7 +41,6 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     effect eVis2    = EffectVisualEffect(VFX_DUR_GHOST_TRANSPARENT);
     effect eLink    = EffectLinkEffects(eConceal, eVis2);
 
-    float fDelay= GetRandomDelay(0.5, 1.5);
     //effect eDam;
     int nDam = d4();
     int nMetaMagic = PRCGetMetaMagicFeat();
@@ -61,7 +62,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
     {
        nDam =  nDam + (nDam/2); //Damage/Healing is +50%
     }
-    
+
     if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, aoeCreator))
     {
         //Fire cast spell at event for the specified target
@@ -75,36 +76,36 @@ ActionDoCommand(SetAllAoEInts(SPELL_CLOUDKILL,OBJECT_SELF, GetSpellSaveDC()));
         {
             if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DEATH))
             {
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
             }
         }
         else if (nHD >= 4 && nHD <= 6)
         {
             //Make a save or die
-            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, aoeCreator), SAVING_THROW_TYPE_DEATH, OBJECT_SELF))
             {
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }
             else
             {
-                DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
+                AssignCommand(aoeCreator, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget);
             }
         }
         else
         {
-            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,aoeCreator)), SAVING_THROW_TYPE_SPELL, OBJECT_SELF, fDelay))
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, aoeCreator), SAVING_THROW_TYPE_SPELL, OBJECT_SELF))
             {
-                DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
+                AssignCommand(aoeCreator, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget);
             }
             else
             {
                 // Halve the damage on succesfull save.
-                DelayCommand(fDelay, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam / 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget));
+                AssignCommand(aoeCreator, ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam / 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNeg, oTarget);
             }
         }
     }

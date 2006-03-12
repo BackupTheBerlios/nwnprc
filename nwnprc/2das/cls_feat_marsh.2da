@@ -41,6 +41,15 @@
 37  MAJ_AUR_MOT_ATTACK                             1935      2    2              1      
 38  MAJ_AUR_STEAD_HAND                             1936      2    2              1      
 39  GRANT_MOVE_ACTION                              1937      3    4              1      
+146   GRANT_MOVE_ACTION                      1938        3      8                1
+147   GRANT_MOVE_ACTION                      1939        3      12               1
+148   GRANT_MOVE_ACTION                      1940        3      16               1
+149   GRANT_MOVE_ACTION                      1941        3      20               1
+150   GRANT_MOVE_ACTION                      1942        3      24               1
+151   GRANT_MOVE_ACTION                      1943        3      28               1
+152   GRANT_MOVE_ACTION                      1944        3      32               1
+153   GRANT_MOVE_ACTION                      1945        3      36               1
+154   GRANT_MOVE_ACTION                      1946        3      40               1
 40  FEAT_EPIC_DEVASTATING_CRITICAL_CLUB            495       1    -1             0      
 41  FEAT_EPIC_DEVASTATING_CRITICAL_DAGGER          496       1    -1             0      
 42  FEAT_EPIC_DEVASTATING_CRITICAL_DART            497       1    -1             0      

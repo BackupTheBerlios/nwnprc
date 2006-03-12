@@ -342,9 +342,6 @@ string EventTypeIdToName(int nEvent);
 
 string _GetMarkerLocalName(string sScript, string sArrayName);
 
-/// Internal function. Prints a list of scripts hooked into the given event for the object.
-void DebugPrintHookedScripts(object oObject, int nEvent);
-
 /// Internal function - Array wrapper
 int wrap_array_create(object store, string name);
 /// Internal function - Array wrapper
@@ -588,12 +585,8 @@ void ExecuteAllScriptsHookedToEvent(object oObject, int nEvent){
     SetLocalInt(GetModule(), "prc_eventhook_running", nEvent);
     SetLocalString(GetModule(), "prc_eventhook_running_sArrayName", EventTypeIdToName(nEvent));
 
-    if(PRINT_EVENTHOOKS &&
-       DEBUG
-       ){
-        DoDebug("Executing eventhook for event " + IntToString(nEvent) + ". Hooked scripts:");
-        DebugPrintHookedScripts(oObject, nEvent);
-    }
+    if(PRINT_EVENTHOOKS && DEBUG)
+        DoDebug("Executing eventhook for event " + IntToString(nEvent) + "; object = " + DebugObject2Str(oObject) + ". Hooked scripts:");
 
     // Loop through the scripts to be fired only once
     string sScript = GetFirstEventScript(oObject, nEvent, FALSE);
@@ -601,7 +594,10 @@ void ExecuteAllScriptsHookedToEvent(object oObject, int nEvent){
     while(sScript != ""){
         bNeedClearing = TRUE;
 
+        if(PRINT_EVENTHOOKS && DEBUG)
+            DoDebug("\nOneshot: '" + sScript + "'");
         ExecuteScript(sScript, OBJECT_SELF);
+
         sScript = GetNextEventScript(oObject, nEvent, FALSE);
     }
 
@@ -612,7 +608,10 @@ void ExecuteAllScriptsHookedToEvent(object oObject, int nEvent){
     // Loop through the persistent scripts
     sScript = GetFirstEventScript(oObject, nEvent, TRUE);
     while(sScript != ""){
+        if(PRINT_EVENTHOOKS && DEBUG)
+            DoDebug("\nPermanent: '" + sScript + "'");
         ExecuteScript(sScript, OBJECT_SELF);
+
         sScript = GetNextEventScript(oObject, nEvent, TRUE);
     }
 

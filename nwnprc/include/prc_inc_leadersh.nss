@@ -61,7 +61,7 @@ object AddCohortToPlayer(int nCohortID, object oPC)
     //pass it to the next function
     AddCohortToPlayerByObject(oCohort, oPC);
     return oCohort;
-}    
+}
 
 void AddCohortToPlayerByObject(object oCohort, object oPC)
 {
@@ -70,7 +70,7 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
     SetMaxHenchmen(99);
     AddHenchman(oPC, oCohort);
     SetMaxHenchmen(nMaxHenchmen);
-    //turn on its scripts    
+    //turn on its scripts
     //normal MoB set
     AddEventScript(oCohort, EVENT_VIRTUAL_ONPHYSICALATTACKED,   "prc_ai_mob_attck", TRUE, FALSE);
     AddEventScript(oCohort, EVENT_VIRTUAL_ONBLOCKED,            "prc_ai_mob_block", TRUE, FALSE);
@@ -89,13 +89,14 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
     //cohort specific ones
     AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_coh_conv",  TRUE, FALSE);
     AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_coh_hb",    TRUE, FALSE);
-    
+
+
     //set it to the pcs level
     int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     SetXP(oCohort, nLevel*(nLevel-1)*500);
     DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
     DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
-    
+
     //if it was a premade one, give it a random name
     //randomize its appearance using DoDisguise
     /* 1.67 code
@@ -103,11 +104,13 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
     {
         AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName());
         DoDisguise(PRCGetRacialType(oCohort), oCohort);
-    }    
+    }
     */
 
     //strip its equipment & inventory
-    object oTest = GetFirstItemInInventory(oCohort);
+    object oTest  = GetFirstItemInInventory(oCohort);
+    object oSkin  = GetPCSkin(oCohort);
+    object oToken = GetHideToken(oCohort);
     while(GetIsObjectValid(oTest))
     {
         if(GetHasInventory(oTest))
@@ -115,17 +118,21 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
             object oTest2 = GetFirstItemInInventory(oTest);
             while(GetIsObjectValid(oTest2))
             {
-                DestroyObject(oTest2);
+                // Avoid blowing up the hide and token that just had the eventscripts stored on them
+                if(oTest2 != oSkin && oTest2 != oToken)
+                    DestroyObject(oTest2);
                 oTest2 = GetNextItemInInventory(oTest);
             }
         }
-        DestroyObject(oTest);
+        // Avoid blowing up the hide and token that just had the eventscripts stored on them
+        if(oTest != oSkin && oTest != oToken)
+            DestroyObject(oTest);
         oTest = GetNextItemInInventory(oCohort);
     }
     int nSlot;
     for(nSlot = 0;nSlot<14;nSlot++)
     {
-        oTest = GetItemInSlot(nSlot, oCohort);  
+        oTest = GetItemInSlot(nSlot, oCohort);
         DestroyObject(oTest);
     }
 
@@ -335,7 +342,7 @@ int GetCohortMaxLevel(int nLeadership, object oPC)
         nLevel = GetHitDice(oPC)-2;
     //really, leadership should be capped at 25 / 17HD
     //but this is a sanity check
-    if(nLevel > 20 
+    if(nLevel > 20
         && !GetHasFeat(FEAT_EPIC_LEADERSHIP, oPC))
         nLevel = 20;
     return nLevel;
@@ -391,7 +398,7 @@ int GetMaximumCohortCount(object oPC)
     if(GetHasFeat(FEAT_GATHER_HORDE_I, oPC)
         && GetPRCSwitch(PRC_ORC_WARLORD_COHORT))
         nCount++;
-    nCount += GetPRCSwitch(PRC_BONUS_COHORTS);    
+    nCount += GetPRCSwitch(PRC_BONUS_COHORTS);
     return nCount;
 }
 
@@ -402,19 +409,19 @@ int GetIsCohortChoiceValid(string sName, int nRace, int nClass1, int nClass2, in
     int nCohortCount = GetMaximumCohortCount(oPC);
     int i;
     //another players cohort
-    if(GetPCPublicCDKey(oPC) != "" 
+    if(GetPCPublicCDKey(oPC) != ""
         && GetPCPublicCDKey(oPC) != sKey)
-    {    
+    {
         DoDebug("GetIsCohortChoiceValid() is FALSE because cdkey is incorrect");
         bIsValid = FALSE;
-    }    
+    }
     //is character
     if(bIsValid
         && GetName(oPC) == sName)
-    {    
+    {
         DoDebug("GetIsCohortChoiceValid() is FALSE because name is in use");
         bIsValid = FALSE;
-    }    
+    }
     //is already a cohort
     if(bIsValid && sName != "")
     {
@@ -422,18 +429,18 @@ int GetIsCohortChoiceValid(string sName, int nRace, int nClass1, int nClass2, in
         {
             object oCohort = GetCohort(i, oPC);
             if(GetName(oCohort) == sName)
-            {    
+            {
                 DoDebug("GetIsCohortChoiceValid() is FALSE because cohort is already in use.");
                 bIsValid = FALSE;
-            }    
+            }
         }
     }
     //has been deleted
     if(bIsValid && nDeleted)
-    {    
+    {
         DoDebug("GetIsCohortChoiceValid() is FALSE because cohort had been deleted");
         bIsValid = FALSE;
-    }    
+    }
     //hathran
     if(bIsValid
         && GetHasFeat(FEAT_HATH_COHORT, oPC))
@@ -499,7 +506,7 @@ int GetIsCohortChoiceValidByID(int nID, object oPC)
     int    nMoral= GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_moral");
     int    nEthran=GetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_ethran");
     string sKey  = GetCampaignString(  COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_cdkey");
-    int    nDeleted = GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_deleted"); 
+    int    nDeleted = GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(nID)+"_deleted");
     return GetIsCohortChoiceValid(sName, nRace, nClass1, nClass2, nClass3, nOrder, nMoral, nEthran, sKey, nDeleted, oPC);
 }
 
@@ -568,7 +575,7 @@ void AddPremadeCohortsToDB()
     //check not added already
     if(GetCampaignInt(COHORT_DATABASE, "PremadeCohorts"))
         return;
-        
+
     //get the limbo location
     location lSpawn = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
     //loop over the races
@@ -595,8 +602,8 @@ void AddPremadeCohortsToDB()
                 }
             }
         }
-    }   
-        
-    //make sure this is only done once  
+    }
+
+    //make sure this is only done once
     SetCampaignInt(COHORT_DATABASE, "PremadeCohorts", TRUE);
 }

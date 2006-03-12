@@ -9,6 +9,8 @@
 
 void main()
 {
+    if(DEBUG) SetLocalObject(GetModule(), "PRC_Debug_FirstPC", GetFirstPC());
+
     // Item creation code
     ExecuteScript("hd_o0_heartbeat",OBJECT_SELF);
 
@@ -55,10 +57,10 @@ void main()
         {
             //due to biowares piss-poor database coding, you have to destroy the old database before storing
             //the object
-            //If you dont, the dataabse will bloat infinitely because when overriting an existing 
-            //database entry really marks the old entry as "deleted" ( but doesnt actually remove it) 
+            //If you dont, the dataabse will bloat infinitely because when overriting an existing
+            //database entry really marks the old entry as "deleted" ( but doesnt actually remove it)
             //and creates a new entry instead.
-            
+
             DestroyCampaignDatabase("prc_data");
             object o2daCache = GetObjectByTag("Bioware2DACache");
             StoreCampaignObject("prc_data", "CacheChest", o2daCache);

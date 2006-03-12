@@ -82,7 +82,7 @@ void Die();
 
 void DoDebug(string sString, object oAdditionalRecipient = OBJECT_INVALID)
 {
-    SendMessageToPC(GetFirstPC(), "<c´jŸ>" + sString + "</c>");
+    SendMessageToPC(GetLocalObject(GetModule(), "PRC_Debug_FirstPC"), "<c´jŸ>" + sString + "</c>");
     if(oAdditionalRecipient != OBJECT_INVALID)
         SendMessageToPC(oAdditionalRecipient, "<c´jŸ>" + sString + "</c>");
     WriteTimestampedLogEntry(sString);

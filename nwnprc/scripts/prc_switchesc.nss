@@ -22,28 +22,29 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_ENTRY                       = 0;
-const int STAGE_SWITCHES                    = 1;
-const int STAGE_SWITCHES_VALUE              = 2;
-const int STAGE_EPIC_SPELLS                 = 3;
-const int STAGE_EPIC_SPELLS_ADD             = 4;
-const int STAGE_EPIC_SPELLS_REMOVE          = 5;
-const int STAGE_EPIC_SPELLS_CONTING         = 6;
-const int STAGE_SHOPS                       = 8;
-const int STAGE_TEFLAMMAR_SHADOWLORD        = 9;
-const int STAGE_LEADERSHIP                  =10;
-const int STAGE_LEADERSHIP_ADD_STANDARD     =11;
-const int STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM=12;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_RACE  =13;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_GENDER=14;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_CLASS =15;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN =16;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM=17;
-const int STAGE_LEADERSHIP_REMOVE           =18;
-const int STAGE_LEADERSHIP_DELETE           =19;
-const int STAGE_LEADERSHIP_DELETE_CONFIRM   =20;
+const int STAGE_ENTRY                           =  0;
+const int STAGE_SWITCHES                        =  1;
+const int STAGE_SWITCHES_VALUE                  =  2;
+const int STAGE_EPIC_SPELLS                     =  3;
+const int STAGE_EPIC_SPELLS_ADD                 =  4;
+const int STAGE_EPIC_SPELLS_REMOVE              =  5;
+const int STAGE_EPIC_SPELLS_CONTING             =  6;
+const int STAGE_SHOPS                           =  8;
+const int STAGE_TEFLAMMAR_SHADOWLORD            =  9;
+const int STAGE_LEADERSHIP                      = 10;
+const int STAGE_LEADERSHIP_ADD_STANDARD         = 11;
+const int STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM = 12;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_RACE      = 13;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_GENDER    = 14;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_CLASS     = 15;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN     = 16;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM   = 17;
+const int STAGE_LEADERSHIP_REMOVE               = 18;
+const int STAGE_LEADERSHIP_DELETE               = 19;
+const int STAGE_LEADERSHIP_DELETE_CONFIRM       = 20;
 
-const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
+const int CHOICE_RETURN_TO_PREVIOUS             = 0xFFFFFFFF;
+const int CHOICE_SWITCHES_USE_2DA               = 0xFFFFFFFE;
 
 
 //////////////////////////////////////////////////
@@ -70,8 +71,8 @@ void AddCohortRaces(int nMin, int nMax, object oPC)
             else
                 AddChoice(sName, i);
         }
-    }              
-}  
+    }
+}
 
 
 void main()
@@ -103,6 +104,7 @@ void main()
             if(nStage == STAGE_ENTRY)
             {
                 SetHeader("What do you want to do?");
+
                 AddChoice("Alter code switches.", 1);
                 if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
                     GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))
@@ -116,6 +118,7 @@ void main()
                 if(GetMaximumCohortCount(oPC))
                     AddChoice("Manage cohorts.", 7);
 
+
                 MarkStageSetUp(nStage, oPC);
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
@@ -128,6 +131,10 @@ void main()
 
                 // First choice is Back, so people don't have to scroll ten pages to find it
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                // Add a special choices
+                AddChoice("Read personal_switch.2da and set switches based on it's contents", CHOICE_SWITCHES_USE_2DA);
+
 
                 // Get the switches container waypoint, and call the builder function if it doesn't exist yet (it should)
                 object oWP = GetWaypointByTag("PRC_Switch_Name_WP");
@@ -320,7 +327,7 @@ void main()
                 SetHeader("Select a race for the cohort:");
                 AddCohortRaces(  0, 100, oPC);
                 DelayCommand(0.01, AddCohortRaces(101, 200, oPC));
-                DelayCommand(0.02, AddCohortRaces(201, 255, oPC));  
+                DelayCommand(0.02, AddCohortRaces(201, 255, oPC));
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -341,13 +348,13 @@ void main()
                 {
                     string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", i)));
                     AddChoice(sName, i);
-                }              
+                }
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN)
             {
                 SetHeader("Select an alignment for the cohort:");
-                
+
                 int nClass = GetLocalInt(oPC, "CustomCohortClass");
                 if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_GOOD,
                     HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -546,6 +553,29 @@ void main()
         {
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_ENTRY;
+            else if(nChoice == CHOICE_SWITCHES_USE_2DA)
+            {
+                object oModule = GetModule();
+                int i = 0;
+                string sSwitchName, sSwitchType, sSwitchValue;
+                while((sSwitchName = Get2DACache("personal_switch", "SwitchName", i)) != "")
+                {
+                    // Read rest of the line
+                    sSwitchType  = Get2DACache("personal_switch", "SwitchType",  i);
+                    sSwitchValue = Get2DACache("personal_switch", "SwitchValue", i);
+
+                    // Determine switch type and set the var
+                    if(sSwitchType == "float")
+                        SetLocalFloat(oModule, sSwitchName, StringToFloat(sSwitchValue));
+                    else if(sSwitchType == "int")
+                        SetPRCSwitch(sSwitchName, StringToInt(sSwitchValue));
+                    else if(sSwitchType == "string")
+                        SetLocalString(oModule, sSwitchName, sSwitchValue);
+
+                    // Increment loop counter
+                    i += 1;
+                }
+            }
             else
             {
                 //move to another stage based on response
@@ -694,7 +724,7 @@ void main()
                 nStage = STAGE_LEADERSHIP_REMOVE;
             else if(nChoice == 3)
                 nStage = STAGE_LEADERSHIP_DELETE;
-            else if(nChoice == 4)  
+            else if(nChoice == 4)
                 nStage = STAGE_LEADERSHIP_ADD_CUSTOM_RACE;
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_ENTRY;

@@ -31,6 +31,8 @@ int KOTCSpellPenVsDemons(object oCaster);
 
 int RunecasterRunePowerSP(object oCaster);
 
+int MarshalDeterminedCaster(object oCaster);
+
 // Use this function to get the adjustments to a spell or SLAs spell penetration
 // from the various class effects
 // Update this function if any new classes change spell pentration
@@ -295,6 +297,14 @@ int RunecasterRunePowerSP(object oCaster)
         return nSP;
 }
 
+int MarshalDeterminedCaster(object oCaster)
+{
+	int nSP = 0;
+	if (GetLocalInt(oCaster,"Marshal_DetCast") > 0) nSP = GetLocalInt(oCaster,"Marshal_DetCast");
+	
+	return nSP;
+}
+
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
     int spell_id = PRCGetSpellId();
@@ -306,6 +316,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += ShadowWeavePen(spell_id,oCaster);
     nSP += KOTCSpellPenVsDemons(oCaster);
     nSP += RunecasterRunePowerSP(oCaster);
+    nSP += MarshalDeterminedCaster(oCaster);
 
     return nSP;
 }

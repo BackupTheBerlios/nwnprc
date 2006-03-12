@@ -92,6 +92,13 @@ const int X2_CI_MODMODE_INVALID = 0;
 const int X2_CI_MODMODE_ARMOR = 1;
 const int X2_CI_MODMODE_WEAPON = 2;
 
+// Runecrafting constants
+const int PRC_RUNE_BASECOST        = 0;
+const int PRC_RUNE_CHARGES         = 1;
+const int PRC_RUNE_PERDAY          = 2;
+const int PRC_RUNE_MAXCHARGES      = 3;
+const int PRC_RUNE_MAXUSESPERDAY   = 4;
+
 // *  Returns TRUE if an item is a Craft Base Item
 // *  to be used in spellscript that can be cast on items - i.e light
 int   CIGetIsCraftFeatBaseItem( object oItem );
@@ -892,20 +899,24 @@ int InscribeRune()
     {
         // 5 is the max uses per day
         if (nCount > 5) nCount = 5;
+        int nMaxUses = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_RUNE_MAXUSESPERDAY));
+        if (nCount > nMaxUses) nCount = nMaxUses;        
         nCharges = nCount;
     }
     // Can't have no charges
     if (nCharges == 0) nCharges = 1;
+    int nMaxCharges = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_RUNE_MAXCHARGES));
+    if (nCount > nMaxCharges) nCharges = nMaxCharges;
 
     FloatingTextStringOnCreature("Spell Level: " + IntToString(nSpellLevel), OBJECT_SELF, FALSE);
     FloatingTextStringOnCreature("Caster Level: " + IntToString(nCaster), OBJECT_SELF, FALSE);
     FloatingTextStringOnCreature("Number of Charges: " + IntToString(nCharges), OBJECT_SELF, FALSE);
 
     // Gold cost multipler, varies depending on the ability used to craft
-    int nMultiplier = 100;
-    if (nClass > 0) nMultiplier = 50;
-    if (GetLocalInt(oCaster, "RuneCharges")) nMultiplier = 50;
-    if (GetLocalInt(oCaster, "RuneUsesPerDay")) nMultiplier = 400;
+    int nMultiplier = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_RUNE_BASECOST));
+    if (nClass > 0) nMultiplier /= 2;
+    if (GetLocalInt(oCaster, "RuneCharges")) nMultiplier = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_RUNE_CHARGES));
+    if (GetLocalInt(oCaster, "RuneUsesPerDay")) nMultiplier = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_RUNE_PERDAY));
 
     // Cost of the rune in gold and XP
     int nGoldCost = nSpellLevel * nCaster * nCharges * nMultiplier;

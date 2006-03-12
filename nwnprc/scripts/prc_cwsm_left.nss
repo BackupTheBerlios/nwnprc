@@ -1,21 +1,23 @@
+#include "inc_utility"
+
 void main()
 {
    object oTarget;
    object oPC = OBJECT_SELF;
    object oWeap = GetFirstItemInInventory(oPC);
 
-   object oItem1 = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
-   object oItem2 = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND);
-   FloatingTextStringOnCreature("Left Exec",OBJECT_SELF);
+   object oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
+   if (DEBUG) FloatingTextStringOnCreature("Right Exec",OBJECT_SELF);
    //Searches Inventory for Katana and Shortsword and Equips them
-   while(!GetIsObjectValid(oItem2))
+   while(!GetIsObjectValid(oItem))
    {
-   	if(GetBaseItemType(oWeap) == BASE_ITEM_KATANA)
+        if(GetBaseItemType(oWeap) == BASE_ITEM_SHORTSWORD)
 	{
-     		oItem2 = oWeap;
-		ActionEquipItem(oWeap,INVENTORY_SLOT_RIGHTHAND);
-	}      
+		oItem = oWeap;
+		ForceEquip(oPC, oWeap, INVENTORY_SLOT_LEFTHAND);
+		if (DEBUG) FloatingTextStringOnCreature("inside left hand loop",OBJECT_SELF);
+		break;
+	}
 	oWeap = GetNextItemInInventory(oPC);
    }
-//ExecuteScript("prc_cwsm_right", oPC);
 }

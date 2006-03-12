@@ -26,7 +26,7 @@ void main()
     int iPCRoll = GetSkillRank(SKILL_INTIMIDATE,oPC) + d20();
     int iTARoll = GetSkillRank(SKILL_INTIMIDATE,oTarget) + d20();
 
-    int iHitDie = GetHitDice(oTarget);
+    int iHitDie;
     int iPCHD = GetHitDice(oPC);
 
     //Shaken Effect
@@ -57,6 +57,7 @@ eLink = EffectLinkEffects(eLink,eVis2);
           if(!PRCMySavingThrow(SAVING_THROW_WILL,oTarget,nDC, SAVING_THROW_TYPE_FEAR, OBJECT_SELF))
           {
            //Make A HitDie Check
+           iHitDie = GetHitDice(oTarget);
            if(iHitDie <= 4)
             {
              ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink2,oTarget,RoundsToSeconds(nDuration));

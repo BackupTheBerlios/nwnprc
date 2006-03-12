@@ -163,7 +163,7 @@ void main()
                  }
               else
                  {
-              SetLocalInt(oTarget,"DetCast",MarshCha);
+                 SetLocalInt(oTarget,"Marshal_DetCast",MarshCha);
                  SetLocalInt(PCMarshal,"MarshalMinor",1);
                  }
               }

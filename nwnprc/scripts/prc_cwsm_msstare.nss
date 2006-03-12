@@ -16,12 +16,9 @@ void main()
 
     if(GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) >= 14)
     	nDuration = 5;
-
-    int iPCCha = GetAbilityModifier(ABILITY_CHARISMA,oPC);
-    int iTACha = GetAbilityModifier(ABILITY_CHARISMA,oTarget);
-
-    int iPCRoll = GetSkillRank(SKILL_INTIMIDATE,oPC) + d20();
-    int iTARoll = GetSkillRank(SKILL_INTIMIDATE,oTarget) + d20();
+    
+    int nPCSize = GetCreatureSize(oPC);
+    int nDC;
 
     effect eDam = EffectAttackDecrease(2);
     effect eSave = EffectSavingThrowDecrease(SAVING_THROW_ALL,2);
@@ -39,10 +36,21 @@ void main()
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && oTarget != OBJECT_SELF)
         {
            //Make Intimidate Check
-           if(iPCRoll > iTARoll)
-            {
-             ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink,oTarget,RoundsToSeconds(nDuration));
-            }
+           int nWis = GetAbilityModifier(ABILITY_WISDOM,oTarget);
+           int nHD = GetHitDice(oTarget);
+           int nRoll = d20();
+           nDC = nWis + nHD + nRoll;
+           
+           int nTargetSize = GetCreatureSize(oTarget);
+           // Size bonus to the check. Its a +4 benefit to the samurai for each category he is larger
+           // Or a -4 loss for each he is smaller.
+           if (nPCSize > nTargetSize) nDC -= (nPCSize - nTargetSize) * 4;
+           if (nTargetSize > nPCSize) nDC += (nTargetSize - nPCSize) * 4;
+           
+           if(GetIsSkillSuccessful(oPC, SKILL_INTIMIDATE, nDC))
+           {
+           	ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eLink,oTarget,RoundsToSeconds(nDuration));
+           }
         }
         oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     }

@@ -85,6 +85,20 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
 	
 	return TRUE;
     }
+    else if (GetHasFeat(FEAT_EPIC_PLANAR_TURNING) && nTurnType == SPELL_TURN_UNDEAD && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+    {
+    	// Evil clerics turn non-evil outsiders, and rebuke evil outsiders
+    	if(GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
+        {
+    		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL) return FALSE;
+    		
+    		return TRUE;
+    	}  
+    	// Good clerics turn non-good outsiders, and rebuke good outsiders
+	if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_GOOD) return FALSE;
+   		
+	return TRUE;
+    }
     else if(nTurnType == SPELL_TURN_BLIGHTSPAWNED)
     {
         // Rebuke/Command evil animals
@@ -422,6 +436,10 @@ int GetCanTurn(object oTarget, int nTurnType)
     {
 	return TRUE;
     }
+    else if (GetHasFeat(FEAT_EPIC_PLANAR_TURNING) && nTurnType == SPELL_TURN_UNDEAD && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+    {
+    	return TRUE;
+    }
     else if(nTurnType == SPELL_TURN_BLIGHTSPAWNED)
     {
         // Rebuke/Command evil animals
@@ -665,7 +683,7 @@ int GetTurningClassLevel(int bUndeadOnly = FALSE)
     //Baelnorn adds all class levels.  Careful not to count double.
     if(GetLevelByClass(CLASS_TYPE_BAELNORN))
     {
-    	nLevel == GetHitDice(OBJECT_SELF);
+    	nLevel = GetHitDice(OBJECT_SELF);
     }    
     
     return nLevel;

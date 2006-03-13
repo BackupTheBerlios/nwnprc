@@ -617,6 +617,8 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
 
 struct ireqreport CheckReqCasterLevel(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
+    if(sReqParam1 == "")
+        return report;
     int nResult;
     int nRequiredCasterLevel = StringToInt(sReqParam1);
 
@@ -664,6 +666,10 @@ struct ireqreport CheckReqCasterLevel(struct ireqreport report, string sReqParam
 
 struct ireqreport CheckReqLevel(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
+    if(sReqParam1 == "")
+        return report;
+    if(sReqParam2 == "")
+        return report;
     int nRequiredClass = StringToInt(sReqParam1);
     int nRequiredLevel = StringToInt(sReqParam2);
     int nLevel = GetLevelByClass(nRequiredClass);
@@ -714,6 +720,8 @@ struct ireqreport CheckReqExtraGold(struct ireqreport report, string sReqParam1,
 
 struct ireqreport CheckReqFeat(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
+    if(sReqParam1 == "")
+        return report;
     int nFeat =  StringToInt(sReqParam1);
     int nResult = GetHasFeat(nFeat);
     string sMessage;
@@ -748,6 +756,8 @@ struct ireqreport CheckReqFeat(struct ireqreport report, string sReqParam1, stri
 
 struct ireqreport CheckReqSpell(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
+    if(sReqParam1 == "")
+        return report;
     int nSpell = StringToInt(sReqParam1);
     int nResult = (GetLocalInt(report.recipe, "Spell" + IntToString(nSpell)) > 0 || GetHasSpell(nSpell) > 0);
 
@@ -792,6 +802,10 @@ struct ireqreport CheckReqSpell(struct ireqreport report, string sReqParam1, str
 
 struct ireqreport CheckReqSkill(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
+    if(sReqParam1 == "")
+        return report;
+    if(sReqParam2 == "")
+        return report;
     int nSkill     = StringToInt(sReqParam1);
     int nDC        = StringToInt(sReqParam2);
     int nSkillRank = GetSkillRank(nSkill);
@@ -1056,6 +1070,8 @@ struct ireqreport CheckReqScript(struct ireqreport report, string sReqParam1, st
 
 struct ireqreport CheckReqRace(struct ireqreport report, string sReqParam1, string sReqParam2, string extras="")
 {
+    if(sReqParam1 == "")
+        return report;
     int nRace   = StringToInt(sReqParam1);
     int nResult = (GetRacialType(OBJECT_SELF) == nRace);
 

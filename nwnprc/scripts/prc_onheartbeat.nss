@@ -64,6 +64,8 @@ void main()
             DestroyCampaignDatabase("prc_data");
             object o2daCache = GetObjectByTag("Bioware2DACache");
             StoreCampaignObject("prc_data", "CacheChest", o2daCache);
+            //have to set the version number each time the database is re-built
+            SetCampaignString("prc_data", "version", PRC_VERSION);
             DoDebug("Storing Bioware2DACache");
         }
     }

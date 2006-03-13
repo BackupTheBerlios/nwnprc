@@ -429,11 +429,12 @@ void main()
                 int    nOrder= GetLocalInt(oPC, "CustomCohortOrder");
                 int    nMoral= GetLocalInt(oPC, "CustomCohortMoral");
                 int    nGender=GetLocalInt(oPC, "CustomCohortGender");
+                string sKey=   GetPCPublicCDKey(oPC);
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", nRace)));
                 sHeader +="\n"+GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
                 SetHeader(sHeader);
                 // GetIsCohortChoiceValid(sName, nRace, nClass1, nClass2,            nClass3,            nOrder, nMoral, nEthran, sKey, nDeleted, oPC);
-                if(GetIsCohortChoiceValid("",    nRace, nClass,  CLASS_TYPE_INVALID, CLASS_TYPE_INVALID, nOrder, nMoral, FALSE,   "",   FALSE,    oPC))
+                if(GetIsCohortChoiceValid("",    nRace, nClass,  CLASS_TYPE_INVALID, CLASS_TYPE_INVALID, nOrder, nMoral, FALSE,   sKey, FALSE,    oPC))
                 {
                     AddChoice("Yes", 1);
                     AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);

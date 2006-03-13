@@ -195,7 +195,10 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     //token exists, if starting new run abort assuming restored from database
     if(nMin == 0
         && array_exists(oWP, sTag))
+    {   
+        DoDebug("MakeSpellbookLevelLoop() restored from database");
         return;
+    }    
         
     if(nMin == 0)
         array_create(oWP, sTag);  
@@ -270,8 +273,11 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     }
     //else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
     if(nMin == 0
-        && GetLocalInt(oWP, sTag+"_"+IntToString(StringToInt(Get2DACache(sFile, sSourceColumn, nMin)))))
+        && GetLocalInt(oWP, sTag+"_"+IntToString(StringToInt(Get2DACache(sFile, sSourceColumn, nMin+1)))))//+1 cos 0 is always null
+    {   
+        DoDebug("MakeLookupLoop() restored from database");
         return;
+    }    
         
     //cant short-ciruit it cos it gets confused between classes
     if(!GetIsObjectValid(oWP))

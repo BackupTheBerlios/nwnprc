@@ -13,8 +13,11 @@
 #include "inc_newspellbook"
 #include "prc_allow_const"
 
+
+
 // this creates a clone of the PC in limbo, removes the effects and equipment,
 // then stores the results of a ability score query onto the PC's hide.
+/* this can be altered for 1.67*/
 void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone);
 void FindTrueAbilityScores()
 {
@@ -711,22 +714,22 @@ void DragonDis(object oPC)
 
 void Baelnorn(object oPC)
 {
-	int nLich = GetLevelByClass(CLASS_TYPE_LICH, oPC);
+    int nLich = GetLevelByClass(CLASS_TYPE_LICH, oPC);
 
-	if (nLich >= 1)
-	{
-		SetLocalInt(oPC, "prc_NoLich", 1);
-	}
+    if (nLich >= 1)
+    {
+        SetLocalInt(oPC, "prc_NoLich", 1);
+    }
 }
 
 void Lich(object oPC)
 {
-	int nBaeln = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
+    int nBaeln = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
 
-	if (nBaeln >= 1)
-	{
-		SetLocalInt(oPC, "PRC_NoBaeln", 1);
-	}
+    if (nBaeln >= 1)
+    {
+        SetLocalInt(oPC, "PRC_NoBaeln", 1);
+    }
 }
 
 void RacialHD(object oPC)

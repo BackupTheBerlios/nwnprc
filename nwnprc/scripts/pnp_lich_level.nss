@@ -107,7 +107,8 @@ void main()
                 LevelUpHide(oPC, oHide, nLichLevel);
                 // they are now a full lich, make them look like one
                 LichLevelUpVFX(oPC);
-                SetCreatureAppearanceType(oPC,APPEARANCE_TYPE_LICH);
+                //let Alter Self code take care of this
+                //SetCreatureAppearanceType(oPC,APPEARANCE_TYPE_LICH);
                 return;
             }
             else
@@ -158,8 +159,9 @@ void main()
                 LevelUpHide(oPC, oHide, nLichLevel);
                 LichLevelUpVFX(oPC);
                 eFx = EffectVisualEffect(VFX_FNF_WAIL_O_BANSHEES);
-                ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,oPC);
-                SetCreatureAppearanceType(oPC,430);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,oPC);                
+                //let Alter Self code take care of this
+                //SetCreatureAppearanceType(oPC,430);
             }
             else
             { // indicate the problem

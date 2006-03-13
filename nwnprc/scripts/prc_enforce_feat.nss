@@ -1037,6 +1037,7 @@ void main()
          || !MarshalAuraLimit(oPC)
          || !Blightbringer(oPC)
          || !CraftingFeats(oPC)
+         /* 1.67 disable this line */
          || !FortySpellSlotLevels(oPC)
          || !RacialHD(oPC)
          || !LeadershipHD(oPC)

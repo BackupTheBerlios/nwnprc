@@ -791,6 +791,8 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     // Create the manifestation token. Deletes any old tokens and cancels corresponding manifestations as a side effect
     oMfToken = _CreateManifestationToken(oManifester);
 
+    Assert(GetIsObjectValid(oMfToken), "GetIsObjectValid(oMfToken)", "ERROR: Unable to create manifestation token!", "psi_inc_manifest", "UsePower()");
+
     // Start the manifestation monitor HB
     DelayCommand(PRC_MANIFESTATION_HB_DELAY, _ManifestationHB(oManifester, GetLocation(oManifester), oMfToken));
 

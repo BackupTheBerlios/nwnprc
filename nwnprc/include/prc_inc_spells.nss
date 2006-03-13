@@ -1380,6 +1380,11 @@ location PRCGetSpellTargetLocation()
 {
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_LOCATION_OVERRIDE))
         return GetLocalLocation(GetModule(), PRC_SPELL_TARGET_LOCATION_OVERRIDE);
+    
+    object oItem     = GetSpellCastItem();    
+    // The rune always targets the one who activates it.
+    if(GetResRef(oItem) == "prc_rune_1") return GetLocation(GetItemPossessor(oItem));
+        
     return GetSpellTargetLocation();
 }
 

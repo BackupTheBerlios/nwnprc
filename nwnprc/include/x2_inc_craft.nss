@@ -952,9 +952,6 @@ int InscribeRune()
         return TRUE;
     }
 
-    // Since we know they can now pay for it, create the rune stone
-    object oRune = CreateItemOnObject("prc_rune_1", oCaster);
-
     // Steal all the code from craft wand.
     // The reason craft wand is used is because it is possible to create runes with charges using the Runecaster class.
     int nPropID = IPGetIPConstCastSpellFromSpellID(nSpell);
@@ -968,9 +965,25 @@ int InscribeRune()
         return TRUE;
     }
 
+    // Since we know they can now pay for it, create the rune stone
+    object oRune = CreateItemOnObject("prc_rune_1", oCaster);
 
     if (nPropID != -1)
     {
+        // This part is always done
+        itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpell, PRCGetCasterLevel());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oRune);
+        itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpell, PRCGetMetaMagicFeat());
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oRune);
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpell, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+        AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oRune);
+        // If Maximize Rune is turned on and we pass the check, add the Maximize IProp
+        if (GetLocalInt(oCaster, "MaximizeRune"))
+        {
+            itemproperty ipMax = ItemPropertyCastSpellMetamagic(nSpell, METAMAGIC_MAXIMIZE);
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipMax,oRune);
+        }    
+    
         // If its uses per day instead of charges, we do some different stuff here
         if (GetLocalInt(oCaster, "RuneUsesPerDay"))
         {
@@ -989,29 +1002,13 @@ int InscribeRune()
         {
             itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_2_CHARGES_PER_USE);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune); 
-            SetItemCharges(oRune,3); // Ensures the item isn't destroyed right away
-            //SetPlotFlag(oRune, TRUE); // Can't sell the item for money
-	    SetXP(oCaster,nNewXP);
-            TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
-            return FALSE;
+            // This is done so the item exists when it is used for the game to read data off of
+	    nCharges = 3;
         }
         else // Do the normal charges
         {
             itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
-        }
-        // This part is always done
-        itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpell, PRCGetCasterLevel());
-        AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oRune);
-        itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpell, PRCGetMetaMagicFeat());
-        AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oRune);
-        itemproperty ipDC = ItemPropertyCastSpellDC(nSpell, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
-        AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
-        // If Maximize Rune is turned on and we pass the check, add the Maximize IProp
-        if (GetLocalInt(oCaster, "MaximizeRune"))
-        {
-            itemproperty ipMax = ItemPropertyCastSpellMetamagic(nSpell, METAMAGIC_MAXIMIZE);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ipMax,oRune);
         }
         SetItemCharges(oRune,nCharges);
         SetXP(oCaster,nNewXP);

@@ -1,7 +1,7 @@
 2DA V2.0
 
   LABEL       ReqType ReqParam1           ReqParam2 
-0 ScriptVar   VAR     PRC_AllCasterLv_11  1         
+0 ScriptVar   VAR     PRC_AllSpell6       0         
 1 CraftWonder FEAT    2925                ****      
 2 ScriptVar   VAR     PRC_AllowLich       0         
 3 ScriptVar   VAR     PRC_DemiLich        0         

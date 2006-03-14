@@ -21,6 +21,15 @@
 void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone);
 void FindTrueAbilityScores()
 {
+    /*1.67 code
+    object oHide = GetPCSkin(oPC);
+    SetLocalInt(oHide, "PRC_trueSTR", GetAbilityScore(oPC, ABILITY_SCORE_STRENGTH,      TRUE));
+    SetLocalInt(oHide, "PRC_trueDEX", GetAbilityScore(oPC, ABILITY_SCORE_DEXTERITY,     TRUE));
+    SetLocalInt(oHide, "PRC_trueCON", GetAbilityScore(oPC, ABILITY_SCORE_CONSTITUTION,  TRUE));
+    SetLocalInt(oHide, "PRC_trueINT", GetAbilityScore(oPC, ABILITY_SCORE_INTELLIGENCE,  TRUE));
+    SetLocalInt(oHide, "PRC_trueWIS", GetAbilityScore(oPC, ABILITY_SCORE_WISDOM,        TRUE));
+    SetLocalInt(oHide, "PRC_trueCHA", GetAbilityScore(oPC, ABILITY_SCORE_CHARISMA,      TRUE));
+    */
     object oPC = OBJECT_SELF;
     int i = 0;
     int bFoundLimbo = FALSE;

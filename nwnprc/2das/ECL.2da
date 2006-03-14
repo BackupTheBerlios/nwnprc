@@ -33,7 +33,7 @@
 29  Ooze                   **** ****               ****      ****   
 30  ****                   **** ****               ****      ****   
 31  ****                   **** ****               ****      ****   
-32  ****                   **** ****               ****      ****   
+32  Desert_HalfOrc         **** ****               ****      ****   
 33  Aranea                 **** ****               ****      ****   
 34  Asabi_Stingtail        **** ****               ****      ****   
 35  Aunuirean              **** ****               ****      ****   
@@ -52,9 +52,9 @@
 48  Dark_Sun_HalfGiant     **** ****               ****      ****   
 49  Derro                  **** ****               ****      ****   
 50  Desert_Dwarf_M         **** ****               ****      ****   
-51  Desert_Dwarf_Q         **** ****               ****      ****   
+51  Wemic                  3    MonsterousHumanoid 15        4   
 52  Desert_Elf             **** ****               ****      ****   
-53  Desert_HalfOrc         **** ****               ****      ****   
+53  Brownie                4    ****               ****      ****   
 54  Desert_Kobold          **** ****               ****      ****   
 55  Dimernesti             **** ****               ****      ****   
 56  Djinni                 6    Outsider           24        7      

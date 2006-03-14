@@ -29,12 +29,20 @@ void main()
             effect eFx = EffectVisualEffect(VFX_COM_CHUNK_RED_SMALL);
             ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,OBJECT_SELF);
             SetCreatureAppearanceType(OBJECT_SELF,APPEARANCE_TYPE_LICH);
+            /*1.67 code
+            SetPortraitId(OBJECT_SELF, 241);
+            SetPortraitResRef(OBJECT_SELF, "Lich");
+            */
         }
         else if (nLichLevel == 10)
         {
             effect eFx = EffectVisualEffect(VFX_COM_CHUNK_RED_LARGE);
-            ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eFx,OBJECT_SELF);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,OBJECT_SELF);
             SetCreatureAppearanceType(OBJECT_SELF,430); // DemiLich
+            /*1.67 code
+            SetPortraitId(OBJECT_SELF, 724);
+            SetPortraitResRef(OBJECT_SELF, "demilich");
+            */
         }
     }
     else // Switch to PC

@@ -718,7 +718,7 @@ void Baelnorn(object oPC)
 
     if (nLich >= 1)
     {
-        SetLocalInt(oPC, "prc_NoLich", 1);
+        SetLocalInt(oPC, "PRC_NoLich", 1);
     }
 }
 
@@ -812,8 +812,30 @@ void main2()
         sVariable = "PRC_SneakLevel" + IntToString(iCount);
         SetLocalInt(oPC, sVariable, 1);
      }
+    
+    // Delete Arcane & Divine caster level markers 
+    iCount    = 1;
+    sVariable = "PRC_AllCasterLvl_";
+    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
+        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
+    // Delete Arcane caster level markers
+    iCount    = 1;
+    sVariable = "PRC_ArcCasterLvl_";
+    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
+        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
+    // Delete Divine caster level markers
+    iCount    = 1;
+    sVariable = "PRC_DivCasterLv_";
+    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
+        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
+    // Delete Manifester level markers
+    iCount    = 1;
+    sVariable = "PRC_ManifesterLvl_";
+    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
+        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
 
-     // Find the spell levels.
+
+     // Set spell level, caster level, power level and manifester level markers
     int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
     int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
     int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
@@ -823,12 +845,13 @@ void main2()
     int bFirstArcClassFound, bFirstDivClassFound, bFirstPsiClassFound;
     int nSpellLevel;
     int nClassSlot;
-    int nClass, nLevel, nAbility, nSlots;
+    int nClass, nLevel, nAbility, nSlots, nCLevel;
     for(nClassSlot = 1; nClassSlot <= 3; nClassSlot++)
     {
         nClass = PRCGetClassByPosition(nClassSlot, oPC);
         if(GetIsDivineClass(nClass))
         {
+            // Do spell levels
             nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstDivClassFound &&
                 GetFirstDivineClass(oPC) == nClass)
@@ -850,9 +873,18 @@ void main2()
                     if(DEBUG) DoDebug("Divine spell level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_DivSpell"+IntToString(nSpellLevel))), oPC);
                 }
             }
+            
+            // Do caster level
+            nCLevel = GetCasterLvl(nClass, oPC);
+            for(; nCLevel > 0; nCLevel--)
+            {
+                SetLocalInt(oPC, "PRC_AllCasterLv_" + IntToString(nCLevel), 1);
+                SetLocalInt(oPC, "PRC_DivCasterLv_" + IntToString(nCLevel), 1);
+            }
         }
         else if(GetIsArcaneClass(nClass))
         {
+            // Do spell levels
             nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstArcClassFound &&
                 GetFirstArcaneClass(oPC) == nClass)
@@ -874,9 +906,18 @@ void main2()
                     if(DEBUG) DoDebug("Arcane spell level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_ArcSpell"+IntToString(nSpellLevel))), oPC);
                 }
             }
+            
+            // Do caster level
+            nCLevel = GetCasterLvl(nClass, oPC);
+            for(; nCLevel > 0; nCLevel--)
+            {
+                SetLocalInt(oPC, "PRC_AllCasterLv_" + IntToString(nCLevel), 1);
+                SetLocalInt(oPC, "PRC_ArcCasterLv_" + IntToString(nCLevel), 1);
+            }
         }
         else if(GetIsPsionicClass(nClass))
         {
+            // Do power levels
             nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstPsiClassFound &&
                 GetFirstPsionicClass(oPC) == nClass)
@@ -894,6 +935,13 @@ void main2()
             {
                 SetLocalInt(oPC, "PRC_PsiPower" + IntToString(nSpellLevel), 0);
                 if(DEBUG) DoDebug("Psionics power level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel))), oPC);
+            }
+            
+            // Do manifester level
+            nCLevel = GetManifesterLevel(oPC, nClass);
+            for(; nCLevel > 0; nCLevel--)
+            {
+                SetLocalInt(oPC, "PRC_ManifesterLvl_" + IntToString(nCLevel), 1);
             }
         }
     }// end while - loop over all 3 class slots

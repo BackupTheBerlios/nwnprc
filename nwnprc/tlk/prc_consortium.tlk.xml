@@ -17784,6 +17784,11 @@ If the black needle strikes an undead creature, that  creature gains 4d4 * 5 tem
   <entry id="52070" lang="en" sex="m">Blue guts</entry>
   <entry id="52071" lang="en" sex="m">Soul rot</entry>
   <entry id="52072" lang="en" sex="m">Command Undead(3)</entry>
+  <entry id="52073" lang="en" sex="m">End Projection</entry>
+  <entry id="52074" lang="en" sex="m">Feat Type:  Class Feat
+Prerequisite:  Baelnorn Level 3
+
+Description: This allows the baelnorn to end the projection affect at will.</entry>
   <entry id="52100" lang="en" sex="m">Necrotic cyst implanted.</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>

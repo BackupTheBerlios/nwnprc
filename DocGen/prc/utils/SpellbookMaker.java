@@ -283,12 +283,12 @@ public final class SpellbookMaker{
 		//set the level to the correct value, including metamagic
 		spells2da.setEntry("Innate", spells2daRow, Integer.toString(metamagicLevel+spellLevel));
 		//clear class levels
-		spells2da.setEntry("Bard", spells2daRow, "****");
-		spells2da.setEntry("Cleric", spells2daRow, "****");
-		spells2da.setEntry("Druid", spells2daRow, "****");
-		spells2da.setEntry("Paladin", spells2daRow, "****");
-		spells2da.setEntry("Ranger", spells2daRow, "****");
-		spells2da.setEntry("Wiz_Sorc", spells2daRow, "****");
+		spells2da.setEntry("Bard", 		spells2daRow, "****");
+		spells2da.setEntry("Cleric", 	spells2daRow, "****");
+		spells2da.setEntry("Druid", 	spells2daRow, "****");
+		spells2da.setEntry("Paladin", 	spells2daRow, "****");
+		spells2da.setEntry("Ranger", 	spells2daRow, "****");
+		spells2da.setEntry("Wiz_Sorc", 	spells2daRow, "****");
 		//set subradial information later on
 		//set subradial master, if applicable
 		if(subradialMaster != 0){
@@ -297,7 +297,13 @@ public final class SpellbookMaker{
 			spells2da.setEntry("Master", spells2daRow, "****");
 		}
 		//remove projectiles from firing because the real spell will do this
-		spells2da.setEntry("HasProjectile", spells2daRow, "0");
+		spells2da.setEntry("Proj", 				spells2daRow, "0");
+		spells2da.setEntry("ProjModel", 		spells2daRow, "****");
+		spells2da.setEntry("ProjType", 			spells2daRow, "****");
+		spells2da.setEntry("ProjSpwnPoint", 	spells2daRow, "****");
+		spells2da.setEntry("ProjSound", 		spells2daRow, "****");
+		spells2da.setEntry("ProjOrientation", 	spells2daRow, "****");
+		spells2da.setEntry("HasProjectile", 	spells2daRow, "0");
 
 		//add a feat.2da line
 		//make it point to the new spells.2da line

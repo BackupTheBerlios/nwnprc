@@ -296,6 +296,8 @@ public final class SpellbookMaker{
 		} else {
 			spells2da.setEntry("Master", spells2daRow, "****");
 		}
+		//remove projectiles from firing because the real spell will do this
+		spells2da.setEntry("HasProjectile", spells2daRow, "0");
 
 		//add a feat.2da line
 		//make it point to the new spells.2da line

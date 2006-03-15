@@ -137,42 +137,7 @@ DoDebug("SpellToSpellbookID("+IntToString(nSpell)+", "+sFile+", "+IntToString(nC
 
 int GetSpellslotLevel(int nClass, object oPC)
 {
-    int nLevel = GetLevelByClass(nClass, oPC);
-    int nArcSpellslotLevel;
-    int nDivSpellslotLevel;
-    int i;
-    for(i=1;i<=3;i++)
-    {
-        int nTempClass = PRCGetClassByPosition(i, oPC);
-        /*1.67 code
-        int nTempClass = GetClassByPosition(i, oPC);
-        */
-        //spellcasting prc
-        int nArcSpellMod = StringToInt(Get2DACache("classes", "ArcSpellLvlMod", nTempClass));
-        int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nTempClass));
-        //cos of the biobug, this is +1 before dividing
-        //yeah its screwy, go bitch at bioware ;)
-        if(nArcSpellMod)
-            nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
-        if(nDivSpellMod)
-            nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;
-        /*1.67 code
-        if(nArcSpellMod)
-            if(nArcSpellMod == 1)
-                nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC))/nArcSpellMod;
-            else    
-                nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
-        if(nDivSpellMod)
-            if(nDivSpellMod == 1)
-                nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC))/nDivSpellMod;
-            else    
-                nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;
-        */
-    }
-    if(GetFirstArcaneClass(oPC) == nClass)
-        nLevel += nArcSpellslotLevel;
-    if(GetFirstDivineClass(oPC) == nClass)
-        nLevel += nDivSpellslotLevel;
+    int nLevel = GetCasterLvl(nClass, oPC);
 DoDebug("GetSpellslotLevel("+IntToString(nClass)+", "+GetName(oPC)+") = "+IntToString(nLevel));
     return nLevel;
 }
@@ -412,7 +377,7 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creating.");
 
 void SetupSpells(object oPC, int nClass)
 {
-    int nLevel = GetLevelByClass(nClass, oPC);
+    int nLevel = GetCasterLvl(nClass, oPC);
     int nAbility = GetAbilityForClass(nClass, oPC);
     int nSpellbookType = GetSpellbookTypeForClass(nClass);
     if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
@@ -490,9 +455,6 @@ void CheckNewSpellbooks(object oPC)
     for(i=1;i<=3;i++)
     {
         int nClass = PRCGetClassByPosition(i, oPC);
-        /*1.67 code
-        int nClass = GetClassByPosition(i, oPC);
-        */
         int nLevel = GetLevelByClass(nClass, oPC);
 DoDebug("CheckNewSpellbooks");
 DoDebug("nClass="+IntToString(nClass));

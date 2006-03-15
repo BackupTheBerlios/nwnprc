@@ -202,6 +202,66 @@ const int EVENT_ITEM_ONUNAQUIREITEM         = 1004;
 /// Requires OnHitCastSpell: Unique on the item used to hit
 const int EVENT_ITEM_ONHIT                  = 1005;
 
+/* Placeable events */
+//Note these will only fire for placeables using the
+//prc_plc_* scriptset
+
+// Placeable event - OnClick (1.67 or later only)
+const int EVENT_PLACEABLE_ONCLICK           = 3001;
+// Placeable event - OnClose
+const int EVENT_PLACEABLE_ONCLOSE           = 3002;
+// Placeable event - OnDamaged
+const int EVENT_PLACEABLE_ONDAMAGED         = 3003;
+// Placeable event - OnDeath
+const int EVENT_PLACEABLE_ONDEATH           = 3004;
+// Placeable event - OnHeartbeat
+const int EVENT_PLACEABLE_ONHEARTBEAT       = 3005;
+// Placeable event - OnDisturbed
+const int EVENT_PLACEABLE_ONDISTURBED       = 3006;
+// Placeable event - OnLock
+const int EVENT_PLACEABLE_ONLOCK            = 3007;
+// Placeable event - OnPhysicalAttacked
+const int EVENT_PLACEABLE_ONATTACKED        = 3008;
+// Placeable event - OnOpen
+const int EVENT_PLACEABLE_ONOPEN            = 3009;
+// Placeable event - OnSpellCastAt
+const int EVENT_PLACEABLE_ONSPELL           = 3010;
+// Placeable event - OnUnLock
+const int EVENT_PLACEABLE_ONUNLOCK          = 3011;
+// Placeable event - OnUsed
+const int EVENT_PLACEABLE_ONUSED            = 3012;
+// Placeable event - OnUserDefined
+const int EVENT_PLACEABLE_ONUSERDEFINED     = 3013;
+
+/* Door events */
+//Note these will only fire for doors using the
+//Note that placeable doors use the placeable set
+//prc_door_* scriptset
+// Door event - OnAreaTransitionClick
+const int EVENT_DOOR_ONTRANSITION           = 4001;
+// Door event - OnClose
+const int EVENT_DOOR_ONCLOSE                = 4002;
+// Door event - OnDamaged
+const int EVENT_DOOR_ONDAMAGED              = 4003;
+// Door event - OnDeath
+const int EVENT_DOOR_ONDEATH                = 4004;
+// Door event - OnFailToOpen
+const int EVENT_DOOR_ONFAILTOOPEN           = 4005;
+// Door event - OnHeartbeat
+const int EVENT_DOOR_ONHEARTBEAT            = 4006;
+// Door event - OnLock
+const int EVENT_DOOR_ONLOCK                 = 4007;
+// Door event - OnPhysicalAttacked
+const int EVENT_DOOR_ONATTACKED             = 4008;
+// Door event - OnOpen
+const int EVENT_DOOR_ONOPEN                 = 4009;
+// Door event - OnSpellCastAt
+const int EVENT_DOOR_ONSPELL                = 4010;
+// Door event - OnUnLock
+const int EVENT_DOOR_ONUNLOCK               = 4011;
+// Door event - OnUserDefined
+const int EVENT_DOOR_ONUSERDEFINED          = 4012;
+
 
 
 /* Callback hooks */

@@ -19,6 +19,8 @@ void main()
     StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
     int nPCForm = GetTrueForm(OBJECT_SELF);
+    if(GetPRCSwitch(PRC_LICH_ALTER_SELF_DISABLE))
+        return;
 
     // Switch to lich
     if (nPCForm == nCurForm)

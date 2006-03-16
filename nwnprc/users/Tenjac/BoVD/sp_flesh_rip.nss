@@ -27,4 +27,75 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	//Spellhook
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nType = MyPRCGetRacialType(oPC);
+	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_FLESH_RIPPER, oPC);
+	
+	//Caster must be undead.  If not, hit 'em with alignment change anyway.
+	//Try reading the description of the spell moron. =P
+	
+	if(nType == RACIAL_TYPE_UNDEAD)
+	{
+		//Check spell resistance
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			int nDam = d8(nCasterLvl);
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = (8 * nCasterLvl);
+			}
+			
+			if(nMetaMagic == METAMAGIC_EMPOWER)
+			{
+				nDam += (nDam/2);
+			}
+			
+			//Non-descript
+			effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
+			
+			//VFX
+			effect eVis = EffectVisualEffect(VFX_);
+			
+			//Make touch attack
+			int nTouch = PRCDoRangedTouchAttack(oTarget);
+			
+			if(nTouch > 0)
+			{
+				//Apply VFX
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+				
+				//Apply damage
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+			}
+			
+			if(nTouch = 2)
+			{
+				//Wounding
+				
+			}
+		}
+	}
+	SPEvilShift(oPC);
+	
+	SPSetSchool();
+}
+				
+			
+	
+	
+	
+	

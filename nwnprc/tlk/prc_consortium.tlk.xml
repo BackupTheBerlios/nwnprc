@@ -6391,7 +6391,7 @@ Power Resistance: No
 Power Points: 7
 Metapsionics: None
 
-You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desiredwhether by simply visualizing the area or by stating direction**. You may also bring one additional willing Medium or smaller creature or its equivalent per three manifester levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with you. *
+You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desired - whether by simply visualizing the area or by stating direction**. You may also bring one additional willing Medium or smaller creature or its equivalent per three manifester levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with you. *
 
 Notes:
 * Implemented as within 10ft of you due to the lovely quality of NWN location tracking code.
@@ -11116,7 +11116,7 @@ Duration: Instantaneous
 Saving Throw: None
 Spell Resistance: No
 
-You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desiredwhether by simply visualizing the area or by stating direction**. You may also bring one additional willing Medium or smaller creature or its equivalent per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with you. *
+You instantly transfer yourself from your current location to any other spot within range. You always arrive at exactly the spot desired - whether by simply visualizing the area or by stating direction**. You may also bring one additional willing Medium or smaller creature or its equivalent per three caster levels. A Large creature counts as two Medium creatures, a Huge creature counts as two Large creatures, and so forth. All creatures to be transported must be in contact with you. *
 
 Notes:
 * Implemented as within 10ft of you due to the lovely quality of NWN location tracking code.

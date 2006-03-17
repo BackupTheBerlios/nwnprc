@@ -51,8 +51,10 @@ void main()
     // Run a script to determine if the PRC Companion is present
     ExecuteScript("prc_companion", OBJECT_SELF);
 
-    CreateSwitchNameArray();
-    DoEpicSpellDefaults();
+    //delay this to avoid TMIs
+    DelayCommand(0.01, CreateSwitchNameArray());
+    DelayCommand(0.01, DoEpicSpellDefaults());
+    DelayCommand(0.01, DoSamuraiBanDefaults());
     SetDefaultFileEnds();
     if(GetPRCSwitch(PRC_CONVOCC_ENABLE))
     {

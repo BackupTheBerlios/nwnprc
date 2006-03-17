@@ -98,7 +98,8 @@ void main()
                     if(bIsValid)
                     {
                         int nStrRef = StringToInt(Get2DACache("itemprops", "StringRef", nRow));
-                        AddChoice(GetStringByStrRef(nStrRef), nRow, oPC);                    
+                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nRow)+"_*_*_*"))
+                            AddChoice(GetStringByStrRef(nStrRef), nRow, oPC);                    
                     }
                     nRow++;
                     sLabel = Get2DACache("itempropdef", "Label", nRow);
@@ -116,7 +117,8 @@ void main()
                     int nStrRef = StringToInt(Get2DACache(sSubTypeResRef, "Name", i));
                     if(nStrRef != 0)
                     {
-                        AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
+                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_"+IntToString(i)+"_*_*"))
+                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
                     }
                 }
             }
@@ -145,7 +147,9 @@ void main()
                     int nStrRef = StringToInt(Get2DACache(sParam1ResRef, "Name", i));
                     if(nStrRef != 0)
                     {
-                        AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
+                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_"+IntToString(nSubType)+"_"+IntToString(i)+"_*")
+                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_*_"+IntToString(i)+"_*"))
+                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
                     }
                 }
             }
@@ -165,7 +169,10 @@ void main()
                     int nStrRef = StringToInt(Get2DACache(sCostResRef, "Name", i));
                     if(nStrRef != 0)
                     {
-                        AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
+                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_"+IntToString(nSubType)+"_"+IntToString(nParam1)+"_"+IntToString(i))
+                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_*_"+IntToString(nParam1)+"_"+IntToString(i))
+                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_*_*_"+IntToString(i)))
+                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
                     }
                 }
             }

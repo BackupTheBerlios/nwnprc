@@ -72,6 +72,7 @@ void main()
     effect eLight    = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER, FALSE);
     effect eGlow     = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE, FALSE);
     int nFeat        = FEAT_PROJECTION;
+    int nSpell       = GetSpellId();
     float fDur       = HoursToSeconds(1);
     
     if(DEBUG) DoDebug("prc_bn_project running.\n"
@@ -81,11 +82,9 @@ void main()
 
     // Check if there is a valid copy around.
     // If so, end the projection.
-    if(GetIsObjectValid(oCopy))
+    if(nSpell == SPELL_END_PROJECTION)
     {
         EndPosses(oPC, oCopy);
-        //Increment if appropriate
-        IncrementRemainingFeatUses(oPC, FEAT_PROJECTION);
         return;
     }
 

@@ -1998,6 +1998,7 @@ const int FEAT_ACP_FEAT                       = 2892;
 const int FEAT_EPIC_SPELLCASTING_REST         = 4399;
 
 //Baelnorn
+const int FEAT_END_PROJECTION                 = 3575;
 const int FEAT_BAELN_PROP                     = 3576;
 const int FEAT_BAELN_TOUCH                    = 3577;
 const int FEAT_BAELN_ABIL                     = 3578;

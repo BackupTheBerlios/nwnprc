@@ -465,6 +465,7 @@ const int SPELL_TRIBAL_FRENZY                       = 1597;
 
 
 //Baelnorn
+const int SPELL_END_PROJECTION                      = 2899;
 const int SPELL_BAELNORN_PROJECTION                 = 2902;
 const int SPELL_BAELNORN_TOUCH                      = 2903;
 const int SPELL_BAELN_EYES                          = 2027;

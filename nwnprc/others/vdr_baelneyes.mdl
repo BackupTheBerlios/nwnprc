@@ -1,4 +1,4 @@
-# Exported from NWmax 0.8 b52 at 8/4/2005 3:37:38 PM
+# Exported from NWmax 0.8 b54 at 3/12/2006 1:35:35 PM
 # mdl file
 #
 #NWmax MODEL ASCII
@@ -15,13 +15,13 @@ node dummy vfx_baelneyes
 endnode
 node emitter star10
   parent vfx_baelneyes
-  position -0.0409952 0.0935884 0.0404766
-  orientation 6.3062e-007 1.0 -2.07465e-006 -0.436332
+  position -0.0479506 0.0 -0.104459
+  orientation 0.954202 0.211542 0.211541 -1.61766
   wirecolor 1.0 1.0 1.0 
   update_sel 2
   update Single
-  render_sel 1
-  render Normal
+  render_sel 3
+  render Billboard_to_Local_Z
   blend_sel 3
   Blend Lighten
   spawnType 0
@@ -56,7 +56,7 @@ node emitter star10
   loop 0
   bounce 0
   m_isTinted 0
-  splat 0
+  Splat 0
   affectedByWind false
   texture fxpa_flare
   twosidedtex 0
@@ -78,17 +78,17 @@ node emitter star10
   p2p_bezier2 0.0
   p2p_bezier3 0.0
   grav 0.0
-  drag 0.0
+  Drag 0.0
 endnode
 node emitter star09
   parent vfx_baelneyes
-  position 0.0415878 0.0935877 0.0404766
-  orientation -9.93841e-007 -1.0 1.41449e-006 -0.436332
+  position 0.0485442 0.0 -0.104458
+  orientation 0.954202 -0.211541 -0.211541 -1.61766
   wirecolor 1.0 1.0 1.0 
   update_sel 2
   update Single
-  render_sel 1
-  render Normal
+  render_sel 3
+  render Billboard_to_Local_Z
   blend_sel 3
   Blend Lighten
   spawnType 0
@@ -123,7 +123,7 @@ node emitter star09
   loop 0
   bounce 0
   m_isTinted 0
-  splat 0
+  Splat 0
   affectedByWind false
   texture fxpa_flare
   twosidedtex 0
@@ -145,7 +145,7 @@ node emitter star09
   p2p_bezier2 0.0
   p2p_bezier3 0.0
   grav 0.0
-  drag 0.0
+  Drag 0.0
 endnode
 endmodelgeom vfx_baelneyes
 donemodel vfx_baelneyes

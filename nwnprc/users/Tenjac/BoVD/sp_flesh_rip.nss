@@ -68,7 +68,7 @@ void main()
 			effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
 			
 			//VFX
-			effect eVis = EffectVisualEffect(VFX_);
+			effect eVis = EffectBeam(VFX_BEAM_BLACK, oPC, BODY_NODE_HAND);
 			
 			//Make touch attack
 			int nTouch = PRCDoRangedTouchAttack(oTarget);
@@ -85,7 +85,9 @@ void main()
 			if(nTouch = 2)
 			{
 				//Wounding
+				effect eWound = EffectHitPointChangeWhenDying(1.0f);
 				
+				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eWound, oTarget);				
 			}
 		}
 	}

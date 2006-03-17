@@ -283,6 +283,28 @@ const string PRC_SAMURAI_SACRIFICE_SCALAR_x100       = "PRC_SAMURAI_SACRIFICE_SC
 const string PRC_SAMURAI_VALUE_SCALAR_x100           = "PRC_SAMURAI_VALUE_SCALAR_x100";
 
 /*
+ * Stop and Itemproperty being addeable
+ * This is just a prefix, they should be finished as
+ * PRC_SAMURAI_BAN_[type]_[subtype]_[param1]_[value]
+ * If an itemproperty is missing one of those, or you wish to ban all of a 
+ * particular type use * instead of a number.
+ * Examples:
+ * Not allowing divine damage :                         PRC_SAMURAI_BAN_16_8_*_*
+ * Not allowing divine damage vs undead:                PRC_SAMURAI_BAN_18_24_8_*
+ * Not allowing +20 encancement weapons                 PRC_SAMURAI_BAN_6_*_*_20
+ * see also DoSamuraiBanDefaults at the end of this file for more examples
+ *
+ */
+const string PRC_SAMURAI_BAN_                            = "PRC_SAMURAI_BAN_";
+
+/*
+ *  Normally, some bans on itemproperties are setup automatically. 
+ *  If this switch is set, then nothing is banned automatically 
+ *  thus giving admins full controll. 
+ */
+const string PRC_SAMURAI_DISABLE_DEFAULT_BAN             = "PRC_SAMURAI_DISABLE_DEFAULT_BAN";
+
+/*
  * Orc Warlord gets a single additional cohort that must be an orc of some sort instead 
  * of multiple summons
  */
@@ -1965,6 +1987,83 @@ void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     }
+}
+
+void DoSamuraiBanDefaults()
+{
+    if(GetPRCSwitch(PRC_SAMURAI_DISABLE_DEFAULT_BAN))
+        return;
+    //remove all penalty iprops    
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"10_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"21_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"24_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"27_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"28_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"29_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"47_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"49_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"50_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"60_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"62_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"63_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"64_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"65_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"66_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"81_*_*_*", TRUE);
+    //PRCs restrictions
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"86_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"87_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"88_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"89_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"90_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"91_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"120_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"121_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"122_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"123_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"124_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"125_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"126_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"127_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"134_*_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"150_*_*_*", TRUE);
+    //only allow elemental damages 6,7,9,10,13   
+    //damage
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"16_5_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"16_8_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"16_11_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"16_12_*_*", TRUE);
+    //damage vs race
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"17_*_5_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"17_*_8_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"17_*_11_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"17_*_12_*", TRUE);
+    //damage vs alignment
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"18_*_5_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"18_*_8_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"18_*_11_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"18_*_12_*", TRUE);
+    //damage vs specific alignment
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"19_*_5_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"19_*_8_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"19_*_11_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"19_*_12_*", TRUE);
+    //damage immunity
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_5_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_8_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_11_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_12_*_*", TRUE);
+    //damage resist
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_5_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_8_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_11_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"20_12_*_*", TRUE);
+    //slays
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"48_21_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"48_22_*_*", TRUE);
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"48_23_*_*", TRUE);
+    //vorpal
+    SetPRCSwitch(PRC_SAMURAI_BAN_+"48_24_*_*", TRUE);
 }
 
 void DoEpicSpellDefaults()

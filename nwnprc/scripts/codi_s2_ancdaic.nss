@@ -117,7 +117,7 @@ void main()
                     int nStrRef = StringToInt(Get2DACache(sSubTypeResRef, "Name", i));
                     if(nStrRef != 0)
                     {
-                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_"+IntToString(i)+"_*_*"))
+                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_"+IntToString(i)+"_*_*"))
                             AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
                     }
                 }
@@ -147,8 +147,8 @@ void main()
                     int nStrRef = StringToInt(Get2DACache(sParam1ResRef, "Name", i));
                     if(nStrRef != 0)
                     {
-                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_"+IntToString(nSubType)+"_"+IntToString(i)+"_*")
-                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_*_"+IntToString(i)+"_*"))
+                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_"+IntToString(nSubType)+"_"+IntToString(i)+"_*")
+                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_*_"+IntToString(i)+"_*"))
                             AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
                     }
                 }
@@ -169,9 +169,9 @@ void main()
                     int nStrRef = StringToInt(Get2DACache(sCostResRef, "Name", i));
                     if(nStrRef != 0)
                     {
-                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_"+IntToString(nSubType)+"_"+IntToString(nParam1)+"_"+IntToString(i))
-                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_*_"+IntToString(nParam1)+"_"+IntToString(i))
-                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType+"_*_*_"+IntToString(i)))
+                        if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_"+IntToString(nSubType)+"_"+IntToString(nParam1)+"_"+IntToString(i))
+                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_*_"+IntToString(nParam1)+"_"+IntToString(i))
+                            && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_*_*_"+IntToString(i)))
                             AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
                     }
                 }

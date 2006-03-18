@@ -202,6 +202,40 @@ void main()
             }
         }
     }
+    
+    //Boneblade +1d6 damage vs living
+    if (GetHasSpellEffect(SPELL_BONEBLADE, oItem))
+    {
+	    if(MyPRCGetRacialType(oSpellTarget) != RACIAL_TYPE_UNDEAD &&
+	       MyPRCGetRacialType(oSpellTarget) != RACIAL_TYPE_CONSTRUCT)
+	    {
+		    effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
+		    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellTarget);
+	    }
+    }
+    
+    //Creatures with a necrotic cyst take +1d6 damage from natural attacks of undead
+    
+    if(GetHasNecroticCyst(oSpellOrigin))
+    {
+	    //if enemy is undead
+	    if(MyPRCGetRacialType(oSpellTarget) == RACIAL_TYPE_UNDEAD)
+	    {
+		    //and unarmed
+		    if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget)) &&
+		        !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget)))
+		        
+		        {
+				effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellOrigin);
+			}
+	     }
+     }
+
+	    
+		       
+	      
+	    
 
 
     /*//////////////////////////////////////////////////

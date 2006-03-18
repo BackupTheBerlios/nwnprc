@@ -18,8 +18,6 @@
 
 //unequips then destroys items
 void ClearCreatureItem(object oPC, object oTarget);
-//clears out all extra shifter creature items
-void ClearShifterItems(object oPC);
 //shift from quickslot info
 void QuickShift(object oPC, int iQuickSlot);
 //asign form to your quick slot
@@ -365,7 +363,7 @@ void SetShift_02(object oPC, object oTarget)
     }
 
     // Big problem with < 0 to abilities, if they have immunity to ability drain
-    // the - to the ability wont do anything
+    // the "-" to the ability wont do anything
 
     // Apply these boni to the creature hide
     if (nStrDelta > 0)
@@ -683,8 +681,6 @@ void SetShift_02(object oPC, object oTarget)
 
     // Reset any PRC feats that might have been lost from the shift
     DelayCommand(1.0, EvalPRCFeats(oPC));
-
-    //DelayCommand(1.5, ClearShifterItems(oPC));
 
     DelayCommand(3.0, DeleteLocalInt(oPC, "shifting"));
     SendMessageToPC(oPC, "Finished shifting");
@@ -2218,25 +2214,6 @@ void SetShiftTrueForm(object oPC)
 
 }
 
-
-void ClearShifterItems(object oPC)
-{
-    int iItemType;
-    object oCheck = GetFirstItemInInventory(oPC);
-    while (GetIsObjectValid(oCheck))
-    {
-        iItemType = GetBaseItemType(oCheck);
-
-        //if (GetTag(oCheck) == "pnp_shft_cweap")
-        //trying just removing all creature items. there should be no creature items in the main part of the inventory anyway.
-        if ((iItemType == BASE_ITEM_CBLUDGWEAPON) || (iItemType == BASE_ITEM_CPIERCWEAPON) || (iItemType == BASE_ITEM_CREATUREITEM) || (iItemType == BASE_ITEM_CSLASHWEAPON) || (iItemType == BASE_ITEM_CSLSHPRCWEAP))
-        {
-            if ((oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC)) && (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC)) && (oCheck != GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC)))
-                AssignCommand(oPC, DestroyObject(oCheck));
-        }
-        oCheck = GetNextItemInInventory(oPC);
-    }
-}
 
 void ClearCreatureItem(object oPC, object oTarget)
 {

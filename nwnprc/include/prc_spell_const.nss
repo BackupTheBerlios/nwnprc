@@ -574,7 +574,7 @@ const int SPELL_STARMANTLE                          = 2583;
 const int SPELL_SWORD_OF_CONSCIENCE                 = 2584;
 const int SPELL_TOMB_OF_LIGHT                       = 2585;
 const int SPELL_VENGEANCE_HALO                      = 2586;
-
+const int SPELL_EXTRACT_DRUG                        = 2587;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

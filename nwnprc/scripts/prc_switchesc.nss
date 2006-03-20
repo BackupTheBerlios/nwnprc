@@ -105,7 +105,10 @@ void main()
             {
                 SetHeader("What do you want to do?");
 
-                AddChoice("Alter code switches.", 1);
+                if(GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO) == 0
+                    || (GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO) == 1
+                    && GetIsDM(oPC)))
+                    AddChoice("Alter code switches.", 1);
                 if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
                     GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))
                     AddChoice("Manage Epic Spells.", 2);

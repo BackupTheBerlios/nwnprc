@@ -44,7 +44,7 @@ void main()
     }
 
     //decide if to cache bioware 2da yet
-    if(bBiowareDBCache)
+    if(bBiowareDBCache > 0)
     {
         if(GetLocalInt(GetModule(), "Bioware2dacacheCount") == bBiowareDBCache)
             DeleteLocalInt(GetModule(), "Bioware2dacacheCount");

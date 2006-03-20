@@ -288,6 +288,14 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
     ExecuteScript("race_unarmed", oPC);
+    //handle PnP sling switch
+    if(GetPRCSwitch(PRC_PNP_SLINGS))
+    {
+        if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)) == BASE_ITEM_SLING)
+            IPSafeAddItemProperty(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), 
+                ItemPropertyMaxRangeStrengthMod(20),
+                999999.9);
+    }       
     //moved here by Primogenitor
     //causes stack underflow error here, moved back
     /*int iRace = GetRacialType(OBJECT_SELF);

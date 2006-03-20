@@ -631,7 +631,10 @@ const string PRC_NO_PETRIFY_GUI                      = "PRC_NO_PETRIFY_GUI";
 
 /*
  * Set this to remove the switch changing convo feat.
- * This must be set for PWs to avoid players screwing around with switches
+ * This should be set for PWs to avoid players screwing around with switches
+ * A value of zero allows anyone to change switches
+ * A value of 1 allows only DMs to change switches
+ * Any other value prohibits everyone from changing switches
  */
 
 const string PRC_DISABLE_SWITCH_CHANGING_CONVO       = "PRC_DISABLE_SWITCH_CHANGING_CONVO";
@@ -1537,6 +1540,8 @@ const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
  * the value is the number of Hbs between caching runs
  * Defaults to 600 (10 mins) if not set
  * cache will be flushed automatically when the PRC version changes
+ * If this is set to -1 or lower, it is never stored for persistance over
+ * module restarts.
  */
 const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE";
 

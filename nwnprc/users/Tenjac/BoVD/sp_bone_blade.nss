@@ -36,7 +36,7 @@ Created:   3/9/2006
 void main()
 {
 	//define vars
-	object oPC = OBJECT_SELF
+	object oPC = OBJECT_SELF;
 	int nSpell = GetSpellId();
 	int nCasterLvL = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();

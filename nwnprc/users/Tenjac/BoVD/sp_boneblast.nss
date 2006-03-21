@@ -31,3 +31,21 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+
+
+void main()
+{
+	//define vars
+	object oPC = OBJECT_SELF;
+	int nCasterLvL = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nType = MyPRCGetRacialType(oPC);
+	int nCreatureType = MyPRCGetRAcialType(oTarget);
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	//Check for undeath
+	if(nType == RACIAL_TYPE_UNDEAD)
+	{
+		
+		

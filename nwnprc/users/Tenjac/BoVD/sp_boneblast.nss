@@ -17,7 +17,7 @@ The caster causes some bone within a touched
 creature to break or crack. The caster cannot specify 
 which bone. Because the damage is general rather than 
 specific, the target takes 1d3 points of Constitution 
-damage. A For­titude save reduces the Constitution damage
+damage. A Fortitude save reduces the Constitution damage
 by half, or negates it if the full damage would have been
 1 point of Constitution damage.
 
@@ -41,11 +41,22 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nType = MyPRCGetRacialType(oPC);
 	int nCreatureType = MyPRCGetRAcialType(oTarget);
+	int nDam = d3(1);
 	
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
-	//Check for undeath
+	//Check for PLAYER undeath
 	if(nType == RACIAL_TYPE_UNDEAD)
 	{
+		//check for target skeleton  
+		//***RACIAL_TYPE_PLANT should also be included if it ever exists***
+		
+		if(nType != RACIAL_TYPE_UNDEAD &&
+		   nType != RACIAL_TYPE_OOZE   &&
+		   nType != RACIAL_TYPE_CONSTRUCT &&
+		   nType != RACIAL_TYPE_ELEMENTAL)
+		   
+		   {
+			   
 		
 		

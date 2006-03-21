@@ -59,43 +59,44 @@ void main()
 	location lLoc = GetLocation(oTarget);
 	effect eDeath = EffectDeath();
 	
-	SPRaiseSpellCastAt(oTarget, FALSE, SPELL_ABYSSAL_MIGHT, oPC);
+	SPRaiseSpellCastAt(oTarget, FALSE, SPELL_BODAK_BIRTH, oPC);
 	
 	//Agony check
-	
-	
-	//"Willing" check
-	if(GetHasEffect(EFFECT_TYPE_DAZED, oTarget) 
-	|| GetHasEffect(EFFECT_TYPE_DOMINATED, oTarget) 
-	|| GetHasEffect(EFFECT_TYPE_PARALYZE, oTarget)
-	|| GetHasEffect(EFFECT_TYPE_STUNNED, oTarget)
-	|| GetHasEffect(EFFECT_TYPE_CHARMED, oTarget))
-		
-	//Kill target
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget
-	
-	//Create Bodak
-	object oBodak = CreateObject(OBJECT_TYPE_CREATURE, "nw_bodak", lLoc, FALSE); 
-	
-	//Will save to avoid control
-	if (!PRCMySavingThrow(SAVING_THROW_WILL, oBodak, (PRCGetSaveDC(oBodak,oPC)), SAVING_THROW_TYPE_MIND_SPELLS, oPC, 1.0))
+	if(GetPersistantLocalInt(oPC, "USING_AGONY"))
 	{
-		//Get original max henchmen
-		int nMax = GetMaxHenchmen();
+		//"Willing" check
+		if(GetHasEffect(EFFECT_TYPE_DAZED, oTarget) 
+		|| GetHasEffect(EFFECT_TYPE_DOMINATED, oTarget) 
+		|| GetHasEffect(EFFECT_TYPE_PARALYZE, oTarget)
+		|| GetHasEffect(EFFECT_TYPE_STUNNED, oTarget)
+		|| GetHasEffect(EFFECT_TYPE_CHARMED, oTarget))
 		
-		//Set new max henchmen high
-		SetMaxHenchmen(150);
-		
-		//Make henchman
-		AddHenchman(oPC, oBodak);
-		
-		//Restore original max henchmen
-		SetMaxHenchmen(nMax);
-		
+		{
+			//Kill target
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget
+			
+			//Create Bodak
+			object oBodak = CreateObject(OBJECT_TYPE_CREATURE, "nw_bodak", lLoc, FALSE); 
+			
+			//Will save to avoid control
+			if (!PRCMySavingThrow(SAVING_THROW_WILL, oBodak, (PRCGetSaveDC(oBodak,oPC)), SAVING_THROW_TYPE_MIND_SPELLS, oPC, 1.0))
+			{
+				//Get original max henchmen
+				int nMax = GetMaxHenchmen();
+				
+				//Set new max henchmen high
+				SetMaxHenchmen(150);
+				
+				//Make henchman
+				AddHenchman(oPC, oBodak);
+				
+				//Restore original max henchmen
+				SetMaxHenchmen(nMax);
+			}
+		}
+				
 	}
-	
 	SPEvilShift(oPC);
-	
+			
 	SPSetSchool();
 }
-	

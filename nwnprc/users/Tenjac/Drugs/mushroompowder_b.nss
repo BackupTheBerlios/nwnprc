@@ -1,6 +1,11 @@
 // Mushroom powder secondary effects
+
+#include "spinc_common"
+
 void main()
 {
-    effect eff = EffectAbilityDecrease(ABILITY_STRENGTH,1);
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT,SupernaturalEffect(eff),OBJECT_SELF);
+	object oPC = OBJECT_SELF;
+	effect eStr = EffectAbilityDecrease(ABILITY_STRENGTH,1);
+	
+	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(eStr), oPC);
 }

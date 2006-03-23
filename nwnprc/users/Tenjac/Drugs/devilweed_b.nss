@@ -1,6 +1,10 @@
 // Devilweed secondary effects
+
+#include "spinc_common"
+
 void main()
 {
-    effect eff = EffectAbilityIncrease(ABILITY_STRENGTH,4);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eff,OBJECT_SELF,HoursToSeconds(d3()));
+	object oPC = OBJECT_SELF;
+	effect eff = EffectAbilityIncrease(ABILITY_STRENGTH,4);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff, oPC, HoursToSeconds(d3()));
 }

@@ -1,6 +1,11 @@
 // Sannish secondary effects
+
+#include "spinc_common"
+
 void main()
 {
-    effect eff = EffectAbilityIncrease(ABILITY_CONSTITUTION,2);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eff,OBJECT_SELF,HoursToSeconds(d4()));
+	object oPC = OBJECT_SELF;
+	
+	effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, 2);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCon, oPC, HoursToSeconds(d4()));
 }

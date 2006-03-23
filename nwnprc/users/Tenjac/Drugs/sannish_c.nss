@@ -1,9 +1,12 @@
 // Sannish overdose
+
+#include "spinc_common"
+
 void main()
 {
-    effect eff = EffectConfused();
-    float fDur = HoursToSeconds(d4(2));
-    SetLocalInt(OBJECT_SELF,"PARTIAL_CONFUSION",TRUE);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eff,OBJECT_SELF,fDur);
-    DelayCommand(fDur,SetLocalInt(OBJECT_SELF,"PARTIAL_CONFUSION",FALSE));
+	object oPC = OBJECT_SELF;
+	effect eDaze = EffectDazed();
+	float fDur = HoursToSeconds(d4(2));
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oPC, fDur);
 }

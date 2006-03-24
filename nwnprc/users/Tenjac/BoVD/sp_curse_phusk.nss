@@ -29,9 +29,32 @@ Created:
 
 #include "spinc_common"
 
+void PassOut(object oTarget)
+{
+	effect eBlind = EffectBlindness();
+	effect eDeaf = EffectDeaf();
+	effect eLink2 = EffectLinkEffects(eBlind, eDeaf);
+	float fDur = (d10(1) * 60.0f);
+	
+	//Blind/deaf
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, (fDur - 1.0f));
+	
+	//Clear all actions
+	AssignCommand(oTarget, ClearAllActions());
+	
+	//Animation		
+	PlayAnimation(ANIMATION_LOOPING_DEAD_BACK, fDur);
+	
+	//Make them sit and wait. 
+	DelayCommand(0.2,SetCommandable(FALSE, oTarget));
+	
+	//Restore Control
+	DelayCommand((fDur - 0.2), SetCommandable(TRUE, oTarget));
+}
+
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	SPSetSchool(SPELL_SCHOOL_ILLUSION);
 	
 	// Run the spellhook. 
 	if (!X2PreSpellCastCode()) return;
@@ -41,9 +64,29 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
-	effect eDaze = EffectDazed();
-	effect eVis
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	effect eLink = EffectLinkEffects(EffectDazed, EffectFrightened);
+	       eLink = EffectLinkEffects(eLink,EffectVisualEffect(VFX_IMP_DAZED_S));
+	       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_FEAR));
 	
 	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CURSE_OF_THE_PUTRID_HUSK, oPC);
+	
+	
+	//Check Spell Resistance
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Will save
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+		{
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0f);
+			
+			DelayCommand(6.0f, PassOut(oTarget));
+		}
+	}
+	
+	SPEvilShift(oPC);
+	
+	SPSetSchool();
+}
 	

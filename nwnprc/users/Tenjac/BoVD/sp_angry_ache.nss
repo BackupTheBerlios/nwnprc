@@ -33,6 +33,9 @@ void main()
 {
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
 	//define vars
 	object oPC = OBJECT_SELF;
 	object oSkin = GetPCSkin(oPC);

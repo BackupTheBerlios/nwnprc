@@ -73,7 +73,7 @@ void main()
 		
 		{
 			//Kill target
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
 			
 			//Create Bodak
 			object oBodak = CreateObject(OBJECT_TYPE_CREATURE, "nw_bodak", lLoc, FALSE); 

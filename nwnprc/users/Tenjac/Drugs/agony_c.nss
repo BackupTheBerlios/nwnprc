@@ -8,12 +8,24 @@ void main()
 	{
 		object oPC = OBJECT_SELF;
 		float fDur = HoursToSeconds(d4(1));
-		effect ePar = EffectCutsceneParalyze();
+		effect eBlind = EffectBlindness();
+		effect eDeaf = EffectDeaf();
+		effect eLink = EffectLinkEffects(eBlind, eDeaf);	
 		
-		//Paralyze
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oPC, fDur);
+		//Blind/deaf
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, (fDur - 1.0f));
+			
+		//Clear all actions
+		AssignCommand(oPC, ClearAllActions());
 		
+		//Animation		
 		PlayAnimation(ANIMATION_LOOPING_DEAD_BACK, fDur);
+				
+		//Make them sit and wait.  That's what you get.  JUST SAY NO!
+		DelayCommand(0.2,SetCommandable(FALSE, oPC));
+		
+		//Restore Control
+		DelayCommand((fDur - 0.2), SetCommandable(TRUE, oPC));
 	}
 }
 		

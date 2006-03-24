@@ -37,18 +37,21 @@ void main()
 {
 	//define vars
 	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
 	int nCasterLvL = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nType = MyPRCGetRacialType(oPC);
-	int nCreatureType = MyPRCGetRAcialType(oTarget);
+	int nCreatureType = MyPRCGetRacialType(oTarget);
 	int nDam = d3(1);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
 	
 	//Check for PLAYER undeath
 	if(nType == RACIAL_TYPE_UNDEAD)
 	{
-		//check for target skeleton  
+		//check for target skeleton or innate immunity
 		//***RACIAL_TYPE_PLANT should also be included if it ever exists***
 		
 		if(nType != RACIAL_TYPE_UNDEAD &&
@@ -56,7 +59,26 @@ void main()
 		   nType != RACIAL_TYPE_CONSTRUCT &&
 		   nType != RACIAL_TYPE_ELEMENTAL)
 		   
-		   {
+		{
+			//Check for resistance
+			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			{
+				//Check for save
+				if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL)) 
+				{
+					nDam--;
+				}
+				
+				//Apply ability *DAMAGE*
+				ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+			}
+		}
+	}
+	SPShiftEvil(oPC);
+	
+	SPSetSchool();
+}
+			   
 			   
 		
 		

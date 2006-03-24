@@ -48,44 +48,39 @@ void main()
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
 	//Check Spell Resistance
-	if (MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
-		return;
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+		{
+			
+			if(nCasterLvl > 7)
+			{
+				nPenalty = 4;
+			}
+			
+			if(nCasterLvl > 11)
+			{
+				nPenalty = 6;
+			}
+			
+			if(nCasterLvl > 15)
+			{
+				nPenalty = 8;
+			}
+			
+			if(nCasterLvl > 19)
+			{
+				nPenalty = 10;
+			}
+		}
+		//Construct effect
+		effect ePenalty = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
+		
+		//Apply Effect
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePenalty, oTarget, fDuration);
 	}
 	
-	if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
-	{
-		return;
-	}
-	
-	if(nCasterLvl > 7)
-	{
-		nPenalty = 4;
-	}
-	
-	if(nCasterLvl > 11)
-	{
-		nPenalty = 6;
-	}
-	
-	if(nCasterLvl > 15)
-	{
-		nPenalty = 8;
-	}
-	
-	if(nCasterLvl > 19)
-	{
-		nPenalty = 10;
-	}
-	
-	//Construct effect
-	effect ePenalty = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
-	
-	//Apply Effect
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePenalty, oTarget, fDuration);
-	
-	SPSetSchool();
-
+	SPSetSchool();		
 }
 	
 	

@@ -25,7 +25,6 @@ void main()
 	effect eWis = EffectAbilityIncrease(ABILITY_WISDOM,2);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWis, oPC, fDur);
 	
-	// Side effect
-	effect eHP = EffectTemporaryHitpoints(d8()+2);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oPC, fDur);
+	//Side Effect - Immune to pain
+	
 }

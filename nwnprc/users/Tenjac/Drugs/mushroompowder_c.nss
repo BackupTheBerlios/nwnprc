@@ -5,9 +5,8 @@
 void main()
 {
 	object oPC = OBJECT_SELF;
-	effect eDam = EffectDamage(d6(3));
-	effect ePar = EffectParalyze();
+	effect eDam = EffectDamage(d6(2));
+	
 	
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oPC, HoursToSeconds(d4()));
 }

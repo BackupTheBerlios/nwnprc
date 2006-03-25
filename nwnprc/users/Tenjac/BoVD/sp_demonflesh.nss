@@ -13,14 +13,58 @@ Duration: 1 minute/level
  
 The caster grows the thick, leathery flesh of a demon,
 gaining a +1 natural armor bonus to Armor Class for 
-every five caster levels (at least +1, maxi­mum +4). 
+every five caster levels (at least +1, maximum +4). 
 This spell has no effect if the caster is an evil 
 outsider.
 
 Author:    Tenjac
-Created:   
+Created:   03/25/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	//define vars
+	object oPC = OBJECT_SELF;
+	int nEnhance = 1;
+	int nCasterLevel = PRCGetCasterLvl(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = (60.0f * nCasterLevel);
+			
+	//+1/5 levels, min 1, max 4
+	if(nCasterLvl > 9)
+	{
+		nEnchance = 2;
+	}
+	
+	if(nCasterLvl > 14)
+	{
+		nEnhance = 3;
+	}
+	
+	if(nCasterLvl > 19)
+	{
+		nEnhance = 4;
+	}
+	
+	//Eval for Extend
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur = (fDur * 2);
+	}
+			
+	//Apply armor bonus
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectACIncrease(nEnhance, AC_NATURAL_BONUS), oPC, fDur);
+	
+	SPEvilShift(oPC);
+	
+	SPSetSchool();
+}

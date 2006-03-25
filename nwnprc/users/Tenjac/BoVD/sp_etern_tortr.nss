@@ -14,13 +14,13 @@ Saving Throw: Fortitude partial
 Spell Resistance: Yes
 
 The subject's body is twisted and warped, wracked 
-forever with excru­ciating pain. The subject is 
+forever with excruciating pain. The subject is 
 rendered helpless, but-as long as the spell continues
 -it is sustained and has no need for food, drink, or 
 air. The subject does not age-all the better to ensure
-a true eternity of unimaginable tor­ture. The subject 
+a true eternity of unimaginable torture. The subject 
 takes 1 point of drain to each ability score each day
-until all scores are reduced to 0 (except Consti­tution,
+until all scores are reduced to 0 (except Constitution,
 which stays at 1). The subject cannot heal or regenerate.
 Lastly, the subject is completely unaware of its 
 surroundings, insensate to anything but the excruciating
@@ -29,16 +29,37 @@ pain.
 A single Fortitude saving throw is all that stands 
 between a target and this horrible spell. However, 
 even if the saving throw is successful, the target 
-still feels terrible (but tempo­rary) pain. The target 
+still feels terrible (but temporary) pain. The target 
 takes 5d6 points of damage immediately and takes a -4
 circumstance penalty on attack rolls, saving throws, 
 skill checks, and ability checks for 1 round per level 
 of the caster.
 
 Author:    Tenjac
-Created:   
+Created:   3/25/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = 5000.0f;
+	
+	//if oTarget is oPC, lay down the hurt
+	if(GetLocalInt(oPC, "EternTorture"))
+	{
+		PlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDur);
+	
+	//Spell resist
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			//Fort save
+			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_EVIL))
+			{
+				AssignCommand(oTarget, 
+				

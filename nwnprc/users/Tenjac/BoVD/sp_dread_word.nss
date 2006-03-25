@@ -39,6 +39,17 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nDam = d3(1);
 	int nDC = PRCGetSaveDC(oTarget, oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if (nMetaMagic == METAMAGIC_MAXIMIZE)
+	{
+		nDam = 3;
+	}
+	
+	if (nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nDam += (nDam/2);
+	}
 	
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{

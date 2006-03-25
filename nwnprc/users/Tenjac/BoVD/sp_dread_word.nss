@@ -35,6 +35,11 @@ Created:   3/26/06
 
 void main()
 {
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nDam = d3(1);

@@ -58,7 +58,7 @@ void main()
 	
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
-		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL, oPC, 1.0);
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL, oPC, 1.0)
 		{
 			effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget

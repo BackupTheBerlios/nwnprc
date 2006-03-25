@@ -5,7 +5,7 @@
 void main()
 {
 	object oPC = OBJECT_SELF;
-	effect eff = EffectAbilityIncrease(ABILITY_WISDOM,d6()+1);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff, oPC, HoursToSeconds(d2()));
+	effect eWis = EffectAbilityIncrease(ABILITY_WISDOM,d6()+1);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWis, oPC, HoursToSeconds(d2()));
 
 }

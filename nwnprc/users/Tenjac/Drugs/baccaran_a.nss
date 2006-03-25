@@ -5,10 +5,9 @@
 void main()
 {
 	object oPC = OBJECT_SELF;
-	effect eff = EffectAbilityDecrease(ABILITY_STRENGTH,d4());
-	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eff, oPC);
+	ApplyAbilityDamage(oPC, ABILITY_STRENGTH, 4, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 	
-	eff2 = EffectSavingThrowDecrease(SAVING_THROW_WILL,2,SAVING_THROW_TYPE_MIND_SPELLS);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff2, oPC, HoursToSeconds(d4(2)));
+	effect eMind = EffectSavingThrowDecrease(SAVING_THROW_WILL,2,SAVING_THROW_TYPE_MIND_SPELLS);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oPC, HoursToSeconds(d4(2)));
 	
 }

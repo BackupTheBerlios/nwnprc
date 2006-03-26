@@ -154,10 +154,11 @@ int RedWizRestrictedSchool()
             FloatingTextStrRefOnCreature(16822359, oCaster, FALSE); // "You cannot cast spells of your prohibited schools. Spell terminated."
             return FALSE;
         }
-        // Sorcerers cannot benefit from red wizard bonuses
-        if(GetLevelByClass(CLASS_TYPE_SORCERER, oCaster) > 0)
+        // Other arcane casters cannot benefit from red wizard bonuses
+        int nClassTest = PRCGetLastSpellCastClass();
+        if(GetIsArcaneClass(nClassTest) && nClassTest != CLASS_TYPE_WIZARD)
         {
-            FloatingTextStringOnCreature("You have attempted to illegaly merge a sorcerer with a Red Wizard. All spellcasting will now fail.", oCaster, FALSE);
+            FloatingTextStringOnCreature("You have attempted to illegaly merge another arcane caster with a Red Wizard. All spellcasting will now fail.", oCaster, FALSE);
             return FALSE;
         }        
     }

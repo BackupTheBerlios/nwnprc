@@ -43,7 +43,7 @@ void PassOut(object oTarget)
 	AssignCommand(oTarget, ClearAllActions());
 	
 	//Animation		
-	PlayAnimation(ANIMATION_LOOPING_DEAD_BACK, fDur);
+	AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_DEAD_BACK, fDur));
 	
 	//Make them sit and wait. 
 	DelayCommand(0.2,SetCommandable(FALSE, oTarget));

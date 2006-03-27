@@ -1,5 +1,6 @@
 Current total: 40
 
+Abberate
 Absorb Strength  (Corrupt)              
 Abyssal Might                                 
 Angry Ache
@@ -8,35 +9,69 @@ Bestow Wound
 Bodak Birth
 Bone Blade (Undead)                                    
 Boneblast (Undead)
-Cloud of the Achaierai                        
+Call Dretch Horde
+Call Lemure Horde
+Cloud of the Achaierai
+Clutch of Orcus
+Crushing Fist of Spite                        
 Curse of the Putrid Husk               
-Damning Darkness                        
-Darkbolt                               
-Death by Thorns (Corrupt)              
-Demonflesh                                           
-Demoncall                                    
-Dread Word                              
+Damning Darkness                                               
+Death by Thorns (Corrupt)                                                        
+Demoncall
+Demonflesh
+Despoil
+Devil's Ego
+Devil's Eye
+Devil's Tail                                     
+Dread Word
+Drug Resistance
+Ectoplasmic Enhancement                              
+Entice Gift
 Eternity of Torture
-Evil Weather (Corrupt)                 
-Festering Death
+Evil Eye
+Evil Weather (Corrupt)
+Extract Drug
+Eye of the Beholder
+Fiendish Clarity
 Flesh Armor
 Flesh Ripper (Undead, Fiend)           
+Grim Revenge
 Gutwrench (Undead)                     
+Heartache
 Heartclutch 
+Hellfire
+Hellfire Storm
 Hell's Power
+Imprison Soul
+Liquid Pain
+Masochism
 Morality Undone
+Psychic Poison
+Reality Blind
 Red Fester (Corrupt)
+Resonating Resistance
 Rotting Curse of Urfestra (Corrupt)
+Sadism
+Sap Strength
 Seething Eyebane  (Corrupt)
 Shriveling
-Stop Heart 
-Sorrow 
-Stunning Screech
+Song of Festering Death
+Sorrow
+Soul's Treasure Lost
+Spores of the Vrock
+Spread of Savagery
+Steal Life
+Stop Heart
+Stunning Screech 
 Thousand Needles
 Tongue of Baalzebul 
 Touch of Juiblex
+Unheavened
 Unliving Weapon 
+Unnerving Gaze
+Utterdark
 Wave of Grief 
 Wave of Pain
+Wirlwind of Teeth
 Wrack
 Wretched Blight 

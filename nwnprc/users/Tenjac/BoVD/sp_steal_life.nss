@@ -1,10 +1,53 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  sp_.nss
+//:: Name      Steal Life
+//:: FileName  sp_steal_life.nss
 //:://////////////////////////////////////////////
-/**@file 
-Level: 
+/**@file Steal Life
+Necromancy [Evil] 
+Level: Sor/Wiz 8 
+Components: V, S, Location 
+Casting Time: 1 action 
+Range: Close (25 ft. + 5 ft./2 levels) 
+Target: One living humanoid 
+Duration: Concentration
+Saving Throw: Fortitude negates 
+Spell Resistance: Yes
 
+The caster taps into the life force of a subject 
+and drains it away, adding it to her own. Each 
+round the caster concentrates, she deals 1 point 
+of ability score drain to the subject. Although the 
+caster can choose which ability score to drain, she
+must choose a different ability score to drain in 
+each round and cannot choose a score already drained
+until she has drained all the others equally, at 
+which point the process starts over. Thus, if the 
+caster drains 1 point of Strength, she must choose 
+another ability in the next round and cannot choose 
+Strength again until she has drained 1 point each of
+Constitution, Dexterity, Intelligence, Wisdom, and 
+Charisma. Then, the caster can drain a second point 
+of Strength (or any other ability), but not a third 
+until she has drained a second point from all the 
+other ability scores.
+
+If the caster casts this spell on the night of a full 
+moon, she becomes effectively one week younger for 
+every point she drains. (Her age is reduced, but 
+memories and abilities acquired during that week are 
+not lost.) Otherwise, the subject takes the ability 
+score drain, but the caster gains nothing.
+
+The subject withers and shrivels as the caster drains 
+its ability scores. When the subject's Constitution 
+score reaches 0, the subject becomes a horrid, dry 
+husk and cannot be further drained. If the caster 
+dies while concentrating on this spell, all the 
+subject's lost ability score points are immediately
+regained.
+
+Location Component: An area under the effect of a 
+desecrate or unhallow spell.
 
 Author:    Tenjac
 Created:   

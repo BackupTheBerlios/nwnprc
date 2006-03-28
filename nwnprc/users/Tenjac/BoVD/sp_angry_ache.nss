@@ -38,7 +38,6 @@ void main()
 	
 	//define vars
 	object oPC = OBJECT_SELF;
-	object oSkin = GetPCSkin(oPC);
 	object oTarget = GetSpellTargetObject();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
@@ -46,6 +45,11 @@ void main()
 	float fDuration = RoundsToSeconds(nCasterLvl * 10);
 	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ANGRY_ACHE, oPC);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDuration += fDuration;
+	}
 	
 	//Calculate DC
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);

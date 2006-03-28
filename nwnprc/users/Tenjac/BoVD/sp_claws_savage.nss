@@ -14,9 +14,7 @@ Duration: 10 minutes/level
 The caster grants one creature two long claws that
 replace its hands, tentacle tips, or whatever 
 else is appropriate. The claws deal damage based 
-on the creature's size.
-
- 
+on the creature's size. 
 
                 Creature Size      Claw Damage
 
@@ -37,7 +35,6 @@ on the creature's size.
                 Gargantuan            2d8
 
                 Colossal              4d6 
-
 
 The creature can make attacks with both claws as if
 it were proficient with them. Just as with a 

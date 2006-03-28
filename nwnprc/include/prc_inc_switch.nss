@@ -500,6 +500,10 @@ const string PRC_PNP_SPELL_SCHOOLS                   = "PRC_PNP_SPELL_SCHOOLS";
 /**
  * Players have a variable tracking how far ahead of the module clock they are
  * and when all players are ahead, the module clock advances to catch up.
+ * This includes 8 hours when resting and time spent crafting
+ *
+ * See inc_time for implementation
+ *
  */
 const string PRC_PLAYER_TIME                         = "PRC_PLAYER_TIME";
 
@@ -1149,6 +1153,9 @@ const string PRC_DISABLE_CRAFT                       = "PRC_DISABLE_CRAFT";
  * can't craft anything. This is divided by 100 to get a float.
  * Normally, it's set to the market price of the item. Set
  * it to less than 100 to reduce it instead. (default: 0).
+ *
+ * This is independant of PRC_PLAYER_TIME
+ *
  */
 const string PRC_CRAFT_TIMER_MULTIPLIER              = "PRC_CRAFT_TIMER_MULTIPLIER";
 
@@ -1156,6 +1163,9 @@ const string PRC_CRAFT_TIMER_MULTIPLIER              = "PRC_CRAFT_TIMER_MULTIPLI
  * Absolute maximum delay (in seconds) where crafting is disabled for a PC,
  * regardless of the item's market price. By default it's 0 (meaning that there's
  * no delay at all).
+ *
+ * This is independant of PRC_PLAYER_TIME
+ *
  */
 const string PRC_CRAFT_TIMER_MAX                     = "PRC_CRAFT_TIMER_MAX";
 
@@ -1163,6 +1173,9 @@ const string PRC_CRAFT_TIMER_MAX                     = "PRC_CRAFT_TIMER_MAX";
  * Absolute minimum delay (in seconds) where crafting is disabled for a PC,
  * regardless of the item's market price. By default it's 0 (meaning that there's
  * no delay at all).
+ *
+ * This is independant of PRC_PLAYER_TIME
+ *
  */
 const string PRC_CRAFT_TIMER_MIN                     = "PRC_CRAFT_TIMER_MIN";
 
@@ -1305,9 +1318,8 @@ const string PRC_DISABLE_CREATURE_TELEPORT           = "PRC_DISABLE_CREATURE_TEL
 
 /**
  * Persistant time tracking.
- * This is done on a player-by-player basis if PRC_PLAYER_TIME is on.
- *
- * TODO: Elaborate
+ * When the first player logs on, the clock is set forward to the last time that
+ * player logged off.
  */
 const string PRC_PW_TIME                             = "PRC_PW_TIME";
 
@@ -1531,27 +1543,42 @@ const string PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS       = "PRC_XP_GIVE_XP_TO_NON_PC
 \******************************************************************************/
 
 /**
- * Set this if you are using NWNX and any sort of database.
- */
-const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
-
-/**
  * Set this if you want to use the bioware db for 2da caching
  * the value is the number of Hbs between caching runs
  * Defaults to 600 (10 mins) if not set
  * cache will be flushed automatically when the PRC version changes
  * If this is set to -1 or lower, it is never stored for persistance over
  * module restarts.
+ * The bioware database will bloat infinitely on Linux, due to biowares poor
+ * handling.
  */
 const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE";
 
 /**
- * This will precache 2da files into the database.
- * The first time a module runs with this set it will lag a lot for a long time
- * as the game does 2da reads.
- * Afterwards it will be much faster.
+ * 2da caching code uses local variables on a token on a creatures inventory
+ * This does not stop the creature being created or stored since the new spellbooks
+ * and psionics need it. It mearly stops the 2das being cached on the creature as well
+ * NOTE: a value of 0 is on by default, any other value is off
  */
-const string PRC_DB_PRECACHE                         = "PRC_DB_PRECACHE";
+const string PRC_2DA_CACHE_IN_CREATURE                = "PRC_2DA_CACHE_IN_CREATURE"; 
+
+/**
+ * 2da caching code will get/set directly in the bioware db
+ * Off by default, gets are quite quick, sets much slower
+ */
+const string PRC_2DA_CACHE_IN_BIOWAREDB               = "PRC_2DA_CACHE_IN_BIOWAREDB"; 
+
+/**
+ * 2da caching code will get/set directly in a NWNX db
+ * Must have PRC_USE_DATABASE turned on and a database setup
+ * Must have a PRC_DB_* variable on to set what type of database to use
+ */
+const string PRC_2DA_CACHE_IN_NWNXDB                  = "PRC_2DA_CACHE_IN_NWNXDB"; 
+
+/**
+ * Set this if you are using NWNX and any sort of database.
+ */
+const string PRC_USE_DATABASE                        = "PRC_USE_DATABASE";
 
 /**
  * Set this if you are using SQLite (the built-in database in NWNX-ODBC2).
@@ -1572,11 +1599,16 @@ const string PRC_DB_SQLLITE_INTERVAL                 = "PRC_DB_SQLLITE_INTERVAL"
  */
 const string PRC_DB_MYSQL                            = "PRC_DB_MYSQL";
 
-/**
- * 2da caching code will use the bioware db over the nwnx-db
- */
-const string PRC_2DA_CACHE_NOT_NWNX                  = "PRC_2DA_CACHE_NOT_NWNX"; 
 
+/**
+ * This will precache 2da files into the database.
+ * The first time a module runs with this set it will lag a lot for a long time
+ * as the game does 2da reads.
+ * Afterwards it will be much faster.
+ * This is a really, really long lag. Like days/weeks type length.
+ * This is not the "normal" precaching that the spellbooks & psionics does.
+ */
+const string PRC_DB_PRECACHE                         = "PRC_DB_PRECACHE";
 
 /**
  * TODO: Write description.

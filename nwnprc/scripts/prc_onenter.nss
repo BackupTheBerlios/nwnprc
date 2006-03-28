@@ -1,4 +1,5 @@
 #include "prc_alterations"
+#include "inc_time"
 #include "prc_inc_domain"
 #include "prc_inc_clsfunc"
 #include "inc_utility"
@@ -104,34 +105,19 @@ void main()
     }
     if(GetPRCSwitch(PRC_PW_TIME))
     {
-        int nYear   = GetPersistantLocalInt(oPC, "persist_Time_Year");
-        int nMonth  = GetPersistantLocalInt(oPC, "persist_Time_Month");
-        int nDay    = GetPersistantLocalInt(oPC, "persist_Time_Day");
-        int nHour   = GetPersistantLocalInt(oPC, "persist_Time_Hour");
-        int nMinute = GetPersistantLocalInt(oPC, "persist_Time_Minute");
-        int nSecond = GetPersistantLocalInt(oPC, "persist_Time_Second");
-        if(GetPRCSwitch(PRC_PLAYER_TIME))
-        {
-            nYear   -= GetCalendarYear();
-            nMonth  -= GetCalendarMonth();
-            nDay    -= GetCalendarDay();
-            nHour   -= GetTimeHour();
-            nMinute -= GetTimeMinute();
-            nSecond -= GetTimeSecond();
-            nSecond = nSecond+((nMinute*60)+FloatToInt(HoursToSeconds(nHour))+(nDay*24*60)+(nMonth*28*24*60)+(nYear*12*28*24*60));
-            AdvanceTimeForPlayer(oPC, IntToFloat(nSecond));
-        }
-        else if(GetIsObjectValid(GetFirstPC()) && !GetIsObjectValid(GetNextPC()))
-        {
+        struct time tTime = GetPersistantLocalTime(oPC, "persist_Time");
             //first pc logging on
-            SetCalendar(nYear, nMonth, nDay);
-            SetTime(nHour, nMinute, nSecond, 0);//dont care about milliseconds
+        if(GetIsObjectValid(GetFirstPC()) 
+            && !GetIsObjectValid(GetNextPC()))
+        {
+            SetTimeAndDate(tTime);
         }
+        RecalculateTime();              
     }
     if(GetPRCSwitch(PRC_PW_LOCATION_TRACKING))
     {
-        location lLoc = GetPersistantLocalLocation(oPC, "persist_loc");
-        DelayCommand(1.0, AssignCommand(oPC, ActionJumpToLocation(lLoc)));
+        struct metalocation lLoc = GetPersistantLocalMetalocation(oPC, "persist_loc");
+        DelayCommand(1.0, AssignCommand(oPC, JumpToLocation(MetalocationToLocation(lLoc))));
     }
     if(GetPRCSwitch(PRC_PW_MAPPIN_TRACKING)
         && !GetLocalInt(oPC, "PRC_PW_MAPPIN_TRACKING_Done"))

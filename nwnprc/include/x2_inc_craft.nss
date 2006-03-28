@@ -680,7 +680,12 @@ These dont work as IPs since they are hardcoded */
         SetXP(oCaster, nNewXP);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds((nGoldCost/5000)*24));
+        //1 day per 1000GP base cost, min 1
+        int nDays = nGoldCost/500;
+        // Maester class cuts crafting time in half.
+        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
+        if(!nDays) nDays = 1;
+        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
         return TRUE;
      }
      else
@@ -807,7 +812,12 @@ These dont work as IPs since they are hardcoded */
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         //if time is enabled, fast forward
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds((nGoldCost/5000)*24));
+        //1 day per 1000GP base cost, min 1
+        int nDays = nGoldCost/500;
+        // Maester class cuts crafting time in half.
+        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
+        if(!nDays) nDays = 1;
+        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
         //1.67 code
         /*
         string sName;
@@ -841,22 +851,22 @@ int InscribeRune()
         DoDebug("Checking for One Use runes");
         // This check is used to clear up the one use runes
         itemproperty ip = GetFirstItemProperty(oItem);
-	while(GetIsItemPropertyValid(ip))
-	{
-	        if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL)
-	        {
-	        	DoDebug("Rune can cast spells");
-	        	if (GetItemPropertyCostTableValue(ip) == 5) // Only one use runes have 2 charges per use
-	        	{
-	        		DoDebug("Rune has 2 charges a use, marking it a one use rune");
-	        		// Give it enough time for the spell to finish casting
-	        		DestroyObject(oItem, 1.0);
-	        		DoDebug("Rune destroyed.");
-	        	}
-	        }
+    while(GetIsItemPropertyValid(ip))
+    {
+            if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL)
+            {
+                DoDebug("Rune can cast spells");
+                if (GetItemPropertyCostTableValue(ip) == 5) // Only one use runes have 2 charges per use
+                {
+                    DoDebug("Rune has 2 charges a use, marking it a one use rune");
+                    // Give it enough time for the spell to finish casting
+                    DestroyObject(oItem, 1.0);
+                    DoDebug("Rune destroyed.");
+                }
+            }
 
-	ip = GetNextItemProperty(oItem);
-    	}
+    ip = GetNextItemProperty(oItem);
+        }
     }
 
     // If Inscribing is turned off, the spell functions as normal
@@ -1003,7 +1013,7 @@ int InscribeRune()
             itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_2_CHARGES_PER_USE);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune); 
             // This is done so the item exists when it is used for the game to read data off of
-	    nCharges = 3;
+        nCharges = 3;
         }
         else // Do the normal charges
         {
@@ -1013,6 +1023,13 @@ int InscribeRune()
         SetItemCharges(oRune,nCharges);
         SetXP(oCaster,nNewXP);
         TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
+        //if time is enabled, fast forward
+        //1 day per 1000GP base cost, min 1
+        int nDays = nGoldCost/500;
+        // Maester class cuts crafting time in half.
+        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
+        if(!nDays) nDays = 1;
+        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
         //1.67 code
         /*
         string sName;

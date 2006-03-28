@@ -167,6 +167,8 @@ void RestFinished(object oPC)
         //school for each spell level
         //also need to remove spells of prohibited schools
     }
+    //skip time forward if applicable
+    AdvanceTimeForPlayer(oPC, HoursToSeconds(8));
 
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_FINISHED);

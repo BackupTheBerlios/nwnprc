@@ -1306,7 +1306,7 @@ string GetRecipeTagFromItem(string sResRef)
         string q = PRC_SQLGetTick();
         //NWNX2/SQL
         //string sQuery = "SELECT file FROM prccache_reqs WHERE ReqType='RESULT' AND ReqParam1='" + sResRef + "'";
-        string sQuery = "SELECT "+q+"recipe_tag"+q+" FROM "+q+"prc_cached2da_item_to_ireq"+q+" WHERE "+q+"l_resref"+q+"='"+sResRef+"'";
+        string sQuery = "SELECT "+q+"recipe_tag"+q+" FROM "+q+"prc_cached2da_item_to_ireq"+q+" WHERE "+q+"L_RESREF"+q+"='"+sResRef+"'";
         PRC_SQLExecDirect(sQuery);
         if (PRC_SQLFetch() == PRC_SQL_ERROR)
             return "";

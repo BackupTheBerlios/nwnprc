@@ -30,7 +30,7 @@ void SafeGetRecipeTagFromItem(string sResRef, int nRow = 0)
     {
         //NWNX2/SQL
         string q = PRC_SQLGetTick();
-        string sQuery = "SELECT "+q+"recipe_tag"+q+" FROM "+q+"prc_cached2da_item_to_ireq"+q+" WHERE "+q+"l_resref"+q+"='"+sResRef+"'";
+        string sQuery = "SELECT "+q+"recipe_tag"+q+" FROM "+q+"prc_cached2da_item_to_ireq"+q+" WHERE "+q+"L_RESREF"+q+"='"+sResRef+"'";
         PRC_SQLExecDirect(sQuery);
         if (PRC_SQLFetch() == PRC_SQL_ERROR)
             return;
@@ -155,9 +155,17 @@ void main()
                     nDelay = max(nDelay, GetPRCSwitch(PRC_CRAFT_TIMER_MAX));
                     
                     // Maester class cuts crafting time in half.
-                    if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF) > 0) nDelay /= 2;
+                    if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF)) nDelay /= 2;
     
                     SetCraftTimer(nDelay);
+                    
+                    //alternatively, use the inc_time based system
+                    //1 day per 1000GP base cost, min 1
+                    int nDays = iReport.marketprice/1000;
+                    // Maester class cuts crafting time in half.
+                    if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF)) nDays /= 2;
+                    if(!nDays) nDays = 1;
+                    AdvanceTimeForPlayer(OBJECT_SELF, HoursToSeconds(nDays*24));
                 }
             } else if (iReport.validrecipe == FALSE) {
                 //not a valid recipe

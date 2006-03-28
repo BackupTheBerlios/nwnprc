@@ -95,12 +95,7 @@ void main()
         if(bPWTime)
         {
             //store it on all PCs separately
-            SetPersistantLocalInt(oPC, "persist_Time_Year", GetCalendarYear());
-            SetPersistantLocalInt(oPC, "persist_Time_Month", GetCalendarMonth());
-            SetPersistantLocalInt(oPC, "persist_Time_Day", GetCalendarDay());
-            SetPersistantLocalInt(oPC, "persist_Time_Hour", GetTimeHour());
-            SetPersistantLocalInt(oPC, "persist_Time_Minute", GetTimeMinute());
-            SetPersistantLocalInt(oPC, "persist_Time_Second", GetTimeSecond());
+            SetPersistantLocalTime(oPC, "persist_Time", GetTimeAndDate());
         }
         // Automatic character export every 6n seconds
         if(bPWPCAutoexport)
@@ -125,7 +120,7 @@ void main()
         // Persistant location tracking
         if(bPWLocationTracking)
         {
-            SetPersistantLocalLocation(oPC, "persist_loc", GetLocation(oPC));
+            SetPersistantLocalMetalocation(oPC, "persist_loc", LocationToMetalocation(GetLocation(oPC)));
         }
         // Persistant map pin tracking
         if(bPWMappinTracking)

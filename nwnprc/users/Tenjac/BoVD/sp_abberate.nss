@@ -28,3 +28,9 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);

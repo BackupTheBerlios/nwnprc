@@ -43,7 +43,7 @@ void DoPoison(object oTarget, object oManifester, int nDC, int nDam);
 void main()
 {
     // Are we running the manifestation part or one of the events?
-    if(GetRunningEvent() != EVENT_ITEM_ONHIT               ||
+    if(GetRunningEvent() != EVENT_ITEM_ONHIT               &&
        GetRunningEvent() != EVENT_ITEM_ONPLAYERUNEQUIPITEM
        )
     {
@@ -109,7 +109,7 @@ void main()
         object oManifester = OBJECT_SELF;
         object oWeapon     = GetSpellCastItem();
         object oTarget     = PRCGetSpellTargetObject();
-        int nArraySize     = array_get_size(oWeapon, "PRC_Power_TruevenomWeapon_Values");
+        int nArraySize     = array_get_size(oWeapon, "PRC_Power_TruevenomWeapon_Values") - 1;
         int nValue         = array_get_int(oWeapon, "PRC_Power_TruevenomWeapon_Values", nArraySize);
         int nDamage        = nValue & 0x0000FFFF;
         int nDC            = (nValue >>> 16 ) & 0x0000FFFF;

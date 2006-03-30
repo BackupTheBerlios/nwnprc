@@ -113,7 +113,7 @@ void main()
            oItem == GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oManifester)
            )
         {
-            int nArraySize = array_get_size(oManifester, "PRC_Power_Prevenom_Values");
+            int nArraySize = array_get_size(oManifester, "PRC_Power_Prevenom_Values") - 1;
             int nValue     = array_get_int(oManifester, "PRC_Power_Prevenom_Values", nArraySize);
             int nDamage    = nValue & 0x0000FFFF;
             int nDC        = (nValue >>> 16 ) & 0x0000FFFF;

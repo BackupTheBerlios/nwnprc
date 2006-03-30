@@ -124,12 +124,15 @@ void main()
             case 6: nBaseDamage = IP_CONST_MONSTERDAMAGE_4d6; break;
             case 7: nBaseDamage = IP_CONST_MONSTERDAMAGE_6d6; break;
 
-            default:{
+            /*default:{
                 string sErr = "psi_pow_clwbeast: ERROR: Unknown nClawSize value: " + IntToString(nClawSize);
                 if(DEBUG) DoDebug(sErr);
                 else      WriteTimestampedLogEntry(sErr);
-            }
+            }*/
         }
+        // Catch exceptions here
+        if (nClawSize < 0) nBaseDamage = IP_CONST_MONSTERDAMAGE_1d3;
+        else if (nClawSize > 7) nBaseDamage = IP_CONST_MONSTERDAMAGE_6d6;
 
         // Create the creature weapon
         oLClaw = GetPsionicCreatureWeapon(oTarget, "PRC_UNARMED_SP", INVENTORY_SLOT_CWEAPON_L, fDuration);

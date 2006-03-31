@@ -62,12 +62,12 @@ void main()
         if(manif.bCanManifest)
         {
             int nMaxBonus   = 8 + (2* manif.nTimesAugOptUsed_1);
-            int nDuration   = 6 * manif.nManifesterLevel;
+            int nDuration   = manif.nManifesterLevel;
             if(manif.bExtend) nDuration *= 2;
             effect eVis     =                         EffectVisualEffect(VFX_COM_HIT_NEGATIVE);
                    eVis     = EffectLinkEffects(eVis, EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE));
             effect eDur     = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
-            float fDuration = IntToFloat(nDuration);
+            float fDuration = 6.0f * nDuration;
             object oWeapon;
 
             // Target checks
@@ -171,7 +171,7 @@ void main()
             ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 
             // Keep track of how many times we've drained the person, which is one more than previous
-            nGainedFromCurrent += 1;
+            nGainedFromCurrent = min(nGainedFromCurrent + 1, nMaxBonus); // Do not allow the value to exceed the max bonus. It probably doesn't matter, but it's ugly :P
             SetLocalInt(oManifester, "PRC_Power_SomE_STRGainedFrom_" + ObjectToString(oTarget), nGainedFromCurrent);
 
             // Check ff the amount gained from current target is greater than the current bonus, but not higher than the maximum
@@ -180,7 +180,7 @@ void main()
                )
             {
                 // Apply Strength bonus for a duration equal to the remaining duration of this power, with accuracy of +-6s
-                float fDuration = IntToFloat(GetLocalInt(oManifester, "PRC_Power_StrengthOfMyEnemy_Duration"));
+                float fDuration = 6.0f * GetLocalInt(oManifester, "PRC_Power_StrengthOfMyEnemy_Duration");
                 effect eStr     = EffectAbilityIncrease(ABILITY_STRENGTH, nGainedFromCurrent);
                 effect eVis     = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStr, oManifester, fDuration, TRUE, POWER_STRENGTH_OF_MY_ENEMY, nManifesterLevel);
@@ -227,9 +227,8 @@ void DispelMonitor(object oManifester, object oTarget, object oWeapon, int nSpel
 
 void CleanUpArray(object oCreature)
 {
-    int i   = 0;
-    int max = array_get_size(oCreature, STRNMY_ARRAY);
-    for(;i < max; i++)
+    int i, max = array_get_size(oCreature, STRNMY_ARRAY);
+    for(i = 0; i < max; i++)
         DeleteLocalInt(oCreature, "PRC_Power_SomE_STRGainedFrom_" + ObjectToString(array_get_object(oCreature, STRNMY_ARRAY, i)));
 
     array_delete(oCreature, STRNMY_ARRAY);

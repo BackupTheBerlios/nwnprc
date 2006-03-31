@@ -20,7 +20,7 @@
     Metapsionics: Extend
 
     Your natural weapons cause additional pain. Each successful attack you make
-    with a natural weapon deals an extra 1d4 points of damage to the target.
+    with a natural weapon deals an extra 1d4 points of bludgeoning damage to the target.
 */
 
 #include "psi_inc_psifunc"
@@ -61,7 +61,7 @@ void main()
         object oBite       = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTarget);
         effect eDur        = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
         effect eVis        = EffectVisualEffect(VFX_IMP_PULSE_WATER);
-        itemproperty ipDam = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_PHYSICAL, IP_CONST_DAMAGEBONUS_1d4);
+        itemproperty ipDam = ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_BLUDGEONING, IP_CONST_DAMAGEBONUS_1d4);
         float fDuration    = 6.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;
 

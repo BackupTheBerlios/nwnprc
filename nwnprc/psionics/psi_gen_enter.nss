@@ -27,6 +27,8 @@ void ResetArea(object oArea);
 object GetExitOfNextMansion();
 int GetMaxMansions();
 
+#include "psi_inc_psifunc"
+
 void main()
 {
     // Getthe activator of the door, and make sure he is in

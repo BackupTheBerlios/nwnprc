@@ -141,17 +141,31 @@ void Hathran(object oPC)
 
     if (GetGender(oPC) == GENDER_FEMALE)
     {
-    SetLocalInt(oPC, "PRC_Female", 0);
+    	SetLocalInt(oPC, "PRC_Female", 0);
     }
 }
 
 void Kord(object oPC)
 {
      SetLocalInt(oPC, "PRC_PrereqKord", 1);
-
+     
      if (GetFortitudeSavingThrow(oPC) >= 6)
      {
         SetLocalInt(oPC, "PRC_PrereqKord", 0);
+     }
+     
+     int nCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
+     if (nCleric > 0)
+     {
+     	SetLocalInt(oPC, "PRC_PrereqKord", 1);
+     
+     	int nKord = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC) +
+     		    GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC) +
+     	            GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC); 
+     	if (nKord >= 2)
+     	{
+     		SetLocalInt(oPC, "PRC_PrereqKord", 0);
+     	}
      }
 }
 

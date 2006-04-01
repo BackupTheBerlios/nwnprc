@@ -22,14 +22,14 @@ void main()
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     int nCasterLvl = GetLevelByClass(CLASS_TYPE_CLERIC);
-    int nContend = GetLevelByClass(CLASS_TYPE_CLERIC) + GetLevelByClass(CLASS_TYPE_CONTENDER);
+    int nContend = GetLevelByClass(CLASS_TYPE_CLERIC) + GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD);
 
     int nContendSurge;
     int nFeat;
     int nSurge;
 
-    nFeat = (GetLevelByClass(CLASS_TYPE_CONTENDER) >= 1) ? nContend:0;
-    nFeat = (GetLevelByClass(CLASS_TYPE_CONTENDER) >= 7) ? FloatToInt(nContend*1.5):nContend;
+    nFeat = (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD) >= 1) ? nContend:0;
+    nFeat = (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD) >= 7) ? FloatToInt(nContend*1.5):nContend;
 
     if(nFeat > 0)
         nSurge = (nFeat/3) + 2;
@@ -37,9 +37,9 @@ void main()
     int nModify = (nCasterLvl/3) + 2;
     int nDuration = 5 + GetAbilityModifier(ABILITY_CHARISMA);
 
-    nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) >= 1) ? 1:0;
-    nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) >= 3) ? (d4(1) + 1):1;
-    nContendSurge = (GetLevelByClass(CLASS_TYPE_CONTENDER) == 10) ? nDuration:(d4(1) + 1);
+    nContendSurge = (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD) >= 1) ? 1:0;
+    nContendSurge = (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD) >= 3) ? (d4(1) + 1):1;
+    nContendSurge = (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD) == 10) ? nDuration:(d4(1) + 1);
 
     //Fire cast spell at event for the specified target
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_DIVINE_STRENGTH, FALSE));

@@ -153,6 +153,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS,oPC) > 0) ExecuteScript("prc_discasmodeus", oPC);
     if(GetLevelByClass(CLASS_TYPE_THRALLHERD,oPC) > 0)           ExecuteScript("psi_thrallherd", oPC);
     if(GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) > 0)           ExecuteScript("psi_sk_clseval", oPC);
+    if(GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD,oPC) > 0) ExecuteScript("prc_contendkord", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -1005,7 +1006,7 @@ void FeatNinja (object oPC)
 
 void FeatContender(object oPC)
 {
-    int iContenderLevel = GetLevelByClass(CLASS_TYPE_CONTENDER, oPC);
+    int iContenderLevel = GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD, oPC);
     int iMod;
     FloatingTextStringOnCreature("Domain Decrement Subroutine",OBJECT_SELF);
 

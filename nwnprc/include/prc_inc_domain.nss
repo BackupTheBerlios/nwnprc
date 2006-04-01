@@ -288,7 +288,9 @@ int GetDomainFeatUsesPerDay(int nFeat, object oPC)
 		if (nFeat == FEAT_STRENGTH_DOMAIN_POWER)
 		{
 			nUses = 1;
-			if (GetLevelByClass(CLASS_TYPE_CONTENDER, oPC) > 0) nUses = 3 + GetAbilityModifier(ABILITY_STRENGTH, oPC);	
+			if (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD, oPC) > 0) nUses = GetAbilityModifier(ABILITY_STRENGTH, oPC);
+			// Catching exceptions
+			if (nUses < 1) nUses = 1;
 		}
 	
 		// All other ones so far are the Charisma based turning domains

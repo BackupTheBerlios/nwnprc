@@ -329,16 +329,16 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,     oCaster)
            +  GetLevelByClass(CLASS_TYPE_RUNECASTER,        oCaster)
 
-           +  (GetLevelByClass(CLASS_TYPE_OLLAM,              oCaster) + 1) / 2
-           //+  (GetLevelByClass(CLASS_TYPE_OCULAR,             oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_TEMPUS,             oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_HATHRAN,            oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_BFZ,                oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_ORCUS,              oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE,      oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_WARPRIEST,          oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D, oCaster) + 1) / 2
-           +  (GetLevelByClass(CLASS_TYPE_CONTENDER,          oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_OLLAM,                 oCaster) + 1) / 2
+           //+  (GetLevelByClass(CLASS_TYPE_OCULAR,              oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_TEMPUS,                oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_HATHRAN,               oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BFZ,                   oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_ORCUS,                 oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_SHINING_BLADE,         oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_WARPRIEST,             oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_D,    oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD, oCaster) + 1) / 2
 
            +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 

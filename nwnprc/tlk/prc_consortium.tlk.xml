@@ -10345,82 +10345,53 @@ Her type changes to "plant" which means that she is no longer subject to poison,
   <entry id="47720" lang="en" sex="m">Mighty Contenders of Kord</entry>
   <entry id="47721" lang="en" sex="m">mighty contender of kord</entry>
   <entry id="47722" lang="en" sex="m">(PRESTIGE CLASS)
+The church of Kord insists that the liberation of the spirit comes through the perfection of the body - in fact, clerics of the Brawler insist that the distinction between body and spirit is a false one, as each is totally dependant on the other. Some devotees of Kord practice breaking chains, demonstrating their bodily perfection while symbolizing their spiritual freedom. Those that seek the highest perfection of body and spirit become Mighty Contenders of Kord.
 
-The church of Kord insists that the liberation of the spirit comes through the perfection of the body - infact, clerics of the Brawler insist that the distinction between body and spirit is a false one, as each is totally dependent on the other.
-
-Those that seek the highest perfection of body and spirit become mighty contenders of Kord.
-
-Hit Die: d10
+- Hit Die: d10.
+- Proficiencies: A Mighty Contender of Kord does not gain any additional weapon or armor proficiencies.
+- Skill Points: 2 + Int Modifier.
 
 REQUIREMENTS:
 
-To qualify to become a mighty contender of Kord, a character must fulfill all the following criteria:
-Alignment: Chaotic Good
-Base Fortitude Save: +6
-Skills: Lore 9 ranks
+Divine Spellcasting: Must be able to cast level 1 spells.
 Feats: Endurance, Power Attack
-Spellcasting: Ability to cast Divine spells
+Skills: Lore 9 ranks.
+Alignment: Chaotic Good
+Special: Must Worship Kord (Clerics need Strength and Good domains)
 
-CLASS SKILLS
+ABILITIES:
 
-Concentration
-Craft
-Lore
-Spellcraft
-Heal
-Persuade
-Intimidate
-
-Skill Points at Each Level: 2 + Int Modifier
-
-CLASS FEATURES
-
-1st. Feat of Strength
-3rd. Surge of Strength
-5th. Great Strength 1
-7th. Feat of Power
-9th. Great Strength 2
-10th. Surge of Power
-
-Spells per Day: A Mighty Contender gains spell levels for every other level of MCoK level they gain.
-
-NOTE: Since Ability scores cannot be changed permanently without magical means Great Strength 1 and 2 is used with this PrC. Plan your builds accordingly.
-
-Feat of Strength
-Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 1
-Specifics: When a Mighty Contender uses the power granted by the Strength domain he adds his Mighty Contender level to his Cleric level to determine his Str Enhancement for the first round.
-
-Surge of Strength
-Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 3
-Specifics: The Bonus granted by Feat of Strength now lasts 1d4+1 rounds.
-
-Feat of Power
-Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 7
-Specifics: When performing a surge of strength, one and a half times the characters Cleric + Contender levels are added to his Strength score for the first round.
-
-Surge of Power
-Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 10
-Specifics: When performing a surge of Strength, one and a half times the characters level is applied to the bonus Strength for the entire Surge of Strength.</entry>
+Level
+1: Feat of Strength: Add your cleric and Mighty Contender levels to determine the boost from the Strength Domain power.
+2:
+3: Surge of Strength: The boost from the Strength domain now lasts 1d4+1 rounds.
+4: 
+5: Strength Increase +1
+6: 
+7: Feat of Power: For the first round of the Strength boost, you gain 1.5 * the normal boost.
+8:
+9: Strength Increase +2
+10: Surge of Power: For the entire duration of the Strength boost, you gain 1.5 * normal boost.</entry>
   <entry id="47723" lang="en" sex="m">Feat of Strength</entry>
   <entry id="47724" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 1
-Specifics: When a Mighty Contender uses the power granted by the Strength domain he adds his Mighty Contender level to his Cleric level to determine his Str Enhancement for the first round.</entry>
+  Prerequisite: Mighty Contender of Kord level 1.
+  Specifics: The Mighty Contender of Kord adds his class level to his cleric level to determine the bonus to Strength granted by the Strength Domain Power. He may now use this ability a number of times per day equal to his strength modifier.
+Use: Automatic.</entry>
   <entry id="47725" lang="en" sex="m">Surge of Strength</entry>
   <entry id="47726" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 3
-Specifics: The Bonus granted by Feat of Strength now lasts 1d4+1 rounds.</entry>
+  Prerequisite: Mighty Contender of Kord level 3.
+  Specifics: The duration of the Strength boost from the Strength Domain Power is increased to 1d4+1 rounds.
+Use: Automatic.</entry>
   <entry id="47727" lang="en" sex="m">Feat of Power</entry>
   <entry id="47728" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 7
-Specifics: When performing a surge of strength, one and a half times the characters Cleric + Contender levels are added to his Strength score for the first round.</entry>
+  Prerequisite: Mighty Contender of Kord level 7.
+  Specifics: When using the Strength Domain Power, the boost to Strength for the first round is 1.5 * the combined Cleric and Mighty Contender of Kord levels.
+Use: Automatic.</entry>
   <entry id="47729" lang="en" sex="m">Surge of Power</entry>
   <entry id="47730" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Mighty Contender of Kord Level 10
-Specifics: When performing a surge of Strength, one and a half times the characters level is applied to the bonus Strength for the entire Surge of Strength.</entry>
+  Prerequisite: Mighty Contender of Kord level 10.
+  Specifics: When using the Strength Domain Power, the boost to Strength for the entire duration is 1.5 * the combined Cleric and Mighty Contender of Kord levels.
+Use: Automatic.</entry>
   <entry id="47731" lang="en" sex="m">Talona's Blight</entry>
   <entry id="47732" lang="en" sex="m">Supernatural disease
 Fortitude Save DC: 10 + Talontar Blightlord class level + Wisdom Modifier

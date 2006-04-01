@@ -72,7 +72,10 @@ void main()
             // Create the portal
             object oPortal = CreateObject(OBJECT_TYPE_PLACEABLE, "genesisportal", lTarget, TRUE, "genesisportal");
             if(GetIsObjectValid(oPortal))
+            {
+            	if(DEBUG) DoDebug("Created valid Genesis portal: " + GetName(oManifester));
                 SetLocalObject(oPortal, "GENESIS_CASTER", oManifester);
+            }
         }
     }
 }

@@ -33,6 +33,7 @@ void main()
     // the same party as whoever cast the mansion.
     object oActivator = GetLastUsedBy();
     if (!ValidateActivator(oActivator)) return;
+    if(DEBUG) DoDebug(GetName(oActivator) + " is the user of the portal and is valid");
 
     // Load the activator's current area and party leader.
     object aActivator = GetArea(oActivator);
@@ -43,6 +44,7 @@ void main()
     object oExit = GetExitOfNextMansion();
     if (GetIsObjectValid(oExit))
     {
+    	if(DEBUG) DoDebug("Mansion Exit Object is valid");
     	object aMansion = GetAreaFromLocation(GetLocation(oExit));
         location loc = Location(aMansion, GetPosition(oExit), GetFacing(oExit));
 
@@ -52,12 +54,14 @@ void main()
         object oPC = GetFirstPC();
         while (GetIsObjectValid(oPC))
         {
+            if(DEBUG) DoDebug("Beginning JumpToLocation loop");
             if (aActivator == GetArea (oPC) &&
                 oActivatorLeader == GetFactionLeader(oPC))
             {
                 // Save the PC's return location so they always go to the right
                 // spot.
                 SetLocalLocation(oPC, "GENESIS_RETURNLOC", oActivatorLoc);
+                if(DEBUG) DoDebug("Jumping PCs");
                 AssignCommand(oPC, DelayCommand(1.0, ActionJumpToLocation(loc)));
             }
 
@@ -170,7 +174,7 @@ object GetExitOfNextMansion()
     {
         // Get the next mansion in sequence.
         int nNextMansion = GetNextMansionIndex();
-PrintString("nNextMansion = " + IntToString(nNextMansion));
+	PrintString("nNextMansion = " + IntToString(nNextMansion));
         string sExitName = "GenesisExit" + (nNextMansion < 10 ? "0" : "") +
             IntToString(nNextMansion);
 
@@ -188,7 +192,7 @@ PrintString("nNextMansion = " + IntToString(nNextMansion));
         {
             if (GetIsPC(oObject))
             {
-PrintString("Area " + IntToString(nNextMansion) + " is OCCUPIED");
+		PrintString("Area " + IntToString(nNextMansion) + " is OCCUPIED");
                 fOccupied = TRUE;
                 break;
             }
@@ -197,12 +201,12 @@ PrintString("Area " + IntToString(nNextMansion) + " is OCCUPIED");
         }
 
         // If the mansion is unoccupied then return it.
-PrintString("returning mansion " + IntToString(nNextMansion));
+	PrintString("returning mansion " + IntToString(nNextMansion));
         if (!fOccupied) return oExit;
     }
 
     // All mansions are occupied, sorry out of luck!
-PrintString("ALL mansions are OCCUPIED");
+    PrintString("ALL mansions are OCCUPIED");
     return OBJECT_INVALID;
 }
 

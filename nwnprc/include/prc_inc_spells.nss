@@ -1413,15 +1413,13 @@ object PRCGetSpellTargetObject()
         return oCaster;
 
     // The rune always targets the one who activates it.
-    if(GetResRef(oItem) == "prc_rune_1") return GetItemPossessor(oItem);
-    // This check doesnt work, still need a way to find the target on one use items.
-    /*if (DEBUG) FloatingTextStringOnCreature(GetName(oCaster) + " has just cast a spell", GetFirstPC(), FALSE);
-    if (GetLocalInt(oCaster, "PRCRuneTarget"))
+    if(GetResRef(oItem) == "prc_rune_1")
     {
-        if (DEBUG) FloatingTextStringOnCreature(GetName(oCaster) + " has PRCRuneTarget set as true", oCaster, FALSE);
-        DeleteLocalInt(oCaster, "PRCRuneTarget");
-        return GetLastSpellCaster();
-    }*/
+    	if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
+    	// Making sure that the owner of the item is correct
+    	if (GetIsObjectValid(GetItemPossessor(oItem))) if(DEBUG) DoDebug(GetName(oCaster) + " is the owner of the Spellcasting item");
+    	return GetItemPossessor(oItem);
+    }
 
     return oBWTarget;
 }

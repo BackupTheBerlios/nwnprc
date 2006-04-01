@@ -369,3 +369,133 @@ const int VFX_FNF_SPELLF_EXP   =  820;
 const int VFX_IMP_SPELLF_FLAME =  821;
 const int VFX_IMP_SPELLF_HEAL  =  822;
 const int VFX_BEAM_SPELLFIRE   =  823;
+
+//////////////////////////////////////////////////
+/* Soopaman's VFX from SMP (Granted to us now)  */
+//////////////////////////////////////////////////
+
+const int VFX_FNF_TORNADO                 	   = 851;
+const int VFX_IMP_PWBLIND                 	   = 852;
+const int VFX_IMP_RED_MISSLE              	   = 853;
+const int VFX_IMP_MAGRED_SMP                  	   = 854;
+const int VFX_IMP_ICEWHIP                 	   = 855;
+const int VFX_IMP_GRN_MISSLE              	   = 856;
+const int VFX_IMP_NEGBLAST_ENERGY         	   = 857;
+const int VFX_DUR_PRISMATIC_SPHERE        	   = 858;
+const int VFX_FNF_NEWWORD                 	   = 859;
+const int VFX_DUR_BIGBYS_BIGBLUE_HAND2    	   = 860;
+const int VFX_FNF_AWAKEN                  	   = 861;
+const int VFX_FNF_CHAOSHAMMER             	   = 862;
+const int VFX_FNF_OTIL_COLDSPHERE         	   = 863;
+const int VFX_DUR_MAZE                    	   = 864;
+const int VFX_DUR_CHILL_SHIELD            	   = 865;
+const int VFX_FNF_DRAGON_STRIKE           	   = 866;
+const int VFX_DUR_SHADOWS_ANTILIGHT       	   = 867;
+const int VFX_DUR_PROTECTION_ARROWS       	   = 868;
+const int VFX_FNF_HELLFIRE                	   = 869;
+const int VFX_FNF_HELLFIRESTORM           	   = 870;
+const int VFX_DUR_BLUESHIELDPROTECT       	   = 871;
+const int VFX_IMP_REGENERATE_IMPACT       	   = 872;
+const int VFX_FNF_BATSGIB                 	   = 873;
+const int VFX_DUR_STORM_OF_VENGEANCE      	   = 874;
+const int VFX_IMP_FREEDOM                 	   = 875;
+const int VIM_IMP_DIMENSIONDOOR_IN        	   = 876;
+const int VIM_IMP_DIMENSIONDOOR_OUT       	   = 877;
+const int VFX_DUR_ANTILIFE_SHELL          	   = 878;
+const int VFX_DUR_LIGHTNING_SHELL         	   = 879;
+const int VFX_IMP_DISENTIGRATION          	   = 880;
+const int VFX_IMP_DIMENSIONANCHOR         	   = 881;
+const int VFX_IMP_DIMENSIONLOCK           	   = 882;
+const int VFX_FNF_GLITTERDUST             	   = 883;
+const int VFX_FNF_INSANITY                	   = 884;
+const int VFX_IMP_IMPRISONMENT            	   = 885;
+const int VFX_DUR_PROTECTION_ENERGY_ACID  	   = 886;
+const int VFX_DUR_PROTECTION_ENERGY_COLD  	   = 887;
+const int VFX_DUR_PROTECTION_ENERGY_FIRE  	   = 888;
+const int VFX_DUR_PROTECTION_ENERGY_ELECT 	   = 889;
+const int VFX_DUR_PROTECTION_ENERGY_SONIC 	   = 890;
+const int VFX_DUR_PRISMATIC_WALL          	   = 891;
+const int VFX_FNF_FEEBLEMIND              	   = 892;
+const int VFX_FNF_SUMMON_NATURES_ALLY_1   	   = 893;
+const int VFX_FNF_MAGIC_WEAPON            	   = 894;
+const int VFX_FNF_DEATH_WATCH             	   = 895;
+const int VFX_IMP_FAERIE_FIRE             	   = 896;
+const int VFX_DUR_RESISTANCE              	   = 897;
+const int VFX_IMP_EPIC_GEM_EMERALD_SMP        	   = 898;
+const int VFX_IMP_EPIC_GEM_SAPPHIRE_SMP       	   = 899;
+const int VFX_IMP_EPIC_GEM_DIAMOND_SMP        	   = 900;
+const int VFX_PERM_ELEMENTAL_SAVANT_WATER 	   = 901;
+const int VFX_PERM_ELEMENTAL_SAVANT_FIRE  	   = 902;
+const int VFX_FNF_SOUL_TRAP               	   = 903;
+const int VFX_DUR_AURA_LAW                	   = 904;
+const int VFX_DUR_SHIELD_OF_FAITH         	   = 905;
+const int VFX_FNF_CALM_ANIMALS            	   = 906;
+const int VFX_DUR_ENTROPIC_SHIELD         	   = 907;
+const int VFX_DUR_FLOATING_DISK           	   = 908;
+const int VFX_DUR_OBSCURING_MIST          	   = 909;
+const int VFX_IMP_MAGIC_ROCK              	   = 910;
+const int VFX_IMP_SHILLELAGH              	   = 911;
+const int VFX_FNF_METEORSWARM_IMPACT      	   = 912;
+const int VFX_FNF_SMP_GATE                	   = 913;
+const int VFX_FNF_ARMAGEDDON              	   = 914;
+const int VFX_DUR_SPHERE_OF_ANHILIATION   	   = 915;
+const int VFX_DUR_CHAOS_CLOAK             	   = 916;
+const int VFX_AOE_DESECRATE_20            	   = 917;
+const int VFX_AOE_DESECRATE_100           	   = 918;
+const int VFX_FNF_INVISIBILITY_SPHERE     	   = 919;
+const int VFX_DUR_DAYLIGHT                	   = 920;
+const int VFX_DUR_FLAMING_SPHERE          	   = 921;
+const int VFX_FNF_VAMPIRIC_DRAIN_PRC      	   = 922;
+const int VFX_FNF_BLASPHEMY               	   = 923;
+const int VFX_DUR_SHIELD_OF_LAW           	   = 924;
+const int VFX_DUR_UNHOLY_AURA_SMP         	   = 925;
+const int VFX_DUR_HOLY_AURA_SMP           	   = 926;
+const int VFX_DUR_PROT_IRON_SKIN          	   = 927;
+const int VFX_FNF_EARTHQUAKE_FISSURE      	   = 928;
+const int VFX_FNF_ORDERS_WRATH            	   = 929;
+const int VFX_DUR_RAINBOW_PATTERN         	   = 930;
+const int VFX_FNF_HOLY_SMITE_BATMAN      	   = 931;
+const int VFX_FNF_P2P_TESTER_OF_D3WM      	   = 932;
+const int VFX_FNF_PYRO_FIREWORKS_REDORANGE	   = 933;
+const int VFX_DUR_BLOOD_FOUNTAIN          	   = 934;
+const int VFX_IMP_DISENTIGRATION_SMP          	   = 935;
+const int VFX_AOE_FORBIDDANCE             	   = 937;
+const int VFX_DUR_CROWN_OF_GLORY          	   = 938;
+const int VFX_DUR_ARMOR_OF_DARKNESS       	   = 939;
+const int VFX_FNF_MAGIC_VESTAMENT         	   = 940;
+const int VFX_DUR_FREEDOM_MOVEMENT     		   = 941;
+const int VFX_PRC_FNF_EARTHQUAKE_SMP          	   = 942;
+const int VFX_DUR_TEMPORAL_STASIS         	   = 943;
+const int VFX_DUR_RESILIENT_SPHERE        	   = 944;
+const int VFX_DUR_DEATHWARD               	   = 945;
+const int VFX_DUR_PHASE_DOOR              	   = 946;
+const int VFX_FNF_SCINTILLATING_PATTERN   	   = 947;
+const int VFX_IMP_DRAGONBLAST             	   = 948;
+const int VFX_FNF_DEEP_SLUMBER            	   = 949;
+const int VFX_AOE_ZONE_OF_TRUTH           	   = 950;
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   
+					   

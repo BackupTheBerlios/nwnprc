@@ -48,6 +48,31 @@ const int CHOICE_CLEAR   = 12;
 const int CHOICE_YES = 1;
 const int CHOICE_NO  = 0;
 
+const int STRREF_ENTRY_HEADER        = 16828416; // "This conversation manages your augmentation profiles and augmentation quickselections."
+const int STRREF_VIEWMOD_PROFILES    = 16828417; // "View / modify augmentation profiles"
+const int STRREF_VIEWMOD_QUICKS      = 16828418; // "View / modify quickselections"
+const int STRREF_SPECIALOPTIONS      = 16828419; // "Special options"
+const int STRREF_BACK_TO_MAIN        = 16824794; // "Back to main menu"
+const int STRREF_SELECT_PROFILE      = 16828420; // "Select profile to modify."
+const int STRREF_SELECT_QUICKS       = 16828421; // "Select quickselection to modify."
+const int STRREF_MAKE_SELECTION      = 16828422; // "Make your selection."
+const int STRREF_ENTERSTAGE_LVLORPP  = 16828423; // "Set how the values in an augmentation profile are treated."
+const int STRREF_ENTERSTAGE_SMPLDEF  = 16828424; // "Set augmentation profiles to a simple default."
+const int STRREF_EXPLAIN_LVLORPP     = 16828425; // "You may define how your personal augmentation profiles are treated. The option values may either mean how many times to use that option, or how many power points to use for that option. In the latter case, the number of times the option is used is the number of power points divided by the cost of the option, rounded down.\nCurrent setting:"
+const int STRREF_POWER_POINTS        = 16826409; // "Power Points"
+const int STRREF_LEVELS              = 5220;     // "Levels"
+const int STRREF_CHANGETO            = 16828426; // "Change to"
+const int STRREF_SET_SIMPLE_DEFAULT  = 16828427; // "This will set your profiles to a simple progression, where each profile's first augmentation option's value is equal to the profile's number and all the other options are zero.\n\nThis change is irreversible, are you sure you want to do this?"
+const int STRREF_YES                 = 4752;     // "Yes"
+const int STRREF_NO                  = 4753;     // "No"
+const int STRREF_SET_PROFILEVAL      = 16828428; // "Set the profile's values. Current:"
+const int STRREF_OPTION              = 16823498; // "Option"
+const int STRREF_RAISE_OPTION        = 16828429; // "Raise option"
+const int STRREF_LOWER_OPTION        = 16828430; // "Lower option"
+const int STRREF_VALUE               = 16828431; // "value"
+const int STRREF_CLEAR_PROFILE       = 16828432; // "Clear profile"
+const int STRREF_SAVE_PROFILE        = 16828433; // "Save profile"
+const int STRREF_BACK_TO_MAIN_NOSAVE = 16828434; // "Return to main menu without saving"
 
 //////////////////////////////////////////////////
 /* Aid functions                                */
@@ -96,21 +121,21 @@ void main()
             if(nStage == STAGE_ENTRY)
             {
                 // Set the header
-                SetHeader("This conversation manages your augmentation profiles and augmentation quickselections.");
+                SetHeaderStrRef(STRREF_ENTRY_HEADER); // "This conversation manages your augmentation profiles and augmentation quickselections."
                 // Add responses for the PC
-                AddChoice("View / modify augmentation profiles", STAGE_PROFILES, oPC);
-                AddChoice("View / modify quickselections", STAGE_QUICKS, oPC);
-                AddChoice("Special options", STAGE_MISC, oPC);
+                AddChoiceStrRef(STRREF_VIEWMOD_PROFILES, STAGE_PROFILES, oPC); // "View / modify augmentation profiles"
+                AddChoiceStrRef(STRREF_VIEWMOD_QUICKS,   STAGE_QUICKS,   oPC); // "View / modify quickselections"
+                AddChoiceStrRef(STRREF_SPECIALOPTIONS,   STAGE_MISC,     oPC); // "Special options"
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
             else if(nStage == STAGE_PROFILES)
             {
-                SetHeader("Select profile to modify.");
+                SetHeaderStrRef(STRREF_SELECT_PROFILE); // "Select profile to modify."
 
                 // Back to main choice
-                AddChoice("Return to main menu", CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC); // "Back to main menu"
 
                 // Loop over the profiles and add a choice for each
                 string sChoice;
@@ -131,10 +156,10 @@ void main()
             }
             else if(nStage == STAGE_QUICKS)
             {
-                SetHeader("Select quickselection to modify.");
+                SetHeaderStrRef(STRREF_SELECT_QUICKS); // "Select quickselection to modify."
 
                 // Back to main choice
-                AddChoice("Return to main menu", CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC); // "Back to main menu"
 
                 // Loop over the quickselections and add a choice for each
                 string sChoice;
@@ -155,41 +180,41 @@ void main()
             }
             else if(nStage == STAGE_MISC)
             {
-                SetHeader("Make your selection.");
+                SetHeaderStrRef(STRREF_MAKE_SELECTION); // "Make your selection."
 
                 // Back to main choice
-                AddChoice("Return to main menu", STAGE_ENTRY, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC); // "Back to main menu"
 
                 // The augment levels / PP personal switch
-                AddChoice("Set how the values in an augmentation profile are treated.", STAGE_LEV_OR_PP, oPC);
+                AddChoiceStrRef(STRREF_ENTERSTAGE_LVLORPP, STAGE_LEV_OR_PP, oPC); // "Set how the values in an augmentation profile are treated."
                 // Set the profiles to a default that approximates the old behaviour
-                AddChoice("Set augmentation profiles to a simple default", STAGE_SET_DEFAULTS, oPC);
+                AddChoiceStrRef(STRREF_ENTERSTAGE_SMPLDEF, STAGE_SET_DEFAULTS, oPC); // "Set augmentation profiles to a simple default."
 
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_LEV_OR_PP)
             {
-                SetHeader("You may define how your personal augmentation profiles are treated. The option values may either mean how many times to use that option, or how many power points to use for that option. In the latter case, the number of times the option is used is the number of power points divided by the cost of the option, rounded down.\nCurrent setting: "
+                SetHeader(GetStringByStrRef(STRREF_EXPLAIN_LVLORPP) + " " // "You may define how your personal augmentation profiles are treated. The option values may either mean how many times to use that option, or how many power points to use for that option. In the latter case, the number of times the option is used is the number of power points divided by the cost of the option, rounded down.\nCurrent setting: "
                         + (GetPersistantLocalInt(oPC, PRC_PLAYER_SWITCH_AUGMENT_IS_PP) ?
-                           "Power Points" :
-                           "Levels"
+                           GetStringByStrRef(STRREF_POWER_POINTS) : // "Power Points"
+                           GetStringByStrRef(STRREF_LEVELS)         // "Levels"
                            )
                           );
 
                 // Back to main choice
-                AddChoice("Return to main menu", CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC); // "Back to main menu"
 
-                AddChoice("Change to levels.", FALSE, oPC);
-                AddChoice("Change to power points.", TRUE, oPC);
+                AddChoice(GetStringByStrRef(STRREF_CHANGETO) + " " + GetStringByStrRef(STRREF_LEVELS) + ".",       FALSE, oPC); // "Change to levels."
+                AddChoice(GetStringByStrRef(STRREF_CHANGETO) + " " + GetStringByStrRef(STRREF_POWER_POINTS) + ".", TRUE,  oPC); // "Change to power points."
 
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_SET_DEFAULTS)
             {
-                SetHeader("This will set your profiles to a simple progression, where each profile's first augmentation option's value is equal to the profile's number and all the other options are zero.\n\nThis change is irreversible, are you sure you want to do this?");
+                SetHeaderStrRef(STRREF_SET_SIMPLE_DEFAULT); // "This will set your profiles to a simple progression, where each profile's first augmentation option's value is equal to the profile's number and all the other options are zero.\n\nThis change is irreversible, are you sure you want to do this?"
 
-                AddChoice("Yes", CHOICE_YES, oPC);
-                AddChoice("No", CHOICE_NO, oPC);
+                AddChoiceStrRef(STRREF_YES, CHOICE_YES, oPC);
+                AddChoiceStrRef(STRREF_NO,  CHOICE_NO,  oPC);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -197,30 +222,31 @@ void main()
             {
                 struct user_augment_profile uapTemp = _DecodeProfile(GetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile"));
 
-                SetHeader("Set the profile's values. Current:" + "\n"
-                        + "Option " + "1: " + IntToString(uapTemp.nOption_1) + "\n"
-                        + "Option " + "2: " + IntToString(uapTemp.nOption_2) + "\n"
-                        + "Option " + "3: " + IntToString(uapTemp.nOption_3) + "\n"
-                        + "Option " + "4: " + IntToString(uapTemp.nOption_4) + "\n"
-                        + "Option " + "5: " + IntToString(uapTemp.nOption_5)
+                // "Set the profile's values. Current:"
+                SetHeader(GetStringByStrRef(STRREF_SET_PROFILEVAL) + "\n" 
+                        + GetStringByStrRef(STRREF_OPTION) + " 1: " + IntToString(uapTemp.nOption_1) + "\n"
+                        + GetStringByStrRef(STRREF_OPTION) + " 2: " + IntToString(uapTemp.nOption_2) + "\n"
+                        + GetStringByStrRef(STRREF_OPTION) + " 3: " + IntToString(uapTemp.nOption_3) + "\n"
+                        + GetStringByStrRef(STRREF_OPTION) + " 4: " + IntToString(uapTemp.nOption_4) + "\n"
+                        + GetStringByStrRef(STRREF_OPTION) + " 5: " + IntToString(uapTemp.nOption_5)
                           );
 
                 // The modification choices
-                AddChoice("Raise option 1 value", CHOICE_RAISE_1, oPC);
-                AddChoice("Lower option 1 value", CHOICE_LOWER_1, oPC);
-                AddChoice("Raise option 2 value", CHOICE_RAISE_2, oPC);
-                AddChoice("Lower option 2 value", CHOICE_LOWER_2, oPC);
-                AddChoice("Raise option 3 value", CHOICE_RAISE_3, oPC);
-                AddChoice("Lower option 3 value", CHOICE_LOWER_3, oPC);
-                AddChoice("Raise option 4 value", CHOICE_RAISE_4, oPC);
-                AddChoice("Lower option 4 value", CHOICE_LOWER_4, oPC);
-                AddChoice("Raise option 5 value", CHOICE_RAISE_5, oPC);
-                AddChoice("Lower option 5 value", CHOICE_LOWER_5, oPC);
+                AddChoice(GetStringByStrRef(STRREF_RAISE_OPTION) + " 1 " + GetStringByStrRef(STRREF_VALUE), CHOICE_RAISE_1, oPC);
+                AddChoice(GetStringByStrRef(STRREF_LOWER_OPTION) + " 1 " + GetStringByStrRef(STRREF_VALUE), CHOICE_LOWER_1, oPC);
+                AddChoice(GetStringByStrRef(STRREF_RAISE_OPTION) + " 2 " + GetStringByStrRef(STRREF_VALUE), CHOICE_RAISE_2, oPC);
+                AddChoice(GetStringByStrRef(STRREF_LOWER_OPTION) + " 2 " + GetStringByStrRef(STRREF_VALUE), CHOICE_LOWER_2, oPC);
+                AddChoice(GetStringByStrRef(STRREF_RAISE_OPTION) + " 3 " + GetStringByStrRef(STRREF_VALUE), CHOICE_RAISE_3, oPC);
+                AddChoice(GetStringByStrRef(STRREF_LOWER_OPTION) + " 3 " + GetStringByStrRef(STRREF_VALUE), CHOICE_LOWER_3, oPC);
+                AddChoice(GetStringByStrRef(STRREF_RAISE_OPTION) + " 4 " + GetStringByStrRef(STRREF_VALUE), CHOICE_RAISE_4, oPC);
+                AddChoice(GetStringByStrRef(STRREF_LOWER_OPTION) + " 4 " + GetStringByStrRef(STRREF_VALUE), CHOICE_LOWER_4, oPC);
+                AddChoice(GetStringByStrRef(STRREF_RAISE_OPTION) + " 5 " + GetStringByStrRef(STRREF_VALUE), CHOICE_RAISE_5, oPC);
+                AddChoice(GetStringByStrRef(STRREF_LOWER_OPTION) + " 5 " + GetStringByStrRef(STRREF_VALUE), CHOICE_LOWER_5, oPC);
 
                 // Add the save choice
-                AddChoice("Clear profile", CHOICE_CLEAR, oPC);
-                AddChoice("Save profile", CHOICE_SAVE, oPC);
-                AddChoice("Return to main menu without saving", CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_CLEAR_PROFILE, CHOICE_CLEAR, oPC); // "Clear profile"
+                AddChoiceStrRef(STRREF_SAVE_PROFILE,  CHOICE_SAVE,  oPC); // "Save profile"
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN_NOSAVE, CHOICE_BACK_TO_MAIN, oPC); // "Return to main menu without saving"
 
                 MarkStageSetUp(nStage, oPC);
             }

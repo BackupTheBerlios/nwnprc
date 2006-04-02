@@ -94,8 +94,13 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
     //set it to the pcs level
     int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     SetXP(oCohort, nLevel*(nLevel-1)*500);
+    SetLocalInt(oCohort, "MastersXP", GetXP(oPC));
     DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
     DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
+    //set its maximum level lag
+    //if its not a bonus cohort, apply a 2-level lag
+    if(GetCurrentCohortCount(oPC) > GetPRCSwitch(PRC_BONUS_COHORTS))
+        SetLocalInt(oCohort, "CohortLevelLag", 2);
 
     //if it was a premade one, give it a random name
     //randomize its appearance using DoDisguise
@@ -338,8 +343,10 @@ int GetCohortMaxLevel(int nLeadership, object oPC)
         case 69: nLevel = 40; break;
         case 70: nLevel = 40; break;
     }
-    if(nLevel > (GetHitDice(oPC)-2))
-        nLevel = GetHitDice(oPC)-2;
+    //if its not a bonus cohort, apply a 2-level lag
+    if(GetCurrentCohortCount(oPC) >= GetPRCSwitch(PRC_BONUS_COHORTS)
+        &&  nLevel > (GetECL(oPC)-2))
+        nLevel = GetECL(oPC)-2;
     //really, leadership should be capped at 25 / 17HD
     //but this is a sanity check
     if(nLevel > 20

@@ -400,6 +400,24 @@ void _DoMindTrapPPLoss(object oManifester, object oTarget)
 }
 
 /** Internal function.
+ * Handles Spellfire absorption when a power is used on a friendly spellfire
+ * user.
+ */
+void _DoSpellfireFriendlyAbsorption(struct manifestation manif, object oTarget)
+{
+    if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") &&
+       GetIsFriend(oTarget, manif.oManifester)
+       )
+    {
+        if(CheckSpellfire(manif.oManifester, oTarget, TRUE))
+        {
+            PRCShowSpellResist(manif.oManifester, oTarget, SPELL_RESIST_MANTLE);
+            manif.bCanManifest = FALSE;
+        }
+    }
+}
+
+/** Internal function.
  * Deletes manifestation-related local variables.
  *
  * @param oManifester The creature currently manifesting a power
@@ -721,7 +739,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
                     PayMetapsionicsFocuses(manif);
                 }
 
-                //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//
+                //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION HERE *//
                 // Damage from overchanneling happens only if one actually spends PP
                 _DoOverchannelDamage(oManifester, bIsPsiLike);
                 // Apply Hostile Mind damage, as necessary
@@ -730,7 +748,9 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
                 _SurgingEuphoriaOrPsychicEnervation(oManifester, nWildSurge);
                 // Apply Mind Trap PP loss
                 _DoMindTrapPPLoss(oManifester, oTarget);
-                //* APPLY DAMAGE EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
+                // Spellfire friendly absorption - This may set bCananifest to FALSE
+                _DoSpellfireFriendlyAbsorption(manif, oTarget);
+                //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
             }
         }
         // Cost was over the manifester cap

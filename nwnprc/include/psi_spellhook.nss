@@ -35,7 +35,7 @@ int PsiPrePowerCastCode();
 int PsiPrePowerCastCode()
 {
     object oManifester = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int nContinue;
 
     DeleteLocalInt(oManifester, "SpellConc");
@@ -147,20 +147,6 @@ int PsiPrePowerCastCode()
         }
     }
 
-    //---------------------------------------------------------------------------
-    // Spellfire
-    //---------------------------------------------------------------------------
-    if(nContinue)
-    {
-        if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") && GetIsFriend(oTarget, OBJECT_SELF))
-        {
-            if(CheckSpellfire(OBJECT_SELF, oTarget, TRUE))
-            {
-                PRCShowSpellResist(OBJECT_SELF, oTarget, SPELL_RESIST_MANTLE);
-                nContinue = FALSE;
-            }
-        }
-    }
     return nContinue;
 }
 

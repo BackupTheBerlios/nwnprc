@@ -41,11 +41,9 @@ void main()
         object oPC = GetFirstPC();
         while (GetIsObjectValid(oPC))
         {
-
-
             if (aActivator == GetArea (oPC)                         &&
                 oActivatorLeader == GetFactionLeader(oPC)           &&
-                GetCanTeleport(aActivator, loc, TRUE)
+                GetCanTeleport(aActivator, loc, TRUE, TRUE)
                 )
             {
                 // Save the PC's return location so they always go to the right

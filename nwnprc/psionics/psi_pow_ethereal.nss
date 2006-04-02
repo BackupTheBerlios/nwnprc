@@ -73,7 +73,7 @@ void main()
         if(manif.bExtend) fDuration *= 2;
 
         // Make sure the manifester is not prevented from extra-dimensional movement. If it can't go, no-one goes
-        if(GetCanTeleport(oManifester, GetLocation(oManifester), TRUE))
+        if(GetCanTeleport(oManifester, GetLocation(oManifester), FALSE, TRUE))
         {
             // Apply effect to self
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oManifester, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
@@ -88,7 +88,7 @@ void main()
                     SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
 
                     // Make sure the target is not prevented from extra-dimensional movement
-                    if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE))
+                    if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE, TRUE))
                     {
                         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
                     }

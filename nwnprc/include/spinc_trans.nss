@@ -60,7 +60,7 @@ void Transpose(object o1, object o2)
     location loc2 = Location(GetArea(o2), GetPosition(o2), GetFacing(o1));
 
     // Make sure both creatures are capable of being teleported
-    if(!(GetCanTeleport(o1, loc2) && GetCanTeleport(o2, loc1)))
+    if(!(GetCanTeleport(o1, loc2, TRUE) && GetCanTeleport(o2, loc1, TRUE)))
         return;
 
     // Swap the creatures.

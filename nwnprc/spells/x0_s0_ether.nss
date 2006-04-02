@@ -60,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ETHEREALNESS, FALSE));
 
     // Make a check to see nothing is preventing extra-dimensional movement
-    if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE))
+    if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE, TRUE))
     {
         //Apply the VFX impact and effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);

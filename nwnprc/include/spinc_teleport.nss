@@ -111,15 +111,14 @@ void TeleportAux(object oCaster)
     location lTarget = GetLocalLocation(oCaster, TP_LOCATION);
     location lCaster = GetLocation(oCaster);
     string sScriptToCall = GetLocalString(oCaster, TP_END_SCRIPT);
-    // If not errorless, run the location through the erroring code
-    if(!GetLocalInt(oCaster, TP_ERRORLESS))
-        lTarget = GetTeleportError(lTarget, oCaster);
+    // Teleportation error handling code
+    lTarget = GetTeleportError(lTarget, oCaster, GetLocalInt(oCaster, TP_ERRORLESS));
 
     int i;
     object oTarget;
 
     // Check if it's valid for the caster to teleport. If he can't go, no-one goes
-    if(GetCanTeleport(oCaster, lTarget, TRUE))
+    if(GetCanTeleport(oCaster, lTarget, TRUE, TRUE))
     {
         // VFX on the starting location
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_TELEPORT_OUT), lCaster);
@@ -128,7 +127,7 @@ void TeleportAux(object oCaster)
         for(i = 0; i < array_get_size(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY); i++)
         {
             oTarget = array_get_object(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY, i);
-            if(GetCanTeleport(oTarget, lTarget))
+            if(GetCanTeleport(oTarget, lTarget, TRUE))
             {
                 DelayCommand(1.0f, AssignTeleportCommands(oTarget, lTarget, sScriptToCall));
             }

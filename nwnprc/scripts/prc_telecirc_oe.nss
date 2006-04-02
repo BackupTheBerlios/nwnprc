@@ -24,12 +24,12 @@ void main()
 
     // Get the creature to teleport and the location to move it to
     object oTarget   = GetEnteringObject();
-    location lTarget = GetLocalLocation(oAoE, "TargetLocation");
+    location lTarget = GetTeleportError(GetLocalLocation(oAoE, "TargetLocation"), oTarget, TRUE);
 
-    if(DEBUG) DoDebug("prc_telecirc_oe: Attempting to teleport '" + DebugObject2Str(oTarget) + "' to " + DebugLocation2Str(lTarget));
+    if(DEBUG) DoDebug("prc_telecirc_oe: Attempting to teleport " + DebugObject2Str(oTarget) + " to " + DebugLocation2Str(lTarget));
 
     // Assign the jump if the target can be teleported
-    if(GetCanTeleport(oTarget, lTarget))
+    if(GetCanTeleport(oTarget, lTarget, TRUE))
         DelayCommand(1.0f, AssignCommand(oTarget, JumpToLocation(lTarget)));
 
     /// @todo: Some neat VFX here. Maybe the conjuration pillar effect?

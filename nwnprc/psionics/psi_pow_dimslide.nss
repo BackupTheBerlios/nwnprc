@@ -50,7 +50,7 @@ void main()
     {
         location lTarget = PRCGetSpellTargetLocation();
         // Check if the caster can teleport and inform if they can't
-        if(GetCanTeleport(oManifester, lTarget, TRUE))
+        if(GetCanTeleport(oManifester, lTarget, TRUE, TRUE))
         {
             // Assign jump command with delay to prevent the damn infinite action loop
             DelayCommand(1.0f, AssignCommand(oManifester, JumpToLocation(lTarget)));

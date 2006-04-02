@@ -87,7 +87,7 @@ void main()
             DoDebug("Maze: ERROR: Selected waypoint does not exist!");
 
         // Make sure the target can be teleported
-        if(GetCanTeleport(oTarget, lTarget, FALSE))
+        if(GetCanTeleport(oTarget, lTarget, TRUE))
         {
             // Store the target's current location for return
             SetLocalLocation(oTarget, "PRC_Maze_Return_Location", GetLocation(oTarget));

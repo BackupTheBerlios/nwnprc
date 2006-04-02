@@ -233,12 +233,12 @@ void TeleportLocationsToMapPins(object oPC);
  * @param lTarget   The location the creature is going to teleport to.
  * @param bInform   If this is true, the creature is sent a message if
  *                  it is not allowed to teleport.
- * @param bPublic   Only relevant if BInform is TRUE. If this is TRUE
- *                  the notice is delivered as floating text. Otherwise,
- *                  it's delivered as a message.
+ * @param bPublic   Used as the bBroadcastToFaction parameter of
+ *                  FloatingTextStringOnCreature() when informing oCreature
+ *                  of error.
  * @return          TRUE if the creature can teleport, FALSE if it can't.
  */
-int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE, int bPublic = FALSE);
+int GetCanTeleport(object oCreature, location lTarget, int bMovesCreature = FALSE, int bInform = FALSE, int bPublic = FALSE);
 
 /**
  * Common code for teleportation spells that:
@@ -258,6 +258,23 @@ int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE, int 
  *                     only the caster is teleported.
  */
 void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty);
+
+/**
+ * Determines whether the given teleportation target location can be used, or whether
+ * the effect causing the teleportation errors, changing the target location.
+ * Any inter-area teleportation effects should use this check even if they normally
+ * always work correctly.
+ *
+ * @param lOriginal         The original destination of the teleport.
+ * @param oUser             The user of the teleportation causing effect.
+ * @param bNormallyErroless Whether the effect causing the teleprotation can normally
+ *                          error. May be overridden by variables set on the target area.
+ * @param bRecursing        Whether the function was called again due to Mishap being
+ *                          rolled or not. This should always be left FALSE.
+ *
+ * @return                  Either lOrignal, or another location based on the error roll.
+ */
+location GetTeleportError(location lOriginal, object oUser, int bNormallyErroless = FALSE, int bRecursing = FALSE);
 
 /**
  * Increments a marker on the target that will cause it to be unable to be
@@ -565,19 +582,34 @@ void TeleportLocationsToMapPins(object oPC)
 }
 
 
-int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE, int bPublic = FALSE)
+int GetCanTeleport(object oCreature, location lTarget, int bMovesCreature = FALSE, int bInform = FALSE, int bPublic = FALSE)
 {
     int bReturn = TRUE;
     // First, check global switch to turn off teleporting
     if(GetPRCSwitch(PRC_DISABLE_TELEPORTATION))
         bReturn = FALSE;
 
-    // Check forbiddance variable on the current area
-    if(GetLocalInt(GetArea(oCreature), PRC_DISABLE_TELEPORTATION_IN_AREA) & PRC_DISABLE_TELEPORTATION_FROM_AREA)
-        bReturn = FALSE;
-    // Check forbiddance variable on the target area
-    if(GetLocalInt(GetAreaFromLocation(lTarget), PRC_DISABLE_TELEPORTATION_IN_AREA) & PRC_DISABLE_TELEPORTATION_TO_AREA)
-        bReturn = FALSE;
+    // If the creature would be actually moved around, do some extra tests
+    if(bMovesCreature)
+    {
+        // Check area-specific variables
+        object oSourceArea = GetArea(oCreature);
+        object oTargetArea = GetAreaFromLocation(lTarget);
+        // Teleportation is between areas
+        if(oSourceArea != oTargetArea)
+        {
+            // Check forbiddance variable on the current area
+            if(GetLocalInt(oSourceArea, PRC_DISABLE_TELEPORTATION_IN_AREA) & PRC_DISABLE_TELEPORTATION_FROM_AREA)
+                bReturn = FALSE;
+            // Check forbiddance variable on the target area
+            if(GetLocalInt(oTargetArea, PRC_DISABLE_TELEPORTATION_IN_AREA) & PRC_DISABLE_TELEPORTATION_TO_AREA)
+                bReturn = FALSE;
+        }
+        // Teleportation within an area
+        else if(GetLocalInt(oSourceArea, PRC_DISABLE_TELEPORTATION_IN_AREA) & PRC_DISABLE_TELEPORTATION_WITHIN_AREA)
+            bReturn = FALSE;
+    }
+
 
     // Check forbiddance variable on the creature
     if(GetLocalInt(oCreature, PRC_DISABLE_CREATURE_TELEPORT))
@@ -586,10 +618,8 @@ int GetCanTeleport(object oCreature, location lTarget, int bInform = FALSE, int 
     // Tell the creature about failure, if necessary
     if(bInform & !bReturn)
     {
-        if(bPublic)
-            FloatingTextStrRefOnCreature(16825298, oCreature, FALSE); // "Something prevents your extra-dimensional movement!"
-        else
-            SendMessageToPCByStrRef(oCreature, 16825298); // "Something prevents your extra-dimensional movement!"
+        // "Something prevents your extra-dimensional movement!"
+        FloatingTextStrRefOnCreature(16825298, oCreature, bPublic);
     }
 
     return bReturn;
@@ -671,19 +701,38 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
     */
 }
 
-location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE)
+location GetTeleportError(location lOriginal, object oUser, int bNormallyErroless = FALSE, int bRecursing = FALSE)
 {
     if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError():\n"
                     + "lOriginal = " + DebugLocation2Str(lOriginal) + "\n"
                     + "oUser = " + DebugObject2Str(oUser) + "\n"
-                    + "bErrored = " + BooleanToString(bErrored) + "\n"
+                    + "bNormallyErroless = " + BooleanToString(bNormallyErroless) + "\n"
+                    + "bRecursing = " + BooleanToString(bRecursing) + "\n"
                       );
+
+    int nOverrideValue = GetLocalInt(GetAreaFromLocation(lOriginal), PRC_FORCE_TELEPORTATION_RESULT);
+
+    // If the effect cannot normally error and there is no override active, just return lOriginal
+    if(bNormallyErroless && !nOverrideValue)
+        return lOriginal;
+
     // Roll for the result. If recursing from a mishap, roll d20 + 80, otherwise roll d100
-    int nRoll = bErrored ?
+    int nRoll = bRecursing ?
                  d20() + 80 :
                  d100()
                  ;
-    if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Roll is " + IntToString(nRoll));
+    // If an override value is specified, force the roll value. Override only applies in the first call, not on subsequent times
+    if(nOverrideValue && !bRecursing)
+    {
+        switch(nOverrideValue)
+        {
+            case PRC_FORCE_TELEPORTATION_RESULT_ONTARGET:     nRoll = 1;  break;
+            case PRC_FORCE_TELEPORTATION_RESULT_OFFTARGET:    nRoll = 91; break;
+            case PRC_FORCE_TELEPORTATION_RESULT_WAYOFFTARGET: nRoll = 95; break;
+            case PRC_FORCE_TELEPORTATION_RESULT_MISHAP:       nRoll = 99; break;
+        }
+    }
+    if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Roll is " + IntToString(nRoll) + ", forced = " + BooleanToString(nOverrideValue));
 
     /* On Target Off Target Way Off Target Mishap
      * 01–90     91–94      95–98          99–100
@@ -732,7 +781,6 @@ location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE
     else
     {
         if(DEBUG) DoDebug("prc_inc_teleport: GetTeleportError(): Mishap - damaging people");
-        // Loop over the targets, checking if they can teleport. Redundant check on the caster, but shouldn't cause any trouble
         object oTarget;
         int i;
         for(i = 0; i < array_get_size(oUser, PRC_TELEPORTING_OBJECTS_ARRAY); i++)
@@ -741,14 +789,14 @@ location GetTeleportError(location lOriginal, object oUser, int bErrored = FALSE
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d10(), DAMAGE_TYPE_MAGICAL), oTarget);
         }
 
-        return GetTeleportError(lOriginal, oUser, TRUE);
+        return GetTeleportError(lOriginal, oUser, bNormallyErroless, TRUE);
     }
 }
 
 void DisallowTeleport(object oTarget)
 {
     if(DEBUG) DoDebug("DisallowTeleport():\n"
-                    + "oTarget = '" + DebugObject2Str(oTarget) + "\n"
+                    + "oTarget = " + DebugObject2Str(oTarget) + "\n"
                     + "\n"
                     + "New blocking variable value: " + IntToString(GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT) + 1) + "\n"
                       );
@@ -760,7 +808,7 @@ void DisallowTeleport(object oTarget)
 void AllowTeleport(object oTarget, int bClearAll = FALSE)
 {
     if(DEBUG) DoDebug("AllowTeleport():\n"
-                    + "oTarget = '" + DebugObject2Str(oTarget) + "\n"
+                    + "oTarget = " + DebugObject2Str(oTarget) + "\n"
                     + "bClearAll = " + BooleanToString(bClearAll) + "\n"
                     + "\n"
                     + "Old blocking variable value: " + IntToString(GetLocalInt(oTarget, PRC_DISABLE_CREATURE_TELEPORT))

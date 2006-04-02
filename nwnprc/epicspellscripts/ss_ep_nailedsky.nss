@@ -57,7 +57,7 @@ void main()
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
 
             // Teleportation spell, so can be prevented by teleportation blocking effects
-            if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE, TRUE))
+            if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE, TRUE, TRUE))
             {
                 RunNailedToTheSky(oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget));
             }

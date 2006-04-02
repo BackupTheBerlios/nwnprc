@@ -76,7 +76,7 @@ void main()
         int nMaxWeight = 100 * (manif.nManifesterLevel + manif.nTimesAugOptUsed_1); // Weight is tenths of a pound
 
         // Make sure the target can be teleported
-        if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE))
+        if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE))
         {
             // If target is an item
             if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)

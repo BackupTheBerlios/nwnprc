@@ -48,7 +48,7 @@ void main()
         lTarget = GetLocation(oTarget);
 
     // Check if teleportation is possible
-    if(!GetCanTeleport(oCaster, lTarget, TRUE))
+    if(!GetCanTeleport(oCaster, lTarget, TRUE, TRUE))
     {
         IncrementRemainingFeatUses(oCaster, iFeat);
         return;

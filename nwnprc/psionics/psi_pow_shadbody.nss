@@ -98,7 +98,7 @@ void main()
         if(manif.bExtend) fDuration *= 2;
 
         // Make sure the target is not prevented from extra-dimensional movement
-        if(GetCanTeleport(oTarget, GetLocation(oTarget), TRUE))
+        if(GetCanTeleport(oTarget, GetLocation(oTarget), FALSE, TRUE))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

@@ -76,11 +76,11 @@ void main()
         float fDuration = 60.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;
 
-	SetLocalInt(oManifester, "PRC_Power_CallWeapon_Augment", manif.nTimesAugOptUsed_1);
-	SetLocalFloat(oManifester, "PRC_Power_CallWeapon_Duration", fDuration);
+        SetLocalInt(oManifester, "PRC_Power_CallWeapon_Augment", manif.nTimesAugOptUsed_1);
+        SetLocalFloat(oManifester, "PRC_Power_CallWeapon_Duration", fDuration);
 
         // Dimensional travel prevention check
-        if(GetCanTeleport(oManifester, GetLocation(oManifester), TRUE))
-	    StartDynamicConversation("psi_callweapon", oManifester, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oManifester);
+        if(GetCanTeleport(oManifester, GetLocation(oManifester), FALSE, TRUE))
+            StartDynamicConversation("psi_callweapon", oManifester, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oManifester);
     }
 }

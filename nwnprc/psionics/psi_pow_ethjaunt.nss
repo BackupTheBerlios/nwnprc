@@ -69,7 +69,7 @@ void main()
         if(manif.bExtend) fDuration *= 2;
 
         // Check ability to move extra-dimensionally
-        if(GetCanTeleport(oManifester, GetLocation(oManifester), TRUE))
+        if(GetCanTeleport(oManifester, GetLocation(oManifester), FALSE, TRUE))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
         }// end if - Manifester can move extra-dimensionally

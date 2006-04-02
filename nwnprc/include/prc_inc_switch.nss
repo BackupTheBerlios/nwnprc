@@ -286,7 +286,7 @@ const string PRC_SAMURAI_VALUE_SCALAR_x100           = "PRC_SAMURAI_VALUE_SCALAR
  * Stop and Itemproperty being addeable
  * This is just a prefix, they should be finished as
  * PRC_SAMURAI_BAN_[type]_[subtype]_[param1]_[value]
- * If an itemproperty is missing one of those, or you wish to ban all of a 
+ * If an itemproperty is missing one of those, or you wish to ban all of a
  * particular type use * instead of a number.
  * Examples:
  * Not allowing divine damage :                         PRC_SAMURAI_BAN_16_8_*_*
@@ -298,14 +298,14 @@ const string PRC_SAMURAI_VALUE_SCALAR_x100           = "PRC_SAMURAI_VALUE_SCALAR
 const string PRC_SAMURAI_BAN_                            = "PRC_SAMURAI_BAN_";
 
 /*
- *  Normally, some bans on itemproperties are setup automatically. 
- *  If this switch is set, then nothing is banned automatically 
- *  thus giving admins full controll. 
+ *  Normally, some bans on itemproperties are setup automatically.
+ *  If this switch is set, then nothing is banned automatically
+ *  thus giving admins full controll.
  */
 const string PRC_SAMURAI_DISABLE_DEFAULT_BAN             = "PRC_SAMURAI_DISABLE_DEFAULT_BAN";
 
 /*
- * Orc Warlord gets a single additional cohort that must be an orc of some sort instead 
+ * Orc Warlord gets a single additional cohort that must be an orc of some sort instead
  * of multiple summons
  */
 const string PRC_ORC_WARLORD_COHORT                  = "PRC_ORC_WARLORD_COHORT";
@@ -417,7 +417,7 @@ const string PRC_CEP_COMPANION_IN_USE                = "PRC_CEP_COMPANION_IN_USE
  * If CEP2 is in use, this will be set automatically
  * It is only here to be used by other scripts
  */
-const string CEP_IN_USE                              = "CEP_IN_USE"; 
+const string CEP_IN_USE                              = "CEP_IN_USE";
 
 /**
  * Spells cast from magic staffs use the wielder's casterlevel rather than the
@@ -662,30 +662,30 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
 /* Set this to enable the permanent death and XP cost functionality
  * of Necrotic Termination spell.
  */
- 
+
  const string PRC_NEC_TERM_PERMADEATH                = "PRC_NEC_TERM_PERMADEATH" ;
- 
+
  /*
   * Set this to enable alignment changes for the casting of spells with the Evil descriptor
   */
  const string PRC_SPELL_ALIGNMENT_SHIFT              = "PRC_SPELL_ALIGNMENT_SHIFT";
- 
+
  /*
   * Set this to give a number of Free cohorts as with leadership
   * This can be used to simulate a party of players
   */
  const string PRC_BONUS_COHORTS                      = "PRC_BONUS_COHORTS";
- 
+
  /*
   * Gives all slings equiped Mighty +20 for free
   * Simulates PnP rules where you can add strength to damage
   */
  const string PRC_PNP_SLINGS                      = "PRC_PNP_SLINGS";
- 
+
  /*
   * This is a local variable set on NPCs that is converted to real XP
   * in the OnSpawn event. Used for epic spells and other XP-burning stuff
-  */  
+  */
  const string PRC_NPC_XP                             = "PRC_NPC_XP";
 
 /******************************************************************************\
@@ -1259,47 +1259,93 @@ const string X2_CI_CRAFTWAND_COSTMODIFIER            = "X2_CI_CRAFTWAND_COSTMODI
  * Defines the maximum number of teleport target locations a PC may store.
  * Default: 50
  */
-const string PRC_TELEPORT_MAX_TARGET_LOCATIONS       = "PRC_TELEPORT_MAX_TARGET_LOCATIONS";
+const string PRC_TELEPORT_MAX_TARGET_LOCATIONS          = "PRC_TELEPORT_MAX_TARGET_LOCATIONS";
 
 /**
- * If this is set, all teleportation spells fail.
+ * If this is set, all spells/powers/effects with the [Teleportation] descriptor
+ * (ie, their scripts use GetCanTeleport()) fail.
+ *
  * Default: Off
  */
-const string PRC_DISABLE_TELEPORTATION              = "PRC_DISABLE_TELEPORTATION";
+const string PRC_DISABLE_TELEPORTATION                  = "PRC_DISABLE_TELEPORTATION";
 
 /**
- * If a local integer variable by this name is set on an area, that area
- * cannot be either teleported to or teleported from or both, depending on
- * the value of the variable.
+ * If a local integer variable by this name is set on an area, certain
+ * teleportation destinations are unavailable based on the value of the variable.
+ * This affects the return value of GetCanTeleport() when the bMovesCreature parameter
+ * is true.
  *
- * Possible values:
- * PRC_DISABLE_TELEPORTATION_FROM_AREA,
- * PRC_DISABLE_TELEPORTATION_TO_AREA,
- * PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA
+ * Possible values are a bitwise combinations of the following:
+ * PRC_DISABLE_TELEPORTATION_FROM_AREA
+ * PRC_DISABLE_TELEPORTATION_TO_AREA
+ * PRC_DISABLE_TELEPORTATION_WITHIN_AREA
  */
-const string PRC_DISABLE_TELEPORTATION_IN_AREA      = "PRC_DISABLE_TELEPORTATION_IN_AREA";
+const string PRC_DISABLE_TELEPORTATION_IN_AREA          = "PRC_DISABLE_TELEPORTATION_IN_AREA";
 
 /**
  * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables teleporting
- * away from the area in question.
+ * from the area in question to other areas.
  */
-const int PRC_DISABLE_TELEPORTATION_FROM_AREA        = 0x1;
+const int PRC_DISABLE_TELEPORTATION_FROM_AREA           = 0x1;
 
 /**
  * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables teleporting
- * into the area in question.
+ * from other areas to the area in question.
  */
-const int PRC_DISABLE_TELEPORTATION_TO_AREA          = 0x2;
+const int PRC_DISABLE_TELEPORTATION_TO_AREA             = 0x2;
 
 /**
  * A value of PRC_DISABLE_TELEPORTATION_IN_AREA. This disables both teleporting
- * into and out of the area in question.
+ * from area in question to another location in that same area.
  */
-const int PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA = 3;
-//this wont compile from inside a module
-//using the prc compile
-//PRC_DISABLE_TELEPORTATION_FROM_AREA |
-//PRC_DISABLE_TELEPORTATION_TO_AREA;
+const int PRC_DISABLE_TELEPORTATION_WITHIN_AREA         = 0x4;
+
+/**
+ * Forces spells/powers/effects that use GetTeleportError() to behave in a
+ * specific way when their destination is in an area on which this local
+ * variable is set.
+ * Based on the value of this variable, such a spell/power will always behave in
+ * a way described by one of the entries of Teleport results table. This happens
+ * even if the spell/power would normally ignore the table.
+ *
+ * Default: Each spell / power behaves by it's normal specification.
+ *
+ * Values:
+ * PRC_FORCE_TELEPORTATION_RESULT_ONTARGET
+ * PRC_FORCE_TELEPORTATION_RESULT_OFFTARGET
+ * PRC_FORCE_TELEPORTATION_RESULT_WAYOFFTARGET
+ * PRC_FORCE_TELEPORTATION_RESULT_MISHAP
+ */
+const string PRC_FORCE_TELEPORTATION_RESULT             = "PRC_FORCE_TELEPORTATION_RESULT";
+
+/**
+ * A value of PRC_FORCE_TELEPORTATION_RESULT. This makes the spells affected by
+ * the variable always succeed.
+ */
+const int PRC_FORCE_TELEPORTATION_RESULT_ONTARGET       = 1;
+
+/**
+ * A value of PRC_FORCE_TELEPORTATION_RESULT. This makes the spells affected by
+ * the variable always dump the target(s) in a random location in the same area.
+ */
+const int PRC_FORCE_TELEPORTATION_RESULT_OFFTARGET      = 2;
+
+/**
+ * A value of PRC_FORCE_TELEPORTATION_RESULT. This makes the spells affected by
+ * the variable always dump the target(s) in a random location among the users's
+ * stored teleport choices, or if there are no others, just stay where the user is.
+ */
+const int PRC_FORCE_TELEPORTATION_RESULT_WAYOFFTARGET   = 3;
+
+/**
+ * A value of PRC_FORCE_TELEPORTATION_RESULT. This makes the spells affected by
+ * the variable always do the following:
+ * // Mishap:
+ * // You and anyone else teleporting with you have gotten “scrambled.”
+ * // You each take 1d10 points of damage, and you reroll on the chart to see where you wind up.
+ * // For these rerolls, roll 1d20+80. Each time “Mishap” comes up, the characters take more damage and must reroll.
+ */
+const int PRC_FORCE_TELEPORTATION_RESULT_MISHAP         = 4;
 
 /**
  * If a variable by this name is non-zero on a creature, that creature cannot
@@ -1308,8 +1354,11 @@ const int PRC_DISABLE_TELEPORTATION_TO_AND_FROM_AREA = 3;
  * Instead, increase it's value by one when the disabling occurs and decrease
  * by one when the disabling turns off. This is required in order to be able to
  * handle overlapping sources of forbiddance.
+ *
+ * Note: This stops all effects with the [Teleportation] descriptor, by causing
+ * GetCanTeleport() to always return FALSE.
  */
-const string PRC_DISABLE_CREATURE_TELEPORT           = "PRC_DISABLE_CREATURE_TELEPORT";
+const string PRC_DISABLE_CREATURE_TELEPORT              = "PRC_DISABLE_CREATURE_TELEPORT";
 
 
 /******************************************************************************\
@@ -1560,20 +1609,20 @@ const string PRC_USE_BIOWARE_DATABASE                = "PRC_USE_BIOWARE_DATABASE
  * and psionics need it. It mearly stops the 2das being cached on the creature as well
  * NOTE: a value of 0 is on by default, any other value is off
  */
-const string PRC_2DA_CACHE_IN_CREATURE                = "PRC_2DA_CACHE_IN_CREATURE"; 
+const string PRC_2DA_CACHE_IN_CREATURE                = "PRC_2DA_CACHE_IN_CREATURE";
 
 /**
  * 2da caching code will get/set directly in the bioware db
  * Off by default, gets are quite quick, sets much slower
  */
-const string PRC_2DA_CACHE_IN_BIOWAREDB               = "PRC_2DA_CACHE_IN_BIOWAREDB"; 
+const string PRC_2DA_CACHE_IN_BIOWAREDB               = "PRC_2DA_CACHE_IN_BIOWAREDB";
 
 /**
  * 2da caching code will get/set directly in a NWNX db
  * Must have PRC_USE_DATABASE turned on and a database setup
  * Must have a PRC_DB_* variable on to set what type of database to use
  */
-const string PRC_2DA_CACHE_IN_NWNXDB                  = "PRC_2DA_CACHE_IN_NWNXDB"; 
+const string PRC_2DA_CACHE_IN_NWNXDB                  = "PRC_2DA_CACHE_IN_NWNXDB";
 
 /**
  * Set this if you are using NWNX and any sort of database.
@@ -2030,7 +2079,7 @@ void DoSamuraiBanDefaults()
 {
     if(GetPRCSwitch(PRC_SAMURAI_DISABLE_DEFAULT_BAN))
         return;
-    //remove all penalty iprops    
+    //remove all penalty iprops
     SetPRCSwitch(PRC_SAMURAI_BAN_+"10_*_*_*", TRUE);
     SetPRCSwitch(PRC_SAMURAI_BAN_+"21_*_*_*", TRUE);
     SetPRCSwitch(PRC_SAMURAI_BAN_+"24_*_*_*", TRUE);
@@ -2064,7 +2113,7 @@ void DoSamuraiBanDefaults()
     SetPRCSwitch(PRC_SAMURAI_BAN_+"127_*_*_*", TRUE);
     SetPRCSwitch(PRC_SAMURAI_BAN_+"134_*_*_*", TRUE);
     SetPRCSwitch(PRC_SAMURAI_BAN_+"150_*_*_*", TRUE);
-    //only allow elemental damages 6,7,9,10,13   
+    //only allow elemental damages 6,7,9,10,13
     //damage
     SetPRCSwitch(PRC_SAMURAI_BAN_+"16_5_*_*", TRUE);
     SetPRCSwitch(PRC_SAMURAI_BAN_+"16_8_*_*", TRUE);
@@ -2121,7 +2170,7 @@ void SetDefaultFileEnds()
     //check for CEP2
     //run the script in the CEP haks
     ExecuteScript("zep_cepverif", OBJECT_SELF);
-   
+
     //there is also the fileends.2da file, but that
     //isnt read in here yet. may be later though
     if(GetPRCSwitch(FILE_END_MANUAL))

@@ -98,6 +98,15 @@ string GetTokenIDString(int nTokenID);
 void SetHeader(string sText, object oPC = OBJECT_INVALID);
 
 /**
+ * A wrapper for SetHeader() that uses TLK references.
+ *
+ * @param nStrRef The TLK entry to use
+ * @param oPC     The PC involved in the conversation. If left
+ *                to default, GetPCSpeaker is used
+ */
+void SetHeaderStrRef(int nStrRef, object oPC = OBJECT_INVALID);
+
+/**
  * Add a reply choice to be displayed. The replies are displayed in
  * the same order as they are added.
  *
@@ -108,6 +117,17 @@ void SetHeader(string sText, object oPC = OBJECT_INVALID);
  *               to default, GetPCSpeaker is used
  */
 void AddChoice(string sText, int nValue, object oPC = OBJECT_INVALID);
+
+/**
+ * A wrapper for AddChoice() that uses TLK references.
+ *
+ * @param nStrRef The TLK entry to use
+ * @param nValue  The numeric value of the choice. This is what will be
+ *                returned by GetChoice()
+ * @param oPC     The PC involved in the conversation. If left
+ *                to default, GetPCSpeaker is used
+ */
+void AddChoiceStrRef(int nStrRef, int nValue, object oPC = OBJECT_INVALID);
 
 /**
  * Sets the custom token at nTokenID to be the given string and stores
@@ -331,6 +351,11 @@ void SetHeader(string sText, object oPC = OBJECT_INVALID)
     SetLocalString(oPC, "DynConv_HeaderText", sText);
 }
 
+void SetHeaderStrRef(int nStrRef, object oPC = OBJECT_INVALID)
+{
+    SetHeader(GetStringByStrRef(nStrRef), oPC);
+}
+
 string GetTokenIDString(int nTokenID)
 {
     return DYNCONV_TOKEN_BASE + IntToString(nTokenID);
@@ -341,6 +366,11 @@ void AddChoice(string sText, int nValue, object oPC = OBJECT_INVALID)
     oPC = _DynConvInternal_ResolvePC(oPC);
     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), sText);
     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), nValue);
+}
+
+void AddChoiceStrRef(int nStrRef, int nValue, object oPC = OBJECT_INVALID)
+{
+    AddChoice(GetStringByStrRef(nStrRef), nValue, oPC);
 }
 
 void SetToken(int nTokenID, string sString, object oPC = OBJECT_SELF)

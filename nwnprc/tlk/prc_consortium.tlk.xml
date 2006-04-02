@@ -17364,6 +17364,28 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
 Prerequisite: Marshal
 Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to your Wisdom.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40.
 Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any given time.</entry>
+  <entry id="51200" lang="en" sex="m">This conversation manages your augmentation profiles and augmentation quickselections.</entry>
+  <entry id="51201" lang="en" sex="m">View / modify augmentation profiles</entry>
+  <entry id="51202" lang="en" sex="m">View / modify quickselections</entry>
+  <entry id="51203" lang="en" sex="m">Special options</entry>
+  <entry id="51204" lang="en" sex="m">Select profile to modify.</entry>
+  <entry id="51205" lang="en" sex="m">Select quickselection to modify.</entry>
+  <entry id="51206" lang="en" sex="m">Make your selection.</entry>
+  <entry id="51207" lang="en" sex="m">Set how the values in an augmentation profile are treated.</entry>
+  <entry id="51208" lang="en" sex="m">Set augmentation profiles to a simple default.</entry>
+  <entry id="51209" lang="en" sex="m">You may define how your personal augmentation profiles are treated. The option values may either mean how many times to use that option, or how many power points to use for that option. In the latter case, the number of times the option is used is the number of power points divided by the cost of the option, rounded down.
+Current setting:</entry>
+  <entry id="51210" lang="en" sex="m">Change to</entry>
+  <entry id="51211" lang="en" sex="m">This will set your profiles to a simple progression, where each profile's first augmentation option's value is equal to the profile's number and all the other options are zero.
+
+This change is irreversible, are you sure you want to do this?</entry>
+  <entry id="51212" lang="en" sex="m">Set the profile's values. Current:</entry>
+  <entry id="51213" lang="en" sex="m">Raise option</entry>
+  <entry id="51214" lang="en" sex="m">Lower option</entry>
+  <entry id="51215" lang="en" sex="m">value</entry>
+  <entry id="51216" lang="en" sex="m">Clear profile</entry>
+  <entry id="51217" lang="en" sex="m">Save profile</entry>
+  <entry id="51218" lang="en" sex="m">Return to main menu without saving</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4

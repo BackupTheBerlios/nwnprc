@@ -818,7 +818,7 @@ int X2PreSpellCastCode()
             nSpell == SPELL_SUNMANTLE ||
             nSpell == SPELL_TWILIGHT_LUCK)
             {
-                nContinue == FALSE;
+                nContinue = FALSE;
             }
         }
     }

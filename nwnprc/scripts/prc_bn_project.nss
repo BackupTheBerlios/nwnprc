@@ -69,7 +69,7 @@ void main()
     object oCopy     = GetLocalObject(oPC, COPY_LOCAL_NAME);
     location lPC     = GetLocation(oPC);
     location lTarget = GetSpellTargetLocation();
-    effect eLight    = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER, FALSE);
+    effect eLight    = EffectVisualEffect(VFX_IMP_HEALING_X , FALSE);
     effect eGlow     = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE, FALSE);
     int nFeat        = FEAT_PROJECTION;
     int nSpell       = GetSpellId();
@@ -114,12 +114,12 @@ void main()
     }
 
     // Do VFX on PC and copy
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eLight, oCopy);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eLight, oPC);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLight, oCopy);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLight, oPC);
 
     // Do the switching around
     PseudoPosses(oPC, oCopy);
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGlow, oPC);
+    //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGlow, oPC, fDur);
     
     //Set up duration marker for ending effect
     DelayCommand(fDur, SetLocalInt(oPC, "PROJECTION_EXPIRED", 1));
@@ -171,6 +171,7 @@ void PseudoPosses(object oPC, object oCopy)
     AddEventScript(oPC, EVENT_ONACQUIREITEM,        "prc_bn_prj_event", TRUE, FALSE); // OnAcquire
     //AddEventScript(oPC, EVENT_ONUNAQUIREITEM,       "prc_bn_prj_event", TRUE, FALSE); // OnUnAcquire
     AddEventScript(oPC, EVENT_ONPLAYERREST_STARTED, "prc_bn_prj_event", FALSE, FALSE); // OnRest
+    AddEventScript(oPC, EVENT_ONCLIENTENTER,        "prc_bn_prj_event", TRUE, FALSE); //OnClientEnter
 
     // Swap the copy and PC
     location lPC   = GetLocation(oPC);
@@ -188,16 +189,16 @@ void EndPosses(object oPC, object oCopy)
                     + "oCopy = '" + GetName(oCopy) + "'"
                       );
 
-
-    effect eLight = EffectVisualEffect(VFX_IMP_RESTORATION_GREATER, FALSE);
-
+    //effect eGlow     = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE, FALSE);
+    effect eLight = EffectVisualEffect(VFX_IMP_HEALING_X , FALSE);
+    
     // Remove Immortality from the PC if necessary
     if(!GetLocalInt(oPC, ALREADY_IMMORTAL_LOCAL_NAME))
         SetImmortal(oPC, FALSE);
 
     // Remove the VFX and the attack penalty
     RemoveSpellEffects(SPELL_BAELNORN_PROJECTION, oPC, oPC);
-    
+        
     // Remove the local signifying that the PC is a projection
     DeleteLocalInt(oPC, "BaelnornProjection_Active");
 
@@ -212,10 +213,9 @@ void EndPosses(object oPC, object oCopy)
 
     // Remove eventhooks
     RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_prj_event", TRUE, FALSE); // OnEquip
-    //RemoveEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM,  "prc_bn_prj_event", TRUE, FALSE); // OnUnEquip
     RemoveEventScript(oPC, EVENT_ONACQUIREITEM,        "prc_bn_prj_event", TRUE, FALSE); // OnAcquire
-    //RemoveEventScript(oPC, EVENT_ONUNAQUIREITEM,       "prc_bn_prj_event", TRUE, FALSE); // OnUnAcquire
     RemoveEventScript(oPC, EVENT_ONPLAYERREST_STARTED, "prc_bn_prj_event", FALSE, FALSE); // OnRest
+    RemoveEventScript(oPC, EVENT_ONCLIENTENTER,        "prc_bn_prj_event", TRUE, FALSE); //OnClientEnter
 
     // Move PC and inventory
     location lCopy = GetLocation(oCopy);

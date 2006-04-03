@@ -91,6 +91,15 @@ if(DEBUG) DoDebug("Equipped item, nerfing:"
             // Signal the projection monitoring HB
             SetLocalInt(oPC, "PRC_BaelnornProjection_Abort", TRUE);
             break;
+            
+        case EVENT_ONCLIENTENTER:
+             object oPC = GetEnteringObject();
+             
+             // Remove eventhooks
+             RemoveEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,    "prc_bn_prj_event", TRUE, FALSE); // OnEquip
+             RemoveEventScript(oPC, EVENT_ONACQUIREITEM,        "prc_bn_prj_event", TRUE, FALSE); // OnAcquire
+             RemoveEventScript(oPC, EVENT_ONPLAYERREST_STARTED, "prc_bn_prj_event", FALSE, FALSE); // OnRest
+             RemoveEventScript(oPC, EVENT_ONCLIENTENTER,        "prc_bn_prj_event", TRUE, FALSE); //OnClientEnter           
 
         default:
             if(DEBUG) DoDebug("prc_bn_prj_event: ERROR: Called for unhandled event: " + IntToString(nEvent));

@@ -795,7 +795,7 @@ int X2PreSpellCastCode()
             nSpell == SPELL_CLAWS_OF_THE_BEBILITH ||
             nSpell == SPELL_DEATH_BY_THORNS ||
             nSpell == SPELL_EVIL_WEATHER ||
-            nSpell == SPELL_FANGS_OF_THE_VAMPIRE ||
+            nSpell == SPELL_FANGS_OF_THE_VAMPIRE_KING ||
             nSpell == SPELL_LAHMS_FINGER_DARTS ||
             nSpell == SPELL_POWER_LEECH ||
             nSpell == SPELL_RAPTURE_OF_RUPTURE ||

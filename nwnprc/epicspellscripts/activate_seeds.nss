@@ -14,8 +14,6 @@ void main()
 {
     object oBook = GetItemActivated();
     string sBook = GetTag(oBook);
-    //remove the "EPIC_SD_" part
-    sBook = GetStringRight(sBook, GetStringLength(sBook)-8);
     int nSeed = GetSeedFromAbrev(sBook);
     int nDC = GetDCForSeed(nSeed);
     int nFE = GetFeatForSeed(nSeed);

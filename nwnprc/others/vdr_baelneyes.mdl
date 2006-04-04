@@ -1,4 +1,4 @@
-# Exported from NWmax 0.8 b54 at 4/3/2006 10:46:46 PM
+# Exported from NWmax 0.8 b54 at 4/3/2006 11:56:03 PM
 # mdl file
 #
 #NWmax MODEL ASCII
@@ -15,7 +15,7 @@ node dummy vfx_baelneyes
 endnode
 node emitter star10
   parent vfx_baelneyes
-  position -0.00693066 0.0537993 -0.100544
+  position -0.000915928 0.0656842 -0.100544
   orientation 0.954202 0.211542 0.211541 -1.61766
   wirecolor 1.0 1.0 1.0 
   update_sel 2
@@ -82,7 +82,7 @@ node emitter star10
 endnode
 node emitter star09
   parent vfx_baelneyes
-  position 0.0460388 0.0537993 -0.104744
+  position 0.0520535 0.0656842 -0.104744
   orientation 0.954202 -0.211541 -0.211541 -1.61766
   wirecolor 1.0 1.0 1.0 
   update_sel 2

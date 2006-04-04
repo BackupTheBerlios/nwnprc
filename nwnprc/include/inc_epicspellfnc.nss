@@ -120,13 +120,17 @@ int GetSpellFromAbrev(string sAbrev)
     sAbrev = GetStringLowerCase(sAbrev);
     if(GetStringLeft(sAbrev, 8) == "epic_sp_")
         sAbrev = GetStringRight(sAbrev, GetStringLength(sAbrev)-8);
-    return -1;
+    if(DEBUG) DoDebug("sAbrew to check vs: " + sAbrev);
     int i = 0;
     string sLabel = GetStringLowerCase(Get2DACache("epicspells", "LABEL", i));
     while(sLabel != "")
     {
+    	if(DEBUG) DoDebug("sLabel to check vs: " + sLabel);
         if(sAbrev == sLabel)
+        {
+            if(DEBUG) DoDebug("SpellID: " + IntToString(i));
             return i;
+        }
         i++;
         sLabel = GetStringLowerCase(Get2DACache("epicspells", "LABEL", i));
     }

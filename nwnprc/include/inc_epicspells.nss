@@ -357,6 +357,14 @@ int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
 
 int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0)
 {
+    if(DEBUG)
+    {
+    	DoDebug("Requirement #1: " + IntToString(nReq1));
+    	DoDebug("Requirement #2: " + IntToString(nReq2));
+    	DoDebug("Requirement #3: " + IntToString(nReq3));
+    	DoDebug("Requirement #4: " + IntToString(nReq4));
+    }
+    
     if (GetHasFeat(nReq1, oPC))
     {
         if (GetHasFeat(nReq2, oPC) || nReq2 == 0)

@@ -34,10 +34,14 @@ void main()
     {
         object oBook = GetInventoryDisturbItem();
         object oPC = GetLastDisturbed();
+        if(DEBUG) DoDebug("Player Name: " + GetName(oPC));
         string sBook = GetTag(oBook);
+        if(DEBUG) DoDebug("Book Tag: " + sBook);
         //remove the "EPIC_SP_" part
-        sBook = GetStringRight(sBook, GetStringLength(sBook)-8);
+        //sBook = GetStringRight(sBook, GetStringLength(sBook)-8);
+        if(DEBUG) DoDebug("Book Tag after Editing: " + sBook);
         int nEpicSpell = GetSpellFromAbrev(sBook);       
+        if(DEBUG) DoDebug("SpellID: " + IntToString(nEpicSpell));
         int nDC = GetDCForSpell(nEpicSpell);
         int nIP = GetResearchIPForSpell(nEpicSpell);
         int nFE = GetResearchFeatForSpell(nEpicSpell);

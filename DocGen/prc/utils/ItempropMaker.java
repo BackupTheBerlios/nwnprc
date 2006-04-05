@@ -12,4 +12,6 @@ import static prc.Main.*;
 
 public final class ItempropMaker{
 	private ItempropMaker(){}
+	public static void main(String[] args) throws Exception{
+	}
 }

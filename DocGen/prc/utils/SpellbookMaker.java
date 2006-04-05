@@ -118,6 +118,12 @@ public final class SpellbookMaker{
 					classSpellRow++;
 					//loop over all the spells
 					for(int row = 0; row < classCoreSpell2da.getEntryCount(); row ++) {
+						//check its not a null row
+
+						if(classCoreSpell2da.getEntry("SpellID", row).equals("****")){
+						}
+						else
+						{
 						//get the real spellID
 						int spellID = classCoreSpell2da.getBiowareEntryAsInt("SpellID", row);
 						//get the name of the spell
@@ -222,6 +228,7 @@ public final class SpellbookMaker{
 								}//end of level check
 							}//end of metamamgic check
 						}//end of metamagic loop
+						}
 					}//end of cls_spells_*_core.2da loop
 					//save the new cls_spell_*.2da file
 					classSpell2da.save2da("2das", true, true);
@@ -263,8 +270,6 @@ public final class SpellbookMaker{
 		spells2da.setEntry("Label", spells2daRow, label);
 		//change the Name
 		spells2da.setEntry("Name", spells2daRow, Integer.toString(tlkRow+MAGIC_TLK));
-		//make it point to the new feat.2da line that will be added soon
-		spells2da.setEntry("FeatID", spells2daRow, Integer.toString(feat2daRow));
 		//if quickened, set oconjuring/casting duration to zero
 		if(metamagicNo == 3){
 			spells2da.setEntry("ConjTime", spells2daRow, "0");
@@ -302,6 +307,8 @@ public final class SpellbookMaker{
 			spells2da.setEntry("FeatID", spells2daRow, Integer.toString(subradialFeatID));
 		} else {
 			spells2da.setEntry("Master", spells2daRow, "****");
+			//make it point to the new feat.2da line that will be added soon
+			spells2da.setEntry("FeatID", spells2daRow, Integer.toString(feat2daRow));
 		}
 		//remove projectiles from firing because the real spell will do this
 		spells2da.setEntry("Proj", 				spells2daRow, "0");
@@ -313,35 +320,39 @@ public final class SpellbookMaker{
 		spells2da.setEntry("HasProjectile", 	spells2daRow, "0");
 
 		//add a feat.2da line
-		//make it point to the new spells.2da line
-		feat2da.setEntry("SPELLID", feat2daRow, Integer.toString(spells2daRow));
-		//change the Name
-		feat2da.setEntry("FEAT", feat2daRow, Integer.toString(tlkRow+MAGIC_TLK));
-		//change the Label
-		feat2da.setEntry("LABEL", feat2daRow, label);
-		//change the description
-		feat2da.setEntry("DESCRIPTION", feat2daRow, spells2da.getEntry("SpellDesc", spells2daRow));
-		//change the icon
-		feat2da.setEntry("ICON", feat2daRow, spells2da.getEntry("IconResRef", spells2daRow));
-		//if spell is hostile, make feat hostile
-		if(spells2da.getEntry("HostileSetting", spellID).equals("1")){
-			feat2da.setEntry("HostileFeat", feat2daRow, "1");
-		} else {
-			feat2da.setEntry("HostileFeat", feat2daRow, "0");
+		if(subradialMaster == 0){
+			//make it point to the new spells.2da line
+			feat2da.setEntry("SPELLID", feat2daRow, Integer.toString(spells2daRow));
+			//change the Name
+			feat2da.setEntry("FEAT", feat2daRow, Integer.toString(tlkRow+MAGIC_TLK));
+			//change the Label
+			feat2da.setEntry("LABEL", feat2daRow, label);
+			//change the description
+			feat2da.setEntry("DESCRIPTION", feat2daRow, spells2da.getEntry("SpellDesc", spells2daRow));
+			//change the icon
+			feat2da.setEntry("ICON", feat2daRow, spells2da.getEntry("IconResRef", spells2daRow));
+			//if spell is hostile, make feat hostile
+			if(spells2da.getEntry("HostileSetting", spellID).equals("1")){
+				feat2da.setEntry("HostileFeat", feat2daRow, "1");
+			} else {
+				feat2da.setEntry("HostileFeat", feat2daRow, "0");
+			}
+			//set the category to the same as the spell
+			feat2da.setEntry("CATEGORY", feat2daRow, spells2da.getEntry("Category", spells2daRow));
 		}
-		//set the category to the same as the spell
-		feat2da.setEntry("CATEGORY", feat2daRow, spells2da.getEntry("Category", spells2daRow));
 
 
 		//add an iprp_feats.2da line
-		//set its label
-		iprp_feats2da.setEntry("Label", iprp_feats2daRow, label);
-		//set its name
-		iprp_feats2da.setEntry("Name", iprp_feats2daRow, Integer.toString(tlkRow+MAGIC_TLK));
-		//make it point to the new feat.2da line
-		iprp_feats2da.setEntry("FeatIndex", iprp_feats2daRow, Integer.toString(feat2daRow));
-		//set its cost to 0.0
-		iprp_feats2da.setEntry("Cost", iprp_feats2daRow, "0.0");
+		if(subradialMaster == 0){
+			//set its label
+			iprp_feats2da.setEntry("Label", iprp_feats2daRow, label);
+			//set its name
+			iprp_feats2da.setEntry("Name", iprp_feats2daRow, Integer.toString(tlkRow+MAGIC_TLK));
+			//make it point to the new feat.2da line
+			iprp_feats2da.setEntry("FeatIndex", iprp_feats2daRow, Integer.toString(feat2daRow));
+			//set its cost to 0.0
+			iprp_feats2da.setEntry("Cost", iprp_feats2daRow, "0.0");
+		}
 
 		//add a cls_spell_*.2da line if needed
 		if(classSpellRow >= classSpell2da.getEntryCount()){
@@ -375,11 +386,13 @@ public final class SpellbookMaker{
 		}
 
 		//cls_feat_*.2da
-		classFeat2da.setEntry("FeatLabel", classFeatRow, label);
-		classFeat2da.setEntry("FeatIndex", classFeatRow, Integer.toString(feat2daRow));
-		classFeat2da.setEntry("List", classFeatRow, Integer.toString(0));
-		classFeat2da.setEntry("GrantedOnLevel", classFeatRow, Integer.toString(99));
-		classFeat2da.setEntry("OnMenu", classFeatRow, Integer.toString(1));
+		if(subradialMaster == 0){
+			classFeat2da.setEntry("FeatLabel", classFeatRow, label);
+			classFeat2da.setEntry("FeatIndex", classFeatRow, Integer.toString(feat2daRow));
+			classFeat2da.setEntry("List", classFeatRow, Integer.toString(0));
+			classFeat2da.setEntry("GrantedOnLevel", classFeatRow, Integer.toString(99));
+			classFeat2da.setEntry("OnMenu", classFeatRow, Integer.toString(1));
+		}
 
 
 		//move to next file lines
@@ -398,10 +411,11 @@ public final class SpellbookMaker{
 
 		//add subradial spells
 		if(subradialMaster == 0){
+			//store the spell row the master uses
+			//will be incremented by subradials
+			//the -1 is because you want the last used row, not the current blank row
+			int masterSpellID = spells2daRow-1;
 			for(int subradial = 1; subradial <= 5; subradial++){
-				//store the spell row the master uses
-				//will be incremented by subradials
-				int masterSpellID = spells2daRow;
 				if(spells2da.getBiowareEntryAsInt("SubRadSpell"+subradial, spellID) != 0){
 					addNewSpellbookData(spells2da.getBiowareEntryAsInt("SubRadSpell"+subradial, spellID),
 										classfilename,
@@ -412,7 +426,7 @@ public final class SpellbookMaker{
 										spellLevel,
 										name,
 										label,
-										spellID);
+										masterSpellID);
 					//update the master rows with the subradial spell rows
 					//the -1 is because you want the last used row, not the current blank row
 					spells2da.setEntry("SubRadSpell"+subradial, masterSpellID, Integer.toString(spells2daRow-1));

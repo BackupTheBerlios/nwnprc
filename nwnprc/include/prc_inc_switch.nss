@@ -673,6 +673,8 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
  /*
   * Set this to give a number of Free cohorts as with leadership
   * This can be used to simulate a party of players
+  * Unlike normal cohorts, those granted through this switch
+  * do not have the -2 level lag.
   */
  const string PRC_BONUS_COHORTS                      = "PRC_BONUS_COHORTS";
 

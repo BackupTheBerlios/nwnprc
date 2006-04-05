@@ -22707,5 +22707,1407 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="61500" lang="en" sex="m">##EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="62000" lang="en" sex="m">##END_OF_EPIC_SPELL_AND_ISC_RESERVE</entry>
   <entry id="62001" lang="en" sex="m">####START_OF_NEW_SPELLBOOK_RESERVE</entry>
+  <entry id="62002" lang="en" sex="m">Sorcerer Hold Monster</entry>
+  <entry id="62003" lang="en" sex="m">Sorcerer Extended Hold Monster</entry>
+  <entry id="62004" lang="en" sex="m">Sorcerer Quickened Hold Monster</entry>
+  <entry id="62005" lang="en" sex="m">Sorcerer Silent Hold Monster</entry>
+  <entry id="62006" lang="en" sex="m">Sorcerer Still Hold Monster</entry>
+  <entry id="62007" lang="en" sex="m">Sorcerer Lesser Mind Blank</entry>
+  <entry id="62008" lang="en" sex="m">Sorcerer Extended Lesser Mind Blank</entry>
+  <entry id="62009" lang="en" sex="m">Sorcerer Quickened Lesser Mind Blank</entry>
+  <entry id="62010" lang="en" sex="m">Sorcerer Silent Lesser Mind Blank</entry>
+  <entry id="62011" lang="en" sex="m">Sorcerer Still Lesser Mind Blank</entry>
+  <entry id="62012" lang="en" sex="m">Sorcerer Lesser Planar Binding</entry>
+  <entry id="62013" lang="en" sex="m">Sorcerer Extended Lesser Planar Binding</entry>
+  <entry id="62014" lang="en" sex="m">Sorcerer Quickened Lesser Planar Binding</entry>
+  <entry id="62015" lang="en" sex="m">Sorcerer Silent Lesser Planar Binding</entry>
+  <entry id="62016" lang="en" sex="m">Sorcerer Still Lesser Planar Binding</entry>
+  <entry id="62017" lang="en" sex="m">Sorcerer Lesser Spell Mantle</entry>
+  <entry id="62018" lang="en" sex="m">Sorcerer Empowered Lesser Spell Mantle</entry>
+  <entry id="62019" lang="en" sex="m">Sorcerer Extended Lesser Spell Mantle</entry>
+  <entry id="62020" lang="en" sex="m">Sorcerer Maximized Lesser Spell Mantle</entry>
+  <entry id="62021" lang="en" sex="m">Sorcerer Quickened Lesser Spell Mantle</entry>
+  <entry id="62022" lang="en" sex="m">Sorcerer Silent Lesser Spell Mantle</entry>
+  <entry id="62023" lang="en" sex="m">Sorcerer Still Lesser Spell Mantle</entry>
+  <entry id="62024" lang="en" sex="m">Sorcerer Snilloc's Major Missile</entry>
+  <entry id="62025" lang="en" sex="m">Sorcerer Empowered Snilloc's Major Missile</entry>
+  <entry id="62026" lang="en" sex="m">Sorcerer Maximized Snilloc's Major Missile</entry>
+  <entry id="62027" lang="en" sex="m">Sorcerer Quickened Snilloc's Major Missile</entry>
+  <entry id="62028" lang="en" sex="m">Sorcerer Silent Snilloc's Major Missile</entry>
+  <entry id="62029" lang="en" sex="m">Sorcerer Still Snilloc's Major Missile</entry>
+  <entry id="62030" lang="en" sex="m">Sorcerer Mestil's Acid Sheath</entry>
+  <entry id="62031" lang="en" sex="m">Sorcerer Extended Mestil's Acid Sheath</entry>
+  <entry id="62032" lang="en" sex="m">Sorcerer Quickened Mestil's Acid Sheath</entry>
+  <entry id="62033" lang="en" sex="m">Sorcerer Silent Mestil's Acid Sheath</entry>
+  <entry id="62034" lang="en" sex="m">Sorcerer Still Mestil's Acid Sheath</entry>
+  <entry id="62035" lang="en" sex="m">Sorcerer Mind Fog</entry>
+  <entry id="62036" lang="en" sex="m">Sorcerer Extended Mind Fog</entry>
+  <entry id="62037" lang="en" sex="m">Sorcerer Quickened Mind Fog</entry>
+  <entry id="62038" lang="en" sex="m">Sorcerer Silent Mind Fog</entry>
+  <entry id="62039" lang="en" sex="m">Sorcerer Still Mind Fog</entry>
+  <entry id="62040" lang="en" sex="m">Sorcerer Necrotic Burst</entry>
+  <entry id="62041" lang="en" sex="m">Sorcerer Empowered Necrotic Burst</entry>
+  <entry id="62042" lang="en" sex="m">Sorcerer Maximized Necrotic Burst</entry>
+  <entry id="62043" lang="en" sex="m">Sorcerer Quickened Necrotic Burst</entry>
+  <entry id="62044" lang="en" sex="m">Sorcerer Silent Necrotic Burst</entry>
+  <entry id="62045" lang="en" sex="m">Sorcerer Still Necrotic Burst</entry>
+  <entry id="62046" lang="en" sex="m">Sorcerer Night's Caress</entry>
+  <entry id="62047" lang="en" sex="m">Sorcerer Empowered Night's Caress</entry>
+  <entry id="62048" lang="en" sex="m">Sorcerer Extended Night's Caress</entry>
+  <entry id="62049" lang="en" sex="m">Sorcerer Maximized Night's Caress</entry>
+  <entry id="62050" lang="en" sex="m">Sorcerer Quickened Night's Caress</entry>
+  <entry id="62051" lang="en" sex="m">Sorcerer Silent Night's Caress</entry>
+  <entry id="62052" lang="en" sex="m">Sorcerer Still Night's Caress</entry>
+  <entry id="62053" lang="en" sex="m">Sorcerer Summon Creature V</entry>
+  <entry id="62054" lang="en" sex="m">Sorcerer Extended Summon Creature V</entry>
+  <entry id="62055" lang="en" sex="m">Sorcerer Quickened Summon Creature V</entry>
+  <entry id="62056" lang="en" sex="m">Sorcerer Silent Summon Creature V</entry>
+  <entry id="62057" lang="en" sex="m">Sorcerer Still Summon Creature V</entry>
+  <entry id="62058" lang="en" sex="m">Sorcerer Teleport</entry>
+  <entry id="62059" lang="en" sex="m">Sorcerer Teleport</entry>
+  <entry id="62060" lang="en" sex="m">Sorcerer Teleport</entry>
+  <entry id="62061" lang="en" sex="m">Sorcerer Quickened Teleport</entry>
+  <entry id="62062" lang="en" sex="m">Sorcerer Quickened Teleport</entry>
+  <entry id="62063" lang="en" sex="m">Sorcerer Quickened Teleport</entry>
+  <entry id="62064" lang="en" sex="m">Sorcerer Silent Teleport</entry>
+  <entry id="62065" lang="en" sex="m">Sorcerer Silent Teleport</entry>
+  <entry id="62066" lang="en" sex="m">Sorcerer Silent Teleport</entry>
+  <entry id="62067" lang="en" sex="m">Sorcerer Acid Fog</entry>
+  <entry id="62068" lang="en" sex="m">Sorcerer Empowered Acid Fog</entry>
+  <entry id="62069" lang="en" sex="m">Sorcerer Extended Acid Fog</entry>
+  <entry id="62070" lang="en" sex="m">Sorcerer Maximized Acid Fog</entry>
+  <entry id="62071" lang="en" sex="m">Sorcerer Silent Acid Fog</entry>
+  <entry id="62072" lang="en" sex="m">Sorcerer Still Acid Fog</entry>
+  <entry id="62073" lang="en" sex="m">Sorcerer Acid Storm</entry>
+  <entry id="62074" lang="en" sex="m">Sorcerer Empowered Acid Storm</entry>
+  <entry id="62075" lang="en" sex="m">Sorcerer Maximized Acid Storm</entry>
+  <entry id="62076" lang="en" sex="m">Sorcerer Silent Acid Storm</entry>
+  <entry id="62077" lang="en" sex="m">Sorcerer Still Acid Storm</entry>
+  <entry id="62078" lang="en" sex="m">Sorcerer Bigby's Forceful Hand</entry>
+  <entry id="62079" lang="en" sex="m">Sorcerer Extended Bigby's Forceful Hand</entry>
+  <entry id="62080" lang="en" sex="m">Sorcerer Silent Bigby's Forceful Hand</entry>
+  <entry id="62081" lang="en" sex="m">Sorcerer Still Bigby's Forceful Hand</entry>
+  <entry id="62082" lang="en" sex="m">Sorcerer Chain Lightning</entry>
+  <entry id="62083" lang="en" sex="m">Sorcerer Empowered Chain Lightning</entry>
+  <entry id="62084" lang="en" sex="m">Sorcerer Maximized Chain Lightning</entry>
+  <entry id="62085" lang="en" sex="m">Sorcerer Silent Chain Lightning</entry>
+  <entry id="62086" lang="en" sex="m">Sorcerer Still Chain Lightning</entry>
+  <entry id="62087" lang="en" sex="m">Sorcerer Circle of Death</entry>
+  <entry id="62088" lang="en" sex="m">Sorcerer Empowered Circle of Death</entry>
+  <entry id="62089" lang="en" sex="m">Sorcerer Maximized Circle of Death</entry>
+  <entry id="62090" lang="en" sex="m">Sorcerer Silent Circle of Death</entry>
+  <entry id="62091" lang="en" sex="m">Sorcerer Still Circle of Death</entry>
+  <entry id="62092" lang="en" sex="m">Sorcerer Disintegrate</entry>
+  <entry id="62093" lang="en" sex="m">Sorcerer Empowered Disintegrate</entry>
+  <entry id="62094" lang="en" sex="m">Sorcerer Maximized Disintegrate</entry>
+  <entry id="62095" lang="en" sex="m">Sorcerer Silent Disintegrate</entry>
+  <entry id="62096" lang="en" sex="m">Sorcerer Still Disintegrate</entry>
+  <entry id="62097" lang="en" sex="m">Sorcerer Ethereal Visage</entry>
+  <entry id="62098" lang="en" sex="m">Sorcerer Extended Ethereal Visage</entry>
+  <entry id="62099" lang="en" sex="m">Sorcerer Silent Ethereal Visage</entry>
+  <entry id="62100" lang="en" sex="m">Sorcerer Still Ethereal Visage</entry>
+  <entry id="62101" lang="en" sex="m">Sorcerer Flesh to Stone</entry>
+  <entry id="62102" lang="en" sex="m">Sorcerer Extended Flesh to Stone</entry>
+  <entry id="62103" lang="en" sex="m">Sorcerer Silent Flesh to Stone</entry>
+  <entry id="62104" lang="en" sex="m">Sorcerer Still Flesh to Stone</entry>
+  <entry id="62105" lang="en" sex="m">Sorcerer Ghoul Gauntlet</entry>
+  <entry id="62106" lang="en" sex="m">Sorcerer Maximized Ghoul Gauntlet</entry>
+  <entry id="62107" lang="en" sex="m">Sorcerer Silent Ghoul Gauntlet</entry>
+  <entry id="62108" lang="en" sex="m">Sorcerer Still Ghoul Gauntlet</entry>
+  <entry id="62109" lang="en" sex="m">Sorcerer Globe of Invulnerability</entry>
+  <entry id="62110" lang="en" sex="m">Sorcerer Extended Globe of Invulnerability</entry>
+  <entry id="62111" lang="en" sex="m">Sorcerer Silent Globe of Invulnerability</entry>
+  <entry id="62112" lang="en" sex="m">Sorcerer Still Globe of Invulnerability</entry>
+  <entry id="62113" lang="en" sex="m">Sorcerer Greater Dispelling</entry>
+  <entry id="62114" lang="en" sex="m">Sorcerer Silent Greater Dispelling</entry>
+  <entry id="62115" lang="en" sex="m">Sorcerer Still Greater Dispelling</entry>
+  <entry id="62116" lang="en" sex="m">Sorcerer Greater Heroism</entry>
+  <entry id="62117" lang="en" sex="m">Sorcerer Extended Greater Heroism</entry>
+  <entry id="62118" lang="en" sex="m">Sorcerer Silent Greater Heroism</entry>
+  <entry id="62119" lang="en" sex="m">Sorcerer Still Greater Heroism</entry>
+  <entry id="62120" lang="en" sex="m">Sorcerer Greater Spell Breach</entry>
+  <entry id="62121" lang="en" sex="m">Sorcerer Silent Greater Spell Breach</entry>
+  <entry id="62122" lang="en" sex="m">Sorcerer Still Greater Spell Breach</entry>
+  <entry id="62123" lang="en" sex="m">Sorcerer Greater Stoneskin</entry>
+  <entry id="62124" lang="en" sex="m">Sorcerer Extended Greater Stoneskin</entry>
+  <entry id="62125" lang="en" sex="m">Sorcerer Silent Greater Stoneskin</entry>
+  <entry id="62126" lang="en" sex="m">Sorcerer Still Greater Stoneskin</entry>
+  <entry id="62127" lang="en" sex="m">Sorcerer Isaac's Greater Missile Storm</entry>
+  <entry id="62128" lang="en" sex="m">Sorcerer Empowered Isaac's Greater Missile Storm</entry>
+  <entry id="62129" lang="en" sex="m">Sorcerer Maximized Isaac's Greater Missile Storm</entry>
+  <entry id="62130" lang="en" sex="m">Sorcerer Silent Isaac's Greater Missile Storm</entry>
+  <entry id="62131" lang="en" sex="m">Sorcerer Still Isaac's Greater Missile Storm</entry>
+  <entry id="62132" lang="en" sex="m">Sorcerer Legend Lore</entry>
+  <entry id="62133" lang="en" sex="m">Sorcerer Extended Legend Lore</entry>
+  <entry id="62134" lang="en" sex="m">Sorcerer Silent Legend Lore</entry>
+  <entry id="62135" lang="en" sex="m">Sorcerer Still Legend Lore</entry>
+  <entry id="62136" lang="en" sex="m">Sorcerer Mass Bull's Strength</entry>
+  <entry id="62137" lang="en" sex="m">Sorcerer Empowered Mass Bull's Strength</entry>
+  <entry id="62138" lang="en" sex="m">Sorcerer Extended Mass Bull's Strength</entry>
+  <entry id="62139" lang="en" sex="m">Sorcerer Maximized Mass Bull's Strength</entry>
+  <entry id="62140" lang="en" sex="m">Sorcerer Silent Mass Bull's Strength</entry>
+  <entry id="62141" lang="en" sex="m">Sorcerer Still Mass Bull's Strength</entry>
+  <entry id="62142" lang="en" sex="m">Sorcerer Mass Cat's Grace</entry>
+  <entry id="62143" lang="en" sex="m">Sorcerer Empowered Mass Cat's Grace</entry>
+  <entry id="62144" lang="en" sex="m">Sorcerer Extended Mass Cat's Grace</entry>
+  <entry id="62145" lang="en" sex="m">Sorcerer Maximized Mass Cat's Grace</entry>
+  <entry id="62146" lang="en" sex="m">Sorcerer Silent Mass Cat's Grace</entry>
+  <entry id="62147" lang="en" sex="m">Sorcerer Still Mass Cat's Grace</entry>
+  <entry id="62148" lang="en" sex="m">Sorcerer Mass Contagion</entry>
+  <entry id="62149" lang="en" sex="m">Sorcerer Silent Mass Contagion</entry>
+  <entry id="62150" lang="en" sex="m">Sorcerer Still Mass Contagion</entry>
+  <entry id="62151" lang="en" sex="m">Sorcerer Mass Eagle's Splendor</entry>
+  <entry id="62152" lang="en" sex="m">Sorcerer Empowered Mass Eagle's Splendor</entry>
+  <entry id="62153" lang="en" sex="m">Sorcerer Extended Mass Eagle's Splendor</entry>
+  <entry id="62154" lang="en" sex="m">Sorcerer Maximized Mass Eagle's Splendor</entry>
+  <entry id="62155" lang="en" sex="m">Sorcerer Silent Mass Eagle's Splendor</entry>
+  <entry id="62156" lang="en" sex="m">Sorcerer Still Mass Eagle's Splendor</entry>
+  <entry id="62157" lang="en" sex="m">Sorcerer Mass Endurance</entry>
+  <entry id="62158" lang="en" sex="m">Sorcerer Empowered Mass Endurance</entry>
+  <entry id="62159" lang="en" sex="m">Sorcerer Extended Mass Endurance</entry>
+  <entry id="62160" lang="en" sex="m">Sorcerer Maximized Mass Endurance</entry>
+  <entry id="62161" lang="en" sex="m">Sorcerer Silent Mass Endurance</entry>
+  <entry id="62162" lang="en" sex="m">Sorcerer Still Mass Endurance</entry>
+  <entry id="62163" lang="en" sex="m">Sorcerer Mass Fox's Cunning</entry>
+  <entry id="62164" lang="en" sex="m">Sorcerer Empowered Mass Fox's Cunning</entry>
+  <entry id="62165" lang="en" sex="m">Sorcerer Extended Mass Fox's Cunning</entry>
+  <entry id="62166" lang="en" sex="m">Sorcerer Maximized Mass Fox's Cunning</entry>
+  <entry id="62167" lang="en" sex="m">Sorcerer Silent Mass Fox's Cunning</entry>
+  <entry id="62168" lang="en" sex="m">Sorcerer Still Mass Fox's Cunning</entry>
+  <entry id="62169" lang="en" sex="m">Sorcerer Mass Haste</entry>
+  <entry id="62170" lang="en" sex="m">Sorcerer Extended Mass Haste</entry>
+  <entry id="62171" lang="en" sex="m">Sorcerer Silent Mass Haste</entry>
+  <entry id="62172" lang="en" sex="m">Sorcerer Still Mass Haste</entry>
+  <entry id="62173" lang="en" sex="m">Sorcerer Mass Owl's Wisdom</entry>
+  <entry id="62174" lang="en" sex="m">Sorcerer Empowered Mass Owl's Wisdom</entry>
+  <entry id="62175" lang="en" sex="m">Sorcerer Extended Mass Owl's Wisdom</entry>
+  <entry id="62176" lang="en" sex="m">Sorcerer Maximized Mass Owl's Wisdom</entry>
+  <entry id="62177" lang="en" sex="m">Sorcerer Silent Mass Owl's Wisdom</entry>
+  <entry id="62178" lang="en" sex="m">Sorcerer Still Mass Owl's Wisdom</entry>
+  <entry id="62179" lang="en" sex="m">Sorcerer Necrotic Eruption</entry>
+  <entry id="62180" lang="en" sex="m">Sorcerer Empowered Necrotic Eruption</entry>
+  <entry id="62181" lang="en" sex="m">Sorcerer Maximized Necrotic Eruption</entry>
+  <entry id="62182" lang="en" sex="m">Sorcerer Silent Necrotic Eruption</entry>
+  <entry id="62183" lang="en" sex="m">Sorcerer Still Necrotic Eruption</entry>
+  <entry id="62184" lang="en" sex="m">Sorcerer Planar Binding</entry>
+  <entry id="62185" lang="en" sex="m">Sorcerer Extended Planar Binding</entry>
+  <entry id="62186" lang="en" sex="m">Sorcerer Silent Planar Binding</entry>
+  <entry id="62187" lang="en" sex="m">Sorcerer Still Planar Binding</entry>
+  <entry id="62188" lang="en" sex="m">Sorcerer Shades</entry>
+  <entry id="62189" lang="en" sex="m">Sorcerer Shades</entry>
+  <entry id="62190" lang="en" sex="m">Sorcerer Shades</entry>
+  <entry id="62191" lang="en" sex="m">Sorcerer Shades</entry>
+  <entry id="62192" lang="en" sex="m">Sorcerer Shades</entry>
+  <entry id="62193" lang="en" sex="m">Sorcerer Shades</entry>
+  <entry id="62194" lang="en" sex="m">Sorcerer Silent Shades</entry>
+  <entry id="62195" lang="en" sex="m">Sorcerer Silent Shades</entry>
+  <entry id="62196" lang="en" sex="m">Sorcerer Silent Shades</entry>
+  <entry id="62197" lang="en" sex="m">Sorcerer Silent Shades</entry>
+  <entry id="62198" lang="en" sex="m">Sorcerer Silent Shades</entry>
+  <entry id="62199" lang="en" sex="m">Sorcerer Silent Shades</entry>
+  <entry id="62200" lang="en" sex="m">Sorcerer Still Shades</entry>
+  <entry id="62201" lang="en" sex="m">Sorcerer Still Shades</entry>
+  <entry id="62202" lang="en" sex="m">Sorcerer Still Shades</entry>
+  <entry id="62203" lang="en" sex="m">Sorcerer Still Shades</entry>
+  <entry id="62204" lang="en" sex="m">Sorcerer Still Shades</entry>
+  <entry id="62205" lang="en" sex="m">Sorcerer Still Shades</entry>
+  <entry id="62206" lang="en" sex="m">Sorcerer Stone to Flesh</entry>
+  <entry id="62207" lang="en" sex="m">Sorcerer Extended Stone to Flesh</entry>
+  <entry id="62208" lang="en" sex="m">Sorcerer Silent Stone to Flesh</entry>
+  <entry id="62209" lang="en" sex="m">Sorcerer Still Stone to Flesh</entry>
+  <entry id="62210" lang="en" sex="m">Sorcerer Summon Creature VI</entry>
+  <entry id="62211" lang="en" sex="m">Sorcerer Extended Summon Creature VI</entry>
+  <entry id="62212" lang="en" sex="m">Sorcerer Silent Summon Creature VI</entry>
+  <entry id="62213" lang="en" sex="m">Sorcerer Still Summon Creature VI</entry>
+  <entry id="62214" lang="en" sex="m">Sorcerer Tenser's Transformation</entry>
+  <entry id="62215" lang="en" sex="m">Sorcerer Empowered Tenser's Transformation</entry>
+  <entry id="62216" lang="en" sex="m">Sorcerer Extended Tenser's Transformation</entry>
+  <entry id="62217" lang="en" sex="m">Sorcerer Maximized Tenser's Transformation</entry>
+  <entry id="62218" lang="en" sex="m">Sorcerer Silent Tenser's Transformation</entry>
+  <entry id="62219" lang="en" sex="m">Sorcerer Still Tenser's Transformation</entry>
+  <entry id="62220" lang="en" sex="m">Sorcerer True Seeing</entry>
+  <entry id="62221" lang="en" sex="m">Sorcerer Extended True Seeing</entry>
+  <entry id="62222" lang="en" sex="m">Sorcerer Silent True Seeing</entry>
+  <entry id="62223" lang="en" sex="m">Sorcerer Still True Seeing</entry>
+  <entry id="62224" lang="en" sex="m">Sorcerer Undeath to Death</entry>
+  <entry id="62225" lang="en" sex="m">Sorcerer Empowered Undeath to Death</entry>
+  <entry id="62226" lang="en" sex="m">Sorcerer Maximized Undeath to Death</entry>
+  <entry id="62227" lang="en" sex="m">Sorcerer Silent Undeath to Death</entry>
+  <entry id="62228" lang="en" sex="m">Sorcerer Still Undeath to Death</entry>
+  <entry id="62229" lang="en" sex="m">Sorcerer Avasculate</entry>
+  <entry id="62230" lang="en" sex="m">Sorcerer Silent Avasculate</entry>
+  <entry id="62231" lang="en" sex="m">Sorcerer Still Avasculate</entry>
+  <entry id="62232" lang="en" sex="m">Sorcerer Banishment</entry>
+  <entry id="62233" lang="en" sex="m">Sorcerer Silent Banishment</entry>
+  <entry id="62234" lang="en" sex="m">Sorcerer Still Banishment</entry>
+  <entry id="62235" lang="en" sex="m">Sorcerer Bigby's Grasping Hand</entry>
+  <entry id="62236" lang="en" sex="m">Sorcerer Extended Bigby's Grasping Hand</entry>
+  <entry id="62237" lang="en" sex="m">Sorcerer Silent Bigby's Grasping Hand</entry>
+  <entry id="62238" lang="en" sex="m">Sorcerer Still Bigby's Grasping Hand</entry>
+  <entry id="62239" lang="en" sex="m">Sorcerer Control Undead</entry>
+  <entry id="62240" lang="en" sex="m">Sorcerer Extended Control Undead</entry>
+  <entry id="62241" lang="en" sex="m">Sorcerer Silent Control Undead</entry>
+  <entry id="62242" lang="en" sex="m">Sorcerer Still Control Undead</entry>
+  <entry id="62243" lang="en" sex="m">Sorcerer Delayed Blast Fireball</entry>
+  <entry id="62244" lang="en" sex="m">Sorcerer Empowered Delayed Blast Fireball</entry>
+  <entry id="62245" lang="en" sex="m">Sorcerer Extended Delayed Blast Fireball</entry>
+  <entry id="62246" lang="en" sex="m">Sorcerer Silent Delayed Blast Fireball</entry>
+  <entry id="62247" lang="en" sex="m">Sorcerer Still Delayed Blast Fireball</entry>
+  <entry id="62248" lang="en" sex="m">Sorcerer Energy Ebb</entry>
+  <entry id="62249" lang="en" sex="m">Sorcerer Extended Energy Ebb</entry>
+  <entry id="62250" lang="en" sex="m">Sorcerer Silent Energy Ebb</entry>
+  <entry id="62251" lang="en" sex="m">Sorcerer Still Energy Ebb</entry>
+  <entry id="62252" lang="en" sex="m">Sorcerer Energy Immunity</entry>
+  <entry id="62253" lang="en" sex="m">Sorcerer Energy Immunity</entry>
+  <entry id="62254" lang="en" sex="m">Sorcerer Energy Immunity</entry>
+  <entry id="62255" lang="en" sex="m">Sorcerer Energy Immunity</entry>
+  <entry id="62256" lang="en" sex="m">Sorcerer Energy Immunity</entry>
+  <entry id="62257" lang="en" sex="m">Sorcerer Energy Immunity</entry>
+  <entry id="62258" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
+  <entry id="62259" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
+  <entry id="62260" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
+  <entry id="62261" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
+  <entry id="62262" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
+  <entry id="62263" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
+  <entry id="62264" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
+  <entry id="62265" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
+  <entry id="62266" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
+  <entry id="62267" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
+  <entry id="62268" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
+  <entry id="62269" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
+  <entry id="62270" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
+  <entry id="62271" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
+  <entry id="62272" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
+  <entry id="62273" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
+  <entry id="62274" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
+  <entry id="62275" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
+  <entry id="62276" lang="en" sex="m">Sorcerer Finger of Death</entry>
+  <entry id="62277" lang="en" sex="m">Sorcerer Empowered Finger of Death</entry>
+  <entry id="62278" lang="en" sex="m">Sorcerer Silent Finger of Death</entry>
+  <entry id="62279" lang="en" sex="m">Sorcerer Still Finger of Death</entry>
+  <entry id="62280" lang="en" sex="m">Sorcerer Great Thunderclap</entry>
+  <entry id="62281" lang="en" sex="m">Sorcerer Silent Great Thunderclap</entry>
+  <entry id="62282" lang="en" sex="m">Sorcerer Still Great Thunderclap</entry>
+  <entry id="62283" lang="en" sex="m">Sorcerer Greater Teleport</entry>
+  <entry id="62284" lang="en" sex="m">Sorcerer Greater Teleport</entry>
+  <entry id="62285" lang="en" sex="m">Sorcerer Greater Teleport</entry>
+  <entry id="62286" lang="en" sex="m">Sorcerer Silent Greater Teleport</entry>
+  <entry id="62287" lang="en" sex="m">Sorcerer Silent Greater Teleport</entry>
+  <entry id="62288" lang="en" sex="m">Sorcerer Silent Greater Teleport</entry>
+  <entry id="62289" lang="en" sex="m">Sorcerer Insanity</entry>
+  <entry id="62290" lang="en" sex="m">Sorcerer Silent Insanity</entry>
+  <entry id="62291" lang="en" sex="m">Sorcerer Still Insanity</entry>
+  <entry id="62292" lang="en" sex="m">Sorcerer Mass Hold Person</entry>
+  <entry id="62293" lang="en" sex="m">Sorcerer Extended Mass Hold Person</entry>
+  <entry id="62294" lang="en" sex="m">Sorcerer Silent Mass Hold Person</entry>
+  <entry id="62295" lang="en" sex="m">Sorcerer Still Mass Hold Person</entry>
+  <entry id="62296" lang="en" sex="m">Sorcerer Mordenkainen's Sword</entry>
+  <entry id="62297" lang="en" sex="m">Sorcerer Extended Mordenkainen's Sword</entry>
+  <entry id="62298" lang="en" sex="m">Sorcerer Silent Mordenkainen's Sword</entry>
+  <entry id="62299" lang="en" sex="m">Sorcerer Still Mordenkainen's Sword</entry>
+  <entry id="62300" lang="en" sex="m">Sorcerer Mordenkainen's Magnificent Mansion</entry>
+  <entry id="62301" lang="en" sex="m">Sorcerer Silent Mordenkainen's Magnificent Mansion</entry>
+  <entry id="62302" lang="en" sex="m">Sorcerer Still Mordenkainen's Magnificent Mansion</entry>
+  <entry id="62303" lang="en" sex="m">Sorcerer Nybor's Stern Reproof</entry>
+  <entry id="62304" lang="en" sex="m">Sorcerer Empowered Nybor's Stern Reproof</entry>
+  <entry id="62305" lang="en" sex="m">Sorcerer Extended Nybor's Stern Reproof</entry>
+  <entry id="62306" lang="en" sex="m">Sorcerer Silent Nybor's Stern Reproof</entry>
+  <entry id="62307" lang="en" sex="m">Sorcerer Still Nybor's Stern Reproof</entry>
+  <entry id="62308" lang="en" sex="m">Sorcerer Power Word, Stun</entry>
+  <entry id="62309" lang="en" sex="m">Sorcerer Silent Power Word, Stun</entry>
+  <entry id="62310" lang="en" sex="m">Sorcerer Prismatic Spray</entry>
+  <entry id="62311" lang="en" sex="m">Sorcerer Silent Prismatic Spray</entry>
+  <entry id="62312" lang="en" sex="m">Sorcerer Still Prismatic Spray</entry>
+  <entry id="62313" lang="en" sex="m">Sorcerer Protection from Spells</entry>
+  <entry id="62314" lang="en" sex="m">Sorcerer Extended Protection from Spells</entry>
+  <entry id="62315" lang="en" sex="m">Sorcerer Silent Protection from Spells</entry>
+  <entry id="62316" lang="en" sex="m">Sorcerer Still Protection from Spells</entry>
+  <entry id="62317" lang="en" sex="m">Sorcerer Shadow Shield</entry>
+  <entry id="62318" lang="en" sex="m">Sorcerer Extended Shadow Shield</entry>
+  <entry id="62319" lang="en" sex="m">Sorcerer Silent Shadow Shield</entry>
+  <entry id="62320" lang="en" sex="m">Sorcerer Still Shadow Shield</entry>
+  <entry id="62321" lang="en" sex="m">Sorcerer Spell Mantle</entry>
+  <entry id="62322" lang="en" sex="m">Sorcerer Empowered Spell Mantle</entry>
+  <entry id="62323" lang="en" sex="m">Sorcerer Extended Spell Mantle</entry>
+  <entry id="62324" lang="en" sex="m">Sorcerer Silent Spell Mantle</entry>
+  <entry id="62325" lang="en" sex="m">Sorcerer Still Spell Mantle</entry>
+  <entry id="62326" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
+  <entry id="62327" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
+  <entry id="62328" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
+  <entry id="62329" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
+  <entry id="62330" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
+  <entry id="62331" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
+  <entry id="62332" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
+  <entry id="62333" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
+  <entry id="62334" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
+  <entry id="62335" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
+  <entry id="62336" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
+  <entry id="62337" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
+  <entry id="62338" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
+  <entry id="62339" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
+  <entry id="62340" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
+  <entry id="62341" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
+  <entry id="62342" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
+  <entry id="62343" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
+  <entry id="62344" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
+  <entry id="62345" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
+  <entry id="62346" lang="en" sex="m">Sorcerer Avascular Mass</entry>
+  <entry id="62347" lang="en" sex="m">Sorcerer Extended Avascular Mass</entry>
+  <entry id="62348" lang="en" sex="m">Sorcerer Silent Avascular Mass</entry>
+  <entry id="62349" lang="en" sex="m">Sorcerer Still Avascular Mass</entry>
+  <entry id="62350" lang="en" sex="m">Sorcerer Bigby's Clenched Fist</entry>
+  <entry id="62351" lang="en" sex="m">Sorcerer Extended Bigby's Clenched Fist</entry>
+  <entry id="62352" lang="en" sex="m">Sorcerer Silent Bigby's Clenched Fist</entry>
+  <entry id="62353" lang="en" sex="m">Sorcerer Still Bigby's Clenched Fist</entry>
+  <entry id="62354" lang="en" sex="m">Sorcerer Blackstaff</entry>
+  <entry id="62355" lang="en" sex="m">Sorcerer Extended Blackstaff</entry>
+  <entry id="62356" lang="en" sex="m">Sorcerer Silent Blackstaff</entry>
+  <entry id="62357" lang="en" sex="m">Sorcerer Still Blackstaff</entry>
+  <entry id="62358" lang="en" sex="m">Sorcerer Create Undead</entry>
+  <entry id="62359" lang="en" sex="m">Sorcerer Extended Create Undead</entry>
+  <entry id="62360" lang="en" sex="m">Sorcerer Silent Create Undead</entry>
+  <entry id="62361" lang="en" sex="m">Sorcerer Still Create Undead</entry>
+  <entry id="62362" lang="en" sex="m">Sorcerer Dimensional Lock</entry>
+  <entry id="62363" lang="en" sex="m">Sorcerer Extended Dimensional Lock</entry>
+  <entry id="62364" lang="en" sex="m">Sorcerer Silent Dimensional Lock</entry>
+  <entry id="62365" lang="en" sex="m">Sorcerer Still Dimensional Lock</entry>
+  <entry id="62366" lang="en" sex="m">Sorcerer Greater Sanctuary</entry>
+  <entry id="62367" lang="en" sex="m">Sorcerer Extended Greater Sanctuary</entry>
+  <entry id="62368" lang="en" sex="m">Sorcerer Silent Greater Sanctuary</entry>
+  <entry id="62369" lang="en" sex="m">Sorcerer Still Greater Sanctuary</entry>
+  <entry id="62370" lang="en" sex="m">Sorcerer Flensing</entry>
+  <entry id="62371" lang="en" sex="m">Sorcerer Silent Flensing</entry>
+  <entry id="62372" lang="en" sex="m">Sorcerer Still Flensing</entry>
+  <entry id="62373" lang="en" sex="m">Sorcerer Greater Planar Binding</entry>
+  <entry id="62374" lang="en" sex="m">Sorcerer Extended Greater Planar Binding</entry>
+  <entry id="62375" lang="en" sex="m">Sorcerer Silent Greater Planar Binding</entry>
+  <entry id="62376" lang="en" sex="m">Sorcerer Still Greater Planar Binding</entry>
+  <entry id="62377" lang="en" sex="m">Sorcerer Wall of Greater Dispel Magic</entry>
+  <entry id="62378" lang="en" sex="m">Sorcerer Extended Wall of Greater Dispel Magic</entry>
+  <entry id="62379" lang="en" sex="m">Sorcerer Silent Wall of Greater Dispel Magic</entry>
+  <entry id="62380" lang="en" sex="m">Sorcerer Still Wall of Greater Dispel Magic</entry>
+  <entry id="62381" lang="en" sex="m">Sorcerer Horrid Wilting</entry>
+  <entry id="62382" lang="en" sex="m">Sorcerer Silent Horrid Wilting</entry>
+  <entry id="62383" lang="en" sex="m">Sorcerer Still Horrid Wilting</entry>
+  <entry id="62384" lang="en" sex="m">Sorcerer Incendiary Cloud</entry>
+  <entry id="62385" lang="en" sex="m">Sorcerer Extended Incendiary Cloud</entry>
+  <entry id="62386" lang="en" sex="m">Sorcerer Silent Incendiary Cloud</entry>
+  <entry id="62387" lang="en" sex="m">Sorcerer Still Incendiary Cloud</entry>
+  <entry id="62388" lang="en" sex="m">Sorcerer Mantle of Egregious Might</entry>
+  <entry id="62389" lang="en" sex="m">Sorcerer Extended Mantle of Egregious Might</entry>
+  <entry id="62390" lang="en" sex="m">Sorcerer Silent Mantle of Egregious Might</entry>
+  <entry id="62391" lang="en" sex="m">Sorcerer Still Mantle of Egregious Might</entry>
+  <entry id="62392" lang="en" sex="m">Sorcerer Mass Blindness/Deafness</entry>
+  <entry id="62393" lang="en" sex="m">Sorcerer Extended Mass Blindness/Deafness</entry>
+  <entry id="62394" lang="en" sex="m">Sorcerer Silent Mass Blindness/Deafness</entry>
+  <entry id="62395" lang="en" sex="m">Sorcerer Still Mass Blindness/Deafness</entry>
+  <entry id="62396" lang="en" sex="m">Sorcerer Mass Charm</entry>
+  <entry id="62397" lang="en" sex="m">Sorcerer Extended Mass Charm</entry>
+  <entry id="62398" lang="en" sex="m">Sorcerer Silent Mass Charm</entry>
+  <entry id="62399" lang="en" sex="m">Sorcerer Maze</entry>
+  <entry id="62400" lang="en" sex="m">Sorcerer Silent Maze</entry>
+  <entry id="62401" lang="en" sex="m">Sorcerer Still Maze</entry>
+  <entry id="62402" lang="en" sex="m">Sorcerer Mind Blank</entry>
+  <entry id="62403" lang="en" sex="m">Sorcerer Extended Mind Blank</entry>
+  <entry id="62404" lang="en" sex="m">Sorcerer Silent Mind Blank</entry>
+  <entry id="62405" lang="en" sex="m">Sorcerer Still Mind Blank</entry>
+  <entry id="62406" lang="en" sex="m">Sorcerer Necrotic Empowerment</entry>
+  <entry id="62407" lang="en" sex="m">Sorcerer Extended Necrotic Empowerment</entry>
+  <entry id="62408" lang="en" sex="m">Sorcerer Silent Necrotic Empowerment</entry>
+  <entry id="62409" lang="en" sex="m">Sorcerer Still Necrotic Empowerment</entry>
+  <entry id="62410" lang="en" sex="m">Sorcerer Premonition</entry>
+  <entry id="62411" lang="en" sex="m">Sorcerer Extended Premonition</entry>
+  <entry id="62412" lang="en" sex="m">Sorcerer Silent Premonition</entry>
+  <entry id="62413" lang="en" sex="m">Sorcerer Still Premonition</entry>
+  <entry id="62414" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
+  <entry id="62415" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
+  <entry id="62416" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
+  <entry id="62417" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
+  <entry id="62418" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
+  <entry id="62419" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
+  <entry id="62420" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
+  <entry id="62421" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
+  <entry id="62422" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
+  <entry id="62423" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
+  <entry id="62424" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
+  <entry id="62425" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
+  <entry id="62426" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
+  <entry id="62427" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
+  <entry id="62428" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
+  <entry id="62429" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
+  <entry id="62430" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
+  <entry id="62431" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
+  <entry id="62432" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
+  <entry id="62433" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
+  <entry id="62434" lang="en" sex="m">Sorcerer Sunburst</entry>
+  <entry id="62435" lang="en" sex="m">Sorcerer Silent Sunburst</entry>
+  <entry id="62436" lang="en" sex="m">Sorcerer Still Sunburst</entry>
+  <entry id="62437" lang="en" sex="m">Sorcerer Bigby's Crushing Hand</entry>
+  <entry id="62438" lang="en" sex="m">Sorcerer Black Blade of Disaster</entry>
+  <entry id="62439" lang="en" sex="m">Sorcerer Dominate Monster</entry>
+  <entry id="62440" lang="en" sex="m">Sorcerer Energy Drain</entry>
+  <entry id="62441" lang="en" sex="m">Sorcerer Gate</entry>
+  <entry id="62442" lang="en" sex="m">Sorcerer Greater Spell Mantle</entry>
+  <entry id="62443" lang="en" sex="m">Sorcerer Mass Hold Monster</entry>
+  <entry id="62444" lang="en" sex="m">Sorcerer Meteor Swarm</entry>
+  <entry id="62445" lang="en" sex="m">Sorcerer Mordenkainen's Disjunction</entry>
+  <entry id="62446" lang="en" sex="m">Sorcerer Necrotic Termination</entry>
+  <entry id="62447" lang="en" sex="m">Sorcerer Power Word, Kill</entry>
+  <entry id="62448" lang="en" sex="m">Sorcerer Shapechange</entry>
+  <entry id="62449" lang="en" sex="m">Sorcerer Shapechange</entry>
+  <entry id="62450" lang="en" sex="m">Sorcerer Shapechange</entry>
+  <entry id="62451" lang="en" sex="m">Sorcerer Shapechange</entry>
+  <entry id="62452" lang="en" sex="m">Sorcerer Shapechange</entry>
+  <entry id="62453" lang="en" sex="m">Sorcerer Shapechange</entry>
+  <entry id="62454" lang="en" sex="m">Sorcerer Sphere of Ultimate Destruction</entry>
+  <entry id="62455" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
+  <entry id="62456" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
+  <entry id="62457" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
+  <entry id="62458" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
+  <entry id="62459" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
+  <entry id="62460" lang="en" sex="m">Sorcerer Teleportation Circle</entry>
+  <entry id="62461" lang="en" sex="m">Sorcerer Teleportation Circle</entry>
+  <entry id="62462" lang="en" sex="m">Sorcerer Teleportation Circle</entry>
+  <entry id="62463" lang="en" sex="m">Sorcerer Time Stop</entry>
+  <entry id="62464" lang="en" sex="m">Sorcerer Wail of the Banshee</entry>
+  <entry id="62465" lang="en" sex="m">Sorcerer Weird</entry>
+  <entry id="62466" lang="en" sex="m">Assassin True Strike</entry>
+  <entry id="62467" lang="en" sex="m">Assassin Silent True Strike</entry>
+  <entry id="62468" lang="en" sex="m">Assassin Sleep</entry>
+  <entry id="62469" lang="en" sex="m">Assassin Empowered Sleep</entry>
+  <entry id="62470" lang="en" sex="m">Assassin Extended Sleep</entry>
+  <entry id="62471" lang="en" sex="m">Assassin Maximized Sleep</entry>
+  <entry id="62472" lang="en" sex="m">Assassin Silent Sleep</entry>
+  <entry id="62473" lang="en" sex="m">Assassin Still Sleep</entry>
+  <entry id="62474" lang="en" sex="m">Assassin Cat's Grace</entry>
+  <entry id="62475" lang="en" sex="m">Assassin Empowered Cat's Grace</entry>
+  <entry id="62476" lang="en" sex="m">Assassin Extended Cat's Grace</entry>
+  <entry id="62477" lang="en" sex="m">Assassin Silent Cat's Grace</entry>
+  <entry id="62478" lang="en" sex="m">Assassin Still Cat's Grace</entry>
+  <entry id="62479" lang="en" sex="m">Assassin Darkness</entry>
+  <entry id="62480" lang="en" sex="m">Assassin Extended Darkness</entry>
+  <entry id="62481" lang="en" sex="m">Assassin Silent Darkness</entry>
+  <entry id="62482" lang="en" sex="m">Assassin Fox's Cunning</entry>
+  <entry id="62483" lang="en" sex="m">Assassin Empowered Fox's Cunning</entry>
+  <entry id="62484" lang="en" sex="m">Assassin Extended Fox's Cunning</entry>
+  <entry id="62485" lang="en" sex="m">Assassin Silent Fox's Cunning</entry>
+  <entry id="62486" lang="en" sex="m">Assassin Still Fox's Cunning</entry>
+  <entry id="62487" lang="en" sex="m">Assassin Invisibility</entry>
+  <entry id="62488" lang="en" sex="m">Assassin Extended Invisibility</entry>
+  <entry id="62489" lang="en" sex="m">Assassin Silent Invisibility</entry>
+  <entry id="62490" lang="en" sex="m">Assassin Still Invisibility</entry>
+  <entry id="62491" lang="en" sex="m">Assassin Undetectable Alignment</entry>
+  <entry id="62492" lang="en" sex="m">Assassin Extended Undetectable Alignment</entry>
+  <entry id="62493" lang="en" sex="m">Assassin Silent Undetectable Alignment</entry>
+  <entry id="62494" lang="en" sex="m">Assassin Still Undetectable Alignment</entry>
+  <entry id="62495" lang="en" sex="m">Assassin Deeper Darkness</entry>
+  <entry id="62496" lang="en" sex="m">Assassin Extended Deeper Darkness</entry>
+  <entry id="62497" lang="en" sex="m">Assassin Silent Deeper Darkness</entry>
+  <entry id="62498" lang="en" sex="m">Assassin Magic Circle against Good</entry>
+  <entry id="62499" lang="en" sex="m">Assassin Extended Magic Circle against Good</entry>
+  <entry id="62500" lang="en" sex="m">Assassin Silent Magic Circle against Good</entry>
+  <entry id="62501" lang="en" sex="m">Assassin Still Magic Circle against Good</entry>
+  <entry id="62502" lang="en" sex="m">Assassin Dimension Door</entry>
+  <entry id="62503" lang="en" sex="m">Assassin Dimension Door</entry>
+  <entry id="62504" lang="en" sex="m">Assassin Dimension Door</entry>
+  <entry id="62505" lang="en" sex="m">Assassin Dimension Door</entry>
+  <entry id="62506" lang="en" sex="m">Assassin Dimension Door</entry>
+  <entry id="62507" lang="en" sex="m">Assassin Freedom of Movement</entry>
+  <entry id="62508" lang="en" sex="m">Assassin Improved Invisibility</entry>
+  <entry id="62509" lang="en" sex="m">Assassin Poison</entry>
+  <entry id="62510" lang="en" sex="m">Assassin Clairaudience/Clairvoyance</entry>
+  <entry id="62511" lang="en" sex="m">Blackguard Cure Light Wounds</entry>
+  <entry id="62512" lang="en" sex="m">Blackguard Empowered Cure Light Wounds</entry>
+  <entry id="62513" lang="en" sex="m">Blackguard Maximized Cure Light Wounds</entry>
+  <entry id="62514" lang="en" sex="m">Blackguard Silent Cure Light Wounds</entry>
+  <entry id="62515" lang="en" sex="m">Blackguard Still Cure Light Wounds</entry>
+  <entry id="62516" lang="en" sex="m">Blackguard Doom</entry>
+  <entry id="62517" lang="en" sex="m">Blackguard Extended Doom</entry>
+  <entry id="62518" lang="en" sex="m">Blackguard Silent Doom</entry>
+  <entry id="62519" lang="en" sex="m">Blackguard Still Doom</entry>
+  <entry id="62520" lang="en" sex="m">Blackguard Inflict Light Wounds</entry>
+  <entry id="62521" lang="en" sex="m">Blackguard Empowered Inflict Light Wounds</entry>
+  <entry id="62522" lang="en" sex="m">Blackguard Maximized Inflict Light Wounds</entry>
+  <entry id="62523" lang="en" sex="m">Blackguard Silent Inflict Light Wounds</entry>
+  <entry id="62524" lang="en" sex="m">Blackguard Still Inflict Light Wounds</entry>
+  <entry id="62525" lang="en" sex="m">Blackguard Magic Weapon</entry>
+  <entry id="62526" lang="en" sex="m">Blackguard Extended Magic Weapon</entry>
+  <entry id="62527" lang="en" sex="m">Blackguard Silent Magic Weapon</entry>
+  <entry id="62528" lang="en" sex="m">Blackguard Still Magic Weapon</entry>
+  <entry id="62529" lang="en" sex="m">Blackguard Summon Creature I</entry>
+  <entry id="62530" lang="en" sex="m">Blackguard Extended Summon Creature I</entry>
+  <entry id="62531" lang="en" sex="m">Blackguard Silent Summon Creature I</entry>
+  <entry id="62532" lang="en" sex="m">Blackguard Still Summon Creature I</entry>
+  <entry id="62533" lang="en" sex="m">Blackguard Bull's Strength</entry>
+  <entry id="62534" lang="en" sex="m">Blackguard Empowered Bull's Strength</entry>
+  <entry id="62535" lang="en" sex="m">Blackguard Extended Bull's Strength</entry>
+  <entry id="62536" lang="en" sex="m">Blackguard Silent Bull's Strength</entry>
+  <entry id="62537" lang="en" sex="m">Blackguard Still Bull's Strength</entry>
+  <entry id="62538" lang="en" sex="m">Blackguard Cure Moderate Wounds</entry>
+  <entry id="62539" lang="en" sex="m">Blackguard Empowered Cure Moderate Wounds</entry>
+  <entry id="62540" lang="en" sex="m">Blackguard Silent Cure Moderate Wounds</entry>
+  <entry id="62541" lang="en" sex="m">Blackguard Still Cure Moderate Wounds</entry>
+  <entry id="62542" lang="en" sex="m">Blackguard Darkness</entry>
+  <entry id="62543" lang="en" sex="m">Blackguard Extended Darkness</entry>
+  <entry id="62544" lang="en" sex="m">Blackguard Silent Darkness</entry>
+  <entry id="62545" lang="en" sex="m">Blackguard Eagle's Splendor</entry>
+  <entry id="62546" lang="en" sex="m">Blackguard Empowered Eagle's Splendor</entry>
+  <entry id="62547" lang="en" sex="m">Blackguard Extended Eagle's Splendor</entry>
+  <entry id="62548" lang="en" sex="m">Blackguard Silent Eagle's Splendor</entry>
+  <entry id="62549" lang="en" sex="m">Blackguard Still Eagle's Splendor</entry>
+  <entry id="62550" lang="en" sex="m">Blackguard Inflict Moderate Wounds</entry>
+  <entry id="62551" lang="en" sex="m">Blackguard Empowered Inflict Moderate Wounds</entry>
+  <entry id="62552" lang="en" sex="m">Blackguard Silent Inflict Moderate Wounds</entry>
+  <entry id="62553" lang="en" sex="m">Blackguard Still Inflict Moderate Wounds</entry>
+  <entry id="62554" lang="en" sex="m">Blackguard Summon Creature II</entry>
+  <entry id="62555" lang="en" sex="m">Blackguard Extended Summon Creature II</entry>
+  <entry id="62556" lang="en" sex="m">Blackguard Silent Summon Creature II</entry>
+  <entry id="62557" lang="en" sex="m">Blackguard Still Summon Creature II</entry>
+  <entry id="62558" lang="en" sex="m">Blackguard Contagion</entry>
+  <entry id="62559" lang="en" sex="m">Blackguard Silent Contagion</entry>
+  <entry id="62560" lang="en" sex="m">Blackguard Still Contagion</entry>
+  <entry id="62561" lang="en" sex="m">Blackguard Cure Serious Wounds</entry>
+  <entry id="62562" lang="en" sex="m">Blackguard Silent Cure Serious Wounds</entry>
+  <entry id="62563" lang="en" sex="m">Blackguard Still Cure Serious Wounds</entry>
+  <entry id="62564" lang="en" sex="m">Blackguard Inflict Serious Wounds</entry>
+  <entry id="62565" lang="en" sex="m">Blackguard Silent Inflict Serious Wounds</entry>
+  <entry id="62566" lang="en" sex="m">Blackguard Still Inflict Serious Wounds</entry>
+  <entry id="62567" lang="en" sex="m">Blackguard Resist Elements</entry>
+  <entry id="62568" lang="en" sex="m">Blackguard Extended Resist Elements</entry>
+  <entry id="62569" lang="en" sex="m">Blackguard Silent Resist Elements</entry>
+  <entry id="62570" lang="en" sex="m">Blackguard Still Resist Elements</entry>
+  <entry id="62571" lang="en" sex="m">Blackguard Summon Creature III</entry>
+  <entry id="62572" lang="en" sex="m">Blackguard Extended Summon Creature III</entry>
+  <entry id="62573" lang="en" sex="m">Blackguard Silent Summon Creature III</entry>
+  <entry id="62574" lang="en" sex="m">Blackguard Still Summon Creature III</entry>
+  <entry id="62575" lang="en" sex="m">Blackguard Cure Critical Wounds</entry>
+  <entry id="62576" lang="en" sex="m">Blackguard Freedom of Movement</entry>
+  <entry id="62577" lang="en" sex="m">Blackguard Inflict Critical Wounds</entry>
+  <entry id="62578" lang="en" sex="m">Blackguard Poison</entry>
+  <entry id="62579" lang="en" sex="m">Blackguard Summon Creature IV</entry>
+  <entry id="62580" lang="en" sex="m">Ocular Adept Cure Minor Wounds</entry>
+  <entry id="62581" lang="en" sex="m">Ocular Adept Quickened Cure Minor Wounds</entry>
+  <entry id="62582" lang="en" sex="m">Ocular Adept Silent Cure Minor Wounds</entry>
+  <entry id="62583" lang="en" sex="m">Ocular Adept Still Cure Minor Wounds</entry>
+  <entry id="62584" lang="en" sex="m">Ocular Adept Light</entry>
+  <entry id="62585" lang="en" sex="m">Ocular Adept Extended Light</entry>
+  <entry id="62586" lang="en" sex="m">Ocular Adept Quickened Light</entry>
+  <entry id="62587" lang="en" sex="m">Ocular Adept Silent Light</entry>
+  <entry id="62588" lang="en" sex="m">Ocular Adept Resistance</entry>
+  <entry id="62589" lang="en" sex="m">Ocular Adept Extended Resistance</entry>
+  <entry id="62590" lang="en" sex="m">Ocular Adept Quickened Resistance</entry>
+  <entry id="62591" lang="en" sex="m">Ocular Adept Silent Resistance</entry>
+  <entry id="62592" lang="en" sex="m">Ocular Adept Still Resistance</entry>
+  <entry id="62593" lang="en" sex="m">Ocular Adept Virtue</entry>
+  <entry id="62594" lang="en" sex="m">Ocular Adept Extended Virtue</entry>
+  <entry id="62595" lang="en" sex="m">Ocular Adept Quickened Virtue</entry>
+  <entry id="62596" lang="en" sex="m">Ocular Adept Silent Virtue</entry>
+  <entry id="62597" lang="en" sex="m">Ocular Adept Still Virtue</entry>
+  <entry id="62598" lang="en" sex="m">Ocular Adept Inflict Minor Wounds</entry>
+  <entry id="62599" lang="en" sex="m">Ocular Adept Quickened Inflict Minor Wounds</entry>
+  <entry id="62600" lang="en" sex="m">Ocular Adept Silent Inflict Minor Wounds</entry>
+  <entry id="62601" lang="en" sex="m">Ocular Adept Still Inflict Minor Wounds</entry>
+  <entry id="62602" lang="en" sex="m">Ocular Adept Bless</entry>
+  <entry id="62603" lang="en" sex="m">Ocular Adept Extended Bless</entry>
+  <entry id="62604" lang="en" sex="m">Ocular Adept Quickened Bless</entry>
+  <entry id="62605" lang="en" sex="m">Ocular Adept Silent Bless</entry>
+  <entry id="62606" lang="en" sex="m">Ocular Adept Still Bless</entry>
+  <entry id="62607" lang="en" sex="m">Ocular Adept Cure Light Wounds</entry>
+  <entry id="62608" lang="en" sex="m">Ocular Adept Empowered Cure Light Wounds</entry>
+  <entry id="62609" lang="en" sex="m">Ocular Adept Maximized Cure Light Wounds</entry>
+  <entry id="62610" lang="en" sex="m">Ocular Adept Quickened Cure Light Wounds</entry>
+  <entry id="62611" lang="en" sex="m">Ocular Adept Silent Cure Light Wounds</entry>
+  <entry id="62612" lang="en" sex="m">Ocular Adept Still Cure Light Wounds</entry>
+  <entry id="62613" lang="en" sex="m">Ocular Adept Doom</entry>
+  <entry id="62614" lang="en" sex="m">Ocular Adept Extended Doom</entry>
+  <entry id="62615" lang="en" sex="m">Ocular Adept Quickened Doom</entry>
+  <entry id="62616" lang="en" sex="m">Ocular Adept Silent Doom</entry>
+  <entry id="62617" lang="en" sex="m">Ocular Adept Still Doom</entry>
+  <entry id="62618" lang="en" sex="m">Ocular Adept Endure Elements</entry>
+  <entry id="62619" lang="en" sex="m">Ocular Adept Extended Endure Elements</entry>
+  <entry id="62620" lang="en" sex="m">Ocular Adept Quickened Endure Elements</entry>
+  <entry id="62621" lang="en" sex="m">Ocular Adept Silent Endure Elements</entry>
+  <entry id="62622" lang="en" sex="m">Ocular Adept Still Endure Elements</entry>
+  <entry id="62623" lang="en" sex="m">Ocular Adept Remove Fear</entry>
+  <entry id="62624" lang="en" sex="m">Ocular Adept Extended Remove Fear</entry>
+  <entry id="62625" lang="en" sex="m">Ocular Adept Quickened Remove Fear</entry>
+  <entry id="62626" lang="en" sex="m">Ocular Adept Silent Remove Fear</entry>
+  <entry id="62627" lang="en" sex="m">Ocular Adept Still Remove Fear</entry>
+  <entry id="62628" lang="en" sex="m">Ocular Adept Sanctuary</entry>
+  <entry id="62629" lang="en" sex="m">Ocular Adept Extended Sanctuary</entry>
+  <entry id="62630" lang="en" sex="m">Ocular Adept Quickened Sanctuary</entry>
+  <entry id="62631" lang="en" sex="m">Ocular Adept Silent Sanctuary</entry>
+  <entry id="62632" lang="en" sex="m">Ocular Adept Still Sanctuary</entry>
+  <entry id="62633" lang="en" sex="m">Ocular Adept Scare</entry>
+  <entry id="62634" lang="en" sex="m">Ocular Adept Extended Scare</entry>
+  <entry id="62635" lang="en" sex="m">Ocular Adept Quickened Scare</entry>
+  <entry id="62636" lang="en" sex="m">Ocular Adept Summon Creature I</entry>
+  <entry id="62637" lang="en" sex="m">Ocular Adept Extended Summon Creature I</entry>
+  <entry id="62638" lang="en" sex="m">Ocular Adept Quickened Summon Creature I</entry>
+  <entry id="62639" lang="en" sex="m">Ocular Adept Silent Summon Creature I</entry>
+  <entry id="62640" lang="en" sex="m">Ocular Adept Still Summon Creature I</entry>
+  <entry id="62641" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
+  <entry id="62642" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
+  <entry id="62643" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
+  <entry id="62644" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
+  <entry id="62645" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
+  <entry id="62646" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
+  <entry id="62647" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
+  <entry id="62648" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
+  <entry id="62649" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
+  <entry id="62650" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
+  <entry id="62651" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
+  <entry id="62652" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
+  <entry id="62653" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
+  <entry id="62654" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
+  <entry id="62655" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
+  <entry id="62656" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
+  <entry id="62657" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
+  <entry id="62658" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
+  <entry id="62659" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
+  <entry id="62660" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
+  <entry id="62661" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
+  <entry id="62662" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
+  <entry id="62663" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
+  <entry id="62664" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
+  <entry id="62665" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
+  <entry id="62666" lang="en" sex="m">Ocular Adept Divine Favor</entry>
+  <entry id="62667" lang="en" sex="m">Ocular Adept Extended Divine Favor</entry>
+  <entry id="62668" lang="en" sex="m">Ocular Adept Quickened Divine Favor</entry>
+  <entry id="62669" lang="en" sex="m">Ocular Adept Silent Divine Favor</entry>
+  <entry id="62670" lang="en" sex="m">Ocular Adept Still Divine Favor</entry>
+  <entry id="62671" lang="en" sex="m">Ocular Adept Entropic Shield</entry>
+  <entry id="62672" lang="en" sex="m">Ocular Adept Extended Entropic Shield</entry>
+  <entry id="62673" lang="en" sex="m">Ocular Adept Quickened Entropic Shield</entry>
+  <entry id="62674" lang="en" sex="m">Ocular Adept Silent Entropic Shield</entry>
+  <entry id="62675" lang="en" sex="m">Ocular Adept Still Entropic Shield</entry>
+  <entry id="62676" lang="en" sex="m">Ocular Adept Inflict Light Wounds</entry>
+  <entry id="62677" lang="en" sex="m">Ocular Adept Empowered Inflict Light Wounds</entry>
+  <entry id="62678" lang="en" sex="m">Ocular Adept Maximized Inflict Light Wounds</entry>
+  <entry id="62679" lang="en" sex="m">Ocular Adept Quickened Inflict Light Wounds</entry>
+  <entry id="62680" lang="en" sex="m">Ocular Adept Silent Inflict Light Wounds</entry>
+  <entry id="62681" lang="en" sex="m">Ocular Adept Still Inflict Light Wounds</entry>
+  <entry id="62682" lang="en" sex="m">Ocular Adept Bane</entry>
+  <entry id="62683" lang="en" sex="m">Ocular Adept Extended Bane</entry>
+  <entry id="62684" lang="en" sex="m">Ocular Adept Quickened Bane</entry>
+  <entry id="62685" lang="en" sex="m">Ocular Adept Silent Bane</entry>
+  <entry id="62686" lang="en" sex="m">Ocular Adept Still Bane</entry>
+  <entry id="62687" lang="en" sex="m">Ocular Adept Shield of Faith</entry>
+  <entry id="62688" lang="en" sex="m">Ocular Adept Extended Shield of Faith</entry>
+  <entry id="62689" lang="en" sex="m">Ocular Adept Quickened Shield of Faith</entry>
+  <entry id="62690" lang="en" sex="m">Ocular Adept Silent Shield of Faith</entry>
+  <entry id="62691" lang="en" sex="m">Ocular Adept Still Shield of Faith</entry>
+  <entry id="62692" lang="en" sex="m">Ocular Adept Magic Weapon</entry>
+  <entry id="62693" lang="en" sex="m">Ocular Adept Extended Magic Weapon</entry>
+  <entry id="62694" lang="en" sex="m">Ocular Adept Quickened Magic Weapon</entry>
+  <entry id="62695" lang="en" sex="m">Ocular Adept Silent Magic Weapon</entry>
+  <entry id="62696" lang="en" sex="m">Ocular Adept Still Magic Weapon</entry>
+  <entry id="62697" lang="en" sex="m">Ocular Adept Conviction</entry>
+  <entry id="62698" lang="en" sex="m">Ocular Adept Extended Conviction</entry>
+  <entry id="62699" lang="en" sex="m">Ocular Adept Quickened Conviction</entry>
+  <entry id="62700" lang="en" sex="m">Ocular Adept Silent Conviction</entry>
+  <entry id="62701" lang="en" sex="m">Ocular Adept Still Conviction</entry>
+  <entry id="62702" lang="en" sex="m">Ocular Adept Aid</entry>
+  <entry id="62703" lang="en" sex="m">Ocular Adept Empowered Aid</entry>
+  <entry id="62704" lang="en" sex="m">Ocular Adept Extended Aid</entry>
+  <entry id="62705" lang="en" sex="m">Ocular Adept Maximized Aid</entry>
+  <entry id="62706" lang="en" sex="m">Ocular Adept Silent Aid</entry>
+  <entry id="62707" lang="en" sex="m">Ocular Adept Still Aid</entry>
+  <entry id="62708" lang="en" sex="m">Ocular Adept Bull's Strength</entry>
+  <entry id="62709" lang="en" sex="m">Ocular Adept Empowered Bull's Strength</entry>
+  <entry id="62710" lang="en" sex="m">Ocular Adept Extended Bull's Strength</entry>
+  <entry id="62711" lang="en" sex="m">Ocular Adept Maximized Bull's Strength</entry>
+  <entry id="62712" lang="en" sex="m">Ocular Adept Silent Bull's Strength</entry>
+  <entry id="62713" lang="en" sex="m">Ocular Adept Still Bull's Strength</entry>
+  <entry id="62714" lang="en" sex="m">Ocular Adept Cure Moderate Wounds</entry>
+  <entry id="62715" lang="en" sex="m">Ocular Adept Empowered Cure Moderate Wounds</entry>
+  <entry id="62716" lang="en" sex="m">Ocular Adept Maximized Cure Moderate Wounds</entry>
+  <entry id="62717" lang="en" sex="m">Ocular Adept Silent Cure Moderate Wounds</entry>
+  <entry id="62718" lang="en" sex="m">Ocular Adept Still Cure Moderate Wounds</entry>
+  <entry id="62719" lang="en" sex="m">Ocular Adept Darkness</entry>
+  <entry id="62720" lang="en" sex="m">Ocular Adept Extended Darkness</entry>
+  <entry id="62721" lang="en" sex="m">Ocular Adept Silent Darkness</entry>
+  <entry id="62722" lang="en" sex="m">Ocular Adept Endurance</entry>
+  <entry id="62723" lang="en" sex="m">Ocular Adept Empowered Endurance</entry>
+  <entry id="62724" lang="en" sex="m">Ocular Adept Extended Endurance</entry>
+  <entry id="62725" lang="en" sex="m">Ocular Adept Maximized Endurance</entry>
+  <entry id="62726" lang="en" sex="m">Ocular Adept Silent Endurance</entry>
+  <entry id="62727" lang="en" sex="m">Ocular Adept Still Endurance</entry>
+  <entry id="62728" lang="en" sex="m">Ocular Adept Hold Person</entry>
+  <entry id="62729" lang="en" sex="m">Ocular Adept Extended Hold Person</entry>
+  <entry id="62730" lang="en" sex="m">Ocular Adept Silent Hold Person</entry>
+  <entry id="62731" lang="en" sex="m">Ocular Adept Still Hold Person</entry>
+  <entry id="62732" lang="en" sex="m">Ocular Adept Lesser Dispel</entry>
+  <entry id="62733" lang="en" sex="m">Ocular Adept Silent Lesser Dispel</entry>
+  <entry id="62734" lang="en" sex="m">Ocular Adept Lesser Restoration</entry>
+  <entry id="62735" lang="en" sex="m">Ocular Adept Silent Lesser Restoration</entry>
+  <entry id="62736" lang="en" sex="m">Ocular Adept Still Lesser Restoration</entry>
+  <entry id="62737" lang="en" sex="m">Ocular Adept Remove Paralysis</entry>
+  <entry id="62738" lang="en" sex="m">Ocular Adept Silent Remove Paralysis</entry>
+  <entry id="62739" lang="en" sex="m">Ocular Adept Still Remove Paralysis</entry>
+  <entry id="62740" lang="en" sex="m">Ocular Adept Resist Elements</entry>
+  <entry id="62741" lang="en" sex="m">Ocular Adept Extended Resist Elements</entry>
+  <entry id="62742" lang="en" sex="m">Ocular Adept Silent Resist Elements</entry>
+  <entry id="62743" lang="en" sex="m">Ocular Adept Still Resist Elements</entry>
+  <entry id="62744" lang="en" sex="m">Ocular Adept Silence</entry>
+  <entry id="62745" lang="en" sex="m">Ocular Adept Extended Silence</entry>
+  <entry id="62746" lang="en" sex="m">Ocular Adept Silent Silence</entry>
+  <entry id="62747" lang="en" sex="m">Ocular Adept Still Silence</entry>
+  <entry id="62748" lang="en" sex="m">Ocular Adept Sound Burst</entry>
+  <entry id="62749" lang="en" sex="m">Ocular Adept Maximized Sound Burst</entry>
+  <entry id="62750" lang="en" sex="m">Ocular Adept Silent Sound Burst</entry>
+  <entry id="62751" lang="en" sex="m">Ocular Adept Still Sound Burst</entry>
+  <entry id="62752" lang="en" sex="m">Ocular Adept Summon Creature II</entry>
+  <entry id="62753" lang="en" sex="m">Ocular Adept Extended Summon Creature II</entry>
+  <entry id="62754" lang="en" sex="m">Ocular Adept Silent Summon Creature II</entry>
+  <entry id="62755" lang="en" sex="m">Ocular Adept Still Summon Creature II</entry>
+  <entry id="62756" lang="en" sex="m">Ocular Adept Eagle's Splendor</entry>
+  <entry id="62757" lang="en" sex="m">Ocular Adept Empowered Eagle's Splendor</entry>
+  <entry id="62758" lang="en" sex="m">Ocular Adept Extended Eagle's Splendor</entry>
+  <entry id="62759" lang="en" sex="m">Ocular Adept Maximized Eagle's Splendor</entry>
+  <entry id="62760" lang="en" sex="m">Ocular Adept Silent Eagle's Splendor</entry>
+  <entry id="62761" lang="en" sex="m">Ocular Adept Still Eagle's Splendor</entry>
+  <entry id="62762" lang="en" sex="m">Ocular Adept Owl's Wisdom</entry>
+  <entry id="62763" lang="en" sex="m">Ocular Adept Empowered Owl's Wisdom</entry>
+  <entry id="62764" lang="en" sex="m">Ocular Adept Extended Owl's Wisdom</entry>
+  <entry id="62765" lang="en" sex="m">Ocular Adept Maximized Owl's Wisdom</entry>
+  <entry id="62766" lang="en" sex="m">Ocular Adept Silent Owl's Wisdom</entry>
+  <entry id="62767" lang="en" sex="m">Ocular Adept Still Owl's Wisdom</entry>
+  <entry id="62768" lang="en" sex="m">Ocular Adept Fox's Cunning</entry>
+  <entry id="62769" lang="en" sex="m">Ocular Adept Empowered Fox's Cunning</entry>
+  <entry id="62770" lang="en" sex="m">Ocular Adept Extended Fox's Cunning</entry>
+  <entry id="62771" lang="en" sex="m">Ocular Adept Maximized Fox's Cunning</entry>
+  <entry id="62772" lang="en" sex="m">Ocular Adept Silent Fox's Cunning</entry>
+  <entry id="62773" lang="en" sex="m">Ocular Adept Still Fox's Cunning</entry>
+  <entry id="62774" lang="en" sex="m">Ocular Adept Ultravision</entry>
+  <entry id="62775" lang="en" sex="m">Ocular Adept Extended Ultravision</entry>
+  <entry id="62776" lang="en" sex="m">Ocular Adept Silent Ultravision</entry>
+  <entry id="62777" lang="en" sex="m">Ocular Adept Still Ultravision</entry>
+  <entry id="62778" lang="en" sex="m">Ocular Adept Negative Energy Ray</entry>
+  <entry id="62779" lang="en" sex="m">Ocular Adept Empowered Negative Energy Ray</entry>
+  <entry id="62780" lang="en" sex="m">Ocular Adept Maximized Negative Energy Ray</entry>
+  <entry id="62781" lang="en" sex="m">Ocular Adept Silent Negative Energy Ray</entry>
+  <entry id="62782" lang="en" sex="m">Ocular Adept Still Negative Energy Ray</entry>
+  <entry id="62783" lang="en" sex="m">Ocular Adept Find Traps</entry>
+  <entry id="62784" lang="en" sex="m">Ocular Adept Extended Find Traps</entry>
+  <entry id="62785" lang="en" sex="m">Ocular Adept Silent Find Traps</entry>
+  <entry id="62786" lang="en" sex="m">Ocular Adept Still Find Traps</entry>
+  <entry id="62787" lang="en" sex="m">Ocular Adept Inflict Moderate Wounds</entry>
+  <entry id="62788" lang="en" sex="m">Ocular Adept Empowered Inflict Moderate Wounds</entry>
+  <entry id="62789" lang="en" sex="m">Ocular Adept Maximized Inflict Moderate Wounds</entry>
+  <entry id="62790" lang="en" sex="m">Ocular Adept Silent Inflict Moderate Wounds</entry>
+  <entry id="62791" lang="en" sex="m">Ocular Adept Still Inflict Moderate Wounds</entry>
+  <entry id="62792" lang="en" sex="m">Ocular Adept Stone Bones</entry>
+  <entry id="62793" lang="en" sex="m">Ocular Adept Extended Stone Bones</entry>
+  <entry id="62794" lang="en" sex="m">Ocular Adept Silent Stone Bones</entry>
+  <entry id="62795" lang="en" sex="m">Ocular Adept Still Stone Bones</entry>
+  <entry id="62796" lang="en" sex="m">Ocular Adept Consecrate</entry>
+  <entry id="62797" lang="en" sex="m">Ocular Adept Extended Consecrate</entry>
+  <entry id="62798" lang="en" sex="m">Ocular Adept Silent Consecrate</entry>
+  <entry id="62799" lang="en" sex="m">Ocular Adept Still Consecrate</entry>
+  <entry id="62800" lang="en" sex="m">Ocular Adept Divine Protection</entry>
+  <entry id="62801" lang="en" sex="m">Ocular Adept Extended Divine Protection</entry>
+  <entry id="62802" lang="en" sex="m">Ocular Adept Silent Divine Protection</entry>
+  <entry id="62803" lang="en" sex="m">Ocular Adept Still Divine Protection</entry>
+  <entry id="62804" lang="en" sex="m">Ocular Adept Living Undeath</entry>
+  <entry id="62805" lang="en" sex="m">Ocular Adept Extended Living Undeath</entry>
+  <entry id="62806" lang="en" sex="m">Ocular Adept Silent Living Undeath</entry>
+  <entry id="62807" lang="en" sex="m">Ocular Adept Still Living Undeath</entry>
+  <entry id="62808" lang="en" sex="m">Ocular Adept Animate Dead</entry>
+  <entry id="62809" lang="en" sex="m">Ocular Adept Extended Animate Dead</entry>
+  <entry id="62810" lang="en" sex="m">Ocular Adept Silent Animate Dead</entry>
+  <entry id="62811" lang="en" sex="m">Ocular Adept Still Animate Dead</entry>
+  <entry id="62812" lang="en" sex="m">Ocular Adept Bestow Curse</entry>
+  <entry id="62813" lang="en" sex="m">Ocular Adept Silent Bestow Curse</entry>
+  <entry id="62814" lang="en" sex="m">Ocular Adept Still Bestow Curse</entry>
+  <entry id="62815" lang="en" sex="m">Ocular Adept Blindness/Deafness</entry>
+  <entry id="62816" lang="en" sex="m">Ocular Adept Extended Blindness/Deafness</entry>
+  <entry id="62817" lang="en" sex="m">Ocular Adept Silent Blindness/Deafness</entry>
+  <entry id="62818" lang="en" sex="m">Ocular Adept Clarity</entry>
+  <entry id="62819" lang="en" sex="m">Ocular Adept Extended Clarity</entry>
+  <entry id="62820" lang="en" sex="m">Ocular Adept Contagion</entry>
+  <entry id="62821" lang="en" sex="m">Ocular Adept Silent Contagion</entry>
+  <entry id="62822" lang="en" sex="m">Ocular Adept Still Contagion</entry>
+  <entry id="62823" lang="en" sex="m">Ocular Adept Cure Serious Wounds</entry>
+  <entry id="62824" lang="en" sex="m">Ocular Adept Empowered Cure Serious Wounds</entry>
+  <entry id="62825" lang="en" sex="m">Ocular Adept Silent Cure Serious Wounds</entry>
+  <entry id="62826" lang="en" sex="m">Ocular Adept Still Cure Serious Wounds</entry>
+  <entry id="62827" lang="en" sex="m">Ocular Adept Dispel Magic</entry>
+  <entry id="62828" lang="en" sex="m">Ocular Adept Silent Dispel Magic</entry>
+  <entry id="62829" lang="en" sex="m">Ocular Adept Still Dispel Magic</entry>
+  <entry id="62830" lang="en" sex="m">Ocular Adept Invisibility Purge</entry>
+  <entry id="62831" lang="en" sex="m">Ocular Adept Extended Invisibility Purge</entry>
+  <entry id="62832" lang="en" sex="m">Ocular Adept Silent Invisibility Purge</entry>
+  <entry id="62833" lang="en" sex="m">Ocular Adept Still Invisibility Purge</entry>
+  <entry id="62834" lang="en" sex="m">Ocular Adept Negative Energy Protection</entry>
+  <entry id="62835" lang="en" sex="m">Ocular Adept Extended Negative Energy Protection</entry>
+  <entry id="62836" lang="en" sex="m">Ocular Adept Silent Negative Energy Protection</entry>
+  <entry id="62837" lang="en" sex="m">Ocular Adept Still Negative Energy Protection</entry>
+  <entry id="62838" lang="en" sex="m">Ocular Adept Prayer</entry>
+  <entry id="62839" lang="en" sex="m">Ocular Adept Extended Prayer</entry>
+  <entry id="62840" lang="en" sex="m">Ocular Adept Silent Prayer</entry>
+  <entry id="62841" lang="en" sex="m">Ocular Adept Still Prayer</entry>
+  <entry id="62842" lang="en" sex="m">Ocular Adept Protection from Elements</entry>
+  <entry id="62843" lang="en" sex="m">Ocular Adept Extended Protection from Elements</entry>
+  <entry id="62844" lang="en" sex="m">Ocular Adept Silent Protection from Elements</entry>
+  <entry id="62845" lang="en" sex="m">Ocular Adept Still Protection from Elements</entry>
+  <entry id="62846" lang="en" sex="m">Ocular Adept Remove Blindness/Deafness</entry>
+  <entry id="62847" lang="en" sex="m">Ocular Adept Silent Remove Blindness/Deafness</entry>
+  <entry id="62848" lang="en" sex="m">Ocular Adept Still Remove Blindness/Deafness</entry>
+  <entry id="62849" lang="en" sex="m">Ocular Adept Remove Curse</entry>
+  <entry id="62850" lang="en" sex="m">Ocular Adept Silent Remove Curse</entry>
+  <entry id="62851" lang="en" sex="m">Ocular Adept Still Remove Curse</entry>
+  <entry id="62852" lang="en" sex="m">Ocular Adept Remove Disease</entry>
+  <entry id="62853" lang="en" sex="m">Ocular Adept Silent Remove Disease</entry>
+  <entry id="62854" lang="en" sex="m">Ocular Adept Still Remove Disease</entry>
+  <entry id="62855" lang="en" sex="m">Ocular Adept Searing Light</entry>
+  <entry id="62856" lang="en" sex="m">Ocular Adept Empowered Searing Light</entry>
+  <entry id="62857" lang="en" sex="m">Ocular Adept Silent Searing Light</entry>
+  <entry id="62858" lang="en" sex="m">Ocular Adept Still Searing Light</entry>
+  <entry id="62859" lang="en" sex="m">Ocular Adept Summon Creature III</entry>
+  <entry id="62860" lang="en" sex="m">Ocular Adept Extended Summon Creature III</entry>
+  <entry id="62861" lang="en" sex="m">Ocular Adept Silent Summon Creature III</entry>
+  <entry id="62862" lang="en" sex="m">Ocular Adept Still Summon Creature III</entry>
+  <entry id="62863" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
+  <entry id="62864" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
+  <entry id="62865" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
+  <entry id="62866" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
+  <entry id="62867" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
+  <entry id="62868" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
+  <entry id="62869" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
+  <entry id="62870" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
+  <entry id="62871" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
+  <entry id="62872" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
+  <entry id="62873" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
+  <entry id="62874" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
+  <entry id="62875" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
+  <entry id="62876" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
+  <entry id="62877" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
+  <entry id="62878" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
+  <entry id="62879" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
+  <entry id="62880" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
+  <entry id="62881" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
+  <entry id="62882" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
+  <entry id="62883" lang="en" sex="m">Ocular Adept Continual Flame</entry>
+  <entry id="62884" lang="en" sex="m">Ocular Adept Silent Continual Flame</entry>
+  <entry id="62885" lang="en" sex="m">Ocular Adept Still Continual Flame</entry>
+  <entry id="62886" lang="en" sex="m">Ocular Adept Inflict Serious Wounds</entry>
+  <entry id="62887" lang="en" sex="m">Ocular Adept Empowered Inflict Serious Wounds</entry>
+  <entry id="62888" lang="en" sex="m">Ocular Adept Silent Inflict Serious Wounds</entry>
+  <entry id="62889" lang="en" sex="m">Ocular Adept Still Inflict Serious Wounds</entry>
+  <entry id="62890" lang="en" sex="m">Ocular Adept Magic Vestment</entry>
+  <entry id="62891" lang="en" sex="m">Ocular Adept Extended Magic Vestment</entry>
+  <entry id="62892" lang="en" sex="m">Ocular Adept Silent Magic Vestment</entry>
+  <entry id="62893" lang="en" sex="m">Ocular Adept Still Magic Vestment</entry>
+  <entry id="62894" lang="en" sex="m">Ocular Adept Darkfire</entry>
+  <entry id="62895" lang="en" sex="m">Ocular Adept Extended Darkfire</entry>
+  <entry id="62896" lang="en" sex="m">Ocular Adept Silent Darkfire</entry>
+  <entry id="62897" lang="en" sex="m">Ocular Adept Still Darkfire</entry>
+  <entry id="62898" lang="en" sex="m">Ocular Adept Glyph of Warding</entry>
+  <entry id="62899" lang="en" sex="m">Ocular Adept Empowered Glyph of Warding</entry>
+  <entry id="62900" lang="en" sex="m">Ocular Adept Extended Glyph of Warding</entry>
+  <entry id="62901" lang="en" sex="m">Ocular Adept Silent Glyph of Warding</entry>
+  <entry id="62902" lang="en" sex="m">Ocular Adept Still Glyph of Warding</entry>
+  <entry id="62903" lang="en" sex="m">Ocular Adept Legion's Conviction</entry>
+  <entry id="62904" lang="en" sex="m">Ocular Adept Extended Legion's Conviction</entry>
+  <entry id="62905" lang="en" sex="m">Ocular Adept Silent Legion's Conviction</entry>
+  <entry id="62906" lang="en" sex="m">Ocular Adept Still Legion's Conviction</entry>
+  <entry id="62907" lang="en" sex="m">Ocular Adept Curse of Petty Failing</entry>
+  <entry id="62908" lang="en" sex="m">Ocular Adept Extended Curse of Petty Failing</entry>
+  <entry id="62909" lang="en" sex="m">Ocular Adept Silent Curse of Petty Failing</entry>
+  <entry id="62910" lang="en" sex="m">Ocular Adept Still Curse of Petty Failing</entry>
+  <entry id="62911" lang="en" sex="m">Ocular Adept Slashing Darkness</entry>
+  <entry id="62912" lang="en" sex="m">Ocular Adept Empowered Slashing Darkness</entry>
+  <entry id="62913" lang="en" sex="m">Ocular Adept Silent Slashing Darkness</entry>
+  <entry id="62914" lang="en" sex="m">Ocular Adept Still Slashing Darkness</entry>
+  <entry id="62915" lang="en" sex="m">Ocular Adept Cure Critical Wounds</entry>
+  <entry id="62916" lang="en" sex="m">Ocular Adept Silent Cure Critical Wounds</entry>
+  <entry id="62917" lang="en" sex="m">Ocular Adept Still Cure Critical Wounds</entry>
+  <entry id="62918" lang="en" sex="m">Ocular Adept Cure Critical Wounds</entry>
+  <entry id="62919" lang="en" sex="m">Ocular Adept Silent Cure Critical Wounds</entry>
+  <entry id="62920" lang="en" sex="m">Ocular Adept Still Cure Critical Wounds</entry>
+  <entry id="62921" lang="en" sex="m">Ocular Adept Cure Critical Wounds</entry>
+  <entry id="62922" lang="en" sex="m">Ocular Adept Silent Cure Critical Wounds</entry>
+  <entry id="62923" lang="en" sex="m">Ocular Adept Still Cure Critical Wounds</entry>
+  <entry id="62924" lang="en" sex="m">Ocular Adept Death Ward</entry>
+  <entry id="62925" lang="en" sex="m">Ocular Adept Extended Death Ward</entry>
+  <entry id="62926" lang="en" sex="m">Ocular Adept Silent Death Ward</entry>
+  <entry id="62927" lang="en" sex="m">Ocular Adept Still Death Ward</entry>
+  <entry id="62928" lang="en" sex="m">Ocular Adept Dismissal</entry>
+  <entry id="62929" lang="en" sex="m">Ocular Adept Silent Dismissal</entry>
+  <entry id="62930" lang="en" sex="m">Ocular Adept Still Dismissal</entry>
+  <entry id="62931" lang="en" sex="m">Ocular Adept Divine Power</entry>
+  <entry id="62932" lang="en" sex="m">Ocular Adept Extended Divine Power</entry>
+  <entry id="62933" lang="en" sex="m">Ocular Adept Silent Divine Power</entry>
+  <entry id="62934" lang="en" sex="m">Ocular Adept Still Divine Power</entry>
+  <entry id="62935" lang="en" sex="m">Ocular Adept Freedom of Movement</entry>
+  <entry id="62936" lang="en" sex="m">Ocular Adept Extended Freedom of Movement</entry>
+  <entry id="62937" lang="en" sex="m">Ocular Adept Silent Freedom of Movement</entry>
+  <entry id="62938" lang="en" sex="m">Ocular Adept Still Freedom of Movement</entry>
+  <entry id="62939" lang="en" sex="m">Ocular Adept Hammer of the Gods</entry>
+  <entry id="62940" lang="en" sex="m">Ocular Adept Silent Hammer of the Gods</entry>
+  <entry id="62941" lang="en" sex="m">Ocular Adept Still Hammer of the Gods</entry>
+  <entry id="62942" lang="en" sex="m">Ocular Adept Neutralize Poison</entry>
+  <entry id="62943" lang="en" sex="m">Ocular Adept Silent Neutralize Poison</entry>
+  <entry id="62944" lang="en" sex="m">Ocular Adept Still Neutralize Poison</entry>
+  <entry id="62945" lang="en" sex="m">Ocular Adept Poison</entry>
+  <entry id="62946" lang="en" sex="m">Ocular Adept Silent Poison</entry>
+  <entry id="62947" lang="en" sex="m">Ocular Adept Still Poison</entry>
+  <entry id="62948" lang="en" sex="m">Ocular Adept Restoration</entry>
+  <entry id="62949" lang="en" sex="m">Ocular Adept Silent Restoration</entry>
+  <entry id="62950" lang="en" sex="m">Ocular Adept Still Restoration</entry>
+  <entry id="62951" lang="en" sex="m">Ocular Adept Summon Creature IV</entry>
+  <entry id="62952" lang="en" sex="m">Ocular Adept Extended Summon Creature IV</entry>
+  <entry id="62953" lang="en" sex="m">Ocular Adept Silent Summon Creature IV</entry>
+  <entry id="62954" lang="en" sex="m">Ocular Adept Still Summon Creature IV</entry>
+  <entry id="62955" lang="en" sex="m">Ocular Adept Inflict Critical Wounds</entry>
+  <entry id="62956" lang="en" sex="m">Ocular Adept Silent Inflict Critical Wounds</entry>
+  <entry id="62957" lang="en" sex="m">Ocular Adept Still Inflict Critical Wounds</entry>
+  <entry id="62958" lang="en" sex="m">Ocular Adept Greater Magic Weapon</entry>
+  <entry id="62959" lang="en" sex="m">Ocular Adept Extended Greater Magic Weapon</entry>
+  <entry id="62960" lang="en" sex="m">Ocular Adept Silent Greater Magic Weapon</entry>
+  <entry id="62961" lang="en" sex="m">Ocular Adept Still Greater Magic Weapon</entry>
+  <entry id="62962" lang="en" sex="m">Ocular Adept Mass Ultravision</entry>
+  <entry id="62963" lang="en" sex="m">Ocular Adept Extended Mass Ultravision</entry>
+  <entry id="62964" lang="en" sex="m">Ocular Adept Silent Mass Ultravision</entry>
+  <entry id="62965" lang="en" sex="m">Ocular Adept Still Mass Ultravision</entry>
+  <entry id="62966" lang="en" sex="m">Ocular Adept Lower Spell Resistance</entry>
+  <entry id="62967" lang="en" sex="m">Ocular Adept Extended Lower Spell Resistance</entry>
+  <entry id="62968" lang="en" sex="m">Ocular Adept Silent Lower Spell Resistance</entry>
+  <entry id="62969" lang="en" sex="m">Ocular Adept Still Lower Spell Resistance</entry>
+  <entry id="62970" lang="en" sex="m">Ocular Adept Recitation</entry>
+  <entry id="62971" lang="en" sex="m">Ocular Adept Extended Recitation</entry>
+  <entry id="62972" lang="en" sex="m">Ocular Adept Silent Recitation</entry>
+  <entry id="62973" lang="en" sex="m">Ocular Adept Still Recitation</entry>
+  <entry id="62974" lang="en" sex="m">Ocular Adept Panacea</entry>
+  <entry id="62975" lang="en" sex="m">Ocular Adept Silent Panacea</entry>
+  <entry id="62976" lang="en" sex="m">Ocular Adept Still Panacea</entry>
+  <entry id="62977" lang="en" sex="m">Ocular Adept Legion's Shield of Faith</entry>
+  <entry id="62978" lang="en" sex="m">Ocular Adept Extended Legion's Shield of Faith</entry>
+  <entry id="62979" lang="en" sex="m">Ocular Adept Silent Legion's Shield of Faith</entry>
+  <entry id="62980" lang="en" sex="m">Ocular Adept Still Legion's Shield of Faith</entry>
+  <entry id="62981" lang="en" sex="m">Ocular Adept Circle of Doom</entry>
+  <entry id="62982" lang="en" sex="m">Ocular Adept Flame Strike</entry>
+  <entry id="62983" lang="en" sex="m">Ocular Adept Healing Circle</entry>
+  <entry id="62984" lang="en" sex="m">Ocular Adept Raise Dead</entry>
+  <entry id="62985" lang="en" sex="m">Ocular Adept Slay Living</entry>
+  <entry id="62986" lang="en" sex="m">Ocular Adept Spell Resistance</entry>
+  <entry id="62987" lang="en" sex="m">Ocular Adept Summon Creature V</entry>
+  <entry id="62988" lang="en" sex="m">Ocular Adept True Seeing</entry>
+  <entry id="62989" lang="en" sex="m">Ocular Adept Battletide</entry>
+  <entry id="62990" lang="en" sex="m">Ocular Adept Monstrous Regeneration</entry>
+  <entry id="62991" lang="en" sex="m">Ocular Adept Mass Contagion</entry>
+  <entry id="62992" lang="en" sex="m">Ocular Adept Mass Cure Light Wounds</entry>
+  <entry id="62993" lang="en" sex="m">Ocular Adept Righteous Might</entry>
+  <entry id="62994" lang="en" sex="m">Ocular Adept Legion's Curse of Petty Failing</entry>
+  <entry id="62995" lang="en" sex="m">Ocular Adept Soul Scour</entry>
+  <entry id="62996" lang="en" sex="m">Knight of the Chalice Bless Weapon</entry>
+  <entry id="62997" lang="en" sex="m">Knight of the Chalice Extended Bless Weapon</entry>
+  <entry id="62998" lang="en" sex="m">Knight of the Chalice Silent Bless Weapon</entry>
+  <entry id="62999" lang="en" sex="m">Knight of the Chalice Still Bless Weapon</entry>
+  <entry id="63000" lang="en" sex="m">Knight of the Chalice Divine Favor</entry>
+  <entry id="63001" lang="en" sex="m">Knight of the Chalice Extended Divine Favor</entry>
+  <entry id="63002" lang="en" sex="m">Knight of the Chalice Silent Divine Favor</entry>
+  <entry id="63003" lang="en" sex="m">Knight of the Chalice Still Divine Favor</entry>
+  <entry id="63004" lang="en" sex="m">Knight of the Chalice Doom</entry>
+  <entry id="63005" lang="en" sex="m">Knight of the Chalice Extended Doom</entry>
+  <entry id="63006" lang="en" sex="m">Knight of the Chalice Silent Doom</entry>
+  <entry id="63007" lang="en" sex="m">Knight of the Chalice Still Doom</entry>
+  <entry id="63008" lang="en" sex="m">Knight of the Chalice Endure Elements</entry>
+  <entry id="63009" lang="en" sex="m">Knight of the Chalice Extended Endure Elements</entry>
+  <entry id="63010" lang="en" sex="m">Knight of the Chalice Silent Endure Elements</entry>
+  <entry id="63011" lang="en" sex="m">Knight of the Chalice Still Endure Elements</entry>
+  <entry id="63012" lang="en" sex="m">Knight of the Chalice Magic Weapon</entry>
+  <entry id="63013" lang="en" sex="m">Knight of the Chalice Extended Magic Weapon</entry>
+  <entry id="63014" lang="en" sex="m">Knight of the Chalice Silent Magic Weapon</entry>
+  <entry id="63015" lang="en" sex="m">Knight of the Chalice Still Magic Weapon</entry>
+  <entry id="63016" lang="en" sex="m">Knight of the Chalice Protection from Evil</entry>
+  <entry id="63017" lang="en" sex="m">Knight of the Chalice Extended Protection from Evil</entry>
+  <entry id="63018" lang="en" sex="m">Knight of the Chalice Silent Protection from Evil</entry>
+  <entry id="63019" lang="en" sex="m">Knight of the Chalice Still Protection from Evil</entry>
+  <entry id="63020" lang="en" sex="m">Knight of the Chalice Remove Fear</entry>
+  <entry id="63021" lang="en" sex="m">Knight of the Chalice Extended Remove Fear</entry>
+  <entry id="63022" lang="en" sex="m">Knight of the Chalice Silent Remove Fear</entry>
+  <entry id="63023" lang="en" sex="m">Knight of the Chalice Still Remove Fear</entry>
+  <entry id="63024" lang="en" sex="m">Knight of the Chalice Summon Creature I</entry>
+  <entry id="63025" lang="en" sex="m">Knight of the Chalice Extended Summon Creature I</entry>
+  <entry id="63026" lang="en" sex="m">Knight of the Chalice Silent Summon Creature I</entry>
+  <entry id="63027" lang="en" sex="m">Knight of the Chalice Still Summon Creature I</entry>
+  <entry id="63028" lang="en" sex="m">Knight of the Chalice Aid</entry>
+  <entry id="63029" lang="en" sex="m">Knight of the Chalice Empowered Aid</entry>
+  <entry id="63030" lang="en" sex="m">Knight of the Chalice Extended Aid</entry>
+  <entry id="63031" lang="en" sex="m">Knight of the Chalice Silent Aid</entry>
+  <entry id="63032" lang="en" sex="m">Knight of the Chalice Still Aid</entry>
+  <entry id="63033" lang="en" sex="m">Knight of the Chalice Bull's Strength</entry>
+  <entry id="63034" lang="en" sex="m">Knight of the Chalice Empowered Bull's Strength</entry>
+  <entry id="63035" lang="en" sex="m">Knight of the Chalice Extended Bull's Strength</entry>
+  <entry id="63036" lang="en" sex="m">Knight of the Chalice Silent Bull's Strength</entry>
+  <entry id="63037" lang="en" sex="m">Knight of the Chalice Still Bull's Strength</entry>
+  <entry id="63038" lang="en" sex="m">Knight of the Chalice Consecrate</entry>
+  <entry id="63039" lang="en" sex="m">Knight of the Chalice Extended Consecrate</entry>
+  <entry id="63040" lang="en" sex="m">Knight of the Chalice Silent Consecrate</entry>
+  <entry id="63041" lang="en" sex="m">Knight of the Chalice Still Consecrate</entry>
+  <entry id="63042" lang="en" sex="m">Knight of the Chalice Endurance</entry>
+  <entry id="63043" lang="en" sex="m">Knight of the Chalice Empowered Endurance</entry>
+  <entry id="63044" lang="en" sex="m">Knight of the Chalice Extended Endurance</entry>
+  <entry id="63045" lang="en" sex="m">Knight of the Chalice Silent Endurance</entry>
+  <entry id="63046" lang="en" sex="m">Knight of the Chalice Still Endurance</entry>
+  <entry id="63047" lang="en" sex="m">Knight of the Chalice Resist Elements</entry>
+  <entry id="63048" lang="en" sex="m">Knight of the Chalice Extended Resist Elements</entry>
+  <entry id="63049" lang="en" sex="m">Knight of the Chalice Silent Resist Elements</entry>
+  <entry id="63050" lang="en" sex="m">Knight of the Chalice Still Resist Elements</entry>
+  <entry id="63051" lang="en" sex="m">Knight of the Chalice Sound Burst</entry>
+  <entry id="63052" lang="en" sex="m">Knight of the Chalice Silent Sound Burst</entry>
+  <entry id="63053" lang="en" sex="m">Knight of the Chalice Still Sound Burst</entry>
+  <entry id="63054" lang="en" sex="m">Knight of the Chalice Summon Creature II</entry>
+  <entry id="63055" lang="en" sex="m">Knight of the Chalice Extended Summon Creature II</entry>
+  <entry id="63056" lang="en" sex="m">Knight of the Chalice Silent Summon Creature II</entry>
+  <entry id="63057" lang="en" sex="m">Knight of the Chalice Still Summon Creature II</entry>
+  <entry id="63058" lang="en" sex="m">Knight of the Chalice Dispel Magic</entry>
+  <entry id="63059" lang="en" sex="m">Knight of the Chalice Silent Dispel Magic</entry>
+  <entry id="63060" lang="en" sex="m">Knight of the Chalice Still Dispel Magic</entry>
+  <entry id="63061" lang="en" sex="m">Knight of the Chalice Summon Creature III</entry>
+  <entry id="63062" lang="en" sex="m">Knight of the Chalice Extended Summon Creature III</entry>
+  <entry id="63063" lang="en" sex="m">Knight of the Chalice Silent Summon Creature III</entry>
+  <entry id="63064" lang="en" sex="m">Knight of the Chalice Still Summon Creature III</entry>
+  <entry id="63065" lang="en" sex="m">Knight of the Chalice Invisibility Purge</entry>
+  <entry id="63066" lang="en" sex="m">Knight of the Chalice Extended Invisibility Purge</entry>
+  <entry id="63067" lang="en" sex="m">Knight of the Chalice Silent Invisibility Purge</entry>
+  <entry id="63068" lang="en" sex="m">Knight of the Chalice Still Invisibility Purge</entry>
+  <entry id="63069" lang="en" sex="m">Knight of the Chalice Magic Circle against Evil</entry>
+  <entry id="63070" lang="en" sex="m">Knight of the Chalice Extended Magic Circle against Evil</entry>
+  <entry id="63071" lang="en" sex="m">Knight of the Chalice Silent Magic Circle against Evil</entry>
+  <entry id="63072" lang="en" sex="m">Knight of the Chalice Still Magic Circle against Evil</entry>
+  <entry id="63073" lang="en" sex="m">Knight of the Chalice Magic Vestment</entry>
+  <entry id="63074" lang="en" sex="m">Knight of the Chalice Extended Magic Vestment</entry>
+  <entry id="63075" lang="en" sex="m">Knight of the Chalice Silent Magic Vestment</entry>
+  <entry id="63076" lang="en" sex="m">Knight of the Chalice Still Magic Vestment</entry>
+  <entry id="63077" lang="en" sex="m">Knight of the Chalice Prayer</entry>
+  <entry id="63078" lang="en" sex="m">Knight of the Chalice Extended Prayer</entry>
+  <entry id="63079" lang="en" sex="m">Knight of the Chalice Silent Prayer</entry>
+  <entry id="63080" lang="en" sex="m">Knight of the Chalice Still Prayer</entry>
+  <entry id="63081" lang="en" sex="m">Knight of the Chalice Protection from Elements</entry>
+  <entry id="63082" lang="en" sex="m">Knight of the Chalice Extended Protection from Elements</entry>
+  <entry id="63083" lang="en" sex="m">Knight of the Chalice Silent Protection from Elements</entry>
+  <entry id="63084" lang="en" sex="m">Knight of the Chalice Still Protection from Elements</entry>
+  <entry id="63085" lang="en" sex="m">Knight of the Chalice Searing Light</entry>
+  <entry id="63086" lang="en" sex="m">Knight of the Chalice Silent Searing Light</entry>
+  <entry id="63087" lang="en" sex="m">Knight of the Chalice Still Searing Light</entry>
+  <entry id="63088" lang="en" sex="m">Knight of the Chalice Dismissal</entry>
+  <entry id="63089" lang="en" sex="m">Knight of the Chalice Greater Magic Weapon</entry>
+  <entry id="63090" lang="en" sex="m">Vigilant Expeditious Retreat</entry>
+  <entry id="63091" lang="en" sex="m">Vigilant Extended Expeditious Retreat</entry>
+  <entry id="63092" lang="en" sex="m">Vigilant Silent Expeditious Retreat</entry>
+  <entry id="63093" lang="en" sex="m">Vigilant Still Expeditious Retreat</entry>
+  <entry id="63094" lang="en" sex="m">Vigilant Resist Elements</entry>
+  <entry id="63095" lang="en" sex="m">Vigilant Extended Resist Elements</entry>
+  <entry id="63096" lang="en" sex="m">Vigilant Silent Resist Elements</entry>
+  <entry id="63097" lang="en" sex="m">Vigilant Still Resist Elements</entry>
+  <entry id="63098" lang="en" sex="m">Vigilant Protection from Elements</entry>
+  <entry id="63099" lang="en" sex="m">Vigilant Extended Protection from Elements</entry>
+  <entry id="63100" lang="en" sex="m">Vigilant Silent Protection from Elements</entry>
+  <entry id="63101" lang="en" sex="m">Vigilant Still Protection from Elements</entry>
+  <entry id="63102" lang="en" sex="m">Vigilant Silence</entry>
+  <entry id="63103" lang="en" sex="m">Vigilant Extended Silence</entry>
+  <entry id="63104" lang="en" sex="m">Vigilant Silent Silence</entry>
+  <entry id="63105" lang="en" sex="m">Vigilant Still Silence</entry>
+  <entry id="63106" lang="en" sex="m">Vigilant Endurance</entry>
+  <entry id="63107" lang="en" sex="m">Vigilant Extended Endurance</entry>
+  <entry id="63108" lang="en" sex="m">Vigilant Silent Endurance</entry>
+  <entry id="63109" lang="en" sex="m">Vigilant Still Endurance</entry>
+  <entry id="63110" lang="en" sex="m">Vigilant Neutralize Poison</entry>
+  <entry id="63111" lang="en" sex="m">Vigilant Silent Neutralize Poison</entry>
+  <entry id="63112" lang="en" sex="m">Vigilant Still Neutralize Poison</entry>
+  <entry id="63113" lang="en" sex="m">Vigilant Remove Disease</entry>
+  <entry id="63114" lang="en" sex="m">Vigilant Silent Remove Disease</entry>
+  <entry id="63115" lang="en" sex="m">Vigilant Still Remove Disease</entry>
+  <entry id="63116" lang="en" sex="m">Vigilant Spike Growth</entry>
+  <entry id="63117" lang="en" sex="m">Vigilant Extended Spike Growth</entry>
+  <entry id="63118" lang="en" sex="m">Vigilant Silent Spike Growth</entry>
+  <entry id="63119" lang="en" sex="m">Vigilant Still Spike Growth</entry>
+  <entry id="63120" lang="en" sex="m">Vigilant Freedom of Movement</entry>
+  <entry id="63121" lang="en" sex="m">Vassal of Bahamut Shield of Faith</entry>
+  <entry id="63122" lang="en" sex="m">Vassal of Bahamut Extended Shield of Faith</entry>
+  <entry id="63123" lang="en" sex="m">Vassal of Bahamut Silent Shield of Faith</entry>
+  <entry id="63124" lang="en" sex="m">Vassal of Bahamut Still Shield of Faith</entry>
+  <entry id="63125" lang="en" sex="m">Vassal of Bahamut Protection from Evil</entry>
+  <entry id="63126" lang="en" sex="m">Vassal of Bahamut Extended Protection from Evil</entry>
+  <entry id="63127" lang="en" sex="m">Vassal of Bahamut Silent Protection from Evil</entry>
+  <entry id="63128" lang="en" sex="m">Vassal of Bahamut Still Protection from Evil</entry>
+  <entry id="63129" lang="en" sex="m">Vassal of Bahamut Endure Elements</entry>
+  <entry id="63130" lang="en" sex="m">Vassal of Bahamut Extended Endure Elements</entry>
+  <entry id="63131" lang="en" sex="m">Vassal of Bahamut Silent Endure Elements</entry>
+  <entry id="63132" lang="en" sex="m">Vassal of Bahamut Still Endure Elements</entry>
+  <entry id="63133" lang="en" sex="m">Vassal of Bahamut Divine Favor</entry>
+  <entry id="63134" lang="en" sex="m">Vassal of Bahamut Extended Divine Favor</entry>
+  <entry id="63135" lang="en" sex="m">Vassal of Bahamut Silent Divine Favor</entry>
+  <entry id="63136" lang="en" sex="m">Vassal of Bahamut Still Divine Favor</entry>
+  <entry id="63137" lang="en" sex="m">Vassal of Bahamut Bless Weapon</entry>
+  <entry id="63138" lang="en" sex="m">Vassal of Bahamut Extended Bless Weapon</entry>
+  <entry id="63139" lang="en" sex="m">Vassal of Bahamut Silent Bless Weapon</entry>
+  <entry id="63140" lang="en" sex="m">Vassal of Bahamut Still Bless Weapon</entry>
+  <entry id="63141" lang="en" sex="m">Vassal of Bahamut Bless</entry>
+  <entry id="63142" lang="en" sex="m">Vassal of Bahamut Extended Bless</entry>
+  <entry id="63143" lang="en" sex="m">Vassal of Bahamut Silent Bless</entry>
+  <entry id="63144" lang="en" sex="m">Vassal of Bahamut Still Bless</entry>
+  <entry id="63145" lang="en" sex="m">Vassal of Bahamut Protection from Elements</entry>
+  <entry id="63146" lang="en" sex="m">Vassal of Bahamut Extended Protection from Elements</entry>
+  <entry id="63147" lang="en" sex="m">Vassal of Bahamut Silent Protection from Elements</entry>
+  <entry id="63148" lang="en" sex="m">Vassal of Bahamut Still Protection from Elements</entry>
+  <entry id="63149" lang="en" sex="m">Vassal of Bahamut Bull's Strength</entry>
+  <entry id="63150" lang="en" sex="m">Vassal of Bahamut Empowered Bull's Strength</entry>
+  <entry id="63151" lang="en" sex="m">Vassal of Bahamut Extended Bull's Strength</entry>
+  <entry id="63152" lang="en" sex="m">Vassal of Bahamut Silent Bull's Strength</entry>
+  <entry id="63153" lang="en" sex="m">Vassal of Bahamut Still Bull's Strength</entry>
+  <entry id="63154" lang="en" sex="m">Vassal of Bahamut Endurance</entry>
+  <entry id="63155" lang="en" sex="m">Vassal of Bahamut Empowered Endurance</entry>
+  <entry id="63156" lang="en" sex="m">Vassal of Bahamut Extended Endurance</entry>
+  <entry id="63157" lang="en" sex="m">Vassal of Bahamut Silent Endurance</entry>
+  <entry id="63158" lang="en" sex="m">Vassal of Bahamut Still Endurance</entry>
+  <entry id="63159" lang="en" sex="m">Vassal of Bahamut Searing Light</entry>
+  <entry id="63160" lang="en" sex="m">Vassal of Bahamut Silent Searing Light</entry>
+  <entry id="63161" lang="en" sex="m">Vassal of Bahamut Still Searing Light</entry>
+  <entry id="63162" lang="en" sex="m">Vassal of Bahamut Resist Elements</entry>
+  <entry id="63163" lang="en" sex="m">Vassal of Bahamut Extended Resist Elements</entry>
+  <entry id="63164" lang="en" sex="m">Vassal of Bahamut Silent Resist Elements</entry>
+  <entry id="63165" lang="en" sex="m">Vassal of Bahamut Still Resist Elements</entry>
+  <entry id="63166" lang="en" sex="m">Vassal of Bahamut Magic Circle against Evil</entry>
+  <entry id="63167" lang="en" sex="m">Vassal of Bahamut Extended Magic Circle against Evil</entry>
+  <entry id="63168" lang="en" sex="m">Vassal of Bahamut Silent Magic Circle against Evil</entry>
+  <entry id="63169" lang="en" sex="m">Vassal of Bahamut Still Magic Circle against Evil</entry>
+  <entry id="63170" lang="en" sex="m">Vassal of Bahamut Holy Sword</entry>
+  <entry id="63171" lang="en" sex="m">Vassal of Bahamut Divine Power</entry>
+  <entry id="63172" lang="en" sex="m">Anti-Paladin Bane</entry>
+  <entry id="63173" lang="en" sex="m">Anti-Paladin Extended Bane</entry>
+  <entry id="63174" lang="en" sex="m">Anti-Paladin Silent Bane</entry>
+  <entry id="63175" lang="en" sex="m">Anti-Paladin Still Bane</entry>
+  <entry id="63176" lang="en" sex="m">Anti-Paladin Doom</entry>
+  <entry id="63177" lang="en" sex="m">Anti-Paladin Extended Doom</entry>
+  <entry id="63178" lang="en" sex="m">Anti-Paladin Silent Doom</entry>
+  <entry id="63179" lang="en" sex="m">Anti-Paladin Still Doom</entry>
+  <entry id="63180" lang="en" sex="m">Anti-Paladin Inflict Light Wounds</entry>
+  <entry id="63181" lang="en" sex="m">Anti-Paladin Empowered Inflict Light Wounds</entry>
+  <entry id="63182" lang="en" sex="m">Anti-Paladin Maximized Inflict Light Wounds</entry>
+  <entry id="63183" lang="en" sex="m">Anti-Paladin Silent Inflict Light Wounds</entry>
+  <entry id="63184" lang="en" sex="m">Anti-Paladin Still Inflict Light Wounds</entry>
+  <entry id="63185" lang="en" sex="m">Anti-Paladin Magic Weapon</entry>
+  <entry id="63186" lang="en" sex="m">Anti-Paladin Extended Magic Weapon</entry>
+  <entry id="63187" lang="en" sex="m">Anti-Paladin Silent Magic Weapon</entry>
+  <entry id="63188" lang="en" sex="m">Anti-Paladin Still Magic Weapon</entry>
+  <entry id="63189" lang="en" sex="m">Anti-Paladin Protection from Good</entry>
+  <entry id="63190" lang="en" sex="m">Anti-Paladin Extended Protection from Good</entry>
+  <entry id="63191" lang="en" sex="m">Anti-Paladin Silent Protection from Good</entry>
+  <entry id="63192" lang="en" sex="m">Anti-Paladin Still Protection from Good</entry>
+  <entry id="63193" lang="en" sex="m">Anti-Paladin Ray of Enfeeblement</entry>
+  <entry id="63194" lang="en" sex="m">Anti-Paladin Empowered Ray of Enfeeblement</entry>
+  <entry id="63195" lang="en" sex="m">Anti-Paladin Extended Ray of Enfeeblement</entry>
+  <entry id="63196" lang="en" sex="m">Anti-Paladin Maximized Ray of Enfeeblement</entry>
+  <entry id="63197" lang="en" sex="m">Anti-Paladin Silent Ray of Enfeeblement</entry>
+  <entry id="63198" lang="en" sex="m">Anti-Paladin Still Ray of Enfeeblement</entry>
+  <entry id="63199" lang="en" sex="m">Anti-Paladin Summon Creature I</entry>
+  <entry id="63200" lang="en" sex="m">Anti-Paladin Extended Summon Creature I</entry>
+  <entry id="63201" lang="en" sex="m">Anti-Paladin Silent Summon Creature I</entry>
+  <entry id="63202" lang="en" sex="m">Anti-Paladin Still Summon Creature I</entry>
+  <entry id="63203" lang="en" sex="m">Anti-Paladin Bull's Strength</entry>
+  <entry id="63204" lang="en" sex="m">Anti-Paladin Empowered Bull's Strength</entry>
+  <entry id="63205" lang="en" sex="m">Anti-Paladin Extended Bull's Strength</entry>
+  <entry id="63206" lang="en" sex="m">Anti-Paladin Silent Bull's Strength</entry>
+  <entry id="63207" lang="en" sex="m">Anti-Paladin Still Bull's Strength</entry>
+  <entry id="63208" lang="en" sex="m">Anti-Paladin Darkness</entry>
+  <entry id="63209" lang="en" sex="m">Anti-Paladin Extended Darkness</entry>
+  <entry id="63210" lang="en" sex="m">Anti-Paladin Silent Darkness</entry>
+  <entry id="63211" lang="en" sex="m">Anti-Paladin Summon Creature II</entry>
+  <entry id="63212" lang="en" sex="m">Anti-Paladin Extended Summon Creature II</entry>
+  <entry id="63213" lang="en" sex="m">Anti-Paladin Silent Summon Creature II</entry>
+  <entry id="63214" lang="en" sex="m">Anti-Paladin Still Summon Creature II</entry>
+  <entry id="63215" lang="en" sex="m">Anti-Paladin Greater Magic Weapon</entry>
+  <entry id="63216" lang="en" sex="m">Anti-Paladin Extended Greater Magic Weapon</entry>
+  <entry id="63217" lang="en" sex="m">Anti-Paladin Silent Greater Magic Weapon</entry>
+  <entry id="63218" lang="en" sex="m">Anti-Paladin Still Greater Magic Weapon</entry>
+  <entry id="63219" lang="en" sex="m">Anti-Paladin Inflict Moderate Wounds</entry>
+  <entry id="63220" lang="en" sex="m">Anti-Paladin Silent Inflict Moderate Wounds</entry>
+  <entry id="63221" lang="en" sex="m">Anti-Paladin Still Inflict Moderate Wounds</entry>
+  <entry id="63222" lang="en" sex="m">Anti-Paladin Magic Circle against Good</entry>
+  <entry id="63223" lang="en" sex="m">Anti-Paladin Extended Magic Circle against Good</entry>
+  <entry id="63224" lang="en" sex="m">Anti-Paladin Silent Magic Circle against Good</entry>
+  <entry id="63225" lang="en" sex="m">Anti-Paladin Still Magic Circle against Good</entry>
+  <entry id="63226" lang="en" sex="m">Anti-Paladin Summon Creature III</entry>
+  <entry id="63227" lang="en" sex="m">Anti-Paladin Extended Summon Creature III</entry>
+  <entry id="63228" lang="en" sex="m">Anti-Paladin Silent Summon Creature III</entry>
+  <entry id="63229" lang="en" sex="m">Anti-Paladin Still Summon Creature III</entry>
+  <entry id="63230" lang="en" sex="m">Anti-Paladin Bestow Curse</entry>
+  <entry id="63231" lang="en" sex="m">Anti-Paladin Silent Bestow Curse</entry>
+  <entry id="63232" lang="en" sex="m">Anti-Paladin Still Bestow Curse</entry>
+  <entry id="63233" lang="en" sex="m">Anti-Paladin Blindness/Deafness</entry>
+  <entry id="63234" lang="en" sex="m">Anti-Paladin Extended Blindness/Deafness</entry>
+  <entry id="63235" lang="en" sex="m">Anti-Paladin Silent Blindness/Deafness</entry>
+  <entry id="63236" lang="en" sex="m">Anti-Paladin Death Ward</entry>
+  <entry id="63237" lang="en" sex="m">Anti-Paladin Inflict Serious Wounds</entry>
+  <entry id="63238" lang="en" sex="m">Anti-Paladin Fear</entry>
+  <entry id="63239" lang="en" sex="m">Soldier of Light Cure Light Wounds</entry>
+  <entry id="63240" lang="en" sex="m">Soldier of Light Empowered Cure Light Wounds</entry>
+  <entry id="63241" lang="en" sex="m">Soldier of Light Maximized Cure Light Wounds</entry>
+  <entry id="63242" lang="en" sex="m">Soldier of Light Silent Cure Light Wounds</entry>
+  <entry id="63243" lang="en" sex="m">Soldier of Light Still Cure Light Wounds</entry>
+  <entry id="63244" lang="en" sex="m">Soldier of Light Bless Weapon</entry>
+  <entry id="63245" lang="en" sex="m">Soldier of Light Extended Bless Weapon</entry>
+  <entry id="63246" lang="en" sex="m">Soldier of Light Silent Bless Weapon</entry>
+  <entry id="63247" lang="en" sex="m">Soldier of Light Still Bless Weapon</entry>
+  <entry id="63248" lang="en" sex="m">Soldier of Light Bless</entry>
+  <entry id="63249" lang="en" sex="m">Soldier of Light Extended Bless</entry>
+  <entry id="63250" lang="en" sex="m">Soldier of Light Silent Bless</entry>
+  <entry id="63251" lang="en" sex="m">Soldier of Light Still Bless</entry>
+  <entry id="63252" lang="en" sex="m">Soldier of Light Magic Weapon</entry>
+  <entry id="63253" lang="en" sex="m">Soldier of Light Extended Magic Weapon</entry>
+  <entry id="63254" lang="en" sex="m">Soldier of Light Silent Magic Weapon</entry>
+  <entry id="63255" lang="en" sex="m">Soldier of Light Still Magic Weapon</entry>
+  <entry id="63256" lang="en" sex="m">Soldier of Light Shield of Faith</entry>
+  <entry id="63257" lang="en" sex="m">Soldier of Light Extended Shield of Faith</entry>
+  <entry id="63258" lang="en" sex="m">Soldier of Light Silent Shield of Faith</entry>
+  <entry id="63259" lang="en" sex="m">Soldier of Light Still Shield of Faith</entry>
+  <entry id="63260" lang="en" sex="m">Soldier of Light Protection from Evil</entry>
+  <entry id="63261" lang="en" sex="m">Soldier of Light Extended Protection from Evil</entry>
+  <entry id="63262" lang="en" sex="m">Soldier of Light Silent Protection from Evil</entry>
+  <entry id="63263" lang="en" sex="m">Soldier of Light Still Protection from Evil</entry>
+  <entry id="63264" lang="en" sex="m">Soldier of Light Light</entry>
+  <entry id="63265" lang="en" sex="m">Soldier of Light Extended Light</entry>
+  <entry id="63266" lang="en" sex="m">Soldier of Light Silent Light</entry>
+  <entry id="63267" lang="en" sex="m">Soldier of Light Cure Moderate Wounds</entry>
+  <entry id="63268" lang="en" sex="m">Soldier of Light Empowered Cure Moderate Wounds</entry>
+  <entry id="63269" lang="en" sex="m">Soldier of Light Silent Cure Moderate Wounds</entry>
+  <entry id="63270" lang="en" sex="m">Soldier of Light Still Cure Moderate Wounds</entry>
+  <entry id="63271" lang="en" sex="m">Soldier of Light Aid</entry>
+  <entry id="63272" lang="en" sex="m">Soldier of Light Empowered Aid</entry>
+  <entry id="63273" lang="en" sex="m">Soldier of Light Extended Aid</entry>
+  <entry id="63274" lang="en" sex="m">Soldier of Light Silent Aid</entry>
+  <entry id="63275" lang="en" sex="m">Soldier of Light Still Aid</entry>
+  <entry id="63276" lang="en" sex="m">Soldier of Light Consecrate</entry>
+  <entry id="63277" lang="en" sex="m">Soldier of Light Extended Consecrate</entry>
+  <entry id="63278" lang="en" sex="m">Soldier of Light Silent Consecrate</entry>
+  <entry id="63279" lang="en" sex="m">Soldier of Light Still Consecrate</entry>
+  <entry id="63280" lang="en" sex="m">Soldier of Light Lesser Restoration</entry>
+  <entry id="63281" lang="en" sex="m">Soldier of Light Silent Lesser Restoration</entry>
+  <entry id="63282" lang="en" sex="m">Soldier of Light Still Lesser Restoration</entry>
+  <entry id="63283" lang="en" sex="m">Soldier of Light Cure Serious Wounds</entry>
+  <entry id="63284" lang="en" sex="m">Soldier of Light Silent Cure Serious Wounds</entry>
+  <entry id="63285" lang="en" sex="m">Soldier of Light Still Cure Serious Wounds</entry>
+  <entry id="63286" lang="en" sex="m">Soldier of Light Greater Magic Weapon</entry>
+  <entry id="63287" lang="en" sex="m">Soldier of Light Extended Greater Magic Weapon</entry>
+  <entry id="63288" lang="en" sex="m">Soldier of Light Silent Greater Magic Weapon</entry>
+  <entry id="63289" lang="en" sex="m">Soldier of Light Still Greater Magic Weapon</entry>
+  <entry id="63290" lang="en" sex="m">Soldier of Light Magic Circle against Evil</entry>
+  <entry id="63291" lang="en" sex="m">Soldier of Light Extended Magic Circle against Evil</entry>
+  <entry id="63292" lang="en" sex="m">Soldier of Light Silent Magic Circle against Evil</entry>
+  <entry id="63293" lang="en" sex="m">Soldier of Light Still Magic Circle against Evil</entry>
+  <entry id="63294" lang="en" sex="m">Soldier of Light Searing Light</entry>
+  <entry id="63295" lang="en" sex="m">Soldier of Light Silent Searing Light</entry>
+  <entry id="63296" lang="en" sex="m">Soldier of Light Still Searing Light</entry>
+  <entry id="63297" lang="en" sex="m">Soldier of Light Negative Energy Protection</entry>
+  <entry id="63298" lang="en" sex="m">Soldier of Light Extended Negative Energy Protection</entry>
+  <entry id="63299" lang="en" sex="m">Soldier of Light Silent Negative Energy Protection</entry>
+  <entry id="63300" lang="en" sex="m">Soldier of Light Still Negative Energy Protection</entry>
+  <entry id="63301" lang="en" sex="m">Soldier of Light Prayer</entry>
+  <entry id="63302" lang="en" sex="m">Soldier of Light Extended Prayer</entry>
+  <entry id="63303" lang="en" sex="m">Soldier of Light Silent Prayer</entry>
+  <entry id="63304" lang="en" sex="m">Soldier of Light Still Prayer</entry>
+  <entry id="63305" lang="en" sex="m">Soldier of Light Remove Disease</entry>
+  <entry id="63306" lang="en" sex="m">Soldier of Light Silent Remove Disease</entry>
+  <entry id="63307" lang="en" sex="m">Soldier of Light Still Remove Disease</entry>
+  <entry id="63308" lang="en" sex="m">Soldier of Light Cure Critical Wounds</entry>
+  <entry id="63309" lang="en" sex="m">Soldier of Light Death Ward</entry>
+  <entry id="63310" lang="en" sex="m">Soldier of Light Holy Sword</entry>
+  <entry id="63311" lang="en" sex="m">Soldier of Light Restoration</entry>
+  <entry id="63312" lang="en" sex="m">Telflammar Shadowlord Blindness/Deafness</entry>
+  <entry id="63313" lang="en" sex="m">Telflammar Shadowlord Extended Blindness/Deafness</entry>
+  <entry id="63314" lang="en" sex="m">Telflammar Shadowlord Silent Blindness/Deafness</entry>
+  <entry id="63315" lang="en" sex="m">Telflammar Shadowlord Ultravision</entry>
+  <entry id="63316" lang="en" sex="m">Telflammar Shadowlord Extended Ultravision</entry>
+  <entry id="63317" lang="en" sex="m">Telflammar Shadowlord Silent Ultravision</entry>
+  <entry id="63318" lang="en" sex="m">Telflammar Shadowlord Still Ultravision</entry>
+  <entry id="63319" lang="en" sex="m">Telflammar Shadowlord Chill Touch</entry>
+  <entry id="63320" lang="en" sex="m">Telflammar Shadowlord Empowered Chill Touch</entry>
+  <entry id="63321" lang="en" sex="m">Telflammar Shadowlord Extended Chill Touch</entry>
+  <entry id="63322" lang="en" sex="m">Telflammar Shadowlord Silent Chill Touch</entry>
+  <entry id="63323" lang="en" sex="m">Telflammar Shadowlord Still Chill Touch</entry>
+  <entry id="63324" lang="en" sex="m">Telflammar Shadowlord Darkness</entry>
+  <entry id="63325" lang="en" sex="m">Telflammar Shadowlord Extended Darkness</entry>
+  <entry id="63326" lang="en" sex="m">Telflammar Shadowlord Silent Darkness</entry>
+  <entry id="63327" lang="en" sex="m">Telflammar Shadowlord Shadow Spray</entry>
+  <entry id="63328" lang="en" sex="m">Telflammar Shadowlord Empowered Shadow Spray</entry>
+  <entry id="63329" lang="en" sex="m">Telflammar Shadowlord Extended Shadow Spray</entry>
+  <entry id="63330" lang="en" sex="m">Telflammar Shadowlord Silent Shadow Spray</entry>
+  <entry id="63331" lang="en" sex="m">Telflammar Shadowlord Still Shadow Spray</entry>
+  <entry id="63332" lang="en" sex="m">Telflammar Shadowlord Invisibility</entry>
+  <entry id="63333" lang="en" sex="m">Telflammar Shadowlord Extended Invisibility</entry>
+  <entry id="63334" lang="en" sex="m">Telflammar Shadowlord Silent Invisibility</entry>
+  <entry id="63335" lang="en" sex="m">Telflammar Shadowlord Still Invisibility</entry>
+  <entry id="63336" lang="en" sex="m">Telflammar Shadowlord Blacklight</entry>
+  <entry id="63337" lang="en" sex="m">Telflammar Shadowlord Extended Blacklight</entry>
+  <entry id="63338" lang="en" sex="m">Telflammar Shadowlord Silent Blacklight</entry>
+  <entry id="63339" lang="en" sex="m">Telflammar Shadowlord Still Blacklight</entry>
+  <entry id="63340" lang="en" sex="m">Telflammar Shadowlord Displacement</entry>
+  <entry id="63341" lang="en" sex="m">Telflammar Shadowlord Extended Displacement</entry>
+  <entry id="63342" lang="en" sex="m">Telflammar Shadowlord Silent Displacement</entry>
+  <entry id="63343" lang="en" sex="m">Telflammar Shadowlord Haste</entry>
+  <entry id="63344" lang="en" sex="m">Telflammar Shadowlord Extended Haste</entry>
+  <entry id="63345" lang="en" sex="m">Telflammar Shadowlord Silent Haste</entry>
+  <entry id="63346" lang="en" sex="m">Telflammar Shadowlord Still Haste</entry>
+  <entry id="63347" lang="en" sex="m">Telflammar Shadowlord Improved Invisibility</entry>
+  <entry id="63348" lang="en" sex="m">Telflammar Shadowlord Extended Improved Invisibility</entry>
+  <entry id="63349" lang="en" sex="m">Telflammar Shadowlord Silent Improved Invisibility</entry>
+  <entry id="63350" lang="en" sex="m">Telflammar Shadowlord Still Improved Invisibility</entry>
+  <entry id="63351" lang="en" sex="m">Telflammar Shadowlord Vampiric Touch</entry>
+  <entry id="63352" lang="en" sex="m">Telflammar Shadowlord Silent Vampiric Touch</entry>
+  <entry id="63353" lang="en" sex="m">Telflammar Shadowlord Still Vampiric Touch</entry>
+  <entry id="63354" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
+  <entry id="63355" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
+  <entry id="63356" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
+  <entry id="63357" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
+  <entry id="63358" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
+  <entry id="63359" lang="en" sex="m">Telflammar Shadowlord Confusion</entry>
+  <entry id="63360" lang="en" sex="m">Telflammar Shadowlord Dark Bolt</entry>
+  <entry id="63361" lang="en" sex="m">Telflammar Shadowlord Dark Bolt</entry>
+  <entry id="63362" lang="en" sex="m">Telflammar Shadowlord Dark Bolt</entry>
+  <entry id="63363" lang="en" sex="m">Telflammar Shadowlord Invisibility Sphere</entry>
+  <entry id="63364" lang="en" sex="m">Knight of the Middle Circle Bless</entry>
+  <entry id="63365" lang="en" sex="m">Knight of the Middle Circle Extended Bless</entry>
+  <entry id="63366" lang="en" sex="m">Knight of the Middle Circle Silent Bless</entry>
+  <entry id="63367" lang="en" sex="m">Knight of the Middle Circle Still Bless</entry>
+  <entry id="63368" lang="en" sex="m">Knight of the Middle Circle Bless Weapon</entry>
+  <entry id="63369" lang="en" sex="m">Knight of the Middle Circle Extended Bless Weapon</entry>
+  <entry id="63370" lang="en" sex="m">Knight of the Middle Circle Silent Bless Weapon</entry>
+  <entry id="63371" lang="en" sex="m">Knight of the Middle Circle Still Bless Weapon</entry>
+  <entry id="63372" lang="en" sex="m">Knight of the Middle Circle Cure Light Wounds</entry>
+  <entry id="63373" lang="en" sex="m">Knight of the Middle Circle Empowered Cure Light Wounds</entry>
+  <entry id="63374" lang="en" sex="m">Knight of the Middle Circle Silent Cure Light Wounds</entry>
+  <entry id="63375" lang="en" sex="m">Knight of the Middle Circle Still Cure Light Wounds</entry>
+  <entry id="63376" lang="en" sex="m">Knight of the Middle Circle Divine Favor</entry>
+  <entry id="63377" lang="en" sex="m">Knight of the Middle Circle Extended Divine Favor</entry>
+  <entry id="63378" lang="en" sex="m">Knight of the Middle Circle Silent Divine Favor</entry>
+  <entry id="63379" lang="en" sex="m">Knight of the Middle Circle Still Divine Favor</entry>
+  <entry id="63380" lang="en" sex="m">Knight of the Middle Circle Magic Weapon</entry>
+  <entry id="63381" lang="en" sex="m">Knight of the Middle Circle Extended Magic Weapon</entry>
+  <entry id="63382" lang="en" sex="m">Knight of the Middle Circle Silent Magic Weapon</entry>
+  <entry id="63383" lang="en" sex="m">Knight of the Middle Circle Still Magic Weapon</entry>
+  <entry id="63384" lang="en" sex="m">Knight of the Middle Circle Protection from Evil</entry>
+  <entry id="63385" lang="en" sex="m">Knight of the Middle Circle Extended Protection from Evil</entry>
+  <entry id="63386" lang="en" sex="m">Knight of the Middle Circle Silent Protection from Evil</entry>
+  <entry id="63387" lang="en" sex="m">Knight of the Middle Circle Still Protection from Evil</entry>
+  <entry id="63388" lang="en" sex="m">Knight of the Middle Circle Aid</entry>
+  <entry id="63389" lang="en" sex="m">Knight of the Middle Circle Extended Aid</entry>
+  <entry id="63390" lang="en" sex="m">Knight of the Middle Circle Silent Aid</entry>
+  <entry id="63391" lang="en" sex="m">Knight of the Middle Circle Still Aid</entry>
+  <entry id="63392" lang="en" sex="m">Knight of the Middle Circle Divine Protection</entry>
+  <entry id="63393" lang="en" sex="m">Knight of the Middle Circle Extended Divine Protection</entry>
+  <entry id="63394" lang="en" sex="m">Knight of the Middle Circle Silent Divine Protection</entry>
+  <entry id="63395" lang="en" sex="m">Knight of the Middle Circle Still Divine Protection</entry>
+  <entry id="63396" lang="en" sex="m">Knight of the Middle Circle Conviction</entry>
+  <entry id="63397" lang="en" sex="m">Knight of the Middle Circle Extended Conviction</entry>
+  <entry id="63398" lang="en" sex="m">Knight of the Middle Circle Silent Conviction</entry>
+  <entry id="63399" lang="en" sex="m">Knight of the Middle Circle Still Conviction</entry>
+  <entry id="63400" lang="en" sex="m">Knight of the Middle Circle Cure Moderate Wounds</entry>
+  <entry id="63401" lang="en" sex="m">Knight of the Middle Circle Dispel Magic</entry>
+  <entry id="63402" lang="en" sex="m">Knight of the Middle Circle Greater Magic Weapon</entry>
+  <entry id="63403" lang="en" sex="m">Knight of the Middle Circle Prayer</entry>
   <entry id="70000" lang="en" sex="m">####END_OF_NEW_SPELLBOOK_RESERVE</entry>
 </tlk>

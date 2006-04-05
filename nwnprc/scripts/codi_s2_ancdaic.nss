@@ -302,7 +302,7 @@ void main()
                                 nMaxValue =  2420000;
                         }    
                         if(GetPRCSwitch(PRC_SAMURAI_VALUE_SCALAR_x100))
-                            nMaxValue *= FloatToInt(IntToFloat(nMaxValue)*(IntToFloat(GetPRCSwitch(PRC_SAMURAI_VALUE_SCALAR_x100))/100.0));
+                            nMaxValue = FloatToInt(IntToFloat(nMaxValue)*(IntToFloat(GetPRCSwitch(PRC_SAMURAI_VALUE_SCALAR_x100))/100.0));
                         //get the items
                         object oKatana;
                         object oWakizashi;

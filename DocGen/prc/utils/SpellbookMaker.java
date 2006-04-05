@@ -17,6 +17,7 @@ public final class SpellbookMaker{
 	private static int tlkRow       = 0;
 	private static int classSpellRow= 0;
 	private static int classFeatRow = 0;
+	private static int subradialID  = 7000;
 	private static Data_2da classes2da;
 	private static Data_2da spells2da;
 	private static Data_2da feat2da;
@@ -131,6 +132,7 @@ public final class SpellbookMaker{
 							System.out.println("Check metamagic for spell "+spellID);
 
 						//need to handle subradials here too
+						//subradials are handled within addNewSpellbookData()
 
 						//now loop over the metamagic varients
 						//-1 represents no metamagic
@@ -289,10 +291,15 @@ public final class SpellbookMaker{
 		spells2da.setEntry("Paladin", 	spells2daRow, "****");
 		spells2da.setEntry("Ranger", 	spells2daRow, "****");
 		spells2da.setEntry("Wiz_Sorc", 	spells2daRow, "****");
-		//set subradial information later on
 		//set subradial master, if applicable
 		if(subradialMaster != 0){
 			spells2da.setEntry("Master", spells2daRow, Integer.toString(subradialMaster));
+			//calculate the new feat id
+			int subradialFeatID = spells2da.getBiowareEntryAsInt("FeatID", subradialMaster);
+			//Set the FEATID on each of the subspells as follows: (65536 * subfeat) + feat ID.
+			//The top 16 bits is used for subfeat, the bottom for feat.
+			subradialFeatID = (65536*subradialID)+subradialFeatID;
+			spells2da.setEntry("FeatID", spells2daRow, Integer.toString(subradialFeatID));
 		} else {
 			spells2da.setEntry("Master", spells2daRow, "****");
 		}
@@ -367,16 +374,6 @@ public final class SpellbookMaker{
 			classSpell2da.setEntry("Level", classSpellRow, "****");
 		}
 
-		//subradial checks
-		for(int subradial = 1; subradial <= 5; subradial++){
-			if(spells2da.getBiowareEntryAsInt("SubRadSpell"+subradial, spells2daRow) != 0){
-				spells2da.setEntry("SubRadSpell"+subradial, spells2daRow, Integer.toString(spells2daRow+subradial));
-			} else {
-				spells2da.setEntry("SubRadSpell"+subradial, spells2daRow, "****");
-			}
-		}
-		subradialMaster = spells2daRow;
-
 		//cls_feat_*.2da
 		classFeat2da.setEntry("FeatLabel", classFeatRow, label);
 		classFeat2da.setEntry("FeatIndex", classFeatRow, Integer.toString(feat2daRow));
@@ -387,28 +384,41 @@ public final class SpellbookMaker{
 
 		//move to next file lines
 		getNextSpells2daRow();
-		getNextFeat2daRow();
-		getNextIPRPFeats2daRow();
 		getNextTlkRow();
-		getNextClassFeat2daRow();
+		//only need new ones of these if its not a subradial
+		if(subradialMaster == 0){
+			getNextFeat2daRow();
+			getNextIPRPFeats2daRow();
+			getNextClassFeat2daRow();
+		}else{ //do this if it is a subradial
+			// increase the subradial id ready for next one
+			subradialID++;
+		}
 		classSpellRow++;
 
 		//add subradial spells
-		for(int subradial = 1; subradial <= 5; subradial++){
-			if(spells2da.getBiowareEntryAsInt("SubRadSpell"+subradial, subradialMaster) != 0){
-				addNewSpellbookData(spells2da.getBiowareEntryAsInt("SubRadSpell"+subradial, spellID),
-									classfilename,
-									metaScript,
-									metamagicNo,
-									metamagicLevel,
-									metamagicFeat,
-									spellLevel,
-									name,
-									label,
-									subradialMaster);
+		if(subradialMaster == 0){
+			for(int subradial = 1; subradial <= 5; subradial++){
+				//store the spell row the master uses
+				//will be incremented by subradials
+				int masterSpellID = spells2daRow;
+				if(spells2da.getBiowareEntryAsInt("SubRadSpell"+subradial, spellID) != 0){
+					addNewSpellbookData(spells2da.getBiowareEntryAsInt("SubRadSpell"+subradial, spellID),
+										classfilename,
+										metaScript,
+										metamagicNo,
+										metamagicLevel,
+										metamagicFeat,
+										spellLevel,
+										name,
+										label,
+										spellID);
+					//update the master rows with the subradial spell rows
+					//the -1 is because you want the last used row, not the current blank row
+					spells2da.setEntry("SubRadSpell"+subradial, masterSpellID, Integer.toString(spells2daRow-1));
+				}
 			}
 		}
-
 	}
 
 	private static void getFirstSpells2daRow(){

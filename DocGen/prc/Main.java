@@ -70,6 +70,9 @@ public class Main {
 		else if(toCall.equals("spellbookmaker")){
 			prc.utils.SpellbookMaker.main(paramsToPass);
 		}
+		else if(toCall.equals("itempropmaker")){
+			prc.utils.ItempropMaker.main(paramsToPass);
+		}
 		else if(toCall.equals("letoxml")){
 			prc.utils.LetoListsGenerator.main(paramsToPass);
 		}

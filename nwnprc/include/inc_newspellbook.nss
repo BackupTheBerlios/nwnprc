@@ -62,9 +62,12 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_WIZARD:
         case CLASS_TYPE_SHADOWLORD:
         case CLASS_TYPE_ASSASSIN:
-            return SPELLBOOK_TYPE_PREPARED;
+            return SPELLBOOK_TYPE_PREPARED;    
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
+            return SPELLBOOK_TYPE_SPONTANEOUS;
+        //outsider HD count as sorc for raks        
+        case CLASS_TYPE_OUTSIDER:
             return SPELLBOOK_TYPE_SPONTANEOUS;
     }
     return SPELLBOOK_TYPE_INVALID;
@@ -98,6 +101,9 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
         case CLASS_TYPE_WILDER:
+            return GetAbilityScore(oPC, ABILITY_CHARISMA);
+        //outsider HD count as sorc for raks        
+        case CLASS_TYPE_OUTSIDER:
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
     }
     return 0;
@@ -455,6 +461,12 @@ void CheckNewSpellbooks(object oPC)
     for(i=1;i<=3;i++)
     {
         int nClass = PRCGetClassByPosition(i, oPC);
+        //raks cast as sorcs
+        if(nClass == CLASS_TYPE_OUTSIDER
+            && !GetLevelByClass(CLASS_TYPE_SORCERER, oPC)
+            && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
+            nClass = CLASS_TYPE_SORCERER;
+            
         int nLevel = GetLevelByClass(nClass, oPC);
 DoDebug("CheckNewSpellbooks");
 DoDebug("nClass="+IntToString(nClass));

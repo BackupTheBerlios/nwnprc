@@ -689,6 +689,11 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * in the OnSpawn event. Used for epic spells and other XP-burning stuff
   */
  const string PRC_NPC_XP                             = "PRC_NPC_XP";
+ /*
+  * Applys speed increase/decrease effects
+  * Simulates PnP rules where different races have different speeds
+  */
+ const string PRC_PNP_RACIAL_SPEED                      = "PRC_PNP_RACIAL_SPEED";
 
 /******************************************************************************\
 *                               ACP switches                              *
@@ -702,10 +707,18 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
  * CEP robes:
  * http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=5950
  * (credit to USAgreco66kg for those CEP files)
+ *
  * Note on haks: You should NOT add the acp_2da hak if you have the PRC installed
- * already. Plus, once you press the OK button to add the ACP haks, make sure
+ * Plus, once you press the OK button to add the ACP haks, make sure
  * you press cancel as soon as it appears. Otherwise, the toolset will crash
  * as it tries to compile the PRC scripts.
+ *
+ * If you are using CEP2, then you only need ragnaroks main package. Compatible robes
+ * and heads are included within CEP2.
+ *
+ * As of NWN v1.67 there is no need to press the cancel button as the toolset no longer
+ * attempts to compile scripts in haks.
+ * 
  */
 
 /*

@@ -260,6 +260,9 @@ void EvalPRCFeats(object oPC)
     int nPRCSize = PRCGetCreatureSize(oPC);
     if(nBiowareSize != nPRCSize)
         ExecuteScript("prc_size", oPC);
+        
+    // Speed changes
+    ExecuteScript("prc_speed", oPC);
 
     // ACP system
     if((GetIsPC(oPC) &&

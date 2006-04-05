@@ -26,10 +26,10 @@ int GetArcanePRCLevels (object oCaster);
 int GetDivinePRCLevels (object oCaster);
 
 // Returns TRUE if nClass is an arcane spellcasting class, FALSE otherwise.
-int GetIsArcaneClass(int nClass);
+int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF);
 
 // Returns TRUE if nClass is an divine spellcasting class, FALSE otherwise.
-int GetIsDivineClass (int nClass);
+int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF);
 
 // Returns the CLASS_TYPE of the first arcane caster class possessed by the character
 // or CLASS_TYPE_INVALID if there is none.
@@ -292,11 +292,20 @@ int GetArcanePRCLevels (object oCaster)
 
    if (nOozeMLevel)
    {
-       if (GetIsArcaneClass(nFirstClass)
-           || (!GetIsDivineClass(nFirstClass) && GetIsArcaneClass(nSecondClass))
-           || (!GetIsDivineClass(nFirstClass) && !GetIsDivineClass(nSecondClass) && GetIsArcaneClass(nThirdClass)))
+       if (GetIsArcaneClass(nFirstClass, oCaster)
+           || (!GetIsDivineClass(nFirstClass, oCaster) 
+                && GetIsArcaneClass(nSecondClass, oCaster))
+           || (!GetIsDivineClass(nFirstClass, oCaster) 
+                && !GetIsDivineClass(nSecondClass, oCaster) 
+                && GetIsArcaneClass(nThirdClass, oCaster)))
            nArcane += nOozeMLevel / 2;
    }
+    //Rakshasa include outsider HD as sorc
+    //if they have sorcerer levels, then it counts as a prestige class
+    //otherwise its used instead of sorc levels
+    if(GetLevelByClass(CLASS_TYPE_SORCERER, oCaster)
+        && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA)
+        nArcane += GetLevelByClass(CLASS_TYPE_OUTSIDER);
 
    return nArcane;
 }
@@ -349,25 +358,32 @@ int GetDivinePRCLevels (object oCaster)
 
    if (nOozeMLevel)
    {
-       if (GetIsDivineClass(nFirstClass)
-           || (!GetIsArcaneClass(nFirstClass) && GetIsDivineClass(nSecondClass))
-           || (!GetIsArcaneClass(nFirstClass) && !GetIsArcaneClass(nSecondClass) && GetIsDivineClass(nThirdClass)))
+       if (GetIsDivineClass(nFirstClass, oCaster)
+           || (!GetIsArcaneClass(nFirstClass, oCaster) 
+                && GetIsDivineClass(nSecondClass, oCaster))
+           || (!GetIsArcaneClass(nFirstClass, oCaster) 
+                && !GetIsArcaneClass(nSecondClass, oCaster) 
+                && GetIsDivineClass(nThirdClass, oCaster)))
            nDivine += nOozeMLevel / 2;
    }
 
    return nDivine;
 }
 
-int GetIsArcaneClass(int nClass)
+int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF)
 {
     return (nClass==CLASS_TYPE_WIZARD ||
             nClass==CLASS_TYPE_SORCERER ||
             nClass==CLASS_TYPE_BARD ||
             nClass==CLASS_TYPE_ASSASSIN ||
-            nClass==CLASS_TYPE_SHADOWLORD);
+            nClass==CLASS_TYPE_SHADOWLORD ||
+            (nClass==CLASS_TYPE_OUTSIDER
+                && GetRacialType(oCaster)==RACIAL_TYPE_RAKSHASA
+                && !GetLevelByClass(CLASS_TYPE_SORCERER))
+            );
 }
 
-int GetIsDivineClass (int nClass)
+int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
 {
     return (nClass==CLASS_TYPE_CLERIC ||
             nClass==CLASS_TYPE_DRUID ||
@@ -385,11 +401,11 @@ int GetIsDivineClass (int nClass)
 
 int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)
 {
-    if (GetIsArcaneClass(PRCGetClassByPosition(1, oCaster)))
+    if (GetIsArcaneClass(PRCGetClassByPosition(1, oCaster), oCaster))
         return 1;
-    if (GetIsArcaneClass(PRCGetClassByPosition(2, oCaster)))
+    if (GetIsArcaneClass(PRCGetClassByPosition(2, oCaster), oCaster))
         return 2;
-    if (GetIsArcaneClass(PRCGetClassByPosition(3, oCaster)))
+    if (GetIsArcaneClass(PRCGetClassByPosition(3, oCaster), oCaster))
         return 3;
 
     return 0;
@@ -397,11 +413,11 @@ int GetFirstArcaneClassPosition (object oCaster = OBJECT_SELF)
 
 int GetFirstDivineClassPosition (object oCaster = OBJECT_SELF)
 {
-    if (GetIsDivineClass(PRCGetClassByPosition(1, oCaster)))
+    if (GetIsDivineClass(PRCGetClassByPosition(1, oCaster), oCaster))
         return 1;
-    if (GetIsDivineClass(PRCGetClassByPosition(2, oCaster)))
+    if (GetIsDivineClass(PRCGetClassByPosition(2, oCaster), oCaster))
         return 2;
-    if (GetIsDivineClass(PRCGetClassByPosition(3, oCaster)))
+    if (GetIsDivineClass(PRCGetClassByPosition(3, oCaster), oCaster))
         return 3;
 
     return 0;
@@ -412,7 +428,13 @@ int GetFirstArcaneClass (object oCaster = OBJECT_SELF)
     int iArcanePos = GetFirstArcaneClassPosition(oCaster);
     if (!iArcanePos) return CLASS_TYPE_INVALID; // no arcane casting class
 
-    return PRCGetClassByPosition(iArcanePos, oCaster);
+    int nClass = PRCGetClassByPosition(iArcanePos, oCaster);
+    //raks cast as sorcs
+    if(nClass == CLASS_TYPE_OUTSIDER
+        && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA
+        && !GetLevelByClass(CLASS_TYPE_SORCERER))
+        nClass = CLASS_TYPE_SORCERER;
+    return nClass;
 }
 
 int GetFirstDivineClass (object oCaster = OBJECT_SELF)
@@ -420,7 +442,8 @@ int GetFirstDivineClass (object oCaster = OBJECT_SELF)
     int iDivinePos = GetFirstDivineClassPosition(oCaster);
     if (!iDivinePos) return CLASS_TYPE_INVALID; // no Divine casting class
 
-    return PRCGetClassByPosition(iDivinePos, oCaster);
+    int nClass = PRCGetClassByPosition(iDivinePos, oCaster);
+    return nClass;
 }
 
 int GetSpellSchool(int iSpellId)
@@ -460,9 +483,9 @@ int GetLevelByTypeArcane(object oCaster = OBJECT_SELF)
     iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
     iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
 
-    if (!GetIsArcaneClass(iClass1)) iClass1Lev = 0;
-    if (!GetIsArcaneClass(iClass2)) iClass2Lev = 0;
-    if (!GetIsArcaneClass(iClass3)) iClass3Lev = 0;
+    if (!GetIsArcaneClass(iClass1, oCaster)) iClass1Lev = 0;
+    if (!GetIsArcaneClass(iClass2, oCaster)) iClass2Lev = 0;
+    if (!GetIsArcaneClass(iClass3, oCaster)) iClass3Lev = 0;
 
     if (iClass1Lev > iBest) iBest = iClass1Lev;
     if (iClass2Lev > iBest) iBest = iClass2Lev;
@@ -494,9 +517,9 @@ int GetLevelByTypeDivine(object oCaster = OBJECT_SELF)
     iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
     iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
 
-    if (!GetIsDivineClass(iClass1)) iClass1Lev = 0;
-    if (!GetIsDivineClass(iClass2)) iClass2Lev = 0;
-    if (!GetIsDivineClass(iClass3)) iClass3Lev = 0;
+    if (!GetIsDivineClass(iClass1, oCaster)) iClass1Lev = 0;
+    if (!GetIsDivineClass(iClass2, oCaster)) iClass2Lev = 0;
+    if (!GetIsDivineClass(iClass3, oCaster)) iClass3Lev = 0;
 
     if (iClass1Lev > iBest) iBest = iClass1Lev;
     if (iClass2Lev > iBest) iBest = iClass2Lev;
@@ -536,9 +559,9 @@ int GetLevelByTypeArcaneFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
     iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
     iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
 
-    if (!GetIsArcaneClass(iClass1)) iClass1Lev = 0;
-    if (!GetIsArcaneClass(iClass2)) iClass2Lev = 0;
-    if (!GetIsArcaneClass(iClass3)) iClass3Lev = 0;
+    if (!GetIsArcaneClass(iClass1, oCaster)) iClass1Lev = 0;
+    if (!GetIsArcaneClass(iClass2, oCaster)) iClass2Lev = 0;
+    if (!GetIsArcaneClass(iClass3, oCaster)) iClass3Lev = 0;
 
     if (iClass1Lev > iBest) iBest = iClass1Lev;
     if (iClass2Lev > iBest) iBest = iClass2Lev;
@@ -591,9 +614,9 @@ int GetLevelByTypeDivineFeats(object oCaster = OBJECT_SELF, int iSpellID = -1)
     iClass2Lev += PractisedSpellcasting(oCaster, iClass2, iClass2Lev);
     iClass3Lev += PractisedSpellcasting(oCaster, iClass3, iClass3Lev);
 
-    if (!GetIsDivineClass(iClass1)) iClass1Lev = 0;
-    if (!GetIsDivineClass(iClass2)) iClass2Lev = 0;
-    if (!GetIsDivineClass(iClass3)) iClass3Lev = 0;
+    if (!GetIsDivineClass(iClass1, oCaster)) iClass1Lev = 0;
+    if (!GetIsDivineClass(iClass2, oCaster)) iClass2Lev = 0;
+    if (!GetIsDivineClass(iClass3, oCaster)) iClass3Lev = 0;
 
     if (iClass1Lev > iBest) iBest = iClass1Lev;
     if (iClass2Lev > iBest) iBest = iClass2Lev;
@@ -693,9 +716,9 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
               +  DeathKnell(oCaster);
     iDivLevel += PractisedSpellcasting(oCaster, iCastingClass, iDivLevel); //gotta be the last one
 
-    if(GetIsArcaneClass(iCastingClass))
+    if(GetIsArcaneClass(iCastingClass, oCaster))
         iReturnLevel = iArcLevel;
-    else if(GetIsDivineClass(iCastingClass))
+    else if(GetIsDivineClass(iCastingClass, oCaster))
         iReturnLevel = iDivLevel;
     //items override arcane/divine
     if(iItemLevel)
@@ -1236,6 +1259,10 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iOcu = GetLevelByClass(CLASS_TYPE_OCULAR, oCaster);
     int iArc = GetLevelByTypeArcane(oCaster);
     int iDiv = GetLevelByTypeDivine(oCaster);
+     //Rakshasa include outsider HD as sorc
+     if(!iSor
+        && GetRacialType(oCaster) == RACIAL_TYPE_RAKSHASA)
+        iSor = GetLevelByClass(CLASS_TYPE_OUTSIDER, oCaster);
 
     int iTemp;
 
@@ -1415,10 +1442,10 @@ object PRCGetSpellTargetObject()
     // The rune always targets the one who activates it.
     if(GetResRef(oItem) == "prc_rune_1")
     {
-    	if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
-    	// Making sure that the owner of the item is correct
-    	if (GetIsObjectValid(GetItemPossessor(oItem))) if(DEBUG) DoDebug(GetName(oCaster) + " is the owner of the Spellcasting item");
-    	return GetItemPossessor(oItem);
+        if(DEBUG) DoDebug(GetName(oCaster) + " has cast a spell using a rune");
+        // Making sure that the owner of the item is correct
+        if (GetIsObjectValid(GetItemPossessor(oItem))) if(DEBUG) DoDebug(GetName(oCaster) + " is the owner of the Spellcasting item");
+        return GetItemPossessor(oItem);
     }
 
     return oBWTarget;

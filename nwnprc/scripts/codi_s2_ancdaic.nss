@@ -619,6 +619,10 @@ void main()
             }
             else if(nChoice == TRUE)
             {
+                //store old cost
+                object oItem = GetLocalObject(oPC, "codi_ancdai"); 
+                int nOldValue = GetGoldPieceValue(oItem);
+                int nSacrificed = GetPersistantLocalInt(oPC, "CODI_SAMURAI");
                 //add the itemproperty
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
                 int nSubType = GetLocalInt(oPC, "codi_ancdai_subtype");
@@ -671,8 +675,11 @@ void main()
                 itemproperty ipToAdd = IPGetItemPropertyByID(nType, nVar2, nVar3, nVar4);
                 if(!GetIsItemPropertyValid(ipToAdd))
                     DoDebug("Itemproperty Not Valid");
-                object oItem = GetLocalObject(oPC, "codi_ancdai"); 
                 IPSafeAddItemProperty(oItem, ipToAdd);
+                //remove gold cost
+                int nNewValue = GetGoldPieceValue(oItem);
+                int nIPCost = nNewValue-nOldValue;
+                SetPersistantLocalInt(oPC, "CODI_SAMURAI", nSacrificed-nIPCost);
                 //go back to start
                 MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_ENTRY;

@@ -19627,15 +19627,15 @@ Epic Levels:
   <entry id="53679" lang="en" sex="m">Bard Silent Legend Lore</entry>
   <entry id="53680" lang="en" sex="m">Bard Still Legend Lore</entry>
   <entry id="53681" lang="en" sex="m">Bard Dimension Door</entry>
-  <entry id="53682" lang="en" sex="m">Bard Dimension Door</entry>
-  <entry id="53683" lang="en" sex="m">Bard Dimension Door</entry>
-  <entry id="53684" lang="en" sex="m">Bard Dimension Door</entry>
-  <entry id="53685" lang="en" sex="m">Bard Dimension Door</entry>
+  <entry id="53682" lang="en" sex="m">Bard Dimension Door - Self only</entry>
+  <entry id="53683" lang="en" sex="m">Bard Dimension Door - Party within 10ft</entry>
+  <entry id="53684" lang="en" sex="m">Bard Dimension Door - Direction and Distance - Self only</entry>
+  <entry id="53685" lang="en" sex="m">Bard Dimension Door - Direction and Distance - Party within 10ft</entry>
   <entry id="53686" lang="en" sex="m">Bard Silent Dimension Door</entry>
-  <entry id="53687" lang="en" sex="m">Bard Silent Dimension Door</entry>
-  <entry id="53688" lang="en" sex="m">Bard Silent Dimension Door</entry>
-  <entry id="53689" lang="en" sex="m">Bard Silent Dimension Door</entry>
-  <entry id="53690" lang="en" sex="m">Bard Silent Dimension Door</entry>
+  <entry id="53687" lang="en" sex="m">Bard Silent Dimension Door - Self only</entry>
+  <entry id="53688" lang="en" sex="m">Bard Silent Dimension Door - Party within 10ft</entry>
+  <entry id="53689" lang="en" sex="m">Bard Silent Dimension Door - Direction and Distance - Self only</entry>
+  <entry id="53690" lang="en" sex="m">Bard Silent Dimension Door - Direction and Distance - Party within 10ft</entry>
   <entry id="53691" lang="en" sex="m">Bard Mass Ultravision</entry>
   <entry id="53692" lang="en" sex="m">Bard Extended Mass Ultravision</entry>
   <entry id="53693" lang="en" sex="m">Bard Silent Mass Ultravision</entry>
@@ -20271,41 +20271,41 @@ Epic Levels:
   <entry id="54323" lang="en" sex="m">Sorcerer Silent Scintillating Sphere</entry>
   <entry id="54324" lang="en" sex="m">Sorcerer Still Scintillating Sphere</entry>
   <entry id="54325" lang="en" sex="m">Sorcerer Serpent's Sigh</entry>
-  <entry id="54326" lang="en" sex="m">Sorcerer Serpent's Sigh</entry>
-  <entry id="54327" lang="en" sex="m">Sorcerer Serpent's Sigh</entry>
-  <entry id="54328" lang="en" sex="m">Sorcerer Serpent's Sigh</entry>
-  <entry id="54329" lang="en" sex="m">Sorcerer Serpent's Sigh</entry>
-  <entry id="54330" lang="en" sex="m">Sorcerer Serpent's Sigh</entry>
+  <entry id="54326" lang="en" sex="m">Sorcerer Bolt of Acid</entry>
+  <entry id="54327" lang="en" sex="m">Sorcerer Bolt of Electricity</entry>
+  <entry id="54328" lang="en" sex="m">Sorcerer Cone of Acid</entry>
+  <entry id="54329" lang="en" sex="m">Sorcerer Cone of Cold</entry>
+  <entry id="54330" lang="en" sex="m">Sorcerer Cone of Fire</entry>
   <entry id="54331" lang="en" sex="m">Sorcerer Empowered Serpent's Sigh</entry>
-  <entry id="54332" lang="en" sex="m">Sorcerer Empowered Serpent's Sigh</entry>
-  <entry id="54333" lang="en" sex="m">Sorcerer Empowered Serpent's Sigh</entry>
-  <entry id="54334" lang="en" sex="m">Sorcerer Empowered Serpent's Sigh</entry>
-  <entry id="54335" lang="en" sex="m">Sorcerer Empowered Serpent's Sigh</entry>
-  <entry id="54336" lang="en" sex="m">Sorcerer Empowered Serpent's Sigh</entry>
+  <entry id="54332" lang="en" sex="m">Sorcerer Empowered Bolt of Acid</entry>
+  <entry id="54333" lang="en" sex="m">Sorcerer Empowered Bolt of Electricity</entry>
+  <entry id="54334" lang="en" sex="m">Sorcerer Empowered Cone of Acid</entry>
+  <entry id="54335" lang="en" sex="m">Sorcerer Empowered Cone of Cold</entry>
+  <entry id="54336" lang="en" sex="m">Sorcerer Empowered Cone of Fire</entry>
   <entry id="54337" lang="en" sex="m">Sorcerer Maximized Serpent's Sigh</entry>
-  <entry id="54338" lang="en" sex="m">Sorcerer Maximized Serpent's Sigh</entry>
-  <entry id="54339" lang="en" sex="m">Sorcerer Maximized Serpent's Sigh</entry>
-  <entry id="54340" lang="en" sex="m">Sorcerer Maximized Serpent's Sigh</entry>
-  <entry id="54341" lang="en" sex="m">Sorcerer Maximized Serpent's Sigh</entry>
-  <entry id="54342" lang="en" sex="m">Sorcerer Maximized Serpent's Sigh</entry>
+  <entry id="54338" lang="en" sex="m">Sorcerer Maximized Bolt of Acid</entry>
+  <entry id="54339" lang="en" sex="m">Sorcerer Maximized Bolt of Electricity</entry>
+  <entry id="54340" lang="en" sex="m">Sorcerer Maximized Cone of Acid</entry>
+  <entry id="54341" lang="en" sex="m">Sorcerer Maximized Cone of Cold</entry>
+  <entry id="54342" lang="en" sex="m">Sorcerer Maximized Cone of Fire</entry>
   <entry id="54343" lang="en" sex="m">Sorcerer Quickened Serpent's Sigh</entry>
-  <entry id="54344" lang="en" sex="m">Sorcerer Quickened Serpent's Sigh</entry>
-  <entry id="54345" lang="en" sex="m">Sorcerer Quickened Serpent's Sigh</entry>
-  <entry id="54346" lang="en" sex="m">Sorcerer Quickened Serpent's Sigh</entry>
-  <entry id="54347" lang="en" sex="m">Sorcerer Quickened Serpent's Sigh</entry>
-  <entry id="54348" lang="en" sex="m">Sorcerer Quickened Serpent's Sigh</entry>
+  <entry id="54344" lang="en" sex="m">Sorcerer Quickened Bolt of Acid</entry>
+  <entry id="54345" lang="en" sex="m">Sorcerer Quickened Bolt of Electricity</entry>
+  <entry id="54346" lang="en" sex="m">Sorcerer Quickened Cone of Acid</entry>
+  <entry id="54347" lang="en" sex="m">Sorcerer Quickened Cone of Cold</entry>
+  <entry id="54348" lang="en" sex="m">Sorcerer Quickened Cone of Fire</entry>
   <entry id="54349" lang="en" sex="m">Sorcerer Silent Serpent's Sigh</entry>
-  <entry id="54350" lang="en" sex="m">Sorcerer Silent Serpent's Sigh</entry>
-  <entry id="54351" lang="en" sex="m">Sorcerer Silent Serpent's Sigh</entry>
-  <entry id="54352" lang="en" sex="m">Sorcerer Silent Serpent's Sigh</entry>
-  <entry id="54353" lang="en" sex="m">Sorcerer Silent Serpent's Sigh</entry>
-  <entry id="54354" lang="en" sex="m">Sorcerer Silent Serpent's Sigh</entry>
+  <entry id="54350" lang="en" sex="m">Sorcerer Silent Bolt of Acid</entry>
+  <entry id="54351" lang="en" sex="m">Sorcerer Silent Bolt of Electricity</entry>
+  <entry id="54352" lang="en" sex="m">Sorcerer Silent Cone of Acid</entry>
+  <entry id="54353" lang="en" sex="m">Sorcerer Silent Cone of Cold</entry>
+  <entry id="54354" lang="en" sex="m">Sorcerer Silent Cone of Fire</entry>
   <entry id="54355" lang="en" sex="m">Sorcerer Still Serpent's Sigh</entry>
-  <entry id="54356" lang="en" sex="m">Sorcerer Still Serpent's Sigh</entry>
-  <entry id="54357" lang="en" sex="m">Sorcerer Still Serpent's Sigh</entry>
-  <entry id="54358" lang="en" sex="m">Sorcerer Still Serpent's Sigh</entry>
-  <entry id="54359" lang="en" sex="m">Sorcerer Still Serpent's Sigh</entry>
-  <entry id="54360" lang="en" sex="m">Sorcerer Still Serpent's Sigh</entry>
+  <entry id="54356" lang="en" sex="m">Sorcerer Still Bolt of Acid</entry>
+  <entry id="54357" lang="en" sex="m">Sorcerer Still Bolt of Electricity</entry>
+  <entry id="54358" lang="en" sex="m">Sorcerer Still Cone of Acid</entry>
+  <entry id="54359" lang="en" sex="m">Sorcerer Still Cone of Cold</entry>
+  <entry id="54360" lang="en" sex="m">Sorcerer Still Cone of Fire</entry>
   <entry id="54361" lang="en" sex="m">Sorcerer Slow</entry>
   <entry id="54362" lang="en" sex="m">Sorcerer Extended Slow</entry>
   <entry id="54363" lang="en" sex="m">Sorcerer Quickened Slow</entry>
@@ -20374,20 +20374,20 @@ Epic Levels:
   <entry id="54426" lang="en" sex="m">Sorcerer Silent Dimensional Anchor</entry>
   <entry id="54427" lang="en" sex="m">Sorcerer Still Dimensional Anchor</entry>
   <entry id="54428" lang="en" sex="m">Sorcerer Dimension Door</entry>
-  <entry id="54429" lang="en" sex="m">Sorcerer Dimension Door</entry>
-  <entry id="54430" lang="en" sex="m">Sorcerer Dimension Door</entry>
-  <entry id="54431" lang="en" sex="m">Sorcerer Dimension Door</entry>
-  <entry id="54432" lang="en" sex="m">Sorcerer Dimension Door</entry>
+  <entry id="54429" lang="en" sex="m">Sorcerer Dimension Door - Self only</entry>
+  <entry id="54430" lang="en" sex="m">Sorcerer Dimension Door - Party within 10ft</entry>
+  <entry id="54431" lang="en" sex="m">Sorcerer Dimension Door - Direction and Distance - Self only</entry>
+  <entry id="54432" lang="en" sex="m">Sorcerer Dimension Door - Direction and Distance - Party within 10ft</entry>
   <entry id="54433" lang="en" sex="m">Sorcerer Quickened Dimension Door</entry>
-  <entry id="54434" lang="en" sex="m">Sorcerer Quickened Dimension Door</entry>
-  <entry id="54435" lang="en" sex="m">Sorcerer Quickened Dimension Door</entry>
-  <entry id="54436" lang="en" sex="m">Sorcerer Quickened Dimension Door</entry>
-  <entry id="54437" lang="en" sex="m">Sorcerer Quickened Dimension Door</entry>
+  <entry id="54434" lang="en" sex="m">Sorcerer Quickened Dimension Door - Self only</entry>
+  <entry id="54435" lang="en" sex="m">Sorcerer Quickened Dimension Door - Party within 10ft</entry>
+  <entry id="54436" lang="en" sex="m">Sorcerer Quickened Dimension Door - Direction and Distance - Self only</entry>
+  <entry id="54437" lang="en" sex="m">Sorcerer Quickened Dimension Door - Direction and Distance - Party within 10ft</entry>
   <entry id="54438" lang="en" sex="m">Sorcerer Silent Dimension Door</entry>
-  <entry id="54439" lang="en" sex="m">Sorcerer Silent Dimension Door</entry>
-  <entry id="54440" lang="en" sex="m">Sorcerer Silent Dimension Door</entry>
-  <entry id="54441" lang="en" sex="m">Sorcerer Silent Dimension Door</entry>
-  <entry id="54442" lang="en" sex="m">Sorcerer Silent Dimension Door</entry>
+  <entry id="54439" lang="en" sex="m">Sorcerer Silent Dimension Door - Self only</entry>
+  <entry id="54440" lang="en" sex="m">Sorcerer Silent Dimension Door - Party within 10ft</entry>
+  <entry id="54441" lang="en" sex="m">Sorcerer Silent Dimension Door - Direction and Distance - Self only</entry>
+  <entry id="54442" lang="en" sex="m">Sorcerer Silent Dimension Door - Direction and Distance - Party within 10ft</entry>
   <entry id="54443" lang="en" sex="m">Sorcerer Electric Orb</entry>
   <entry id="54444" lang="en" sex="m">Sorcerer Empowered Electric Orb</entry>
   <entry id="54445" lang="en" sex="m">Sorcerer Maximized Electric Orb</entry>
@@ -20474,29 +20474,29 @@ Epic Levels:
   <entry id="54526" lang="en" sex="m">Sorcerer Silent Phantasmal Killer</entry>
   <entry id="54527" lang="en" sex="m">Sorcerer Still Phantasmal Killer</entry>
   <entry id="54528" lang="en" sex="m">Sorcerer Polymorph Self</entry>
-  <entry id="54529" lang="en" sex="m">Sorcerer Polymorph Self</entry>
-  <entry id="54530" lang="en" sex="m">Sorcerer Polymorph Self</entry>
-  <entry id="54531" lang="en" sex="m">Sorcerer Polymorph Self</entry>
-  <entry id="54532" lang="en" sex="m">Sorcerer Polymorph Self</entry>
-  <entry id="54533" lang="en" sex="m">Sorcerer Polymorph Self</entry>
+  <entry id="54529" lang="en" sex="m">Sorcerer Polymorph, Giant Spider</entry>
+  <entry id="54530" lang="en" sex="m">Sorcerer Polymorph, Troll</entry>
+  <entry id="54531" lang="en" sex="m">Sorcerer Polymorph, Umber Hulk</entry>
+  <entry id="54532" lang="en" sex="m">Sorcerer Polymorph, Fey</entry>
+  <entry id="54533" lang="en" sex="m">Sorcerer Polymorph, Zombie</entry>
   <entry id="54534" lang="en" sex="m">Sorcerer Extended Polymorph Self</entry>
-  <entry id="54535" lang="en" sex="m">Sorcerer Extended Polymorph Self</entry>
-  <entry id="54536" lang="en" sex="m">Sorcerer Extended Polymorph Self</entry>
-  <entry id="54537" lang="en" sex="m">Sorcerer Extended Polymorph Self</entry>
-  <entry id="54538" lang="en" sex="m">Sorcerer Extended Polymorph Self</entry>
-  <entry id="54539" lang="en" sex="m">Sorcerer Extended Polymorph Self</entry>
+  <entry id="54535" lang="en" sex="m">Sorcerer Extended Polymorph, Giant Spider</entry>
+  <entry id="54536" lang="en" sex="m">Sorcerer Extended Polymorph, Troll</entry>
+  <entry id="54537" lang="en" sex="m">Sorcerer Extended Polymorph, Umber Hulk</entry>
+  <entry id="54538" lang="en" sex="m">Sorcerer Extended Polymorph, Fey</entry>
+  <entry id="54539" lang="en" sex="m">Sorcerer Extended Polymorph, Zombie</entry>
   <entry id="54540" lang="en" sex="m">Sorcerer Quickened Polymorph Self</entry>
-  <entry id="54541" lang="en" sex="m">Sorcerer Quickened Polymorph Self</entry>
-  <entry id="54542" lang="en" sex="m">Sorcerer Quickened Polymorph Self</entry>
-  <entry id="54543" lang="en" sex="m">Sorcerer Quickened Polymorph Self</entry>
-  <entry id="54544" lang="en" sex="m">Sorcerer Quickened Polymorph Self</entry>
-  <entry id="54545" lang="en" sex="m">Sorcerer Quickened Polymorph Self</entry>
+  <entry id="54541" lang="en" sex="m">Sorcerer Quickened Polymorph, Giant Spider</entry>
+  <entry id="54542" lang="en" sex="m">Sorcerer Quickened Polymorph, Troll</entry>
+  <entry id="54543" lang="en" sex="m">Sorcerer Quickened Polymorph, Umber Hulk</entry>
+  <entry id="54544" lang="en" sex="m">Sorcerer Quickened Polymorph, Fey</entry>
+  <entry id="54545" lang="en" sex="m">Sorcerer Quickened Polymorph, Zombie</entry>
   <entry id="54546" lang="en" sex="m">Sorcerer Silent Polymorph Self</entry>
-  <entry id="54547" lang="en" sex="m">Sorcerer Silent Polymorph Self</entry>
-  <entry id="54548" lang="en" sex="m">Sorcerer Silent Polymorph Self</entry>
-  <entry id="54549" lang="en" sex="m">Sorcerer Silent Polymorph Self</entry>
-  <entry id="54550" lang="en" sex="m">Sorcerer Silent Polymorph Self</entry>
-  <entry id="54551" lang="en" sex="m">Sorcerer Silent Polymorph Self</entry>
+  <entry id="54547" lang="en" sex="m">Sorcerer Silent Polymorph, Giant Spider</entry>
+  <entry id="54548" lang="en" sex="m">Sorcerer Silent Polymorph, Troll</entry>
+  <entry id="54549" lang="en" sex="m">Sorcerer Silent Polymorph, Umber Hulk</entry>
+  <entry id="54550" lang="en" sex="m">Sorcerer Silent Polymorph, Fey</entry>
+  <entry id="54551" lang="en" sex="m">Sorcerer Silent Polymorph, Zombie</entry>
   <entry id="54552" lang="en" sex="m">Sorcerer Remove Blindness/Deafness</entry>
   <entry id="54553" lang="en" sex="m">Sorcerer Quickened Remove Blindness/Deafness</entry>
   <entry id="54554" lang="en" sex="m">Sorcerer Silent Remove Blindness/Deafness</entry>
@@ -20506,23 +20506,23 @@ Epic Levels:
   <entry id="54558" lang="en" sex="m">Sorcerer Silent Remove Curse</entry>
   <entry id="54559" lang="en" sex="m">Sorcerer Still Remove Curse</entry>
   <entry id="54560" lang="en" sex="m">Sorcerer Shadow Conjuration</entry>
-  <entry id="54561" lang="en" sex="m">Sorcerer Shadow Conjuration</entry>
-  <entry id="54562" lang="en" sex="m">Sorcerer Shadow Conjuration</entry>
-  <entry id="54563" lang="en" sex="m">Sorcerer Shadow Conjuration</entry>
-  <entry id="54564" lang="en" sex="m">Sorcerer Shadow Conjuration</entry>
-  <entry id="54565" lang="en" sex="m">Sorcerer Shadow Conjuration</entry>
+  <entry id="54561" lang="en" sex="m">Sorcerer Shadow Conjuration, Summon Shadow</entry>
+  <entry id="54562" lang="en" sex="m">Sorcerer Shadow Conjuration, Darkness</entry>
+  <entry id="54563" lang="en" sex="m">Sorcerer Shadow Conjuration, Invisibility</entry>
+  <entry id="54564" lang="en" sex="m">Sorcerer Shadow Conjuration, Mage Armor</entry>
+  <entry id="54565" lang="en" sex="m">Sorcerer Shadow Conjuration, Magic Missile</entry>
   <entry id="54566" lang="en" sex="m">Sorcerer Silent Shadow Conjuration</entry>
-  <entry id="54567" lang="en" sex="m">Sorcerer Silent Shadow Conjuration</entry>
-  <entry id="54568" lang="en" sex="m">Sorcerer Silent Shadow Conjuration</entry>
-  <entry id="54569" lang="en" sex="m">Sorcerer Silent Shadow Conjuration</entry>
-  <entry id="54570" lang="en" sex="m">Sorcerer Silent Shadow Conjuration</entry>
-  <entry id="54571" lang="en" sex="m">Sorcerer Silent Shadow Conjuration</entry>
+  <entry id="54567" lang="en" sex="m">Sorcerer Silent Shadow Conjuration, Summon Shadow</entry>
+  <entry id="54568" lang="en" sex="m">Sorcerer Silent Shadow Conjuration, Darkness</entry>
+  <entry id="54569" lang="en" sex="m">Sorcerer Silent Shadow Conjuration, Invisibility</entry>
+  <entry id="54570" lang="en" sex="m">Sorcerer Silent Shadow Conjuration, Mage Armor</entry>
+  <entry id="54571" lang="en" sex="m">Sorcerer Silent Shadow Conjuration, Magic Missile</entry>
   <entry id="54572" lang="en" sex="m">Sorcerer Still Shadow Conjuration</entry>
-  <entry id="54573" lang="en" sex="m">Sorcerer Still Shadow Conjuration</entry>
-  <entry id="54574" lang="en" sex="m">Sorcerer Still Shadow Conjuration</entry>
-  <entry id="54575" lang="en" sex="m">Sorcerer Still Shadow Conjuration</entry>
-  <entry id="54576" lang="en" sex="m">Sorcerer Still Shadow Conjuration</entry>
-  <entry id="54577" lang="en" sex="m">Sorcerer Still Shadow Conjuration</entry>
+  <entry id="54573" lang="en" sex="m">Sorcerer Still Shadow Conjuration, Summon Shadow</entry>
+  <entry id="54574" lang="en" sex="m">Sorcerer Still Shadow Conjuration, Darkness</entry>
+  <entry id="54575" lang="en" sex="m">Sorcerer Still Shadow Conjuration, Invisibility</entry>
+  <entry id="54576" lang="en" sex="m">Sorcerer Still Shadow Conjuration, Mage Armor</entry>
+  <entry id="54577" lang="en" sex="m">Sorcerer Still Shadow Conjuration, Magic Missile</entry>
   <entry id="54578" lang="en" sex="m">Sorcerer Sinsabur's Baleful Bolt</entry>
   <entry id="54579" lang="en" sex="m">Sorcerer Empowered Sinsabur's Baleful Bolt</entry>
   <entry id="54580" lang="en" sex="m">Sorcerer Maximized Sinsabur's Baleful Bolt</entry>
@@ -20627,23 +20627,23 @@ Epic Levels:
   <entry id="54679" lang="en" sex="m">Sorcerer Silent Greater Fireburst</entry>
   <entry id="54680" lang="en" sex="m">Sorcerer Still Greater Fireburst</entry>
   <entry id="54681" lang="en" sex="m">Sorcerer Greater Shadow Conjuration</entry>
-  <entry id="54682" lang="en" sex="m">Sorcerer Greater Shadow Conjuration</entry>
-  <entry id="54683" lang="en" sex="m">Sorcerer Greater Shadow Conjuration</entry>
-  <entry id="54684" lang="en" sex="m">Sorcerer Greater Shadow Conjuration</entry>
-  <entry id="54685" lang="en" sex="m">Sorcerer Greater Shadow Conjuration</entry>
-  <entry id="54686" lang="en" sex="m">Sorcerer Greater Shadow Conjuration</entry>
+  <entry id="54682" lang="en" sex="m">Sorcerer Greater Shadow Conjuration, Summon Shadow</entry>
+  <entry id="54683" lang="en" sex="m">Sorcerer Greater Shadow Conjuration, Acid Arrow</entry>
+  <entry id="54684" lang="en" sex="m">Sorcerer Greater Shadow Conjuration, Ghostly Visage</entry>
+  <entry id="54685" lang="en" sex="m">Sorcerer Greater Shadow Conjuration, Web</entry>
+  <entry id="54686" lang="en" sex="m">Sorcerer Greater Shadow Conjuration, Minor Globe of Invulnerability</entry>
   <entry id="54687" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration</entry>
-  <entry id="54688" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration</entry>
-  <entry id="54689" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration</entry>
-  <entry id="54690" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration</entry>
-  <entry id="54691" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration</entry>
-  <entry id="54692" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration</entry>
+  <entry id="54688" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration, Summon Shadow</entry>
+  <entry id="54689" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration, Acid Arrow</entry>
+  <entry id="54690" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration, Ghostly Visage</entry>
+  <entry id="54691" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration, Web</entry>
+  <entry id="54692" lang="en" sex="m">Sorcerer Silent Greater Shadow Conjuration, Minor Globe of Invulnerability</entry>
   <entry id="54693" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration</entry>
-  <entry id="54694" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration</entry>
-  <entry id="54695" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration</entry>
-  <entry id="54696" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration</entry>
-  <entry id="54697" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration</entry>
-  <entry id="54698" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration</entry>
+  <entry id="54694" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration, Summon Shadow</entry>
+  <entry id="54695" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration, Acid Arrow</entry>
+  <entry id="54696" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration, Ghostly Visage</entry>
+  <entry id="54697" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration, Web</entry>
+  <entry id="54698" lang="en" sex="m">Sorcerer Still Greater Shadow Conjuration, Minor Globe of Invulnerability</entry>
   <entry id="54699" lang="en" sex="m">####END_OF_NEW_SPELLBOOK_RESERVE</entry>
   <entry id="54700" lang="en" sex="m">Inscribe Rune</entry>
   <entry id="54701" lang="en" sex="m">Type of Feat: Item Creation
@@ -22764,14 +22764,14 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62056" lang="en" sex="m">Sorcerer Silent Summon Creature V</entry>
   <entry id="62057" lang="en" sex="m">Sorcerer Still Summon Creature V</entry>
   <entry id="62058" lang="en" sex="m">Sorcerer Teleport</entry>
-  <entry id="62059" lang="en" sex="m">Sorcerer Teleport</entry>
-  <entry id="62060" lang="en" sex="m">Sorcerer Teleport</entry>
+  <entry id="62059" lang="en" sex="m">Sorcerer Teleport - Self only</entry>
+  <entry id="62060" lang="en" sex="m">Sorcerer Teleport - Party within 10ft</entry>
   <entry id="62061" lang="en" sex="m">Sorcerer Quickened Teleport</entry>
-  <entry id="62062" lang="en" sex="m">Sorcerer Quickened Teleport</entry>
-  <entry id="62063" lang="en" sex="m">Sorcerer Quickened Teleport</entry>
+  <entry id="62062" lang="en" sex="m">Sorcerer Quickened Teleport - Self only</entry>
+  <entry id="62063" lang="en" sex="m">Sorcerer Quickened Teleport - Party within 10ft</entry>
   <entry id="62064" lang="en" sex="m">Sorcerer Silent Teleport</entry>
-  <entry id="62065" lang="en" sex="m">Sorcerer Silent Teleport</entry>
-  <entry id="62066" lang="en" sex="m">Sorcerer Silent Teleport</entry>
+  <entry id="62065" lang="en" sex="m">Sorcerer Silent Teleport - Self only</entry>
+  <entry id="62066" lang="en" sex="m">Sorcerer Silent Teleport - Party within 10ft</entry>
   <entry id="62067" lang="en" sex="m">Sorcerer Acid Fog</entry>
   <entry id="62068" lang="en" sex="m">Sorcerer Empowered Acid Fog</entry>
   <entry id="62069" lang="en" sex="m">Sorcerer Extended Acid Fog</entry>
@@ -22894,23 +22894,23 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62186" lang="en" sex="m">Sorcerer Silent Planar Binding</entry>
   <entry id="62187" lang="en" sex="m">Sorcerer Still Planar Binding</entry>
   <entry id="62188" lang="en" sex="m">Sorcerer Shades</entry>
-  <entry id="62189" lang="en" sex="m">Sorcerer Shades</entry>
-  <entry id="62190" lang="en" sex="m">Sorcerer Shades</entry>
-  <entry id="62191" lang="en" sex="m">Sorcerer Shades</entry>
-  <entry id="62192" lang="en" sex="m">Sorcerer Shades</entry>
-  <entry id="62193" lang="en" sex="m">Sorcerer Shades</entry>
+  <entry id="62189" lang="en" sex="m">Sorcerer Summon Shadow</entry>
+  <entry id="62190" lang="en" sex="m">Sorcerer Shades, Cone of Cold</entry>
+  <entry id="62191" lang="en" sex="m">Sorcerer Shades, Fireball</entry>
+  <entry id="62192" lang="en" sex="m">Sorcerer Shades, Stoneskin</entry>
+  <entry id="62193" lang="en" sex="m">Sorcerer Shades, Wall of Fire</entry>
   <entry id="62194" lang="en" sex="m">Sorcerer Silent Shades</entry>
-  <entry id="62195" lang="en" sex="m">Sorcerer Silent Shades</entry>
-  <entry id="62196" lang="en" sex="m">Sorcerer Silent Shades</entry>
-  <entry id="62197" lang="en" sex="m">Sorcerer Silent Shades</entry>
-  <entry id="62198" lang="en" sex="m">Sorcerer Silent Shades</entry>
-  <entry id="62199" lang="en" sex="m">Sorcerer Silent Shades</entry>
+  <entry id="62195" lang="en" sex="m">Sorcerer Silent Summon Shadow</entry>
+  <entry id="62196" lang="en" sex="m">Sorcerer Silent Shades, Cone of Cold</entry>
+  <entry id="62197" lang="en" sex="m">Sorcerer Silent Shades, Fireball</entry>
+  <entry id="62198" lang="en" sex="m">Sorcerer Silent Shades, Stoneskin</entry>
+  <entry id="62199" lang="en" sex="m">Sorcerer Silent Shades, Wall of Fire</entry>
   <entry id="62200" lang="en" sex="m">Sorcerer Still Shades</entry>
-  <entry id="62201" lang="en" sex="m">Sorcerer Still Shades</entry>
-  <entry id="62202" lang="en" sex="m">Sorcerer Still Shades</entry>
-  <entry id="62203" lang="en" sex="m">Sorcerer Still Shades</entry>
-  <entry id="62204" lang="en" sex="m">Sorcerer Still Shades</entry>
-  <entry id="62205" lang="en" sex="m">Sorcerer Still Shades</entry>
+  <entry id="62201" lang="en" sex="m">Sorcerer Still Summon Shadow</entry>
+  <entry id="62202" lang="en" sex="m">Sorcerer Still Shades, Cone of Cold</entry>
+  <entry id="62203" lang="en" sex="m">Sorcerer Still Shades, Fireball</entry>
+  <entry id="62204" lang="en" sex="m">Sorcerer Still Shades, Stoneskin</entry>
+  <entry id="62205" lang="en" sex="m">Sorcerer Still Shades, Wall of Fire</entry>
   <entry id="62206" lang="en" sex="m">Sorcerer Stone to Flesh</entry>
   <entry id="62207" lang="en" sex="m">Sorcerer Extended Stone to Flesh</entry>
   <entry id="62208" lang="en" sex="m">Sorcerer Silent Stone to Flesh</entry>
@@ -22958,29 +22958,29 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62250" lang="en" sex="m">Sorcerer Silent Energy Ebb</entry>
   <entry id="62251" lang="en" sex="m">Sorcerer Still Energy Ebb</entry>
   <entry id="62252" lang="en" sex="m">Sorcerer Energy Immunity</entry>
-  <entry id="62253" lang="en" sex="m">Sorcerer Energy Immunity</entry>
-  <entry id="62254" lang="en" sex="m">Sorcerer Energy Immunity</entry>
-  <entry id="62255" lang="en" sex="m">Sorcerer Energy Immunity</entry>
-  <entry id="62256" lang="en" sex="m">Sorcerer Energy Immunity</entry>
-  <entry id="62257" lang="en" sex="m">Sorcerer Energy Immunity</entry>
+  <entry id="62253" lang="en" sex="m">Sorcerer Acid Energy Immunity</entry>
+  <entry id="62254" lang="en" sex="m">Sorcerer Cold Energy Immunity</entry>
+  <entry id="62255" lang="en" sex="m">Sorcerer Electricity Energy Immunity</entry>
+  <entry id="62256" lang="en" sex="m">Sorcerer Fire Energy Immunity</entry>
+  <entry id="62257" lang="en" sex="m">Sorcerer Sonic Energy Immunity</entry>
   <entry id="62258" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
-  <entry id="62259" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
-  <entry id="62260" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
-  <entry id="62261" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
-  <entry id="62262" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
-  <entry id="62263" lang="en" sex="m">Sorcerer Extended Energy Immunity</entry>
+  <entry id="62259" lang="en" sex="m">Sorcerer Extended Acid Energy Immunity</entry>
+  <entry id="62260" lang="en" sex="m">Sorcerer Extended Cold Energy Immunity</entry>
+  <entry id="62261" lang="en" sex="m">Sorcerer Extended Electricity Energy Immunity</entry>
+  <entry id="62262" lang="en" sex="m">Sorcerer Extended Fire Energy Immunity</entry>
+  <entry id="62263" lang="en" sex="m">Sorcerer Extended Sonic Energy Immunity</entry>
   <entry id="62264" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
-  <entry id="62265" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
-  <entry id="62266" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
-  <entry id="62267" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
-  <entry id="62268" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
-  <entry id="62269" lang="en" sex="m">Sorcerer Silent Energy Immunity</entry>
+  <entry id="62265" lang="en" sex="m">Sorcerer Silent Acid Energy Immunity</entry>
+  <entry id="62266" lang="en" sex="m">Sorcerer Silent Cold Energy Immunity</entry>
+  <entry id="62267" lang="en" sex="m">Sorcerer Silent Electricity Energy Immunity</entry>
+  <entry id="62268" lang="en" sex="m">Sorcerer Silent Fire Energy Immunity</entry>
+  <entry id="62269" lang="en" sex="m">Sorcerer Silent Sonic Energy Immunity</entry>
   <entry id="62270" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
-  <entry id="62271" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
-  <entry id="62272" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
-  <entry id="62273" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
-  <entry id="62274" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
-  <entry id="62275" lang="en" sex="m">Sorcerer Still Energy Immunity</entry>
+  <entry id="62271" lang="en" sex="m">Sorcerer Still Acid Energy Immunity</entry>
+  <entry id="62272" lang="en" sex="m">Sorcerer Still Cold Energy Immunity</entry>
+  <entry id="62273" lang="en" sex="m">Sorcerer Still Electricity Energy Immunity</entry>
+  <entry id="62274" lang="en" sex="m">Sorcerer Still Fire Energy Immunity</entry>
+  <entry id="62275" lang="en" sex="m">Sorcerer Still Sonic Energy Immunity</entry>
   <entry id="62276" lang="en" sex="m">Sorcerer Finger of Death</entry>
   <entry id="62277" lang="en" sex="m">Sorcerer Empowered Finger of Death</entry>
   <entry id="62278" lang="en" sex="m">Sorcerer Silent Finger of Death</entry>
@@ -22989,11 +22989,11 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62281" lang="en" sex="m">Sorcerer Silent Great Thunderclap</entry>
   <entry id="62282" lang="en" sex="m">Sorcerer Still Great Thunderclap</entry>
   <entry id="62283" lang="en" sex="m">Sorcerer Greater Teleport</entry>
-  <entry id="62284" lang="en" sex="m">Sorcerer Greater Teleport</entry>
-  <entry id="62285" lang="en" sex="m">Sorcerer Greater Teleport</entry>
+  <entry id="62284" lang="en" sex="m">Sorcerer Greater Teleport - Self only</entry>
+  <entry id="62285" lang="en" sex="m">Sorcerer Greater Teleport - Party within 10ft</entry>
   <entry id="62286" lang="en" sex="m">Sorcerer Silent Greater Teleport</entry>
-  <entry id="62287" lang="en" sex="m">Sorcerer Silent Greater Teleport</entry>
-  <entry id="62288" lang="en" sex="m">Sorcerer Silent Greater Teleport</entry>
+  <entry id="62287" lang="en" sex="m">Sorcerer Silent Greater Teleport - Self only</entry>
+  <entry id="62288" lang="en" sex="m">Sorcerer Silent Greater Teleport - Party within 10ft</entry>
   <entry id="62289" lang="en" sex="m">Sorcerer Insanity</entry>
   <entry id="62290" lang="en" sex="m">Sorcerer Silent Insanity</entry>
   <entry id="62291" lang="en" sex="m">Sorcerer Still Insanity</entry>
@@ -23032,25 +23032,25 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62324" lang="en" sex="m">Sorcerer Silent Spell Mantle</entry>
   <entry id="62325" lang="en" sex="m">Sorcerer Still Spell Mantle</entry>
   <entry id="62326" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
-  <entry id="62327" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
-  <entry id="62328" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
-  <entry id="62329" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
-  <entry id="62330" lang="en" sex="m">Sorcerer Summon Creature VII</entry>
+  <entry id="62327" lang="en" sex="m">Sorcerer Summon Huge Air Elemental</entry>
+  <entry id="62328" lang="en" sex="m">Sorcerer Summon Huge Earth Elemental</entry>
+  <entry id="62329" lang="en" sex="m">Sorcerer Summon Huge Fire Elemental</entry>
+  <entry id="62330" lang="en" sex="m">Sorcerer Summon Huge Water Elemental</entry>
   <entry id="62331" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
-  <entry id="62332" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
-  <entry id="62333" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
-  <entry id="62334" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
-  <entry id="62335" lang="en" sex="m">Sorcerer Extended Summon Creature VII</entry>
+  <entry id="62332" lang="en" sex="m">Sorcerer Extended Summon Huge Air Elemental</entry>
+  <entry id="62333" lang="en" sex="m">Sorcerer Extended Summon Huge Earth Elemental</entry>
+  <entry id="62334" lang="en" sex="m">Sorcerer Extended Summon Huge Fire Elemental</entry>
+  <entry id="62335" lang="en" sex="m">Sorcerer Extended Summon Huge Water Elemental</entry>
   <entry id="62336" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
-  <entry id="62337" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
-  <entry id="62338" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
-  <entry id="62339" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
-  <entry id="62340" lang="en" sex="m">Sorcerer Silent Summon Creature VII</entry>
+  <entry id="62337" lang="en" sex="m">Sorcerer Silent Summon Huge Air Elemental</entry>
+  <entry id="62338" lang="en" sex="m">Sorcerer Silent Summon Huge Earth Elemental</entry>
+  <entry id="62339" lang="en" sex="m">Sorcerer Silent Summon Huge Fire Elemental</entry>
+  <entry id="62340" lang="en" sex="m">Sorcerer Silent Summon Huge Water Elemental</entry>
   <entry id="62341" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
-  <entry id="62342" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
-  <entry id="62343" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
-  <entry id="62344" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
-  <entry id="62345" lang="en" sex="m">Sorcerer Still Summon Creature VII</entry>
+  <entry id="62342" lang="en" sex="m">Sorcerer Still Summon Huge Air Elemental</entry>
+  <entry id="62343" lang="en" sex="m">Sorcerer Still Summon Huge Earth Elemental</entry>
+  <entry id="62344" lang="en" sex="m">Sorcerer Still Summon Huge Fire Elemental</entry>
+  <entry id="62345" lang="en" sex="m">Sorcerer Still Summon Huge Water Elemental</entry>
   <entry id="62346" lang="en" sex="m">Sorcerer Avascular Mass</entry>
   <entry id="62347" lang="en" sex="m">Sorcerer Extended Avascular Mass</entry>
   <entry id="62348" lang="en" sex="m">Sorcerer Silent Avascular Mass</entry>
@@ -23120,25 +23120,25 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62412" lang="en" sex="m">Sorcerer Silent Premonition</entry>
   <entry id="62413" lang="en" sex="m">Sorcerer Still Premonition</entry>
   <entry id="62414" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
-  <entry id="62415" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
-  <entry id="62416" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
-  <entry id="62417" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
-  <entry id="62418" lang="en" sex="m">Sorcerer Summon Creature VIII</entry>
+  <entry id="62415" lang="en" sex="m">Sorcerer Summon Greater Air Elemental</entry>
+  <entry id="62416" lang="en" sex="m">Sorcerer Summon Greater Earth Elemental</entry>
+  <entry id="62417" lang="en" sex="m">Sorcerer Summon Greater Fire Elemental</entry>
+  <entry id="62418" lang="en" sex="m">Sorcerer Summon Greater Water Elemental</entry>
   <entry id="62419" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
-  <entry id="62420" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
-  <entry id="62421" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
-  <entry id="62422" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
-  <entry id="62423" lang="en" sex="m">Sorcerer Extended Summon Creature VIII</entry>
+  <entry id="62420" lang="en" sex="m">Sorcerer Extended Summon Greater Air Elemental</entry>
+  <entry id="62421" lang="en" sex="m">Sorcerer Extended Summon Greater Earth Elemental</entry>
+  <entry id="62422" lang="en" sex="m">Sorcerer Extended Summon Greater Fire Elemental</entry>
+  <entry id="62423" lang="en" sex="m">Sorcerer Extended Summon Greater Water Elemental</entry>
   <entry id="62424" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
-  <entry id="62425" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
-  <entry id="62426" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
-  <entry id="62427" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
-  <entry id="62428" lang="en" sex="m">Sorcerer Silent Summon Creature VIII</entry>
+  <entry id="62425" lang="en" sex="m">Sorcerer Silent Summon Greater Air Elemental</entry>
+  <entry id="62426" lang="en" sex="m">Sorcerer Silent Summon Greater Earth Elemental</entry>
+  <entry id="62427" lang="en" sex="m">Sorcerer Silent Summon Greater Fire Elemental</entry>
+  <entry id="62428" lang="en" sex="m">Sorcerer Silent Summon Greater Water Elemental</entry>
   <entry id="62429" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
-  <entry id="62430" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
-  <entry id="62431" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
-  <entry id="62432" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
-  <entry id="62433" lang="en" sex="m">Sorcerer Still Summon Creature VIII</entry>
+  <entry id="62430" lang="en" sex="m">Sorcerer Still Summon Greater Air Elemental</entry>
+  <entry id="62431" lang="en" sex="m">Sorcerer Still Summon Greater Earth Elemental</entry>
+  <entry id="62432" lang="en" sex="m">Sorcerer Still Summon Greater Fire Elemental</entry>
+  <entry id="62433" lang="en" sex="m">Sorcerer Still Summon Greater Water Elemental</entry>
   <entry id="62434" lang="en" sex="m">Sorcerer Sunburst</entry>
   <entry id="62435" lang="en" sex="m">Sorcerer Silent Sunburst</entry>
   <entry id="62436" lang="en" sex="m">Sorcerer Still Sunburst</entry>
@@ -23154,20 +23154,20 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62446" lang="en" sex="m">Sorcerer Necrotic Termination</entry>
   <entry id="62447" lang="en" sex="m">Sorcerer Power Word, Kill</entry>
   <entry id="62448" lang="en" sex="m">Sorcerer Shapechange</entry>
-  <entry id="62449" lang="en" sex="m">Sorcerer Shapechange</entry>
-  <entry id="62450" lang="en" sex="m">Sorcerer Shapechange</entry>
-  <entry id="62451" lang="en" sex="m">Sorcerer Shapechange</entry>
-  <entry id="62452" lang="en" sex="m">Sorcerer Shapechange</entry>
-  <entry id="62453" lang="en" sex="m">Sorcerer Shapechange</entry>
+  <entry id="62449" lang="en" sex="m">Sorcerer Shapechange, Red Dragon</entry>
+  <entry id="62450" lang="en" sex="m">Sorcerer Shapechange, Fire Giant</entry>
+  <entry id="62451" lang="en" sex="m">Sorcerer Shapechange, Balor</entry>
+  <entry id="62452" lang="en" sex="m">Sorcerer Shapechange, Death Slaad</entry>
+  <entry id="62453" lang="en" sex="m">Sorcerer Shapechange, Iron Golem</entry>
   <entry id="62454" lang="en" sex="m">Sorcerer Sphere of Ultimate Destruction</entry>
   <entry id="62455" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
-  <entry id="62456" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
-  <entry id="62457" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
-  <entry id="62458" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
-  <entry id="62459" lang="en" sex="m">Sorcerer Summon Creature IX</entry>
+  <entry id="62456" lang="en" sex="m">Sorcerer Summon Elder Air Elemental</entry>
+  <entry id="62457" lang="en" sex="m">Sorcerer Summon Elder Earth Elemental</entry>
+  <entry id="62458" lang="en" sex="m">Sorcerer Summon Elder Fire Elemental</entry>
+  <entry id="62459" lang="en" sex="m">Sorcerer Summon Elder Water Elemental</entry>
   <entry id="62460" lang="en" sex="m">Sorcerer Teleportation Circle</entry>
-  <entry id="62461" lang="en" sex="m">Sorcerer Teleportation Circle</entry>
-  <entry id="62462" lang="en" sex="m">Sorcerer Teleportation Circle</entry>
+  <entry id="62461" lang="en" sex="m">Sorcerer Teleportation Circle - Visible</entry>
+  <entry id="62462" lang="en" sex="m">Sorcerer Teleportation Circle - Hidden</entry>
   <entry id="62463" lang="en" sex="m">Sorcerer Time Stop</entry>
   <entry id="62464" lang="en" sex="m">Sorcerer Wail of the Banshee</entry>
   <entry id="62465" lang="en" sex="m">Sorcerer Weird</entry>
@@ -23208,10 +23208,10 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62500" lang="en" sex="m">Assassin Silent Magic Circle against Good</entry>
   <entry id="62501" lang="en" sex="m">Assassin Still Magic Circle against Good</entry>
   <entry id="62502" lang="en" sex="m">Assassin Dimension Door</entry>
-  <entry id="62503" lang="en" sex="m">Assassin Dimension Door</entry>
-  <entry id="62504" lang="en" sex="m">Assassin Dimension Door</entry>
-  <entry id="62505" lang="en" sex="m">Assassin Dimension Door</entry>
-  <entry id="62506" lang="en" sex="m">Assassin Dimension Door</entry>
+  <entry id="62503" lang="en" sex="m">Assassin Dimension Door - Self only</entry>
+  <entry id="62504" lang="en" sex="m">Assassin Dimension Door - Party within 10ft</entry>
+  <entry id="62505" lang="en" sex="m">Assassin Dimension Door - Direction and Distance - Self only</entry>
+  <entry id="62506" lang="en" sex="m">Assassin Dimension Door - Direction and Distance - Party within 10ft</entry>
   <entry id="62507" lang="en" sex="m">Assassin Freedom of Movement</entry>
   <entry id="62508" lang="en" sex="m">Assassin Improved Invisibility</entry>
   <entry id="62509" lang="en" sex="m">Assassin Poison</entry>
@@ -23347,30 +23347,30 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62639" lang="en" sex="m">Ocular Adept Silent Summon Creature I</entry>
   <entry id="62640" lang="en" sex="m">Ocular Adept Still Summon Creature I</entry>
   <entry id="62641" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
-  <entry id="62642" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
-  <entry id="62643" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
-  <entry id="62644" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
-  <entry id="62645" lang="en" sex="m">Ocular Adept Protection from Alignment</entry>
+  <entry id="62642" lang="en" sex="m">Ocular Adept Protection from Evil</entry>
+  <entry id="62643" lang="en" sex="m">Ocular Adept Protection from Good</entry>
+  <entry id="62644" lang="en" sex="m">Ocular Adept Protection from Chaos</entry>
+  <entry id="62645" lang="en" sex="m">Ocular Adept Protection from Law</entry>
   <entry id="62646" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
-  <entry id="62647" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
-  <entry id="62648" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
-  <entry id="62649" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
-  <entry id="62650" lang="en" sex="m">Ocular Adept Extended Protection from Alignment</entry>
+  <entry id="62647" lang="en" sex="m">Ocular Adept Extended Protection from Evil</entry>
+  <entry id="62648" lang="en" sex="m">Ocular Adept Extended Protection from Good</entry>
+  <entry id="62649" lang="en" sex="m">Ocular Adept Extended Protection from Chaos</entry>
+  <entry id="62650" lang="en" sex="m">Ocular Adept Extended Protection from Law</entry>
   <entry id="62651" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
-  <entry id="62652" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
-  <entry id="62653" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
-  <entry id="62654" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
-  <entry id="62655" lang="en" sex="m">Ocular Adept Quickened Protection from Alignment</entry>
+  <entry id="62652" lang="en" sex="m">Ocular Adept Quickened Protection from Evil</entry>
+  <entry id="62653" lang="en" sex="m">Ocular Adept Quickened Protection from Good</entry>
+  <entry id="62654" lang="en" sex="m">Ocular Adept Quickened Protection from Chaos</entry>
+  <entry id="62655" lang="en" sex="m">Ocular Adept Quickened Protection from Law</entry>
   <entry id="62656" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
-  <entry id="62657" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
-  <entry id="62658" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
-  <entry id="62659" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
-  <entry id="62660" lang="en" sex="m">Ocular Adept Silent Protection from Alignment</entry>
+  <entry id="62657" lang="en" sex="m">Ocular Adept Silent Protection from Evil</entry>
+  <entry id="62658" lang="en" sex="m">Ocular Adept Silent Protection from Good</entry>
+  <entry id="62659" lang="en" sex="m">Ocular Adept Silent Protection from Chaos</entry>
+  <entry id="62660" lang="en" sex="m">Ocular Adept Silent Protection from Law</entry>
   <entry id="62661" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
-  <entry id="62662" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
-  <entry id="62663" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
-  <entry id="62664" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
-  <entry id="62665" lang="en" sex="m">Ocular Adept Still Protection from Alignment</entry>
+  <entry id="62662" lang="en" sex="m">Ocular Adept Still Protection from Evil</entry>
+  <entry id="62663" lang="en" sex="m">Ocular Adept Still Protection from Good</entry>
+  <entry id="62664" lang="en" sex="m">Ocular Adept Still Protection from Chaos</entry>
+  <entry id="62665" lang="en" sex="m">Ocular Adept Still Protection from Law</entry>
   <entry id="62666" lang="en" sex="m">Ocular Adept Divine Favor</entry>
   <entry id="62667" lang="en" sex="m">Ocular Adept Extended Divine Favor</entry>
   <entry id="62668" lang="en" sex="m">Ocular Adept Quickened Divine Favor</entry>
@@ -23569,25 +23569,25 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62861" lang="en" sex="m">Ocular Adept Silent Summon Creature III</entry>
   <entry id="62862" lang="en" sex="m">Ocular Adept Still Summon Creature III</entry>
   <entry id="62863" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
-  <entry id="62864" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
-  <entry id="62865" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
-  <entry id="62866" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
-  <entry id="62867" lang="en" sex="m">Ocular Adept Magic Circle against Alignment</entry>
+  <entry id="62864" lang="en" sex="m">Ocular Adept Magic Circle against Evil</entry>
+  <entry id="62865" lang="en" sex="m">Ocular Adept Magic Circle against Good</entry>
+  <entry id="62866" lang="en" sex="m">Ocular Adept Magic Circle against Chaos</entry>
+  <entry id="62867" lang="en" sex="m">Ocular Adept Magic Circle against Law</entry>
   <entry id="62868" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
-  <entry id="62869" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
-  <entry id="62870" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
-  <entry id="62871" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
-  <entry id="62872" lang="en" sex="m">Ocular Adept Extended Magic Circle against Alignment</entry>
+  <entry id="62869" lang="en" sex="m">Ocular Adept Extended Magic Circle against Evil</entry>
+  <entry id="62870" lang="en" sex="m">Ocular Adept Extended Magic Circle against Good</entry>
+  <entry id="62871" lang="en" sex="m">Ocular Adept Extended Magic Circle against Chaos</entry>
+  <entry id="62872" lang="en" sex="m">Ocular Adept Extended Magic Circle against Law</entry>
   <entry id="62873" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
-  <entry id="62874" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
-  <entry id="62875" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
-  <entry id="62876" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
-  <entry id="62877" lang="en" sex="m">Ocular Adept Silent Magic Circle against Alignment</entry>
+  <entry id="62874" lang="en" sex="m">Ocular Adept Silent Magic Circle against Evil</entry>
+  <entry id="62875" lang="en" sex="m">Ocular Adept Silent Magic Circle against Good</entry>
+  <entry id="62876" lang="en" sex="m">Ocular Adept Silent Magic Circle against Chaos</entry>
+  <entry id="62877" lang="en" sex="m">Ocular Adept Silent Magic Circle against Law</entry>
   <entry id="62878" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
-  <entry id="62879" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
-  <entry id="62880" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
-  <entry id="62881" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
-  <entry id="62882" lang="en" sex="m">Ocular Adept Still Magic Circle against Alignment</entry>
+  <entry id="62879" lang="en" sex="m">Ocular Adept Still Magic Circle against Evil</entry>
+  <entry id="62880" lang="en" sex="m">Ocular Adept Still Magic Circle against Good</entry>
+  <entry id="62881" lang="en" sex="m">Ocular Adept Still Magic Circle against Chaos</entry>
+  <entry id="62882" lang="en" sex="m">Ocular Adept Still Magic Circle against Law</entry>
   <entry id="62883" lang="en" sex="m">Ocular Adept Continual Flame</entry>
   <entry id="62884" lang="en" sex="m">Ocular Adept Silent Continual Flame</entry>
   <entry id="62885" lang="en" sex="m">Ocular Adept Still Continual Flame</entry>
@@ -24060,14 +24060,14 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="63352" lang="en" sex="m">Telflammar Shadowlord Silent Vampiric Touch</entry>
   <entry id="63353" lang="en" sex="m">Telflammar Shadowlord Still Vampiric Touch</entry>
   <entry id="63354" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
-  <entry id="63355" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
-  <entry id="63356" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
-  <entry id="63357" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
-  <entry id="63358" lang="en" sex="m">Telflammar Shadowlord Dimension Door</entry>
+  <entry id="63355" lang="en" sex="m">Telflammar Shadowlord Dimension Door - Self only</entry>
+  <entry id="63356" lang="en" sex="m">Telflammar Shadowlord Dimension Door - Party within 10ft</entry>
+  <entry id="63357" lang="en" sex="m">Telflammar Shadowlord Dimension Door - Direction and Distance - Self only</entry>
+  <entry id="63358" lang="en" sex="m">Telflammar Shadowlord Dimension Door - Direction and Distance - Party within 10ft</entry>
   <entry id="63359" lang="en" sex="m">Telflammar Shadowlord Confusion</entry>
   <entry id="63360" lang="en" sex="m">Telflammar Shadowlord Dark Bolt</entry>
-  <entry id="63361" lang="en" sex="m">Telflammar Shadowlord Dark Bolt</entry>
-  <entry id="63362" lang="en" sex="m">Telflammar Shadowlord Dark Bolt</entry>
+  <entry id="63361" lang="en" sex="m">Telflammar Shadowlord Dark Bolt (all Bolt)</entry>
+  <entry id="63362" lang="en" sex="m">Telflammar Shadowlord Dark Bolt (1 Bolt/rnd)</entry>
   <entry id="63363" lang="en" sex="m">Telflammar Shadowlord Invisibility Sphere</entry>
   <entry id="63364" lang="en" sex="m">Knight of the Middle Circle Bless</entry>
   <entry id="63365" lang="en" sex="m">Knight of the Middle Circle Extended Bless</entry>

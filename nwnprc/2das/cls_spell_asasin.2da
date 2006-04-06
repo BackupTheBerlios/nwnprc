@@ -39,10 +39,10 @@
 35  Assassin_Silent_Magic_Circle_against_Good    4     19692  10092    11880   105         33      
 36  Assassin_Still_Magic_Circle_against_Good     4     19693  10093    11881   105         37      
 37  Assassin_DimensionDoor_RadialMaster          4     19694  10094    11882   2890        ****    
-38  Assassin_DimensionDoor_RadialMaster          ****  ****   ****     11883   2891        ****    
-39  Assassin_DimensionDoor_RadialMaster          ****  ****   ****     11884   2892        ****    
-40  Assassin_DimensionDoor_RadialMaster          ****  ****   ****     11885   2896        ****    
-41  Assassin_DimensionDoor_RadialMaster          ****  ****   ****     11886   2897        ****    
+38  Assassin_DimensionDoor_SelfOnly              ****  ****   ****     11883   2891        ****    
+39  Assassin_DimensionDoor_Party                 ****  ****   ****     11884   2892        ****    
+40  Assassin_DimensionDoor_DirDist_SelfOnly      ****  ****   ****     11885   2896        ****    
+41  Assassin_DimensionDoor_DirDist_Party         ****  ****   ****     11886   2897        ****    
 42  Assassin_Freedom_of_Movement                 4     19695  10095    11887   62          ****    
 43  Assassin_Improved_Invisibility               4     19696  10096    11888   88          ****    
 44  Assassin_Poison                              4     19697  10097    11889   129         ****    

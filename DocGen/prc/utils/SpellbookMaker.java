@@ -126,10 +126,6 @@ public final class SpellbookMaker{
 						{
 						//get the real spellID
 						int spellID = classCoreSpell2da.getBiowareEntryAsInt("SpellID", row);
-						//get the name of the spell
-						String spellName = getCheckedTlkEntry(spells2da.getBiowareEntryAsInt("Name", spellID));
-						//get the label of the spell
-						String spellLabel = spells2da.getEntry("Label", spellID);
 						//get the level of the spell
 						int spellLevel = classCoreSpell2da.getBiowareEntryAsInt("Level", row);
 						//get the metamagic reference to know what types work
@@ -209,10 +205,6 @@ public final class SpellbookMaker{
 								}
 								//check if the metamagic adjusted level is less than the maximum level
 								if((metamagicLevel+spellLevel) <= maxLevel){
-									//assemble the name
-									String name = className+spellNameMetamagic+spellName;
-									//assemble the label
-									String label = classLabel+spellLabelMetamagic+spellLabel;
 									//debug printout
 									//System.out.println(name+" : "+label);
 									addNewSpellbookData(spellID,
@@ -222,8 +214,10 @@ public final class SpellbookMaker{
 														metamagicLevel,
 														metamagicFeat,
 														spellLevel,
-														name,
-														label,
+														className,
+														spellNameMetamagic,
+														classLabel,
+														spellLabelMetamagic,
 														0);
 								}//end of level check
 							}//end of metamamgic check
@@ -252,9 +246,19 @@ public final class SpellbookMaker{
 											int metamagicLevel,
 											String metamagicFeat,
 											int spellLevel,
-											String name,
-											String label,
+											String className,
+											String spellNameMetamagic,
+											String classLabel,
+											String spellLabelMetamagic,
 											int subradialMaster){
+		//get the name of the spell
+		String spellName = getCheckedTlkEntry(spells2da.getBiowareEntryAsInt("Name", spellID));
+		//get the label of the spell
+		String spellLabel = spells2da.getEntry("Label", spellID);
+		//assemble the name
+		String name = className+spellNameMetamagic+spellName;
+		//assemble the label
+		String label = classLabel+spellLabelMetamagic+spellLabel;
 		//set the next tlk line to the name
 		customtlk.setEntry(tlkRow, name);
 
@@ -424,8 +428,10 @@ public final class SpellbookMaker{
 										metamagicLevel,
 										metamagicFeat,
 										spellLevel,
-										name,
-										label,
+										className,
+										spellNameMetamagic,
+										classLabel,
+										spellLabelMetamagic,
 										masterSpellID);
 					//update the master rows with the subradial spell rows
 					//the -1 is because you want the last used row, not the current blank row

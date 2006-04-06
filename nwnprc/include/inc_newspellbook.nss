@@ -491,7 +491,15 @@ void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID)
     object oPC = OBJECT_SELF;
     //get the spellbook ID
     string sFile = GetFileForClass(nClass);
-    int nSpellbookID = SpellToSpellbookID(PRCGetSpellId(), sFile);
+    int nFakeSpellID = PRCGetSpellId();
+    //if its a subradial spell, get the master
+    int nMasterFakeSpellID;
+    nMasterFakeSpellID = StringToInt(Get2DACache("spells", "Master", nFakeSpellID));
+    if(!nMasterFakeSpellID)
+        nMasterFakeSpellID = nFakeSpellID;
+        
+    int nSpellbookID = SpellToSpellbookID(nMasterFakeSpellID, sFile);
+        
     if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
     {
 DoDebug("Error: NewSpellbookMem_"+IntToString(nClass)+" array does not exist");
@@ -539,11 +547,11 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
     //uses GetSpellId to get the fake spellID not the real one
     //this is only the BASE DC, feats etc are added on top of this
     int nDC = 10
-        +StringToInt(Get2DACache("Spells", "Innate", PRCGetSpellId()))
+        +StringToInt(Get2DACache("Spells", "Innate", nFakeSpellID))
         +((GetAbilityForClass(nClass, oPC)-10)/2);
     //cast the spell
     //dont need to override level, the spellscript will calculate it
     ActionCastSpell(nSpellID, 0, nDC, 0, nMetamagic, nClass);
     //remove it from the spellbook
-    RemoveSpellUse(oPC, PRCGetSpellId(), nClass);
+    RemoveSpellUse(oPC, nMasterFakeSpellID, nClass);
 }

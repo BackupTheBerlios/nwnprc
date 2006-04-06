@@ -46,8 +46,8 @@ public final class ItempropMaker{
 				else
 					param1 = 1;
 				//loop over each subtype
-				if(subtype){
-					Data_2da subtype2da = Data_2da.load2da("2das\\"+itempropdef2da.getBiowareEntry("SubTypeResRef", type)"+.2da", true);
+				if(subtype != 0){
+					Data_2da subtype2da = Data_2da.load2da("2das\\"+itempropdef2da.getBiowareEntry("SubTypeResRef", type)+".2da", true);
 					for(int subtypeID = 0; subtypeID < subtype2da.getEntryCount(); subtypeID ++) {
 						//loop over the param1s, if applicable
 						if(subtype2da.getBiowareEntry("Param1ResRef", subtypeID) == ""){
@@ -56,12 +56,22 @@ public final class ItempropMaker{
 							if(itempropdef2da.getBiowareEntry("Param1ResRef", type) == "")
 								param1 = 0;
 							else
-								param1 = 1;
+								param1 = 2;
+						}
+						if(param1 != 0){
+							String param1name;
+							if(param1 == 1)
+								param1name = paramtable2da.getBiowareEntry("TableResRef", itempropdef2da.getBiowareEntryAsInt("Param1ResRef", type));
+							else if(param1 == 2)
+								param1name = paramtable2da.getBiowareEntry("TableResRef", subtype2da.getBiowareEntryAsInt("Param1ResRef", subtypeID));
+							Data_2da param12da = Data_2da.load2da("2das\\"+itempropdef2da.getBiowareEntry("SubTypeResRef", type)+".2da", true);
+						}else{
+							//no param1
 						}
 					}
 				}else{
 					//no subtype
-					if(param1){
+					if(param1 != 0){
 					}else{
 						//no param1
 					}

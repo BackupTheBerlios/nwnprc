@@ -267,6 +267,9 @@ const int FEAT_LEADERSHIP                              = 4365;
 const int FEAT_EPIC_LEADERSHIP                         = 4366;
 const int FEAT_LEGENDARY_COMMANDER                     = 4367;
 
+// Libris Mortis
+const int FEAT_REQUIEM                                 = 2455;
+
 // Magic of Faerun
 const int FEAT_SPELL_GIRDING                           = 2456;
 

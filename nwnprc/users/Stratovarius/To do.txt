@@ -4,6 +4,12 @@ Bugs:
 Everything Below this line is pushed back to 3.1
 -----------------------------------------------------
 
+Truenaming:
+1 Base Class
+~60 Utterances
+4 Prestige Classes
+30 feats
+
 Psionic PrCs:
 Metamind
 Psion Uncarnate
@@ -11,11 +17,15 @@ Pyro
 Cryo
 Sanctified Mind - 2da/TLK only
 Iron Mind - 2da/TLK
+Shadowmind - All to do
 
 Normal PrCs:
 Blood Magus
 Slayer of Domiel - 2da/TLK, Spells, Update spell constant
 Disciple of Asmodeus - 2da/TLK, Spell Const, Command, Greater Command
+Suel Archanamach - All to do
+Dirgesinger - 2das, 1 ability
+Stormsinger - All to do
 
 Pale master -> 3.0:
 Fighter vassal

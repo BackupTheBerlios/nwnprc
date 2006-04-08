@@ -153,3 +153,4 @@ const int CLASS_TYPE_SPELLFIRE               =  57;
 const int CLASS_TYPE_ORDER_BOW_INITIATE      = 161;
 const int CLASS_TYPE_SLAYER_OF_DOMIEL        = 221;
 const int CLASS_TYPE_DISCIPLE_OF_ASMODEUS    = 222;
+const int CLASS_TYPE_DIRGESINGER	     = 223;

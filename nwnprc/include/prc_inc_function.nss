@@ -1030,6 +1030,16 @@ else
     }
 }
 
+void BardSong(object oPC)
+{
+	// This is used to set the number of bardic song uses per day, as bardic PrCs can increase it
+	// or other classes can grant it on their own
+	int nTotal = GetLevelByClass(CLASS_TYPE_BARD, oPC);
+	nTotal += GetLevelByClass(CLASS_TYPE_DIRGESINGER, oPC);
+	
+	FeatUsePerDay(oPC, FEAT_BARD_SONGS, -1, nTotal);
+}
+
 void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);

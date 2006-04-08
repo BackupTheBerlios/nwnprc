@@ -1,4 +1,13 @@
 2DA V2.0
 
-     FeatLabel FeatIndex List GrantedOnLevel OnMenu 
-0    ****      ****      **** ****           ****   
+     FeatLabel                       FeatIndex List GrantedOnLevel OnMenu 
+0    Unseen_Weapon_Unerring_Strike   ****      3    1              1      
+1    Shadow_and_Stealth              ****      3    2              0      
+2    Sudden_Strike                   ****      3    2              0      
+3    Shadow_Vision                   ****      3    3              0      
+4    Unseen_Weapon_Unexpected_Strike ****      3    3              1      
+5    Unseen_Weapon_Ephemeral_Weapon  ****      3    5              1      
+6    See_in_Darkness                 ****      3    7              0      
+7    Unseen_Weapon_Shadowy_Strike    ****      3    7              1      
+8    Unseen_Weapon_Far_Shadow        ****      3    9              1      
+9    Unseen_Weapon_Free_Action       ****      3    10             1      

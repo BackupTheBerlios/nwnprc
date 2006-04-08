@@ -68,4 +68,6 @@ void main()
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, 0, 9))
         return;
+    if(CheckMissingSpells(oPC, CLASS_TYPE_SUEL_ARCHANAMACH, 1, 5))
+        return;        
 }

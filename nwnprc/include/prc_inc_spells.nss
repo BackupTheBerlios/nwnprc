@@ -376,6 +376,7 @@ int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_SORCERER ||
             nClass==CLASS_TYPE_BARD ||
             nClass==CLASS_TYPE_ASSASSIN ||
+            nClass==CLASS_TYPE_SUEL_ARCHANAMACH ||
             nClass==CLASS_TYPE_SHADOWLORD ||
             (nClass==CLASS_TYPE_OUTSIDER
                 && GetRacialType(oCaster)==RACIAL_TYPE_RAKSHASA
@@ -1248,6 +1249,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iPal = GetLevelByClass(CLASS_TYPE_PALADIN, oCaster);
     int iRan = GetLevelByClass(CLASS_TYPE_RANGER, oCaster);
     int iAss = GetLevelByClass(CLASS_TYPE_ASSASSIN, oCaster);
+    int iSue = GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oCaster);
     int iSha = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
     int iBlk = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oCaster);
     int iVob = GetLevelByClass(CLASS_TYPE_VASSAL, oCaster);
@@ -1338,6 +1340,13 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iAss;
              return iTemp;
              break;
+        case CLASS_TYPE_SUEL_ARCHANAMACH:
+             if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_SUEL_ARCHANAMACH)
+                 iTemp = iArc;
+             else
+                 iTemp = iSue;
+             return iTemp;
+             break;             
         case CLASS_TYPE_BLACKGUARD:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_BLACKGUARD)
                  iTemp = iDiv;
@@ -1525,6 +1534,19 @@ int PRCGetMetaMagicFeat()
         nFeat = nNewSpellMetamagic-1;
     if(nSSFeat)
         nFeat = nSSFeat;
+        
+    // Suel Archanamach's Extend spells they cast on themselves.
+    // Only works for Suel Spells, and not any other caster type they might have 
+    // Since this is a spellscript, it assumes OBJECT_SELF is the caster
+    if (GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH) >= 3 && PRCGetLastSpellCastClass() == CLASS_TYPE_SUEL_ARCHANAMACH)
+    {
+    	// Check that they cast on themselves
+    	if (OBJECT_SELF == GetSpellTargetObject())
+    	{
+    		// Add extend to the metamagic feat using bitwise math
+    		nFeat |= METAMAGIC_EXTEND;
+    	}    		
+    }
 
     if(GetIsObjectValid(GetSpellCastItem()))
     {

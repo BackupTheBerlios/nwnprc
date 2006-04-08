@@ -24,7 +24,7 @@ Blood Magus
 Slayer of Domiel - 2da/TLK, Spells, Spellbook, Update spell constant
 Disciple of Asmodeus - 2da/TLK, Spell Const, Command, Greater Command
 Dirgesinger - 2das/TLK
-Suel Archanamach - 2das/TLK, Spellbook, Extended Spellstrength
+Suel Archanamach - TLK
 Stormsinger - All to do
 
 Pale master -> 3.1:

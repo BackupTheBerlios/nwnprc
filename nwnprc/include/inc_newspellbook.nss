@@ -21,6 +21,7 @@ Spont:
 Make cls_spbk_*.2da
 Make cls_spkn_*.2da
 Make cls_spcr_*.2da
+Add the spellbook feat to cls_feat_*.2da at the appropriate level
 Add class to GetSpellbookTypeForClass() below
 Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
@@ -65,6 +66,7 @@ int GetSpellbookTypeForClass(int nClass)
             return SPELLBOOK_TYPE_PREPARED;    
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
+        case CLASS_TYPE_SUEL_ARCHANAMACH:
             return SPELLBOOK_TYPE_SPONTANEOUS;
         //outsider HD count as sorc for raks        
         case CLASS_TYPE_OUTSIDER:
@@ -101,6 +103,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
         case CLASS_TYPE_WILDER:
+        case CLASS_TYPE_SUEL_ARCHANAMACH:
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
         //outsider HD count as sorc for raks        
         case CLASS_TYPE_OUTSIDER:

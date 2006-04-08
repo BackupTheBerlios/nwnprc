@@ -328,6 +328,7 @@ void EvalPRCFeats(object oPC)
         ExecuteScript("psi_powergain", oPC);
     if(GetLevelByClass(CLASS_TYPE_BARD, oPC)
         || GetLevelByClass(CLASS_TYPE_SORCERER, oPC)
+        || GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oPC)
         || (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC)
             && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )

@@ -61,7 +61,6 @@
 57 FEAT_EPIC_PLANAR_TURNING            854       1    -1             0      
 58 FEAT_EPIC_IMPROVED_COMBAT_CASTING   696       1    -1             0      
 59 FEAT_EPIC_ARMOR_SKIN                490       1    -1             0      
-60 FEAT_EPIC_SPELL_PENETRATION         618       1    -1             0      
 61 FEAT_EPIC_GREAT_WISDOM_1            804       1    -1             0      
 62 FEAT_EPIC_GREAT_WISDOM_2            805       1    -1             0      
 63 FEAT_EPIC_GREAT_WISDOM_3            806       1    -1             0      
@@ -72,7 +71,6 @@
 68 FEAT_EPIC_GREAT_WISDOM_8            811       1    -1             0      
 69 FEAT_EPIC_GREAT_WISDOM_9            812       1    -1             0      
 70 FEAT_EPIC_GREAT_WISDOM_10           813       1    -1             0      
-71 FEAT_EPIC_BLINDING_SPEED            491       0    -1             1      
 72 FocusedSpellPenetrCon               3128      1    -1             0      
 73 FocusedSpellPenetrDiv               3129      1    -1             0      
 74 FocusedSpellPenetrEnc               3130      1    -1             0      

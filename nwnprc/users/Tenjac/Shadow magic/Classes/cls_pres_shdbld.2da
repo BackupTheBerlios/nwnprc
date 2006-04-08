@@ -1,3 +1,8 @@
 2DA V2.0
 
-  LABEL     ReqType ReqParam1        ReqParam2 
+     LABEL           ReqType ReqParam1 ReqParam2 
+0    BAB             BAB     5         ****      
+1    Bluff           SKILL   23        5         
+2    Hide            SKILL   5         5         
+3    Move_Silently   SKILL   8         5         
+4    Blind_Fight     FEAT    408       ****      

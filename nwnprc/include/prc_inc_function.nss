@@ -154,6 +154,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_THRALLHERD,oPC) > 0)           ExecuteScript("psi_thrallherd", oPC);
     if(GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) > 0)           ExecuteScript("psi_sk_clseval", oPC);
     if(GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD,oPC) > 0) ExecuteScript("prc_contendkord", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH,oPC) > 0)     ExecuteScript("prc_suelarchana", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -346,27 +347,6 @@ void DeletePRCLocalInts(object oSkin)
 
     DeleteNamedComposites(oPC, "PRC_ComAttBon");
 
-    /* Automatically deletes the variables now
-    DeleteLocalInt(oPC, "ArcherBowSpec");
-    DeleteLocalInt(oPC, "BattleRagerAtk");
-    DeleteLocalInt(oPC, "DispIronPowerA"+IntToString(ATTACK_BONUS_ONHAND));
-    DeleteLocalInt(oPC, "DispIronPowerA"+IntToString(ATTACK_BONUS_OFFHAND));
-    DeleteLocalInt(oPC, "HexBrutStrikeAtk");
-    DeleteLocalInt(oPC, "KatanaFinesseR");
-    DeleteLocalInt(oPC, "KatanaFinesseL");
-    DeleteLocalInt(oPC, "IntuitiveAttackR");
-    DeleteLocalInt(oPC, "IntuitiveAttackL");
-    DeleteLocalInt(oPC, "IntuitiveAttackUnarmed");
-    DeleteLocalInt(oPC, "ManArmsGenSpe");
-    DeleteLocalInt(oPC, "AbsoluteAmbidex");
-    DeleteLocalInt(oPC, "ZulkirDefender");
-    DeleteLocalInt(oPC, "WeoponMasteryBow");
-    DeleteLocalInt(oPC, "WeoponMasteryXBow");
-    DeleteLocalInt(oPC, "WeoponMasteryShur");
-    DeleteLocalInt(oPC, "WeaponAttackBonusR");
-    DeleteLocalInt(oPC, "WeaponAttackBonusL");
-    */
-
     // PRCGetClassByPosition and PRCGetLevelByPosition cleanup
     DeleteLocalInt(oPC, "PRC_ClassInPos1");
     DeleteLocalInt(oPC, "PRC_ClassInPos2");
@@ -383,22 +363,8 @@ void DeletePRCLocalInts(object oSkin)
     // In order to work with the PRC system we need to delete some locals for each
     // PRC that has a hide
 
-    // Unhealable ability damage
-    /*
-    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_STR");
-    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_DEX");
-    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_CON");
-    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_INT");
-    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_WIS");
-    DeleteLocalInt(oSkin, "PRC_UnhealableAbilityDamage_CHA");
-    */
-
     DeleteNamedComposites(oSkin, "PRC_CBon");
 
-    // Duelist
-    //DeleteLocalInt(oSkin,"GraceBonus");
-    //DeleteLocalInt(oSkin,"ElaborateParryBonus");
-    //DeleteLocalInt(oSkin,"CannyDefenseBonus");
     // Elemental Savants
     DeleteLocalInt(oSkin,"ElemSavantResist");
     DeleteLocalInt(oSkin,"ElemSavantPerfection");
@@ -406,25 +372,8 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"ElemSavantImmParal");
     DeleteLocalInt(oSkin,"ElemSavantImmSleep");
     // HeartWarder
-    //DeleteLocalInt(oSkin, "HeartPassionA");
-    //DeleteLocalInt(oSkin, "HeartPassionP");
-    //DeleteLocalInt(oSkin, "HeartPassionPe");
-    //DeleteLocalInt(oSkin, "HeartPassionT");
-    //DeleteLocalInt(oSkin, "HeartPassionUMD");
-    //DeleteLocalInt(oSkin, "HeartPassionB");
-    //DeleteLocalInt(oSkin, "HeartPassionI");
     DeleteLocalInt(oSkin,"FeyType");
-    //DeleteLocalInt(oSkin, "HeartWardCharBonus");
-    // MageKiller
-    //DeleteLocalInt(oSkin,"MKFortBonus");
-    //DeleteLocalInt(oSkin,"MKRefBonus");
-    // Master Harper
-    //DeleteLocalInt(oSkin,"MHLycanbane");
-    //DeleteLocalInt(oSkin,"MHMililEar");
-    //DeleteLocalInt(oSkin,"MHDeneirsOrel");
-    //DeleteLocalInt(oSkin,"MHHarperKnowledge");
     // OozeMaster
-    //DeleteLocalInt(oSkin,"OozeChaPen");
     DeleteLocalInt(oSkin,"IndiscernibleCrit");
     DeleteLocalInt(oSkin,"IndiscernibleBS");
     DeleteLocalInt(oSkin,"OneOozeMind");
@@ -435,89 +384,34 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"SpellswordSFBonusNormal");
     DeleteLocalInt(oSkin,"SpellswordSFBonusEpic");
     // Acolyte of the skin
-    //DeleteLocalInt(oSkin,"AcolyteSkinBonus");
     DeleteLocalInt(oSkin,"AcolyteSymbBonus");
-    //DeleteLocalInt(oSkin,"AcolyteStatBonusCon");
-    //DeleteLocalInt(oSkin,"AcolyteStatBonusDex");
-    //DeleteLocalInt(oSkin,"AcolyteStatBonusInt");
     DeleteLocalInt(oSkin,"AcolyteResistanceCold");
     DeleteLocalInt(oSkin,"AcolyteResistanceFire");
     DeleteLocalInt(oSkin,"AcolyteResistanceAcid");
     DeleteLocalInt(oSkin,"AcolyteResistanceElectric");
-    // Vassal of Bahamut
-    //DeleteLocalInt(oSkin, "ImperiousAura");
-    // Disciple of Baalzebul
-    //DeleteLocalInt(oSkin, "KingofLies");
-    //DeleteLocalInt(oSkin, "TongueoftheDevil");
     // Battleguard of Tempus
     DeleteLocalInt(oSkin,"FEAT_WEAP_TEMPUS");
-    //DeleteLocalInt(oSkin,"Tempus_Lore");
-    //DeleteLocalInt(oSkin,"BatForgerW");
-    // Blood Archer
-    //DeleteLocalInt(oSkin,"Acidblood");
-    //DeleteLocalInt(oSkin,"Level3");
-    //DeleteLocalInt(oSkin,"Level6");
-    //DeleteLocalInt(oSkin,"Level9");
-    //DeleteLocalInt(oSkin,"BloodArcherRegen");
     // Bonded Summoner
     DeleteLocalInt(oSkin,"BondResEle");
-    //DeleteLocalInt(oSkin,"ImmuEle");
     DeleteLocalInt(oSkin,"BondSubType");
     // Disciple of Meph
     DeleteLocalInt(oSkin,"DiscMephResist");
     DeleteLocalInt(oSkin,"DiscMephGlove");
-    // Disciple of Dispater
-    //DeleteLocalInt(oSkin,"DeviceSear");
-    //DeleteLocalInt(oSkin,"DeviceDisa");
-    //DeleteLocalInt(oSkin,"IPowerBonus");
-    // Evil Brand
-    //DeleteLocalInt(oSkin,"EvilbrandPe");
     // Initiate of Draconic Mysteries
     DeleteLocalInt(oSkin,"IniSR");
     DeleteLocalInt(oSkin,"IniStunStrk");
-    // Lich Loved
-    //DeleteLocalInt(oSkin,"LichLovedD");
     // Man at Arms
-    //DeleteLocalInt(oSkin,"ManArmsGenSpe");
-    //DeleteLocalInt(oSkin,"ManArmsDmg");
     DeleteLocalInt(oSkin,"ManArmsCore");
-    // Peerless Archer
-    //DeleteLocalInt(oSkin,"PABowyer");
-    // Prereq Feats
-    //DeleteLocalInt(oSkin,"EnduranceBonus");
-    //DeleteLocalInt(oSkin,"TrackSkill");
-    //DeleteLocalInt(oSkin,"Ethran");
     // Telflammar Shadowlord
     DeleteLocalInt(oSkin,"ShaDiscorp");
     // Vile Feats
-    //DeleteLocalInt(oSkin,"DeformObeseCon");
-    //DeleteLocalInt(oSkin,"DeformGauntDex");
-    //DeleteLocalInt(oSkin,"WillDeform");
-    //DeleteLocalInt(oSkin,"DeformObeseDex");
-    //DeleteLocalInt(oSkin,"DeformObeseIntim");
-    //DeleteLocalInt(oSkin,"DeformObesePoison");
-    //DeleteLocalInt(oSkin,"DeformGauntCon");
-    //DeleteLocalInt(oSkin,"DeformGauntIntim");
-    //DeleteLocalInt(oSkin,"DeformGauntHide");
-    //DeleteLocalInt(oSkin,"DeformGauntMS");
     DeleteLocalInt(oSkin,"DeformGaunt");
     DeleteLocalInt(oSkin,"DeformObese");
-    // Vow Feats
-    //DeleteLocalInt(oSkin,"SacredVow");
-    //DeleteLocalInt(oSkin,"VowObed");
-    // Vigilant
-    //DeleteLocalInt(oSkin,"VigilantSkinBonus");
-    // Bladesinger
-    //DeleteLocalInt(oSkin,"BladesAC");
-    //DeleteLocalInt(oSkin,"BladesCon");
     // Sneak Attack
     DeleteLocalInt(oSkin,"RogueSneakDice");
     DeleteLocalInt(oSkin,"BlackguardSneakDice");
     // Sacred Fist
-    //DeleteLocalInt(oSkin,"SacFisAC");
     DeleteLocalInt(oSkin,"SacFisMv");
-    // Brawler
-    //DeleteLocalInt(oSkin,"BrawlerBlock");
     // Minstrel
     DeleteLocalInt(oSkin,"MinstrelSFBonus"); /// @todo Make ASF reduction compositable
     // Nightshade
@@ -525,182 +419,21 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin,"ImmuNSPoison");
     // Soldier of Light
     DeleteLocalInt(oSkin,"ImmuPF");
-    //DeleteLocalInt(oSkin,"SoLFH");
-    // Battlerager
-    //DeleteLocalInt(oSkin,"BRageProw");
-    // Runescarred Berserker
-    //DeleteLocalInt(oSkin,"RitScarAC");
     // Ultimate Ranger
-    //DeleteLocalInt(oSkin,"URGrace");
     DeleteLocalInt(oSkin,"URImmu");
-    //DeleteLocalInt(oSkin,"URSnare");
-    //DeleteLocalInt(oSkin,"URCamouf");
-    //Werewolf
-    //DeleteLocalInt(oSkin,"WerewolfArmorBonus");
-    //DeleteLocalInt(oSkin,"WerewolfWisBonus");
-    // Tempest
-    //DeleteLocalInt(oSkin,"TwoWeaponDefenseBonus");
-    // Lich
-    //DeleteLocalInt(oSkin,"LichSkillHide");
-    //DeleteLocalInt(oSkin,"LichSkillListen");
-    //DeleteLocalInt(oSkin,"LichSkillPersuade");
-    //DeleteLocalInt(oSkin,"LichSkillSilent");
-    //DeleteLocalInt(oSkin,"LichSkillSearch");
-    //DeleteLocalInt(oSkin,"LichSkillSpot");
-    //DeleteLocalInt(oSkin,"LichInt");
-    //DeleteLocalInt(oSkin,"LichTurn");
-    //DeleteLocalInt(oSkin,"LichWis");
-    //DeleteLocalInt(oSkin,"LichCon");
-    //DeleteLocalInt(oSkin,"LichCha");
-    // Drow Judicator
-    //DeleteLocalInt(oSkin, "SelvBlessFortBonus");
-    //DeleteLocalInt(oSkin, "SelvBlessRefBonus");
-    //DeleteLocalInt(oSkin, "SelvBlessWillBonus");
-    // Arcane Duelist
-    //DeleteLocalInt(oSkin, "ADDef");
     // Thayan Knight
     DeleteLocalInt(oSkin,"ThayHorror");
-    //DeleteLocalInt(oSkin,"ThayHorrorFear");
-    //DeleteLocalInt(oSkin,"ThayHorrorCharm");
     DeleteLocalInt(oSkin,"ThayZulkFave");
-    //DeleteLocalInt(oSkin,"ThayZulkFaveSkill");
-    //DeleteLocalInt(oSkin,"ThayZulkFaveSave");
     DeleteLocalInt(oSkin,"ThayZulkChamp");
-    //DeleteLocalInt(oSkin,"ThayZulkChampSkill");
-    //DeleteLocalInt(oSkin,"ThayZulkChampSave");
-    // Outlaw
-    //DeleteLocalInt(oSkin,"OutLuckF");
-    //DeleteLocalInt(oSkin,"OutLuckR");
-    //DeleteLocalInt(oSkin,"OutLuckW");
-    //DeleteLocalInt(oSkin,"OutPe");
-    //DeleteLocalInt(oSkin,"OutLIn");
-    //DeleteLocalInt(oSkin,"OutLPe");
-    //DeleteLocalInt(oSkin,"OutLBl");
     // Black Flame Zealot
     DeleteLocalInt(oSkin,"BFZHeart");
     // Henshin Mystic
     DeleteLocalInt(oSkin,"Happo");
-    //DeleteLocalInt(oSkin,"InterP");
-    //DeleteLocalInt(oSkin,"InterT");
-    //DeleteLocalInt(oSkin,"InterB");
-    //DeleteLocalInt(oSkin,"InterI");
     DeleteLocalInt(oSkin,"HMSight");
     DeleteLocalInt(oSkin,"HMInvul");
-    // race vars
-    //DeleteLocalInt(oSkin,"RacialNaturalArmor");
-    //DeleteLocalInt(oSkin,"RacialSize_AC");
-    //DeleteLocalInt(oSkin,"RacialSize_Attack");
-    //DeleteLocalInt(oSkin,"RacialSize_SkillHide");
-    //DeleteLocalInt(oSkin,"RacialRegeneration_5");
-    //DeleteLocalInt(oSkin,"RacialRegeneration_2");
-    //DeleteLocalInt(oSkin,"VeryHeroic");
-    //DeleteLocalInt(oSkin,"SA_Jump");
-    //DeleteLocalInt(oSkin,"SA_Bluff");
-    //DeleteLocalInt(oSkin,"SA_Jump_4");
-    //DeleteLocalInt(oSkin,"SA_Heal");
-    //DeleteLocalInt(oSkin,"Leap");
-    //DeleteLocalInt(oSkin,"TKLeap");
-    //DeleteLocalInt(oSkin,"SA_Spot_4");
-    //DeleteLocalInt(oSkin,"Keen_Sight");
-    //DeleteLocalInt(oSkin,"Birdseye");
-    //DeleteLocalInt(oSkin,"SA_Listen_4");
-    //DeleteLocalInt(oSkin,"SA_Search_4");
-    //DeleteLocalInt(oSkin,"SA_Perform_4");
-    //DeleteLocalInt(oSkin,"SA_Perform");
-    //DeleteLocalInt(oSkin,"SA_Open_Lock");
-    //DeleteLocalInt(oSkin,"Minot_Scent_Spot");
-    //DeleteLocalInt(oSkin,"Minot_Scent_Search");
-    //DeleteLocalInt(oSkin,"Minot_Scent_Listen");
-    //DeleteLocalInt(oSkin,"Kender_Bonus_Bluff");
-    //DeleteLocalInt(oSkin,"Kender_Bonus_Taunt");
-    //DeleteLocalInt(oSkin,"LackofFocus");
-    //DeleteLocalInt(oSkin,"Gully_Trait_Persuade");
-    //DeleteLocalInt(oSkin,"Gully_Trait_Fear");
-    //DeleteLocalInt(oSkin,"SA_Move_4");
-    //DeleteLocalInt(oSkin,"SA_Craft_Armor");
-    //DeleteLocalInt(oSkin,"SA_Craft_Weapon");
-    //DeleteLocalInt(oSkin,"SA_Hide");
-    //DeleteLocalInt(oSkin,"SA_Hide_Forest");
-    //DeleteLocalInt(oSkin,"Svirf_Dodge");
-    //DeleteLocalInt(oSkin,"SA_Hide_4");
-    //DeleteLocalInt(oSkin,"Chameleon");
-    //DeleteLocalInt(oSkin,"SA_Appraise");
-    //DeleteLocalInt(oSkin,"SA_AnimalEmpathy_6");
-    //DeleteLocalInt(oSkin,"SA_AnimalEmpathy_2");
-    //DeleteLocalInt(oSkin,"PSA_Persuade");
-    //DeleteLocalInt(oSkin,"PSA_Lorespell_Lore");
-    //DeleteLocalInt(oSkin,"PSA_Lorespell_Spell");
-
-    // Baelnorn
-    //DeleteLocalInt(oSkin, "BaelnDefA");
-
-    //DeleteLocalInt(oSkin, "BaelnPropSp");
-    //DeleteLocalInt(oSkin, "BaelnPropH");
-    //DeleteLocalInt(oSkin, "BaelnPropL");
-    //DeleteLocalInt(oSkin, "BaelnPropM");
-    //DeleteLocalInt(oSkin, "BaelnPropS");
-    //DeleteLocalInt(oSkin, "BaelnPropP");
-
-    //DeleteLocalInt(oSkin, "BaelnAbilC");
-    //DeleteLocalInt(oSkin, "BaelnAbilW");
-    //DeleteLocalInt(oSkin, "BaelnAbilI");
-
-    //Undead
-    //DeleteLocalInt(oSkin, "TurnRes");
-    //DeleteLocalInt(oSkin, "ImpTurnRes");
-
-
-    //Alaghar
-    //DeleteLocalInt(oSkin, "SilverbeardAC");
-
-    //Ollam
-    //DeleteLocalInt(oSkin, "OllamLore");
-
-    //Combat Medic
-    //DeleteLocalInt(oSkin, "CbtMed_Concentration");
-    //DeleteLocalInt(oSkin, "CbtMed_Heal");
-
-    //psionics
-    //DeleteLocalInt(oSkin, "Combat_Mani");
-    //DeleteLocalInt(oSkin, "PsionicDodge");
-
-    // Thrall of Graz'zt
-    //DeleteLocalInt(oSkin, "Dark_Charm_AE");
-    //DeleteLocalInt(oSkin, "Dark_Charm_PF");
-    //DeleteLocalInt(oSkin, "Dark_Charm_PS");
-    //DeleteLocalInt(oSkin, "Dark_Charm_BL");
-
     //Blightlord
     DeleteLocalInt(oSkin, "WntrHeart");
     DeleteLocalInt(oSkin, "BlightBlood");
-
-    // Ninja
-    //DeleteLocalInt(oSkin, "KiPowerWillBonus");
-    //DeleteLocalInt(oSkin, "AcroJumpBonus");
-    //DeleteLocalInt(oSkin, "AcroTumbBonus");
-    //DeleteLocalInt(oSkin, "NinjaACBonus");
-
-    //epic spells
-    //transendent vitality
-    //DeleteLocalInt(oSkin, "TransVitalCon");
-    //DeleteLocalInt(oSkin, "TransVitalRegen");
-
-    //size changes
-    //DeleteLocalInt(oSkin, "SizeChangesStr");
-    //DeleteLocalInt(oSkin, "SizeChangesDex");
-    //DeleteLocalInt(oSkin, "SizeChangesCon");
-    //DeleteLocalInt(oSkin, "SizeChangesACN");
-    //DeleteLocalInt(oSkin, "SizeChangesACD");
-    //DeleteLocalInt(oSkin, "SizeChangesAB");
-
-    // Magical Aptitude
-    //DeleteLocalInt(oSkin, "MagicalAptitudeSpellcraft");
-    //DeleteLocalInt(oSkin, "MagicalAptitudeUMD");
-
-    //Swashbuckler
-    //DeleteLocalInt(oSkin, "SwashGrace");
-    //DeleteLocalInt(oSkin, "SwashAC");
-
     // Contemplative
     DeleteLocalInt(oSkin, "ContempDisease");
     DeleteLocalInt(oSkin, "ContempPoison");
@@ -708,8 +441,6 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "ContemplativeSR");
 
     // Blood Magus
-    //DeleteLocalInt(oSkin, "DurableCasting");
-    //DeleteLocalInt(oSkin, "BloodMagusInfusion");
     DeleteLocalInt(oSkin, "ThickerThanWater");
 
     // Feats
@@ -722,14 +453,14 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "TactileTrapsmithSearchDecrease");
     DeleteLocalInt(oSkin, "TactileTrapsmithDisableDecrease");
 
-    // Warchief
-    //DeleteLocalInt(oPC, "WarchiefCha");
-
     // Warmind
     DeleteLocalInt(oSkin, "EnduringBody");
 
     // Ironmind
     DeleteLocalInt(oSkin, "IronMind_DR");
+    
+    // Suel Archanamach
+    DeleteLocalInt(oSkin, "IronMind_DR");    
 
     // Domains
     DeleteLocalInt(oSkin, "StormDomainPower");

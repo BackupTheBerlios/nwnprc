@@ -89,8 +89,8 @@ void main()
     }
 
     //delay the 2da lookup stuff
-    //DelayCommand(10.0, ExecuteScript("look2daint", OBJECT_SELF));//helps avoid TMI errors
-    //DelayCommand(12.0, MakeLookupLoopMaster());
+    DelayCommand(10.0, ExecuteScript("look2daint", OBJECT_SELF));//helps avoid TMI errors
+    DelayCommand(12.0, MakeLookupLoopMaster());
     
     //mark server as loading
     float fDelay = IntToFloat(GetPRCSwitch(PRC_PW_LOGON_DELAY))*60.0;

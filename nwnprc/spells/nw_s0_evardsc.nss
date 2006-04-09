@@ -1,28 +1,38 @@
 //::///////////////////////////////////////////////
 //:: Evards Black Tentacles: Heartbeat
-//:: NW_S0_EvardsB
+//:: NW_S0_EvardsC
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
-    Upon entering the mass of rubbery tentacles the
-    target is struck by 1d4 tentacles.  Each has
-    a chance to hit of 5 + 1d20. If it succeeds then
-    it does 2d6 damage and the target must make
-    a Fortitude Save versus paralysis or be paralyzed
-    for 1 round.
+This spell conjures a field of rubbery black tentacles, each 10 feet long.
+These waving members seem to spring forth from the earth, floor, or whatever
+surface is underfoot—including water. They grasp and entwine around creatures
+that enter the area, holding them fast and crushing them with great strength.
+Every creature within the area of the spell must make a grapple check, opposed
+by the grapple check of the tentacles. Treat the tentacles attacking a particular
+target as a Large creature with a base attack bonus equal to your caster level
+and a Strength score of 19. Thus, its grapple check modifier is equal to your
+caster level +8. The tentacles are immune to all types of damage.
+Once the tentacles grapple an opponent, they may make a grapple check each round
+on your turn to deal 1d6+4 points of bludgeoning damage. The tentacles continue
+to crush the opponent until the spell ends or the opponent escapes.
+Any creature that enters the area of the spell is immediately attacked by the
+tentacles. Even creatures who aren’t grappling with the tentacles may move
+through the area at only half normal speed.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Preston Watamaniuk
 //:: Created On: Nov 23, 2001
 //:://////////////////////////////////////////////
 //:: GZ: Removed SR, its not there by the book
-
-//:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
+//:: Primogenitor: Implemented 3.5ed rules
 #include "spinc_common"
 
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
+#include "inc_grapple"
+
 
 void main()
 {
@@ -31,57 +41,65 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
  ActionDoCommand(SetAllAoEInts(SPELL_EVARDS_BLACK_TENTACLES,OBJECT_SELF, GetSpellSaveDC()));
 
 
-     object oTarget;
-    effect eParal = EffectParalyze();
-    effect eDur = EffectVisualEffect(VFX_DUR_PARALYZED);
-    effect eLink = EffectLinkEffects(eDur, eParal);
-    effect eDam;
-
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int nDamage;
-    int nAC = GetAC(oTarget);
-    int nHits = d4();
-    int nRoll;
-    float fDelay;
-
-
-    oTarget = GetFirstInPersistentObject();
+    int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
+    object oTarget = GetFirstInPersistentObject();
     while(GetIsObjectValid(oTarget))
     {
-        nDamage = 0;
-        if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+        if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE , GetAreaOfEffectCreator())
+            && GetCreatureFlag(oTarget, CREATURE_VAR_IS_INCORPOREAL) != TRUE)
         {
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_EVARDS_BLACK_TENTACLES));
-            nDamage = 0;
-            for (nHits = d4(); nHits > 0; nHits--)
+            //Fire cast spell at event for the target
+            SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(),
+                SPELL_EVARDS_BLACK_TENTACLES));
+            //now do grappling and stuff
+            int nGrappleSucessful = FALSE;
+            //this spell doesnt need to make a touch attack
+            int nTargetGrapple;
+            int nTargetRoll = d20();
+            nTargetGrapple += GetGrappleMod(oTarget);
+            nTargetGrapple += nTargetRoll;
+            int nAttackerGrapple;
+            int nAttackerRoll = d20();
+            //as defined in the spell
+            nAttackerGrapple += nCasterLevel+nAttackerRoll+4+4;
+            //defender has benefit
+            if(nAttackerGrapple > nTargetGrapple)
+                nGrappleSucessful = TRUE;
+            string sMessage = GetName(GetAreaOfEffectCreator())+" grapples "+GetName(oTarget)+" : ";
+            if(nGrappleSucessful)
+                sMessage += "*hit*";
+            else
+                sMessage += "*miss*";
+            sMessage += " : ("+IntToString(nAttackerRoll)+" + "+IntToString(nAttackerGrapple-nAttackerRoll)+" = "+IntToString(nAttackerGrapple);
+            sMessage += " vs "+IntToString(nTargetRoll)+" + "+IntToString(nTargetGrapple-nTargetRoll)+" = "+IntToString(nTargetGrapple)+")";
+            SendMessageToPC(GetAreaOfEffectCreator(), sMessage);
+            //prevent a double-message if the creator walks into their own spell
+            if(GetAreaOfEffectCreator() != oTarget)
+                SendMessageToPC(oTarget, sMessage);
+            if(nGrappleSucessful)
             {
-                fDelay = GetRandomDelay(0.75, 1.5);
-                nRoll = 5 + d20();
-                if(nRoll >= nAC)
+                //if already being grappled, apply damage
+                if(GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF)))
                 {
-                    nDamage = nDamage + d6();
-                    //Enter Metamagic conditions
-                    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-                    {
-                        nDamage = 12;//Damage is at max
-                    }
-                    else if ((nMetaMagic & METAMAGIC_EMPOWER))
-                    {
-                        nDamage = nDamage + (nDamage/2); //Damage/Healing is +50%
-                    }
-                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+                    //apply the damage
+                    int nDamage = d6();
+                    if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                        nDamage = 6;
+                    if(nMetaMagic == METAMAGIC_EMPOWER)
+                        nDamage += d6()/2;
+                    nDamage += 4;
+                    effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_NORMAL);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
                 }
-            }
-        }
-        if(nDamage > 0)
-        {
-            eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_PLUS_TWO);
-            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-            PRCBonusDamage(oTarget);
-            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,(GetAreaOfEffectCreator()))), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
-            {
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(1),FALSE));
+                //now being grappled
+                AssignCommand(oTarget, ClearAllActions());
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
+                SetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF),
+                    GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF))+1);
+                DelayCommand(6.1,
+                    SetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF),
+                        GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF))-1));
             }
         }
         oTarget = GetNextInPersistentObject();

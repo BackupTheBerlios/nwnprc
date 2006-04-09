@@ -22,9 +22,10 @@
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
 #include "spinc_common"
 
-#include "x0_i0_spells"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
+#include "inc_grapple"
 
 void main()
 {
@@ -52,7 +53,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     object oTarget = GetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DISABLED);
 
     //Check for metamagic extend
@@ -78,13 +79,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
             int nTargetRoll = GetAC(oTarget);
 
-			// Give the caster feedback about the grapple check if he is a PC.
-			if (GetIsPC(OBJECT_SELF))
-			{
-				SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
-					"Bigby's Grasping Hand hit" : "Bigby's Grasping Hand missed");
-			}
-			
+            // Give the caster feedback about the grapple check if he is a PC.
+            if (GetIsPC(OBJECT_SELF))
+            {
+                SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
+                    "Bigby's Grasping Hand hit" : "Bigby's Grasping Hand missed");
+            }
+            
             // * grapple HIT succesful,
             if (nCasterRoll >= nTargetRoll)
             {
@@ -95,18 +96,18 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     + CasterLvl
                     + 10 + 4;
 
-                nTargetRoll = d20(1) + GetSizeModifier(oTarget)
-                    + GetAbilityModifier(ABILITY_STRENGTH) + GetBaseAttackBonus(oTarget);
+                nTargetRoll = d20(1);
+                nTargetRoll += GetGrappleMod(oTarget);
 
-				// Give the caster feedback about the grapple check if he is a PC.
-				if (GetIsPC(OBJECT_SELF))
-				{
-					string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
-					SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) + 
-						" vs. " + IntToString(nTargetRoll) + suffix);
-				}
-			
-                if (nCasterRoll >= nTargetRoll)
+                // Give the caster feedback about the grapple check if he is a PC.
+                if (GetIsPC(OBJECT_SELF))
+                {
+                    string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
+                    SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) + 
+                        " vs. " + IntToString(nTargetRoll) + suffix);
+                }
+            
+                if (nCasterRoll > nTargetRoll)
                 {
                     // Hold the target paralyzed
                     effect eKnockdown = EffectParalyze();

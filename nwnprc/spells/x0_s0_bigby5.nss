@@ -31,6 +31,7 @@
 #include "spinc_common"
 #include "prc_alterations"
 #include "x2_inc_spellhook"
+#include "inc_grapple"
 
 int nSpellID = 463;
 void RunHandImpact(object oTarget, object oCaster)
@@ -109,12 +110,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 + CasterLvl + 12 + -1;
             int nTargetRoll = GetAC(oTarget);
 
-               // Give the caster feedback about the grapple check if he is a PC.
-               if (GetIsPC(OBJECT_SELF))
-               {
-                    SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
-                         "Bigby's Crushing Hand hit" : "Bigby's Grasping Hand missed");
-               }
+           // Give the caster feedback about the grapple check if he is a PC.
+           if (GetIsPC(OBJECT_SELF))
+           {
+                SendMessageToPC(OBJECT_SELF, nCasterRoll >= nTargetRoll ?
+                     "Bigby's Crushing Hand hit" : "Bigby's Grasping Hand missed");
+           }
 
             // * grapple HIT succesful,
             if (nCasterRoll >= nTargetRoll)
@@ -125,29 +126,24 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 nCasterRoll = d20(1) + nCasterModifier
                     +CasterLvl + 12 + 4;
 
-                nTargetRoll = d20(1) + GetSizeModifier(oTarget)
-                    + GetAbilityModifier(ABILITY_STRENGTH) + GetBaseAttackBonus(oTarget);
-//                nTargetRoll = /*NEED GetBaseAttackBonus*/
-//                    GetBaseAttackBonus(oTarget) + GetSizeModifier(oTarget)
-//                    + GetAbilityModifier(ABILITY_STRENGTH);
+                nTargetRoll = d20(1);
+                nTargetRoll += GetGrappleMod(oTarget);
 
-                    // Give the caster feedback about the grapple check if he is a PC.
-                    if (GetIsPC(OBJECT_SELF))
-                    {
-                         string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
-                         SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) +
-                              " vs. " + IntToString(nTargetRoll) + suffix);
-                    }
+                // Give the caster feedback about the grapple check if he is a PC.
+                if (GetIsPC(OBJECT_SELF))
+                {
+                     string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
+                     SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) +
+                          " vs. " + IntToString(nTargetRoll) + suffix);
+                }
 
-                if (nCasterRoll >= nTargetRoll)
+                if (nCasterRoll > nTargetRoll)
                 {
                     effect eKnockdown = EffectParalyze();
 
                     // creatures immune to paralzation are still prevented from moving
                     if (GetIsImmune(oTarget, EFFECT_TYPE_PARALYZE) == FALSE)
-                    {
                         eKnockdown = EffectCutsceneImmobilize();
-                    }
 
                     effect eHand = EffectVisualEffect(VFX_DUR_BIGBYS_CRUSHING_HAND);
                     effect eLink = EffectLinkEffects(eKnockdown, eHand);

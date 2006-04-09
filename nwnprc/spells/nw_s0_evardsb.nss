@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Evards Black Tentacles
-//:: NW_S0_Evards.nss
+//:: Evards Black Tentacles: On Exit
+//:: NW_S0_EvardsB
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
@@ -26,45 +26,35 @@ through the area at only half normal speed.
 //:://////////////////////////////////////////////
 //:: GZ: Removed SR, its not there by the book
 //:: Primogenitor: Implemented 3.5ed rules
-
-#include "prc_alterations"
+#include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-/*
-  Spellcast Hook Code
-  Added 2003-06-20 by Georg
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-*/
-    if (!X2PreSpellCastCode())
+    //Declare major variables
+    //Get the object that is exiting the AOE
+    object oTarget = GetExitingObject();
+    int bValid = FALSE;
+    effect eAOE;
+    if(GetHasSpellEffect(SPELL_EVARDS_BLACK_TENTACLES, oTarget))
     {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
+        //Search through the valid effects on the target.
+        eAOE = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eAOE) && bValid == FALSE)
+        {
+            if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
+            {
+                if(GetEffectType(eAOE) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE)
+                {
+                    //If the effect was created by the Acid_Fog then remove it
+                    if(GetEffectSpellId(eAOE) == SPELL_EVARDS_BLACK_TENTACLES)
+                    {
+                        RemoveEffect(oTarget, eAOE);
+                        bValid = TRUE;
+                    }
+                }
+            }
+            //Get next effect on the target
+            eAOE = GetNextEffect(oTarget);
+        }
     }
-// End of Spell Cast Hook
-
-    //Declare major variables including Area of Effect Object
-    effect eAOE = EffectAreaOfEffect(AOE_PER_EVARDS_BLACK_TENTACLES,
-        "nw_s0_evardsa", "nw_s0_evardsc", "nw_s0_evardsb");
-    location lTarget = PRCGetSpellTargetLocation();
-    int nDuration = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = PRCGetMetaMagicFeat();
-    //Make sure duration does no equal 0
-    if (nDuration < 1)
-    {
-        nDuration = 1;
-    }
-    //Check Extend metamagic feat.
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-    {
-       nDuration = nDuration *2;    //Duration is +100%
-    }
-    //Create an instance of the AOE Object using the Apply Effect function
-    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lTarget, RoundsToSeconds(nDuration));
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
 }

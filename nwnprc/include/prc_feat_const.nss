@@ -2062,3 +2062,12 @@ const int FEAT_SPELLFIRE_RAPID_BLAST          = 4377;
 const int FEAT_SPELLFIRE_CHARGE_ITEM          = 4378;
 const int FEAT_SPELLFIRE_CROWN                = 4379;
 const int FEAT_SPELLFIRE_MAELSTROM            = 4380;
+
+// Favoured Soul
+const int FEAT_FAVOURED_SOUL_ACID             = 2237;
+const int FEAT_FAVOURED_SOUL_COLD             = 2238;
+const int FEAT_FAVOURED_SOUL_ELEC             = 2239;
+const int FEAT_FAVOURED_SOUL_FIRE             = 2240;
+const int FEAT_FAVOURED_SOUL_SONIC            = 2241;
+const int FEAT_FAVOURED_SOUL_WINGS            = 2242;
+const int FEAT_FAVOURED_SOUL_DAMRED           = 2243;

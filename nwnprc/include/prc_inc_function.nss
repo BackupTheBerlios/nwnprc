@@ -142,7 +142,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));
     if(GetLevelByClass(CLASS_TYPE_CONTEMPLATIVE,oPC) > 0)        ExecuteScript("prc_contemplate", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLOOD_MAGUS,oPC) > 0)          ExecuteScript("prc_bloodmagus", oPC);
-    if(GetLevelByClass(CLASS_TYPE_LASHER,oPC) > 0)               /*DelayCommand(0.1,*/ExecuteScript("prc_lasher", oPC)/*)*/;
+    if(GetLevelByClass(CLASS_TYPE_LASHER,oPC) > 0)               ExecuteScript("prc_lasher", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARCHIEF,oPC) > 0)             ExecuteScript("prc_warchief", oPC);
     if(GetLevelByClass(CLASS_TYPE_GHOST_FACED_KILLER,oPC) > 0)   ExecuteScript("prc_gfkill", oPC);
     if(GetLevelByClass(CLASS_TYPE_WARMIND,oPC) > 0)              ExecuteScript("psi_warmind", oPC);
@@ -155,6 +155,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_SOULKNIFE, oPC) > 0)           ExecuteScript("psi_sk_clseval", oPC);
     if(GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD,oPC) > 0) ExecuteScript("prc_contendkord", oPC);
     if(GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH,oPC) > 0)     ExecuteScript("prc_suelarchana", oPC);
+    if(GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0)        ExecuteScript("prc_favouredsoul", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -329,6 +330,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_BARD, oPC)
         || GetLevelByClass(CLASS_TYPE_SORCERER, oPC)
         || GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oPC)
+        || GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oPC)
         || (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC)
             && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )
@@ -461,7 +463,14 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "IronMind_DR");
     
     // Suel Archanamach
-    DeleteLocalInt(oSkin, "IronMind_DR");    
+    DeleteLocalInt(oSkin, "SuelArchanamachSpellFailure");    
+
+    // Favoured Soul
+    DeleteLocalInt(oSkin, "FavouredSoulResistElementAcid");
+    DeleteLocalInt(oSkin, "FavouredSoulResistElementCold");
+    DeleteLocalInt(oSkin, "FavouredSoulResistElementElec");
+    DeleteLocalInt(oSkin, "FavouredSoulResistElementFire");
+    DeleteLocalInt(oSkin, "FavouredSoulResistElementSonic");
 
     // Domains
     DeleteLocalInt(oSkin, "StormDomainPower");

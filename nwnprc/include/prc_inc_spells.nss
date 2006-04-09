@@ -397,6 +397,7 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_KNIGHT_CHALICE ||
             nClass==CLASS_TYPE_ANTI_PALADIN ||
             nClass==CLASS_TYPE_VIGILANT ||
+            nClass==CLASS_TYPE_FAVOURED_SOUL ||
             nClass==CLASS_TYPE_OCULAR);
 }
 
@@ -1249,6 +1250,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iPal = GetLevelByClass(CLASS_TYPE_PALADIN, oCaster);
     int iRan = GetLevelByClass(CLASS_TYPE_RANGER, oCaster);
     int iAss = GetLevelByClass(CLASS_TYPE_ASSASSIN, oCaster);
+    int iFav = GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oCaster);
     int iSue = GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oCaster);
     int iSha = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
     int iBlk = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oCaster);
@@ -1345,6 +1347,13 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iArc;
              else
                  iTemp = iSue;
+             return iTemp;
+             break; 
+        case CLASS_TYPE_FAVOURED_SOUL:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_FAVOURED_SOUL)
+                 iTemp = iDiv;
+             else
+                 iTemp = iFav;
              return iTemp;
              break;             
         case CLASS_TYPE_BLACKGUARD:

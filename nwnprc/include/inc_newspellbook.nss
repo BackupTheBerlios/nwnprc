@@ -67,6 +67,7 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
         case CLASS_TYPE_SUEL_ARCHANAMACH:
+        case CLASS_TYPE_FAVOURED_SOUL:
             return SPELLBOOK_TYPE_SPONTANEOUS;
         //outsider HD count as sorc for raks        
         case CLASS_TYPE_OUTSIDER:
@@ -104,6 +105,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_BARD:
         case CLASS_TYPE_WILDER:
         case CLASS_TYPE_SUEL_ARCHANAMACH:
+        case CLASS_TYPE_FAVOURED_SOUL:
             return GetAbilityScore(oPC, ABILITY_CHARISMA);
         //outsider HD count as sorc for raks        
         case CLASS_TYPE_OUTSIDER:
@@ -562,9 +564,9 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
     //this is only the BASE DC, feats etc are added on top of this
     int nDC = 10;
     nDC += StringToInt(Get2DACache("Spells", "Innate", nFakeSpellID));
-    //if(nClass == CLASS_TYPE_FAVORED_SOUL)
-    //    nDC += (GetAbilityModifier(ABILITY_WISDOM, oPC);
-    //else
+    if(nClass == CLASS_TYPE_FAVOURED_SOUL)
+        nDC += (GetAbilityModifier(ABILITY_WISDOM, oPC));
+    else
         nDC += ((GetAbilityForClass(nClass, oPC)-10)/2);
     //cast the spell
     //dont need to override level, the spellscript will calculate it

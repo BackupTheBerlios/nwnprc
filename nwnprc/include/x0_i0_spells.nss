@@ -1579,6 +1579,7 @@ int spellsIsFlying(object oCreature)
     if(!bFlying
         && (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oCreature) >= 9
             || GetLevelByClass(CLASS_TYPE_LICH, oCreature) >= 5
+            || GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oCreature) >= 17
             || nRace == RACIAL_TYPE_AVARIEL
             || nRace == RACIAL_TYPE_FEYRI))
         bFlying = TRUE;

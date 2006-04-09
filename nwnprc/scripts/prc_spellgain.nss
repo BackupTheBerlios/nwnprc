@@ -69,6 +69,8 @@ void main()
     if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, 0, 9))
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_SUEL_ARCHANAMACH, 1, 5))
-        return; 
+        return;  
+    if(CheckMissingSpells(oPC, CLASS_TYPE_FAVOURED_SOUL, 0, 9))
+        return;        
     //add new classes here   
 }

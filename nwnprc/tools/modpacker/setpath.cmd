@@ -1,1 +1,1 @@
-set PATH=%PATH%;C:\NeverwinterNights\prc\prc166\tools\modpacker
+set "PATH=%PATH%;C:\Documents and Settings\user\Desktop\PRC Stuff\prc\tools\modpacker"

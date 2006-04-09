@@ -2,7 +2,7 @@
 
 java -Xmx200m -jar tools\prc.jar itempropmaker
 pause
-tools\modpacker\XmlToGff others xml_temp\*
-del xml_temp
-
+mkdir xml_temp
+java -cp tools\modpacker\nwn-tools.jar org.progeeks.nwn.GffToXml others xml_temp\*
+pause
 :end

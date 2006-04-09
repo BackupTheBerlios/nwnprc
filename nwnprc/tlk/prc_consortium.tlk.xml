@@ -24402,5 +24402,796 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="63694" lang="en" sex="m">Bad Strref Greater Shadow Conjuration, Ghostly Visage</entry>
   <entry id="63695" lang="en" sex="m">Bad Strref Greater Shadow Conjuration, Web</entry>
   <entry id="63696" lang="en" sex="m">Bad Strref Greater Shadow Conjuration, Minor Globe of Invulnerability</entry>
+  <entry id="63697" lang="en" sex="m">Bad Strref Storm of Vengeance</entry>
+  <entry id="63698" lang="en" sex="m">Bad Strref Summon Creature IX</entry>
+  <entry id="63699" lang="en" sex="m">Bad Strref Summon Elder Air Elemental</entry>
+  <entry id="63700" lang="en" sex="m">Bad Strref Summon Elder Earth Elemental</entry>
+  <entry id="63701" lang="en" sex="m">Bad Strref Summon Elder Fire Elemental</entry>
+  <entry id="63702" lang="en" sex="m">Bad Strref Summon Elder Water Elemental</entry>
+  <entry id="63703" lang="en" sex="m">Bad Strref Implosion</entry>
+  <entry id="63704" lang="en" sex="m">Bad Strref Undeath's Eternal Foe</entry>
+  <entry id="63705" lang="en" sex="m">Bad Strref Gate</entry>
+  <entry id="63706" lang="en" sex="m">Bad Strref Energy Drain</entry>
+  <entry id="63707" lang="en" sex="m">Bad Strref Dimensional Lock</entry>
+  <entry id="63708" lang="en" sex="m">Bad Strref Extended Dimensional Lock</entry>
+  <entry id="63709" lang="en" sex="m">Bad Strref Silent Dimensional Lock</entry>
+  <entry id="63710" lang="en" sex="m">Bad Strref Still Dimensional Lock</entry>
+  <entry id="63711" lang="en" sex="m">Bad Strref Fire Storm</entry>
+  <entry id="63712" lang="en" sex="m">Bad Strref Silent Fire Storm</entry>
+  <entry id="63713" lang="en" sex="m">Bad Strref Still Fire Storm</entry>
+  <entry id="63714" lang="en" sex="m">Bad Strref Earthquake</entry>
+  <entry id="63715" lang="en" sex="m">Bad Strref Silent Earthquake</entry>
+  <entry id="63716" lang="en" sex="m">Bad Strref Still Earthquake</entry>
+  <entry id="63717" lang="en" sex="m">Bad Strref Aura versus Alignment</entry>
+  <entry id="63718" lang="en" sex="m">Bad Strref Unholy Aura</entry>
+  <entry id="63719" lang="en" sex="m">Bad Strref Holy Aura</entry>
+  <entry id="63720" lang="en" sex="m">Bad Strref Extended Aura versus Alignment</entry>
+  <entry id="63721" lang="en" sex="m">Bad Strref Extended Unholy Aura</entry>
+  <entry id="63722" lang="en" sex="m">Bad Strref Extended Holy Aura</entry>
+  <entry id="63723" lang="en" sex="m">Bad Strref Silent Aura versus Alignment</entry>
+  <entry id="63724" lang="en" sex="m">Bad Strref Silent Unholy Aura</entry>
+  <entry id="63725" lang="en" sex="m">Bad Strref Silent Holy Aura</entry>
+  <entry id="63726" lang="en" sex="m">Bad Strref Still Aura versus Alignment</entry>
+  <entry id="63727" lang="en" sex="m">Bad Strref Still Unholy Aura</entry>
+  <entry id="63728" lang="en" sex="m">Bad Strref Still Holy Aura</entry>
+  <entry id="63729" lang="en" sex="m">Bad Strref Summon Creature VIII</entry>
+  <entry id="63730" lang="en" sex="m">Bad Strref Summon Greater Air Elemental</entry>
+  <entry id="63731" lang="en" sex="m">Bad Strref Summon Greater Earth Elemental</entry>
+  <entry id="63732" lang="en" sex="m">Bad Strref Summon Greater Fire Elemental</entry>
+  <entry id="63733" lang="en" sex="m">Bad Strref Summon Greater Water Elemental</entry>
+  <entry id="63734" lang="en" sex="m">Bad Strref Extended Summon Creature VIII</entry>
+  <entry id="63735" lang="en" sex="m">Bad Strref Extended Summon Greater Air Elemental</entry>
+  <entry id="63736" lang="en" sex="m">Bad Strref Extended Summon Greater Earth Elemental</entry>
+  <entry id="63737" lang="en" sex="m">Bad Strref Extended Summon Greater Fire Elemental</entry>
+  <entry id="63738" lang="en" sex="m">Bad Strref Extended Summon Greater Water Elemental</entry>
+  <entry id="63739" lang="en" sex="m">Bad Strref Silent Summon Creature VIII</entry>
+  <entry id="63740" lang="en" sex="m">Bad Strref Silent Summon Greater Air Elemental</entry>
+  <entry id="63741" lang="en" sex="m">Bad Strref Silent Summon Greater Earth Elemental</entry>
+  <entry id="63742" lang="en" sex="m">Bad Strref Silent Summon Greater Fire Elemental</entry>
+  <entry id="63743" lang="en" sex="m">Bad Strref Silent Summon Greater Water Elemental</entry>
+  <entry id="63744" lang="en" sex="m">Bad Strref Still Summon Creature VIII</entry>
+  <entry id="63745" lang="en" sex="m">Bad Strref Still Summon Greater Air Elemental</entry>
+  <entry id="63746" lang="en" sex="m">Bad Strref Still Summon Greater Earth Elemental</entry>
+  <entry id="63747" lang="en" sex="m">Bad Strref Still Summon Greater Fire Elemental</entry>
+  <entry id="63748" lang="en" sex="m">Bad Strref Still Summon Greater Water Elemental</entry>
+  <entry id="63749" lang="en" sex="m">Bad Strref Mass Heal</entry>
+  <entry id="63750" lang="en" sex="m">Bad Strref Silent Mass Heal</entry>
+  <entry id="63751" lang="en" sex="m">Bad Strref Still Mass Heal</entry>
+  <entry id="63752" lang="en" sex="m">Bad Strref Sunbeam</entry>
+  <entry id="63753" lang="en" sex="m">Bad Strref Silent Sunbeam</entry>
+  <entry id="63754" lang="en" sex="m">Bad Strref Still Sunbeam</entry>
+  <entry id="63755" lang="en" sex="m">Bad Strref Create Greater Undead</entry>
+  <entry id="63756" lang="en" sex="m">Bad Strref Extended Create Greater Undead</entry>
+  <entry id="63757" lang="en" sex="m">Bad Strref Silent Create Greater Undead</entry>
+  <entry id="63758" lang="en" sex="m">Bad Strref Still Create Greater Undead</entry>
+  <entry id="63759" lang="en" sex="m">Bad Strref Mass Cure Critical Wounds</entry>
+  <entry id="63760" lang="en" sex="m">Bad Strref Silent Mass Cure Critical Wounds</entry>
+  <entry id="63761" lang="en" sex="m">Bad Strref Still Mass Cure Critical Wounds</entry>
+  <entry id="63762" lang="en" sex="m">Bad Strref Dictum</entry>
+  <entry id="63763" lang="en" sex="m">Bad Strref Silent Dictum</entry>
+  <entry id="63764" lang="en" sex="m">Bad Strref Still Dictum</entry>
+  <entry id="63765" lang="en" sex="m">Bad Strref Word of Chaos</entry>
+  <entry id="63766" lang="en" sex="m">Bad Strref Silent Word of Chaos</entry>
+  <entry id="63767" lang="en" sex="m">Bad Strref Still Word of Chaos</entry>
+  <entry id="63768" lang="en" sex="m">Bad Strref Holy Word</entry>
+  <entry id="63769" lang="en" sex="m">Bad Strref Silent Holy Word</entry>
+  <entry id="63770" lang="en" sex="m">Bad Strref Still Holy Word</entry>
+  <entry id="63771" lang="en" sex="m">Bad Strref Mass Cure Serious Wounds</entry>
+  <entry id="63772" lang="en" sex="m">Bad Strref Empowered Mass Cure Serious Wounds</entry>
+  <entry id="63773" lang="en" sex="m">Bad Strref Silent Mass Cure Serious Wounds</entry>
+  <entry id="63774" lang="en" sex="m">Bad Strref Still Mass Cure Serious Wounds</entry>
+  <entry id="63775" lang="en" sex="m">Bad Strref Blasphemy</entry>
+  <entry id="63776" lang="en" sex="m">Bad Strref Silent Blasphemy</entry>
+  <entry id="63777" lang="en" sex="m">Bad Strref Still Blasphemy</entry>
+  <entry id="63778" lang="en" sex="m">Bad Strref Resurrection</entry>
+  <entry id="63779" lang="en" sex="m">Bad Strref Silent Resurrection</entry>
+  <entry id="63780" lang="en" sex="m">Bad Strref Still Resurrection</entry>
+  <entry id="63781" lang="en" sex="m">Bad Strref Regenerate</entry>
+  <entry id="63782" lang="en" sex="m">Bad Strref Extended Regenerate</entry>
+  <entry id="63783" lang="en" sex="m">Bad Strref Silent Regenerate</entry>
+  <entry id="63784" lang="en" sex="m">Bad Strref Still Regenerate</entry>
+  <entry id="63785" lang="en" sex="m">Bad Strref Destruction</entry>
+  <entry id="63786" lang="en" sex="m">Bad Strref Silent Destruction</entry>
+  <entry id="63787" lang="en" sex="m">Bad Strref Still Destruction</entry>
+  <entry id="63788" lang="en" sex="m">Bad Strref Greater Restoration</entry>
+  <entry id="63789" lang="en" sex="m">Bad Strref Extended Greater Restoration</entry>
+  <entry id="63790" lang="en" sex="m">Bad Strref Silent Greater Restoration</entry>
+  <entry id="63791" lang="en" sex="m">Bad Strref Still Greater Restoration</entry>
+  <entry id="63792" lang="en" sex="m">Bad Strref Summon Creature VII</entry>
+  <entry id="63793" lang="en" sex="m">Bad Strref Summon Huge Air Elemental</entry>
+  <entry id="63794" lang="en" sex="m">Bad Strref Summon Huge Earth Elemental</entry>
+  <entry id="63795" lang="en" sex="m">Bad Strref Summon Huge Fire Elemental</entry>
+  <entry id="63796" lang="en" sex="m">Bad Strref Summon Huge Water Elemental</entry>
+  <entry id="63797" lang="en" sex="m">Bad Strref Extended Summon Creature VII</entry>
+  <entry id="63798" lang="en" sex="m">Bad Strref Extended Summon Huge Air Elemental</entry>
+  <entry id="63799" lang="en" sex="m">Bad Strref Extended Summon Huge Earth Elemental</entry>
+  <entry id="63800" lang="en" sex="m">Bad Strref Extended Summon Huge Fire Elemental</entry>
+  <entry id="63801" lang="en" sex="m">Bad Strref Extended Summon Huge Water Elemental</entry>
+  <entry id="63802" lang="en" sex="m">Bad Strref Silent Summon Creature VII</entry>
+  <entry id="63803" lang="en" sex="m">Bad Strref Silent Summon Huge Air Elemental</entry>
+  <entry id="63804" lang="en" sex="m">Bad Strref Silent Summon Huge Earth Elemental</entry>
+  <entry id="63805" lang="en" sex="m">Bad Strref Silent Summon Huge Fire Elemental</entry>
+  <entry id="63806" lang="en" sex="m">Bad Strref Silent Summon Huge Water Elemental</entry>
+  <entry id="63807" lang="en" sex="m">Bad Strref Still Summon Creature VII</entry>
+  <entry id="63808" lang="en" sex="m">Bad Strref Still Summon Huge Air Elemental</entry>
+  <entry id="63809" lang="en" sex="m">Bad Strref Still Summon Huge Earth Elemental</entry>
+  <entry id="63810" lang="en" sex="m">Bad Strref Still Summon Huge Fire Elemental</entry>
+  <entry id="63811" lang="en" sex="m">Bad Strref Still Summon Huge Water Elemental</entry>
+  <entry id="63812" lang="en" sex="m">Bad Strref Greater Sanctuary</entry>
+  <entry id="63813" lang="en" sex="m">Bad Strref Extended Greater Sanctuary</entry>
+  <entry id="63814" lang="en" sex="m">Bad Strref Silent Greater Sanctuary</entry>
+  <entry id="63815" lang="en" sex="m">Bad Strref Still Greater Sanctuary</entry>
+  <entry id="63816" lang="en" sex="m">Bad Strref Banishment</entry>
+  <entry id="63817" lang="en" sex="m">Bad Strref Silent Banishment</entry>
+  <entry id="63818" lang="en" sex="m">Bad Strref Still Banishment</entry>
+  <entry id="63819" lang="en" sex="m">Bad Strref Control Undead</entry>
+  <entry id="63820" lang="en" sex="m">Bad Strref Extended Control Undead</entry>
+  <entry id="63821" lang="en" sex="m">Bad Strref Silent Control Undead</entry>
+  <entry id="63822" lang="en" sex="m">Bad Strref Still Control Undead</entry>
+  <entry id="63823" lang="en" sex="m">Bad Strref Create Undead</entry>
+  <entry id="63824" lang="en" sex="m">Bad Strref Extended Create Undead</entry>
+  <entry id="63825" lang="en" sex="m">Bad Strref Silent Create Undead</entry>
+  <entry id="63826" lang="en" sex="m">Bad Strref Still Create Undead</entry>
+  <entry id="63827" lang="en" sex="m">Bad Strref Mass Fox's Cunning</entry>
+  <entry id="63828" lang="en" sex="m">Bad Strref Empowered Mass Fox's Cunning</entry>
+  <entry id="63829" lang="en" sex="m">Bad Strref Extended Mass Fox's Cunning</entry>
+  <entry id="63830" lang="en" sex="m">Bad Strref Maximized Mass Fox's Cunning</entry>
+  <entry id="63831" lang="en" sex="m">Bad Strref Silent Mass Fox's Cunning</entry>
+  <entry id="63832" lang="en" sex="m">Bad Strref Still Mass Fox's Cunning</entry>
+  <entry id="63833" lang="en" sex="m">Bad Strref Summon Creature VI</entry>
+  <entry id="63834" lang="en" sex="m">Bad Strref Extended Summon Creature VI</entry>
+  <entry id="63835" lang="en" sex="m">Bad Strref Silent Summon Creature VI</entry>
+  <entry id="63836" lang="en" sex="m">Bad Strref Still Summon Creature VI</entry>
+  <entry id="63837" lang="en" sex="m">Bad Strref Mass Eagle's Splendor</entry>
+  <entry id="63838" lang="en" sex="m">Bad Strref Empowered Mass Eagle's Splendor</entry>
+  <entry id="63839" lang="en" sex="m">Bad Strref Extended Mass Eagle's Splendor</entry>
+  <entry id="63840" lang="en" sex="m">Bad Strref Maximized Mass Eagle's Splendor</entry>
+  <entry id="63841" lang="en" sex="m">Bad Strref Silent Mass Eagle's Splendor</entry>
+  <entry id="63842" lang="en" sex="m">Bad Strref Still Mass Eagle's Splendor</entry>
+  <entry id="63843" lang="en" sex="m">Bad Strref Mass Endurance</entry>
+  <entry id="63844" lang="en" sex="m">Bad Strref Empowered Mass Endurance</entry>
+  <entry id="63845" lang="en" sex="m">Bad Strref Extended Mass Endurance</entry>
+  <entry id="63846" lang="en" sex="m">Bad Strref Maximized Mass Endurance</entry>
+  <entry id="63847" lang="en" sex="m">Bad Strref Silent Mass Endurance</entry>
+  <entry id="63848" lang="en" sex="m">Bad Strref Still Mass Endurance</entry>
+  <entry id="63849" lang="en" sex="m">Bad Strref Energy Immunity</entry>
+  <entry id="63850" lang="en" sex="m">Bad Strref Acid Energy Immunity</entry>
+  <entry id="63851" lang="en" sex="m">Bad Strref Cold Energy Immunity</entry>
+  <entry id="63852" lang="en" sex="m">Bad Strref Electricity Energy Immunity</entry>
+  <entry id="63853" lang="en" sex="m">Bad Strref Fire Energy Immunity</entry>
+  <entry id="63854" lang="en" sex="m">Bad Strref Sonic Energy Immunity</entry>
+  <entry id="63855" lang="en" sex="m">Bad Strref Extended Energy Immunity</entry>
+  <entry id="63856" lang="en" sex="m">Bad Strref Extended Acid Energy Immunity</entry>
+  <entry id="63857" lang="en" sex="m">Bad Strref Extended Cold Energy Immunity</entry>
+  <entry id="63858" lang="en" sex="m">Bad Strref Extended Electricity Energy Immunity</entry>
+  <entry id="63859" lang="en" sex="m">Bad Strref Extended Fire Energy Immunity</entry>
+  <entry id="63860" lang="en" sex="m">Bad Strref Extended Sonic Energy Immunity</entry>
+  <entry id="63861" lang="en" sex="m">Bad Strref Silent Energy Immunity</entry>
+  <entry id="63862" lang="en" sex="m">Bad Strref Silent Acid Energy Immunity</entry>
+  <entry id="63863" lang="en" sex="m">Bad Strref Silent Cold Energy Immunity</entry>
+  <entry id="63864" lang="en" sex="m">Bad Strref Silent Electricity Energy Immunity</entry>
+  <entry id="63865" lang="en" sex="m">Bad Strref Silent Fire Energy Immunity</entry>
+  <entry id="63866" lang="en" sex="m">Bad Strref Silent Sonic Energy Immunity</entry>
+  <entry id="63867" lang="en" sex="m">Bad Strref Still Energy Immunity</entry>
+  <entry id="63868" lang="en" sex="m">Bad Strref Still Acid Energy Immunity</entry>
+  <entry id="63869" lang="en" sex="m">Bad Strref Still Cold Energy Immunity</entry>
+  <entry id="63870" lang="en" sex="m">Bad Strref Still Electricity Energy Immunity</entry>
+  <entry id="63871" lang="en" sex="m">Bad Strref Still Fire Energy Immunity</entry>
+  <entry id="63872" lang="en" sex="m">Bad Strref Still Sonic Energy Immunity</entry>
+  <entry id="63873" lang="en" sex="m">Bad Strref Greater Dispelling</entry>
+  <entry id="63874" lang="en" sex="m">Bad Strref Silent Greater Dispelling</entry>
+  <entry id="63875" lang="en" sex="m">Bad Strref Still Greater Dispelling</entry>
+  <entry id="63876" lang="en" sex="m">Bad Strref Heal</entry>
+  <entry id="63877" lang="en" sex="m">Bad Strref Silent Heal</entry>
+  <entry id="63878" lang="en" sex="m">Bad Strref Still Heal</entry>
+  <entry id="63879" lang="en" sex="m">Bad Strref Harm</entry>
+  <entry id="63880" lang="en" sex="m">Bad Strref Silent Harm</entry>
+  <entry id="63881" lang="en" sex="m">Bad Strref Still Harm</entry>
+  <entry id="63882" lang="en" sex="m">Bad Strref Mass Cure Moderate Wounds</entry>
+  <entry id="63883" lang="en" sex="m">Bad Strref Empowered Mass Cure Moderate Wounds</entry>
+  <entry id="63884" lang="en" sex="m">Bad Strref Maximized Mass Cure Moderate Wounds</entry>
+  <entry id="63885" lang="en" sex="m">Bad Strref Silent Mass Cure Moderate Wounds</entry>
+  <entry id="63886" lang="en" sex="m">Bad Strref Still Mass Cure Moderate Wounds</entry>
+  <entry id="63887" lang="en" sex="m">Bad Strref Blade Barrier</entry>
+  <entry id="63888" lang="en" sex="m">Bad Strref Empowered Blade Barrier</entry>
+  <entry id="63889" lang="en" sex="m">Bad Strref Extended Blade Barrier</entry>
+  <entry id="63890" lang="en" sex="m">Bad Strref Maximized Blade Barrier</entry>
+  <entry id="63891" lang="en" sex="m">Bad Strref Silent Blade Barrier</entry>
+  <entry id="63892" lang="en" sex="m">Bad Strref Still Blade Barrier</entry>
+  <entry id="63893" lang="en" sex="m">Bad Strref Mass Owl's Wisdom</entry>
+  <entry id="63894" lang="en" sex="m">Bad Strref Empowered Mass Owl's Wisdom</entry>
+  <entry id="63895" lang="en" sex="m">Bad Strref Extended Mass Owl's Wisdom</entry>
+  <entry id="63896" lang="en" sex="m">Bad Strref Maximized Mass Owl's Wisdom</entry>
+  <entry id="63897" lang="en" sex="m">Bad Strref Silent Mass Owl's Wisdom</entry>
+  <entry id="63898" lang="en" sex="m">Bad Strref Still Mass Owl's Wisdom</entry>
+  <entry id="63899" lang="en" sex="m">Bad Strref Undeath to Death</entry>
+  <entry id="63900" lang="en" sex="m">Bad Strref Empowered Undeath to Death</entry>
+  <entry id="63901" lang="en" sex="m">Bad Strref Maximized Undeath to Death</entry>
+  <entry id="63902" lang="en" sex="m">Bad Strref Silent Undeath to Death</entry>
+  <entry id="63903" lang="en" sex="m">Bad Strref Still Undeath to Death</entry>
+  <entry id="63904" lang="en" sex="m">Bad Strref Planar Ally</entry>
+  <entry id="63905" lang="en" sex="m">Bad Strref Extended Planar Ally</entry>
+  <entry id="63906" lang="en" sex="m">Bad Strref Silent Planar Ally</entry>
+  <entry id="63907" lang="en" sex="m">Bad Strref Still Planar Ally</entry>
+  <entry id="63908" lang="en" sex="m">Bad Strref Mass Bull's Strength</entry>
+  <entry id="63909" lang="en" sex="m">Bad Strref Empowered Mass Bull's Strength</entry>
+  <entry id="63910" lang="en" sex="m">Bad Strref Extended Mass Bull's Strength</entry>
+  <entry id="63911" lang="en" sex="m">Bad Strref Maximized Mass Bull's Strength</entry>
+  <entry id="63912" lang="en" sex="m">Bad Strref Silent Mass Bull's Strength</entry>
+  <entry id="63913" lang="en" sex="m">Bad Strref Still Mass Bull's Strength</entry>
+  <entry id="63914" lang="en" sex="m">Bad Strref Spell Resistance</entry>
+  <entry id="63915" lang="en" sex="m">Bad Strref Extended Spell Resistance</entry>
+  <entry id="63916" lang="en" sex="m">Bad Strref Quickened Spell Resistance</entry>
+  <entry id="63917" lang="en" sex="m">Bad Strref Silent Spell Resistance</entry>
+  <entry id="63918" lang="en" sex="m">Bad Strref Still Spell Resistance</entry>
+  <entry id="63919" lang="en" sex="m">Bad Strref Legion's Curse of Petty Failing</entry>
+  <entry id="63920" lang="en" sex="m">Bad Strref Extended Legion's Curse of Petty Failing</entry>
+  <entry id="63921" lang="en" sex="m">Bad Strref Quickened Legion's Curse of Petty Failing</entry>
+  <entry id="63922" lang="en" sex="m">Bad Strref Silent Legion's Curse of Petty Failing</entry>
+  <entry id="63923" lang="en" sex="m">Bad Strref Still Legion's Curse of Petty Failing</entry>
+  <entry id="63924" lang="en" sex="m">Bad Strref Raise Dead</entry>
+  <entry id="63925" lang="en" sex="m">Bad Strref Quickened Raise Dead</entry>
+  <entry id="63926" lang="en" sex="m">Bad Strref Silent Raise Dead</entry>
+  <entry id="63927" lang="en" sex="m">Bad Strref Still Raise Dead</entry>
+  <entry id="63928" lang="en" sex="m">Bad Strref Circle of Doom</entry>
+  <entry id="63929" lang="en" sex="m">Bad Strref Empowered Circle of Doom</entry>
+  <entry id="63930" lang="en" sex="m">Bad Strref Maximized Circle of Doom</entry>
+  <entry id="63931" lang="en" sex="m">Bad Strref Quickened Circle of Doom</entry>
+  <entry id="63932" lang="en" sex="m">Bad Strref Silent Circle of Doom</entry>
+  <entry id="63933" lang="en" sex="m">Bad Strref Still Circle of Doom</entry>
+  <entry id="63934" lang="en" sex="m">Bad Strref Slay Living</entry>
+  <entry id="63935" lang="en" sex="m">Bad Strref Empowered Slay Living</entry>
+  <entry id="63936" lang="en" sex="m">Bad Strref Maximized Slay Living</entry>
+  <entry id="63937" lang="en" sex="m">Bad Strref Quickened Slay Living</entry>
+  <entry id="63938" lang="en" sex="m">Bad Strref Silent Slay Living</entry>
+  <entry id="63939" lang="en" sex="m">Bad Strref Still Slay Living</entry>
+  <entry id="63940" lang="en" sex="m">Bad Strref Summon Creature V</entry>
+  <entry id="63941" lang="en" sex="m">Bad Strref Extended Summon Creature V</entry>
+  <entry id="63942" lang="en" sex="m">Bad Strref Quickened Summon Creature V</entry>
+  <entry id="63943" lang="en" sex="m">Bad Strref Silent Summon Creature V</entry>
+  <entry id="63944" lang="en" sex="m">Bad Strref Still Summon Creature V</entry>
+  <entry id="63945" lang="en" sex="m">Bad Strref Righteous Might</entry>
+  <entry id="63946" lang="en" sex="m">Bad Strref Extended Righteous Might</entry>
+  <entry id="63947" lang="en" sex="m">Bad Strref Quickened Righteous Might</entry>
+  <entry id="63948" lang="en" sex="m">Bad Strref Silent Righteous Might</entry>
+  <entry id="63949" lang="en" sex="m">Bad Strref Still Righteous Might</entry>
+  <entry id="63950" lang="en" sex="m">Bad Strref Battletide</entry>
+  <entry id="63951" lang="en" sex="m">Bad Strref Extended Battletide</entry>
+  <entry id="63952" lang="en" sex="m">Bad Strref Quickened Battletide</entry>
+  <entry id="63953" lang="en" sex="m">Bad Strref Silent Battletide</entry>
+  <entry id="63954" lang="en" sex="m">Bad Strref Still Battletide</entry>
+  <entry id="63955" lang="en" sex="m">Bad Strref Mass Cure Light Wounds</entry>
+  <entry id="63956" lang="en" sex="m">Bad Strref Empowered Mass Cure Light Wounds</entry>
+  <entry id="63957" lang="en" sex="m">Bad Strref Maximized Mass Cure Light Wounds</entry>
+  <entry id="63958" lang="en" sex="m">Bad Strref Quickened Mass Cure Light Wounds</entry>
+  <entry id="63959" lang="en" sex="m">Bad Strref Silent Mass Cure Light Wounds</entry>
+  <entry id="63960" lang="en" sex="m">Bad Strref Still Mass Cure Light Wounds</entry>
+  <entry id="63961" lang="en" sex="m">Bad Strref Healing Circle</entry>
+  <entry id="63962" lang="en" sex="m">Bad Strref Empowered Healing Circle</entry>
+  <entry id="63963" lang="en" sex="m">Bad Strref Maximized Healing Circle</entry>
+  <entry id="63964" lang="en" sex="m">Bad Strref Quickened Healing Circle</entry>
+  <entry id="63965" lang="en" sex="m">Bad Strref Silent Healing Circle</entry>
+  <entry id="63966" lang="en" sex="m">Bad Strref Still Healing Circle</entry>
+  <entry id="63967" lang="en" sex="m">Bad Strref Monstrous Regeneration</entry>
+  <entry id="63968" lang="en" sex="m">Bad Strref Extended Monstrous Regeneration</entry>
+  <entry id="63969" lang="en" sex="m">Bad Strref Quickened Monstrous Regeneration</entry>
+  <entry id="63970" lang="en" sex="m">Bad Strref Silent Monstrous Regeneration</entry>
+  <entry id="63971" lang="en" sex="m">Bad Strref Still Monstrous Regeneration</entry>
+  <entry id="63972" lang="en" sex="m">Bad Strref Soul Scour</entry>
+  <entry id="63973" lang="en" sex="m">Bad Strref Empowered Soul Scour</entry>
+  <entry id="63974" lang="en" sex="m">Bad Strref Maximized Soul Scour</entry>
+  <entry id="63975" lang="en" sex="m">Bad Strref Quickened Soul Scour</entry>
+  <entry id="63976" lang="en" sex="m">Bad Strref Silent Soul Scour</entry>
+  <entry id="63977" lang="en" sex="m">Bad Strref Still Soul Scour</entry>
+  <entry id="63978" lang="en" sex="m">Bad Strref True Seeing</entry>
+  <entry id="63979" lang="en" sex="m">Bad Strref Extended True Seeing</entry>
+  <entry id="63980" lang="en" sex="m">Bad Strref Quickened True Seeing</entry>
+  <entry id="63981" lang="en" sex="m">Bad Strref Silent True Seeing</entry>
+  <entry id="63982" lang="en" sex="m">Bad Strref Still True Seeing</entry>
+  <entry id="63983" lang="en" sex="m">Bad Strref Flame Strike</entry>
+  <entry id="63984" lang="en" sex="m">Bad Strref Empowered Flame Strike</entry>
+  <entry id="63985" lang="en" sex="m">Bad Strref Maximized Flame Strike</entry>
+  <entry id="63986" lang="en" sex="m">Bad Strref Quickened Flame Strike</entry>
+  <entry id="63987" lang="en" sex="m">Bad Strref Silent Flame Strike</entry>
+  <entry id="63988" lang="en" sex="m">Bad Strref Still Flame Strike</entry>
+  <entry id="63989" lang="en" sex="m">Bad Strref Lower Spell Resistance</entry>
+  <entry id="63990" lang="en" sex="m">Bad Strref Extended Lower Spell Resistance</entry>
+  <entry id="63991" lang="en" sex="m">Bad Strref Silent Lower Spell Resistance</entry>
+  <entry id="63992" lang="en" sex="m">Bad Strref Still Lower Spell Resistance</entry>
+  <entry id="63993" lang="en" sex="m">Bad Strref Recitation</entry>
+  <entry id="63994" lang="en" sex="m">Bad Strref Extended Recitation</entry>
+  <entry id="63995" lang="en" sex="m">Bad Strref Quickened Recitation</entry>
+  <entry id="63996" lang="en" sex="m">Bad Strref Silent Recitation</entry>
+  <entry id="63997" lang="en" sex="m">Bad Strref Still Recitation</entry>
+  <entry id="63998" lang="en" sex="m">Bad Strref Summon Creature IV</entry>
+  <entry id="63999" lang="en" sex="m">Bad Strref Extended Summon Creature IV</entry>
+  <entry id="64000" lang="en" sex="m">Bad Strref Quickened Summon Creature IV</entry>
+  <entry id="64001" lang="en" sex="m">Bad Strref Silent Summon Creature IV</entry>
+  <entry id="64002" lang="en" sex="m">Bad Strref Still Summon Creature IV</entry>
+  <entry id="64003" lang="en" sex="m">Bad Strref Neutralize Poison</entry>
+  <entry id="64004" lang="en" sex="m">Bad Strref Quickened Neutralize Poison</entry>
+  <entry id="64005" lang="en" sex="m">Bad Strref Silent Neutralize Poison</entry>
+  <entry id="64006" lang="en" sex="m">Bad Strref Still Neutralize Poison</entry>
+  <entry id="64007" lang="en" sex="m">Bad Strref Blood of the Martyr</entry>
+  <entry id="64008" lang="en" sex="m">Bad Strref Quickened Blood of the Martyr</entry>
+  <entry id="64009" lang="en" sex="m">Bad Strref Silent Blood of the Martyr</entry>
+  <entry id="64010" lang="en" sex="m">Bad Strref Still Blood of the Martyr</entry>
+  <entry id="64011" lang="en" sex="m">Bad Strref Inflict Critical Wounds</entry>
+  <entry id="64012" lang="en" sex="m">Bad Strref Empowered Inflict Critical Wounds</entry>
+  <entry id="64013" lang="en" sex="m">Bad Strref Maximized Inflict Critical Wounds</entry>
+  <entry id="64014" lang="en" sex="m">Bad Strref Quickened Inflict Critical Wounds</entry>
+  <entry id="64015" lang="en" sex="m">Bad Strref Silent Inflict Critical Wounds</entry>
+  <entry id="64016" lang="en" sex="m">Bad Strref Still Inflict Critical Wounds</entry>
+  <entry id="64017" lang="en" sex="m">Bad Strref Death Ward</entry>
+  <entry id="64018" lang="en" sex="m">Bad Strref Extended Death Ward</entry>
+  <entry id="64019" lang="en" sex="m">Bad Strref Quickened Death Ward</entry>
+  <entry id="64020" lang="en" sex="m">Bad Strref Silent Death Ward</entry>
+  <entry id="64021" lang="en" sex="m">Bad Strref Still Death Ward</entry>
+  <entry id="64022" lang="en" sex="m">Bad Strref Dismissal</entry>
+  <entry id="64023" lang="en" sex="m">Bad Strref Quickened Dismissal</entry>
+  <entry id="64024" lang="en" sex="m">Bad Strref Silent Dismissal</entry>
+  <entry id="64025" lang="en" sex="m">Bad Strref Still Dismissal</entry>
+  <entry id="64026" lang="en" sex="m">Bad Strref Poison</entry>
+  <entry id="64027" lang="en" sex="m">Bad Strref Empowered Poison</entry>
+  <entry id="64028" lang="en" sex="m">Bad Strref Maximized Poison</entry>
+  <entry id="64029" lang="en" sex="m">Bad Strref Quickened Poison</entry>
+  <entry id="64030" lang="en" sex="m">Bad Strref Silent Poison</entry>
+  <entry id="64031" lang="en" sex="m">Bad Strref Still Poison</entry>
+  <entry id="64032" lang="en" sex="m">Bad Strref Panacea</entry>
+  <entry id="64033" lang="en" sex="m">Bad Strref Empowered Panacea</entry>
+  <entry id="64034" lang="en" sex="m">Bad Strref Maximized Panacea</entry>
+  <entry id="64035" lang="en" sex="m">Bad Strref Quickened Panacea</entry>
+  <entry id="64036" lang="en" sex="m">Bad Strref Silent Panacea</entry>
+  <entry id="64037" lang="en" sex="m">Bad Strref Still Panacea</entry>
+  <entry id="64038" lang="en" sex="m">Bad Strref Legion's Shield of Faith</entry>
+  <entry id="64039" lang="en" sex="m">Bad Strref Extended Legion's Shield of Faith</entry>
+  <entry id="64040" lang="en" sex="m">Bad Strref Quickened Legion's Shield of Faith</entry>
+  <entry id="64041" lang="en" sex="m">Bad Strref Silent Legion's Shield of Faith</entry>
+  <entry id="64042" lang="en" sex="m">Bad Strref Still Legion's Shield of Faith</entry>
+  <entry id="64043" lang="en" sex="m">Bad Strref Freedom of Movement</entry>
+  <entry id="64044" lang="en" sex="m">Bad Strref Extended Freedom of Movement</entry>
+  <entry id="64045" lang="en" sex="m">Bad Strref Quickened Freedom of Movement</entry>
+  <entry id="64046" lang="en" sex="m">Bad Strref Silent Freedom of Movement</entry>
+  <entry id="64047" lang="en" sex="m">Bad Strref Still Freedom of Movement</entry>
+  <entry id="64048" lang="en" sex="m">Bad Strref Greater Magic Weapon</entry>
+  <entry id="64049" lang="en" sex="m">Bad Strref Extended Greater Magic Weapon</entry>
+  <entry id="64050" lang="en" sex="m">Bad Strref Quickened Greater Magic Weapon</entry>
+  <entry id="64051" lang="en" sex="m">Bad Strref Silent Greater Magic Weapon</entry>
+  <entry id="64052" lang="en" sex="m">Bad Strref Still Greater Magic Weapon</entry>
+  <entry id="64053" lang="en" sex="m">Bad Strref Hammer of the Gods</entry>
+  <entry id="64054" lang="en" sex="m">Bad Strref Empowered Hammer of the Gods</entry>
+  <entry id="64055" lang="en" sex="m">Bad Strref Maximized Hammer of the Gods</entry>
+  <entry id="64056" lang="en" sex="m">Bad Strref Quickened Hammer of the Gods</entry>
+  <entry id="64057" lang="en" sex="m">Bad Strref Silent Hammer of the Gods</entry>
+  <entry id="64058" lang="en" sex="m">Bad Strref Still Hammer of the Gods</entry>
+  <entry id="64059" lang="en" sex="m">Bad Strref Mass Ultravision</entry>
+  <entry id="64060" lang="en" sex="m">Bad Strref Extended Mass Ultravision</entry>
+  <entry id="64061" lang="en" sex="m">Bad Strref Silent Mass Ultravision</entry>
+  <entry id="64062" lang="en" sex="m">Bad Strref Still Mass Ultravision</entry>
+  <entry id="64063" lang="en" sex="m">Bad Strref Cure Critical Wounds</entry>
+  <entry id="64064" lang="en" sex="m">Bad Strref Empowered Cure Critical Wounds</entry>
+  <entry id="64065" lang="en" sex="m">Bad Strref Maximized Cure Critical Wounds</entry>
+  <entry id="64066" lang="en" sex="m">Bad Strref Quickened Cure Critical Wounds</entry>
+  <entry id="64067" lang="en" sex="m">Bad Strref Silent Cure Critical Wounds</entry>
+  <entry id="64068" lang="en" sex="m">Bad Strref Still Cure Critical Wounds</entry>
+  <entry id="64069" lang="en" sex="m">Bad Strref Divine Power</entry>
+  <entry id="64070" lang="en" sex="m">Bad Strref Extended Divine Power</entry>
+  <entry id="64071" lang="en" sex="m">Bad Strref Quickened Divine Power</entry>
+  <entry id="64072" lang="en" sex="m">Bad Strref Silent Divine Power</entry>
+  <entry id="64073" lang="en" sex="m">Bad Strref Still Divine Power</entry>
+  <entry id="64074" lang="en" sex="m">Bad Strref Dimensional Anchor</entry>
+  <entry id="64075" lang="en" sex="m">Bad Strref Extended Dimensional Anchor</entry>
+  <entry id="64076" lang="en" sex="m">Bad Strref Quickened Dimensional Anchor</entry>
+  <entry id="64077" lang="en" sex="m">Bad Strref Silent Dimensional Anchor</entry>
+  <entry id="64078" lang="en" sex="m">Bad Strref Still Dimensional Anchor</entry>
+  <entry id="64079" lang="en" sex="m">Bad Strref Restoration</entry>
+  <entry id="64080" lang="en" sex="m">Bad Strref Quickened Restoration</entry>
+  <entry id="64081" lang="en" sex="m">Bad Strref Silent Restoration</entry>
+  <entry id="64082" lang="en" sex="m">Bad Strref Still Restoration</entry>
+  <entry id="64083" lang="en" sex="m">Bad Strref Protection from Elements</entry>
+  <entry id="64084" lang="en" sex="m">Bad Strref Extended Protection from Elements</entry>
+  <entry id="64085" lang="en" sex="m">Bad Strref Quickened Protection from Elements</entry>
+  <entry id="64086" lang="en" sex="m">Bad Strref Silent Protection from Elements</entry>
+  <entry id="64087" lang="en" sex="m">Bad Strref Still Protection from Elements</entry>
+  <entry id="64088" lang="en" sex="m">Bad Strref Remove Blindness/Deafness</entry>
+  <entry id="64089" lang="en" sex="m">Bad Strref Quickened Remove Blindness/Deafness</entry>
+  <entry id="64090" lang="en" sex="m">Bad Strref Silent Remove Blindness/Deafness</entry>
+  <entry id="64091" lang="en" sex="m">Bad Strref Still Remove Blindness/Deafness</entry>
+  <entry id="64092" lang="en" sex="m">Bad Strref Prayer</entry>
+  <entry id="64093" lang="en" sex="m">Bad Strref Extended Prayer</entry>
+  <entry id="64094" lang="en" sex="m">Bad Strref Quickened Prayer</entry>
+  <entry id="64095" lang="en" sex="m">Bad Strref Silent Prayer</entry>
+  <entry id="64096" lang="en" sex="m">Bad Strref Still Prayer</entry>
+  <entry id="64097" lang="en" sex="m">Bad Strref Darkfire</entry>
+  <entry id="64098" lang="en" sex="m">Bad Strref Extended Darkfire</entry>
+  <entry id="64099" lang="en" sex="m">Bad Strref Quickened Darkfire</entry>
+  <entry id="64100" lang="en" sex="m">Bad Strref Silent Darkfire</entry>
+  <entry id="64101" lang="en" sex="m">Bad Strref Still Darkfire</entry>
+  <entry id="64102" lang="en" sex="m">Bad Strref Blindness/Deafness</entry>
+  <entry id="64103" lang="en" sex="m">Bad Strref Extended Blindness/Deafness</entry>
+  <entry id="64104" lang="en" sex="m">Bad Strref Quickened Blindness/Deafness</entry>
+  <entry id="64105" lang="en" sex="m">Bad Strref Silent Blindness/Deafness</entry>
+  <entry id="64106" lang="en" sex="m">Bad Strref Slashing Darkness</entry>
+  <entry id="64107" lang="en" sex="m">Bad Strref Empowered Slashing Darkness</entry>
+  <entry id="64108" lang="en" sex="m">Bad Strref Maximized Slashing Darkness</entry>
+  <entry id="64109" lang="en" sex="m">Bad Strref Quickened Slashing Darkness</entry>
+  <entry id="64110" lang="en" sex="m">Bad Strref Silent Slashing Darkness</entry>
+  <entry id="64111" lang="en" sex="m">Bad Strref Still Slashing Darkness</entry>
+  <entry id="64112" lang="en" sex="m">Bad Strref Magic Circle against Evil</entry>
+  <entry id="64113" lang="en" sex="m">Bad Strref Extended Magic Circle against Evil</entry>
+  <entry id="64114" lang="en" sex="m">Bad Strref Quickened Magic Circle against Evil</entry>
+  <entry id="64115" lang="en" sex="m">Bad Strref Silent Magic Circle against Evil</entry>
+  <entry id="64116" lang="en" sex="m">Bad Strref Still Magic Circle against Evil</entry>
+  <entry id="64117" lang="en" sex="m">Bad Strref Animate Dead</entry>
+  <entry id="64118" lang="en" sex="m">Bad Strref Extended Animate Dead</entry>
+  <entry id="64119" lang="en" sex="m">Bad Strref Quickened Animate Dead</entry>
+  <entry id="64120" lang="en" sex="m">Bad Strref Silent Animate Dead</entry>
+  <entry id="64121" lang="en" sex="m">Bad Strref Still Animate Dead</entry>
+  <entry id="64122" lang="en" sex="m">Bad Strref Bestow Curse</entry>
+  <entry id="64123" lang="en" sex="m">Bad Strref Quickened Bestow Curse</entry>
+  <entry id="64124" lang="en" sex="m">Bad Strref Silent Bestow Curse</entry>
+  <entry id="64125" lang="en" sex="m">Bad Strref Still Bestow Curse</entry>
+  <entry id="64126" lang="en" sex="m">Bad Strref Legion's Conviction</entry>
+  <entry id="64127" lang="en" sex="m">Bad Strref Extended Legion's Conviction</entry>
+  <entry id="64128" lang="en" sex="m">Bad Strref Quickened Legion's Conviction</entry>
+  <entry id="64129" lang="en" sex="m">Bad Strref Silent Legion's Conviction</entry>
+  <entry id="64130" lang="en" sex="m">Bad Strref Still Legion's Conviction</entry>
+  <entry id="64131" lang="en" sex="m">Bad Strref Magic Circle against Good</entry>
+  <entry id="64132" lang="en" sex="m">Bad Strref Extended Magic Circle against Good</entry>
+  <entry id="64133" lang="en" sex="m">Bad Strref Quickened Magic Circle against Good</entry>
+  <entry id="64134" lang="en" sex="m">Bad Strref Silent Magic Circle against Good</entry>
+  <entry id="64135" lang="en" sex="m">Bad Strref Still Magic Circle against Good</entry>
+  <entry id="64136" lang="en" sex="m">Bad Strref Magic Circle against Law</entry>
+  <entry id="64137" lang="en" sex="m">Bad Strref Extended Magic Circle against Law</entry>
+  <entry id="64138" lang="en" sex="m">Bad Strref Quickened Magic Circle against Law</entry>
+  <entry id="64139" lang="en" sex="m">Bad Strref Silent Magic Circle against Law</entry>
+  <entry id="64140" lang="en" sex="m">Bad Strref Still Magic Circle against Law</entry>
+  <entry id="64141" lang="en" sex="m">Bad Strref Clarity</entry>
+  <entry id="64142" lang="en" sex="m">Bad Strref Extended Clarity</entry>
+  <entry id="64143" lang="en" sex="m">Bad Strref Quickened Clarity</entry>
+  <entry id="64144" lang="en" sex="m">Bad Strref Deeper Darkness</entry>
+  <entry id="64145" lang="en" sex="m">Bad Strref Extended Deeper Darkness</entry>
+  <entry id="64146" lang="en" sex="m">Bad Strref Quickened Deeper Darkness</entry>
+  <entry id="64147" lang="en" sex="m">Bad Strref Silent Deeper Darkness</entry>
+  <entry id="64148" lang="en" sex="m">Bad Strref Contagion</entry>
+  <entry id="64149" lang="en" sex="m">Bad Strref Quickened Contagion</entry>
+  <entry id="64150" lang="en" sex="m">Bad Strref Silent Contagion</entry>
+  <entry id="64151" lang="en" sex="m">Bad Strref Still Contagion</entry>
+  <entry id="64152" lang="en" sex="m">Bad Strref Summon Creature III</entry>
+  <entry id="64153" lang="en" sex="m">Bad Strref Extended Summon Creature III</entry>
+  <entry id="64154" lang="en" sex="m">Bad Strref Quickened Summon Creature III</entry>
+  <entry id="64155" lang="en" sex="m">Bad Strref Silent Summon Creature III</entry>
+  <entry id="64156" lang="en" sex="m">Bad Strref Still Summon Creature III</entry>
+  <entry id="64157" lang="en" sex="m">Bad Strref Continual Flame</entry>
+  <entry id="64158" lang="en" sex="m">Bad Strref Quickened Continual Flame</entry>
+  <entry id="64159" lang="en" sex="m">Bad Strref Silent Continual Flame</entry>
+  <entry id="64160" lang="en" sex="m">Bad Strref Still Continual Flame</entry>
+  <entry id="64161" lang="en" sex="m">Bad Strref Negative Energy Protection</entry>
+  <entry id="64162" lang="en" sex="m">Bad Strref Extended Negative Energy Protection</entry>
+  <entry id="64163" lang="en" sex="m">Bad Strref Quickened Negative Energy Protection</entry>
+  <entry id="64164" lang="en" sex="m">Bad Strref Silent Negative Energy Protection</entry>
+  <entry id="64165" lang="en" sex="m">Bad Strref Still Negative Energy Protection</entry>
+  <entry id="64166" lang="en" sex="m">Bad Strref Searing Light</entry>
+  <entry id="64167" lang="en" sex="m">Bad Strref Empowered Searing Light</entry>
+  <entry id="64168" lang="en" sex="m">Bad Strref Maximized Searing Light</entry>
+  <entry id="64169" lang="en" sex="m">Bad Strref Quickened Searing Light</entry>
+  <entry id="64170" lang="en" sex="m">Bad Strref Silent Searing Light</entry>
+  <entry id="64171" lang="en" sex="m">Bad Strref Still Searing Light</entry>
+  <entry id="64172" lang="en" sex="m">Bad Strref Remove Disease</entry>
+  <entry id="64173" lang="en" sex="m">Bad Strref Quickened Remove Disease</entry>
+  <entry id="64174" lang="en" sex="m">Bad Strref Silent Remove Disease</entry>
+  <entry id="64175" lang="en" sex="m">Bad Strref Still Remove Disease</entry>
+  <entry id="64176" lang="en" sex="m">Bad Strref Glyph of Warding</entry>
+  <entry id="64177" lang="en" sex="m">Bad Strref Empowered Glyph of Warding</entry>
+  <entry id="64178" lang="en" sex="m">Bad Strref Extended Glyph of Warding</entry>
+  <entry id="64179" lang="en" sex="m">Bad Strref Maximized Glyph of Warding</entry>
+  <entry id="64180" lang="en" sex="m">Bad Strref Quickened Glyph of Warding</entry>
+  <entry id="64181" lang="en" sex="m">Bad Strref Silent Glyph of Warding</entry>
+  <entry id="64182" lang="en" sex="m">Bad Strref Still Glyph of Warding</entry>
+  <entry id="64183" lang="en" sex="m">Bad Strref Dispel Magic</entry>
+  <entry id="64184" lang="en" sex="m">Bad Strref Quickened Dispel Magic</entry>
+  <entry id="64185" lang="en" sex="m">Bad Strref Silent Dispel Magic</entry>
+  <entry id="64186" lang="en" sex="m">Bad Strref Still Dispel Magic</entry>
+  <entry id="64187" lang="en" sex="m">Bad Strref Magic Vestment</entry>
+  <entry id="64188" lang="en" sex="m">Bad Strref Extended Magic Vestment</entry>
+  <entry id="64189" lang="en" sex="m">Bad Strref Quickened Magic Vestment</entry>
+  <entry id="64190" lang="en" sex="m">Bad Strref Silent Magic Vestment</entry>
+  <entry id="64191" lang="en" sex="m">Bad Strref Still Magic Vestment</entry>
+  <entry id="64192" lang="en" sex="m">Bad Strref Cure Serious Wounds</entry>
+  <entry id="64193" lang="en" sex="m">Bad Strref Empowered Cure Serious Wounds</entry>
+  <entry id="64194" lang="en" sex="m">Bad Strref Maximized Cure Serious Wounds</entry>
+  <entry id="64195" lang="en" sex="m">Bad Strref Quickened Cure Serious Wounds</entry>
+  <entry id="64196" lang="en" sex="m">Bad Strref Silent Cure Serious Wounds</entry>
+  <entry id="64197" lang="en" sex="m">Bad Strref Still Cure Serious Wounds</entry>
+  <entry id="64198" lang="en" sex="m">Bad Strref Magic Circle against Chaos</entry>
+  <entry id="64199" lang="en" sex="m">Bad Strref Extended Magic Circle against Chaos</entry>
+  <entry id="64200" lang="en" sex="m">Bad Strref Quickened Magic Circle against Chaos</entry>
+  <entry id="64201" lang="en" sex="m">Bad Strref Silent Magic Circle against Chaos</entry>
+  <entry id="64202" lang="en" sex="m">Bad Strref Still Magic Circle against Chaos</entry>
+  <entry id="64203" lang="en" sex="m">Bad Strref Inflict Serious Wounds</entry>
+  <entry id="64204" lang="en" sex="m">Bad Strref Empowered Inflict Serious Wounds</entry>
+  <entry id="64205" lang="en" sex="m">Bad Strref Maximized Inflict Serious Wounds</entry>
+  <entry id="64206" lang="en" sex="m">Bad Strref Quickened Inflict Serious Wounds</entry>
+  <entry id="64207" lang="en" sex="m">Bad Strref Silent Inflict Serious Wounds</entry>
+  <entry id="64208" lang="en" sex="m">Bad Strref Still Inflict Serious Wounds</entry>
+  <entry id="64209" lang="en" sex="m">Bad Strref Remove Curse</entry>
+  <entry id="64210" lang="en" sex="m">Bad Strref Quickened Remove Curse</entry>
+  <entry id="64211" lang="en" sex="m">Bad Strref Silent Remove Curse</entry>
+  <entry id="64212" lang="en" sex="m">Bad Strref Still Remove Curse</entry>
+  <entry id="64213" lang="en" sex="m">Bad Strref Curse of Petty Failing</entry>
+  <entry id="64214" lang="en" sex="m">Bad Strref Extended Curse of Petty Failing</entry>
+  <entry id="64215" lang="en" sex="m">Bad Strref Quickened Curse of Petty Failing</entry>
+  <entry id="64216" lang="en" sex="m">Bad Strref Silent Curse of Petty Failing</entry>
+  <entry id="64217" lang="en" sex="m">Bad Strref Still Curse of Petty Failing</entry>
+  <entry id="64218" lang="en" sex="m">Bad Strref Invisibility Purge</entry>
+  <entry id="64219" lang="en" sex="m">Bad Strref Extended Invisibility Purge</entry>
+  <entry id="64220" lang="en" sex="m">Bad Strref Quickened Invisibility Purge</entry>
+  <entry id="64221" lang="en" sex="m">Bad Strref Silent Invisibility Purge</entry>
+  <entry id="64222" lang="en" sex="m">Bad Strref Still Invisibility Purge</entry>
+  <entry id="64223" lang="en" sex="m">Bad Strref Hold Person</entry>
+  <entry id="64224" lang="en" sex="m">Bad Strref Extended Hold Person</entry>
+  <entry id="64225" lang="en" sex="m">Bad Strref Quickened Hold Person</entry>
+  <entry id="64226" lang="en" sex="m">Bad Strref Silent Hold Person</entry>
+  <entry id="64227" lang="en" sex="m">Bad Strref Still Hold Person</entry>
+  <entry id="64228" lang="en" sex="m">Bad Strref Negative Energy Ray</entry>
+  <entry id="64229" lang="en" sex="m">Bad Strref Empowered Negative Energy Ray</entry>
+  <entry id="64230" lang="en" sex="m">Bad Strref Maximized Negative Energy Ray</entry>
+  <entry id="64231" lang="en" sex="m">Bad Strref Quickened Negative Energy Ray</entry>
+  <entry id="64232" lang="en" sex="m">Bad Strref Silent Negative Energy Ray</entry>
+  <entry id="64233" lang="en" sex="m">Bad Strref Still Negative Energy Ray</entry>
+  <entry id="64234" lang="en" sex="m">Bad Strref Ultravision</entry>
+  <entry id="64235" lang="en" sex="m">Bad Strref Extended Ultravision</entry>
+  <entry id="64236" lang="en" sex="m">Bad Strref Silent Ultravision</entry>
+  <entry id="64237" lang="en" sex="m">Bad Strref Still Ultravision</entry>
+  <entry id="64238" lang="en" sex="m">Bad Strref Undetectable Alignment</entry>
+  <entry id="64239" lang="en" sex="m">Bad Strref Extended Undetectable Alignment</entry>
+  <entry id="64240" lang="en" sex="m">Bad Strref Quickened Undetectable Alignment</entry>
+  <entry id="64241" lang="en" sex="m">Bad Strref Silent Undetectable Alignment</entry>
+  <entry id="64242" lang="en" sex="m">Bad Strref Still Undetectable Alignment</entry>
+  <entry id="64243" lang="en" sex="m">Bad Strref Living Undeath</entry>
+  <entry id="64244" lang="en" sex="m">Bad Strref Extended Living Undeath</entry>
+  <entry id="64245" lang="en" sex="m">Bad Strref Quickened Living Undeath</entry>
+  <entry id="64246" lang="en" sex="m">Bad Strref Silent Living Undeath</entry>
+  <entry id="64247" lang="en" sex="m">Bad Strref Still Living Undeath</entry>
+  <entry id="64248" lang="en" sex="m">Bad Strref Find Traps</entry>
+  <entry id="64249" lang="en" sex="m">Bad Strref Extended Find Traps</entry>
+  <entry id="64250" lang="en" sex="m">Bad Strref Quickened Find Traps</entry>
+  <entry id="64251" lang="en" sex="m">Bad Strref Silent Find Traps</entry>
+  <entry id="64252" lang="en" sex="m">Bad Strref Still Find Traps</entry>
+  <entry id="64253" lang="en" sex="m">Bad Strref Darkness</entry>
+  <entry id="64254" lang="en" sex="m">Bad Strref Extended Darkness</entry>
+  <entry id="64255" lang="en" sex="m">Bad Strref Quickened Darkness</entry>
+  <entry id="64256" lang="en" sex="m">Bad Strref Silent Darkness</entry>
+  <entry id="64257" lang="en" sex="m">Bad Strref Stone Bones</entry>
+  <entry id="64258" lang="en" sex="m">Bad Strref Extended Stone Bones</entry>
+  <entry id="64259" lang="en" sex="m">Bad Strref Quickened Stone Bones</entry>
+  <entry id="64260" lang="en" sex="m">Bad Strref Silent Stone Bones</entry>
+  <entry id="64261" lang="en" sex="m">Bad Strref Still Stone Bones</entry>
+  <entry id="64262" lang="en" sex="m">Bad Strref Endurance</entry>
+  <entry id="64263" lang="en" sex="m">Bad Strref Empowered Endurance</entry>
+  <entry id="64264" lang="en" sex="m">Bad Strref Extended Endurance</entry>
+  <entry id="64265" lang="en" sex="m">Bad Strref Maximized Endurance</entry>
+  <entry id="64266" lang="en" sex="m">Bad Strref Quickened Endurance</entry>
+  <entry id="64267" lang="en" sex="m">Bad Strref Silent Endurance</entry>
+  <entry id="64268" lang="en" sex="m">Bad Strref Still Endurance</entry>
+  <entry id="64269" lang="en" sex="m">Bad Strref Sound Burst</entry>
+  <entry id="64270" lang="en" sex="m">Bad Strref Maximized Sound Burst</entry>
+  <entry id="64271" lang="en" sex="m">Bad Strref Quickened Sound Burst</entry>
+  <entry id="64272" lang="en" sex="m">Bad Strref Silent Sound Burst</entry>
+  <entry id="64273" lang="en" sex="m">Bad Strref Still Sound Burst</entry>
+  <entry id="64274" lang="en" sex="m">Bad Strref Silence</entry>
+  <entry id="64275" lang="en" sex="m">Bad Strref Extended Silence</entry>
+  <entry id="64276" lang="en" sex="m">Bad Strref Quickened Silence</entry>
+  <entry id="64277" lang="en" sex="m">Bad Strref Silent Silence</entry>
+  <entry id="64278" lang="en" sex="m">Bad Strref Still Silence</entry>
+  <entry id="64279" lang="en" sex="m">Bad Strref Cure Moderate Wounds</entry>
+  <entry id="64280" lang="en" sex="m">Bad Strref Empowered Cure Moderate Wounds</entry>
+  <entry id="64281" lang="en" sex="m">Bad Strref Maximized Cure Moderate Wounds</entry>
+  <entry id="64282" lang="en" sex="m">Bad Strref Quickened Cure Moderate Wounds</entry>
+  <entry id="64283" lang="en" sex="m">Bad Strref Silent Cure Moderate Wounds</entry>
+  <entry id="64284" lang="en" sex="m">Bad Strref Still Cure Moderate Wounds</entry>
+  <entry id="64285" lang="en" sex="m">Bad Strref Aid</entry>
+  <entry id="64286" lang="en" sex="m">Bad Strref Empowered Aid</entry>
+  <entry id="64287" lang="en" sex="m">Bad Strref Extended Aid</entry>
+  <entry id="64288" lang="en" sex="m">Bad Strref Maximized Aid</entry>
+  <entry id="64289" lang="en" sex="m">Bad Strref Quickened Aid</entry>
+  <entry id="64290" lang="en" sex="m">Bad Strref Silent Aid</entry>
+  <entry id="64291" lang="en" sex="m">Bad Strref Still Aid</entry>
+  <entry id="64292" lang="en" sex="m">Bad Strref Bull's Strength</entry>
+  <entry id="64293" lang="en" sex="m">Bad Strref Empowered Bull's Strength</entry>
+  <entry id="64294" lang="en" sex="m">Bad Strref Extended Bull's Strength</entry>
+  <entry id="64295" lang="en" sex="m">Bad Strref Maximized Bull's Strength</entry>
+  <entry id="64296" lang="en" sex="m">Bad Strref Quickened Bull's Strength</entry>
+  <entry id="64297" lang="en" sex="m">Bad Strref Silent Bull's Strength</entry>
+  <entry id="64298" lang="en" sex="m">Bad Strref Still Bull's Strength</entry>
+  <entry id="64299" lang="en" sex="m">Bad Strref Eagle's Splendor</entry>
+  <entry id="64300" lang="en" sex="m">Bad Strref Empowered Eagle's Splendor</entry>
+  <entry id="64301" lang="en" sex="m">Bad Strref Extended Eagle's Splendor</entry>
+  <entry id="64302" lang="en" sex="m">Bad Strref Maximized Eagle's Splendor</entry>
+  <entry id="64303" lang="en" sex="m">Bad Strref Quickened Eagle's Splendor</entry>
+  <entry id="64304" lang="en" sex="m">Bad Strref Silent Eagle's Splendor</entry>
+  <entry id="64305" lang="en" sex="m">Bad Strref Still Eagle's Splendor</entry>
+  <entry id="64306" lang="en" sex="m">Bad Strref Lesser Restoration</entry>
+  <entry id="64307" lang="en" sex="m">Bad Strref Quickened Lesser Restoration</entry>
+  <entry id="64308" lang="en" sex="m">Bad Strref Silent Lesser Restoration</entry>
+  <entry id="64309" lang="en" sex="m">Bad Strref Still Lesser Restoration</entry>
+  <entry id="64310" lang="en" sex="m">Bad Strref Owl's Wisdom</entry>
+  <entry id="64311" lang="en" sex="m">Bad Strref Empowered Owl's Wisdom</entry>
+  <entry id="64312" lang="en" sex="m">Bad Strref Extended Owl's Wisdom</entry>
+  <entry id="64313" lang="en" sex="m">Bad Strref Maximized Owl's Wisdom</entry>
+  <entry id="64314" lang="en" sex="m">Bad Strref Quickened Owl's Wisdom</entry>
+  <entry id="64315" lang="en" sex="m">Bad Strref Silent Owl's Wisdom</entry>
+  <entry id="64316" lang="en" sex="m">Bad Strref Still Owl's Wisdom</entry>
+  <entry id="64317" lang="en" sex="m">Bad Strref Summon Creature II</entry>
+  <entry id="64318" lang="en" sex="m">Bad Strref Extended Summon Creature II</entry>
+  <entry id="64319" lang="en" sex="m">Bad Strref Quickened Summon Creature II</entry>
+  <entry id="64320" lang="en" sex="m">Bad Strref Silent Summon Creature II</entry>
+  <entry id="64321" lang="en" sex="m">Bad Strref Still Summon Creature II</entry>
+  <entry id="64322" lang="en" sex="m">Bad Strref Divine Protection</entry>
+  <entry id="64323" lang="en" sex="m">Bad Strref Extended Divine Protection</entry>
+  <entry id="64324" lang="en" sex="m">Bad Strref Quickened Divine Protection</entry>
+  <entry id="64325" lang="en" sex="m">Bad Strref Silent Divine Protection</entry>
+  <entry id="64326" lang="en" sex="m">Bad Strref Still Divine Protection</entry>
+  <entry id="64327" lang="en" sex="m">Bad Strref Resist Elements</entry>
+  <entry id="64328" lang="en" sex="m">Bad Strref Extended Resist Elements</entry>
+  <entry id="64329" lang="en" sex="m">Bad Strref Quickened Resist Elements</entry>
+  <entry id="64330" lang="en" sex="m">Bad Strref Silent Resist Elements</entry>
+  <entry id="64331" lang="en" sex="m">Bad Strref Still Resist Elements</entry>
+  <entry id="64332" lang="en" sex="m">Bad Strref Lesser Dispel</entry>
+  <entry id="64333" lang="en" sex="m">Bad Strref Silent Lesser Dispel</entry>
+  <entry id="64334" lang="en" sex="m">Bad Strref Fox's Cunning</entry>
+  <entry id="64335" lang="en" sex="m">Bad Strref Empowered Fox's Cunning</entry>
+  <entry id="64336" lang="en" sex="m">Bad Strref Extended Fox's Cunning</entry>
+  <entry id="64337" lang="en" sex="m">Bad Strref Maximized Fox's Cunning</entry>
+  <entry id="64338" lang="en" sex="m">Bad Strref Quickened Fox's Cunning</entry>
+  <entry id="64339" lang="en" sex="m">Bad Strref Silent Fox's Cunning</entry>
+  <entry id="64340" lang="en" sex="m">Bad Strref Still Fox's Cunning</entry>
+  <entry id="64341" lang="en" sex="m">Bad Strref Remove Paralysis</entry>
+  <entry id="64342" lang="en" sex="m">Bad Strref Quickened Remove Paralysis</entry>
+  <entry id="64343" lang="en" sex="m">Bad Strref Silent Remove Paralysis</entry>
+  <entry id="64344" lang="en" sex="m">Bad Strref Still Remove Paralysis</entry>
+  <entry id="64345" lang="en" sex="m">Bad Strref Inflict Moderate Wounds</entry>
+  <entry id="64346" lang="en" sex="m">Bad Strref Empowered Inflict Moderate Wounds</entry>
+  <entry id="64347" lang="en" sex="m">Bad Strref Maximized Inflict Moderate Wounds</entry>
+  <entry id="64348" lang="en" sex="m">Bad Strref Quickened Inflict Moderate Wounds</entry>
+  <entry id="64349" lang="en" sex="m">Bad Strref Silent Inflict Moderate Wounds</entry>
+  <entry id="64350" lang="en" sex="m">Bad Strref Still Inflict Moderate Wounds</entry>
+  <entry id="64351" lang="en" sex="m">Bad Strref Sanctuary</entry>
+  <entry id="64352" lang="en" sex="m">Bad Strref Extended Sanctuary</entry>
+  <entry id="64353" lang="en" sex="m">Bad Strref Quickened Sanctuary</entry>
+  <entry id="64354" lang="en" sex="m">Bad Strref Silent Sanctuary</entry>
+  <entry id="64355" lang="en" sex="m">Bad Strref Still Sanctuary</entry>
+  <entry id="64356" lang="en" sex="m">Bad Strref Protection from Law</entry>
+  <entry id="64357" lang="en" sex="m">Bad Strref Extended Protection from Law</entry>
+  <entry id="64358" lang="en" sex="m">Bad Strref Quickened Protection from Law</entry>
+  <entry id="64359" lang="en" sex="m">Bad Strref Silent Protection from Law</entry>
+  <entry id="64360" lang="en" sex="m">Bad Strref Still Protection from Law</entry>
+  <entry id="64361" lang="en" sex="m">Bad Strref Protection from Evil</entry>
+  <entry id="64362" lang="en" sex="m">Bad Strref Extended Protection from Evil</entry>
+  <entry id="64363" lang="en" sex="m">Bad Strref Quickened Protection from Evil</entry>
+  <entry id="64364" lang="en" sex="m">Bad Strref Silent Protection from Evil</entry>
+  <entry id="64365" lang="en" sex="m">Bad Strref Still Protection from Evil</entry>
+  <entry id="64366" lang="en" sex="m">Bad Strref Endure Elements</entry>
+  <entry id="64367" lang="en" sex="m">Bad Strref Extended Endure Elements</entry>
+  <entry id="64368" lang="en" sex="m">Bad Strref Quickened Endure Elements</entry>
+  <entry id="64369" lang="en" sex="m">Bad Strref Silent Endure Elements</entry>
+  <entry id="64370" lang="en" sex="m">Bad Strref Still Endure Elements</entry>
+  <entry id="64371" lang="en" sex="m">Bad Strref Magic Weapon</entry>
+  <entry id="64372" lang="en" sex="m">Bad Strref Extended Magic Weapon</entry>
+  <entry id="64373" lang="en" sex="m">Bad Strref Quickened Magic Weapon</entry>
+  <entry id="64374" lang="en" sex="m">Bad Strref Silent Magic Weapon</entry>
+  <entry id="64375" lang="en" sex="m">Bad Strref Still Magic Weapon</entry>
+  <entry id="64376" lang="en" sex="m">Bad Strref Bless</entry>
+  <entry id="64377" lang="en" sex="m">Bad Strref Extended Bless</entry>
+  <entry id="64378" lang="en" sex="m">Bad Strref Quickened Bless</entry>
+  <entry id="64379" lang="en" sex="m">Bad Strref Silent Bless</entry>
+  <entry id="64380" lang="en" sex="m">Bad Strref Still Bless</entry>
+  <entry id="64381" lang="en" sex="m">Bad Strref Summon Creature I</entry>
+  <entry id="64382" lang="en" sex="m">Bad Strref Extended Summon Creature I</entry>
+  <entry id="64383" lang="en" sex="m">Bad Strref Quickened Summon Creature I</entry>
+  <entry id="64384" lang="en" sex="m">Bad Strref Silent Summon Creature I</entry>
+  <entry id="64385" lang="en" sex="m">Bad Strref Still Summon Creature I</entry>
+  <entry id="64386" lang="en" sex="m">Bad Strref Protection from Good</entry>
+  <entry id="64387" lang="en" sex="m">Bad Strref Extended Protection from Good</entry>
+  <entry id="64388" lang="en" sex="m">Bad Strref Quickened Protection from Good</entry>
+  <entry id="64389" lang="en" sex="m">Bad Strref Silent Protection from Good</entry>
+  <entry id="64390" lang="en" sex="m">Bad Strref Still Protection from Good</entry>
+  <entry id="64391" lang="en" sex="m">Bad Strref Detect Good</entry>
+  <entry id="64392" lang="en" sex="m">Bad Strref Extended Detect Good</entry>
+  <entry id="64393" lang="en" sex="m">Bad Strref Quickened Detect Good</entry>
+  <entry id="64394" lang="en" sex="m">Bad Strref Silent Detect Good</entry>
+  <entry id="64395" lang="en" sex="m">Bad Strref Still Detect Good</entry>
+  <entry id="64396" lang="en" sex="m">Bad Strref Detect Law</entry>
+  <entry id="64397" lang="en" sex="m">Bad Strref Extended Detect Law</entry>
+  <entry id="64398" lang="en" sex="m">Bad Strref Quickened Detect Law</entry>
+  <entry id="64399" lang="en" sex="m">Bad Strref Silent Detect Law</entry>
+  <entry id="64400" lang="en" sex="m">Bad Strref Still Detect Law</entry>
+  <entry id="64401" lang="en" sex="m">Bad Strref Detect Chaos</entry>
+  <entry id="64402" lang="en" sex="m">Bad Strref Extended Detect Chaos</entry>
+  <entry id="64403" lang="en" sex="m">Bad Strref Quickened Detect Chaos</entry>
+  <entry id="64404" lang="en" sex="m">Bad Strref Silent Detect Chaos</entry>
+  <entry id="64405" lang="en" sex="m">Bad Strref Still Detect Chaos</entry>
+  <entry id="64406" lang="en" sex="m">Bad Strref Doom</entry>
+  <entry id="64407" lang="en" sex="m">Bad Strref Extended Doom</entry>
+  <entry id="64408" lang="en" sex="m">Bad Strref Quickened Doom</entry>
+  <entry id="64409" lang="en" sex="m">Bad Strref Silent Doom</entry>
+  <entry id="64410" lang="en" sex="m">Bad Strref Still Doom</entry>
+  <entry id="64411" lang="en" sex="m">Bad Strref Bane</entry>
+  <entry id="64412" lang="en" sex="m">Bad Strref Extended Bane</entry>
+  <entry id="64413" lang="en" sex="m">Bad Strref Quickened Bane</entry>
+  <entry id="64414" lang="en" sex="m">Bad Strref Silent Bane</entry>
+  <entry id="64415" lang="en" sex="m">Bad Strref Still Bane</entry>
+  <entry id="64416" lang="en" sex="m">Bad Strref Inflict Light Wounds</entry>
+  <entry id="64417" lang="en" sex="m">Bad Strref Empowered Inflict Light Wounds</entry>
+  <entry id="64418" lang="en" sex="m">Bad Strref Maximized Inflict Light Wounds</entry>
+  <entry id="64419" lang="en" sex="m">Bad Strref Quickened Inflict Light Wounds</entry>
+  <entry id="64420" lang="en" sex="m">Bad Strref Silent Inflict Light Wounds</entry>
+  <entry id="64421" lang="en" sex="m">Bad Strref Still Inflict Light Wounds</entry>
+  <entry id="64422" lang="en" sex="m">Bad Strref Divine Favor</entry>
+  <entry id="64423" lang="en" sex="m">Bad Strref Extended Divine Favor</entry>
+  <entry id="64424" lang="en" sex="m">Bad Strref Quickened Divine Favor</entry>
+  <entry id="64425" lang="en" sex="m">Bad Strref Silent Divine Favor</entry>
+  <entry id="64426" lang="en" sex="m">Bad Strref Still Divine Favor</entry>
+  <entry id="64427" lang="en" sex="m">Bad Strref Entropic Shield</entry>
+  <entry id="64428" lang="en" sex="m">Bad Strref Extended Entropic Shield</entry>
+  <entry id="64429" lang="en" sex="m">Bad Strref Quickened Entropic Shield</entry>
+  <entry id="64430" lang="en" sex="m">Bad Strref Silent Entropic Shield</entry>
+  <entry id="64431" lang="en" sex="m">Bad Strref Still Entropic Shield</entry>
+  <entry id="64432" lang="en" sex="m">Bad Strref Conviction</entry>
+  <entry id="64433" lang="en" sex="m">Bad Strref Extended Conviction</entry>
+  <entry id="64434" lang="en" sex="m">Bad Strref Quickened Conviction</entry>
+  <entry id="64435" lang="en" sex="m">Bad Strref Silent Conviction</entry>
+  <entry id="64436" lang="en" sex="m">Bad Strref Still Conviction</entry>
+  <entry id="64437" lang="en" sex="m">Bad Strref Scare</entry>
+  <entry id="64438" lang="en" sex="m">Bad Strref Extended Scare</entry>
+  <entry id="64439" lang="en" sex="m">Bad Strref Quickened Scare</entry>
+  <entry id="64440" lang="en" sex="m">Bad Strref Shield of Faith</entry>
+  <entry id="64441" lang="en" sex="m">Bad Strref Extended Shield of Faith</entry>
+  <entry id="64442" lang="en" sex="m">Bad Strref Quickened Shield of Faith</entry>
+  <entry id="64443" lang="en" sex="m">Bad Strref Silent Shield of Faith</entry>
+  <entry id="64444" lang="en" sex="m">Bad Strref Still Shield of Faith</entry>
+  <entry id="64445" lang="en" sex="m">Bad Strref Cure Light Wounds</entry>
+  <entry id="64446" lang="en" sex="m">Bad Strref Empowered Cure Light Wounds</entry>
+  <entry id="64447" lang="en" sex="m">Bad Strref Maximized Cure Light Wounds</entry>
+  <entry id="64448" lang="en" sex="m">Bad Strref Quickened Cure Light Wounds</entry>
+  <entry id="64449" lang="en" sex="m">Bad Strref Silent Cure Light Wounds</entry>
+  <entry id="64450" lang="en" sex="m">Bad Strref Still Cure Light Wounds</entry>
+  <entry id="64451" lang="en" sex="m">Bad Strref Protection from Chaos</entry>
+  <entry id="64452" lang="en" sex="m">Bad Strref Extended Protection from Chaos</entry>
+  <entry id="64453" lang="en" sex="m">Bad Strref Quickened Protection from Chaos</entry>
+  <entry id="64454" lang="en" sex="m">Bad Strref Silent Protection from Chaos</entry>
+  <entry id="64455" lang="en" sex="m">Bad Strref Still Protection from Chaos</entry>
+  <entry id="64456" lang="en" sex="m">Bad Strref Detect Evil</entry>
+  <entry id="64457" lang="en" sex="m">Bad Strref Extended Detect Evil</entry>
+  <entry id="64458" lang="en" sex="m">Bad Strref Quickened Detect Evil</entry>
+  <entry id="64459" lang="en" sex="m">Bad Strref Silent Detect Evil</entry>
+  <entry id="64460" lang="en" sex="m">Bad Strref Still Detect Evil</entry>
+  <entry id="64461" lang="en" sex="m">Bad Strref Remove Fear</entry>
+  <entry id="64462" lang="en" sex="m">Bad Strref Extended Remove Fear</entry>
+  <entry id="64463" lang="en" sex="m">Bad Strref Quickened Remove Fear</entry>
+  <entry id="64464" lang="en" sex="m">Bad Strref Silent Remove Fear</entry>
+  <entry id="64465" lang="en" sex="m">Bad Strref Still Remove Fear</entry>
+  <entry id="64466" lang="en" sex="m">Bad Strref Inflict Minor Wounds</entry>
+  <entry id="64467" lang="en" sex="m">Bad Strref Quickened Inflict Minor Wounds</entry>
+  <entry id="64468" lang="en" sex="m">Bad Strref Silent Inflict Minor Wounds</entry>
+  <entry id="64469" lang="en" sex="m">Bad Strref Still Inflict Minor Wounds</entry>
+  <entry id="64470" lang="en" sex="m">Bad Strref Virtue</entry>
+  <entry id="64471" lang="en" sex="m">Bad Strref Extended Virtue</entry>
+  <entry id="64472" lang="en" sex="m">Bad Strref Quickened Virtue</entry>
+  <entry id="64473" lang="en" sex="m">Bad Strref Silent Virtue</entry>
+  <entry id="64474" lang="en" sex="m">Bad Strref Still Virtue</entry>
+  <entry id="64475" lang="en" sex="m">Bad Strref Light</entry>
+  <entry id="64476" lang="en" sex="m">Bad Strref Extended Light</entry>
+  <entry id="64477" lang="en" sex="m">Bad Strref Quickened Light</entry>
+  <entry id="64478" lang="en" sex="m">Bad Strref Silent Light</entry>
+  <entry id="64479" lang="en" sex="m">Bad Strref Cure Minor Wounds</entry>
+  <entry id="64480" lang="en" sex="m">Bad Strref Quickened Cure Minor Wounds</entry>
+  <entry id="64481" lang="en" sex="m">Bad Strref Silent Cure Minor Wounds</entry>
+  <entry id="64482" lang="en" sex="m">Bad Strref Still Cure Minor Wounds</entry>
+  <entry id="64483" lang="en" sex="m">Bad Strref Resistance</entry>
+  <entry id="64484" lang="en" sex="m">Bad Strref Extended Resistance</entry>
+  <entry id="64485" lang="en" sex="m">Bad Strref Quickened Resistance</entry>
+  <entry id="64486" lang="en" sex="m">Bad Strref Silent Resistance</entry>
+  <entry id="64487" lang="en" sex="m">Bad Strref Still Resistance</entry>
   <entry id="70000" lang="en" sex="m">####END_OF_NEW_SPELLBOOK_RESERVE</entry>
 </tlk>

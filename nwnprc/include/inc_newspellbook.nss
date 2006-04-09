@@ -27,7 +27,7 @@ Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
 Add class to GetCasterLvl() in prc_inc_spells
 Add class to MakeLookupLoopMaster() in inc_lookups
-Add class to prc_spellgain
+Add class to prc_spellgain if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, MinimumSpellLevel, MaximumSpellLevel))
 Add class to ExecuteScript("prc_spellgain", oPC) list in EvalPRCFeats in prc_inc_function
 Run the assemble_spellbooks.bat file
 Make the prc_* scripts in newspellbook
@@ -464,18 +464,18 @@ void CheckNewSpellbooks(object oPC)
     for(i=1;i<=3;i++)
     {
         int nClass = PRCGetClassByPosition(i, oPC);
-        //raks cast as sorcs
-        if(nClass == CLASS_TYPE_OUTSIDER
-            && !GetLevelByClass(CLASS_TYPE_SORCERER, oPC)
-            && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
-            nClass = CLASS_TYPE_SORCERER;
-            
         int nLevel = GetLevelByClass(nClass, oPC);
+            
 DoDebug("CheckNewSpellbooks");
 DoDebug("nClass="+IntToString(nClass));
 DoDebug("nLevel="+IntToString(nLevel));
         if(nLevel)
         {
+            //raks cast as sorcs
+            if(nClass == CLASS_TYPE_OUTSIDER
+                && !GetLevelByClass(CLASS_TYPE_SORCERER, oPC)
+                && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
+                nClass = CLASS_TYPE_SORCERER;
             //remove persistant locals used to track when all spells cast
             if(persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
             {
@@ -547,14 +547,26 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
             SendMessageToPC(oPC, sMessage);
         }
     }
+    //remove it from the spellbook
+    RemoveSpellUse(oPC, nMasterFakeSpellID, nClass);
+    //test for ASF
+    if(GetIsArcaneClass(nClass)
+        && Random(100) < GetArcaneSpellFailure(oPC)
+        && FindSubString(GetStringLowerCase(Get2DACache("spells", "VS", nSpellID)),"s") != -1)
+        //52946 = Spell failed due to arcane spell failure!
+    {
+        SendMessageToPCByStrRef(oPC, 52946);
+        return;
+    }
     //uses GetSpellId to get the fake spellID not the real one
     //this is only the BASE DC, feats etc are added on top of this
-    int nDC = 10
-        +StringToInt(Get2DACache("Spells", "Innate", nFakeSpellID))
-        +((GetAbilityForClass(nClass, oPC)-10)/2);
+    int nDC = 10;
+    nDC += StringToInt(Get2DACache("Spells", "Innate", nFakeSpellID));
+    //if(nClass == CLASS_TYPE_FAVORED_SOUL)
+    //    nDC += (GetAbilityModifier(ABILITY_WISDOM, oPC);
+    //else
+        nDC += ((GetAbilityForClass(nClass, oPC)-10)/2);
     //cast the spell
     //dont need to override level, the spellscript will calculate it
     ActionCastSpell(nSpellID, 0, nDC, 0, nMetamagic, nClass);
-    //remove it from the spellbook
-    RemoveSpellUse(oPC, nMasterFakeSpellID, nClass);
 }

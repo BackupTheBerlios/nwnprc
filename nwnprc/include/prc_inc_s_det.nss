@@ -111,7 +111,7 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
     {
 DoDebug("DetectAlignmentRound() : Round = "+IntToString(nRound)+"from "+GetName(OBJECT_SELF)+" of "+GetName(oTest));    
         if((GetAlignmentGoodEvil(oTest)==nGoodEvil || nGoodEvil == -1)
-            && (GetAlignmentGoodEvil(oTest)==nLawChaos || nLawChaos == -1)
+            && (GetAlignmentLawChaos(oTest)==nLawChaos || nLawChaos == -1)
             && oTest != OBJECT_SELF
             && !GetHasSpellEffect(SPELL_UNDETECTABLE_ALINGMENT, oTest))
         {

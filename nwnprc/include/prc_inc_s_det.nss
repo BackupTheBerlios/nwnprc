@@ -109,6 +109,7 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
     int nAuraCount;
     while(GetIsObjectValid(oTest))
     {
+DoDebug("DetectAlignmentRound() : Round = "+IntToString(nRound)+"from "+GetName(OBJECT_SELF)+" of "+GetName(oTest));    
         if((GetAlignmentGoodEvil(oTest)==nGoodEvil || nGoodEvil == -1)
             && (GetAlignmentGoodEvil(oTest)==nLawChaos || nLawChaos == -1)
             && oTest != OBJECT_SELF
@@ -133,7 +134,7 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
 
             int nStrength;
             int nRawStrength;
-            int nRace = GetRacialType(oTest);
+            int nRace = MyPRCGetRacialType(oTest);
             if(nRace == RACIAL_TYPE_OUTSIDER)
                 nRawStrength = GetHitDice(oTest);
             else if((nRace == RACIAL_TYPE_UNDEAD && nGoodEvil==ALIGNMENT_EVIL)//undead only for evils
@@ -202,9 +203,10 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
         FloatingTextStringOnCreature(GetRGB(15,16-(nStrongestAura*3),16-(nStrongestAura*3)) + GetStringByStrRef(16832045) + " " + IntToString(nAuraCount) + " " + GetNounForStrength(nStrongestAura) + " " + sAura + " " + GetStringByStrRef(16832046) + ".", OBJECT_SELF, FALSE);
     }
 
-    ActionPlayAnimation(ANIMATION_LOOPING_MEDITATE, 1.0, 6.0);
+    //ActionPlayAnimation(ANIMATION_LOOPING_MEDITATE, 1.0, 6.0);
     nRound++;
     if(nRound >3)
         nRound = 3;
-    ActionDoCommand(DetectAlignmentRound(nRound, lLoc, nGoodEvil, nLawChaos, sAura, nBeamVFX));
+    //ActionDoCommand(DetectAlignmentRound(nRound, lLoc, nGoodEvil, nLawChaos, sAura, nBeamVFX));
+    DelayCommand(6.0, ActionDoCommand(DetectAlignmentRound(nRound, lLoc, nGoodEvil, nLawChaos, sAura, nBeamVFX)));
 }

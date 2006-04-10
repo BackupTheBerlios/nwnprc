@@ -55,7 +55,8 @@ string GetNounForStrength(int nStrength)
 void ApplyEffectDetectAuraOnObject(int nStrength, object oTarget, int nVFX)
 {
     location lLoc = GetLocation(oTarget);
-    float fRadius = (IntToFloat(GetCreatureSize(oTarget))*0.5)+0.5; //this is graphics related, not rules
+    //float fRadius = (IntToFloat(GetCreatureSize(oTarget))*0.5)+0.5; //this is graphics related, not rules
+    float fRadius = StringToFloat(Get2DACache("appearance", "CREPERSPACE", GetAppearanceType(oTarget)));
     location lCenter;
     vector vCenter = GetPositionFromLocation(lLoc);
     switch(nStrength)

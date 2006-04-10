@@ -4,6 +4,9 @@
 //:://////////////////////////////////////////////
 /** @file
 
+This file handles the Detect Evil/Law/Chaos/Good series of spells
+If there are other detect spells, they can probably be put in here too.
+
     @author Primogenitor
 */
 //:://////////////////////////////////////////////
@@ -51,7 +54,6 @@ string GetNounForStrength(int nStrength)
 
 void ApplyEffectDetectAuraOnObject(int nStrength, object oTarget, int nVFX)
 {
-    return;
     location lLoc = GetLocation(oTarget);
     float fRadius = (IntToFloat(GetCreatureSize(oTarget))*0.5)+0.5; //this is graphics related, not rules
     location lCenter;
@@ -94,7 +96,7 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
     //if you move/turn, restart the process
     if(lLoc != GetLocation(OBJECT_SELF))
         nRound = 1;
-    if(nRound == 0)
+    if(nRound <= 0)
         nRound = 1;
     //sanity check
    if(nRound > 3)
@@ -199,7 +201,7 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
         FloatingTextStringOnCreature(GetRGB(15,16-(nStrongestAura*3),16-(nStrongestAura*3)) + GetStringByStrRef(16832045) + " " + IntToString(nAuraCount) + " " + GetNounForStrength(nStrongestAura) + " " + sAura + " " + GetStringByStrRef(16832046) + ".", OBJECT_SELF, FALSE);
     }
 
-    //ActionPlayAnimation(ANIMATION_LOOPING_MEDITATE, 1.0, 6.0);
+    ActionPlayAnimation(ANIMATION_LOOPING_MEDITATE, 1.0, 6.0);
     nRound++;
     if(nRound >3)
         nRound = 3;

@@ -7,14 +7,24 @@ void main()
     //rather than try to fudge around biowares differences
     //Ill just scale relative to that
     int nCurrentSpeed = 30;
-    int nRacialSpeed = 30;
+    int nNewSpeed = nCurrentSpeed;
+    //test for racial movement changes
     if(GetPRCSwitch(PRC_PNP_RACIAL_SPEED))
-        nRacialSpeed = StringToInt(Get2DACache("racialtypes", "Endurance", GetRacialType(oPC)));
+        nNewSpeed = StringToInt(Get2DACache("racialtypes", "Endurance", GetRacialType(oPC)));
+    //test for armor movement changes    
+    if(GetPRCSwitch(PRC_PNP_ARMOR_SPEED))
+    {
+        int nArmorType = GetArmorType(GetItemInSlot(INVENTORY_SLOT_CHEST, oPC));
+        if(nArmorType == ARMOR_TYPE_MEDIUM)
+            nNewSpeed = FloatToInt(IntToFloat(nNewSpeed)*0.75);
+        else if(nArmorType == ARMOR_TYPE_HEAVY)
+            nNewSpeed = FloatToInt(IntToFloat(nNewSpeed)*0.666);
+    }    
     //no change, abort
-    if(nRacialSpeed == nCurrentSpeed)
+    if(nNewSpeed == nCurrentSpeed)
         return;
     //get relative change    
-    float fSpeedChange = IntToFloat(nCurrentSpeed)/IntToFloat(30);
+    float fSpeedChange = IntToFloat(nNewSpeed)/IntToFloat(nCurrentSpeed);
     //get the object thats going to apply the effect
     object oWP = GetWaypointByTag("PRC_Speed_WP");
     //not valid, create it
@@ -41,7 +51,7 @@ void main()
         int nChange = FloatToInt((fSpeedChange-1.0)*100.0);
         if(nChange < 0)
             nChange = 0;
-        if(nChange > 199)
+        else if(nChange > 199)
             nChange = 199;
         AssignCommand(oWP, 
             ApplyEffectToObject(DURATION_TYPE_PERMANENT,
@@ -54,7 +64,7 @@ void main()
         int nChange = FloatToInt((1.0-fSpeedChange)*100.0);
         if(nChange < 0)
             nChange = 0;
-        if(nChange > 99)
+        else if(nChange > 99)
             nChange = 99;
         AssignCommand(oWP, 
             ApplyEffectToObject(DURATION_TYPE_PERMANENT,

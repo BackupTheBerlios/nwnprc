@@ -6,6 +6,10 @@ void main()
 {
 //SendMessageToPC(GetFirstPC(), "Firing Trap");
     object oTarget = GetLocalObject(OBJECT_SELF, "Target");
+    if(!GetIsObjectValid(oTarget))
+        oTarget = GetLastUsedBy();
+    if(!GetIsObjectValid(oTarget))
+        oTarget = GetEnteringObject();
     struct trap tTrap = GetLocalTrap(OBJECT_SELF, "TrapSettings");
     if(tTrap.nSpellID)
     {

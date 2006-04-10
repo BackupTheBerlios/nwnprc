@@ -689,11 +689,19 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * in the OnSpawn event. Used for epic spells and other XP-burning stuff
   */
  const string PRC_NPC_XP                             = "PRC_NPC_XP";
+ 
  /*
   * Applys speed increase/decrease effects
   * Simulates PnP rules where different races have different speeds
   */
  const string PRC_PNP_RACIAL_SPEED                      = "PRC_PNP_RACIAL_SPEED";
+ 
+ /*
+  * Applys speed increase/decrease effects
+  * Simulates PnP rules where different armors have different speeds
+  * Medium armor is a 25% speed reduction, Heavy is a 33% reduction
+  */
+ const string PRC_PNP_ARMOR_SPEED                      = "PRC_PNP_ARMOR_SPEED";
 
 /******************************************************************************\
 *                               ACP switches                              *
@@ -2316,6 +2324,8 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_DOMAIN_ENFORCEMENT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BONUS_COHORTS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_SLINGS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_MANUAL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_AUTOMATIC);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_NPC_AUTOMATIC);

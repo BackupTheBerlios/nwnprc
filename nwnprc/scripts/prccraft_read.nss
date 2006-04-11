@@ -112,17 +112,20 @@ void main()
         SendMessageToPCByStrRef(OBJECT_SELF, STRREF_CRAFTDISABLED);
         return;
     }
+    //check if crafting disabled
+    if (GetLocalInt(GetArea(OBJECT_SELF), PRC_AREA_DISABLE_CRAFTING))
+    {
+        FloatingTextStrRefOnCreature(16832014, oCaster); // * Item creation feats are not enabled in this area *
+        return;
+    }
     
     object oItem = PRCGetSpellTargetObject();
     //been read recently, craft it
     if(GetLocalInt(oItem, "BeenRead"))
     {
-    
-    
         object oTarget = PRCGetSpellTargetObject();
         int nTargetType = GetObjectType(oTarget);
         struct ireqreport iReport;
-        
         
         // Current valid targets are: items, placeables, doors, and creatures.
         // If would-be wondrous item creator is trying to use Craft Wondrous Item on some invalid target..
@@ -175,7 +178,6 @@ void main()
     }
     else //not been read, read it
     {   
-    
         //If targeting a valid recipe, display its content
         struct ireqreport iReport = CheckIReqs(oItem, TRUE, FALSE);
 

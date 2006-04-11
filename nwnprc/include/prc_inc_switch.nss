@@ -1170,6 +1170,13 @@ const string PRC_BRAWLER_SIZE                        = "PRC_BRAWLER_SIZE";
  */
 const string PRC_DISABLE_CRAFT                       = "PRC_DISABLE_CRAFT";
 
+/*
+ * set this on an area to disable crafting within that area
+ * Best used in conjunction with the time elapsing and no-rest 
+ * This applies to both PRC Crafting and biowares scroll/wand/potions
+ */
+const string PRC_AREA_DISABLE_CRAFTING               = "PRC_AREA_DISABLE_CRAFTING";
+
 
 /*
  * Multiply the delay (in seconds) after the creation of an item in which a PC
@@ -1272,7 +1279,6 @@ const string X2_CI_CRAFTWAND_MAXLEVEL                = "X2_CI_CRAFTWAND_MAXLEVEL
  * defaults to 750
  */
 const string X2_CI_CRAFTWAND_COSTMODIFIER            = "X2_CI_CRAFTWAND_COSTMODIFIER";
-
 
 /******************************************************************************\
 *                           Teleport System Switches                           *

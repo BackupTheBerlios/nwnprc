@@ -1071,7 +1071,12 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
         // ---------------------------------------------------------------------
         if (GetModuleSwitchValue(MODULE_SWITCH_DISABLE_ITEM_CREATION_FEATS) == TRUE)
         {
-            FloatingTextStrRefOnCreature(83612, oCaster); // item creation disabled
+            FloatingTextStrRefOnCreature(83612, oCaster); // * Item creation feats are not enabled in this module *
+            return FALSE;
+        }
+        if (GetLocalInt(GetArea(oCaster), PRC_AREA_DISABLE_CRAFTING))
+        {
+            FloatingTextStrRefOnCreature(16832014, oCaster); // * Item creation feats are not enabled in this area *
             return FALSE;
         }
 

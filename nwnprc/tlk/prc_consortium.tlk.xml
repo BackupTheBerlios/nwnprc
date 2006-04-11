@@ -21041,6 +21041,7 @@ Deafened: The creature is struck deaf for 1d4 rounds.
   <entry id="54795" lang="en" sex="m">Protection from Evil (5)</entry>
   <entry id="54796" lang="en" sex="m">Protection from Good (5)</entry>
   <entry id="54797" lang="en" sex="m">Protection from Law (5)</entry>
+  <entry id="54798" lang="en" sex="m">* Item creation feats are not enabled in this area *</entry>
   <entry id="54800" lang="en" sex="m">Contemplative</entry>
   <entry id="54801" lang="en" sex="m">Contemplatives</entry>
   <entry id="54802" lang="en" sex="m">contemplative</entry>

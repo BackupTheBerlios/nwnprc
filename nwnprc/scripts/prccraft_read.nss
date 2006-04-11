@@ -115,7 +115,7 @@ void main()
     //check if crafting disabled
     if (GetLocalInt(GetArea(OBJECT_SELF), PRC_AREA_DISABLE_CRAFTING))
     {
-        FloatingTextStrRefOnCreature(16832014, oCaster); // * Item creation feats are not enabled in this area *
+        FloatingTextStrRefOnCreature(16832014, OBJECT_SELF); // * Item creation feats are not enabled in this area *
         return;
     }
     

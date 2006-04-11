@@ -22,6 +22,8 @@ void main()
             SetLocalInt(OBJECT_SELF, "DoorHP", nMaxHP);
             SetPlotFlag(OBJECT_SELF, FALSE);
             ActionCloseDoor(OBJECT_SELF);
+            //as of 1.67 you can play animations on doors
+            //PlayAnimation(ANIMATION_DOOR_CLOSE);
         }
         break;
     }

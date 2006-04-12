@@ -44,7 +44,7 @@
 void Ebb(object oTarget, int nRounds)
 {
 	//check duration
-	if((nRounds < 1) || (GetCurrentHitPoints(oTarget) < 1))
+	if((nRounds < 1) || (GetIsDead(oTarget)))
 	{
 		return;
 	}

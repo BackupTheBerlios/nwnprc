@@ -17786,6 +17786,42 @@ Description: This allows the baelnorn to end the projection affect at will.</ent
 </entry>
   <entry id="52076" lang="en" sex="m">Feat Type: Class Feat 
 Description:  The character has Ultravision.</entry>
+  <entry id="52077" lang="en" sex="m">Unseen Weapon: Unerring Strike</entry>
+  <entry id="52078" lang="en" sex="m">Feat Type: Class Feat
+Prerequisite: Shadowblade 1
+Description: As a standard action, you can wrap any melee weapon you wield in a layer of shifting shadows.  Once per day per shadowblade level, you can activate one of the powers of your unseen weapon as a swift action. When you activate your useen weapon, you must choose of the abilities.  Multiple uses of the same ability do not stack on a single attack. At first level, you gain the ability to make an unerring strike.
+
+Your next melee attack ignores any miss chance because of concealment or total concealment. </entry>
+  <entry id="52079" lang="en" sex="m">Shadow and Stealth</entry>
+  <entry id="52080" lang="en" sex="m">Feat Type: Class Feat
+Prerequisite: Shadowblade 2
+Description: Beginning at 2nd level, the shadows that engulf your unseen weapon cover you as well, granting you a circumstance bonus equal to half your class level (rounded down) on Hide and Move Silently checks.</entry>
+  <entry id="52081" lang="en" sex="m">Sudden Strike</entry>
+  <entry id="52082" lang="en" sex="m">Feat Type: Class Feat
+Prerequisites: Shadowblade 2
+Description: Beginning at 2nd level, if you can catch an opponent when she is unable to defend herself effectively from your attack, you can strike a vital spot for extra damage.  Whenever your target is denied a dexterity bonus to Armor Class (whether the target actually has a Dexterity bonus or not), you deal an extra 1d6 points of damage with your attack.  This extra damage increases by 1d6 for every two levels thereafter.  You can't use sudden strike when flanking an opponent unless that opponent is denied its Dexterity bonus to AC.  Ranged aattacks can count as sudden strike attacks only if the target is within 30 feet.
+
+Sudden stike functions identically to sneak attack in all other respects.  The extra damage from sudden strike stacks with the extra damage from sneak attack whenever both would apply to the same target.  It also stacks with the ephemeral weapon ability of the unseen weapon class feature.</entry>
+  <entry id="52083" lang="en" sex="m">Unseen Weapon: Unexpected Strike</entry>
+  <entry id="52084" lang="en" sex="m">Feat Type: Class Feat
+Prerequisite: Shadowblade 3
+Description: Your opponent is denied its Dexterity bonus against your next melee attack.</entry>
+  <entry id="52085" lang="en" sex="m">Unseen Weapon: Ephemeral Weapon</entry>
+  <entry id="52086" lang="en" sex="m">Feat Type: Class Feat
+Prerequisite: Shadowblade 5
+Description: Your next melee attack deals an extra 2d6 points of damage, as extraplanar darness momentarily replaces portions of your opponent's body.</entry>
+  <entry id="52087" lang="en" sex="m">Unseen Weapon: Shadowy Strike</entry>
+  <entry id="52088" lang="en" sex="m">Feat Type: Class Feat
+Prerequisite: Shadowblade 7
+Description: Your next melee attack is resolved as a melee touch attack, ignoring armor and natural armor.</entry>
+  <entry id="52089" lang="en" sex="m">Unseen Weapon: Far Shadow</entry>
+  <entry id="52090" lang="en" sex="m">Feat Type: Class Feat
+Prerequisite: Shadowblade 9
+Description:  Your melee reach is increased by 10 feet for 1 round.</entry>
+  <entry id="52091" lang="en" sex="m">Unseen Weapon: Free Action</entry>
+  <entry id="52092" lang="en" sex="m">Feat Type: Class Feat
+Prerequisite: Shadowblade 10
+Description: At 10th level, you can use your unseen weapon abilities as a free action, though you are still limited to one use per day per class level.</entry>
   <entry id="52100" lang="en" sex="m">Necrotic cyst implanted.</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>

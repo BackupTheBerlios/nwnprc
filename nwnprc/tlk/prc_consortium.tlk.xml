@@ -17782,6 +17782,10 @@ If the black needle strikes an undead creature, that  creature gains 4d4 * 5 tem
 Prerequisite:  Baelnorn Level 3
 
 Description: This allows the baelnorn to end the projection affect at will.</entry>
+  <entry id="52075" lang="en" sex="m">Ultravision
+</entry>
+  <entry id="52076" lang="en" sex="m">Feat Type: Class Feat 
+Description:  The character has Ultravision.</entry>
   <entry id="52100" lang="en" sex="m">Necrotic cyst implanted.</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>

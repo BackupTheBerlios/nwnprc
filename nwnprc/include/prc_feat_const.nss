@@ -2071,3 +2071,14 @@ const int FEAT_FAVOURED_SOUL_FIRE             = 2240;
 const int FEAT_FAVOURED_SOUL_SONIC            = 2241;
 const int FEAT_FAVOURED_SOUL_WINGS            = 2242;
 const int FEAT_FAVOURED_SOUL_DAMRED           = 2243;
+
+//Shadowblade
+const int FEAT_UNSEEN_WEAPON_UNERRING_STRIKE  = 3650;
+const int FEAT_SHADOW_AND_STEALTH             = 3651;
+const int FEAT_SUDDEN_STRIKE                  = 3652;
+const int FEAT_UNSEEN_WEAPON_UNEXPECTED_STRIKE= 3653;
+const int FEAT_UNSEEN_WEAPON_EPHEMERAL_WEAPON = 3654;
+const int FEAT_UNSEEN_WEAPON_SHADOWY_STRIKE   = 3655;
+const int FEAT_UNSEEN_WEAPON_FAR_SHADOW       = 3656;
+const int FEAT_UNSEEN_WEAPON_FREE_ACTION      = 3657;
+const int FEAT_ULTRAVISION                    = 3658;

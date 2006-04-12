@@ -219,6 +219,7 @@ void EvalPRCFeats(object oPC)
         || GetHasFeat(FAST_HEALING_3, oPC))                      ExecuteScript("prc_fastheal", oPC);
 
     if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC))                  ExecuteScript("prc_spellf_eval", oPC);
+    if(GetHasFeat(FEAT_ULTRAVISION, oPC))                        ExecuteScript("prc_ultravis", oPC);
 
     if(GetLevelByClass(CLASS_TYPE_ARCANE_ARCHER, oPC) >= 2
         && !GetHasFeat(FEAT_PRESTIGE_IMBUE_ARROW, oPC)

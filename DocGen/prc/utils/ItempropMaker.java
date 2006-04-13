@@ -36,7 +36,7 @@ public final class ItempropMaker{
 			param12daarray[i] = Data_2da.load2da("2das\\"+paramtable2da.getBiowareEntry("TableResRef", i)+".2da", true);
 		}
 		//loop over each row
-		for(int itempropdef2darow = 85;
+		for(int itempropdef2darow = 100;//85;
 			itempropdef2darow < itempropdef2da.getEntryCount();
 			itempropdef2darow ++) {
 			if(itempropdef2da.getBiowareEntryAsInt("Name", itempropdef2darow) != 0){
@@ -87,25 +87,27 @@ public final class ItempropMaker{
 							Data_2da param12da = param12daarray[param1tableid];
 							for(int param1ID = 0; param1ID < param12da.getEntryCount(); param1ID ++) {
 								if(cost != 0){
-									Data_2da cost2da = cost2daarray[itempropdef2da.getBiowareEntryAsInt("CostTableResRef", type)];
-									for(int costID = 0; costID < cost2da.getEntryCount(); costID ++) {
-										//has type, subtype, param1, and cost
-									}
+									int costtable = itempropdef2da.getBiowareEntryAsInt("CostTableResRef", type);
+									Data_2da cost2da = cost2daarray[costtable];
+									//has type, subtype, param1, and cost
+									write(type, subtypeID, param1tableid, param1ID, costtable, cost2da.getEntryCount());
 								}else{
 									//no cost
 									//has type, subtype, and param1
+									write(type, subtypeID, param1tableid, param1ID, -1, -1);
 								}
 							}
 						}else{
 							//no param1
 							if(cost != 0){
-								Data_2da cost2da = cost2daarray[itempropdef2da.getBiowareEntryAsInt("CostTableResRef", type)];
-								for(int costID = 0; costID < cost2da.getEntryCount(); costID ++) {
-									//has type, subtype, and cost
-								}
+								int costtable = itempropdef2da.getBiowareEntryAsInt("CostTableResRef", type);
+								Data_2da cost2da = cost2daarray[costtable];
+								//has type, subtype, and cost
+								write(type, subtypeID, -1, -1, costtable, cost2da.getEntryCount());
 							}else{
 								//no cost
 								//has type, and subtype
+								write(type, subtypeID, -1, -1, -1, -1);
 							}
 						}
 					}
@@ -116,13 +118,14 @@ public final class ItempropMaker{
 						Data_2da param12da = param12daarray[param1tableid];
 						for(int param1ID = 0; param1ID < param12da.getEntryCount(); param1ID ++) {
 							if(cost != 0){
-								Data_2da cost2da = cost2daarray[itempropdef2da.getBiowareEntryAsInt("CostTableResRef", type)];
-								for(int costID = 0; costID < cost2da.getEntryCount(); costID ++) {
-									//has type, param1, and cost
-								}
+								int costtable = itempropdef2da.getBiowareEntryAsInt("CostTableResRef", type);
+								Data_2da cost2da = cost2daarray[costtable];
+								//has type, param1, and cost
+								write(type, -1, param1tableid, param1ID, costtable, cost2da.getEntryCount());
 							}else{
 								//no cost
-									//has type, and param1
+								//has type, and param1
+								write(type, -1, param1tableid, param1ID, -1, -1);
 							}
 						}
 					}else{
@@ -131,11 +134,11 @@ public final class ItempropMaker{
 							int costtable = itempropdef2da.getBiowareEntryAsInt("CostTableResRef", type);
 							Data_2da cost2da = cost2daarray[costtable];
 							//has type, and cost
-							write(type, -1, -1, 0, costtable, cost2da.getEntryCount());
+							write(type, -1, -1, -1, costtable, cost2da.getEntryCount());
 						}else{
 							//no cost
 								//has type
-							write(type, -1, -1, 0, 0, 0);
+							write(type, -1, -1, -1, -1, -1);
 						}
 					}
 				}
@@ -203,46 +206,58 @@ public final class ItempropMaker{
 			resref += "_"+subtype;
 		if(param1value != -1)
 			resref += "_"+param1value;
+		//sanity checks
+		if(param1value == -1)
+			param1value = 0;
+		if(param1table == -1)
+			param1table = 255;
+		if(subtype == -1)
+			subtype = 0;
+		if(costtable == -1)
+			costtable = 0;
+		if(costmax == -1)
+			costmax = 0;
 		//output stuff
 		//header things first
 		xml.append("<gff name=\""+resref+".uti\" type=\"UTI\" version=\"V3.2\">\n");
-		xml.append("	<struct id=\"-1\">\n");
-		xml.append("	<element name=\"TemplateResRef\" type=\"11\" value=\""+resref+"\" />\n");
-		xml.append("	<element name=\"BaseItem\" type=\"5\" value=\"111\" />\n");
-		xml.append("	<element name=\"LocalizedName\" type=\"12\" value=\"-1\" />\n");
-		xml.append("	<element name=\"Description\" type=\"12\" value=\"-1\" />\n");
-		xml.append("	<element name=\"DescIdentified\" type=\"12\" value=\"-1\" />\n");
-		xml.append("	<element name=\"Tag\" type=\"10\" value=\""+resref+"\" />\n");
-		xml.append("	<element name=\"Charges\" type=\"0\" value=\"0\" />\n");
-		xml.append("	<element name=\"Cost\" type=\"4\" value=\"2\" />\n");
-		xml.append("	<element name=\"Stolen\" type=\"0\" value=\"0\" />\n");
-		xml.append("	<element name=\"StackSize\" type=\"2\" value=\"1\" />\n");
-		xml.append("	<element name=\"Plot\" type=\"0\" value=\"0\" />\n");
-		xml.append("	<element name=\"AddCost\" type=\"4\" value=\"0\" />\n");
-		xml.append("	<element name=\"Identified\" type=\"0\" value=\"1\" />\n");
-		xml.append("	<element name=\"Cursed\" type=\"0\" value=\"0\" />\n");
-		xml.append("	<element name=\"ModelPart1\" type=\"0\" value=\"11\" />\n");
-		xml.append("	<element name=\"ModelPart2\" type=\"0\" value=\"11\" />\n");
-		xml.append("	<element name=\"ModelPart3\" type=\"0\" value=\"11\" />\n");
-		xml.append("	<element name=\"PropertiesList\" type=\"15\">\n");
+		xml.append("    <struct id=\"-1\">\n");
+/*		xml.append("		<element name=\"TemplateResRef\" type=\"11\" value=\""+resref+"\" />\n");
+		xml.append("		<element name=\"BaseItem\" type=\"5\" value=\"78\" />\n");
+		xml.append("		<element name=\"LocalizedName\" type=\"12\" value=\"-1\" >\n");
+		xml.append("            <localString languageId=\"0\" value=\"0\" />\n");
+		xml.append("        </element>\n");
+		xml.append("		<element name=\"Description\" type=\"12\" value=\"-1\" />\n");
+		xml.append("		<element name=\"DescIdentified\" type=\"12\" value=\"-1\" />\n");
+		xml.append("		<element name=\"Tag\" type=\"10\" value=\""+resref+"\" />\n");
+		xml.append("		<element name=\"Charges\" type=\"0\" value=\"0\" />\n");
+		xml.append("		<element name=\"Cost\" type=\"4\" value=\"2\" />\n");
+		xml.append("		<element name=\"Stolen\" type=\"0\" value=\"0\" />\n");
+		xml.append("		<element name=\"StackSize\" type=\"2\" value=\"1\" />\n");
+		xml.append("		<element name=\"Plot\" type=\"0\" value=\"0\" />\n");
+		xml.append("		<element name=\"AddCost\" type=\"4\" value=\"0\" />\n");
+		xml.append("		<element name=\"Identified\" type=\"0\" value=\"1\" />\n");
+		xml.append("		<element name=\"Cursed\" type=\"0\" value=\"0\" />\n");
+		xml.append("		<element name=\"ModelPart1\" type=\"0\" value=\"1\" />\n");
+		xml.append("		<element name=\"PropertiesList\" type=\"15\">\n");
 		//loop over the itemproperties
 		for(int i=0; i<costmax; i++){
-			xml.append("		<struct id=\"0\" >\n");
-			xml.append("	    	<element name=\"PropertyName\" type=\"2\" value=\""+type+"\" />\n");
-			xml.append("	        <element name=\"Subtype\" type=\"2\" value=\""+subtype+"\" />\n");
-			xml.append("	        <element name=\"CostTable\" type=\"0\" value=\""+costtable+"\" />\n");
-			xml.append("	        <element name=\"CostValue\" type=\"2\" value=\""+i+"\" />\n");
-			xml.append("	        <element name=\"Param1\" type=\"0\" value=\""+param1table+"\" />\n");
-			xml.append("	        <element name=\"Param1Value\" type=\"0\" value=\""+param1value+"\" />\n");
-			xml.append("	        <element name=\"ChanceAppear\" type=\"0\" value=\"100\" />\n");
-			xml.append("	    </struct>\n");
+			xml.append("			<struct id=\"0\" >\n");
+			xml.append("	    		<element name=\"PropertyName\" type=\"2\" value=\""+type+"\" />\n");
+			xml.append("	    	    <element name=\"Subtype\" type=\"2\" value=\""+subtype+"\" />\n");
+			xml.append("	    	    <element name=\"CostTable\" type=\"0\" value=\""+costtable+"\" />\n");
+			xml.append("	    	    <element name=\"CostValue\" type=\"2\" value=\""+i+"\" />\n");
+			xml.append("	    	    <element name=\"Param1\" type=\"0\" value=\""+param1table+"\" />\n");
+			xml.append("	    	    <element name=\"Param1Value\" type=\"0\" value=\""+param1value+"\" />\n");
+			xml.append("	    	    <element name=\"ChanceAppear\" type=\"0\" value=\"100\" />\n");
+			xml.append("	    	</struct>\n");
 		}
 		//footer stuff
-		xml.append("	</element>\n");
-		xml.append("	<element name=\"PaletteID\" type=\"0\" value=\"47\" />\n");
-		xml.append("	<element name=\"Comment\" type=\"10\" value=\"\" />\n");
+		xml.append("		</element>\n");
+		//this is set to 99 so it will not appear in the palette :)
+		xml.append("		<element name=\"PaletteID\" type=\"0\" value=\"99\" />\n");*/
+		xml.append("		<element name=\"Comment\" type=\"10\" value=\"\" />\n");
 		xml.append("    </struct>\n");
-		xml.append("</gff>\n");
+		xml.append("</gff>");
 
 		File target = new File("xml_temp\\"+resref+".uti.xml");
 		// Clean up old version if necessary
@@ -250,6 +265,7 @@ public final class ItempropMaker{
 			if(verbose) System.out.println("Deleting previous version of " + target.getName());
 			target.delete();
 		}
+		if(verbose) System.out.println("Writing brand new version of " + target.getName());
 		target.createNewFile();
 
 		// Creater the writer and print

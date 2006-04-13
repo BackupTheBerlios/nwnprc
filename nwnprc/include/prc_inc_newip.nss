@@ -135,7 +135,7 @@ itemproperty ItemPropertyCastSpellMetamagic(int nSpell, int nMetamagic)
 
 itemproperty ItemPropertyCastSpellCasterLevel(int nSpell, int nLevel)
 {
-    //convert nSpell into reference to iprip_spells.2da
+    //convert nSpell into reference to iprp_spells.2da
     nSpell = IPGetIPConstCastSpellFromSpellID(nSpell);
 
     itemproperty ipReturn;
@@ -220,48 +220,156 @@ itemproperty ItemPropertyAreaOfEffect(int nIPAoEID, int nLevel)
 itemproperty ItemPropertyLimitUseByAbility(int nAbility, int nMinScore)
 {
     itemproperty ipReturn;
+    string sResRef = "prc_ip86_"+IntToString(nAbility);
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);
+    int i;
+    for(i=0;i<nMinScore;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
     if(!GetIsItemPropertyValid(ipReturn))
-        DoDebug("ItemPropertyLimitUseByAbility "+IntToString(nAbility)+" "+IntToString(nMinScore)+" is not valid");
+    {
+        string sMessage = "ItemPropertyLimitUseByAbility "+IntToString(nAbility)+" "+IntToString(nMinScore)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }
     return ipReturn;
 }
 
 itemproperty ItemPropertyLimitUseBySkill(int nSkill, int nMinScore)
 {
     itemproperty ipReturn;
+    string sResRef = "prc_ip87_"+IntToString(nSkill);
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);
+    int i;
+    for(i=0;i<nMinScore;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
     if(!GetIsItemPropertyValid(ipReturn))
-        DoDebug("ItemPropertyLimitUseBySkill "+IntToString(nSkill)+" "+IntToString(nMinScore)+" is not valid");
+    {
+        string sMessage = "ItemPropertyLimitUseBySkill "+IntToString(nSkill)+" "+IntToString(nMinScore)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }
     return ipReturn;
 }
 
 itemproperty ItemPropertyLimitUseBySpellcasting(int nLevel)
 {
     itemproperty ipReturn;
+    string sResRef = "prc_ip88";
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);
+    int i;
+    for(i=0;i<nLevel;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
     if(!GetIsItemPropertyValid(ipReturn))
-        DoDebug("ItemPropertyLimitUseBySpellcasting "+IntToString(nLevel)+" is not valid");
+    {
+        string sMessage = "ItemPropertyLimitUseBySpellcasting "+IntToString(nLevel)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }
     return ipReturn;
 }
 
 itemproperty ItemPropertyLimitUseByArcaneSpellcasting(int nLevel)
 {
     itemproperty ipReturn;
+    string sResRef = "prc_ip89";
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);
+    int i;
+    for(i=0;i<nLevel;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
     if(!GetIsItemPropertyValid(ipReturn))
-        DoDebug("ItemPropertyLimitUseByArcaneSpellcasting "+IntToString(nLevel)+" is not valid");
+    {
+        string sMessage = "ItemPropertyLimitUseByArcaneSpellcasting "+IntToString(nLevel)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }
     return ipReturn;
 }
 
 itemproperty ItemPropertyLimitUseByDivineSpellcasting(int nLevel)
 {
     itemproperty ipReturn;
+    string sResRef = "prc_ip90";
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);
+    int i;
+    for(i=0;i<nLevel;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
     if(!GetIsItemPropertyValid(ipReturn))
-        DoDebug("ItemPropertyLimitUseByDivineSpellcasting "+IntToString(nLevel)+" is not valid");
+    {
+        string sMessage = "ItemPropertyLimitUseByDivineSpellcasting "+IntToString(nLevel)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }
     return ipReturn;
 }
 
 itemproperty ItemPropertyLimitUseBySneakAttackDice(int nDice)
 {
     itemproperty ipReturn;
+    string sResRef = "prc_ip91";
+    object oChest = GetObjectByTag("HEARTOFCHAOS");//use the crafting chest
+    object oItem = CreateItemOnObject(sResRef, oChest);
+    DestroyObject(oItem);
+    ipReturn = GetFirstItemProperty(oItem);
+    int i;
+    for(i=0;i<nDice;i++)
+    {
+        ipReturn = GetNextItemProperty(oItem);
+    }
     if(!GetIsItemPropertyValid(ipReturn))
-        DoDebug("ItemPropertyLimitUseBySneakAttackDice "+IntToString(nDice)+" is not valid");
+    {
+        string sMessage = "ItemPropertyLimitUseBySneakAttackDice "+IntToString(nDice)+" is not valid";
+        if(GetIsObjectValid(oChest))
+            sMessage += "\n oChest is valid.";
+        if(GetIsObjectValid(oItem))
+            sMessage += "\n oItem is valid.";
+        sMessage += "\n sResRef is "+sResRef+".";
+        DoDebug(sMessage);
+    }
     return ipReturn;
 }
 

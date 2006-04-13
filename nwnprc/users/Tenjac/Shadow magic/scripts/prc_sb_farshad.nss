@@ -2,7 +2,8 @@
 //:: Unseen Weapon: Far Shadow
 //:: prc_sb_farshad.nss
 //:://////////////////////////////////////////////
-//:: 
+//:: Your melee attack range is extended by 10 feet
+//:: for one round.
 //:://////////////////////////////////////////////
 
 void main()

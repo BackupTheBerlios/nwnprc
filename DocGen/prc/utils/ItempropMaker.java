@@ -36,7 +36,7 @@ public final class ItempropMaker{
 			param12daarray[i] = Data_2da.load2da("2das\\"+paramtable2da.getBiowareEntry("TableResRef", i)+".2da", true);
 		}
 		//loop over each row
-		for(int itempropdef2darow = 100;//85;
+		for(int itempropdef2darow = 85;
 			itempropdef2darow < itempropdef2da.getEntryCount();
 			itempropdef2darow ++) {
 			if(itempropdef2da.getBiowareEntryAsInt("Name", itempropdef2darow) != 0){
@@ -219,9 +219,9 @@ public final class ItempropMaker{
 			costmax = 0;
 		//output stuff
 		//header things first
-		xml.append("<gff name=\""+resref+".uti\" type=\"UTI\" version=\"V3.2\">\n");
+		xml.append("<gff name=\""+resref+".uti\" type=\"UTI \" version=\"V3.2\">\n");
 		xml.append("    <struct id=\"-1\">\n");
-/*		xml.append("		<element name=\"TemplateResRef\" type=\"11\" value=\""+resref+"\" />\n");
+		xml.append("		<element name=\"TemplateResRef\" type=\"11\" value=\""+resref+"\" />\n");
 		xml.append("		<element name=\"BaseItem\" type=\"5\" value=\"78\" />\n");
 		xml.append("		<element name=\"LocalizedName\" type=\"12\" value=\"-1\" >\n");
 		xml.append("            <localString languageId=\"0\" value=\"0\" />\n");
@@ -254,7 +254,7 @@ public final class ItempropMaker{
 		//footer stuff
 		xml.append("		</element>\n");
 		//this is set to 99 so it will not appear in the palette :)
-		xml.append("		<element name=\"PaletteID\" type=\"0\" value=\"99\" />\n");*/
+		xml.append("		<element name=\"PaletteID\" type=\"0\" value=\"99\" />\n");
 		xml.append("		<element name=\"Comment\" type=\"10\" value=\"\" />\n");
 		xml.append("    </struct>\n");
 		xml.append("</gff>");

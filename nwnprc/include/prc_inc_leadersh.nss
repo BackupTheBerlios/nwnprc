@@ -63,6 +63,104 @@ object AddCohortToPlayer(int nCohortID, object oPC)
     return oCohort;
 }
 
+void CancelGreatFeats(object oSpawn)
+{
+    //store how many Great X feats they have
+    //this is to fix a bioware bug where de-leveling doesnt remove the stat bonus
+    int nGreatStr;
+    int nGreatDex;
+    int nGreatCon;
+    int nGreatInt;
+    int nGreatWis;
+    int nGreatCha;
+    if     (GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_10, oSpawn)) nGreatStr = 10;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_9, oSpawn)) nGreatStr = 9;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_8, oSpawn)) nGreatStr = 8;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_7, oSpawn)) nGreatStr = 7;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_6, oSpawn)) nGreatStr = 6;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_5, oSpawn)) nGreatStr = 5;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_4, oSpawn)) nGreatStr = 4;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_3, oSpawn)) nGreatStr = 3;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_2, oSpawn)) nGreatStr = 2;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_STRENGTH_1, oSpawn)) nGreatStr = 1;
+    if     (GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_10, oSpawn)) nGreatDex = 10;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_9, oSpawn)) nGreatDex = 9;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_8, oSpawn)) nGreatDex = 8;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_7, oSpawn)) nGreatDex = 7;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_6, oSpawn)) nGreatDex = 6;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_5, oSpawn)) nGreatDex = 5;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_4, oSpawn)) nGreatDex = 4;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_3, oSpawn)) nGreatDex = 3;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_2, oSpawn)) nGreatDex = 2;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_DEXTERITY_1, oSpawn)) nGreatDex = 1;
+    if     (GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_10, oSpawn)) nGreatCon = 10;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_9, oSpawn)) nGreatCon = 9;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_8, oSpawn)) nGreatCon = 8;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_7, oSpawn)) nGreatCon = 7;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_6, oSpawn)) nGreatCon = 6;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_5, oSpawn)) nGreatCon = 5;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_4, oSpawn)) nGreatCon = 4;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_3, oSpawn)) nGreatCon = 3;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_2, oSpawn)) nGreatCon = 2;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CONSTITUTION_1, oSpawn)) nGreatCon = 1;
+    if     (GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_10, oSpawn)) nGreatInt = 10;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_9, oSpawn)) nGreatInt = 9;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_8, oSpawn)) nGreatInt = 8;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_7, oSpawn)) nGreatInt = 7;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_6, oSpawn)) nGreatInt = 6;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_5, oSpawn)) nGreatInt = 5;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_4, oSpawn)) nGreatInt = 4;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_3, oSpawn)) nGreatInt = 3;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_2, oSpawn)) nGreatInt = 2;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_INTELLIGENCE_1, oSpawn)) nGreatInt = 1;
+    if     (GetHasFeat(FEAT_EPIC_GREAT_WISDOM_10, oSpawn)) nGreatWis = 10;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_9, oSpawn)) nGreatWis = 9;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_8, oSpawn)) nGreatWis = 8;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_7, oSpawn)) nGreatWis = 7;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_6, oSpawn)) nGreatWis = 6;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_5, oSpawn)) nGreatWis = 5;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_4, oSpawn)) nGreatWis = 4;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_3, oSpawn)) nGreatWis = 3;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_2, oSpawn)) nGreatWis = 2;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_1, oSpawn)) nGreatWis = 1;
+    if     (GetHasFeat(FEAT_EPIC_GREAT_WISDOM_10, oSpawn)) nGreatCha = 10;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_9, oSpawn)) nGreatCha = 9;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_8, oSpawn)) nGreatCha = 8;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_7, oSpawn)) nGreatCha = 7;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_6, oSpawn)) nGreatCha = 6;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_5, oSpawn)) nGreatCha = 5;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_4, oSpawn)) nGreatCha = 4;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_3, oSpawn)) nGreatCha = 3;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_2, oSpawn)) nGreatCha = 2;
+    else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_1, oSpawn)) nGreatCha = 1;
+    //apply penalties to counter the GreatX feats
+    if(nGreatStr)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+            SupernaturalEffect(EffectAbilityDecrease(ABILITY_STRENGTH, nGreatStr)),
+        oSpawn);
+    if(nGreatDex)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+            SupernaturalEffect(EffectAbilityDecrease(ABILITY_DEXTERITY, nGreatDex)),
+        oSpawn);
+    if(nGreatCon)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+            SupernaturalEffect(EffectAbilityDecrease(ABILITY_CONSTITUTION, nGreatCon)),
+        oSpawn);
+    if(nGreatInt)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+            SupernaturalEffect(EffectAbilityDecrease(ABILITY_INTELLIGENCE, nGreatInt)),
+        oSpawn);
+    if(nGreatWis)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+            SupernaturalEffect(EffectAbilityDecrease(ABILITY_WISDOM, nGreatWis)),
+        oSpawn);
+    if(nGreatCha)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+            SupernaturalEffect(EffectAbilityDecrease(ABILITY_CHARISMA, nGreatCha)),
+        oSpawn);
+
+}
+
 void AddCohortToPlayerByObject(object oCohort, object oPC)
 {
     //add it to the pc
@@ -111,6 +209,11 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
         DoDisguise(PRCGetRacialType(oCohort), oCohort);
     }
     */
+    
+    //if its a custom made cohort, need to cancel GreatX feats
+    if(GetResRef(oCohort) == "")
+        CancelGreatFeats(oCohort);
+    
 
     //strip its equipment & inventory
     object oTest  = GetFirstItemInInventory(oCohort);

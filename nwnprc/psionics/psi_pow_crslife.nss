@@ -74,11 +74,13 @@ void main()
         int nDamage;
         effect eVisDeath  = EffectVisualEffect(VFX_IMP_DEATH_L);
         effect eVisDamage = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
+        effect eVis       = EffectVisualEffect(PSI_FNF_CRISIS_OF_LIFE);
         effect eDamage;
 
         // Let the AI know
         SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
-
+	
+	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         // Check immunities
         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DEATH,       oManifester) &&
            !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS, oManifester)

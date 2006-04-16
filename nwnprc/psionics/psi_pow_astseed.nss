@@ -66,7 +66,7 @@ void main()
 
         // Create new seed and do some VFX
         oSeed = CreateObject(OBJECT_TYPE_PLACEABLE, "x2_plc_phylact", PRCGetSpellTargetLocation());
-        effect eVis = EffectVisualEffect(VFX_IMP_DEATH_WARD);
+        effect eVis = EffectVisualEffect(PSI_FNF_ASTRAL_SEED);
         DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSeed));
 
         // Store a reference to the seed on the manifester

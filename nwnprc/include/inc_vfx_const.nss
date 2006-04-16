@@ -364,6 +364,14 @@ const int PSI_DUR_SHADOW_BODY           = 816;
 const int PSI_FNF_PSYCHIC_CRUSH         = 817;
 const int EPIC_DUR_FLEETNESS_OF_FOOT    = 818;
 const int PSI_DUR_ENERGY_ADAPTATION_ALL = 819;
+const int PSI_FNF_CRISIS_OF_LIFE    	= 824;
+const int PSI_FNF_RECALL_AGONY      	= 825;
+const int PSI_DUR_SYNESTHETE        	= 826;
+const int PSI_IMP_CONCUSSION_BLAST  	= 827;
+const int PSI_DUR_BURST             	= 828;
+const int PSI_FNF_PSYCHIC_CHIRURGY  	= 829;
+const int PSI_FNF_ASTRAL_SEED       	= 830;
+const int PSI_DUR_INTELLECT_FORTRESS	= 831;
 //Spellfire
 const int VFX_FNF_SPELLF_EXP   =  820;
 const int VFX_IMP_SPELLF_FLAME =  821;

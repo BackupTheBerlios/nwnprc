@@ -76,7 +76,7 @@ void main()
     if(manif.bCanManifest)
     {
         effect eDur      = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE),
-                                             EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE)
+                                             EffectVisualEffect(PSI_DUR_INTELLECT_FORTRESS)
                                              );
         effect eVis      = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
         effect eFNF      = EffectVisualEffect(VFX_FNF_LOS_NORMAL_10);

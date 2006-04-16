@@ -75,6 +75,7 @@ void main()
 
         location lTarget = PRCGetSpellTargetLocation();
         effect eImpact   = EffectVisualEffect(VFX_FNF_TIME_STOP);
+        effect eDur      = EffectVisualEffect(PSI_DUR_TEMPORAL_ACCELERATION);
         effect eTStop    = EffectTimeStop();
         float fDuration  = 6.0f * (1 + manif.nTimesAugOptUsed_1);
         if(manif.bExtend) fDuration *= 2;
@@ -108,6 +109,7 @@ void main()
 
         // Apply the VFX impact and effects
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, lTarget);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oManifester, fDuration);
         // Delayed a bit to let the VFX start
         DelayCommand(0.75f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTStop, oManifester, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
     }// end if - Successfull manifestation

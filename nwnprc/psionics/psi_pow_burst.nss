@@ -63,7 +63,7 @@ void main()
         if(manif.bExtend) fDur *= 2;
 
         effect eFast = EffectMovementSpeedIncrease(150);
-        effect eVis  = EffectVisualEffect(VFX_IMP_HASTE);
+        effect eVis  = EffectVisualEffect(PSI_DUR_BURST);
         effect eLink = EffectLinkEffects(eFast, eVis);
 
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur, TRUE, -1, manif.nManifesterLevel);

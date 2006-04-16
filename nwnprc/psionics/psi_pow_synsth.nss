@@ -87,7 +87,7 @@ void main()
                eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_LISTEN, 4));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_BLINDNESS));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_DEAFNESS));
-               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ULTRAVISION));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_SYNESTHETE));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         effect eTest;
         float fDuration = 600.0f * manif.nManifesterLevel;

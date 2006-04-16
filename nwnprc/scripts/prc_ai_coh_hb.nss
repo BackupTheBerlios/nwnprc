@@ -19,24 +19,44 @@ void main()
     //cohort XP gain
     //get the amount the PC has gained
     int XPGained = GetXP(oPC)-GetLocalInt(OBJECT_SELF, "MastersXP");
+    //correct for simple LA XP penalty
+    if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
+    {
+        int iPCLvl = GetHitDice(oPC);
+        int nRace = GetRacialType(oPC);
+        int iLvlAdj = StringToInt(Get2DACache("ECL", "LA", nRace));
+        if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
+            iLvlAdj += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
+        float fRealXPToLevel = IntToFloat(GetXPForLevel(iPCLvl+1));
+        float fECLXPToLevel = IntToFloat(GetXPForLevel(iPCLvl+1+iLvlAdj));
+        float fXPRatio = fECLXPToLevel/fRealXPToLevel;
+        XPGained = FloatToInt(IntToFloat(XPGained)*fXPRatio);
+    }
+    //store the amount the PC now has for the next HB
     SetLocalInt(OBJECT_SELF, "MastersXP", GetXP(oPC));
+    //work out proportion based on relative ECLs
     int nPCECL = GetECL(oPC);
     int nCohortECL = GetECL(oCohort);
     int nCohortLag = GetLocalInt(oCohort, "CohortLevelLag");
     float ECLRatio = IntToFloat(nPCECL)/IntToFloat(nCohortECL);
+    //get the amount to gain
     int nCohortXPGain = FloatToInt(IntToFloat(XPGained)*ECLRatio);
+    //get the current amount
     int nCohortXP = GetXP(oCohort);
+    //work out the new amount
     int nCohortNewXP = nCohortXP+nCohortXPGain;
+    //get the cap based on PC level
     int nCohortXPCap = ((nPCECL-nCohortLag)*(nPCECL-nCohortLag+1)*500)-1;
+    //this is how much XP the next levelup will be at
     int nCohortXPLevel = nCohortECL*(nCohortECL+1)*500;
-DoDebug("XPGained = "+IntToString(XPGained));
-DoDebug("nPCECL = "+IntToString(nPCECL));
-DoDebug("nCohortECL = "+IntToString(nCohortECL));
-DoDebug("nCohortXPGain = "+IntToString(nCohortXPGain));
-DoDebug("nCohortXP = "+IntToString(nCohortXP));
-DoDebug("nCohortNewXP = "+IntToString(nCohortNewXP));
-DoDebug("nCohortXPCap = "+IntToString(nCohortXPCap));
-DoDebug("nCohortXPLevel = "+IntToString(nCohortXPLevel));
+//DoDebug("XPGained = "+IntToString(XPGained));
+//DoDebug("nPCECL = "+IntToString(nPCECL));
+//DoDebug("nCohortECL = "+IntToString(nCohortECL));
+//DoDebug("nCohortXPGain = "+IntToString(nCohortXPGain));
+//DoDebug("nCohortXP = "+IntToString(nCohortXP));
+//DoDebug("nCohortNewXP = "+IntToString(nCohortNewXP));
+//DoDebug("nCohortXPCap = "+IntToString(nCohortXPCap));
+//DoDebug("nCohortXPLevel = "+IntToString(nCohortXPLevel));
     //apply the cap
     if(nCohortNewXP > nCohortXPCap)
         nCohortNewXP = nCohortXPCap;

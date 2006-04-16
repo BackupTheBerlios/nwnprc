@@ -123,7 +123,7 @@ void CancelGreatFeats(object oSpawn)
     else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_3, oSpawn)) nGreatWis = 3;
     else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_2, oSpawn)) nGreatWis = 2;
     else if(GetHasFeat(FEAT_EPIC_GREAT_WISDOM_1, oSpawn)) nGreatWis = 1;
-    if     (GetHasFeat(FEAT_EPIC_GREAT_WISDOM_10, oSpawn)) nGreatCha = 10;
+    if     (GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_10, oSpawn)) nGreatCha = 10;
     else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_9, oSpawn)) nGreatCha = 9;
     else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_8, oSpawn)) nGreatCha = 8;
     else if(GetHasFeat(FEAT_EPIC_GREAT_CHARISMA_7, oSpawn)) nGreatCha = 7;
@@ -168,26 +168,6 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
     SetMaxHenchmen(99);
     AddHenchman(oPC, oCohort);
     SetMaxHenchmen(nMaxHenchmen);
-    //turn on its scripts
-    //normal MoB set
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONPHYSICALATTACKED,   "prc_ai_mob_attck", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONBLOCKED,            "prc_ai_mob_block", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONCOMBATROUNDEND,     "prc_ai_mob_combt", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONDAMAGED,            "prc_ai_mob_damag", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONDISTURBED,          "prc_ai_mob_distb", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONPERCEPTION,         "prc_ai_mob_percp", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONSPAWNED,            "prc_ai_mob_spawn", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONSPELLCASTAT,        "prc_ai_mob_spell", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONDEATH,              "prc_ai_mob_death", TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONRESTED,             "prc_ai_mob_rest",  TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONUSERDEFINED,        "prc_ai_mob_userd", TRUE, FALSE);
-    //dont run this, cohort-specific script replaces it
-    //AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_mob_conv",  TRUE, TRUE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_mob_heart", TRUE, FALSE);
-    //cohort specific ones
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_coh_conv",  TRUE, FALSE);
-    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_coh_hb",    TRUE, FALSE);
-
 
     //set it to the pcs level
     int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
@@ -243,6 +223,31 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
         oTest = GetItemInSlot(nSlot, oCohort);
         DestroyObject(oTest);
     }
+    //get rid of any gold it has
+    TakeGoldFromCreature(GetGold(oCohort), oCohort, TRUE);
+    //clean up any leftovers on the skin
+    ScrubPCSkin(oCohort, oSkin);
+    DeletePRCLocalInts(oSkin);
+    
+    //turn on its scripts
+    //normal MoB set
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONPHYSICALATTACKED,   "prc_ai_mob_attck", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONBLOCKED,            "prc_ai_mob_block", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONCOMBATROUNDEND,     "prc_ai_mob_combt", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONDAMAGED,            "prc_ai_mob_damag", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONDISTURBED,          "prc_ai_mob_distb", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONPERCEPTION,         "prc_ai_mob_percp", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONSPAWNED,            "prc_ai_mob_spawn", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONSPELLCASTAT,        "prc_ai_mob_spell", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONDEATH,              "prc_ai_mob_death", TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONRESTED,             "prc_ai_mob_rest",  TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONUSERDEFINED,        "prc_ai_mob_userd", TRUE, FALSE);
+    //dont run this, cohort-specific script replaces it
+    //AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_mob_conv",  TRUE, TRUE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_mob_heart", TRUE, FALSE);
+    //cohort specific ones
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_coh_conv",  TRUE, FALSE);
+    AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_coh_hb",    TRUE, FALSE);
 
     //DEBUG
     //various tests
@@ -372,6 +377,9 @@ void RegisterAsCohort(object oPC)
 
 int GetCohortMaxLevel(int nLeadership, object oPC)
 {
+    //if its a bonus cohort, use the players ECL
+    if(GetCurrentCohortCount(oPC) >= GetPRCSwitch(PRC_BONUS_COHORTS))
+        return GetECL(oPC);
     int nLevel;
     switch(nLeadership)
     {

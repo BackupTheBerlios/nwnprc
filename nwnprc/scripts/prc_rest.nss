@@ -155,6 +155,9 @@ void RestFinished(object oPC)
 
     //DelayCommand(1.0,PrcFeats(oPC));
     PrcFeats(oPC);
+    
+    //allow players to recruit a new cohort
+    DeleteLocalInt(oPC, "CohortRecruited");
 
     // New Spellbooks
     DelayCommand(0.1, CheckNewSpellbooks(oPC));

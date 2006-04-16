@@ -9,8 +9,18 @@ void main()
 {
     object oCohort = OBJECT_SELF;
     object oPC = GetMaster(oCohort);
-    if(!GetIsObjectValid(oPC))
+    object oMaster = GetLocalObject(oCohort, "MasterObject");
+    if(!GetIsObjectValid(oPC) && GetIsObjectValid(oMaster))
     {
+        //must have become disconnected from master
+        //re-add it as a cohort, but dont re-setup it
+        AddCohortToPlayerByObject(oCohort, oMaster, FALSE);
+        //dont continue this script, allow next HB to kick in instead
+        return;
+    }
+    else if(!GetIsObjectValid(oPC) && GetIsObjectValid(oMaster))
+    {
+        //master no longer exists
         RemoveCohortFromPlayer(oCohort, oPC);
         return;
     }    
@@ -38,6 +48,9 @@ void main()
     int nPCECL = GetECL(oPC);
     int nCohortECL = GetECL(oCohort);
     int nCohortLag = GetLocalInt(oCohort, "CohortLevelLag");
+    int nCohortMaxHD = nPCECL-nCohortLag-StringToInt(Get2DACache("ECL", "LA", GetRacialType(oCohort)));
+    if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
+        nCohortMaxHD -= StringToInt(Get2DACache("ECL", "RaceHD", GetRacialType(oCohort)));
     float ECLRatio = IntToFloat(nPCECL)/IntToFloat(nCohortECL);
     //get the amount to gain
     int nCohortXPGain = FloatToInt(IntToFloat(XPGained)*ECLRatio);
@@ -45,8 +58,8 @@ void main()
     int nCohortXP = GetXP(oCohort);
     //work out the new amount
     int nCohortNewXP = nCohortXP+nCohortXPGain;
-    //get the cap based on PC level
-    int nCohortXPCap = ((nPCECL-nCohortLag)*(nPCECL-nCohortLag+1)*500)-1;
+    //get the cap based on PC level and cohort LA
+    int nCohortXPCap = ((nCohortMaxHD)*(nCohortMaxHD+1)*500)-1;
     //this is how much XP the next levelup will be at
     int nCohortXPLevel = nCohortECL*(nCohortECL+1)*500;
 //DoDebug("XPGained = "+IntToString(XPGained));

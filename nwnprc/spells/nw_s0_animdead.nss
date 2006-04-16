@@ -92,7 +92,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 || GetResRef(oSummonTest)=="nw_s_skelchief"//"NW_S_SKELCHIEF"
                 || GetHasSpellEffect(SPELL_ANIMATE_DEAD, oSummonTest))
                 nTotalHD += GetHitDice(oSummonTest);
-            FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), OBJECT_SELF);
+            if(DEBUG)FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), OBJECT_SELF);
             i++;
             oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         }
@@ -106,7 +106,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         {
             FloatingTextStringOnCreature("You cannot summon more undead at this time.", OBJECT_SELF);
         }
-        FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD)+"HD out of "+IntToString(nMaxHD)+"HD.", OBJECT_SELF);
+        FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD+nHD)+"HD out of "+IntToString(nMaxHD)+"HD.", OBJECT_SELF);
     }
     else
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), HoursToSeconds(nDuration));

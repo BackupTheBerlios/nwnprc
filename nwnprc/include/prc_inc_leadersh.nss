@@ -30,7 +30,7 @@ int GetCurrentCohortCount(object oPC);
 int GetCohortMaxLevel(int nLeadership, object oPC);
 void RegisterAsCohort(object oPC);
 object AddCohortToPlayer(int nCohortID, object oPC);
-void AddCohortToPlayerByObject(object oCohort, object oPC);
+void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE);
 void RemoveCohortFromPlayer(object oCohort, object oPC);
 int GetLeadershipScore(object oPC = OBJECT_SELF);
 void CheckHB();
@@ -161,70 +161,73 @@ void CancelGreatFeats(object oSpawn)
 
 }
 
-void AddCohortToPlayerByObject(object oCohort, object oPC)
+void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
 {
     //add it to the pc
     int nMaxHenchmen = GetMaxHenchmen();
     SetMaxHenchmen(99);
     AddHenchman(oPC, oCohort);
     SetMaxHenchmen(nMaxHenchmen);
-
-    //set it to the pcs level
-    int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
-    SetXP(oCohort, nLevel*(nLevel-1)*500);
-    SetLocalInt(oCohort, "MastersXP", GetXP(oPC));
-    DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
-    DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
-    //set its maximum level lag
-    //if its not a bonus cohort, apply a 2-level lag
-    if(GetCurrentCohortCount(oPC) > GetPRCSwitch(PRC_BONUS_COHORTS))
-        SetLocalInt(oCohort, "CohortLevelLag", 2);
-
-    //if it was a premade one, give it a random name
-    //randomize its appearance using DoDisguise
-    /* 1.67 code
-    if(GetResRef(oCohort) != "")
-    {
-        AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName());
-        DoDisguise(PRCGetRacialType(oCohort), oCohort);
-    }
-    */
-    
-    //if its a custom made cohort, need to cancel GreatX feats
-    if(GetResRef(oCohort) == "")
-        CancelGreatFeats(oCohort);
-    
-
-    //strip its equipment & inventory
-    object oTest  = GetFirstItemInInventory(oCohort);
     object oSkin  = GetPCSkin(oCohort);
-    object oToken = GetHideToken(oCohort);
-    while(GetIsObjectValid(oTest))
+
+    if(bDoSetup)
     {
-        if(GetHasInventory(oTest))
+        //set it to the pcs level
+        int nLevel = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
+        SetXP(oCohort, nLevel*(nLevel-1)*500);
+        SetLocalInt(oCohort, "MastersXP", GetXP(oPC));
+        DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
+        DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
+        //set its maximum level lag
+        //if its not a bonus cohort, apply a 2-level lag
+        if(GetCurrentCohortCount(oPC) > GetPRCSwitch(PRC_BONUS_COHORTS))
+            SetLocalInt(oCohort, "CohortLevelLag", 2);
+
+        //if it was a premade one, give it a random name
+        //randomize its appearance using DoDisguise
+        /* 1.67 code
+        if(GetResRef(oCohort) != "")
         {
-            object oTest2 = GetFirstItemInInventory(oTest);
-            while(GetIsObjectValid(oTest2))
-            {
-                // Avoid blowing up the hide and token that just had the eventscripts stored on them
-                if(oTest2 != oSkin && oTest2 != oToken)
-                    DestroyObject(oTest2);
-                oTest2 = GetNextItemInInventory(oTest);
-            }
+            AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName());
+            DoDisguise(PRCGetRacialType(oCohort), oCohort);
         }
-        // Avoid blowing up the hide and token that just had the eventscripts stored on them
-        if(oTest != oSkin && oTest != oToken)
+        */
+
+        //if its a custom made cohort, need to cancel GreatX feats
+        if(GetResRef(oCohort) == "")
+            CancelGreatFeats(oCohort);
+
+
+        //strip its equipment & inventory
+        object oTest  = GetFirstItemInInventory(oCohort);
+        object oToken = GetHideToken(oCohort);
+        while(GetIsObjectValid(oTest))
+        {
+            if(GetHasInventory(oTest))
+            {
+                object oTest2 = GetFirstItemInInventory(oTest);
+                while(GetIsObjectValid(oTest2))
+                {
+                    // Avoid blowing up the hide and token that just had the eventscripts stored on them
+                    if(oTest2 != oSkin && oTest2 != oToken)
+                        DestroyObject(oTest2);
+                    oTest2 = GetNextItemInInventory(oTest);
+                }
+            }
+            // Avoid blowing up the hide and token that just had the eventscripts stored on them
+            if(oTest != oSkin && oTest != oToken)
+                DestroyObject(oTest);
+            oTest = GetNextItemInInventory(oCohort);
+        }
+        int nSlot;
+        for(nSlot = 0;nSlot<14;nSlot++)
+        {
+            oTest = GetItemInSlot(nSlot, oCohort);
             DestroyObject(oTest);
-        oTest = GetNextItemInInventory(oCohort);
+        }
+        //get rid of any gold it has
+        TakeGoldFromCreature(GetGold(oCohort), oCohort, TRUE);
     }
-    int nSlot;
-    for(nSlot = 0;nSlot<14;nSlot++)
-    {
-        oTest = GetItemInSlot(nSlot, oCohort);
-        DestroyObject(oTest);
-    }
-    //get rid of any gold it has
-    TakeGoldFromCreature(GetGold(oCohort), oCohort, TRUE);
     //clean up any leftovers on the skin
     ScrubPCSkin(oCohort, oSkin);
     DeletePRCLocalInts(oSkin);
@@ -248,6 +251,9 @@ void AddCohortToPlayerByObject(object oCohort, object oPC)
     //cohort specific ones
     AddEventScript(oCohort, EVENT_VIRTUAL_ONCONVERSATION,       "prc_ai_coh_conv",  TRUE, FALSE);
     AddEventScript(oCohort, EVENT_VIRTUAL_ONHEARTBEAT,          "prc_ai_coh_hb",    TRUE, FALSE);
+
+    //mark the master on the cohort
+    SetLocalObject(oCohort, "MasterObject", oPC);
 
     //DEBUG
     //various tests

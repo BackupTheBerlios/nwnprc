@@ -269,12 +269,15 @@ void main()
             else if(nStage == STAGE_LEADERSHIP)
             {
                 SetHeader("What do you want to change?");
-                if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC))
+                if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC)
+                    && !GetLocalInt(oPC, "CohortRecruited"))
                     AddChoice("Recruit a custom cohort", 1);
-                if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC))
+                if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC)
+                    && !GetLocalInt(oPC, "CohortRecruited"))
                     AddChoice("Recruit a standard cohort", 4);
-                if(GetCurrentCohortCount(oPC))
-                    AddChoice("Dismiss an existing cohort", 2);
+                //not implemented, remove via radial    
+                //if(GetCurrentCohortCount(oPC))
+                //    AddChoice("Dismiss an existing cohort", 2);
                 if(GetCampaignInt(COHORT_DATABASE, "CohortCount")>0)
                     AddChoice("Delete a stored custom cohort", 3);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
@@ -773,6 +776,8 @@ void main()
             {
                 int nCohortID = GetLocalInt(oPC, "CohortID");
                 AddCohortToPlayer(nCohortID, oPC);
+                //mark the player as having recruited for the day
+                SetLocalInt(oPC, "CohortRecruited", TRUE);
                 nStage = STAGE_LEADERSHIP;
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
@@ -887,6 +892,8 @@ void main()
                 //add to player
                 //also does name/portrait/bodypart changes via DoDisguise
                 AddCohortToPlayerByObject(oCohort, oPC);
+                //mark the player as having recruited for the day
+                SetLocalInt(oPC, "CohortRecruited", TRUE);
                 nStage = STAGE_LEADERSHIP;
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)

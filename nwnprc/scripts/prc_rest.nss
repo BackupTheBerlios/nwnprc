@@ -158,6 +158,29 @@ void RestFinished(object oPC)
     
     //allow players to recruit a new cohort
     DeleteLocalInt(oPC, "CohortRecruited");
+    
+    //in large parties, sometimes people dont rest
+    //loop over all and forcerest when nessicary
+    //assumes NPCs start and finish resting after the PC
+    if(!GetIsObjectValid(GetMaster(oPC)))
+    {
+        int nType;
+        for(nType = 1; nType < 6; nType++)
+        {
+            int i = 1;
+            object oOldTest;
+            object oTest = GetAssociate(nType, oPC, i);
+            while(GetIsObjectValid(oTest) && oTest != oOldTest)
+            {
+                if(GetCurrentAction(oTest) != ACTION_REST)
+                    AssignCommand(oTest, DelayCommand(0.01, PRCForceRest(oTest)));
+                i++;
+                oOldTest = oTest;
+                oTest = GetAssociate(nType, oPC, i);
+            }
+        
+        }
+    }
 
     // New Spellbooks
     DelayCommand(0.1, CheckNewSpellbooks(oPC));

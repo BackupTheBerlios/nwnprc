@@ -24,11 +24,11 @@ void main()
         {
             if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
             {
-                    if(GetEffectSpellId(eAOE) == SPELL_DES_20)
-                    {
-                        RemoveEffect(oTarget, eAOE);
-                        bValid = TRUE;
-                    }
+                if(GetEffectSpellId(eAOE) == SPELL_DES_20)
+                {
+                    RemoveEffect(oTarget, eAOE);
+                    bValid = TRUE;
+                }
             }
             //Get next effect on the target
             eAOE = GetNextEffect(oTarget);

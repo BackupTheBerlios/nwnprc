@@ -316,6 +316,12 @@ const string PRC_ORC_WARLORD_COHORT                  = "PRC_ORC_WARLORD_COHORT";
  */
 const string PRC_LICH_ALTER_SELF_DISABLE             = "PRC_LICH_ALTER_SELF_DISABLE";
 
+/*
+ * Reduces the True Necromancers aura visual effects
+ * It continues to function the same though
+ */
+const string PRC_TRUE_NECROMANCER_ALTERNATE_VISUAL             = "PRC_TRUE_NECROMANCER_ALTERNATE_VISUAL";
+
 /******************************************************************************\
 *                               Epic Spell switches                            *
 \******************************************************************************/
@@ -2289,6 +2295,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SAMURAI_VALUE_SCALAR_x100);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ORC_WARLORD_COHORT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_LICH_ALTER_SELF_DISABLE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUE_NECROMANCER_ALTERNATE_VISUAL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_EPIC_XP_COSTS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_EPIC_TAKE_TEN_RULE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE);

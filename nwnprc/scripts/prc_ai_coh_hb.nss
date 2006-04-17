@@ -118,5 +118,19 @@ DoDebug("Test E");
             DestroyObject(OBJECT_SELF, 0.1);
 DoDebug("Test F");
         }
-    }
+    }/*
+    
+    //and now for some intelligence to the AI
+    //if you have a familiar, summon it
+    if(GetHasFeat(FEAT_SUMMON_FAMILIAR, oCohort)
+        //&& !GetIsObjectValid(GetAssociate(ASSOCIATE_TYPE_FAMILIAR, oCohort))
+        )
+        ActionUseFeat(FEAT_SUMMON_FAMILIAR, oCohort);
+        //SummonFamiliar(oCohort);
+    //if you have an animal companion, summon it
+    if(GetHasFeat(FEAT_ANIMAL_COMPANION, oCohort)
+        //&& !GetIsObjectValid(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION, oCohort))
+        )
+        ActionUseFeat(FEAT_ANIMAL_COMPANION, oCohort);
+        //SummonAnimalCompanion(oCohort);*/
 }   

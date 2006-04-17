@@ -37,7 +37,6 @@ void main()
 {
 	//define vars
 	object oPC = OBJECT_SELF;
-	int nSpell = GetSpellId();
 	int nCasterLvL = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nType = MyPRCGetRacialType(oTarget);

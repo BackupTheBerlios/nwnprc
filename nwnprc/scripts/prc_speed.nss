@@ -20,6 +20,14 @@ void main()
         else if(nArmorType == ARMOR_TYPE_HEAVY)
             nNewSpeed = FloatToInt(IntToFloat(nNewSpeed)*0.666);
     }    
+    //scale by PC speed
+    if(GetPRCSwitch(PRC_REMOVE_PLAYER_SPEED) && GetIsPC(oPC))
+    {
+        //PCs move at 4.0 NPC "normal" is 3.5
+        nCurrentSpeed = FloatToInt(IntToFloat(nCurrentSpeed)*(4.0/3.5));
+    }
+DoDebug("prc_speed NewSpeed = "+IntToString(nNewSpeed)+" OldSpeed = "+IntToString(nCurrentSpeed));    
+DoDebug("GetMovementRate() = "+IntToString(GetMovementRate(oPC)));
     //no change, abort
     if(nNewSpeed == nCurrentSpeed)
         return;

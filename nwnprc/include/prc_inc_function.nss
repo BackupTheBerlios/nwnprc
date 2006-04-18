@@ -295,6 +295,7 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
     ExecuteScript("race_unarmed", oPC);
+    ExecuteScript("prc_templates", oPC);
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
     {
@@ -774,12 +775,12 @@ else
 
 void BardSong(object oPC)
 {
-	// This is used to set the number of bardic song uses per day, as bardic PrCs can increase it
-	// or other classes can grant it on their own
-	int nTotal = GetLevelByClass(CLASS_TYPE_BARD, oPC);
-	nTotal += GetLevelByClass(CLASS_TYPE_DIRGESINGER, oPC);
-	
-	FeatUsePerDay(oPC, FEAT_BARD_SONGS, -1, nTotal);
+    // This is used to set the number of bardic song uses per day, as bardic PrCs can increase it
+    // or other classes can grant it on their own
+    int nTotal = GetLevelByClass(CLASS_TYPE_BARD, oPC);
+    nTotal += GetLevelByClass(CLASS_TYPE_DIRGESINGER, oPC);
+    
+    FeatUsePerDay(oPC, FEAT_BARD_SONGS, -1, nTotal);
 }
 
 void FeatSpecialUsePerDay(object oPC)

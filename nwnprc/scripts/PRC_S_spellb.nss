@@ -88,7 +88,11 @@ void main()
                 string sMessage;
                 int i;
                 sMessage += "You have remaining:\n";
-                persistant_array_create(oPC,  "NewSpellbookMem_"+IntToString(nSpellClass));
+                if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nSpellClass)))
+                {
+            DoDebug("Error: NewSpellbookMem_"+IntToString(nSpellClass)+" array does not exist");
+                    persistant_array_create(oPC,  "NewSpellbookMem_"+IntToString(nSpellClass));
+                }
                 int nArraySize = persistant_array_get_size(oPC, "NewSpellbookMem_" + IntToString(nSpellClass));
                 for(i = 0; i < nArraySize; i++)
                 {

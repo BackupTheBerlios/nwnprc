@@ -12,9 +12,6 @@
    Is also used to enforce the proper discipline selection.
 */
 
-
-#include "prc_class_const"
-#include "prc_feat_const"
 #include "psi_inc_psifunc"
 
 string PLEASE_RESELECT = GetStringByStrRef(16826471); //"Please reselect your feats."
@@ -61,6 +58,14 @@ int EpicPsionicFeats(object oPC);
  * @return    TRUE if needed to relevel, FALSE otherwise.
  */
 int SplitPsionicRay(object oPC);
+
+/**
+ * Enforces the restriction that Thrallherds cannot have leadership.
+ *
+ * @param oPC The PC whose feats to check.
+ * @return    TRUE if needed to relevel, FALSE otherwise.
+ */
+int Thrallherd(object oPC);
 
 // ---------------
 // BEGIN FUNCTIONS
@@ -247,6 +252,17 @@ int SplitPsionicRay(object oPC)
     return FALSE;
 }
 
+int Thrallherd(object oPC)
+{
+	if (GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) > 0 && GetHasFeat(FEAT_LEADERSHIP, oPC))
+	{ 
+	        FloatingTextStringOnCreature("You cannot take the Thrallherd class if you have the Leadership feat.", oPC, FALSE);
+	        return TRUE;
+    	}
+    	
+    	return FALSE;
+}
+
 
 void main()
 {
@@ -256,6 +272,8 @@ void main()
 
     // Psion disciplines
     bRelevel |= PsionDiscipline(oPC);
+    // Thrallherd
+    bRelevel |= Thrallherd(oPC);
 
 
     if(GetIsPsionicCharacter(oPC))

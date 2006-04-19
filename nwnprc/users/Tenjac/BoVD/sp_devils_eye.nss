@@ -22,3 +22,25 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	SPSetSchool(SPELL_SCHOOL_DIVINATION);
+	
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	effect eUltra = EffectUltravision();
+	effect eVis = EffectVisualEffect(VFX_DUR_ULTRAVISION);
+	effect eLink = EffectLinkEffects(eUltra, eVis);
+	float fDur = (60.0f * nCasterLvl);
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+	
+	SPSetSchool();
+	SPEvilShift(oPC);
+}
+	
+	

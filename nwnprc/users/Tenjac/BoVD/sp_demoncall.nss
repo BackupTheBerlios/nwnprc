@@ -23,3 +23,22 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+
+void main()
+{
+	// Run the spellhook.
+	
+	if (!X2PreSpellCastCode()) return;
+		
+	SPSetSchool(SPELL_SCHOOL_DIVINATION);
+	
+	object oPC = OBJECT_SELF;
+	effect eLore = EffectSkillIncrease(SKILL_LORE, 10);
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLore, oPC, 3.0f);
+	
+	SPSetSchool();
+	SPEvilShift(oPC);
+	
+}
+	

@@ -17228,7 +17228,7 @@ His followers are loyal to the death, and his empire is the stuff of legend.
 
 Hit Die: d10
 Skill Points at Each Additional Level: 4+ Int Modifier
-Bonus Feats: The epic swashbuckler gains a bonus feat every three levels, starting at level 23 </entry>
+Bonus Feats: The epic marshal gains a bonus feat every three levels, starting at level 23 </entry>
   <entry id="51047" lang="en" sex="m">Minor Aura - Demand Fortitude</entry>
   <entry id="51048" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Marshal
@@ -17312,12 +17312,12 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
   <entry id="51079" lang="en" sex="m">Major Aura - Motivate Attack</entry>
   <entry id="51080" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Marshal
-Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to their attack rolls made with melee weapons.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40 (so a level 7 Marshal grants DR 2/-, while a level 25 Marshal grants DR 5/-).
+Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to their attack rolls made with melee weapons.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40.
 Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any given time.</entry>
   <entry id="51081" lang="en" sex="m">Major Aura - Steady Hand</entry>
   <entry id="51082" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Marshal
-Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to their attack rolls made with ranged weapons.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40 (so a level 7 Marshal grants DR 2/-, while a level 25 Marshal grants DR 5/-).
+Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to their attack rolls made with ranged weapons.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40.
 Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any given time.</entry>
   <entry id="51083" lang="en" sex="m">Grant Move Action</entry>
   <entry id="51084" lang="en" sex="m">Type of Feat: Class Specific
@@ -21659,21 +21659,8 @@ Use: Automatic.</entry>
   <entry id="55137" lang="en" sex="m">Ghost-Faced Killers</entry>
   <entry id="55138" lang="en" sex="m">ghost-faced killer</entry>
   <entry id="55139" lang="en" sex="m">(PRESTIGE CLASS)
-The ghost-faced killer has the ability to disappear
-into an invisible or ethereal void at
-will, on a limited basis.  In addition, he gradually
-learns more an more vulnerable places
-to attack his victims using Sudden Strike (Sneak
-Attack).  By far, what differentiates
-him from other assassin style classes is his ability
-to literally frighten his victim to death.
-Frightful attack may kill the intended victim, or it
-may only shake them up, but not
-only does it affect the victim, it has the ability to
-frighten all those who witness this
-horrible attack.  The ghost-faced killer and his
-friends are not affected by this
-secondary fear effect.
+The ghost-faced killer has the ability to disappear into an invisible or ethereal void at will, on a limited basis.  In addition, he gradually learns more an more vulnerable places to attack his victims using Sudden Strike (Sneak Attack).  By far, what differentiates him from other assassin style classes is his ability to literally frighten his victim to death. 
+Frightful attack may kill the intended victim, or it may only shake them up, but not only does it affect the victim, it has the ability to frighten all those who witness this horrible attack.  The ghost-faced killer and his friends are not affected by this secondary fear effect.
 
 - Hit Die: d8
 - Proficiencies: All simple and martial weapons, and

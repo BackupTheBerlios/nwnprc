@@ -513,9 +513,11 @@ object GetCohort(int nID, object oPC)
 int GetMaximumCohortCount(object oPC)
 {
     int nCount = 0;
-    if(GetHasFeat(FEAT_LEADERSHIP, oPC))
+    if(GetHasFeat(FEAT_LEADERSHIP, oPC)
+        && !GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC))
         nCount++;
-    if(GetHasFeat(FEAT_LEGENDARY_COMMANDER, oPC))
+    if(GetHasFeat(FEAT_LEGENDARY_COMMANDER, oPC)
+        && !GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC))
         nCount++;
     if(GetHasFeat(FEAT_HATH_COHORT, oPC))
         nCount++;
@@ -642,7 +644,8 @@ int GetCanRegister(object oPC)
     for(i=0;i<nCohortCount;i++)
     {
         string sName = GetCampaignString(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_name");
-        if(sName == GetName(oPC))
+        if(sName == GetName(oPC)
+            && !GetCampaignInt(COHORT_DATABASE, "Cohort_"+IntToString(i)+"_deleted"))
             bReturn = FALSE;
     }
     return bReturn;

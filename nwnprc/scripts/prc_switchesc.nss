@@ -275,7 +275,7 @@ void main()
                 if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC)
                     && !GetLocalInt(oPC, "CohortRecruited"))
                     AddChoice("Recruit a standard cohort", 4);
-                //not implemented, remove via radial    
+                //not implemented, remove via radial or conversation    
                 //if(GetCurrentCohortCount(oPC))
                 //    AddChoice("Dismiss an existing cohort", 2);
                 if(GetCampaignInt(COHORT_DATABASE, "CohortCount")>0)

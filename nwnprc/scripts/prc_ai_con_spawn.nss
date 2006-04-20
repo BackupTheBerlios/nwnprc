@@ -2,12 +2,6 @@
 void main()
 {
     ExecuteScript("nw_ch_acani9", OBJECT_SELF);
-    if(GetAppearanceType(OBJECT_SELF) == APPEARANCE_TYPE_GOLEM_MITHRAL)
-    {
-        //mithral golems get permahaste
-        //yeah, its not the same as PnP, but its pretty close ;)
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, SupernaturalEffect(EffectHaste()), OBJECT_SELF);
-    }
     //lootable, but not ressurectable
     SetLootable(OBJECT_SELF, TRUE);
     SetIsDestroyable(FALSE, FALSE, TRUE);

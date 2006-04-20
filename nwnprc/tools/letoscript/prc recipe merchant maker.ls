@@ -2,7 +2,7 @@
 meta dir=> '..\..\Craft2das' or die $!;
 $name = 'prc_recipe';
 $i = 0;
-$max = 776;
+$max = 1000;
 $x = 0;
 $y = 0;
 
@@ -35,4 +35,4 @@ for($i=0; $i<=$max; $i++)
 	print "$resref $x $y /StoreList/[2]/ItemList/[_]/InventoryRes /StoreList/[2]/ItemList/[_]/Infinite /StoreList/[2]/ItemList/[_]/Repos_PosX /StoreList/[2]/ItemList/[_]/Repos_Posy \n";
 }
 
-%store = ">$name.utm";
+%store = ">..\\..\\others\\$name.utm";

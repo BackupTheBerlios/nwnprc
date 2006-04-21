@@ -54,7 +54,8 @@ void CleanCopy(object oImage)
      {
         SetDroppableFlag(oItem, FALSE);
         SetItemCursedFlag(oItem, TRUE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_10_PERCENT), oItem);
+        SetIdentified(oItem, TRUE);
         oItem = GetNextItemInInventory(oImage);
      }
      int i;
@@ -62,7 +63,8 @@ void CleanCopy(object oImage)
      {
         oItem = GetItemInSlot(i, oImage);
         SetDroppableFlag(oItem, FALSE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_10_PERCENT), oItem);
+        SetIdentified(oItem, TRUE);
         SetItemCursedFlag(oItem, TRUE);
      }
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
@@ -97,11 +99,11 @@ void main()
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     
    int nHD = GetHitDice(OBJECT_SELF);
-   FloatingTextStringOnCreature("HD: " + IntToString(nHD), OBJECT_SELF, FALSE);
+   if (DEBUG) FloatingTextStringOnCreature("HD: " + IntToString(nHD), OBJECT_SELF, FALSE);
    int nClass = GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF);
-   FloatingTextStringOnCreature("Thrallherd Level: " + IntToString(nClass), OBJECT_SELF, FALSE);
+   if (DEBUG) FloatingTextStringOnCreature("Thrallherd Level: " + IntToString(nClass), OBJECT_SELF, FALSE);
    int nCha = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
-   FloatingTextStringOnCreature("Cha Modifier: " + IntToString(nCha), OBJECT_SELF, FALSE);
+   if (DEBUG) FloatingTextStringOnCreature("Cha Modifier: " + IntToString(nCha), OBJECT_SELF, FALSE);
 
    int nLead = nHD + nClass + nCha;
    int nLevel;
@@ -132,12 +134,12 @@ void main()
    if (nLead == 24) nLevel = 17;
    if (nLead >= 25) nLevel = 17;
    
-   FloatingTextStringOnCreature("Leadship Score: " + IntToString(nLead), OBJECT_SELF, FALSE);
-   FloatingTextStringOnCreature("Spell ID: " + IntToString(GetSpellId()), OBJECT_SELF, FALSE);
+   if (DEBUG) FloatingTextStringOnCreature("Leadship Score: " + IntToString(nLead), OBJECT_SELF, FALSE);
+   if (DEBUG) FloatingTextStringOnCreature("Spell ID: " + IntToString(GetSpellId()), OBJECT_SELF, FALSE);
    
    object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_fight", GetSpellTargetLocation(), FALSE, "psi_thrall_thrall");
    AddHenchman(OBJECT_SELF, oCreature);
-   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oCreature));
    
    int n;
    for(n=1;n<nLevel;n++)
@@ -149,11 +151,11 @@ void main()
    	GenerateBossTreasure(oCreature);
    }    
    
+   CleanCopy(oCreature);
+   
    EquipWeapon(oCreature);
    EquipArmor(oCreature);
    EquipMisc(oCreature);
-   
-   CleanCopy(oCreature);
    
    SetMaxHenchmen(nMax);
 }

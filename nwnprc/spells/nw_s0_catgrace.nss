@@ -73,8 +73,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     eDex = EffectAbilityIncrease(ABILITY_DEXTERITY,nModify);
     effect eLink = EffectLinkEffects(eDex, eDur);
 
-	// bleedingedge - Strip old spell off to deal with mass buffs.
-	StripBuff(oTarget, SPELL_CATS_GRACE, SPELL_MASS_CATS_GRACE);
+	// Stratovarius - Prevents stacking of normal and Mass spells
+	RemoveEffectsFromSpell(oTarget, SPELL_MASS_CATS_GRACE);
 	
     //Apply visual and bonus effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,CasterLvl);

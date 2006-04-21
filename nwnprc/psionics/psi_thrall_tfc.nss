@@ -22,7 +22,8 @@ void CleanCopy(object oImage)
      {
         SetDroppableFlag(oItem, FALSE);
         SetItemCursedFlag(oItem, TRUE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_10_PERCENT), oItem);
+        SetIdentified(oItem, TRUE);
         oItem = GetNextItemInInventory(oImage);
      }
      int i;
@@ -30,7 +31,8 @@ void CleanCopy(object oImage)
      {
         oItem = GetItemInSlot(i, oImage);
         SetDroppableFlag(oItem, FALSE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_10_PERCENT), oItem);
+        SetIdentified(oItem, TRUE);
         SetItemCursedFlag(oItem, TRUE);
      }
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
@@ -67,9 +69,9 @@ void main()
    int nHD = GetHitDice(OBJECT_SELF);
    int nLevel = nHD - 2;
    
-   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_cleric", GetSpellTargetLocation(), FALSE, "psi_thrall_twofold");
+   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_cleri", GetSpellTargetLocation(), FALSE, "psi_thrall_twofold");
    AddHenchman(OBJECT_SELF, oCreature);
-   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oCreature));
    
    int n;
    for(n=1;n<nLevel;n++)
@@ -81,11 +83,11 @@ void main()
    	GenerateBossTreasure(oCreature);
    }    
    
+   CleanCopy(oCreature);
+   
    EquipWeapon(oCreature);
    EquipArmor(oCreature);
    EquipMisc(oCreature);
-   
-   CleanCopy(oCreature);
    
    SetMaxHenchmen(nMax);
 }

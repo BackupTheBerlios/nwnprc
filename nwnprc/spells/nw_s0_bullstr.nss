@@ -62,18 +62,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     }
 
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    // This code was there to prevent stacking issues, but programming says thats handled in code...
-/*    if (GetHasSpellEffect(SPELL_GREATER_BULLS_STRENGTH))
-    {
-        return;
-    }
 
-    //Apply effects and VFX to target
-    RemoveSpellEffects(SPELL_BULLS_STRENGTH, OBJECT_SELF, oTarget);
-    RemoveSpellEffects(SPELLABILITY_BG_BULLS_STRENGTH, OBJECT_SELF, oTarget);
-*/
-	// bleedingedge - Strip old spell off to deal with mass buffs.
-	StripBuff(oTarget, SPELL_BULLS_STRENGTH, SPELL_MASS_BULLS_STRENGTH);
+	// Stratovarius - Prevents stacking of normal and Mass spells
+	RemoveEffectsFromSpell(oTarget, SPELL_MASS_BULLS_STRENGTH);
 	
     eStr = EffectAbilityIncrease(ABILITY_STRENGTH,nModify);
     effect eLink = EffectLinkEffects(eStr, eDur);

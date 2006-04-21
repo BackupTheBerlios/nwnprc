@@ -67,8 +67,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION,nModify);
     effect eLink = EffectLinkEffects(eCon, eDur);
 
-	// bleedingedge - Strip old spell off to deal with mass buffs.
-	StripBuff(oTarget, SPELL_ENDURANCE, SPELL_MASS_ENDURANCE);
+	// Stratovarius - Prevents stacking of normal and Mass spells
+	RemoveEffectsFromSpell(oTarget, SPELL_MASS_ENDURANCE);
 	
     //Appyly the VFX impact and ability bonus effect
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,CasterLvl);

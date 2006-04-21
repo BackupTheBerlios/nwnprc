@@ -71,8 +71,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_OWLS_WISDOM, FALSE));
 
-	// bleedingedge - Strip old spell off to deal with mass buffs.
-	StripBuff(oTarget, SPELL_OWLS_WISDOM, SPELL_MASS_OWLS_WISDOM);
+	// Stratovarius - Prevents stacking of normal and Mass spells
+	RemoveEffectsFromSpell(oTarget, SPELL_MASS_OWLS_WISDOM);
 	
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,CasterLvl);

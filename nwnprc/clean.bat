@@ -9,3 +9,4 @@ del /q ocfixerfobjs\*.*
 del /q *.temp
 del /q CompiledResources\*.hak
 del /q CompiledResources\*.erf
+del /q xml_temp\*.*

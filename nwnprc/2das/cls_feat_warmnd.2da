@@ -7,6 +7,10 @@
 3   Warmind_OverwhelmForce          3639      3    10             1      
 4   Warmind_EnduringBody            3640      3    3              0      
 5   Warmind_SweepingStrike          3641      3    5              0      
+8   FEAT_AUGMENT_PSIONICS_QUICKSELECTS             3550      3    1              1      
+9   FEAT_AUGMENT_PSIONICS_DIGITS_0_4               3551      3    1              1      
+10  FEAT_AUGMENT_PSIONICS_DIGITS_5_9               3552      3    1              1      
+11  FEAT_AUGMENT_PSIONICS_TENS                     3553      3    1              1      
 6   ****                            ****      **** ****           ****   
 7   ****                            ****      **** ****           ****   
 8   **Bonus_Feats**                 ****      **** ****           ****   

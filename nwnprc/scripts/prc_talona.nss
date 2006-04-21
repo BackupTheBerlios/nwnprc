@@ -113,7 +113,7 @@ void main()
         	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE), oCreatureSkin);
         	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_BACKSTAB), oCreatureSkin);
         	//Feat 354 is FEAT_LOWLIGHTVISION
-        	AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(354), oCreatureSkin);
+        	AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(354), oCreatureSkin);
 
         	if (iCompLCA != ALIGNMENT_NEUTRAL)
         	{

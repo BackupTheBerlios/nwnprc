@@ -48,15 +48,15 @@ void ApplySneakToSkin(object oPC, int iRogueSneak, int iBlackguardSneak)
    SetLocalInt(oSkin,"BlackguardSneakDice",iBlackguardSneakFeat);
 
    /*if (iRogueSneak) DelayCommand(0.2, AddItemProperty(DURATION_TYPE_PERMANENT,
-                           ItemPropertyBonusFeat(iRogueSneakFeat), oSkin));
+                           PRCItemPropertyBonusFeat(iRogueSneakFeat), oSkin));
    if (iBlackguardSneak) DelayCommand(0.2, AddItemProperty(DURATION_TYPE_PERMANENT,
-                           ItemPropertyBonusFeat(iBlackguardSneakFeat), oSkin));
+                           PRCItemPropertyBonusFeat(iBlackguardSneakFeat), oSkin));
                            */
     if(iRogueSneak)
-        DelayCommand(0.2, IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(iRogueSneakFeat), 0.0f,
+        DelayCommand(0.2, IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(iRogueSneakFeat), 0.0f,
                                                 X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
     if(iBlackguardSneak)
-        DelayCommand(0.2, IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(iBlackguardSneakFeat), 0.0f,
+        DelayCommand(0.2, IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(iBlackguardSneakFeat), 0.0f,
                                                 X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
 }
 

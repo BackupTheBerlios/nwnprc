@@ -867,8 +867,8 @@ void AddIniDmg(object oPC)
       iConv = ConvMonsterDmg(iConv);
       TotalAndRemoveProperty(oCweapB,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iConv),oCweapB);
-      //AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapB);
-      IPSafeAddItemProperty(oCweapB, ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+      //AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapB);
+      IPSafeAddItemProperty(oCweapB, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
    }
    if ( oCweapL != OBJECT_INVALID && !FeatIniDmg(oCweapL))
    {
@@ -880,8 +880,8 @@ void AddIniDmg(object oPC)
       iConv = ConvMonsterDmg(iConv);
       TotalAndRemoveProperty(oCweapL,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iConv),oCweapL);
-      //AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapL);
-      IPSafeAddItemProperty(oCweapL, ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+      //AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapL);
+      IPSafeAddItemProperty(oCweapL, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
    }
    if ( oCweapR != OBJECT_INVALID && !FeatIniDmg(oCweapR))
    {
@@ -893,8 +893,8 @@ void AddIniDmg(object oPC)
       iConv = ConvMonsterDmg(iConv);
       TotalAndRemoveProperty(oCweapR,ITEM_PROPERTY_MONSTER_DAMAGE,-1);
       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyMonsterDamage(iConv),oCweapR);
-      //AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapR);
-      IPSafeAddItemProperty(oCweapR, ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+      //AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oCweapR);
+      IPSafeAddItemProperty(oCweapR, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
    }
 }
 
@@ -904,7 +904,7 @@ void AddCriti(object oPC,object oSkin,int ip_feat_crit,int nFeat)
     // Do not add multiple instances of the same bonus feat iprop, it lags the game
     if(GetHasFeat(nFeat,oPC))
         return;
-    IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(ip_feat_crit), 0.0f,
+    IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(ip_feat_crit), 0.0f,
                           X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 }
 
@@ -1640,7 +1640,7 @@ void CorpseCrafter(object oPC, object oSummon)
     if (GetHasFeat(FEAT_NIMBLE_BONES, oPC))
     {
         object oSkin = GetPCSkin(oPC);
-        itemproperty iInit = ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT);
+        itemproperty iInit = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT);
         //AddItemProperty(DURATION_TYPE_PERMANENT, iInit, oSkin);
         IPSafeAddItemProperty(oSkin, iInit, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 

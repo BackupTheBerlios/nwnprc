@@ -461,8 +461,8 @@ void GiveFeat(object oPC, int nFeatIP)
 {
     object oSkin = GetPCSkin(oPC);
     if (oSkin != OBJECT_INVALID)
-        //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nFeatIP), oSkin);
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nFeatIP), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        //AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nFeatIP), oSkin);
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nFeatIP), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     SetLocalInt(oPC, "nEpicSpellFeatCastable", GetCastableFeatCount(oPC));
 }
 

@@ -328,13 +328,13 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
     // Give the power's control feats
     object oSkin        = GetPCSkin(oCreature);
     string sPowerFeatIP = Get2DACache(sPowerFile, "IPFeatID", n2daRow);
-    itemproperty ipFeat = ItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
+    itemproperty ipFeat = PRCItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
     IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     // Second power feat, if any
     sPowerFeatIP = Get2DACache(sPowerFile, "IPFeatID2", n2daRow);
     if(sPowerFeatIP != "")
     {
-        ipFeat = ItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
+        ipFeat = PRCItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
         IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 

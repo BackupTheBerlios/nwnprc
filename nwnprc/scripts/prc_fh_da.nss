@@ -27,7 +27,7 @@ void main()
 
     // apply HIPS to PC skin temporar so that player can "rehide" without being seen
     object oSkin =  GetPCSkin(oPC);
-    itemproperty iProp = ItemPropertyBonusFeat(31);  // 31 = HIPS IP_PROP value
+    itemproperty iProp = PRCItemPropertyBonusFeat(31);  // 31 = HIPS IP_PROP value
     //AddItemProperty(DURATION_TYPE_TEMPORARY, iProp, oSkin, 1.0);
     IPSafeAddItemProperty(oSkin, iProp, 1.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 

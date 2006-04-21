@@ -212,7 +212,7 @@ void AnimalCompanion()
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE), oCompSkin);
         AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_BACKSTAB), oCompSkin);
         //Feat 354 is FEAT_LOWLIGHTVISION
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(354), oCompSkin);
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(354), oCompSkin);
         if (iCompLCA != ALIGNMENT_NEUTRAL)
         {
             AdjustAlignment(oComp, ALIGNMENT_NEUTRAL, 50);

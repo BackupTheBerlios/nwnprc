@@ -202,8 +202,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         eLink = EffectLinkEffects(eLink, eBAB);
         eLink = EffectLinkEffects(eLink, eAttacks);
         eLink = EffectLinkEffects(eLink, eFort);
-        itemproperty ipSimple = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
-        itemproperty ipMartial = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
+        itemproperty ipSimple = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
+        itemproperty ipMartial = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
 
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, OBJECT_SELF, fDuration, TRUE, -1, nCasterLvl);

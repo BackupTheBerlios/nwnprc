@@ -102,6 +102,7 @@ int GetBreakConcentrationCheck(object oConcentrator);
 //////////////////////////////////////////////////
 
 // Generic includes
+#include "inc_item_props"
 #include "inc_utility"
 #include "prc_inc_spells"
 #include "prcsp_engine"

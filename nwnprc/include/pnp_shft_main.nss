@@ -608,7 +608,7 @@ void SetShift_02(object oPC, object oTarget)
             int nIP =  GetIPFeatFromFeat(i);
             if(nIP != -1)
             {
-                itemproperty iProp = ItemPropertyBonusFeat(nIP);
+                itemproperty iProp = PRCItemPropertyBonusFeat(nIP);
                 AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oHidePC);
             }
 
@@ -617,7 +617,7 @@ void SetShift_02(object oPC, object oTarget)
     // Fix the biobugged Improved Critical (creature) by giving the PC Improved Critical (unarmed) which seems
     // to work with creature weapons
     if (!GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE, oPC) && GetHasFeat(FEAT_IMPROVED_CRITICAL_CREATURE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_IMPCRITUNARM),oHidePC);
+        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMPCRITUNARM),oHidePC);
 
 
     // If they dont have the natural spell feat they can only cast spells in certain shapes

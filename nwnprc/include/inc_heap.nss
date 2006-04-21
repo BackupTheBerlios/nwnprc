@@ -133,7 +133,8 @@ int heap_put_int(object oStore, string sName, int nKey, int nEntry);
 int heap_put_object(object oStore, string sName, int nKey, object oEntry);
 
 /**
- * Heap insertion functions - string.
+ * Heap insertion functions - string
+.
  * Inserts the given key & element pair at a location in the heap
  * determined by the key.
  * Return order of elements inserted with the same key is not defined.

@@ -15,8 +15,8 @@ void main()
     if(!GetLocalInt(oPC, "HavocMageBattlecast"))
     {
         SetLocalInt(oPC, "HavocMageBattlecast", TRUE);
-        //AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_IMP_CC), oSkin);
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_IMP_CC), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        //AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(IP_CONST_IMP_CC), oSkin);
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_IMP_CC), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         nMes = "*Battlecast Activated*";
     }
     else

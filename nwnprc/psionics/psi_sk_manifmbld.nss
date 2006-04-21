@@ -178,56 +178,56 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     // Weapon Focus
     /* Every soulknife has this, so it's automatically on the weapons now. Uncomment if for some reason another class with the mindblade class feature is added
     if(GetHasFeat(FEAT_WEAPON_FOCUS_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_FOCUS_SHORT_SWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_FOCUS_SHORT_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_WEAPON_FOCUS_LONG_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_WEAPON_FOCUS_BASTARD_SWORD :
                                                                                                                 IP_CONST_FEAT_WEAPON_FOCUS_THROWING_AXE
                                                                       ), oMbld);*/
     // Improved Critical
     if(GetHasFeat(FEAT_IMPROVED_CRITICAL_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_IMPROVED_CRITICAL_SHORT_SWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_IMPROVED_CRITICAL_SHORT_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_IMPROVED_CRITICAL_LONG_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_IMPROVED_CRITICAL_BASTARD_SWORD :
                                                                                                                 IP_CONST_FEAT_IMPROVED_CRITICAL_THROWING_AXE
                                                                       ), oMbld);
     // Overwhelming Critical
     if(GetHasFeat(FEAT_OVERWHELMING_CRITICAL_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTSWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTSWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_LONGSWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_BASTARDSWORD :
                                                                                                                 IP_CONST_FEAT_EPIC_OVERWHELMING_CRITICAL_THROWINGAXE
                                                                       ), oMbld);
     // Devastating Critical
     if(GetHasFeat(FEAT_DEVASTATING_CRITICAL_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_EPIC_DEVASTATING_CRITICAL_LONGSWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_EPIC_DEVASTATING_CRITICAL_BASTARDSWORD :
                                                                                                                 IP_CONST_FEAT_EPIC_DEVASTATING_CRITICAL_THROWINGAXE
                                                                       ), oMbld);
     // Weapon Specialization
     if(GetHasFeat(FEAT_WEAPON_SPECIALIZATION_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_WEAPON_SPECIALIZATION_LONG_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_WEAPON_SPECIALIZATION_BASTARD_SWORD :
                                                                                                                 IP_CONST_FEAT_WEAPON_SPECIALIZATION_THROWING_AXE
                                                                       ), oMbld);
     // Epic Weapon Focus
     if(GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_WEAPON_FOCUS_SHORT_SWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_WEAPON_FOCUS_SHORT_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_EPIC_WEAPON_FOCUS_LONG_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_EPIC_WEAPON_FOCUS_BASTARD_SWORD :
                                                                                                                 IP_CONST_FEAT_EPIC_WEAPON_FOCUS_THROWING_AXE
                                                                       ), oMbld);
     // Epic Weapon Specialization
     if(GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_MINDBLADE, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_SHORT_SWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_SHORT_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_LONG_SWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_BASTARD_SWORD :
                                                                                                                 IP_CONST_FEAT_EPIC_WEAPON_SPECIALIZATION_THROWING_AXE
                                                                       ), oMbld);
     // Weapon of Choice
     if(GetHasFeat(FEAT_WEAPON_OF_CHOICE_MINDBLADE, oPC) && nMbldType != MBLADE_SHAPE_RANGED)
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_OF_CHOICE_SHORTSWORD :
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nMbldType == MBLADE_SHAPE_SHORTSWORD   ? IP_CONST_FEAT_WEAPON_OF_CHOICE_SHORTSWORD :
                                                                        nMbldType == MBLADE_SHAPE_LONGSWORD    ? IP_CONST_FEAT_WEAPON_OF_CHOICE_LONGSWORD :
                                                                        nMbldType == MBLADE_SHAPE_BASTARDSWORD ? IP_CONST_FEAT_WEAPON_OF_CHOICE_BASTARDSWORD :
                                                                                                                 -1 // This shouldn't ever be reached
@@ -235,7 +235,7 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     // Bladewind: Due to some moron @ BioWare, calls to DoWhirlwindAttack() do not do anything if one
     // does not have the feat. Therefore, we need to grant it as a bonus feat on the blade.
     if(GetHasFeat(FEAT_BLADEWIND, oPC))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_WHIRLWIND), oMbld);
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WHIRLWIND), oMbld);
 
 
     /* Apply the enhancements */
@@ -265,9 +265,9 @@ void BuildMindblade(object oPC, object oMbld, int nMbldType)
     if(nFlags & MBLADE_FLAG_MIGHTYCLEAVING)
     {
         if(GetHasFeat(FEAT_CLEAVE, oPC))
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_GREAT_CLEAVE), oMbld);
+            AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(IP_CONST_FEAT_GREAT_CLEAVE), oMbld);
         else
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_CLEAVE), oMbld);
+            AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(IP_CONST_FEAT_CLEAVE), oMbld);
     }
     if(nFlags & MBLADE_FLAG_COLLISION)
     {

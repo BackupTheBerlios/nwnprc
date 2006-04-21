@@ -370,7 +370,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1=0, int nParam2=0, in
    }
    else if (nPropID == ITEM_PROPERTY_BONUS_FEAT)
    {
-        ipRet = ItemPropertyBonusFeat(nParam1);
+        ipRet = PRCItemPropertyBonusFeat(nParam1);
    }
    else if (nPropID == ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N)
    {
@@ -952,17 +952,17 @@ object IPCreateProficiencyFeatItemOnCreature(object oCreature)
     // just in case
     SetDroppableFlag(oRing, FALSE);
 
-    itemproperty ip = ItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_HEAVY);
+    itemproperty ip = PRCItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_HEAVY);
     AddItemProperty(DURATION_TYPE_PERMANENT,ip,oRing);
-    ip = ItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_MEDIUM);
+    ip = PRCItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_MEDIUM);
     AddItemProperty(DURATION_TYPE_PERMANENT,ip,oRing);
-    ip = ItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_LIGHT);
+    ip = PRCItemPropertyBonusFeat(IP_CONST_FEAT_ARMOR_PROF_LIGHT);
     AddItemProperty(DURATION_TYPE_PERMANENT,ip,oRing);
-    ip = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_EXOTIC);
+    ip = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_EXOTIC);
     AddItemProperty(DURATION_TYPE_PERMANENT,ip,oRing);
-    ip = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
+    ip = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);
     AddItemProperty(DURATION_TYPE_PERMANENT,ip,oRing);
-    ip = ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
+    ip = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
     AddItemProperty(DURATION_TYPE_PERMANENT,ip,oRing);
 
     return oRing;

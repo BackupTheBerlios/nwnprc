@@ -13,8 +13,8 @@ void main()
    DelayCommand(0.2, ActionUseSkill(SKILL_HIDE, OBJECT_SELF));
    DelayCommand(0.2, ActionUseSkill(SKILL_MOVE_SILENTLY, OBJECT_SELF));
 
-   //AddItemProperty(DURATION_TYPE_TEMPORARY,ItemPropertyBonusFeat(31),oSkin,3.0f);
-   IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(31), 3.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+   //AddItemProperty(DURATION_TYPE_TEMPORARY,PRCItemPropertyBonusFeat(31),oSkin,3.0f);
+   IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(31), 3.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
    SetActionMode(oTarget,ACTION_MODE_STEALTH,TRUE);
 
 }

@@ -83,7 +83,7 @@ void main()
         // If augmented, give Uncanny Dodge
         if(manif.nTimesAugOptUsed_1 == 1)
         {
-            itemproperty ipUD = ItemPropertyBonusFeat(IP_CONST_FEAT_UNCANNY_DODGE1);
+            itemproperty ipUD = PRCItemPropertyBonusFeat(IP_CONST_FEAT_UNCANNY_DODGE1);
             object oSkin = GetPCSkin(oTarget);
             IPSafeAddItemProperty(oSkin, ipUD, fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }

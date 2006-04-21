@@ -75,6 +75,6 @@ void main()
         float fDuration = 6.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;
 
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nIPFeat), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nIPFeat), fDuration, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 }

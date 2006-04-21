@@ -692,7 +692,7 @@ void SetShift_02(object oPC, object oTarget)
             int nIP =  GetIPFeatFromFeat(i);
             if(nIP != -1)
             {
-                itemproperty iProp = ItemPropertyBonusFeat(nIP);
+                itemproperty iProp = PRCItemPropertyBonusFeat(nIP);
                 //AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oHidePC);
                 IPSafeAddItemProperty(oHidePC, iProp, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
             }

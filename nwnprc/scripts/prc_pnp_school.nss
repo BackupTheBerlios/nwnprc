@@ -412,10 +412,10 @@ void main()
                 int nSchool2 = GetLocalInt(oPC, "School2");
                 int nSchool3 = GetLocalInt(oPC, "School3");
                 object oSkin = GetPCSkin(oPC);
-                itemproperty ipSchool = ItemPropertyBonusFeat(GetIPFromSchool(nSchool));
-                itemproperty ipSchool1 = ItemPropertyBonusFeat(GetIPFromOppSchool(nSchool1));
-                itemproperty ipSchool2 = ItemPropertyBonusFeat(GetIPFromOppSchool(nSchool2));
-                itemproperty ipSchool3 = ItemPropertyBonusFeat(GetIPFromOppSchool(nSchool3));
+                itemproperty ipSchool = PRCItemPropertyBonusFeat(GetIPFromSchool(nSchool));
+                itemproperty ipSchool1 = PRCItemPropertyBonusFeat(GetIPFromOppSchool(nSchool1));
+                itemproperty ipSchool2 = PRCItemPropertyBonusFeat(GetIPFromOppSchool(nSchool2));
+                itemproperty ipSchool3 = PRCItemPropertyBonusFeat(GetIPFromOppSchool(nSchool3));
                 IPSafeAddItemProperty(oSkin, ipSchool, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
                 if(nSchool1 != 0)
                     IPSafeAddItemProperty(oSkin, ipSchool1, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);

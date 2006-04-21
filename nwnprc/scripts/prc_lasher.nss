@@ -57,10 +57,10 @@ void ApplyBonuses(object oPC, object oWeapon)
     if(iClassLevel > 1 && !GetHasFeat(FEAT_IMPROVED_KNOCKDOWN))    //improved knockdown (whip)
     {
         IPSafeAddItemProperty(oSkin,
-            ItemPropertyBonusFeat(IP_CONST_FEAT_KNOCKDOWN)  //for radial inclusion
+            PRCItemPropertyBonusFeat(IP_CONST_FEAT_KNOCKDOWN)  //for radial inclusion
             );
         IPSafeAddItemProperty(oSkin,
-            ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_KNOCKDOWN)
+            PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_KNOCKDOWN)
             );
     }
 
@@ -70,10 +70,10 @@ void ApplyBonuses(object oPC, object oWeapon)
     if(iClassLevel > 5 && !GetHasFeat(FEAT_IMPROVED_DISARM))    //improved disarm (whip)
     {
         IPSafeAddItemProperty(oSkin,
-                ItemPropertyBonusFeat(IP_CONST_FEAT_DISARM) //in case the whip doesn't have it
+                PRCItemPropertyBonusFeat(IP_CONST_FEAT_DISARM) //in case the whip doesn't have it
                 );
         IPSafeAddItemProperty(oSkin,
-                ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_DISARM)
+                PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_DISARM)
                 );
     }
 

@@ -264,27 +264,27 @@ void ElementalFamiliar2(string iSize, string iType)
 
     }
 
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oHide);
+    AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oHide);
 
     int Arcanlvl = GetCasterLvl(TYPE_ARCANE);
 
 
    if (Arcanlvl>26)
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicSpecCreature),oHide);
+       AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicSpecCreature),oHide);
 
     if (Arcanlvl>21)
-       AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oHide);
+       AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oHide);
 
     if (Arcanlvl>11)
     {
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oHide);
+      AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oHide);
       ApplyEffectToObject(DURATION_TYPE_INSTANT,SupernaturalEffect(EffectSpellResistanceIncrease(Arcanlvl+5)),oEle);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_BarbEndurance),oHide);
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oHide);
+      AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_BarbEndurance),oHide);
+      AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oHide);
     }
     else  if (Arcanlvl>8)
     {
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oHide);
+      AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oHide);
       ApplyEffectToObject(DURATION_TYPE_INSTANT,SupernaturalEffect(EffectSpellResistanceIncrease(Arcanlvl+5)),oEle);
     }
 

@@ -15,7 +15,7 @@ void main()
     if(!GetHasFeat(FEAT_ACP_FEAT, oPC)
         && GetPRCSwitch(PRC_ACP_MANUAL))
     {
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_ACP_FEAT), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_ACP_FEAT), 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         return;
     }
     else if(((GetPRCSwitch(PRC_ACP_AUTOMATIC) && GetIsPC(oPC))

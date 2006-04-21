@@ -353,7 +353,7 @@ void AddSpellUse(object oPC, int nSpellbookID, int nClass)
     int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nSpellbookID));
     if(!GetHasFeat(nFeatID, oPC))
     {
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(nIPFeatID), oSkin);
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nIPFeatID), oSkin);
         SetLocalInt(oSkin, "NewSpellbookTemp_"+IntToString(nIPFeatID), TRUE);
 DoDebug("SetLocalInt(oSkin, NewSpellbookTemp_"+IntToString(nIPFeatID)+", TRUE);");
     }

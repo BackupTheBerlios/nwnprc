@@ -268,7 +268,7 @@ void DoEffect(object oConstruct, effect eEffect)
 // a convenience so I needn't typ(e/o) it several times
 void DoFeat(object oHide, int nIPFeatID)
 {
-    itemproperty ipFeat = ItemPropertyBonusFeat(nIPFeatID);
+    itemproperty ipFeat = PRCItemPropertyBonusFeat(nIPFeatID);
     AddItemProperty(DURATION_TYPE_PERMANENT, ipFeat, oHide);
 }
 

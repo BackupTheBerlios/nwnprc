@@ -366,13 +366,13 @@ void main()
                 // Add the power feat(s) to the PC's hide
                 // First power feat
                 int nPowerFeatIP = StringToInt(Get2DACache(sPowerFile, "IPFeatID", nPower));
-                itemproperty ipFeat = ItemPropertyBonusFeat(nPowerFeatIP);
+                itemproperty ipFeat = PRCItemPropertyBonusFeat(nPowerFeatIP);
                 IPSafeAddItemProperty(oSkin, ipFeat);
                 // Second power feat
                 string sPowerFeat2IP = Get2DACache(sPowerFile, "IPFeatID2", nPower);
                 if(sPowerFeat2IP != "")
                 {
-                    ipFeat = ItemPropertyBonusFeat(StringToInt(sPowerFeat2IP));
+                    ipFeat = PRCItemPropertyBonusFeat(StringToInt(sPowerFeat2IP));
                     IPSafeAddItemProperty(oSkin, ipFeat);
                 }
                 // Raise the power count

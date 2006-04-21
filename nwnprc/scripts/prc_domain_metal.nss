@@ -129,8 +129,8 @@ void main()
 		int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
 		int nWFIprop = FeatToIprop(nWeaponFocus);
 		
-		IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-		IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+		IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+		IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 		
 		// Store the weapon feat for later reuse
 		// The reason we use the feat and not the iprop constant is so we can check using GetHasFeat whether to reapply

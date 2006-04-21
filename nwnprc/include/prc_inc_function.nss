@@ -226,7 +226,7 @@ void EvalPRCFeats(object oPC)
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
     {
         //add the old feat to the hide
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_FEAT_PRESTIGE_IMBUE_ARROW), 0.0f,
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_FEAT_PRESTIGE_IMBUE_ARROW), 0.0f,
                               X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 
@@ -256,7 +256,7 @@ void EvalPRCFeats(object oPC)
     // Switch convo feat
     //Now everyone gets it at level 1, but just to be on the safe side
     if(!GetHasFeat(2285, oPC))
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
 
     // Size changes
     int nBiowareSize = GetCreatureSize(oPC);
@@ -288,7 +288,7 @@ void EvalPRCFeats(object oPC)
         !GetHasFeat(FEAT_EPIC_SPELLCASTING_REST, oPC)
        )
     {
-        IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_REST), 0.0f,
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_REST), 0.0f,
                               X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
     // Miscellaneous
@@ -515,7 +515,7 @@ void ScrubPCSkin(object oPC, object oSkin)
         ip = GetNextItemProperty(oSkin);
     }
     if (iCode)
-      AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(381),oSkin);
+      AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(381),oSkin);
 
     // Schedule restoring the unhealable ability damage
     DelayCommand(0.0f, ReApplyUnhealableAbilityDamage(oPC));

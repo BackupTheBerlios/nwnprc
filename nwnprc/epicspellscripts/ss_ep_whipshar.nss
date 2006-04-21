@@ -87,7 +87,7 @@ void main()
         int iCasterLvl = GetTotalCastingLevel(OBJECT_SELF); // Bone - changed.
         int iDuration = iCasterLvl;
         itemproperty ipExoticFeat =
-            ItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_EXOTIC);
+            PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_EXOTIC);
         object oHide = GetPCSkin(oPC);
         object oWeapon = OBJECT_INVALID;
 

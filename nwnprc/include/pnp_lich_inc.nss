@@ -526,7 +526,7 @@ void LevelUpAmulet(object oAmulet,int nLevel)
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oAmulet);
         iprop = ItemPropertyCastSpell(IP_CONST_CASTSPELL_ANIMATE_DEAD_15,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oAmulet);
-        iprop = ItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFOCUSNEC);
+        iprop = PRCItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFOCUSNEC);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oAmulet);
     }
     if (nLevel == 4)

@@ -20,7 +20,7 @@ affects the shield.
 
 The caster makes a grapple check whenever she hits
 with a claw attack, adding to the opponent's roll any
-enhancement bonus from magic pos­sessed by the 
+enhancement bonus from magic possessed by the 
 opponent's armor or shield. If the caster wins, the
 armor or shield is torn away and ruined.
 
@@ -52,5 +52,14 @@ Corruption Cost: 1d6 points of Dexterity damage.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "spinc_common"
+
 void main()
 {
+	//vars
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	
+	
+	

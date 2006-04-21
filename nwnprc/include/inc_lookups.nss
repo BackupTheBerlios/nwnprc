@@ -13,14 +13,22 @@
 //sDestComumn is the column you want returned
 //sVarNameBase is the root of the variables and tag of token
 //nLoopSize is the number of rows per call
-void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn, 
+void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     string sDestColumn, string sVarNameBase, int nLoopSize = 100);
 
-void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase, 
+void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     string sColumnName, string sColumnValue, int nLoopSize = 100);
-    
+
 //this returns the real SpellID of "wrapper" spells cast by psionic or the new spellbooks
 int GetPowerFromSpellID(int nSpellID);
+
+/**
+ * Maps spells.2da rows of the class-specific entries to corresponding cls_psipw_*.2da rows.
+ *
+ * @param nSpellID Spells.2da row to determine cls_psipw_*.2da row for
+ * @return         The mapped value
+ */
+int GetPowerfileIndexFromSpellID(int nSpellID);
 
 //this retuns the featID of the class-specific feat for a spellID
 //useful for psionics GetHasPower function
@@ -54,14 +62,19 @@ void MakeLookupLoopMaster()
     //now the loops
     DelayCommand(1.0, MakeLookupLoop(CLASS_TYPE_PSION,            0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(1.2, MakeLookupLoop(CLASS_TYPE_PSION,            0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_PSION)));
+    DelayCommand(1.3, MakeLookupLoop(CLASS_TYPE_PSION,            0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     DelayCommand(1.4, MakeLookupLoop(CLASS_TYPE_PSYWAR,           0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(1.6, MakeLookupLoop(CLASS_TYPE_PSYWAR,           0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_PSYWAR)));
+    DelayCommand(1.7, MakeLookupLoop(CLASS_TYPE_PSYWAR,           0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     DelayCommand(1.8, MakeLookupLoop(CLASS_TYPE_WILDER,           0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(2.0, MakeLookupLoop(CLASS_TYPE_WILDER,           0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WILDER)));
+    DelayCommand(2.1, MakeLookupLoop(CLASS_TYPE_WILDER,           0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     DelayCommand(2.2, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(2.4, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_FIST_OF_ZUOKEN)));
+    DelayCommand(2.5, MakeLookupLoop(CLASS_TYPE_FIST_OF_ZUOKEN,   0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     DelayCommand(2.6, MakeLookupLoop(CLASS_TYPE_WARMIND,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(2.8, MakeLookupLoop(CLASS_TYPE_WARMIND,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WARMIND)));
+    DelayCommand(2.9, MakeLookupLoop(CLASS_TYPE_WARMIND,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     //add new psionic classes here
     //also add them later too
 
@@ -80,7 +93,7 @@ void MakeLookupLoopMaster()
     DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_BARD,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_SORCERER,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(4.2, MakeLookupLoop(CLASS_TYPE_FAVOURED_SOUL,       0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "RealSpellID", "GetPowerFromSpellID"));
-    
+
     DelayCommand(2.6, MakeLookupLoop(CLASS_TYPE_BLACKGUARD,          0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
     DelayCommand(2.7, MakeLookupLoop(CLASS_TYPE_ANTI_PALADIN,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
     DelayCommand(2.8, MakeLookupLoop(CLASS_TYPE_SOLDIER_OF_LIGHT,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
@@ -95,7 +108,7 @@ void MakeLookupLoopMaster()
     DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_BARD,                0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
     DelayCommand(4.0, MakeLookupLoop(CLASS_TYPE_SORCERER,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
     DelayCommand(4.2, MakeLookupLoop(CLASS_TYPE_FAVOURED_SOUL,       0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellID", "", "GetRowFromSpellID"));
-    
+
     DelayCommand(4.1, MakeSpellbookLevelLoop(CLASS_TYPE_BLACKGUARD,  0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(4.1, MakeSpellbookLevelLoop(CLASS_TYPE_BLACKGUARD,  0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(4.1, MakeSpellbookLevelLoop(CLASS_TYPE_BLACKGUARD,  0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
@@ -167,10 +180,10 @@ void MakeLookupLoopMaster()
     DelayCommand(6.9, MakeSpellbookLevelLoop(CLASS_TYPE_FAVOURED_SOUL,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "6"));
     DelayCommand(7.0, MakeSpellbookLevelLoop(CLASS_TYPE_FAVOURED_SOUL,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "7"));
     DelayCommand(7.1, MakeSpellbookLevelLoop(CLASS_TYPE_FAVOURED_SOUL,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "8"));
-    DelayCommand(7.2, MakeSpellbookLevelLoop(CLASS_TYPE_FAVOURED_SOUL,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));    
+    DelayCommand(7.2, MakeSpellbookLevelLoop(CLASS_TYPE_FAVOURED_SOUL,    0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));
 }
 
-void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase, 
+void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     string sColumnName, string sColumnValue, int nLoopSize = 100)
 {
     string sFile;
@@ -186,8 +199,8 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     {
         sFile = Get2DACache("classes", "FeatsTable", nClass);
         sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-    }    
-    
+    }
+
     //get the token to store it on
     //this is piggybacked into 2da caching
     string sTag = ""+sVarNameBase+"_"+IntToString(nClass)+"_"+sColumnName+"_"+sColumnValue;
@@ -197,13 +210,13 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
         object oChest = GetObjectByTag("Bioware2DACache");
         if(!GetIsObjectValid(oChest))
         {
-            //has to be an object, placeables cant go through the DB    
+            //has to be an object, placeables cant go through the DB
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
              GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
         }
         if(!GetIsObjectValid(oChest))
         {
-            //has to be an object, placeables cant go through the DB    
+            //has to be an object, placeables cant go through the DB
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
                 GetStartingLocation(), FALSE, "Bioware2DACache");
         }
@@ -214,42 +227,43 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     //token exists, if starting new run abort assuming restored from database
     if(nMin == 0
         && array_exists(oWP, sTag))
-    {   
+    {
         DoDebug("MakeSpellbookLevelLoop() restored from database");
         return;
-    }    
-        
+    }
+
     if(nMin == 0)
-        array_create(oWP, sTag);  
-        
+        array_create(oWP, sTag);
+
     if(!GetIsObjectValid(oWP))
     {
         DoDebug("Problem creating token for "+sTag);
         return;
-    }  
-    
-    
+    }
+
+
     int i = nMin;
     for(i=nMin;i<nMin+nLoopSize;i++)
     {
         if(Get2DACache(sFile, sColumnName, i) == sColumnValue
             && Get2DACache(sFile, "ReqFeat", i) == "")
-            array_set_int(oWP, sTag, array_get_size(oWP, sTag), i);    
+            array_set_int(oWP, sTag, array_get_size(oWP, sTag), i);
     }
     if(i<nMax)
         DelayCommand(1.0, MakeSpellbookLevelLoop(nClass, i, nMax, sVarNameBase, sColumnName, sColumnValue, nLoopSize));
-DoDebug("MakeSpellbookLevelLoop("
-    +IntToString(nClass)+", "
-    +IntToString(i)+", "
-    +IntToString(nMax)+", "
-    +sVarNameBase+", "
-    +sColumnName+", "
-    +sColumnValue+", "
-    +IntToString(nLoopSize)+", "
-    +") : sTag = "+sTag);
+
+if(DEBUG) DoDebug("MakeSpellbookLevelLoop("
+                 +IntToString(nClass)+", "
+                 +IntToString(i)+", "
+                 +IntToString(nMax)+", "
+                 +sVarNameBase+", "
+                 +sColumnName+", "
+                 +sColumnValue+", "
+                 +IntToString(nLoopSize)+", "
+                 +") : sTag = "+sTag);
 }
 
-void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn, 
+void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     string sDestColumn, string sVarNameBase, int nLoopSize = 100)
 {
 
@@ -266,7 +280,7 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     {
         sFile = Get2DACache("classes", "FeatsTable", nClass);
         sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-    }    
+    }
     //get the token to store it on
     //this is piggybacked into 2da caching
     string sTag = "PRC_"+sVarNameBase;
@@ -276,13 +290,13 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         object oChest = GetObjectByTag("Bioware2DACache");
         if(!GetIsObjectValid(oChest))
         {
-            //has to be an object, placeables cant go through the DB    
+            //has to be an object, placeables cant go through the DB
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
              GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
         }
         if(!GetIsObjectValid(oChest))
         {
-            //has to be an object, placeables cant go through the DB    
+            //has to be an object, placeables cant go through the DB
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
                 GetStartingLocation(), FALSE, "Bioware2DACache");
         }
@@ -293,11 +307,11 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     //else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
     if(nMin == 0
         && GetLocalInt(oWP, sTag+"_"+IntToString(StringToInt(Get2DACache(sFile, sSourceColumn, nMin+1)))))//+1 cos 0 is always null
-    {   
+    {
         DoDebug("MakeLookupLoop() restored from database");
         return;
-    }    
-        
+    }
+
     //cant short-ciruit it cos it gets confused between classes
     if(!GetIsObjectValid(oWP))
     {
@@ -311,30 +325,31 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         int nSource;
         if(sSourceColumn == "")
             nSource = i;
-        else    
+        else
             nSource = StringToInt(Get2DACache(sFile, sSourceColumn, i));
         int nDest;
         if(sDestColumn == "")
             nDest = i;
-        else    
+        else
             nDest = StringToInt(Get2DACache(sFile, sDestColumn,   i));
-        if(nSource != 0 
+        if(nSource != 0
             && nDest != 0)
-        {   
+        {
             SetLocalInt(oWP, sTag+"_"+IntToString(nSource), nDest);
-        }    
+        }
     }
     if(i<nMax)
         DelayCommand(1.0, MakeLookupLoop(nClass, i, nMax, sSourceColumn, sDestColumn, sVarNameBase, nLoopSize));
-DoDebug("MakeLookupLoop("
-    +IntToString(nClass)+", "
-    +IntToString(i)+", "
-    +IntToString(nMax)+", "
-    +sSourceColumn+", "
-    +sDestColumn+", "
-    +sVarNameBase+", "
-    +IntToString(nLoopSize)+", "
-    +") : sTag = "+sTag);        
+
+if(DEBUG) DoDebug("MakeLookupLoop("
+                 +IntToString(nClass)+", "
+                 +IntToString(i)+", "
+                 +IntToString(nMax)+", "
+                 +sSourceColumn+", "
+                 +sDestColumn+", "
+                 +sVarNameBase+", "
+                 +IntToString(nLoopSize)+", "
+                 +") : sTag = "+sTag);
 }
 
 int GetPowerFromSpellID(int nSpellID)
@@ -344,6 +359,13 @@ int GetPowerFromSpellID(int nSpellID)
     if(nPower == 0)
         nPower = -1;
     return nPower;
+}
+
+int GetPowerfileIndexFromSpellID(int nSpellID)
+{
+    object oWP = GetObjectByTag("PRC_SpellIDToClsPsipw");
+    int nIndex = GetLocalInt(oWP, "PRC_SpellIDToClsPsipw_" + IntToString(nSpellID));
+    return nIndex;
 }
 
 int GetClassFeatFromPower(int nPowerID, int nClass)
@@ -369,3 +391,6 @@ string GetPsiBookFileName(int nClass)
     sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     return sPsiFile;
 }
+
+// Test main
+//void main(){}

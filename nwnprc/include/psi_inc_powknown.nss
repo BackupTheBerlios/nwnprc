@@ -13,13 +13,19 @@
     -- A modifier value to maximum powers known on this list to account for stuff like
        Apopsi, Expanded Knowledge and Psychic Chirurgery that add or remove powers
     -- An array related to powers the knowledge of which is not dependent on character level
-    --- Each array entry specifies the 2da row of a known power's data
+    --- Each array entry specifies the spells.2da row of the known power's class-specific entry
     -- For each character level on which powers have been gained from this list
     --- An array of powers gained on this level
-    ---- Each array entry specifies the 2da row of a known power's data
+    ---- Each array entry specifies the spells.2da row of the known power's class-specific entry
 
     @author Ornedan
     @date   Created - 2006.01.06
+    @date   Modified - 2006.04.21
+            Changed the stored value from cls_psipw_*.2da row to spells.2da row of the
+            class-specific entry because the adding policy to cls_psipw_*.2da means that the rows
+            after the added entry are moved. Which would break compatibility with old characters.
+            On the other hand, if the spells.2da entries are moved, the result would likely be a
+            backwards-compatibility loss anyway.
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -207,7 +213,7 @@ void _RecurseRemoveArray(object oCreature, string sArrayName, string sPowerFile,
     {
         // Set the marker
         string sName = "PRC_PowerFeatRemovalMarker_" + Get2DACache(sPowerFile, "IPFeatID",
-                                                                   persistant_array_get_int(oCreature, sArrayName, nCurIndex)
+                                                                   GetPowerfileIndexFromSpellID(persistant_array_get_int(oCreature, sArrayName, nCurIndex))
                                                                    );
         if(DEBUG) DoDebug("_RecurseRemoveArray(): Recursing through array, marker set:\n" + sName);
 
@@ -249,10 +255,14 @@ void _RemovePowerArray(object oCreature, int nList, int nLevel)
 
 int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent = FALSE, int nLevelToTieTo = -1)
 {
-    string sBase  = _POWER_LIST_NAME_BASE + IntToString(nList);
-    string sArray = sBase;
+    string sBase      = _POWER_LIST_NAME_BASE + IntToString(nList);
+    string sArray     = sBase;
+    string sPowerFile = GetPsiBookFileName(/*PowerListToClassType(*/nList/*)*/);
     string sTestArray;
     int i, j, nSize, bReturn;
+
+    // Get the spells.2da row corresponding to the cls_psipw_*.2da row
+    int nSpells2daRow = StringToInt(Get2DACache(sPowerFile, "SpellID", n2daRow));
 
     // Determine the array name.
     if(bLevelDependent)
@@ -277,7 +287,7 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
         {
             nSize = persistant_array_get_size(oCreature, sTestArray);
             for(j = 0; j < nSize; j++)
-                if(persistant_array_get_int(oCreature, sArray, j) == n2daRow)
+                if(persistant_array_get_int(oCreature, sArray, j) == nSpells2daRow)
                     return FALSE;
         }
     }
@@ -287,7 +297,7 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
     {
         nSize = persistant_array_get_size(oCreature, sTestArray);
         for(j = 0; j < nSize; j++)
-            if(persistant_array_get_int(oCreature, sArray, j) == n2daRow)
+            if(persistant_array_get_int(oCreature, sArray, j) == nSpells2daRow)
                 return FALSE;
     }
 
@@ -297,7 +307,7 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
         persistant_array_create(oCreature, sArray);
 
     // Store the power in the array
-    if(persistant_array_set_int(oCreature, sArray, persistant_array_get_size(oCreature, sArray), n2daRow) != SDL_SUCCESS)
+    if(persistant_array_set_int(oCreature, sArray, persistant_array_get_size(oCreature, sArray), nSpells2daRow) != SDL_SUCCESS)
     {
         if(DEBUG) DoDebug("psi_inc_powknown: AddPowerKnown(): ERROR: Unable to add power to known array\n"
                         + "oCreature = " + DebugObject2Str(oCreature) + "\n"
@@ -305,6 +315,7 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
                         + "n2daRow = " + IntToString(n2daRow) + "\n"
                         + "bLevelDependent = " + BooleanToString(bLevelDependent) + "\n"
                         + "nLevelToTieTo = " + IntToString(nLevelToTieTo) + "\n"
+                        + "nSpells2daRow = " + IntToString(nSpells2daRow) + "\n"
                           );
         return FALSE;
     }
@@ -316,7 +327,6 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
 
     // Give the power's control feats
     object oSkin        = GetPCSkin(oCreature);
-    string sPowerFile   = GetPsiBookFileName(/*PowerListToClassType(*/nList/*)*/);
     string sPowerFeatIP = Get2DACache(sPowerFile, "IPFeatID", n2daRow);
     itemproperty ipFeat = ItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
     IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
@@ -532,6 +542,72 @@ int GetHasPower(int nPower, object oCreature = OBJECT_SELF)
        )
         return TRUE;
     return FALSE;
+}
+
+string DebugListKnownPowers(object oCreature)
+{
+    string sReturn = "Powers known by " + DebugObject2Str(oCreature) + ":\n";
+    int i, j, k, numPowerLists = 6;
+    int nPowerList, nSize;
+    string sTemp, sArray, sArrayBase, sPowerFile;
+    // Loop over all power lists
+    for(i = 1; i <= numPowerLists; i++)
+    {
+        // Some padding
+        sReturn += "  ";
+        // Get the power list for this loop
+        switch(i)
+        {
+            case 1: nPowerList = POWER_LIST_PSION;          sReturn += "Psion";           break;
+            case 2: nPowerList = POWER_LIST_WILDER;         sReturn += "Wilder";          break;
+            case 3: nPowerList = POWER_LIST_PSYWAR;         sReturn += "Psychic Warrior"; break;
+            case 4: nPowerList = POWER_LIST_FIST_OF_ZUOKEN; sReturn += "Fist of Zuoken";  break;
+            case 5: nPowerList = POWER_LIST_WARMIND;        sReturn += "Warmind";         break;
+
+            // This should always be last
+            case 6: nPowerList = POWER_LIST_MISC;           sReturn += "Misceallenous";   break;
+        }
+        sReturn += " powers known:\n";
+
+        // Determine if the character has any powers from this list
+        sPowerFile = GetPsiBookFileName(nPowerList);
+        sArrayBase = _POWER_LIST_NAME_BASE + IntToString(nPowerList);
+
+        // Loop over levels
+        for(j = 1; j <= GetHitDice(oCreature); j++)
+        {
+            sArray = sArrayBase + _POWER_LIST_LEVEL_ARRAY + IntToString(j);
+            if(persistant_array_exists(oCreature, sArray))
+            {
+                sReturn += "   Gained on level " + IntToString(j) + ":\n";
+                nSize = persistant_array_get_size(oCreature, sArray);
+                for(k = 0; k < nSize; k++)
+                    sReturn += "    " + GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name",
+                                                                                  GetPowerfileIndexFromSpellID(persistant_array_get_int(oCreature, sArray, k))
+                                                                                  )
+                                                                      )
+                                                          )
+                            + "\n";
+            }
+        }
+
+        // Non-leveldependent powers
+        sArray = sArrayBase + _POWER_LIST_GENERAL_ARRAY;
+        if(persistant_array_exists(oCreature, sArray))
+        {
+            sReturn += "   Non-leveldependent:\n";
+            nSize = persistant_array_get_size(oCreature, sArray);
+            for(k = 0; k < nSize; k++)
+                sReturn += "    " + GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name",
+                                                                                  GetPowerfileIndexFromSpellID(persistant_array_get_int(oCreature, sArray, k))
+                                                                                  )
+                                                                      )
+                                                          )
+                        + "\n";
+        }
+    }
+
+    return sReturn;
 }
 
 /* Probably unnecessary

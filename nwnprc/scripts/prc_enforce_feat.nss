@@ -969,11 +969,24 @@ int LeadershipHD(object oPC)
         FloatingTextStringOnCreature("You must take "+IntToString(6-GetECL(oPC))+" more levels before you can select Leadership.", oPC, FALSE);
         return FALSE;
     }
-    if(GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) && GetHasFeat(FEAT_LEADERSHIP, oPC))
+    if(GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC))
     {
-        FloatingTextStringOnCreature("A thrallherd cannot take the Leadership feat.", oPC, FALSE);
-        return FALSE;    
-    }
+        if(GetHasFeat(FEAT_LEADERSHIP, oPC))
+        {
+            FloatingTextStringOnCreature("A thrallherd cannot take the Leadership feat.", oPC, FALSE);
+            return FALSE;    
+        }
+        if(GetHasFeat(FEAT_EPIC_LEADERSHIP, oPC))
+        {
+            FloatingTextStringOnCreature("A thrallherd cannot take the Epic Leadership feat.", oPC, FALSE);
+            return FALSE;    
+        }
+        if(GetHasFeat(FEAT_LEGENDARY_COMMANDER, oPC))
+        {
+            FloatingTextStringOnCreature("A thrallherd cannot take the Legendary Commander feat.", oPC, FALSE);
+            return FALSE;    
+        }
+    }   
     return TRUE;
 }
 

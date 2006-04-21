@@ -179,9 +179,29 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
         DelayCommand(1.0, AssignCommand(oCohort, SetIsDestroyable(FALSE, TRUE, TRUE)));
         DelayCommand(1.0, AssignCommand(oCohort, SetLootable(oCohort, TRUE)));
         //set its maximum level lag
-        //if its not a bonus cohort, apply a 2-level lag
-        if(GetCurrentCohortCount(oPC) > GetPRCSwitch(PRC_BONUS_COHORTS))
+        if(GetCurrentCohortCount(oPC) <= GetPRCSwitch(PRC_BONUS_COHORTS))
+        {
+            //bonus cohort, no cap
+        }
+        else if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
+            && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC)
+            && GetCurrentCohortCount(oPC) <= GetPRCSwitch(PRC_BONUS_COHORTS)+1)
+        {
+            //thrallherd with switch, 1 level lag
+            SetLocalInt(oCohort, "CohortLevelLag", 1);
+        }
+        else if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
+            && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) >= 10
+            && GetCurrentCohortCount(oPC) <= GetPRCSwitch(PRC_BONUS_COHORTS)+2)
+        {
+            //twofold master with switch, 2 level lag
             SetLocalInt(oCohort, "CohortLevelLag", 2);
+        }
+        else
+        {
+            //other cohort have a 2 level lag
+            SetLocalInt(oCohort, "CohortLevelLag", 2);
+        }
 
         //if it was a premade one, give it a random name
         //randomize its appearance using DoDisguise
@@ -460,10 +480,33 @@ int GetCohortMaxLevel(int nLeadership, object oPC)
         case 69: nLevel = 40; break;
         case 70: nLevel = 40; break;
     }
-    //if its not a bonus cohort, apply a 2-level lag
-    if(GetCurrentCohortCount(oPC) >= GetPRCSwitch(PRC_BONUS_COHORTS)
-        &&  nLevel > (GetECL(oPC)-2))
-        nLevel = GetECL(oPC)-2;
+    //apply a level lag
+    if(GetCurrentCohortCount(oPC) <= GetPRCSwitch(PRC_BONUS_COHORTS))
+    {
+        //bonus cohort, no cap
+    }
+    else if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
+        && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC)
+        && GetCurrentCohortCount(oPC) <= GetPRCSwitch(PRC_BONUS_COHORTS)+1)
+    {
+        //thrallherd with switch, 1 level lag
+        if(nLevel > GetECL(oPC)-1)
+            nLevel = GetECL(oPC)-1;
+    }
+    else if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
+        && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) >= 10
+        && GetCurrentCohortCount(oPC) <= GetPRCSwitch(PRC_BONUS_COHORTS)+2)
+    {
+        //twofold master with switch, 2 level lag
+        if(nLevel > GetECL(oPC)-2)
+            nLevel = GetECL(oPC)-2;
+    }
+    else
+    {
+        //other cohort have a 2 level lag
+        if(nLevel > GetECL(oPC)-2)
+            nLevel = GetECL(oPC)-2;
+    }
     //really, leadership should be capped at 25 / 17HD
     //but this is a sanity check
     if(nLevel > 20
@@ -519,10 +562,20 @@ int GetMaximumCohortCount(object oPC)
     if(GetHasFeat(FEAT_LEGENDARY_COMMANDER, oPC)
         && !GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC))
         nCount++;
+    //hathran class    
     if(GetHasFeat(FEAT_HATH_COHORT, oPC))
         nCount++;
+    //orc warlord with switch    
     if(GetHasFeat(FEAT_GATHER_HORDE_I, oPC)
         && GetPRCSwitch(PRC_ORC_WARLORD_COHORT))
+        nCount++;    
+    //thrallherd with switch    
+    if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
+        && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC))
+        nCount++;  
+    //twofold masteer    
+    if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
+        && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) >= 10)
         nCount++;
     nCount += GetPRCSwitch(PRC_BONUS_COHORTS);
     return nCount;

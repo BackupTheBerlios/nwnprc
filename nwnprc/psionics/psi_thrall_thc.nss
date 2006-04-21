@@ -72,6 +72,11 @@ void CleanCopy(object oImage)
 
 void main()
 {
+    if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP))
+    {   
+        FloatingTextStringOnCreature("Please select your thrall via the cohort system.", OBJECT_SELF, FALSE);
+        return;
+    }
     int nMax = GetMaxHenchmen();
     
     int i = 1;
@@ -79,19 +84,19 @@ void main()
     
     if (GetTag(oHench) == "psi_thrall_thrall")
     {
-    	FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
-    	return;
+        FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
+        return;
     }
     
     while (GetIsObjectValid(oHench))
     {
-    	i += 1;
-    	oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
+        i += 1;
+        oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
         if (GetTag(oHench) == "psi_thrall_thrall")
-	{
-	    	FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
-	    	return;
-    	}
+    {
+            FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
+            return;
+        }
     }
     
     if (i >= nMax) SetMaxHenchmen(i+1);
@@ -144,11 +149,11 @@ void main()
    int n;
    for(n=1;n<nLevel;n++)
    {
-   	LevelUpHenchman(oCreature, CLASS_TYPE_CLERIC, TRUE);
+    LevelUpHenchman(oCreature, CLASS_TYPE_CLERIC, TRUE);
    }   
    for(n=1;n<nLevel;n++)
    {
-   	GenerateBossTreasure(oCreature);
+    GenerateBossTreasure(oCreature);
    }    
    
    CleanCopy(oCreature);

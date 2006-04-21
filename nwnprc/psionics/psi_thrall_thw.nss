@@ -54,8 +54,7 @@ void CleanCopy(object oImage)
      {
         SetDroppableFlag(oItem, FALSE);
         SetItemCursedFlag(oItem, TRUE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_10_PERCENT), oItem);
-        SetIdentified(oItem, TRUE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
         oItem = GetNextItemInInventory(oImage);
      }
      int i;
@@ -63,8 +62,7 @@ void CleanCopy(object oImage)
      {
         oItem = GetItemInSlot(i, oImage);
         SetDroppableFlag(oItem, FALSE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_10_PERCENT), oItem);
-        SetIdentified(oItem, TRUE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyWeightReduction(IP_CONST_REDUCEDWEIGHT_80_PERCENT), oItem);
         SetItemCursedFlag(oItem, TRUE);
      }
      TakeGoldFromCreature(GetGold(oImage), oImage, TRUE);
@@ -72,6 +70,12 @@ void CleanCopy(object oImage)
 
 void main()
 {
+    if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP))
+    {   
+        FloatingTextStringOnCreature("Please select your thrall via the cohort system.", OBJECT_SELF, FALSE);
+        return;
+    }
+
     int nMax = GetMaxHenchmen();
     
     int i = 1;
@@ -79,19 +83,19 @@ void main()
     
     if (GetTag(oHench) == "psi_thrall_thrall")
     {
-    	FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
-    	return;
+        FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
+        return;
     }
     
     while (GetIsObjectValid(oHench))
     {
-    	i += 1;
-    	oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
+        i += 1;
+        oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
         if (GetTag(oHench) == "psi_thrall_thrall")
-	{
-	    	FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
-	    	return;
-    	}
+    {
+            FloatingTextStringOnCreature("You already have a thrall", OBJECT_SELF, FALSE);
+            return;
+        }
     }
     
     if (i >= nMax) SetMaxHenchmen(i+1);
@@ -99,11 +103,8 @@ void main()
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     
    int nHD = GetHitDice(OBJECT_SELF);
-   if (DEBUG) FloatingTextStringOnCreature("HD: " + IntToString(nHD), OBJECT_SELF, FALSE);
    int nClass = GetLevelByClass(CLASS_TYPE_THRALLHERD, OBJECT_SELF);
-   if (DEBUG) FloatingTextStringOnCreature("Thrallherd Level: " + IntToString(nClass), OBJECT_SELF, FALSE);
    int nCha = GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
-   if (DEBUG) FloatingTextStringOnCreature("Cha Modifier: " + IntToString(nCha), OBJECT_SELF, FALSE);
 
    int nLead = nHD + nClass + nCha;
    int nLevel;
@@ -134,28 +135,27 @@ void main()
    if (nLead == 24) nLevel = 17;
    if (nLead >= 25) nLevel = 17;
    
-   if (DEBUG) FloatingTextStringOnCreature("Leadship Score: " + IntToString(nLead), OBJECT_SELF, FALSE);
-   if (DEBUG) FloatingTextStringOnCreature("Spell ID: " + IntToString(GetSpellId()), OBJECT_SELF, FALSE);
+   FloatingTextStringOnCreature("Leadship Score: " + IntToString(nLead), OBJECT_SELF, FALSE);
    
    object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_wiz", GetSpellTargetLocation(), FALSE, "psi_thrall_thrall");
    AddHenchman(OBJECT_SELF, oCreature);
-   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oCreature));
+   ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
    
    int n;
    for(n=1;n<nLevel;n++)
    {
-   	LevelUpHenchman(oCreature, CLASS_TYPE_INVALID, TRUE);
+    LevelUpHenchman(oCreature, CLASS_TYPE_INVALID, TRUE);
    }   
    for(n=1;n<nLevel;n++)
    {
-   	GenerateBossTreasure(oCreature);
+    GenerateBossTreasure(oCreature);
    }    
-   
-   CleanCopy(oCreature);
    
    EquipWeapon(oCreature);
    EquipArmor(oCreature);
    EquipMisc(oCreature);
+   
+   CleanCopy(oCreature);
    
    SetMaxHenchmen(nMax);
 }

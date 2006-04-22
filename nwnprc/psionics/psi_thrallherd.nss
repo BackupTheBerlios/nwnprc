@@ -25,7 +25,7 @@ void main()
             )
         {
             if(DEBUG) DoDebug("psi_thrallherd: Adding Psionic Charm");
-            AddPowerKnown(oPC, nClass, 21004, TRUE, GetHitDice(oPC));
+            AddPowerKnown(oPC, nClass, 11, TRUE, GetHitDice(oPC));
             SetKnownPowersModifier(oPC, nClass, ++nPowerTotal);
             SetPersistantLocalInt(oPC, "PRC_Thrallherd_CharmGained", TRUE);
         }
@@ -35,7 +35,7 @@ void main()
             )
         {
             if(DEBUG) DoDebug("psi_thrallherd: Adding Psionic Dominate");
-            AddPowerKnown(oPC, nClass, 21163, TRUE, GetHitDice(oPC));
+            AddPowerKnown(oPC, nClass, 164, TRUE, GetHitDice(oPC));
             SetKnownPowersModifier(oPC, nClass, ++nPowerTotal);
             SetPersistantLocalInt(oPC, "PRC_Thrallherd_DominateGained", TRUE);
         }

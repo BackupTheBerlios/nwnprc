@@ -669,11 +669,11 @@ void main()
             else if (nChoice == 1)
             {
                 //Crafting recipes
-                object oStore = GetObjectByTag("prc_wiz_recipe");
+                object oStore = GetObjectByTag("prc_recipe");
                 if(!GetIsObjectValid(oStore))
                 {
                     location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_wiz_recipe", lLimbo);
+                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_recipe", lLimbo);
                 }
                 DelayCommand(1.0, OpenStore(oStore, oPC));
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
@@ -693,6 +693,7 @@ void main()
             else if (nChoice == 3)
             {
                 //Spell scrolls
+                //NOTE: This is the store within the epic spell lab at the moment
                 object oStore = GetObjectByTag("prc_wiz_store");
                 if(!GetIsObjectValid(oStore))
                 {

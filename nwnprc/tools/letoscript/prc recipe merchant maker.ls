@@ -5,7 +5,7 @@ $i = 0;
 $max = 1000;
 $x = 0;
 $y = 0;
-
+$count = 0;
 add Name => /StoreList/[2]/ItemList, Type=>gffList;
 /ResRef = $name;
 /LocName = $name;
@@ -31,6 +31,8 @@ for($i=0; $i<=$max; $i++)
 			$x = 0;
 			$y++;
 		}
+		/StoreList/[2]/ItemList/[_].id = $count;
+		$count++;
 	}
 	print "$resref $x $y /StoreList/[2]/ItemList/[_]/InventoryRes /StoreList/[2]/ItemList/[_]/Infinite /StoreList/[2]/ItemList/[_]/Repos_PosX /StoreList/[2]/ItemList/[_]/Repos_Posy \n";
 }

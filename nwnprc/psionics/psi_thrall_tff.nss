@@ -74,7 +74,7 @@ void main()
    int nHD = GetHitDice(OBJECT_SELF);
    int nLevel = nHD - 2;
    
-   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_fight", GetSpellTargetLocation(), FALSE, "psi_thrall_twofold");
+   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_fgt", GetSpellTargetLocation(), FALSE, "psi_thrall_twofold");
    AddHenchman(OBJECT_SELF, oCreature);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oCreature));
    
@@ -89,9 +89,9 @@ void main()
    }    
    
    CleanCopy(oCreature);
-   
-   EquipWeapon(oCreature);
-   EquipArmor(oCreature);
+   AssignCommand(oCreature, ClearAllActions());
+   AssignCommand(oCreature, ActionEquipMostDamagingMelee());
+   AssignCommand(oCreature, ActionEquipMostEffectiveArmor());
    EquipMisc(oCreature);
    
    SetMaxHenchmen(nMax);

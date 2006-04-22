@@ -142,7 +142,7 @@ void main()
    if (DEBUG) FloatingTextStringOnCreature("Leadship Score: " + IntToString(nLead), OBJECT_SELF, FALSE);
    if (DEBUG) FloatingTextStringOnCreature("Spell ID: " + IntToString(GetSpellId()), OBJECT_SELF, FALSE);
    
-   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_rogue", GetSpellTargetLocation(), FALSE, "psi_thrall_thrall");
+   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_rog", GetSpellTargetLocation(), FALSE, "psi_thrall_thrall");
    AddHenchman(OBJECT_SELF, oCreature);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oCreature));
    
@@ -157,9 +157,9 @@ void main()
    }    
    
    CleanCopy(oCreature);
-   
-   EquipWeapon(oCreature);
-   EquipArmor(oCreature);
+   AssignCommand(oCreature, ClearAllActions());
+   AssignCommand(oCreature, ActionEquipMostDamagingMelee());
+   AssignCommand(oCreature, ActionEquipMostEffectiveArmor());
    EquipMisc(oCreature);
    
    SetMaxHenchmen(nMax);

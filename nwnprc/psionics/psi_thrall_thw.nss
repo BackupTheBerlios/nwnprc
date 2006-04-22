@@ -137,7 +137,7 @@ void main()
    
    FloatingTextStringOnCreature("Leadship Score: " + IntToString(nLead), OBJECT_SELF, FALSE);
    
-   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_wiz", GetSpellTargetLocation(), FALSE, "psi_thrall_thrall");
+   object oCreature = CreateObject(OBJECT_TYPE_CREATURE, "psi_thrall_sorc", GetSpellTargetLocation(), FALSE, "psi_thrall_thrall");
    AddHenchman(OBJECT_SELF, oCreature);
    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetSpellTargetLocation());
    
@@ -151,11 +151,11 @@ void main()
     GenerateBossTreasure(oCreature);
    }    
    
-   EquipWeapon(oCreature);
-   EquipArmor(oCreature);
-   EquipMisc(oCreature);
-   
    CleanCopy(oCreature);
-   
+   AssignCommand(oCreature, ClearAllActions());
+   AssignCommand(oCreature, ActionEquipMostDamagingRanged());
+   AssignCommand(oCreature, ActionEquipMostEffectiveArmor());
+   EquipMisc(oCreature);
+      
    SetMaxHenchmen(nMax);
 }

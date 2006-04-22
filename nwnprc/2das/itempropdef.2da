@@ -93,8 +93,8 @@
 89  16825171 UseLimitationArcaneSpell       ****             0     23              ****         16825175   ****        
 90  16825172 UseLimitationDivineSpell       ****             0     23              ****         16825176   ****        
 91  16825173 UseLimitationSneak             ****             0     28              ****         16825177   ****        
-92  16824992 ItemMetamagic                  IPRP_SPELLS      0     29              ****         16824993   16824994    
-93  16824961 ItemDC                         IPRP_SPELLS      0     28              ****         16824962   16824963    
+92  16824992 ItemMetamagic                  IPRP_SPELLS      0     29              ****         16824993   16824992    
+93  16824961 ItemDC                         IPRP_SPELLS      0     28              ****         16824962   16824961    
 94  ****     bio_reserved                   ****             ****  ****            ****         ****       ****        
 95  ****     bio_reserved                   ****             ****  ****            ****         ****       ****        
 96  ****     bio_reserved                   ****             ****  ****            ****         ****       ****        

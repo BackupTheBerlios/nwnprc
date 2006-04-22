@@ -94,7 +94,7 @@ void main()
 	ApplyTouchAttackDamage(oPC, oTarget, nTouch, nDam, DAMAGE_TYPE_NEGATIVE);
 	
 	//Fort save for paral
-	if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE))
+	if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE) || GetIsImmune(oTarget, IMMUNITY_TYPE_PARALYSIS))
 	{
 		return;
 	}

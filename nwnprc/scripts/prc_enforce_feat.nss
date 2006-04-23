@@ -1066,6 +1066,6 @@ void main()
        int nOldXP = GetXP(oPC);
        int nNewXP = nMinXPForLevel - 1000;
        SetXP(oPC,nNewXP);
-       DelayCommand(1.0, SetXP(oPC,nOldXP));
+       DelayCommand(0.1, SetXP(oPC,nOldXP));
     }
 }

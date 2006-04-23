@@ -328,7 +328,7 @@ void EvalPRCFeats(object oPC)
         || GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)
         || GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC)
         || GetLevelByClass(CLASS_TYPE_WARMIND, oPC))
-        ExecuteScript("psi_powergain", oPC);
+        DelayCommand(1.0, ExecuteScript("psi_powergain", oPC));
     if(GetLevelByClass(CLASS_TYPE_BARD, oPC)
         || GetLevelByClass(CLASS_TYPE_SORCERER, oPC)
         || GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oPC)
@@ -336,7 +336,7 @@ void EvalPRCFeats(object oPC)
         || (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC)
             && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )
-        ExecuteScript("prc_spellgain", oPC);
+        DelayCommand(1.0, ExecuteScript("prc_spellgain", oPC));
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.

@@ -404,7 +404,7 @@ void RegisterAsCohort(object oPC)
 int GetCohortMaxLevel(int nLeadership, object oPC)
 {
     //if its a bonus cohort, use the players ECL
-    if(GetCurrentCohortCount(oPC) >= GetPRCSwitch(PRC_BONUS_COHORTS))
+    if(GetCurrentCohortCount(oPC) <= GetPRCSwitch(PRC_BONUS_COHORTS))
         return GetECL(oPC);
     int nLevel;
     switch(nLeadership)
@@ -477,7 +477,7 @@ int GetCohortMaxLevel(int nLeadership, object oPC)
         case 66: nLevel = 38; break;
         case 67: nLevel = 39; break;
         case 68: nLevel = 39; break;
-        case 69: nLevel = 40; break;
+        case 69: nLevel = 40; break;    
         case 70: nLevel = 40; break;
     }
     //apply a level lag

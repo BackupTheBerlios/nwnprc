@@ -299,8 +299,8 @@ void EvalPRCFeats(object oPC)
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
     {
-        if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)) == BASE_ITEM_SLING)
-            IPSafeAddItemProperty(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), 
+        if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_SLING)
+            IPSafeAddItemProperty(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC), 
                 ItemPropertyMaxRangeStrengthMod(20),
                 999999.9);
     }       

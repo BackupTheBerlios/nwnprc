@@ -82,7 +82,11 @@ ActionDoCommand(SetAllAoEInts(SPELL_EVARDS_BLACK_TENTACLES,OBJECT_SELF, GetSpell
         {
             //now being grappled
             AssignCommand(oTarget, ClearAllActions());
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0);
+            effect eHold = EffectEntangle();
+            effect eEntangle = EffectVisualEffect(VFX_DUR_ENTANGLE);
+            effect eLink = EffectLinkEffects(eHold, eEntangle);
+            //eLink = EffectKnockdown();
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
             SetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF),
                 GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF))+1);
             DelayCommand(6.1,

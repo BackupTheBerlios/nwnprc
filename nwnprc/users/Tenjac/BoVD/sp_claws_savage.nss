@@ -56,4 +56,113 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+void GetClawWeapon (object oCreature, string sResRef, int nInventorySlot, float fDuration);
+
 #include "spinc_common"
+
+void main()
+{
+	//Spellhook
+	if (!X2PreSpellCastCode()) return;
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	//define vars
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	object oLClaw, oRClaw;
+	int nCasterLvl = PRCGetCasterLevel();
+	int nClawSize = PRCGetCreatureSize(oTarget);
+	int nBaseDamage;
+	float fDuration = 600.0f * nCasterLvl;
+	
+		
+	// Determine base damage
+	switch(nClawSize)
+	{
+		case 0: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d3; break;
+		case 1: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d4; break;
+		case 2: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d6; break;
+		case 3: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d8; break;
+		case 4: nBaseDamage = IP_CONST_MONSTERDAMAGE_2d6; break;
+		case 5: nBaseDamage = IP_CONST_MONSTERDAMAGE_3d6; break;
+		case 6: nBaseDamage = IP_CONST_MONSTERDAMAGE_4d6; break;
+		case 7: nBaseDamage = IP_CONST_MONSTERDAMAGE_6d6; break;
+	}
+	
+	//Check for existing claws, if so, nBaseDamage +=2
+	if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget)))
+	{		
+		nBaseDamage += 2;
+	}
+	
+	// Get the creature weapon
+	oLClaw = GetClawWeapon(oPC, "PRC_UNARMED_SP", INVENTORY_SLOT_CWEAPON_L, fDuration);	
+	oRClaw = GetClawWeapon(oPC, "PRC_UNARMED_SP", INVENTORY_SLOT_CWEAPON_R, fDuration);
+	
+	// Catch exceptions here
+	if (nClawSize < 0) nBaseDamage = IP_CONST_MONSTERDAMAGE_1d3;
+	else if (nClawSize > 7) nBaseDamage = IP_CONST_MONSTERDAMAGE_6d6;
+		
+	// Add the base damage
+	AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyMonsterDamage(nBaseDamage), oLClaw, fDuration);
+	AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyMonsterDamage(nBaseDamage), oRClaw, fDuration);
+	
+	//Add Enhancement Bonus
+	IPSafeAddItemProperty(oLClaw, ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+	IPSafeAddItemProperty(oRClaw, ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+
+void GetClawWeapon (object oCreature, string sResRef, int nInventorySlot, float fDuration)
+{
+	int bCreatedWeapon = FALSE;
+	object oCWeapon = GetItemInSlot(nInventorySlot, oCreature);
+	
+	RemoveUnarmedAttackEffects(oCreature);
+	// Make sure they can actually equip them
+	UnarmedFeats(oCreature);
+	
+	// Determine if a creature weapon of the proper type already exists in the slot
+	if(!GetIsObjectValid(oCWeapon)                                       ||
+	GetStringUpperCase(GetTag(oCWeapon)) != GetStringUpperCase(sResRef)) // Hack: The resref's and tags of the PRC creature weapons are the same
+	{
+		if (GetHasItem(oCreature, sResRef))
+		{
+			oCWeapon = GetItemPossessedBy(oCreature, sResRef);
+			SetIdentified(oCWeapon, TRUE);
+			//AssignCommand(oCreature, ActionEquipItem(oCWeapon, INVENTORY_SLOT_CWEAPON_L));
+			ForceEquip(oCreature, oCWeapon, nInventorySlot);
+		}
+		else
+		{			
+			oCWeapon = CreateItemOnObject(sResRef, oCreature);
+			SetIdentified(oCWeapon, TRUE);
+			//AssignCommand(oCreature, ActionEquipItem(oCWeapon, INVENTORY_SLOT_CWEAPON_L));
+			ForceEquip(oCreature, oCWeapon, nInventorySlot);
+			bCreatedWeapon = TRUE;
+		}
+	}
+		
+	// Clean up the mess of extra fists made on taking first level.
+	DelayCommand(6.0f, LocalCleanExtraFists(oCreature));
+	
+	// Weapon finesse or intuitive attack?
+	SetLocalInt(oCreature, "UsingCreature", TRUE);
+	ExecuteScript("prc_intuiatk", oCreature);
+	DelayCommand(1.0f, DeleteLocalInt(oCreature, "UsingCreature"));
+	
+	// Add OnHitCast: Unique if necessary
+	if(GetHasFeat(FEAT_REND, oCreature))
+	IPSafeAddItemProperty(oCWeapon, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+	
+	// This adds creature weapon finesse
+	ApplyUnarmedAttackEffects(oCreature);
+	
+	// Destroy the weapon if it was created by this function
+	if(bCreatedWeapon)
+	DestroyObject(oCWeapon, (fDuration + 6.0));
+	
+	return oCWeapon;
+}

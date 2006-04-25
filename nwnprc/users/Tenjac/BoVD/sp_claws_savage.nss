@@ -74,8 +74,20 @@ void main()
 	int nClawSize = PRCGetCreatureSize(oTarget);
 	int nBaseDamage;
 	float fDuration = 600.0f * nCasterLvl;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nBonus = 2;
 	
-		
+	//eval metamagic
+	if (nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDuration = (fDuration * 2);
+	}
+	
+	if (nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nBonus = (nBonus * 1.5);
+	}
+			
 	// Determine base damage
 	switch(nClawSize)
 	{
@@ -92,7 +104,7 @@ void main()
 	//Check for existing claws, if so, nBaseDamage +=2
 	if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTarget)))
 	{		
-		nBaseDamage += 2;
+		nBaseDamage += nBonus;
 	}
 	
 	// Get the creature weapon
@@ -108,8 +120,8 @@ void main()
 	AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyMonsterDamage(nBaseDamage), oRClaw, fDuration);
 	
 	//Add Enhancement Bonus
-	IPSafeAddItemProperty(oLClaw, ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
-	IPSafeAddItemProperty(oRClaw, ItemPropertyEnhancementBonus(2), fDuration, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+	IPSafeAddItemProperty(oLClaw, ItemPropertyEnhancementBonus(nBonus), fDuration, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+	IPSafeAddItemProperty(oRClaw, ItemPropertyEnhancementBonus(nBonus), fDuration, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
 	
 	SPEvilShift(oPC);
 	SPSetSchool();

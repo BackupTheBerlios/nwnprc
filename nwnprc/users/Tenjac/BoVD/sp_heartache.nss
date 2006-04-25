@@ -38,7 +38,9 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
-		
+	float fDur = 6.0f;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_HEARTACHE, oPC);
 	
 	//Spell Resistance
@@ -47,10 +49,16 @@ void main()
 		//Save
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 		{
+			//eval metamagic
+			if (nMetaMagic == METAMAGIC_EXTEND)
+			{
+				fDur = (fDur * 2);
+			}			
+			
 			effect ePar = EffectCutsceneParalyze();
 			effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_GLOW_LIGHT_BLUE)), ePar);
 			
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0f);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur);
 		}
 	}
 	

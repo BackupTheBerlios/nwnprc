@@ -35,10 +35,23 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oSkin = GetPCSkin(oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = 60.0f * nCasterLvl;
+	int nBonus = 4;
+	
+	//eval metamagic
+	if (nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur = (fDur * 2);
+	}
+	
+	if (nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nBonus = (nBonus * 1.5);
+	}
 	
 	itemproperty ipRace = ITEM_PROPERTY_BONUS_FEAT(FEAT_RACIAL_OUTSIDER);
-	itemproperty ipCha = ITEM_PROPERTY_ABILITY_BONUS(ABILITY_CHARISMA, 4);
+	itemproperty ipCha = ITEM_PROPERTY_ABILITY_BONUS(ABILITY_CHARISMA, nBonus);
 	
 	AddItemProperty(DURATION_TYPE_TEMPORARY, ipCha, oSkin, fDur);
 	IPSafeAddItemProperty(oSkin, ipRace, fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE, TRUE);

@@ -16346,9 +16346,13 @@ Special Abilities:
 - Darkvision: Brownies are able to see in the dark.
 - Skill Bonus (Craft Weapon): +2 racial bonus to Craft Weapon checks.
 - Skill Bonus (Craft Armor): +2 racial bonus to Craft Armor checks.
+- Skill Bonus (Craft Trap): +2 racial bonus to Craft Trap checks.
 - Skill Bonus (Listen): +2 racial bonus to Listen checks.
 - Skill Bonus (Spot): +2 racial bonus to Spot checks.
-- Keen Senses: Brownies make active Search checks automatically and with no movement penalties.
+- Uncanny Dodge: Brownies retains his Dex bonus to AC, even if caught flat-footed or attacked by a hidden or invisible creature. 
+- Evasion: Whenever a Reflex save is allowed for half damage, Brownies instead takes no damage if they succeed at the save. 
+- Hide in Plain Sight: Brownies are able to use the Hide skill even while being observed.
+- Spell-Like Abilities: 1/day - Confusion. Caster level 7th plus character level. The DC is Charisma-based.
 - Fey: Brownies are considered Fey for the purpose of spells.</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
@@ -16747,6 +16751,11 @@ Use: Selected.</entry>
   <entry id="50208" lang="en" sex="m">Type of Feat: Racial
 Prerequisite: Race-Specific.
 Specifics: The creature receives +8 racial bonus to Jump checks.
+Use: Automatic.</entry>
+  <entry id="50209" lang="en" sex="m">Skill Affinity (Craft Trap)</entry>
+  <entry id="50210" lang="en" sex="m">Type of Feat: Racial
+Prerequisite: Race-Specific.
+Specifics: The creature receives +2 racial bonus to Craft Trap checks.
 Use: Automatic.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain

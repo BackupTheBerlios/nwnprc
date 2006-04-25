@@ -3,16 +3,17 @@
      FeatLabel           FeatIndex 
 0    Evasion             206
 1    UncanyDodge         195
-2    CalmAnimals         ****
+2    HideInPlainSight    433 
+3    CalmAnimals         ****
 4    DancingLights       ****
 5    Daylight            ****
 6    DimensionDoor       ****
 7    ProtectionFromEvil  ****
 8    Ventriloquism       ****
-9    KeenSenses          240 
-10   SkillAffinityListen 237
-11   SkillAffinitySpot   239
-12   SkillAff_CrftArm    4757
-13   SkillAff_CrftWeap   4758  
+9    SkillAffinityListen 237
+10   SkillAffinitySpot   239
+11   SkillAff_CrftArm    4757
+12   SkillAff_CrftWeap   4758  
+13   SkillAff_CrftTrap   4517  
 14   Race_Fey            4718      
 15   FEAT_PIXIE_CONFUSE  4663    

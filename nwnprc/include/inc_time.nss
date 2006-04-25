@@ -7,6 +7,16 @@
     
     This is disabled unless the switch PRC_PLAYER_TIME is true
 
+    Also in this include is a time struct and various functions for expressing time
+    As part of this, there is some custom tokens that can be setup
+    //82001         part of day
+    //82002         date
+    //82003         month
+    //82004         year
+    //82005         hour
+    //82006         minutes
+    //82007         seconds
+
     @author Primogenitor
 */
 
@@ -311,3 +321,119 @@ void AdvanceTimeForPlayer(object oPC, float fSeconds)
     SetLocalTime(oPC, "TimeAhead", tTime);
     DelayCommand(0.01, RecalculateTime());
 }
+
+void AssembleTokens(struct time tTime)
+{
+    tTime = TimeCheck(tTime);
+    //setup time tokens
+    //82001         part of day
+    //82002         date
+    //82003         month
+    //82004         year
+    //82005         hour
+    //82006         minutes
+    //82007         seconds   
+    //82008         24 hour clock
+    //82009         timer
+    
+    //this assumes default time settings
+    //Dawn, 06:00
+    //Dusk, 18:00
+    if(tTime.nHour == 6)
+        SetCustomToken(82001, "dawn");
+    else if(tTime.nHour == 18)
+        SetCustomToken(82001, "dusk");
+    else if(tTime.nHour >= 19 || tTime.nHour <= 5)
+        SetCustomToken(82001, "night");
+    else if(tTime.nHour >= 7 && tTime.nHour < 13)
+        SetCustomToken(82001, "morning");
+    else if(tTime.nHour >= 13 &&  tTime.nHour < 18)
+        SetCustomToken(82001, "afternoon");
+
+    string sDay = IntToString(tTime.nDay);
+    if(tTime.nDay == 1
+        //|| tTime.nDay == 11 //this is 11th
+        || tTime.nDay == 21)
+        sDay += "st";
+    else if(tTime.nDay == 2
+        //|| tTime.nDay == 12 //this is 12th
+        || tTime.nDay == 22)
+        sDay += "nd";
+    else if(tTime.nDay == 3
+        //|| tTime.nDay == 13 //this is 13th
+        || tTime.nDay == 23)
+        sDay += "rd";
+    else
+        sDay += "th";
+    SetCustomToken(82002, sDay);
+
+    string sMonth;
+    switch(tTime.nMonth)
+    {
+        case 1:  sMonth = "January";   break;
+        case 2:  sMonth = "Febuary";   break;
+        case 3:  sMonth = "March";     break;
+        case 4:  sMonth = "April";     break;
+        case 5:  sMonth = "May";       break;
+        case 6:  sMonth = "June";      break;
+        case 7:  sMonth = "July";      break;
+        case 8:  sMonth = "August";    break;
+        case 9:  sMonth = "September"; break;
+        case 10: sMonth = "October";   break;
+        case 11: sMonth = "November";  break;
+        case 12: sMonth = "December";  break;
+    }
+    SetCustomToken(82003, sMonth);
+
+    SetCustomToken(82004, IntToString(tTime.nYear));
+    SetCustomToken(82005, IntToString(tTime.nHour));
+    SetCustomToken(82006, IntToString(tTime.nMinute));
+    SetCustomToken(82007, IntToString(tTime.nSecond));
+    SetCustomToken(82008, IntToString(tTime.nHour)+":"+IntToString(tTime.nMinute));
+    
+    string sTimer;
+    if(!tTime.nYear)
+    {
+        if(tTime.nYear > 1)
+            sTimer += IntToString(tTime.nYear)+" years";
+        else    
+            sTimer += IntToString(tTime.nYear)+" year";
+    }    
+    if(!tTime.nMonth)
+    {
+        if(sTimer != "")
+            sTimer += ", ";
+        if(tTime.nMonth > 1)
+            sTimer += IntToString(tTime.nMonth)+" months";
+        else    
+            sTimer += IntToString(tTime.nMonth)+" month";
+    }    
+    if(!tTime.nDay)
+    {
+        if(sTimer != "")
+            sTimer += ", ";
+        if(tTime.nDay > 1)
+            sTimer += IntToString(tTime.nDay)+" days";
+        else
+            sTimer += IntToString(tTime.nMonth)+" day";
+    }    
+    if(!tTime.nHour)
+    {
+        if(sTimer != "")
+            sTimer += ", ";
+        if(tTime.nHour > 1)
+            sTimer += IntToString(tTime.nHour)+" hours";
+        else
+            sTimer += IntToString(tTime.nMonth)+" hour";
+    }    
+    if(!tTime.nMinute)
+    {
+        if(sTimer != "")
+            sTimer += ", ";
+        if(tTime.nMinute > 1)
+            sTimer += IntToString(tTime.nMinute)+" minutes";
+        else
+            sTimer += IntToString(tTime.nMonth)+" minute";
+    }    
+    SetCustomToken(82009, sTimer);
+}    

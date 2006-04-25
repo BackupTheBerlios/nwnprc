@@ -355,6 +355,12 @@ void main()
     {
         SetCompositeBonus(oSkin, "SA_Craft_Weapon", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_WEAPON);
     }
+ 
+    // Skill Affinity, +2 to craft trap
+    if(GetHasFeat(FEAT_SA_CRFTTRAP))
+    {
+        SetCompositeBonus(oSkin, "SA_Craft_Trap", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_TRAP);
+    }
 
     // Skill Affinity, +2 to hide
     if(GetHasFeat(FEAT_SA_HIDE))

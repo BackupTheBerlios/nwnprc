@@ -70,7 +70,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	object oLClaw, oRClaw;
-	int nCasterLvl = PRCGetCasterLevel();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nClawSize = PRCGetCreatureSize(oTarget);
 	int nBaseDamage;
 	float fDuration = 600.0f * nCasterLvl;

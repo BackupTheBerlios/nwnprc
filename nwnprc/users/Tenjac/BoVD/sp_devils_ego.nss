@@ -25,3 +25,26 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	object oPC = OBJECT_SELF;
+	object oSkin = GetPCSkin(oPC);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = 60.0f * nCasterLvl;
+	
+	itemproperty ipRace = ITEM_PROPERTY_BONUS_FEAT(FEAT_RACIAL_OUTSIDER);
+	itemproperty ipCha = ITEM_PROPERTY_ABILITY_BONUS(ABILITY_CHARISMA, 4);
+	
+	AddItemProperty(DURATION_TYPE_TEMPORARY, ipCha, oSkin, fDur);
+	IPSafeAddItemProperty(oSkin, ipRace, fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE, TRUE);
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+	
+	

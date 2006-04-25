@@ -16334,14 +16334,22 @@ Special Abilities:
   <entry id="49746" lang="en" sex="m">Brownie</entry>
   <entry id="49747" lang="en" sex="m">brownie</entry>
   <entry id="49748" lang="en" sex="m">Brownies</entry>
-  <entry id="49749" lang="en" sex="m">Brownies are distant relatives of halflings (perhaps half halfing, half pixie) but they are smaller and far less common. They are basically friendly to humans and their ilk but because they are shy, they are seldom seen and favour quiet, pastoral areas in which to dwell.
+  <entry id="49749" lang="en" sex="m">Brownies are benign and exceedingly nimble creatures that may be related very distantly to halflings. Peaceful and friendly, brownies live in pastoral regions, foraging and gleaning their food.
 
-Brownie Ability Adjustments: +6 Dex, +2 Con
+A brownie stands no taller than 2 feet and weighs about 6 pounds. Their garments are usually made of wool or linen and dyed bright colors and decorated with elaborate embroidery or trimmed with silver or gold studs and buttons.
+
+Brownie Ability Adjustments: -6 Strength, +10 Dexterity, +2 Constitution, +2 Intelligence, +2 Wisdom, +2 Charisma
 Favored Class (Wizard): A multiclass Brownie's wizard class does not count when determining whether he suffers an XP penalty for multiclassing.
 
 Special Abilities:
 
--</entry>
+- Darkvision: Brownies are able to see in the dark.
+- Skill Bonus (Craft Weapon): +2 racial bonus to Craft Weapon checks.
+- Skill Bonus (Craft Armor): +2 racial bonus to Craft Armor checks.
+- Skill Bonus (Listen): +2 racial bonus to Listen checks.
+- Skill Bonus (Spot): +2 racial bonus to Spot checks.
+- Keen Senses: Brownies make active Search checks automatically and with no movement penalties.
+- Fey: Brownies are considered Fey for the purpose of spells.</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

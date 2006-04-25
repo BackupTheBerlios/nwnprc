@@ -39,8 +39,11 @@ struct time
 struct time TimeCheck(struct time tTime);
 struct time GetLocalTime(object oObject, string sName);
 void SetLocalTime(object oObject, string sName, struct time tTime);
+void DeleteLocalTime(object oObject, string sName);
 struct time GetPersistantLocalTime(object oObject, string sName);
 void SetPersistantLocalTime(object oObject, string sName, struct time tTime);
+string TimeToString(struct time tTime);
+struct time StringToTime(string sIn);
 
 void SetTimeAndDate(struct time tTime);
 int GetIsTimeAhead(struct time tTime1, struct time tTime2);
@@ -118,6 +121,17 @@ void SetLocalTime(object oObject, string sName, struct time tTime)
     SetLocalInt(oObject, sName+".nMillisecond", tTime.nMillisecond);
 }
 
+void DeleteLocalTime(object oObject, string sName)
+{
+    DeleteLocalInt(oObject, sName+".nYear");
+    DeleteLocalInt(oObject, sName+".nMonth");
+    DeleteLocalInt(oObject, sName+".nDay");
+    DeleteLocalInt(oObject, sName+".nHour");
+    DeleteLocalInt(oObject, sName+".nMinute");
+    DeleteLocalInt(oObject, sName+".nSecond");
+    DeleteLocalInt(oObject, sName+".nMillisecond");
+}
+
 struct time GetPersistantLocalTime(object oObject, string sName)
 {
     struct time tTime;
@@ -142,6 +156,55 @@ void SetPersistantLocalTime(object oObject, string sName, struct time tTime)
     SetPersistantLocalInt(oObject, sName+".nMinute", tTime.nMinute);
     SetPersistantLocalInt(oObject, sName+".nSecond", tTime.nSecond);
     SetPersistantLocalInt(oObject, sName+".nMillisecond", tTime.nMillisecond);
+}
+
+string TimeToString(struct time tTime)
+{
+    string sReturn;
+    sReturn += IntToString(tTime.nYear)+"|";
+    sReturn += IntToString(tTime.nMonth)+"|";
+    sReturn += IntToString(tTime.nDay)+"|";
+    sReturn += IntToString(tTime.nHour)+"|";
+    sReturn += IntToString(tTime.nMinute)+"|";
+    sReturn += IntToString(tTime.nSecond)+"|";
+    sReturn += IntToString(tTime.nMillisecond);
+    return sReturn;
+}
+
+struct time StringToTime(string sIn)
+{
+    struct time tTime;
+    int nPos;
+    string sID;
+    nPos = FindSubString(sIn, "|");
+    tTime.nYear = StringToInt(GetStringLeft(sIn, nPos));
+    sIn = GetStringRight(sIn, GetStringLength(sIn)-nPos-1);
+
+    nPos = FindSubString(sIn, "|");
+    tTime.nMonth = StringToInt(GetStringLeft(sIn, nPos));
+    sIn = GetStringRight(sIn, GetStringLength(sIn)-nPos-1);
+
+    nPos = FindSubString(sIn, "|");
+    tTime.nDay = StringToInt(GetStringLeft(sIn, nPos));
+    sIn = GetStringRight(sIn, GetStringLength(sIn)-nPos-1);
+
+    nPos = FindSubString(sIn, "|");
+    tTime.nHour = StringToInt(GetStringLeft(sIn, nPos));
+    sIn = GetStringRight(sIn, GetStringLength(sIn)-nPos-1);
+
+    nPos = FindSubString(sIn, "|");
+    tTime.nMinute = StringToInt(GetStringLeft(sIn, nPos));
+    sIn = GetStringRight(sIn, GetStringLength(sIn)-nPos-1);
+
+    nPos = FindSubString(sIn, "|");
+    tTime.nSecond = StringToInt(GetStringLeft(sIn, nPos));
+    sIn = GetStringRight(sIn, GetStringLength(sIn)-nPos-1);
+
+    nPos = FindSubString(sIn, "|");
+    tTime.nMillisecond = StringToInt(GetStringLeft(sIn, nPos));
+    sIn = GetStringRight(sIn, GetStringLength(sIn)-nPos-1);
+
+    return tTime;
 }
 
 struct time TimeCheck(struct time tTime)

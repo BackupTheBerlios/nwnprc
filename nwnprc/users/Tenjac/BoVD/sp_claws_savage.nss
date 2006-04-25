@@ -132,14 +132,12 @@ void GetClawWeapon (object oCreature, string sResRef, int nInventorySlot, float 
 		{
 			oCWeapon = GetItemPossessedBy(oCreature, sResRef);
 			SetIdentified(oCWeapon, TRUE);
-			//AssignCommand(oCreature, ActionEquipItem(oCWeapon, INVENTORY_SLOT_CWEAPON_L));
 			ForceEquip(oCreature, oCWeapon, nInventorySlot);
 		}
 		else
 		{			
 			oCWeapon = CreateItemOnObject(sResRef, oCreature);
 			SetIdentified(oCWeapon, TRUE);
-			//AssignCommand(oCreature, ActionEquipItem(oCWeapon, INVENTORY_SLOT_CWEAPON_L));
 			ForceEquip(oCreature, oCWeapon, nInventorySlot);
 			bCreatedWeapon = TRUE;
 		}

@@ -25,3 +25,37 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	//vars
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+		
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_HEARTACHE, oPC);
+	
+	//Spell Resistance
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Save
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+		{
+			effect ePar = EffectCutsceneParalyze();
+			effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_GLOW_LIGHT_BLUE)), ePar);
+			
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0f);
+		}
+	}
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+		
+		

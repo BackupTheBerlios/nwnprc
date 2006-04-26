@@ -65,7 +65,7 @@
 61 FEAT_BLACKGUARD_SNEAK_ATTACK_12D6   1014      3    32             0      
 62 FEAT_BLACKGUARD_SNEAK_ATTACK_13D6   1015      3    35             0      
 63 FEAT_BLACKGUARD_SNEAK_ATTACK_14D6   1016      3    38             0      
-64 HIDE_IN_PLAIN_SIGHT                 433       3    4              0      
+46 FEAT_UR_HIPS                        3457      3    4              1      
 65 FEAT_USE_POISON                     960       3    1              0      
 66 VenomImmunity                       203       3    8              0      
 67 FEAT_PRESTIGE_INVISIBILITY_2        471       3    10             1      

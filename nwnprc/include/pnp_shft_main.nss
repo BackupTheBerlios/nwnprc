@@ -121,11 +121,8 @@ void SetShift_02(object oPC, object oTarget);
 
 void StoreAppearance(object oPC)
 {
-
     if (GetLocalInt(oPC, "shifting") == TRUE)
-    {
         return;
-    }
 
     int iIsStored = GetPersistantLocalInt( oPC, "AppearanceIsStored" );
 
@@ -135,8 +132,17 @@ void StoreAppearance(object oPC)
     }
     else
     {
-        SetPersistantLocalInt(oPC, "AppearanceIsStored", 6);
-        SetPersistantLocalInt(oPC, "AppearanceStored", GetAppearanceType(oPC));
+        SetPersistantLocalInt(oPC,    "AppearanceIsStored", 6);
+        SetPersistantLocalInt(oPC,    "AppearanceStored", GetAppearanceType(oPC));
+        SetPersistantLocalInt(oPC,    "AppearanceStoredPortraitID", GetPortraitId(oPC));
+        SetPersistantLocalString(oPC, "AppearanceStoredPortraitResRef", GetPortraitResRef(oPC));
+        SetPersistantLocalInt(oPC,    "AppearanceStoredTail", GetCreatureTailType(oPC));
+        SetPersistantLocalInt(oPC,    "AppearanceStoredWing", GetCreatureWingType(oPC));
+        int i;
+        for(i=0;i<=20;i++)
+        {
+            SetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i), GetCreatureBodyPart(i, oPC));        
+        }
     }
 }
 
@@ -2204,7 +2210,23 @@ void SetShiftTrueForm(object oPC)
     }
 
     // Change the PC appearance back to TRUE form
-    SetCreatureAppearanceType(oPC, GetTrueForm(oPC));
+    if(GetPersistantLocalInt(oPC,"AppearanceIsStored") == 6)
+    {
+        SetCreatureAppearanceType(oPC, GetPersistantLocalInt(oPC,"AppearanceStored"));
+        SetPortraitId(oPC, GetPersistantLocalInt(oPC,            "AppearanceStoredPortraitID"));
+        SetPortraitResRef(oPC, GetPersistantLocalString(oPC,     "AppearanceStoredPortraitResRef"));
+        SetCreatureTailType(GetPersistantLocalInt(oPC,           "AppearanceStoredTail"), oPC);
+        SetCreatureWingType(GetPersistantLocalInt(oPC,           "AppearanceStoredWing"), oPC);
+        int i;
+        for(i=0;i<=20;i++)
+        {
+            SetCreatureBodyPart(i, GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i)), oPC);
+        }    
+    }
+    else
+        //hasnt been previously stored
+        //use racial lookup
+        SetCreatureAppearanceType(oPC, GetTrueForm(oPC));
 
     // Set race back to unused
     SetLocalInt(oPC, "RACIAL_TYPE", 0);

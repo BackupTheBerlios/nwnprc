@@ -44,7 +44,7 @@ void StoreCohort(object oCohort);
 
 #include "prc_feat_const"
 #include "inc_utility"
-//1.67 #include "pnp_shft_poly" //for DoDisguise
+#include "pnp_shft_poly" //for DoDisguise
 
 
 //////////////////////////////////////////////////
@@ -205,13 +205,11 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
 
         //if it was a premade one, give it a random name
         //randomize its appearance using DoDisguise
-        /* 1.67 code
         if(GetResRef(oCohort) != "")
         {
-            AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName());
-            DoDisguise(PRCGetRacialType(oCohort), oCohort);
+            AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName()));
+            DoDisguise(MyPRCGetRacialType(oCohort), oCohort);
         }
-        */
 
         //if its a custom made cohort, need to cancel GreatX feats
         if(GetResRef(oCohort) == "")

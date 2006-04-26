@@ -35,6 +35,9 @@ void main()
     //check if it should be destroyed
     if(nCurrentHP <= 0)
     {
+        //as of 1.67 you can play animations on doors
+        PlayAnimation(ANIMATION_DOOR_DESTROY);
+        /*
         effect eVFX = EffectVisualEffect(VFX_COM_CHUNK_STONE_MEDIUM);
         location lLoc = GetLocation(OBJECT_SELF);
         vector vPos = GetPositionFromLocation(lLoc);
@@ -55,8 +58,7 @@ void main()
         lTarget = Location(GetAreaFromLocation(lLoc),
             Vector(vPos.x, vPos.y-1.0, vPos.z), 0.0);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, lTarget);
-        //as of 1.67 you can play animations on doors
-        //PlayAnimation(ANIMATION_DOOR_DESTROY);
+        */
         effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eInvis, OBJECT_SELF);
         effect eGhost = EffectCutsceneGhost();

@@ -13,23 +13,11 @@
 #include "inc_newspellbook"
 #include "prc_allow_const"
 
-
-
 // this creates a clone of the PC in limbo, removes the effects and equipment,
 // then stores the results of a ability score query onto the PC's hide.
-/* this can be altered for 1.67*/
 void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone);
 void FindTrueAbilityScores()
 {
-    /*1.67 code
-    object oHide = GetPCSkin(oPC);
-    SetLocalInt(oHide, "PRC_trueSTR", GetAbilityScore(oPC, ABILITY_SCORE_STRENGTH,      TRUE));
-    SetLocalInt(oHide, "PRC_trueDEX", GetAbilityScore(oPC, ABILITY_SCORE_DEXTERITY,     TRUE));
-    SetLocalInt(oHide, "PRC_trueCON", GetAbilityScore(oPC, ABILITY_SCORE_CONSTITUTION,  TRUE));
-    SetLocalInt(oHide, "PRC_trueINT", GetAbilityScore(oPC, ABILITY_SCORE_INTELLIGENCE,  TRUE));
-    SetLocalInt(oHide, "PRC_trueWIS", GetAbilityScore(oPC, ABILITY_SCORE_WISDOM,        TRUE));
-    SetLocalInt(oHide, "PRC_trueCHA", GetAbilityScore(oPC, ABILITY_SCORE_CHARISMA,      TRUE));
-    */
     object oPC = OBJECT_SELF;
     int i = 0;
     int bFoundLimbo = FALSE;
@@ -141,31 +129,17 @@ void Hathran(object oPC)
 
     if (GetGender(oPC) == GENDER_FEMALE)
     {
-    	SetLocalInt(oPC, "PRC_Female", 0);
+    SetLocalInt(oPC, "PRC_Female", 0);
     }
 }
 
 void Kord(object oPC)
 {
      SetLocalInt(oPC, "PRC_PrereqKord", 1);
-     
+
      if (GetFortitudeSavingThrow(oPC) >= 6)
      {
         SetLocalInt(oPC, "PRC_PrereqKord", 0);
-     }
-     
-     int nCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-     if (nCleric > 0)
-     {
-     	SetLocalInt(oPC, "PRC_PrereqKord", 1);
-     
-     	int nKord = GetHasFeat(FEAT_GOOD_DOMAIN_POWER,oPC) +
-     		    GetHasFeat(FEAT_LUCK_DOMAIN_POWER,oPC) +
-     	            GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER,oPC); 
-     	if (nKord >= 2)
-     	{
-     		SetLocalInt(oPC, "PRC_PrereqKord", 0);
-     	}
      }
 }
 
@@ -252,8 +226,7 @@ void Shadowlord(object oPC, int iArcSpell)
      int iShadLevel = GetLevelByClass(CLASS_TYPE_SHADOWDANCER, oPC);
 
      int iShadItem;
-     if(GetHasItem(oPC,"shadowwalkerstok")
-        || GetPersistantLocalInt(oPC, "shadowwalkerstok"))
+     if(GetHasItem(oPC,"shadowwalkerstok"))
      {
      iShadItem = 1;
      }
@@ -672,7 +645,7 @@ void Alaghar(object oPC)
     iProperDomains = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
                      GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC) +
                      GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC) +
-                     GetHasFeat(FEAT_DOMAIN_POWER_DWARF);
+                     GetHasFeat(4043);//dwarf
 
     if (iProperDomains >= 2)
     {
@@ -690,16 +663,6 @@ void Thrallherd(object oPC)
         GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR_REPAIR, oPC))
     {
         SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
-    }
-}
-
-void PsionicCheck(object oPC)
-{
-    SetLocalInt(oPC, "PRC_IsPsionic", 1);
-
-    if (GetIsPsionicCharacter(oPC))
-    {
-        SetLocalInt(oPC, "PRC_IsPsionic", 0);
     }
 }
 
@@ -733,26 +696,6 @@ void DragonDis(object oPC)
      {
         SetLocalInt(oPC, "PRC_DraAllow", 1);
      }
-}
-
-void Baelnorn(object oPC)
-{
-    int nLich = GetLevelByClass(CLASS_TYPE_LICH, oPC);
-
-    if (nLich >= 1)
-    {
-        SetLocalInt(oPC, "PRC_NoLich", 1);
-    }
-}
-
-void Lich(object oPC)
-{
-    int nBaeln = GetLevelByClass(CLASS_TYPE_BAELNORN, oPC);
-
-    if (nBaeln >= 1)
-    {
-        SetLocalInt(oPC, "PRC_NoBaeln", 1);
-    }
 }
 
 void RacialHD(object oPC)
@@ -835,30 +778,8 @@ void main2()
         sVariable = "PRC_SneakLevel" + IntToString(iCount);
         SetLocalInt(oPC, sVariable, 1);
      }
-    
-    // Delete Arcane & Divine caster level markers 
-    iCount    = 1;
-    sVariable = "PRC_AllCasterLvl_";
-    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
-        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
-    // Delete Arcane caster level markers
-    iCount    = 1;
-    sVariable = "PRC_ArcCasterLvl_";
-    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
-        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
-    // Delete Divine caster level markers
-    iCount    = 1;
-    sVariable = "PRC_DivCasterLv_";
-    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
-        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
-    // Delete Manifester level markers
-    iCount    = 1;
-    sVariable = "PRC_ManifesterLvl_";
-    while(GetLocalInt(oPC, sVariable + IntToString(iCount)))
-        DeleteLocalInt(oPC, sVariable + IntToString(iCount++));
 
-
-     // Set spell level, caster level, power level and manifester level markers
+     // Find the spell levels.
     int iCha = GetLocalInt(GetPCSkin(oPC), "PRC_trueCHA") - 10;
     int iWis = GetLocalInt(GetPCSkin(oPC), "PRC_trueWIS") - 10;
     int iInt = GetLocalInt(GetPCSkin(oPC), "PRC_trueINT") - 10;
@@ -866,105 +787,78 @@ void main2()
     int nDivHighest;
     int nPsiHighest;
     int bFirstArcClassFound, bFirstDivClassFound, bFirstPsiClassFound;
+    //for(i=1;i<3;i++)
     int nSpellLevel;
-    int nClassSlot;
-    int nClass, nLevel, nAbility, nSlots, nCLevel;
-    for(nClassSlot = 1; nClassSlot <= 3; nClassSlot++)
+    int nClassSlot = 1;
+    while(nClassSlot <= 3)
     {
-        nClass = PRCGetClassByPosition(nClassSlot, oPC);
+        int nClass = GetClassByPosition(nClassSlot, oPC);
+        nClassSlot += 1;
         if(GetIsDivineClass(nClass))
         {
-            // Do spell levels
-            nLevel = GetLevelByClass(nClass, oPC);
+            int nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstDivClassFound &&
                 GetFirstDivineClass(oPC) == nClass)
             {
                 nLevel += GetDivinePRCLevels(oPC);
                 bFirstDivClassFound = TRUE;
             }
-            nAbility = GetAbilityForClass(nClass, oPC);
+            int nAbility = GetAbilityForClass(nClass, oPC);
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
                     SetLocalInt(oPC, "PRC_DivSpell"+IntToString(nSpellLevel), 0);
                     if(nSpellLevel > nDivHighest)
                         nDivHighest = nSpellLevel;
-                    if(DEBUG) DoDebug("Divine spell level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_DivSpell"+IntToString(nSpellLevel))), oPC);
                 }
-            }
-            
-            // Do caster level
-            nCLevel = GetCasterLvl(nClass, oPC);
-            for(; nCLevel > 0; nCLevel--)
-            {
-                SetLocalInt(oPC, "PRC_AllCasterLv_" + IntToString(nCLevel), 1);
-                SetLocalInt(oPC, "PRC_DivCasterLv_" + IntToString(nCLevel), 1);
             }
         }
         else if(GetIsArcaneClass(nClass))
         {
-            // Do spell levels
-            nLevel = GetLevelByClass(nClass, oPC);
+            int nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstArcClassFound &&
                 GetFirstArcaneClass(oPC) == nClass)
             {
                 nLevel += GetArcanePRCLevels(oPC);
                 bFirstArcClassFound = TRUE;
             }
-            nAbility = GetAbilityForClass(nClass, oPC);
+            int nAbility = GetAbilityForClass(nClass, oPC);
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
                     SetLocalInt(oPC, "PRC_ArcSpell"+IntToString(nSpellLevel), 0);
                     if(nSpellLevel > nArcHighest)
                         nArcHighest = nSpellLevel;
-                    if(DEBUG) DoDebug("Arcane spell level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_ArcSpell"+IntToString(nSpellLevel))), oPC);
                 }
-            }
-            
-            // Do caster level
-            nCLevel = GetCasterLvl(nClass, oPC);
-            for(; nCLevel > 0; nCLevel--)
-            {
-                SetLocalInt(oPC, "PRC_AllCasterLv_" + IntToString(nCLevel), 1);
-                SetLocalInt(oPC, "PRC_ArcCasterLv_" + IntToString(nCLevel), 1);
             }
         }
         else if(GetIsPsionicClass(nClass))
         {
-            // Do power levels
-            nLevel = GetLevelByClass(nClass, oPC);
+            int nLevel = GetLevelByClass(nClass, oPC);
             if (!bFirstPsiClassFound &&
                 GetFirstPsionicClass(oPC) == nClass)
             {
                 nLevel += GetPsionicPRCLevels(oPC);
                 bFirstPsiClassFound = TRUE;
             }
-            nAbility    = GetAbilityForClass(nClass, oPC);
+            int nAbility = GetAbilityForClass(nClass, oPC);
             string sPsiFile = GetPsionicFileName(nClass);
-            int nMaxLevel   = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
+            int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
 
             int nPsiHighest = min(nMaxLevel, nAbility - 10);
 
             for(nSpellLevel = 1; nSpellLevel <= nPsiHighest; nSpellLevel++)
             {
-                SetLocalInt(oPC, "PRC_PsiPower" + IntToString(nSpellLevel), 0);
+                SetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel), 0);
                 if(DEBUG) DoDebug("Psionics power level Prereq Variable " + IntToString(nSpellLevel) +": " + IntToString(GetLocalInt(oPC, "PRC_PsiPower"+IntToString(nSpellLevel))), oPC);
-            }
-            
-            // Do manifester level
-            nCLevel = GetManifesterLevel(oPC, nClass);
-            for(; nCLevel > 0; nCLevel--)
-            {
-                SetLocalInt(oPC, "PRC_ManifesterLvl_" + IntToString(nCLevel), 1);
             }
         }
     }// end while - loop over all 3 class slots
@@ -1000,9 +894,6 @@ void main2()
      RangerURangerMutex(oPC);
      DragonDis(oPC);
      Thrallherd(oPC);
-     PsionicCheck(oPC);
-     Baelnorn(oPC);
-     Lich(oPC);
      RacialHD(oPC);
      // Truly massive debug message flood if activated.
      /*

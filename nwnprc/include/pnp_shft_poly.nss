@@ -19,7 +19,6 @@ void ShifterCheck(object oPC)
         SetLocalInt(oHidePC,"nPCShifted",TRUE);
     }
 }
-/* 1.67 code
 
 
 //changes portrait, head, and appearance
@@ -124,4 +123,3 @@ void DoDisguise(int nRace, object oTarget = OBJECT_SELF)
     SetPortraitId(oTarget, nPortraitID); //do portaitID first cos it overrides resref
     SetPortraitResRef(oTarget, sPortraitResRef);
 }
-*/

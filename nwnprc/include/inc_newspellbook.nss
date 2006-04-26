@@ -160,21 +160,14 @@ int GetSpellslotLevel(int nClass, object oPC)
         //spellcasting prc
         int nArcSpellMod = StringToInt(Get2DACache("classes", "ArcSpellLvlMod", nTempClass));
         int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nTempClass));
-        //cos of the biobug, this is +1 before dividing
-        //yeah its screwy, go bitch at bioware ;)
-        if(nArcSpellMod)
+        if(nArcSpellMod == 1)
+            nArcSpellslotLevel += GetLevelByClass(nTempClass, oPC);
+        else    
             nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
-        if(nDivSpellMod)
+        if(nDivSpellMod == 1)
+            nDivSpellslotLevel += GetLevelByClass(nTempClass, oPC);
+        else    
             nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;
-        //bioware fixed this for 1.67 so this can changed too:
-        //if(nArcSpellMod == 1)
-        //    nArcSpellslotLevel += GetLevelByClass(nTempClass, oPC);
-        //else    
-        //    nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
-        //if(nDivSpellMod == 1)
-        //    nDivSpellslotLevel += GetLevelByClass(nTempClass, oPC);
-        //else    
-        //    nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;
     }
     if(GetFirstArcaneClass(oPC) == nClass)
         nLevel += nArcSpellslotLevel;

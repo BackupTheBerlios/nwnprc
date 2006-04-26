@@ -59,9 +59,9 @@ int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF);
 
 void SetupPRCGetClassByPosition(object oCreature)
 {
-    /*1.67 code
+    
     return;
-    */
+    /*1.67 deprecated code
     int i;
     int nCounter = 1;
     //set to defaults, including the +1 for 1start not 0 start
@@ -84,13 +84,13 @@ void SetupPRCGetClassByPosition(object oCreature)
                 break; // end loop now
         }
     }
+    */
 }
 
 int PRCGetClassByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
 {
-    /*1.67 code
     return GetClassByPosition(nClassPosition, oCreature);
-    */
+    /*1.67 deprecated code
     if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
         return CLASS_TYPE_INVALID;
     int nClass = GetLocalInt(oCreature, "PRC_ClassInPos"+IntToString(nClassPosition));
@@ -102,13 +102,13 @@ int PRCGetClassByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
     //correct for 1 start not 0 start
     nClass--;
     return nClass;
+    */
 }
 
 int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
 {
-    /*1.67 code
     return GetLevelByPosition(nClassPosition, oCreature);
-    */
+    /*1.67 deprecated code
     if(!GetIsObjectValid(oCreature) || GetObjectType(oCreature) != OBJECT_TYPE_CREATURE)
         return 0;
     int nClass = GetLocalInt(oCreature, "PRC_ClassLevelInPos"+IntToString(nClassPosition));
@@ -120,6 +120,7 @@ int PRCGetLevelByPosition(int nClassPosition, object oCreature=OBJECT_SELF)
     //correct for 1 start not 0 start
     nClass--;
     return nClass;
+    */
 }
 
 // Test main

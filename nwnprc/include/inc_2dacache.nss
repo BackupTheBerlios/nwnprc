@@ -718,7 +718,7 @@ void Cache_Done()
 void Cache_Ireq(int nItem, int nRow = 0)
 {
     string sFile = Get2DACache("item_to_ireq", "RECIPE_TAG", nItem);
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_ireq WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -736,7 +736,7 @@ void Cache_Ireq(int nItem, int nRow = 0)
         Get2DACache(sFile, "ReqParam2", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Ireq(nItem, nRow));
-        if(nRow >= GetPRCSwitch(FILE_END_IREQ))
+        if(nRow >= GetPRCSwitch(FILE_END_IREQ) && GetPRCSwitch(PRC_USE_DATABASE))
         {
             if(GetPRCSwitch(PRC_DB_SQLLITE))
             {
@@ -760,7 +760,7 @@ void Cache_Ireq(int nItem, int nRow = 0)
 
 void Cache_Item_To_Ireq(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_item_to_ireq ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -777,7 +777,7 @@ void Cache_Item_To_Ireq(int nRow = 0)
     }
     else
         DelayCommand(0.1, Cache_Ireq(0));
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {
@@ -792,7 +792,7 @@ void Cache_Item_To_Ireq(int nRow = 0)
 void Cache_Class_Feat(int nClass, int nRow = 0)
 {
     string sFile = Get2DACache("classes", "FeatsTable", nClass);
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_cls_feat WHERE (file = '"+GetStringLowerCase(sFile)+"') ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -810,7 +810,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
         Get2DACache(sFile, "OnMenu", nRow);
         nRow++;
         DelayCommand(0.1, Cache_Class_Feat(nClass, nRow));
-        if(nRow >= GetPRCSwitch(FILE_END_CLASS_FEAT))
+        if(nRow >= GetPRCSwitch(FILE_END_CLASS_FEAT) && GetPRCSwitch(PRC_USE_DATABASE))
         {
             if(GetPRCSwitch(PRC_DB_SQLLITE))
             {
@@ -834,7 +834,7 @@ void Cache_Class_Feat(int nClass, int nRow = 0)
 
 void Cache_Classes(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_classes ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -902,7 +902,7 @@ void Cache_Classes(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Class_Feat(0));
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {
@@ -916,7 +916,7 @@ void Cache_Classes(int nRow = 0)
 
 void Cache_RacialTypes(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_racialtypes ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -954,7 +954,7 @@ void Cache_RacialTypes(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Classes(0));
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {
@@ -969,7 +969,7 @@ void Cache_RacialTypes(int nRow = 0)
 
 void Cache_Feat(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_feat ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -1025,7 +1025,7 @@ void Cache_Feat(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_RacialTypes());
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {
@@ -1039,7 +1039,7 @@ void Cache_Feat(int nRow = 0)
 
 void Cache_Spells(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_spells ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -1108,7 +1108,7 @@ void Cache_Spells(int nRow = 0)
     }
     else
         DelayCommand(0.1, Cache_Feat());
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {
@@ -1122,7 +1122,7 @@ void Cache_Spells(int nRow = 0)
 
 void Cache_Portraits(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_portraits ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -1142,7 +1142,7 @@ void Cache_Portraits(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Spells());
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {
@@ -1156,7 +1156,7 @@ void Cache_Portraits(int nRow = 0)
 
 void Cache_Soundset(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_soundset ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -1175,7 +1175,7 @@ void Cache_Soundset(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Portraits());
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {
@@ -1189,7 +1189,7 @@ void Cache_Soundset(int nRow = 0)
 
 void Cache_Appearance(int nRow = 0)
 {
-    if(nRow == 0)
+    if(nRow == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         string SQL = "SELECT rowid FROM prc_cached2da_appearance ORDER BY rowid DESC LIMIT 1";
         PRC_SQLExecDirect(SQL);
@@ -1238,7 +1238,7 @@ void Cache_Appearance(int nRow = 0)
     }
     else
         DelayCommand(1.0, Cache_Soundset());
-    if(nRow % 100 == 0)
+    if(nRow % 100 == 0 && GetPRCSwitch(PRC_USE_DATABASE))
     {
         if(GetPRCSwitch(PRC_DB_SQLLITE))
         {

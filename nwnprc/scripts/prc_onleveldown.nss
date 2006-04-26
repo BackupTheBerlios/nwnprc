@@ -33,15 +33,6 @@ void main()
     object oPC    = OBJECT_SELF;
     int nOldLevel = GetLocalInt(oPC, "PRC_OnLevelDown_OldLevel");
 
-    //Used to determine what the last levelled class was
-    if(GetLevelByClass(PRCGetClassByPosition(1, oPC), oPC) != PRCGetLevelByPosition(1, oPC))
-        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(1, oPC));
-    else if(GetLevelByClass(PRCGetClassByPosition(2, oPC), oPC) != PRCGetLevelByPosition(2, oPC))
-        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(2, oPC));
-    else if(GetLevelByClass(PRCGetClassByPosition(3, oPC), oPC) != PRCGetLevelByPosition(3, oPC))
-        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(3, oPC));
-    DelayCommand(2.0, DeleteLocalInt(oPC, "LastLevelledClass"));
-
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);

@@ -990,47 +990,6 @@ int LeadershipHD(object oPC)
     return TRUE;
 }
 
-//this is a rough calculation to stop the 41 spellslot levels bugs
-int FortySpellSlotLevels(object oPC)
-{
-    int i;
-    int nArcSpellslotLevel;
-    int nDivSpellslotLevel;
-    for(i=1;i<=3;i++)
-    {
-        int nClass = PRCGetClassByPosition(i, oPC);
-        //spellcasting prc
-        int nArcSpellMod = StringToInt(Get2DACache("classes", "ArcSpellLvlMod", nClass));
-        int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nClass));
-        if(nArcSpellMod)
-            nArcSpellslotLevel += (GetLevelByClass(nClass, oPC)+1)/nArcSpellMod;
-        if(nDivSpellMod)
-            nDivSpellslotLevel += (GetLevelByClass(nClass, oPC)+1)/nDivSpellMod;
-        //spellcasting base class
-        //bioware only
-        if(nClass == CLASS_TYPE_BARD
-            || nClass == CLASS_TYPE_WIZARD
-            || nClass == CLASS_TYPE_SORCERER
-            )
-            nArcSpellslotLevel += GetLevelByClass(nClass);
-        if(nClass == CLASS_TYPE_CLERIC
-            || nClass == CLASS_TYPE_DRUID
-            || nClass == CLASS_TYPE_RANGER
-            || nClass == CLASS_TYPE_PALADIN
-            )
-            nDivSpellslotLevel += GetLevelByClass(nClass);
-
-    }
-
-    if(nArcSpellslotLevel > 40
-        || nDivSpellslotLevel > 40)
-    {
-        FloatingTextStringOnCreature("You cannot take this class as it would break your spellcasting.", oPC, FALSE);
-        return FALSE;
-    }
-    return TRUE;
-}
-
 void main()
 {
         //Declare Major Variables
@@ -1055,8 +1014,6 @@ void main()
          || !MarshalAuraLimit(oPC)
          || !Blightbringer(oPC)
          || !CraftingFeats(oPC)
-         /* 1.67 disable this line */
-         || !FortySpellSlotLevels(oPC)
          || !RacialHD(oPC)
          || !LeadershipHD(oPC)
        )

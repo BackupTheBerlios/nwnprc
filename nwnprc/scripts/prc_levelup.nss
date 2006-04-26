@@ -29,15 +29,6 @@ void main()
     object oPC = GetPCLevellingUp();
 //if(DEBUG) DoDebug("prc_levelup running for '" + GetName(oPC) + "'");
 
-    //Used to determine what the last levelled class was
-    if(GetLevelByClass(PRCGetClassByPosition(1, oPC), oPC) != PRCGetLevelByPosition(1, oPC))
-        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(1, oPC));
-    else if(GetLevelByClass(PRCGetClassByPosition(2, oPC), oPC) != PRCGetLevelByPosition(2, oPC))
-        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(2, oPC));
-    else if(GetLevelByClass(PRCGetClassByPosition(3, oPC), oPC) != PRCGetLevelByPosition(3, oPC))
-        SetLocalInt(oPC, "LastLevelledClass", PRCGetClassByPosition(3, oPC));
-    DelayCommand(2.0, DeleteLocalInt(oPC, "LastLevelledClass"));
-
     object oSkin = GetPCSkin(oPC);
     ScrubPCSkin(oPC, oSkin);
     DeletePRCLocalInts(oSkin);
@@ -54,10 +45,9 @@ void main()
 
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the newly leveled up player meets.
-    DelayCommand(0.3, ExecuteScript("prc_prereq", oPC));
-    // These HAVE to run after prc_prereq, they rely on variables it sets
-    DelayCommand(1.0, ExecuteScript("prc_enforce_feat", oPC));
-    DelayCommand(1.0, ExecuteScript("prc_enforce_psi", oPC));
+    DelayCommand(0.5, ExecuteScript("prc_prereq", oPC)); // Delayed so that deleveling gets to happen before it.
+    ExecuteScript("prc_enforce_feat", oPC);
+    ExecuteScript("prc_enforce_psi", oPC);
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
 

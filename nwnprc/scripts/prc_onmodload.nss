@@ -71,11 +71,11 @@ void main()
     {
         PRC_SQLInit();
         PRCMakeTables();
-        if(GetPRCSwitch(PRC_DB_PRECACHE))
-            Cache_2da_data();
         if(GetPRCSwitch(PRC_DB_SQLLITE))
             DelayCommand(IntToFloat(GetPRCSwitch(PRC_DB_SQLLITE_INTERVAL)), PRC_SQLCommit());
     }
+    if(GetPRCSwitch(PRC_DB_PRECACHE))
+        Cache_2da_data();
     //pre-made cohorts
     //DelayCommand(6.0, AddPremadeCohortsToDB());
     //done differently now

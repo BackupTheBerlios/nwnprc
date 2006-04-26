@@ -42,7 +42,7 @@ void main()
     //katana
     if(!bHasKatana)
     {
-        object oKatana = CreateItemOnObject("codi_mw_katana", OBJECT_SELF);
+        object oKatana = CreateItemOnObject("nw_wswka001", OBJECT_SELF);
         object oKatana2 = CopyObject(oKatana, GetLocation(OBJECT_SELF), OBJECT_SELF, "codi_katana");
         DestroyObject(oKatana);
         //check in inventory
@@ -50,14 +50,12 @@ void main()
             DestroyObject(oKatana2);
         else    
             SetItemCursedFlag(oKatana2, TRUE);
-        /*1.67 code
-        SetName(oKatana2, GetName(OBJECT_SELF)+"'s Katana");
-        */
+        SetName(oKatana2, GetName(OBJECT_SELF)+"'s "+GetName(oKatana2));
     }
     //wakizashi (short sword)
     if(!bHasWakizashi)
     {
-        object oWakizashi = CreateItemOnObject("codi_mw_short", OBJECT_SELF);
+        object oWakizashi = CreateItemOnObject("nw_wswss001", OBJECT_SELF);
         object oWakizashi2 = CopyObject(oWakizashi, GetLocation(OBJECT_SELF), OBJECT_SELF, "codi_wakizashi");
         DestroyObject(oWakizashi);
         //check in inventory
@@ -65,9 +63,7 @@ void main()
             DestroyObject(oWakizashi2);
         else    
             SetItemCursedFlag(oWakizashi2, TRUE);
-        /*1.67 code
         SetName(oWakizashi2, GetName(OBJECT_SELF)+"'s Wakizashi");
-        */
     }
 }
 

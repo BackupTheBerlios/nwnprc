@@ -89,7 +89,6 @@ void SeeTrue(object oPC ,object oSkin ,int nLevel)
         DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyTrueSeeing(),oSkin));
 }
 
-/* 1.67 code
 void DoWing(object oPC, int nWingType)
 {
     //wing invalid, use current
@@ -111,7 +110,6 @@ void DoTail(object oPC, int nTailType)
     //override any stored default appearance
     SetPersistantLocalInt(oPC,    "AppearanceStoredTail", nTailType);
 }
-*/
 
 void main()
 {
@@ -236,7 +234,7 @@ void main()
     if (bResisEle>0) SmallResist(oPC,oSkin,bResisEle,sResis);
     if (bResisEle>0) LargeResist(oPC,oSkin,bResisEle,lResis);
     if (nLevel>17) SpellResis(oPC,oSkin,nLevel);
-    //1.67 code //if (nLevel>17) DoTail(oPC, nTailType);
-    //1.67 code //if (nLevel>9)  DoWings(oPC, nWingType);
+    if (nLevel>17) DoTail(oPC, nTailType);
+    if (nLevel>9)  DoWing(oPC, nWingType);
     if (nLevel>19) SeeTrue(oPC,oSkin,nLevel);
 }

@@ -228,7 +228,7 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
     if(nMin == 0
         && array_exists(oWP, sTag))
     {
-        DoDebug("MakeSpellbookLevelLoop() restored from database");
+        DoDebug("MakeSpellbookLevelLoop("+sTag+") restored from database");
         return;
     }
 
@@ -308,7 +308,7 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
     if(nMin == 0
         && GetLocalInt(oWP, sTag+"_"+IntToString(StringToInt(Get2DACache(sFile, sSourceColumn, nMin+1)))))//+1 cos 0 is always null
     {
-        DoDebug("MakeLookupLoop() restored from database");
+        DoDebug("MakeLookupLoop("+sTag+") restored from database");
         return;
     }
 

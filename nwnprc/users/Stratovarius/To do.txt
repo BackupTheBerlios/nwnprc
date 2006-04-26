@@ -2,6 +2,9 @@
 3.1
 -----------------------------------------------------
 
+Domains:
+Cold
+
 Truenaming:
 1 Base Class
 ~60 Utterances

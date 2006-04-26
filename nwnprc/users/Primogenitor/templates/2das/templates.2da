@@ -1,5 +1,5 @@
 2DA V2.0
 
-    Label     Name LA   Str  Dex  Con  Int  Wis  Cha  NaturalAC Speed SR    AB   Fort Ref  Will FeatList        SetupScript MaintainScript
-0   Fiendish  **** **** **** **** **** **** **** **** ****      ****  HD+5  **** **** **** **** tmp_feat_fiend  ****        tmp_m_fiend
-1   Celestial **** **** **** **** **** **** **** **** ****      ****  HD+5  **** **** **** **** tmp_feat_celest ****        tmp_m_celest
+    Label     Name LA TestScript   SetupScript MaintainScript
+0   Fiendish  **** +2 tmp_t_fiend  ****        tmp_m_fiend
+1   Celestial **** +2 tmp_t_celest ****        tmp_m_celest

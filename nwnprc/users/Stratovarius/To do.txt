@@ -2,8 +2,13 @@
 3.1
 -----------------------------------------------------
 
-Domains:
+Domains (PGtF):
+Balance
 Cold
+Mentalism
+Repose
+Suffering
+Trade
 
 Truenaming:
 1 Base Class

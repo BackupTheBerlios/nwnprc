@@ -16757,6 +16757,23 @@ Use: Automatic.</entry>
 Prerequisite: Race-Specific.
 Specifics: The creature receives +2 racial bonus to Craft Trap checks.
 Use: Automatic.</entry>
+<entry id="50211" lang="en" sex="m">Polar Ray</entry>
+<entry id="50212" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 8
+Innate Level: 8
+School: Evocation
+Descriptor(s): Cold
+Component(s): Verbal, Somatic
+Range: Short
+Area of Effect / Target: Single
+Duration: Instant
+Additional Counter Spells: 
+Save: None
+Spell Resistance: Yes
+
+A blue-white ray of freezing air and ice springs from your hand. You must succeed on a ranged touch attack with the ray to deal damage to a target. The ray deals 1d6 points of cold damage per caster level (maximum 25d6).</entry>
+
+
+
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

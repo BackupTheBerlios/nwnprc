@@ -16778,7 +16778,7 @@ A blue-white ray of freezing air and ice springs from your hand. You must succee
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
 Granted Power: Free Martial Weapon Proficiency and Weapon Focus your choice of hammer.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Keen Edge (3), Impact (4), Blade Barrier (5), Iron Body (7)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Greater Magic Weapon (2), Keen Edge (3), Blade Barrier (5)
 Use: Automatic.</entry>
   <entry id="50503" lang="en" sex="m">Metal</entry>
   <entry id="50504" lang="en" sex="m">Storm</entry>
@@ -16791,7 +16791,7 @@ Use: Automatic.</entry>
   <entry id="50507" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Portal domain.
 Granted Power: None.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Benign Transposition (2), Dimension Door (4), Banishment (5), Recall (6), Gate (8)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Benign Transposition (2), Dimension Door (4), Banishment (5), Gate (8)
 Use: Automatic. </entry>
   <entry id="50508" lang="en" sex="m">Force</entry>
   <entry id="50509" lang="en" sex="m">Type of Feat: Domain
@@ -16833,13 +16833,13 @@ Use: Automatic.</entry>
   <entry id="50521" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Dwarf domain.
 Granted Power: The cleric gains the Great Fortitude feat for free.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Glyph of Warding (2), Hammer of the Gods (3), Impact (4), Stoneskin (5), Protection from Spells (8)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Glyph of Warding (2), Stoneskin (5), Protection from Spells (8)
 Use: Automatic.</entry>
   <entry id="50522" lang="en" sex="m">Charm</entry>
   <entry id="50523" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Charm domain.
 Granted Power: You may boost your Charisma score by +4 once per day. This boost lasts for 1 minute.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Charm Monster (3), Dominate Person (5), Mass Charm (7), True Domination (9)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Charm Monster (3), Dominate Person (5), Mass Charm (7), Dominate Monster (9)
 Use: Once/Day.</entry>
   <entry id="50524" lang="en" sex="m">Elf</entry>
   <entry id="50525" lang="en" sex="m">Type of Feat: Domain
@@ -16851,7 +16851,7 @@ Use: Automatic.</entry>
   <entry id="50527" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Family domain.
 Granted Power: As a free action, you may protect a number of creatures equal to your Charisma Modifier (minimum 1) with a +4 bonus to AC. This lasts 1 round per level.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Shield Other (2), Legion's Shield of Faith (3), Hero's Feast (6), Protection From Spells (7)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Divine Protection (1), Legion's Shield of Faith (3), Protection From Spells (7)
 Use: Once/Day.</entry>
   <entry id="50528" lang="en" sex="m">Fate</entry>
   <entry id="50529" lang="en" sex="m">Type of Feat: Domain
@@ -16893,19 +16893,19 @@ Use: Once/Day.</entry>
   <entry id="50541" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Ocean domain.
 Granted Power: None.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Snilloc's Snowball (1), Snilloc's Snowball Swarm (2), Ice Storm (4), Drown (5),  Mass Drown (8)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Snilloc's Snowball (1), Snilloc's Snowball Swarm (2), Drown (5),  Mass Drown (8)
 Use: Automatic.</entry>
   <entry id="50542" lang="en" sex="m">Orc</entry>
   <entry id="50543" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Orc domain.
 Granted Power: Once per day, you may smite a target with a bonus to damage equal to your cleric level. If the target is an Elf or Dwarf, you gain +4 to the attack roll.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Prayer (2), Divine Power (3), Battletide (4), Dominate Monster (8), Power Word: Kill (9)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Prayer (2), Divine Power (3), Dominate Monster (8), Power Word: Kill (9)
 Use: Automatic.</entry>
   <entry id="50544" lang="en" sex="m">Renewal</entry>
   <entry id="50545" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Renewal domain.
 Granted Power: Once per day as a free action, you may gain 1d8 + Charisma modifier hitpoints.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Restoration (1), Restoration (3), Raise Dead (4), Ressurection (6), Mass Greater Restore (9)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Restoration (1), Restoration (3), Raise Dead (4), Ressurection (6)
 Use: Automatic.</entry>
   <entry id="50546" lang="en" sex="m">Retribution</entry>
   <entry id="50547" lang="en" sex="m">Type of Feat: Domain
@@ -16917,7 +16917,7 @@ Use: Automatic.</entry>
   <entry id="50549" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to Rune domain.
 Granted Power: The cleric gains the Scribe Scroll feat.
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Glyph of Warding (3), Recall (4), Greater Glyph of Warding (6), Wall of Greater Dispelling (7)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Glyph of Warding (3), Wall of Greater Dispelling (7), Blackstaff (8)
 Use: Automatic.</entry>
   <entry id="50550" lang="en" sex="m">Scaleykind</entry>
   <entry id="50551" lang="en" sex="m">Type of Feat: Domain
@@ -16956,7 +16956,7 @@ Use: Automatic.</entry>
   <entry id="50559" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Evil domain.
 Granted Power: +1 Caster level on Evil spells (Not yet implemented).
-Bonus Spells: The cleric gains access to the following spells at the specified spell level: Negative Energy Ray (1), Negative Energy Burst (3), Finger of Death (7), Energy Drain (8)
+Bonus Spells: The cleric gains access to the following spells at the specified spell level: Negative Energy Ray (1), Negative Energy Burst (3), Enervation (4), Finger of Death (7), Energy Drain (8)
 Use: Automatic.</entry>
   <entry id="50560" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Fire domain.

@@ -44,6 +44,9 @@ void main()
 	float fDuration = (600.0f * nCasterLvl);
 	string sSword;
 	
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	//Check for undeath

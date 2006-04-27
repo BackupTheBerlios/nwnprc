@@ -28,3 +28,41 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+
+void main()
+{
+	//spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	//var
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nBonus = 2;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = HoursToSeconds(nCasterLvl);
+	
+	//if(is using mushroom powder)
+	{
+		//eval metamagic
+		if (nMetaMagic == METAMAGIC_EMPOWER)
+		{
+			nBonus = nBonus * 1.5;
+		}
+		
+		if (nMetaMagic == METAMAGIC_EXTEND)
+		{
+			fDur = fDur * 2;
+		}
+		
+		effect eLink = EffectSkillIncrease(SKILL_BLUFF, nBonus);
+		       eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERSUADE, nBonus));
+		
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+	}	
+	
+	SPEvilShift(oPC);
+	
+	SPSetSchool();
+}

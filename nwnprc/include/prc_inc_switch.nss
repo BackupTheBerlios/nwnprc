@@ -678,10 +678,15 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
  const string PRC_NEC_TERM_PERMADEATH                = "PRC_NEC_TERM_PERMADEATH" ;
 
  /*
-  * Set this to enable alignment changes for the casting of spells with the Evil descriptor
+  * Set this to enable alignment changes for the casting of spells with the Evil/Good descriptor
   */
  const string PRC_SPELL_ALIGNMENT_SHIFT              = "PRC_SPELL_ALIGNMENT_SHIFT";
 
+/*
+ * Set this to enable destruction of weapons/armor via Claws of the Bebilith
+ */
+ const string PRC_BEBILITH_CLAWS_DESTROY             = "PRC_BEBILITH_CLAWS_DESTROY";
+ 
  /*
   * Set this to give a number of Free cohorts as with leadership
   * This can be used to simulate a party of players
@@ -2463,4 +2468,5 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_MAX_STAT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_BONUS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BEBILITH_CLAWS_DESTROY);
 }

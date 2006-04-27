@@ -22,6 +22,7 @@ const int AOE_MOB_FORM_DOOM                     = 136;
 const int AOE_PER_ENERGYWALL_WIDENED            = 137;
 const int AOE_PER_ESHAMBLER_WIDENED             = 138;
 const int AOE_PER_NULL_PSIONICS_FIELD_WIDENED   = 139;
+const int AOE_PER_ACHAIERAI                     = 206;
 
 // Invisible Area of Effects
 const int VFX_PER_5_FT_INVIS                    = 184;

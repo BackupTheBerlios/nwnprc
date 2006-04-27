@@ -156,6 +156,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD,oPC) > 0) ExecuteScript("prc_contendkord", oPC);
     if(GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH,oPC) > 0)     ExecuteScript("prc_suelarchana", oPC);
     if(GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0)        ExecuteScript("prc_favouredsoul", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SHADOWBLADE, oPC) > 1)         ExecuteScript("prc_sb_shdstlth", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

@@ -139,10 +139,11 @@ void FormOfDoomHB(object oManifester, object oTarget, int nSpellID, int nBeatsRe
         if(GetIsInCombat(oTarget))
         {
             // Spread the attacks out over a round, there's 4 total
+            //bioware splits attacks over 3 flurries/round
             TentacleAttack(oTarget);
-            DelayCommand(1.0f, TentacleAttack(oTarget));
-            DelayCommand(3.0f, TentacleAttack(oTarget));
-            DelayCommand(5.0f, TentacleAttack(oTarget));
+            TentacleAttack(oTarget);
+            DelayCommand(2.0f, TentacleAttack(oTarget));
+            DelayCommand(4.0f, TentacleAttack(oTarget));
         }
 
         // Schedule next HB

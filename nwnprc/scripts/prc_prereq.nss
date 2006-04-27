@@ -15,91 +15,17 @@
 
 // this creates a clone of the PC in limbo, removes the effects and equipment,
 // then stores the results of a ability score query onto the PC's hide.
-void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone);
-void FindTrueAbilityScores()
-{
-    object oPC = OBJECT_SELF;
-    int i = 0;
-    int bFoundLimbo = FALSE;
-    object oLimbo = GetObjectByTag("Limbo",i);
-    location lLimbo;
-    while(!bFoundLimbo && i < 100)
-    {
-        if (GetIsObjectValid(oLimbo))
-        {
-            if (GetName(oLimbo) == "Limbo")
-            {
-                bFoundLimbo = TRUE;
-                lLimbo = Location(oLimbo, Vector(0.0f, 0.0f, 0.0f), 0.0f);
-                break;
-            }
-        }
-        i++;
-        object oLimbo = GetObjectByTag("Limbo",i);
-    }
-    //create copy of the PC for getting base ability scores
-    object oClone;
-    if(bFoundLimbo)
-    {
-        oClone = CopyObject(oPC, lLimbo, OBJECT_INVALID, "PRC_AbilityScore_Clone_" + ObjectToString(oPC));
-    }
-    else
-    {
-        // create a clone but make it completely uninteractive
-        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PRC_AbilityScore_Clone_" + ObjectToString(oPC));
-        effect eClone = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
-               eClone = EffectLinkEffects(eClone, EffectCutsceneGhost());
-               eClone = SupernaturalEffect(eClone);
-        DelayCommand(0.1, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eClone, oClone));
-    }
-
-    ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
-
-    object oItem;
-    int nSlot;
-
-    for (nSlot = 0 ; nSlot < NUM_INVENTORY_SLOTS ; nSlot++)
-    {
-        oItem = GetItemInSlot(nSlot, oClone);
-        //remove if valid, unless in the creature hide slot
-        if (GetIsObjectValid(oItem)) // && nSlot != INVENTORY_SLOT_CARMOUR) -- I'd rather play it safe.
-        {
-            DestroyObject(oItem);
-        }
-    }
-
-    effect eEffect = GetFirstEffect(oClone);
-    while (GetIsEffectValid(eEffect))
-    {
-        RemoveEffect(oClone, eEffect);
-        eEffect = GetNextEffect(oClone);
-    }
-
-    DelayCommand(0.5, FindTrueAbilityScoresPhaseTwo(oPC, oClone));
-    DelayCommand(3.0, DestroyObject(oClone));
-}
-
-void FindTrueAbilityScoresPhaseTwo(object oPC, object oClone)
+void FindTrueAbilityScores(object oPC)
 {
     int i;
 
-    int iStr = GetAbilityScore(oClone, ABILITY_STRENGTH);
-    int iDex = GetAbilityScore(oClone, ABILITY_DEXTERITY);
-    int iCon = GetAbilityScore(oClone, ABILITY_CONSTITUTION);
-    int iInt = GetAbilityScore(oClone, ABILITY_INTELLIGENCE);
-    int iWis = GetAbilityScore(oClone, ABILITY_WISDOM);
-    int iCha = GetAbilityScore(oClone, ABILITY_CHARISMA);
-
-    // hack - the clone gets double the benefit from the Epic Great Attribute feats
-    for (i = FEAT_EPIC_GREAT_STRENGTH_1 ; i <= FEAT_EPIC_GREAT_STRENGTH_10 ; i++) if (GetHasFeat(i, oPC)) iStr--;
-    for (i = FEAT_EPIC_GREAT_DEXTERITY_1 ; i <= FEAT_EPIC_GREAT_DEXTERITY_10 ; i++) if (GetHasFeat(i, oPC)) iDex--;
-    for (i = FEAT_EPIC_GREAT_CONSTITUTION_1 ; i <= FEAT_EPIC_GREAT_CONSTITUTION_10 ; i++) if (GetHasFeat(i, oPC)) iCon--;
-    for (i = FEAT_EPIC_GREAT_INTELLIGENCE_1 ; i <= FEAT_EPIC_GREAT_INTELLIGENCE_10 ; i++) if (GetHasFeat(i, oPC)) iInt--;
-    for (i = FEAT_EPIC_GREAT_WISDOM_1 ; i <= FEAT_EPIC_GREAT_WISDOM_10 ; i++) if (GetHasFeat(i, oPC)) iWis--;
-    for (i = FEAT_EPIC_GREAT_CHARISMA_1 ; i <= FEAT_EPIC_GREAT_CHARISMA_10 ; i++) if (GetHasFeat(i, oPC)) iCha--;
-
+    int iStr = GetAbilityScore(oPC, ABILITY_STRENGTH, TRUE);
+    int iDex = GetAbilityScore(oPC, ABILITY_DEXTERITY, TRUE);
+    int iCon = GetAbilityScore(oPC, ABILITY_CONSTITUTION, TRUE);
+    int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE, TRUE);
+    int iWis = GetAbilityScore(oPC, ABILITY_WISDOM, TRUE);
+    int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA, TRUE);
     object oHide = GetPCSkin(oPC);
-
     SetLocalInt(oHide, "PRC_trueSTR", iStr);
     SetLocalInt(oHide, "PRC_trueDEX", iDex);
     SetLocalInt(oHide, "PRC_trueCON", iCon);
@@ -745,8 +671,7 @@ void RacialHD(object oPC)
     }
 }
 
-// YES, that is main2()... it's the second (delayed) phase of main.
-void main2()
+void main()
 {
      //Declare Major Variables
      object oPC = OBJECT_SELF;
@@ -755,6 +680,9 @@ void main2()
      int iArcSpell1;
      int iDivSpell1;
      int iSnkLevel;
+     
+     FindTrueAbilityScores(oPC);
+     
 
      // Initialize all the variables.
      string sVariable;
@@ -923,11 +851,4 @@ void main2()
      }
      */
 
-}
-
-void main()
-{
-     FindTrueAbilityScores();
-
-     DelayCommand(0.6, main2());
 }

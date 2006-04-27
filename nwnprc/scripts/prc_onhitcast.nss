@@ -33,6 +33,7 @@
 void SetRancorVar(object oPC);
 void SetImprovedRicochetVar(object oPC);
 void DoImprovedRicochet(object oPC, object oTarget);
+void DoBebilithGrapple(object oSpellTarget, object oSpellOrigin);
 
 void main()
 {
@@ -231,11 +232,12 @@ void main()
 			}
 	     }
      }
-
-	    
-		       
-	      
-	    
+    
+    //Claws of the Bebilith 
+    if(GetHasSpellEffect(SPELL_CLAWS_OF_THE_BEBILITH, oSpellOrigin))
+    {
+	    DoBebilithGrapple(oSpellTarget, oSpellOrigin);
+    }	    	    
 
 
     /*//////////////////////////////////////////////////
@@ -481,4 +483,14 @@ void SetImprovedRicochetVar(object oPC)
         DelayCommand(2.0, SetLocalInt(oPC, "CanRicochet", 1));
         DelayCommand(2.1, SetLocalInt(oPC, "ImpRicochetVarRunning", 2));
     }
+}
+
+void DoBebilithGrapple(object oSpellTarget, object oSpellOrigin)
+{
+	//Check for target's armor/shield
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oSpellTarget);
+	object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget);
+		
+	//check switch
+	//if(GetPRCSwitch(PRC_BEBILITH_CLAWS_DESTROY))
 }

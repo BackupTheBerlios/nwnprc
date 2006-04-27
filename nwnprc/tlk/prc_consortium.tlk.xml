@@ -2711,8 +2711,7 @@ Alignment: Chaotic Good.
 Feats: Dodge, Mobility, Spell Focus: Enchantment, Exotic Weapon Proficiency: Whip
 Skills: Bluff 3, Persuade 6.
 Divine Spellcasting: Ability to cast spells of Level 3.
-Class: Cleric.
-Special: Must worship Sune Firehair. (Must have the Good and Protection domains.)
+Special: Must worship Sune Firehair. (Clerics must have two of Charm, Good and Protection domains.)
 
 ABILITIES:
 
@@ -2794,12 +2793,11 @@ Battleguards of Tempus are the soldier-priests of Tempus who specialize in milit
 REQUIREMENTS:
 
 Alignment: Any Non-Lawful.
-Feats: Combat Casting, Weapon Focus (any melee weapon).
+Feats: Combat Casting, Weapon Focus (any melee weapon), Leadership.
 Skills: Craft (Weapon) 5, Craft (Armor) 5 ranks, Lore 5 ranks.
 Base Attack Bonus: 4
-Divine Spellcasting: Ability to cast spells of Level 2.
-Class: Cleric.
-Special: Must worship Tempus. (Must have the War domain.)
+Divine Spellcasting: Level 2
+Special: Must worship Tempus. (Clerics must have the War domain, as well as one of Strength or Protection)
 
 ABILITIES:
 
@@ -4076,7 +4074,7 @@ REQUIREMENTS:
 Alignment: Non-Good and Non-Lawful.
 Feats: Great Fortitude, Weapon Focus (Spear)
 Divine Spellcasting: Can cast 3rd level spells.
-Special: Must worship Talos. (Clerics taking this class must have two of the following domains: Destruction, Fire, Evil.)
+Special: Must worship Talos. (Clerics taking this class must have two of the following domains: Destruction, Fire, Evil, Storm.)
 
 ABILITIES:
 
@@ -4317,7 +4315,7 @@ Skills: Hide 8 ranks, Lore 8 ranks, Move Silently 8 ranks.
 Feats: Exotic Weapon Proficiency, Iron Will,
 Sneak Attack: 1d6.
 Divine Spellcasting: Must be able to cast level 2 spells.
-Special: Must worship Kossuth. (Clerics taking this class must have the Fire and Destruction domains.)
+Special: Must worship Kossuth. (Clerics taking this class must two of Fire, Destruction and Renewal domains.)
 
 ABILITIES:
 

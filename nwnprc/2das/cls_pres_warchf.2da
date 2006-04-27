@@ -1,6 +1,6 @@
 2DA V2.0
 
    LABEL       ReqType ReqParam1     ReqParam2 
-8  Toughness   FEAT    4365            ****      
+8  Leadership   FEAT    4365            ****      
 9  Base_Attack BAB     3             ****      
 10 ScriptVar   VAR     PRC_AllowWarchief 0         

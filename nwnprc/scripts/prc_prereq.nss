@@ -230,15 +230,15 @@ void ManAtArms(object oPC)
 
 void BFZ(object oPC)
 {
-     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-
-
-     if (iCleric > 0)
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
      {
           SetLocalInt(oPC, "PRC_PrereqBFZ", 1);
-          if (GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC) && GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC))
+     	  int nBFZ = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
+     	             GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) + 
+     	             GetHasFeat(FEAT_DOMAIN_POWER_RENEWAL, oPC);          
+          if (nBFZ >= 2)
           {
-          SetLocalInt(oPC, "PRC_PrereqBFZ", 0);
+          	SetLocalInt(oPC, "PRC_PrereqBFZ", 0);
           }
      }
 }
@@ -290,19 +290,49 @@ void EOG(object oPC)
 
 void Stormlord(object oPC)
 {
-     int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
-
-
-     if (iCleric)
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
      {
-     SetLocalInt(oPC, "PRC_PrereqStormL", 1);
-     int iStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER,oPC)+GetHasFeat(FEAT_EVIL_DOMAIN_POWER,oPC);
-          {
-          if (iStorm>1)
-               {
-               SetLocalInt(oPC, "PRC_PrereqStormL", 0);
-               }
-          }
+     	SetLocalInt(oPC, "PRC_PrereqStormL", 1);
+     	int nStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
+     	             GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) + 
+     	             GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
+     	             GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC);
+     	
+     	if (nStorm >= 2)
+        {
+        	SetLocalInt(oPC, "PRC_PrereqStormL", 0);
+        }
+     }
+}
+
+void Tempus(object oPC)
+{
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
+     {
+     	SetLocalInt(oPC, "PRC_PrereqTempus", 1);
+     	int nTempus = GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
+     	             GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC);
+     	
+     	if (nTempus >= 1 && GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC))
+        {
+        	SetLocalInt(oPC, "PRC_PrereqTempus", 0);
+        }
+     }
+}
+
+void Heartwarder(object oPC)
+{
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
+     {
+     	SetLocalInt(oPC, "PRC_PrereqHeartW", 1);
+     	int nStorm = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
+     	             GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) + 
+     	             GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC);
+     	
+     	if (nStorm >= 2)
+        {
+        	SetLocalInt(oPC, "PRC_PrereqHeartW", 0);
+        }
      }
 }
 
@@ -624,6 +654,25 @@ void DragonDis(object oPC)
      }
 }
 
+void SoulEater(object oPC)
+{
+	SetLocalInt(oPC, "PRC_PrereqSoulEater", 1);
+	
+	if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_ABERRATION ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_ANIMAL ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_BEAST ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_DRAGON ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_HUMANOID_MONSTROUS ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_MAGICAL_BEAST ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_FEY ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_GIANT ||
+	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_ELEMENTAL)
+	{
+		SetLocalInt(oPC, "PRC_PrereqSoulEater", 0);
+	}	
+}
+
 void RacialHD(object oPC)
 {
     SetLocalInt(oPC, "PRC_PrereqAberration", 1);
@@ -822,6 +871,9 @@ void main()
      RangerURangerMutex(oPC);
      DragonDis(oPC);
      Thrallherd(oPC);
+     Heartwarder(oPC);
+     SoulEater(oPC);
+     Tempus(oPC);
      RacialHD(oPC);
      // Truly massive debug message flood if activated.
      /*

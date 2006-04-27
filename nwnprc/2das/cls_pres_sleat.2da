@@ -4,11 +4,5 @@
 0  Alertness   FEAT    0         ****      
 1  Base_Attack BAB     5         ****      
 2  Lore        SKILL   7         2         
-3  Illithid    RACE    225       ****      
-4  Ogre        RACE    212       ****      
-5  Minotaur    RACE    218       ****      
-6  Troll       RACE    231       ****      
-7  Neraph      RACE    235       ****      
-8  Pixie       RACE    226       ****      
-9  Rakshasa    RACE    224       ****      
-10 Shadoswyft  RACE    236       ****      
+5  ScriptVar   VAR     PRC_AllowSoulEater 0
+5  ScriptVar   VAR     PRC_PrereqSoulEater 0

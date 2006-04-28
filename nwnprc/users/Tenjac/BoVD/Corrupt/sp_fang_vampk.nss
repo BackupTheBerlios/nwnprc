@@ -45,6 +45,8 @@ void main()
 	//Get or create weapon
 	object oChompers = GetBiteWeapon(oPC, "PRC_UNARMED_S", INVENTORY_SLOT_CWEAPON_B, fDuration);
 	
+	//attack bonus of +10 plus the caster's Strength modifier
+	
 	//Corruption cost
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d6(1), 0);
 	

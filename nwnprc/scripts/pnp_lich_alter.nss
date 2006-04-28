@@ -16,6 +16,7 @@
 
 void main()
 {
+    StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
     int nPCForm = GetTrueForm(OBJECT_SELF);
 
@@ -27,14 +28,17 @@ void main()
         {
             effect eFx = EffectVisualEffect(VFX_COM_CHUNK_RED_SMALL);
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eFx,OBJECT_SELF);
-
             SetCreatureAppearanceType(OBJECT_SELF,APPEARANCE_TYPE_LICH);
+            SetPortraitResRef(OBJECT_SELF, "Lich");
+            SetPortraitId(OBJECT_SELF, 241);
         }
         else if (nLichLevel == 10)
         {
             effect eFx = EffectVisualEffect(VFX_COM_CHUNK_RED_LARGE);
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eFx,OBJECT_SELF);
             SetCreatureAppearanceType(OBJECT_SELF,430); // DemiLich
+            SetPortraitResRef(OBJECT_SELF, "demilich");
+            SetPortraitId(OBJECT_SELF, 724);
         }
     }
     else // Switch to PC

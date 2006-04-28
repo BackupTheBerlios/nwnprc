@@ -90,15 +90,15 @@ void DoDisguise(int nRace, object oTarget = OBJECT_SELF)
     SetCreatureAppearanceType(oTarget, nAppearance);
 
     //need to be delayed a bit otherwise you get "supergnome" and "exploded elf" effects
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN,       d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN,        d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH,      d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH,       d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_TORSO,            d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM,    d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM,     d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP,      d2(), oTarget)));
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP,       d2(), oTarget)));
+    DelayCommand(1.1, SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN,       d2(), oTarget));
+    DelayCommand(1.2, SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN,        d2(), oTarget));
+    DelayCommand(1.3, SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH,      d2(), oTarget));
+    DelayCommand(1.4, SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH,       d2(), oTarget));
+    DelayCommand(1.5, SetCreatureBodyPart(CREATURE_PART_TORSO,            d2(), oTarget));
+    DelayCommand(1.6, SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM,    d2(), oTarget));
+    DelayCommand(1.7, SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM,     d2(), oTarget));
+    DelayCommand(1.8, SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP,      d2(), oTarget));
+    DelayCommand(1.9, SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP,       d2(), oTarget));
     
     //dont do these body parts, they dont have tattoos and weird things could happen
     //SetCreatureBodyPart(CREATURE_PART_BELT,             d2(), oTarget);
@@ -111,15 +111,15 @@ void DoDisguise(int nRace, object oTarget = OBJECT_SELF)
     //SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT,       d2(), oTarget);
     //SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT,        d2(), oTarget);
     //randomise the head
-    AssignCommand(oTarget, ActionDoCommand(SetCreatureBodyPart(CREATURE_PART_HEAD, Random(nHeadMax)+1, oTarget)));
+    DelayCommand(2.0, SetCreatureBodyPart(CREATURE_PART_HEAD, Random(nHeadMax)+1, oTarget));
     
     //remove any wings/tails
     SetCreatureWingType(CREATURE_WING_TYPE_NONE, oTarget);
     SetCreatureTailType(CREATURE_TAIL_TYPE_NONE, oTarget);
 
     int nPortraitID = Random(nPortraitMax-nPortraitMin+1)+nPortraitMin;
-    string sPortraitResRef = Get2DAString("portraits", "BaseResRef", nPortraitID);
+    string sPortraitResRef = Get2DACache("portraits", "BaseResRef", nPortraitID);
     sPortraitResRef = GetStringLeft(sPortraitResRef, GetStringLength(sPortraitResRef)-1); //trim the trailing _
-    SetPortraitId(oTarget, nPortraitID); //do portaitID first cos it overrides resref
     SetPortraitResRef(oTarget, sPortraitResRef);
+    SetPortraitId(oTarget, nPortraitID);
 }

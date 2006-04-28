@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 // disguise for rak
 
+#include "pnp_shft_poly"
 #include "pnp_shft_main"
 
 void main()
@@ -25,12 +26,14 @@ void main()
     {
         effect eFx = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
         ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,OBJECT_SELF);
-        SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_HUMAN_NPC_FEMALE_12);
+        //SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_HUMAN_NPC_FEMALE_12);
+        //any of the normal races will do
+        DoDisguise(Random(7));
     }
     else // Switch to PC
     {
         effect eFx = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eFx,OBJECT_SELF);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT,eFx,OBJECT_SELF);
         //re-use unshifter code from shifter instead
         //this will also remove complexities with lich/shifter characters
         SetShiftTrueForm(OBJECT_SELF);

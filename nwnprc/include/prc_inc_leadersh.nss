@@ -207,8 +207,90 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
         //randomize its appearance using DoDisguise
         if(GetResRef(oCohort) != "")
         {
-            AssignCommand(oCohort, SetName(oCohort, RandomName()+" "+RandomName()));
+            string sName;
+            //first name
+            switch(MyPRCGetRacialType(oCohort))
+            {
+                case RACIAL_TYPE_DWARF: 
+                    if(GetGender(oCohort) == GENDER_FEMALE)
+                        sName += RandomName(NAME_FIRST_DWARF_FEMALE);
+                    else
+                        sName += RandomName(NAME_FIRST_DWARF_MALE);
+                    break;
+                case RACIAL_TYPE_ELF: 
+                    if(GetGender(oCohort) == GENDER_FEMALE)
+                        sName += RandomName(NAME_FIRST_ELF_FEMALE);
+                    else
+                        sName += RandomName(NAME_FIRST_ELF_MALE);
+                    break;
+                case RACIAL_TYPE_GNOME: 
+                    if(GetGender(oCohort) == GENDER_FEMALE)
+                        sName += RandomName(NAME_FIRST_GNOME_FEMALE);
+                    else
+                        sName += RandomName(NAME_FIRST_GNOME_MALE);
+                    break;
+                case RACIAL_TYPE_HUMAN: 
+                    if(GetGender(oCohort) == GENDER_FEMALE)
+                        sName += RandomName(NAME_FIRST_HUMAN_FEMALE);
+                    else
+                        sName += RandomName(NAME_FIRST_HUMAN_MALE);
+                    break;
+                case RACIAL_TYPE_HALFELF: 
+                    if(GetGender(oCohort) == GENDER_FEMALE)
+                        sName += RandomName(NAME_FIRST_HALFELF_FEMALE);
+                    else
+                        sName += RandomName(NAME_FIRST_HALFELF_MALE);
+                    break;
+                case RACIAL_TYPE_HALFORC: 
+                    if(GetGender(oCohort) == GENDER_FEMALE)
+                        sName += RandomName(NAME_FIRST_HALFORC_FEMALE);
+                    else
+                        sName += RandomName(NAME_FIRST_HALFORC_MALE);
+                    break;
+                case RACIAL_TYPE_HALFLING: 
+                    if(GetGender(oCohort) == GENDER_FEMALE)
+                        sName += RandomName(NAME_FIRST_HALFLING_FEMALE);
+                    else
+                        sName += RandomName(NAME_FIRST_HALFLING_MALE);
+                    break;
+            }
+            sName += " ";
+            //surname
+            switch(MyPRCGetRacialType(oCohort))
+            {
+                case RACIAL_TYPE_DWARF: 
+                    sName += RandomName(NAME_LAST_DWARF);
+                    break;
+                case RACIAL_TYPE_ELF: 
+                    sName += RandomName(NAME_LAST_ELF);
+                    break;
+                case RACIAL_TYPE_GNOME: 
+                    sName += RandomName(NAME_LAST_GNOME);
+                    break;
+                case RACIAL_TYPE_HUMAN: 
+                    sName += RandomName(NAME_LAST_HUMAN);
+                    break;
+                case RACIAL_TYPE_HALFELF: 
+                    sName += RandomName(NAME_LAST_HALFELF);
+                    break;
+                case RACIAL_TYPE_HALFORC: 
+                    sName += RandomName(NAME_LAST_HALFORC);
+                    break;
+                case RACIAL_TYPE_HALFLING: 
+                    sName += RandomName(NAME_LAST_HALFLING);
+                    break;
+            }
+            //change the name
+            AssignCommand(oCohort, SetName(oCohort, sName));
+            
+            //use disguise code to alter head etc
             DoDisguise(MyPRCGetRacialType(oCohort), oCohort);
+            
+            //DoDisguise removed wings/tails need to re-add
+            if(GetRacialType(oCohort) == RACIAL_TYPE_FEYRI)
+                SetCreatureWingType(CREATURE_WING_TYPE_DEMON, oCohort);
+            else if(GetRacialType(oCohort) == RACIAL_TYPE_AVARIEL)
+                SetCreatureWingType(CREATURE_WING_TYPE_BIRD, oCohort);
         }
 
         //if its a custom made cohort, need to cancel GreatX feats

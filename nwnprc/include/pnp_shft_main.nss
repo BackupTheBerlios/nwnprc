@@ -653,7 +653,19 @@ void SetShift_02(object oPC, object oTarget)
         SetCreatureAppearanceType(oPC,iAppearance);
     else
         SetCreatureAppearanceType(oPC,GetAppearanceType(oTarget));
-
+    //do 1.67 stuff
+    //wing/tails
+    SetCreatureWingType(GetCreatureWingType(oTarget), oPC);
+    SetCreatureTailType(GetCreatureTailType(oTarget), oPC);
+    //portrait
+    SetPortraitResRef(oPC, GetPortraitResRef(oTarget));
+    SetPortraitId(oPC, GetPortraitId(oTarget));
+    //bodyparts
+    for(i=0;i<=20;i++)
+    {
+        SetCreatureBodyPart(i, GetCreatureBodyPart(i, oTarget), oPC);
+    }    
+        
     // For spells to make sure they now treat you like the new race
     SetLocalInt(oPC,"RACIAL_TYPE",MyPRCGetRacialType(oTarget)+1);
 
@@ -2000,7 +2012,7 @@ int GetTrueForm(object oPC)
     }
     else
     {
-        nPCForm = GetAppearanceType(oPC);
+        nPCForm = StringToInt(Get2DACache("racialtypes", "Appearance", GetRacialType(oPC)));
     }
 
     return nPCForm;
@@ -2122,6 +2134,29 @@ int SetShiftFromTemplateValidate(object oPC, string sTemplate, int iEpic)
     return bRetValue;
 }
 
+//returns the PC to their original form
+//purely visual
+void SetVisualTrueForm(object oPC)
+{
+    if(GetPersistantLocalInt(oPC,"AppearanceIsStored") == 6)
+    {
+        SetCreatureAppearanceType(oPC, GetPersistantLocalInt(oPC,"AppearanceStored"));
+        SetPortraitId(oPC, GetPersistantLocalInt(oPC,            "AppearanceStoredPortraitID"));
+        SetPortraitResRef(oPC, GetPersistantLocalString(oPC,     "AppearanceStoredPortraitResRef"));
+        SetCreatureTailType(GetPersistantLocalInt(oPC,           "AppearanceStoredTail"), oPC);
+        SetCreatureWingType(GetPersistantLocalInt(oPC,           "AppearanceStoredWing"), oPC);
+        int i;
+        for(i=0;i<=20;i++)
+        {
+            SetCreatureBodyPart(i, GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i)), oPC);
+        }    
+    }
+    else
+        //hasnt been previously stored
+        //use racial lookup
+        SetCreatureAppearanceType(oPC, GetTrueForm(oPC));
+}
+
 
 // Transforms the oPC back to thier true form if they are shifted
 void SetShiftTrueForm(object oPC)
@@ -2210,23 +2245,7 @@ void SetShiftTrueForm(object oPC)
     }
 
     // Change the PC appearance back to TRUE form
-    if(GetPersistantLocalInt(oPC,"AppearanceIsStored") == 6)
-    {
-        SetCreatureAppearanceType(oPC, GetPersistantLocalInt(oPC,"AppearanceStored"));
-        SetPortraitId(oPC, GetPersistantLocalInt(oPC,            "AppearanceStoredPortraitID"));
-        SetPortraitResRef(oPC, GetPersistantLocalString(oPC,     "AppearanceStoredPortraitResRef"));
-        SetCreatureTailType(GetPersistantLocalInt(oPC,           "AppearanceStoredTail"), oPC);
-        SetCreatureWingType(GetPersistantLocalInt(oPC,           "AppearanceStoredWing"), oPC);
-        int i;
-        for(i=0;i<=20;i++)
-        {
-            SetCreatureBodyPart(i, GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i)), oPC);
-        }    
-    }
-    else
-        //hasnt been previously stored
-        //use racial lookup
-        SetCreatureAppearanceType(oPC, GetTrueForm(oPC));
+    SetVisualTrueForm(oPC);
 
     // Set race back to unused
     SetLocalInt(oPC, "RACIAL_TYPE", 0);

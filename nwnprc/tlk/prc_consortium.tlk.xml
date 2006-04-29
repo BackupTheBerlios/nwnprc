@@ -1732,7 +1732,7 @@ Level
 
 BONUS MANIFESTING
 
-Upon reaching levels 2, 3, 4, 5, 6 the Sanctified Mind gains a new manifester level, increasing his power points, total powers known, and maximum power level.</entry>  
+Upon reaching levels 2, 3, 4, 5, 6 the Sanctified Mind gains a new manifester level, increasing his power points, total powers known, and maximum power level.</entry>
   <entry id="45356" lang="en" sex="m">Partition Mind</entry>
   <entry id="45357" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Sanctified Mind level 1.
@@ -1777,7 +1777,7 @@ REQUIREMENTS:
 
 Alignment: Non-Good.
 Feats: Requiem (Perform 8, Bardic Music class feature)
-Skills: Lore 4 ranks, Perform 8. 
+Skills: Lore 4 ranks, Perform 8.
 Special: Must possess the Bardic Music class feature.
 
 ABILITIES:
@@ -1841,11 +1841,11 @@ Level
 2: Dispelling Strike 1/day - Subject is the target of a Greater Dispel Magic.
 3: Extended Spellstrength - All Suel Archanamach spells cast on himself are extended.
 4: Ignore Spell Failure 10%
-5: 
+5:
 6: Dispelling Strike 2/day
 7: Ignore Spell Failure 15%
-8: 
-9: 
+8:
+9:
 10: Dispelling Strike 3/day, Ignore Spell Failure 20%
 
 SPELLCASTING
@@ -1896,25 +1896,25 @@ The Favoured Soul follows the path of the cleric but is able to channel divine p
 ABILITIES:
 
 Level
-1: 
-2: 
+1:
+2:
 3: Deity's Weapon Focus - Gain Weapon Focus in your diety's chosen weapon.
-4: 
+4:
 5: Energy Resistance - Gain 10/- resistance to chosen element.
-6: 
-7: 
-8: 
-9: 
+6:
+7:
+8:
+9:
 10: Energy Resistance - Choose a second element to resist.
-11: 
+11:
 12: Deity's Weapon Specialization
-13: 
-14: 
+13:
+14:
 15: Energy Resistance - Choose a third element to resist.
-16: 
+16:
 17: Wings - The Favoured Soul gains wings and counts as a flying creature.
-18: 
-19: 
+18:
+19:
 20: Damage Reduction - Gain Damage Reduction 10/+3
 
 SPELLCASTING
@@ -1993,7 +1993,6 @@ Use: Automatic.</entry>
 Prerequisite: Favoured Soul level 20.
 Specifics: You gain Damage Reduction 10/+3.
 Use: Automatic.</entry>
-  
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>
   <entry id="45460" lang="en" sex="m">Elemental Focus +6</entry>
@@ -3689,6 +3688,7 @@ REQUIREMENTS:
 Caster level: Caster level 11+ in any class. Psionic manifester level does not count.
 Alignment: Any non-good.
 Feat: Craft Wondrous Item.
+Must not have any levels in Baelnorn.
 
 To gain lich powers:
 Creation of first stage of phylactery. (First level up in the Lich class, then create your phylactery to gain your Lich powers. Each level, this phylactery must be upgraded. Costs 40,000 gold and 1,600 XP.)
@@ -8391,7 +8391,7 @@ Duration: 1 round/level
 Power Points: 3
 Metapsionics: Extend
 
-Your natural weapons cause additional pain. Each successful attack you make with a natural weapon deals an extra 1d4 points of damage to the target.</entry>
+Your natural weapons cause additional pain. Each successful attack you make with a natural weapon deals an extra 1d4 points of bludgeoning damage to the target.</entry>
   <entry id="46925" lang="en" sex="m">Prevenom</entry>
   <entry id="46926" lang="en" sex="m">Psychometabolism (Creation)
 Level: Psychic warrior 1
@@ -9117,9 +9117,12 @@ Level:
 26: 11 Epic Wild Shape/day.
 29: 13 Epic Wild Shape/day.
 </entry>
-  <entry id="47155" lang="en" sex="m">Anomalous Form</entry>
-  <entry id="47156" lang="en" sex="m">Anomalous Form
-This feat stops shifters from taking this creatures shape.</entry>
+  <entry id="47155" lang="en" sex="m">Archetypal Form</entry>
+  <entry id="47156" lang="en" sex="m">Type of Feat: DM Tool - "The dirty hobbitses will not get their hands on my preciousss"
+Prerequisite: A creature you don't want people to polymorph into
+Specifics: The presence of this feat on a creature, as tested for using GetHasFeat(), prevents the use of it as a template
+by users of PRC polymorphing mechanics (PnP Shifter, Soul Eater, etc.)
+Use: Automatic, used in the function GetCanShiftIntoCreature() in prc_inc_shifting</entry>
   <entry id="47157" lang="en" sex="m">Soak 4 Damage</entry>
   <entry id="47158" lang="en" sex="m">Soak 6 Damage</entry>
   <entry id="47159" lang="en" sex="m">Soak 7 Damage</entry>
@@ -10426,9 +10429,9 @@ Level
 1: Feat of Strength: Add your cleric and Mighty Contender levels to determine the boost from the Strength Domain power.
 2:
 3: Surge of Strength: The boost from the Strength domain now lasts 1d4+1 rounds.
-4: 
+4:
 5: Strength Increase +1
-6: 
+6:
 7: Feat of Power: For the first round of the Strength boost, you gain 1.5 * the normal boost.
 8:
 9: Strength Increase +2
@@ -16410,8 +16413,8 @@ Special Abilities:
 - Skill Bonus (Craft Trap): +2 racial bonus to Craft Trap checks.
 - Skill Bonus (Listen): +2 racial bonus to Listen checks.
 - Skill Bonus (Spot): +2 racial bonus to Spot checks.
-- Uncanny Dodge: Brownies retains his Dex bonus to AC, even if caught flat-footed or attacked by a hidden or invisible creature. 
-- Evasion: Whenever a Reflex save is allowed for half damage, Brownies instead takes no damage if they succeed at the save. 
+- Uncanny Dodge: Brownies retains his Dex bonus to AC, even if caught flat-footed or attacked by a hidden or invisible creature.
+- Evasion: Whenever a Reflex save is allowed for half damage, Brownies instead takes no damage if they succeed at the save.
 - Hide in Plain Sight: Brownies are able to use the Hide skill even while being observed.
 - Spell-Like Abilities: 1/day - Confusion. Caster level 7th plus character level. The DC is Charisma-based.
 - Fey: Brownies are considered Fey for the purpose of spells.</entry>
@@ -16827,7 +16830,7 @@ Component(s): Verbal, Somatic
 Range: Short
 Area of Effect / Target: Single
 Duration: Instant
-Additional Counter Spells: 
+Additional Counter Spells:
 Save: None
 Spell Resistance: Yes
 
@@ -17456,6 +17459,28 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
 Prerequisite: Marshal
 Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to your Wisdom.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40.
 Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any given time.</entry>
+  <entry id="51110" lang="en" sex="m">You need</entry>
+  <entry id="51111" lang="en" sex="m">more character levels before you can take on that form.</entry>
+  <entry id="51112" lang="en" sex="m">You cannot polymorph into a PC.</entry>
+  <entry id="51113" lang="en" sex="m">Target cannot be polymorphed into.</entry>
+  <entry id="51114" lang="en" sex="m">The module settings prevent this creature from being polymorphed into.</entry>
+  <entry id="51115" lang="en" sex="m">You cannot use PnP Shifter abilities to polymorph into this creature.</entry>
+  <entry id="51116" lang="en" sex="m">more PnP Shifter levels before you can take on that form.</entry>
+  <entry id="51117" lang="en" sex="m">Your inventory is too full for the PRC Shifting system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again.</entry>
+  <entry id="51118" lang="en" sex="m">The PRC Shifting system will not work while you are affected by a polymorph effect. Please remove it before trying again.</entry>
+  <entry id="51119" lang="en" sex="m"></entry>
+  <entry id="51120" lang="en" sex="m"></entry>
+  <entry id="51121" lang="en" sex="m"></entry>
+  <entry id="51122" lang="en" sex="m"></entry>
+  <entry id="51123" lang="en" sex="m"></entry>
+  <entry id="51124" lang="en" sex="m"></entry>
+  <entry id="51125" lang="en" sex="m"></entry>
+  <entry id="51126" lang="en" sex="m"></entry>
+  <entry id="51127" lang="en" sex="m"></entry>
+  <entry id="51128" lang="en" sex="m"></entry>
+  <entry id="51129" lang="en" sex="m"></entry>
+
+
   <entry id="51200" lang="en" sex="m">This conversation manages your augmentation profiles and augmentation quickselections.</entry>
   <entry id="51201" lang="en" sex="m">View / modify augmentation profiles</entry>
   <entry id="51202" lang="en" sex="m">View / modify quickselections</entry>
@@ -17478,6 +17503,7 @@ This change is irreversible, are you sure you want to do this?</entry>
   <entry id="51216" lang="en" sex="m">Clear profile</entry>
   <entry id="51217" lang="en" sex="m">Save profile</entry>
   <entry id="51218" lang="en" sex="m">Return to main menu without saving</entry>
+  <entry id="51219" lang="en" sex="m">You have lost concentration on the power you were attempting to manifest!</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4
@@ -17685,7 +17711,7 @@ Baelnorns are elves who have sought undeath to serve their families, communities
 
 REQUIREMENTS:
 
-Race: Elf .
+Race: Elf.
 Skills: Concentration 5, Spellcraft 14.
 Class : 11 levels in Sorceror, Wizard, or Cleric
 Alignment: Any Good
@@ -17876,7 +17902,7 @@ Prerequisite:  Baelnorn Level 3
 Description: This allows the baelnorn to end the projection affect at will.</entry>
   <entry id="52075" lang="en" sex="m">Ultravision
 </entry>
-  <entry id="52076" lang="en" sex="m">Feat Type: Class Feat 
+  <entry id="52076" lang="en" sex="m">Feat Type: Class Feat
 Description:  The character has Ultravision.</entry>
   <entry id="52077" lang="en" sex="m">Unseen Weapon: Unerring Strike</entry>
   <entry id="52078" lang="en" sex="m">Feat Type: Class Feat
@@ -21760,7 +21786,7 @@ Use: Automatic.</entry>
   <entry id="55137" lang="en" sex="m">Ghost-Faced Killers</entry>
   <entry id="55138" lang="en" sex="m">ghost-faced killer</entry>
   <entry id="55139" lang="en" sex="m">(PRESTIGE CLASS)
-The ghost-faced killer has the ability to disappear into an invisible or ethereal void at will, on a limited basis.  In addition, he gradually learns more an more vulnerable places to attack his victims using Sudden Strike (Sneak Attack).  By far, what differentiates him from other assassin style classes is his ability to literally frighten his victim to death. 
+The ghost-faced killer has the ability to disappear into an invisible or ethereal void at will, on a limited basis.  In addition, he gradually learns more an more vulnerable places to attack his victims using Sudden Strike (Sneak Attack).  By far, what differentiates him from other assassin style classes is his ability to literally frighten his victim to death.
 Frightful attack may kill the intended victim, or it may only shake them up, but not only does it affect the victim, it has the ability to frighten all those who witness this horrible attack.  The ghost-faced killer and his friends are not affected by this secondary fear effect.
 
 - Hit Die: d8

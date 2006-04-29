@@ -23,6 +23,20 @@ void DamageReduction(object oPC, object oSkin, int iLevel)
     SetLocalInt(oSkin, "FavouredSoulDR", iLevel);
 }
 
+void SetWings(object oPC)
+{
+	// Neutral wing type
+	int nWings = CREATURE_WING_TYPE_BIRD;
+	int nAlign = GetAlignmentGoodEvil(oPC);
+	if (nAlign == ALIGNMENT_EVIL) nWings = CREATURE_WING_TYPE_DEMON;
+	else if (nAlign == ALIGNMENT_GOOD) nWings = CREATURE_WING_TYPE_ANGEL;
+	
+	// Only need to do this once
+	if (GetCreatureWingType(oPC) == nWings) return;
+	
+	SetCreatureWingType(nWings, oPC);
+}
+
 void main()
 {
     	//Declare main variables.
@@ -57,8 +71,8 @@ void main()
     		ResistElement(oPC, oSkin, IP_CONST_DAMAGERESIST_10, IP_CONST_DAMAGETYPE_SONIC, sVar);
     	}  
     
-    	
-    	DamageReduction(oPC, oSkin, IP_CONST_DAMAGEREDUCTION_3);
+    	if (nClass >= 17) SetWings(oPC);
+    	if (nClass >= 20) DamageReduction(oPC, oSkin, IP_CONST_DAMAGEREDUCTION_3);
     
     	// This ability is gained at level 3
     	if (nClass >= 3)

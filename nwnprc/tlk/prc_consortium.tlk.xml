@@ -1811,12 +1811,188 @@ Use: Selected.</entry>
   <entry id="45379" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Dirgesinger level 4.
 Specifics: All enemies able to hear the Dirgesinger must make a save vs 10 + ranks in Perform, or take 1d6 points of Strength and Dexterity Damage. This counts as a use of the Bardic Music class feature.
-Use: Automatic.</entry>
-  <entry id="45380" lang="en" sex="m">Power Resistance</entry>
+Use: Selected.</entry>
+  <entry id="45380" lang="en" sex="m">Song of Awakening</entry>
   <entry id="45381" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Dirgesinger level 5.
 Specifics: You animate a single undead creature for 10 rounds. The creature animated is identical to the appropriate True Necromancer creation. This counts as a use of the Bardic Music class feature.
 Use: Selected.</entry>
+  <entry id="45382" lang="en" sex="m">Suel Archanamach</entry>
+  <entry id="45383" lang="en" sex="m">Suel Archanamachs</entry>
+  <entry id="45384" lang="en" sex="m">suel archanamach</entry>
+  <entry id="45385" lang="en" sex="m">(PRESTIGE CLASS)
+The ancient Suel Empire was known for the great and terrible power wielded by its mighty archmages. Suloise sorcerers delved deep into arcane lore that other folk avoided, unearthing many dark and dangerous secrets in the process. The Suel Empire was ruled by noble families headed by mages of unsurpassed power, and the countless rivalries and vendettas between these families led to the rise of an elite school of combat training: the way of the Archanamach. Conditioned for loyalty, determination, and absolute obedience, Archanamachs were skillful warriors who studied arcane magics for the express purpose of learning how to slay powerful wizards.
+    In the days of the Suel Empire, the Archanamachs were guards for their archmage masters, serving the greatest Suel wizards with sword and spell. They were also assassins and spies trained to slay powerful wizards of rival families, as well as defend the wizards of their own families. In hundreds of secret duels of spell and steel, Archanamachs practiced their art against others of their kind, learning their skills from hidden Archanamach academies.
+
+- Hit Die: d8
+- Proficiencies: A Suel Archanamach gains no additional proficiencies.
+- Skill Points: 4 + Int Modifier
+
+REQUIREMENTS:
+
+Base Attack Bonus: +6.
+Feats: Weapon Proficiency (Martial), Combat Casting, Iron Will
+Skills: Concentration 4 ranks, Jump 4 ranks, Spellcraft 5 ranks, Tumble 4 ranks.
+
+ABILITIES:
+
+Level
+1: Ignore Spell Failure 5%, Tenacious Spells - Add 6 to the DC to dispel a Suel Archanamach spell.
+2: Dispelling Strike 1/day - Subject is the target of a Greater Dispel Magic.
+3: Extended Spellstrength - All Suel Archanamach spells cast on himself are extended.
+4: Ignore Spell Failure 10%
+5: 
+6: Dispelling Strike 2/day
+7: Ignore Spell Failure 15%
+8: 
+9: 
+10: Dispelling Strike 3/day, Ignore Spell Failure 20%
+
+SPELLCASTING
+
+To cast a spell, the Suel Archanamach must have a Charisma score of 10 + the spell level. A Suel Archanamach's caster level is equal to his class level. He has access to any spell from the Abjuration, Divination, Illusion, or Transmutation school on the Sorcerer spell list, and casts spells as a Sorcerer does.
+
+Spells per day:
+1:  1 - - - -
+2:  1 0 - - -
+3:  2 1 - - -
+4:  2 2 0 - -
+5:  3 2 1 - -
+6:  3 3 2 0 -
+7:  3 3 2 1 -
+8:  4 3 3 2 0
+9:  4 4 3 2 1
+10: 4 4 3 3 2</entry>
+  <entry id="45386" lang="en" sex="m">Ignore Spell Failure</entry>
+  <entry id="45387" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Suel Archanamach level 1.
+Specifics: The Suel Archanamach reduces his Arcane Spell Failure chance by 5% at level 1, and by 5% more for every three levels thereafter.
+Use: Automatic.</entry>
+  <entry id="45388" lang="en" sex="m">Tenacious Spells</entry>
+  <entry id="45389" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Suel Archanamach level 1.
+Specifics: The Suel Archanamach's spells are particularly hard to dispel; add +6 to the DC required to dispel the Archanamach's spells.
+Use: Automatic.</entry>
+  <entry id="45390" lang="en" sex="m">Dispelling Strike</entry>
+  <entry id="45391" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Suel Archanamach level 2.
+Specifics: Once per day, a Suel Archanamach can attempt a dispelling strike. If he hits on his melee attack, the victim is subject to a targeted Greater Dispel Magic, with a dispel check of 1d20 + class level + 6. At 6th level, he can use this twice per day, and three times at 10th.
+Use: Selected.</entry>
+  <entry id="45392" lang="en" sex="m">Extended Spellstrength</entry>
+  <entry id="45393" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Suel Archanamach level 3.
+Specifics: All Suel Archanamach spells which he casts on himself are autmatically Extended.
+Use: Automatic.</entry>
+  <entry id="45394" lang="en" sex="m">Favoured Soul</entry>
+  <entry id="45395" lang="en" sex="m">Favoured Souls</entry>
+  <entry id="45396" lang="en" sex="m">favoured soul</entry>
+  <entry id="45397" lang="en" sex="m">(BASE CLASS)
+The Favoured Soul follows the path of the cleric but is able to channel divine power with suprising ease. She is able to perform the same tasks as her fellow divine spellcasters but with virtually no study; to her, it comes naturally. Scholars wonder if Favoured Souls have traces of outsider blood from unions. holy or unholy, centuries ago and generations removed. Ohters suggest that divine training of the proper type awakens the ability, or that Favoured Souls are simply imbued with their gifts by their gods when they begin the cleric's path. In any case, Favoured Souls cast their spells naturally, as much through force of personality as through study. Though this gives them extraordinary divine abilities no normal person could ever match, they see their gift as a call to action, and so in some ways lag behind their more studious colleagues.
+
+- Hit Die: d8
+- Proficiencies: A Favoured Soul gains proficiencies.with Simple Weapons, Light and Medium Armour, and Shields.
+- Skill Points: 2 + Int Modifier
+
+ABILITIES:
+
+Level
+1: 
+2: 
+3: Deity's Weapon Focus - Gain Weapon Focus in your diety's chosen weapon.
+4: 
+5: Energy Resistance - Gain 10/- resistance to chosen element.
+6: 
+7: 
+8: 
+9: 
+10: Energy Resistance - Choose a second element to resist.
+11: 
+12: Deity's Weapon Specialization
+13: 
+14: 
+15: Energy Resistance - Choose a third element to resist.
+16: 
+17: Wings - The Favoured Soul gains wings and counts as a flying creature.
+18: 
+19: 
+20: Damage Reduction - Gain Damage Reduction 10/+3
+
+SPELLCASTING
+
+To cast a spell, the Favoured Soul must have a Charisma score of 10 + the spell level. The DC of a Favoured Soul's spell is 10 + Spell Level + Wisdom Modifier. A Favoured Soul's caster level is equal to his class level. He has access to any spell from the Cleric spell list, and casts spells as a Sorcerer does.
+
+Spells per day:
+Level: 0 1 2 3 4 5 6 7 8 9
+
+1:     5 3 - - - - - - - -
+2:     6 4 - - - - - - - -
+3:     6 5 - - - - - - - -
+4:     6 6 3 - - - - - - -
+5:     6 6 4 - - - - - - -
+6:     6 6 5 3 - - - - - -
+7:     6 6 6 4 - - - - - -
+8:     6 6 6 5 3 - - - - -
+9:     6 6 6 6 4 - - - - -
+10:    6 6 6 6 5 3 - - - -
+11:    6 6 6 6 6 4 - - - -
+12:    6 6 6 6 6 5 3 - - -
+13:    6 6 6 6 6 6 4 - - -
+14:    6 6 6 6 6 6 5 3 - -
+15:    6 6 6 6 6 6 6 4 - -
+16:    6 6 6 6 6 6 6 5 3 -
+17:    6 6 6 6 6 6 6 6 4 -
+18:    6 6 6 6 6 6 6 6 5 3
+19:    6 6 6 6 6 6 6 6 6 4
+20:    6 6 6 6 6 6 6 6 6 6
+
+Spells Known
+Level: 0 1 2 3 4 5 6 7 8 9
+
+1:     4 3 - - - - - - - -
+2:     5 3 - - - - - - - -
+3:     5 4 - - - - - - - -
+4:     6 4 3 - - - - - - -
+5:     6 5 3 - - - - - - -
+6:     7 5 4 3 - - - - - -
+7:     7 6 4 3 - - - - - -
+8:     8 6 5 4 3 - - - - -
+9:     8 6 5 4 3 - - - - -
+10:    9 6 6 5 4 3 - - - -
+11:    9 6 6 5 4 3 - - - -
+12:    9 6 6 6 5 4 3 - - -
+13:    9 6 6 6 5 4 3 - - -
+14:    9 6 6 6 6 5 4 3 - -
+15:    9 6 6 6 6 5 4 3 - -
+16:    9 6 6 6 6 6 5 4 3 -
+17:    9 6 6 6 6 6 5 4 3 -
+18:    9 6 6 6 6 6 6 5 4 3
+19:    9 6 6 6 6 6 6 5 4 3
+20:    9 6 6 6 6 6 6 6 5 4</entry>
+  <entry id="45398" lang="en" sex="m">Deity's Weapon Focus</entry>
+  <entry id="45399" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Favoured Soul level 3.
+Specifics: You gain Weapon Focus in your deity's chosen weapon.
+Use: Automatic.</entry>
+  <entry id="45400" lang="en" sex="m">Energy Resistance</entry>
+  <entry id="45401" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Favoured Soul level 5.
+Specifics: Chose an energy type. You gain 10/- Resistance to damage from that energy type. At level 10 and level 15 you may choose a second and third energy type to gain resistance to.
+Use: Automatic.</entry>
+  <entry id="45402" lang="en" sex="m">Deity's Weapon Specialization</entry>
+  <entry id="45403" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Favoured Soul level 12.
+Specifics: You gain Weapon Specialization in your deity's chosen weapon.
+Use: Automatic.</entry>
+  <entry id="45404" lang="en" sex="m">Wings</entry>
+  <entry id="45405" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Favoured Soul level 17.
+Specifics: You gain wings appropriate to your alignment, and count as a flying creature. The primary benefits is this makes jump checks much easier.
+Use: Automatic.</entry>
+  <entry id="45406" lang="en" sex="m">Damage Reduction</entry>
+  <entry id="45407" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Favoured Soul level 20.
+Specifics: You gain Damage Reduction 10/+3.
+Use: Automatic.</entry>
   
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>

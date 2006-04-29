@@ -663,7 +663,7 @@ void SetShift_02(object oPC, object oTarget)
     //bodyparts
     for(i=0;i<=20;i++)
     {
-        SetCreatureBodyPart(i, GetCreatureBodyPart(i, oTarget), oPC);
+        DelayCommand(1.0, SetCreatureBodyPart(i, GetCreatureBodyPart(i, oTarget), oPC));
     }    
         
     // For spells to make sure they now treat you like the new race
@@ -2148,7 +2148,9 @@ void SetVisualTrueForm(object oPC)
         int i;
         for(i=0;i<=20;i++)
         {
-            SetCreatureBodyPart(i, GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i)), oPC);
+            DelayCommand(1.0, 
+                SetCreatureBodyPart(i,  
+                    GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i)), oPC));
         }    
     }
     else

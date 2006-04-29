@@ -627,10 +627,10 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
                 {
                     nDamageTotal = nDamageTotal / 2;
                     
-                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
-                    	{
-                		nDamageTotal = 0;
-                    	}                     
+                        if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                        {
+                        nDamageTotal = 0;
+                        }                     
                 }
                 effect eVis = EffectVisualEffect(vfx_impactHurt);
                 effect eDam = EffectDamage(nDamageTotal,DAMAGE_TYPE_NEGATIVE);
@@ -1575,13 +1575,8 @@ int spellsIsFlying(object oCreature)
         case 472: // Hive mother
         bFlying = TRUE;
     }
-    int nRace = GetRacialType(oCreature);
     if(!bFlying
-        && (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oCreature) >= 9
-            || GetLevelByClass(CLASS_TYPE_LICH, oCreature) >= 5
-            || GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oCreature) >= 17
-            || nRace == RACIAL_TYPE_AVARIEL
-            || nRace == RACIAL_TYPE_FEYRI))
+        && GetCreatureWingType(oCreature) != CREATURE_WING_TYPE_NONE)
         bFlying = TRUE;
     return bFlying;
 }

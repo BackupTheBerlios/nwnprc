@@ -63,11 +63,11 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      int iBonus = 0;
      if (GetHasFeat(FEAT_GREAT_LEAP, oPC))
      {
-     	if (Ninja_AbilitiesEnabled(oPC))
-     	{
-     		bIsRunningJump = TRUE;
-     		iBonus = 4;
-     	}
+        if (Ninja_AbilitiesEnabled(oPC))
+        {
+            bIsRunningJump = TRUE;
+            iBonus = 4;
+        }
      }
      // PnP rules are height * 6 for run and height * 2 for jump.
      // I can't get height so that is assumed to be 6.
@@ -95,8 +95,7 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      // skill 28 = jump
      int iJumpRoll = d20() + GetSkillRank(SKILL_JUMP, oPC) + iBonus + GetAbilityModifier(ABILITY_STRENGTH, oPC);
 
-     if(GetRacialType(oPC) == RACIAL_TYPE_HALFLING) iJumpRoll += 2;
-     if(GetSkillRank(SKILL_TUMBLE, oPC) >= 5) iJumpRoll += 2;
+     if(GetSkillRank(SKILL_TUMBLE, oPC, TRUE) >= 5) iJumpRoll += 2;
 
      // Jump distance is determined by the number exceeding 10
      // divided based on running or standing jump.

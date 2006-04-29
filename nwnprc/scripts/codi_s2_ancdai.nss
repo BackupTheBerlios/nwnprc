@@ -42,7 +42,7 @@ void main()
     //katana
     if(!bHasKatana)
     {
-        object oKatana = CreateItemOnObject("nw_wswka001", OBJECT_SELF);
+        object oKatana = CreateItemOnObject("codi_mw_katana", OBJECT_SELF);
         object oKatana2 = CopyObject(oKatana, GetLocation(OBJECT_SELF), OBJECT_SELF, "codi_katana");
         DestroyObject(oKatana);
         //check in inventory
@@ -55,7 +55,7 @@ void main()
     //wakizashi (short sword)
     if(!bHasWakizashi)
     {
-        object oWakizashi = CreateItemOnObject("nw_wswss001", OBJECT_SELF);
+        object oWakizashi = CreateItemOnObject("codi_mw_short", OBJECT_SELF);
         object oWakizashi2 = CopyObject(oWakizashi, GetLocation(OBJECT_SELF), OBJECT_SELF, "codi_wakizashi");
         DestroyObject(oWakizashi);
         //check in inventory

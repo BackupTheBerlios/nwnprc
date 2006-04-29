@@ -67,7 +67,7 @@ void main()
 
     if(manif.bCanManifest)
     {
-        effect eDur     = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
+        effect eDur     = EffectVisualEffect(PSI_DUR_DISPELLING_BUFFER);
         float fDuration = HoursToSeconds(manif.nManifesterLevel);
         if(manif.bExtend) fDuration *= 2;
 

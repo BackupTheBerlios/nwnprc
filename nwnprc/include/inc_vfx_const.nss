@@ -372,6 +372,7 @@ const int PSI_DUR_BURST             	= 828;
 const int PSI_FNF_PSYCHIC_CHIRURGY  	= 829;
 const int PSI_FNF_ASTRAL_SEED       	= 830;
 const int PSI_DUR_INTELLECT_FORTRESS	= 831;
+const int PSI_DUR_DISPELLING_BUFFER	= 832;
 //Spellfire
 const int VFX_FNF_SPELLF_EXP   =  820;
 const int VFX_IMP_SPELLF_FLAME =  821;

@@ -10,6 +10,12 @@ Repose
 Suffering
 Trade
 
+Base Classes:
+Favoured Soul - Classes.2da, cls_feat.2da, TLK
+Warmage - All to do
+Dread Necromancer - All to do
+Healer - All to do
+
 Truenaming:
 1 Base Class
 ~60 Utterances
@@ -17,20 +23,19 @@ Truenaming:
 30 feats
 
 Psionic PrCs:
-Metamind
-Psion Uncarnate
-Pyro
-Cryo
-Sanctified Mind - Classes.2da, cls_feat.2da, TLK
-Iron Mind - Classes.2da, cls_feat.2da, TLK, Invest Armour feat.
+Metamind - All to do
+Psion Uncarnate - All to do
+Pyrokineticist - All to do
+Cryokineticist - All to do
+Sanctified Mind - Classes.2da, cls_feat.2da
+Iron Mind - Classes.2da, cls_feat.2da, Invest Armour feat.
 Shadowmind - All to do
 
 Normal PrCs:
 Slayer of Domiel - Classes.2da, cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
 Disciple of Asmodeus - Classes.2da, cls_feat.2da, TLK, Spell Const, Command, Greater Command
-Dirgesinger - Classes.2da, cls_feat.2da, TLK
+Dirgesinger - Classes.2da, cls_feat.2da
 Suel Archanamach - Classes.2da, cls_feat.2da, TLK
-Favoured Soul - Classes.2da, cls_feat.2da, TLK
 Stormsinger - All to do
 Blood Magus - Check what is done and what needs doing.
 

@@ -388,22 +388,31 @@ void main()
              // * GZ Oct 2003: If we are deaf, we do not have negative effects from curse song
             if (!GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
             {
-                    RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
+                RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
+                nRace = MyPRCGetRacialType(oTarget);
+                
+                // Undead and Constructs are immune to mind effecting abilities.
+                // A bard with requiem can effect undead
+                if ((nRace == RACIAL_TYPE_UNDEAD && GetHasFeat(FEAT_REQUIEM, OBJECT_SELF)) || nRace != RACIAL_TYPE_UNDEAD || nRace != RACIAL_TYPE_CONSTRUCT)
+                {
+                	// Even with requiem, they have half duration
+                	if (nRace == RACIAL_TYPE_UNDEAD) nDuration /= 2;                    
 
-                    if (nHP > 0 && !GetLocalInt(oTarget, sCurseSongHP))
-                    {
-                        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SONIC), oTarget);
-                        DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHP, oTarget));
-                        SetLocalInt(oTarget, sCurseSongHP, TRUE);
-                        DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(oTarget, sCurseSongHP));
-                    }
-
-                    if (!GetIsDead(oTarget))
-                    {
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-                        DelayCommand(GetRandomDelay(0.1,0.5),ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-                        //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-                   }
+                    	if (nHP > 0 && !GetLocalInt(oTarget, sCurseSongHP))
+                    	{
+                    	    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SONIC), oTarget);
+                    	    DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHP, oTarget));
+                    	    SetLocalInt(oTarget, sCurseSongHP, TRUE);
+                    	    DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(oTarget, sCurseSongHP));
+                    	}
+	
+                    	if (!GetIsDead(oTarget))
+                    	{
+                    	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+                    	    DelayCommand(GetRandomDelay(0.1,0.5),ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                    	    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                    	}
+                }
             }
             else
             {

@@ -1631,306 +1631,193 @@ Use: Combat mode.</entry>
 Prerequisite: Peerless Archer Level 1
 Specifics: Adds +3 to Craft Weapon checks.
 Use: Automatic.</entry>
-  <entry id="45334" lang="en" sex="m">Holy Acolyte</entry>
-  <entry id="45335" lang="en" sex="m">Holy Acolytes</entry>
-  <entry id="45336" lang="en" sex="m">holy acolyte</entry>
-  <entry id="45337" lang="en" sex="m">Cosmic Descrier</entry>
-  <entry id="45338" lang="en" sex="m">Cosmic Descriers</entry>
-  <entry id="45339" lang="en" sex="m">cosmic descrier</entry>
-  <entry id="45340" lang="en" sex="m">Master Scout</entry>
-  <entry id="45341" lang="en" sex="m">Master Scouts</entry>
-  <entry id="45342" lang="en" sex="m">master scout</entry>
-  <entry id="45343" lang="en" sex="m">Corindarian Infiltrator</entry>
-  <entry id="45344" lang="en" sex="m">Corindarian Infiltrators</entry>
-  <entry id="45345" lang="en" sex="m">Corindarian infiltrator</entry>
-  <entry id="45346" lang="en" sex="m">High Proselytizer</entry>
-  <entry id="45347" lang="en" sex="m">High Proselytizers</entry>
-  <entry id="45348" lang="en" sex="m">high proselytizer</entry>
-  <entry id="45349" lang="en" sex="m">(PRESTIGE CLASS)
-Master Scouts are experts at gathering information, spying, and creating magical traps using innate intuitive power. Often sought out by kingdoms for their armies, Master Scouts are the elite of the elite of wilderness trackers, trappers, and scouting. Master Scouts are typically Rangers, Rogues, Barbarians, or Bards.
+  <entry id="45334" lang="en" sex="m">Invest Armour</entry>
+  <entry id="45335" lang="en" sex="m">Type of Feat: Psionic
+Prerequisite: Proficiency with armour worn.
+Specifics: You may expend your psionic focus to increase the armour bonus of the armour you're wearing by 3. This lasts for one round.
+Use: Selected.</entry>
+  <entry id="45336" lang="en" sex="m">Iron Mind</entry>
+  <entry id="45337" lang="en" sex="m">Iron Minds</entry>
+  <entry id="45338" lang="en" sex="m">iron mind</entry>
+  <entry id="45339" lang="en" sex="m">(PRESTIGE CLASS)
+Elite warriors trained to resist mental compulsions of all kinds, members of the Iron Mind class defend dwarf and gnome kingdoms against intrusions by mind flayers, dark elf enchanters, and the like. An Iron Mind becomes one with her armour, and its presence protects her from mental assault as thoroughly as it wards against physical blows. Iron Minds combine the protection and assurance that their armour provides with rigorous training to overcome physical injury through mental power into one seamless fighting technique.
 
-- Hit Die: d6.
-- Proficiencies: Simple weapons and light armor.
-- Skill Points: 6 + Int Modifier.
+- Hit Die: d10
+- Proficiencies: An Iron Mind gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
 
 REQUIREMENTS:
 
-Alignment: Any.
-Skills: Discipline 4 ranks, Search 6 ranks, Spot 8 ranks, Spellcraft 5 ranks, Hide 8 ranks, Move Silently 8 ranks.
-Feats: Alertness, Lightning Reflexes, Dodge
+Feats: Invest Armour, Armour Proficiency (Heavy), Iron Will.
+Skills: Concentration 8 ranks.
+Manifesting: Must be able to manifest 1st level powers.
+Base Attack Bonus: +3.
 
 ABILITIES:
 
 Level
-1: Stealthy - as feat
-  Spark of Flame 3/day - 1d4 fire damage/ms level on opponent who stumbles into trap. Lasts 1 turn/level or until triggered/dispelled.
-2: Sphere of Cold 3/day - only usable on snowy terrain, 1d8 cold damage/ms level on opponents within 20ft of the trap (triggered at 10ft). Fort save or be frozen for 3 rounds. Lasts 1 turn/level or until triggered/dispelled.
-  Amplify - as spell
-  Evasion - as feat
-3: See Invisibility - as spell
-  Flame Burst 2/day - 1d6 fire damage/ms level on opponents within 20ft of the trap. Lasts 1 turn/level or until triggered/dispelled.
-  Dash - Increased movement rate (+5%)
-4: Seal Invisibility 2/day - Reveals any invisible beings who come into contact with the seal. Lasts 3 rounds/level or until dispelled.
-  Detect Traps - As spell.
-  Uncanny Dodge I - As feat.
-5: Use Poison - As feat.
-  Poisonous Spike 2/day - 1d6 acid damage/ms level, fort save or suffer 1d6 con damage, 1d6 str damage, and 1d6 dex damage. Lasts 1 turn/level or until triggered/dispelled.
-6: Shocking Sphere 2/day - 1d8 electrical damage/ms level on opponents within 20ft of the trap (triggered at 10ft). Lasts 1 turn/level or until triggered/dispelled.
-7: Defensive Roll - As rogue bonus feat.
-  Invisibility - As spell.
-8: Uncanny Dodge II - As feat.
-  Rockslide 1/day - Only usable in underground terrain, 1d10 physical damage/ms level on opponents within 30ft of the trap (triggered at 10ft). Fort save or be knocked down. Lasts 1 turn/level or until triggered/dispelled.
-9: Hide in Plain Sight - As feat.
-10: Deadly Poison Trap 1/day - 1d4 acid damage/ms level, fort save or die. Lasts 1 turn/level or until triggered.
-  Improved Evasion - As feat.</entry>
-  <entry id="45350" lang="en" sex="m">Epic Master Scout</entry>
-  <entry id="45351" lang="en" sex="m">The Epic Master Scout is the ultimate of scouts, trained with such expertise that none can ambush them and they are masters of detection and stealth. The Master Scout's traps continue to gain more damage, and the DC of their traps continues to increase every 2 MS levels.
+1: Armoured Mind 1/day - Expend Psionic focus to add a bonus to a single saving throw.
+2: Damage Reduction 1/-
+3: Mind Over Body 1/day - The Iron Mind can use her Will save in place of a Fortitude or Reflex save.
+4: Armoured Mind 2/day
+5: Damage Reduction 2/-, Mettle of Will - If she succeeds on any spell with "Will half" or "Will partial", she suffers no effect from the spell or power.
+6: Mind Over Body 2/day
+7: Armoured Mind 3/day
+8: Damage Reduction 3/-, Lend Resolve - You may expend psionic focus to grant an ally a bonus on Will saves equal to your class level.
+9: Mind Over Body 2/day
+10: Armoured Mind 4/day, Barbed Mind - Any time you succeed at a Will save against a mind-affecting effect, the caster takes 1d6 points of damage and 1 Wisdom damage.
 
-Epic Feats:
-A Master Scout gains a bonus epic feat every 4 levels after 10.
+BONUS MANIFESTING
 
-Bonus Feats List: Damage Reduction, Epic Toughness, Epic Reputation, Armor Skin, Epic Prowess, Skill Mastery, Great Dexterity, Self Concealment, Epic Dodge, Epic Speed, Epic Skill Focus, Keen Sense</entry>
-  <entry id="45352" lang="en" sex="m">Spark of Fire</entry>
-  <entry id="45353" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 1
-Specifics: A Master Scout is able to create a Spark of Fire, a trap that can be placed onto any terrain. When an enemy comes within 5ft of the trap, it explodes and deals 1d4 damage per Master Scout level to the opponent who triggered it. The DC to avoid is 10 + 1/2 Master Scout level + WIS modifier. When the trap is triggered, the Master Scout becomes aware of the presence of the enemy who stumbled upon it. The trap lasts 1 turn/level or until dispelled.
+Upon reaching levels 2, 3, 4, 5, 7, 8, 9, 10 the Iron Mind gains a new manifester level, increasing his power points, total powers known, and maximum power level.</entry>
+  <entry id="45340" lang="en" sex="m">Armoured Mind</entry>
+  <entry id="45341" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Iron Mind level 1.
+Specifics: You may expend Psionic Focus to add a bonus equal to your armour bonus (not including enhancements) to your Will save for 1 round.
 Use: Selected.</entry>
-  <entry id="45354" lang="en" sex="m">Sphere of Cold</entry>
-  <entry id="45355" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 2
-Specifics: A Master Scout is able to craft a Sphere of Cold, a powerful trap that can only be created on snowy terrains. When an enemy comes within 10ft of the trap, magical snow and ice explode all around in a 20ft radius dealing 1d8 damage per Master Scout level to all opponents within 30 ft. In addition, those hit by the magic must make a Fortitude Save (DC: 10 + 1/2 Master Scout level + WIS modifier) or be held for 3 rounds. DC to avoid is 10 + 1/2 master scout level + WIS modifier. When the trap is triggered, the Master Scout becomes aware of the presence of the enemy who stumbled upon it. The trap remains for 1 turn/ms level or until dispelled.
+  <entry id="45342" lang="en" sex="m">Damage Reduction</entry>
+  <entry id="45343" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Iron Mind level 2.
+Specifics: You gain Damage Resistance 1/- to all physical attacks. This increases to 2/- at level 5, and 3/- at level 8.
+Use: Automatic.</entry>
+  <entry id="45344" lang="en" sex="m">Mind Over Body</entry>
+  <entry id="45345" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Iron Mind level 3.
+Specifics: Once per day you may use your Will save in place of your next Reflex or Fortitude save. The power still acts as if it was a Reflex or Fortitude save, thus a successful save with Evasion means you take no damage. You may use this twice per day at 6th, and three times at 9th.
 Use: Selected.</entry>
-  <entry id="45356" lang="en" sex="m">Flame Burst</entry>
+  <entry id="45346" lang="en" sex="m">Mettle of Will</entry>
+  <entry id="45347" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Iron Mind level 5
+Specifics: If you make a successful saving throw against any spell or power with "Will half" or "Will partial", you suffer no effect from that spell or power. This ability only applies when the Iron Mind wears heavy armour.
+Use: Automatic.</entry>
+  <entry id="45348" lang="en" sex="m">Lend Resolve</entry>
+  <entry id="45349" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Iron Mind level 8
+Specifics: You may expend Psionic Focus to grant an ally within 30' a bonus to his Will save equal to your class level. This lasts for 1 round.
+Use: Selected.</entry>
+  <entry id="45350" lang="en" sex="m">Barbed Mind</entry>
+  <entry id="45351" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Iron Mind level 10
+Specifics: Any time you succeed on a Will saving throw versus a mind-affecting effect, that effect's creator takes 1d6 points of damage and 1 point of Wisdom damage. This ability only applies when the Iron Mind wears heavy armour.
+Use: Automatic.</entry>
+  <entry id="45352" lang="en" sex="m">Sanctified Mind</entry>
+  <entry id="45353" lang="en" sex="m">Sanctified Minds</entry>
+  <entry id="45354" lang="en" sex="m">sanctified mind</entry>
+  <entry id="45355" lang="en" sex="m">(PRESTIGE CLASS)
+The Society of the Sanctified Mind is a collection of elite clerics, fighters, monks, paladins, psions, psychic warriors, soulknives, and others who view the threat posed by the presence and goals of evil psionic using creatures to be the most dire menace facing civilized races today.
+    Members of this organization consider their cause to be a crusade to rid the world of the awful and invisible influence of those who seek to corrupt and pervert an individual's right to think for herself. A Sanctified Mind believes that all evil-aligned psionic-using creatures must be crushed. All members share this devotion, and the most fervent of the order's elite warriors take the name of the society itself as their name. this way, they say, they can never forget the vital importance of their chosen mission.
+
+- Hit Die: d8
+- Proficiencies: An Sanctified Mind gains no additional proficiencies.
+- Skill Points: 4 + Int Modifier
+
+REQUIREMENTS:
+
+Alignment: Non-Evil.
+Feats: Martial Weapon Proficiency, Iron Will.
+Skills: Lore 4 ranks.
+Base Attack Bonus: +4.
+Special: Must possess a power point reserve of at least 1 power point.
+
+ABILITIES:
+
+Level
+1: Partition Mind - You gain immunity to mind spells for a short time per day.
+2: Cleansing Strike - You may smite a psionics using creature
+3: Disrupting Blow 1/day - On a succesful hit, the target creature cannot use psionics for 1d4 rounds.
+4: Hard to Hold - You add your class level to discipline checks.
+5: Disrupting Blow 2/day
+6: Power Resistance - You gain Power Resistance equal to 5 + character level.
+
+
+BONUS MANIFESTING
+
+Upon reaching levels 2, 3, 4, 5, 6 the Sanctified Mind gains a new manifester level, increasing his power points, total powers known, and maximum power level.</entry>  
+  <entry id="45356" lang="en" sex="m">Partition Mind</entry>
   <entry id="45357" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 3
-Specifics: A Master Scout is able to plant a Flame Burst, a powerful trap that can be magically locked on any terrain. When an enemy comes within 10ft of the trap, flames explode all around in a sphere of 20ft damaging all enemies with 1d6 fire damage/master scout level. DC to avoid is 10 + 1/2 master scout level + WIS modifier. When the trap is triggered, the Master Scout becomes aware of the presence of the enemy who stumbled upon it. The trap stays on the ground for 1 turn/level or until triggered/dispelled.
+Prerequisite: Sanctified Mind level 1.
+Specifics: You become immune to the effect of Mind Affecting spells and powers for a number of rounds equal to your class level + your charisma modifier. You are also slowed during this time. You may use this ability once per day.
 Use: Selected.</entry>
-  <entry id="45358" lang="en" sex="m">Invisibility Seal</entry>
+  <entry id="45358" lang="en" sex="m">Cleansing Strike</entry>
   <entry id="45359" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 4
-Specifics: A Master Scout is able to place an Invisibility Seal that reveals all invisible beings whom come into contact with the seal. It lasts 3 rounds/Master Scout level or until dispelled.
+Prerequisite: Sanctified Mind level 2.
+Specifics: You can expend your Psionic Focus to smite a psionics-using creature with one melee attack. You add your wisdom bonus to the attack roll, and deal an additional 1d6 points of damage per class level. You may use this once per day.
 Use: Selected.</entry>
-  <entry id="45360" lang="en" sex="m">Poisonous Spike</entry>
+  <entry id="45360" lang="en" sex="m">Disrupting Blow</entry>
   <entry id="45361" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 5
-Specifics: A Master Scout is able to use poison and has adapted this ability to create a powerful, poisonous spell trap. When the poisonous spike is triggered, several spikes etch themselves into the unfortunate victim. The victim suffers 1d6 acid damage, and must make a fortitude save or suffer 1d6 str/dex/con damage. This trap has no effect on those immune to poison.
+Prerequisite: Sanctified Mind level 3.
+Specifics: You may make a melee attack against a psionics-using creature. If the attack hits, the target must make a save vs 10 + Sanctified Mind level + Wisdom Modifier or lose access to psionics and psi-like abilities for 1d4 rounds. At 5th level, you may use this twice per day.
 Use: Selected.</entry>
-  <entry id="45362" lang="en" sex="m">Shocking Sphere</entry>
+  <entry id="45362" lang="en" sex="m">Hard to Hold</entry>
   <entry id="45363" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 6
-Specifics: A Master Scout is able to create a Shocking Sphere, an electrical glyph of energy that shatters with powerful electricity damage. When an enemy comes within 10ft of the trap, electricity shatters all around a radius of 20ft dealing 1d8 electricity damage. The trap lasts 1 turn/level or until dispelled.
-Use: Selected.</entry>
-  <entry id="45364" lang="en" sex="m">Rockslide</entry>
+Prerequisite: Sanctified Mind level 4.
+Specifics: You gain your Sanctified Mind level as a bonus to Disciple checks.
+Use: Automatic.</entry>
+  <entry id="45364" lang="en" sex="m">Power Resistance</entry>
   <entry id="45365" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 8
-Specifics: A Master Scout may plot a rockslide, replacing real rocks with magical rocks. When an enemy comes within 15 ft of the trap, large magical boulders pummel all enemies within a 30ft radius. Those crushed by the boulders receive 1d10 physical damage/ms level and must make a fort save or be knocked down for 3 rounds. This trap lasts for 1 turn/level or until dispelled.
+Prerequisite: Sanctified Mind level 6.
+Specifics: You gain Power Resistance equal to 5 + your total character level. This is identical to Spell Resistance.
 Use: Selected.</entry>
-  <entry id="45366" lang="en" sex="m">Deadly Poison Trap</entry>
-  <entry id="45367" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Master Scout Level 10
-Specifics: A Deadly Poison Trap is covered in such thick poison that if the victim stumbles upon it, he/she is struck dead unless he/she makes a fortitude save. Even if the fortitude save is made, the victim takes 1d4 acid damage/ms level.
+  <entry id="45366" lang="en" sex="m">Requiem</entry>
+  <entry id="45367" lang="en" sex="m">Type of Feat: General
+Prerequisite: Bardic Music class feature, Perform 8.
+Specifics: Your bardic music can now affect the undead. The duration of the effect on undead is one half normal.
+Use: Automatic.</entry>
+  <entry id="45368" lang="en" sex="m">Dirgesinger</entry>
+  <entry id="45369" lang="en" sex="m">Dirgesingers</entry>
+  <entry id="45370" lang="en" sex="m">dirgesinger</entry>
+  <entry id="45371" lang="en" sex="m">(PRESTIGE CLASS)
+Dirgesingers voice melodies not of celebration and joy, but of sorrow and grief. They seek to spread this melancholy outlook far and wide, believing that only those who give in to their sadness can truly understand the world. Dirgesingers hold high positions in death-obsessed cultures. Serving as members of a secret guild or as part of a hierarchy of death priests, they are entrusted with the serious responsibility of composing suitable laments for the dead. The more important the deceased, the more sorrowful and moving her lament is expected to be. No one will remember the dead queen in a few short generations, but a great lament might be sung a thousand years hence.
+
+- Hit Die: d6
+- Proficiencies: A Dirgesinger gains no additional proficiencies.
+- Skill Points: 4 + Int Modifier
+
+REQUIREMENTS:
+
+Alignment: Non-Good.
+Feats: Requiem (Perform 8, Bardic Music class feature)
+Skills: Lore 4 ranks, Perform 8. 
+Special: Must possess the Bardic Music class feature.
+
+ABILITIES:
+
+Level
+1: Song of Sorrow - All creatures take a -2 penalty to Will saves, attack and damage.
+2: Song of Bolstering - All undead gain a bonus to turn resistance.
+3: Song of Grief - Target creature is confused.
+4: Song of Horror - All enemies take 1d6 points of Strength and Dexterity damage.
+5: Song of Awakening - The Dirgesinger animates a corpse for a short time.
+
+BARDIC MUSIC
+
+The Dirgesinger stacks with the Bard class to determine both the number of uses per day and the effect of the Bardic Music class ability.</entry>
+  <entry id="45372" lang="en" sex="m">Song of Sorrow</entry>
+  <entry id="45373" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Dirgesinger level 1.
+Specifics: All enemies able to hear the Dirgesinger must make a save vs 10 + ranks in Perform, or take a -2 penalty to Will saves, Attack, and Damage for 10 rounds. This counts as a use of the Bardic Music class feature.
 Use: Selected.</entry>
-  <entry id="45368" lang="en" sex="m">(PRESTIGE CLASS)
-A Holy Acolyte is a divine cleric who specializes in the healing arts. They are dedicated to helping others, and keeping people safe. Eventually a Holy Acolyte becomes so close to the Divine that they become angelic in nature. To become a Holy Acolyte, you must be of good alignment, able to cast level 3 divine spells, and follow a good deity.
-
-- Hit Die: d4
-- Proficiencies: A Holy Acolyte does not gain any additional weapon or armor proficiencies.
-- Skill Points: 2 + Int Modifier.
-- Base Attack Bonus: As wizard
-
-REQUIREMENTS:
-Alignment: Any Good
-Skills: Heal 8 ranks, Spellcraft 8 ranks, Concentration 6 ranks.
-Feats: Healing Domain, Divine Shield, Celestial Blessing.
-Spellcasting: 3rd level Divine Spells.
-
-ABILITIES:
-
-Level
-1: Revelation 1/day - +2 con, +2 wis, 3hp/HA level; 3/- damage reduction. Self only, 1 round/HA level.
-  Holy Blessing 2/day - bless a friend with a touch, healing 3HP/caster level and removing any poisons.
-2: Protective Aura 2/day - Gives all within the circle of an effect a +4 bonus to AC and a +1 regen for 1 round/HA level
-3: Holy Protection 1/day - +2 AC, +1 regen, Immunity: Level/Ability Drain, 1 turn/HA level.
-4: Divine Sting 1/day - d8 negative damage per caster level to a maximum of 10d8.
-  Divine Healing 3/day - heal a target d12 health per caster level to a maximum of 30d12.
-6: Purify 2/day - Remove any negative effects that plague a target completely, as well as heal d8 hp per caster level, to a maximum of 30d8.
-8: Divine Guard 2/day - Powerful shield around a target that grants Damage Reduction 5/+20 to a target. 3 rounds/HA level.
-9: Blessing of the Gods 1/day - All allies (not the Acolyte itself) within 30ft receive +2 BAB, +2 Damage, +2 bonus to AC, and they instantly heal 4 HP/HA level. These effects last 1 turn/caster level.
-10: Angelic Purity - The Holy Acolyte becomes angelic, receiving many benefits for being such. The Holy Acolytes race becomes Outsider and receives Immunity: Mind Spells, Immunity: Poison, Immunity: Disease, 10/+1 damage reduction, and 10/- damage resistance on cold, acid, and electricity.
-  Divine Grace - As Paladin's, doesn't stack with Paladin's.
-  Angelic Kiss I - Your kiss is able to heal whomever it touches. You heal d2HP/level per kiss, and can use this ability infinite times per day. This ability cannot be used on yourself.
-  Celestial Guardian 1/day - The Holy Acolyte is able to call upon their deity to bestow a powerful Celestial Guardian to aid the Holy Acolyte. The power of the Celestial Guardian increases in power every 5 Holy Acolyte levels.
-
-A Holy Acolyte receives +1 to their existing spell casting to Divine Spells every 2 levels of Holy Acolyte.
-</entry>
-  <entry id="45369" lang="en" sex="m">Epic Holy Acolyte</entry>
-  <entry id="45370" lang="en" sex="m">The Holy Acolyte continues to gain new powers over their angelic nature; becoming so close to the celestial plane that they draw power directly from their deity.
-
-Epic Feats:
-A holy acolyte receives a bonus epic feat every 5 levels after 10.
-Bonus Feats List: Damage Reduction, Epic Toughness, Epic Spell Penetration, Epic Spell Focus, Great Wisdom, Great Charisma, Epic Reputation, Automatic Quicken, Automatic Silent Spell, Improved Combat Casting, Epic Spell Casting, Epic Energy Resistance, and Armor Skin.
-
-Epic Spells: Starting at level 15, a Holy Acolyte is able to learn epic spells.
-
-ABILITIES:
-
-15. Divine Circle of Recovery 2/day - All allies within the area of effect are healed 10 HP/HA level.
-20. Divine Smile 1/day - All allies are healed completely and stripped of negative effects.
-  Angelic Kiss II - Angelic Kiss upgrades to d4 hp/HA level.
-  Divine Judgment 1/day - All hostile opponents within 20ft of the target range suffer 16d8 divine damage, as well as being dispelled (as greater dispel) and suffer -6 SR.
-25. Apocalyptical Gaze 1/day - An opponent must make a fortitude save of 15 + WIS modifier or die. Even if the opponent succeeds, the gaze attempts to turn them to stone. The opponent must make another fortitude save of 15 + WIS modifier, or be turned to stone. Even if that fails, the opponent suffers 20d8 divine damage.
-30. Celestial Grace - You become the epitome of celestial beauty, prestige, and grace. You receive +4 WIS, +4 CHA. In addition, you become immune to death magic, and immunity: Level/Ability Drain
-  Holy Turning - You add your Holy Acolyte level into your Turn Undead power.
-  Angelic Kiss III - Kiss upgrades to d6 hp/HA level.
-R</entry>
-  <entry id="45371" lang="en" sex="m">Revelation</entry>
-  <entry id="45373" lang="en" sex="m">Holy Blessing</entry>
-  <entry id="45375" lang="en" sex="m">Protective Aura</entry>
-  <entry id="45377" lang="en" sex="m">Holy Protection</entry>
-  <entry id="45379" lang="en" sex="m">Divine Sting</entry>
-  <entry id="45381" lang="en" sex="m">Divine Healing</entry>
-  <entry id="45383" lang="en" sex="m">Purify</entry>
-  <entry id="45385" lang="en" sex="m">Divine Guard</entry>
-  <entry id="45387" lang="en" sex="m">Blessing of the Gods</entry>
-  <entry id="45389" lang="en" sex="m">Angelic Purity</entry>
-  <entry id="45391" lang="en" sex="m">Angelic Kiss I</entry>
-  <entry id="45393" lang="en" sex="m">Celestial Guardian</entry>
-  <entry id="45395" lang="en" sex="m">Divine Circle of Recovery</entry>
-  <entry id="45397" lang="en" sex="m">Divine Smile</entry>
-  <entry id="45399" lang="en" sex="m">Angelic Kiss II</entry>
-  <entry id="45401" lang="en" sex="m">Divine Judgment</entry>
-  <entry id="45403" lang="en" sex="m">Apocalyptical Gaze</entry>
-  <entry id="45405" lang="en" sex="m">Celestial Grace</entry>
-  <entry id="45407" lang="en" sex="m">Holy Turning</entry>
-  <entry id="45409" lang="en" sex="m">Angelic Kiss III</entry>
-  <entry id="45411" lang="en" sex="m">(PRESTIGE CLASS)
-Corindarian Infiltrators are members of a secret rogue guild known to few. It is known to few because those whom discover them either become one, or are slain quickly. They are master assassins, and skilled warriors. Few have the talent required to become an Infiltrator; and even those that do aren't guaranteed a spot in their ranks.
-
-
-- Hit Die: d6.
-- Proficiencies: An infiltrator is proficient with simple and martial weapons, and light and medium armors.
-- Skill Points: 4 + Int Modifier.
-
-REQUIREMENTS:
-
-Alignment: Any.
-Sneak Attack: 4d6
-Base Attack Bonus: +6
-Skills: Hide 6 ranks, Move Silently 6 ranks, Disable Traps 6 ranks, Open Locks 6 ranks, Discipline 4 ranks.
-Feats: Weapon Proficiency (Martial), Expertise
-
-ABILITIES:
-
-Level
-1: Sneak Attack +1d6
-  Use Poison: As feat.
-  Displace Self 1/day: As spell "Displacement" only it is self-only and lasts 1 turn/infiltrator level.
-2: Evasion: As feat
-3: Death Attack: An Infiltrator is allowed to attempt a Death Attack, as the Assassin's ability; an Infiltrator uses infiltrator and/or assassin and/or shadowlord levels when determining the DC if applicable.
-  Displace Self 2/day
-4: Master of Aim and Focus: The Infiltrator gains a +2 permanent attack bonus.
-  Skill Mastery: As rogue bonus feat.
-5: Sneak Attack +2d6.
-  Lethal Strike 1/day: Attempt to kill an opponent in one strike. Does not work if the target is immune to critical hits.</entry>
-  <entry id="45412" lang="en" sex="m">Displace Self I</entry>
-  <entry id="45413" lang="en" sex="m">Displace Self II</entry>
-  <entry id="45414" lang="en" sex="m">Displace Self III</entry>
-  <entry id="45416" lang="en" sex="m">Master of Aim and Focus</entry>
-  <entry id="45418" lang="en" sex="m">Lethal Strike</entry>
-  <entry id="45419" lang="en" sex="m">(EPIC PRESTIGE CLASS)
-Cosmic Descriers are masters of the planes, specializing in planar magic of all kinds. Especially fond of summoning planar creatures, Cosmic Descriers are extremely powerful and shouldn't be taken lightly --- for they hold the power to destroy entire planes if they desired.
-
-- Hit Die: d4.
-- Proficiencies: A Cosmic Descrier does not gain any extra weapon or armor proficiencies..
-- Skill Points: 2 + Int Modifier.
-
-REQUIREMENTS:
-
-Alignment: Any.
-Skills: Lore 24 ranks.
-Feats: Spell Focus (Conjuration), Epic Energy Resistance
-Spellcasting: Level 9 Arcane or Level 9 Divine spells.
-
-ABILITIES:
-
-Level
-1: Outsider - The Cosmic Descrier is considered an Outsider, gaining Immunity to Mind Spells, Poisons, and Diseases. In addition, the Cosmic Descrier gains 20/+1 damage reduction.
- Superior Planar Summoning (+4 HD) - Increase the power of the following spells: elemental swarm, gate, greater planar ally, greater planar binding, summon monster IX.. all summons cast by these spells receive +4 HD.
-2: Naturalization - Though an Outsider, the Cosmic Descrier develops natural affinity to any plane he or she enters. This prevents them from being turned via Planar Turning.
-3: Gate 3/day, Enduring Gate (1 day) - The spell "Gate" lasts 24 hours.
-5: Bonus Feat, Superior Planar Summoning (+8 HD).
-6: Enduring Gate (2 days) - The spell "Gate" lasts 48 hours.
-7: Cosmic Connection 1/day - Become one with the planes for 1 round/caster level. Take 25 physical damage due to the energy given forth to control the massive energy infusion and in return receive Immunity to Critical Hits and +5 caster level for the duration.
-9: Superior Planar Summoning (+12 HD), Enduring Gate (3 days)
-10: Bonus Feat
-
-Spellcasting: A Cosmic Descrier gains +1 esc every 2 levels.</entry>
-  <entry id="45420" lang="en" sex="m">Superior Planar Summoning +4</entry>
-  <entry id="45422" lang="en" sex="m">Naturalization</entry>
-  <entry id="45424" lang="en" sex="m">Enduring Gate I</entry>
-  <entry id="45425" lang="en" sex="m">Enduring Gate II</entry>
-  <entry id="45426" lang="en" sex="m">Enduring Gate III</entry>
-  <entry id="45428" lang="en" sex="m">Superior Planar Summoning +8</entry>
-  <entry id="45430" lang="en" sex="m">Cosmic Connection</entry>
-  <entry id="45432" lang="en" sex="m">Superior Planar Summoning +12</entry>
-  <entry id="45433" lang="en" sex="m">(EPIC PRESTIGE CLASS)
-High Proselytizers are the greatest servants of their deity, upholding their Deity's word as law. They have the ability to enrapture audiences and bring forth change with nothing more their voices.
-
-- Hit Die: d8.
-- Proficiencies: A High Proselytizer does not gain any extra weapon or armor proficiencies..
-- Skill Points: 2 + Int Modifier.
-
-REQUIREMENTS:
-
-Alignment: Any.
-Skills: Persuade 12 ranks, Lore 24 ranks.
-Feats: Epic Reputation
-Spellcasting: Level 5 Divine spells.
-
-ABILITIES:
-
-Level
-1: Proselytize 1/day - 10 HD or lower automatically dominated, caster becomes under effect of sanctuary, mass charm person: DC 20 + 1/2 HP level + WIS modifier; affects those whom fail the saving throw even if they are immune to mind spells.
-2: Heal 1/day
-3: Proselytize (Deific Touch) 1/day - As proselytize, except heal all those charmed by word 1d4 hp.
-4: Bonus Feat
-5: Proselytize (Deific Word) 1/day - As proselytize, except damage all of those not charmed by 3d8 + 12 sonic damage and will save or be stunned for 3 rounds.
-6: Heal 2/day
-7: Proselytize (Deific Face) 1/day - As proselytize, except Sun Burst + Word of Faith on all those unaffected by the charm.
-8: Bonus Feat
-9: Proselytize (Deific Aura) 1/day - As proselytize, except give off of a wave of Blasphemy, Dictum, Holy Word, or Word of Chaos (depending on alignment)
-10: Heal 3/day, Proselytize 2/day
-12: Bonus Feat
-13: Proselytize (Deific Touch) 2/day
-14: Heal 4/day
-15: Proselytize (Deific Word) 2/day
-16: Bonus Feat
-17: Proselytize (Deific Face) 2/day
-18: Heal 5/day
-19: Proselytize (Deific Aura) 2/day
-20: Bonus Feat
-
-Spellcasting: A High Proselytizer gains +1 esc every 2 levels.</entry>
-  <entry id="45434" lang="en" sex="m">Proselytize I</entry>
-  <entry id="45435" lang="en" sex="m">Proselytize II</entry>
-  <entry id="45437" lang="en" sex="m">Proselytize (Deific Touch) I</entry>
-  <entry id="45438" lang="en" sex="m">Proselytize (Deific Touch) II</entry>
-  <entry id="45440" lang="en" sex="m">Proselytize (Deific Word) I</entry>
-  <entry id="45441" lang="en" sex="m">Proselytize (Deific Word) II</entry>
-  <entry id="45443" lang="en" sex="m">Proselytize (Deific Face) I</entry>
-  <entry id="45444" lang="en" sex="m">Proselytize (Deific Face) II</entry>
-  <entry id="45446" lang="en" sex="m">Proselytize (Deific Aura) I</entry>
-  <entry id="45447" lang="en" sex="m">Proselytize (Deific Aura) II</entry>
-  <entry id="45449" lang="en" sex="m">Blasphemy</entry>
-  <entry id="45451" lang="en" sex="m">Dictum</entry>
-  <entry id="45453" lang="en" sex="m">Holy Word</entry>
-  <entry id="45455" lang="en" sex="m">Word of Chaos</entry>
-  <entry id="45456" lang="en" sex="m">Undead Vassal</entry>
-  <entry id="45457" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Pale Master Level 10
-Specifics: Upon taking this feat, the Pale Master may choose one of six undead vassals (companions). They are: a Mummy Warrior Lord (LE), a Lich (LE), a Vampire Assassin (CE), an Alhoon (NE), a Revenant (NE), or a Shadow Knight (CE).
-Use: Selected/Automatic.
-NOTES: This ability is based off of the Pale Master's CASTER LEVEL, *NOT* character level. For every caster level, the HD (level) of the summon increases by one. I eventually plan to expand this to be 10 different vassals, but for this version, there will only be 6. This is plenty, but some people prefer more (for good reason).</entry>
+  <entry id="45374" lang="en" sex="m">Song of Bolstering</entry>
+  <entry id="45375" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Dirgesinger level 2.
+Specifics: All undead within 30 feet of the Dirgesinger gain a bonus on their Turn Resistance equal to the Dirgesinger's level plus his Bard level for 15 rounds. This counts as a use of the Bardic Music class feature.
+Use: Selected.</entry>
+  <entry id="45376" lang="en" sex="m">Song of Grief</entry>
+  <entry id="45377" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Dirgesinger level 3.
+Specifics: A creature within 60 feet of the Dirgesinger is driven mad with grief unless it succeeds at a saving throw vs 10 + ranks in perform. If it fails the save, it is confused for 10 rounds. This counts as a use of the Bardic Music class feature.
+Use: Selected.</entry>
+  <entry id="45378" lang="en" sex="m">Song of Horrow</entry>
+  <entry id="45379" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Dirgesinger level 4.
+Specifics: All enemies able to hear the Dirgesinger must make a save vs 10 + ranks in Perform, or take 1d6 points of Strength and Dexterity Damage. This counts as a use of the Bardic Music class feature.
+Use: Automatic.</entry>
+  <entry id="45380" lang="en" sex="m">Power Resistance</entry>
+  <entry id="45381" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Dirgesinger level 5.
+Specifics: You animate a single undead creature for 10 rounds. The creature animated is identical to the appropriate True Necromancer creation. This counts as a use of the Bardic Music class feature.
+Use: Selected.</entry>
+  
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>
   <entry id="45460" lang="en" sex="m">Elemental Focus +6</entry>

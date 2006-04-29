@@ -397,6 +397,8 @@ void main()
 
     eHP = ExtraordinaryEffect(eHP);
     eLink = ExtraordinaryEffect(eLink);
+    
+    int nRace;
 
     while(GetIsObjectValid(oTarget))
     {
@@ -404,27 +406,36 @@ void main()
              if (!GetHasEffect(EFFECT_TYPE_SILENCE,oTarget) && !GetHasEffect(EFFECT_TYPE_DEAF,oTarget))
              {
                 RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
-
-                if(oTarget == OBJECT_SELF)
+                nRace = MyPRCGetRacialType(oTarget);
+                
+                // Undead and Constructs are immune to mind effecting abilities.
+                // A bard with requiem can effect undead
+                if ((nRace == RACIAL_TYPE_UNDEAD && GetHasFeat(FEAT_REQUIEM, OBJECT_SELF)) || nRace != RACIAL_TYPE_UNDEAD || nRace != RACIAL_TYPE_CONSTRUCT)
                 {
-                    effect eLinkBard = EffectLinkEffects(eLink, eVis);
-                    eLinkBard = ExtraordinaryEffect(eLinkBard);
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkBard, oTarget, RoundsToSeconds(nDuration));
-                    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-                    if (nHP > 0)
-                    {
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
-                    }
-                }
-                else if(GetIsFriend(oTarget))
-                {
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-                    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-                    if (nHP > 0)
-                    {
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
-                    }
+                	// Even with requiem, they have half duration
+                	if (nRace == RACIAL_TYPE_UNDEAD) nDuration /= 2;
+                	
+                	if(oTarget == OBJECT_SELF)
+                	{
+                	    effect eLinkBard = EffectLinkEffects(eLink, eVis);
+                	    eLinkBard = ExtraordinaryEffect(eLinkBard);
+                	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkBard, oTarget, RoundsToSeconds(nDuration));
+                	    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                	    if (nHP > 0)
+                	    {
+                	        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
+                	    }
+                	}
+                	else if(GetIsFriend(oTarget))
+                	{
+                	    ApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
+                	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+                	    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                	    if (nHP > 0)
+                	    {
+                	        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
+                	    }
+                	}
                 }
             }
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));

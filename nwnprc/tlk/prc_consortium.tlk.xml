@@ -16755,8 +16755,8 @@ Use: Automatic.</entry>
 Prerequisite: Race-Specific.
 Specifics: The creature receives +2 racial bonus to Craft Trap checks.
 Use: Automatic.</entry>
-<entry id="50211" lang="en" sex="m">Polar Ray</entry>
-<entry id="50212" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 8
+  <entry id="50211" lang="en" sex="m">Polar Ray</entry>
+  <entry id="50212" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 8
 Innate Level: 8
 School: Evocation
 Descriptor(s): Cold
@@ -16769,9 +16769,6 @@ Save: None
 Spell Resistance: Yes
 
 A blue-white ray of freezing air and ice springs from your hand. You must succeed on a ranged touch attack with the ray to deal damage to a target. The ray deals 1d6 points of cold damage per caster level (maximum 25d6).</entry>
-
-
-
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
@@ -17864,6 +17861,15 @@ Prerequisite: Caster Level 1
 Description:  You grow an internal cyst of undead flesh called a mother cyst. The mother cyst is slightly painful, but otherwise isn't harmful.  This cyst gives you the ability to cast necrotic cyst spells.</entry>
   <entry id="52106" lang="en" sex="m">necrotic cysts.</entry>
   <entry id="52107" lang="en" sex="m">has a necrotic cyst.</entry>
+  <entry id="52108" lang="en" sex="m">Agony
+</entry>
+  <entry id="52109" lang="en" sex="m">Baccaran</entry>
+  <entry id="52110" lang="en" sex="m">Devilweed</entry>
+  <entry id="52111" lang="en" sex="m">Luhix</entry>
+  <entry id="52112" lang="en" sex="m">Mushroom Powder</entry>
+  <entry id="52113" lang="en" sex="m">Sannish</entry>
+  <entry id="52114" lang="en" sex="m">Terran Brandy</entry>
+  <entry id="52115" lang="en" sex="m">Vodare</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

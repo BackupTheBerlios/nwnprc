@@ -576,10 +576,57 @@ void _ManifestationHB(object oManifester, location lManifester, object oMfToken)
         {
             if(DEBUG) DoDebug("_ManifestationHB(): Manifester moved or lost concentration, destroying token");
             _DestroyManifestationToken(oManifester, oMfToken);
+
+            // Inform manifester
+            FloatingTextStrRefOnCreature(16828435, oManifester, FALSE); // "You have lost concentration on the power you were attempting to manifest!"
         }
         // Schedule next HB
         else
             DelayCommand(PRC_MANIFESTATION_HB_DELAY, _ManifestationHB(oManifester, lManifester, oMfToken));
+    }
+}
+
+/** Internal function.
+ * Checks if the manifester is in range to use the power they are trying to use.
+ * If not, queues commands to make the manifester to run into range.
+ *
+ * @param oManifester A creature manifesting a power
+ * @param nPower      SpellID of the power being manifested
+ * @param lTarget     The target location or the location of the target object
+ */
+void _ManifestationRangeCheck(object oManifester, int nPower, location lTarget)
+{
+    float fDistance   = GetDistanceBetweenLocations(GetLocation(oManifester), lTarget);
+    float fRangeLimit;
+    string sRange     = Get2DACache("spells", "Range", nPower);
+
+    // Personal range powers are always in range
+    if(sRange == "P")
+        return;
+    // Ranges according to the CCG spells.2da page
+    else if(sRange == "T")
+        fRangeLimit = 2.25f;
+    else if(sRange == "S")
+        fRangeLimit = 8.0f;
+    else if(sRange == "M")
+        fRangeLimit = 20.0f;
+    else if(sRange == "L")
+        fRangeLimit = 40.0f;
+
+    // See if we are out of range
+    if(fDistance > fRangeLimit)
+    {
+        // Create waypoint for the movement
+        object oWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", lTarget);
+
+        // Move into range, with a bit of fudge-factor
+        ActionMoveToObject(oWP, TRUE, fRangeLimit - 0.15f);
+
+        // Cleanup
+        ActionDoCommand(DestroyObject(oWP));
+
+        // Cleanup, paranoia
+        AssignCommand(oWP, ActionDoCommand(DestroyObject(oWP, 60.0f)));
     }
 }
 
@@ -813,15 +860,18 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     // Create the manifestation token. Deletes any old tokens and cancels corresponding manifestations as a side effect
     oMfToken = _CreateManifestationToken(oManifester);
 
-    // Start the manifestation monitor HB
-    DelayCommand(PRC_MANIFESTATION_HB_DELAY, _ManifestationHB(oManifester, GetLocation(oManifester), oMfToken));
-
     /// @todo Hook to the manifester's OnDamaged event for the concentration checks to avoid losing the power
 
     // Nuke action queue to prevent cheating with creative power stacking.
     // Probably not necessary anymore - Ornedan
     if(DEBUG) SendMessageToPC(oManifester, "Clearing all actions in preparation for second stage of the power.");
     ClearAllActions();
+
+    // If out of range, move to range
+    _ManifestationRangeCheck(oManifester, nPower, GetIsObjectValid(oTarget) ? GetLocation(oTarget) : lTarget);
+
+    // Start the manifestation monitor HB
+    ActionDoCommand(_ManifestationHB(oManifester, GetLocation(oManifester), oMfToken));
 
     // Assuming the spell isn't used as a swift action, fakecast for visuals
     if(nManifDur > 0)

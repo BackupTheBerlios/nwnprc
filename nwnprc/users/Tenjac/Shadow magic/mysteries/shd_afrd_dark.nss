@@ -5,11 +5,10 @@
 /**@file Afraid of the Dark
 Apprentic, Umbral Mind
 Level/School: 3rd/Illusion (Mind-Affecting, Shadow)
-Range: 
-Effect: 
-Duration:  
-Saving Throw:  
-Spell Resistance: 
+Range: Medium (100ft + 10ft/level)
+Duration:  Instantaneous
+Saving Throw:  Will half
+Spell Resistance: Wes
 
 Author:    Tenjac
 Created:   

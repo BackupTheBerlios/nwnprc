@@ -47,9 +47,8 @@ void CountdownToSlime(object oTarget, int nCounter)
 		//kill target
 		effect eDeath = EffectDeath();		
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
-		
-		
-		CreateObject(OBJECT_TYPE_CREATURE, "x2_gelcube", lLoc);
+				
+		CreateObject(OBJECT_TYPE_CREATURE, "nw_ochrejellymed", lLoc);
 	}
 }
 

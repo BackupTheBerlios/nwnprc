@@ -498,7 +498,7 @@ const int SPELL_ENERGY_EBB                          = 2863;
 const int SPELL_NIGHTS_CARESS                       = 2864;
 const int SPELL_COMMAND_UNDEAD                      = 2499;
 
-const int SPELL_ABBERATE                            = 2500;	
+const int SPELL_ABERRATE                            = 2500;	
 const int SPELL_ABSORB_STRENGTH                     = 2501;
 const int SPELL_ABYSSAL_MIGHT                       = 2502;
 const int SPELL_ANGRY_ACHE                          = 2503;
@@ -508,7 +508,7 @@ const int SPELL_APOCALYPSE_FROM_THE_SKY_ACID        = 2506;
 const int SPELL_APOCALYPSE_FROM_THE_SKY_SONIC       = 2507;
 const int SPELL_BESTOW_WOUND                        = 2508;
 const int SPELL_BODAK_BIRTH                         = 2509;
-const int SPELL_BONEBLADE                          = 2510;
+const int SPELL_BONEBLADE                           = 2510;
 const int SPELL_BONEBLAST                           = 2511;
 const int SPELL_CALL_DRETCH_HORDE                   = 2512;
 const int SPELL_CALL_LEMURE_HORDE                   = 2513;
@@ -599,6 +599,9 @@ const int SPELL_SICKEN_EVIL                         = 2597;
 const int SPELL_STORM_OF_SHARDS                     = 2598;
 const int SPELL_SUNMANTLE                           = 2599;
 const int SPELL_TWILIGHT_LUCK                       = 2600;
+const int SPELL_BONEBLADE_GREATSWORD                = 2601;
+const int SPELL_BONEBLADE_LONGSWORD                 = 2602;
+const int SPELL_BONEBLADE_SHORTSWORD                = 2603;
 
 
 // Passive feats

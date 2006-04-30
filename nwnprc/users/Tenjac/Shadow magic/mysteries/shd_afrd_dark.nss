@@ -1,0 +1,19 @@
+//::///////////////////////////////////////////////
+//:: Name      Afraid of the Dark
+//:: FileName  shd_afrd_dark.nss
+//:://////////////////////////////////////////////
+/**@file Afraid of the Dark
+Apprentic, Umbral Mind
+Level/School: 3rd/Illusion (Mind-Affecting, Shadow)
+Range: 
+Effect: 
+Duration:  
+Saving Throw:  
+Spell Resistance: 
+
+Author:    Tenjac
+Created:   
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+

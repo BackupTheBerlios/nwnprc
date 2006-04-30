@@ -162,11 +162,11 @@ int GetSpellslotLevel(int nClass, object oPC)
         int nDivSpellMod = StringToInt(Get2DACache("classes", "DivSpellLvlMod", nTempClass));
         if(nArcSpellMod == 1)
             nArcSpellslotLevel += GetLevelByClass(nTempClass, oPC);
-        else    
+        else if(nArcSpellMod > 1)
             nArcSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nArcSpellMod;
         if(nDivSpellMod == 1)
             nDivSpellslotLevel += GetLevelByClass(nTempClass, oPC);
-        else    
+        else if(nDivSpellslotLevel > 1)    
             nDivSpellslotLevel += (GetLevelByClass(nTempClass, oPC)+1)/nDivSpellMod;
     }
     if(GetFirstArcaneClass(oPC) == nClass)
@@ -428,6 +428,21 @@ void SetupSpells(object oPC, int nClass)
         {
             int nSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i);
             AddSpellUse(oPC, nSpellbookID, nClass);
+            //metamagic
+            string sFile = GetFileForClass(nClass);
+            int nRealSpellID = StringToInt(Get2DACache(sFile, "RealSpellID", nSpellbookID));
+            int j;
+            for(j=nSpellbookID; j<=nSpellbookID+10; j++)
+            {
+                int nTestRealSpellID = StringToInt(Get2DACache(sFile, "RealSpellID", j)); 
+                if(nTestRealSpellID == nRealSpellID)
+                {
+                    int nMetaFeat = StringToInt(Get2DACache(sFile, "ReqFeat", j));
+                    if(nMetaFeat != 0
+                        && GetHasFeat(nMetaFeat, oPC))
+                        AddSpellUse(oPC, j, nClass);
+                }
+            }
         }    
     }
     else if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)

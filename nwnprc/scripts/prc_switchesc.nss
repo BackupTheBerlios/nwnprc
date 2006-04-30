@@ -109,8 +109,10 @@ void main()
                     || (GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO) == 1
                     && GetIsDM(oPC)))
                     AddChoice("Alter code switches.", 1);
-                if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-                    GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))
+                if (GetIsEpicCleric(oPC) 
+                        || GetIsEpicDruid(oPC) 
+                        || GetIsEpicSorcerer(oPC) 
+                        || GetIsEpicWizard(oPC))
                     AddChoice("Manage Epic Spells.", 2);
                 AddChoice("Purchase general items, such as scrolls or crafting materials.", 3);
                 AddChoice("Attempt to identify everything in my inventory.", 4);
@@ -189,7 +191,8 @@ void main()
                 if(GetCastableFeatCount(oPC)<7)
                     AddChoice("Add an Epic Spell to the radial menu.", 2);
                 AddChoice("Manage any active contingencies.", 3);
-                AddChoice("Research an Epic Spell.", 4);
+                if(!GetPRCSwitch(PRC_SPELLSLAB))
+                    AddChoice("Research an Epic Spell.", 4);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -243,15 +246,21 @@ void main()
             else if(nStage == STAGE_SHOPS)
             {
                 SetHeader("Select what type of item you wish to purchase.");
-                if(GetHasFeat(FEAT_CRAFT_ITEM, oPC))
+                if(GetHasFeat(FEAT_CRAFT_ITEM, oPC)
+                    && !GetPRCSwitch(PRC_SPELLSLAB_NORECIPES))
                     AddChoice("Crafting recipes", 1);
                 if(GetHasFeat(FEAT_BREW_POTION, oPC)
                     || GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
                     || GetHasFeat(FEAT_CRAFT_WAND, oPC))
                     AddChoice("Magic item raw materials", 2);
-                AddChoice("Spell scrolls", 3);
-                if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-                    GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))
+                if(!GetPRCSwitch(PRC_SPELLSLAB_NOSCROLLS))    
+                    AddChoice("Spell scrolls", 3);
+                if ((GetIsEpicCleric(oPC) 
+                        || GetIsEpicDruid(oPC) 
+                        || GetIsEpicSorcerer(oPC) 
+                        || GetIsEpicWizard(oPC))
+                    && GetPRCSwitch(PRC_SPELLSLAB) != 3    
+                    )    
                     AddChoice("Epic spell books", 4);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 

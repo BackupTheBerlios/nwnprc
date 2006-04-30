@@ -985,6 +985,9 @@ float GetRelativeAngleBetweenLocations(location lFrom, location lTo)
 {
     vector vPos1 = GetPositionFromLocation(lFrom);
     vector vPos2 = GetPositionFromLocation(lTo);
+    //sanity check
+    if(GetDistanceBetweenLocations(lFrom, lTo) == 0.0)
+        return 0.0; 
 
     float fAngle = acos((vPos2.x - vPos1.x) / GetDistanceBetweenLocations(lFrom, lTo));
     // The above formula only returns values [0, 180], so test for negative y movement

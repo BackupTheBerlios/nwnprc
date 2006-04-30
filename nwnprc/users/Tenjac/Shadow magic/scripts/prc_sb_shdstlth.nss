@@ -13,7 +13,7 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	object oSkin = GetPCSkin(oPC);
-	int nBonus = 4;
+	int nBonus = (GetLevelByClass(CLASS_TYPE_SHADOWBLADE)/2);	
 	
 	if (GetLocalInt(oSkin, "ShdStlthH") == nBonus) return;
 	

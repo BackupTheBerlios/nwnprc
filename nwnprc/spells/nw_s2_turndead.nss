@@ -74,7 +74,7 @@ void main()
     //casters level for turning
     int nLevel = GetTurningClassLevel();
         
-    //casters charimsa modifier
+    //casters charisma modifier
     int nChaMod = GetAbilityModifier(ABILITY_CHARISMA);
     //Heartwarder adds two to cha checks
     if (GetHasFeat(FEAT_HEART_PASSION))
@@ -143,7 +143,12 @@ void main()
         return;
     }
     
-    SendMessageToPC(OBJECT_SELF, "You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD));
+    FloatingTextStringOnCreature("You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD), OBJECT_SELF, FALSE);
+    effect eImpactVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
+    // Evil clerics rebuke, not turn, and have a different VFX
+    if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL) eImpactVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
+    
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpactVis, GetLocation(OBJECT_SELF));
     
     //assemble the list of targets to try to turn
     MakeTurningTargetList(nTurningMaxHD, nTurningTotalHD, PRCGetSpellId());

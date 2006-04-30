@@ -404,6 +404,16 @@ const int SPELL_DIMENSIONAL_LOCK                    = 2898;
 const int SPELL_TELEPORT                            = 2874;
 const int SPELL_BLOOD_OF_THE_MARTYR         	    = 3099;
 const int SPELL_POLAR_RAY	         	    = 3098;
+const int SPELL_COMMAND_APPROACH                    = 3093;
+const int SPELL_COMMAND_DROP                        = 3094;
+const int SPELL_COMMAND_FALL                        = 3095;
+const int SPELL_COMMAND_FLEE                        = 3096;
+const int SPELL_COMMAND_HALT                        = 3097;
+const int SPELL_GREATER_COMMAND_APPROACH            = 3087;
+const int SPELL_GREATER_COMMAND_DROP                = 3088;
+const int SPELL_GREATER_COMMAND_FALL                = 3089;
+const int SPELL_GREATER_COMMAND_FLEE                = 3090;
+const int SPELL_GREATER_COMMAND_HALT                = 3091;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;

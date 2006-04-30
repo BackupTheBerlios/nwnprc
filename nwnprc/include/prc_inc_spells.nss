@@ -1813,3 +1813,51 @@ int GetHasMettle(object oTarget, int nSavingThrow)
 
     return nMettle;
 }
+
+void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration, int nCaster)
+{
+	if (nSpellId == SPELL_COMMAND_APPROACH || nSpellId == SPELL_GREATER_COMMAND_APPROACH)
+	{
+		// Force the target to approach the caster
+		AssignCommand(oTarget, ClearAllActions(TRUE));
+		AssignCommand(oTarget, ActionForceMoveToObject(oCaster, TRUE));
+	}
+	// Creatures that can't be disarmed ignore this
+	else if ((nSpellId == SPELL_COMMAND_DROP && GetIsCreatureDisarmable(oTarget)) || 
+	         (nSpellId == SPELL_GREATER_COMMAND_DROP && GetIsCreatureDisarmable(oTarget)))
+	{
+		// Force the target to drop what its holding
+		AssignCommand(oTarget, ClearAllActions(TRUE));
+		AssignCommand(oTarget, ActionPutDownItem(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)));
+		AssignCommand(oTarget, ActionPutDownItem(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget)));
+	}
+	else if (nSpellId == SPELL_COMMAND_FALL || nSpellId == SPELL_GREATER_COMMAND_FALL)
+	{
+		// Force the target to fall down
+		AssignCommand(oTarget, ClearAllActions(TRUE));
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);
+	}
+	else if (nSpellId == SPELL_COMMAND_FLEE || nSpellId == SPELL_GREATER_COMMAND_FLEE)
+	{
+		// Force the target to flee the caster
+		AssignCommand(oTarget, ClearAllActions(TRUE));
+		AssignCommand(oTarget, ActionMoveAwayFromObject(oCaster, TRUE));	
+	}
+	else if (nSpellId == SPELL_COMMAND_HALT || nSpellId == SPELL_GREATER_COMMAND_HALT)
+	{
+		// Force the target to stand still
+		AssignCommand(oTarget, ClearAllActions(TRUE));
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectCutsceneParalyze(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);	
+	}
+	else // Catch errors here
+	{
+		if (!GetIsCreatureDisarmable(oTarget)) 
+		{
+			FloatingTextStringOnCreature(GetName(oTarget) + " is not disarmable.", oCaster, FALSE);
+		}
+		else
+		{
+			FloatingTextStringOnCreature("sp_command/sp_greatcommand: Error, Unknown SpellId", oCaster, FALSE);
+		}
+	}
+}

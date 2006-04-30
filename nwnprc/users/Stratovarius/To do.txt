@@ -11,7 +11,7 @@ Suffering
 Trade
 
 Base Classes:
-Favoured Soul - Classes.2da, cls_feat.2da, TLK
+Favoured Soul - Classes.2da, cls_feat.2da
 Warmage - All to do
 Dread Necromancer - All to do
 Healer - All to do
@@ -33,9 +33,9 @@ Shadowmind - All to do
 
 Normal PrCs:
 Slayer of Domiel - Classes.2da, cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
-Disciple of Asmodeus - Classes.2da, cls_feat.2da, TLK, Spell Const, Command, Greater Command
+Disciple of Asmodeus - Classes.2da, cls_feat.2da, (Greater) Command class abilities
 Dirgesinger - Classes.2da, cls_feat.2da
-Suel Archanamach - Classes.2da, cls_feat.2da, TLK
+Suel Archanamach - Classes.2da, cls_feat.2da
 Stormsinger - All to do
 Blood Magus - Check what is done and what needs doing.
 

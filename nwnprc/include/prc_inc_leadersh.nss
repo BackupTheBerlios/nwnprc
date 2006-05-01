@@ -280,6 +280,9 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
                     sName += RandomName(NAME_LAST_HALFLING);
                     break;
             }
+            //sanity check 
+            if(sName == " ")
+                sName = "";
             //change the name
             AssignCommand(oCohort, SetName(oCohort, sName));
             

@@ -631,6 +631,27 @@ void _ManifestationRangeCheck(object oManifester, int nPower, location lTarget)
 }
 
 /** Internal function.
+ * Assigns the fakecast command that is used to display the conjuration VFX when using a power.
+ * Separated from UsePower() due to a bug with ActionFakeCastSpellAtObject(), which requires
+ * use of ClearAllActions() to work around.
+ * The problem is that if the target is an item on the ground, if the actor is out of spell
+ * range when doing the fakecast, they will run on top of the item instead of to the edge of
+ * the spell range. This only happens if there was a "real action" in the actor's action queue
+ * immediately prior to the fakecast.
+ */
+void _AssignUsePowerFakeCastCommands(object oManifester, object oTarget, location lTarget, int nSpellID)
+{
+    // Nuke actions to prevent the fakecast action from bugging
+    ClearAllActions();
+
+    if(GetIsObjectValid(oTarget))
+        ActionCastFakeSpellAtObject(nSpellID, oTarget, PROJECTILE_PATH_TYPE_DEFAULT);
+    else
+        ActionCastFakeSpellAtLocation(nSpellID, lTarget, PROJECTILE_PATH_TYPE_DEFAULT);
+}
+
+
+/** Internal function.
  * Places the cheatcasting of the real power into the manifester's action queue.
  */
 void _UsePowerAux(object oManifester, object oMfToken, int nSpellId,
@@ -876,10 +897,8 @@ void UsePower(int nPower, int nClass, int bIsPsiLike = FALSE, int nLevelOverride
     // Assuming the spell isn't used as a swift action, fakecast for visuals
     if(nManifDur > 0)
     {
-        if(GetIsObjectValid(oTarget))
-            ActionCastFakeSpellAtObject(nSpellID, oTarget, PROJECTILE_PATH_TYPE_DEFAULT);
-        else
-            ActionCastFakeSpellAtLocation(nSpellID, lTarget, PROJECTILE_PATH_TYPE_DEFAULT);
+        // Hack. Workaround of a bug with the fakecast actions. See function comment for details
+        ActionDoCommand(_AssignUsePowerFakeCastCommands(oManifester, oTarget, lTarget, nSpellID));
     }
 
     // Action queue the function that will cheatcast the actual power

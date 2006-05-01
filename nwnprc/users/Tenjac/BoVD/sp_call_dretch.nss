@@ -34,4 +34,59 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+int GetTotalAssociateHD(object oPC);
+
 #include "spinc_common"
+
+voide main()
+{
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMaxHDControlled = nCasterLevel * 2;
+	int nTotalControlled = GetTotalAssociateHD(oPC);
+	int nDretches = d4(2);
+	int nCounter = nDretches;
+	
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	//Summon loop
+	while(nCounter > 0)
+	{
+		
+		nCounter--;
+	}
+	
+	//If you can't control them all
+	if((nDretches * 2) > nMaxHDControlled - nTotalControlled)
+	{
+		//drop extras
+		
+	}
+	
+	
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+
+int GetTotalAssociateHD(object oPC)
+{
+	int nHDControlled;
+	int nAssociate = 1;
+	object oAssociate = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, nAssociate)
+	
+	while(GetIsObjectValid(oAssociate))
+	{
+		nHDControlled += GetHitDice(oAssociate)
+		
+		//increment nAssociate
+		nAssociate++;
+		
+		oAssocitate = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, nAssociate)
+	}
+	return nHDControlled;
+}
+	
+	

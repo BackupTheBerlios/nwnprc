@@ -35,15 +35,43 @@ void main()
 {
 	//vars
 	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
+	location lLoc = GetSpellTargetLocation();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nBonus = 1;
+	int nBonus = max((nCasterLvl/3), 1);
 	int nRace = MyPRCGetRacialType(oTarget);
 	
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		
+	//loop
+	while(GetIsObjectValid(oTarget))
+	{
+		//Check for incorporeal undead
+		
+		{
+			effect eLink = EffectACIncrease(nBonus, AC_DEFLECTION_BONUS);
+			       eLink = EffectLinkEffects(eLink, EffectTurnResistanceIncrease(nBonus + 1));
+			       eLink = EffectLinkEffects(eLink, EffectTemporaryHitpoints(d8(1) + nBonus - 1));
+			       eLink = EffectLinkEffects(eLink, EffectAttackIncrease(nBonus));
+			       eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PARALYZED));
+			
+			//Apply for 1 day
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24));
+			
+		}
+	}
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+			
+			
+	
+	
 	
 	
 	

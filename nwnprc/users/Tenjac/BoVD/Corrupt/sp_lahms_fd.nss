@@ -48,12 +48,93 @@ or no fingers is useless.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "spinc_common"
-#include "prc_inc_spells"
 
 void main()
 {
+	object oPC = OBJECT_SELF;	
+	object oTarget = GetSpellTargetObject();
+	int nLFingers = GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND");
+	int nRFingers = GetPersistantLocalInt(oPC, "FENGERS_RIGHT_HAND");
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nFingers = 1;
+	int nDam;
+	effect eVis = EffectVisualEffect(VFX_IMP_MAGBLUE);
+	effect eMissle = EffectViualEffect(VFX_IMP_MIRV);
+	effect eDam = EffectAbilityDecrease(ABILITY_DEXTERITY, nDam);
+	float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
+	float fDelay = fDist/(3.0 * log(fDist) + 2.0);
+	float fDelay2, fTime;
+	location lTarget = GetSpellTargetLocation();
+		               
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
 	SPSetSchool(SPELL_SHOOL_TRANSMUTATION);
 	
+	//Spell Resistance, no save
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Calculate fingers used
+		if(nCasterLvl > 3) nFingers++;
+		if(nCasterLvl > 6) nFingers++;		
+		if(nCasterLvl > 9) nFingers++;		
+		if(nCasterLvl > 12) nFingers++;
+		
+		//gotta set up a new counter because nFingers is used later
+		int nCounter = nFingers;
+		
+		//Determine which hand to screw up
+		if(nLFingers > nFingers)
+		{
+			nLFingers -= nFingers;
+			SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", nLFingers);
+		}
+		
+		else if(nRFiinger > nFingers) 
+		{
+			nRFingers -= nFingers;
+			SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", nRFingers);
+		}
+		
+		else 
+		{
+			SendMessageToPC(oPC, "You do not have enough fingers left to cast this spell");
+			nCounter = 0;
+		}
+		
+		//Damage loop
+		while(nCounter > 0)
+		{
+			nDam = d4(1);			
+			
+			//Apply the MIRV and damage effect
+			DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget));
+			DelayCommand(fDelay2, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget));
+			DelayCommand(fTime, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+			
+			// Play the sound of a dart hitting
+			DelayCommand(fTime, PlaySound("cb_ht_dart1"));
+			
+			//decrement nCounter to handle loop termination			
+			nCounter--;
+		}
+				
+		//Determine usefullness of remaining stumps	
+		if(nLFingers < 2)
+		{
+			//mark left hand useless
+			SetPersistantLocalInt(oPC, "LEFT_HAND_USELESS", 1);
+		}
+		
+		if(nRFingers < 2)
+		{	
+			//mark right hand useless	
+			SetPersistantLocalInt(oPC, "RIGHT_HAND_USELESS", 1);
+		}
+	}
 	
+	SPEvilShift(oPC);
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, nFingers, 0);
+	SPSetSchool();
+}

@@ -76,11 +76,6 @@ module.Hak : prc_race.hak
 module.Hak : prc_textures.hak
 module.Hak : prc_misc.hak
 module.Hak : prc_craft2das.hak
-#these are biowares 1.67 hak files
-module.Hak : aurora_tdt.hak
-module.Hak : aurora_tdtinfo.hak
-module.Hak : aurora_ttz.hak
-module.Hak : aurora_ttzinfo.hak
 
 # Custom tlk used by the prc pack.
 module.CustomTlk : prc_consortium.tlk

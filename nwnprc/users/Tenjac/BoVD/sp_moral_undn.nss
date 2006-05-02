@@ -60,6 +60,8 @@ void main()
 	
 	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_MORALITY_UNDONE, oPC);
+	
 	//Spell Resist
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{

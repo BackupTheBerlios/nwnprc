@@ -44,4 +44,39 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nGoodEvil = GetGoodEvilValue(oTarget);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = (600.0f * nCasterLvl);
+	
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	//Spell Resist
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Saving Throw
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+		{
+			//Poor, poor paladin.  It's pathetic that you didn't make your save.
+			AdjustAlignment(oTarget, ALIGNMENT_EVIL, (100 + nGoodEvil));
+			
+			//Schedule restoration.  This might be a problem if they were 100 before and
+			//improved their alignment any while evil. They might be restored to 85 instead.
+			DelayCommand(fDur, AdjustAlignment(oTarget, ALIGNMENT_GOOD, (100 + nGoodEvil)));
+		}
+	}
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+			
+		
+		

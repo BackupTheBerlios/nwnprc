@@ -72,6 +72,8 @@ void main()
 	
 	SPSetSchool(SPELL_SHOOL_TRANSMUTATION);
 	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_LAHMS_FINGER_DARTS, oPC);
+	
 	//Set up fingers if it hasn't been done before
 	if (GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND") < 1)
 	{

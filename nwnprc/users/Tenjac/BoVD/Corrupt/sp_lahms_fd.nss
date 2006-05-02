@@ -54,8 +54,8 @@ void main()
 {
 	object oPC = OBJECT_SELF;	
 	object oTarget = GetSpellTargetObject();
-	int nLFingers = GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND");
-	int nRFingers = GetPersistantLocalInt(oPC, "FENGERS_RIGHT_HAND");
+	int nLFingers = (GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND") - 1);
+	int nRFingers = (GetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND")- 1);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nFingers = 1;
 	int nDam;
@@ -71,6 +71,12 @@ void main()
 	if(!X2PreSpellCastCode()) return;
 	
 	SPSetSchool(SPELL_SHOOL_TRANSMUTATION);
+	
+	//Set up fingers if it hasn't been done before
+	if (GetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND") < 1)
+	{
+		SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", 6);
+		SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", 6);
 	
 	//Spell Resistance, no save
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))

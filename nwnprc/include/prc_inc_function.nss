@@ -758,7 +758,6 @@ void FeatContender(object oPC)
 {
     int iContenderLevel = GetLevelByClass(CLASS_TYPE_MIGHTY_CONTENDER_KORD, oPC);
     int iMod;
-    FloatingTextStringOnCreature("Domain Decrement Subroutine",OBJECT_SELF);
 
 if(iContenderLevel > 0)
     iMod = GetAbilityModifier(ABILITY_STRENGTH, oPC);

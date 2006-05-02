@@ -52,6 +52,7 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nGoodEvil = GetGoodEvilValue(oTarget);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	float fDur = (600.0f * nCasterLvl);
 	
 	//Spellhook
@@ -63,7 +64,7 @@ void main()
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Saving Throw
-		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 		{
 			//Poor, poor paladin.  It's pathetic that you didn't make your save.
 			AdjustAlignment(oTarget, ALIGNMENT_EVIL, (100 + nGoodEvil));

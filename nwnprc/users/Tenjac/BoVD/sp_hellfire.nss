@@ -21,9 +21,68 @@ to being reduced by protection from elements
 magic.
 
 Author:    Tenjac
-Created:   
+Created:   05/03/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+{
+	object oPC = OBJECT_SELF;
+	location lLoc = GetSpellTargetLocation();
+	effect eVis = EffectVisualEffect(806);
+	effect eExplode = EffectVisualEffect(VFX_IMP_FLAME_M);	
+	effect eDam;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDamage;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDelay;
+	
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+		
+	//Apply the fireball explosion at the location captured above.
+	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lLoc);
+	
+	//get initial oTarget
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+	
+	//damage loop
+	while(GetIsObjectValid(oTarget))
+	{
+		if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
+		{
+			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			{
+				//Roll damage for each target
+				nDamage = d6(3);
+				
+				//Resolve metamagic
+				if (nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDamage = 18;
+				}
+				else if (nMetaMagic == METAMAGIC_EMPOWER)
+				{
+					nDamage = nDamage + nDamage / 2;
+				}
+				
+				//Set the damage effect
+				eDam = EffectDamage(nDamage, DAMAGE_TYPE_DIVINE);
+				
+				// Apply effects to the currently selected target.
+				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+				DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+				}
+			}
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+	}
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+		
+	
+		
+

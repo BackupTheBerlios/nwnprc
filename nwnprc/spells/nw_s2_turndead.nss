@@ -67,8 +67,8 @@ void main()
     // Because Turn Undead isn't from a domain, skip this check
     if (GetSpellId() != SPELL_TURN_UNDEAD)
     {
-    	// Used by the uses per day check code for bonus domains
-    	if (!DecrementDomainUses(GetTurningDomain(GetSpellId()), OBJECT_SELF)) return;
+        // Used by the uses per day check code for bonus domains
+        if (!DecrementDomainUses(GetTurningDomain(GetSpellId()), OBJECT_SELF)) return;
     }
 
     //casters level for turning
@@ -138,6 +138,15 @@ void main()
             string sResRef = "x2_s_bguard_18"; 
             object oCreated = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lLoc);
             ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, lLoc);
+            //create the effect
+            //supernatural dominated vs cutscenedominated
+            //supernatural will last over resting
+            //Why not use both?
+            effect eCommand2 = SupernaturalEffect(EffectDominated());
+            effect eCommand = SupernaturalEffect(EffectCutsceneDominated());
+            eCommand = EffectLinkEffects(eCommand, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED));
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oCreated);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand2, oCreated);
             nHDCount += GetHitDiceForTurning(oCreated);
         }
         return;

@@ -27,6 +27,8 @@ Created:   05/03/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
 {
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();

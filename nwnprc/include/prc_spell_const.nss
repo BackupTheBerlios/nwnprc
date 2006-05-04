@@ -602,7 +602,13 @@ const int SPELL_TWILIGHT_LUCK                       = 2600;
 const int SPELL_BONEBLADE_GREATSWORD                = 2601;
 const int SPELL_BONEBLADE_LONGSWORD                 = 2602;
 const int SPELL_BONEBLADE_SHORTSWORD                = 2603;
-
+const int SPELL_AGONY                               = 2604;
+const int SPELL_BACCARAN                            = 2605;
+const int SPELL_DEVILWEED                           = 2606;
+const int SPELL_LUHIX                               = 2607;
+const int SPELL_MUSHROOM_POWDER                     = 2608;
+const int SPELL_SANNISH                             = 2609;
+const int SPELL_TERRAN_BRANDY                       = 2610;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

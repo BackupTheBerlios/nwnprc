@@ -20,9 +20,59 @@ blackens the subject's flesh. The subject takes
 Disease Component: Soul rot. 
 
 Author:    Tenjac
-Created:   
+Created:   05/04/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	//spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_SHRIVELING, oPC);
+	
+	//Check for Soul rot
+	if(GetHasEffect((EffectDisease, DISEASE_SOUL_ROT), oPC);
+	{
+		//SR
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			int nDam = d4(min(nCasterLvl, 10));
+			
+			//eval metamagic
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 4 * (min(nCasterLvl, 10));
+			}
+			
+			if(nMetaMagic == METAMAGIC_EMPOWER)
+			{
+				nDam += (nDam/2);
+			}			
+			
+			//Check for save
+			if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+			{
+				nDam = nDam/2;
+			}
+			
+			effect eVis = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
+			
+			//Apply damage & visual
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+		}
+	}
+	SPEvilShift(oPC);
+	SPSetSchool();
+}

@@ -36,4 +36,64 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDelay = (d3(1) - 1);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nType = MyPRCGetRacialType(oTarget);
+	
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HEARTCLUTCH, oPC);
+	
+	if(nType != RACIAL_TYPE_OOZE &&
+	   nType != RACIAL_TYPE_UNDEAD &&
+	   nType != RACIAL_TYPE_CONSTRUCT &&
+	   nType != RACIAL_TYPE_ELEMENTAL)
+	   
+	{
+		//Check for Soul rot
+		if(GetHasEffect((EffectDisease, DISEASE_SOUL_ROT), oPC);
+		{
+			//Check for Spell resistance
+			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			{
+				//Clutching loop
+				DoClutchLoop(oTarget, nDelay);
+			}
+		}
+	}
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+
+void ClutchLoop(object oTarget, int nDelay)
+{
+	if(nDelay < 1)
+	{
+		//Save
+		if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+		{
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3)), oTarget));
+			
+		}
+		else
+		{
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath, oTarget);
+		}
+	}
+	
+	nDelay--;
+	
+	//Round we go...
+	ClutchLoop(oTarget, nDelay);
+}
+			

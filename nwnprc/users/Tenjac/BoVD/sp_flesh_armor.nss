@@ -29,12 +29,34 @@ Duration: 10 minutes/level or until discharged
  Focus: The entire freshly harvested skin of another 
  creature of the caster's size.
 
-
-
 Author:    Tenjac
-Created:   
+Created:   05/05/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur= (600.0f * CasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nAmount = min(50, (5 * nCasterLvl));
+	effect eFlesh = EffectDamageReduction(10, DAMAGE_POWER_PLUS_ONE, nAmount);
+	
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	 //Meta Magic
+	 if(nMetaMagic == METAMAGIC_EXTEND)
+	 {
+		 fDur = (fDur * 2);
+	 }
+	 
+	 
+	 
+	

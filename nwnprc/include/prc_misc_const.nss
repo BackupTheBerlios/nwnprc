@@ -55,7 +55,8 @@ const int DISEASE_CONTAGION_RED_ACHE            = 24;
 const int DISEASE_CONTAGION_SHAKES              = 25;
 const int DISEASE_CONTAGION_SLIMY_DOOM          = 26;
 const int DISEASE_PESTILENCE                    = 51;
-
+const int DISEASE_BLUE_GUTS                     = 53;
+const int DISEASE_SOUL_ROT                      = 54;
 
 //:://////////////////////////////////////////////
 //:: Poison Const

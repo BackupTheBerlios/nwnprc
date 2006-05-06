@@ -29,8 +29,6 @@ Created:   1/25/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-const int DISEASE_BLUE_GUTS = 53;
-const int DISEASE_SOUL_ROT = 54;
 
 #include "prc_alterations"
 #include "spinc_common"

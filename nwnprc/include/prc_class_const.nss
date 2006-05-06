@@ -162,3 +162,4 @@ const int CLASS_TYPE_MASTER_OF_SHADOW        = 206;
 const int CLASS_TYPE_NOCTUMANCER             = 207;
 const int CLASS_TYPE_SHADOWBLADE             = 208;
 const int CLASS_TYPE_SHADOWSMITH             = 209;
+const int CLASS_TYPE_WAR_WIZARD_OF_CORMYR    = 226;

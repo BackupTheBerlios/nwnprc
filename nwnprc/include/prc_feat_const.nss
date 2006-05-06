@@ -2083,3 +2083,7 @@ const int FEAT_UNSEEN_WEAPON_SHADOWY_STRIKE   = 3655;
 const int FEAT_UNSEEN_WEAPON_FAR_SHADOW       = 3656;
 const int FEAT_UNSEEN_WEAPON_FREE_ACTION      = 3657;
 const int FEAT_ULTRAVISION                    = 3658;
+
+// War Wizard of Cormyr
+const int FEAT_WWOC_WIDEN_SPELL               = 2473;
+const int FEAT_WWOC_ENLARGE_SPELL_AREA        = 2474;

@@ -1,0 +1,9 @@
+2DA V2.0
+
+  LABEL       ReqType ReqParam1      ReqParam2 
+0 ScriptVar   VAR     PRC_ArcSpell4  0         
+1 Empower     FEAT    11             ****      
+2 Maximize    FEAT    25             ****      
+3 WeapProfMar FEAT    45             ****      
+4 Spellcraft  SKILL   16             10        
+5 ScriptVar   VAR     PRC_AllowWWoC  0         

@@ -48,14 +48,46 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	float fDur = 15000.0f;
-		
+	float fDur = 15000.0f;	
+	effect eImp = EffectVisualEffect(VFX_FNF_PWKILL);
+	
+	//spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	//Spell resist
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//VFX
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
+		
+		//Fort save
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 		{
-			//Fort save
-			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_EVIL))
-			{
-				AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDur)); 
-				
+			AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDur)); 
+			AssignCommand(oTarget, SetCommandable(FALSE));
+			
+			//Should this be done by dispell spells instead?
+			DelayCommand(fDur, AssignCommand(oTarget, SetCommandable(TRUE)));
+		}
+		
+		else
+		{
+			//5d6 damage, -4 to attack, save, skills, attribute checks
+			int nDam = d6(5);
+			effect eLink = EffectAttackDecrease(4, ATTACK_BONUS_MISC);
+			eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, 4, SAVING_THROW_TYPE_ALL);
+			eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL, 4);
+			
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (6.0f * nCasterLvl));
+		}
+	}
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+
+void AbilityScrewed (object oTarget)	
+			

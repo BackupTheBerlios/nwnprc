@@ -2079,6 +2079,45 @@ Use: Selected.</entry>
 Prerequisite: Disciple of Asmodeus level 10.
 Specifics: The Disciple of Asmodeus gains a +2 bonus on Saving Throws, Attacks, and Armour Class.
 Use: Automatic.</entry>
+  <entry id="45428" lang="en" sex="m">War Wizard of Cormyr</entry>
+  <entry id="45429" lang="en" sex="m">War Wizards of Cormyr</entry>
+  <entry id="45430" lang="en" sex="m">War Wizard of Cormyr</entry>
+  <entry id="45431" lang="en" sex="m">(PRESTIGE CLASS)
+The Cormyrean War Wizards are some of the most respected battlemages in all of Faerun. Trained by experienced combat mages, they bring great power to the battlefield. In the war against the Tuigan horde, they were instrumental in protecting the outnumbered allied troops fighting against the horde. In the recent war in Cormyr against the dragon and her goblin minions, many War Wizards lost their lives holding back the onslaught. Since their creation, they have been one of Cormyr's most effective tools against subversion by foreign or hostile powers. The road they must travel to achieve such ends is long, difficult, and often lonely, but the special people who follow this path are made of the stuff that can endure such hardships. Their reward? The respect of their peers and the people of Cormyr, and the gratitude of kings.
+
+- Hit Die: d4
+- Proficiencies: A War Wizard of Cormyr gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
+
+REQUIREMENTS:
+
+Alignment: No Chaotic, No Evil.
+Feats: Weapon Proficiency (Martial), Empower Spell, Extend Spell.
+Skills: Spellcraft 10 ranks.
+Arcane Spellcasting: Able to cast 4th-level spells.
+
+ABILITIES:
+
+Level
+1: Weapon Focus - Choose a bonus Martial Weapon Focus
+2: Metamagic Feat - Choose a bonus Metamagic feat.
+3: Widen Spell - Increase spell area
+4: Metamagic Feat
+5: Enlarge Spell Area - Greatly increased spell area.
+
+SPELLCASTING
+
+Every level in War Wizard of Cormyr, the character gains new spells per day as if he had also gained a level in his highest caster class (bard, sorcerer, or wizard). He does not learn any new spells through his abilities.</entry>
+  <entry id="45432" lang="en" sex="m">Widen Spell</entry>
+  <entry id="45433" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: War Wizard of Corymr level 3.
+Specifics: A number of times per day equal to your class level plus your Charisma modifier, you can increase the area of a spell by 50%. This only works on spells that are already area effect to begin with.
+Use: Selected.</entry>
+  <entry id="45434" lang="en" sex="m">Enlarge Spell Area</entry>
+  <entry id="45435" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: War Wizard of Cormyr level 5.
+Specifics: When using your Widen Spell class ability, the area of the spell is now increased by 100%. 
+Use: Automatic.</entry>
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>
   <entry id="45460" lang="en" sex="m">Elemental Focus +6</entry>

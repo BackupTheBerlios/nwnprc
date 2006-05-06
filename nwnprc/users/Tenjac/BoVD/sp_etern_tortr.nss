@@ -48,12 +48,8 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	float fDur = 5000.0f;
-	
-	//if oTarget is oPC, lay down the hurt
-	if(GetLocalInt(oPC, "EternTorture"))
-	{
-		PlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDur);
+	float fDur = 15000.0f;
+		
 	
 	//Spell resist
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
@@ -61,5 +57,5 @@ void main()
 			//Fort save
 			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_EVIL))
 			{
-				AssignCommand(oTarget, 
+				AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDur)); 
 				

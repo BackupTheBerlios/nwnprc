@@ -14,7 +14,9 @@ public final class SQLMaker{
 	private SQLMaker(){}
 
 	private static StringBuilder sql;
-
+	private static String q = "";
+	private static boolean mysql = false;
+	private static boolean sqlite = true;
 	/**
 	 * The main method, as usual.
 	 *
@@ -25,46 +27,67 @@ public final class SQLMaker{
 		if(args.length == 0 || args[0].equals("--help") || args[0].equals("-?"))
 			readMe();
 
+		String dir = args[0];
+		if(args[1] == "MySQL"){
+			q = "`";
+			mysql = true;
+			sqlite = false;
+		}
+
 		// Allocate a buffer for constructing the string in - 1Kb
 		sql = new StringBuilder(0x3FF);
 		//setup the transaction
-		sql.append("BEGIN IMMEDIATE;\n");
+		if(sqlite)
+			sql.append("BEGIN IMMEDIATE;\n");
 		//optimize for windows
-		sql.append("PRAGMA page_size=4096;\n");
+		if(sqlite)
+			sql.append("PRAGMA page_size=4096;\n");
 		//create a few tables
-    	sql.append("CREATE TABLE prc_cached2da_ireq (rowid varchar(255), "                   +
-    	           "file varchar(255), LABEL varchar(255), ReqType varchar(255), "           +
-    	           "ReqParam1 varchar(255), ReqParam2 varchar(255));\n"                      +
+    	sql.append("CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ("	+
+    			   ""+q+"rowid"+q+"     varchar(255) DEFAULT '_', "        			+
+    	           ""+q+"file"+q+"      varchar(255) DEFAULT '_', "					+
+    	           ""+q+"LABEL"+q+"     varchar(255) DEFAULT '_', "					+
+    	           ""+q+"ReqType"+q+"   varchar(255) DEFAULT '_', "  		        +
+    	           ""+q+"ReqParam1"+q+" varchar(255) DEFAULT '_', "					+
+    	           ""+q+"ReqParam2"+q+" varchar(255) DEFAULT '_');\n"				+
 
-    	           "CREATE TABLE prc_cached2da_cls_feat (rowid varchar(255), "               +
-    	           "file varchar(255), FeatLabel varchar(255), FeatIndex varchar(255), "     +
-    	           "List varchar(255), GrantedOnLevel varchar(255), OnMenu varchar(255));\n" +
+    	           "CREATE TABLE "+q+"prc_cached2da_cls_feat"+q+" ("				+
+    	           ""+q+"rowid"+q+" 			varchar(255) DEFAULT '_', "         +
+    	           ""+q+"file"+q+" 				varchar(255) DEFAULT '_', "			+
+    	           ""+q+"FeatLabel"+q+" 		varchar(255) DEFAULT '_', "			+
+    	           ""+q+"FeatIndex"+q+" 		varchar(255) DEFAULT '_', "		    +
+    	           ""+q+"List"+q+" 				varchar(255) DEFAULT '_', "			+
+    	           ""+q+"GrantedOnLevel"+q+" 	varchar(255) DEFAULT '_', "			+
+    	           ""+q+"OnMenu"+q+" 			varchar(255) DEFAULT '_');\n" 		+
 
-    	           "CREATE TABLE prc_cached2da (file varchar(255), "                         +
-    		       "columnid varchar(255), rowid varchar(255), data varchar(255));\n"
+    	           "CREATE TABLE "+q+"prc_cached2da"+q+" ("							+
+    	           ""+q+"file"+q+" 				varchar(255) DEFAULT '_', "         +
+    		       ""+q+"columnid"+q+" 			varchar(255) DEFAULT '_', "			+
+    		       ""+q+"rowid"+q+" 			varchar(255) DEFAULT '_', "			+
+    		       ""+q+"data"+q+" 				varchar(255) DEFAULT '_');\n"
     	           );
 		printSQL(true); //start a new file
 
 
-		String dir = args[0];
 		File[] files = new File(dir).listFiles();
 		for(int i = 0; i < files.length; i++)
 			addFileToSQL(files[i]);
 
 		//create some indexs
-		sql.append("CREATE UNIQUE INDEX spellsrowindex  ON prc_cached2da_spells (rowid);\n"       +
-		           "CREATE UNIQUE INDEX featrowindex    ON prc_cached2da_feat (rowid);\n"         +
-		           "CREATE        INDEX clsfeatindex    ON prc_cached2da_cls_feat (file, FeatIndex);\n" +
-		           "CREATE UNIQUE INDEX appearrowindex  ON prc_cached2da_appearance (rowid);\n"   +
-		           "CREATE UNIQUE INDEX portrrowindex   ON prc_cached2da_portraits (rowid);\n"     +
-		           "CREATE UNIQUE INDEX soundsrowindex  ON prc_cached2da_soundset (rowid);\n"     +
-		           //"CREATE UNIQUE INDEX datanameindex   ON prc_data (name);\n"                    +
-		           "CREATE UNIQUE INDEX cachedindex     ON prc_cached2da (file, columnid, rowid);\n"+
-		           "CREATE        INDEX ireqfileindex   ON prc_cached2da_ireq (file);\n"          +
-		           "CREATE UNIQUE INDEX refrindex       ON prc_cached2da_item_to_ireq (L_RESREF, rowid);\n"
+		sql.append("CREATE UNIQUE INDEX "+q+"spellsrowindex"+q+"  ON "+q+"prc_cached2da_spells"+q+" ("+q+"rowid"+q+");\n"       +
+		           "CREATE UNIQUE INDEX "+q+"featrowindex"+q+"    ON "+q+"prc_cached2da_feat"+q+" ("+q+"rowid"+q+");\n"         +
+		           "CREATE        INDEX "+q+"clsfeatindex"+q+"    ON "+q+"prc_cached2da_cls_feat"+q+" ("+q+"file"+q+", "+q+"FeatIndex"+q+");\n" +
+		           "CREATE UNIQUE INDEX "+q+"appearrowindex"+q+"  ON "+q+"prc_cached2da_appearance"+q+" ("+q+"rowid"+q+");\n"   +
+		           "CREATE UNIQUE INDEX "+q+"portrrowindex"+q+"   ON "+q+"prc_cached2da_portraits"+q+" ("+q+"rowid"+q+");\n"     +
+		           "CREATE UNIQUE INDEX "+q+"soundsrowindex"+q+"  ON "+q+"prc_cached2da_soundset"+q+" ("+q+"rowid"+q+");\n"     +
+		           //"CREATE UNIQUE INDEX "+q+"datanameindex"+q+"   ON "+q+"prc_data"+q+" ("+q+"name"+q+");\n"                    +
+		           "CREATE UNIQUE INDEX "+q+"cachedindex"+q+"     ON "+q+"prc_cached2da"+q+" ("+q+"file"+q+", "+q+"columnid"+q+", "+q+"rowid"+q+");\n"+
+		           "CREATE        INDEX "+q+"ireqfileindex"+q+"   ON "+q+"prc_cached2da_ireq"+q+" ("+q+"file"+q+");\n"          +
+		           "CREATE UNIQUE INDEX "+q+"refrindex"+q+"       ON "+q+"prc_cached2da_item_to_ireq"+q+" ("+q+"L_RESREF"+q+", "+q+"rowid"+q+");\n"
 		           );
 		//complete the transaction
-		sql.append("COMMIT;\n");
+		if(sqlite)
+			sql.append("COMMIT;\n");
 
 		printSQL(false);
 
@@ -151,23 +174,23 @@ public final class SQLMaker{
 	private static void addSQLForSingleTable(Data_2da data, String filename) throws Exception{
 
 		StringBuilder entry;
-		entry = new StringBuilder("CREATE TABLE prc_cached2da_"+filename+" (rowid varchar(255)");
+		entry = new StringBuilder("CREATE TABLE "+q+"prc_cached2da_"+filename+q+" ("+q+"rowid"+q+" varchar(255)");
 		String[] labels = data.getLabels();
 		for(int i = 0 ; i < labels.length ; i++){
-			entry.append(", "+labels[i]+" varchar(255) DEFAULT '_'");
+			entry.append(", "+q+labels[i]+q+" varchar(255) DEFAULT '_'");
 		}
 		entry.append(");");
 
 		sql.append(entry + "\n");
 		//put the data in
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
-			entry = new StringBuilder("INSERT INTO prc_cached2da_"+filename);
+			entry = new StringBuilder("INSERT INTO "+q+"prc_cached2da_"+filename+q);
 			//entry +=" (rowid";
 			//for(int i = 0 ; i < labels.length ; i++){
 			//	entry += ", "+labels[i];
 			//}
 			//entry += ")"
-			entry.append(" VALUES ("+row);
+			entry.append(" VALUES ("+q+row+q);
 			for(int column = 0; column < labels.length ; column ++) {
 				entry.append(", ");
 
@@ -191,13 +214,13 @@ public final class SQLMaker{
 		String[] labels = data.getLabels();
 		StringBuilder entry;
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
-			entry = new StringBuilder("INSERT INTO prc_cached2da_"+tablename);
+			entry = new StringBuilder("INSERT INTO "+q+"prc_cached2da_"+tablename+q);
 			//entry +="(rowid";
 			//for(int i = 0 ; i < labels.length ; i++){
 			//	entry += ", "+labels[i];
 			//}
 			//entry += ", file)";
-			entry.append(" VALUES ("+row);
+			entry.append(" VALUES ("+q+row+q);
 			for(int column = 0; column < labels.length ; column ++) {
 				entry.append(", ");
 
@@ -221,7 +244,7 @@ public final class SQLMaker{
 		StringBuilder entry;
 		for(int row = 0; row < data.getEntryCount() ; row ++) {
 			for(int column = 0; column < labels.length ; column ++) {
-				entry = new StringBuilder("INSERT INTO prc_cached2da VALUES ('"+filename+"', '"+labels[column]+"', "+row+", ");
+				entry = new StringBuilder("INSERT INTO "+q+"prc_cached2da"+q+" VALUES ('"+filename+"', '"+labels[column]+"', "+row+", ");
 
 				String value = data.getEntry(labels[column], row);
 

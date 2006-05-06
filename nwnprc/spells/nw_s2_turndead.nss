@@ -111,7 +111,15 @@ void main()
     }*/
     //add bonus HD    
     nTurningTotalHD += nBonusTurningTotalHD;    
-    nTurningMaxHD   += nBonusTurningMaxHD;   
+    nTurningMaxHD   += nBonusTurningMaxHD;       
+    
+    FloatingTextStringOnCreature("You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD), OBJECT_SELF, FALSE);
+    effect eImpactVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
+    // Evil clerics rebuke, not turn, and have a different VFX
+    if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL) eImpactVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
+    
+    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpactVis, GetLocation(OBJECT_SELF));
+    
     
     //zone of animation effect
     //"You can use a rebuke or command undead attempt to animate 
@@ -129,35 +137,56 @@ void main()
     //currently implemented ignoring corpses & what the corpses are of.
     if(GetLocalInt(OBJECT_SELF, "UsingZoneOfAnimation"))
     {
+        //Undead Mastery multiplies total HD by 10
+        //non-undead have their HD score multiplied by 10 to compensate
+        if(GetHasFeat(FEAT_UNDEAD_MASTERY))
+            nLevel *= 10;
+        //create the effect
+        effect eCommand2 = EffectDominated();
+        effect eCommand = EffectCutsceneDominated();
+        effect eLink = EffectLinkEffects(eCommand, eCommand2);
+        eLink = SupernaturalEffect(eLink);
+        effect eVFXCom = EffectVisualEffect(VFX_IMP_DOMINATE_S);
         effect eVFX = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
-        int nHDCount = GetCommandedTotalHD();
-        while(nHDCount < nTurningMaxHD)
+        //keep creating stuff
+        int nCommandedTotalHD = GetCommandedTotalHD();
+        while(nCommandedTotalHD < nTurningTotalHD)
         {
             location lLoc = GetLocation(OBJECT_SELF);
             //skeletal blackguard
             string sResRef = "x2_s_bguard_18"; 
             object oCreated = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lLoc);
-            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, lLoc);
-            //create the effect
-            //supernatural dominated vs cutscenedominated
-            //supernatural will last over resting
-            //Why not use both?
-            effect eCommand2 = SupernaturalEffect(EffectDominated());
-            effect eCommand = SupernaturalEffect(EffectCutsceneDominated());
-            eCommand = EffectLinkEffects(eCommand, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED));
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand, oCreated);
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eCommand2, oCreated);
-            nHDCount += GetHitDiceForTurning(oCreated);
+            
+            
+            int nTargetHD = GetHitDiceForTurning(oCreated);
+            //undead mastery only applies to undead
+            //so non-undead have thier HD multiplied by 10
+            if(MyPRCGetRacialType(oCreated) != RACIAL_TYPE_UNDEAD
+                && GetHasFeat(FEAT_UNDEAD_MASTERY))
+                nTargetHD *= 10;
+                
+            if(nCommandedTotalHD + nTargetHD <= nLevel)
+            {
+                ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVFX, GetLocation(oCreated));
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oCreated);
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, eVFXCom, oCreated);
+            }  
+            //cant be commanded, clean it up
+            else
+                DestroyObject(oCreated);
+            
+            nCommandedTotalHD += nTargetHD;
         }
+        //send feedback
+        int nCommandLevel = nLevel;
+        if(GetHasFeat(FEAT_UNDEAD_MASTERY))
+            nCommandLevel *= 10;
+        FloatingTextStringOnCreature("Currently commanding "
+            +IntToString(GetCommandedTotalHD())
+            +"HD out of "+IntToString(nCommandLevel)
+            +"HD.", OBJECT_SELF);
         return;
     }
-    
-    FloatingTextStringOnCreature("You are turning "+IntToString(nTurningTotalHD)+"HD of creatures whose HD is equal or less than "+IntToString(nTurningMaxHD), OBJECT_SELF, FALSE);
-    effect eImpactVis = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
-    // Evil clerics rebuke, not turn, and have a different VFX
-    if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL) eImpactVis = EffectVisualEffect(VFX_FNF_LOS_EVIL_30);
-    
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpactVis, GetLocation(OBJECT_SELF));
     
     //assemble the list of targets to try to turn
     MakeTurningTargetList(nTurningMaxHD, nTurningTotalHD, PRCGetSpellId());

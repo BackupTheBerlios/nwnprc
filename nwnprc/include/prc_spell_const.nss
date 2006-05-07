@@ -414,6 +414,7 @@ const int SPELL_GREATER_COMMAND_DROP                = 3088;
 const int SPELL_GREATER_COMMAND_FALL                = 3089;
 const int SPELL_GREATER_COMMAND_FLEE                = 3090;
 const int SPELL_GREATER_COMMAND_HALT                = 3091;
+const int SPELL_OBSCURING_MIST                      = 3085;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;

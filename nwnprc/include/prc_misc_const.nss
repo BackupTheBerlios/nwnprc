@@ -11,6 +11,7 @@
 const int AOE_MOB_PESTILENCE                    = 150;
 const int AOE_PER_TELEPORTATIONCIRCLE           = 151;
 const int AOE_PER_DEEPER_DARKNESS               = 213;
+const int AOE_PER_OBSCURING_MIST                = 141;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

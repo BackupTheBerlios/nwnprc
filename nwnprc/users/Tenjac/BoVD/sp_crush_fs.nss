@@ -45,3 +45,15 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
+	int nCasterLvl = PRCGetCasterLevel();
+        float fDuration = RoundsToSeconds(nCasterLvl);
+        
+	if (!X2PreSpellCastCode()) return;
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+			
+	// Apply summon and vfx at target location. 
+	MultisummonPreSummon();	
+	SPApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3), lTarget);	
+	SPApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature("sp_crush_fist"), lTarget, fDuration);
+	
+}

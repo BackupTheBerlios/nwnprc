@@ -79,6 +79,7 @@ void main()
                         if (GetHasRequiredFeatsForResearch(oPC, nR1, nR2, nR3, nR4))
                         {
                             DoSpellResearch(oPC, nDC, nIP, sSc, oBook);
+                            return;
                         }
                         else
                             SendMessageToPC(oPC, MES_NOT_HAVE_REQ_FEATS);
@@ -94,5 +95,8 @@ void main()
         }
         else
             SendMessageToPC(oPC, MES_CANNOT_RESEARCH_HERE);
+        //couldnt research, give the book back.
+        CopyItem(oBook, oPC, TRUE);
+        DestroyObject(oBook);
     }
 }

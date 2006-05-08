@@ -40,7 +40,8 @@ DoDebug(GetName(oTarget)+" is leaving "+GetName(oCreator)+"'s darkness effect");
                 || nID == SPELL_SHADOW_CONJURATION_DARKNESS 
                 || nID == 688 //bioware SLA darkness 
                 || nID == SHADOWLORD_DARKNESS 
-                || nID == SPELL_RACE_DARKNESS)
+                || nID == SPELL_RACE_DARKNESS
+                || nID == SPELL_DEEPER_DARKNESS)
             && (GetEffectCreator(eAOE) == oCreator)
             && nType != EFFECT_TYPE_AREA_OF_EFFECT
                 )

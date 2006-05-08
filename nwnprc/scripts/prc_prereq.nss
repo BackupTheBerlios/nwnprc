@@ -784,7 +784,7 @@ void main()
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
@@ -807,7 +807,7 @@ void main()
 
             for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
             {
-                int nSlots = GetSlotCount(nLevel - 1, nSpellLevel, nAbility, nClass);
+                int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
                 {
                     SetLocalInt(oPC, "PRC_AllSpell"+IntToString(nSpellLevel), 0);
@@ -828,7 +828,7 @@ void main()
             }
             int nAbility = GetAbilityForClass(nClass, oPC);
             string sPsiFile = GetPsionicFileName(nClass);
-            int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel - 1));
+            int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel));
 
             int nPsiHighest = min(nMaxLevel, nAbility - 10);
 

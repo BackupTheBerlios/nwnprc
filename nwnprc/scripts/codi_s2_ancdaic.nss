@@ -621,7 +621,9 @@ void main()
             {
                 //store old cost
                 object oItem = GetLocalObject(oPC, "codi_ancdai"); 
+                int nOldPlot = GetPlotFlag(oItem);
                 int nOldValue = GetGoldPieceValue(oItem);
+                SetPlotFlag(oItem, nOldPlot);
                 int nSacrificed = GetPersistantLocalInt(oPC, "CODI_SAMURAI");
                 //add the itemproperty
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
@@ -677,7 +679,10 @@ void main()
                     DoDebug("Itemproperty Not Valid");
                 IPSafeAddItemProperty(oItem, ipToAdd);
                 //remove gold cost
+                //only works if non-plot
+                int nNewPlot = GetPlotFlag(oItem);
                 int nNewValue = GetGoldPieceValue(oItem);
+                SetPlotFlag(oItem, nNewPlot);
                 int nIPCost = nNewValue-nOldValue;
                 SetPersistantLocalInt(oPC, "CODI_SAMURAI", nSacrificed-nIPCost);
                 //go back to start

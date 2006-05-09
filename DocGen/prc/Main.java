@@ -77,7 +77,7 @@ public class Main {
 			prc.utils.LetoListsGenerator.main(paramsToPass);
 		}
 		else if(toCall.equals("prec2dagen")){
-			prc.utils.precache2daGen.main(paramsToPass);
+			prc.utils.Precache2daGen.main(paramsToPass);
 		}
 
 		else{

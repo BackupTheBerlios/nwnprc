@@ -44,6 +44,7 @@ void main()
 	float fDur = HoursToSeconds(nCasterLvl);
 	
 	//if(is using mushroom powder)
+	if(GetHasSpellEffect(SPELL_MUSHROOM_POWDER, oPC))
 	{
 		//eval metamagic
 		if (nMetaMagic == METAMAGIC_EMPOWER)

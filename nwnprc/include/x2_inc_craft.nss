@@ -147,8 +147,8 @@ int   CIGetSpellWasUsedForItemCreation(object oSpellTarget);
 int   CIGetSpellInnateLevel(int nSpellID, int bDefaultZeroToOne = FALSE)
 {
     int nRet = StringToInt(Get2DACache(X2_CI_CRAFTING_SP_2DA, "Level", nSpellID));
-    if (nRet == 0)
-        nRet =1;
+    if (nRet == 0 && bDefaultZeroToOne == TRUE) // Was missing the "bDefaultZeroToOne == TRUE" check, fixed to match specification - Ornedan
+        nRet = 1;
 
     return nRet;
 }
@@ -841,7 +841,7 @@ int InscribeRune()
     {
         string sName = GetName(GetItemPossessor(oItem));
         if (DEBUG) FloatingTextStringOnCreature(sName + " has just cast a rune spell", oCaster, FALSE);
-        
+
         DoDebug("Checking for One Use runes");
         // This check is used to clear up the one use runes
         itemproperty ip = GetFirstItemProperty(oItem);
@@ -904,7 +904,7 @@ int InscribeRune()
         // 5 is the max uses per day
         if (nCount > 5) nCount = 5;
         int nMaxUses = StringToInt(Get2DACache("prc_rune_craft", "Cost", PRC_RUNE_MAXUSESPERDAY));
-        if (nCount > nMaxUses) nCount = nMaxUses;        
+        if (nCount > nMaxUses) nCount = nMaxUses;
         nCharges = nCount;
     }
     // Can't have no charges
@@ -986,8 +986,8 @@ int InscribeRune()
         {
             itemproperty ipMax = ItemPropertyCastSpellMetamagic(nSpell, METAMAGIC_MAXIMIZE);
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMax,oRune);
-        }    
-    
+        }
+
         // If its uses per day instead of charges, we do some different stuff here
         if (GetLocalInt(oCaster, "RuneUsesPerDay"))
         {
@@ -1005,7 +1005,7 @@ int InscribeRune()
         else if (nCharges == 1) // This is to handle one use runes so the spellhooking works
         {
             itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_2_CHARGES_PER_USE);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune); 
+            AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
             // This is done so the item exists when it is used for the game to read data off of
         nCharges = 3;
         }

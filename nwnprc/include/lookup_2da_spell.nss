@@ -62,8 +62,16 @@ lookup_spell_level(int spell_id, object oModule = OBJECT_INVALID)
 string
 lookup_spell_innate(int spell_id, object oModule = OBJECT_INVALID)
 {
-	return lookup_and_cache_spell_field(spell_id,
-		"PRC_PACK_SPELL_INNATE_LEVEL_", "Innate", oModule);
+    string sTemp = lookup_and_cache_spell_field(spell_id, "PRC_PACK_SPELL_INNATE_LEVEL_", "Innate", oModule);
+    if(sTemp == "")
+    {
+        string sMaster = Get2DACache("spells", "Master", spell_id);
+        if(sMaster != "")
+        {
+            sTemp = Get2DACache("spells", "Innate", StringToInt(sMaster));
+        }
+    }
+    return sTemp;
 }
 
 string

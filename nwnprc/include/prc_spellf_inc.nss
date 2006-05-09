@@ -52,7 +52,7 @@ int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE)
     //abilities rely on access to weave
     if(GetHasFeat(FEAT_SHADOWWEAVE, oTarget)) return 0;
 
-    int nSpellID = GetSpellId();
+    int nSpellID = PRCGetSpellId();
     if(!bFriendly && GetLocalInt(oCaster, "IsAOE_" + IntToString(nSpellID)))
         return 0; //can't absorb hostile AOE spells
 
@@ -70,7 +70,7 @@ int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE)
     int nSpellLevel = GetLocalInt(oCaster, "PRC_CurrentManifest_PowerLevel");   //replicates GetPowerLevel(oCaster);
     if(!nSpellLevel)    //not a power                       //avoids compiler problems
     {                                                       //with includes
-        string sInnate = Get2DACache("spells", "Innate", nSpellID);
+        string sInnate = lookup_spell_innate(nSpellID);
         if(sInnate == "") return 0; //no innate level, unlike cantrips
         nSpellLevel = StringToInt(sInnate);
     }

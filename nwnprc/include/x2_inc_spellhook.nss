@@ -160,7 +160,7 @@ int RedWizRestrictedSchool()
         {
             FloatingTextStringOnCreature("You have attempted to illegaly merge another arcane caster with a Red Wizard. All spellcasting will now fail.", oCaster, FALSE);
             return FALSE;
-        }        
+        }
     }
 
     return TRUE;
@@ -202,7 +202,7 @@ int BardSorcPrCCheck()
     //check they have bard/sorc levels
     if(!GetLevelByClass(CLASS_TYPE_BARD)
         && !GetLevelByClass(CLASS_TYPE_SORCERER))
-        return TRUE;    
+        return TRUE;
     //check its a bard/sorc spell
     if(PRCGetLastSpellCastClass() != CLASS_TYPE_BARD
         && PRCGetLastSpellCastClass() != CLASS_TYPE_SORCERER)
@@ -214,7 +214,7 @@ int BardSorcPrCCheck()
     //check they have bard/sorc in first arcane slot
     if(GetFirstArcaneClass() != CLASS_TYPE_BARD
         && GetFirstArcaneClass() != CLASS_TYPE_SORCERER)
-        return TRUE;    
+        return TRUE;
     //check they have arcane PrC
     if(!GetArcanePRCLevels(OBJECT_SELF))
         return TRUE;
@@ -778,17 +778,17 @@ int X2PreSpellCastCode()
             FloatingTextStringOnCreature("You do not have any free hands.", OBJECT_SELF, FALSE);
         }
     }
-    
-    
+
+
     //Corrupt or Sanctified spell
     if(nContinue)
-    {   
+    {
         int nClass = PRCGetLastSpellCastClass();
-        
+
         if(nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
         {
             int nSpell = PRCGetSpellId();
-            
+
             //Check for each Corrupt and Sanctified spell
             if(nSpell == SPELL_ABSORB_STRENGTH ||
             nSpell == SPELL_APOCALYPSE_FROM_THE_SKY ||
@@ -822,8 +822,8 @@ int X2PreSpellCastCode()
             }
         }
     }
-            
-    
+
+
 
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of
@@ -865,7 +865,7 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if(nContinue)
         nContinue = BardSorcPrCCheck();
-        
+
     //---------------------------------------------------------------------------
     // Run Inscribe Rune Check
     //---------------------------------------------------------------------------
@@ -1038,7 +1038,7 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
        && GetBaseItemType(GetSpellCastItem()) == BASE_ITEM_MAGICSTAFF
        && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL))
     {
-        int nDC = 10+StringToInt(Get2DACache("Spells", "Innate", PRCGetSpellId()));
+        int nDC = 10 + StringToInt(lookup_spell_innate(PRCGetSpellId()));
         nDC += (GetAbilityForClass(GetFirstArcaneClass(OBJECT_SELF), OBJECT_SELF)-10)/2;
         SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, nDC);
         DelayCommand(0.01, DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));

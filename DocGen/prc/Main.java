@@ -76,6 +76,9 @@ public class Main {
 		else if(toCall.equals("letoxml")){
 			prc.utils.LetoListsGenerator.main(paramsToPass);
 		}
+		else if(toCall.equals("prec2dagen")){
+			prc.utils.precache2daGen.main(paramsToPass);
+		}
 
 		else{
 			System.out.println("Unknown class: " + toCall);
@@ -109,6 +112,8 @@ public class Main {
 						   "                          of a given 2da\n"+
 						   "             2datosql   - Creates a SQL file from 2das\n" +
 						   "             letoxml    - Creates Leto XML lists from 2da and TLK\n" +
+						   "             prec2dagen - Creates a 2da file that lists spells/feat.2da rows\n" +
+						   "                          that should be precached\n" +
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

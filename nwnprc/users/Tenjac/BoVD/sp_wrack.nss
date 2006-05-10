@@ -26,9 +26,71 @@ visibly shaken and takes a -2 penalty on attack rolls,
 saves, and checks for 3d10 minutes. 
 
 Author:    Tenjac
-Created:   
+Created:   5/10/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	float fDur = (6.0f * nCasterLvl);
+	effect eBlind = EffectBlindness();
+	int nPenalty = 2;
+
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur = (fDur * 2);
+	}
+	
+	if(nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nPenalty += (nPenalty/2);
+	}	
+	
+	//Check Spell Resistance
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Will save
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+		{
+			//Blind
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oTarget, fDur);
+			
+			//Clear all actions
+			AssignCommand(oTarget, ClearAllActions());
+			
+			//Animation		
+			AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_SPASM, 6.0f));
+			DelayCommand(6.0f,AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_DEAD_BACK, (fDur - 6.0f)));
+			
+			//Make them sit and wait. 
+			DelayCommand(6.2,SetCommandable(FALSE, oTarget));
+			
+			//Restore Control
+			DelayCommand((fDur - 6.2), SetCommandable(TRUE, oTarget));
+			
+			//After spell end
+			effect eLink = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
+			       eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, nPenalty, SAVING_THROW_TYPE_ALL));
+			       eLink = EffectLinkeffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, nPenalty));
+			       			
+			DelayCommand(fDur, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (d10(3) * 60.0f));
+		}
+	}
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+		
+	

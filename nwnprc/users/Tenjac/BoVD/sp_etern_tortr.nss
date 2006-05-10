@@ -89,5 +89,39 @@ void main()
 	SPSetSchool();
 }
 
-void AbilityScrewed (object oTarget)	
+void AbilityScrewed (object oTarget)
+{
+	if(GetAbilityScore(oTarget, ABILITY_STRENGTH) > 3) 
+	{
+		ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
+	}
+		
+	if(GetAbilityScore(oTarget, ABILITY_DEXTERITY) > 3)
+	{
+		ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
+	}
+	
+	if(GetAbilityScore(oTarget, ABILITY_CONSTITUTION) > 3)
+	{
+		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
+	}
+	if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) > 3)
+	{
+		ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
+	}
+	
+	if(GetAbilityScore(oTarget, ABILITY_WISDOM) > 3)
+	{
+		ApplyAbilityDamage(oTarget, ABILITY_WISDOM, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
+	}
+	
+	if(GetAbilityScore(oTarget, ABILITY_CHARISMA) > 3)
+	{
+		ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
+	}
+	
+	
+	
+	
+	
 			

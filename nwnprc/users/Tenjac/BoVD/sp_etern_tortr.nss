@@ -41,6 +41,8 @@ Created:   3/25/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+void AbilityScrewed (object oTarget);
+
 #include "spinc_common"
 
 void main()
@@ -48,6 +50,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nAttributes = 0;
 	float fDur = 15000.0f;	
 	effect eImp = EffectVisualEffect(VFX_FNF_PWKILL);
 	
@@ -66,10 +69,8 @@ void main()
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 		{
 			AssignCommand(oTarget, PlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDur)); 
-			AssignCommand(oTarget, SetCommandable(FALSE));
-			
-			//Should this be done by dispell spells instead?
-			DelayCommand(fDur, AssignCommand(oTarget, SetCommandable(TRUE)));
+			SPApplyEffectToObject(DURATION_TYPE_PERMANENT,  EffectCutsceneParalyze, oTarget);						
+			AbilityScrewed(oTarget);
 		}
 		
 		else
@@ -77,8 +78,8 @@ void main()
 			//5d6 damage, -4 to attack, save, skills, attribute checks
 			int nDam = d6(5);
 			effect eLink = EffectAttackDecrease(4, ATTACK_BONUS_MISC);
-			eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, 4, SAVING_THROW_TYPE_ALL);
-			eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL, 4);
+			       eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, 4, SAVING_THROW_TYPE_ALL);
+			       eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL, 4);
 			
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (6.0f * nCasterLvl));
@@ -91,34 +92,49 @@ void main()
 
 void AbilityScrewed (object oTarget)
 {
+	int nAttributes = 0;
+	
 	if(GetAbilityScore(oTarget, ABILITY_STRENGTH) > 3) 
 	{
 		ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
 	}
-		
+	else nAttributes++;
+	
 	if(GetAbilityScore(oTarget, ABILITY_DEXTERITY) > 3)
 	{
 		ApplyAbilityDamage(oTarget, ABILITY_DEXTERITY, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
 	}
+	else nAttributes++;
 	
 	if(GetAbilityScore(oTarget, ABILITY_CONSTITUTION) > 3)
 	{
 		ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
 	}
+	else nAttributes++;
+	
 	if(GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) > 3)
 	{
 		ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
 	}
+	else nAttributes++;
 	
 	if(GetAbilityScore(oTarget, ABILITY_WISDOM) > 3)
 	{
 		ApplyAbilityDamage(oTarget, ABILITY_WISDOM, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
 	}
+	else nAttributes++;
 	
 	if(GetAbilityScore(oTarget, ABILITY_CHARISMA) > 3)
 	{
 		ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, 1, DURATION_TYPE_PERMANENT, TRUE, -1.0f);
 	}
+	else nAttributes++;
+	
+	if nAttributes < 6;
+	{
+		AbilityScrewed(oTarget);
+	}
+}
 	
 	
 	

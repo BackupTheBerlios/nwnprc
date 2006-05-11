@@ -32,9 +32,55 @@ that would normally disregard them.
 Material Component: A drop of bile and a bit of sulfur.
 
 Author:    Tenjac
-Created:   
+Created:   5/11/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	// Set the spellschool
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY); 
+		
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = HoursToSeconds(nCasterLvl);
+			
+	//Spell Resistance
+	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Saving Throw
+		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+		{
+			//Setup bomb
+			int nDam = d6(min((nCasterLvl/2), 10));
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 6 * min((nCasterLvl/2), 10);
+			}
+			
+			if(nMetaMagic == METAMAGIC_EMPOWER)
+			{
+				nDam += (nDam/2);
+			}
+			
+			if(nMetaMagic == METAMAGIC_EXTEND)
+			{
+				fDur += fDur;
+			}
+			
+			
+		}
+	}
+	SPEvilShift(oPC);
+	SPSetSchool();
+}

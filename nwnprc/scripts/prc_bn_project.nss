@@ -82,11 +82,10 @@ void main()
 
     // Check if there is a valid copy around.
     // If so, abort
-    if(GetHasSpellEffect(SPELL_BAELNORN_PROJECTION))
+    if(nSpell == SPELL_END_PROJECTION )
     {
-	    IncrementRemainingFeatUses(oPC, FEAT_PROJECTION);
-	    SendMessageToPC(oPC, "You cannot create another projection while you have a projection active");
-	    return;
+	  EndPosses(oPC, oCopy);
+	  return;
     }
 
     // Create the copy

@@ -169,6 +169,12 @@ void DoCorruptionCost(object oCaster, int nAbility, int nCost, int bDrain);
 // nSavingThrow takes either SAVING_THROW_WILL or SAVING_THROW_FORT
 int GetHasMettle(object oTarget, int nSavingThrow);
 
+/*This function is used to tell whether the target is incorporeal via
+ *the persistant local int "IS_INCORPOREAL" or appearance.
+ */
+
+int GetIsIncorporeal(object oTarget);
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -1832,6 +1838,31 @@ int GetHasMettle(object oTarget, int nSavingThrow)
     }
 
     return nMettle;
+}
+
+int GetIsIncorporeal(object oTarget)
+{
+	int nAppear = GetAppearanceType(oTarget);
+	int bIncorporeal = FALSE;
+	
+	//
+	if(nAppear == APPEARANCE_TYPE_ALLIP ||
+	nAppear == APPEARANCE_TYPE_SHADOW ||
+	nAppear == APPEARANCE_TYPE_SHADOW_FIEND ||
+	nAppear == APPEARANCE_TYPE_SPECTRE ||
+	nAppear == APPEARANCE_TYPE_WRAITH)
+	{
+		bIncorporeal = TRUE;
+	}
+	
+	//Check for local int
+	if(GetPersistantLocalInt(oTarget, "Is_Incorporeal"))
+	{
+		bIncorporeal = TRUE;
+	}
+	
+	//Return value
+	return bIncorporeal;
 }
 
 void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration, int nCaster)

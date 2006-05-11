@@ -19,9 +19,47 @@ The subject takes a -1 morale penalty on attack
 rolls for the duration of the spell. 
 
 Author:    Tenjac
-Created:   
+Created:   5/11/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	// Set the spellschool
+	SPSetSchool(SPELL_SCHOOL_ILLUSION); 
+		
+	// Run the spellhook. 
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}	
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_UNNERVING_GAZE, oPC);
+	
+	effect ePenalty = EffectAttackDecrease(1, ATTACK_BONUS_MISC);
+	
+	//Spell Resistance
+	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Saving Throw
+		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+		{
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePenalty, oTarget, fDur);
+		}
+	}
+	
+	SPSetSchool();
+}
+	

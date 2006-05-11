@@ -17,4 +17,4 @@
 5 dark-Elf     RACE    169                ****      
 6 NoLichLevels VAR     PRC_NoLich         0         
 7 Spellcraft   SKILL   16                 14        
-8 ScriptVar    VAR     PRC_AllCasterLv_11 1          
+8 ScriptVar    VAR     PRC_AllSpell6      0         

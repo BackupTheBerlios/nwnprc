@@ -94,6 +94,18 @@ const int IP_CONST_FEAT_UNCANNY_DODGE1 = 382;
 const int IP_CONST_FEAT_LOWLIGHT_VISION = 383;
 const int IP_CONST_FEAT_NEW_PWATK = 384;
 const int IP_CONST_FEAT_NEW_IPWATK = 385;
+
+const int IP_CONST_FEAT_EPIC_AUTO_STILL_I       = 204;
+const int IP_CONST_FEAT_EPIC_AUTO_STILL_II      = 205;
+const int IP_CONST_FEAT_EPIC_AUTO_STILL_III     = 206;
+const int IP_CONST_FEAT_EPIC_AUTO_QUICKEN_I     = 207;
+const int IP_CONST_FEAT_EPIC_AUTO_QUICKEN_II    = 208;
+const int IP_CONST_FEAT_EPIC_AUTO_QUICKEN_III   = 209;
+const int IP_CONST_FEAT_EPIC_AUTO_SILENT_I      = 210;
+const int IP_CONST_FEAT_EPIC_AUTO_SILENT_II     = 210;
+const int IP_CONST_FEAT_EPIC_AUTO_SILENT_III    = 210;
+
+
 const int IP_CONST_FEAT_KI_STRIKE = 254;
 
 const int IP_CONST_FEAT_REND            = 255;
@@ -399,6 +411,17 @@ const int IP_CONST_FEAT_WEAPON_OF_CHOICE_MINDBLADE                  = 16280;
 // Arcane Archer
 const int IP_CONST_FEAT_FEAT_PRESTIGE_IMBUE_ARROW                   = 390;
 
+//undead feats
+const int IP_CONST_FEAT_UNDEAD_HD                      = 213;
+const int IP_CONST_FEAT_IMMUNITY_ABILITY_DECREASE      = 214;
+const int IP_CONST_FEAT_IMMUNITY_CRITICAL              = 215;
+const int IP_CONST_FEAT_IMMUNITY_DEATH                 = 216;
+const int IP_CONST_FEAT_IMMUNITY_DISEASE               = 217;
+const int IP_CONST_FEAT_IMMUNITY_MIND_SPELLS           = 218;
+const int IP_CONST_FEAT_IMMUNITY_PARALYSIS             = 219;
+const int IP_CONST_FEAT_IMMUNITY_POISON                = 220;
+const int IP_CONST_FEAT_IMMUNITY_SNEAKATTACK           = 221;
+
 
 // IP_CONST_CASTSPELL
 
@@ -538,71 +561,71 @@ const int IP_CONST_ACP_FEAT = 98;
 const int IP_CONST_IMP_CC = 97;
 
 // Cast Bonus Domain Radial Feats
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_ONE 		= 142;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_TWO 		= 143;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_THREE 	= 144;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_FOUR 		= 145;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_FIVE 		= 146;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_SIX 		= 147;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_SEVEN 	= 148;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_EIGHT 	= 149;
-const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_NINE 		= 150;
-const int IP_CONST_FEAT_CHECK_DOMAIN_SLOTS 		= 151;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_ONE       = 142;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_TWO       = 143;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_THREE     = 144;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_FOUR      = 145;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_FIVE      = 146;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_SIX       = 147;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_SEVEN     = 148;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_EIGHT     = 149;
+const int IP_CONST_FEAT_CAST_DOMAIN_LEVEL_NINE      = 150;
+const int IP_CONST_FEAT_CHECK_DOMAIN_SLOTS      = 151;
 
 // Bonus Domain Power Feats
-const int IP_CONST_FEAT_WAR_DOMAIN        		=  152;
-const int IP_CONST_FEAT_STRENGTH_DOMAIN   		=  153;
-const int IP_CONST_FEAT_PROTECTION_DOMAIN 		=  154;
-const int IP_CONST_FEAT_LUCK_DOMAIN      		=  155;
-const int IP_CONST_FEAT_DEATH_DOMAIN      		=  156;
-const int IP_CONST_FEAT_AIR_DOMAIN        		=  157;
-const int IP_CONST_FEAT_ANIMAL_DOMAIN     		=  158;
-const int IP_CONST_FEAT_DESTRUCTION_DOMAIN		=  159;
-const int IP_CONST_FEAT_EARTH_DOMAIN      		=  160;
-const int IP_CONST_FEAT_EVIL_DOMAIN       		=  161;
-const int IP_CONST_FEAT_FIRE_DOMAIN       		=  162;
-const int IP_CONST_FEAT_GOOD_DOMAIN       		=  163;
-const int IP_CONST_FEAT_HEALING_DOMAIN    		=  164;
-const int IP_CONST_FEAT_KNOWLEDGE_DOMAIN  		=  165;
-const int IP_CONST_FEAT_MAGIC_DOMAIN      		=  166;
-const int IP_CONST_FEAT_PLANT_DOMAIN      		=  167;
-const int IP_CONST_FEAT_SUN_DOMAIN        		=  168;
-const int IP_CONST_FEAT_TRAVEL_DOMAIN     		=  169;
-const int IP_CONST_FEAT_TRICKERY_DOMAIN   		=  170;
-const int IP_CONST_FEAT_WATER_DOMAIN     		=  171;
-const int IP_CONST_FEAT_DARKNESS_DOMAIN        		=  172;
-const int IP_CONST_FEAT_METAL_DOMAIN       		=  173;
-const int IP_CONST_FEAT_STORM_DOMAIN       		=  174;
-const int IP_CONST_FEAT_PORTAL_DOMAIN      		=  175;
-const int IP_CONST_FEAT_DWARF_DOMAIN       		=  176;
-const int IP_CONST_FEAT_ORC_DOMAIN         		=  177;
-const int IP_CONST_FEAT_FORCE_DOMAIN       		=  178;
-const int IP_CONST_FEAT_SLIME_DOMAIN       		=  179;
-const int IP_CONST_FEAT_TIME_DOMAIN        		=  180;
-const int IP_CONST_FEAT_CHARM_DOMAIN       		=  181;
-const int IP_CONST_FEAT_SPELLS_DOMAIN      		=  182;
-const int IP_CONST_FEAT_RUNE_DOMAIN        		=  183;
-const int IP_CONST_FEAT_FATE_DOMAIN        		=  184;
-const int IP_CONST_FEAT_DOMINATION_DOMAIN  		=  185;
-const int IP_CONST_FEAT_UNDEATH_DOMAIN     		=  186;
-const int IP_CONST_FEAT_FAMILY_DOMAIN      		=  187;
-const int IP_CONST_FEAT_HALFLING_DOMAIN    		=  188;
-const int IP_CONST_FEAT_ILLUSION_DOMAIN    		=  189;
-const int IP_CONST_FEAT_HATRED_DOMAIN      		=  190;
-const int IP_CONST_FEAT_NOBILITY_DOMAIN    		=  191;
-const int IP_CONST_FEAT_RETRIBUTION_DOMAIN 		=  192;
-const int IP_CONST_FEAT_SCALEYKIND_DOMAIN  		=  193;
-const int IP_CONST_FEAT_GNOME_DOMAIN       		=  194;
-const int IP_CONST_FEAT_ELF_DOMAIN         		=  195;
-const int IP_CONST_FEAT_RENEWAL_DOMAIN     		=  196;
-const int IP_CONST_FEAT_SPIDER_DOMAIN      		=  197;
-const int IP_CONST_FEAT_TYRANNY_DOMAIN     		=  198;
-const int IP_CONST_FEAT_OCEAN_DOMAIN       		=  199;
-const int IP_CONST_FEAT_BLIGHTBRINGER      		=  200;
+const int IP_CONST_FEAT_WAR_DOMAIN              =  152;
+const int IP_CONST_FEAT_STRENGTH_DOMAIN         =  153;
+const int IP_CONST_FEAT_PROTECTION_DOMAIN       =  154;
+const int IP_CONST_FEAT_LUCK_DOMAIN             =  155;
+const int IP_CONST_FEAT_DEATH_DOMAIN            =  156;
+const int IP_CONST_FEAT_AIR_DOMAIN              =  157;
+const int IP_CONST_FEAT_ANIMAL_DOMAIN           =  158;
+const int IP_CONST_FEAT_DESTRUCTION_DOMAIN      =  159;
+const int IP_CONST_FEAT_EARTH_DOMAIN            =  160;
+const int IP_CONST_FEAT_EVIL_DOMAIN             =  161;
+const int IP_CONST_FEAT_FIRE_DOMAIN             =  162;
+const int IP_CONST_FEAT_GOOD_DOMAIN             =  163;
+const int IP_CONST_FEAT_HEALING_DOMAIN          =  164;
+const int IP_CONST_FEAT_KNOWLEDGE_DOMAIN        =  165;
+const int IP_CONST_FEAT_MAGIC_DOMAIN            =  166;
+const int IP_CONST_FEAT_PLANT_DOMAIN            =  167;
+const int IP_CONST_FEAT_SUN_DOMAIN              =  168;
+const int IP_CONST_FEAT_TRAVEL_DOMAIN           =  169;
+const int IP_CONST_FEAT_TRICKERY_DOMAIN         =  170;
+const int IP_CONST_FEAT_WATER_DOMAIN            =  171;
+const int IP_CONST_FEAT_DARKNESS_DOMAIN             =  172;
+const int IP_CONST_FEAT_METAL_DOMAIN            =  173;
+const int IP_CONST_FEAT_STORM_DOMAIN            =  174;
+const int IP_CONST_FEAT_PORTAL_DOMAIN           =  175;
+const int IP_CONST_FEAT_DWARF_DOMAIN            =  176;
+const int IP_CONST_FEAT_ORC_DOMAIN              =  177;
+const int IP_CONST_FEAT_FORCE_DOMAIN            =  178;
+const int IP_CONST_FEAT_SLIME_DOMAIN            =  179;
+const int IP_CONST_FEAT_TIME_DOMAIN             =  180;
+const int IP_CONST_FEAT_CHARM_DOMAIN            =  181;
+const int IP_CONST_FEAT_SPELLS_DOMAIN           =  182;
+const int IP_CONST_FEAT_RUNE_DOMAIN             =  183;
+const int IP_CONST_FEAT_FATE_DOMAIN             =  184;
+const int IP_CONST_FEAT_DOMINATION_DOMAIN       =  185;
+const int IP_CONST_FEAT_UNDEATH_DOMAIN          =  186;
+const int IP_CONST_FEAT_FAMILY_DOMAIN           =  187;
+const int IP_CONST_FEAT_HALFLING_DOMAIN         =  188;
+const int IP_CONST_FEAT_ILLUSION_DOMAIN         =  189;
+const int IP_CONST_FEAT_HATRED_DOMAIN           =  190;
+const int IP_CONST_FEAT_NOBILITY_DOMAIN         =  191;
+const int IP_CONST_FEAT_RETRIBUTION_DOMAIN      =  192;
+const int IP_CONST_FEAT_SCALEYKIND_DOMAIN       =  193;
+const int IP_CONST_FEAT_GNOME_DOMAIN            =  194;
+const int IP_CONST_FEAT_ELF_DOMAIN              =  195;
+const int IP_CONST_FEAT_RENEWAL_DOMAIN          =  196;
+const int IP_CONST_FEAT_SPIDER_DOMAIN           =  197;
+const int IP_CONST_FEAT_TYRANNY_DOMAIN          =  198;
+const int IP_CONST_FEAT_OCEAN_DOMAIN            =  199;
+const int IP_CONST_FEAT_BLIGHTBRINGER           =  200;
 
 // Domain Feats
-const int IP_CONST_FEAT_GREAT_FORTITUDE     		=  202;
-const int IP_CONST_FEAT_SCRIBE_SCROLL     		=  203;
+const int IP_CONST_FEAT_GREAT_FORTITUDE             =  202;
+const int IP_CONST_FEAT_SCRIBE_SCROLL           =  203;
 
 
 // Lasher

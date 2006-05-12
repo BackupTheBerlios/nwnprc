@@ -267,6 +267,9 @@ void EvalPRCFeats(object oPC)
         
     // Speed changes
     ExecuteScript("prc_speed", oPC);
+    
+    // templates
+    ExecuteScript("prc_templates", oPC);
 
     // ACP system
     if((GetIsPC(oPC) &&

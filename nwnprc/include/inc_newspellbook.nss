@@ -555,7 +555,7 @@ DoDebug("Error: NewSpellbookMem_"+IntToString(nClass)+" array does not exist");
     {
         int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
 DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));
-        if(nCount-1 < 1)
+        if(nCount < 1)
         {
             string sSpellName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
             string sMessage = "You have no castings of "+sSpellName+" remaining";

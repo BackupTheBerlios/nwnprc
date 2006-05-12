@@ -157,14 +157,23 @@ void main()
     SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_CONTINUE);
     
     if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL)
+    {
+        SendMessageToPC(oPC, "Not evil");
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
+    }    
     
     int nCasterLevel = GetCasterLvl(TYPE_ARCANE, oPC);
     if(nCasterLevel < 11)
+    {
+        SendMessageToPC(oPC, "nCasterLevel = "+IntToString(nCasterLevel));
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
+    }    
         
     if(!GetHasFeat(FEAT_CRAFT_WONDROUS, oPC))
+    {
+        SendMessageToPC(oPC, "No craft wonderous items");
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
+    }    
     
     int nRace = MyPRCGetRacialType(oPC);
     if(nRace != RACIAL_TYPE_DWARF

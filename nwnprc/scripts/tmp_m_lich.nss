@@ -372,9 +372,7 @@ void main()
     ipIP = ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_ELECTRICAL,IP_CONST_DAMAGEIMMUNITY_100_PERCENT);
     IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     ipIP = ItemPropertyDamageImmunity(IP_CONST_DAMAGETYPE_COLD,IP_CONST_DAMAGEIMMUNITY_100_PERCENT);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
-    ipIP = ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_MINDSPELLS);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);     
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
     
     int nAbilityBonus = 2;
     if(nIsDemi)
@@ -394,6 +392,26 @@ void main()
     SetCompositeBonus(oSkin, "Template_lich_Search",   nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
     SetCompositeBonus(oSkin, "Template_lich_Spot",     nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);
     
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_UNDEAD_HD);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_ABILITY_DECREASE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_CRITICAL);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_DEATH);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_DISEASE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_MIND_SPELLS);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_PARALYSIS);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_POISON);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_SNEAKATTACK);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+     
+
     if(nIsDemi)
     {
         //demilich specific bonuses
@@ -405,11 +423,11 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
         ipIP = ItemPropertyImmunityToSpellLevel(9);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-        ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_STILL_I);
+        ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_STILL_I);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-        ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_STILL_II);
+        ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_STILL_II);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-        ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_STILL_III);
+        ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_STILL_III);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
         if(GetHasFeat(FEAT_EPIC_AUTOMATIC_QUICKEN_3, oPC))
         {   
@@ -417,17 +435,17 @@ void main()
         }
         else if(GetHasFeat(FEAT_EPIC_AUTOMATIC_QUICKEN_2, oPC))
         {
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_QUICKEN_III);
+            ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_QUICKEN_III);
             IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
         }    
         else if(GetHasFeat(FEAT_EPIC_AUTOMATIC_QUICKEN_1, oPC))
         {
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_QUICKEN_II);
+            ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_QUICKEN_II);
             IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
         }    
         else
         {
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_QUICKEN_I);
+            ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_AUTO_QUICKEN_I);
             IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
         }    
         
@@ -454,28 +472,8 @@ void main()
             //weird; 
         //2/day: 
             //greater planar ally.
-    }
-    
-    
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_UNDEAD_HD);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_ABILITY_DECREASE);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_CRITICAL);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_DEATH);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_DISEASE);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_MIND_SPELLS);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_PARALYSIS);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_POISON);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_IMMUNITY_SNEAKATTACK);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
-        
+    }     
+     
     //appearance
     //touch/natural attack & paralysing touch
     //fear aura

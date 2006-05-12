@@ -33,3 +33,46 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nType = MyPRCGetRacialType(oPC);
+	
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_GRIM_REVENGE, oPC);
+	
+	//Check for undead
+	if(nType == RACIAL_TYPE_UNDEAD)
+	{
+		//Check Spell Resistance
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			//Will save
+			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+			{
+				int nDam = d6(6);
+				
+				if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDam = 36;
+				}
+				if(nMetaMagic == METAMAGIC_EMPOWER)
+				{
+					nDam += (nDam/2);
+				}
+				
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+				
+				//Remove hand from oTarget - assume offhand or random?
+				//http://nwn.bioware.com/players/167/scripts_commandslist.html
+				//SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, int nModelNumber, oTarget);
+				//SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, int nModelNumber, oTarget);

@@ -14960,6 +14960,24 @@ Ranged Precision: Your ranged precision damage increases to 6d8 at level 11, and
 
 Epic Order of the Bow Initiate Bonus Feats List:
 Blinding Speed, Epic Prowess, Weapon Focus: Long/Short Bow, Overwhelming Critical: Long/Short Bow, Devastating Critical: Long/Short Bow, Manyshot, Improved Manyshot, Pinpoint Accuracy, Great Dexterity, Epic Reflexes, Epic Toughness.</entry>
+  <entry id="49171" lang="en" sex="m">Ethereal</entry>
+  <entry id="49172" lang="en" sex="m">You exist on the Ethereal Plane. While on the Ethereal Plane, a creature is called ethereal. Unlike incorporeal creatures, ethereal creatures are not present on the Material Plane.
+
+Ethereal creatures are invisible, inaudible, insubstantial, and scentless to creatures on the Material Plane. Even most magical attacks have no effect on them. See invisibility and true seeing reveal ethereal creatures. 
+
+An ethereal creature can’t affect the Material Plane, not even magically. An ethereal creature, however, interacts with other ethereal creatures and objects the way material creatures interact with material creatures and objects.
+
+Even if a creature on the Material Plane can see an ethereal creature the ethereal creature is on another plane. Only force effects can affect the ethereal creatures. If, on the other hand, both creatures are ethereal, they can affect each other normally. </entry>
+  <entry id="49173" lang="en" sex="m">Incorporeal</entry>
+  <entry id="49174" lang="en" sex="m">You lack a physical body. Such creatures are insubstantial and can’t be touched by nonmagical matter or energy. Likewise, they cannot manipulate objects or exert physical force on objects. However, incorporeal beings have a tangible presence that sometimes seems like a physical attack against a corporeal creature.
+
+Incorporeal creatures are present on the same plane as the characters, and characters have some chance to affect them.
+
+Incorporeal creatures can be harmed only by other incorporeal creatures, by magic weapons, or by spells, spell-like effects, or supernatural effects. They are immune to all nonmagical attack forms. 
+
+Even when struck by magic or magic weapons, an incorporeal creature has a 50% chance to ignore any damage from a corporeal source.
+
+Incorporeal creatures are immune to critical hits and sneak attacks.</entry>
   <entry id="49193" lang="en" sex="m">Power Points</entry>
   <entry id="49194" lang="en" sex="m">Your manifester level is not high enough to spend</entry>
   <entry id="49195" lang="en" sex="m">You do not have a high enough ability score to manifest this power</entry>

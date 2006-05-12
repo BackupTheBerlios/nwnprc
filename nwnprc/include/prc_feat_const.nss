@@ -2087,3 +2087,7 @@ const int FEAT_ULTRAVISION                    = 3658;
 // War Wizard of Cormyr
 const int FEAT_WWOC_WIDEN_SPELL               = 2473;
 const int FEAT_WWOC_ENLARGE_SPELL_AREA        = 2474;
+
+// Status markers
+const int FEAT_INCORPOREAL                    = 4166;
+const int FEAT_ETHEREAL                       = 4167;

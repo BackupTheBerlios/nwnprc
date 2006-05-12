@@ -624,14 +624,20 @@ const int IP_CONST_FEAT_OCEAN_DOMAIN            =  199;
 const int IP_CONST_FEAT_BLIGHTBRINGER           =  200;
 
 // Domain Feats
-const int IP_CONST_FEAT_GREAT_FORTITUDE             =  202;
+const int IP_CONST_FEAT_GREAT_FORTITUDE         =  202;
 const int IP_CONST_FEAT_SCRIBE_SCROLL           =  203;
 
 
 // Lasher
-const int IP_CONST_FEAT_IMPROVED_KNOCKDOWN = 264;
-const int IP_CONST_FEAT_IMPROVED_DISARM = 265;
+const int IP_CONST_FEAT_IMPROVED_KNOCKDOWN      = 264;
+const int IP_CONST_FEAT_IMPROVED_DISARM         = 265;
+
 // Spellfire
 const int IP_CONST_FEAT_SPELLFIRE_INCREASE      =  266;
 const int IP_CONST_FEAT_SPELLFIRE_DECREASE      =  267;
 const int IP_CONST_FEAT_SPELLFIRE_QUICKSELECT   =  268;
+
+
+// Status markers
+const int IP_CONST_FEAT_INCORPOREAL             = 227;
+const int IP_CONST_FEAT_ETHEREAL                = 228;

@@ -42,6 +42,7 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nType = MyPRCGetRacialType(oPC);
+	int nModelNumber = 0;
 	
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
@@ -72,7 +73,20 @@ void main()
 				
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 				
-				//Remove hand from oTarget - assume offhand or random?
+				//Remove hand from oTarget - left hand first?
 				//http://nwn.bioware.com/players/167/scripts_commandslist.html
-				//SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, int nModelNumber, oTarget);
-				//SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, int nModelNumber, oTarget);
+				
+				if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) != nModelNumber))
+				{
+					SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
+					SetPersistantLocalInt(oTarget, "LEFT_HAND_USELESS", 1);
+				}
+				
+				else if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
+				{
+					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
+					SetPersistantLocalInt(oTarget, "RIGHT_HAND_USELESS", 1);
+				}
+				
+				
+				

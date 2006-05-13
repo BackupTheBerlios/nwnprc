@@ -48,7 +48,21 @@ void main()
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
     //timestop noncombat equip
     DoTimestopEquip();
-        
+    
+    //Handle lack of fingers/hands
+    if(GetPersistantLocalInt(OBJECT_SELF, "LEFT_HAND_USELESS"))
+    {
+	    //Force unequip
+	    ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, OBJECT_SELF), INVENTORY_SLOT_LEFTHAND, TRUE);
+	    SendMessageToPC(OBJECT_SELF, "You cannot use your left hand");
+    }
+    
+    if(GetPersistantLocalInt(OBJECT_SELF, "RIGHT_HAND_USELESS"))
+    {
+	    //Force unequip
+	    ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF), INVENTORY_SLOT_RIGHTHAND, TRUE);
+	    SendMessageToPC(OBJECT_SELF, "You cannot use your right hand");
+    }    
 
     // Execute scripts hooked to this event for the creature and item triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);

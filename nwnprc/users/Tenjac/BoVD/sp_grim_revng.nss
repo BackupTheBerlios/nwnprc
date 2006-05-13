@@ -43,6 +43,20 @@ void main()
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nType = MyPRCGetRacialType(oPC);
 	int nModelNumber = 0;
+	int bLeftHandMissing;
+	int bRightHandMissing;
+	int bLeftAnimated = FALSE;
+	int bRightAnimated = FALSE;
+	
+	if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) == nModelNumber))
+	{
+		nLeftHandMissing = TRUE;
+	}
+	
+	if(GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, oTarget) == nModelNumber))	
+	{
+		nRightHandMissing = TRUE;
+	}
 	
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
@@ -76,17 +90,71 @@ void main()
 				//Remove hand from oTarget - left hand first?
 				//http://nwn.bioware.com/players/167/scripts_commandslist.html
 				
-				if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) != nModelNumber))
+				if(!bLeftHandMissing)
 				{
+					//deal damage
+					SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+					
 					SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
 					SetPersistantLocalInt(oTarget, "LEFT_HAND_USELESS", 1);
+					
+					//Force unequip
+					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget), INVENTORY_SLOT_LEFTHAND, TRUE);
+					
+					bLeftAnimated = TRUE;
 				}
 				
-				else if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
+				else if(!bRightHandMissing)
 				{
+					//deal damage
+					SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+					
 					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
 					SetPersistantLocalInt(oTarget, "RIGHT_HAND_USELESS", 1);
+					
+					//Force unequip
+					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget), INVENTORY_SLOT_RIGHTHAND, TRUE);
+					
+					bRightAnimated = TRUE;
 				}
 				
+				else
+				{
+					SendMessageToPC(oPC, "Your target has no hands!");
+				}
+				
+				//Create copy of target, set all body parts null
+								
+				object oHand = CopyObject(oTarget, GetLocation(oTarget), OBJECT_INVALID);
+												
+				SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_PELVIS, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_TORSO, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_BELT, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_NECK, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER, nModelNumber, oHand);
+				SetCreatureBodyPart(CREATURE_PART_HEAD, nModelNumber, oHand);
+				
+				if(!bLeftAnimated)
+				{
+					SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oHand);
+				}
+				
+				if(!bRightAnimated)
+				{
+					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oHand);
+				}
+				
+				//Make hand hostile to target
 				
 				

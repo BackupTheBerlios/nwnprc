@@ -146,7 +146,13 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		{
 			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
-
+		
+		//Eternity of Torture
+		if(GetHasSpellEffect(SPELL_ETERNITY_OF_TORTURE, oTarget))
+		{
+			AssignCommand(oTarget, SetCommandable(TRUE, oTarget));
+			RemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
+		}
 	}
 
 	//Greater Dispelling
@@ -157,7 +163,13 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		{
 			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
-
+		
+		//Eternity of Torture
+		if(GetHasSpellEffect(SPELL_ETERNITY_OF_TORTURE, oTarget))
+		{
+			AssignCommand(oTarget, SetCommandable(TRUE, oTarget));
+			RemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
+		}
 	}
 
 	//Mordenkainen's Disjunction
@@ -168,7 +180,12 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 		{
 			RemoveSpellEffects(SPELL_GHOUL_GAUNTLET, oCaster, oTarget);
 		}
-
+		//Eternity of Torture
+		if(GetHasSpellEffect(SPELL_ETERNITY_OF_TORTURE, oTarget))
+		{
+			AssignCommand(oTarget, SetCommandable(TRUE, oTarget));
+			RemoveSpellEffects(SPELL_ETERNITY_OF_TORTURE, oCaster, oTarget);
+		}
 	}
 
 	//Limited Wish

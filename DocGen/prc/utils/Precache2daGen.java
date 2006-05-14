@@ -78,6 +78,7 @@ public class Precache2daGen {
 		
 		handleNormalSpells();
 		handlePsionics(dir);
+		handleNewSpells();
 		
 		output.appendRow();
 		output.setEntry("Label", output.getEntryCount() - 1, "Stop");
@@ -180,6 +181,33 @@ public class Precache2daGen {
 					}
 				}
 			}
+		}
+	}
+	
+	private static void handleNewSpells() {
+		int begin = -1, end = -1;
+		int temp, i = normalSpellMaxRow;
+		while(i < spells.getEntryCount()) {
+			if(spells.getEntry("Label", i).equals("####START_OF_NEW_SPELLBOOK_RESERVE"))
+				begin = i + 1;
+			if(spells.getEntry("Label", i).equals("####END_OF_NEW_SPELLBOOK_RESERVE"))
+				end = i - 1;
+			if(begin != -1 && end != -1)
+				break;
+			i += 1;
+		}
+		
+		if(begin == -1 || end == -1) {
+			err_pr.println("Missing a new spellbook reserve marker");
+			System.exit(1);
+		}
+		
+		for(i = begin; i <= end; i++) {
+			output.appendRow();
+			temp = output.getEntryCount() - 1;
+			output.setEntry("Label",  temp, "****");
+			output.setEntry("RowNum", temp, String.valueOf(i));
+			output.setEntry("Type",   temp, "NS");
 		}
 	}
 }

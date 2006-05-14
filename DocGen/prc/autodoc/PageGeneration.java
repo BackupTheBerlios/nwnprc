@@ -1,6 +1,6 @@
 package prc.autodoc;
 
-//import java.io.*;
+import java.io.*;
 import java.util.*;
 //import java.util.regex.*;
 
@@ -80,9 +80,8 @@ public final class PageGeneration{
 		// hits the memory limit
 		System.gc();
 	}
-
-
-
+	
+	
 
 	/**
 	 * Prints normal & epic spells and psionic powers.
@@ -98,8 +97,13 @@ public final class PageGeneration{
 
 		String path = null,
 		       name = null,
-		       text = null;
+		       text = null,
+		       icon = null,
+		       subradName = null,
+		       subradIcon = null;
+		StringBuffer subradialText = null;
 		boolean errored;
+		int subRadial;
 
 		SpellType spelltype = NONE;
 
@@ -136,12 +140,49 @@ public final class PageGeneration{
 						errored = true;
 					}
 					// Add in the icon
-					String icon = spells2da.getEntry("IconResRef", i);
+					icon = spells2da.getEntry("IconResRef", i);
 					if(icon.equals("****")){
 						err_pr.println("Icon not defined for spell " + i + ": " + name);
 						errored = true;
 					}
 					text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
+					
+					// Handle subradials, if any
+					subradialText = new StringBuffer();
+					// Assume that if there are any, the first slot is always non-****
+					if(!spells2da.getEntry("SubRadSpell1", i).equals("****")){
+						for(int j = 1; j <= 5; j++) {
+							try {
+								subRadial = Integer.parseInt(spells2da.getEntry("SubRadSpell" + j, i));
+								
+								// Try name
+								subradName = tlk.get(spells2da.getEntry("Name", subRadial))
+								                .replaceAll("/", " / ");
+								// Check the name for validity
+								if(subradName.equals(badStrRef)){
+									err_pr.println("Invalid name entry for spell " + subRadial);
+									errored = true;
+								}
+								
+								// Try icon
+								subradIcon = spells2da.getEntry("IconResRef", subRadial);
+								if(subradIcon.equals("****")){
+									err_pr.println("Icon not defined for spell " + subRadial + ": " + subradName);
+									errored = true;
+								}
+								
+								// Build list
+								subradialText.append(spellSubradialListEntryTemplate.replaceAll("~~~Icon~~~", Icons.buildIcon(subradIcon))
+								                                                    .replaceAll("~~~SubradialName~~~", subradName));
+							} catch(NumberFormatException e) {
+								err_pr.println("Invalid SubRadSpell" + j + " for spell " + i + ": " + name);
+								errored = true;
+							}
+						}
+						
+						subradialText = new StringBuffer(spellSubradialListTemplate.replaceAll("~~~EntryList~~~", subradialText.toString()));
+					}
+					text = text.replaceAll("~~~SubradialNames~~~", subradialText.toString());
 
 					// Build the path
 					switch(spelltype){
@@ -156,7 +197,7 @@ public final class PageGeneration{
 							break;
 
 						default:
-							throw new AssertionError("This message should not be seen");
+							throw new AssertionError("Unhandled spellType");
 					}
 
 					// Check if we had any errors. If we did, and the error tolerance flag isn't up, skip printing this page
@@ -164,7 +205,7 @@ public final class PageGeneration{
 						// Print the page
 						printPage(path, text);
 						// Store a data structure represeting the entry into a hashmap
-						spells.put(i, new SpellEntry(name, text, path, i, spelltype));
+						spells.put(i, new SpellEntry(name, /*text, */path, i, spelltype));
 					}else
 						throw new PageGenerationException("Error(s) encountered while creating page");
 				}
@@ -175,6 +216,44 @@ public final class PageGeneration{
 		// Force a clean-up of dead objects. This will keep discarded objects from slowing down the program as it
 		// hits the memory limit
 		System.gc();
+	}
+
+	/**
+	 * Creates a list of spells.2da rows that should contain a psionic power's class-specific
+	 * entry.
+	 */
+	public static void listPsionicPowers(){
+		// A map of power name to class-specific spells.2da entry
+		HashMap<String, Integer> psiPowMap = new HashMap<String, Integer>();
+		
+		// Load cls_psipw_*.2da
+		String[] fileNames = new File("2da").list(new FilenameFilter(){
+			public boolean accept(File dir, String name){
+				return name.toLowerCase().startsWith("cls_psipw_") &&
+				       name.toLowerCase().endsWith(".2da");
+			}
+		});
+		
+		Data_2da[] cls_psipw_2das = new Data_2da[fileNames.length];
+		for(int i = 0; i < fileNames.length; i++)
+			//Strip out the ".2da" from the filenames before loading, since the loader function assumes it's missing
+			cls_psipw_2das[i] = twoDA.get(fileNames[i].replace(".2da", ""));
+		
+		// Parse the 2das
+		for(Data_2da cls_psipw : cls_psipw_2das){
+			for(int i = 0; i < cls_psipw.getEntryCount(); i++){
+				// Column FeatID is used to determine if the row specifies the main entry of a power
+				if(!cls_psipw.getEntry("FeatID", i).equals("****")) {
+					try {
+						psiPowMap.put(tlk.get(cls_psipw.getEntry("Name", i)), Integer.parseInt(cls_psipw.getEntry("SpellID", i)));
+					} catch(NumberFormatException e) {
+						err_pr.println("Invalid SpellID entry in " + cls_psipw.getName() + ", line " + i);
+					}
+				}
+			}
+		}
+
+		psiPowIDs = new HashSet<Integer>(psiPowMap.values());
 	}
 
 	/**
@@ -217,8 +296,8 @@ public final class PageGeneration{
 
 	/**
 	 * A small convenience method for testing if the given entry contains a
-	 * psionic power. Subradial powers are cropped off, only the radial
-	 * master is printed.
+	 * psionic power. This is determined by whether the power's id is
+	 * in the psiPowIDs Set. 
 	 *
 	 * @param spells2da the Data_2da entry containing spells.2da
 	 * @param entryNum  the line number to use for testing
@@ -227,9 +306,10 @@ public final class PageGeneration{
 	 *           <code>false</code> otherwise
 	 */
 	private static boolean isPsionicPower(Data_2da spells2da, int entryNum){
+		/*
 		// First, check if the power is a radial master.
 		String subRad = spells2da.getEntry("SubRadSpell1", entryNum);
-		/*
+		
 		if(!subRad.equals("****")){
 			try{
 				// Check if the subradialspell is a psionic power
@@ -241,11 +321,13 @@ public final class PageGeneration{
 		}}
 		// Skip any spells with a Master entry
 		if(!spells2da.getEntry("Master", entryNum).equals("****")) return false;
-		*/
+		
 		// Check if the power's impactscript has the correct prefix
 		for(String check : settings.psionicpowerSignatures)
 			if(spells2da.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
+		*/
+		return psiPowIDs.contains(entryNum);
 	}
 
 
@@ -403,6 +485,7 @@ public final class PageGeneration{
 		FeatEntry other = null;
 		String temp = null;
 		Data_2da feats2da = twoDA.get("feat");
+		boolean allChildrenEpic, allChildrenClassFeat;
 
 		//path.replace(contentPath, "../");
 
@@ -465,12 +548,17 @@ public final class PageGeneration{
 		for(FeatEntry check : masterFeats.values()){
 			if(verbose) System.out.println("Linking masterfeat " + check.name);
 			temp = "";
+			allChildrenEpic = allChildrenClassFeat = true;
 			for(FeatEntry child : check.childFeats.values()){
+				if(!child.isEpic) allChildrenEpic = false; 
+				if(!child.isClassFeat) allChildrenClassFeat = false;
 				temp += featPageLinkTemplate.replace("~~~Path~~~", child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
 	                                        .replace("~~~Name~~~", child.name);
 			}
 
 			check.text = check.text.replaceAll("~~~MasterFeatChildList~~~", temp);
+			check.allChildrenClassFeat = allChildrenClassFeat;
+			check.allChildrenEpic = allChildrenEpic;
 		}
 		System.gc();
 	}
@@ -593,18 +681,23 @@ public final class PageGeneration{
 		System.gc();
 
 		// Print a page with alphabetically sorted list of all feats
-
-		printPage(contentPath + "feats" + fileSeparator + "alphasortedfeats.html", buildAllFeatsList());
+		printPage(contentPath + "feats" + fileSeparator + "alphasortedfeats.html", buildAllFeatsList(false));
+		
+		// Print a page with alphabetically sorted list of all epic feats
+		printPage(contentPath + "epic_feats" + fileSeparator + "alphasortedepicfeats.html", buildAllFeatsList(true));
 	}
 
 	/**
-	 * Constructs an alphabetically sorted list of all feats.
+	 * Constructs an alphabetically sorted list of all (or only all epic) feats.
 	 *
+	 * @param epicOnly if <code>true</code>, only feats that are epic are placed in the list. Otherwise, all feats.
 	 * @return an html page containing the list
 	 */
-	private static String buildAllFeatsList(){
+	private static String buildAllFeatsList(boolean epicOnly){
 		TreeMap<String, FeatEntry> sorted = new TreeMap<String, FeatEntry>(String.CASE_INSENSITIVE_ORDER);
-		for(FeatEntry entry : feats.values()) sorted.put(entry.name, entry);
+		for(FeatEntry entry : feats.values())
+			if(!epicOnly || (epicOnly && entry.isEpic))
+				sorted.put(entry.name, entry);
 		String toReturn = alphaSortedListTemplate,
 		       entrySet;
 		FeatEntry entry;

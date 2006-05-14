@@ -217,8 +217,8 @@ public class Main{
 		public ArrayList<Integer> modifiedSpells = new ArrayList<Integer>();
 		/** A set of script name prefixes used to find epic spell entries in spells.2da */
 		public String[] epicspellSignatures    = null;
-		/** A set of script name prefixes used to find psionic power entries in spells.2da */
-		public String[] psionicpowerSignatures = null;
+		/*/** A set of script name prefixes used to find psionic power entries in spells.2da *
+		public String[] psionicpowerSignatures = null;*/
 		
 		/**
 		 * Read the settings file in and store the data for later access.
@@ -251,34 +251,94 @@ public class Main{
 					
 					// Take action based on current mode
 					if(mode == Modes.LANGUAGE){
-						String[] temp = new String[4];
+						String[] temp = new String[LANGDATA_NUMENTRIES];
 						String result;
 						langMatch.reset(check);
 						// parse the language entry
-						for(int i = 0; i < 4; i++){
+						for(int i = 0; i < LANGDATA_NUMENTRIES; i++){
 							if(!langMatch.find())
 								throw new Exception("Missing language parameter");
 							result = langMatch.group();
 							
-							if(result.startsWith("name")){
+							if(result.startsWith("name=")){
 								paraMatch.reset(result);
 								paraMatch.find();
-								temp[0] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+								temp[LANGDATA_LANGNAME] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
-							else if(result.startsWith("base")){
+							else if(result.startsWith("base=")){
 								paraMatch.reset(result);
 								paraMatch.find();
-								temp[1] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+								temp[LANGDATA_BASETLK] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
-							else if(result.startsWith("prc")){
+							else if(result.startsWith("prc=")){
 								paraMatch.reset(result);
 								paraMatch.find();
-								temp[2] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+								temp[LANGDATA_PRCTLK] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
-							else if(result.startsWith("allfeats")){
+							else if(result.startsWith("feats=")){
 								paraMatch.reset(result);
 								paraMatch.find();
-								temp[3] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+								temp[LANGDATA_FEATSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("allfeats=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_ALLFEATSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("epicfeats=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_EPICFEATSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("allepicfeats=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_ALLEPICFEATSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("baseclasses=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_BASECLASSESTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("prestigeclasses=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_PRESTIGECLASSESTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("spells=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_SPELLSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("epicspells=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_EPICSPELLSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("psipowers=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_PSIONICPOWERSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("modspells=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_MODIFIEDSPELLSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("skills=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_SKILLSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("domains=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_DOMAINSTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("races=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_RACESTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
 							else
 								throw new Exception("Unknown language parameter encountered\n" + check);
@@ -290,10 +350,10 @@ public class Main{
 						String[] temp = check.trim().split("=");
 						if(temp[0].equals("epicspell")){
 							epicspellSignatures = temp[1].replace("\"", "").split("\\|");
-						}
+						}/* Not needed anymore
 						else if(temp[0].equals("psionicpower")){
 							psionicpowerSignatures = temp[1].replace("\"", "").split("\\|");
-						}
+						}*/
 						else
 							throw new Exception("Unknown signature parameter encountered:\n" + check);
 					}
@@ -346,8 +406,44 @@ public class Main{
 	/** The file separator, given it's own constant for ease of use */
 	public static final String fileSeparator = System.getProperty("file.separator");
 	
-	/** Array of the settings for currently used language */
+	/** Array of the settings for currently used language. Index with the LANGDATA_ constants */
 	public static String[] curLanguageData = null;
+	
+	/** Size of the curLanguageData array */
+	public static final int LANGDATA_NUMENTRIES         = 16;
+	/** curLanguageData index of the language name */
+	public static final int LANGDATA_LANGNAME           = 0;
+	/** curLanguageData index of the name of the dialog.tlk equivalent for this language */
+	public static final int LANGDATA_BASETLK            = 1;
+	/** curLanguageData index of the name of the prc_consortium.tlk equivalent for this language */
+	public static final int LANGDATA_PRCTLK             = 2;
+	/** curLanguageData index of the name of the "All Feats" string equivalent for this language */
+	public static final int LANGDATA_ALLFEATSTXT        = 3;
+	/** curLanguageData index of the name of the "All Epic Feats" string equivalent for this language */
+	public static final int LANGDATA_ALLEPICFEATSTXT    = 4;
+	/** curLanguageData index of the name of the "Feats" string equivalent for this language */
+	public static final int LANGDATA_FEATSTXT           = 5;
+	/** curLanguageData index of the name of the "Epic Feats" string equivalent for this language */
+	public static final int LANGDATA_EPICFEATSTXT       = 6;
+	/** curLanguageData index of the name of the "Base Classes" string equivalent for this language */
+	public static final int LANGDATA_BASECLASSESTXT     = 7;
+	/** curLanguageData index of the name of the "Prestige Classes" string equivalent for this language */
+	public static final int LANGDATA_PRESTIGECLASSESTXT = 8;
+	/** curLanguageData index of the name of the "Spells" string equivalent for this language */
+	public static final int LANGDATA_SPELLSTXT          = 9;
+	/** curLanguageData index of the name of the "Epic Spells" string equivalent for this language */
+	public static final int LANGDATA_EPICSPELLSTXT      = 10;
+	/** curLanguageData index of the name of the "Psionic Powers" string equivalent for this language */
+	public static final int LANGDATA_PSIONICPOWERSTXT   = 11;
+	/** curLanguageData index of the name of the "Modified Spells" string equivalent for this language */
+	public static final int LANGDATA_MODIFIEDSPELLSTXT  = 12;
+	/** curLanguageData index of the name of the "Domains" string equivalent for this language */
+	public static final int LANGDATA_DOMAINSTXT         = 13;
+	/** curLanguageData index of the name of the "Skills" string equivalent for this language */
+	public static final int LANGDATA_SKILLSTXT          = 14;
+	/** curLanguageData index of the name of the "Races" string equivalent for this language */
+	public static final int LANGDATA_RACESTXT           = 15;
+	
 	
 	/** Current language name */
 	public static String curLanguage = null;
@@ -389,7 +485,10 @@ public class Main{
 	                     listEntryTemplate               = null,
 	                     alphaSortedListTemplate         = null,
 						 requiredForFeatHeaderTemplate   = null,
-						 featPageLinkTemplate            = null;
+						 featPageLinkTemplate            = null,
+						 featMenuTemplate                = null,
+						 spellSubradialListTemplate      = null,
+						 spellSubradialListEntryTemplate = null;
 	
 	
 	/* Data structures to store generated entry data in */
@@ -400,6 +499,7 @@ public class Main{
 	public static HashMap<Integer, GenericEntry> skills,
 	                                             domains,
 	                                             races;
+	public static HashSet<Integer> psiPowIDs;
 	
 	
 	/**
@@ -439,14 +539,14 @@ public class Main{
 		for(int i = 0; i < settings.languages.size(); i++){
 			// Set language, path and load TLKs
 			curLanguageData = settings.languages.get(i);
-			curLanguage = curLanguageData[0];
+			curLanguage = curLanguageData[LANGDATA_LANGNAME];
 			mainPath    = "manual" + fileSeparator + curLanguage + fileSeparator;
 			contentPath = mainPath + "content" + fileSeparator;
 			menuPath    = mainPath + "menus" + fileSeparator;
 			
 			// If we fail on a language, skip to next one
 			try{
-				tlk = new TLKStore(curLanguageData[1], curLanguageData[2]);
+				tlk = new TLKStore(curLanguageData[LANGDATA_BASETLK], curLanguageData[LANGDATA_PRCTLK]);
 			}catch(TLKReadException e){
 				err_pr.println("Failure while reading TLKs for language: " + curLanguage +":\n" + e);
 				continue;
@@ -522,6 +622,9 @@ public class Main{
             alphaSortedListTemplate         = readTemplate(templatePath + "alphasorted_listpage.html");
 			requiredForFeatHeaderTemplate   = readTemplate(templatePath + "reqforfeatheader.html");
 			featPageLinkTemplate            = readTemplate(templatePath + "featpagelink.html");
+			featMenuTemplate                = readTemplate(templatePath + "featmenu.html");
+			spellSubradialListTemplate      = readTemplate(templatePath + "spellsubradials.html");
+			spellSubradialListEntryTemplate = readTemplate(templatePath + "spellsubradialsentry.html");
 		}catch(IOException e){
 			return false;
 		}
@@ -659,6 +762,7 @@ public class Main{
 	private static void createPages(){
 		/* First, do the pages that do not require linking to other pages */
 		doSkills();
+		listPsionicPowers();
 		doSpells();
 		
 		/* Then, build the feats */
@@ -680,9 +784,9 @@ public class Main{
 		/* First, the types that do not need any extra data beyond name & path
 		 * and use GenericEntry
 		 */
-		doGenericMenu(skills, "Skills", "manual_menus_skills.html");
-		doGenericMenu(domains, "Domains", "manual_menus_domains.html");
-		doGenericMenu(races, "Races", "manual_menus_races.html");
+		doGenericMenu(skills, curLanguageData[LANGDATA_SKILLSTXT], "manual_menus_skills.html");
+		doGenericMenu(domains, curLanguageData[LANGDATA_DOMAINSTXT], "manual_menus_domains.html");
+		doGenericMenu(races, curLanguageData[LANGDATA_RACESTXT], "manual_menus_races.html");
 		/* Then the more specialised data where it needs to be split over several
 		 * menu pages
 		 */

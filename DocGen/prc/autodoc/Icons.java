@@ -23,7 +23,9 @@ public class Icons{
 	
 	private static boolean init = false;
 	
-	private static HashSet<String> existingIcons = null; 
+	private static HashSet<String> existingIcons = null;
+	
+	private static HashMap<String, File> rawIcons = null;
 	
 	private static void init(){
 		/*try{
@@ -40,6 +42,16 @@ public class Icons{
 		//executor = new ThreadPoolExecutor(50, 1000, 60, TimeUnit.SECONDS, bq);
 		//timer = new Timer("Checker", true);
 		executor = Executors.newCachedThreadPool();
+		
+		rawIcons = new HashMap<String, File>();
+		File[] tgas = new File("rawicons").listFiles(new FileFilter(){
+			public boolean accept(File file){
+				return file.getName().toLowerCase().endsWith(".tga");
+			}
+		});
+		
+		for(File tga : tgas)
+			rawIcons.put(tga.getName().toLowerCase(), tga);
 	}
 	
 	
@@ -59,8 +71,12 @@ public class Icons{
 		if(iconName.equals("****"))
 			return "";
 		
+		// Lowercase the name
+		iconName = iconName.toLowerCase();
+		
+		// Build the html
 		String tag = iconTemplate.replace("~~~ImageURL~~~","../../../images/" + iconName + ".png")
-                                 .replace("~~~AltText~~~", iconName);
+                                 .replace("~~~ImageName~~~", iconName);
 		
 		// Case of already existing and indexed image
 		if(existingIcons.contains(iconName))
@@ -73,9 +89,9 @@ public class Icons{
 			return tag;
 		}
 		
-		File tga = new File("rawicons" + fileSeparator + iconName + ".tga");
+		File tga = rawIcons.get(iconName + ".tga");
 		// There is no icon to convert
-		if(!tga.exists()){
+		if(tga == null){
 			err_pr.println("Missing icon file: " + iconName + ".tga");
 			return "";
 		}

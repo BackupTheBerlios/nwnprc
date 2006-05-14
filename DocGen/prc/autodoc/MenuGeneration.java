@@ -91,13 +91,13 @@ public final class MenuGeneration{
 		while(modSpellLinks.size() > 0)
 			modSpellPrint.append(modSpellLinks.remove(modSpellLinks.firstKey()));
 		
-		printPage(menuPath + "manual_menus_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Spells")
+		printPage(menuPath + "manual_menus_spells.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_SPELLSTXT])
 		                                                             .replaceAll("~~~menuEntries~~~", normalPrint.toString()));
-		printPage(menuPath + "manual_menus_epic_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Epic Spells")
+		printPage(menuPath + "manual_menus_epic_spells.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_EPICSPELLSTXT])
 		                                                                  .replaceAll("~~~menuEntries~~~", epicPrint.toString()));
-		printPage(menuPath + "manual_menus_psionic_powers.html", menuTemplate.replaceAll("~~~menuName~~~", "Psionic Powers")
+		printPage(menuPath + "manual_menus_psionic_powers.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_PSIONICPOWERSTXT])
 		                                                                     .replaceAll("~~~menuEntries~~~", psionicPrint.toString()));
-		printPage(menuPath + "manual_menus_modified_spells.html", menuTemplate.replaceAll("~~~menuName~~~", "Modified Spells")
+		printPage(menuPath + "manual_menus_modified_spells.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_MODIFIEDSPELLSTXT])
 		                                                                      .replaceAll("~~~menuEntries~~~", modSpellPrint.toString()));
 	}
 	
@@ -108,13 +108,23 @@ public final class MenuGeneration{
 	 * are skipped.
 	 */
 	public static void doFeatMenus(){
-		TreeMap<String, String> normalFeatLinks  = new TreeMap<String, String>(),
-		                        epicFeatLinks    = new TreeMap<String, String>();
-		StringBuffer normalPrint  = new StringBuffer(),
-		             epicPrint    = new StringBuffer();
+		TreeMap<String, String> normalFeatLinks       = new TreeMap<String, String>(),
+		                        normalMasterfeatLinks = new TreeMap<String, String>(),
+		                        epicFeatLinks         = new TreeMap<String, String>(),
+		                        epicMasterfeatLinks   = new TreeMap<String, String>();
+		StringBuffer normalList       = new StringBuffer(),
+		             normalMasterList = new StringBuffer(),
+		             epicList         = new StringBuffer(),
+		             epicMasterList   = new StringBuffer();
 		String temp = null;
+		String normalMenu = featMenuTemplate,
+		       epicMenu   = featMenuTemplate;
 		
 		if(verbose) System.out.println("Printing feat menus");
+		
+		// Print names
+		normalMenu = normalMenu.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_FEATSTXT]);
+		epicMenu = epicMenu.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_EPICFEATSTXT]);
 		
 		// Parse through feats
 		for(FeatEntry feat : feats.values()){
@@ -130,35 +140,57 @@ public final class MenuGeneration{
 				                                             .replaceAll("~~~targetName~~~", feat.name));
 		}
 		
+		// Transfer the feat link lists into text form
+		while(normalFeatLinks.size() > 0)
+			normalList.append(normalFeatLinks.remove(normalFeatLinks.firstKey()));
+		while(epicFeatLinks.size() > 0)
+			epicList.append(epicFeatLinks.remove(epicFeatLinks.firstKey()));
+		
 		// Parse through masterfeats
 		for(FeatEntry masterfeat : masterFeats.values()){
-			if(masterfeat.isClassFeat) continue;
-			if(!masterfeat.isEpic)
-				normalFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
-				                                                                 masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
-				                                                     .replaceAll("~~~targetName~~~", masterfeat.name));
-			else
-				epicFeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
-				                                                               masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
-				                                                   .replaceAll("~~~targetName~~~", masterfeat.name));
+			if(masterfeat.isClassFeat && masterfeat.allChildrenClassFeat) continue;
+			if(masterfeat.isEpic)
+				epicMasterfeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                                     masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                                         .replaceAll("~~~targetName~~~", masterfeat.name));
+			if(!masterfeat.allChildrenEpic)
+				normalMasterfeatLinks.put(masterfeat.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                                       masterfeat.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                                           .replaceAll("~~~targetName~~~", masterfeat.name));
 		}
 		
+        // Transfer the masterfeat link lists into text form
+		while(normalMasterfeatLinks.size() > 0)
+			normalMasterList.append(normalMasterfeatLinks.remove(normalMasterfeatLinks.firstKey()));
+		while(epicMasterfeatLinks.size() > 0)
+			epicMasterList.append(epicMasterfeatLinks.remove(epicMasterfeatLinks.firstKey()));
+		
 		// Add in a link to the page listing *all* feats
-		normalPrint.append(menuItemTemplate.replaceAll("~~~TargetPath~~~",
-				                                       (contentPath + "feats" + fileSeparator + "alphasortedfeats.html")
-				                                        .replace(mainPath, "../").replaceAll("\\\\", "/"))
-				                           .replaceAll("~~~targetName~~~", curLanguageData[3]));
+		normalMenu = normalMenu.replaceAll("~~~allFeatsLink~~~", menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                                             (contentPath + "feats" + fileSeparator + "alphasortedfeats.html")
+				                                                                              .replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                                                 .replaceAll("~~~targetName~~~", curLanguageData[LANGDATA_ALLFEATSTXT]));
 		
-		while(normalFeatLinks.size() > 0)
-			normalPrint.append(normalFeatLinks.remove(normalFeatLinks.firstKey()));
-		while(epicFeatLinks.size() > 0)
-			epicPrint.append(epicFeatLinks.remove(epicFeatLinks.firstKey()));
+		// Add in a link to the page listing all epic feats
+		epicMenu = epicMenu.replaceAll("~~~allFeatsLink~~~", menuItemTemplate.replaceAll("~~~TargetPath~~~",
+				                                                                         (contentPath + "epic_feats" + fileSeparator + "alphasortedepicfeats.html")
+				                                                                          .replace(mainPath, "../").replaceAll("\\\\", "/"))
+				                                                             .replaceAll("~~~targetName~~~", curLanguageData[LANGDATA_ALLEPICFEATSTXT]));
 		
-		printPage(menuPath + "manual_menus_feat.html", menuTemplate.replaceAll("~~~menuName~~~", "Feats")
-		                                                           .replaceAll("~~~menuEntries~~~", normalPrint.toString()));
-		printPage(menuPath + "manual_menus_epic_feat.html", menuTemplate.replaceAll("~~~menuName~~~", "Epic Feats")
-		                                                                .replaceAll("~~~menuEntries~~~", epicPrint.toString()));
+		// Add in the masterfeat links
+		normalMenu = normalMenu.replaceAll("~~~masterFeats~~~",normalMasterList.toString());
+		epicMenu = epicMenu.replaceAll("~~~masterFeats~~~", epicMasterList.toString());
+		
+		// Add in the feat links
+		normalMenu = normalMenu.replaceAll("~~~featLinks~~~", normalList.toString());
+		epicMenu = epicMenu.replaceAll("~~~featLinks~~~", epicList.toString());
+		
+		// Print the pages
+		printPage(menuPath + "manual_menus_feat.html", normalMenu);
+		printPage(menuPath + "manual_menus_epic_feat.html", epicMenu);
 	}
+	
+	//private static void doFeatMenusAux()
 	
 	
 	/**
@@ -190,9 +222,9 @@ public final class MenuGeneration{
 		while(prestigeLinks.size() > 0)
 			prestigePrint.append(prestigeLinks.remove(prestigeLinks.firstKey()));
 		
-		printPage(menuPath + "manual_menus_base_classes.html", menuTemplate.replaceAll("~~~menuName~~~", "Base Classes")
+		printPage(menuPath + "manual_menus_base_classes.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_BASECLASSESTXT])
 		                                                                   .replaceAll("~~~menuEntries~~~", basePrint.toString()));
-		printPage(menuPath + "manual_menus_prestige_classes.html", menuTemplate.replaceAll("~~~menuName~~~", "Prestige Classes")
+		printPage(menuPath + "manual_menus_prestige_classes.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_PRESTIGECLASSESTXT])
 		                                                                       .replaceAll("~~~menuEntries~~~", prestigePrint.toString()));
 	}
 }

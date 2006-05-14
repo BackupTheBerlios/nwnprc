@@ -50,15 +50,15 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nDam = d4(1) + 1;
     effect eDam;
     effect eVis = EffectVisualEffect(VFX_IMP_FROST_S);
-    
+
     nCasterLevel +=SPGetPenetr();
 
     if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RAY_OF_FROST));
-        
-        int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
+
+        int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
         if(iAttackRoll > 0)
         {
             //Make SR Check
@@ -73,17 +73,17 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                  {
                      nDam = nDam + nDam/2; //Damage/Healing is +50%
                  }
-            
+
                  // perform ranged touch attack and apply sneak attack if any exists
                  int eDamageType = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_COLD);
                  ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDam, eDamageType);
                  PRCBonusDamage(oTarget);
-    
+
                  //Apply the VFX impact and damage effect
                  SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
              }
         }
-        effect eRay = EffectBeam(VFX_BEAM_COLD, OBJECT_SELF, BODY_NODE_HAND, iAttackRoll);
+        effect eRay = EffectBeam(VFX_BEAM_COLD, OBJECT_SELF, BODY_NODE_HAND, !iAttackRoll);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7,FALSE);
     }
 

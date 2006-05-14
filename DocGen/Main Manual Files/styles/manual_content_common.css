@@ -4,58 +4,75 @@
 
 TR
 {
-	vertical-align: top;
-	padding: 5px;
+    vertical-align: top;
+    padding: 5px;
 }
 
 TH
 {
-	text-align: left;
+    text-align: left;
 }
 
 TABLE.table_contenttable
 {
-	font-family: verdana, helvetica, sans-serif;
-	font-size: 10pt;
-	color: #c0c0c0;
-	width: 550px;
-	height: 50px;
+    font-family: verdana, helvetica, sans-serif;
+    font-size: 10pt;
+    color: #c0c0c0;
+    width: 550px;
+    height: 50px;
 }
 
 TD.padded
 {
-	padding: 5px;
+    padding: 5px;
 }
 
 DIV.div_paddedcontent
 {
-	padding: 0px 40px 0px 40px;
+    padding: 0px 40px 0px 40px;
 }
 
 TH.th_header
 {
-	border-style: solid;
-	border-width: 1px;
-	border-color: #6c6c6c;
-	padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #6c6c6c;
+    padding: 5px;
 }
 
 TD.td_noborder
 {
-	padding: 5px;
+    padding: 5px;
 }
 
 TD.td_bordered
 {
-	border-right-style: solid;
-	border-right-width: 1px;
-	border-right-color: #6c6c6c;
-	padding: 5px;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #6c6c6c;
+    padding: 5px;
 }
 
 DIV.div_featpagesectionheader
 {
     padding-top: 1em;
 }
+
+DIV.div_paddedicon
+{
+    padding-bottom: 1em;
+}
+
+DIV.div_spellsubradiallist
+{
+    padding-top: 2em;
+}
+
+DIV.div_spellsubradiallistentry
+{
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+
 
 -->

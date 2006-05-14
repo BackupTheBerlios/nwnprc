@@ -1777,7 +1777,7 @@ REQUIREMENTS:
 
 Alignment: Non-Good.
 Feats: Requiem (Perform 8, Bardic Music class feature)
-Skills: Lore 4 ranks, Perform 8. 
+Skills: Lore 4 ranks, Perform 8.
 Special: Must possess the Bardic Music class feature.
 
 ABILITIES:
@@ -1841,11 +1841,11 @@ Level
 2: Dispelling Strike 1/day - Subject is the target of a Greater Dispel Magic.
 3: Extended Spellstrength - All Suel Archanamach spells cast on himself are extended.
 4: Ignore Spell Failure 10%
-5: 
+5:
 6: Dispelling Strike 2/day
 7: Ignore Spell Failure 15%
-8: 
-9: 
+8:
+9:
 10: Dispelling Strike 3/day, Ignore Spell Failure 20%
 
 SPELLCASTING
@@ -1908,25 +1908,25 @@ The Favoured Soul follows the path of the cleric but is able to channel divine p
 ABILITIES:
 
 Level
-1: 
-2: 
+1:
+2:
 3: Deity's Weapon Focus - Gain Weapon Focus in your diety's chosen weapon.
-4: 
+4:
 5: Energy Resistance - Gain 10/- resistance to chosen element.
-6: 
-7: 
-8: 
-9: 
+6:
+7:
+8:
+9:
 10: Energy Resistance - Choose a second element to resist.
-11: 
+11:
 12: Deity's Weapon Specialization
-13: 
-14: 
+13:
+14:
 15: Energy Resistance - Choose a third element to resist.
-16: 
+16:
 17: Wings - The Favoured Soul gains wings and counts as a flying creature.
-18: 
-19: 
+18:
+19:
 20: Damage Reduction - Gain Damage Reduction 10/+3
 
 SPELLCASTING
@@ -2116,7 +2116,7 @@ Use: Selected.</entry>
   <entry id="45434" lang="en" sex="m">Enlarge Spell Area</entry>
   <entry id="45435" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: War Wizard of Cormyr level 5.
-Specifics: When using your Widen Spell class ability, the area of the spell is now increased by 100%. 
+Specifics: When using your Widen Spell class ability, the area of the spell is now increased by 100%.
 Use: Automatic.</entry>
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>
@@ -10550,9 +10550,9 @@ Level
 1: Feat of Strength: Add your cleric and Mighty Contender levels to determine the boost from the Strength Domain power.
 2:
 3: Surge of Strength: The boost from the Strength domain now lasts 1d4+1 rounds.
-4: 
+4:
 5: Strength Increase +1
-6: 
+6:
 7: Feat of Power: For the first round of the Strength boost, you gain 1.5 * the normal boost.
 8:
 9: Strength Increase +2
@@ -13348,7 +13348,8 @@ Use: Combat Mode.</entry>
   <entry id="48626" lang="en" sex="m">Power Attack +10</entry>
   <entry id="48627" lang="en" sex="m">Power Attack +15</entry>
   <entry id="48628" lang="en" sex="m">Power Attack +20</entry>
-  <entry id="48629" lang="en" sex="m">You just stumbled across a BioBug. Attempting to use this feat/power/spell when you open the radial on your character does not work.</entry>
+  <entry id="48629" lang="en" sex="m">You just stumbled across a BioBug. Attempting to use this feat/power/spell when you open the radial on your character does not work.
+Workarounds: Either place it on your quickbar or just open the radial on whatever you intend to target. Note that the latter option will obviously not work if you need to target yourself.</entry>
   <entry id="48630" lang="en" sex="m">General Specialization</entry>
   <entry id="48631" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Man At Arms level 1
@@ -14963,7 +14964,7 @@ Blinding Speed, Epic Prowess, Weapon Focus: Long/Short Bow, Overwhelming Critica
   <entry id="49171" lang="en" sex="m">Ethereal</entry>
   <entry id="49172" lang="en" sex="m">You exist on the Ethereal Plane. While on the Ethereal Plane, a creature is called ethereal. Unlike incorporeal creatures, ethereal creatures are not present on the Material Plane.
 
-Ethereal creatures are invisible, inaudible, insubstantial, and scentless to creatures on the Material Plane. Even most magical attacks have no effect on them. See invisibility and true seeing reveal ethereal creatures. 
+Ethereal creatures are invisible, inaudible, insubstantial, and scentless to creatures on the Material Plane. Even most magical attacks have no effect on them. See invisibility and true seeing reveal ethereal creatures.
 
 An ethereal creature can’t affect the Material Plane, not even magically. An ethereal creature, however, interacts with other ethereal creatures and objects the way material creatures interact with material creatures and objects.
 
@@ -14973,7 +14974,7 @@ Even if a creature on the Material Plane can see an ethereal creature the ethere
 
 Incorporeal creatures are present on the same plane as the characters, and characters have some chance to affect them.
 
-Incorporeal creatures can be harmed only by other incorporeal creatures, by magic weapons, or by spells, spell-like effects, or supernatural effects. They are immune to all nonmagical attack forms. 
+Incorporeal creatures can be harmed only by other incorporeal creatures, by magic weapons, or by spells, spell-like effects, or supernatural effects. They are immune to all nonmagical attack forms.
 
 Even when struck by magic or magic weapons, an incorporeal creature has a 50% chance to ignore any damage from a corporeal source.
 
@@ -16552,8 +16553,8 @@ Special Abilities:
 - Skill Bonus (Craft Trap): +2 racial bonus to Craft Trap checks.
 - Skill Bonus (Listen): +2 racial bonus to Listen checks.
 - Skill Bonus (Spot): +2 racial bonus to Spot checks.
-- Uncanny Dodge: Brownies retains his Dex bonus to AC, even if caught flat-footed or attacked by a hidden or invisible creature. 
-- Evasion: Whenever a Reflex save is allowed for half damage, Brownies instead takes no damage if they succeed at the save. 
+- Uncanny Dodge: Brownies retains his Dex bonus to AC, even if caught flat-footed or attacked by a hidden or invisible creature.
+- Evasion: Whenever a Reflex save is allowed for half damage, Brownies instead takes no damage if they succeed at the save.
 - Hide in Plain Sight: Brownies are able to use the Hide skill even while being observed.
 - Spell-Like Abilities: 1/day - Confusion. Caster level 7th plus character level. The DC is Charisma-based.
 - Fey: Brownies are considered Fey for the purpose of spells.</entry>
@@ -16969,7 +16970,7 @@ Component(s): Verbal, Somatic
 Range: Short
 Area of Effect / Target: Single
 Duration: Instant
-Additional Counter Spells: 
+Additional Counter Spells:
 Save: None
 Spell Resistance: Yes
 
@@ -18018,7 +18019,7 @@ Prerequisite:  Baelnorn Level 3
 Description: This allows the baelnorn to end the projection affect at will.</entry>
   <entry id="52075" lang="en" sex="m">Ultravision
 </entry>
-  <entry id="52076" lang="en" sex="m">Feat Type: Class Feat 
+  <entry id="52076" lang="en" sex="m">Feat Type: Class Feat
 Description:  The character has Ultravision.</entry>
   <entry id="52077" lang="en" sex="m">Unseen Weapon: Unerring Strike</entry>
   <entry id="52078" lang="en" sex="m">Feat Type: Class Feat
@@ -21902,7 +21903,7 @@ Use: Automatic.</entry>
   <entry id="55137" lang="en" sex="m">Ghost-Faced Killers</entry>
   <entry id="55138" lang="en" sex="m">ghost-faced killer</entry>
   <entry id="55139" lang="en" sex="m">(PRESTIGE CLASS)
-The ghost-faced killer has the ability to disappear into an invisible or ethereal void at will, on a limited basis.  In addition, he gradually learns more an more vulnerable places to attack his victims using Sudden Strike (Sneak Attack).  By far, what differentiates him from other assassin style classes is his ability to literally frighten his victim to death. 
+The ghost-faced killer has the ability to disappear into an invisible or ethereal void at will, on a limited basis.  In addition, he gradually learns more an more vulnerable places to attack his victims using Sudden Strike (Sneak Attack).  By far, what differentiates him from other assassin style classes is his ability to literally frighten his victim to death.
 Frightful attack may kill the intended victim, or it may only shake them up, but not only does it affect the victim, it has the ability to frighten all those who witness this horrible attack.  The ghost-faced killer and his friends are not affected by this secondary fear effect.
 
 - Hit Die: d8

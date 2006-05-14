@@ -12,13 +12,12 @@
 
 # different laguage tlks
 language:
-	name="english" base="dialog.tlk" prc="prc_consortium.tlk" allfeats="All Feats"
+	name="english" base="dialog.tlk" prc="prc_consortium.tlk" feats="Feats" allfeats="All Feats" epicfeats="Epic Feats" allepicfeats="All Epic Feats" baseclasses="Base Classes" prestigeclasses="Prestige Classes" spells="Spells" epicspells="Epic Spells" psipowers="Psionic Powers" modspells="Modified Spells" skills="Skills" domains="Domains" races="Races"
 
 
 # what string a certain type of spell.2da script name entry starts with. Delimited by | characters
 signature:
 	epicspell="ss_ep_|wander"
-	psionicpower="psi_pow_|psi_ast_con_"
 
 # modified spells indices in spells.2da
 modified_spell:

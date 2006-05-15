@@ -52,6 +52,13 @@ void main()
 			effect eLink = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
 			eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, nPenalty, SAVING_THROW_TYPE_ALL));
 			eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, nPenalty));
-			       			
 			
+			//Handle removal
+			
+		}
+	}
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
 	

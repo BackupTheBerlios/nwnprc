@@ -15,7 +15,7 @@ Spell Resistance: Yes
 
 On a succesful melee attack, you instantly suck the 
 heat from the target's body, rendering it numb. The 
-target takes 3d6 points of Dexterity damage.
+target takes 1d6 points of Dexterity damage.
 Creatures with the cold subtype are immune to the 
 effects of Shivering Touch.
 

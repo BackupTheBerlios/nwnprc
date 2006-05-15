@@ -465,7 +465,6 @@ public class Main{
 	
 	/** The template files */
 	public static String babAndSavthrTableHeaderTemplate = null,
-	                     classFeatTableHeaderTemplate    = null,
 	                     classTemplate                   = null,
 	                     classTablesEntryTemplate        = null,
 	                     domainTemplate                  = null,
@@ -485,10 +484,12 @@ public class Main{
 	                     listEntryTemplate               = null,
 	                     alphaSortedListTemplate         = null,
 						 requiredForFeatHeaderTemplate   = null,
-						 featPageLinkTemplate            = null,
+						 pageLinkTemplate                = null,
 						 featMenuTemplate                = null,
 						 spellSubradialListTemplate      = null,
-						 spellSubradialListEntryTemplate = null;
+						 spellSubradialListEntryTemplate = null,
+						 classFeatTableTemplate          = null,
+						 classFeatTableEntryTemplate     = null;
 	
 	
 	/* Data structures to store generated entry data in */
@@ -601,7 +602,6 @@ public class Main{
 		
 		try{
 			babAndSavthrTableHeaderTemplate = readTemplate(templatePath + "babNsavthrtableheader.html");
-			classFeatTableHeaderTemplate    = readTemplate(templatePath + "classfeattableheader.html");
 			classTablesEntryTemplate        = readTemplate(templatePath + "classtablesentry.html");
 			classTemplate                   = readTemplate(templatePath + "class.html");
 			domainTemplate                  = readTemplate(templatePath + "domain.html");
@@ -621,10 +621,12 @@ public class Main{
             listEntryTemplate               = readTemplate(templatePath + "listpageentry.html");
             alphaSortedListTemplate         = readTemplate(templatePath + "alphasorted_listpage.html");
 			requiredForFeatHeaderTemplate   = readTemplate(templatePath + "reqforfeatheader.html");
-			featPageLinkTemplate            = readTemplate(templatePath + "featpagelink.html");
+			pageLinkTemplate                = readTemplate(templatePath + "pagelink.html");
 			featMenuTemplate                = readTemplate(templatePath + "featmenu.html");
 			spellSubradialListTemplate      = readTemplate(templatePath + "spellsubradials.html");
 			spellSubradialListEntryTemplate = readTemplate(templatePath + "spellsubradialsentry.html");
+			classFeatTableTemplate          = readTemplate(templatePath + "classfeattable.html");
+			classFeatTableEntryTemplate     = readTemplate(templatePath + "classfeattableentry.html");
 		}catch(IOException e){
 			return false;
 		}

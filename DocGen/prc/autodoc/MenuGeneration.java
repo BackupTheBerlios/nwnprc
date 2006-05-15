@@ -73,7 +73,7 @@ public final class MenuGeneration{
 					                                                  .replaceAll("~~~targetName~~~", spell.name));
 					break;
 				
-				default: throw new AssertionError("This message should not be seen");
+				default: throw new AssertionError("Unhandled spelltype: " + spell.type);
 			}
 			
 			if(settings.modifiedSpells.contains(spell.entryNum))

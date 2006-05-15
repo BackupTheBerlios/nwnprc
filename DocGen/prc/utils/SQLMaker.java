@@ -42,6 +42,19 @@ public final class SQLMaker{
 		//optimize for windows
 		if(sqlite)
 			sql.append("PRAGMA page_size=4096;\n");
+		//delete any preexsiting tables
+		sql.append( "DROP TABLE IF EXISTS "+q+"prc_cached2da"+q+";\n"+
+				    "DROP TABLE IF EXISTS "+q+"prc_cached2da_appearance"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_classes"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_cls_feat"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_feat"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_ireq"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_item_to_ireq"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_portraits"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_racialtypes"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_soundset"+q+";\n"+
+					"DROP TABLE IF EXISTS "+q+"prc_cached2da_spells"+q+";\n"
+					);
 		//create a few tables
     	sql.append("CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ("	+
     			   ""+q+"rowid"+q+"     varchar(255) DEFAULT '_', "        			+

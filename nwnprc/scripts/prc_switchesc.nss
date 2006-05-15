@@ -43,8 +43,8 @@ const int STAGE_LEADERSHIP_REMOVE               = 18;
 const int STAGE_LEADERSHIP_DELETE               = 19;
 const int STAGE_LEADERSHIP_DELETE_CONFIRM       = 20;
 
-const int CHOICE_RETURN_TO_PREVIOUS             = 0xFFFFFFFF;
-const int CHOICE_SWITCHES_USE_2DA               = 0xFFFFFFFE;
+const int CHOICE_RETURN_TO_PREVIOUS             = 0xEFFFFFFF;
+const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;
 
 
 //////////////////////////////////////////////////
@@ -109,9 +109,9 @@ void main()
                     || (GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO) == 1
                     && GetIsDM(oPC)))
                     AddChoice("Alter code switches.", 1);
-                if (GetIsEpicCleric(oPC) 
-                        || GetIsEpicDruid(oPC) 
-                        || GetIsEpicSorcerer(oPC) 
+                if (GetIsEpicCleric(oPC)
+                        || GetIsEpicDruid(oPC)
+                        || GetIsEpicSorcerer(oPC)
                         || GetIsEpicWizard(oPC))
                     AddChoice("Manage Epic Spells.", 2);
                 AddChoice("Purchase general items, such as scrolls or crafting materials.", 3);
@@ -253,14 +253,14 @@ void main()
                     || GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)
                     || GetHasFeat(FEAT_CRAFT_WAND, oPC))
                     AddChoice("Magic item raw materials", 2);
-                if(!GetPRCSwitch(PRC_SPELLSLAB_NOSCROLLS))    
+                if(!GetPRCSwitch(PRC_SPELLSLAB_NOSCROLLS))
                     AddChoice("Spell scrolls", 3);
-                if ((GetIsEpicCleric(oPC) 
-                        || GetIsEpicDruid(oPC) 
-                        || GetIsEpicSorcerer(oPC) 
+                if ((GetIsEpicCleric(oPC)
+                        || GetIsEpicDruid(oPC)
+                        || GetIsEpicSorcerer(oPC)
                         || GetIsEpicWizard(oPC))
-                    && GetPRCSwitch(PRC_SPELLSLAB) != 3    
-                    )    
+                    && GetPRCSwitch(PRC_SPELLSLAB) != 3
+                    )
                     AddChoice("Epic spell books", 4);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
@@ -284,7 +284,7 @@ void main()
                 if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC)
                     && !GetLocalInt(oPC, "CohortRecruited"))
                     AddChoice("Recruit a standard cohort", 4);
-                //not implemented, remove via radial or conversation    
+                //not implemented, remove via radial or conversation
                 //if(GetCurrentCohortCount(oPC))
                 //    AddChoice("Dismiss an existing cohort", 2);
                 if(GetCampaignInt(COHORT_DATABASE, "CohortCount")>0)
@@ -574,11 +574,14 @@ void main()
                 object oModule = GetModule();
                 int i = 0;
                 string sSwitchName, sSwitchType, sSwitchValue;
-                while((sSwitchName = Get2DACache("personal_switch", "SwitchName", i)) != "")
+                // Use Get2DAString() instead of Get2DACache() to avoid caching.
+                // People might want to set different switch values when playing in different modules.
+                // Or just change the switch values midplay.
+                while((sSwitchName = Get2DAString("personal_switch", "SwitchName", i)) != "")
                 {
                     // Read rest of the line
-                    sSwitchType  = Get2DACache("personal_switch", "SwitchType",  i);
-                    sSwitchValue = Get2DACache("personal_switch", "SwitchValue", i);
+                    sSwitchType  = Get2DAString("personal_switch", "SwitchType",  i);
+                    sSwitchValue = Get2DAString("personal_switch", "SwitchValue", i);
 
                     // Determine switch type and set the var
                     if(sSwitchType == "float")

@@ -59,14 +59,12 @@ void SetupStage()
 
         case STAGE_ALIGNMENT:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            i=0;
             if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_GOOD,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
                 HexToInt(Get2DACache("classes", "AlignRstrctType",nClass)),
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(112), 0);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_GOOD,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -74,7 +72,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(115), 1);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_GOOD,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -82,7 +79,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(118), 2);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_NEUTRAL,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -90,7 +86,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(113), 3);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_NEUTRAL,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -98,7 +93,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(116), 4);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_NEUTRAL,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -106,7 +100,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(119), 5);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_EVIL,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -114,7 +107,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(114), 6);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_EVIL,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -122,7 +114,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(117), 7);
-                i++;
             }
             if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_EVIL,
                 HexToInt(Get2DACache("classes", "AlignRestrict",nClass)),
@@ -130,7 +121,6 @@ void SetupStage()
                 HexToInt(Get2DACache("classes", "InvertRestrict",nClass)))==TRUE)
             {
                 AddChoice(GetStringByStrRef(120), 8);
-                i++;
             }
             DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
             MarkStageSetUp(nStage);
@@ -138,6 +128,8 @@ void SetupStage()
 
         case STAGE_ABILITY:
             //this one is done manually
+            //force it to clear previous tokens
+            ClearCurrentStage(OBJECT_SELF);
             //first setup
             if(GetLocalInt(OBJECT_SELF, "Str") == 0)
             {
@@ -164,66 +156,102 @@ void SetupStage()
                 nMaxStat = 18;
             if(nStr < nMaxStat  && nPoints >= GetCost(nStr+1))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nStr)+" "+GetStringByStrRef(135)+". "+GetStringByStrRef(137)+" "
+                AddChoice(IntToString(nStr)+" "+GetStringByStrRef(135)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nStr+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "StrAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_STRENGTH);
-                i++;
+                        +" (Racial "+Get2DACache("racialtypes", "StrAdjust", nRace)+")", 
+                        ABILITY_STRENGTH);
             }
             if(nDex < nMaxStat && nPoints >= GetCost(nDex+1))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nDex)+" "+GetStringByStrRef(133)+". "+GetStringByStrRef(137)+" "
+                AddChoice(IntToString(nDex)+" "+GetStringByStrRef(133)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nDex+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_DEXTERITY);
-                i++;
+                        +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")", 
+                        ABILITY_DEXTERITY);
             }
             if(nCon < nMaxStat && nPoints >= GetCost(nCon+1))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nCon)+" "+GetStringByStrRef(132)+". "+GetStringByStrRef(137)+" "
+                AddChoice(IntToString(nCon)+" "+GetStringByStrRef(132)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCon+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "ConAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_CONSTITUTION);
-                i++;
+                        +" (Racial "+Get2DACache("racialtypes", "ConAdjust", nRace)+")", 
+                        ABILITY_CONSTITUTION);
             }
             if(nInt < nMaxStat && nPoints >= GetCost(nInt+1))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nInt)+" "+GetStringByStrRef(134)+". "+GetStringByStrRef(137)+" "
+                AddChoice(IntToString(nInt)+" "+GetStringByStrRef(134)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nInt+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "IntAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_INTELLIGENCE);
-                i++;
+                        +" (Racial "+Get2DACache("racialtypes", "IntAdjust", nRace)+")", 
+                        ABILITY_INTELLIGENCE);
             }
             if(nWis < nMaxStat && nPoints >= GetCost(nWis+1))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nWis)+" "+GetStringByStrRef(136)+". "+GetStringByStrRef(137)+" "
+                AddChoice(IntToString(nWis)+" "+GetStringByStrRef(136)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nWis+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "WisAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_WISDOM);
-                i++;
+                        +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")", 
+                        ABILITY_WISDOM);
             }
             if(nCha < nMaxStat && nPoints >= GetCost(nCha+1))
             {
-                array_set_string(OBJECT_SELF, "ChoiceTokens", i,
-                    IntToString(nCha)+" "+GetStringByStrRef(131)+". "+GetStringByStrRef(137)+" "
+                AddChoice(IntToString(nCha)+" "+GetStringByStrRef(131)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCha+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "ChaAdjust", nRace)+")");
-                array_set_int(OBJECT_SELF, "ChoiceValues", i, ABILITY_CHARISMA);
-                i++;
+                        +" (Racial "+Get2DACache("racialtypes", "ChaAdjust", nRace)+")", 
+                        ABILITY_CHARISMA);
             }
             //Dont mark it as setup, needs to be recreated
             //MarkStageSetUp(nStage);
             break;
 
         case STAGE_SKILL:
-            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            DelayCommand(0.01, SkillLoop());
-            MarkStageSetUp(nStage);
+            {
+                i=0;
+                //add the "store" option
+                AddChoice("Store all remaining points.", -2);
+                //get the skillfile
+                string sFile = Get2DACache("classes", "SkillsTable", nClass);
+                //loop over each valid row
+                string sSkillIndex = Get2DACache(sFile, "SkillIndex", i);
+                while(i < GetPRCSwitch(FILE_END_SKILLS))
+                {
+                    //check there is a skill there
+                    if(sSkillIndex != "")
+                    {
+                        //see if its class or cross-class
+                        int nClassSkill = StringToInt(Get2DACache(sFile, "ClassSkill", i));
+                        int nSkillID = StringToInt(sSkillIndex);
+                        string sName = GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkillID)));
+                        if(nClassSkill == 1)
+                        {
+                            //class skill
+                            sName += " (Class skill)";
+                            //check not capped
+                            int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkillID);
+                            int nCap = 1+3; //this should be level +3
+                            if(nStoredPoints >= nCap)
+                                sName = "";
+                        }
+                        else
+                        {
+                            //cross-class skill
+                            sName += " (Class skill)";                            
+                            //check at least 2 points remaining
+                            if(nPoints < 2)
+                                sName = "";
+                            //check not capped    
+                            int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkillID);
+                            int nCap = (1+3)/2; //this should be level +3
+                            if(nStoredPoints >= nCap)
+                                sName = "";
+                        }
+                        if(sName != "")
+                        {
+                            AddChoice(sName, nSkillID);
+                        }
+                    }
+                    i++;
+                    sSkillIndex = Get2DACache(sFile, "Name", i);
+                }
+            }
+            //Dont mark it as setup, needs to be recreated
+            //MarkStageSetUp(nStage);
             break;
 
     // this has a wait while lookup

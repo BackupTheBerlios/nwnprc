@@ -364,6 +364,10 @@ string GetTokenIDString(int nTokenID)
 void AddChoice(string sText, int nValue, object oPC = OBJECT_INVALID)
 {
     oPC = _DynConvInternal_ResolvePC(oPC);
+    if(!array_exists(oPC, "ChoiceTokens"))
+        array_create(oPC, "ChoiceTokens");
+    if(!array_exists(oPC, "ChoiceValues"))
+        array_create(oPC, "ChoiceValues");
     array_set_string(oPC, "ChoiceTokens", array_get_size(oPC, "ChoiceTokens"), sText);
     array_set_int   (oPC, "ChoiceValues", array_get_size(oPC, "ChoiceValues"), nValue);
 }

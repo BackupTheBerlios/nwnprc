@@ -152,7 +152,7 @@ void ChoiceSelected(int nChoiceNo)
 
         //one option stages
         case STAGE_ALIGNMENT:
-            switch(array_get_int(OBJECT_SELF, "ChoiceValues",nChoiceNo))
+            switch(GetChoice(OBJECT_SELF))
             {
                 case 0: //lawful good
                     SetLocalInt(OBJECT_SELF, "LawfulChaotic", 85);
@@ -245,7 +245,7 @@ void ChoiceSelected(int nChoiceNo)
                     SetLocalInt(OBJECT_SELF, "Points", nPoints-GetCost(nCha));
                     break;
             }
-            if(GetLocalInt(OBJECT_SELF, "Points") == 0)
+            if(GetLocalInt(OBJECT_SELF, "Points") <= 0)
             {
                 nStage++;
             }
@@ -273,14 +273,14 @@ void ChoiceSelected(int nChoiceNo)
             break;
 
         case STAGE_SKILL:
-            array_create(OBJECT_SELF, "Skills");
+            if(!array_exists(OBJECT_SELF, "Skills"))
+                array_create(OBJECT_SELF, "Skills");
             if(GetChoice(OBJECT_SELF) == -2)
             {
                 //save all remaining
                 array_set_int(OBJECT_SELF, "Skills", -1,
                     array_get_int(OBJECT_SELF, "Skills", -1)+GetLocalInt(OBJECT_SELF, "Points"));
-                SetLocalInt(OBJECT_SELF, "Points", 0);
-                nStage++;
+                nPoints = 0;    
             }
             else
             {
@@ -292,25 +292,11 @@ void ChoiceSelected(int nChoiceNo)
                     nPoints -= 2 ;//cross class skill
                 else
                     nPoints -= 1;//class
-                SetLocalInt(OBJECT_SELF, "Points", nPoints);
-                //check if finished
-                if(nPoints <= 0)
-                    nStage++;
-                else //then recreate the tokens
-                {
-                    if(nPoints > 1)
-                        SetupSkillToken(GetChoice(OBJECT_SELF), nChoiceNo);
-                    else
-                    {
-                        for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
-                        {
-                            if(!SetupSkillToken(array_get_int(OBJECT_SELF, "ChoiceValues", i), i))
-                                i--;
-                        }
-                    }
-                }
-    //          array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
             }
+            //check if finished
+            SetLocalInt(OBJECT_SELF, "Points", nPoints);
+            if(nPoints <= 0)
+                nStage++;
             break;
         case STAGE_SKILL_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
@@ -320,8 +306,8 @@ void ChoiceSelected(int nChoiceNo)
                 DeleteLocalString(OBJECT_SELF, "Skills_-1");
                 array_delete(OBJECT_SELF, "Skills");
                 nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValues");
-                array_delete(OBJECT_SELF, "ChoiceTokens");
+                //array_delete(OBJECT_SELF, "ChoiceValues");
+                //array_delete(OBJECT_SELF, "ChoiceTokens");
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
             }
             else if(GetChoice(OBJECT_SELF) == 1)

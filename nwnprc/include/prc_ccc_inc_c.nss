@@ -71,9 +71,9 @@ void SkillLoop()
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
     int nRace = GetLocalInt(OBJECT_SELF, "Race");
     int nLevel = GetLocalInt(OBJECT_SELF, "Level");
-    if(nPoints== 0)
+    if(nPoints == 0)
     {
-        nPoints = StringToInt(Get2DACache("classes", "SkillPointBase", GetLocalInt(OBJECT_SELF, "Class")));
+        nPoints = StringToInt(Get2DACache("classes", "SkillPointBase", nClass));
         nInt += StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace));
         nPoints += ((nInt-10)/2);
         if(nPoints <1)

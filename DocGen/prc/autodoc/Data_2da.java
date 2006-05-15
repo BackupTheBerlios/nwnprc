@@ -741,8 +741,9 @@ public class Data_2da implements Cloneable{
 		boolean minimal = false;
 		boolean ignoreErrors = false;
 		boolean readStdin = false;
+		boolean bugCompat = false;
 
-		for(String param : args){//[-crmnqs] file... | -
+		for(String param : args){//[-bcrmnqs] file... | -
 			// Parameter parseage
 			if(param.startsWith("-")){
 				if(param.equals("-"))
@@ -751,6 +752,9 @@ public class Data_2da implements Cloneable{
 				else{
 					for(char c : param.substring(1).toCharArray()){
 						switch(c){
+						case 'b':
+							bugCompat = true;
+							break;
 						case 'c':
 							compare = true;
 							if(resave) resave = false;
@@ -798,8 +802,8 @@ public class Data_2da implements Cloneable{
 		// Run the specified operation
 		if(compare){
 			Data_2da file1, file2;
-			file1 = load2da(args[1]);
-			file2 = load2da(args[2]);
+			file1 = load2da(args[1], bugCompat);
+			file2 = load2da(args[2], bugCompat);
 
 			doComparison(file1, file2);
 		}
@@ -807,7 +811,7 @@ public class Data_2da implements Cloneable{
 			Data_2da temp;
 			for(String fileName : fileNames){
 				try{
-					temp = load2da(fileName);
+					temp = load2da(fileName, bugCompat);
 					temp.save2da(new File(fileName).getCanonicalFile().getParent() + File.separator, true, !minimal);
 				}catch(Exception e){
 					// Print the error
@@ -826,7 +830,7 @@ public class Data_2da implements Cloneable{
 			// Validify by loading
 			for(String fileName : fileNames){
 				try{
-					load2da(fileName);
+					load2da(fileName, bugCompat);
 				}catch(Exception e){
 					// Print the error
 					err_pr.printException(e);
@@ -842,8 +846,9 @@ public class Data_2da implements Cloneable{
 
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-		                   "  [-crmnqs] file... | -\n"+
+		                   "  [-bcrmnqs] file... | -\n"+
 		                   "\n"+
+		                   "  -b    bug-compatibility mode. Counts tabs as whitespace instead of data\n"+
 		                   "  -c    prints the differing lines between the 2das given as first two\n"+
 		                   "        parameters. They must have the same label set and entrycount.\n" +
 		                   "        Mutually exclusive with -r\n"+

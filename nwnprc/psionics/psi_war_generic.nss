@@ -5,5 +5,5 @@
 
 void main()
 {
-    UsePower(GetPowerFromSpellID(PRCGetSpellId()), CLASS_TYPE_PSYWAR);
+    UsePower(GetPowerFromSpellID(PRCGetSpellId()), CLASS_TYPE_WARMIND);
 }

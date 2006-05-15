@@ -3,5 +3,5 @@
       LABEL                         ReqType     ReqParam1        ReqParam2   
 0     Ring_of_Nine_Lives            RESULT      x0_it_mring012   ****        
 1     Caster_Level_11th             CASTERLVL   11               ****        
-2     ForgeRing		            FEAT        2929             **** 
-3     Heal			    SPELL	79		 ****         
+2     ForgeRing                 FEAT        2929             **** 
+3     Heal              SPELL   79       ****         

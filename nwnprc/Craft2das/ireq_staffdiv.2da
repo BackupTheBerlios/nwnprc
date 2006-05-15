@@ -1,8 +1,8 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Staff_of_Divination	    RESULT      jd_wmgst003      ****        
+0    Staff_of_Divination        RESULT      jd_wmgst003      ****        
 1    Caster_Level_13th              CASTERLVL   13               ****        
-2    CraftStaff		  	    FEAT        2928             ****           
-3    Identify			    SPELL	86		 ****
-4    True_Seeing		    SPELL	186		 ****
+2    CraftStaff             FEAT        2928             ****           
+3    Identify               SPELL   86       ****
+4    True_Seeing            SPELL   186      ****

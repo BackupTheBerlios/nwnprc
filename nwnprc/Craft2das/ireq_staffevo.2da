@@ -1,12 +1,12 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Staff_of_Evocation		    RESULT      jd_wmgst005      ****        
+0    Staff_of_Evocation         RESULT      jd_wmgst005      ****        
 1    Caster_Level_13th              CASTERLVL   13               ****        
-2    CraftStaff		  	    FEAT        2928             ****           
-3    Aganazzars_Scorcher	    SPELL	3165		 ****
-4    Bigbys_Interposing_Hand	    SPELL	459		 ****
-5    Chain_Lightning		    SPELL	14		 ****
-6    Fireball			    SPELL	58		 ****
-7    Ice_Storm			    SPELL	368		 ****
-8    Magic_Missle		    SPELL	107		 ****
+2    CraftStaff             FEAT        2928             ****           
+3    Aganazzars_Scorcher        SPELL   3165         ****
+4    Bigbys_Interposing_Hand        SPELL   459      ****
+5    Chain_Lightning            SPELL   14       ****
+6    Fireball               SPELL   58       ****
+7    Ice_Storm              SPELL   368      ****
+8    Magic_Missle           SPELL   107      ****

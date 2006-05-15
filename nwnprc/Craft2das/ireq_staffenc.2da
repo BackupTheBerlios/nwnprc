@@ -1,12 +1,12 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Staff_of_Enchantment	    RESULT      jd_wmgst004      ****        
+0    Staff_of_Enchantment       RESULT      jd_wmgst004      ****        
 1    Caster_Level_13th              CASTERLVL   13               ****        
-2    CraftStaff		  	    FEAT        2928             ****           
-3    Confusion			    SPELL	26		 ****
-4    Greater_Heroism		    SPELL	3134		 ****
-5    Heroism			    SPELL	3133		 ****
-6    Mind_Fog			    SPELL	118		 ****
-7    Sleep			    SPELL	165		 ****
-8    Tashas_Hideous_Laughter	    SPELL	457		 ****
+2    CraftStaff             FEAT        2928             ****           
+3    Confusion              SPELL   26       ****
+4    Greater_Heroism            SPELL   3134         ****
+5    Heroism                SPELL   3133         ****
+6    Mind_Fog               SPELL   118      ****
+7    Sleep              SPELL   165      ****
+8    Tashas_Hideous_Laughter        SPELL   457      ****

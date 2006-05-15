@@ -3,5 +3,5 @@
       LABEL                         ReqType     ReqParam1        ReqParam2   
 0     Ring_of_Fortitude_+6          RESULT      x2_it_mring025   ****        
 1     Caster_Level_30th             CASTERLVL   30               ****        
-2     ForgeRing		            FEAT        2929             **** 
-3     Resistance		    SPELL	151		 ****         
+2     ForgeRing                 FEAT        2929             **** 
+3     Resistance            SPELL   151      ****         

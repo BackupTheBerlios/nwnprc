@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Amulet_of_Will_+3		    RESULT      nw_it_mneck026   ****        
+0     Amulet_of_Will_+3         RESULT      nw_it_mneck026   ****        
 1     Caster_Level_9th              CASTERLVL   9                ****        
 2     CraftWonderousItems           FEAT        2925             **** 
-3     Resistance		    SPELL	151		 ****
+3     Resistance            SPELL   151      ****

@@ -1,11 +1,11 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Staff_of_Necromancy	    RESULT      jd_wmgst012      ****        
+0    Staff_of_Necromancy        RESULT      jd_wmgst012      ****        
 1    Caster_Level_13th              CASTERLVL   13               ****        
-2    CraftStaff		  	    FEAT        2928             ****           
-3    Circle_of_Death		    SPELL	18		 ****
-4    Enervation			    SPELL	52		 ****
-5    Ghoul_Touch		    SPELL	64		 ****
-6    Scare			    SPELL	155		 ****
-7    Vampiric_Touch		    SPELL	188		 ****
+2    CraftStaff             FEAT        2928             ****           
+3    Circle_of_Death            SPELL   18       ****
+4    Enervation             SPELL   52       ****
+5    Ghoul_Touch            SPELL   64       ****
+6    Scare              SPELL   155      ****
+7    Vampiric_Touch         SPELL   188      ****

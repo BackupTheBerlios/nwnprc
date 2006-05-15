@@ -1,9 +1,9 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Staff_of_Defense		    RESULT      nw_wmgst004      ****        
+0     Staff_of_Defense          RESULT      nw_wmgst004      ****        
 1     Caster_Level_11th             CASTERLVL   11               ****        
-2     CraftStaff		    FEAT        2928             ****           
-3     Ghostly_Visage		    SPELL	120		 ****
-4     Mage_Armor		    SPELL	102		 ****
-5     Protection_from_Alignment	    SPELL	138		 ****
+2     CraftStaff            FEAT        2928             ****           
+3     Ghostly_Visage            SPELL   120      ****
+4     Mage_Armor            SPELL   102      ****
+5     Protection_from_Alignment     SPELL   138      ****

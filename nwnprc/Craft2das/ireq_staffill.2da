@@ -1,12 +1,12 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Staff_of_Illusion		    RESULT      jd_wmgst009      ****        
+0    Staff_of_Illusion          RESULT      jd_wmgst009      ****        
 1    Caster_Level_15th              CASTERLVL   15               ****        
-2    CraftStaff		  	    FEAT        2928             ****           
-3    Color_Spray		    SPELL	24		 ****
-4    Displacement		    SPELL	458		 ****
-5    Greater_Shadow_Conjuration	    SPELL	71		 ****
-6    Improved_Invisibility	    SPELL	88		 ****
-7    Invisibility		    SPELL	90		 ****
-8    Shadow_Shield		    SPELL	160		 ****
+2    CraftStaff             FEAT        2928             ****           
+3    Color_Spray            SPELL   24       ****
+4    Displacement           SPELL   458      ****
+5    Greater_Shadow_Conjuration     SPELL   71       ****
+6    Improved_Invisibility      SPELL   88       ****
+7    Invisibility           SPELL   90       ****
+8    Shadow_Shield          SPELL   160      ****

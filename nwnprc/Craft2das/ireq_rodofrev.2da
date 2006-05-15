@@ -1,8 +1,8 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Rod_of_Reversal	    	    RESULT      nw_wmgmrd005     ****        
+0     Rod_of_Reversal               RESULT      nw_wmgmrd005     ****        
 1     Caster_Level_11th             CASTERLVL   11               ****        
-2     CraftRod		            FEAT        2927             ****           
-3     Dispel_Magic		    SPELL	41		 ****
-4     Greater_Dispelling	    SPELL	67		 ****
+2     CraftRod                  FEAT        2927             ****           
+3     Dispel_Magic          SPELL   41       ****
+4     Greater_Dispelling        SPELL   67       ****

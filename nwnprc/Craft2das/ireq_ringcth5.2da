@@ -3,5 +3,5 @@
       LABEL                         ReqType     ReqParam1        ReqParam2   
 0     Ring_Clear_Thoughts_+5        RESULT      nw_it_mring017   ****        
 1     Caster_Level_15th             CASTERLVL   15               ****        
-2     ForgeRing		            FEAT        2929             **** 
-3     Foxs_Cunning		    SPELL	356		 ****         
+2     ForgeRing                 FEAT        2929             **** 
+3     Foxs_Cunning          SPELL   356      ****         

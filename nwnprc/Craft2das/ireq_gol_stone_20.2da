@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                           ReqType     ReqParam1        ReqParam2   
-0     Golem  	                      RESULT      prc_con_result   prc_con_stone_20        
+0     Golem                           RESULT      prc_con_result   prc_con_stone_20        
 1     Caster_Level_14th               CASTERLVL      14            ****        
 2     CraftConstruct                  FEAT         2920            ****   
 3     GoldCost                        EXTRAGOLD   62500            ****

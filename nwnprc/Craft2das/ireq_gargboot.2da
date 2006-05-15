@@ -1,8 +1,8 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Gargoyle_Boots		    RESULT      nw_it_mboots004  ****        
+0    Gargoyle_Boots         RESULT      nw_it_mboots004  ****        
 1    Caster_Level_13th              CASTERLVL   13               ****        
 2    CraftWonderousItems            FEAT        2925             **** 
-3    Stoneskin			    SPELL	172		 ****
-4    Resistance			    SPELL	151		 ****
+3    Stoneskin              SPELL   172      ****
+4    Resistance             SPELL   151      ****

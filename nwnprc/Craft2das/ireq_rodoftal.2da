@@ -3,6 +3,6 @@
       LABEL                         ReqType     ReqParam1        ReqParam2   
 0     Rod_of_Thunder_and_Lightning  RESULT      x2_it_wmgrd001   ****        
 1     Caster_Level_20th             CASTERLVL   20               ****        
-2     CraftRod		            FEAT        2927             ****           
-3     Chain_Lightning		    SPELL	14		 ****
-4     Sound_Burst		    SPELL	167		 ****
+2     CraftRod                  FEAT        2927             ****           
+3     Chain_Lightning           SPELL   14       ****
+4     Sound_Burst           SPELL   167      ****

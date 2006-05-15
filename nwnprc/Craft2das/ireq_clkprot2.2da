@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Cloak_of_Protection_+2	    RESULT      nw_maarcl088     ****        
+0    Cloak_of_Protection_+2     RESULT      nw_maarcl088     ****        
 1    Caster_Level_6th               CASTERLVL   6                ****        
 2    CraftWonderousItems            FEAT        2925             ****
-3    Shield_of_Faith		    SPELL	450		 **** 
+3    Shield_of_Faith            SPELL   450      **** 

@@ -1,9 +1,9 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Staff_of_Power		    RESULT      nw_wmgst005      ****        
+0     Staff_of_Power            RESULT      nw_wmgst005      ****        
 1     Caster_Level_11th             CASTERLVL   11               ****        
-2     CraftStaff		    FEAT        2928             ****           
-3     Fireball			    SPELL	58		 ****
-4     Magic_Missle		    SPELL	107		 ****
-5     Ray_of_Enfeeblement	    SPELL	143		 ****
+2     CraftStaff            FEAT        2928             ****           
+3     Fireball              SPELL   58       ****
+4     Magic_Missle          SPELL   107      ****
+5     Ray_of_Enfeeblement       SPELL   143      ****

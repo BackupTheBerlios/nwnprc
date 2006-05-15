@@ -1,6 +1,6 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Boots_of_Sun_Soul_+1	    RESULT      nw_it_mboots018  ****        
+0    Boots_of_Sun_Soul_+1       RESULT      nw_it_mboots018  ****        
 1    Caster_Level_5th               CASTERLVL   5                ****        
 2    CraftWonderousItems            FEAT        2925             **** 

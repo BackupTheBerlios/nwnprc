@@ -1,8 +1,8 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Belt_of_Agility_+3		    RESULT      nw_it_mbelt020   ****        
+0    Belt_of_Agility_+3         RESULT      nw_it_mbelt020   ****        
 1    Caster_Level_9th               CASTERLVL   9                ****        
 2    CraftWonderousItems            FEAT        2925             **** 
-3    Cats_Grace		    SPELL	13		 ****
-4    Freedom_of_Movement	    SPELL	62		 ****
+3    Cats_Grace         SPELL   13       ****
+4    Freedom_of_Movement        SPELL   62       ****

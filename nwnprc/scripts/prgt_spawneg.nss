@@ -9,6 +9,6 @@ void main()
     //add code in here to change things if you want to
     //for example, to set the detect DC to be 25 use:
     //tTrap.nDetectDC = 25;
-    CreateTrap(GetLocation(OBJECT_SELF), tTrap);
+    PRGT_CreateTrapAtLocation(GetLocation(OBJECT_SELF), tTrap);
     DestroyObject(OBJECT_SELF);
 }

@@ -1,14 +1,14 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Staff_of_True_Defense	    RESULT      jd_wmgst016      ****        
+0    Staff_of_True_Defense      RESULT      jd_wmgst016      ****        
 1    Caster_Level_20th              CASTERLVL   20               ****        
-2    CraftStaff		  	    FEAT        2928             ****           
-3    Death_Armor		    SPELL	519		 ****
-4    Improved_Mage_Armor	    SPELL	3174		 ****
-5    Mestils_Acid_Sheath	    SPELL	524		 ****
-6    Shadow_Shield		    SPELL	160		 ****
-7    Shield			    SPELL	417		 ****
-8    Spell_Mantle		    SPELL	169		 ****
-9    Spiderskin			    SPELL	3184		 ****
-10   Stoneskin			    SPELL	172		 ****		    
+2    CraftStaff             FEAT        2928             ****           
+3    Death_Armor            SPELL   519      ****
+4    Improved_Mage_Armor        SPELL   3174         ****
+5    Mestils_Acid_Sheath        SPELL   524      ****
+6    Shadow_Shield          SPELL   160      ****
+7    Shield             SPELL   417      ****
+8    Spell_Mantle           SPELL   169      ****
+9    Spiderskin             SPELL   3184         ****
+10   Stoneskin              SPELL   172      ****           

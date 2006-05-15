@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Cloak_of_Movement		    RESULT      nw_maarcl056     ****        
+0    Cloak_of_Movement          RESULT      nw_maarcl056     ****        
 1    Caster_Level_9th               CASTERLVL   9                ****        
 2    CraftWonderousItems            FEAT        2925             **** 
-3    Freedom_of_Movement	    SPELL	62		 ****
+3    Freedom_of_Movement        SPELL   62       ****

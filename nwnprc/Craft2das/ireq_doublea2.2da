@@ -1,6 +1,6 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Double_Axe_+2	            RESULT      nw_wdbmax010     ****        
+0     Double_Axe_+2             RESULT      nw_wdbmax010     ****        
 1     Caster_Level_6th              CASTERLVL   6                ****        
 2     CraftArmsandArmor             FEAT        2926             ****           

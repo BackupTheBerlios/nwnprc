@@ -1,6 +1,6 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Light_Crossbow_+2	            RESULT      nw_wbwmxl008     ****        
+0     Light_Crossbow_+2             RESULT      nw_wbwmxl008     ****        
 1     Caster_Level_6th              CASTERLVL   6                ****        
 2     CraftArmsandArmor             FEAT        2926             ****           

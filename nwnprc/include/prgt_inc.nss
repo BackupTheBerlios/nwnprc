@@ -1,3 +1,23 @@
+//::///////////////////////////////////////////////
+//:: Name           Primogenitors Respawning Ground Trap include
+//:: FileName       prgt_inc
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+        This was orignally designed to allow respawning ground traps
+        However, as of NWN 1.67 this is no longer needed.
+        
+        The secondary purpose of this is now most useful and that
+        is to provide a system where a wide variety of traps
+        can be set and used.
+        
+        This particular file provides interface functions
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Primogenitor
+//:: Created On: Quite some time ago
+//:://////////////////////////////////////////////
+
 /*
 int    DAMAGE_TYPE_BLUDGEONING  = 1;
 int    DAMAGE_TYPE_PIERCING     = 2;
@@ -16,213 +36,47 @@ int    DAMAGE_TYPE_SONIC        = 2048;
 #include "prgt_inc_trap"
 #include "inc_utility"
 
-object CreateTrap(location lLoc, struct trap tTrap);
-void DetectPsuedoHB(object oTrap);
-void ShowTrap(object oTrap, object oDetector);
-void DisarmTrap(object oTrap);
-void DoTrapXP(object oTrap, object oTarget, int nEvent);
-
-const float TRAP_SPACING = 2.5;
+const int TRAP_BASE_TYPE_PRGT  = 100;
 const int TRAP_EVENT_TRIGGERED = 1;
-const int TRAP_EVENT_DISARMED = 2;
+const int TRAP_EVENT_DISARMED  = 2;
 const int TRAP_EVENT_RECOVERED = 3;    //this is in addition to being disarmed
 
-void VoidCreateTrap(location lLoc, struct trap tTrap)
+
+object PRGT_CreateTrapAtLocation(location lLoc, struct trap tTrap)
 {
-    CreateTrap(lLoc, tTrap);
-}
+    object oTrap;
+    oTrap = CreateTrapAtLocation(TRAP_BASE_TYPE_PRGT, 
+        lLoc,    
+        tTrap.fSize,
+        "",//tag
+        STANDARD_FACTION_HOSTILE,
+        tTrap.sDisarmScript,
+        tTrap.sTriggerScript);
 
-object CreateTrap(location lLoc, struct trap tTrap)
-{
-    object oTrap, oDetect, oTemp;
-
-    // First, create the detection AoE
-    effect eDetect = EffectAreaOfEffect(tTrap.nDetectAOE, "prgt_det_ent", "prgt_det_hb", "prgt_det_ext");
-    eDetect = SupernaturalEffect(eDetect);
-    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eDetect, lLoc);
-
-    // Get an object reference to it
-    oTemp = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
-    while(GetIsObjectValid(oTemp))
-    {
-        //DoDebug("Looking for detection AoE, testing object '" + GetTag(oTemp) + "', comparing to '" + Get2DACache("vfx_persistent", "LABEL", tTrap.nDetectAOE) +"' - " + BooleanToString(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nDetectAOE)));
-        // Test if we found the correct AoE
-        if(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nDetectAOE) &&
-           !GetLocalInt(oTemp, "PRC_PRGT_ParanoiaMarker") // Just in case there are two traps in the almost same location
-           )
-        {
-            oDetect = oTemp;
-            SetLocalInt(oDetect, "PRC_PRGT_ParanoiaMarker", TRUE);
-            break;
-        }
-        // Didn't find, get next
-        oTemp = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
-    }
-    if(DEBUG && !GetIsObjectValid(oDetect))
-        DoDebug("CreateTrap(): ERROR: Can't get object reference to detection AoE!");
-
-
-    // Do the trap AoE
-    effect eTrap   = EffectAreaOfEffect(tTrap.nTrapAOE, "prgt_trp_ent", "prgt_trp_hb", "prgt_trpt_ext");
-    eTrap   = SupernaturalEffect(eTrap);
-    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eTrap,   lLoc);
-
-    // Get an object reference to it
-    oTemp = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
-    while(GetIsObjectValid(oTemp))
-    {
-        //DoDebug("Looking for detection AoE, testing object '" + GetTag(oTemp) + "', comparing to '" + Get2DACache("vfx_persistent", "LABEL", tTrap.nTrapAOE) +"' - " + BooleanToString(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nTrapAOE)));
-        // Test if we found the correct AoE
-        if(GetTag(oTemp) == Get2DACache("vfx_persistent", "LABEL", tTrap.nTrapAOE) &&
-           !GetLocalInt(oTemp, "PRC_PRGT_ParanoiaMarker") // Just in case there are two traps in the almost same location
-           )
-        {
-            oTrap = oTemp;
-            SetLocalInt(oTrap, "PRC_PRGT_ParanoiaMarker", TRUE);
-            break;
-        }
-        // Didn't find, get next
-        oTemp = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
-    }
-    if(DEBUG && !GetIsObjectValid(oTrap))
-        DoDebug("CreateTrap(): ERROR: Can't get object reference to trap AoE!");
-
-
-    // Store the data
-    SetLocalObject(oTrap, "Detect", oDetect);
-    SetLocalObject(oDetect, "Trap", oTrap);
     SetLocalTrap(oTrap, "TrapSettings", tTrap);
+    SetTrapOneShot(oTrap, FALSE);
+    SetTrapRecoverable(oTrap, FALSE);
 
     return oTrap;
 }
 
-void ShowTrap(object oTrap, object oDetector)
+void PRGT_CreateTrapOnObject(object oTrap, struct trap tTrap)
 {
-    if(GetLocalInt(oTrap, "Spawned"))
-    {
-        int nCounter;
-        object oRealTrap = GetLocalObject(oTrap, "RealTrap_"+IntToString(nCounter));
-        while(GetIsObjectValid(oRealTrap))
-        {
-            SetTrapDetectedBy(oRealTrap, oDetector);
-            nCounter++;
-            oRealTrap = GetLocalObject(oTrap, "RealTrap_"+IntToString(nCounter));
-        }
-        return;
-    }
-    SetLocalInt(oTrap, "Spawned", TRUE);
-    location lLoc = GetLocation(oTrap);
-//    float fMaxRadius = 5.0;   //this needs to get the correct radius
-    int nTrapAOE = GetLocalTrap(oTrap, "TrapSettings").nTrapAOE;
-    float fMaxRadius = StringToFloat(Get2DACache("vfx_persistent", "RADIUS", nTrapAOE));
-    float fRadius = fMaxRadius;
-    int nCounter = 0;
-    string sResRef = GetLocalTrap(oTrap, "TrapSettings").sResRef;
-    while(fRadius > 0.0)
-    {
-        float fDiameter = 2*PI*fRadius;
-        int nCount = FloatToInt(fDiameter/TRAP_SPACING);
-        float fAngle = 360.0/IntToFloat(nCount);
-        float fi;
-        location lTest;
-        while(fi < 360.0)
-        {
-            vector vTest = GetPositionFromLocation(lLoc);
-            vTest.x += cos(fi)*fRadius;
-            vTest.y += sin(fi)*fRadius;
-            lTest =  Location(GetAreaFromLocation(lLoc), vTest, GetFacingFromLocation(lLoc));
-            object oRealTrap = CreateObject(OBJECT_TYPE_PLACEABLE, sResRef, lTest);
-            SetTrapDetectedBy(oRealTrap, oDetector);
-            SetLocalObject(oTrap, "RealTrap_"+IntToString(nCounter), oRealTrap);
-            SetLocalObject(oRealTrap, "Trap", oTrap);
-            nCounter++;
-            fi += fAngle;
-        }
-        fRadius -= TRAP_SPACING;
-    }
+    CreateTrapOnObject(TRAP_BASE_TYPE_PRGT, 
+        oTrap,    
+        STANDARD_FACTION_HOSTILE,
+        tTrap.sDisarmScript,
+        tTrap.sTriggerScript);
+
+    SetLocalTrap(oTrap, "TrapSettings", tTrap);
+    SetTrapOneShot(oTrap, FALSE);
+    SetTrapRecoverable(oTrap, FALSE);
 }
 
-void DetectPsuedoHB(object oTrap)
-{
-    object oPC = OBJECT_SELF;
-    if(!GetLocalInt(oPC, "InDetect"))
-        return;
-    if(GetDetectMode(oPC)!=DETECT_MODE_ACTIVE
-        || !LineOfSightObject(oPC, oTrap))
-    {
-        DelayCommand(6.0, DetectPsuedoHB(oTrap));
-        return;
-    }
-    int nDetectDC = GetLocalTrap(oTrap, "TrapSettings").nDetectDC;
-    if(GetIsSkillSuccessful(oPC, SKILL_SEARCH, nDetectDC))
-    {
-        ShowTrap(oTrap, oPC);
-    }
-    DelayCommand(6.0, DetectPsuedoHB(oTrap));
-}
 
-void TrapPsuedoHB(object oTrap)
+void PRGT_VoidCreateTrapAtLocation(location lLoc, struct trap tTrap)
 {
-    object oPC = OBJECT_SELF;
-    if(GetLocalInt(oPC, "InTrap") == 0)
-        return;
-    if(GetCurrentAction(oPC) != ACTION_DISABLETRAP &&
-        GetCurrentAction(oPC) != ACTION_EXAMINETRAP &&
-        GetCurrentAction(oPC) != ACTION_FLAGTRAP &&
-        GetCurrentAction(oPC) != ACTION_RECOVERTRAP)
-    {
-        //fire the trap
-        string sTriggerScript = GetLocalTrap(oTrap, "TrapSettings").sTriggerScript;
-        SetLocalObject(oTrap, "Target", oPC);
-        ExecuteScript(sTriggerScript, oTrap);
-        DoTrapXP(oTrap, oPC, TRAP_EVENT_TRIGGERED);
-        //is it one shot?
-        object oRealTrap;
-        if(GetLocalInt(oTrap, "Spawned"))
-        {
-            oRealTrap = GetLocalObject(oTrap, "RealTrap_0");
-        }
-        else
-        {
-            string sResRef = GetLocalTrap(oTrap, "TrapSettings").sResRef;
-            oRealTrap = CreateObject(OBJECT_TYPE_PLACEABLE, sResRef, GetLocation(oTrap));
-            DestroyObject(oRealTrap);
-        }
-        if(GetTrapOneShot(oRealTrap))
-            DelayCommand(1.0, DisarmTrap(oTrap));
-    }
-    else
-    {
-        DelayCommand(6.0, TrapPsuedoHB(oTrap));
-    }
-}
-
-void DisarmTrap(object oTrap)
-{
-    int nCounter;
-    object oRealTrap = GetLocalObject(oTrap, "RealTrap_"+IntToString(nCounter));
-    while(GetIsObjectValid(oRealTrap))
-    {
-        DestroyObject(oRealTrap);
-        nCounter++;
-        oRealTrap = GetLocalObject(oTrap, "RealTrap_"+IntToString(nCounter));
-    }
-    object oDetect = GetLocalObject(oTrap, "Detect");
-    DestroyObject(oDetect);
-    DestroyObject(oTrap);
-    struct trap tTrap = GetLocalTrap(oTrap, "TrapSettings");
-    if(tTrap.nRespawnSeconds)
-    {
-        struct trap tNewTrap = tTrap;
-        if(tTrap.nRespawnRandomCR)
-        {
-            tNewTrap = CreateRandomTrap(tTrap.nRespawnRandomCR);
-            tNewTrap.nRespawnSeconds = tTrap.nRespawnSeconds;
-        }
-        AssignCommand(GetArea(oTrap),
-            DelayCommand(IntToFloat(tTrap.nRespawnSeconds),
-                VoidCreateTrap(GetLocation(oTrap), tNewTrap)));
-    }
+    PRGT_CreateTrapAtLocation(lLoc, tTrap);
 }
 
 void DoTrapXP(object oTrap, object oTarget, int nEvent)

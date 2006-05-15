@@ -1,9 +1,9 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Staff_of_the_Holy		    RESULT      nw_wmgst006      ****        
+0     Staff_of_the_Holy         RESULT      nw_wmgst006      ****        
 1     Caster_Level_11th             CASTERLVL   11               ****        
-2     CraftStaff		    FEAT        2928             ****           
-3     Aid			    SPELL	1		 ****
-4     Cure_Light_Wounds		    SPELL	32		 ****
-5     Cure_Moderate_Wounds	    SPELL	34		 ****
+2     CraftStaff            FEAT        2928             ****           
+3     Aid               SPELL   1        ****
+4     Cure_Light_Wounds         SPELL   32       ****
+5     Cure_Moderate_Wounds      SPELL   34       ****

@@ -1,8 +1,8 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Rod_of_Beguiling		    RESULT      nw_wmgmrd004     ****        
+0     Rod_of_Beguiling          RESULT      nw_wmgmrd004     ****        
 1     Caster_Level_9th              CASTERLVL   9                ****        
-2     CraftRod		            FEAT        2927             ****           
-3     Charm_Person		    SPELL	16		 ****
-4     Dominate_Person		    SPELL	45		 ****
+2     CraftRod                  FEAT        2927             ****           
+3     Charm_Person          SPELL   16       ****
+4     Dominate_Person           SPELL   45       ****

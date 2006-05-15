@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0     Rod_of_the_Ghost	    	    RESULT      nw_wmgrd002      ****        
+0     Rod_of_the_Ghost              RESULT      nw_wmgrd002      ****        
 1     Caster_Level_5th              CASTERLVL   5                ****        
-2     CraftRod		            FEAT        2927             ****           
-3     Ghostly_Visage		    SPELL	120		 ****
+2     CraftRod                  FEAT        2927             ****           
+3     Ghostly_Visage            SPELL   120      ****

@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                              ReqType     ReqParam1        ReqParam2   
-0     Golem  	                         RESULT      prc_con_result   prc_con_adam_70       
+0     Golem                              RESULT      prc_con_result   prc_con_adam_70       
 1     Caster_Level_30th                  CASTERLVL      30            ****        
 2     CraftConstruct                     FEAT         2920            ****     
 3     GoldCost                           EXTRAGOLD  312500            ****

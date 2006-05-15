@@ -1,7 +1,7 @@
 2DA V2.0
 
       LABEL                         ReqType     ReqParam1        ReqParam2   
-0    Boots_of_Striding_+2	    RESULT      nw_it_mboots006  ****        
+0    Boots_of_Striding_+2       RESULT      nw_it_mboots006  ****        
 1    Caster_Level_6th               CASTERLVL   6                ****        
 2    CraftWonderousItems            FEAT        2925             **** 
-3    Endurance			    SPELL	49		 ****
+3    Endurance              SPELL   49       ****

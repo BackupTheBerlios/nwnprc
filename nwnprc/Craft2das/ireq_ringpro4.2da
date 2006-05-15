@@ -3,5 +3,5 @@
       LABEL                         ReqType     ReqParam1        ReqParam2   
 0     Ring_of_Protection_+4         RESULT      nw_it_mring019   ****        
 1     Caster_Level_12th             CASTERLVL   12               ****        
-2     ForgeRing		            FEAT        2929             **** 
-3     Shield_of_Faith		    SPELL	450		 ****         
+2     ForgeRing                 FEAT        2929             **** 
+3     Shield_of_Faith           SPELL   450      ****         

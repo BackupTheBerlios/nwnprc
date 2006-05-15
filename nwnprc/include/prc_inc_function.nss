@@ -163,6 +163,10 @@ void EvalPRCFeats(object oPC)
     // It also runs things that clerics with those domains need
     if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0 ||
         GetLevelByClass(CLASS_TYPE_CLERIC, oPC))                  ExecuteScript("prc_domain_skin", oPC);
+    
+    // Templates 
+    //these go here so feats can be reused
+    ExecuteScript("prc_templates", oPC);
 
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
@@ -267,9 +271,6 @@ void EvalPRCFeats(object oPC)
         
     // Speed changes
     ExecuteScript("prc_speed", oPC);
-    
-    // templates
-    ExecuteScript("prc_templates", oPC);
 
     // ACP system
     if((GetIsPC(oPC) &&
@@ -299,7 +300,6 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
     ExecuteScript("race_unarmed", oPC);
-    ExecuteScript("prc_templates", oPC);
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
     {
@@ -500,7 +500,8 @@ void ScrubPCSkin(object oPC, object oSkin)
             // Spare 400 through 570 and 398 -- epic spells & spell effects
             //also spare the new spellbook feats (1000-12000)
             //also spare the psionic feats (12000+)
-            //also spare Pnp spellschool feats (231-249
+            //also spare Pnp spellschool feats (231-249)
+            //also spare 
             if ((st < 400 || st > 570)
                 && st != 398
                 && st < 1000

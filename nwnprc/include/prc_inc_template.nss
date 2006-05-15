@@ -79,7 +79,7 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
     
     //run the main PRC function system
     //run the whole thing so we trigger any other feats weve borrowed
-    EvalPRCFeats(oPC);
+    DelayCommand(0.1, EvalPRCFeats(oPC));
     //ran, evalated, done
     return TRUE;
 }

@@ -224,7 +224,7 @@ public final class PageGeneration{
 	 */
 	public static void listPsionicPowers(){
 		// A map of power name to class-specific spells.2da entry
-		HashMap<String, Integer> psiPowMap = new HashMap<String, Integer>();
+		psiPowMap = new HashMap<String, Integer>();
 		
 		// Load cls_psipw_*.2da
 		String[] fileNames = new File("2da").list(new FilenameFilter(){
@@ -252,8 +252,6 @@ public final class PageGeneration{
 				}
 			}
 		}
-
-		psiPowIDs = new HashSet<Integer>(psiPowMap.values());
 	}
 
 	/**
@@ -327,7 +325,7 @@ public final class PageGeneration{
 			if(spells2da.getEntry("ImpactScript", entryNum).startsWith(check)) return true;
 		return false;
 		*/
-		return psiPowIDs.contains(entryNum);
+		return psiPowMap.containsValue(entryNum);
 	}
 
 
@@ -967,6 +965,9 @@ public final class PageGeneration{
 
 				// Add in the feat table
 				text = text.replaceAll("~~~ClassFeatTable~~~", buildClassFeatTables(classes2da, i));
+				
+				// Add in the spells / powers table
+				text = text.replaceAll("~~~ClassSpellAndPowerTables~~~", buildClassSpellAndPowerTables(classes2da, i));
 
 				/* Check whether this is a base or a prestige class. No prestige
 				 * class should give exp penalty (nor should any base class not give it),
@@ -1159,7 +1160,7 @@ public final class PageGeneration{
 	 * @param classes2da  data structure wrapping classes.2da
 	 * @param entryNum    number of the entry to generate table for
 	 *
-	 * @return  String that contains the tables
+	 * @return  String that contains the table
 	 *
 	 * @throws PageGenerationException if there is an error while generating the table and error tolerance is off
 	 */
@@ -1369,5 +1370,172 @@ public final class PageGeneration{
 		}
 		
 		return classFeatTableTemplate.replace("~~~TableContents~~~", tableText.toString());
+	}
+
+	/**
+	 * Constructs the html table of the new spellbook spells and psionic powers lists of
+	 * the given class. The entries are ordered by spell / power level
+	 *
+	 * @param classes2da  data structure wrapping classes.2da
+	 * @param entryNum    number of the entry to generate table for
+	 *
+	 * @return  String that contains the table
+	 *
+	 * @throws PageGenerationException if there is an error while generating the table and error tolerance is off
+	 */
+	private static String buildClassSpellAndPowerTables(Data_2da classes2da, int entryNum){
+		// Some guesswork to find the name of the spell and power 2das
+		StringBuffer toReturn = new StringBuffer("");
+		String classAbrev = null;
+		Data_2da spellList = null,
+		         powerList = null;
+		
+		// Check for correctly formed table name
+		if(!classes2da.getEntry("FeatsTable", entryNum).toLowerCase().startsWith("cls_feat_")) {
+			if(tolErr){
+				err_pr.println("Malformed FeatsTable entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+				return "";
+			}
+			else throw new PageGenerationException("Malformed FeatsTable entry for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)));
+		}
+		
+		// Extract the class abbreviation
+		classAbrev = classes2da.getEntry("FeatsTable", entryNum).toLowerCase().substring(9);
+		
+		// Attempt to load the class and power 2das
+		try {
+			spellList = twoDA.get("cls_spcr_" + classAbrev);
+		} catch(TwoDAReadException e) { /* Ensure nullness */ spellList = null; }
+		try {
+			powerList = twoDA.get("cls_psipw_" + classAbrev);
+		} catch(TwoDAReadException e) { /* Ensure nullness */ powerList = null; }
+		
+		// Do spellbook
+		if(spellList != null){
+			// Map of level numbers to maps of spell names to html links
+			TreeMap<String, TreeMap<String, String>> levelLists = new TreeMap<String, TreeMap<String, String>>();
+			SpellEntry spell = null;
+			
+			for(int i = 0; i < spellList.getEntryCount(); i++){
+				// Make sure the Level entry is a number
+				try {
+					Integer.parseInt(spellList.getEntry("Level", i));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Level entry in " + spellList.getName() + " on row " + i + ": " + spellList.getEntry("Level", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Level entry in " + spellList.getName() + " on row " + i + ": " + spellList.getEntry("Level", i));
+				}
+				
+				// Make sure the SpellID is valid
+				spell = null;
+				try {
+					spell = spells.get(Integer.parseInt(spellList.getEntry("SpellID", i)));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid SpellID entry in " + spellList.getName() + " on row " + i + ": " + spellList.getEntry("SpellID", i));
+						continue;
+					}else throw new PageGenerationException("Invalid SpellID entry in " + spellList.getName() + " on row " + i + ": " + spellList.getEntry("SpellID", i));
+				}
+				if(spell == null){
+					if(tolErr){
+						err_pr.println("SpellID entry in " + spellList.getName() + " on row " + i + " points at nonexistent spell: " + spellList.getEntry("SpellID", i));
+						continue;
+					}else throw new PageGenerationException("SpellID entry in " + spellList.getName() + " on row " + i + " points at nonexistent spell: " + spellList.getEntry("SpellID", i));
+				}
+				
+				// If no map for this level yet, fill it in
+				if(!levelLists.containsKey(spellList.getEntry("Level", i)))
+					levelLists.put(spellList.getEntry("Level", i), new TreeMap<String, String>());
+				
+				// Add the spell to the map
+				levelLists.get(spellList.getEntry("Level", i))
+				          .put(spell.name, pageLinkTemplate.replace("~~~Path~~~", spell.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+                                                           .replace("~~~Name~~~", spell.name));
+			}
+			
+			StringBuffer tableLines = new StringBuffer(),
+			             spellLinks;
+			String tableLine;
+			while(levelLists.size() > 0){
+				tableLine = classMagicTableEntryTemplate.replace("~~~Level~~~", levelLists.firstKey());
+				spellLinks = new StringBuffer();
+				for(String spellLink : levelLists.remove(levelLists.firstKey()).values())
+					spellLinks.append(spellLink);
+				tableLines.append(tableLine.replace("~~~EntryList~~~", spellLinks.toString()));
+			}
+			
+			toReturn.append(classMagicTableTemplate.replace("~~~TableName~~~", curLanguageData[LANGDATA_SPELLBOOKTXT])
+			                                       .replace("~~~Type~~~", curLanguageData[LANGDATA_SPELLSTXT])
+			                                       .replace("~~~TableContents~~~", tableLines.toString()));
+		}
+		
+		// Do psionics
+		if(powerList != null){
+			// Map of level numbers to maps of spell names to html links
+			TreeMap<String, TreeMap<String, String>> levelLists = new TreeMap<String, TreeMap<String, String>>();
+			SpellEntry power = null;
+			
+			for(int i = 0; i < powerList.getEntryCount(); i++){
+				// Skip rows that do not define a power
+				if(powerList.getEntry("Level", i).equals("****"))
+					continue;
+				
+				// Make sure the Level entry is a number
+				try {
+					Integer.parseInt(powerList.getEntry("Level", i));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Level entry in " + powerList.getName() + " on row " + i + ": " + powerList.getEntry("Level", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Level entry in " + powerList.getName() + " on row " + i + ": " + powerList.getEntry("Level", i));
+				}
+				
+				// Make sure the SpellID is valid
+				power = null;
+				try {
+					// Attempt to get the spell entry via a mapping of power names to spellIDs
+					power = spells.get(psiPowMap.get(tlk.get(Integer.parseInt(powerList.getEntry("Name", i)))));
+				} catch (NumberFormatException e) {
+					if(tolErr){
+						err_pr.println("Invalid Name entry in " + powerList.getName() + " on row " + i + ": " + powerList.getEntry("Name", i));
+						continue;
+					}else throw new PageGenerationException("Invalid Name entry in " + powerList.getName() + " on row " + i + ": " + powerList.getEntry("Name", i));
+				}
+				if(power == null){
+					if(tolErr){
+						err_pr.println("Unable to map Name entry in " + powerList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(powerList.getEntry("Name", i)));
+						continue;
+					}else throw new PageGenerationException("Unable to map Name entry in " + powerList.getName() + " on row " + i + " to a spellEntry: " + tlk.get(powerList.getEntry("Name", i)));
+				}
+				
+				// If no map for this level yet, fill it in
+				if(!levelLists.containsKey(powerList.getEntry("Level", i)))
+					levelLists.put(powerList.getEntry("Level", i), new TreeMap<String, String>());
+				
+				// Add the spell to the map
+				levelLists.get(powerList.getEntry("Level", i))
+				          .put(power.name, pageLinkTemplate.replace("~~~Path~~~", power.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+                                                           .replace("~~~Name~~~", power.name));
+			}
+			
+			StringBuffer tableLines = new StringBuffer(),
+			             spellLinks;
+			String tableLine;
+			while(levelLists.size() > 0){
+				tableLine = classMagicTableEntryTemplate.replace("~~~Level~~~", levelLists.firstKey());
+				spellLinks = new StringBuffer();
+				for(String spellLink : levelLists.remove(levelLists.firstKey()).values())
+					spellLinks.append(spellLink);
+				tableLines.append(tableLine.replace("~~~EntryList~~~", spellLinks.toString()));
+			}
+			
+			toReturn.append(classMagicTableTemplate.replace("~~~TableName~~~", curLanguageData[LANGDATA_PSIONICPOWERSTXT])
+					                               .replace("~~~Type~~~", curLanguageData[LANGDATA_POWERTXT])
+			                                       .replace("~~~TableContents~~~", tableLines.toString()));
+		}
+		
+		
+		return toReturn.toString();
 	}
 }

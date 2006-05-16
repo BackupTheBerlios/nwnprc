@@ -340,6 +340,16 @@ public class Main{
 								paraMatch.find();
 								temp[LANGDATA_RACESTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
+							else if(result.startsWith("spellbook=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_SPELLBOOKTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							else if(result.startsWith("powers=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_POWERTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
 							else
 								throw new Exception("Unknown language parameter encountered\n" + check);
 						}
@@ -410,7 +420,7 @@ public class Main{
 	public static String[] curLanguageData = null;
 	
 	/** Size of the curLanguageData array */
-	public static final int LANGDATA_NUMENTRIES         = 16;
+	public static final int LANGDATA_NUMENTRIES         = 18;
 	/** curLanguageData index of the language name */
 	public static final int LANGDATA_LANGNAME           = 0;
 	/** curLanguageData index of the name of the dialog.tlk equivalent for this language */
@@ -443,6 +453,10 @@ public class Main{
 	public static final int LANGDATA_SKILLSTXT          = 14;
 	/** curLanguageData index of the name of the "Races" string equivalent for this language */
 	public static final int LANGDATA_RACESTXT           = 15;
+	/** curLanguageData index of the name of the "Spellbook" string equivalent for this language */
+	public static final int LANGDATA_SPELLBOOKTXT       = 16;
+	/** curLanguageData index of the name of the "Powers" string equivalent for this language */
+	public static final int LANGDATA_POWERTXT           = 17;
 	
 	
 	/** Current language name */
@@ -489,7 +503,9 @@ public class Main{
 						 spellSubradialListTemplate      = null,
 						 spellSubradialListEntryTemplate = null,
 						 classFeatTableTemplate          = null,
-						 classFeatTableEntryTemplate     = null;
+						 classFeatTableEntryTemplate     = null,
+						 classMagicTableTemplate         = null,
+						 classMagicTableEntryTemplate    = null;
 	
 	
 	/* Data structures to store generated entry data in */
@@ -500,7 +516,8 @@ public class Main{
 	public static HashMap<Integer, GenericEntry> skills,
 	                                             domains,
 	                                             races;
-	public static HashSet<Integer> psiPowIDs;
+	/** Map of psionic power names to the indexes of the spells.2da entries chosen to represent the power in question */
+	public static HashMap<String, Integer> psiPowMap;
 	
 	
 	/**
@@ -627,6 +644,8 @@ public class Main{
 			spellSubradialListEntryTemplate = readTemplate(templatePath + "spellsubradialsentry.html");
 			classFeatTableTemplate          = readTemplate(templatePath + "classfeattable.html");
 			classFeatTableEntryTemplate     = readTemplate(templatePath + "classfeattableentry.html");
+			classMagicTableTemplate         = readTemplate(templatePath + "classmagictable.html");
+			classMagicTableEntryTemplate    = readTemplate(templatePath + "classmagictableentry.html");
 		}catch(IOException e){
 			return false;
 		}

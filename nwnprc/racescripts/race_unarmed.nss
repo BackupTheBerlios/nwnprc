@@ -2,7 +2,6 @@
 // :: by WodahsEht 9/27/04
 // ::
 // :: Determines the appropriate natural attacks for races.
-// :: moved to prc_inc_function to avoid unnessecary script overheads by Primogenitor
 
 
 #include "prc_alterations"

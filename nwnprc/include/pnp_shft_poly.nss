@@ -1,4 +1,6 @@
 
+int GetIsPolyMorphedOrShifted(object oCreature);
+
 #include "pnp_shft_main"
 
 void ShifterCheck(object oPC)
@@ -122,4 +124,27 @@ void DoDisguise(int nRace, object oTarget = OBJECT_SELF)
     sPortraitResRef = GetStringLeft(sPortraitResRef, GetStringLength(sPortraitResRef)-1); //trim the trailing _
     SetPortraitResRef(oTarget, sPortraitResRef);
     SetPortraitId(oTarget, nPortraitID);
+}
+
+// Determine whether the character is polymorphed or shfited.
+int GetIsPolyMorphedOrShifted(object oCreature)
+{
+    int bPoly = FALSE;
+
+    object oHide = GetPCSkin(oCreature);
+
+    effect eChk = GetFirstEffect(oCreature);
+
+    while (GetIsEffectValid(eChk))
+    {
+        if (GetEffectType(eChk) == EFFECT_TYPE_POLYMORPH)
+            bPoly = TRUE;
+
+        eChk = GetNextEffect(oCreature);
+    }
+
+    if (GetLocalInt(oHide, "nPCShifted"))
+        bPoly = TRUE;
+
+    return bPoly;
 }

@@ -70,6 +70,7 @@ int GetIsPRCCreatureWeapon(object oTest);
 
 
 #include "prc_alterations"
+#include "pnp_shft_poly"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
@@ -122,33 +123,6 @@ int GetIsPRCCreatureWeapon(object oTest)
            sTest == "PRC_UNARMED_SP"  ||
            sTest == "NW_IT_CREWPB010"
            ;
-}
-
-// Determine whether the character is polymorphed or shfited.
-int GetIsPolyMorphedOrShifted(object oCreature)
-{
-    int bPoly = FALSE;
-
-    object oHide = GetPCSkin(oCreature);
-
-    effect eChk = GetFirstEffect(oCreature);
-
-    while (GetIsEffectValid(eChk))
-    {
-        if (GetEffectType(eChk) == EFFECT_TYPE_POLYMORPH)
-        {
-            bPoly = TRUE;
-        }
-
-        eChk = GetNextEffect(oCreature);
-    }
-
-    if (GetLocalInt(oHide, "nPCShifted"))
-    {
-        bPoly = TRUE;
-    }
-
-    return bPoly;
 }
 
 // Remove the unarmed penalty effect

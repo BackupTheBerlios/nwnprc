@@ -323,7 +323,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             && nRace != 163
             && nRace != 164)
             sName = "";
-        else if(sPreReqFeat1 != "****")
+        if(sPreReqFeat1 != "****")
         {
             int bReturn = FALSE;
             for(j=0;j<array_get_size(oPC, "Feats"); j++)
@@ -341,7 +341,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             if(bReturn == FALSE)
                 sName = "";
         }
-        else if(sPreReqFeat2 != "****")
+        if(sPreReqFeat2 != "****")
         {
             int bReturn = FALSE;
             for(j=0;j<array_get_size(oPC, "Feats"); j++)
@@ -359,7 +359,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             if(bReturn == FALSE)
                 sName = "";
         }
-        else if(sOrReqFeat0 != "****"
+        if(sOrReqFeat0 != "****"
                 || sOrReqFeat1 != "****"
                 || sOrReqFeat2 != "****"
                 || sOrReqFeat3 != "****"
@@ -449,7 +449,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             if(bReturn == FALSE)
                 sName = "";
         }
-        else if(sReqSkill != "****")
+        if(sReqSkill != "****")
         {
             int nSkillValue = GetLocalInt(oPC, "Skill"+sReqSkill);
             if((sReqSkillRanks == "****" && nSkillValue)
@@ -459,7 +459,7 @@ void FeatLoop(int nClassFeatStage = FALSE)
             else
                 sName = "";
         }
-        else if(sReqSkill2 != "****")
+        if(sReqSkill2 != "****")
         {
             int nSkillValue = GetLocalInt(oPC, "Skill"+sReqSkill2);
             if((sReqSkillRanks2 == "****" && nSkillValue)
@@ -810,7 +810,7 @@ void BonusFeatLoop()
             && nRow == FEAT_VILE_DEFORM_GAUNT
             && nMoral > 20)
             sName = "";
-        else if(sPreReqFeat1 != "****")
+        if(sPreReqFeat1 != "****")
         {
             int bReturn = FALSE;
             for(j=0;j<array_get_size(oPC, "Feats"); j++)
@@ -828,7 +828,7 @@ void BonusFeatLoop()
             if(bReturn == FALSE)
                 sName = "";
         }
-        else if(sPreReqFeat2 != "****")
+        if(sPreReqFeat2 != "****")
         {
             int bReturn = FALSE;
             for(j=0;j<array_get_size(oPC, "Feats"); j++)
@@ -846,7 +846,7 @@ void BonusFeatLoop()
             if(bReturn == FALSE)
                 sName = "";
         }
-        else if(sOrReqFeat0 != "****"
+        if(sOrReqFeat0 != "****"
                 || sOrReqFeat1 != "****"
                 || sOrReqFeat2 != "****"
                 || sOrReqFeat3 != "****"
@@ -936,7 +936,7 @@ void BonusFeatLoop()
             if(bReturn == FALSE)
                 sName = "";
         }
-        else if(sReqSkill != "****")
+        if(sReqSkill != "****")
         {
             int nSkillValue = GetLocalInt(oPC, "Skill"+sReqSkill);
             if((sReqSkillRanks == "****" && nSkillValue)
@@ -946,7 +946,7 @@ void BonusFeatLoop()
             else
                 sName = "";
         }
-        else if(sReqSkill2 != "****")
+        if(sReqSkill2 != "****")
         {
             int nSkillValue = GetLocalInt(oPC, "Skill"+sReqSkill2);
             if((sReqSkillRanks2 == "****" && nSkillValue)

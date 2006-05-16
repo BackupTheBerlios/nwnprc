@@ -202,16 +202,25 @@ void SetupStage()
 
         case STAGE_SKILL:
             {
+                if(nPoints == 0)
+                {
+                    //calculate number of points
+                    nPoints += StringToInt(Get2DACache("classes", "SkillPointBase ", nClass));
+                    nPoints += (nInt-10)/2;
+                    nPoints *= 4;
+                    SetLocalInt(OBJECT_SELF, "Points", nPoints);
+                }
+            
                 i=0;
                 //add the "store" option
                 AddChoice("Store all remaining points.", -2);
                 //get the skillfile
                 string sFile = Get2DACache("classes", "SkillsTable", nClass);
                 //loop over each valid row
-                string sSkillIndex = Get2DACache(sFile, "SkillIndex", i);
-                while(i < GetPRCSwitch(FILE_END_SKILLS))
+                while(i < GetPRCSwitch(FILE_END_CLASS_SKILLS))
                 {
                     //check there is a skill there
+                    string sSkillIndex = Get2DACache(sFile, "SkillIndex", i);
                     if(sSkillIndex != "")
                     {
                         //see if its class or cross-class
@@ -231,7 +240,7 @@ void SetupStage()
                         else
                         {
                             //cross-class skill
-                            sName += " (Class skill)";                            
+                            sName += " (Cross-class skill)";                            
                             //check at least 2 points remaining
                             if(nPoints < 2)
                                 sName = "";
@@ -247,7 +256,6 @@ void SetupStage()
                         }
                     }
                     i++;
-                    sSkillIndex = Get2DACache(sFile, "Name", i);
                 }
             }
             //Dont mark it as setup, needs to be recreated

@@ -23,15 +23,19 @@
 <br>
 <br>The first step is to download the PRC Server Pack from
 <a href="http://nwvault.ign.com/View.php?view=Other.Detail&id=945">here</a>.
-If your using windows, you should get the .exe installer. At this time there is not
-a linux or mac compatible version.
+If your using windows, you should get the .exe installer.
 <br>To install the PRC Server Pack, simply run the exe. It should automatically
 detect your NWN directory. After it has installed itself, it will offer to precache
-the 2das for you straght away. If you need to precache it again in the future, run
-the "precache sqlite.bat" file in your NWN directory. One word of warning, that batch
-file will delete the old database, so if you have systems that modifiy it in some way you
-may want to look at alternatives or move data around.
-<br>Once the precacher has finished, you should have a ready populated database.
+the 2das for you straght away.
+<br>
+<br>If you are using another OS there is a .rar version as well, which should be extracted to your NWN directoy. Then you will need to manually start the precaching by running the "precache sqlite.bat" file (NOTE: I dont know anything about non-windows OS, so I dont know if a batch file applies or not. If you have more information, please contact the PRC team so this manual can be updated).
+<br>
+<br>If you are looking to add the ConvoCC to an existing server, then you should use the method above (after making a full backup of course). If your existing server uses MySQL, then you will have to use the rar distribution and run "precache mysql.bat" instead. This will produce a file named "out.sql" which you should then run through your databse tools (NOTE: I know little about non-SQLite databases, so I dont know how well this works or any details of it. If you have more information, please contact the PRC team so this manual can be updated).
+<br>
+<br>Once the precacher has finished, you should have a ready populated database with all the 2da information in it. This is needed so that SQL-queries can be used to retrieve lists of feats etc, rather than lengthy loops over all the rows in the 2das.
+<br>
+<br>If you need to precache the 2da files again in the future, for example a new PRC version is released, run the "precache sqlite.bat" file (or "precache mysql.bat" if using MySQL and then process the out.sql file as before) in your NWN directory. This will remove the tables that the precacher previously added, so it should preserve any other existing  data. However, it is probably a good idea to make a backup before you update, just to be save!
+<br>
 <br><center> <a href="prc_server_pg01.htm">Previous Page </a><a href="prc_server_pg03.htm">Next Page </a></center>
 <br>
 <br>

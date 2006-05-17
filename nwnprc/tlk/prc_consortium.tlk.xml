@@ -10366,15 +10366,13 @@ A characters base Leadership score equals his level plus any Charisma modifier. 
 
 The character can attract a single cohort of up to this level. Regardless of a characters Leadership score, he can only recruit a cohort who is two or more levels lower than himself. The cohort does not have any equipment of their own, that must be provided for them A character can try to attract a cohort of a particular race, class, and alignment. The cohorts alignment may not be opposed to the leaders alignment on either the law-vs-chaos or good-vs-evil axis, and the leader takes a Leadership penalty if she recruits a cohort of an alignment different from her own.
 
-Note: Due to implementation issues, before any cohorts can be recruited, at least one character must be stored as a cohort via the PRC Options conversation. Stored cohorts are global across different modules and characters.
-
 Cohorts earn XP as follows:
 The cohort does not count as a party member when determining the partys XP.
 Divide the cohorts level by the level of the PC with whom he is associated (the character with the Leadership feat who attracted the cohort).
 Multiply this result by the total XP awarded to the PC and add that number of experience points to the cohorts total.
 If a cohort gains enough XP to bring it to a level one lower than the associated PCs character level, the cohort does not gain the new level. Instead, the cohorts new XP total is 1 less than the amount needed attain the next level.
 
-Use: Selected (through PRC Options)
+Use: Once per day, selected (through PRC Options)
 
 Leadership - Cohort
 1 - none

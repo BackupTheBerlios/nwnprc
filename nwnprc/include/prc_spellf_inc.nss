@@ -48,6 +48,9 @@ int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE)
 {
     //can't absorb spells without feat
     if(!GetHasFeat(FEAT_SPELLFIRE_WIELDER, oTarget)) return 0;
+    
+    //Can't absorb own spells/powers if switch is set
+    if(GetPRCSwitch(PRC_SPELLFIRE_DISALLOW_CHARGE_SELF) && oTarget == oCaster) return 0;    
 
     //abilities rely on access to weave
     if(GetHasFeat(FEAT_SHADOWWEAVE, oTarget)) return 0;

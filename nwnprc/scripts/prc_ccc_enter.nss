@@ -19,6 +19,8 @@ void main()
     object oPC = GetEnteringObject();
     if(GetIsDM(oPC))
         return;//dont mess with DMs
+    if(!GetIsPC(oPC))
+        return;//dont run for NPCs
 
 
     

@@ -6,6 +6,7 @@
 #include "inc_leto_prc"
 #include "x2_inc_switches"
 #include "prc_inc_teleport"
+#include "prc_inc_leadersh"
 
 
 void main()
@@ -216,7 +217,7 @@ void main()
         SpawnNewThread("PRC_Spellfire", "prc_spellfire_hb", 6.0f, oPC);
 
     //if the player logged off while being registered as a cohort    
-    if(GetPersistentLocalInt(oPC, "RegisteringAsCohort"))
+    if(GetPersistantLocalInt(oPC, "RegisteringAsCohort"))
         AssignCommand(GetModule(), CheckHB(oPC));
 
     // Execute scripts hooked to this event for the player triggering it

@@ -340,7 +340,11 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
  * @param bInstantAttack    If TRUE, all attacks are performed at the same time, instead of over a round.
  *                          Default: FALSE
  */
-void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE, int bInstantAttack = FALSE);
+void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, 
+    float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, 
+    int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", 
+    string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE, 
+    int bInstantAttack = FALSE);
 
 // Performs a single attack and can add in bonus damage damage/effects
 // If the first attack hits, a local int called "PRCCombat_StruckByAttack" will be TRUE
@@ -358,7 +362,20 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
 // sMessageSuccess - message to display on a successful hit. (i.e. "*Sneak Attack Hit*")
 // sMessageFailure - message to display on a failure to hit. (i.e. "*Sneak Attack Miss*")
 // iTouchAttackType - TOUCH_ATTACK_* const - melee, ranged, spell melee, spell ranged
-void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE);
+// oRightHandOverride - item to use as if in the right hand
+// oLeftHandOverride - item to use as if in the left hand
+void PerformAttack(object oDefender, 
+    object oAttacker, 
+    effect eSpecialEffect, 
+    float eDuration = 0.0, 
+    int iAttackBonusMod = 0, 
+    int iDamageModifier = 0, 
+    int iDamageType = 0, 
+    string sMessageSuccess = "", 
+    string sMessageFailure = "", 
+    int iTouchAttackType = FALSE, 
+    object oRightHandOverride = OBJECT_INVALID, 
+    object oLeftHandOverride = OBJECT_INVALID);
 
 //:://///////////////////////////////////////
 //::  Structs
@@ -4724,7 +4741,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainHandAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
 }
 
-void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE)
+void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE, object oRightHandOverride = OBJECT_INVALID, object oLeftHandOverride = OBJECT_INVALID)
 {
      // create struct for attack loop logic
      struct AttackLoopVars sAttackVars;
@@ -4732,7 +4749,13 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
      // set variables required in attack loop logic
      sAttackVars.oWeaponR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oAttacker);
      sAttackVars.oWeaponL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oAttacker);
+     //apply hand overrides
+     if(GetIsObjectValid(oRightHandOverride))
+        sAttackVars.oWeaponR = oRightHandOverride;
+     if(GetIsObjectValid(oLeftHandOverride))
+        sAttackVars.oWeaponR = oLeftHandOverride;
      sAttackVars.bIsRangedWeapon = GetWeaponRanged(sAttackVars.oWeaponR);
+
 
      sAttackVars.iDamageModifier = iDamageModifier;
      sAttackVars.iDamageType = iDamageType;

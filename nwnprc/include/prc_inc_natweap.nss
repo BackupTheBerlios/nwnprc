@@ -84,3 +84,91 @@
     
     *) Since initiative is hardcoded, we cant use that at all. Relies on heartbeat scripts instead.
 */
+
+//the name of the array that the resrefs of the natural weapons are stored in
+const string ARRAY_NAT_WEAP_RESREF  = "ARRAY_NAT_WEAP_RESREF";
+
+#include "prc_alterations"
+
+void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
+{
+    //no natural weapons, abort
+    if(!array_exists(oPC, ARRAY_NAT_WEAP_RESREF))
+        return; 
+    int i;
+    float fDelay = IntToFloat(Random(20))/10.0;
+    object oTarget = GetAttackTarget(); 
+    //attack not in melee range abort
+    if(!GetIsInMeleeRange(oTarget, oPC))
+        return;
+    while(i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF))
+    {
+        //get the resref to use
+        string sResRef = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF);
+        //get the created item
+        object oWeapon = GetObjectByTag(sResRef);
+        if(!GetIsObjectValid(oWeapon))
+        {
+            object oLimbo = GetObjectByTag("HEARTOFCHAOS");
+            location lLimbo = GetLocation(oLimbo);
+            if(!GetIsObjectValid(oLimbo))
+                lLimbo = GetStartingLocation();
+            oWeapon = CreateObject(OBJECT_TYPE_ITEM, sResRef, lLimbo);
+        }
+        //null effect
+        effect eInvalid;
+        string sMessageSuccess;
+        string sMessageFailure;
+        switch(GetBaseItemType(oWeapon))
+        {
+            case BASE_ITEM_CBLUDGWEAPON: sMessageSuccess = "Slam"; break;
+            case BASE_ITEM_CPIERCWEAPON: sMessageSuccess = "Gore"; break;
+            case BASE_ITEM_CSLASHWEAPON: sMessageSuccess = "Bite"; break;
+            case BASE_ITEM_CSLSHPRCWEAP: sMessageSuccess = "Claw"; break;
+        }
+        //add attack
+        sMessageFailure += " attack";        
+        //copy it to failure
+        sMessageFailure = sMessageSuccess;
+        //add hit/miss
+        sMessageSuccess += " hit";
+        sMessageFailure += " missed";
+        //add stars around messages
+        sMessageSuccess = "* "+sMessageSuccess+" *";
+        sMessageFailure = "* "+sMessageFailure+" *";
+        //secondary attacks are -5 to hit
+        int nAttackMod = -5;
+        //check for (Improved) Multiattack
+        //if(GetHasFeat(FEAT_IMPROVED_MULTIATTACK, oPC))
+        //    nAttackMod = 0;
+        //else if(GetHasFeat(FEAT_MULTIATTACK, oPC))
+        //    nAttackMod = -2;
+        //else
+            nAttackMod = -5;
+        //secondary attacks are half strength
+        //apply this as a reduced damage amount
+        int nDamageMod = -GetAbilityModifier(ABILITY_STRENGTH, oPC)/2;
+        
+        //do the attack within a delay
+        AssignCommand(oPC, 
+            DelayCommand(fDelay,
+                PerformAttack(oTarget, 
+                    oPC,                //
+                    eInvalid,           //effect eSpecialEffect,
+                    0.0,                //float eDuration = 0.0
+                    nAttackMod,         //int iAttackBonusMod = 0
+                    nDamageMod,         //int iDamageModifier = 0
+                    0,                  //int iDamageType = 0
+                    sMessageSuccess,    //string sMessageSuccess = ""   
+                    sMessageFailure,    //string sMessageFailure = ""
+                    FALSE,              //int iTouchAttackType = FALSE
+                    oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
+                    OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
+                    )));             
+        i++;
+        //calculate the delay to use
+        fDelay += 2.0;
+        if(fDelay > 6.0)
+            fDelay -= 6.0;
+    }
+}

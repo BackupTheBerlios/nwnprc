@@ -34,4 +34,46 @@ Created:   5/15/06
 
 void main()
 {
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	effect eVis = EffectVisualEffect(VFX_COM_HIT_NEGATIVE);
+		
+	//spellhook
+	if(!X2PreSpellCastCode()) return;
 	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	//SR
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//Fort save
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+		{
+			//determine addiction
+			int nAddict = DISEASE_ADDICT_TERRAN_BRANDY;
+			
+			if(nCasterLvl > 5)
+			{
+				nAddict = DISEASE_ADDICT_MUSHROOM_POWDER;
+			}
+			if(nCasterLvl > 10)
+			{
+				nAddcit = DISEASE_ADDICT_VODARE;
+			}
+			if(nCasterLvl > 15)
+			{
+				nAddict = DISEASE_ADDICT_AGONY;
+			}
+			
+			//Construct effect
+			effect eAddict = EffectDisease(nAddict);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oTarget);
+		}
+	}
+	
+	SPSetSchool();
+}
+		

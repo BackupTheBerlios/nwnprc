@@ -42,12 +42,13 @@ void main()
 	float fDuration = RoundsToSeconds(nCasterLvl);
 	int nPenalty = 4;
 	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
 	//Check Spell Resistance
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Will save
-		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
 		{
 			effect eLink = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
 			eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, nPenalty, SAVING_THROW_TYPE_ALL));

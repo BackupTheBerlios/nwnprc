@@ -20,9 +20,34 @@ upgrade of his existing damage reduction by /+1
 Material Component: The heart of an elf child.
 
 Author:    Tenjac
-Created:   
+Created:   5/16/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = (nCasterLvl * 600.0f);
+	int nType = MyPRCGetRacialType(oPC);
+	int nAlignEvil = GetAlignmentGoodEvil(oPC);
+	int nAlignLaw = GetAlignmentLawChaos(oPC);
+	
+	//spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	//must be devil
+	if(nType == RACIAL_TYPE_OUTSIDER &&
+	   nAlignEvil == ALIGNMENT_EVIL &&
+	   nAlignLaw == ALIGNMENT_LAWFUL)
+	{
+		effect eArmor = EffectACIncrease(nACBonus, AC_DEFLECTION_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+		effect eTest = GetFirstEffect	
+	
+	
+	

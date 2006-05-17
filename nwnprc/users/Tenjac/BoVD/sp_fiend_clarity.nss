@@ -19,9 +19,36 @@ as if he had a see invisibility spell cast on him.
 The caster can detect good at will.
 
 Author:    Tenjac
-Created:   
+Created:   5/17/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = (600.0f * nCasterLvl);
+	
+	//Spellhook
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_DIVINATION);
+	
+	itemproperty nDarkvis = ItemPropertyBonusFeat(FEAT_DARKVISION);
+	effect eTrueSee = EffectTrueSeeing();
+	itemproperty nDetGood = ItemPropertyBonusFeat(FEAT_DETECT_GOOD_AT_WILL);
+	
+	IPSafeAddItemProperty(oPC, nDarkvis, fDur);
+	IPSafeAddItemProperty(oPC, nDetGood, fDur);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eTrueSee, oPC, fDur);
+	
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+	
+	

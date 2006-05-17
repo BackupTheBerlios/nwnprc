@@ -155,6 +155,6 @@ void main()
 					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oHand);
 				}
 				
-				//Make hand hostile to target
-				
+				//Make hand hostile to target				
+				AssignCommand(oTarget, SetIsEnemy(oHand));
 				

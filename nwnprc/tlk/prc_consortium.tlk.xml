@@ -3810,7 +3810,7 @@ As a template class:
 
 REQUIREMENTS:
 
-Caster level: Caster level 11+ in any class. Psionic manifester level does not count.
+Spells: Must be able to cast at least 6th level arcane or divine spells.
 Alignment: Any non-good.
 Feat: Craft Wondrous Item.
 
@@ -3839,7 +3839,7 @@ Level
   Constitution +12
   Undeath
 
-In order to become a Demilich you must be a level 21 Sorcerer, Wizard, or Cleric.
+In order to become a Demilich you must be a level 21 caster.
 Each level, you must create one soul gem in order to gain the powers for that level. You must also upgrade your phylactery. To gain the final level, you must have 8 soul gems.
 Soul gems cost 120,000 gold and 4,800 exp each gem. (Use the Craft Wondrous item feat to create them)
 

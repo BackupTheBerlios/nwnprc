@@ -91,6 +91,70 @@ const string ARRAY_NAT_WEAP_RESREF  = "ARRAY_NAT_WEAP_RESREF";
 #include "prc_alterations"
 #include "prc_inc_combat"
 
+void DoNaturalAttack(object oWeapon)
+{
+    object oPC = OBJECT_SELF;
+    object oTarget = GetAttackTarget(); 
+    //if target is not valid, abort
+    if(!GetIsObjectValid(oTarget))
+        return;
+    //if target is dead, abort    
+    if(GetIsDead(oTarget))
+        return;
+    //if target is not hostile, abort    
+    if(!GetIsEnemy(oTarget))
+        return;
+    //no point attacking plot
+    if(GetPlotFlag(oTarget))
+        return;
+    //attack not in melee range abort
+    if(!GetIsInMeleeRange(oTarget, oPC))
+        return;
+    
+    //null effect
+    effect eInvalid;
+    string sMessageSuccess;
+    string sMessageFailure;
+    sMessageSuccess += GetName(oWeapon);
+    //add attack
+    sMessageSuccess += " attack";        
+    //copy it to failure
+    sMessageFailure = sMessageSuccess;
+    //add hit/miss
+    sMessageSuccess += " hit";
+    sMessageFailure += " missed";
+    //add stars around messages
+    sMessageSuccess = "*"+sMessageSuccess+"*";
+    sMessageFailure = "*"+sMessageFailure+"*";
+    //secondary attacks are -5 to hit
+    int nAttackMod = -5;
+    //check for (Improved) Multiattack
+    //if(GetHasFeat(FEAT_IMPROVED_MULTIATTACK, oPC))
+    //    nAttackMod = 0;
+    //else if(GetHasFeat(FEAT_MULTIATTACK, oPC))
+    //    nAttackMod = -2;
+    //else
+        nAttackMod = -5;
+    //secondary attacks are half strength
+    //apply this as a reduced damage amount
+    int nDamageMod;// = -GetAbilityModifier(ABILITY_STRENGTH, oPC)/2;
+
+    PerformAttack(oTarget, 
+        oPC,                //
+        eInvalid,           //effect eSpecialEffect,
+        0.0,                //float eDuration = 0.0
+        nAttackMod,         //int iAttackBonusMod = 0
+        nDamageMod,         //int iDamageModifier = 0
+        0,                  //int iDamageType = 0
+        "",//sMessageSuccess,    //string sMessageSuccess = ""   
+        "",//sMessageFailure,    //string sMessageFailure = ""
+        FALSE,              //int iTouchAttackType = FALSE
+        oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
+        OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
+        );        
+    DoDebug("Performing an attack with "+GetName(oWeapon));     
+}
+
 void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
 {
     //no natural weapons, abort
@@ -98,10 +162,6 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
         return; 
     int i;
     float fDelay = IntToFloat(Random(20))/10.0;
-    object oTarget = GetAttackTarget(); 
-    //attack not in melee range abort
-    if(!GetIsInMeleeRange(oTarget, oPC))
-        return;
     while(i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF))
     {
         //get the resref to use
@@ -122,50 +182,11 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
             break;
         }
         
-        //null effect
-        effect eInvalid;
-        string sMessageSuccess;
-        string sMessageFailure;
-        sMessageSuccess += GetName(oWeapon);
-        //add attack
-        sMessageSuccess += " attack";        
-        //copy it to failure
-        sMessageFailure = sMessageSuccess;
-        //add hit/miss
-        sMessageSuccess += " hit";
-        sMessageFailure += " missed";
-        //add stars around messages
-        sMessageSuccess = "*"+sMessageSuccess+"*";
-        sMessageFailure = "*"+sMessageFailure+"*";
-        //secondary attacks are -5 to hit
-        int nAttackMod = -5;
-        //check for (Improved) Multiattack
-        //if(GetHasFeat(FEAT_IMPROVED_MULTIATTACK, oPC))
-        //    nAttackMod = 0;
-        //else if(GetHasFeat(FEAT_MULTIATTACK, oPC))
-        //    nAttackMod = -2;
-        //else
-            nAttackMod = -5;
-        //secondary attacks are half strength
-        //apply this as a reduced damage amount
-        int nDamageMod = -GetAbilityModifier(ABILITY_STRENGTH, oPC)/2;
-        
         //do the attack within a delay
         AssignCommand(oPC, 
             DelayCommand(fDelay,
-                PerformAttack(oTarget, 
-                    oPC,                //
-                    eInvalid,           //effect eSpecialEffect,
-                    0.0,                //float eDuration = 0.0
-                    nAttackMod,         //int iAttackBonusMod = 0
-                    nDamageMod,         //int iDamageModifier = 0
-                    0,                  //int iDamageType = 0
-                    sMessageSuccess,    //string sMessageSuccess = ""   
-                    sMessageFailure,    //string sMessageFailure = ""
-                    FALSE,              //int iTouchAttackType = FALSE
-                    oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
-                    OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
-                    )));             
+                DoNaturalAttack(oWeapon)));
+        DoDebug("Assigning an attack with "+GetName(oWeapon));
         i++;
         //calculate the delay to use
         fDelay += 2.0;

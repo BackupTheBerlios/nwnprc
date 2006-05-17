@@ -2020,7 +2020,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
           if(iConcealRoll <= iConcealment)
           {
                bEnemyIsConcealed = TRUE;
-               sFeedback += "*Miss*: (Enemy is Concealed)";
+               sFeedback += "*miss*: (Enemy is Concealed)";
                iReturn = 0;
           }
      }
@@ -2028,7 +2028,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      // Autmatically dodge the first attack of each round
      if( GetHasFeat(FEAT_EPIC_DODGE, oDefender) && bFirstAttack)
      {
-               sFeedback += "*Miss*: (Enemy Dodged)";
+               sFeedback += "*miss*: (Enemy Dodged)";
                iReturn = 0;
      }
 
@@ -2063,14 +2063,14 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      //Just a regular hit
      else if( (((iDiceRoll + iAttackBonus) > iEnemyAC) || iDiceRoll == 20) && iDiceRoll != 1 && !bEnemyIsConcealed)
      {
-         sFeedback += "*Hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
+         sFeedback += "*hit*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
          iReturn = 1;
      }
 
      //Missed
      else if(!bEnemyIsConcealed)
      {
-         sFeedback += "*Miss*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
+         sFeedback += "*miss*: (" + IntToString(iDiceRoll) + " + " + IntToString(iAttackBonus) + " = " + IntToString(iDiceRoll + iAttackBonus) + ")";
          iReturn = 0;
      }
 
@@ -4317,7 +4317,7 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           {
               oDefender = OBJECT_INVALID;
               oNewDefender = OBJECT_INVALID;
-              SendMessageToPC(oAttacker, "No new valid targets to attack!");
+              if(DEBUG) DoDebug("No new valid targets to attack!");
               return;
           }
 
@@ -4371,14 +4371,14 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
 
 void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE)
 {
-     SendMessageToPC(oAttacker, "Entered AttackLoopMain()");
+     if(DEBUG) DoDebug("Entered AttackLoopMain()");
      // turn off touch attack if var says it only applies to first attack
      if (bFirstAttack && !bApplyTouchToAll) iTouchAttackType == FALSE;
 
      // perform all bonus attacks
      if(iBonusAttacks > 0)
      {
-          SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
+          if(DEBUG) DoDebug("AttackLoopMain: Called AttackLoopLogic");
           iBonusAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
@@ -4386,13 +4386,13 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
      // perform main attack first, then off-hand attack
      else if(iMainAttacks > 0 && iMainAttacks >= iOffHandAttacks)
      {
-          SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic");
+          if(DEBUG) DoDebug("AttackLoopMain: Called AttackLoopLogic");
           iMainAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 0, FALSE, iTouchAttackType);
      }
      else if(iOffHandAttacks > 0)
      {
-          SendMessageToPC(oAttacker, "AttackLoopMain: Called AttackLoopLogic - offhand");
+          if(DEBUG) DoDebug("AttackLoopMain: Called AttackLoopLogic - offhand");
           iOffHandAttacks --;
           AttackLoopLogic(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage, 1, FALSE, iTouchAttackType);
      }

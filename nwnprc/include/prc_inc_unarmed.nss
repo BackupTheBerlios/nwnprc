@@ -256,8 +256,8 @@ int FindUnarmedDamage(object oCreature)
         iBrawlerDamage = iBrawler / 6 + iSizeModifier;
 
     // Certain race pack creatures use different damages.
-    if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK)   iRacialDamage = 2;
+    //if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
+    if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK)   iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL)      iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_RAKSHASA)   iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR)    iRacialDamage = 2;
@@ -470,7 +470,7 @@ void UnarmedFists(object oCreature)
     {
         sWeapType = "PRC_UNARMED_S";
     }
-    else if (iRace == RACIAL_TYPE_TANARUKK ||
+    else if (//iRace == RACIAL_TYPE_TANARUKK ||
              iRace == RACIAL_TYPE_MINOTAUR)
     {
         sWeapType = "PRC_UNARMED_P";
@@ -600,7 +600,8 @@ void UnarmedFists(object oCreature)
 
     // Add OnHitCast: Unique if necessary
     if(GetHasFeat(FEAT_REND, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);
+        AddItemProperty(DURATION_TYPE_PERMANENT, 
+            ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);
 
     // Cool VFX when striking unarmed
     if (iMonkEq > 9)
@@ -616,7 +617,8 @@ void UnarmedFists(object oCreature)
     ApplyUnarmedAttackEffects(oCreature);
 
     // Friendly message to remind players that certain things won't appear correct.
-    if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE && GetHasSpellEffect(SPELL_UNARMED_ATTACK_PEN, oCreature))
+    if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE 
+        && GetHasSpellEffect(SPELL_UNARMED_ATTACK_PEN, oCreature))
     {
         SetLocalInt(oCreature, "UnarmedSubSystemMessage", TRUE);
         DelayCommand(3.001f, SendMessageToPC(oCreature, "This character uses the PRC's unarmed system.  This system has been created to"));

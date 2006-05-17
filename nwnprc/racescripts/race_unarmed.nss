@@ -10,7 +10,8 @@ void main ()
 {
     int iRace = GetRacialType(OBJECT_SELF);
     
-    if (iRace == RACIAL_TYPE_MINOTAUR   ||
+    if (
+        //iRace == RACIAL_TYPE_MINOTAUR   ||
         iRace == RACIAL_TYPE_TANARUKK   ||
         iRace == RACIAL_TYPE_TROLL      ||
         iRace == RACIAL_TYPE_RAKSHASA   ||

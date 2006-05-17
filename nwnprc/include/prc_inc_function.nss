@@ -54,6 +54,7 @@ void DeletePRCLocalInts(object oSkin);
 #include "NW_I0_GENERIC"
 #include "x2_inc_itemprop"
 #include "pnp_shft_poly"
+#include "prc_inc_natweap"
 
 
 int nbWeaponFocus(object oPC);
@@ -454,6 +455,9 @@ void ScrubPCSkin(object oPC, object oSkin)
 
     // Schedule restoring the unhealable ability damage
     DelayCommand(0.0f, ReApplyUnhealableAbilityDamage(oPC));
+    
+    // Remove all natural weapons too
+    ClearNaturalWeapons(oPC);
 }
 
 int BlastInfidelOrFaithHeal(object oCaster, object oTarget, int iEnergyType, int iDisplayFeedback)

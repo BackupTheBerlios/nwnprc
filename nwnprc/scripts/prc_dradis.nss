@@ -215,6 +215,49 @@ void main()
     if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) nTailType = 51;
     
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC);
+    
+    //natural weapons
+    //bite at level 2
+    //2 claws at level 2
+    //2 wing slam at level 12
+    //tail slam at level 17
+    if(nLevel >= 2)
+    {
+        
+        string sSizeRef;
+        int nSize = PRCGetCreatureSize(oPC);
+        switch(nSize)
+        {
+            case CREATURE_SIZE_FINE:        sSizeRef += "f"; break;
+            case CREATURE_SIZE_DIMINUTIVE:  sSizeRef += "d"; break;
+            case CREATURE_SIZE_SMALL:       sSizeRef += "s"; break;
+            case CREATURE_SIZE_MEDIUM:      sSizeRef += "m"; break;
+            case CREATURE_SIZE_LARGE:       sSizeRef += "l"; break;
+            case CREATURE_SIZE_HUGE:        sSizeRef += "h"; break;
+            case CREATURE_SIZE_GARGANTUAN:  sSizeRef += "g"; break;
+            case CREATURE_SIZE_COLOSSAL:    sSizeRef += "c"; break;
+            default:                        sSizeRef += "m"; break;
+        }
+        if(nLevel >=2)
+        {
+            string sResRef = "prc_rdd_bite_"+sSizeRef;
+            AddNaturalSecondaryWeapon(oPC, sResRef); 
+            //claw here
+        }
+        if(nLevel >=12)
+        {
+            string sResRef = "prc_rdd_wing_"+sSizeRef;
+            if(nSize >= CREATURE_SIZE_MEDIUM)
+                AddNaturalSecondaryWeapon(oPC, sResRef, 2);             
+        }
+        if(nLevel >=17)
+        {
+            string sResRef = "prc_rdd_tail_"+sSizeRef;
+            if(nSize >= CREATURE_SIZE_LARGE)
+                AddNaturalSecondaryWeapon(oPC, sResRef);             
+        }
+    }
+    
 
     int thickScale = -1;
     if(GetHasFeat(DRACONIC_ARMOR_AUG_2,oPC))

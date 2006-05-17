@@ -42,7 +42,6 @@ void main()
 {
     object oPC = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
-    object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF);
     
     if(oTarget == OBJECT_INVALID)
     {
@@ -56,46 +55,51 @@ void main()
     fDistance = MetersToFeet(fDistance);
     if(fDistance >= 10.0)
     {
-        if (GetIsObjectValid(oWeap))
+        string sResRef = "prc_mino_char";
+        object oWeapon = GetObjectByTag(sResRef);
+        if(!GetIsObjectValid(oWeapon))
         {
-            FloatingTextStringOnCreature("You must be fighting unarmed to use Powerful Charge", oPC);
-            return;
+            object oLimbo = GetObjectByTag("HEARTOFCHAOS");
+            location lLimbo = GetLocation(oLimbo);
+            if(!GetIsObjectValid(oLimbo))
+                lLimbo = GetStartingLocation();
+            oWeapon = CreateObject(OBJECT_TYPE_ITEM, sResRef, lLimbo);
         }
         
-        int iVoiceConst = 0;
-    int iVoice = d3(1);
-    switch(iVoice)
-    {
-         case 1: iVoice = VOICE_CHAT_BATTLECRY1;
-                 break;
-         case 2: iVoice = VOICE_CHAT_BATTLECRY2;
-                 break;
-         case 3: iVoice = VOICE_CHAT_BATTLECRY3;
-                 break;
-    }
+        int iVoice = d3(1);
+        switch(iVoice)
+        {
+             case 1: iVoice = VOICE_CHAT_BATTLECRY1;
+                     break;
+             case 2: iVoice = VOICE_CHAT_BATTLECRY2;
+                     break;
+             case 3: iVoice = VOICE_CHAT_BATTLECRY3;
+                     break;
+        }
         PlayVoiceChat(iVoice);
-
-        int iAttackRoll = d20() + GetBaseAttackBonus(oPC) + GetAbilityModifier(ABILITY_STRENGTH, oPC) + 2;
-        int iAC = GetAC(oTarget);
-        int iDmg = d8() + d6(4) + 6 + GetAbilityModifier(ABILITY_STRENGTH, oPC);
-        
-        float fDur = 15.0;
-        
-        effect eAC = EffectACDecrease(2);
-        effect eDmg;        
-
-        if (iAttackRoll >= iAC)
-        {
-            eDmg = EffectDamage(iDmg, DAMAGE_TYPE_PIERCING);
-        }
-        
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oPC, fDur);
-        
-        AssignCommand(oPC, ActionMoveToObject(oTarget, TRUE));
-        DelayCommand(0.1, AssignCommand(oPC, ActionDoCommand(ApplyEffectToObject(DURATION_TYPE_INSTANT, eDmg, oTarget))));
-        DelayCommand(0.2, AssignCommand(oPC, ActionDoCommand(HitString(iAttackRoll >= iAC))));
-        DelayCommand(0.3, AssignCommand(oPC, ActionDoCommand(RemoveSpellEffects(GetSpellId(), oPC, oPC))));
-        DelayCommand(0.4, AssignCommand(oPC, ActionDoCommand(Attack(oTarget))));
+        //charging allows double speed, +2 AB, -2 AC
+        effect eCharge = EffectLinkEffects(EffectAttackIncrease(2), EffectACDecrease(2));
+        eCharge = EffectLinkEffects(eCharge, EffectMovementSpeedIncrease(99));
+        eCharge = SupernaturalEffect(eCharge);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCharge, oPC, 3.0);
+        //char
+        effect eInvalid;
+        ActionMoveToObject(oTarget, TRUE);
+        ActionDoCommand(
+            PerformAttack(oTarget, 
+                oPC,                //
+                eInvalid,           //effect eSpecialEffect,
+                0.0,                //float eDuration = 0.0
+                9,                  //int iAttackBonusMod = 0
+                0,                  //int iDamageModifier = 0
+                0,                  //int iDamageType = 0
+                "* Powerful Charge hit *",    //string sMessageSuccess = ""   
+                "* Powerful Charge missed *",    //string sMessageFailure = ""
+                FALSE,              //int iTouchAttackType = FALSE
+                oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
+                OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
+            ));
+        ActionAttack(oTarget);    
     }
     else
     {

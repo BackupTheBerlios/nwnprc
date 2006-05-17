@@ -38,12 +38,15 @@ void main()
         nCurrentSpeed = FloatToInt(IntToFloat(nCurrentSpeed)*(4.0/3.5));
     }  
     //no change, abort
-    //if(nNewSpeed == nCurrentSpeed)
-        //return;
+    if(nNewSpeed == nCurrentSpeed)
+        return;
+    //only apply it in a valid area
+    if(!GetIsObjectValid(GetAreaFromLocation(GetLocation(oPC))))
+        return;
     //get relative change    
     float fSpeedChange = IntToFloat(nNewSpeed)/IntToFloat(nCurrentSpeed);
-DoDebug("prc_speed NewSpeed = "+IntToString(nNewSpeed)+" OldSpeed = "+IntToString(nCurrentSpeed)+" SpeedChange = "+FloatToString(fSpeedChange));  
-DoDebug("GetMovementRate() = "+IntToString(GetMovementRate(oPC)));
+    if(DEBUG) DoDebug("prc_speed NewSpeed = "+IntToString(nNewSpeed)+" OldSpeed = "+IntToString(nCurrentSpeed)+" SpeedChange = "+FloatToString(fSpeedChange));  
+    if(DEBUG) DoDebug("GetMovementRate() = "+IntToString(GetMovementRate(oPC)));
     //get the object thats going to apply the effect
     object oWP = GetObjectByTag("PRC_Speed_WP");
     object oLimbo = GetObjectByTag("HEARTOFCHAOS");
@@ -56,16 +59,16 @@ DoDebug("GetMovementRate() = "+IntToString(GetMovementRate(oPC)));
         //has to be a creature so it can be jumped around
         //re-used the 2da cache blueprint since it has no scripts
         oWP = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache", lLimbo, FALSE, "PRC_Speed_WP");
-        //make sure the player can never interact with it
-        SetPlotFlag(oWP, TRUE);
-        SetCreatureAppearanceType(oWP, APPEARANCE_TYPE_INVISIBLE_HUMAN_MALE);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oWP);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oWP);
     }
     if(!GetIsObjectValid(oWP))
     {
         DoDebug("PRC_Speed_WP is not valid");
     }
+    //make sure the player can never interact with WP
+    SetPlotFlag(oWP, TRUE);
+    SetCreatureAppearanceType(oWP, APPEARANCE_TYPE_INVISIBLE_HUMAN_MALE);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oWP);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oWP);
     //remove previous effects
     effect eTest = GetFirstEffect(oPC);
     while(GetIsEffectValid(eTest))

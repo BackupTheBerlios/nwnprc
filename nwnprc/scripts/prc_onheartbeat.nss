@@ -14,8 +14,6 @@ void main()
     // Item creation code
     ExecuteScript("hd_o0_heartbeat",OBJECT_SELF);
 
-    // Race Pack Code
-    ExecuteScript("race_hb", GetModule() );
 
     /* Loop over all players, executing various things */
     // Cache switch values to variables. This is one of the places where optimization
@@ -26,11 +24,11 @@ void main()
         bPWHPTracking       = GetPRCSwitch(PRC_PW_HP_TRACKING),
         bPWLocationTracking = GetPRCSwitch(PRC_PW_LOCATION_TRACKING),
         bPWMappinTracking   = GetPRCSwitch(PRC_PW_MAPPIN_TRACKING),
-        bBiowareDBCache     = GetPRCSwitch(PRC_USE_BIOWARE_DATABASE),
-        bCraftingBaseItems  = GetPRCSwitch(PRC_CRAFTING_BASE_ITEMS);
+        bBiowareDBCache     = GetPRCSwitch(PRC_USE_BIOWARE_DATABASE);
+    int nMapPinCount, i;
     int bHasPoly;
     effect eTest;
-    int nMapPinCount, i;
+    
     // Run some autoexport stuff first. This determines if it needs to loop over players at all
     if(bPWPCAutoexport)
     {
@@ -74,23 +72,6 @@ void main()
     object oPC = GetFirstPC(); // Init the PC object
     while(GetIsObjectValid(oPC))
     {
-        // Eventhook
-        ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONHEARTBEAT);
-        // ECL
-        ApplyECLToXP(oPC);
-
-        // Check if the character has lost a level since last HB
-        if(GetHitDice(oPC) != GetLocalInt(oPC, "PRC_HitDiceTracking"))
-        {
-            if(GetHitDice(oPC) < GetLocalInt(oPC, "PRC_HitDiceTracking"))
-            {
-                SetLocalInt(oPC, "PRC_OnLevelDown_OldLevel", GetLocalInt(oPC, "PRC_HitDiceTracking"));
-                DelayCommand(0.0f, ExecuteScript("prc_onleveldown", oPC));
-            }
-
-            SetLocalInt(oPC, "PRC_HitDiceTracking", GetHitDice(oPC));
-        }
-
         // Persistent World time tracking
         if(bPWTime)
         {
@@ -114,14 +95,10 @@ void main()
         }
         // Persistant hit point tracking
         if(bPWHPTracking)
-        {
             SetPersistantLocalInt(oPC, "persist_HP", GetCurrentHitPoints(oPC));
-        }
         // Persistant location tracking
         if(bPWLocationTracking)
-        {
             SetPersistantLocalMetalocation(oPC, "persist_loc", LocationToMetalocation(GetLocation(oPC)));
-        }
         // Persistant map pin tracking
         if(bPWMappinTracking)
         {
@@ -133,64 +110,8 @@ void main()
             }
             SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
         }
-
-        //crafting base items
-        if(bCraftingBaseItems)
-        {
-            int bHasPotion,
-                bHasScroll,
-                bHasWand;
-            int bHasPotionFeat,
-                bHasScrollFeat,
-                bHasWandFeat;
-            if(GetHasFeat(FEAT_BREW_POTION, oPC))
-                bHasPotionFeat = TRUE;
-            if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC))
-                bHasScrollFeat = TRUE;
-            if(GetHasFeat(FEAT_CRAFT_WAND, oPC))
-                bHasWandFeat = TRUE;
-            if(bHasPotionFeat || bHasScrollFeat || bHasWandFeat)
-            {
-                object oTest = GetFirstItemInInventory(oPC);
-                while(GetIsObjectValid(oTest)
-                    //&& (!bHasPotion || !bHasScroll || !bHasWand)
-                    )
-                {
-                    string sResRef = GetResRef(oTest);
-                    if(sResRef == "x2_it_cfm_pbottl")
-                        bHasPotion = TRUE;
-                    if(sResRef == "x2_it_cfm_bscrl")
-                        bHasScroll = TRUE;
-                    if(sResRef == "x2_it_cfm_wand")
-                        bHasWand = TRUE;
-                    oTest = GetNextItemInInventory(oPC);
-                }
-                if(bHasPotionFeat && !bHasPotion)
-                {
-                    oTest = CreateItemOnObject("x2_it_cfm_pbottl", oPC);
-                    if(GetItemPossessor(oTest) != oPC)
-                        DestroyObject(oTest); //not enough room in inventory
-                    else
-                        SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
-                }
-                if(bHasScrollFeat && !bHasScroll)
-                {
-                    oTest = CreateItemOnObject("x2_it_cfm_bscrl", oPC);
-                    if(GetItemPossessor(oTest) != oPC)
-                        DestroyObject(oTest); //not enough room in inventory
-                    else
-                        SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
-                }
-                if(bHasWandFeat && !bHasWand)
-                {
-                    oTest = CreateItemOnObject("x2_it_cfm_wand", oPC);
-                    if(GetItemPossessor(oTest) != oPC)
-                        DestroyObject(oTest); //not enough room in inventory
-                    else
-                        SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
-                }
-            }
-        }
+        //run the individual HB event script
+        ExecuteScript("prc_onhb_indiv", oPC);
         // Get the next PC for the loop
         oPC = GetNextPC();
     }

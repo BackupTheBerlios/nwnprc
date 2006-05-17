@@ -89,6 +89,7 @@
 const string ARRAY_NAT_WEAP_RESREF  = "ARRAY_NAT_WEAP_RESREF";
 
 #include "prc_alterations"
+#include "prc_inc_combat"
 
 void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
 {
@@ -104,7 +105,7 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
     while(i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF))
     {
         //get the resref to use
-        string sResRef = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF);
+        string sResRef = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF, i);
         //get the created item
         object oWeapon = GetObjectByTag(sResRef);
         if(!GetIsObjectValid(oWeapon))
@@ -115,27 +116,27 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
                 lLimbo = GetStartingLocation();
             oWeapon = CreateObject(OBJECT_TYPE_ITEM, sResRef, lLimbo);
         }
+        if(!GetIsObjectValid(oWeapon))
+        {
+            //something odd here, abort to be safe
+            break;
+        }
+        
         //null effect
         effect eInvalid;
         string sMessageSuccess;
         string sMessageFailure;
-        switch(GetBaseItemType(oWeapon))
-        {
-            case BASE_ITEM_CBLUDGWEAPON: sMessageSuccess = "Slam"; break;
-            case BASE_ITEM_CPIERCWEAPON: sMessageSuccess = "Gore"; break;
-            case BASE_ITEM_CSLASHWEAPON: sMessageSuccess = "Bite"; break;
-            case BASE_ITEM_CSLSHPRCWEAP: sMessageSuccess = "Claw"; break;
-        }
+        sMessageSuccess += GetName(oWeapon);
         //add attack
-        sMessageFailure += " attack";        
+        sMessageSuccess += " attack";        
         //copy it to failure
         sMessageFailure = sMessageSuccess;
         //add hit/miss
         sMessageSuccess += " hit";
         sMessageFailure += " missed";
         //add stars around messages
-        sMessageSuccess = "* "+sMessageSuccess+" *";
-        sMessageFailure = "* "+sMessageFailure+" *";
+        sMessageSuccess = "*"+sMessageSuccess+"*";
+        sMessageFailure = "*"+sMessageFailure+"*";
         //secondary attacks are -5 to hit
         int nAttackMod = -5;
         //check for (Improved) Multiattack
@@ -171,4 +172,29 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
         if(fDelay > 6.0)
             fDelay -= 6.0;
     }
+}
+
+void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1)
+{
+    if(!array_exists(oPC, ARRAY_NAT_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_WEAP_RESREF);
+    //check if it was already added
+    int i;
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF);i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF, i);
+        if(sTest == sResRef)
+            return;
+    }
+    //add it/them
+    for(i=0;i<nCount;i++)
+    {
+        array_set_string(oPC, ARRAY_NAT_WEAP_RESREF,
+            array_get_size(oPC, ARRAY_NAT_WEAP_RESREF), sResRef);
+    }       
+}
+
+void ClearNaturalWeapons(object oPC)
+{
+    array_delete(oPC, ARRAY_NAT_WEAP_RESREF);
 }

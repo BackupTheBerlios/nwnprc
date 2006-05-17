@@ -7,6 +7,4 @@ copy *.2da precacher2das\*.2da
 del *.2da
 del *.nss
 del *.ncs
-java -Xmx100m -jar prc.jar 2datosql precacher2das
-sqlite sqlite.db ".read out.sql"
-del out.sql
+java -Xmx100m -jar prc.jar 2datosql precacher2das MySQL

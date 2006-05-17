@@ -503,11 +503,11 @@ void FeatLoop(int nClassFeatStage = FALSE)
             AddChoice(sName, nRow);
         }
     }
-    int n2daLimit;
-    if(nClassFeatStage)
-        n2daLimit = GetPRCSwitch(FILE_END_CLASS_FEAT);
-    else
-        n2daLimit = GetPRCSwitch(FILE_END_FEAT);
+    //int n2daLimit;
+    //if(nClassFeatStage)
+    //    n2daLimit = GetPRCSwitch(FILE_END_CLASS_FEAT);
+    //else
+    //    n2daLimit = GetPRCSwitch(FILE_END_FEAT);
 
     if(!bAtLeastOneResult)
     {
@@ -516,13 +516,14 @@ void FeatLoop(int nClassFeatStage = FALSE)
         if(nClassFeatStage)
         {
             DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-            FloatingTextStringOnCreature("Done all feats", OBJECT_SELF, FALSE);
+    //        FloatingTextStringOnCreature("Done all feats", OBJECT_SELF, FALSE);
+            FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
             return;
         }
         else
         {
             nClassFeatStage = TRUE;
-            FloatingTextStringOnCreature("Done general feats", OBJECT_SELF, FALSE);
+    //        FloatingTextStringOnCreature("Done general feats", OBJECT_SELF, FALSE);
         }
     }
 
@@ -538,100 +539,6 @@ void FeatLoop(int nClassFeatStage = FALSE)
     }*/
 
     DelayCommand(0.01, FeatLoop(nClassFeatStage));
-}
-
-int IsInWizList(int nSpell, int nLevel)
-{
-    int i;
-    string sLevel = IntToString(nLevel);
-    for (i=2;i<array_get_size(OBJECT_SELF, "SpellLvl"+sLevel);i++)
-    {
-        if(nSpell == array_get_int(OBJECT_SELF,"SpellLvl"+sLevel,i))
-            return TRUE;
-    }
-    return FALSE;
-}
-
-void SpellLoop()
-{
-    int i = GetLocalInt(OBJECT_SELF, "i");
-    string sClassCol;
-    int nClass = GetLocalInt(OBJECT_SELF, "Class");
-    string SQL;
-
-    string q = PRC_SQLGetTick();
-
-    //get spellschool
-    int nSchool = GetLocalInt(OBJECT_SELF, "School");
-    //get opposition school
-    string sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", nSchool)));
-    int bEnd = TRUE;
-    if(i==0 && nClass == CLASS_TYPE_WIZARD)
-    {
-        //add all cantrips
-        array_create(OBJECT_SELF, "SpellLvl0");
-        SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = 0) AND ("+q+"School"+q+" != '"+sOpposition+"')";
-        PRC_SQLExecDirect(SQL);
-        while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-        {
-            bEnd = FALSE;
-            int nRow = StringToInt(PRC_SQLGetData(1));
-            array_set_int(OBJECT_SELF, "SpellLvl0",
-                array_get_size(OBJECT_SELF, "SpellLvl0"),nRow);
-        }
-    }
-
-    int nSpellLevel = GetLocalInt(OBJECT_SELF, "CurrentSpellLevel");
-    switch(nClass)
-    {
-        case CLASS_TYPE_WIZARD:
-            nSpellLevel = 1;
-            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = 1) AND ("+q+"School"+q+" != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
-            break;
-        case CLASS_TYPE_SORCERER:
-            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
-            break;
-        case CLASS_TYPE_BARD:
-            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Bard"+q+" = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
-            break;
-    }
-    PRC_SQLExecDirect(SQL);
-    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-    {
-        bEnd = FALSE;
-        int nStrRef = StringToInt(PRC_SQLGetData(2));
-        string sName = GetStringByStrRef(nStrRef);
-        int nRow = StringToInt(PRC_SQLGetData(1));
-        if(IsInWizList(nRow, nSpellLevel))
-            sName = "";
-        if(sName != "")
-        {
-            sName = "Level "+IntToString(nSpellLevel)+" : "+sName;
-            AddChoice(sName, nRow);
-        }
-    }
-
-    if(bEnd)
-    {
-        DeleteLocalInt(OBJECT_SELF, "i");
-        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-        DeleteLocalInt(OBJECT_SELF, "Percentage");
-        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-        return;
-    }
-
-    i += 100;
-    SetLocalInt(OBJECT_SELF, "i", i);
-    /*
-    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
-    {
-        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(SPELLS_2DA_END));
-        FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
-        SetLocalInt(OBJECT_SELF, "Percentage",1);
-        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
-    }*/
-
-    DelayCommand(0.01, SpellLoop());
 }
 
 
@@ -745,10 +652,11 @@ void BonusFeatLoop()
         string sReqSkill2 = PRC_SQLGetData(11);
         string sReqSkillRanks = PRC_SQLGetData(12);
         string sReqSkillRanks2 = PRC_SQLGetData(13);
-        PrintString(sName);
+PrintString("BonusFeatLoop() "+sName);
         //enforcement testing
         if(sName == "" || sName == "Bad Strref")
         {
+            sName = "";
         }
         else if(GetPRCSwitch(PRC_CONVOCC_ENFORCE_BLOOD_OF_THE_WARLORD)
             && nRow == FEAT_BLOOD_OF_THE_WARLORD
@@ -986,12 +894,10 @@ void BonusFeatLoop()
         //PrintString(sName);
 
         if(sName != "")
-        {
             AddChoice(sName, nRow);
-        }
     }
-    int n2daLimit;
-    n2daLimit = GetPRCSwitch(FILE_END_CLASS_FEAT);
+    //int n2daLimit;
+    //n2daLimit = GetPRCSwitch(FILE_END_CLASS_FEAT);
 
     if(!bAtLeastOneResult)
     {
@@ -1015,6 +921,102 @@ void BonusFeatLoop()
 
     DelayCommand(0.01, BonusFeatLoop());
 }
+
+int IsInWizList(int nSpell, int nLevel)
+{
+    int i;
+    string sLevel = IntToString(nLevel);
+    for (i=2;i<array_get_size(OBJECT_SELF, "SpellLvl"+sLevel);i++)
+    {
+        if(nSpell == array_get_int(OBJECT_SELF,"SpellLvl"+sLevel,i))
+            return TRUE;
+    }
+    return FALSE;
+}
+
+void SpellLoop()
+{
+    int i = GetLocalInt(OBJECT_SELF, "i");
+    string sClassCol;
+    int nClass = GetLocalInt(OBJECT_SELF, "Class");
+    string SQL;
+
+    string q = PRC_SQLGetTick();
+
+    //get spellschool
+    int nSchool = GetLocalInt(OBJECT_SELF, "School");
+    //get opposition school
+    string sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", nSchool)));
+    int bEnd = TRUE;
+    if(i==0 && nClass == CLASS_TYPE_WIZARD)
+    {
+        //add all cantrips
+        array_create(OBJECT_SELF, "SpellLvl0");
+        SQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = 0) AND ("+q+"School"+q+" != '"+sOpposition+"')";
+        PRC_SQLExecDirect(SQL);
+        while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        {
+            bEnd = FALSE;
+            int nRow = StringToInt(PRC_SQLGetData(1));
+            array_set_int(OBJECT_SELF, "SpellLvl0",
+                array_get_size(OBJECT_SELF, "SpellLvl0"),nRow);
+        }
+    }
+
+    int nSpellLevel = GetLocalInt(OBJECT_SELF, "CurrentSpellLevel");
+    switch(nClass)
+    {
+        case CLASS_TYPE_WIZARD:
+            nSpellLevel = 1;
+            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = 1) AND ("+q+"School"+q+" != '"+sOpposition+"') LIMIT 100 OFFSET "+IntToString(i);
+            break;
+        case CLASS_TYPE_SORCERER:
+            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            break;
+        case CLASS_TYPE_BARD:
+            SQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Bard"+q+" = "+IntToString(nSpellLevel)+") LIMIT 100 OFFSET "+IntToString(i);
+            break;
+    }
+    PRC_SQLExecDirect(SQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        bEnd = FALSE;
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        if(IsInWizList(nRow, nSpellLevel))
+            sName = "";
+        if(sName != "")
+        {
+            sName = "Level "+IntToString(nSpellLevel)+" : "+sName;
+            AddChoice(sName, nRow);
+        }
+    }
+
+    if(bEnd)
+    {
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        DeleteLocalInt(OBJECT_SELF, "Percentage");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        return;
+    }
+
+    i += 100;
+    SetLocalInt(OBJECT_SELF, "i", i);
+    /*
+    if(GetLocalInt(OBJECT_SELF, "Percentage") == 0)
+    {
+        int nPercentage = FloatToInt((IntToFloat(i)*100.0)/IntToFloat(SPELLS_2DA_END));
+        FloatingTextStringOnCreature(IntToString(nPercentage)+"%", OBJECT_SELF);
+        SetLocalInt(OBJECT_SELF, "Percentage",1);
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "Percentage"));
+    }*/
+
+    DelayCommand(0.01, SpellLoop());
+}
+
+
 
 
 void RaceLoop()

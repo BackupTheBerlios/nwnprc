@@ -298,6 +298,7 @@ void ChoiceSelected(int nChoiceNo)
             if(nPoints <= 0)
                 nStage++;
             break;
+            
         case STAGE_SKILL_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
             {
@@ -367,6 +368,44 @@ void ChoiceSelected(int nChoiceNo)
                 nStage++;
             }
             break;
+            
+        case STAGE_BONUS_FEAT:
+            if(GetChoice(OBJECT_SELF) == -1)
+                nStage++;//skip the check
+            else
+                SetLocalInt(OBJECT_SELF, "BonusFeat", GetChoice(OBJECT_SELF));
+            nStage++;
+            break;
+            
+        case STAGE_BONUS_FEAT_CHECK:
+            if(GetChoice(OBJECT_SELF) == -1)
+            {
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "BonusFeat");
+                nStage--;
+                array_delete(OBJECT_SELF, "ChoiceValues");
+                array_delete(OBJECT_SELF, "ChoiceTokens");
+                MarkStageNotSetUp(nStage, OBJECT_SELF);
+            }
+            else if(GetChoice(OBJECT_SELF) == 1)
+            {
+                array_set_int(OBJECT_SELF, "Feats",
+                   array_get_size(OBJECT_SELF, "Feats")+1,
+                        GetLocalInt(OBJECT_SELF, "BonusFeat"));
+                SetLocalInt(OBJECT_SELF, "BonusFeatCount", GetLocalInt(OBJECT_SELF, "BonusFeatCount")+1);
+                if(GetLocalInt(OBJECT_SELF, "BonusFeatCount") >= StringToInt(Get2DACache(Get2DACache("classes", "BonusFeatsTable", nClass),"Bonus",0)))
+                {
+                    nStage++;
+                }
+                else
+                {
+                    nStage--;
+                    array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
+                    array_delete(OBJECT_SELF, "ChoiceValues");
+                    array_delete(OBJECT_SELF, "ChoiceTokens");
+                }
+            }
+            break;            
 
         case STAGE_FAMILIAR:
             if(GetChoice(OBJECT_SELF) == -1)
@@ -548,6 +587,7 @@ void ChoiceSelected(int nChoiceNo)
                     break;
             }
             break;
+            
         case STAGE_SPELLS_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
             {
@@ -575,6 +615,7 @@ void ChoiceSelected(int nChoiceNo)
                     GetChoice(OBJECT_SELF));
             nStage++;
             break;
+            
         case STAGE_WIZ_SCHOOL_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
             {
@@ -588,43 +629,6 @@ void ChoiceSelected(int nChoiceNo)
             else if(GetChoice(OBJECT_SELF) == 1)
             {
                 nStage++;
-            }
-            break;
-
-        case STAGE_BONUS_FEAT:
-            if(GetChoice(OBJECT_SELF) == -1)
-                nStage++;//skip the check
-            else
-                SetLocalInt(OBJECT_SELF, "BonusFeat", GetChoice(OBJECT_SELF));
-            nStage++;
-            break;
-        case STAGE_BONUS_FEAT_CHECK:
-            if(GetChoice(OBJECT_SELF) == -1)
-            {
-                MarkStageNotSetUp(nStage, OBJECT_SELF);
-                DeleteLocalInt(OBJECT_SELF, "BonusFeat");
-                nStage--;
-                array_delete(OBJECT_SELF, "ChoiceValues");
-                array_delete(OBJECT_SELF, "ChoiceTokens");
-                MarkStageNotSetUp(nStage, OBJECT_SELF);
-            }
-            else if(GetChoice(OBJECT_SELF) == 1)
-            {
-                array_set_int(OBJECT_SELF, "Feats",
-                   array_get_size(OBJECT_SELF, "Feats")+1,
-                        GetLocalInt(OBJECT_SELF, "BonusFeat"));
-                SetLocalInt(OBJECT_SELF, "BonusFeatCount", GetLocalInt(OBJECT_SELF, "BonusFeatCount")+1);
-                if(GetLocalInt(OBJECT_SELF, "BonusFeatCount") >= StringToInt(Get2DACache(Get2DACache("classes", "BonusFeatsTable", nClass),"Bonus",0)))
-                {
-                    nStage++;
-                }
-                else
-                {
-                    nStage--;
-                    array_set_int(OBJECT_SELF, "StagesSetup", nStage, FALSE);
-                    array_delete(OBJECT_SELF, "ChoiceValues");
-                    array_delete(OBJECT_SELF, "ChoiceTokens");
-                }
             }
             break;
 

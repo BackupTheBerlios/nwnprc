@@ -33,7 +33,7 @@ object AddCohortToPlayer(int nCohortID, object oPC);
 void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE);
 void RemoveCohortFromPlayer(object oCohort, object oPC);
 int GetLeadershipScore(object oPC = OBJECT_SELF);
-void CheckHB();
+void CheckHB(object oPC);
 void AddPremadeCohortsToDB();
 void StoreCohort(object oCohort);
 
@@ -447,24 +447,31 @@ void StoreCohort(object oCohort)
     SetCampaignInt(     COHORT_DATABASE, "Cohort_"+IntToString(nCohortCount)+"_deleted",   FALSE);
 }
 
-void CheckHB()
+void CheckHB(object oPC)
 {
-    SetCommandable(FALSE);
-    if(GetHitDice(OBJECT_SELF) == 40)
+    //make sure only 1 hb running at a time
+    if(GetLocalInt(oPC, "CohortCheckHB") > 1)
+        return;
+    SetLocalInt(oPC, "CohortCheckHB", GetLocalInt(oPC, "CohortCheckHB")+1);
+    DelayCommand(0.99, 
+        SetLocalInt(oPC, "CohortCheckHB", GetLocalInt(oPC, "CohortCheckHB")-1));   
+    SetCommandable(FALSE, oPC);
+    if(GetHitDice(oPC) == 40)
     {
-        StoreCohort(OBJECT_SELF);
+        StoreCohort(oPC);
         //restore previous xp amound
-        int nOldXP = GetLocalInt(OBJECT_SELF, "OriginalXP");
-        SetXP(OBJECT_SELF, nOldXP);
+        int nOldXP = GetLocalInt(oPC, "OriginalXP");
+        SetXP(oPC, nOldXP);
         //tell the player what was done
-        SendMessageToPC(OBJECT_SELF, "Character registered as cohort.");
+        SendMessageToPC(oPC, "Character registered as cohort.");
         //remove the non-commandabiltiy
         //csp lowes dex, which stops leveling with certain feats
-        SetCommandable(TRUE);
+        SetCommandable(TRUE, oPC);
+        DeletePersistantLocalInt(oPC, "RegisteringAsCohort");
         //stop the psuedoHB
         return;
     }
-    DelayCommand(1.0, CheckHB());
+    DelayCommand(1.0, CheckHB(oPC));
 }
 
 void RegisterAsCohort(object oPC)
@@ -480,7 +487,8 @@ void RegisterAsCohort(object oPC)
 
     SetLocalInt(oPC, "OriginalXP", GetXP(oPC));
     SetXP(oPC, 40*(40-1)*500);
-    AssignCommand(oPC, CheckHB());
+    SetPersistantLocalInt(oPC, "RegisteringAsCohort", TRUE);
+    AssignCommand(GetModule(), CheckHB(oPC));
 }
 
 

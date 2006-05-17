@@ -206,7 +206,7 @@ void SetupStage()
                 {
                     //calculate number of points
                     nPoints += StringToInt(Get2DACache("classes", "SkillPointBase ", nClass));
-                    nPoints += (nInt-10)/2;
+                    nPoints += (nInt-10+StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace)))/2;
                     nPoints *= 4;
                     SetLocalInt(OBJECT_SELF, "Points", nPoints);
                 }
@@ -266,6 +266,21 @@ void SetupStage()
         case STAGE_FEAT:
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DelayCommand(0.01, FeatLoop());
+            MarkStageSetUp(nStage);
+            break;
+
+        case STAGE_BONUS_FEAT:
+            if(StringToInt(Get2DACache(Get2DACache("Classes", "BonusFeatsTable", nClass), "Bonus", 0))<=0)
+            {
+                //if the character canot take any bonus feats
+                //then go to next stage
+                AddChoice("You cannot select a bonus feat.", -1);
+            }
+            else
+            {
+                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+                DelayCommand(0.01, BonusFeatLoop());
+            }
             MarkStageSetUp(nStage);
             break;
 
@@ -452,21 +467,6 @@ void SetupStage()
                         }
                     }
                 }
-            }
-            MarkStageSetUp(nStage);
-            break;
-
-        case STAGE_BONUS_FEAT:
-            if(StringToInt(Get2DACache(Get2DACache("Classes", "BonusFeatsTable", nClass), "Bonus", 0))<=0)
-            {
-                //if the character canot take any bonus feats
-                //then go to next stage
-                AddChoice("You cannot select a bonus feat.", -1);
-            }
-            else
-            {
-                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-                DelayCommand(0.01, BonusFeatLoop());
             }
             MarkStageSetUp(nStage);
             break;

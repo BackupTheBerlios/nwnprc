@@ -118,7 +118,8 @@ void main()
                 AddChoice("Attempt to identify everything in my inventory.", 4);
                 if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD)
                     AddChoice("Join the Shadowlords as a prerequisited for the Teflammar Shadowlord class.", 5);
-                if(GetCanRegister(oPC))
+                if(GetCanRegister(oPC)
+                    && !GetPRCSwitch(PRC_DISABLE_REGISTER_COHORTS))
                     AddChoice("Register this character as a cohort.", 6);
                 if(GetMaximumCohortCount(oPC))
                     AddChoice("Manage cohorts.", 7);
@@ -279,10 +280,12 @@ void main()
             {
                 SetHeader("What do you want to change?");
                 if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC)
-                    && !GetLocalInt(oPC, "CohortRecruited"))
+                    && !GetLocalInt(oPC, "CohortRecruited")
+                    && !GetPRCSwitch(PRC_DISABLE_CUSTOM_COHORTS))
                     AddChoice("Recruit a custom cohort", 1);
                 if(GetCurrentCohortCount(oPC) < GetMaximumCohortCount(oPC)
-                    && !GetLocalInt(oPC, "CohortRecruited"))
+                    && !GetLocalInt(oPC, "CohortRecruited")
+                    && !GetPRCSwitch(PRC_DISABLE_STANDARD_COHORTS))
                     AddChoice("Recruit a standard cohort", 4);
                 //not implemented, remove via radial or conversation
                 //if(GetCurrentCohortCount(oPC))

@@ -694,6 +694,21 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * do not have the -2 level lag.
   */
  const string PRC_BONUS_COHORTS                      = "PRC_BONUS_COHORTS";
+ 
+ /*
+  * Disable the use of custom cohorts
+  */
+ const string PRC_DISABLE_CUSTOM_COHORTS                      = "PRC_DISABLE_CUSTOM_COHORTS";
+ 
+ /*
+  * Disable the use of standard cohorts
+  */
+ const string PRC_DISABLE_STANDARD_COHORTS                      = "PRC_DISABLE_STANDARD_COHORTS";
+ 
+ /*
+  * Disable registration of custom cohorts
+  */
+ const string PRC_DISABLE_REGISTER_COHORTS                      = "PRC_DISABLE_REGISTER_COHORTS";
 
  /*
   * Gives all slings equiped Mighty +20 for free
@@ -2355,7 +2370,11 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_SWITCH_CHANGING_CONVO);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_DOMAIN_ENFORCEMENT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BONUS_COHORTS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_CUSTOM_COHORTS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_STANDARD_COHORTS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_REGISTER_COHORTS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_SLINGS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BEBILITH_CLAWS_DESTROY);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_REMOVE_PLAYER_SPEED);
@@ -2468,5 +2487,4 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_MAX_STAT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_BONUS);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BEBILITH_CLAWS_DESTROY);
 }

@@ -4,7 +4,7 @@ void main()
 {
     object oPC = OBJECT_SELF;
     int nBiowareSize = GetCreatureSize(oPC);
-    int nPRCSize = PRCGetCreatureSize(oPC);
+    int nPRCSize = PRCGetCreatureSize(oPC, TRUE); //only include things that change ability scores
     //change counters
     int nStr;
     int nDex;

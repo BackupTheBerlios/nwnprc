@@ -4147,10 +4147,10 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                    DelayCommand(1.0, DeleteLocalInt(oDefender, "PRCCombat_StruckByAttack"));
               }          
           
-              ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender);
+              DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender));
 
               // apply any on hit abilities from attackers weapon to defender
-              ApplyOnHitAbilities(oDefender, oAttacker, oWeapon);
+              DelayCommand(0.01,ApplyOnHitAbilities(oDefender, oAttacker, oWeapon));
 
               // apply any on hit abilities from defenders armor to attacker
               object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oDefender);

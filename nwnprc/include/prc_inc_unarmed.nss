@@ -77,6 +77,7 @@ int GetIsPRCCreatureWeapon(object oTest);
 #include "prc_racial_const"
 #include "prc_spell_const"
 #include "inc_utility"
+#include "prc_inc_natweap"
 
 //////////////////////////////////////////////////
 /* Function defintions                          */
@@ -258,7 +259,7 @@ int FindUnarmedDamage(object oCreature)
     // Certain race pack creatures use different damages.
     //if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
     if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK)   iRacialDamage = 2;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL)      iRacialDamage = 2;
+    //else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL)      iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_RAKSHASA)   iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR)    iRacialDamage = 2;
     else if (GetRacialType(oCreature) == RACIAL_TYPE_WEMIC)      iRacialDamage = 2;
@@ -291,16 +292,12 @@ int FindUnarmedDamage(object oCreature)
     iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
     iDamageToUse = (iShouDamage    > iDamageToUse) ? iShouDamage    : iDamageToUse;
 
-    // For the creature weapon, we consider only creatures that don't have IoDM levels, for
-    // "correctness"
-    if (!GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature) && iRacialDamage > iDamageToUse)
+    //Decided if to use the creature weapon or unarmed weapon is done via PRC Options
+    //defaults to using creature weapon if present, or unarmed otherwise
+    if (!GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature) 
+        && iRacialDamage > iDamageToUse)
     {
         iDamageToUse = iRacialDamage;
-        SetLocalInt(oCreature, "UsesRacialAttack", TRUE);
-    }
-    else // this is so that the damage subtype is not added inappropriately.
-    {
-        DeleteLocalInt(oCreature, "UsesRacialAttack");
     }
 
     // Small characters get a penalty to damage if they've somehow ended up with no damage bonus
@@ -409,36 +406,46 @@ int FindUnarmedDamage(object oCreature)
 // Adds appropriate feats to the skin. Stolen from SoulTaker + expanded with overwhelming/devastating critical.
 void UnarmedFeats(object oCreature)
 {
+    // If we are polymorphed/shifted, do not mess with the creature weapon.
+    if (GetIsPolyMorphedOrShifted(oCreature)) return;
+    
     object oSkin = GetPCSkin(oCreature);
 
     if (!GetHasFeat(FEAT_WEAPON_PROFICIENCY_CREATURE, oCreature))
         AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_CREATURE),oSkin);
 
-    if (GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oSkin);
+    //only roll unarmed feats into creature feats when not using natural weapons
+    if(!GetIsUsingPrimaryNaturalWeapons(oCreature))
+    {
+        if (GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE, oCreature))
+            AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapFocCreature),oSkin);
 
-    if (GetHasFeat(FEAT_WEAPON_SPECIALIZATION_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_WEAPON_SPECIALIZATION_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oSkin);
+        if (GetHasFeat(FEAT_WEAPON_SPECIALIZATION_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_WEAPON_SPECIALIZATION_CREATURE, oCreature))
+            AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapSpecCreature),oSkin);
 
-    if (GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_IMPROVED_CRITICAL_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oSkin);
+        if (GetHasFeat(FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE, oCreature) && !GetHasFeat(FEAT_IMPROVED_CRITICAL_CREATURE, oCreature))
+            AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_ImpCritCreature),oSkin);
 
-    if (GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oSkin);
+        if (GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_CREATURE, oCreature))
+            AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicFocCreature),oSkin);
 
-    if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicSpecCreature),oSkin);
+        if (GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_WEAPON_SPECIALIZATION_CREATURE, oCreature))
+            AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_WeapEpicSpecCreature),oSkin);
 
-    if (GetHasFeat(FEAT_EPIC_OVERWHELMING_CRITICAL_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_OVERWHELMING_CRITICAL_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_OVERCRITICAL_CREATURE),oSkin);
+        if (GetHasFeat(FEAT_EPIC_OVERWHELMING_CRITICAL_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_OVERWHELMING_CRITICAL_CREATURE, oCreature))
+            AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_OVERCRITICAL_CREATURE),oSkin);
 
-    if (GetHasFeat(FEAT_EPIC_DEVASTATING_CRITICAL_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_DEVASTATING_CRITICAL_CREATURE, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_DEVCRITICAL_CREATURE),oSkin);
+        if (GetHasFeat(FEAT_EPIC_DEVASTATING_CRITICAL_UNARMED, oCreature) && !GetHasFeat(FEAT_EPIC_DEVASTATING_CRITICAL_CREATURE, oCreature))
+            AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_DEVCRITICAL_CREATURE),oSkin);
+    }    
 }
 
 // Creates/strips a creature weapon and applies bonuses.  Large chunks stolen from SoulTaker.
 void UnarmedFists(object oCreature)
 {
+    // If we are polymorphed/shifted, do not mess with the creature weapon.
+    if (GetIsPolyMorphedOrShifted(oCreature)) return;
+    
     RemoveUnarmedAttackEffects(oCreature);
 
     object oRighthand = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCreature);
@@ -463,15 +470,16 @@ void UnarmedFists(object oCreature)
     // Determine the type of damage the character should do.
     string sWeapType;
     if (GetHasFeat(FEAT_CLAWDRAGON, oCreature) ||
-        iRace == RACIAL_TYPE_TROLL             ||
+        //iRace == RACIAL_TYPE_TROLL             ||
         iRace == RACIAL_TYPE_RAKSHASA          ||
         iRace == RACIAL_TYPE_LIZARDFOLK        ||
         iRace == RACIAL_TYPE_WEMIC)
     {
         sWeapType = "PRC_UNARMED_S";
     }
-    else if (//iRace == RACIAL_TYPE_TANARUKK ||
-             iRace == RACIAL_TYPE_MINOTAUR)
+    else if (iRace == RACIAL_TYPE_TANARUKK
+             //|| iRace == RACIAL_TYPE_MINOTAUR
+             )
     {
         sWeapType = "PRC_UNARMED_P";
     }
@@ -480,8 +488,6 @@ void UnarmedFists(object oCreature)
         sWeapType = "PRC_UNARMED_B";
     }
 
-    // If we are polymorphed/shifted, do not mess with the creature weapon.
-    if (GetIsPolyMorphedOrShifted(oCreature)) return;
 
     // Equip the creature weapon.
     if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
@@ -504,95 +510,112 @@ void UnarmedFists(object oCreature)
     DelayCommand(6.0f, CleanExtraFists(oCreature));
 
     // Determine the character's capacity to pierce DR.
-    int iKi = (iMonkEq > 9)  ? 1 : 0;
-        iKi = (iMonkEq > 12) ? 2 : iKi;
-        iKi = (iMonkEq > 15) ? 3 : iKi;
-
-    int iDragClaw = GetHasFeat(FEAT_CLAWDRAGON,oCreature) ? 1: 0;
-        iDragClaw = GetHasFeat(FEAT_CLAWENH2,oCreature)   ? 2: iDragClaw;
-        iDragClaw = GetHasFeat(FEAT_CLAWENH3,oCreature)   ? 3: iDragClaw;
-
-    int iBrawlEnh = iBrawler / 6;
-
-    int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oCreature) ? 1 : 0 ;
-        iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oCreature) ? 2 : iEpicKi ;
-
-    // The total enhancement to the fist is the sum of all the enhancements above
-    int iEnh = iKi + iDragClaw + iBrawlEnh + iEpicKi;
-
-    // Strip the Fist.
-    itemproperty ip = GetFirstItemProperty(oWeapL);
-    while (GetIsItemPropertyValid(ip))
+    // only applies when not using natural weapons
+    if(!GetIsUsingPrimaryNaturalWeapons(oCreature))
     {
-        RemoveItemProperty(oWeapL, ip);
-        ip = GetNextItemProperty(oWeapL);
-    }
+        int iKi = (iMonkEq > 9)  ? 1 : 0;
+            iKi = (iMonkEq > 12) ? 2 : iKi;
+            iKi = (iMonkEq > 15) ? 3 : iKi;
 
-    // Leave the fist blank if weapons are equipped.  The only way a weapon will
-    // be equipped on the left hand is if there is a weapon in the right hand.
-    if (GetIsObjectValid(oRighthand)) return;
+        int iDragClaw = GetHasFeat(FEAT_CLAWDRAGON,oCreature) ? 1: 0;
+            iDragClaw = GetHasFeat(FEAT_CLAWENH2,oCreature)   ? 2: iDragClaw;
+            iDragClaw = GetHasFeat(FEAT_CLAWENH3,oCreature)   ? 3: iDragClaw;
 
-    // Add glove bonuses.
-    object oItem = GetItemInSlot(INVENTORY_SLOT_ARMS,oCreature);
-    int iGloveEnh = 0;
-    if (GetIsObjectValid(oItem))
-    {
-        int iType = GetBaseItemType(oItem);
-        if (iType == BASE_ITEM_GLOVES)
+        int iBrawlEnh = iBrawler / 6;
+
+        int iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_4,oCreature) ? 1 : 0 ;
+            iEpicKi = GetHasFeat(FEAT_EPIC_IMPROVED_KI_STRIKE_5,oCreature) ? 2 : iEpicKi ;
+
+        // The total enhancement to the fist is the sum of all the enhancements above
+        int iEnh = iKi + iDragClaw + iBrawlEnh + iEpicKi;
+
+        // Strip the Fist.
+        itemproperty ip = GetFirstItemProperty(oWeapL);
+        while (GetIsItemPropertyValid(ip))
         {
-            ip = GetFirstItemProperty(oItem);
-            while(GetIsItemPropertyValid(ip))
+            RemoveItemProperty(oWeapL, ip);
+            ip = GetNextItemProperty(oWeapL);
+        }
+
+        // Leave the fist blank if weapons are equipped.  The only way a weapon will
+        // be equipped on the left hand is if there is a weapon in the right hand.
+        if (GetIsObjectValid(oRighthand)) return;
+
+        // Add glove bonuses.
+        object oItem = GetItemInSlot(INVENTORY_SLOT_ARMS,oCreature);
+        int iGloveEnh = 0;
+        if (GetIsObjectValid(oItem))
+        {
+            int iType = GetBaseItemType(oItem);
+            if (iType == BASE_ITEM_GLOVES)
             {
-                iType = GetItemPropertyType(ip);
-                switch (iType)
+                ip = GetFirstItemProperty(oItem);
+                while(GetIsItemPropertyValid(ip))
                 {
-                    case ITEM_PROPERTY_DAMAGE_BONUS:
-                    case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
-                    case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
-                    case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
-                    case ITEM_PROPERTY_ON_HIT_PROPERTIES:
-                    case ITEM_PROPERTY_ONHITCASTSPELL:
-                    case ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE:
-                    case ITEM_PROPERTY_KEEN:
-                    case ITEM_PROPERTY_MASSIVE_CRITICALS:
-                    case ITEM_PROPERTY_POISON:
-                    case ITEM_PROPERTY_REGENERATION_VAMPIRIC:
-                    case ITEM_PROPERTY_WOUNDING:
-                    case ITEM_PROPERTY_DECREASED_DAMAGE:
-                    case ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER:
-                        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
-                        break;
-                    case ITEM_PROPERTY_ATTACK_BONUS:
-                        int iCost = GetItemPropertyCostTableValue(ip);
-                        iGloveEnh = (iCost>iGloveEnh) ? iCost:iGloveEnh;
-                        iEnh =      (iCost>iEnh)      ? iCost:iEnh;
-                        break;
+                    iType = GetItemPropertyType(ip);
+                    switch (iType)
+                    {
+                        case ITEM_PROPERTY_DAMAGE_BONUS:
+                        case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
+                        case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
+                        case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:
+                        case ITEM_PROPERTY_ON_HIT_PROPERTIES:
+                        case ITEM_PROPERTY_ONHITCASTSPELL:
+                        case ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE:
+                        case ITEM_PROPERTY_KEEN:
+                        case ITEM_PROPERTY_MASSIVE_CRITICALS:
+                        case ITEM_PROPERTY_POISON:
+                        case ITEM_PROPERTY_REGENERATION_VAMPIRIC:
+                        case ITEM_PROPERTY_WOUNDING:
+                        case ITEM_PROPERTY_DECREASED_DAMAGE:
+                        case ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER:
+                            DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
+                            break;
+                        case ITEM_PROPERTY_ATTACK_BONUS:
+                            int iCost = GetItemPropertyCostTableValue(ip);
+                            iGloveEnh = (iCost>iGloveEnh) ? iCost:iGloveEnh;
+                            iEnh =      (iCost>iEnh)      ? iCost:iEnh;
+                            break;
+                    }
+                    ip = GetNextItemProperty(oItem);
                 }
-                ip = GetNextItemProperty(oItem);
-            }
-            // handles these seperately so as not to create "attack penalties vs. xxxx"
-            ip = GetFirstItemProperty(oItem);
-            while(GetIsItemPropertyValid(ip))
-            {
-                iType = GetItemPropertyType(ip);
-                switch (iType)
+                // handles these seperately so as not to create "attack penalties vs. xxxx"
+                ip = GetFirstItemProperty(oItem);
+                while(GetIsItemPropertyValid(ip))
                 {
-                    case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
-                    case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
-                    case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
-                    if (GetItemPropertyCostTableValue(ip) > iEnh)
-                        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
-                    break;
+                    iType = GetItemPropertyType(ip);
+                    switch (iType)
+                    {
+                        case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
+                        case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
+                        case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
+                        if (GetItemPropertyCostTableValue(ip) > iEnh)
+                            DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ip,oWeapL));
+                        break;
+                    }
+                    ip = GetNextItemProperty(oItem);
                 }
-                ip = GetNextItemProperty(oItem);
             }
         }
+
+        // Add damage resistance penetration.
+        DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iEnh), oWeapL));
+
+        // Cool VFX when striking unarmed
+        if (iMonkEq > 9)
+            //DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), oWeapL));
+            DelayCommand(0.1, IPSafeAddItemProperty(oWeapL, PRCItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
+
+        // This adds creature weapon finesse and a penalty to offset the DR penetration attack bonus.
+        SetLocalInt(oCreature, "UnarmedEnhancement", iEnh);
+        SetLocalInt(oCreature, "UnarmedEnhancementGlove", iGloveEnh);
     }
 
     // Weapon finesse or intuitive attack?
     SetLocalInt(oCreature, "UsingCreature", TRUE);
     ExecuteScript("prc_intuiatk", oCreature);
     DelayCommand(1.0f, DeleteLocalInt(oCreature, "UsingCreature"));
+    ApplyUnarmedAttackEffects(oCreature);            
 
     // Add the appropriate damage to the fist.
     int iMonsterDamage = FindUnarmedDamage(oCreature);
@@ -602,19 +625,6 @@ void UnarmedFists(object oCreature)
     if(GetHasFeat(FEAT_REND, oCreature))
         AddItemProperty(DURATION_TYPE_PERMANENT, 
             ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);
-
-    // Cool VFX when striking unarmed
-    if (iMonkEq > 9)
-        //DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), oWeapL));
-        DelayCommand(0.1, IPSafeAddItemProperty(oWeapL, PRCItemPropertyBonusFeat(IP_CONST_FEAT_KI_STRIKE), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE));
-
-    // Add damage resistance penetration.
-    DelayCommand(0.1, AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyAttackBonus(iEnh), oWeapL));
-
-    // This adds creature weapon finesse and a penalty to offset the DR penetration attack bonus.
-    SetLocalInt(oCreature, "UnarmedEnhancement", iEnh);
-    SetLocalInt(oCreature, "UnarmedEnhancementGlove", iGloveEnh);
-    ApplyUnarmedAttackEffects(oCreature);
 
     // Friendly message to remind players that certain things won't appear correct.
     if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE 

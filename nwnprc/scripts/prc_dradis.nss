@@ -223,7 +223,6 @@ void main()
     //tail slam at level 17
     if(nLevel >= 2)
     {
-        
         string sSizeRef;
         int nSize = PRCGetCreatureSize(oPC);
         switch(nSize)
@@ -238,19 +237,19 @@ void main()
             case CREATURE_SIZE_COLOSSAL:    sSizeRef += "c"; break;
             default:                        sSizeRef += "m"; break;
         }
-        if(nLevel >=2)
+        if(GetHasFeat(DRACONIC_BITE, oPC))
         {
             string sResRef = "prc_rdd_bite_"+sSizeRef;
             AddNaturalSecondaryWeapon(oPC, sResRef); 
             //claw here
         }
-        if(nLevel >=12)
+        if(GetHasFeat(DRACONIC_WINGSLAMS, oPC))
         {
             string sResRef = "prc_rdd_wing_"+sSizeRef;
             if(nSize >= CREATURE_SIZE_MEDIUM)
                 AddNaturalSecondaryWeapon(oPC, sResRef, 2);             
         }
-        if(nLevel >=17)
+        if(GetHasFeat(DRACONIC_TAILSLAP, oPC))
         {
             string sResRef = "prc_rdd_tail_"+sSizeRef;
             if(nSize >= CREATURE_SIZE_LARGE)

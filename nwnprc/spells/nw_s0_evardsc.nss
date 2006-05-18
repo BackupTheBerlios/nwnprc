@@ -55,28 +55,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //now do grappling and stuff
             int nGrappleSucessful = FALSE;
             //this spell doesnt need to make a touch attack
-            int nTargetGrapple;
-            int nTargetRoll = d20();
-            nTargetGrapple += GetGrappleMod(oTarget);
-            nTargetGrapple += nTargetRoll;
-            int nAttackerGrapple;
-            int nAttackerRoll = d20();
             //as defined in the spell
-            nAttackerGrapple += nCasterLevel+nAttackerRoll+4+4;
-            //defender has benefit
-            if(nAttackerGrapple > nTargetGrapple)
-                nGrappleSucessful = TRUE;
-            string sMessage = GetName(GetAreaOfEffectCreator())+" grapples "+GetName(oTarget)+" : ";
-            if(nGrappleSucessful)
-                sMessage += "*hit*";
-            else
-                sMessage += "*miss*";
-            sMessage += " : ("+IntToString(nAttackerRoll)+" + "+IntToString(nAttackerGrapple-nAttackerRoll)+" = "+IntToString(nAttackerGrapple);
-            sMessage += " vs "+IntToString(nTargetRoll)+" + "+IntToString(nTargetGrapple-nTargetRoll)+" = "+IntToString(nTargetGrapple)+")";
-            SendMessageToPC(GetAreaOfEffectCreator(), sMessage);
-            //prevent a double-message if the creator walks into their own spell
-            if(GetAreaOfEffectCreator() != oTarget)
-                SendMessageToPC(oTarget, sMessage);
+            int nAttackerGrappleMod = nCasterLevel+4+4;
+            nGrappleSucessful = DoGrappleCheck(OBJECT_INVALID, oTarget, 
+                nAttackerGrappleMod, 0, 
+                GetStringByStrRef(6341), "");
             if(nGrappleSucessful)
             {
                 //if already being grappled, apply damage

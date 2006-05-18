@@ -236,8 +236,9 @@ const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
 const string PRC_USE_NEW_IMBUE_ARROW                 = "PRC_USE_NEW_IMBUE_ARROW";
 
 /*
- * If this is set, the Dragon Disciple size increases at level 15 and 25 will be disabled
- * Players will still recieve the feats, but they will not do anything.
+ * If this is set, the Dragon Disciple size increases at level 15 and 25 
+ * will give ability increases matching the new size
+ * In any case, DDs will benefit from increased natural damage
 */
 const string PRC_DRAGON_DISCIPLE_SIZE_CHANGES        = "PRC_DRAGON_DISCIPLE_SIZE_CHANGES";
 

@@ -60,9 +60,10 @@ void DeathlessFrenzyCheck(object oTarget);
  * feats into account.
  *
  * @param oObject Creature whose size to get
+ * @param nAbilityAdjust Int if TRUE, it will only take into account things that affect abiliy scores as well as size
  * @return        CREATURE_SIZE_* constant
  */
-int PRCGetCreatureSize(object oObject = OBJECT_SELF);
+int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nAbilityAdjust = FALSE);
 
 
 //this is here rather than inc_utility because it uses creature size and screws compiling if its elsewhere
@@ -282,7 +283,7 @@ effect EffectShaken()
 
 // Get the size (CREATURE_SIZE_*) of oCreature.
 //including any PRC size modification feats / spells
-int PRCGetCreatureSize(object oObject = OBJECT_SELF)
+int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nAbilityAdjust = FALSE)
 {
     int nSize = GetCreatureSize(oObject);
     if(GetHasFeat(FEAT_SIZE_DECREASE_6, oObject))
@@ -311,7 +312,8 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF)
     else if(GetHasFeat(FEAT_SIZE_INCREASE_1, oObject))
         nSize +=  1;
 
-    if(!GetPRCSwitch(PRC_DRAGON_DISCIPLE_SIZE_CHANGES))
+    if(!nAbilityAdjust
+        || GetPRCSwitch(PRC_DRAGON_DISCIPLE_SIZE_CHANGES))
     {
         if(GetHasFeat(FEAT_DRACONIC_SIZE_INCREASE_2, oObject))
             nSize +=  2;
@@ -319,13 +321,16 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF)
             nSize +=  1;
     }
 
-    // Size changing powers
-    // Compression: Size decreased by one or two categories, depending on augmentation
-    if(GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction"))
-        nSize -= GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction");
-    // Expansion: Size increase by one or two categories, depending on augmentation
-    if(GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease"))
-        nSize += GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
+    if(!nAbilityAdjust)
+    {
+        // Size changing powers
+        // Compression: Size decreased by one or two categories, depending on augmentation
+        if(GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction"))
+            nSize -= GetLocalInt(oObject, "PRC_Power_Compression_SizeReduction");
+        // Expansion: Size increase by one or two categories, depending on augmentation
+        if(GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease"))
+            nSize += GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
+    }    
 
 
     if(nSize < CREATURE_SIZE_FINE)

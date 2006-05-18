@@ -14870,8 +14870,12 @@ Bonus Feats:  The epic dragon disciple gains a bonus feat every five levels afte
 Your breath weapon damage potential increases by 2d10 for every 3 levels after 10th.
 The save DC against your breath weapon continues to increase as you level.
 Your natural AC increases by +1 for every 5 levels after 10th.
+At level 12 you gain the ability to make 2 slam attacks with your wings.
+At level 15 you increase in size, which increases the damage of your natural weapons.
+At level 17 you gain a tail and the ability to make a slap attack with it.
 At level 18 you gain spell resistance equal to 20+Disciple Level.
 At level 20 you gain True Seeing.
+At level 25 you increase in size, which increases the damage of your natural weapons.
 
 Epic Dragon Disciple Bonus Feats List:
 Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell,  Epic Damage Reduction, Epic Prowess, Epic Reputation, Epic Spell Focus, Epic Spell Penetration, Epic Toughness, Improved Combat Casting, Epic Spell Focus: Lore, Great Charisma, Great Constitution, Great Strength.
@@ -21560,6 +21564,8 @@ Level
 1: Draconic Armor - The character's skin develops nearly invisible scales that increase his/her natural armor class by +1.
   Hit Dice Increase (d6) - The character rolls d6 for hit points. This change is not retroactive.
 2: Draconic Ability Scores -  Strength +2.
+  Claw Attack - The character gains 2 claws they can use as primary natural attacks.
+  Bite Attack - The character gains a bite they can use as a secondary natural attack.
 3: Breath Weapon I - The character can activate a Dragon Breath Weapon, dealing 2d10 points of damage to each opponent caught within.
 4: Hit Dice Increase (d8) - The character rolls d8 for hit points. This change is not retroactive.
   Draconic Ability Scores -  Strength +2.
@@ -21760,7 +21766,7 @@ At level 3, you gain the ability to breath a 60 foot line of force once per day.
   <entry id="54977" lang="en" sex="m">Draconic Immunity</entry>
   <entry id="54978" lang="en" sex="m">You receive an immunity based on what type of Dragon Disciple you are.  Not all Dragon Disciples receive an immunity.</entry>
   <entry id="54979" lang="en" sex="m">Draconic Enlargement I</entry>
-  <entry id="54980" lang="en" sex="m">At 15th level, and every 10 levels thereafter, the dragon disciple's size increases by one step (such as from Large to Huge), to a maximum of Colossal size. The change in size affects the dragon disciple's base natural weapon damage. Apply the appropriate new size modifier to the character's attacks and AC. It also changes Strength, Dexterity, and Constitution as appropriate for the new size.</entry>
+  <entry id="54980" lang="en" sex="m">At 15th level, and every 10 levels thereafter, the dragon disciple's size increases by one step (such as from Large to Huge), to a maximum of Colossal size. The change in size affects the dragon disciple's base natural weapon damage. Apply the appropriate new size modifier to the character's attacks and AC. It may also change Strength, Dexterity, and Constitution as appropriate for the new size (dependant on PRC_DRAGON_DISCIPLE_SIZE_CHANGES switch).</entry>
   <entry id="54981" lang="en" sex="m">Draconic Enlargement II</entry>
   <entry id="54982" lang="en" sex="m">Epic Dragon Disciple</entry>
   <entry id="54983" lang="en" sex="m">Embracing your draconic heritage is but one stop on your life journey. Your quest to understand, command, and harness your draconic energies has taken you into realm of the epic.
@@ -21773,13 +21779,58 @@ Your breath weapon damage potential increases by 1d10 for every 3 levels after 1
 The save DC against your breath weapon increses by +1 every 4 levels after 10th.
 You gain an additional useage of your breath weapon every 3 levels after 10th, subject to a 1d4 round delay between uses.
 Your natural AC increases by +1 for every 5 levels after 10th.
+At 12th level, you gain the ability to use your wings to make additional slam attacks.
 You increase in size at level 15th and 25th, with an appropriate increase in abilities.
+At 17th level, you grow a tail, which can be used to make an additional attack with.
 At 18th level, you gain Spell Resistance equal to 20+Dragon Disciple levels.
 At 20th level, you gain True Seeing.
 
 Epic Dragon Disciple Bonus Feats List:
 Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell,  Epic Damage Reduction, Epic Prowess, Epic Reputation, Epic Spell Focus, Epic Spell Penetration, Epic Toughness, Improved Combat Casting.
 </entry>
+  <entry id="54984" lang="en" sex="m">Draconic Claws</entry>
+  <entry id="54985" lang="en" sex="m">At 2nd level, a dragon disciple gains 2 claws that can be used to make natural attacks with. You cannot use claws when weilding any weapons in your hands.
+
+Size - Damage
+Fine - 1d2
+Diminutive - 1d2
+Timy - 1d2
+Small - 1d3
+Medium - 1d4
+Large - 1d6
+Huge - 1d8
+Gigantic - 2d6 
+Colossal - 3d6</entry>
+  <entry id="54986" lang="en" sex="m">Draconic Bite</entry>
+  <entry id="54987" lang="en" sex="m">At 2nd level, a dragon disciple gains a bite that can be used to make a natural attack with. You can use your bite in addition to any weapons weilding in your hands.
+
+Size - Damage
+Fine - 1d2
+Diminutive - 1d2
+Timy - 1d3
+Small - 1d4
+Medium - 1d6
+Large - 1d8
+Huge - 2d6
+Gigantic - 3d6 
+Colossal - 4d6</entry>
+  <entry id="54988" lang="en" sex="m">Draconic Wing Slams</entry>
+  <entry id="54989" lang="en" sex="m">At 12nd level, a dragon disciple gains the ability to make 2 natural attacks with their wings, if of medium size or bigger. You can use your wing slams in addition to any weapons weilding in your hands.
+
+Size - Damage
+Medium - 1d3
+Large - 1d4
+Huge - 1d6
+Gigantic - 1d8 
+Colossal - 2d6</entry>
+  <entry id="54990" lang="en" sex="m">Draconic Tail</entry>
+  <entry id="54991" lang="en" sex="m">At 17nd level, a dragon disciple grows a tail that can be used to make a natural attack with, if of large size or bigger. You can use your tail slap in addition to any weapons weilding in your hands.
+
+Size - Damage
+Large - 1d6
+Huge - 1d8
+Gigantic - 2d6 
+Colossal - 3d6</entry>
   <entry id="55004" lang="en" sex="m">End of DD reserved</entry>
   <entry id="55100" lang="en" sex="m">Ninja</entry>
   <entry id="55101" lang="en" sex="m">Ninjas</entry>

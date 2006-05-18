@@ -535,9 +535,28 @@ void main()
     
     //natural weapons
     //replace with a feat check
-    if(GetRacialType(OBJECT_SELF)==RACIAL_TYPE_MINOTAUR)
+    int nRace = GetRacialType(oPC);
+    if(nRace==RACIAL_TYPE_MINOTAUR)
     {
         string sResRef = "prc_mino_gore_";
+        int nSize = PRCGetCreatureSize(oPC);
+        switch(nSize)
+        {
+            case CREATURE_SIZE_FINE:        sResRef += "f"; break;
+            case CREATURE_SIZE_DIMINUTIVE:  sResRef += "d"; break;
+            case CREATURE_SIZE_SMALL:       sResRef += "s"; break;
+            case CREATURE_SIZE_MEDIUM:      sResRef += "m"; break;
+            case CREATURE_SIZE_LARGE:       sResRef += "l"; break;
+            case CREATURE_SIZE_HUGE:        sResRef += "h"; break;
+            case CREATURE_SIZE_GARGANTUAN:  sResRef += "g"; break;
+            case CREATURE_SIZE_COLOSSAL:    sResRef += "c"; break;
+            default:                        sResRef += "l"; break;
+        }
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_TROLL)
+    {
+        string sResRef = "prc_troll_bite_";
         int nSize = PRCGetCreatureSize(oPC);
         switch(nSize)
         {

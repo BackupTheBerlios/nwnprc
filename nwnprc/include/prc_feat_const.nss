@@ -1584,6 +1584,10 @@ const int DRACONIC_ARMOR_AUG_2                   = 4150;
 const int DRAGON_BLOODED                         = 4151;
 const int FEAT_DRACONIC_SIZE_INCREASE_1          = 4152;
 const int FEAT_DRACONIC_SIZE_INCREASE_2          = 4153;
+const int DRACONIC_CLAWS                         = 4162;
+const int DRACONIC_BITE                          = 4163;
+const int DRACONIC_WINGSLAMS                     = 4164;
+const int DRACONIC_TAILSLAP                      = 4165;
 
 // Complete Adv Ninja
 const int FEAT_EPIC_ACROBATICS_8    = 2484;

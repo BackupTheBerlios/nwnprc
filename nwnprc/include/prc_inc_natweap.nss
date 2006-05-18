@@ -85,6 +85,13 @@
     *) Since initiative is hardcoded, we cant use that at all. Relies on heartbeat scripts instead.
 */
 
+void DoNaturalAttack(object oWeapon);
+void DoNaturalWeaponHB(object oPC = OBJECT_SELF);
+void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1);
+int GetIsUsingPrimaryNaturalWeapons(object oPC);
+void SetIsUsingPrimaryNaturalWeapons(object oPC, int nNatural);
+void ClearNaturalWeapons(object oPC);
+
 //the name of the array that the resrefs of the natural weapons are stored in
 const string ARRAY_NAT_WEAP_RESREF  = "ARRAY_NAT_WEAP_RESREF";
 
@@ -166,6 +173,9 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
     {
         //get the resref to use
         string sResRef = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF, i);
+        //if null, move to next
+        if(sResRef == "")
+            continue;
         //get the created item
         object oWeapon = GetObjectByTag(sResRef);
         if(!GetIsObjectValid(oWeapon))
@@ -179,7 +189,7 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
         if(!GetIsObjectValid(oWeapon))
         {
             //something odd here, abort to be safe
-            break;
+            continue;
         }
         
         //do the attack within a delay
@@ -215,7 +225,32 @@ void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1)
     }       
 }
 
+void RemoveNaturalSecondaryWeapons(object oPC, string sResRef)
+{
+    if(!array_exists(oPC, ARRAY_NAT_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_WEAP_RESREF);
+    //check if it was already added
+    int i;
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF);i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF, i);
+        if(sTest == sResRef)
+            array_set_string(oPC, ARRAY_NAT_WEAP_RESREF, i, "");            
+    }    
+}
+
 void ClearNaturalWeapons(object oPC)
 {
     array_delete(oPC, ARRAY_NAT_WEAP_RESREF);
+}
+
+int GetIsUsingPrimaryNaturalWeapons(object oPC)
+{
+    int nNatural;
+    return nNatural;
+}
+
+
+void SetIsUsingPrimaryNaturalWeapons(object oPC, int nNatural)
+{
 }

@@ -3,3 +3,4 @@ Things easy to forget about that still need to be done...
 Claws of the Bebilith - Grapple code in prc_onhitcast
 Lahm's Finger Darts - Regrowth of fingers with ability damage
 Evil Weather - recolored Storm of Vengeance VFX
+Boneblade - Put the new swords in

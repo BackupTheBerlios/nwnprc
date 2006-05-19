@@ -95,19 +95,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 nCasterRoll = d20(1) + nCasterModifier
                     + CasterLvl
                     + 10 + 4;
-
-                nTargetRoll = d20(1);
-                nTargetRoll += GetGrappleMod(oTarget);
-
-                // Give the caster feedback about the grapple check if he is a PC.
-                if (GetIsPC(OBJECT_SELF))
-                {
-                    string suffix = nCasterRoll >= nTargetRoll ? ", success" : ", failure";
-                    SendMessageToPC(OBJECT_SELF, "Grapple check " + IntToString(nCasterRoll) + 
-                        " vs. " + IntToString(nTargetRoll) + suffix);
-                }
-            
-                if (nCasterRoll > nTargetRoll)
+    
+                int nAttackerGrappleMod = nCasterModifier
+                    + CasterLvl
+                    + 10 + 4;
+                int nGrapple = DoGrappleCheck(OBJECT_INVALID, oTarget,  
+                    nAttackerGrappleMod, 0,
+                    GetStringByStrRef(2685), "");
+                if (nGrapple)
                 {
                     // Hold the target paralyzed
                     effect eKnockdown = EffectParalyze();

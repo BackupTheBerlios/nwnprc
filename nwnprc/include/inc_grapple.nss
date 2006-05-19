@@ -49,6 +49,11 @@ int DoGrappleCheck(object oAttacker, object oDefender,
     int nAttackerMod = 0, int nDefenderMod = 0, 
     string sAttackerName = "", string sDefenderName = "")
 {
+    //cant grapple incorporeal or ethereal things
+    if((GetIsEthereal(oDefender) && !GetIsEthereal(oAttacker)) 
+        || GetIsIncorporeal(oDefender))
+        return FALSE;
+        
     int nResult;
     int nDefenderGrapple;
     int nDefenderRoll = d20();
@@ -101,5 +106,62 @@ int GetIsGrappledByObject(object oTarget, object oGrappler)
     return nGrappled;
 }
 
+void SetIsGrappledByObject(object oTarget, object oGrappler)
+{
 
-void StartGrapple
+    SetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF),
+        GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF))+1);
+    DelayCommand(6.1,
+        SetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF),
+            GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF))-1));
+}
+
+// Rather than PnP grappling where you can do various things
+// while grappling, both targets are immobilised. 
+// If a player uses their grapple feat on a target they are already
+// grappling, then they will use grapple special attacks (constrict, swallow etc).
+void StartGrapple(object oAttacker, object oDefender, 
+    int nAttackerMod = 0, int nDefenderMod = 0, 
+    string sAttackerName = "", string sDefenderName = "")
+{
+    //cant grapple incorporeal or ethereal things
+    if((GetIsEthereal(oDefender) && !GetIsEthereal(oAttacker))
+        || GetIsIncorporeal(oDefender))
+        return;
+        
+    if(GetIsGrappledByObject(oDefender, oAttacker))
+    {
+        //special stuff code
+        return;
+    }
+    //initiate grapple
+    //provoke attack of opportunity
+    effect eInvalid;
+    PerformAttack(oAttacker, oDefender, eInvalid);
+    int nAoO = GetLocalInt(oDefender, "PRCCombat_StruckByAttack");
+    //grapple only works if it missed
+    if(!nAoO)
+    {
+        //touch attack
+        //bypass if oAttacker is not valid
+        if(!GetIsObjectValid(oAttacker)
+            || PRCDoMeleeTouchAttack(oDefender, TRUE, oAttacker))
+        {
+            //grapple check
+            if(DoGrappleCheck(oAttacker, oDefender, 
+                nAttackerMod, nDefenderMod, 
+                sAttackerName, sDefenderName))
+            {
+                //now grappled
+                //create the effect
+                effect eHold = EffectCutsceneImmobilize();
+                effect eEntangle = EffectVisualEffect(VFX_DUR_SPELLTURNING_R);
+                effect eLink = EffectLinkEffects(eHold, eEntangle);
+                //apply the effect
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAttacker, 6.0);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oDefender, 6.0);
+                //run the pseudoHB
+            }
+        }    
+    }
+}

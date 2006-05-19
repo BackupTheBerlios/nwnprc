@@ -29,8 +29,11 @@ public class main {
 		if(toCall.equals("-rwg")){
 			//random world (map) generator
 			rmg.rwg.rwg.main(paramsToPass);
-		}
-		else{
+
+		}else if(toCall.equals("-rag")){
+			//random area generator
+			rmg.rag.rag.main(paramsToPass);
+		} else{
 			System.out.println("Unknown class: " + toCall);
 			readMe();
 		}
@@ -45,7 +48,8 @@ public class main {
 		                   "  java -jar rmg.jar [--help] | class [parameters]\n"+
 		                   "\n"+
 		                   "class       name of the class to call. possible values:\n"+
-		                   "            -rig Random Item Generator \n"+
+		                   "            -rwg Random World Generator \n"+
+		                   "            -rag Random Area Generator \n"+
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

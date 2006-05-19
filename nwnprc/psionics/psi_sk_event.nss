@@ -232,7 +232,7 @@ void main()
     }
     else if(nEvent == EVENT_ONUNAQUIREITEM)
     {
-        if(LOCAL_DEBUG) DoDebug("psi_sk_event: OnAcquire");
+        if(LOCAL_DEBUG) DoDebug("psi_sk_event: OnUnAcquire");
         object oItem = GetModuleItemLost();
         if(GetStringLeft(GetTag(oItem), 14) == "prc_sk_mblade_")
         {

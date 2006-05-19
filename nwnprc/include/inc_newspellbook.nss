@@ -551,6 +551,7 @@ DoDebug("Error: NewSpellbookMem_"+IntToString(nClass)+" array does not exist");
     }
     //check if all cast
     int nSpellbookType = GetSpellbookTypeForClass(nClass);
+    int nSpellLevel = StringToInt(Get2DACache(sFile, "Level", nSpellbookID));
     if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
     {
         int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
@@ -571,7 +572,6 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
     }
     else  if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
     {
-        int nSpellLevel = StringToInt(Get2DACache(sFile, "Level", nSpellbookID));
         int nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel);
 DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] = "+IntToString(nCount));
         if(nCount < 1)
@@ -596,8 +596,43 @@ DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellbookID)+"] 
         && FindSubString(GetStringLowerCase(Get2DACache("spells", "VS", nSpellID)),"s") != -1)
         //52946 = Spell failed due to arcane spell failure!
     {
-        SendMessageToPCByStrRef(oPC, 52946);
-        return;
+        int nFail = TRUE;
+        //auto-still exceptions
+        if(nMetamagic == METAMAGIC_STILL
+            ||(GetHasFeat(FEAT_EPIC_AUTOMATIC_STILL_SPELL_1, oPC) 
+                && nSpellLevel <= 3)
+            ||(GetHasFeat(FEAT_EPIC_AUTOMATIC_STILL_SPELL_2, oPC) 
+                && nSpellLevel <= 6)
+            ||(GetHasFeat(FEAT_EPIC_AUTOMATIC_STILL_SPELL_3, oPC) 
+                && nSpellLevel <= 9))
+            nFail = FALSE;
+        if(nFail)
+        {
+            SendMessageToPCByStrRef(oPC, 52946);
+            return;
+        }   
+    }
+    //test for deaf/silenced
+    if(FindSubString(GetStringLowerCase(Get2DACache("spells", "VS", nSpellID)),"v") != -1
+        && (GetHasEffect(EFFECT_TYPE_SILENCE, oPC)
+            || (GetHasEffect(EFFECT_TYPE_DEAF, oPC) && Random(100) < 20)))
+        //3734 = Spell failed!
+    {
+        int nFail = TRUE;
+        //auto-still exceptions
+        if(nMetamagic == METAMAGIC_SILENT
+            || (GetHasFeat(FEAT_EPIC_AUTOMATIC_SILENT_SPELL_1, oPC) 
+                && nSpellLevel <= 3)
+            ||(GetHasFeat(FEAT_EPIC_AUTOMATIC_SILENT_SPELL_2, oPC) 
+                && nSpellLevel <= 6)
+            ||(GetHasFeat(FEAT_EPIC_AUTOMATIC_SILENT_SPELL_3, oPC) 
+                && nSpellLevel <= 9))
+            nFail = FALSE;
+        if(nFail)
+        {
+            SendMessageToPCByStrRef(oPC, 3734);
+            return;
+        }   
     }
     //uses GetSpellId to get the fake spellID not the real one
     //this is only the BASE DC, feats etc are added on top of this

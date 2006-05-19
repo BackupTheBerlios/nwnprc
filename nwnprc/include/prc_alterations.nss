@@ -98,6 +98,13 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
  */
 int GetBreakConcentrationCheck(object oConcentrator);
 
+/**
+ * Gets a creature that can apply an effect
+ * Useful to apply/remove specific effects rather than using spellID
+ * Remember to assigncommand the effect creation
+ */
+object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TRUE);
+
 //////////////////////////////////////////////////
 /* Include section                              */
 //////////////////////////////////////////////////
@@ -619,5 +626,55 @@ int GetBreakConcentrationCheck(object oConcentrator)
     return FALSE;
 }
 
+
+object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TRUE)
+{
+    object oWP = GetObjectByTag(sTag);
+    object oLimbo = GetObjectByTag("HEARTOFCHAOS");
+    location lLimbo = GetLocation(oLimbo);
+    if(!GetIsObjectValid(oLimbo))
+        lLimbo = GetStartingLocation();
+    //not valid, create it
+    if(!GetIsObjectValid(oWP))
+    {
+        //has to be a creature so it can be jumped around
+        //re-used the 2da cache blueprint since it has no scripts
+        oWP = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache", lLimbo, FALSE, sTag);
+    }
+    if(!GetIsObjectValid(oWP)
+        && DEBUG)
+    {
+        DoDebug(sTag+" is not valid");
+    }
+    //make sure the player can never interact with WP
+    SetPlotFlag(oWP, TRUE);
+    SetCreatureAppearanceType(oWP, APPEARANCE_TYPE_INVISIBLE_HUMAN_MALE);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oWP);
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oWP);
+    //remove previous effects
+    if(nStripEffects)
+    {
+        effect eTest = GetFirstEffect(oPC);
+        while(GetIsEffectValid(eTest))
+        {
+            if(GetEffectCreator(eTest) == oWP
+                && GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL)
+            {   
+                if(DEBUG) DoDebug("Stripping previous effect");
+                RemoveEffect(oPC, eTest);
+            }    
+            eTest = GetNextEffect(oPC);
+        }
+    }
+    //jump to PC
+    //must be in same area to apply effect
+    if(GetArea(oWP) != GetArea(oPC))
+        AssignCommand(oWP, 
+            ActionJumpToObject(oPC));
+    return oWP;     
+}
+
+
 // Test main
 //void main(){}
+

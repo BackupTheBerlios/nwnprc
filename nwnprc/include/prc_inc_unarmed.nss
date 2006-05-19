@@ -452,59 +452,6 @@ void UnarmedFists(object oCreature)
     object oLefthand = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
     object oWeapL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oCreature);
 
-    int iRace = GetRacialType(oCreature);
-    int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oCreature);
-    int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oCreature);
-    int iSacFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
-    int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
-    int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
-    int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
-    int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
-
-    // Sacred Fists who break their code get no benefits.
-    if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacFist = 0;
-
-    // The monk adds all these classes.
-    int iMonkEq = iMonk + iShou + iSacFist + iHenshin + iZuoken;
-
-    // Determine the type of damage the character should do.
-    string sWeapType;
-    if (GetHasFeat(FEAT_CLAWDRAGON, oCreature) ||
-        //iRace == RACIAL_TYPE_TROLL             ||
-        iRace == RACIAL_TYPE_RAKSHASA          ||
-        iRace == RACIAL_TYPE_LIZARDFOLK        ||
-        iRace == RACIAL_TYPE_WEMIC)
-    {
-        sWeapType = "PRC_UNARMED_S";
-    }
-    else if (iRace == RACIAL_TYPE_TANARUKK
-             //|| iRace == RACIAL_TYPE_MINOTAUR
-             )
-    {
-        sWeapType = "PRC_UNARMED_P";
-    }
-    else
-    {
-        sWeapType = "PRC_UNARMED_B";
-    }
-
-
-    // Equip the creature weapon.
-    if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
-    {
-        if (GetHasItem(oCreature, sWeapType))
-        {
-            oWeapL = GetItemPossessedBy(oCreature, sWeapType);
-            SetIdentified(oWeapL, TRUE);
-            AssignCommand(oCreature, ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
-        }
-        else
-        {
-            oWeapL = CreateItemOnObject(sWeapType, oCreature);
-            SetIdentified(oWeapL, TRUE);
-            AssignCommand(oCreature,ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
-        }
-    }
 
     // Clean up the mess of extra fists made on taking first level.
     DelayCommand(6.0f, CleanExtraFists(oCreature));
@@ -513,6 +460,61 @@ void UnarmedFists(object oCreature)
     // only applies when not using natural weapons
     if(!GetIsUsingPrimaryNaturalWeapons(oCreature))
     {
+    
+        int iRace = GetRacialType(oCreature);
+        int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oCreature);
+        int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oCreature);
+        int iSacFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
+        int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
+        int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
+        int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
+        int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
+    
+        // Sacred Fists who break their code get no benefits.
+        if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacFist = 0;
+    
+        // The monk adds all these classes.
+        int iMonkEq = iMonk + iShou + iSacFist + iHenshin + iZuoken;
+    
+        // Determine the type of damage the character should do.
+        string sWeapType;
+        if (GetHasFeat(FEAT_CLAWDRAGON, oCreature) ||
+            //iRace == RACIAL_TYPE_TROLL             ||
+            iRace == RACIAL_TYPE_RAKSHASA          ||
+            iRace == RACIAL_TYPE_LIZARDFOLK        ||
+            iRace == RACIAL_TYPE_WEMIC)
+        {
+            sWeapType = "PRC_UNARMED_S";
+        }
+        else if (iRace == RACIAL_TYPE_TANARUKK
+                 //|| iRace == RACIAL_TYPE_MINOTAUR
+                 )
+        {
+            sWeapType = "PRC_UNARMED_P";
+        }
+        else
+        {
+            sWeapType = "PRC_UNARMED_B";
+        }
+    
+    
+        // Equip the creature weapon.
+        if (!GetIsObjectValid(oWeapL) || GetTag(oWeapL) != sWeapType)
+        {
+            if (GetHasItem(oCreature, sWeapType))
+            {
+                oWeapL = GetItemPossessedBy(oCreature, sWeapType);
+                SetIdentified(oWeapL, TRUE);
+                AssignCommand(oCreature, ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
+            }
+            else
+            {
+                oWeapL = CreateItemOnObject(sWeapType, oCreature);
+                SetIdentified(oWeapL, TRUE);
+                AssignCommand(oCreature,ActionEquipItem(oWeapL, INVENTORY_SLOT_CWEAPON_L));
+            }
+        }
+    
         int iKi = (iMonkEq > 9)  ? 1 : 0;
             iKi = (iMonkEq > 12) ? 2 : iKi;
             iKi = (iMonkEq > 15) ? 3 : iKi;
@@ -623,8 +625,8 @@ void UnarmedFists(object oCreature)
 
     // Add OnHitCast: Unique if necessary
     if(GetHasFeat(FEAT_REND, oCreature))
-        AddItemProperty(DURATION_TYPE_PERMANENT, 
-            ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), oWeapL);
+        IPSafeAddItemProperty(oWeapL, 
+            ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1));
 
     // Friendly message to remind players that certain things won't appear correct.
     if (GetLocalInt(oCreature, "UnarmedSubSystemMessage") != TRUE 

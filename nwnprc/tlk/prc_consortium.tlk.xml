@@ -16154,7 +16154,7 @@ Special Abilities:
 - Natural Armor Bonus: Racial natural armor bonus of 5.
 - Weapon Proficiency (Simple): All Minotaurs are proficient with Simple Weapons.
 - Weapon Proficiency (Martial): All Minotaurs are proficient with Martial Weapons.
-- Weapon Proficiency (Creature): Minotaurs can make an unarmed gore attack with their horns.
+- Natural Weapon: Minotaurs can make an unarmed gore attack with their horns.
 - Powerful Charge: Minotaurs can make a charging gore attack at +2 to hit, -2 to AC for an additional 4d6+6 damage.
 - Uncanny Dodge: Minotaurs retain their dexterity bonus to AC, even if caught flat-footed or attacked by a hidden or invisible creature.
 - Large Creature: Minotaurs suffer -1 penalties to their Attack and Armor Class, and -4 to their Hide skill.
@@ -16345,7 +16345,8 @@ Special Abilities:
 
 - Darkvision: Trolls are able to see in the dark.
 - Track: +1 racial bonus to Spot, Search and Listen checks.
-- Weapon Proficiency (Creature): Trolls can make an unarmed attack with their claws.
+- Natural Weapon: Trolls can make an natural bite attack and attack with claws.
+- Rend: It a troll hits with both its claws, it deals additional damage.
 - Natural Armor Bonus: Racial natural armor bonus of 5.
 - Regeneration: Innate ability to regenerate 5 hit points per round.
 - Large Creature: Trolls suffer -1 penalties to their Attack and Armor Class, and -4 to their Hide skill.

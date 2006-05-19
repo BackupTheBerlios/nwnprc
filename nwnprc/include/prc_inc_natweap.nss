@@ -91,9 +91,14 @@ void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1);
 int GetIsUsingPrimaryNaturalWeapons(object oPC);
 void SetIsUsingPrimaryNaturalWeapons(object oPC, int nNatural);
 void ClearNaturalWeapons(object oPC);
+void UpdateSecondaryWeaponSizes(object oPC);
+string GetAffixForSize(int nSize);
 
 //the name of the array that the resrefs of the natural weapons are stored in
-const string ARRAY_NAT_WEAP_RESREF  = "ARRAY_NAT_WEAP_RESREF";
+const string ARRAY_NAT_SEC_WEAP_RESREF   = "ARRAY_NAT_SEC_WEAP_RESREF";
+const string ARRAY_NAT_PRI_WEAP_RESREF   = "ARRAY_NAT_PRI_WEAP_RESREF";
+const string ARRAY_NAT_PRI_WEAP_ATTACKS  = "ARRAY_NAT_PRI_WEAP_ATTACKS";
+const string NATURAL_WEAPON_ATTACK_COUNT = "NATURAL_WEAPON_ATTACK_COUNT";
 
 #include "prc_alterations"
 #include "prc_inc_combat"
@@ -165,14 +170,15 @@ void DoNaturalAttack(object oWeapon)
 void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
 {
     //no natural weapons, abort
-    if(!array_exists(oPC, ARRAY_NAT_WEAP_RESREF))
+    if(!array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
         return; 
+    UpdateSecondaryWeaponSizes(oPC);
     int i;
     float fDelay = IntToFloat(Random(20))/10.0;
-    while(i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF))
+    while(i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
     {
         //get the resref to use
-        string sResRef = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF, i);
+        string sResRef = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
         //if null, move to next
         if(sResRef == "")
             continue;
@@ -205,52 +211,185 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
     }
 }
 
-void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1)
+string GetAffixForSize(int nSize)
 {
-    if(!array_exists(oPC, ARRAY_NAT_WEAP_RESREF))
-        array_create(oPC, ARRAY_NAT_WEAP_RESREF);
+    string sResRef;
+    switch(nSize)
+    {
+        case CREATURE_SIZE_FINE:        sResRef += "f"; break;
+        case CREATURE_SIZE_DIMINUTIVE:  sResRef += "d"; break;
+        case CREATURE_SIZE_SMALL:       sResRef += "s"; break;
+        case CREATURE_SIZE_MEDIUM:      sResRef += "m"; break;
+        case CREATURE_SIZE_LARGE:       sResRef += "l"; break;
+        case CREATURE_SIZE_HUGE:        sResRef += "h"; break;
+        case CREATURE_SIZE_GARGANTUAN:  sResRef += "g"; break;
+        case CREATURE_SIZE_COLOSSAL:    sResRef += "c"; break;
+        default:                        sResRef += "l"; break;
+    }   
+    return sResRef;        
+}
+
+void EquipNaturalWeapon(object oPC, string sResRef)
+{
+    object oObject = CreateItemOnObject(sResRef, oPC);
+    AssignCommand(oPC, ActionEquipItem(oObject, INVENTORY_SLOT_CWEAPON_L));
+}
+
+void UpdateNaturalWeaponSizes(object oPC)
+{
+    int nSize = PRCGetCreatureSize(oPC);
+    int nLastSize = GetLocalInt(oPC, "NaturalWeaponCreatureSize");
+    if(nSize == nLastSize)
+        return; 
+    SetLocalInt(oPC, "NaturalWeaponCreatureSize", nSize);
+    string sCurrent = "_"+GetAffixForSize(nSize);
+    //secondary
+    int i;
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF);i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
+        string sTestSize = GetStringRight(sTest, 2);
+        if(sTestSize != sCurrent
+            && GetStringLeft(sTestSize, 1) == "_")
+        {
+            array_set_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i, 
+                GetStringLeft(sTest, GetStringLength(sTest)-2)+sCurrent);
+        }
+    }    
+    //primary
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
+        string sTestSize = GetStringRight(sTest, 2);
+        if(sTestSize != sCurrent
+            && GetStringLeft(sTestSize, 1) == "_")
+        {
+            array_set_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i, 
+                GetStringLeft(sTest, GetStringLength(sTest)-2)+sCurrent);
+        }
+    }    
+    //equiped
+    if(GetIsUsingPrimaryNaturalWeapons(oPC))
+    {
+        object oObject = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+        string sTest = GetResRef(oObject);
+        string sTestSize = GetStringRight(sTest, 2);
+        if(sTestSize != sCurrent
+            && GetStringLeft(sTestSize, 1) == "_")
+        {
+            DestroyObject(oObject);
+            string sNewResRef = GetStringLeft(sTest, GetStringLength(sTest)-2)+sCurrent;
+            EquipNaturalWeapon(oPC, sNewResRef);
+            
+        }
+    }
+}
+
+void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1)
+{
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
     //check if it was already added
     int i;
-    for(i=0;i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF);i++)
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);i++)
     {
-        string sTest = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF, i);
+        string sTest = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
+        if(sTest == sResRef)
+            return;
+    }
+    //add it/them
+    array_set_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF,
+        array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF), sResRef);
+    array_set_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS,
+        array_get_size(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS), nCount);
+}
+
+void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1)
+{
+    if(!array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_SEC_WEAP_RESREF);
+    //check if it was already added
+    int i;
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF);i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
         if(sTest == sResRef)
             return;
     }
     //add it/them
     for(i=0;i<nCount;i++)
     {
-        array_set_string(oPC, ARRAY_NAT_WEAP_RESREF,
-            array_get_size(oPC, ARRAY_NAT_WEAP_RESREF), sResRef);
+        array_set_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF,
+            array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF), sResRef);
     }       
 }
 
 void RemoveNaturalSecondaryWeapons(object oPC, string sResRef)
 {
-    if(!array_exists(oPC, ARRAY_NAT_WEAP_RESREF))
-        array_create(oPC, ARRAY_NAT_WEAP_RESREF);
+    if(!array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_SEC_WEAP_RESREF);
     //check if it was already added
     int i;
-    for(i=0;i<array_get_size(oPC, ARRAY_NAT_WEAP_RESREF);i++)
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF);i++)
     {
-        string sTest = array_get_string(oPC, ARRAY_NAT_WEAP_RESREF, i);
+        string sTest = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
         if(sTest == sResRef)
-            array_set_string(oPC, ARRAY_NAT_WEAP_RESREF, i, "");            
+            array_set_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i, "");            
     }    
 }
 
 void ClearNaturalWeapons(object oPC)
 {
-    array_delete(oPC, ARRAY_NAT_WEAP_RESREF);
+    array_delete(oPC, ARRAY_NAT_SEC_WEAP_RESREF);
+    array_delete(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
+    array_delete(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
 }
 
 int GetIsUsingPrimaryNaturalWeapons(object oPC)
 {
-    int nNatural;
-    return nNatural;
+    object oObject = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+    if(!GetIsObjectValid(oObject))
+        return FALSE;
+    string sResRef = GetResRef(oObject);
+    int i;
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
+        if(sTest == sResRef)
+            return TRUE;            
+    }    
+    return FALSE;
 }
 
-
-void SetIsUsingPrimaryNaturalWeapons(object oPC, int nNatural)
+void SetPrimaryNaturalWeapon(object oPC, int nIndex)
 {
+    string sResRef = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, nIndex);
+    if(sResRef == "")
+        return;
+    EquipNaturalWeapon(oPC, sResRef);
+    int nAttackCount = array_get_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS, nIndex);
+    //set the number of attacks correctly
+    //note this function does set the number, not BAB
+    //note this function does work on PCs, despite the description
+    if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)))
+        //dont set it directly, instead set the local which is checked in OnUnEquip
+        SetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT, nAttackCount);
+    else
+        SetBaseAttackBonus(nAttackCount);
+    //unlike PnP where they should all be at full AB, here they will be at -5 a time
+    //to compensate, apply +2AB per attack above 1
+    if(nAttackCount > 1)
+    {
+        //get the object thats going to apply the effect
+        object oWP = GetObjectToApplyNewEffect("WP_NatWeapABEffect", oPC);
+        int nBonus = (nAttackCount-1)*2;
+        AssignCommand(oWP, 
+            ActionDoCommand(
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+                    SupernaturalEffect(
+                        EffectAttackIncrease(nBonus)),
+                    oPC)));              
+    }   
 }

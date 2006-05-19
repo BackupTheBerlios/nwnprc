@@ -48,39 +48,7 @@ void main()
     if(DEBUG) DoDebug("prc_speed NewSpeed = "+IntToString(nNewSpeed)+" OldSpeed = "+IntToString(nCurrentSpeed)+" SpeedChange = "+FloatToString(fSpeedChange));  
     if(DEBUG) DoDebug("GetMovementRate() = "+IntToString(GetMovementRate(oPC)));
     //get the object thats going to apply the effect
-    object oWP = GetObjectByTag("PRC_Speed_WP");
-    object oLimbo = GetObjectByTag("HEARTOFCHAOS");
-    location lLimbo = GetLocation(oLimbo);
-    if(!GetIsObjectValid(oLimbo))
-        lLimbo = GetStartingLocation();
-    //not valid, create it
-    if(!GetIsObjectValid(oWP))
-    {
-        //has to be a creature so it can be jumped around
-        //re-used the 2da cache blueprint since it has no scripts
-        oWP = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache", lLimbo, FALSE, "PRC_Speed_WP");
-    }
-    if(!GetIsObjectValid(oWP))
-    {
-        DoDebug("PRC_Speed_WP is not valid");
-    }
-    //make sure the player can never interact with WP
-    SetPlotFlag(oWP, TRUE);
-    SetCreatureAppearanceType(oWP, APPEARANCE_TYPE_INVISIBLE_HUMAN_MALE);
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oWP);
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oWP);
-    //remove previous effects
-    effect eTest = GetFirstEffect(oPC);
-    while(GetIsEffectValid(eTest))
-    {
-        if(GetEffectCreator(eTest) == oWP
-            && GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL)
-        {   
-            DoDebug("Stripping previous speed effect");
-            RemoveEffect(oPC, eTest);
-        }    
-        eTest = GetNextEffect(oPC);
-    }
+    object oWP = GetObjectToApplyNewEffect("WP_SpeedEffect", oPC, TRUE);
     //its an increase
     if(fSpeedChange > 1.0)
     {
@@ -90,10 +58,6 @@ void main()
         else if(nChange > 199)
             nChange = 199;
 DoDebug("Applying an increase in speed "+IntToString(nChange));
-        //must be in same area to apply effect
-        if(GetArea(oWP) != GetArea(oPC))
-            AssignCommand(oWP, 
-                ActionJumpToObject(oPC));
         AssignCommand(oWP, 
             ActionDoCommand(
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,
@@ -109,10 +73,6 @@ DoDebug("Applying an increase in speed "+IntToString(nChange));
         else if(nChange > 99)
             nChange = 99;
 DoDebug("Applying an decrease in speed "+IntToString(nChange));
-        //must be in same area to apply effect
-        if(GetArea(oWP) != GetArea(oPC))
-            AssignCommand(oWP, 
-                ActionJumpToObject(oPC));
         AssignCommand(oWP, 
             ActionDoCommand(
                 ApplyEffectToObject(DURATION_TYPE_PERMANENT,

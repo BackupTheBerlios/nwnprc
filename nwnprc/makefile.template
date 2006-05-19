@@ -89,6 +89,8 @@ NEWSPELLBOOKHAK                 = $(OUTPATH)\prc_newspellbook.hak
 OCFIX_ERF                       = $(OUTPATH)\prc_ocfix.erf
 OCFIX_HIF                       = $(OUTPATH)\prc_ocfix.hif
 
+# The BioDB files that contain precached spell/power -related data
+DATABASEFILES                   = $(OUTPATH)\PRC_DATA.CDX $(OUTPATH)\PRC_DATA.DBF $(OUTPATH)\PRC_DATA.FPT
 
 # The NSIS script used to build setup.exe
 INSTALLSCRIPT	= Setup\install.nsi
@@ -154,6 +156,8 @@ NWN_ERF                 = $(NWN_DIR)\erf
 NWN_HAK                 = $(NWN_DIR)\hak
 NWN_TLK                 = $(NWN_DIR)\tlk
 NWN_OVERRIDE            = $(NWN_DIR)\override
+NWN_DATABASE            = $(NWN_DIR)\database
+NWN_MODULES             = $(NWN_DIR)\modules
 
 # Arguments for various rules
 NSS_FLAGS		= -cgoq -I "$(MAKEDIR)\include"
@@ -205,6 +209,7 @@ OCFIXFILES=~~~ocfix~~~
 
 OCFIXOBJS=~~~ocfixobjs~~~
 
+
 #
 # Top level virtual rules that just associate pretty text names with various
 # targets
@@ -214,7 +219,7 @@ OCFIXOBJS=~~~ocfixobjs~~~
 all: hak
 
 # Rule to build the rar file.
-rar: hak $(RAR)
+rar: hak database $(RAR)
 
 
 # Rule to build the 'hak' content and install it.
@@ -279,7 +284,8 @@ installoverrides: $(OVERRIDEFILES)
 $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) $(OCFIX_ERF) \
 	$(OVERRIDEFILES) $(TLK) $(MISCRESOURCES) $(CRAFT2DASHAK) \
 	$(EPICSPELLSCRIPTSHAK) $(SPELLSHAK) $(RACEHAK) $(INCLUDEHAK) \
-	$(HIF) $(OCFIX_HIF) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) $(TLK)
+	$(HIF) $(OCFIX_HIF) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) $(TLK) \
+	$(DATABASEFILES)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(RARCOMPILER)" a -ep -inul $@ $**
@@ -299,6 +305,37 @@ $(RAR): $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(MISCHAK) $(ERF) $(OCFIX_ERF) \
 #	@echo $(@F)
 #	-@del "$@" 2>nul
 #	@"$(ERFCOMPILER)" -c $@ $**
+
+database:
+#	Delete the old files
+	-@del "$(NWN_DATABASE)\PRC_DATA.CDX" 2>nul
+	-@del "$(NWN_DATABASE)\PRC_DATA.DBF" 2>nul
+	-@del "$(NWN_DATABASE)\PRC_DATA.FPT" 2>nul
+	-@del precacherows.2da 2>nul
+# Create the precacheable 2das listing
+	@java -jar -Xmx200m tools\prc.jar prec2dagen 2das
+# Copy it to nwn override
+	@copy /Y precacherows.2da "$(NWN_OVERRIDE)"
+# Copy the precacher module to nwn modules directory
+	@copy /Y tools\Precacher.mod "$(NWN_MODULES)"
+# Tell the user to run NWN and pause until they tell they have done so
+	@echo Start up NWN, using the Precacher module. When in character selection
+	@echo screen, leave NWN running in foreground.
+	@echo It is recommended that you run NWN in windowed mode, as there will be
+	@echo a message printed in this window when it is safe to terminate the NWN
+	@echo process.
+	@pause
+# Monitor the log
+	@echo Monitoring NWN...
+	@set NWN_DIR=$(NWN_DIR)
+	@precachemonitorloop.bat
+# Monitor has finished, so we know that the DB has been written. Wait until user acknowledges
+	@echo NWN has finished caching, so you can close it
+	pause
+# Copy the DB files to CompiledResources
+	@copy /Y "$(NWN_DATABASE)\PRC_DATA.CDX" $(OUTPATH)
+	@copy /Y "$(NWN_DATABASE)\PRC_DATA.DBF" $(OUTPATH)
+	@copy /Y "$(NWN_DATABASE)\PRC_DATA.FPT" $(OUTPATH)
 
 
 # Rule to build the HAK file.

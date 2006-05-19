@@ -76,6 +76,12 @@ Section "PRC Pack" Section1
 	SetOutPath "$NWNPATH\erf\"
 	File "..\CompiledResources\prc_consortium.erf"
 	File "..\CompiledResources\prc_ocfix.erf"
+
+	SetOutPath "$NWNPATH\database\"
+	File "..\CompiledResources\PRC_DATA.CDX"
+	File "..\CompiledResources\PRC_DATA.DBF"
+	File "..\CompiledResources\PRC_DATA.FPT"
+
 	CreateShortCut "$DESKTOP\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateDirectory "$SMPROGRAMS\PRC Pack"
 	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
@@ -137,6 +143,9 @@ Section Uninstall
 	Delete "$NWNPATH\tlk\prc_consortium.tlk"
 	Delete "$NWNPATH\erf\prc_consortium.erf"
 	Delete "$NWNPATH\erf\prc_ocfix.erf"
+	Delete "$NWNPATH\database\PRC_DATA.CDX"
+	Delete "$NWNPATH\database\PRC_DATA.DBF"
+	Delete "$NWNPATH\database\PRC_DATA.FPT"
 	Delete "$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe"
 
 

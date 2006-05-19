@@ -34,7 +34,7 @@
 //#include "inc_utility" Provided by prc_alterations
 #include "psi_inc_soulkn"
 
-const int LOCAL_DEBUG = DEBUG && FALSE;
+const int LOCAL_DEBUG = DEBUG;
 
 
 void BastardSword2hHandler(object oPC)

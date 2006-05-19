@@ -23,9 +23,24 @@ identify an unheavened nimbus on sight.
 Drug Component: Vodare. 
 
 Author:    Tenjac
-Created:   
+Created:   5/18/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	//spellhook
+	if(!X2PreSpellCastCode()) return;
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	
+	//check for Vodare
+	if(GetHasSpellEffect(SPELL_VODARE, oPC))
+	{
+		//only aginast
+	

@@ -172,6 +172,9 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
     //no natural weapons, abort
     if(!array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
         return; 
+    //in a different form, abort for now fix it later    
+    if (GetIsPolyMorphedOrShifted(oPC)) 
+        return;
     UpdateSecondaryWeaponSizes(oPC);
     int i;
     float fDelay = IntToFloat(Random(20))/10.0;

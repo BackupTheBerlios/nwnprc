@@ -550,4 +550,25 @@ void main()
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
     }
+    else if(nRace==RACIAL_TYPE_RAKSHASA)
+    {
+        string sResRef = "prc_raks_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_LIZARDFOLK)
+    {
+        string sResRef = "prc_lizf_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_TANARUKK)
+    {
+        string sResRef = "prc_tana_bite_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
 }

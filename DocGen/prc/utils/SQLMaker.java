@@ -28,7 +28,7 @@ public final class SQLMaker{
 			readMe();
 
 		String dir = args[0];
-		if(args[1] == "MySQL"){
+		if(args.length >= 1 && args[1].equals("MySQL")){
 			q = "`";
 			mysql = true;
 			sqlite = false;
@@ -234,6 +234,7 @@ public final class SQLMaker{
 			//}
 			//entry += ", file)";
 			entry.append(" VALUES ("+q+row+q);
+			entry.append(", '"+filename+"'");
 			for(int column = 0; column < labels.length ; column ++) {
 				entry.append(", ");
 
@@ -245,7 +246,7 @@ public final class SQLMaker{
 
 				if(verbose) spinner.spin();
 			}
-			entry.append(", '"+filename+"');");
+			entry.append(");");
 			sql.append(entry + "\n");
 			printSQL(false);
 		}

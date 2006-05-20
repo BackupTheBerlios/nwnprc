@@ -34,7 +34,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
     int bValid = FALSE;
     effect eAOE;
 
-    if(GetHasSpellEffect(SPELL_SILENCE, oTarget))
+    if(GetHasSpellEffect(SPELL_SILENCE, oTarget) || GetHasSpellEffect(POWER_CONTROLSOUND, oTarget))
     {
         //Search through the valid effects on the target.
         eAOE = GetFirstEffect(oTarget);
@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                 if(GetEffectType(eAOE) == EFFECT_TYPE_SILENCE)
                 {
                     //If the effect was created by the Silence then remove it
-                    if(GetEffectSpellId(eAOE) == SPELL_SILENCE)
+                    if(GetEffectSpellId(eAOE) == SPELL_SILENCE || GetEffectSpellId(eAOE) == POWER_CONTROLSOUND)
                     {
                         //AssignAOEDebugString("Removing Effects");
                         RemoveEffect(oTarget, eAOE);

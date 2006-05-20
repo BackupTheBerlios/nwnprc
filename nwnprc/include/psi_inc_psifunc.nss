@@ -407,7 +407,7 @@ int GetManifesterDC(object oManifester = OBJECT_SELF)
     nDC += GetAbilityModifier(GetAbilityOfClass(nClass), oManifester);//(GetAbilityScoreOfClass(oManifester, nClass) - 10)/2;
 
     // Stuff that applies only to powers, not psi-like abilities goes inside
-    if(GetLocalInt(oManifester, PRC_IS_PSILIKE))
+    if(!GetLocalInt(oManifester, PRC_IS_PSILIKE))
     {
         if (GetLocalInt(oManifester, "PsionicEndowmentActive") == TRUE && UsePsionicFocus(oManifester))
         {
@@ -574,12 +574,12 @@ int GetPsionicPRCLevels(object oCreature)
     {
         nLevel += GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature) - 1;
         if(GetLevelByClass(CLASS_TYPE_IRONMIND, oCreature) >= 6) nLevel -= 1;
-    }    
+    }
     // No manifester level boost at level 1 for Sanctified Mind
     if(GetLevelByClass(CLASS_TYPE_SANCTIFIED_MIND, oCreature))
     {
         nLevel += GetLevelByClass(CLASS_TYPE_SANCTIFIED_MIND, oCreature) - 1;
-    }    
+    }
 
     return nLevel;
 }

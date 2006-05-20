@@ -223,7 +223,7 @@ void main()
                 struct user_augment_profile uapTemp = _DecodeProfile(GetLocalInt(oPC, "PRC_Augment_Setup_Convo_TempProfile"));
 
                 // "Set the profile's values. Current:"
-                SetHeader(GetStringByStrRef(STRREF_SET_PROFILEVAL) + "\n" 
+                SetHeader(GetStringByStrRef(STRREF_SET_PROFILEVAL) + "\n"
                         + GetStringByStrRef(STRREF_OPTION) + " 1: " + IntToString(uapTemp.nOption_1) + "\n"
                         + GetStringByStrRef(STRREF_OPTION) + " 2: " + IntToString(uapTemp.nOption_2) + "\n"
                         + GetStringByStrRef(STRREF_OPTION) + " 3: " + IntToString(uapTemp.nOption_3) + "\n"
@@ -321,6 +321,7 @@ void main()
             {
                 // The value of the choice is the new value of the switch
                 SetPersistantLocalInt(oPC, PRC_PLAYER_SWITCH_AUGMENT_IS_PP, nChoice);
+                ClearCurrentStage(oPC);
             }
         }
         else if(nStage == STAGE_SET_DEFAULTS)

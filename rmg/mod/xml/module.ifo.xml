@@ -4,19 +4,19 @@
  -->
 <gff name="module.ifo" type="IFO " version="V3.2" >
     <struct id="-1" >
-        <element name="Mod_ID" type="13" value="byte[16][bb][24][b4][22][1][d3][c3][ea][5a][25][3d][f1][42][7b][92][66]" />
+        <element name="Mod_ID" type="13" value="byte[16][bb][24][b4][22][1][d3][c3][ea][5a][25][3d][f0][f9][c0][1e][65]" />
         <element name="Mod_MinGameVer" type="10" value="1.66" />
         <element name="Mod_Creator_ID" type="5" value="2" />
         <element name="Mod_Version" type="4" value="3" />
         <element name="Expansion_Pack" type="2" value="3" />
         <element name="Mod_Name" type="12" value="-1" >
-            <localString languageId="0" value="RMG" />
+            <localString languageId="0" value="rmg" />
         </element>
         <element name="Mod_Tag" type="10" value="MODULE" />
         <element name="Mod_Description" type="12" value="-1" />
         <element name="Mod_IsSaveGame" type="0" value="0" />
         <element name="Mod_CustomTlk" type="10" value="" />
-        <element name="Mod_Entry_Area" type="11" value="ooc" />
+        <element name="Mod_Entry_Area" type="11" value="nowhere" />
         <element name="Mod_Entry_X" type="8" value="10.0" />
         <element name="Mod_Entry_Y" type="8" value="10.0" />
         <element name="Mod_Entry_Z" type="8" value="0.0" />
@@ -53,7 +53,7 @@
         <element name="Mod_GVar_List" type="15" />
         <element name="Mod_Area_list" type="15" >
             <struct id="6" >
-                <element name="Area_Name" type="11" value="ooc" />
+                <element name="Area_Name" type="11" value="nowhere" />
             </struct>
         </element>
         <element name="Mod_HakList" type="15" />

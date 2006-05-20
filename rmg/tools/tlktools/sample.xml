@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--  
+	TLKTools - TLK<->XML generation tools
+	sample.xml
+
+	Copyright (C) 2004 Guido Imperiale
+	This code is released under the terms of the GNU GPL.
+	Please refer to tlktools.h for more info.
+-->
+ 
+<!-- This is a comment -->
+
+<tlk>
+	<!--sample "merged" style: all entries for the same ID are consecutive-->
+	<entry id="1" lang="en" sex="m">Good morning sir!</entry>
+	<entry id="1" lang="en" sex="f">Good morning milady!</entry>
+	<entry id="1" lang="it" sex="m">Buongiorno messere!</entry>
+	<entry id="1" lang="it" sex="f">Buongiorno madamigella!</entry>
+
+	<!-- defaults to lang="en" sex="m", or anything stated by the last "tlk" entry-->
+	<entry id="2">How are you?</entry>
+
+	<!--sample "separated" style: entries are grouped by language and/or by sex-->
+	<tlk lang="en">
+		<entry id="3" sex="m">I'm fine sir, how are you?</entry>
+		<entry id="3" sex="f">I'm fine milady, how are you?</entry>
+	</tlk>
+	<tlk lang="it">
+		<entry id="3" sex="m">Io sto bene, messere, e voi?</entry>
+		<entry id="3" sex="f">Io sto bene, madamigella, e voi?</entry>
+	</tlk>
+
+	<!--moving whole blocks of entries becomes a piece of cake using offsets-->
+	<tlk offset="4">
+		<entry id="0">Entry 4</entry>
+		<entry id="1">Entry 5</entry>
+	</tlk>
+
+	
+	<!--Merge our TLK with the PRC-->
+	<tlkread sex="m">prc_consortium.tlk</tlkread>
+
+	
+	<!-- We've modified and translated a line of prc_consortium.tlk.
+	     First, check that it has not been modified. This is the original line: -->
+	<entry id="12314" lang="en" sex="m">Battlerager</entry>
+
+	<!-- This is the modified line: -->
+	<entry id="12314" lang="en" sex="m" quiet="1">BattleRager</entry>
+	
+	<!-- And finally the translation: -->
+	<entry id="12314" lang="it" sex="m">Furia da Battaglia</entry>
+	
+	
+	<!--Hey, we want CEP too! A check will be made for any eventual overlapping lines, which is a Good Thing. -->
+	<tlkread sex="m">cep.tlk</tlkread>
+	
+	
+	<!--Finally, save the result.
+        Note that both PRC and CEP, since they exist only for one language/sex,
+	    will be replicated in all TLKs we write.-->
+	<tlkwrite sex="m" lang="en">en/mytlk.tlk</tlkwrite>
+	<tlkwrite sex="f" lang="en">en/mytlkf.tlk</tlkwrite>
+	<tlkwrite sex="m" lang="it">it/mytlk.tlk</tlkwrite>
+	<tlkwrite sex="f" lang="it">it/mytlkf.tlk</tlkwrite>
+
+	<!--And/or, if you prefer, save the result to an XML for further editing-->
+	<xmlwrite>mytlk.xml</xmlwrite>
+
+</tlk>

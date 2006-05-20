@@ -15,4 +15,8 @@ del /q hak_nwangband\*.ncs
 del /q xmltemp\*.*
 
 del /q xmltemp
+
+copy "C:\Games\NeverwinterNights\NWN\tlk\nwangband.tlk"     nwangband.tlk
+..\tools\tlktools\tlk2xml nwangband.tlk nwangband.xml
+
 pause

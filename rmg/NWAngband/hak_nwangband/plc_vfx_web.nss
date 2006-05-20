@@ -1,0 +1,20 @@
+//::///////////////////////////////////////////////
+//:: Name       Placeable Visual Effect Web small
+//:: FileName   plc_vfx_web
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+
+*/
+//:://////////////////////////////////////////////
+//:: Created By:
+//:: Created On:
+//:://////////////////////////////////////////////
+
+
+void main()
+{
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+        EffectVisualEffect(VFX_DUR_WEB),
+        OBJECT_SELF);
+}

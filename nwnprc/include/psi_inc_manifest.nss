@@ -403,7 +403,7 @@ void _DoMindTrapPPLoss(object oManifester, object oTarget)
  * Handles Spellfire absorption when a power is used on a friendly spellfire
  * user.
  */
-void _DoSpellfireFriendlyAbsorption(struct manifestation manif, object oTarget)
+struct manifestation _DoSpellfireFriendlyAbsorption(struct manifestation manif, object oTarget)
 {
     if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") &&
        GetIsFriend(oTarget, manif.oManifester)
@@ -415,6 +415,8 @@ void _DoSpellfireFriendlyAbsorption(struct manifestation manif, object oTarget)
             manif.bCanManifest = FALSE;
         }
     }
+
+    return manif;
 }
 
 /** Internal function.
@@ -817,7 +819,7 @@ struct manifestation EvaluateManifestation(object oManifester, object oTarget, s
                 // Apply Mind Trap PP loss
                 _DoMindTrapPPLoss(oManifester, oTarget);
                 // Spellfire friendly absorption - This may set bCananifest to FALSE
-                _DoSpellfireFriendlyAbsorption(manif, oTarget);
+                manif = _DoSpellfireFriendlyAbsorption(manif, oTarget);
                 //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL MANIFESTATION ABOVE *//
             }
         }

@@ -1,0 +1,6 @@
++ Druid Spells (List forthcoming)
++ Fix that damn WF/IA bug
++ Make Duelist's Precise Strike an OnHit property
++ War Weaver
++ Duskblade
+? Hexblade (MAYBE)

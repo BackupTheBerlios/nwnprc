@@ -27,7 +27,7 @@ defeated, only a regenerate spell can restore the
 victim to normal.
 
 Author:    Tenjac
-Created:   
+Created:   5/20/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -124,7 +124,6 @@ void main()
 				}
 				
 				//Create copy of target, set all body parts null
-								
 				object oHand = CopyObject(oTarget, GetLocation(oTarget), OBJECT_INVALID);
 												
 				SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, nModelNumber, oHand);
@@ -155,6 +154,22 @@ void main()
 					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oHand);
 				}
 				
+				//Set Bonuses
+				effect eLink = EffectACIncrease(4, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+				       eLink = EffectLinkEffects(eLink, EffectAttackIncrease(4, ATTACK_BONUS_MISC));
+				       
+				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oHand);
+				
+				itemproperty iUndead = ItemPropertyBonusFeat(FEAT_UNDEAD);
+				IPSafeAddItemProperty(GetPCSkin(oHand), iUndead);
+				
 				//Make hand hostile to target				
-				AssignCommand(oTarget, SetIsEnemy(oHand));
+				AssignCommand(oHand, SetIsEnemy(oTarget));
+			}			
+		}
+	}
+	SPEvilShift(oPC);
+	SPSetSchool();
+}
+				
 				

@@ -70,6 +70,7 @@ Section "PRC Pack" Section1
 	
 	;Precacher specifics
 	File "precacher sqlite.bat"
+	File "precacher mysql.bat"
 	File "sqlite.exe"
 	File "7za.exe"
 	File "bioware2das.7z"
@@ -146,6 +147,7 @@ Section Uninstall
 	
 	;Precacher specifics
 	Delete "$NWNPATH\precacher sqlite.bat"
+	Delete "$NWNPATH\precacher mysql.bat"
 	Delete "$NWNPATH\sqlite.exe"
 	Delete "$NWNPATH\7za.exe"
 	Delete "$NWNPATH\bioware2das.7z"

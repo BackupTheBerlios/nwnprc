@@ -2,19 +2,15 @@
 3.1
 -----------------------------------------------------
 
-Domains (PGtF):
-Balance
-Cold
-Mentalism
-Repose
-Suffering
-Trade
+-----------------------------------------------------
+Primary
+-----------------------------------------------------
 
 Base Classes:
 Favoured Soul - Classes.2da, cls_feat.2da
 Warmage - All to do
 Dread Necromancer - All to do
-Healer - All to do
+Beguiler - All to do
 
 Truenaming:
 1 Base Class
@@ -23,10 +19,6 @@ Truenaming:
 30 feats
 
 Psionic PrCs:
-Metamind - All to do
-Psion Uncarnate - All to do
-Pyrokineticist - All to do
-Cryokineticist - All to do
 Sanctified Mind - Classes.2da, cls_feat.2da
 Iron Mind - Classes.2da, cls_feat.2da, Invest Armour feat.
 Shadowmind - All to do
@@ -36,6 +28,21 @@ Slayer of Domiel - Classes.2da, cls_feat.2da, TLK, Spells, Spellbook, Update spe
 Disciple of Asmodeus - Classes.2da, cls_feat.2da, (Greater) Command class abilities
 Dirgesinger - Classes.2da, cls_feat.2da
 Suel Archanamach - Classes.2da, cls_feat.2da
+
+-----------------------------------------------------
+Secondary
+-----------------------------------------------------
+
+Base Classes:
+Healer - All to do
+
+Psionic PrCs:
+Metamind - All to do
+Psion Uncarnate - All to do
+Pyrokineticist - All to do
+Cryokineticist - All to do
+
+Normal PrCs:
 Stormsinger - All to do
 Blood Magus - Check what is done and what needs doing.
 
@@ -47,6 +54,14 @@ Summon Undead
 Summon Greater Undead
 Poke attacks
 Death Touch -> create undead on failed save
+
+Domains (PGtF):
+Balance
+Cold
+Mentalism
+Repose
+Suffering
+Trade
 
 -----------------------------------------------------
 Feats to do in spare time

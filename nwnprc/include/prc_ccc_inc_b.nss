@@ -288,7 +288,7 @@ void ChoiceSelected(int nChoiceNo)
                 array_set_int(OBJECT_SELF, "Skills", GetChoice(OBJECT_SELF),
                     array_get_int(OBJECT_SELF, "Skills", GetChoice(OBJECT_SELF))+1);
                 //decrease points remaining
-                if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", nChoiceNo)))
+                if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", GetChoice(OBJECT_SELF))))
                     nPoints -= 2 ;//cross class skill
                 else
                     nPoints -= 1;//class
@@ -297,6 +297,8 @@ void ChoiceSelected(int nChoiceNo)
             SetLocalInt(OBJECT_SELF, "Points", nPoints);
             if(nPoints <= 0)
                 nStage++;
+            else
+                MarkStageNotSetUp(nStage);    
             break;
             
         case STAGE_SKILL_CHECK:
@@ -508,9 +510,9 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl1"),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
+                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
                     array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
@@ -528,9 +530,9 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
+                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
                     array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
@@ -558,9 +560,9 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
-                    for(i=nChoiceNo;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
+                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
                     array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
@@ -767,49 +769,39 @@ void ChoiceSelected(int nChoiceNo)
             SetLocalInt(OBJECT_SELF, "Appearance",
                 GetChoice(OBJECT_SELF));
             nStage++;
-            DoCloneLetoscript();
-            break;
-        case STAGE_HAIR:
-            SetLocalInt(OBJECT_SELF, "Hair",
+            SetCreatureAppearanceType(GetLocalObject(OBJECT_SELF, "Clone"),
                 GetChoice(OBJECT_SELF));
-            nStage++;
-            DoCloneLetoscript();
             break;
         case STAGE_HEAD:
             SetLocalInt(OBJECT_SELF, "Head",
                 GetChoice(OBJECT_SELF));
+            SetCreatureBodyPart(CREATURE_PART_HEAD,
+                GetChoice(OBJECT_SELF), 
+                GetLocalObject(OBJECT_SELF, "Clone"));   
             nStage++;
-            DoCloneLetoscript();
             break;
         case STAGE_PORTRAIT:
             SetLocalInt(OBJECT_SELF, "Portrait",
                 GetChoice(OBJECT_SELF));
-            nStage++;
-            DoCloneLetoscript();
-            break;
-        case STAGE_SKIN:
-            SetLocalInt(OBJECT_SELF, "Skin",
+            SetPortraitId(OBJECT_SELF, 
                 GetChoice(OBJECT_SELF));
-            nStage++;
-            DoCloneLetoscript();
-            break;
-        case STAGE_SOUNDSET:
-            SetLocalInt(OBJECT_SELF, "Soundset",
+            SetPortraitId(GetLocalObject(OBJECT_SELF, "Clone"), 
                 GetChoice(OBJECT_SELF));
-            DoCloneLetoscript();
             nStage++;
             break;
         case STAGE_TAIL:
             SetLocalInt(OBJECT_SELF, "Tail",
                 GetChoice(OBJECT_SELF));
+            SetCreatureTailType(GetChoice(OBJECT_SELF), 
+                GetLocalObject(OBJECT_SELF, "Clone"));    
             nStage++;
-            DoCloneLetoscript();
             break;
         case STAGE_WINGS:
             SetLocalInt(OBJECT_SELF, "Wings",
                 GetChoice(OBJECT_SELF));
+            SetCreatureWingType(GetChoice(OBJECT_SELF), 
+                GetLocalObject(OBJECT_SELF, "Clone"));   
             nStage++;
-            DoCloneLetoscript();
             break;
         case STAGE_TATTOOPART:
             if(GetChoice(OBJECT_SELF) == 0)
@@ -819,7 +811,6 @@ void ChoiceSelected(int nChoiceNo)
             else
             {
                 SwitchTattoo(GetChoice(OBJECT_SELF));
-                DoCloneLetoscript();
             }
             break;
         case STAGE_TATTOOPART_CHECK:
@@ -835,6 +826,25 @@ void ChoiceSelected(int nChoiceNo)
             {
                 nStage++;
             }
+            break;
+            
+        case STAGE_HAIR:
+            SetLocalInt(OBJECT_SELF, "Hair",
+                GetChoice(OBJECT_SELF));
+            nStage++;
+            DoCloneLetoscript();
+            break;
+        case STAGE_SKIN:
+            SetLocalInt(OBJECT_SELF, "Skin",
+                GetChoice(OBJECT_SELF));
+            nStage++;
+            DoCloneLetoscript();
+            break;
+        case STAGE_SOUNDSET:
+            SetLocalInt(OBJECT_SELF, "Soundset",
+                GetChoice(OBJECT_SELF));
+            DoCloneLetoscript();
+            nStage++;
             break;
         case STAGE_TATTOOCOLOUR1:
             SetLocalInt(OBJECT_SELF, "TattooColour1",
@@ -906,7 +916,7 @@ void ChoiceSelected(int nChoiceNo)
             array_set_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills", GetChoice(OBJECT_SELF),
                 array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(nLevel)+"Skills", GetChoice(OBJECT_SELF))+1);
             //decrease points remaining
-            if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", nChoiceNo)))
+            if(TestStringAgainstPattern("**Cross**", array_get_string(OBJECT_SELF, "ChoiceTokens", GetChoice(OBJECT_SELF))))
                 nPoints -= 2 ;//cross class skill
             else
                 nPoints -= 1;//class
@@ -917,7 +927,7 @@ void ChoiceSelected(int nChoiceNo)
             else //then recreate the tokens
             {
                 if(nPoints > 1)
-                    SetupSkillToken(GetChoice(OBJECT_SELF), nChoiceNo);
+                    SetupSkillToken(GetChoice(OBJECT_SELF), GetChoice(OBJECT_SELF));
                 else
                 {
                     for(i=0;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)

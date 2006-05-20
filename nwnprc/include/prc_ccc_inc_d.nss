@@ -691,4 +691,7 @@ void SwitchTattoo(int nPart)
     else if(nTattooed == 2)
         nTattooed = 1;
     array_set_int(OBJECT_SELF, "Tattoo", nPart, nTattooed);
+    SetCreatureBodyPart(nPart,
+        nTattooed, 
+        GetLocalObject(OBJECT_SELF, "Clone"));  
 }

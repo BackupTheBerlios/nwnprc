@@ -208,6 +208,9 @@ void SetupStage()
                     nPoints += StringToInt(Get2DACache("classes", "SkillPointBase ", nClass));
                     nPoints += (nInt-10+StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace)))/2;
                     nPoints *= 4;
+                    //minimum 4
+                    if(nPoints < 4)
+                        nPoints = 4;
                     SetLocalInt(OBJECT_SELF, "Points", nPoints);
                 }
             
@@ -236,6 +239,8 @@ void SetupStage()
                             int nCap = 1+3; //this should be level +3
                             if(nStoredPoints >= nCap)
                                 sName = "";
+                            else 
+                                sName += " : "+IntToString(nStoredPoints);
                         }
                         else
                         {
@@ -249,6 +254,8 @@ void SetupStage()
                             int nCap = (1+3)/2; //this should be level +3
                             if(nStoredPoints >= nCap)
                                 sName = "";
+                            else 
+                                sName += " : "+IntToString(nStoredPoints);
                         }
                         if(sName != "")
                         {
@@ -259,7 +266,8 @@ void SetupStage()
                 }
             }
             //Dont mark it as setup, needs to be recreated
-            //MarkStageSetUp(nStage);
+            //mark it here so it scrolls, unmark it in responce
+            MarkStageSetUp(nStage);
             break;
 
     // this has a wait while lookup

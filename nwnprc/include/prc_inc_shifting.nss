@@ -31,7 +31,7 @@ const int SHIFTER_TYPE_POLYMORPH = 3;
 
 const string SHIFTER_FORMS_ARRAY      = "PRC_ShiftingForms_";
 const string SHIFTER_NAMES_ARRAY      = "PRC_ShiftingNames_";
-const string SHIFTER_TRUEFORM_PREFIX  = "PRC_ShiftingTrueForm_";
+const string SHIFTER_TRUEFORM         = "PRC_ShiftingTrueForm";
 const string SHIFTER_ISSHIFTED_MARKER = "PRC_IsShifted";
 const string SHIFTER_SHIFT_MUTEX      = "PRC_Shifting_InProcess";
 
@@ -52,9 +52,9 @@ const int STRREF_POLYMORPH_MUTEX     = 16828334; // "The PRC Shifting system wil
 //////////////////////////////////////////////////
 
 /**
- * A struct for dynamic model data.
+ * A struct for data about appearance.
  */
-struct modelvalues{
+struct appearancevalues{
 	/* Fields for the actual appearance */
 
     /// The appearance type aka appearance.2da row
@@ -109,7 +109,7 @@ struct modelvalues{
     /// Portrait ID
     int nPortraitID;
     /// Portrait resref
-    int sPortraitResRef;
+    string sPortraitResRef;
     /// The footstep type
     int nFootStepType;
 };
@@ -215,14 +215,103 @@ void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int 
 
 void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE);
 
-struct modelvalues GetAppearanceData(object oTemplate);
+// Appearance data functions
 
-void SetAppearanceData(object oTarget, struct modelvalues mdlval);
+/**
+ * Reads in all the data about the target creature's appearance and stores it in
+ * a structure that is then returned.
+ *
+ * @param oTemplate Creature whose appearance data to read
+ * @return          An appearancevalues structure containing the data
+ */
+struct appearancevalues GetAppearanceData(object oTemplate);
+
+/**
+ * Sets the given creature's appearance data to values in the given appearancevalues
+ * structure.
+ *
+ * @param oTarget The creauture whose appearance to modify
+ * @param appval  The appearance data to apply to oTarget
+ */
+void SetAppearanceData(object oTarget, struct appearancevalues appval);
+
+/**
+ * Retrieves an appearancevalues structure that has been placed in local variable
+ * storage.
+ *
+ * @param oStore The object on which the data has been stored
+ * @param sName  The name of the local variable
+ * @return       An appearancevalues structure containing the retrieved data
+ */
+struct appearancevalues GetLocalAppearancevalues(object oStore, string sName);
+
+/**
+ * Stores an appearancevalues structure on the given object as local variables.
+ *
+ * @param oStore The object onto which to store the data
+ * @param sName  The name of the local variable
+ * @param appval The data to store
+ */
+void SetLocalAppearancevalues(object oStore, string sName, struct appearancevalues appval);
+
+/**
+ * Deletes an appearancevalues structure that has been stored on the given object
+ * as local variable.
+ *
+ * @param oStore The object from which to delete data
+ * @param sName  The name of the local variable
+ */
+void DeleteLocalAppearancevalues(object oStore, string sName);
+
+/**
+ * Persistant storage version of GetLocalAppearancevalues(). As normal for
+ * persistant storage, behaviour is not guaranteed in case the storage object is
+ * not a creature.
+ *
+ * @param oStore The object on which the data has been stored
+ * @param sName  The name of the local variable
+ * @return       An appearancevalues structure containing the retrieved data
+ */
+struct appearancevalues GetPersistantLocalAppearancevalues(object oStore, string sName);
+
+/**
+ * Persistant storage version of GetLocalAppearancevalues(). As normal for
+ * persistant storage, behaviour is not guaranteed in case the storage object is
+ * not a creature.
+ *
+ * @param oStore The object onto which to store the data
+ * @param sName  The name of the local variable
+ * @param appval The data to store
+ */
+void SetPersistantLocalAppearancevalues(object oStore, string sName, struct appearancevalues appval);
+
+/**
+ * Persistant storage version of GetLocalAppearancevalues(). As normal for
+ * persistant storage, behaviour is not guaranteed in case the storage object is
+ * not a creature.
+ *
+ * @param oStore The object from which to delete data
+ * @param sName  The name of the local variable
+ */
+void DeletePersistantLocalAppearancevalues(object oStore, string sName);
+
+/**
+ * Creates a string containing the values of the fields of the given appearancevalues
+ * structure.
+ *
+ * @param appval The appearancevalues structure to convert into a string
+ * @return       A string that describes the contents of appval
+ */
+string DebugAppearancevalues2Str(struct appearancevalues appval);
 
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
+
+#include "inc_utility"
+#include "prc_inc_switch"
+#include "prc_inc_racial"
 
 
 //////////////////////////////////////////////////
@@ -252,21 +341,21 @@ void _RemoveExtraCreatureItems(object oShifter)
     {
         nItemType = GetBaseItemType(oItem);
 
-        if(iItemType == BASE_ITEM_CBLUDGWEAPON ||
-           iItemType == BASE_ITEM_CPIERCWEAPON ||
-           iItemType == BASE_ITEM_CREATUREITEM ||
-           iItemType == BASE_ITEM_CSLASHWEAPON ||
-           iItemType == BASE_ITEM_CSLSHPRCWEAP
+        if(nItemType == BASE_ITEM_CBLUDGWEAPON ||
+           nItemType == BASE_ITEM_CPIERCWEAPON ||
+           nItemType == BASE_ITEM_CREATUREITEM ||
+           nItemType == BASE_ITEM_CSLASHWEAPON ||
+           nItemType == BASE_ITEM_CSLSHPRCWEAP
            )
         {
-            if(oCheck != oCWPB &&
-               oCheck != oCWPL &&
-               oCheck != oCWPR &&
-               oCheck != oCSkin
+            if(oItem != oCWPB &&
+               oItem != oCWPL &&
+               oItem != oCWPR &&
+               oItem != oCSkin
                )
-                MyDestroyObject(oCheck);
+                MyDestroyObject(oItem);
         }
-        oCheck = GetNextItemInInventory(oPC);
+        oItem = GetNextItemInInventory(oShifter);
     }
 }
 
@@ -276,7 +365,7 @@ void _RemoveExtraCreatureItems(object oShifter)
  */
 int _GetCanFormCast(object oTemplate)
 {
-    int nRacialType = MyPRCGetRacialType(oCreature);
+    int nRacialType = MyPRCGetRacialType(oTemplate);
 
     // Need to have hands, and the ability to speak
 
@@ -326,7 +415,7 @@ int _GetCanFormCast(object oTemplate)
 int _GetIsCreatureHarmless(object oTemplate)
 {
     /* This is likely to cause problems - Ornedan
-    string sCreatureName = GetName(oCreature);
+    string sCreatureName = GetName(oTemplate);
 
     // looking for small < 1 CR creatures that nobody looks at twice
 
@@ -344,7 +433,7 @@ int _GetIsCreatureHarmless(object oTemplate)
         return FALSE;
     */
 
-    return GetChallengeRating(oCreature) < 1.0;
+    return GetChallengeRating(oTemplate) < 1.0;
 }
 
 void _CopyAllItemProperties(object oFrom, object oTo)
@@ -417,7 +506,7 @@ int _GetIPFeatFromFeat(int nFeat)
         case FEAT_RAPID_SHOT:                       return IP_CONST_FEAT_RAPID_SHOT;
         case FEAT_SHIELD_PROFICIENCY:               return IP_CONST_FEAT_SHIELD_PROFICIENCY;
         case FEAT_SNEAK_ATTACK:                     return IP_CONST_FEAT_SNEAK_ATTACK_1D6;
-        case FEAT_USE_POISON:                       return IP_CONST_FEAT_USE_POISION; // 1.67 fixed this typo.
+        case FEAT_USE_POISON:                       return IP_CONST_FEAT_USE_POISON;
         case FEAT_WHIRLWIND_ATTACK:                 return IP_CONST_FEAT_WHIRLWIND;
         case FEAT_WEAPON_PROFICIENCY_CREATURE:      return IP_CONST_FEAT_WEAPON_PROF_CREATURE;
     }
@@ -439,709 +528,711 @@ void _CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
     int max_props = 7;
 
     //first, auras--only want to allow one aura power to transfer
-    if ( GetHasSpell(SPELLABILITY_AURA_BLINDING, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_BLINDING, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(750,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(750, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_COLD, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_COLD, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(751,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(751, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_ELECTRICITY, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_ELECTRICITY, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(752,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(752, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_FEAR, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_FEAR, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(753,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(753, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_FIRE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_FIRE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(754,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(754, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_MENACE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_MENACE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(755,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(755, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_PROTECTION, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_PROTECTION, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(756,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(756, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_STUN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_STUN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(757,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(757, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_UNEARTHLY_VISAGE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_UNEARTHLY_VISAGE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(758,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(758, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_AURA_UNNATURAL, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_AURA_UNNATURAL, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(759,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(759, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //now, bolts
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_CHARISMA, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_CHARISMA, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(760,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(760, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_CONSTITUTION, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_CONSTITUTION, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(761,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(761, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_DEXTERITY, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_DEXTERITY, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(762,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(762, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_INTELLIGENCE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_INTELLIGENCE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(763,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(763, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_STRENGTH, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_STRENGTH, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(764,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(764, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_WISDOM, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_WISDOM, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(765,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(765, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ACID, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_ACID, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(766,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(766, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_CHARM, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_CHARM, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(767,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(767, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_COLD, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_COLD, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(768,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(768, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_CONFUSE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_CONFUSE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(769,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(769, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DAZE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_DAZE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(770,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(770, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DEATH, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_DEATH, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(771,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(771, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DISEASE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_DISEASE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(772,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(772, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DOMINATE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_DOMINATE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(773,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(773, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_FIRE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_FIRE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(774,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(774, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_KNOCKDOWN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_KNOCKDOWN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(775,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(775, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_LEVEL_DRAIN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_LEVEL_DRAIN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(776,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(776, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_LIGHTNING, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_LIGHTNING, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(777,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(777, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_PARALYZE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_PARALYZE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(778,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(778, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_POISON, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_POISON, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(779,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(779, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_SHARDS, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_SHARDS, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(780,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(780, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_SLOW, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_SLOW, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(781,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(781, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_STUN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_STUN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(782,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(782, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_BOLT_WEB, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BOLT_WEB, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(783,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(783, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //now, cones
-    if ( GetHasSpell(SPELLABILITY_CONE_ACID, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_CONE_ACID, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(784,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(784, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_CONE_COLD, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_CONE_COLD, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(785,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(785, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_CONE_DISEASE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_CONE_DISEASE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(786,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(786, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_CONE_FIRE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_CONE_FIRE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(787,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(787, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_CONE_LIGHTNING, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_CONE_LIGHTNING, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(788,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(788, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_CONE_POISON, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_CONE_POISON, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(789,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(789, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_CONE_SONIC, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_CONE_SONIC, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(790,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(790, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //various petrify attacks
-    if ( GetHasSpell(SPELLABILITY_BREATH_PETRIFY, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_BREATH_PETRIFY, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(791,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(791, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_PETRIFY, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_PETRIFY, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(792,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(792, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_TOUCH_PETRIFY, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_TOUCH_PETRIFY, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(793,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(793, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //dragon stuff (fear aura, breaths)
-    if ( GetHasSpell(SPELLABILITY_DRAGON_FEAR, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_FEAR, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(796,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(796, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_ACID, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_ACID, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(400,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(400, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_COLD, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_COLD, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(401,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(401, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_FEAR, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_FEAR, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(402,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(402, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_FIRE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_FIRE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(403,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(403, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_GAS, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_GAS, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(404,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(404, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_LIGHTNING, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_LIGHTNING, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(405,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(405, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(698, oCreature) && (total_props <= max_props) ) //NEGATIVE
+    if ( GetHasSpell(698, oTemplate) && (total_props <= max_props) ) //NEGATIVE
     {
-        iProp = ItemPropertyCastSpell(794,IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(794, IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_PARALYZE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_PARALYZE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(406,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(406, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_SLEEP, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_SLEEP, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(407,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(407, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_SLOW, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_SLOW, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(408,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(408 ,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_WEAKEN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_WEAKEN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(409,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(409, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(771, oCreature) && (total_props <= max_props) ) //PRISMATIC
+    if ( GetHasSpell(771, oTemplate) && (total_props <= max_props) ) //PRISMATIC
     {
-        iProp = ItemPropertyCastSpell(795,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(795, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //gaze attacks
-    if ( GetHasSpell(SPELLABILITY_GAZE_CHARM, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_CHARM, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(797,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(797, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_CONFUSION, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_CONFUSION, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(798,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(798, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DAZE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DAZE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(799,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(799, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DEATH, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DEATH, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(800,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(800, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_CHAOS, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_CHAOS, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(801,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(801, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_EVIL, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_EVIL, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(802,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(802, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_GOOD, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_GOOD, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(803,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(803, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_LAW, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_LAW, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(804,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(804, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DOMINATE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DOMINATE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(805,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(805, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DOOM, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_DOOM, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(806,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(806, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_FEAR, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_FEAR, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(807,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(807, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_PARALYSIS, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_PARALYSIS, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(808,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(808, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_GAZE_STUNNED, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GAZE_STUNNED, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(809,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(809, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //miscellaneous abilities
-    if ( GetHasSpell(SPELLABILITY_GOLEM_BREATH_GAS, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_GOLEM_BREATH_GAS, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(810,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(810, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HELL_HOUND_FIREBREATH, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HELL_HOUND_FIREBREATH, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(811,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(811, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_KRENSHAR_SCARE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_KRENSHAR_SCARE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(812,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(812, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //howls
-    if ( GetHasSpell(SPELLABILITY_HOWL_CONFUSE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_CONFUSE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(813,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(813, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HOWL_DAZE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_DAZE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(814,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(814, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HOWL_DEATH, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_DEATH, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(815,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(815, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HOWL_DOOM, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_DOOM, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(816,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(816, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HOWL_FEAR, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_FEAR, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(817,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(817, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HOWL_PARALYSIS, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_PARALYSIS, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(818,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(818, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HOWL_SONIC, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_SONIC, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(819,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(819, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_HOWL_STUN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_HOWL_STUN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(820,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(820, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //pulses
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_CHARISMA, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_CHARISMA, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(821,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(821, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_CONSTITUTION, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_CONSTITUTION, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(822,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(822, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_DEXTERITY, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_DEXTERITY, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(823,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(823, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_INTELLIGENCE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_INTELLIGENCE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(824,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(824, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_STRENGTH, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_STRENGTH, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(825,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(825, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_WISDOM, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_WISDOM, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(826,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(826, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_COLD, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_COLD, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(827,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(827, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_DEATH, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_DEATH, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(828,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(828, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_DISEASE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_DISEASE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(829,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(829, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_DROWN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_DROWN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(830,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(830, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_FIRE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_FIRE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(831,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(831, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_HOLY, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_HOLY, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(832,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(832, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_LEVEL_DRAIN, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_LEVEL_DRAIN, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(833,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(833, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_LIGHTNING, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_LIGHTNING, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(834,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(834, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_NEGATIVE, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_NEGATIVE, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(835,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(835, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_POISON, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_POISON, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(836,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(836, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_SPORES, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_SPORES, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(837,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(837, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_PULSE_WHIRLWIND, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_PULSE_WHIRLWIND, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(838,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(838, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //monster summon abilities
-    if ( GetHasSpell(SPELLABILITY_SUMMON_SLAAD, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_SUMMON_SLAAD, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(839,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(839, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(SPELLABILITY_SUMMON_TANARRI, oCreature) && (total_props <= max_props) )
+    if ( GetHasSpell(SPELLABILITY_SUMMON_TANARRI, oTemplate) && (total_props <= max_props) )
     {
-        iProp = ItemPropertyCastSpell(840,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(840, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //abilities without const refs
-    if ( GetHasSpell(552, oCreature) && (total_props <= max_props) ) //PSIONIC CHARM
+    if ( GetHasSpell(552, oTemplate) && (total_props <= max_props) ) //PSIONIC CHARM
     {
-        iProp = ItemPropertyCastSpell(841,IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(841, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(551, oCreature) && (total_props <= max_props) ) //PSIONIC MINDBLAST
+    if ( GetHasSpell(551, oTemplate) && (total_props <= max_props) ) //PSIONIC MINDBLAST
     {
-        iProp = ItemPropertyCastSpell(842,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(842, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(713, oCreature) && (total_props <= max_props) ) //MINDBLAST 10M
+    if ( GetHasSpell(713, oTemplate) && (total_props <= max_props) ) //MINDBLAST 10M
     {
-        iProp = ItemPropertyCastSpell(843,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(843, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(741, oCreature) && (total_props <= max_props) ) //PSIONIC BARRIER
+    if ( GetHasSpell(741, oTemplate) && (total_props <= max_props) ) //PSIONIC BARRIER
     {
-        iProp = ItemPropertyCastSpell(844,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(844, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(763, oCreature) && (total_props <= max_props) ) //PSIONIC CONCUSSION
+    if ( GetHasSpell(763, oTemplate) && (total_props <= max_props) ) //PSIONIC CONCUSSION
     {
-        iProp = ItemPropertyCastSpell(845,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(845, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(731, oCreature) && (total_props <= max_props) ) //BEBILITH WEB
+    if ( GetHasSpell(731, oTemplate) && (total_props <= max_props) ) //BEBILITH WEB
     {
-        iProp = ItemPropertyCastSpell(846,IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(846, IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(736, oCreature) && (total_props <= max_props) ) //BEHOLDER EYES
+    if ( GetHasSpell(736, oTemplate) && (total_props <= max_props) ) //BEHOLDER EYES
     {
-        iProp = ItemPropertyCastSpell(847,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(847, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(770, oCreature) && (total_props <= max_props) ) //CHAOS SPITTLE
+    if ( GetHasSpell(770, oTemplate) && (total_props <= max_props) ) //CHAOS SPITTLE
     {
-        iProp = ItemPropertyCastSpell(848,IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(848, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(757, oCreature) && (total_props <= max_props) ) //SHADOWBLEND
+    if ( GetHasSpell(757, oTemplate) && (total_props <= max_props) ) //SHADOWBLEND
     {
-        iProp = ItemPropertyCastSpell(849,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(849, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ( GetHasSpell(774, oCreature) && (total_props <= max_props) ) //DEFLECTING FORCE
+    if ( GetHasSpell(774, oTemplate) && (total_props <= max_props) ) //DEFLECTING FORCE
     {
-        iProp = ItemPropertyCastSpell(850,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(850, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
     //some spell-like abilities
-    if (((GetHasSpell(SPELL_DARKNESS,oCreature)) ||
-        (GetHasSpell(SPELLABILITY_AS_DARKNESS,oCreature))) &&
+    if ((GetHasSpell(SPELL_DARKNESS, oTemplate)          ||
+         GetHasSpell(SPELLABILITY_AS_DARKNESS, oTemplate)
+         ) &&
+        (total_props <= max_props)
+        )
+    {
+        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_DARKNESS_3, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
+        total_props++;
+    }
+    if ((GetHasSpell(SPELL_DISPLACEMENT, oTemplate)) && (total_props <= max_props))
+    {
+        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_DISPLACEMENT_9, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
+        total_props++;
+    }
+    if (((GetHasSpell(SPELLABILITY_AS_INVISIBILITY, oTemplate)) ||
+        (GetHasSpell(SPELL_INVISIBILITY, oTemplate))) &&
         (total_props <= max_props))
     {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_DARKNESS_3,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_INVISIBILITY_3, IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
-    if ((GetHasSpell(SPELL_DISPLACEMENT,oCreature)) && (total_props <= max_props))
+    if ((GetHasSpell(SPELL_WEB, oTemplate)) && (total_props <= max_props))
     {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_DISPLACEMENT_9,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
-        total_props++;
-    }
-    if (((GetHasSpell(SPELLABILITY_AS_INVISIBILITY,oCreature)) ||
-        (GetHasSpell(SPELL_INVISIBILITY,oCreature))) &&
-        (total_props <= max_props))
-    {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_INVISIBILITY_3,IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
-        total_props++;
-    }
-    if ((GetHasSpell(SPELL_WEB,oCreature)) && (total_props <= max_props))
-    {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_WEB_3,IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT,iProp,oItem);
+        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_WEB_3, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
+        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
         total_props++;
     }
 }
@@ -1159,7 +1250,7 @@ void _CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
 int _GetIsFormStored(object oShifter, int nShifterType, string sResRef)
 {
     string sFormsArray = SHIFTER_FORMS_ARRAY + IntToString(nShifterType);
-    int i, nArraySize  = persistant_array_size(oShifter, sFormsArray);
+    int i, nArraySize  = persistant_array_get_size(oShifter, sFormsArray);
 
     // Lowercase the searched for string
     sResRef = GetStringLowerCase(sResRef);
@@ -1209,7 +1300,7 @@ int _GetCanShift(object oShifter)
     effect eTest = GetFirstEffect(oShifter);
     while(GetIsEffectValid(eTest))
     {
-        if(GetEffectType(eTest) = EFFECT_TYPE_POLYMORPH)
+        if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
         {
             bReturn = FALSE;
             SendMessageToPCByStrRef(oShifter, STRREF_POLYMORPH_MUTEX); // "The PRC Shifting system will not work while you are affected by a polymorph effect. Please remove it before trying again."
@@ -1220,6 +1311,7 @@ int _GetCanShift(object oShifter)
 
     return bReturn;
 }
+
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -1244,11 +1336,10 @@ int StoreCurrentAppearanceAsTrueAppearance(object oShifter, int bCarefull = TRUE
     }
 
     // Get the form data
-    struct modelvalues mvalTrueAppearance = GetAppearanceData(oShifter);
+    struct appearancevalues appval = GetAppearanceData(oShifter);
 
     // Store it
-    SetPersitantLocalInt(SHIFTER_TRUEFORM_PREFIX + "Appearance", mvalTrueAppearance.nAppearanceType);
-    /// @todo Fill in the rest of the data once intergrating 1.67
+    SetPersistantLocalAppearancevalues(oShifter, SHIFTER_TRUEFORM, appval);
 
     return TRUE;
 }
@@ -1277,7 +1368,7 @@ void StoreForm(object oShifter, int nShifterType, object oTarget)
     // Get the storeable data
     string sResRef = GetResRef(oTarget);
     string sName   = GetName(oTarget);
-    int nArraySize = persistant_array_size(oShifter, sFormsArray);
+    int nArraySize = persistant_array_get_size(oShifter, sFormsArray);
 
     // Check for the form already being present
     if(_GetIsFormStored(oShifter, nShifterType, sResRef))
@@ -1292,7 +1383,7 @@ int GetNumberOfStoredForms(object oShifter, int nShifterType)
     if(!persistant_array_exists(oShifter, SHIFTER_FORMS_ARRAY + IntToString(nShifterType)))
         return 0;
 
-    return persistant_array_size(oShifter, SHIFTER_FORMS_ARRAY + IntToString(nShifterType));
+    return persistant_array_get_size(oShifter, SHIFTER_FORMS_ARRAY + IntToString(nShifterType));
 }
 
 string GetStoredForm(object oShifter, int nShifterType, int nIndex)
@@ -1317,7 +1408,7 @@ void DeleteStoredForm(object oShifter, int nShifterType, int nIndex)
         return;
 
     // Move array entries
-    int i, nArraySize = persistant_array_size(oShifter, sFormsArray);
+    int i, nArraySize = persistant_array_get_size(oShifter, sFormsArray);
     for(i = nIndex; i < nArraySize - 1; i++)
     {
         persistant_array_set_string(oShifter, sFormsArray, i,
@@ -1342,7 +1433,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
     int bReturn = TRUE;
 
     // Some basic checks
-    if(GetIsObjectValid(oShifter) && GetIsObjectValid(oTarget))
+    if(GetIsObjectValid(oShifter) && GetIsObjectValid(oTemplate))
     {
         // PC check
         if(GetIsPC(oTemplate))
@@ -1386,11 +1477,11 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                 bReturn = FALSE;
             if(nRacialType == RACIAL_TYPE_DRAGON             && GetPRCSwitch(PNP_SHFT_F_DRAGON))
                 bReturn = FALSE;
-            if(nRacialType == RACIAL_TYPE_ABERRATION         && GetPRCSwitch(PNP_SHFT_F_ABERRRATION))
+            if(nRacialType == RACIAL_TYPE_ABERRATION         && GetPRCSwitch(PNP_SHFT_F_ABERRATION))
                 bReturn = FALSE;
             if(nRacialType == RACIAL_TYPE_OOZE               && GetPRCSwitch(PNP_SHFT_F_OOZE))
                 bReturn = FALSE;
-            if(nRacialType == RACIAL_TYPE_MAGICAL_BEAST      && GetPRCSwitch(PNP_SHFT_F_MAGICAL_BEAST))
+            if(nRacialType == RACIAL_TYPE_MAGICAL_BEAST      && GetPRCSwitch(PNP_SHFT_F_MAGICALBEAST))
                 bReturn = FALSE;
             if(nRacialType == RACIAL_TYPE_GIANT              && GetPRCSwitch(PNP_SHFT_F_GIANT))
                 bReturn = FALSE;
@@ -1400,7 +1491,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                 bReturn = FALSE;
             if(nRacialType == RACIAL_TYPE_ANIMAL             && GetPRCSwitch(PNP_SHFT_F_ANIMAL))
                 bReturn = FALSE;
-            if(nRacialType == RACIAL_TYPE_HUMANOID_MONSTROUS && GetPRCSwitch(PNP_SHFT_F_HUMANOID_MONSTROUS))
+            if(nRacialType == RACIAL_TYPE_HUMANOID_MONSTROUS && GetPRCSwitch(PNP_SHFT_F_MONSTROUSHUMANOID))
                 bReturn = FALSE;
             if(GetPRCSwitch(PNP_SHFT_F_HUMANOID)            &&
                (nRacialType == RACIAL_TYPE_DWARF              ||
@@ -1566,85 +1657,247 @@ void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGai
     MyDestroyObject(oTemplate);
 }
 
-struct modelvalues GetAppearanceData(object oTemplate)
+// Appearance data functions
+
+struct appearancevalues GetAppearanceData(object oTemplate)
 {
-	struct modelvalues mdlval;
+	struct appearancevalues appval;
 	// The appearance type
-    mdlval.nAppearanceType = GetAppearanceType(oTemplate);
+    appval.nAppearanceType         = GetAppearanceType(oTemplate);
     // Body parts
-    mdlval.nBodyPart_RightFoot     = GetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT,     oTemplate);
-    mdlval.nBodyPart_LeftFoot      = GetCreatureBodyPart(CREATURE_PART_LEFT_FOOT,      oTemplate);
-    mdlval.nBodyPart_RightShin     = GetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN,     oTemplate);
-    mdlval.nBodyPart_LeftShin      = GetCreatureBodyPart(CREATURE_PART_LEFT_SHIN,      oTemplate);
-    mdlval.nBodyPart_RightThigh    = GetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH,    oTemplate);
-    mdlval.nBodyPart_LeftThight    = GetCreatureBodyPart(CREATURE_PART_LEFT_THIGH,     oTemplate);
-    mdlval.nBodyPart_Pelvis        = GetCreatureBodyPart(CREATURE_PART_PELVIS,         oTemplate);
-    mdlval.nBodyPart_Torso         = GetCreatureBodyPart(CREATURE_PART_TORSO,          oTemplate);
-    mdlval.nBodyPart_Belt          = GetCreatureBodyPart(CREATURE_PART_BELT,           oTemplate);
-    mdlval.nBodyPart_Neck          = GetCreatureBodyPart(CREATURE_PART_NECK,           oTemplate);
-    mdlval.nBodyPart_RightForearm  = GetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM,  oTemplate);
-    mdlval.nBodyPart_LeftForearm   = GetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM,   oTemplate);
-    mdlval.nBodyPart_RightBicep    = GetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP,    oTemplate);
-    mdlval.nBodyPart_LeftBicep     = GetCreatureBodyPart(CREATURE_PART_LEFT_BICEP,     oTemplate);
-    mdlval.nBodyPart_RightShoulder = GetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER, oTemplate);
-    mdlval.nBodyPart_LeftShoulder  = GetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER,  oTemplate);
-    mdlval.nBodyPart_RightHand     = GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND,     oTemplate);
-    mdlval.nBodyPart_LeftHand      = GetCreatureBodyPart(CREATURE_PART_LEFT_HAND,      oTemplate);
-    mdlval.nBodyPart_Head          = GetCreatureBodyPart(CREATURE_PART_HEAD,           oTemplate);
+    appval.nBodyPart_RightFoot     = GetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT,     oTemplate);
+    appval.nBodyPart_LeftFoot      = GetCreatureBodyPart(CREATURE_PART_LEFT_FOOT,      oTemplate);
+    appval.nBodyPart_RightShin     = GetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN,     oTemplate);
+    appval.nBodyPart_LeftShin      = GetCreatureBodyPart(CREATURE_PART_LEFT_SHIN,      oTemplate);
+    appval.nBodyPart_RightThigh    = GetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH,    oTemplate);
+    appval.nBodyPart_LeftThight    = GetCreatureBodyPart(CREATURE_PART_LEFT_THIGH,     oTemplate);
+    appval.nBodyPart_Pelvis        = GetCreatureBodyPart(CREATURE_PART_PELVIS,         oTemplate);
+    appval.nBodyPart_Torso         = GetCreatureBodyPart(CREATURE_PART_TORSO,          oTemplate);
+    appval.nBodyPart_Belt          = GetCreatureBodyPart(CREATURE_PART_BELT,           oTemplate);
+    appval.nBodyPart_Neck          = GetCreatureBodyPart(CREATURE_PART_NECK,           oTemplate);
+    appval.nBodyPart_RightForearm  = GetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM,  oTemplate);
+    appval.nBodyPart_LeftForearm   = GetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM,   oTemplate);
+    appval.nBodyPart_RightBicep    = GetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP,    oTemplate);
+    appval.nBodyPart_LeftBicep     = GetCreatureBodyPart(CREATURE_PART_LEFT_BICEP,     oTemplate);
+    appval.nBodyPart_RightShoulder = GetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER, oTemplate);
+    appval.nBodyPart_LeftShoulder  = GetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER,  oTemplate);
+    appval.nBodyPart_RightHand     = GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND,     oTemplate);
+    appval.nBodyPart_LeftHand      = GetCreatureBodyPart(CREATURE_PART_LEFT_HAND,      oTemplate);
+    appval.nBodyPart_Head          = GetCreatureBodyPart(CREATURE_PART_HEAD,           oTemplate);
     // Wings
-    mdlval.nWingType = GetCreatureWingType(oTemplate);
+    appval.nWingType               = GetCreatureWingType(oTemplate);
     // Tail
-    mdlval.nTailType = GetCreatureTailType(oTemplate);
+    appval.nTailType               = GetCreatureTailType(oTemplate);
     // Portrait ID
-    mdlval.nPortraitID     = GetPortraitId(oTemplate);
+    appval.nPortraitID             = GetPortraitId(oTemplate);
     // Portrait resref
-    mdlval.sPortraitResRef = GetPortraitResRef(oTemplate);
+    appval.sPortraitResRef         = GetPortraitResRef(oTemplate);
     // Footstep type
-    mdlval.nFootStepType = GetFootstepType(oTemplate);
+    appval.nFootStepType           = GetFootstepType(oTemplate);
 
 
-    return mdlval;
+    return appval;
 }
 
-void SetAppearanceData(object oTarget, struct modelvalues mdlval)
+void SetAppearanceData(object oTarget, struct appearancevalues appval)
 {
 	// The appearance type
-	SetCreatureAppearanceType(oTarget, mdlval.nnAppearanceType);
+	SetCreatureAppearanceType(oTarget, appval.nAppearanceType);
 	// Body parts
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT     , mdlval.nBodyPart_RightFoot     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT      , mdlval.nBodyPart_LeftFoot      , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN     , mdlval.nBodyPart_RightShin     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN      , mdlval.nBodyPart_LeftShin      , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH    , mdlval.nBodyPart_RightThigh    , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH     , mdlval.nBodyPart_LeftThight    , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_PELVIS         , mdlval.nBodyPart_Pelvis        , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_TORSO          , mdlval.nBodyPart_Torso         , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_BELT           , mdlval.nBodyPart_Belt          , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_NECK           , mdlval.nBodyPart_Neck          , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM  , mdlval.nBodyPart_RightForearm  , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM   , mdlval.nBodyPart_LeftForearm   , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP    , mdlval.nBodyPart_RightBicep    , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP     , mdlval.nBodyPart_LeftBicep     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER , mdlval.nBodyPart_RightShoulder , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER  , mdlval.nBodyPart_LeftShoulder  , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND     , mdlval.nBodyPart_RightHand     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_HAND      , mdlval.nBodyPart_LeftHand      , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_HEAD           , mdlval.nBodyPart_Head          , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT     , appval.nBodyPart_RightFoot     , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT      , appval.nBodyPart_LeftFoot      , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN     , appval.nBodyPart_RightShin     , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN      , appval.nBodyPart_LeftShin      , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH    , appval.nBodyPart_RightThigh    , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH     , appval.nBodyPart_LeftThight    , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_PELVIS         , appval.nBodyPart_Pelvis        , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_TORSO          , appval.nBodyPart_Torso         , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_BELT           , appval.nBodyPart_Belt          , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_NECK           , appval.nBodyPart_Neck          , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM  , appval.nBodyPart_RightForearm  , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM   , appval.nBodyPart_LeftForearm   , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP    , appval.nBodyPart_RightBicep    , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP     , appval.nBodyPart_LeftBicep     , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER , appval.nBodyPart_RightShoulder , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER  , appval.nBodyPart_LeftShoulder  , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND     , appval.nBodyPart_RightHand     , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_LEFT_HAND      , appval.nBodyPart_LeftHand      , oTarget);
+	SetCreatureBodyPart(CREATURE_PART_HEAD           , appval.nBodyPart_Head          , oTarget);
 	// Wings
-	SetCreatureWingType(mdlval.nWingType, oTarget);
+	SetCreatureWingType(appval.nWingType, oTarget);
 	// Tail
-    SetCreatureTailType(mdlval.nTailType, oTarget);
-    // Portrait ID
-    mdlval.nPortraitID
-    // Portrait resref
-    mdlval.sPortraitResRef
+    SetCreatureTailType(appval.nTailType, oTarget);
     // Footstep type
-    SetFootstepType(mdlval.nFootStepType, oTarget);
+    SetFootstepType(appval.nFootStepType, oTarget);
 
-
-    /// @todo Test whether portrait change commands take place instantenously
+    /* Portrait stuff */
+    // If the portrait ID is not PORTRAIT_INVALID, use it. This will also set the resref
+    if(appval.nPortraitID != PORTRAIT_INVALID)
+        SetPortraitId(oTarget, appval.nPortraitID);
+    // Otherwise, use the portrait resref. This will set portrait ID to PORTRAIT_INVALID
+    else
+        SetPortraitResRef(oTarget, appval.sPortraitResRef);
 }
 
+struct appearancevalues GetLocalAppearancevalues(object oStore, string sName)
+{
+    struct appearancevalues appval;
+	// The appearance type
+    appval.nAppearanceType         = GetLocalInt(oStore, sName + "nAppearanceType");
+    // Body parts
+    appval.nBodyPart_RightFoot     = GetLocalInt(oStore, sName + "nBodyPart_RightFoot");
+    appval.nBodyPart_LeftFoot      = GetLocalInt(oStore, sName + "nBodyPart_LeftFoot");
+    appval.nBodyPart_RightShin     = GetLocalInt(oStore, sName + "nBodyPart_RightShin");
+    appval.nBodyPart_LeftShin      = GetLocalInt(oStore, sName + "nBodyPart_LeftShin");
+    appval.nBodyPart_RightThigh    = GetLocalInt(oStore, sName + "nBodyPart_RightThigh");
+    appval.nBodyPart_LeftThight    = GetLocalInt(oStore, sName + "nBodyPart_LeftThight");
+    appval.nBodyPart_Pelvis        = GetLocalInt(oStore, sName + "nBodyPart_Pelvis");
+    appval.nBodyPart_Torso         = GetLocalInt(oStore, sName + "nBodyPart_Torso");
+    appval.nBodyPart_Belt          = GetLocalInt(oStore, sName + "nBodyPart_Belt");
+    appval.nBodyPart_Neck          = GetLocalInt(oStore, sName + "nBodyPart_Neck");
+    appval.nBodyPart_RightForearm  = GetLocalInt(oStore, sName + "nBodyPart_RightForearm");
+    appval.nBodyPart_LeftForearm   = GetLocalInt(oStore, sName + "nBodyPart_LeftForearm");
+    appval.nBodyPart_RightBicep    = GetLocalInt(oStore, sName + "nBodyPart_RightBicep");
+    appval.nBodyPart_LeftBicep     = GetLocalInt(oStore, sName + "nBodyPart_LeftBicep");
+    appval.nBodyPart_RightShoulder = GetLocalInt(oStore, sName + "nBodyPart_RightShoulder");
+    appval.nBodyPart_LeftShoulder  = GetLocalInt(oStore, sName + "nBodyPart_LeftShoulder");
+    appval.nBodyPart_RightHand     = GetLocalInt(oStore, sName + "nBodyPart_RightHand");
+    appval.nBodyPart_LeftHand      = GetLocalInt(oStore, sName + "nBodyPart_LeftHand");
+    appval.nBodyPart_Head          = GetLocalInt(oStore, sName + "nBodyPart_Head");
+    // Wings
+    appval.nWingType               = GetLocalInt(oStore, sName + "nWingType");
+    // Tail
+    appval.nTailType               = GetLocalInt(oStore, sName + "nTailType");
+    // Portrait ID
+    appval.nPortraitID             = GetLocalInt(oStore, sName + "nPortraitID");
+    // Portrait resref
+    appval.sPortraitResRef         = GetLocalString(oStore, sName + "sPortraitResRef");
+    // Footstep type
+    appval.nFootStepType           = GetLocalInt(oStore, sName + "nFootStepType");
+
+
+    return appval;
+}
+
+void SetLocalAppearancevalues(object oStore, string sName, struct appearancevalues appval)
+{
+	// The appearance type
+    SetLocalInt(oStore, sName + "nAppearanceType"        , appval.nAppearanceType         );
+    // Body parts
+    SetLocalInt(oStore, sName + "nBodyPart_RightFoot"    , appval.nBodyPart_RightFoot     );
+    SetLocalInt(oStore, sName + "nBodyPart_LeftFoot"     , appval.nBodyPart_LeftFoot      );
+    SetLocalInt(oStore, sName + "nBodyPart_RightShin"    , appval.nBodyPart_RightShin     );
+    SetLocalInt(oStore, sName + "nBodyPart_LeftShin"     , appval.nBodyPart_LeftShin      );
+    SetLocalInt(oStore, sName + "nBodyPart_RightThigh"   , appval.nBodyPart_RightThigh    );
+    SetLocalInt(oStore, sName + "nBodyPart_LeftThight"   , appval.nBodyPart_LeftThight    );
+    SetLocalInt(oStore, sName + "nBodyPart_Pelvis"       , appval.nBodyPart_Pelvis        );
+    SetLocalInt(oStore, sName + "nBodyPart_Torso"        , appval.nBodyPart_Torso         );
+    SetLocalInt(oStore, sName + "nBodyPart_Belt"         , appval.nBodyPart_Belt          );
+    SetLocalInt(oStore, sName + "nBodyPart_Neck"         , appval.nBodyPart_Neck          );
+    SetLocalInt(oStore, sName + "nBodyPart_RightForearm" , appval.nBodyPart_RightForearm  );
+    SetLocalInt(oStore, sName + "nBodyPart_LeftForearm"  , appval.nBodyPart_LeftForearm   );
+    SetLocalInt(oStore, sName + "nBodyPart_RightBicep"   , appval.nBodyPart_RightBicep    );
+    SetLocalInt(oStore, sName + "nBodyPart_LeftBicep"    , appval.nBodyPart_LeftBicep     );
+    SetLocalInt(oStore, sName + "nBodyPart_RightShoulder", appval.nBodyPart_RightShoulder );
+    SetLocalInt(oStore, sName + "nBodyPart_LeftShoulder" , appval.nBodyPart_LeftShoulder  );
+    SetLocalInt(oStore, sName + "nBodyPart_RightHand"    , appval.nBodyPart_RightHand     );
+    SetLocalInt(oStore, sName + "nBodyPart_LeftHand"     , appval.nBodyPart_LeftHand      );
+    SetLocalInt(oStore, sName + "nBodyPart_Head"         , appval.nBodyPart_Head          );
+    // Wings
+    SetLocalInt(oStore, sName + "nWingType"              , appval.nWingType               );
+    // Tail
+    SetLocalInt(oStore, sName + "nTailType"              , appval.nTailType               );
+    // Portrait ID
+    SetLocalInt(oStore, sName + "nPortraitID"            , appval.nPortraitID             );
+    // Portrait resref
+    SetLocalString(oStore, sName + "sPortraitResRef"     , appval.sPortraitResRef         );
+    // Footstep type
+    SetLocalInt(oStore, sName + "nFootStepType"          , appval.nFootStepType           );
+}
+
+void DeleteLocalAppearancevalues(object oStore, string sName)
+{
+	// The appearance type
+    DeleteLocalInt(oStore, sName + "nAppearanceType");
+    // Body parts
+    DeleteLocalInt(oStore, sName + "nBodyPart_RightFoot");
+    DeleteLocalInt(oStore, sName + "nBodyPart_LeftFoot");
+    DeleteLocalInt(oStore, sName + "nBodyPart_RightShin");
+    DeleteLocalInt(oStore, sName + "nBodyPart_LeftShin");
+    DeleteLocalInt(oStore, sName + "nBodyPart_RightThigh");
+    DeleteLocalInt(oStore, sName + "nBodyPart_LeftThight");
+    DeleteLocalInt(oStore, sName + "nBodyPart_Pelvis");
+    DeleteLocalInt(oStore, sName + "nBodyPart_Torso");
+    DeleteLocalInt(oStore, sName + "nBodyPart_Belt");
+    DeleteLocalInt(oStore, sName + "nBodyPart_Neck");
+    DeleteLocalInt(oStore, sName + "nBodyPart_RightForearm");
+    DeleteLocalInt(oStore, sName + "nBodyPart_LeftForearm");
+    DeleteLocalInt(oStore, sName + "nBodyPart_RightBicep");
+    DeleteLocalInt(oStore, sName + "nBodyPart_LeftBicep");
+    DeleteLocalInt(oStore, sName + "nBodyPart_RightShoulder");
+    DeleteLocalInt(oStore, sName + "nBodyPart_LeftShoulder");
+    DeleteLocalInt(oStore, sName + "nBodyPart_RightHand");
+    DeleteLocalInt(oStore, sName + "nBodyPart_LeftHand");
+    DeleteLocalInt(oStore, sName + "nBodyPart_Head");
+    // Wings
+    DeleteLocalInt(oStore, sName + "nWingType");
+    // Tail
+    DeleteLocalInt(oStore, sName + "nTailType");
+    // Portrait ID
+    DeleteLocalInt(oStore, sName + "nPortraitID");
+    // Portrait resref
+    DeleteLocalString(oStore, sName + "sPortraitResRef");
+    // Footstep type
+    DeleteLocalInt(oStore, sName + "nFootStepType");
+}
+
+struct appearancevalues GetPersistantLocalAppearancevalues(object oStore, string sName)
+{
+    object oToken = GetHideToken(oStore);
+    return GetLocalAppearancevalues(oToken, sName);
+}
+
+void SetPersistantLocalAppearancevalues(object oStore, string sName, struct appearancevalues appval)
+{
+    object oToken = GetHideToken(oStore);
+    SetLocalAppearancevalues(oToken, sName, appval);
+}
+
+void DeletePersistantLocalAppearancevalues(object oStore, string sName)
+{
+    object oToken = GetHideToken(oStore);
+    DeleteLocalAppearancevalues(oToken, sName);
+}
+
+string DebugAppearancevalues2Str(struct appearancevalues appval)
+{
+    return "Appearance type            = " + IntToString(appval.nAppearanceType) + "\n"
+         + "Body part - Right Foot     = " + IntToString(appval.nBodyPart_RightFoot    ) + "\n"
+         + "Body part - Left Foot      = " + IntToString(appval.nBodyPart_LeftFoot     ) + "\n"
+         + "Body part - Right Shin     = " + IntToString(appval.nBodyPart_RightShin    ) + "\n"
+         + "Body part - Left Shin      = " + IntToString(appval.nBodyPart_LeftShin     ) + "\n"
+         + "Body part - Right Thigh    = " + IntToString(appval.nBodyPart_RightThigh   ) + "\n"
+         + "Body part - Left Thigh     = " + IntToString(appval.nBodyPart_LeftThight   ) + "\n"
+         + "Body part - Pelvis         = " + IntToString(appval.nBodyPart_Pelvis       ) + "\n"
+         + "Body part - Torso          = " + IntToString(appval.nBodyPart_Torso        ) + "\n"
+         + "Body part - Belt           = " + IntToString(appval.nBodyPart_Belt         ) + "\n"
+         + "Body part - Neck           = " + IntToString(appval.nBodyPart_Neck         ) + "\n"
+         + "Body part - Right Forearm  = " + IntToString(appval.nBodyPart_RightForearm ) + "\n"
+         + "Body part - Left Forearm   = " + IntToString(appval.nBodyPart_LeftForearm  ) + "\n"
+         + "Body part - Right Bicep    = " + IntToString(appval.nBodyPart_RightBicep   ) + "\n"
+         + "Body part - Left Bicep     = " + IntToString(appval.nBodyPart_LeftBicep    ) + "\n"
+         + "Body part - Right Shoulder = " + IntToString(appval.nBodyPart_RightShoulder) + "\n"
+         + "Body part - Left Shoulder  = " + IntToString(appval.nBodyPart_LeftShoulder ) + "\n"
+         + "Body part - Right Hand     = " + IntToString(appval.nBodyPart_RightHand    ) + "\n"
+         + "Body part - Left Hand      = " + IntToString(appval.nBodyPart_LeftHand     ) + "\n"
+         + "Body part - Head           = " + IntToString(appval.nBodyPart_Head         ) + "\n"
+         + "Wings                      = " + IntToString(appval.nWingType) + "\n"
+         + "Tail                       = " + IntToString(appval.nTailType) + "\n"
+         + "Portrait ID                = " + (appval.nPortraitID == PORTRAIT_INVALID ? "PORTRAIT_INVALID" : IntToString(appval.nPortraitID)) + "\n"
+         + "Portrait ResRef            = " + appval.sPortraitResRef + "\n"
+         + "Footstep type              = " + IntToString(appval.nFootStepType) + "\n"
+         ;
+}
 
 // Test main
-//void main(){}
+void main(){}

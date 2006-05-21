@@ -2,7 +2,7 @@
 //:: Lingering Damage
 //:: ft_lingdmg
 //:://////////////////////////////////////////////
-/*
+/** @file
     Sets up adding and removing OnHit: CastSpell
     - Unique Power to weapons equipped by the feat
     possessor. This is done by the script adding
@@ -30,12 +30,13 @@ void main()
     object oPC, oItem;
     int nEvent = GetRunningEvent();
 
+    if(DEBUG) DoDebug("ft_lingdmg running, event: " + IntToString(nEvent));
 
     // We aren't being called from any event, instead from EvalPRCFeats, so set up the eventhooks
     if(nEvent == FALSE)
     {
         oPC = OBJECT_SELF;
-        //SendMessageToPC(oPC, "ft_lingdmg - Adding eventhooks");
+        if(DEBUG) DoDebug("ft_lingdmg: Adding eventhooks");
 
         AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM, "ft_lingdmg", TRUE, FALSE);
         AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "ft_lingdmg", TRUE, FALSE);
@@ -47,7 +48,11 @@ void main()
         oPC = OBJECT_SELF;
         oItem = GetSpellCastItem();
         object oTarget = PRCGetSpellTargetObject();
-        //SendMessageToPC(oPC, "ft_lingdmg - OnHit");
+        if(DEBUG) DoDebug("ft_lingdmg: OnHit:\n"
+                        + "oPC = " + DebugObject2Str(oPC) + "\n"
+                        + "oItem = " + DebugObject2Str(oItem) + "\n"
+                        + "oTarget = " + DebugObject2Str(oTarget) + "\n"
+                          );
         // only run if called by a weapon
         if(GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
         {
@@ -56,7 +61,7 @@ void main()
                 int iDam      = d6(GetTotalSneakAttackDice(oPC) );
                 int iDamType  = GetWeaponDamageType(oItem);
                 int iDamPower = GetDamagePowerConstant(oItem, oTarget, oPC);
-                //SendMessageToPC(oPC, "Lingering Damage - iDam: " + IntToString(iDam) + "; iDamType: " + IntToString(iDamType) + "; iDamPower: " + IntToString(iDamPower));
+                if(DEBUG) DoDebug("Lingering Damage - iDam: " + IntToString(iDam) + "; iDamType: " + IntToString(iDamType) + "; iDamPower: " + IntToString(iDamPower));
                 effect eDam = EffectDamage(iDam, iDamType, iDamPower);
                 DelayCommand(RoundsToSeconds(1), ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget) );
             }
@@ -67,7 +72,7 @@ void main()
     {
         oPC = GetItemLastEquippedBy();
         oItem = GetItemLastEquipped();
-        //SendMessageToPC(oPC, "ft_lingdmg - OnEquip");
+        if(DEBUG) DoDebug("ft_lingdmg - OnEquip");
         if( GetWeaponRanged(oItem) || IPGetIsMeleeWeapon(oItem) )
             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
@@ -76,7 +81,7 @@ void main()
     {
         oPC = GetItemLastUnequippedBy();
         oItem = GetItemLastUnequipped();
-        //SendMessageToPC(oPC, "ft_lingdmg - OnEquip");
+        if(DEBUG) DoDebug("ft_lingdmg - OnEquip");
         if( GetWeaponRanged(oItem) || IPGetIsMeleeWeapon(oItem) )
             RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);
     }

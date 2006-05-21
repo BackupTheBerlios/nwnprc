@@ -44,15 +44,9 @@ void main()
 
     int         nSpellsPerDay0 =    GetLocalInt(oPC, "SpellsPerDay0");
     int         nSpellsPerDay1 =    GetLocalInt(oPC, "SpellsPerDay1");
-
-    int         nWings  =           GetLocalInt(oPC, "Wings");
-    int         nTail =             GetLocalInt(oPC, "Tail");
-    int         nPortrait =         GetLocalInt(oPC, "Portrait");
-    int         nAppearance =       GetLocalInt(oPC, "Appearance");
     int         nVoiceset =         GetLocalInt(oPC, "Soundset");
     int         nSkin =             GetLocalInt(oPC, "Skin");
     int         nHair =             GetLocalInt(oPC, "Hair");
-    int         nHead =             GetLocalInt(oPC, "Head");
     int         nTattooColour1 =    GetLocalInt(oPC, "TattooColour1");
     int         nTattooColour2 =    GetLocalInt(oPC, "TattooColour2");
 
@@ -105,7 +99,7 @@ void main()
     {
         sScript += LetoAdd("FamiliarType", IntToString(nFamiliar), "int");
         if(GetFamiliarName(oPC) == "")
-            sScript += LetoAdd("FamiliarName", RandomName(), "string");
+            sScript += LetoAdd("FamiliarName", RandomName(NAME_FAMILIAR), "string");
     }
 
     //Animal Companion
@@ -114,7 +108,7 @@ void main()
     {
         sScript += LetoAdd("CompanionType", IntToString(nAnimalCompanion), "int");
         if(GetAnimalCompanionName(oPC) == "")
-            sScript += LetoAdd("CompanionName", RandomName(), "string");
+            sScript += LetoAdd("CompanionName", RandomName(NAME_ANIMAL), "string");
     }
 
     //Domains
@@ -217,35 +211,12 @@ void main()
     }
 
     //Appearance stuff
-    sScript += LetoAdd("Appearance_Type", IntToString(nAppearance), "word");
     if(nVoiceset != -1) //keep existing portrait
         sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
     sScript += SetSkinColor(nSkin);
     sScript += SetHairColor(nHair);
-    sScript += LetoAdd("Wings", IntToString(nWings), "byte");
-    sScript += LetoAdd("Tail", IntToString(nTail), "byte");
-    sScript += LetoAdd("Appearance_Head", IntToString(nHead), "byte");
-//NPCS have and ID, PCs have a resref. resref overrides portrait.
-//    sScript += "<gff:set 'PortraitId'   "+IntToString(nPortrait)+">";
-    if(nPortrait != -1) //keep existing portrait
-        sScript += SetPCPortrait(Get2DACache("portraits","BaseResRef",nPortrait));
     sScript += SetTatooColor(nTattooColour1, 1);
     sScript += SetTatooColor(nTattooColour2, 2);
-    sScript += LetoAdd("BodyPart_Neck",   IntToString(array_get_int(OBJECT_SELF, "Tattoo",  1)), "byte");
-    sScript += LetoAdd("BodyPart_Torso",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  2)), "byte");
-    sScript += LetoAdd("BodyPart_Pelvis", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  4)), "byte");
-    sScript += LetoAdd("BodyPart_LBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  6)), "byte");
-    sScript += LetoAdd("BodyPart_LFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  7)), "byte");
-    sScript += LetoAdd("BodyPart_LHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  8)), "byte");
-    sScript += LetoAdd("BodyPart_LThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  9)), "byte");
-    sScript += LetoAdd("BodyPart_LShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 10)), "byte");
-    sScript += LetoAdd("BodyPart_LFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 11)), "byte");
-    sScript += LetoAdd("BodyPart_RBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 13)), "byte");
-    sScript += LetoAdd("BodyPart_RFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 14)), "byte");
-    sScript += LetoAdd("BodyPart_RHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 15)), "byte");
-    sScript += LetoAdd("BodyPart_RThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 16)), "byte");
-    sScript += LetoAdd("BodyPart_RShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 17)), "byte");
-    sScript += LetoAdd("BodyPart_RFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 18)), "byte");
 
     //Special abilities
     //since bioware screws this up in 1.64 its not needed
@@ -337,8 +308,6 @@ void main()
         object oCopy = CopyObject(oPC, GetLocation(oPC));
         StackedLetoScript(SetCreatureName(RandomName(), FALSE));
         StackedLetoScript(SetCreatureName(RandomName(), TRUE));
-        if(nPortrait != -1)
-            StackedLetoScript(SetNPCPortrait(nPortrait));
         RunStackedLetoScriptOnObject(oCopy, "OBJECT", "SPAWN");
     }
     else

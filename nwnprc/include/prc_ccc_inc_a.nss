@@ -205,9 +205,13 @@ void SetupStage()
                 if(nPoints == 0)
                 {
                     //calculate number of points
-                    nPoints += StringToInt(Get2DACache("classes", "SkillPointBase ", nClass));
+                    nPoints += StringToInt(Get2DACache("classes", "SkillPointBase", nClass));
                     nPoints += (nInt-10+StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace)))/2;
-                    nPoints *= 4;
+                    if(GetPRCSwitch(PRC_CONVOCC_SKILL_MULTIPLIER))
+                        nPoints *= GetPRCSwitch(PRC_CONVOCC_SKILL_MULTIPLIER);
+                    else
+                        nPoints *= 4;
+                    nPoints += GetPRCSwitch(PRC_CONVOCC_SKILL_BONUS);
                     //minimum 4
                     if(nPoints < 4)
                         nPoints = 4;
@@ -254,7 +258,7 @@ void SetupStage()
                             int nCap = (1+3)/2; //this should be level +3
                             if(nStoredPoints >= nCap)
                                 sName = "";
-                            else 
+                            else if(sName != "") 
                                 sName += " : "+IntToString(nStoredPoints);
                         }
                         if(sName != "")
@@ -588,7 +592,16 @@ void SetupStage()
             MarkStageSetUp(nStage);
             break;
         case STAGE_TATTOOPART:
-            SetupTattooParts();
+            AddChoice("Done", 0);
+            AddChoice("Torso", CREATURE_PART_TORSO);
+            AddChoice("Left bicep", CREATURE_PART_LEFT_BICEP);
+            AddChoice("Left forearm", CREATURE_PART_LEFT_FOREARM);
+            AddChoice("Left thigh", CREATURE_PART_LEFT_THIGH);
+            AddChoice("Left shin", CREATURE_PART_LEFT_SHIN);
+            AddChoice("Right bicep", CREATURE_PART_RIGHT_BICEP);
+            AddChoice("Right forearm", CREATURE_PART_RIGHT_FOREARM);
+            AddChoice("Right thigh", CREATURE_PART_RIGHT_THIGH);
+            AddChoice("Right shin", CREATURE_PART_RIGHT_SHIN);
             MarkStageSetUp(nStage);
             break;
 

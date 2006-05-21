@@ -74,41 +74,58 @@ void ChoiceSelected(int nChoiceNo)
             }
             else if(GetChoice(OBJECT_SELF) == 1)
             {
-                SetLocalInt(OBJECT_SELF, "Appearance",
+                SetCreatureAppearanceType(OBJECT_SELF, 
                     StringToInt(Get2DACache("racialtypes", "Appearance",
                         GetLocalInt(OBJECT_SELF, "Race"))));
-                SetLocalInt(OBJECT_SELF, "Head", 1);
+                SetCreatureWingType(CREATURE_WING_TYPE_NONE, OBJECT_SELF);
                 //builder toggles
                 if(nRace == RACIAL_TYPE_AVARIEL
                     && GetPRCSwitch(PRC_CONVOCC_AVARIEL_WINGS))
-                    SetLocalInt(OBJECT_SELF, "Wings", 6);
+                    SetCreatureWingType(CREATURE_WING_TYPE_BIRD, OBJECT_SELF);
                 if(nRace == RACIAL_TYPE_FEYRI
                     && GetPRCSwitch(PRC_CONVOCC_FEYRI_WINGS))
-                    SetLocalInt(OBJECT_SELF, "Wings", 3);
+                    SetCreatureWingType(CREATURE_WING_TYPE_DEMON, OBJECT_SELF);
                 if(nRace == RACIAL_TYPE_FEYRI
                     && GetPRCSwitch(PRC_CONVOCC_FEYRI_TAIL))
-                    SetLocalInt(OBJECT_SELF, "Tail", 3);
+                    SetCreatureTailType(CREATURE_TAIL_TYPE_DEVIL, OBJECT_SELF);
                 if(nRace == RACIAL_TYPE_RAKSHASA
                     && nSex == GENDER_FEMALE
                     && GetPRCSwitch(PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE))
-                    SetLocalInt(OBJECT_SELF, "Appearance", APPEARANCE_TYPE_RAKSHASA_TIGER_FEMALE);
+                    SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_RAKSHASA_TIGER_FEMALE);
                 if(nRace == RACIAL_TYPE_DRIDER
                     && nSex == GENDER_FEMALE
                     && GetPRCSwitch(PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE))
-                    SetLocalInt(OBJECT_SELF, "Appearance", APPEARANCE_TYPE_DRIDER_FEMALE);
+                    SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_DRIDER_FEMALE);
+                //set tattoos to 2 so they show
+                //1 is no tatoo
+                //0 is nothing at all                
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, 1);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, 1);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, 2);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN, 2);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH, 2);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH, 2);
+                SetCreatureBodyPart(CREATURE_PART_PELVIS, 1);
+                SetCreatureBodyPart(CREATURE_PART_TORSO, 2);
+                SetCreatureBodyPart(CREATURE_PART_BELT, 0);
+                SetCreatureBodyPart(CREATURE_PART_NECK, 1);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM,2);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM, 2);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, 2);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP, 2);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER, 0);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER, 0);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, 1);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, 1);
+                SetCreatureBodyPart(CREATURE_PART_HEAD, 1);
+                
                 //make the clone
                 MakeClone();
                 ApplyEffectAtLocation(DURATION_TYPE_INSTANT,
                     EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1),
                         GetLocation(OBJECT_SELF));
-                //set tattoos to 2 so they show
-                //1 is no tatoo
-                //0 is nothing at all
-                array_create(OBJECT_SELF, "Tattoo");
-                for(i=1;i<=18;i++)
-                {
-                    array_set_int(OBJECT_SELF, "Tattoo",  i, 2);
-                }
+                
+                
                 DoCloneLetoscript();
                 DoRotatingCamera();
                 //racial bonuses
@@ -298,7 +315,10 @@ void ChoiceSelected(int nChoiceNo)
             if(nPoints <= 0)
                 nStage++;
             else
+            {
+                ClearCurrentStage();
                 MarkStageNotSetUp(nStage);    
+            }    
             break;
             
         case STAGE_SKILL_CHECK:
@@ -704,7 +724,6 @@ void ChoiceSelected(int nChoiceNo)
             if(GetChoice(OBJECT_SELF) == -1)
             {
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
-                DeleteLocalInt(OBJECT_SELF, "Tail");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
@@ -719,7 +738,6 @@ void ChoiceSelected(int nChoiceNo)
             if(GetChoice(OBJECT_SELF) == -1)
             {
                 MarkStageNotSetUp(nStage, OBJECT_SELF);
-                DeleteLocalInt(OBJECT_SELF, "Wings");
                 nStage--;
                 array_delete(OBJECT_SELF, "ChoiceValues");
                 array_delete(OBJECT_SELF, "ChoiceTokens");
@@ -766,23 +784,22 @@ void ChoiceSelected(int nChoiceNo)
             break;
 
         case STAGE_APPEARANCE:
-            SetLocalInt(OBJECT_SELF, "Appearance",
+            SetCreatureAppearanceType(OBJECT_SELF,
                 GetChoice(OBJECT_SELF));
-            nStage++;
             SetCreatureAppearanceType(GetLocalObject(OBJECT_SELF, "Clone"),
                 GetChoice(OBJECT_SELF));
+            nStage++;
             break;
         case STAGE_HEAD:
-            SetLocalInt(OBJECT_SELF, "Head",
-                GetChoice(OBJECT_SELF));
+            SetCreatureBodyPart(CREATURE_PART_HEAD,
+                GetChoice(OBJECT_SELF), 
+                OBJECT_SELF);   
             SetCreatureBodyPart(CREATURE_PART_HEAD,
                 GetChoice(OBJECT_SELF), 
                 GetLocalObject(OBJECT_SELF, "Clone"));   
             nStage++;
             break;
         case STAGE_PORTRAIT:
-            SetLocalInt(OBJECT_SELF, "Portrait",
-                GetChoice(OBJECT_SELF));
             SetPortraitId(OBJECT_SELF, 
                 GetChoice(OBJECT_SELF));
             SetPortraitId(GetLocalObject(OBJECT_SELF, "Clone"), 
@@ -790,17 +807,17 @@ void ChoiceSelected(int nChoiceNo)
             nStage++;
             break;
         case STAGE_TAIL:
-            SetLocalInt(OBJECT_SELF, "Tail",
-                GetChoice(OBJECT_SELF));
             SetCreatureTailType(GetChoice(OBJECT_SELF), 
                 GetLocalObject(OBJECT_SELF, "Clone"));    
+            SetCreatureTailType(GetChoice(OBJECT_SELF), 
+                OBJECT_SELF);   
             nStage++;
             break;
         case STAGE_WINGS:
-            SetLocalInt(OBJECT_SELF, "Wings",
-                GetChoice(OBJECT_SELF));
             SetCreatureWingType(GetChoice(OBJECT_SELF), 
                 GetLocalObject(OBJECT_SELF, "Clone"));   
+            SetCreatureWingType(GetChoice(OBJECT_SELF), 
+                OBJECT_SELF);  
             nStage++;
             break;
         case STAGE_TATTOOPART:
@@ -810,7 +827,17 @@ void ChoiceSelected(int nChoiceNo)
             }
             else
             {
-                SwitchTattoo(GetChoice(OBJECT_SELF));
+                int nTattooed = GetCreatureBodyPart(GetChoice(OBJECT_SELF), OBJECT_SELF);
+                if(nTattooed == 1)
+                    nTattooed = 2;
+                else if(nTattooed == 2)
+                    nTattooed = 1;
+                SetCreatureBodyPart(GetChoice(OBJECT_SELF),
+                    nTattooed, 
+                    GetLocalObject(OBJECT_SELF, "Clone"));  
+                SetCreatureBodyPart(GetChoice(OBJECT_SELF),
+                    nTattooed, 
+                    OBJECT_SELF);  
             }
             break;
         case STAGE_TATTOOPART_CHECK:

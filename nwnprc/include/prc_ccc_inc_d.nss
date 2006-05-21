@@ -355,28 +355,20 @@ int CheckClassRequirements(int nClassID)
     //this checks for base classes
     if(Get2DACache("classes", "EpicLevel", nClassID) != "-1")
         return FALSE;
-    //alignment changes are checked for in alignment
-
-    //anything else is good
-    return TRUE;
-//MaxLevel
-//not implemented
-//EpicLevel
-//not implemented
-
-//below is only for prestige classes
-//which doesnt apply as we only want base
+    //alignment changes are checked for in alignment    
+    //MaxLevel
+    //not implemented
+    //EpicLevel
+    //not implemented
     string sPreReq = Get2DACache("classes", "PreReqTable", nClassID);
-    if(sPreReq == "")
-        return TRUE;
-    else
-        return FALSE;
 //now check the prereq table
-//not implemented
+//only variables implemented
     int i;
     for(i=0;i<GetPRCSwitch(FILE_END_CLASS_PREREQ);i++)
     {
         string sReqType = Get2DACache(sPreReq, "ReqType", i);
+        string sParam1 = Get2DACache(sPreReq, "ReqParam1", i);
+        string sParam2 = Get2DACache(sPreReq, "ReqParam2", i);
         //jump out if no more prereqs
         if(sReqType == "")
             return TRUE;
@@ -399,104 +391,10 @@ int CheckClassRequirements(int nClassID)
         else if(sReqType ==  "DIVSPELL")
         {}
         else if(sReqType ==  "VAR")
-        {}
-    }
-    return FALSE;
-}
-
-int SetupSkillToken(int nSkill, int nPosition)
-{
-//    WriteTimestampedLogEntry("SetupSkillToken("+IntToString(nSkill)+", "+IntToString(nPosition)+")");
-
-    int nClass = GetLocalInt(OBJECT_SELF, "Class");
-    string sFile = Get2DACache("classes", "SkillsTable", nClass);
-    int nPoints = GetLocalInt(OBJECT_SELF, "Points");
-    int nSkillClassNo;
-    int bValid;
-    int i;
-    int nLevel = GetLocalInt(OBJECT_SELF, "Level");
-    //special case for stored skill points
-    if(nSkill == -2)
-    {
-        string sName = "Store all remaining points.";
-        array_set_string(OBJECT_SELF, "ChoiceTokens",nPosition,sName);
-        array_set_int(OBJECT_SELF, "ChoiceValue",nPosition,nSkill);
-        return TRUE;
-    }
-    else if(nSkill == -1)
-    {
-        int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkill);
-        for(i=1;i<=nLevel;i++)
         {
-            nStoredPoints += array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Skills", nSkill);
+            if(GetLocalInt(OBJECT_SELF, sParam1) != StringToInt(sParam2))
+                return FALSE;
         }
-        string sName = "Stored skill points: "+IntToString(nStoredPoints)+" points.";
-        array_set_string(OBJECT_SELF, "ChoiceTokens",nPosition,sName);
-        array_set_int(OBJECT_SELF, "ChoiceValue",nPosition,nSkill);
-        return TRUE;
-    }
-    //get the line no in the class skills file
-    for(i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
-    {
-        if(StringToInt(Get2DACache(sFile, "SkillIndex", i))==nSkill
-            && Get2DACache(sFile, "SkillLabel", i) != "")
-        {
-            nSkillClassNo = i;
-            bValid = TRUE;
-            break;
-        }
-    }
-    //abort if skill not takeable
-    if(!bValid)
-        return TRUE;
-    bValid = 0;
-    string sName = GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkill)));
-    //skip out if skill is not valid
-    if(sName == GetStringByStrRef(0))
-        return TRUE;
-    //add the current points value to name
-    int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkill);
-    for(i=1;i<=nLevel;i++)
-    {
-        nStoredPoints += array_get_int(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Skills", nSkill);
-    }
-    sName += " "+IntToString(nStoredPoints)+" points.";
-    //check for crossclassness
-    if(Get2DACache(sFile, "ClassSkill", nSkillClassNo) == "1")
-    {
-        sName += " (Class Skill)";
-        if(nPoints >= 1
-            && nStoredPoints <= nLevel+3)//this is the class limit
-            bValid = 1;
-        else
-            bValid = 2;
-    }
-    else
-    {//crossclass
-        sName += " (Cross-class Skill)";
-        if(nPoints >= 2
-            && nStoredPoints <= (nLevel+3)/2)//this is the class limit
-            bValid = 1;
-        else
-            bValid = 2;
-    }
-    if(bValid ==1)
-    {
-        array_set_string(OBJECT_SELF, "ChoiceTokens",nPosition,sName);
-        array_set_int(OBJECT_SELF, "ChoiceValue",nPosition,nSkill);
-    }
-    else if(bValid ==2)
-    {
-        for(i=nPosition;i<array_get_size(OBJECT_SELF, "ChoiceValue");i++)
-            array_set_int(OBJECT_SELF, "ChoiceValue",i,  array_get_int(OBJECT_SELF, "ChoiceValue", i+1));
-        for(i=nPosition;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
-            array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
-        if(array_get_size(OBJECT_SELF, "ChoiceTokens")>0)
-        {
-            array_shrink(OBJECT_SELF, "ChoiceValue", array_get_size(OBJECT_SELF, "ChoiceValue") -1);
-            array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
-        }
-        return FALSE;
     }
     return TRUE;
 }
@@ -548,56 +446,18 @@ void DoCloneLetoscript()
     object oClone = GetLocalObject(OBJECT_SELF, "Clone");
     if(!GetIsObjectValid(oClone))
         return;
-    int         nWings  =           GetLocalInt(OBJECT_SELF, "Wings");
-    int         nTail =             GetLocalInt(OBJECT_SELF, "Tail");
-    int         nPortrait =         GetLocalInt(OBJECT_SELF, "Portrait");
-    int         nAppearance =       GetLocalInt(OBJECT_SELF, "Appearance");
     int         nSoundset =         GetLocalInt(OBJECT_SELF, "Soundset");
     int         nSkin =             GetLocalInt(OBJECT_SELF, "Skin");
     int         nHair =             GetLocalInt(OBJECT_SELF, "Hair");
-    int         nHead =             GetLocalInt(OBJECT_SELF, "Head");
     int         nSex =              GetLocalInt(OBJECT_SELF, "Gender");
     int         nTattooColour1 =    GetLocalInt(OBJECT_SELF, "TattooColour1");
     int         nTattooColour2 =    GetLocalInt(OBJECT_SELF, "TattooColour2");
     StackedLetoScript(LetoSet("Gender", IntToString(nSex), "byte"));
-    if(nAppearance != -1)
-    {
-        StackedLetoScript(LetoSet("Appearance_Type", IntToString(nAppearance), "word"));
-    }
     StackedLetoScript(LetoSet("SoundSetFile", IntToString(nSoundset), "word"));
-    if(nPortrait != -1)
-    {
-//        StackedLetoScript("<gff:set 'PortraitId' '"+IntToString(nPortrait)+"'>");
-        StackedLetoScript(LetoSet("Portrait", "po_"+Get2DACache("portraits","BaseResRef",nPortrait), "resref"));
-    }
-    StackedLetoScript(SetWings(nWings));
-    StackedLetoScript(SetTail(nTail));
     StackedLetoScript(SetSkinColor(nSkin));
     StackedLetoScript(SetHairColor(nHair));
     StackedLetoScript(SetTatooColor(nTattooColour1, 1));
     StackedLetoScript(SetTatooColor(nTattooColour2, 2));
-    //StackedLetoScript(LetoSet("BodyPart_Neck",   IntToString(array_get_int(OBJECT_SELF, "Tattoo",  1)), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_Torso",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  2)), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_Belt",   array_get_int(OBJECT_SELF, "Tattoo",  3), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_Pelvis", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  4)), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_LShoul", array_get_int(OBJECT_SELF, "Tattoo",  5), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_LBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  6)), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_LFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  7)), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_LHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo",  8)), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_LThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo",  9)), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_LShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 10)), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_LFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 11)), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_RShoul", array_get_int(OBJECT_SELF, "Tattoo", 12), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_RBicep", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 13)), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_RFArm",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 14)), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_RHand",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 15)), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_RThigh", IntToString(array_get_int(OBJECT_SELF, "Tattoo", 16)), "byte"));
-    StackedLetoScript(LetoSet("BodyPart_RShin",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 17)), "byte"));
-    //StackedLetoScript(LetoSet("BodyPart_RFoot",  IntToString(array_get_int(OBJECT_SELF, "Tattoo", 18)), "byte"));
-    if(nHead != -1)
-    {
-        StackedLetoScript(LetoSet("Appearance_Head", IntToString(nHead), "byte"));
-    }
     string sResult;
     RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
     sResult = GetLocalString(GetModule(), "LetoResult");
@@ -649,7 +509,6 @@ void MakeClone()
         //make sure the clone stays put
         effect eParal = EffectCutsceneImmobilize();
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oClone, 9999.9);
-
 }
 
 void DoRotatingCamera()
@@ -681,17 +540,4 @@ void DoRotatingCamera()
         AssignCommand(oPC, ActionPlayAnimation(100+Random(17)));
     else
         AssignCommand(oPC, ActionPlayAnimation(100+Random(21), 1.0, 6.0));
-}
-
-void SwitchTattoo(int nPart)
-{
-    int nTattooed = array_get_int(OBJECT_SELF, "Tattoo", nPart);
-    if(nTattooed == 1)
-        nTattooed = 2;
-    else if(nTattooed == 2)
-        nTattooed = 1;
-    array_set_int(OBJECT_SELF, "Tattoo", nPart, nTattooed);
-    SetCreatureBodyPart(nPart,
-        nTattooed, 
-        GetLocalObject(OBJECT_SELF, "Clone"));  
 }

@@ -310,13 +310,13 @@ void SetupHeader()
             break;
         case STAGE_DOMAIN_CHECK:
             sText = GetStringByStrRef(16824209)+"\n";
-            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", GetLocalInt(OBJECT_SELF, "Domain1"))));
             sText+= "\n";
-            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", GetLocalInt(OBJECT_SELF, "Domain1"))));
-            sText+= "\nAnd: ";
-            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", GetLocalInt(OBJECT_SELF, "Domain2"))));
+            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", GetLocalInt(OBJECT_SELF, "Domain1"))))+"\n";
+            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", GetLocalInt(OBJECT_SELF, "Domain1"))))+"\n";
+            sText+= "\nAnd: \n";
+            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", GetLocalInt(OBJECT_SELF, "Domain2"))))+"\n";
             sText+= "\n";
-            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", GetLocalInt(OBJECT_SELF, "Domain2"))));
+            sText+= GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", GetLocalInt(OBJECT_SELF, "Domain2"))))+"\n";
             sText+= "\n"+GetStringByStrRef(16824210);
             SetHeader(sText);
             //SetToken(DYNCONV_TOKEN_HEADER, sText);

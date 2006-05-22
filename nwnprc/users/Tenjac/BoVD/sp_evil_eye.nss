@@ -54,12 +54,36 @@ void main()
 			eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, nPenalty, SAVING_THROW_TYPE_ALL));
 			eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, nPenalty));
 			
-			//Handle removal
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24));
+						
+			//Handle removal via damage						
+			SetLocalString(oTarget, "EvilEyeCaster", GetName(oPC));
 			
+			//Handle removal via sunrise
+			{
+				DawnCheck(oTarget, oPC);
+			}						
 		}
 	}
 	
 	SPEvilShift(oPC);
 	SPSetSchool();
 }
+
+void DawnCheck(object oTarget, object oPC, int nRemove)
+{
+	if(!GetIsDawn())
+	{
+		nRemove = 1;
+	}
 	
+	if((nRemove == 1) && (GetIsDawn()))
+	{
+		RemoveSpellEffects(SPELL_EVIL_EYE, oPC, oTarget);
+		return;
+	}
+	
+	DelayCommand(HoursToSeconds(1), DawnCheck(oTarget, oPC, nRemove);
+}
+	
+		

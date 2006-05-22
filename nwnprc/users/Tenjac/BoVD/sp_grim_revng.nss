@@ -50,12 +50,12 @@ void main()
 	
 	if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) == nModelNumber))
 	{
-		nLeftHandMissing = TRUE;
+		bLeftHandMissing = TRUE;
 	}
 	
 	if(GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, oTarget) == nModelNumber))	
 	{
-		nRightHandMissing = TRUE;
+		bRightHandMissing = TRUE;
 	}
 	
 	//Spellhook

@@ -66,7 +66,7 @@ void main()
 		}
 	}	
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);		
+	SPSetSchool();		
 }
 
 

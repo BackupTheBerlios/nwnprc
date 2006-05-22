@@ -195,6 +195,36 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
                 <element name="Mod_Hak" type="10" value="nwangband" />
             </struct>
             <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_2das" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_scripts" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_newspellbook" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_spells" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_epicspells" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_psionics" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_race" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_textures" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_misc" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prc_craft2das" />
+            </struct>
+            <struct id="8" >
                 <element name="Mod_Hak" type="10" value="cep2_1" />
             </struct>
             <struct id="8" >
@@ -237,9 +267,6 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
                 <element name="Mod_Hak" type="10" value="acp_pheno8_hr" />
             </struct>
             <struct id="8" >
-                <element name="Mod_Hak" type="10" value="acp_robes" />
-            </struct>
-            <struct id="8" >
                 <element name="Mod_Hak" type="10" value="acp_core" />
             </struct>
             <struct id="8" >
@@ -253,36 +280,6 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
             </struct>
             <struct id="8" >
                 <element name="Mod_Hak" type="10" value="acp_kensai" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_2das" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_scripts" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_newspellbook" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_spells" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_epicspells" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_psionics" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_race" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_textures" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_misc" />
-            </struct>
-            <struct id="8" >
-                <element name="Mod_Hak" type="10" value="prc_craft2das" />
             </struct>
             <struct id="8" >
                 <element name="Mod_Hak" type="10" value="ctp_bio_fix" />

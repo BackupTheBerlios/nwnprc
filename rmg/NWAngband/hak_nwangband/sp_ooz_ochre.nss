@@ -13,6 +13,7 @@
 
 #include "reg_inc"
 #include "spawn_inc"
+#include "amb_inc"
 
 void main()
 {

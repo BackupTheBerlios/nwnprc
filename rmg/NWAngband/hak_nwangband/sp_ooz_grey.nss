@@ -13,6 +13,7 @@
 
 #include "reg_inc"
 #include "spawn_inc"
+#include "amb_inc"
 
 void main()
 {
@@ -26,5 +27,5 @@ void main()
     REG_SpawnEncounter(fCR,
         "ooz_grey",
         lSpawn,
-        0);
+        2);
 }

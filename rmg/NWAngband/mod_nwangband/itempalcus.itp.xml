@@ -1146,6 +1146,10 @@
                         <element name="ID" type="0" value="26" />
                         <element name="LIST" type="15" >
                             <struct id="0" >
+                                <element name="NAME" type="10" value="A Stolen Dweomer" />
+                                <element name="RESREF" type="11" value="it_dweomerthief" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="16830216" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr401" />
                             </struct>
@@ -1162,6 +1166,14 @@
                                 <element name="RESREF" type="11" value="splscrl_animobj" />
                             </struct>
                             <struct id="0" >
+                                <element name="NAME" type="10" value="Avascular Mass" />
+                                <element name="RESREF" type="11" value="nw_it_sparscr810" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Avasculate" />
+                                <element name="RESREF" type="11" value="nw_it_sparscr709" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="16830368" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr107" />
                             </struct>
@@ -1174,12 +1186,20 @@
                                 <element name="RESREF" type="11" value="sp_it_sparscr503" />
                             </struct>
                             <struct id="0" >
+                                <element name="NAME" type="10" value="Blasphemy" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr705" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="16830236" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr402" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16825357" />
                                 <element name="RESREF" type="11" value="splscrl_blsbah" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Blood of the Martyr" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr405" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830234" />
@@ -1196,6 +1216,10 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830218" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr403" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Command Undead" />
+                                <element name="RESREF" type="11" value="nw_it_sparscr223" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16825353" />
@@ -1216,6 +1240,30 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830380" />
                                 <element name="RESREF" type="11" value="sp_it_spdvscr302" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Deeper Darkness" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr305" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Detect Chaos" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr110" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Detect Evil" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr107" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Detect Good" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr108" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Detect Law" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr109" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dictum" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr706" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16825212" />
@@ -1250,6 +1298,14 @@
                                 <element name="RESREF" type="11" value="sp_it_sparscr404" />
                             </struct>
                             <struct id="0" >
+                                <element name="NAME" type="10" value="Energy Ebb" />
+                                <element name="RESREF" type="11" value="nw_it_sparscr710" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Energy Ebb" />
+                                <element name="RESREF" type="11" value="nw_it_spdvscr710" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="16830242" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr605" />
                             </struct>
@@ -1268,6 +1324,14 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830429" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr802" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Forceblast" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr301" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Ghoul Gauntlet" />
+                                <element name="RESREF" type="11" value="nw_it_sparscr615" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830290" />
@@ -1296,6 +1360,10 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830272" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr202" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Holy Word" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr704" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830226" />
@@ -1356,6 +1424,22 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830263" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr407" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Magic Circle against Chaos" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr308" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Magic Circle against Evil" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr309" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Magic Circle against Good" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr310" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Magic Circle against Law" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr311" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830240" />
@@ -1434,186 +1518,6 @@
                                 <element name="RESREF" type="11" value="splscrl_natav" />
                             </struct>
                             <struct id="0" >
-                                <element name="STRREF" type="4" value="16830441" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr108" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830443" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr705" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830394" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr402" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826310" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr703" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826310" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr802" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826308" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr602" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830286" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr401" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830284" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr502" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830265" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr303" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830431" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr208" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830445" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr410" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830398" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr303" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826070" />
-                                <element name="RESREF" type="11" value="splscrl_majmiss" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830447" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr109" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830224" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr406" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830449" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr504" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830451" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr902" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830459" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr307" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16825689" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr504" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16825707" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr903" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16825359" />
-                                <element name="RESREF" type="11" value="splscrl_unyield" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830461" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr411" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16825361" />
-                                <element name="RESREF" type="11" value="splscrl_gwdm" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16830463" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr702" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="A Stolen Dweomer" />
-                                <element name="RESREF" type="11" value="it_dweomerthief" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Avascular Mass" />
-                                <element name="RESREF" type="11" value="nw_it_sparscr810" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Avasculate" />
-                                <element name="RESREF" type="11" value="nw_it_sparscr709" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Blasphemy" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr705" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Blood of the Martyr" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr405" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Command Undead" />
-                                <element name="RESREF" type="11" value="nw_it_sparscr223" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Deeper Darkness" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr305" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Detect Chaos" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr110" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Detect Evil" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr107" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Detect Good" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr108" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Detect Law" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr109" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Dictum" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr706" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Energy Ebb" />
-                                <element name="RESREF" type="11" value="nw_it_sparscr710" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Energy Ebb" />
-                                <element name="RESREF" type="11" value="nw_it_spdvscr710" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Forceblast" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr301" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Ghoul Gauntlet" />
-                                <element name="RESREF" type="11" value="nw_it_sparscr615" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Holy Word" />
-                                <element name="RESREF" type="11" value="sp_it_spdvscr704" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Magic Circle against Chaos" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr308" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Magic Circle against Evil" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr309" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Magic Circle against Good" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr310" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Magic Circle against Law" />
-                                <element name="RESREF" type="11" value="sp_it_sparscr311" />
-                            </struct>
-                            <struct id="0" >
                                 <element name="NAME" type="10" value="Necrotic Awareness" />
                                 <element name="RESREF" type="11" value="nw_it_sparscr114" />
                             </struct>
@@ -1686,8 +1590,32 @@
                                 <element name="RESREF" type="11" value="nw_it_spdvscr515" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16830441" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr108" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830443" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr705" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="NAME" type="10" value="Otiluke&apos;s Resilient Sphere" />
                                 <element name="RESREF" type="11" value="nw_it_sparscr420" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830394" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr402" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826310" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr703" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826310" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr802" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826308" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr602" />
                             </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Protection from Chaos" />
@@ -1706,16 +1634,88 @@
                                 <element name="RESREF" type="11" value="sp_it_sparscr114" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16830286" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr401" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830284" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr502" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="NAME" type="10" value="Scroll" />
                                 <element name="RESREF" type="11" value="rig_scroll" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830265" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr303" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830431" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr208" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830445" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr410" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830398" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr303" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826070" />
+                                <element name="RESREF" type="11" value="splscrl_majmiss" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830447" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr109" />
                             </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Snilloc&apos;s Snowball Swarm" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr209" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16830224" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr406" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830449" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr504" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830451" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr902" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830459" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr307" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16825689" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr504" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16825707" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr903" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="NAME" type="10" value="Undetectable Alignment" />
                                 <element name="RESREF" type="11" value="sp_it_spdvscr204" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16825359" />
+                                <element name="RESREF" type="11" value="splscrl_unyield" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830461" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr411" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16825361" />
+                                <element name="RESREF" type="11" value="splscrl_gwdm" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16830463" />
+                                <element name="RESREF" type="11" value="sp_it_spdvscr702" />
                             </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Word of Chaos" />
@@ -1737,130 +1737,6 @@
                         <element name="ID" type="0" value="0" />
                         <element name="LIST" type="15" >
                             <struct id="0" >
-                                <element name="STRREF" type="4" value="16826278" />
-                                <element name="RESREF" type="11" value="2dapoison135" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826285" />
-                                <element name="RESREF" type="11" value="2dapoison142" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826288" />
-                                <element name="RESREF" type="11" value="2dapoison143" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826270" />
-                                <element name="RESREF" type="11" value="2dapoison127" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826276" />
-                                <element name="RESREF" type="11" value="2dapoison133" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826277" />
-                                <element name="RESREF" type="11" value="2dapoison134" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826269" />
-                                <element name="RESREF" type="11" value="2dapoison126" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826275" />
-                                <element name="RESREF" type="11" value="2dapoison132" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826286" />
-                                <element name="RESREF" type="11" value="2dapoison100" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826268" />
-                                <element name="RESREF" type="11" value="2dapoison125" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826274" />
-                                <element name="RESREF" type="11" value="2dapoison131" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826284" />
-                                <element name="RESREF" type="11" value="2dapoison141" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826290" />
-                                <element name="RESREF" type="11" value="2dapoison144" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826267" />
-                                <element name="RESREF" type="11" value="2dapoison124" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826266" />
-                                <element name="RESREF" type="11" value="2dapoison123" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826273" />
-                                <element name="RESREF" type="11" value="2dapoison130" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824442" />
-                                <element name="RESREF" type="11" value="prc_sk_mblade_bs" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824442" />
-                                <element name="RESREF" type="11" value="prc_sk_mblade_ls" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824442" />
-                                <element name="RESREF" type="11" value="prc_sk_mblade_ss" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824442" />
-                                <element name="RESREF" type="11" value="prc_sk_mblade_th" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826283" />
-                                <element name="RESREF" type="11" value="2dapoison140" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826292" />
-                                <element name="RESREF" type="11" value="2dapoison145" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826280" />
-                                <element name="RESREF" type="11" value="2dapoison137" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826272" />
-                                <element name="RESREF" type="11" value="2dapoison129" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826281" />
-                                <element name="RESREF" type="11" value="2dapoison138" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826265" />
-                                <element name="RESREF" type="11" value="2dapoison122" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826271" />
-                                <element name="RESREF" type="11" value="2dapoison128" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826294" />
-                                <element name="RESREF" type="11" value="2dapoison146" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826282" />
-                                <element name="RESREF" type="11" value="2dapoison139" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826279" />
-                                <element name="RESREF" type="11" value="2dapoison136" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16826264" />
-                                <element name="RESREF" type="11" value="2dapoison044" />
-                            </struct>
-                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4669" />
                                 <element name="RESREF" type="11" value="2dapoison023" />
                             </struct>
@@ -1875,6 +1751,10 @@
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Astral Construct Slam" />
                                 <element name="RESREF" type="11" value="psi_ast_con_slam" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826278" />
+                                <element name="RESREF" type="11" value="2dapoison135" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4675" />
@@ -1897,6 +1777,10 @@
                                 <element name="RESREF" type="11" value="2dapoison008" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826285" />
+                                <element name="RESREF" type="11" value="2dapoison142" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4673" />
                                 <element name="RESREF" type="11" value="2dapoison027" />
                             </struct>
@@ -1909,8 +1793,20 @@
                                 <element name="RESREF" type="11" value="2dapoison018" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826288" />
+                                <element name="RESREF" type="11" value="2dapoison143" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4674" />
                                 <element name="RESREF" type="11" value="2dapoison028" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826270" />
+                                <element name="RESREF" type="11" value="2dapoison127" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826276" />
+                                <element name="RESREF" type="11" value="2dapoison133" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4686" />
@@ -1933,12 +1829,28 @@
                                 <element name="RESREF" type="11" value="epicshifterpower" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826277" />
+                                <element name="RESREF" type="11" value="2dapoison134" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826269" />
+                                <element name="RESREF" type="11" value="2dapoison126" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826275" />
+                                <element name="RESREF" type="11" value="2dapoison132" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4685" />
                                 <element name="RESREF" type="11" value="2dapoison039" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4655" />
                                 <element name="RESREF" type="11" value="2dapoison009" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826286" />
+                                <element name="RESREF" type="11" value="2dapoison100" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4649" />
@@ -1949,12 +1861,32 @@
                                 <element name="RESREF" type="11" value="hidetoken" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826268" />
+                                <element name="RESREF" type="11" value="2dapoison125" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826274" />
+                                <element name="RESREF" type="11" value="2dapoison131" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4684" />
                                 <element name="RESREF" type="11" value="2dapoison038" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4667" />
                                 <element name="RESREF" type="11" value="2dapoison021" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826284" />
+                                <element name="RESREF" type="11" value="2dapoison141" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826290" />
+                                <element name="RESREF" type="11" value="2dapoison144" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826267" />
+                                <element name="RESREF" type="11" value="2dapoison124" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4652" />
@@ -1981,8 +1913,36 @@
                                 <element name="RESREF" type="11" value="prc_maniftoken" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826266" />
+                                <element name="RESREF" type="11" value="2dapoison123" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826273" />
+                                <element name="RESREF" type="11" value="2dapoison130" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4682" />
                                 <element name="RESREF" type="11" value="2dapoison036" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824442" />
+                                <element name="RESREF" type="11" value="prc_sk_mblade_bs" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824442" />
+                                <element name="RESREF" type="11" value="prc_sk_mblade_ls" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824442" />
+                                <element name="RESREF" type="11" value="prc_sk_mblade_ss" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824442" />
+                                <element name="RESREF" type="11" value="prc_sk_mblade_th" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826283" />
+                                <element name="RESREF" type="11" value="2dapoison140" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4646" />
@@ -1995,6 +1955,10 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4666" />
                                 <element name="RESREF" type="11" value="2dapoison020" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826292" />
+                                <element name="RESREF" type="11" value="2dapoison145" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4651" />
@@ -5145,6 +5109,10 @@
                                 <element name="RESREF" type="11" value="ireq_poison044" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826280" />
+                                <element name="RESREF" type="11" value="2dapoison137" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4662" />
                                 <element name="RESREF" type="11" value="2dapoison016" />
                             </struct>
@@ -5163,6 +5131,10 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4647" />
                                 <element name="RESREF" type="11" value="2dapoison001" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826272" />
+                                <element name="RESREF" type="11" value="2dapoison129" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4681" />
@@ -5189,8 +5161,20 @@
                                 <element name="RESREF" type="11" value="2dapoison022" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826281" />
+                                <element name="RESREF" type="11" value="2dapoison138" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4663" />
                                 <element name="RESREF" type="11" value="2dapoison017" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826265" />
+                                <element name="RESREF" type="11" value="2dapoison122" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826271" />
+                                <element name="RESREF" type="11" value="2dapoison128" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="4680" />
@@ -5217,8 +5201,24 @@
                                 <element name="RESREF" type="11" value="2dapoison026" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16826294" />
+                                <element name="RESREF" type="11" value="2dapoison146" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826282" />
+                                <element name="RESREF" type="11" value="2dapoison139" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826279" />
+                                <element name="RESREF" type="11" value="2dapoison136" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="4653" />
                                 <element name="RESREF" type="11" value="2dapoison007" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16826264" />
+                                <element name="RESREF" type="11" value="2dapoison044" />
                             </struct>
                         </element>
                     </struct>

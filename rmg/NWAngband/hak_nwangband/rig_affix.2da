@@ -1,0 +1,793 @@
+2DA V2.0
+
+           Label             Text                        Property1 Property2 Property3 Property4 Property5 
+0          none              ****                        ****      ****      ****      ****      ****      
+1          Strength1         "Strength +1"               1         ****      ****      ****      ****      
+2          Strength2         "Strength +2"               2         ****      ****      ****      ****      
+3          Strength3         "Strength +3"               3         ****      ****      ****      ****      
+4          Strength4         "Strength +4"               4         ****      ****      ****      ****      
+5          Strength5         "Strength +5"               5         ****      ****      ****      ****      
+6          Strength6         "Strength +6"               6         ****      ****      ****      ****      
+7          Strength7         "Strength +7"               7         ****      ****      ****      ****      
+8          Strength8         "Strength +8"               8         ****      ****      ****      ****      
+9          Strength9         "Strength +9"               9         ****      ****      ****      ****      
+10         Strength10        "Strength +10"              10        ****      ****      ****      ****      
+11         Strength11        "Strength +11"              11        ****      ****      ****      ****      
+12         Strength12        "Strength +12"              12        ****      ****      ****      ****      
+13         Dexterity1        "Dexterity +1"              13        ****      ****      ****      ****      
+14         Dexterity2        "Dexterity +2"              14        ****      ****      ****      ****      
+15         Dexterity3        "Dexterity +3"              15        ****      ****      ****      ****      
+16         Dexterity4        "Dexterity +4"              16        ****      ****      ****      ****      
+17         Dexterity5        "Dexterity +5"              17        ****      ****      ****      ****      
+18         Dexterity6        "Dexterity +6"              18        ****      ****      ****      ****      
+19         Dexterity7        "Dexterity +7"              19        ****      ****      ****      ****      
+20         Dexterity8        "Dexterity +8"              20        ****      ****      ****      ****      
+21         Dexterity9        "Dexterity +9"              21        ****      ****      ****      ****      
+22         Dexterity10       "Dexterity +10"             22        ****      ****      ****      ****      
+23         Dexterity11       "Dexterity +11"             23        ****      ****      ****      ****      
+24         Dexterity12       "Dexterity +12"             24        ****      ****      ****      ****      
+25         Constitution1     "Constitution +1"           25        ****      ****      ****      ****      
+26         Constitution2     "Constitution +2"           26        ****      ****      ****      ****      
+27         Constitution3     "Constitution +3"           27        ****      ****      ****      ****      
+28         Constitution4     "Constitution +4"           28        ****      ****      ****      ****      
+29         Constitution5     "Constitution +5"           29        ****      ****      ****      ****      
+30         Constitution6     "Constitution +6"           30        ****      ****      ****      ****      
+31         Constitution7     "Constitution +7"           31        ****      ****      ****      ****      
+32         Constitution8     "Constitution +8"           32        ****      ****      ****      ****      
+33         Constitution9     "Constitution +9"           33        ****      ****      ****      ****      
+34         Constitution10    "Constitution +10"          34        ****      ****      ****      ****      
+35         Constitution11    "Constitution +11"          35        ****      ****      ****      ****      
+36         Constitution12    "Constitution +12"          36        ****      ****      ****      ****      
+37         Intelligence1     "Intelligence +1"           37        ****      ****      ****      ****      
+38         Intelligence2     "Intelligence +2"           38        ****      ****      ****      ****      
+39         Intelligence3     "Intelligence +3"           39        ****      ****      ****      ****      
+40         Intelligence4     "Intelligence +4"           40        ****      ****      ****      ****      
+41         Intelligence5     "Intelligence +5"           41        ****      ****      ****      ****      
+42         Intelligence6     "Intelligence +6"           42        ****      ****      ****      ****      
+43         Intelligence7     "Intelligence +7"           43        ****      ****      ****      ****      
+44         Intelligence8     "Intelligence +8"           44        ****      ****      ****      ****      
+45         Intelligence9     "Intelligence +9"           45        ****      ****      ****      ****      
+46         Intelligence10    "Intelligence +10"          46        ****      ****      ****      ****      
+47         Intelligence11    "Intelligence +11"          47        ****      ****      ****      ****      
+48         Intelligence12    "Intelligence +12"          48        ****      ****      ****      ****      
+49         Wisdom1           "Wisdom +1"                 49        ****      ****      ****      ****      
+50         Wisdom2           "Wisdom +2"                 50        ****      ****      ****      ****      
+51         Wisdom3           "Wisdom +3"                 51        ****      ****      ****      ****      
+52         Wisdom4           "Wisdom +4"                 52        ****      ****      ****      ****      
+53         Wisdom5           "Wisdom +5"                 53        ****      ****      ****      ****      
+54         Wisdom6           "Wisdom +6"                 54        ****      ****      ****      ****      
+55         Wisdom7           "Wisdom +7"                 55        ****      ****      ****      ****      
+56         Wisdom8           "Wisdom +8"                 56        ****      ****      ****      ****      
+57         Wisdom9           "Wisdom +9"                 57        ****      ****      ****      ****      
+58         Wisdom10          "Wisdom +10"                58        ****      ****      ****      ****      
+59         Wisdom11          "Wisdom +11"                59        ****      ****      ****      ****      
+60         Wisdom12          "Wisdom +12"                60        ****      ****      ****      ****      
+61         Charisma1         "Charisma +1"               61        ****      ****      ****      ****      
+62         Charisma2         "Charisma +2"               62        ****      ****      ****      ****      
+63         Charisma3         "Charisma +3"               63        ****      ****      ****      ****      
+64         Charisma4         "Charisma +4"               64        ****      ****      ****      ****      
+65         Charisma5         "Charisma +5"               65        ****      ****      ****      ****      
+66         Charisma6         "Charisma +6"               66        ****      ****      ****      ****      
+67         Charisma7         "Charisma +7"               67        ****      ****      ****      ****      
+68         Charisma8         "Charisma +8"               68        ****      ****      ****      ****      
+69         Charisma9         "Charisma +9"               69        ****      ****      ****      ****      
+70         Charisma10        "Charisma +10"              70        ****      ****      ****      ****      
+71         Charisma11        "Charisma +11"              71        ****      ****      ****      ****      
+72         Charisma12        "Charisma +12"              72        ****      ****      ****      ****      
+73         Enhancement1      " +1"                       73        ****      ****      ****      ****      
+74         Enhancement2      " +2"                       74        ****      ****      ****      ****      
+75         Enhancement3      " +3"                       75        ****      ****      ****      ****      
+76         Enhancement4      " +4"                       76        ****      ****      ****      ****      
+77         Enhancement5      " +5"                       77        ****      ****      ****      ****      
+78         Enhancement6      " +6"                       78        ****      ****      ****      ****      
+79         Enhancement7      " +7"                       79        ****      ****      ****      ****      
+80         Enhancement8      " +8"                       80        ****      ****      ****      ****      
+81         Enhancement9      " +9"                       81        ****      ****      ****      ****      
+82         Enhancement10     " +10"                      82        ****      ****      ****      ****      
+83         Enhancement11     " +11"                      83        ****      ****      ****      ****      
+84         Enhancement12     " +12"                      84        ****      ****      ****      ****      
+85         Enhancement13     " +13"                      85        ****      ****      ****      ****      
+86         Enhancement14     " +14"                      86        ****      ****      ****      ****      
+87         Enhancement15     " +15"                      87        ****      ****      ****      ****      
+88         Enhancement16     " +16"                      88        ****      ****      ****      ****      
+89         Enhancement17     " +17"                      89        ****      ****      ****      ****      
+90         Enhancement18     " +18"                      90        ****      ****      ****      ****      
+91         Enhancement19     " +19"                      91        ****      ****      ****      ****      
+92         Enhancement20     " +20"                      92        ****      ****      ****      ****      
+93         AC1               " +1"                       93        ****      ****      ****      ****      
+94         AC2               " +2"                       94        ****      ****      ****      ****      
+95         AC3               " +3"                       95        ****      ****      ****      ****      
+96         AC4               " +4"                       96        ****      ****      ****      ****      
+97         AC5               " +5"                       97        ****      ****      ****      ****      
+98         AC6               " +6"                       98        ****      ****      ****      ****      
+99         AC7               " +7"                       99        ****      ****      ****      ****      
+100        AC8               " +8"                       100       ****      ****      ****      ****      
+101        AC9               " +9"                       101       ****      ****      ****      ****      
+102        AC10              " +10"                      102       ****      ****      ****      ****      
+103        AC11              " +11"                      103       ****      ****      ****      ****      
+104        AC12              " +12"                      104       ****      ****      ****      ****      
+105        AC13              " +13"                      105       ****      ****      ****      ****      
+106        AC14              " +14"                      106       ****      ****      ****      ****      
+107        AC15              " +15"                      107       ****      ****      ****      ****      
+108        AC16              " +16"                      108       ****      ****      ****      ****      
+109        AC17              " +17"                      109       ****      ****      ****      ****      
+110        AC18              " +18"                      110       ****      ****      ****      ****      
+111        AC19              " +19"                      111       ****      ****      ****      ****      
+112        AC20              " +20"                      112       ****      ****      ****      ****      
+113        Flaming1          "Flaming +1"                113       ****      ****      ****      ****      
+114        Flaming2          "Flaming +2"                114       ****      ****      ****      ****      
+115        Flaming3          "Flaming +3"                115       ****      ****      ****      ****      
+116        Flaming4          "Flaming +4"                116       ****      ****      ****      ****      
+117        Flaming5          "Flaming +5"                117       ****      ****      ****      ****      
+118        Flaming6          "Flaming +6"                118       ****      ****      ****      ****      
+119        Flaming7          "Flaming +7"                119       ****      ****      ****      ****      
+120        Flaming8          "Flaming +8"                120       ****      ****      ****      ****      
+121        Flaming9          "Flaming +9"                121       ****      ****      ****      ****      
+122        Flaming10         "Flaming +10"               122       ****      ****      ****      ****      
+123        Flaming11         "Flaming +11"               123       ****      ****      ****      ****      
+124        Flaming12         "Flaming +12"               124       ****      ****      ****      ****      
+125        Flaming13         "Flaming +13"               125       ****      ****      ****      ****      
+126        Flaming14         "Flaming +14"               126       ****      ****      ****      ****      
+127        Flaming15         "Flaming +15"               127       ****      ****      ****      ****      
+128        Flaming16         "Flaming +16"               128       ****      ****      ****      ****      
+129        Flaming17         "Flaming +17"               129       ****      ****      ****      ****      
+130        Flaming18         "Flaming +18"               130       ****      ****      ****      ****      
+131        Flaming19         "Flaming +19"               131       ****      ****      ****      ****      
+132        Flaming20         "Flaming +20"               132       ****      ****      ****      ****      
+133        Freezing1         "Freezing +1"               133       ****      ****      ****      ****      
+134        Freezing2         "Freezing +2"               134       ****      ****      ****      ****      
+135        Freezing3         "Freezing +3"               135       ****      ****      ****      ****      
+136        Freezing4         "Freezing +4"               136       ****      ****      ****      ****      
+137        Freezing5         "Freezing +5"               137       ****      ****      ****      ****      
+138        Freezing6         "Freezing +6"               138       ****      ****      ****      ****      
+139        Freezing7         "Freezing +7"               139       ****      ****      ****      ****      
+140        Freezing8         "Freezing +8"               140       ****      ****      ****      ****      
+141        Freezing9         "Freezing +9"               141       ****      ****      ****      ****      
+142        Freezing10        "Freezing +10"              142       ****      ****      ****      ****      
+143        Freezing11        "Freezing +11"              143       ****      ****      ****      ****      
+144        Freezing12        "Freezing +12"              144       ****      ****      ****      ****      
+145        Freezing13        "Freezing +13"              145       ****      ****      ****      ****      
+146        Freezing14        "Freezing +14"              146       ****      ****      ****      ****      
+147        Freezing15        "Freezing +15"              147       ****      ****      ****      ****      
+148        Freezing16        "Freezing +16"              148       ****      ****      ****      ****      
+149        Freezing17        "Freezing +17"              149       ****      ****      ****      ****      
+150        Freezing18        "Freezing +18"              150       ****      ****      ****      ****      
+151        Freezing19        "Freezing +19"              151       ****      ****      ****      ****      
+152        Freezing20        "Freezing +20"              152       ****      ****      ****      ****      
+153        Shocking1         "Shocking +1"               153       ****      ****      ****      ****      
+154        Shocking2         "Shocking +2"               154       ****      ****      ****      ****      
+155        Shocking3         "Shocking +3"               155       ****      ****      ****      ****      
+156        Shocking4         "Shocking +4"               156       ****      ****      ****      ****      
+157        Shocking5         "Shocking +5"               157       ****      ****      ****      ****      
+158        Shocking6         "Shocking +6"               158       ****      ****      ****      ****      
+159        Shocking7         "Shocking +7"               159       ****      ****      ****      ****      
+160        Shocking8         "Shocking +8"               160       ****      ****      ****      ****      
+161        Shocking9         "Shocking +9"               161       ****      ****      ****      ****      
+162        Shocking10        "Shocking +10"              162       ****      ****      ****      ****      
+163        Shocking11        "Shocking +11"              163       ****      ****      ****      ****      
+164        Shocking12        "Shocking +12"              164       ****      ****      ****      ****      
+165        Shocking13        "Shocking +13"              165       ****      ****      ****      ****      
+166        Shocking14        "Shocking +14"              166       ****      ****      ****      ****      
+167        Shocking15        "Shocking +15"              167       ****      ****      ****      ****      
+168        Shocking16        "Shocking +16"              168       ****      ****      ****      ****      
+169        Shocking17        "Shocking +17"              169       ****      ****      ****      ****      
+170        Shocking18        "Shocking +18"              170       ****      ****      ****      ****      
+171        Shocking19        "Shocking +19"              171       ****      ****      ****      ****      
+172        Shocking20        "Shocking +20"              172       ****      ****      ****      ****      
+173        Sonic1            "Sonic +1"                  173       ****      ****      ****      ****      
+174        Sonic2            "Sonic +2"                  174       ****      ****      ****      ****      
+175        Sonic3            "Sonic +3"                  175       ****      ****      ****      ****      
+176        Sonic4            "Sonic +4"                  176       ****      ****      ****      ****      
+177        Sonic5            "Sonic +5"                  177       ****      ****      ****      ****      
+178        Sonic6            "Sonic +6"                  178       ****      ****      ****      ****      
+179        Sonic7            "Sonic +7"                  179       ****      ****      ****      ****      
+180        Sonic8            "Sonic +8"                  180       ****      ****      ****      ****      
+181        Sonic9            "Sonic +9"                  181       ****      ****      ****      ****      
+182        Sonic10           "Sonic +10"                 182       ****      ****      ****      ****      
+183        Sonic11           "Sonic +11"                 183       ****      ****      ****      ****      
+184        Sonic12           "Sonic +12"                 184       ****      ****      ****      ****      
+185        Sonic13           "Sonic +13"                 185       ****      ****      ****      ****      
+186        Sonic14           "Sonic +14"                 186       ****      ****      ****      ****      
+187        Sonic15           "Sonic +15"                 187       ****      ****      ****      ****      
+188        Sonic16           "Sonic +16"                 188       ****      ****      ****      ****      
+189        Sonic17           "Sonic +17"                 189       ****      ****      ****      ****      
+190        Sonic18           "Sonic +18"                 190       ****      ****      ****      ****      
+191        Sonic19           "Sonic +19"                 191       ****      ****      ****      ****      
+192        Sonic20           "Sonic +20"                 192       ****      ****      ****      ****      
+193        Acid1             "Acid +1"                   193       ****      ****      ****      ****      
+194        Acid2             "Acid +2"                   194       ****      ****      ****      ****      
+195        Acid3             "Acid +3"                   195       ****      ****      ****      ****      
+196        Acid4             "Acid +4"                   196       ****      ****      ****      ****      
+197        Acid5             "Acid +5"                   197       ****      ****      ****      ****      
+198        Acid6             "Acid +6"                   198       ****      ****      ****      ****      
+199        Acid7             "Acid +7"                   199       ****      ****      ****      ****      
+200        Acid8             "Acid +8"                   200       ****      ****      ****      ****      
+201        Acid9             "Acid +9"                   201       ****      ****      ****      ****      
+202        Acid10            "Acid +10"                  202       ****      ****      ****      ****      
+203        Acid11            "Acid +11"                  203       ****      ****      ****      ****      
+204        Acid12            "Acid +12"                  204       ****      ****      ****      ****      
+205        Acid13            "Acid +13"                  205       ****      ****      ****      ****      
+206        Acid14            "Acid +14"                  206       ****      ****      ****      ****      
+207        Acid15            "Acid +15"                  207       ****      ****      ****      ****      
+208        Acid16            "Acid +16"                  208       ****      ****      ****      ****      
+209        Acid17            "Acid +17"                  209       ****      ****      ****      ****      
+210        Acid18            "Acid +18"                  210       ****      ****      ****      ****      
+211        Acid19            "Acid +19"                  211       ****      ****      ****      ****      
+212        Acid20            "Acid +20"                  212       ****      ****      ****      ****      
+213        Flaming1          "Flaming vs Evil +1"        213       790       794       ****      ****      
+214        Flaming2          "Flaming vs Evil +2"        214       790       794       ****      ****      
+215        Flaming3          "Flaming vs Evil +3"        215       790       794       ****      ****      
+216        Flaming4          "Flaming vs Evil +4"        216       790       794       ****      ****      
+217        Flaming5          "Flaming vs Evil +5"        217       790       794       ****      ****      
+218        Flaming6          "Flaming vs Evil +6"        218       790       794       ****      ****      
+219        Flaming7          "Flaming vs Evil +7"        219       790       794       ****      ****      
+220        Flaming8          "Flaming vs Evil +8"        220       790       794       ****      ****      
+221        Flaming9          "Flaming vs Evil +9"        221       790       794       ****      ****      
+222        Flaming10         "Flaming vs Evil +10"       222       790       794       ****      ****      
+223        Flaming11         "Flaming vs Evil +11"       223       790       794       ****      ****      
+224        Flaming12         "Flaming vs Evil +12"       224       790       794       ****      ****      
+225        Flaming13         "Flaming vs Evil +13"       225       790       794       ****      ****      
+226        Flaming14         "Flaming vs Evil +14"       226       790       794       ****      ****      
+227        Flaming15         "Flaming vs Evil +15"       227       790       794       ****      ****      
+228        Flaming16         "Flaming vs Evil +16"       228       790       794       ****      ****      
+229        Flaming17         "Flaming vs Evil +17"       229       790       794       ****      ****      
+230        Flaming18         "Flaming vs Evil +18"       230       790       794       ****      ****      
+231        Flaming19         "Flaming vs Evil +19"       231       790       794       ****      ****      
+232        Flaming20         "Flaming vs Evil +20"       232       790       794       ****      ****      
+233        Freezing1         "Freezing vs Evil +1"       233       790       794       ****      ****      
+234        Freezing2         "Freezing vs Evil +2"       234       790       794       ****      ****      
+235        Freezing3         "Freezing vs Evil +3"       235       790       794       ****      ****      
+236        Freezing4         "Freezing vs Evil +4"       236       790       794       ****      ****      
+237        Freezing5         "Freezing vs Evil +5"       237       790       794       ****      ****      
+238        Freezing6         "Freezing vs Evil +6"       238       790       794       ****      ****      
+239        Freezing7         "Freezing vs Evil +7"       239       790       794       ****      ****      
+240        Freezing8         "Freezing vs Evil +8"       240       790       794       ****      ****      
+241        Freezing9         "Freezing vs Evil +9"       241       790       794       ****      ****      
+242        Freezing10        "Freezing vs Evil +10"      242       790       794       ****      ****      
+243        Freezing11        "Freezing vs Evil +11"      243       790       794       ****      ****      
+244        Freezing12        "Freezing vs Evil +12"      244       790       794       ****      ****      
+245        Freezing13        "Freezing vs Evil +13"      245       790       794       ****      ****      
+246        Freezing14        "Freezing vs Evil +14"      246       790       794       ****      ****      
+247        Freezing15        "Freezing vs Evil +15"      247       790       794       ****      ****      
+248        Freezing16        "Freezing vs Evil +16"      248       790       794       ****      ****      
+249        Freezing17        "Freezing vs Evil +17"      249       790       794       ****      ****      
+250        Freezing18        "Freezing vs Evil +18"      250       790       794       ****      ****      
+251        Freezing19        "Freezing vs Evil +19"      251       790       794       ****      ****      
+252        Freezing20        "Freezing vs Evil +20"      252       790       794       ****      ****      
+253        Shocking1         "Shocking vs Evil +1"       253       790       794       ****      ****      
+254        Shocking2         "Shocking vs Evil +2"       254       790       794       ****      ****      
+255        Shocking3         "Shocking vs Evil +3"       255       790       794       ****      ****      
+256        Shocking4         "Shocking vs Evil +4"       256       790       794       ****      ****      
+257        Shocking5         "Shocking vs Evil +5"       257       790       794       ****      ****      
+258        Shocking6         "Shocking vs Evil +6"       258       790       794       ****      ****      
+259        Shocking7         "Shocking vs Evil +7"       259       790       794       ****      ****      
+260        Shocking8         "Shocking vs Evil +8"       260       790       794       ****      ****      
+261        Shocking9         "Shocking vs Evil +9"       261       790       794       ****      ****      
+262        Shocking10        "Shocking vs Evil +10"      262       790       794       ****      ****      
+263        Shocking11        "Shocking vs Evil +11"      263       790       794       ****      ****      
+264        Shocking12        "Shocking vs Evil +12"      264       790       794       ****      ****      
+265        Shocking13        "Shocking vs Evil +13"      265       790       794       ****      ****      
+266        Shocking14        "Shocking vs Evil +14"      266       790       794       ****      ****      
+267        Shocking15        "Shocking vs Evil +15"      267       790       794       ****      ****      
+268        Shocking16        "Shocking vs Evil +16"      268       790       794       ****      ****      
+269        Shocking17        "Shocking vs Evil +17"      269       790       794       ****      ****      
+270        Shocking18        "Shocking vs Evil +18"      270       790       794       ****      ****      
+271        Shocking19        "Shocking vs Evil +19"      271       790       794       ****      ****      
+272        Shocking20        "Shocking vs Evil +20"      272       790       794       ****      ****      
+273        Sonic1            "Sonic vs Evil +1"          273       790       794       ****      ****      
+274        Sonic2            "Sonic vs Evil +2"          274       790       794       ****      ****      
+275        Sonic3            "Sonic vs Evil +3"          275       790       794       ****      ****      
+276        Sonic4            "Sonic vs Evil +4"          276       790       794       ****      ****      
+277        Sonic5            "Sonic vs Evil +5"          277       790       794       ****      ****      
+278        Sonic6            "Sonic vs Evil +6"          278       790       794       ****      ****      
+279        Sonic7            "Sonic vs Evil +7"          279       790       794       ****      ****      
+280        Sonic8            "Sonic vs Evil +8"          280       790       794       ****      ****      
+281        Sonic9            "Sonic vs Evil +9"          281       790       794       ****      ****      
+282        Sonic10           "Sonic vs Evil +10"         282       790       794       ****      ****      
+283        Sonic11           "Sonic vs Evil +11"         283       790       794       ****      ****      
+284        Sonic12           "Sonic vs Evil +12"         284       790       794       ****      ****      
+285        Sonic13           "Sonic vs Evil +13"         285       790       794       ****      ****      
+286        Sonic14           "Sonic vs Evil +14"         286       790       794       ****      ****      
+287        Sonic15           "Sonic vs Evil +15"         287       790       794       ****      ****      
+288        Sonic16           "Sonic vs Evil +16"         288       790       794       ****      ****      
+289        Sonic17           "Sonic vs Evil +17"         289       790       794       ****      ****      
+290        Sonic18           "Sonic vs Evil +18"         290       790       794       ****      ****      
+291        Sonic19           "Sonic vs Evil +19"         291       790       794       ****      ****      
+292        Sonic20           "Sonic vs Evil +20"         292       790       794       ****      ****      
+293        Acid1             "Acid vs Evil +1"           293       790       794       ****      ****      
+294        Acid2             "Acid vs Evil +2"           294       790       794       ****      ****      
+295        Acid3             "Acid vs Evil +3"           295       790       794       ****      ****      
+296        Acid4             "Acid vs Evil +4"           296       790       794       ****      ****      
+297        Acid5             "Acid vs Evil +5"           297       790       794       ****      ****      
+298        Acid6             "Acid vs Evil +6"           298       790       794       ****      ****      
+299        Acid7             "Acid vs Evil +7"           299       790       794       ****      ****      
+300        Acid8             "Acid vs Evil +8"           300       790       794       ****      ****      
+301        Acid9             "Acid vs Evil +9"           301       790       794       ****      ****      
+302        Acid10            "Acid vs Evil +10"          302       790       794       ****      ****      
+303        Acid11            "Acid vs Evil +11"          303       790       794       ****      ****      
+304        Acid12            "Acid vs Evil +12"          304       790       794       ****      ****      
+305        Acid13            "Acid vs Evil +13"          305       790       794       ****      ****      
+306        Acid14            "Acid vs Evil +14"          306       790       794       ****      ****      
+307        Acid15            "Acid vs Evil +15"          307       790       794       ****      ****      
+308        Acid16            "Acid vs Evil +16"          308       790       794       ****      ****      
+309        Acid17            "Acid vs Evil +17"          309       790       794       ****      ****      
+310        Acid18            "Acid vs Evil +18"          310       790       794       ****      ****      
+311        Acid19            "Acid vs Evil +19"          311       790       794       ****      ****      
+312        Acid20            "Acid vs Evil +20"          312       790       794       ****      ****      
+313        Flaming1          "Flaming vs Good +1"        313       791       794       ****      ****      
+314        Flaming2          "Flaming vs Good +2"        314       791       794       ****      ****      
+315        Flaming3          "Flaming vs Good +3"        315       791       794       ****      ****      
+316        Flaming4          "Flaming vs Good +4"        316       791       794       ****      ****      
+317        Flaming5          "Flaming vs Good +5"        317       791       794       ****      ****      
+318        Flaming6          "Flaming vs Good +6"        318       791       794       ****      ****      
+319        Flaming7          "Flaming vs Good +7"        319       791       794       ****      ****      
+320        Flaming8          "Flaming vs Good +8"        320       791       794       ****      ****      
+321        Flaming9          "Flaming vs Good +9"        321       791       794       ****      ****      
+322        Flaming10         "Flaming vs Good +10"       322       791       794       ****      ****      
+323        Flaming11         "Flaming vs Good +11"       323       791       794       ****      ****      
+324        Flaming12         "Flaming vs Good +12"       324       791       794       ****      ****      
+325        Flaming13         "Flaming vs Good +13"       325       791       794       ****      ****      
+326        Flaming14         "Flaming vs Good +14"       326       791       794       ****      ****      
+327        Flaming15         "Flaming vs Good +15"       327       791       794       ****      ****      
+328        Flaming16         "Flaming vs Good +16"       328       791       794       ****      ****      
+329        Flaming17         "Flaming vs Good +17"       329       791       794       ****      ****      
+330        Flaming18         "Flaming vs Good +18"       330       791       794       ****      ****      
+331        Flaming19         "Flaming vs Good +19"       331       791       794       ****      ****      
+332        Flaming20         "Flaming vs Good +20"       332       791       794       ****      ****      
+333        Freezing1         "Freezing vs Good +1"       333       791       794       ****      ****      
+334        Freezing2         "Freezing vs Good +2"       334       791       794       ****      ****      
+335        Freezing3         "Freezing vs Good +3"       335       791       794       ****      ****      
+336        Freezing4         "Freezing vs Good +4"       336       791       794       ****      ****      
+337        Freezing5         "Freezing vs Good +5"       337       791       794       ****      ****      
+338        Freezing6         "Freezing vs Good +6"       338       791       794       ****      ****      
+339        Freezing7         "Freezing vs Good +7"       339       791       794       ****      ****      
+340        Freezing8         "Freezing vs Good +8"       340       791       794       ****      ****      
+341        Freezing9         "Freezing vs Good +9"       341       791       794       ****      ****      
+342        Freezing10        "Freezing vs Good +10"      342       791       794       ****      ****      
+343        Freezing11        "Freezing vs Good +11"      343       791       794       ****      ****      
+344        Freezing12        "Freezing vs Good +12"      344       791       794       ****      ****      
+345        Freezing13        "Freezing vs Good +13"      345       791       794       ****      ****      
+346        Freezing14        "Freezing vs Good +14"      346       791       794       ****      ****      
+347        Freezing15        "Freezing vs Good +15"      347       791       794       ****      ****      
+348        Freezing16        "Freezing vs Good +16"      348       791       794       ****      ****      
+349        Freezing17        "Freezing vs Good +17"      349       791       794       ****      ****      
+350        Freezing18        "Freezing vs Good +18"      350       791       794       ****      ****      
+351        Freezing19        "Freezing vs Good +19"      351       791       794       ****      ****      
+352        Freezing20        "Freezing vs Good +20"      352       791       794       ****      ****      
+353        Shocking1         "Shocking vs Good +1"       353       791       794       ****      ****      
+354        Shocking2         "Shocking vs Good +2"       354       791       794       ****      ****      
+355        Shocking3         "Shocking vs Good +3"       355       791       794       ****      ****      
+356        Shocking4         "Shocking vs Good +4"       356       791       794       ****      ****      
+357        Shocking5         "Shocking vs Good +5"       357       791       794       ****      ****      
+358        Shocking6         "Shocking vs Good +6"       358       791       794       ****      ****      
+359        Shocking7         "Shocking vs Good +7"       359       791       794       ****      ****      
+360        Shocking8         "Shocking vs Good +8"       360       791       794       ****      ****      
+361        Shocking9         "Shocking vs Good +9"       361       791       794       ****      ****      
+362        Shocking10        "Shocking vs Good +10"      362       791       794       ****      ****      
+363        Shocking11        "Shocking vs Good +11"      363       791       794       ****      ****      
+364        Shocking12        "Shocking vs Good +12"      364       791       794       ****      ****      
+365        Shocking13        "Shocking vs Good +13"      365       791       794       ****      ****      
+366        Shocking14        "Shocking vs Good +14"      366       791       794       ****      ****      
+367        Shocking15        "Shocking vs Good +15"      367       791       794       ****      ****      
+368        Shocking16        "Shocking vs Good +16"      368       791       794       ****      ****      
+369        Shocking17        "Shocking vs Good +17"      369       791       794       ****      ****      
+370        Shocking18        "Shocking vs Good +18"      370       791       794       ****      ****      
+371        Shocking19        "Shocking vs Good +19"      371       791       794       ****      ****      
+372        Shocking20        "Shocking vs Good +20"      372       791       794       ****      ****      
+373        Sonic1            "Sonic vs Good +1"          373       791       794       ****      ****      
+374        Sonic2            "Sonic vs Good +2"          374       791       794       ****      ****      
+375        Sonic3            "Sonic vs Good +3"          375       791       794       ****      ****      
+376        Sonic4            "Sonic vs Good +4"          376       791       794       ****      ****      
+377        Sonic5            "Sonic vs Good +5"          377       791       794       ****      ****      
+378        Sonic6            "Sonic vs Good +6"          378       791       794       ****      ****      
+379        Sonic7            "Sonic vs Good +7"          379       791       794       ****      ****      
+380        Sonic8            "Sonic vs Good +8"          380       791       794       ****      ****      
+381        Sonic9            "Sonic vs Good +9"          381       791       794       ****      ****      
+382        Sonic10           "Sonic vs Good +10"         382       791       794       ****      ****      
+383        Sonic11           "Sonic vs Good +11"         383       791       794       ****      ****      
+384        Sonic12           "Sonic vs Good +12"         384       791       794       ****      ****      
+385        Sonic13           "Sonic vs Good +13"         385       791       794       ****      ****      
+386        Sonic14           "Sonic vs Good +14"         386       791       794       ****      ****      
+387        Sonic15           "Sonic vs Good +15"         387       791       794       ****      ****      
+388        Sonic16           "Sonic vs Good +16"         388       791       794       ****      ****      
+389        Sonic17           "Sonic vs Good +17"         389       791       794       ****      ****      
+390        Sonic18           "Sonic vs Good +18"         390       791       794       ****      ****      
+391        Sonic19           "Sonic vs Good +19"         391       791       794       ****      ****      
+392        Sonic20           "Sonic vs Good +20"         392       791       794       ****      ****      
+393        Acid1             "Acid vs Good +1"           393       791       794       ****      ****      
+394        Acid2             "Acid vs Good +2"           394       791       794       ****      ****      
+395        Acid3             "Acid vs Good +3"           395       791       794       ****      ****      
+396        Acid4             "Acid vs Good +4"           396       791       794       ****      ****      
+397        Acid5             "Acid vs Good +5"           397       791       794       ****      ****      
+398        Acid6             "Acid vs Good +6"           398       791       794       ****      ****      
+399        Acid7             "Acid vs Good +7"           399       791       794       ****      ****      
+400        Acid8             "Acid vs Good +8"           400       791       794       ****      ****      
+401        Acid9             "Acid vs Good +9"           401       791       794       ****      ****      
+402        Acid10            "Acid vs Good +10"          402       791       794       ****      ****      
+403        Acid11            "Acid vs Good +11"          403       791       794       ****      ****      
+404        Acid12            "Acid vs Good +12"          404       791       794       ****      ****      
+405        Acid13            "Acid vs Good +13"          405       791       794       ****      ****      
+406        Acid14            "Acid vs Good +14"          406       791       794       ****      ****      
+407        Acid15            "Acid vs Good +15"          407       791       794       ****      ****      
+408        Acid16            "Acid vs Good +16"          408       791       794       ****      ****      
+409        Acid17            "Acid vs Good +17"          409       791       794       ****      ****      
+410        Acid18            "Acid vs Good +18"          410       791       794       ****      ****      
+411        Acid19            "Acid vs Good +19"          411       791       794       ****      ****      
+412        Acid20            "Acid vs Good +20"          412       791       794       ****      ****      
+413        Flaming1          "Flaming vs Chaotic +1"     413       792       794       ****      ****      
+414        Flaming2          "Flaming vs Chaotic +2"     414       792       794       ****      ****      
+415        Flaming3          "Flaming vs Chaotic +3"     415       792       794       ****      ****      
+416        Flaming4          "Flaming vs Chaotic +4"     416       792       794       ****      ****      
+417        Flaming5          "Flaming vs Chaotic +5"     417       792       794       ****      ****      
+418        Flaming6          "Flaming vs Chaotic +6"     418       792       794       ****      ****      
+419        Flaming7          "Flaming vs Chaotic +7"     419       792       794       ****      ****      
+420        Flaming8          "Flaming vs Chaotic +8"     420       792       794       ****      ****      
+421        Flaming9          "Flaming vs Chaotic +9"     421       792       794       ****      ****      
+422        Flaming10         "Flaming vs Chaotic +10"    422       792       794       ****      ****      
+423        Flaming11         "Flaming vs Chaotic +11"    423       792       794       ****      ****      
+424        Flaming12         "Flaming vs Chaotic +12"    424       792       794       ****      ****      
+425        Flaming13         "Flaming vs Chaotic +13"    425       792       794       ****      ****      
+426        Flaming14         "Flaming vs Chaotic +14"    426       792       794       ****      ****      
+427        Flaming15         "Flaming vs Chaotic +15"    427       792       794       ****      ****      
+428        Flaming16         "Flaming vs Chaotic +16"    428       792       794       ****      ****      
+429        Flaming17         "Flaming vs Chaotic +17"    429       792       794       ****      ****      
+430        Flaming18         "Flaming vs Chaotic +18"    430       792       794       ****      ****      
+431        Flaming19         "Flaming vs Chaotic +19"    431       792       794       ****      ****      
+432        Flaming20         "Flaming vs Chaotic +20"    432       792       794       ****      ****      
+433        Freezing1         "Freezing vs Chaotic +1"    433       792       794       ****      ****      
+434        Freezing2         "Freezing vs Chaotic +2"    434       792       794       ****      ****      
+435        Freezing3         "Freezing vs Chaotic +3"    435       792       794       ****      ****      
+436        Freezing4         "Freezing vs Chaotic +4"    436       792       794       ****      ****      
+437        Freezing5         "Freezing vs Chaotic +5"    437       792       794       ****      ****      
+438        Freezing6         "Freezing vs Chaotic +6"    438       792       794       ****      ****      
+439        Freezing7         "Freezing vs Chaotic +7"    439       792       794       ****      ****      
+440        Freezing8         "Freezing vs Chaotic +8"    440       792       794       ****      ****      
+441        Freezing9         "Freezing vs Chaotic +9"    441       792       794       ****      ****      
+442        Freezing10        "Freezing vs Chaotic +10"   442       792       794       ****      ****      
+443        Freezing11        "Freezing vs Chaotic +11"   443       792       794       ****      ****      
+444        Freezing12        "Freezing vs Chaotic +12"   444       792       794       ****      ****      
+445        Freezing13        "Freezing vs Chaotic +13"   445       792       794       ****      ****      
+446        Freezing14        "Freezing vs Chaotic +14"   446       792       794       ****      ****      
+447        Freezing15        "Freezing vs Chaotic +15"   447       792       794       ****      ****      
+448        Freezing16        "Freezing vs Chaotic +16"   448       792       794       ****      ****      
+449        Freezing17        "Freezing vs Chaotic +17"   449       792       794       ****      ****      
+450        Freezing18        "Freezing vs Chaotic +18"   450       792       794       ****      ****      
+451        Freezing19        "Freezing vs Chaotic +19"   451       792       794       ****      ****      
+452        Freezing20        "Freezing vs Chaotic +20"   452       792       794       ****      ****      
+453        Shocking1         "Shocking vs Chaotic +1"    453       792       794       ****      ****      
+454        Shocking2         "Shocking vs Chaotic +2"    454       792       794       ****      ****      
+455        Shocking3         "Shocking vs Chaotic +3"    455       792       794       ****      ****      
+456        Shocking4         "Shocking vs Chaotic +4"    456       792       794       ****      ****      
+457        Shocking5         "Shocking vs Chaotic +5"    457       792       794       ****      ****      
+458        Shocking6         "Shocking vs Chaotic +6"    458       792       794       ****      ****      
+459        Shocking7         "Shocking vs Chaotic +7"    459       792       794       ****      ****      
+460        Shocking8         "Shocking vs Chaotic +8"    460       792       794       ****      ****      
+461        Shocking9         "Shocking vs Chaotic +9"    461       792       794       ****      ****      
+462        Shocking10        "Shocking vs Chaotic +10"   462       792       794       ****      ****      
+463        Shocking11        "Shocking vs Chaotic +11"   463       792       794       ****      ****      
+464        Shocking12        "Shocking vs Chaotic +12"   464       792       794       ****      ****      
+465        Shocking13        "Shocking vs Chaotic +13"   465       792       794       ****      ****      
+466        Shocking14        "Shocking vs Chaotic +14"   466       792       794       ****      ****      
+467        Shocking15        "Shocking vs Chaotic +15"   467       792       794       ****      ****      
+468        Shocking16        "Shocking vs Chaotic +16"   468       792       794       ****      ****      
+469        Shocking17        "Shocking vs Chaotic +17"   469       792       794       ****      ****      
+470        Shocking18        "Shocking vs Chaotic +18"   470       792       794       ****      ****      
+471        Shocking19        "Shocking vs Chaotic +19"   471       792       794       ****      ****      
+472        Shocking20        "Shocking vs Chaotic +20"   472       792       794       ****      ****      
+473        Sonic1            "Sonic vs Chaotic +1"       473       792       794       ****      ****      
+474        Sonic2            "Sonic vs Chaotic +2"       474       792       794       ****      ****      
+475        Sonic3            "Sonic vs Chaotic +3"       475       792       794       ****      ****      
+476        Sonic4            "Sonic vs Chaotic +4"       476       792       794       ****      ****      
+477        Sonic5            "Sonic vs Chaotic +5"       477       792       794       ****      ****      
+478        Sonic6            "Sonic vs Chaotic +6"       478       792       794       ****      ****      
+479        Sonic7            "Sonic vs Chaotic +7"       479       792       794       ****      ****      
+480        Sonic8            "Sonic vs Chaotic +8"       480       792       794       ****      ****      
+481        Sonic9            "Sonic vs Chaotic +9"       481       792       794       ****      ****      
+482        Sonic10           "Sonic vs Chaotic +10"      482       792       794       ****      ****      
+483        Sonic11           "Sonic vs Chaotic +11"      483       792       794       ****      ****      
+484        Sonic12           "Sonic vs Chaotic +12"      484       792       794       ****      ****      
+485        Sonic13           "Sonic vs Chaotic +13"      485       792       794       ****      ****      
+486        Sonic14           "Sonic vs Chaotic +14"      486       792       794       ****      ****      
+487        Sonic15           "Sonic vs Chaotic +15"      487       792       794       ****      ****      
+488        Sonic16           "Sonic vs Chaotic +16"      488       792       794       ****      ****      
+489        Sonic17           "Sonic vs Chaotic +17"      489       792       794       ****      ****      
+490        Sonic18           "Sonic vs Chaotic +18"      490       792       794       ****      ****      
+491        Sonic19           "Sonic vs Chaotic +19"      491       792       794       ****      ****      
+492        Sonic20           "Sonic vs Chaotic +20"      492       792       794       ****      ****      
+493        Acid1             "Acid vs Chaotic +1"        493       792       794       ****      ****      
+494        Acid2             "Acid vs Chaotic +2"        494       792       794       ****      ****      
+495        Acid3             "Acid vs Chaotic +3"        495       792       794       ****      ****      
+496        Acid4             "Acid vs Chaotic +4"        496       792       794       ****      ****      
+497        Acid5             "Acid vs Chaotic +5"        497       792       794       ****      ****      
+498        Acid6             "Acid vs Chaotic +6"        498       792       794       ****      ****      
+499        Acid7             "Acid vs Chaotic +7"        499       792       794       ****      ****      
+500        Acid8             "Acid vs Chaotic +8"        500       792       794       ****      ****      
+501        Acid9             "Acid vs Chaotic +9"        501       792       794       ****      ****      
+502        Acid10            "Acid vs Chaotic +10"       502       792       794       ****      ****      
+503        Acid11            "Acid vs Chaotic +11"       503       792       794       ****      ****      
+504        Acid12            "Acid vs Chaotic +12"       504       792       794       ****      ****      
+505        Acid13            "Acid vs Chaotic +13"       505       792       794       ****      ****      
+506        Acid14            "Acid vs Chaotic +14"       506       792       794       ****      ****      
+507        Acid15            "Acid vs Chaotic +15"       507       792       794       ****      ****      
+508        Acid16            "Acid vs Chaotic +16"       508       792       794       ****      ****      
+509        Acid17            "Acid vs Chaotic +17"       509       792       794       ****      ****      
+510        Acid18            "Acid vs Chaotic +18"       510       792       794       ****      ****      
+511        Acid19            "Acid vs Chaotic +19"       511       792       794       ****      ****      
+512        Acid20            "Acid vs Chaotic +20"       512       792       794       ****      ****      
+513        Flaming1          "Flaming vs Lawful +1"      513       793       794       ****      ****      
+514        Flaming2          "Flaming vs Lawful +2"      514       793       794       ****      ****      
+515        Flaming3          "Flaming vs Lawful +3"      515       793       794       ****      ****      
+516        Flaming4          "Flaming vs Lawful +4"      516       793       794       ****      ****      
+517        Flaming5          "Flaming vs Lawful +5"      517       793       794       ****      ****      
+518        Flaming6          "Flaming vs Lawful +6"      518       793       794       ****      ****      
+519        Flaming7          "Flaming vs Lawful +7"      519       793       794       ****      ****      
+520        Flaming8          "Flaming vs Lawful +8"      520       793       794       ****      ****      
+521        Flaming9          "Flaming vs Lawful +9"      521       793       794       ****      ****      
+522        Flaming10         "Flaming vs Lawful +10"     522       793       794       ****      ****      
+523        Flaming11         "Flaming vs Lawful +11"     523       793       794       ****      ****      
+524        Flaming12         "Flaming vs Lawful +12"     524       793       794       ****      ****      
+525        Flaming13         "Flaming vs Lawful +13"     525       793       794       ****      ****      
+526        Flaming14         "Flaming vs Lawful +14"     526       793       794       ****      ****      
+527        Flaming15         "Flaming vs Lawful +15"     527       793       794       ****      ****      
+528        Flaming16         "Flaming vs Lawful +16"     528       793       794       ****      ****      
+529        Flaming17         "Flaming vs Lawful +17"     529       793       794       ****      ****      
+530        Flaming18         "Flaming vs Lawful +18"     530       793       794       ****      ****      
+531        Flaming19         "Flaming vs Lawful +19"     531       793       794       ****      ****      
+532        Flaming20         "Flaming vs Lawful +20"     532       793       794       ****      ****      
+533        Freezing1         "Freezing vs Lawful +1"     533       793       794       ****      ****      
+534        Freezing2         "Freezing vs Lawful +2"     534       793       794       ****      ****      
+535        Freezing3         "Freezing vs Lawful +3"     535       793       794       ****      ****      
+536        Freezing4         "Freezing vs Lawful +4"     536       793       794       ****      ****      
+537        Freezing5         "Freezing vs Lawful +5"     537       793       794       ****      ****      
+538        Freezing6         "Freezing vs Lawful +6"     538       793       794       ****      ****      
+539        Freezing7         "Freezing vs Lawful +7"     539       793       794       ****      ****      
+540        Freezing8         "Freezing vs Lawful +8"     540       793       794       ****      ****      
+541        Freezing9         "Freezing vs Lawful +9"     541       793       794       ****      ****      
+542        Freezing10        "Freezing vs Lawful +10"    542       793       794       ****      ****      
+543        Freezing11        "Freezing vs Lawful +11"    543       793       794       ****      ****      
+544        Freezing12        "Freezing vs Lawful +12"    544       793       794       ****      ****      
+545        Freezing13        "Freezing vs Lawful +13"    545       793       794       ****      ****      
+546        Freezing14        "Freezing vs Lawful +14"    546       793       794       ****      ****      
+547        Freezing15        "Freezing vs Lawful +15"    547       793       794       ****      ****      
+548        Freezing16        "Freezing vs Lawful +16"    548       793       794       ****      ****      
+549        Freezing17        "Freezing vs Lawful +17"    549       793       794       ****      ****      
+550        Freezing18        "Freezing vs Lawful +18"    550       793       794       ****      ****      
+551        Freezing19        "Freezing vs Lawful +19"    551       793       794       ****      ****      
+552        Freezing20        "Freezing vs Lawful +20"    552       793       794       ****      ****      
+553        Shocking1         "Shocking vs Lawful +1"     553       793       794       ****      ****      
+554        Shocking2         "Shocking vs Lawful +2"     554       793       794       ****      ****      
+555        Shocking3         "Shocking vs Lawful +3"     555       793       794       ****      ****      
+556        Shocking4         "Shocking vs Lawful +4"     556       793       794       ****      ****      
+557        Shocking5         "Shocking vs Lawful +5"     557       793       794       ****      ****      
+558        Shocking6         "Shocking vs Lawful +6"     558       793       794       ****      ****      
+559        Shocking7         "Shocking vs Lawful +7"     559       793       794       ****      ****      
+560        Shocking8         "Shocking vs Lawful +8"     560       793       794       ****      ****      
+561        Shocking9         "Shocking vs Lawful +9"     561       793       794       ****      ****      
+562        Shocking10        "Shocking vs Lawful +10"    562       793       794       ****      ****      
+563        Shocking11        "Shocking vs Lawful +11"    563       793       794       ****      ****      
+564        Shocking12        "Shocking vs Lawful +12"    564       793       794       ****      ****      
+565        Shocking13        "Shocking vs Lawful +13"    565       793       794       ****      ****      
+566        Shocking14        "Shocking vs Lawful +14"    566       793       794       ****      ****      
+567        Shocking15        "Shocking vs Lawful +15"    567       793       794       ****      ****      
+568        Shocking16        "Shocking vs Lawful +16"    568       793       794       ****      ****      
+569        Shocking17        "Shocking vs Lawful +17"    569       793       794       ****      ****      
+570        Shocking18        "Shocking vs Lawful +18"    570       793       794       ****      ****      
+571        Shocking19        "Shocking vs Lawful +19"    571       793       794       ****      ****      
+572        Shocking20        "Shocking vs Lawful +20"    572       793       794       ****      ****      
+573        Sonic1            "Sonic vs Lawful +1"        573       793       794       ****      ****      
+574        Sonic2            "Sonic vs Lawful +2"        574       793       794       ****      ****      
+575        Sonic3            "Sonic vs Lawful +3"        575       793       794       ****      ****      
+576        Sonic4            "Sonic vs Lawful +4"        576       793       794       ****      ****      
+577        Sonic5            "Sonic vs Lawful +5"        577       793       794       ****      ****      
+578        Sonic6            "Sonic vs Lawful +6"        578       793       794       ****      ****      
+579        Sonic7            "Sonic vs Lawful +7"        579       793       794       ****      ****      
+580        Sonic8            "Sonic vs Lawful +8"        580       793       794       ****      ****      
+581        Sonic9            "Sonic vs Lawful +9"        581       793       794       ****      ****      
+582        Sonic10           "Sonic vs Lawful +10"       582       793       794       ****      ****      
+583        Sonic11           "Sonic vs Lawful +11"       583       793       794       ****      ****      
+584        Sonic12           "Sonic vs Lawful +12"       584       793       794       ****      ****      
+585        Sonic13           "Sonic vs Lawful +13"       585       793       794       ****      ****      
+586        Sonic14           "Sonic vs Lawful +14"       586       793       794       ****      ****      
+587        Sonic15           "Sonic vs Lawful +15"       587       793       794       ****      ****      
+588        Sonic16           "Sonic vs Lawful +16"       588       793       794       ****      ****      
+589        Sonic17           "Sonic vs Lawful +17"       589       793       794       ****      ****      
+590        Sonic18           "Sonic vs Lawful +18"       590       793       794       ****      ****      
+591        Sonic19           "Sonic vs Lawful +19"       591       793       794       ****      ****      
+592        Sonic20           "Sonic vs Lawful +20"       592       793       794       ****      ****      
+593        Acid1             "Acid vs Lawful +1"         593       793       794       ****      ****      
+594        Acid2             "Acid vs Lawful +2"         594       793       794       ****      ****      
+595        Acid3             "Acid vs Lawful +3"         595       793       794       ****      ****      
+596        Acid4             "Acid vs Lawful +4"         596       793       794       ****      ****      
+597        Acid5             "Acid vs Lawful +5"         597       793       794       ****      ****      
+598        Acid6             "Acid vs Lawful +6"         598       793       794       ****      ****      
+599        Acid7             "Acid vs Lawful +7"         599       793       794       ****      ****      
+600        Acid8             "Acid vs Lawful +8"         600       793       794       ****      ****      
+601        Acid9             "Acid vs Lawful +9"         601       793       794       ****      ****      
+602        Acid10            "Acid vs Lawful +10"        602       793       794       ****      ****      
+603        Acid11            "Acid vs Lawful +11"        603       793       794       ****      ****      
+604        Acid12            "Acid vs Lawful +12"        604       793       794       ****      ****      
+605        Acid13            "Acid vs Lawful +13"        605       793       794       ****      ****      
+606        Acid14            "Acid vs Lawful +14"        606       793       794       ****      ****      
+607        Acid15            "Acid vs Lawful +15"        607       793       794       ****      ****      
+608        Acid16            "Acid vs Lawful +16"        608       793       794       ****      ****      
+609        Acid17            "Acid vs Lawful +17"        609       793       794       ****      ****      
+610        Acid18            "Acid vs Lawful +18"        610       793       794       ****      ****      
+611        Acid19            "Acid vs Lawful +19"        611       793       794       ****      ****      
+612        Acid20            "Acid vs Lawful +20"        612       793       794       ****      ****      
+613        Flaming1          "Flaming vs Neutral +1"     613       790       791       792       793       
+614        Flaming2          "Flaming vs Neutral +2"     614       790       791       792       793       
+615        Flaming3          "Flaming vs Neutral +3"     615       790       791       792       793       
+616        Flaming4          "Flaming vs Neutral +4"     616       790       791       792       793       
+617        Flaming5          "Flaming vs Neutral +5"     617       790       791       792       793       
+618        Flaming6          "Flaming vs Neutral +6"     618       790       791       792       793       
+619        Flaming7          "Flaming vs Neutral +7"     619       790       791       792       793       
+620        Flaming8          "Flaming vs Neutral +8"     620       790       791       792       793       
+621        Flaming9          "Flaming vs Neutral +9"     621       790       791       792       793       
+622        Flaming10         "Flaming vs Neutral +10"    622       790       791       792       793       
+623        Flaming11         "Flaming vs Neutral +11"    623       790       791       792       793       
+624        Flaming12         "Flaming vs Neutral +12"    624       790       791       792       793       
+625        Flaming13         "Flaming vs Neutral +13"    625       790       791       792       793       
+626        Flaming14         "Flaming vs Neutral +14"    626       790       791       792       793       
+627        Flaming15         "Flaming vs Neutral +15"    627       790       791       792       793       
+628        Flaming16         "Flaming vs Neutral +16"    628       790       791       792       793       
+629        Flaming17         "Flaming vs Neutral +17"    629       790       791       792       793       
+630        Flaming18         "Flaming vs Neutral +18"    630       790       791       792       793       
+631        Flaming19         "Flaming vs Neutral +19"    631       790       791       792       793       
+632        Flaming20         "Flaming vs Neutral +20"    632       790       791       792       793       
+633        Freezing1         "Freezing vs Neutral +1"    633       790       791       792       793       
+634        Freezing2         "Freezing vs Neutral +2"    634       790       791       792       793       
+635        Freezing3         "Freezing vs Neutral +3"    635       790       791       792       793       
+636        Freezing4         "Freezing vs Neutral +4"    636       790       791       792       793       
+637        Freezing5         "Freezing vs Neutral +5"    637       790       791       792       793       
+638        Freezing6         "Freezing vs Neutral +6"    638       790       791       792       793       
+639        Freezing7         "Freezing vs Neutral +7"    639       790       791       792       793       
+640        Freezing8         "Freezing vs Neutral +8"    640       790       791       792       793       
+641        Freezing9         "Freezing vs Neutral +9"    641       790       791       792       793       
+642        Freezing10        "Freezing vs Neutral +10"   642       790       791       792       793       
+643        Freezing11        "Freezing vs Neutral +11"   643       790       791       792       793       
+644        Freezing12        "Freezing vs Neutral +12"   644       790       791       792       793       
+645        Freezing13        "Freezing vs Neutral +13"   645       790       791       792       793       
+646        Freezing14        "Freezing vs Neutral +14"   646       790       791       792       793       
+647        Freezing15        "Freezing vs Neutral +15"   647       790       791       792       793       
+648        Freezing16        "Freezing vs Neutral +16"   648       790       791       792       793       
+649        Freezing17        "Freezing vs Neutral +17"   649       790       791       792       793       
+650        Freezing18        "Freezing vs Neutral +18"   650       790       791       792       793       
+651        Freezing19        "Freezing vs Neutral +19"   651       790       791       792       793       
+652        Freezing20        "Freezing vs Neutral +20"   652       790       791       792       793       
+653        Shocking1         "Shocking vs Neutral +1"    653       790       791       792       793       
+654        Shocking2         "Shocking vs Neutral +2"    654       790       791       792       793       
+655        Shocking3         "Shocking vs Neutral +3"    655       790       791       792       793       
+656        Shocking4         "Shocking vs Neutral +4"    656       790       791       792       793       
+657        Shocking5         "Shocking vs Neutral +5"    657       790       791       792       793       
+658        Shocking6         "Shocking vs Neutral +6"    658       790       791       792       793       
+659        Shocking7         "Shocking vs Neutral +7"    659       790       791       792       793       
+660        Shocking8         "Shocking vs Neutral +8"    660       790       791       792       793       
+661        Shocking9         "Shocking vs Neutral +9"    661       790       791       792       793       
+662        Shocking10        "Shocking vs Neutral +10"   662       790       791       792       793       
+663        Shocking11        "Shocking vs Neutral +11"   663       790       791       792       793       
+664        Shocking12        "Shocking vs Neutral +12"   664       790       791       792       793       
+665        Shocking13        "Shocking vs Neutral +13"   665       790       791       792       793       
+666        Shocking14        "Shocking vs Neutral +14"   666       790       791       792       793       
+667        Shocking15        "Shocking vs Neutral +15"   667       790       791       792       793       
+668        Shocking16        "Shocking vs Neutral +16"   668       790       791       792       793       
+669        Shocking17        "Shocking vs Neutral +17"   669       790       791       792       793       
+670        Shocking18        "Shocking vs Neutral +18"   670       790       791       792       793       
+671        Shocking19        "Shocking vs Neutral +19"   671       790       791       792       793       
+672        Shocking20        "Shocking vs Neutral +20"   672       790       791       792       793       
+673        Sonic1            "Sonic vs Neutral +1"       673       790       791       792       793       
+674        Sonic2            "Sonic vs Neutral +2"       674       790       791       792       793       
+675        Sonic3            "Sonic vs Neutral +3"       675       790       791       792       793       
+676        Sonic4            "Sonic vs Neutral +4"       676       790       791       792       793       
+677        Sonic5            "Sonic vs Neutral +5"       677       790       791       792       793       
+678        Sonic6            "Sonic vs Neutral +6"       678       790       791       792       793       
+679        Sonic7            "Sonic vs Neutral +7"       679       790       791       792       793       
+680        Sonic8            "Sonic vs Neutral +8"       680       790       791       792       793       
+681        Sonic9            "Sonic vs Neutral +9"       681       790       791       792       793       
+682        Sonic10           "Sonic vs Neutral +10"      682       790       791       792       793       
+683        Sonic11           "Sonic vs Neutral +11"      683       790       791       792       793       
+684        Sonic12           "Sonic vs Neutral +12"      684       790       791       792       793       
+685        Sonic13           "Sonic vs Neutral +13"      685       790       791       792       793       
+686        Sonic14           "Sonic vs Neutral +14"      686       790       791       792       793       
+687        Sonic15           "Sonic vs Neutral +15"      687       790       791       792       793       
+688        Sonic16           "Sonic vs Neutral +16"      688       790       791       792       793       
+689        Sonic17           "Sonic vs Neutral +17"      689       790       791       792       793       
+690        Sonic18           "Sonic vs Neutral +18"      690       790       791       792       793       
+691        Sonic19           "Sonic vs Neutral +19"      691       790       791       792       793       
+692        Sonic20           "Sonic vs Neutral +20"      692       790       791       792       793       
+693        Acid1             "Acid vs Neutral +1"        693       790       791       792       793       
+694        Acid2             "Acid vs Neutral +2"        694       790       791       792       793       
+695        Acid3             "Acid vs Neutral +3"        695       790       791       792       793       
+696        Acid4             "Acid vs Neutral +4"        696       790       791       792       793       
+697        Acid5             "Acid vs Neutral +5"        697       790       791       792       793       
+698        Acid6             "Acid vs Neutral +6"        698       790       791       792       793       
+699        Acid7             "Acid vs Neutral +7"        699       790       791       792       793       
+700        Acid8             "Acid vs Neutral +8"        700       790       791       792       793       
+701        Acid9             "Acid vs Neutral +9"        701       790       791       792       793       
+702        Acid10            "Acid vs Neutral +10"       702       790       791       792       793       
+703        Acid11            "Acid vs Neutral +11"       703       790       791       792       793       
+704        Acid12            "Acid vs Neutral +12"       704       790       791       792       793       
+705        Acid13            "Acid vs Neutral +13"       705       790       791       792       793       
+706        Acid14            "Acid vs Neutral +14"       706       790       791       792       793       
+707        Acid15            "Acid vs Neutral +15"       707       790       791       792       793       
+708        Acid16            "Acid vs Neutral +16"       708       790       791       792       793       
+709        Acid17            "Acid vs Neutral +17"       709       790       791       792       793       
+710        Acid18            "Acid vs Neutral +18"       710       790       791       792       793       
+711        Acid19            "Acid vs Neutral +19"       711       790       791       792       793       
+712        Acid20            "Acid vs Neutral +20"       712       790       791       792       793       
+713        Mighty1           "Might +1"                  713       ****      ****      ****      ****      
+714        Mighty2           "Might +2"                  714       ****      ****      ****      ****      
+715        Mighty3           "Might +3"                  715       ****      ****      ****      ****      
+716        Mighty4           "Might +4"                  716       ****      ****      ****      ****      
+717        Mighty5           "Might +5"                  717       ****      ****      ****      ****      
+718        Mighty6           "Might +6"                  718       ****      ****      ****      ****      
+719        Mighty7           "Might +7"                  719       ****      ****      ****      ****      
+720        Mighty8           "Might +8"                  720       ****      ****      ****      ****      
+721        Mighty9           "Might +9"                  721       ****      ****      ****      ****      
+722        Mighty10          "Might +10"                 722       ****      ****      ****      ****      
+723        Mighty11          "Might +11"                 723       ****      ****      ****      ****      
+724        Mighty12          "Might +12"                 724       ****      ****      ****      ****      
+725        Mighty13          "Might +13"                 725       ****      ****      ****      ****      
+726        Mighty14          "Might +14"                 726       ****      ****      ****      ****      
+727        Mighty15          "Might +15"                 727       ****      ****      ****      ****      
+728        Mighty16          "Might +16"                 728       ****      ****      ****      ****      
+729        Mighty17          "Might +17"                 729       ****      ****      ****      ****      
+730        Mighty18          "Might +18"                 730       ****      ****      ****      ****      
+731        Mighty19          "Might +19"                 731       ****      ****      ****      ****      
+732        Mighty20          "Might +20"                 732       ****      ****      ****      ****      
+733        Regeneration1     "Regeneration +1"           733       ****      ****      ****      ****      
+734        Regeneration2     "Regeneration +2"           734       ****      ****      ****      ****      
+735        Regeneration3     "Regeneration +3"           735       ****      ****      ****      ****      
+736        Regeneration4     "Regeneration +4"           736       ****      ****      ****      ****      
+737        Regeneration5     "Regeneration +5"           737       ****      ****      ****      ****      
+738        Regeneration6     "Regeneration +6"           738       ****      ****      ****      ****      
+739        Regeneration7     "Regeneration +7"           739       ****      ****      ****      ****      
+740        Regeneration8     "Regeneration +8"           740       ****      ****      ****      ****      
+741        Regeneration9     "Regeneration +9"           741       ****      ****      ****      ****      
+742        Regeneration10    "Regeneration +10"          742       ****      ****      ****      ****      
+743        Regeneration11    "Regeneration +11"          743       ****      ****      ****      ****      
+744        Regeneration12    "Regeneration +12"          744       ****      ****      ****      ****      
+745        Regeneration13    "Regeneration +13"          745       ****      ****      ****      ****      
+746        Regeneration14    "Regeneration +14"          746       ****      ****      ****      ****      
+747        Regeneration15    "Regeneration +15"          747       ****      ****      ****      ****      
+748        Regeneration16    "Regeneration +16"          748       ****      ****      ****      ****      
+749        Regeneration17    "Regeneration +17"          749       ****      ****      ****      ****      
+750        Regeneration18    "Regeneration +18"          750       ****      ****      ****      ****      
+751        Regeneration19    "Regeneration +19"          751       ****      ****      ****      ****      
+752        Regeneration20    "Regeneration +20"          752       ****      ****      ****      ****      
+753        Vampiric1         "Vampiric Regeneration +1"  753       ****      ****      ****      ****      
+754        Vampiric2         "Vampiric Regeneration +2"  754       ****      ****      ****      ****      
+755        Vampiric3         "Vampiric Regeneration +3"  755       ****      ****      ****      ****      
+756        Vampiric4         "Vampiric Regeneration +4"  756       ****      ****      ****      ****      
+757        Vampiric5         "Vampiric Regeneration +5"  757       ****      ****      ****      ****      
+758        Vampiric6         "Vampiric Regeneration +6"  758       ****      ****      ****      ****      
+759        Vampiric7         "Vampiric Regeneration +7"  759       ****      ****      ****      ****      
+760        Vampiric8         "Vampiric Regeneration +8"  760       ****      ****      ****      ****      
+761        Vampiric9         "Vampiric Regeneration +9"  761       ****      ****      ****      ****      
+762        Vampiric10        "Vampiric Regeneration +10" 762       ****      ****      ****      ****      
+763        Vampiric11        "Vampiric Regeneration +11" 763       ****      ****      ****      ****      
+764        Vampiric12        "Vampiric Regeneration +12" 764       ****      ****      ****      ****      
+765        Vampiric13        "Vampiric Regeneration +13" 765       ****      ****      ****      ****      
+766        Vampiric14        "Vampiric Regeneration +14" 766       ****      ****      ****      ****      
+767        Vampiric15        "Vampiric Regeneration +15" 767       ****      ****      ****      ****      
+768        Vampiric16        "Vampiric Regeneration +16" 768       ****      ****      ****      ****      
+769        Vampiric17        "Vampiric Regeneration +17" 769       ****      ****      ****      ****      
+770        Vampiric18        "Vampiric Regeneration +18" 770       ****      ****      ****      ****      
+771        Vampiric19        "Vampiric Regeneration +19" 771       ****      ****      ****      ****      
+772        Vampiric20        "Vampiric Regeneration +20" 772       ****      ****      ****      ****      
+773        Darkvision        "Darkvision"                773       ****      ****      ****      ****      
+774        Keen              "Keeness"                   774       ****      ****      ****      ****      
+775        Haste             "Haste"                     775       ****      ****      ****      ****      
+776        Freedom           "Freedom"                   776       ****      ****      ****      ****      
+777        HolyAvenger       "Holy Vengance"             777       ****      ****      ****      ****      
+778        TrueSeeing        "True Seeing"               778       ****      ****      ****      ****      
+779        SneakImmunity     "Sneak Immunity"            779       ****      ****      ****      ****      
+780        DrainImmunity     "Drain Immunity"            780       ****      ****      ****      ****      
+781        MindImmunity      "Mind Immunity"             781       ****      ****      ****      ****      
+782        PoisonImmunity    "Poison Immunity"           782       ****      ****      ****      ****      
+783        DiseaseImmunity   "Disease Immunity"          783       ****      ****      ****      ****      
+784        FearImmunity      "Fear Immunity"             784       ****      ****      ****      ****      
+785        KnockdownImmunity "Knockdown Immunity"        785       ****      ****      ****      ****      
+786        ParalysisImmunity "Paralysis Immunity"        786       ****      ****      ****      ****      
+787        CriticalImmunity  "Critical Immunity"         787       ****      ****      ****      ****      
+788        DeathImmunity     "Death Immunity"            788       ****      ****      ****      ****      
+789        Evasive           "Evasiion"                  789       ****      ****      ****      ****      

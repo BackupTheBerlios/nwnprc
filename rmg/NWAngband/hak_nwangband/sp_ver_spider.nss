@@ -13,6 +13,7 @@
 
 #include "reg_inc"
 #include "spawn_inc"
+#include "amb_inc"
 
 void main()
 {
@@ -27,4 +28,17 @@ void main()
         "ver_spider",
         lSpawn,
         1);
+        
+    string sResRef;
+    switch(Random(2))
+    {
+        case 0: sResRef = "as_an_bugsscary1"; break;
+        case 1: sResRef = "as_an_bugsscary2"; break;
+    }
+    CreateDescriptiveSound(sResRef, 
+        "Insects crawling over each other", 
+        lSpawn,
+        10,
+        TRUE,
+        20.0);
 }

@@ -1093,168 +1093,6 @@
                         <element name="ID" type="0" value="0" />
                         <element name="LIST" type="15" >
                             <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con1" />
-                                <element name="CR" type="8" value="2.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con1a" />
-                                <element name="CR" type="8" value="2.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con2" />
-                                <element name="CR" type="8" value="4.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con2a" />
-                                <element name="CR" type="8" value="4.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con3" />
-                                <element name="CR" type="8" value="5.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con3a" />
-                                <element name="CR" type="8" value="5.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con4" />
-                                <element name="CR" type="8" value="7.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con4a" />
-                                <element name="CR" type="8" value="7.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con4b" />
-                                <element name="CR" type="8" value="8.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con5" />
-                                <element name="CR" type="8" value="9.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con5a" />
-                                <element name="CR" type="8" value="10.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con5b" />
-                                <element name="CR" type="8" value="10.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con6" />
-                                <element name="CR" type="8" value="12.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con6a" />
-                                <element name="CR" type="8" value="13.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con6b" />
-                                <element name="CR" type="8" value="13.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con7" />
-                                <element name="CR" type="8" value="15.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con7a" />
-                                <element name="CR" type="8" value="15.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con7b" />
-                                <element name="CR" type="8" value="16.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con7c" />
-                                <element name="CR" type="8" value="17.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con8" />
-                                <element name="CR" type="8" value="18.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con8a" />
-                                <element name="CR" type="8" value="18.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con8b" />
-                                <element name="CR" type="8" value="19.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con8c" />
-                                <element name="CR" type="8" value="20.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con9" />
-                                <element name="CR" type="8" value="24.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con9a" />
-                                <element name="CR" type="8" value="24.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con9b" />
-                                <element name="CR" type="8" value="25.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
-                                <element name="STRREF" type="4" value="16824740" />
-                                <element name="RESREF" type="11" value="psi_astral_con9c" />
-                                <element name="CR" type="8" value="26.0" />
-                                <element name="FACTION" type="10" value="Hostile" />
-                            </struct>
-                            <struct id="0" >
                                 <element name="NAME" type="10" value="Aasimar Barbarian" />
                                 <element name="RESREF" type="11" value="prc_npc_198_0_0" />
                                 <element name="CR" type="8" value="0.25" />
@@ -1822,6 +1660,168 @@
                                 <element name="NAME" type="10" value="Arctic Dwarf Wizard" />
                                 <element name="RESREF" type="11" value="prc_npc_151_10_1" />
                                 <element name="CR" type="8" value="0.25" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con1" />
+                                <element name="CR" type="8" value="2.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con1a" />
+                                <element name="CR" type="8" value="2.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con2" />
+                                <element name="CR" type="8" value="4.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con2a" />
+                                <element name="CR" type="8" value="4.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con3" />
+                                <element name="CR" type="8" value="5.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con3a" />
+                                <element name="CR" type="8" value="5.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con4" />
+                                <element name="CR" type="8" value="7.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con4a" />
+                                <element name="CR" type="8" value="7.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con4b" />
+                                <element name="CR" type="8" value="8.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con5" />
+                                <element name="CR" type="8" value="9.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con5a" />
+                                <element name="CR" type="8" value="10.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con5b" />
+                                <element name="CR" type="8" value="10.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con6" />
+                                <element name="CR" type="8" value="12.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con6a" />
+                                <element name="CR" type="8" value="13.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con6b" />
+                                <element name="CR" type="8" value="13.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con7" />
+                                <element name="CR" type="8" value="15.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con7a" />
+                                <element name="CR" type="8" value="15.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con7b" />
+                                <element name="CR" type="8" value="16.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con7c" />
+                                <element name="CR" type="8" value="17.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con8" />
+                                <element name="CR" type="8" value="18.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con8a" />
+                                <element name="CR" type="8" value="18.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con8b" />
+                                <element name="CR" type="8" value="19.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con8c" />
+                                <element name="CR" type="8" value="20.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con9" />
+                                <element name="CR" type="8" value="24.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con9a" />
+                                <element name="CR" type="8" value="24.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con9b" />
+                                <element name="CR" type="8" value="25.0" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16824740" />
+                                <element name="RESREF" type="11" value="psi_astral_con9c" />
+                                <element name="CR" type="8" value="26.0" />
                                 <element name="FACTION" type="10" value="Hostile" />
                             </struct>
                             <struct id="0" >

@@ -1,31 +1,3 @@
-
-
-// Because CreateObject doesnt work with sounds this is the fudge
-// It assumes there are multiple placed instances somewhere for each
-// object where the resref is the same as the tag.
-// I estimate about 5-10 instances per resref are needed, depending on useage
-//
-// NOTE: Dont delete these objects when no longer needed. Instead use
-// SoundObjectStop() to stop them.
-//
-// NOTE: This automatically starts the sound playing, but it does not alter
-// position or volume.
-//
-// NOTE: This selects sound objects to move based on earliest spawned
-// It does not take into acocunt if it is on or off at the time, nor how much
-// use it gets. It also does not separete placed sounds and ones put in a
-// storage areas
-//
-// lSpawn is the location to put the sound at
-//
-// sTag is the tag of the original to use. This does not need to be the same
-// as the resref, and you can have multiple different tags based of the same
-// resref
-//
-// return is the sound object that was moved
-object CreateSoundObject(location lSpawn, string sTag);
-
-
 //sounds are in a nice shade of blue    100,100,200
 //feelings and observations are grey    200,200,200
 //smells are in green                   100,200,100
@@ -36,44 +8,46 @@ const float SOUND_TEST_DELAY = 60.0;
 const string MESSAGE_FLOATING = "Description_Message_Floating";//0 is none, 1 is self, 2 is party
 const string MESSAGE_PRIVATE = "Description_Message_Private";//0 is no, 1 is yes
 
-object CreateSoundObject(location lSpawn, string sTag)
+int GetAoEForRadius(float fRadius)
 {
-    int i = GetLocalInt(GetModule(), "Sound_"+sTag);
-    object oSound = GetObjectByTag(sTag, i);
-    if(!GetIsObjectValid(oSound))
-    {
-        oSound = GetObjectByTag(sTag, 0);
-        SetLocalInt(GetModule(), "Sound_"+sTag, 0);
-    }
+    int nAoE;
+    if(fRadius <= 5.0)
+        nAoE = 190;
+    else if(fRadius <= 10.0)
+        nAoE = 191;
+    else if(fRadius <= 15.0)
+        nAoE = 192;
+    else if(fRadius <= 20.0)
+        nAoE = 193;
+    else if(fRadius <= 25.0)
+        nAoE = 194;
+    else if(fRadius <= 30.0)
+        nAoE = 195;
+    else if(fRadius <= 35.0)
+        nAoE = 196;
+    else if(fRadius <= 40.0)
+        nAoE = 197;
+    else if(fRadius <= 450.0)
+        nAoE = 198;
     else
-    {
-        i++;
-        SetLocalInt(GetModule(), "Sound_"+sTag, i);
-    }
-    AssignCommand(oSound, JumpToLocation(lSpawn));
-    SoundObjectPlay(oSound);
-    return oSound;
+        nAoE = 199;
+    return nAoE;
+
 }
 
-object CreateDescriptiveSound(string sTag, string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE)
+object CreateDescriptiveSound(string sResRef, string sDesc, location lSpawn, float int nDC = 0, int nOneShot = FALSE, float fRadius = 10.0)
 {
     //sounds are in a nice shade of blue
     string sMess = GetRGB(100, 100, 200)+"* You hear: "+sDesc+GetRGB(100, 100, 200)+" *";
-    //create the sound object
-    object oSound = CreateSoundObject(lSpawn, sTag);
-    //set it to non-playable
-    SoundObjectStop(oSound);
-    //set it to half-volumne
-    SoundObjectSetVolume(oSound, 64);
     //pick a suitable AoE effect based on radius size
-    //only invis purge is non-visible at the moment
-    effect eAoE = EffectAreaOfEffect(AOE_MOB_INVISIBILITY_PURGE, "amb_sound_enter", "amb_sound_hb", "amb_sound_exit");
+    int nAoE = GetAoEForRadius(fRadius);
+    effect eAoE = EffectAreaOfEffect(nAoE, "amb_sound_enter", "amb_sound_hb", "amb_sound_exit");
     //make supernatural so cant be dispelled etc
     eAoE = SupernaturalEffect(eAoE);
     //apply it
     ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eAoE, lSpawn);
     //get the AoE Object we just made
-    string sTag = Get2DAString("vfx_persistent", "LABEL", AOE_MOB_INVISIBILITY_PURGE);
+    string sTag = Get2DAString("vfx_persistent", "LABEL", nAoE);
     object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lSpawn, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
     while(GetIsObjectValid(oAoE))
     {
@@ -92,24 +66,25 @@ object CreateDescriptiveSound(string sTag, string sDesc, location lSpawn, int nD
     SetLocalInt(oAoE, "SoundDC", nDC);
     SetLocalString(oAoE, "SoundDesc", sDesc);
     SetLocalString(oAoE, "SoundMess", sMess);
+    SetLocalString(oAoE, "SoundResRef", sResRef);
     SetLocalObject(oAoE, "SoundObject", oSound);
     SetLocalInt(oAoE, "SoundOneShot", nOneShot);
     return oAoE;
 }
 
-object CreateDescriptiveSmell(string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE)
+object CreateDescriptiveSmell(string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE, float fRadius = 10.0)
 {
     //smells are in a nice shade of green
     string sMess = GetRGB(100, 200, 100)+"* You smell: "+sDesc+GetRGB(100, 200, 100)+" *";
     //pick a suitable AoE effect based on radius size
-    //only invis purge is non-visible at the moment
-    effect eAoE = EffectAreaOfEffect(AOE_MOB_INVISIBILITY_PURGE, "amb_smell_enter", "amb_smell_hb", "amb_smell_exit");
+    int nAoE = GetAoEForRadius(fRadius);
+    effect eAoE = EffectAreaOfEffect(nAoE, "amb_smell_enter", "amb_smell_hb", "amb_smell_exit");
     //make supernatural so cant be dispelled etc
     eAoE = SupernaturalEffect(eAoE);
     //apply it
     ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eAoE, lSpawn);
     //get the AoE Object we just made
-    string sTag = Get2DAString("vfx_persistent", "LABEL", AOE_MOB_INVISIBILITY_PURGE);
+    string sTag = Get2DAString("vfx_persistent", "LABEL", nAoE);
     object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lSpawn, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
     while(GetIsObjectValid(oAoE))
     {
@@ -132,19 +107,19 @@ object CreateDescriptiveSmell(string sDesc, location lSpawn, int nDC = 0, int nO
     return oAoE;
 }
 
-object CreateDescriptiveFeeling(string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE)
+object CreateDescriptiveFeeling(string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE, float fRadius = 10.0)
 {
     //feelings are in a nice shade of grey
     string sMess = GetRGB(200, 200, 200)+"* You feel: "+sDesc+GetRGB(200, 200, 200)+" *";
     //pick a suitable AoE effect based on radius size
-    //only invis purge is non-visible at the moment
-    effect eAoE = EffectAreaOfEffect(AOE_MOB_INVISIBILITY_PURGE, "amb_feel_enter", "amb_feel_hb", "amb_feel_exit");
+    int nAoE = GetAoEForRadius(fRadius);
+    effect eAoE = EffectAreaOfEffect(nAoE, "amb_feel_enter", "amb_feel_hb", "amb_feel_exit");
     //make supernatural so cant be dispelled etc
     eAoE = SupernaturalEffect(eAoE);
     //apply it
     ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eAoE, lSpawn);
     //get the AoE Object we just made
-    string sTag = Get2DAString("vfx_persistent", "LABEL", AOE_MOB_INVISIBILITY_PURGE);
+    string sTag = Get2DAString("vfx_persistent", "LABEL", nAoE);
     object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lSpawn, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
     while(GetIsObjectValid(oAoE))
     {
@@ -185,13 +160,13 @@ void SendAmbientMessage(object oPC, string sMess, string sDesc, string sVerb)
         {
             object oMaster = GetMaster(oPC);
             object oTest = oMaster;
-            while(GetIsObjectValid(oTest))
+            while(GetIsObjectValid(oMaster))
             {
                 oTest = oMaster;
-                oTest = GetMaster(oTest);
+                oMaster = GetMaster(oTest);
             }
             //light grey color
-            sMess = GetRGB(200, 200, 200)+GetName(oPC)+" looks uncomfortable.";
+            sMess = GetRGB(200, 200, 200)+"You notice that "+GetName(oPC)+" looks uncomfortable.";
             //players dont, they can talk to each other
             if(GetLocalInt(oPC, MESSAGE_FLOATING))
                 FloatingTextStringOnCreature(sMess, oMaster, FALSE);
@@ -226,12 +201,13 @@ void DoSoundCheck(object oPC)
     string sMess = GetLocalString(OBJECT_SELF, "SoundMess");
     string sDesc = GetLocalString(OBJECT_SELF, "SoundDesc");
     object oSound = GetLocalObject(OBJECT_SELF, "SoundObject");
+    string sResRef = GetLocalString(oAoE, "SoundResRef");
     int nOneShot = GetLocalInt(OBJECT_SELF, "SoundOneShot");
     //make the skill check
     if(GetIsSkillSuccessful(oPC, SKILL_LISTEN, nDC))
     {
         //play the sound
-        SoundObjectPlay(oSound);
+        PlaySound(sResRef);
         //do the message
         SendAmbientMessage(oPC, sMess, sDesc, "hear");
         //if its one-shot, clean up

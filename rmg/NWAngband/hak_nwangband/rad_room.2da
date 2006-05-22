@@ -1,0 +1,7 @@
+2DA V2.0
+
+           Label         ResRef          FreqPerim FreqArea RoomMinSize RoomMinArea ShapeLimit RoomMaxSize 
+0          SewerGeneral  rad_sp_sewer    10        50       2           5           45         500         
+1          SewerStorage  rad_sp_store    3         10       5           20          45         500         
+2          MushroomPatch rad_sp_mushroom 5         10       0           0           45         10          
+3          SpidersWeb    rad_sp_web      3         5        0           0           45         20          

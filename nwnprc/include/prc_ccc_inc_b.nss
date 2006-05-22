@@ -530,9 +530,9 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl1"),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                    for(i=GetLocalInt(OBJECT_SELF, DYNCONV_VARIABLE)-1;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
-                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
+                    for(i=GetLocalInt(OBJECT_SELF, DYNCONV_VARIABLE)-1;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
                     array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
@@ -550,9 +550,9 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                    for(i=GetLocalInt(OBJECT_SELF, DYNCONV_VARIABLE)-1;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
-                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
+                    for(i=GetLocalInt(OBJECT_SELF, DYNCONV_VARIABLE)-1;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
                     array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);
@@ -580,9 +580,9 @@ void ChoiceSelected(int nChoiceNo)
                         array_get_size(OBJECT_SELF, "SpellLvl"+IntToString(GetLocalInt(OBJECT_SELF, "CurrentSpellLevel"))),
                             GetChoice(OBJECT_SELF));
                     //remove spell from choices
-                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
+                    for(i=GetLocalInt(OBJECT_SELF, DYNCONV_VARIABLE)-1;i<array_get_size(OBJECT_SELF, "ChoiceValues");i++)
                         array_set_int(OBJECT_SELF, "ChoiceValues",i,  array_get_int(OBJECT_SELF, "ChoiceValues", i+1));
-                    for(i=GetChoice(OBJECT_SELF);i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
+                    for(i=GetLocalInt(OBJECT_SELF, DYNCONV_VARIABLE)-1;i<array_get_size(OBJECT_SELF, "ChoiceTokens");i++)
                         array_set_string(OBJECT_SELF, "ChoiceTokens",i, array_get_string(OBJECT_SELF, "ChoiceTokens",i+1));
                     array_shrink(OBJECT_SELF, "ChoiceValues", array_get_size(OBJECT_SELF, "ChoiceValues") -1);
                     array_shrink(OBJECT_SELF, "ChoiceTokens",array_get_size(OBJECT_SELF, "ChoiceTokens")-1);

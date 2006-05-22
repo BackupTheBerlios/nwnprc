@@ -9,6 +9,8 @@
 #include "inc_utility"
 #include "prc_inc_clsfunc"
 #include "psi_inc_psifunc"
+#include "prc_inc_death"
+
 
 void main()
 {
@@ -55,10 +57,10 @@ void main()
 
     // Psionic creatures lose all PP on death
     if(GetIsPsionicCharacter(oDead))
-    {
         LoseAllPowerPoints(oDead, TRUE);
-    }
 
+    DoDied(OBJECT_SELF, TRUE);
+    
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oDead, EVENT_ONPLAYERDEATH);
 }

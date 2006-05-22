@@ -125,7 +125,7 @@ int GetSpellFromAbrev(string sAbrev)
     string sLabel = GetStringLowerCase(Get2DACache("epicspells", "LABEL", i));
     while(sLabel != "")
     {
-    	if(DEBUG) DoDebug("sLabel to check vs: " + sLabel);
+        if(DEBUG) DoDebug("sLabel to check vs: " + sLabel);
         if(sAbrev == sLabel)
         {
             if(DEBUG) DoDebug("SpellID: " + IntToString(i));
@@ -361,4 +361,4 @@ string GetNameForSpell(int nSpellID)
 }
 
 // Test main
-void main(){}
+//void main(){}

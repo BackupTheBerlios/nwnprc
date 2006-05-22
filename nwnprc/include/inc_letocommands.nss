@@ -54,7 +54,7 @@ string LetoAdd(string sLocation,string sValue, string sType)
     return LetoSet(sLocation, sValue, sType, TRUE);
 }
 
-string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
+string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
 {
 //phoenix
 // <gff:add 'FirstName' {type='string' value=<qq:Bob the Minogon> setifexists=True}>
@@ -82,16 +82,16 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
     if(GetPRCSwitch(PRC_LETOSCRIPT_PHEONIX_SYNTAX))
     {
         string sReturn = "<gff:";
-        //if(bAdd)
+        if(bAdd)
             sReturn +="add";
-        //else
-        //    sReturn +="set";
+        else
+            sReturn +="set";
         sReturn += "'"+sLocation+"' {type='"+sType+"' ";
         if(sType != "list")
             sReturn += "value="+sValue+" ";
         if(!bAdd)
             sReturn += " setifexists=True";
-        sReturn += "}> ";
+        sReturn += "}>\n";
         return  sReturn;
     }
 //unicorn
@@ -103,7 +103,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE)
         sReturn += "Type => gff"+sType;
         if(bAdd)
             sReturn += ", SetIfExists => TRUE";
-        sReturn += "; ";
+        sReturn += ";\n";
         return sReturn;
     }
 }

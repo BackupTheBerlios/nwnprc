@@ -748,7 +748,77 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * This switch removes that so they are on even footings.
   */
  const string PRC_REMOVE_PLAYER_SPEED                      = "PRC_REMOVE_PLAYER_SPEED";
+ 
+ 
+ /*
+  * Turns on the PRC PnP Bleeding & Death system
+  * see prc_inc_death for details
+  * NOTE: This will only work if the module has no other scripts for 
+  * OnPlayerDying and OnPlayerDeath events. Otherwise those will interfere with 
+  * this system
+  */
+const string PRC_PNP_DEATH_ENABLE                           = "PRC_PNP_DEATH_ENABLE";
 
+ /*
+  *  if zero, dont bleed just die
+  *  By PnP this would be 1 round, or 6 seconds
+  */
+const string PRC_DEATH_TIME_BETWEEN_BLEEDING       = "PRC_DEATH_TIME_BETWEEN_BLEEDING";   
+
+ /*
+  *  if zero, dont stabilise
+  *  By PnP this would be 1 hour, or 2 minutes/120 
+  *  seconds by default NWN settings
+  */
+const string PRC_DEATH_TIME_BETWEEN_STABLE         = "PRC_DEATH_TIME_BETWEEN_STABLE";   
+
+ /*
+  *  if zero, dont disabled
+  *  By PnP this would be 1 day, or 48 minutes/2880 
+  *  seconds by default NWN settings
+  */
+const string PRC_DEATH_TIME_BETWEEN_DISABLED       = "PRC_DEATH_TIME_BETWEEN_DISABLED";   
+
+ /*
+  *  this is the checks once dead for raising
+  */
+const string PRC_DEATH_TIME_BETWEEN_DEATH          = "PRC_DEATH_TIME_BETWEEN_DEATH";   
+
+/*
+ * Damage when bleeding
+ * By PnP, this would be 1
+ */
+const string PRC_DEATH_DAMAGE_FROM_BLEEDING        = "PRC_DEATH_DAMAGE_FROM_BLEEDING";
+
+/*
+ * Damage when stable
+ * By PnP, this would be 1
+ */
+const string PRC_DEATH_DAMAGE_FROM_STABLE          = "PRC_DEATH_DAMAGE_FROM_STABLE";
+
+/*
+ * Healing when bleeding
+ * By PnP, this would be 0
+ */
+const string PRC_DEATH_HEAL_FROM_STABLE            = "PRC_DEATH_HEAL_FROM_STABLE";
+
+/*
+ * % chance to improve when bleeding
+ * By PnP, this would be 10
+ */
+const string PRC_DEATH_BLEED_TO_STABLE_CHANCE      = "PRC_DEATH_BLEED_TO_STABLE_CHANCE";
+
+/*
+ * % chance to resume bleeding when stable
+ * By PnP, this would be 0
+ */
+const string PRC_DEATH_STABLE_TO_BLEED_CHANCE      = "PRC_DEATH_STABLE_TO_BLEED_CHANCE";
+
+/*
+ * % chance to improve when stable
+ * By PnP, this would be 10
+ */
+const string PRC_DEATH_STABLE_TO_DISABLED_CHANCE   = "PRC_DEATH_STABLE_TO_DISABLED_CHANCE";
 /******************************************************************************\
 *                               ACP switches                              *
 \******************************************************************************/
@@ -2386,6 +2456,17 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_REMOVE_PLAYER_SPEED);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_STABLE_TO_DISABLED_CHANCE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_STABLE_TO_BLEED_CHANCE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_BLEED_TO_STABLE_CHANCE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_HEAL_FROM_STABLE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_DAMAGE_FROM_STABLE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_DAMAGE_FROM_BLEEDING);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_TIME_BETWEEN_DEATH);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_TIME_BETWEEN_DISABLED);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_TIME_BETWEEN_STABLE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_TIME_BETWEEN_BLEEDING);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_DEATH_ENABLE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_MANUAL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_AUTOMATIC);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ACP_NPC_AUTOMATIC);

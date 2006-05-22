@@ -5,6 +5,8 @@
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "inc_utility"
+#include "prc_inc_death"
+
 
 void main()
 {
@@ -74,6 +76,8 @@ void main()
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget);
         }
     }
+    
+    DoDied(OBJECT_SELF, FALSE);
 
     // Execute scripts hooked to this event for the NPC triggering it
     ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_NPC_ONDEATH);

@@ -33,6 +33,7 @@ void SweepingStrike(object oCaster, object oTarget)
             if(oAreaTarget != oCaster &&
                GetIsInMeleeRange(oAreaTarget, oCaster) &&
                GetIsInMeleeRange(oAreaTarget, oTarget) &&
+               GetIsEnemy(oTarget) && 
                oAreaTarget != oTarget)
             {
                 // Perform the Attack

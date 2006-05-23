@@ -29,4 +29,57 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+void SadisticLoop(object oPC, int nCounter, int nDamage);
+
 #include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	object oPC = OBJECT_SELF;
+	int nDam = 0;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nCounter = PRCGetCasterLevel(oPC);
+	int nDamage;
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		nCounter = (nCounter * 2);
+	}
+		
+	//Start the loop
+	SadisticLoop(oPC, nCounter, nDamage);
+	
+	SPEvilShift(oPC)
+	SPSetSchool();
+}
+
+void SadisticLoop(object oPC, int nCounter, int nDamage)
+{
+	if(nCounter > 0)
+	{
+		if(nDamage > 0)
+		{
+			int nBonus = nDamage/10;
+			
+			effect eLink = EffectAttackIncrease(nBonus, ATTACK_BONUS_MISC);
+			eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus, SAVING_THROW_TYPE_ALL));
+			eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_ALL_SKILLS, nBonus));
+						
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 6.0f);			
+		}
+		
+		//Decrement counter
+		nCounter--;
+		
+		//Schedule next go-round
+		DelayCommand(6.0f, SadisticLoop(oPC, nCounter, nDamage));
+	}
+}
+	
+
+	
+	

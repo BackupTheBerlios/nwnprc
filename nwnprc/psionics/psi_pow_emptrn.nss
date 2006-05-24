@@ -84,7 +84,7 @@ void main()
             effect eHeal, eDam;
 
             // Let the AI know
-            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+            SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
 
             // Handle Twin Power
             int nRepeats = manif.bTwin ? 2 : 1;

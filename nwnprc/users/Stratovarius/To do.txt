@@ -7,10 +7,10 @@ Primary
 -----------------------------------------------------
 
 Base Classes:
-Favoured Soul - Classes.2da, cls_feat.2da
-Warmage - All to do
-Dread Necromancer - All to do
-Beguiler - All to do
+Favoured Soul - cls_feat.2da
+Warmage - All to do, Spells
+Dread Necromancer - All to do, Spells
+Beguiler - All to do, Spells
 
 Truenaming:
 1 Base Class
@@ -19,15 +19,15 @@ Truenaming:
 30 feats
 
 Psionic PrCs:
-Sanctified Mind - Classes.2da, cls_feat.2da
-Iron Mind - Classes.2da, cls_feat.2da, Invest Armour feat.
-Shadowmind - All to do
+Sanctified Mind - cls_feat.2da
+Iron Mind - cls_feat.2da, Invest Armour feat.
+Shadowmind - All to do, (Mass) Cloud Mind powers
 
 Normal PrCs:
-Slayer of Domiel - Classes.2da, cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
-Disciple of Asmodeus - Classes.2da, cls_feat.2da, (Greater) Command class abilities
-Dirgesinger - Classes.2da, cls_feat.2da
-Suel Archanamach - Classes.2da, cls_feat.2da
+Slayer of Domiel - cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
+Disciple of Asmodeus - cls_feat.2da, (Greater) Command class abilities
+Dirgesinger - cls_feat.2da
+Suel Archanamach - cls_feat.2da
 
 -----------------------------------------------------
 Secondary

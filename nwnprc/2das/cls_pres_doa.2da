@@ -5,6 +5,7 @@
 1     Persuade               SKILL     12                  5           
 2     DISCIPLE_OF_DARKNESS   FEAT      4012                ****        
 3     Leadership             FEAT      4365                ****        
+4     ScriptVar              VAR       PRC_PrereqAsmodeus  0           
 5     ScriptVar              VAR       PRC_AllowAsmodeus   0           
 6     FEAT_EB_HAND           FEATOR    3390                ****        
 7     FEAT_EB_HEAD           FEATOR    3391                ****        

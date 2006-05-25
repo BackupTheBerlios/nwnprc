@@ -389,6 +389,21 @@ void ThrallOfGrazzt(object oPC)
      }
 }
 
+void Asmodeus(object oPC)
+{
+    SetLocalInt(oPC, "PRC_PrereqAsmodeus", 1);
+
+    if(GetAlignmentLawChaos(oPC) == ALIGNMENT_LAWFUL && GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)
+    {
+        SetLocalInt(oPC, "PRC_PrereqAsmodeus", 0);
+    }
+
+    if(GetAlignmentLawChaos(oPC) == ALIGNMENT_NEUTRAL && GetAlignmentGoodEvil(oPC) == ALIGNMENT_EVIL)
+    {
+        SetLocalInt(oPC, "PRC_PrereqAsmodeus", 0);
+    }
+}
+
 void Rava(object oPC)
 {
     SetLocalInt(oPC, "PRC_PreReq_Rava", 1);
@@ -408,6 +423,7 @@ void Rava(object oPC)
         SetLocalInt(oPC, "PRC_PreReq_Rava", 0);
     }
 }
+
 void WWolf(object oPC)
 {
     //If not a natural lycanthrope or not already leveled in werewolf, prevent the player from taking the werewolf class
@@ -874,6 +890,7 @@ void main()
      Heartwarder(oPC);
      SoulEater(oPC);
      Tempus(oPC);
+     Asmodeus(oPC);
      RacialHD(oPC);
      // Truly massive debug message flood if activated.
      /*

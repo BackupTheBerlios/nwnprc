@@ -20,8 +20,21 @@ void main()
 	float fDur = RoundsToSeconds(d4(1) + 1);
 	float fDaze = ((d6(1) + 1) * 60.0f);
 	
-	//primary
+	//Handle resetting addiction DC
+	SetPersistantLocalInt(oPC, "Addiction_Agony_DC", 25);
 	
+	//Handle satiation
+	
+	
+	//Make addiction check
+	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 25, SAVING_THROW_TYPE_DISEASE))
+	{
+		effect eAddict = EffectDisease(DISEASE_AGONY_ADDICTION);
+		SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
+		FloatingTextStringOnCreature("You have become addicted to Agony.", oPC, FALSE);
+	}
+	
+	//primary	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,eStun,oPC, fDur);	
 	DelayCommand(fDur, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff2, oPC, fDaze));	
 		

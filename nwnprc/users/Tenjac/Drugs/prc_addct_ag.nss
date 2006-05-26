@@ -17,8 +17,9 @@ void main()
 	object oPC = OBJECT_SELF;
 	int nDC    = GetPersistantLocalInt(oPC, "Addiction_Agony_DC");
 		
-	//make save vs nasty bad things
-	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, nDC, SAVING_THROW_TYPE_DISEASE))
+	//make save vs nasty bad things or have satiation
+	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, nDC, SAVING_THROW_TYPE_DISEASE) &&
+	   (GetPersistantLocalInt(oPC, "AgonySatiation") < 1))
 	{
 		//1d6 Dex, 1d6 Wis, 1d6 Con
 		ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
@@ -57,7 +58,13 @@ void main()
 		}
 	}
 	
-	//Handle DC increase from addiction.  Since satiation is only one day, go ahead and set it
-	SetPersistantLocalInt(oPC, "Addiction_Agony_DC", (nDC + 5));
+	//Handle DC increase from addiction.  
+	if(!GetPersistantLocalInt(oPC, "AgonySatiation"))
+	{
+		SetPersistantLocalInt(oPC, "Addiction_Agony_DC", (nDC + 5));
+	}
+	
+	//Remove the int, as it only lasts 1 day
+	DeletePersistantLocalInt(oPC, "AgonySatiation");
 }
 

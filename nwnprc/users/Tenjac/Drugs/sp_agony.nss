@@ -24,7 +24,7 @@ void main()
 	SetPersistantLocalInt(oPC, "Addiction_Agony_DC", 25);
 	
 	//Handle satiation
-	
+	SetPersistantLocalInt(oPC, "AgonySatiation", 1);	
 	
 	//Make addiction check
 	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 25, SAVING_THROW_TYPE_DISEASE))

@@ -34,7 +34,7 @@ void main()
 		FloatingTextStringOnCreature("You have become addicted to Agony.", oPC, FALSE);
 	}
 	
-	//primary	
+	//primary
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,eStun,oPC, fDur);	
 	DelayCommand(fDur, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff2, oPC, fDaze));	
 		

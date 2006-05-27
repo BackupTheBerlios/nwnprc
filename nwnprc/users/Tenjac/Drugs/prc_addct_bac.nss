@@ -23,7 +23,7 @@ void main()
 	   nSatiation < 1))
 	
 	{
-		//1d6 Dex, 1d6 Wis, 1d6 Con
+		//1d3 Dex
 		ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, d3(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
 		DeletePersistantLocalInt(oPC, "PreviousBaccaranSave");
 	}

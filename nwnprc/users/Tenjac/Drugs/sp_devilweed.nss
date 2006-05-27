@@ -16,6 +16,20 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	
+	//Handle resetting addiction DC
+	SetPersistantLocalInt(oPC, "Addiction_Devilweed_DC", 6);
+			
+	//Handle satiation
+	SetPersistantLocalInt(oPC, "DevilweedSatiation", 10);
+	
+	//Make addiction check
+	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 6, SAVING_THROW_TYPE_DISEASE))
+	{
+		effect eAddict = EffectDisease(DISEASE_DEVILWEED_ADDICTION);
+		SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
+		FloatingTextStringOnCreature("You have become addicted to Devilweed.", oPC, FALSE);
+	}
+	
 	//Primary
 	ApplyAbilityDamage(oPC, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 	

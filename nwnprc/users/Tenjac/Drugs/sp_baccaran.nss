@@ -23,7 +23,15 @@ void main()
 	SetPersistantLocalInt(oPC, "Addiction_Baccaran_DC", 6);
 		
 	//Handle satiation
-	SetPersistantLocalInt(oPC, "BaccaranSatiation", 10);	
+	SetPersistantLocalInt(oPC, "BaccaranSatiation", 10);
+	
+	//Make addiction check
+	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 6, SAVING_THROW_TYPE_DISEASE))
+	{
+		effect eAddict = EffectDisease(DISEASE_BACCARAN_ADDICTION);
+		SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
+		FloatingTextStringOnCreature("You have become addicted to Baccaran.", oPC, FALSE);
+	}
 
 	//Primary
 	ApplyAbilityDamage(oPC, ABILITY_STRENGTH, 4, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);

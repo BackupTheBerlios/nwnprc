@@ -18,6 +18,12 @@ void main()
 	effect eMind = EffectSavingThrowDecrease(SAVING_THROW_WILL,2,SAVING_THROW_TYPE_MIND_SPELLS);
 	effect eWis = EffectAbilityIncrease(ABILITY_WISDOM,d6()+1);
 	effect eDam = EffectDamage(d6(2));
+	
+	//Handle resetting addiction DC
+	SetPersistantLocalInt(oPC, "Addiction_Baccaran_DC", 6);
+		
+	//Handle satiation
+	SetPersistantLocalInt(oPC, "BaccaranSatiation", 10);	
 
 	//Primary
 	ApplyAbilityDamage(oPC, ABILITY_STRENGTH, 4, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);

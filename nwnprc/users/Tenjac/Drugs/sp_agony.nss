@@ -27,11 +27,14 @@ void main()
 	SetPersistantLocalInt(oPC, "AgonySatiation", 1);	
 	
 	//Make addiction check
-	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 25, SAVING_THROW_TYPE_DISEASE))
+	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
 	{
-		effect eAddict = EffectDisease(DISEASE_AGONY_ADDICTION);
-		SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
-		FloatingTextStringOnCreature("You have become addicted to Agony.", oPC, FALSE);
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 25, SAVING_THROW_TYPE_DISEASE))
+		{
+			effect eAddict = EffectDisease(DISEASE_AGONY_ADDICTION);
+			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
+			FloatingTextStringOnCreature("You have become addicted to Agony.", oPC, FALSE);
+		}
 	}
 	
 	//primary

@@ -26,11 +26,14 @@ void main()
 	SetPersistantLocalInt(oPC, "BaccaranSatiation", 10);
 	
 	//Make addiction check
-	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 6, SAVING_THROW_TYPE_DISEASE))
+	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
 	{
-		effect eAddict = EffectDisease(DISEASE_BACCARAN_ADDICTION);
-		SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
-		FloatingTextStringOnCreature("You have become addicted to Baccaran.", oPC, FALSE);
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 6, SAVING_THROW_TYPE_DISEASE))
+		{
+			effect eAddict = EffectDisease(DISEASE_BACCARAN_ADDICTION);
+			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
+			FloatingTextStringOnCreature("You have become addicted to Baccaran.", oPC, FALSE);
+		}
 	}
 
 	//Primary

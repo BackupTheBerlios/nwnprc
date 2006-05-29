@@ -11,3 +11,60 @@ Created:   5/24/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	int nDC    = GetPersistantLocalInt(oPC, "Addiction_Mushroom_DC");
+	int nSatiation = GetPersistantLocalInt(oPC, "MushroomSatiation");
+		
+	//make save vs nasty bad things or have satiation
+	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, nDC, SAVING_THROW_TYPE_DISEASE) &&
+	   (!GetPersistantLocalInt(oPC, "MushroomSatiation")))
+	{
+		//1d8 Dex, 1d8 Wis, 1d6 Con, 1d6 Str
+		ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
+		ApplyAbilityDamage(oPC, ABILITY_WISDOM, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
+		
+		DeletePersistantLocalInt(oPC, "PreviousMushroomSave");
+	}
+	
+	else 
+	{
+		//Two successful saves
+		if(GetPersistantLocalInt(oPC, "PreviousMushroomSave"))
+		{
+			//Remove addiction
+			//Find the disease effect
+			effect eDisease = GetFirstEffect(OBJECT_SELF);
+			effect eTest = EffectDisease(DISEASE_MUSHROOM_POWDER_ADDICTION);
+			
+			while(GetIsEffectValid(eDisease))
+			{
+				if(eDisease == eTest)
+				{
+					RemoveEffect(oPC, eDisease);
+					DeletePersistantLocalInt(oPC, "PreviousMushroomSave");
+					break;
+				}
+				
+				eDisease = GetNextEffect(OBJECT_SELF);
+			}			
+		}
+		//Saved, but no previous
+		else
+		{
+			SetPersistantLocalInt(oPC, "PreviousMushroomSave", 1);
+		}
+	}
+	
+	//Handle DC increase from addiction.  
+	if(!GetPersistantLocalInt(oPC, "MushroomSatiation"))
+	{
+		SetPersistantLocalInt(oPC, "Addiction_Mushroom_DC", (nDC + 5));
+	}
+	
+	//Decrement satiation
+	nSatiation--;
+	SetPersistantLocalInt(oPC, "MushroomSatiation", nSatiation);
+}

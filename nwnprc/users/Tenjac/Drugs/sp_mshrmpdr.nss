@@ -17,6 +17,23 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	
+	//Handle resetting addiction DC
+	SetPersistantLocalInt(oPC, "Addiction_Mushroom_DC", 10);
+	
+	//Handle satiation
+	SetPersistantLocalInt(oPC, "MushroomSatiation", 5);
+	
+	//Make addiction check
+	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
+	{
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 10, SAVING_THROW_TYPE_DISEASE))
+		{
+			effect eAddict = EffectDisease(DISEASE_MUSHROOM_POWDER_ADDICTION);
+			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAddict, oPC);
+			FloatingTextStringOnCreature("You have become addicted to Mushroom Powder.", oPC, FALSE);
+		}
+	}
+	
 	// Initial effect
 	effect eLink = EffectAbilityIncrease(ABILITY_INTELLIGENCE,2);
 	eLink = EffectLinkEffects(EffectAbilityIncrease(ABILITY_CHARISMA,2), eLink);
@@ -36,13 +53,16 @@ void main()
 	
 	DelayCommand(60.0f, ApplyAbilityDamage(oPC, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
 	
-	//Overdose
-	/*if(overdose)
+	//Overdose - simplified slightly
+	if(GetLocalInt(oPC, "MushroomOD")
 	{
 		effect eDam = EffectDamage(d6(2));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
-	}
-	*/
+	}	
+	
+	SetLocalInt(oPC, "MushrooomOD", 1);
+	DelayCommand(HoursToSeconds(12), DeleteLocalInt(oPC, "MushroomOD"));
+	
 }
 
 

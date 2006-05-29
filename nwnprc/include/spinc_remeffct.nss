@@ -53,6 +53,12 @@ void SpellRemovalCheck(object oCaster, object oTarget)
 			
 			RemoveSpellEffects(SPELL_TOUCH_OF_JUIBLEX, oCaster, oTarget);
 		}
+		
+		//Evil Eye
+		if(GetHasSpellEffect(SPELL_EVIL_EYE, oTarget))
+		{
+			RemoveSpellEffects(SPELL_EVIL_EYE, oCaster, oTarget);
+		}
 	}
 
 	//Remove Disease

@@ -610,6 +610,8 @@ const int SPELL_LUHIX                               = 2607;
 const int SPELL_MUSHROOM_POWDER                     = 2608;
 const int SPELL_SANNISH                             = 2609;
 const int SPELL_TERRAN_BRANDY                       = 2610;
+const int SPELL_LESSER_SHIVERING_TOUCH              = 2611;
+const int SPELL_SHIVERING_TOUCH                     = 2612;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

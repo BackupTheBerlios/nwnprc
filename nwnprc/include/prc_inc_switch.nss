@@ -224,6 +224,12 @@ const string PRC_METAMAGIC_OVERRIDE                   = "PRC_METAMAGIC_OVERRIDE"
  */
 const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
 
+/*
+ * This switch toggles whether items are destroyed by Claws of the Bebilith or 
+ * simply unequipped.
+ */
+ const string PRC_BEBILITH_CLAWS_DESTROY              = "PRC_BEBILITH_CLAWS_DESTROY";
+
 /******************************************************************************\
 *                                  Class switches                              *
 \******************************************************************************/
@@ -689,10 +695,6 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   */
  const string PRC_SPELL_ALIGNMENT_SHIFT              = "PRC_SPELL_ALIGNMENT_SHIFT";
 
-/*
- * Set this to enable destruction of weapons/armor via Claws of the Bebilith
- */
- const string PRC_BEBILITH_CLAWS_DESTROY             = "PRC_BEBILITH_CLAWS_DESTROY";
  
  /*
   * Set this to give a number of Free cohorts as with leadership

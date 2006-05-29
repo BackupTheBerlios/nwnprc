@@ -12,6 +12,8 @@ const int AOE_MOB_PESTILENCE                    = 150;
 const int AOE_PER_TELEPORTATIONCIRCLE           = 151;
 const int AOE_PER_DEEPER_DARKNESS               = 213;
 const int AOE_PER_OBSCURING_MIST                = 141;
+const int AOE_PER_ACHAIERAI                     = 206;
+const int AOE_PER_UTTERDARK                     = 205;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;
@@ -23,7 +25,7 @@ const int AOE_MOB_FORM_DOOM                     = 136;
 const int AOE_PER_ENERGYWALL_WIDENED            = 137;
 const int AOE_PER_ESHAMBLER_WIDENED             = 138;
 const int AOE_PER_NULL_PSIONICS_FIELD_WIDENED   = 139;
-const int AOE_PER_ACHAIERAI                     = 206;
+
 
 // Invisible Area of Effects
 const int VFX_PER_5_FT_INVIS                    = 184;
@@ -58,6 +60,14 @@ const int DISEASE_CONTAGION_SLIMY_DOOM          = 26;
 const int DISEASE_PESTILENCE                    = 51;
 const int DISEASE_BLUE_GUTS                     = 53;
 const int DISEASE_SOUL_ROT                      = 54;
+const int DISEASE_AGONY_ADDICTION               = 55;
+const int DISEASE_BACCARAN_ADDICTION            = 56;
+const int DISEASE_DEVILWEED_ADDICTION           = 57;
+const int DISEASE_LUHIX_ADDICTION               = 58;
+const int DISEASE_MUSHROOM_POWDER_ADDICTION     = 59;
+const int DISEASE_SANNISH_ADDICTION             = 60;
+const int DISEASE_TERRAN_BRANDY_ADDICTION       = 61;
+const int DISEASE_VODARE_ADDICTION              = 62;
 
 //:://////////////////////////////////////////////
 //:: Poison Const

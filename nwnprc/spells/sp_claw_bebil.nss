@@ -26,23 +26,23 @@ armor or shield is torn away and ruined.
 
                 Caster Size           Claw Damage
 
-                Fine                        -
+                Fine                        1
 
-                Diminutive                  1
+                Diminutive                  1d2
 
-                Tiny                        ld2
+                Tiny                        ld3
 
-                Small                       ld3
+                Small                       ld4
 
-                Medium-size                 ld4
+                Medium-size                 ld6
 
-                Large                       1d6
+                Large                       1d8
 
-                Huge                        1d8
+                Huge                        2d6
 
-                Gargantuan                  2d2
+                Gargantuan                  2d8
 
-                Colossal                    2d8 
+                Colossal                    4d6 
 
 Corruption Cost: 1d6 points of Dexterity damage.
 
@@ -65,26 +65,25 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nClawSize = max(min(PRCGetCreatureSize(oTarget), CREATURE_SIZE_LARGE), CREATURE_SIZE_SMALL) - CREATURE_SIZE_SMALL;
+	int nClawSize = PRCGetCreatureSize(oTarget);
 	int nBaseDamage;
 	float fDuration = (600.0f * nCasterLvl);
 	
 	// Determine base damage
 	switch(nClawSize)
 	{
-		case 0: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d3; break;
-		case 1: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d4; break;
-		case 2: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d6; break;
-		case 3: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d8; break;
-		case 4: nBaseDamage = IP_CONST_MONSTERDAMAGE_2d6; break;
-		case 5: nBaseDamage = IP_CONST_MONSTERDAMAGE_3d6; break;
-		case 6: nBaseDamage = IP_CONST_MONSTERDAMAGE_4d6; break;
-		case 7: nBaseDamage = IP_CONST_MONSTERDAMAGE_6d6; break;
-		
+		case 0: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d2; break;
+		case 1: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d2; break;
+		case 2: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d3; break;
+		case 3: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d4; break;
+		case 4: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d6; break;
+		case 5: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d8; break;
+		case 6: nBaseDamage = IP_CONST_MONSTERDAMAGE_2d6; break;
+		case 7: nBaseDamage = IP_CONST_MONSTERDAMAGE_2d8; break;		
 	}
 	// Catch exceptions here
-	if (nClawSize < 0) nBaseDamage = IP_CONST_MONSTERDAMAGE_1d3;
-	else if (nClawSize > 7) nBaseDamage = IP_CONST_MONSTERDAMAGE_6d6;
+	if (nClawSize < 0) nBaseDamage = IP_CONST_MONSTERDAMAGE_1d2;
+	else if (nClawSize > 7) nBaseDamage = IP_CONST_MONSTERDAMAGE_4d6;
 	
 	// Create the creature weapon
 	object oLClaw   = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);

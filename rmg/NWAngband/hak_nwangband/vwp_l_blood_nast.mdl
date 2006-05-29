@@ -1,0 +1,190 @@
+#MAXMODEL ASCII
+# model: VWP_L_Blood_nast
+filedependancy VWP_L_Blood_nast.max
+newmodel VWP_L_Blood_nast
+setsupermodel VWP_L_Blood_nast NULL
+classification effect
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom VWP_L_Blood_nast
+node dummy VWP_L_Blood_nast
+  parent NULL
+  #part-number 0
+endnode
+node emitter Big_Blood
+  parent VWP_L_Blood_nast
+  #part-number 1
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 0
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Motion_Blur
+  blend Normal
+  texture fxpa_sphere
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0 0 0
+  orientation 0 0 0 0
+  colorStart 0.454901993 0.278430998 0
+  colorEnd 0.454901993 0.278430998 0
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.0179999992
+  sizeEnd 0.0199999996
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate -206
+  lifeExp 512.0
+  mass 0
+  spread 2.09439993
+  particleRot 0
+  velocity -2
+  randvel 2
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0.0500000007
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter sticky_Blood
+  parent VWP_L_Blood_nast
+  #part-number 2
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Billboard_to_World_Z
+  blend Normal
+  texture fxpa_sphere
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0 0 0.0149549004
+  orientation 0 0 0 0
+  colorStart 0.290196002 0.149020001 0
+  colorEnd 0.290196002 0.149020001 0
+  alphaStart 1
+  alphaEnd 0
+  sizeStart 0.0179999992
+  sizeEnd 0.400000006
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 0
+  lifeExp 512.0
+  mass 2
+  spread 1.57079995
+  particleRot 0
+  velocity 3
+  randvel 2
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+endmodelgeom VWP_L_Blood_nast
+
+#MAXANIM ASCII
+newanim impact VWP_L_Blood_nast
+  length 512.0
+  transtime 0
+  animroot VWP_L_Blood_nast
+  event 0 detonate
+  event 0.0333333015 detonate
+  event 0.166666999 detonate
+node dummy VWP_L_Blood_nast
+  parent NULL
+  #part-number 0
+endnode
+node emitter Big_Blood
+  parent VWP_L_Blood_nast
+  #part-number 1
+  birthratekey 4
+    0 4000
+    0.0333333015 5000
+    0.166666999 1000
+    0.333332986 -205.714005
+  masskey 3
+    0 4
+    0.0333333015 4
+    0.333332986 1.5
+  velocitykey 4
+    0 9
+    0.0333333015 7
+    0.166666999 3
+    0.333332986 1
+  randvelkey 2
+    0.0333333015 2
+    0.333332986 1
+  bounce_cokey 1
+    0.0333333015 0.0500000007
+endnode
+node emitter sticky_Blood
+  parent VWP_L_Blood_nast
+  #part-number 2
+  birthratekey 3
+    0 600
+    0.0333333015 600
+    0.300000012 0
+  velocitykey 2
+    0 3
+    0.300000012 1
+  randvelkey 3
+    0 4
+    0.0333333015 4
+    0.300000012 1
+endnode
+doneanim impact VWP_L_Blood_nast
+
+donemodel VWP_L_Blood_nast

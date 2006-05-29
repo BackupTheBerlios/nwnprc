@@ -12,7 +12,9 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "inc_dynconv"
+#include "ral_inc"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -25,6 +27,7 @@ const int STAGE_SHOPPING_ITEMS                              = 1002;
 const int STAGE_TEMPLE                                      = 2000;
 const int STAGE_INN                                         = 3000;
 const int STAGE_LIBRARY                                     = 4000;
+const int STAGE_PORTAL                                      = 5000;
 
 
 //////////////////////////////////////////////////
@@ -63,13 +66,12 @@ void main()
         {
             if(nStage == STAGE_ENTRY)
             {
-                SetHeader("It is <CUSTOM82001> on the <CUSTOM82002> of <CUSTOM82003> <CUSTOM82004> in the city of Angband. 
-What do you want to do today?");
-                //AddChoice("Go to the portal",               1, oPC);
+                SetHeader("It is <CUSTOM82001> on the <CUSTOM82002> of <CUSTOM82003> <CUSTOM82004> in the city of Angband.\nWhat do you want to do today?");
+                AddChoice("Go to the portal",               1, oPC);
                 AddChoice("Go shopping",                    2, oPC);
-                AddChoice("Go to the temples",              3, oPC);
-                AddChoice("Go to the inns",                 4, oPC);
-                AddChoice("Go to the library",              5, oPC);
+                //AddChoice("Go to the temple",               3, oPC);
+                AddChoice("Go to the inn",                  4, oPC);
+                //AddChoice("Go to the library",              5, oPC);
                 //AddChoice("Go to the council chambers",     6, oPC);
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
@@ -103,6 +105,18 @@ What do you want to do today?");
                 AddChoice("<StartCheck>[Pickpocket]</Start>",   6, oPC);
                 AddChoice("back",                               999, oPC);
             }
+            else if(nStage == STAGE_PORTAL)
+            {
+                SetHeader("Are you sure you wish to enter the Portal?");
+                AddChoice("Yes",                                1, oPC);
+                AddChoice("No",                                 2, oPC);
+            }
+            else if(nStage == STAGE_INN)
+            {
+                SetHeader("Are you sure you wish to enter the Inn?");
+                AddChoice("Yes",                                1, oPC);
+                AddChoice("No",                                 2, oPC);
+            }
         }
 
         // Do token setup
@@ -129,23 +143,49 @@ What do you want to do today?");
         int nChoice = GetChoice(oPC);
         if(nStage == STAGE_ENTRY)
         {
-            if(nChoice == 2)
+            if(nChoice == 1)
+            {
+                nStage = STAGE_PORTAL;
+                MarkStageNotSetUp(nStage);
+                object oPortal = GetNearestObjectByTag("Sewer_Portal");
+                AssignCommand(oPC, JumpToObject(oPortal));
+            }    
+            else if(nChoice == 2)
+            {
                 nStage = STAGE_SHOPPING;
+                MarkStageNotSetUp(nStage);
+                object oPortal = GetNearestObjectByTag("Angband_Merchant");
+                AssignCommand(oPC, JumpToObject(oPortal));
+            }    
             else if(nChoice == 3)
+            {
                 nStage = STAGE_TEMPLE;
+                MarkStageNotSetUp(nStage);
+                object oPortal = GetNearestObjectByTag("Angband_Temple");
+                AssignCommand(oPC, JumpToObject(oPortal));
+            }    
             else if(nChoice == 4)
+            {
                 nStage = STAGE_INN;
-            else if(nChoice == 5)
+                MarkStageNotSetUp(nStage);
+                object oPortal = GetNearestObjectByTag("Angband_Inn");
+                AssignCommand(oPC, JumpToObject(oPortal));
+            }    
+            else if(nChoice == 5) 
                 nStage = STAGE_LIBRARY;
         }
-        if(nStage == STAGE_SHOPPING)
+        else if(nStage == STAGE_SHOPPING)
         {
             if(nChoice == 999)
+            {
                 nStage = STAGE_ENTRY;
+                MarkStageNotSetUp(nStage);
+            }    
             else if(nChoice == 1)
             {
                 //casual shopping
                 nStage = STAGE_SHOPPING_ATTITUDE;
+                MarkStageNotSetUp(nStage);
             }
             else if(nChoice == 2)
             {
@@ -156,9 +196,69 @@ What do you want to do today?");
             {
                 //specific
                 nStage = STAGE_SHOPPING_ITEMS;
+                MarkStageNotSetUp(nStage);
             }    
         }
-
+        else if(nStage == STAGE_SHOPPING_ATTITUDE)
+        {
+            if(nChoice == 999)
+            {
+                nStage = STAGE_SHOPPING;
+                MarkStageNotSetUp(nStage);
+            }    
+                /*
+                AddChoice("Normal",                             1, oPC);
+                AddChoice("<StartCheck>[Intimidate]</Start>",   2, oPC);
+                AddChoice("<StartCheck>[Persuade]</Start>",     3, oPC);
+                AddChoice("<StartCheck>[Bluff]</Start>",        4, oPC);
+                AddChoice("<StartCheck>[Appraise]</Start>",     5, oPC);
+                AddChoice("<StartCheck>[Pickpocket]</Start>",   6, oPC);
+                */
+        }
+        else if(nStage == STAGE_SHOPPING_ITEMS)
+        {
+            if(nChoice == 999)
+            {
+                nStage = STAGE_SHOPPING;
+                MarkStageNotSetUp(nStage);
+            }    
+                /*
+            AddChoice("Weapons",                        1, oPC);
+            AddChoice("Armor",                          2, oPC);
+            AddChoice("Jewlery",                        3, oPC);
+            AddChoice("Consumables",                    4, oPC);
+                */
+        }
+        else if(nStage == STAGE_PORTAL)
+        {
+            if(nChoice == 2)
+            {
+                nStage = STAGE_ENTRY;
+                MarkStageNotSetUp(nStage);
+            }
+            else if(nChoice == 1)
+            {
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);    
+                SetCutsceneMode(oPC, FALSE);
+                PRCForceRest(oPC);
+                object oPortal = GetNearestObjectByTag("Sewer_Portal");
+                RAL_DoTransition(oPC, oPortal);
+            }
+        }
+        else if(nStage == STAGE_INN)
+        {
+            if(nChoice == 2)
+            {
+                nStage = STAGE_ENTRY;
+                MarkStageNotSetUp(nStage);
+            }
+            else if(nChoice == 1)
+            {
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT); 
+                object oPortal = GetNearestObjectByTag("Angband_Inn_Inside");
+                AssignCommand(oPC, JumpToObject(oPortal));
+            }
+        }
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);
     }

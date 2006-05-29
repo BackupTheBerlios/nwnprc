@@ -1,0 +1,256 @@
+#MAXMODEL ASCII
+# model: VWP_L_Blood_Grn
+filedependancy VWP_L_Blood_Grn.max
+newmodel VWP_L_Blood_Grn
+setsupermodel VWP_L_Blood_Grn NULL
+classification effect
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom VWP_L_Blood_Grn
+node dummy VWP_L_Blood_Grn
+  parent NULL
+  #part-number 0
+endnode
+node emitter M_Grn_Sticky
+  parent VWP_L_Blood_Grn
+  #part-number 1
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 1
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 1
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Normal
+  blend Normal
+  texture blood
+  xgrid 2
+  ygrid 2
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0 0.00069755601 0
+  orientation -1 0 0 -3.14159012
+  colorStart 0.305882007 0.407842994 0
+  colorEnd 0.262744993 0.349020004 0
+  alphaStart 1
+  alphaEnd 0
+  sizeStart 0.0179999992
+  sizeEnd 1
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 3
+  birthrate 150
+  lifeExp 512.0
+  mass 2.4000001
+  spread 1.57079995
+  particleRot 0
+  velocity 2
+  randvel 2
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter M_Grn_Cloud
+  parent VWP_L_Blood_Grn
+  #part-number 2
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 0
+  random 0
+  inherit 1
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture fxpa_Smoke01
+  xgrid 4
+  ygrid 4
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0 0.00069755601 0
+  orientation -1 0 0 -3.14159012
+  colorStart 0.305882007 0.407842994 0
+  colorEnd 0.231372997 0.309803993 0
+  alphaStart 0.5
+  alphaEnd 0
+  sizeStart 0.5
+  sizeEnd 0.5
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 15
+  birthrate 7
+  lifeExp 0.5
+  mass 1
+  spread 1.57079995
+  particleRot 0
+  velocity 1
+  randvel 0.5
+  fps 15
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter M_Grn_Spray
+  parent VWP_L_Blood_Grn
+  #part-number 3
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 0
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Motion_Blur
+  blend Normal
+  texture fxpa_sphere
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0 0.00069755601 0
+  orientation -1 0 0 -3.14159012
+  colorStart 0.305882007 0.407842994 0
+  colorEnd 0.305882007 0.407842994 0
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.0160000008
+  sizeEnd 0.0199999996
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 400
+  lifeExp 512.0
+  mass 4
+  spread 1.57079995
+  particleRot 0
+  velocity 4
+  randvel 2.01009989
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0.0500000007
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+endmodelgeom VWP_L_Blood_Grn
+
+#MAXANIM ASCII
+newanim impact VWP_L_Blood_Grn
+  length 512.0
+  transtime 0
+  animroot VWP_L_Blood_Grn
+  event 0 detonate
+  event 0 detonate
+  event 0.0333333015 detonate
+  event 0.0666666999 detonate
+  event 0.166666999 detonate
+node dummy VWP_L_Blood_Grn
+  parent NULL
+  #part-number 0
+endnode
+node emitter M_Grn_Sticky
+  parent VWP_L_Blood_Grn
+  #part-number 1
+  birthratekey 3
+    0 150
+    0.0333333015 150
+    0.300000012 -150
+  velocitykey 2
+    0 2
+    0.300000012 0
+  randvelkey 2
+    0 2
+    0.300000012 1
+endnode
+node emitter M_Grn_Cloud
+  parent VWP_L_Blood_Grn
+  #part-number 2
+endnode
+node emitter M_Grn_Spray
+  parent VWP_L_Blood_Grn
+  #part-number 3
+  birthratekey 4
+    0 400
+    0.0333333015 600
+    0.166666999 0
+    0.333332986 -705.713989
+  masskey 3
+    0 4
+    0.0333333015 4
+    0.333332986 1.5
+  velocitykey 4
+    0 4
+    0.0333333015 4
+    0.166666999 1
+    0.333332986 0
+  randvelkey 2
+    0.0333333015 2
+    0.333332986 1
+  bounce_cokey 1
+    0.0333333015 0.0500000007
+endnode
+doneanim impact VWP_L_Blood_Grn
+
+donemodel VWP_L_Blood_Grn

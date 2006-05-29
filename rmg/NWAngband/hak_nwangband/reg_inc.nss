@@ -30,6 +30,7 @@ const string REG_DATABASE = "reg";
 #include "random_inc"
 #include "reg_inc_setup"
 #include "spawn_inc"
+#include "inc_ecl"
 
 void REG_SpawnObject(string sResRef, float fCR, location lLoc)
 {
@@ -50,15 +51,19 @@ void REG_SpawnObject(string sResRef, float fCR, location lLoc)
 
 int REG_CheckSpawningClear(location lLoc, float fBlockingSize)
 {
+    DoDebug("REG_CheckSpawningClear() testing from "+GetName(OBJECT_SELF));
     if(GetLocalInt(OBJECT_SELF, "REG_BlockSpawn"))
     {
         DoDebug("encounter already triggered, aborting");
         return FALSE;
     }
     //check any nearby spawns and if present stop spawning
-    object oTest = GetFirstObjectInShape(SHAPE_SPHERE, fBlockingSize, lLoc);
-    while(GetIsObjectValid(oTest))
+    int i = 1;
+    object oTest = GetNearestObjectToLocation(OBJECT_TYPE_PLACEABLE, lLoc, i);
+    while(GetIsObjectValid(oTest) 
+        && GetDistanceBetweenLocations(lLoc, GetLocation(oTest)) < fBlockingSize)
     {
+        DoDebug("REG_CheckSpawningClear() testing "+GetName(oTest));
         if(GetLocalInt(oTest, "REG_BlockSpawn")
             && oTest != OBJECT_SELF)
         {
@@ -66,7 +71,8 @@ int REG_CheckSpawningClear(location lLoc, float fBlockingSize)
             return FALSE;
         }
         SetLocalInt(oTest, "REG_BlockSpawn", TRUE);
-        oTest = GetNextObjectInShape(SHAPE_SPHERE, fBlockingSize, lLoc);
+        i++;
+        oTest =  GetNearestObjectToLocation(OBJECT_TYPE_PLACEABLE, lLoc, i);
     }
     SetLocalInt(OBJECT_SELF, "REG_BlockSpawn", TRUE);
     return TRUE;

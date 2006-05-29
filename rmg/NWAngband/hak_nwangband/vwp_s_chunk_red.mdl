@@ -1,0 +1,582 @@
+#MAXMODEL ASCII
+# model: vwp_s_chunk_red
+filedependancy vwp_s_chunk_red.max
+newmodel vwp_s_chunk_red
+setsupermodel vwp_s_chunk_red NULL
+classification effect
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom vwp_s_chunk_red
+node dummy vwp_s_chunk_red
+  parent NULL
+  #part-number 0
+endnode
+node emitter L_Red_Spray04
+  parent vwp_s_chunk_red
+  #part-number 1
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 1
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 1
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Normal
+  blend Normal
+  texture blood
+  xgrid 2
+  ygrid 2
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.000233451006 0.000229798999 0.585636973
+  orientation 0 0 0 0
+  colorStart 0.388235003 0 0
+  colorEnd 0.388235003 0 0
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.100000001
+  sizeEnd 0.400000006
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 200
+  lifeExp 512.0
+  mass 3
+  spread 1.91986001
+  particleRot 0
+  velocity 7
+  randvel 2.5999999
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter Giblets02
+  parent vwp_s_chunk_red
+  #part-number 2
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture NULL
+  chunkName Red_s_Giblet
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.0359653011 0.000229798999 0.52550298
+  orientation 0 0 0 0
+  colorStart 1 1 1
+  colorEnd 1 1 1
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.00999999978
+  sizeEnd 0.00999999978
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 3
+  lifeExp 512.0
+  mass 2.5
+  spread 5.23599005
+  particleRot 4
+  velocity 3
+  randvel 3.29999995
+  fps 0
+  xsize 20
+  ysize 20
+  bounce_co 0
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter bones02
+  parent vwp_s_chunk_red
+  #part-number 3
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture NULL
+  chunkName Red_s_Bone
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.0257172994 0.000229798999 0.688423991
+  orientation 0 0 0 0
+  colorStart 1 1 1
+  colorEnd 1 1 1
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.100000001
+  sizeEnd 0.100000001
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 2
+  lifeExp 512.0
+  mass 2
+  spread 3.66518998
+  particleRot 5
+  velocity 3
+  randvel 0.5
+  fps 0
+  xsize 20
+  ysize 20
+  bounce_co 0.200000003
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter L_Red_Sticky01
+  parent vwp_s_chunk_red
+  #part-number 4
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 1
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 1
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Normal
+  blend Normal
+  texture blood
+  xgrid 2
+  ygrid 2
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.000233451006 0.000229798999 0.493981004
+  orientation 0 -1 0 -3.14159012
+  colorStart 0.313726008 0 0
+  colorEnd 0.313726008 0 0
+  alphaStart 1
+  alphaEnd 0
+  sizeStart 0.5
+  sizeEnd 2
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 3
+  birthrate 100
+  lifeExp 512.0
+  mass 2
+  spread 1.57079995
+  particleRot 0
+  velocity 5
+  randvel 2.79999995
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter Thighs01
+  parent vwp_s_chunk_red
+  #part-number 5
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture NULL
+  chunkName Red_s_Thigh
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position -0.0618197992 0.000229798999 0.602092981
+  orientation 0 0 0 0
+  colorStart 1 1 1
+  colorEnd 1 1 1
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.100000001
+  sizeEnd 0.100000001
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 1
+  lifeExp 512.0
+  mass 2
+  spread 3.14159012
+  particleRot 3
+  velocity 3
+  randvel 0.800000012
+  fps 0
+  xsize 20
+  ysize 20
+  bounce_co 0.100000001
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter ribs01
+  parent vwp_s_chunk_red
+  #part-number 6
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture NULL
+  chunkName Red_s_Rib
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.000233451006 0.000229798999 0.464922011
+  orientation 0 0 0 0
+  colorStart 1 1 1
+  colorEnd 1 1 1
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.100000001
+  sizeEnd 0.100000001
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 2
+  lifeExp 512.0
+  mass 2
+  spread 1.57079995
+  particleRot 2
+  velocity 2.79999995
+  randvel 0.800000012
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter Giblets03
+  parent vwp_s_chunk_red
+  #part-number 7
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture NULL
+  chunkName Red_s_Giblet
+  xgrid 0
+  ygrid 0
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position -0.000452050008 0.000229798999 0.388242006
+  orientation 0 -1 0 -3.14159012
+  colorStart 1 1 1
+  colorEnd 1 1 1
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.100000001
+  sizeEnd 0.100000001
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 4
+  lifeExp 512.0
+  mass 2
+  spread 1.57079995
+  particleRot 4
+  velocity 2
+  randvel 1
+  fps 0
+  xsize 20
+  ysize 20
+  bounce_co 0.200000003
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter L_Red_Cloud01
+  parent vwp_s_chunk_red
+  #part-number 8
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 0
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture fxpa_Smoke01
+  xgrid 4
+  ygrid 4
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.000233451006 0.000229798999 0.66554898
+  orientation 0 -1 0 -1.57079995
+  colorStart 0.313726008 0 0
+  colorEnd 0.313726008 0 0
+  alphaStart 0.600000024
+  alphaEnd 0
+  sizeStart 1
+  sizeEnd 2
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 15
+  birthrate 23
+  lifeExp 0.5
+  mass 0
+  spread 6.28318977
+  particleRot 0
+  velocity 1
+  randvel 0.300000012
+  fps 12
+  xsize 90
+  ysize 20
+  bounce_co 0
+  blurlength 0.100000001
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+endmodelgeom vwp_s_chunk_red
+
+#MAXANIM ASCII
+newanim impact vwp_s_chunk_red
+  length 512.0
+  transtime 0
+  animroot vwp_s_chunk_red
+  event 0 detonate
+  event 0 detonate
+  event 0 detonate
+  event 0 detonate
+  event 0 detonate
+  event 0 detonate
+  event 0 detonate
+  event 0.0333333015 detonate
+node dummy vwp_s_chunk_red
+  parent NULL
+  #part-number 0
+endnode
+node emitter L_Red_Spray04
+  parent vwp_s_chunk_red
+  #part-number 1
+  birthratekey 4
+    0 200
+    0.0333333015 200
+    0.166666999 81
+    0.233333007 -800
+  masskey 1
+    0.233333007 3
+  velocitykey 4
+    0 7
+    0.0333333015 7
+    0.166666999 7
+    0.233333007 0
+  randvelkey 3
+    0.0333333015 2.5999999
+    0.166666999 2.5999999
+    0.233333007 1.60000002
+  bounce_cokey 1
+    0.0333333015 0
+endnode
+node emitter Giblets02
+  parent vwp_s_chunk_red
+  #part-number 2
+endnode
+node emitter bones02
+  parent vwp_s_chunk_red
+  #part-number 3
+endnode
+node emitter L_Red_Sticky01
+  parent vwp_s_chunk_red
+  #part-number 4
+  birthratekey 3
+    0 100
+    0.133332998 200
+    0.266667008 -300
+endnode
+node emitter Thighs01
+  parent vwp_s_chunk_red
+  #part-number 5
+endnode
+node emitter ribs01
+  parent vwp_s_chunk_red
+  #part-number 6
+endnode
+node emitter Giblets03
+  parent vwp_s_chunk_red
+  #part-number 7
+endnode
+node emitter L_Red_Cloud01
+  parent vwp_s_chunk_red
+  #part-number 8
+endnode
+doneanim impact vwp_s_chunk_red
+
+donemodel vwp_s_chunk_red

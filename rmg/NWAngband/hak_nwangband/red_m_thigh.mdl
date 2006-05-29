@@ -1,0 +1,107 @@
+#MAXMODEL ASCII
+# model: Red_M_Thigh
+filedependancy Red_M_Thigh.max
+newmodel Red_M_Thigh
+setsupermodel Red_M_Thigh NULL
+classification effect
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom Red_M_Thigh
+node dummy Red_M_Thigh
+  parent NULL
+  #part-number 0
+endnode
+node trimesh meaty_bits
+  parent Red_M_Thigh
+  #part-number 1
+  ambient 0.560783982 0 0
+  diffuse 1 1 1
+  specular 0 0 0
+  shininess 1
+  shadow 0
+  bitmap chunk64
+  verts 12
+    -0.150059998 0.00351429009 -0.0190185998
+    0.0421389006 0.0936248004 -0.0256276
+    0.0465025008 0.00152373 -0.100137003
+    -0.0836658031 0.0566803999 0.0709913969
+    -0.0846486017 -0.0496518984 0.0813701004
+    0.133589998 0.0368853994 0.065930903
+    0.140521005 -0.0636944026 -0.0178228002
+    0.215379998 0.0038228801 -0.0759963989
+    -0.237647995 0.036822699 0.0681563988
+    -0.0560166016 0.0402226001 0.0167136006
+    -0.0739087015 -0.0197234992 0.0168570001
+    -0.0457419008 0.00391972996 0.0542755015
+  tverts 22
+    0.817404985 0.690820992 0
+    0.801183999 0.803068995 0
+    0.886933029 0.690820992 0
+    0.662438989 0.760194004 0
+    0.662438989 0.621448994 0
+    0.801183999 0.578574002 0
+    0.27235201 0.760168016 0
+    0.344090998 0.863484979 0
+    0.27235201 0.863484979 0
+    0.345106006 0.74979502 0
+    0.0137807 0.74979502 0
+    0.0750811994 0.863484979 0
+    0.0127654001 0.863484979 0
+    0.0756177008 0.74979502 0
+    0.137761995 0.735616982 0
+    0.0781868994 0.863484979 0
+    0.139401004 0.863484979 0
+    0.200442001 0.607748985 0
+    0.199598998 0.771625996 0
+    0.200614005 0.863484979 0
+    0.34554401 0.973800004 0
+    0.27235201 0.991805971 0
+  faces 16
+    0 1 2 1 0 1 2 2
+    0 3 1 1 0 3 1 2
+    0 4 3 1 0 4 3 2
+    1 3 5 2 0 5 4 3
+    3 4 5 2 0 2 5 3
+    4 0 6 2 6 7 8 3
+    0 2 6 2 6 9 7 3
+    2 1 7 2 10 11 12 3
+    1 5 7 2 10 13 11 3
+    6 2 7 2 13 14 11 3
+    6 5 4 1 15 14 16 1
+    7 5 6 1 14 17 16 1
+    8 9 10 1 14 18 19 3
+    8 11 9 1 18 8 19 3
+    11 8 10 1 18 6 8 3
+    10 9 11 2 8 20 21 1
+  position -0.0188402999 0.0446284004 0.00753402989
+  orientation 0 0 1 -1.22172999
+  alpha 1
+  scale 1
+  setfillumcolor 0.349020004 0 0
+endnode
+endmodelgeom Red_M_Thigh
+
+#MAXANIM ASCII
+newanim impact Red_M_Thigh
+  length 512.0
+  transtime 0
+  animroot Red_M_Thigh
+node dummy Red_M_Thigh
+  parent NULL
+  #part-number 0
+endnode
+node trimesh meaty_bits
+  parent Red_M_Thigh
+  #part-number 1
+  ambient 0.200000003 0.200000003 0.200000003
+  diffuse 0.800000012 0.800000012 0.800000012
+  specular 0 0 0
+  shininess 1
+  alphakey 3
+    0 1
+    3.96667004 1
+    512.0 0
+endnode
+doneanim impact Red_M_Thigh
+
+donemodel Red_M_Thigh

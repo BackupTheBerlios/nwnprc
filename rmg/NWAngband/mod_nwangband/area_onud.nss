@@ -112,8 +112,9 @@ void main()
                     SignalEvent(oTest, EventUserDefined(500));
 
                 //destroy trigger traps as these must have come from trap kits
+                //or they may have been spawned
                 if(GetObjectType(oTest) == OBJECT_TYPE_TRIGGER
-                    &&GetIsTrapped(oTest))
+                    && GetIsTrapped(oTest))
                     DestroyObject(oTest);
 
                 oTest = GetNextObjectInArea(oArea);

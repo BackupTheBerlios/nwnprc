@@ -256,9 +256,9 @@
 252        GnollWiz                 c_gnollwiz    3025     0        4      
 253        HobWarrior               c_hobgob      3055     0        4      
 254        HobWiz                   c_hobgobwiz   3056     0        4      
-255        Devil                    c_devil       3057     0        4      
-256        User01                   ****          ****     ****     4      
-257        User02                   ****          ****     ****     4      
+255        Devil                    c_devil       3057     0        4  
+256        Maggris                  c_maggris     16777225 ****     4
+257        Wereboar                 c_wboar       16777226 ****     4     
 258        User03                   ****          ****     ****     4      
 259        User04                   ****          ****     ****     4      
 260        User05                   ****          ****     ****     4      

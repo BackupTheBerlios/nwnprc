@@ -1,0 +1,94 @@
+#MAXMODEL ASCII
+# model: Red_L_Giblet
+filedependancy Red_L_Giblet.max
+newmodel Red_L_Giblet
+setsupermodel Red_L_Giblet NULL
+classification effect
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom Red_L_Giblet
+node dummy Red_L_Giblet
+  parent NULL
+  #part-number 0
+endnode
+node trimesh L_chunk03
+  parent Red_L_Giblet
+  #part-number 1
+  ambient 0.560783982 0 0
+  diffuse 1 1 1
+  specular 0 0 0
+  shininess 1
+  shadow 0
+  bitmap chunk64
+  verts 7
+    0.128638998 0.0344955996 0.103795998
+    0.092003502 0.211358994 -0.0111226998
+    -0.181660995 0.126764998 -0.0694950968
+    -0.0320026018 -0.162698001 -0.0683889985
+    0.135899007 -0.192295998 -0.00496905996
+    0.198964998 0.0271035004 0.0665702969
+    0.0105900001 0.0141599001 -0.0885502994
+  tverts 20
+    0.346709013 0.121670999 0
+    0.327488005 0.190540001 0
+    0.270747006 0.138432994 0
+    0.255984008 0.143068001 0
+    0.220780998 0.153753996 0
+    0.184492007 0.100611001 0
+    0.31408599 0.0550757982 0
+    0.383143008 0.0332172997 0
+    0.129675999 0.251763999 0
+    0.0928027034 0.195371002 0
+    0.0968097001 0.237742007 0
+    0.320603997 0.0996776968 0
+    0.171473995 0.557188988 0
+    0.236570001 0.603030026 0
+    0.240548 0.636249006 0
+    0.200279996 0.549887002 0
+    0.0155562004 0.138224006 0
+    0.183632001 0.0819441974 0
+    0.123273 0.176482007 0
+    0.428070009 0.0665294975 0
+  faces 10
+    0 1 2 1 0 1 2 2
+    0 2 3 1 3 4 5 2
+    0 3 4 1 0 6 7 2
+    0 4 5 1 8 9 10 2
+    0 5 1 1 0 11 1 2
+    6 2 1 1 12 13 14 2
+    6 3 2 1 12 15 13 2
+    6 4 3 1 16 17 18 2
+    6 5 4 1 19 11 7 2
+    6 1 5 1 19 1 11 2
+  position -0.0449896008 -0.00986571983 0.00501460023
+  orientation 0 0 0 0
+  alpha 1
+  scale 1
+  setfillumcolor 0.349020004 0 0
+endnode
+endmodelgeom Red_L_Giblet
+
+#MAXANIM ASCII
+newanim impact Red_L_Giblet
+  length 512.0
+  transtime 0.25
+  animroot Red_L_Giblet
+node dummy Red_L_Giblet
+  parent NULL
+  #part-number 0
+endnode
+node trimesh L_chunk03
+  parent Red_L_Giblet
+  #part-number 1
+  ambient 0.200000003 0.200000003 0.200000003
+  diffuse 0.800000012 0.800000012 0.800000012
+  specular 0 0 0
+  shininess 1
+  alphakey 3
+    0 1
+    3.29999995 1
+    512.0 0
+endnode
+doneanim impact Red_L_Giblet
+
+donemodel Red_L_Giblet

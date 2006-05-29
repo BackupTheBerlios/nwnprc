@@ -58,7 +58,7 @@ void main()
     }
     CreateDescriptiveSound(sResRef, 
         "Rodents scratching around.", 
-        lSpawn,
+        GetLocation(OBJECT_SELF),
         10,
         TRUE,
         20.0);

@@ -2,7 +2,7 @@
 //feelings and observations are grey    200,200,200
 //smells are in green                   100,200,100
 
-#include "gen_inc_color"
+#include "inc_utility"
 
 const float SOUND_TEST_DELAY = 60.0;
 const string MESSAGE_FLOATING = "Description_Message_Floating";//0 is none, 1 is self, 2 is party
@@ -35,7 +35,7 @@ int GetAoEForRadius(float fRadius)
 
 }
 
-object CreateDescriptiveSound(string sResRef, string sDesc, location lSpawn, float int nDC = 0, int nOneShot = FALSE, float fRadius = 10.0)
+object CreateDescriptiveSound(string sResRef, string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE, float fRadius = 10.0)
 {
     //sounds are in a nice shade of blue
     string sMess = GetRGB(100, 100, 200)+"* You hear: "+sDesc+GetRGB(100, 100, 200)+" *";
@@ -67,7 +67,6 @@ object CreateDescriptiveSound(string sResRef, string sDesc, location lSpawn, flo
     SetLocalString(oAoE, "SoundDesc", sDesc);
     SetLocalString(oAoE, "SoundMess", sMess);
     SetLocalString(oAoE, "SoundResRef", sResRef);
-    SetLocalObject(oAoE, "SoundObject", oSound);
     SetLocalInt(oAoE, "SoundOneShot", nOneShot);
     return oAoE;
 }
@@ -168,22 +167,22 @@ void SendAmbientMessage(object oPC, string sMess, string sDesc, string sVerb)
             //light grey color
             sMess = GetRGB(200, 200, 200)+"You notice that "+GetName(oPC)+" looks uncomfortable.";
             //players dont, they can talk to each other
-            if(GetLocalInt(oPC, MESSAGE_FLOATING))
+            //DEBUGif(GetLocalInt(oPC, MESSAGE_FLOATING))
                 FloatingTextStringOnCreature(sMess, oMaster, FALSE);
             //some people may like a PM instead
-            if(GetLocalInt(oPC, MESSAGE_PRIVATE))
+            //DEBUGif(GetLocalInt(oPC, MESSAGE_PRIVATE))
                 SendMessageToPC(oMaster, sMess);
         }
         SpeakString("Wait, I "+sVerb+" "+sDesc+".");
     }
     else
     {
-        if(GetLocalInt(oPC, MESSAGE_FLOATING) == 1)
-            FloatingTextStringOnCreature(sMess, oPC, FALSE);
-        else if(GetLocalInt(oPC, MESSAGE_FLOATING) == 2)
+        //DEBUGif(GetLocalInt(oPC, MESSAGE_FLOATING) == 1)
+        //DEBUG    FloatingTextStringOnCreature(sMess, oPC, FALSE);
+        //DEBUGelse if(GetLocalInt(oPC, MESSAGE_FLOATING) == 2)
             FloatingTextStringOnCreature(sMess, oPC, TRUE);
         //some people may like a PM instead
-        if(GetLocalInt(oPC, MESSAGE_PRIVATE))
+        //DEBUGif(GetLocalInt(oPC, MESSAGE_PRIVATE))
             SendMessageToPC(oPC, sMess);
     }
 }
@@ -200,8 +199,7 @@ void DoSoundCheck(object oPC)
     int nDC = GetLocalInt(OBJECT_SELF, "SoundDC");
     string sMess = GetLocalString(OBJECT_SELF, "SoundMess");
     string sDesc = GetLocalString(OBJECT_SELF, "SoundDesc");
-    object oSound = GetLocalObject(OBJECT_SELF, "SoundObject");
-    string sResRef = GetLocalString(oAoE, "SoundResRef");
+    string sResRef = GetLocalString(OBJECT_SELF, "SoundResRef");
     int nOneShot = GetLocalInt(OBJECT_SELF, "SoundOneShot");
     //make the skill check
     if(GetIsSkillSuccessful(oPC, SKILL_LISTEN, nDC))

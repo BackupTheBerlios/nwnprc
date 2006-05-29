@@ -1,0 +1,94 @@
+#MAXMODEL ASCII
+# model: GRN_s_Giblet
+filedependancy GRN_s_Giblet.max
+newmodel GRN_s_Giblet
+setsupermodel GRN_s_Giblet NULL
+classification effect
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom GRN_s_Giblet
+node dummy GRN_s_Giblet
+  parent NULL
+  #part-number 0
+endnode
+node trimesh M_chunk02
+  parent GRN_s_Giblet
+  #part-number 1
+  ambient 0.0392156988 0.231372997 0
+  diffuse 1 1 1
+  specular 0 0 0
+  shininess 1
+  shadow 0
+  bitmap chunk64
+  verts 7
+    0.00368658989 -0.0362210013 -0.00466564018
+    -0.00191866001 0.0618625991 -0.00851735007
+    -0.0569513999 0.0203757994 -0.0443286002
+    -0.0158015005 -0.0965809003 -0.0436500013
+    0.0453928001 -0.0622022003 -0.00474213995
+    0.0510978997 0.0198618006 0.0391470008
+    0.0300405007 -0.0484566987 -0.0560190007
+  tverts 20
+    0.383298993 0.397830993 0
+    0.473845989 0.613434017 0
+    0.386613995 0.511622012 0
+    0.493817002 0.314734995 0
+    0.373237997 0.621430993 0
+    0.367439985 0.317061007 0
+    0.387264997 0.346163005 0
+    0.456322998 0.324304014 0
+    0.404098988 0.637338996 0
+    0.367224991 0.538704991 0
+    0.371232003 0.623317003 0
+    0.460864007 0.428083986 0
+    0.384914011 0.333276004 0
+    0.498795986 0.60048902 0
+    0.393005013 0.603854001 0
+    0.492998004 0.333436996 0
+    0.369257003 0.526340008 0
+    0.494643986 0.624257982 0
+    0.409891993 0.629230976 0
+    0.501249015 0.357616007 0
+  faces 10
+    0 1 2 1 0 1 2 2
+    0 2 3 1 3 4 5 2
+    0 3 4 1 0 6 7 2
+    0 4 5 1 8 9 10 2
+    0 5 1 1 0 11 1 2
+    6 2 1 1 12 13 14 2
+    6 3 2 1 12 15 13 2
+    6 4 3 1 16 17 18 2
+    6 5 4 1 19 11 7 2
+    6 1 5 1 19 1 11 2
+  position -0.00393310981 0.0202744994 0.0154571999
+  orientation 0 0 0 0
+  alpha 1
+  scale 1
+  setfillumcolor 0.411765009 0.474510014 0
+endnode
+endmodelgeom GRN_s_Giblet
+
+#MAXANIM ASCII
+newanim impact GRN_s_Giblet
+  length 512.0
+  transtime 0
+  animroot GRN_s_Giblet
+node dummy GRN_s_Giblet
+  parent NULL
+  #part-number 0
+endnode
+node trimesh M_chunk02
+  parent GRN_s_Giblet
+  #part-number 1
+  ambient 0.200000003 0.200000003 0.200000003
+  diffuse 0.800000012 0.800000012 0.800000012
+  specular 0 0 0
+  shininess 1
+  alphakey 3
+    0 1
+    4.33333015 1
+    512.0 0
+endnode
+doneanim impact GRN_s_Giblet
+
+donemodel GRN_s_Giblet

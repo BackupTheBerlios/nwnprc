@@ -33,12 +33,12 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
         </element>
         <element name="Mod_IsSaveGame" type="0" value="0" />
         <element name="Mod_CustomTlk" type="10" value="nwangband" />
-        <element name="Mod_Entry_Area" type="11" value="angbandmonastery" />
-        <element name="Mod_Entry_X" type="8" value="30.0" />
-        <element name="Mod_Entry_Y" type="8" value="29.0" />
-        <element name="Mod_Entry_Z" type="8" value="2.0" />
-        <element name="Mod_Entry_Dir_X" type="8" value="-0.5555702" />
-        <element name="Mod_Entry_Dir_Y" type="8" value="0.83146966" />
+        <element name="Mod_Entry_Area" type="11" value="angband" />
+        <element name="Mod_Entry_X" type="8" value="25.086702" />
+        <element name="Mod_Entry_Y" type="8" value="25.022194" />
+        <element name="Mod_Entry_Z" type="8" value="4.6" />
+        <element name="Mod_Entry_Dir_X" type="8" value="0.0" />
+        <element name="Mod_Entry_Dir_Y" type="8" value="1.0" />
         <element name="Mod_Expan_List" type="15" />
         <element name="Mod_DawnHour" type="0" value="6" />
         <element name="Mod_DuskHour" type="0" value="18" />
@@ -115,9 +115,6 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
                 <element name="Area_Name" type="11" value="desolateanddespa" />
             </struct>
             <struct id="6" >
-                <element name="Area_Name" type="11" value="angbandmonastery" />
-            </struct>
-            <struct id="6" >
                 <element name="Area_Name" type="11" value="ral_01_xxx" />
             </struct>
             <struct id="6" >
@@ -189,6 +186,12 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
             <struct id="6" >
                 <element name="Area_Name" type="11" value="factionholder" />
             </struct>
+            <struct id="6" >
+                <element name="Area_Name" type="11" value="angband" />
+            </struct>
+            <struct id="6" >
+                <element name="Area_Name" type="11" value="angbandmonastery" />
+            </struct>
         </element>
         <element name="Mod_HakList" type="15" >
             <struct id="8" >
@@ -223,6 +226,9 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
             </struct>
             <struct id="8" >
                 <element name="Mod_Hak" type="10" value="prc_craft2das" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="id1_creaturepack" />
             </struct>
             <struct id="8" >
                 <element name="Mod_Hak" type="10" value="cep2_1" />

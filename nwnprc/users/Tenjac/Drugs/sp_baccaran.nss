@@ -41,10 +41,13 @@ void main()
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWis, oPC, HoursToSeconds(d2())));
 	
 	//Overdose
-	if(GetHasSpellEffect(SPELL_BACCARAN, oPC))
+	if(GetLocalInt(oPC, "BaccaranOD"))
 	{
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oPC, HoursToSeconds(d4(2)));
 	}
+	
+	SetLocalInt(oPC, "BaccaranOD", 1);
+	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "BaccaranOD"));
 }
 		

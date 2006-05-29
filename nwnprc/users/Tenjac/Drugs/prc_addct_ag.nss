@@ -19,12 +19,12 @@ void main()
 		
 	//make save vs nasty bad things or have satiation
 	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, nDC, SAVING_THROW_TYPE_DISEASE) &&
-	   (GetPersistantLocalInt(oPC, "AgonySatiation") < 1))
+	   (!GetPersistantLocalInt(oPC, "AgonySatiation")))
 	{
 		//1d6 Dex, 1d6 Wis, 1d6 Con
 		ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
 		ApplyAbilityDamage(oPC, ABILITY_WISDOM, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
-		ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
+		ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
 		
 		DeletePersistantLocalInt(oPC, "PreviousAgonySave");
 	}

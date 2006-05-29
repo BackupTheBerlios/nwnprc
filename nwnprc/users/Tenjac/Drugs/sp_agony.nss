@@ -46,7 +46,7 @@ void main()
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCha, oPC, fDur2));
 		
 	//overdose
-	if(GetHasSpellEffect(SPELL_AGONY, oPC));
+	if(GetLocalInt(oPC, "AgonyOD"))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 18, SAVING_THROW_TYPE_POISON))
 		{
@@ -71,4 +71,6 @@ void main()
 			DelayCommand((fDur - 0.2), SetCommandable(TRUE, oPC));
 		}
 	}
+	SetLocalInt(oPC, "AgonyOD", 1);
+	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "AgonyOD"));
 }

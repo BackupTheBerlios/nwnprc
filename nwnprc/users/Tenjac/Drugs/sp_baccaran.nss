@@ -11,6 +11,7 @@ Created:   5/18/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "prc_inc_drugfunc"
 
 void main()
 {
@@ -20,10 +21,10 @@ void main()
 	effect eDam = EffectDamage(d6(2));
 	
 	//Handle resetting addiction DC
-	SetPersistantLocalInt(oPC, "Addiction_Baccaran_DC", 6);
+	SetPersistantLocalInt(oPC, "PRC_Addiction_Baccaran_DC", 6);
 		
 	//Handle satiation
-	SetPersistantLocalInt(oPC, "BaccaranSatiation", 10);
+	SetPersistantLocalInt(oPC, "PRC_BaccaranSatiation", 10);
 	
 	//Make addiction check
 	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
@@ -44,13 +45,13 @@ void main()
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWis, oPC, HoursToSeconds(d2())));
 	
 	//Overdose
-	if(GetLocalInt(oPC, "BaccaranOD"))
+	if(GetLocalInt(oPC, "PRC_BaccaranOD"))
 	{
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oPC, HoursToSeconds(d4(2)));
 	}
 	
-	SetLocalInt(oPC, "BaccaranOD", 1);
-	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "BaccaranOD"));
+	SetLocalInt(oPC, "PRC_BaccaranOD", 1);
+	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "PRC_BaccaranOD"));
 }
 		

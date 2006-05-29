@@ -15,24 +15,24 @@ Created:   5/24/06
 void main()
 {
 	object oPC = OBJECT_SELF;
-	int nDC    = GetPersistantLocalInt(oPC, "Addiction_Agony_DC");
+	int nDC    = GetPersistantLocalInt(oPC, "PRC_Addiction_Agony_DC");
 		
 	//make save vs nasty bad things or have satiation
 	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, nDC, SAVING_THROW_TYPE_DISEASE) &&
-	   (!GetPersistantLocalInt(oPC, "AgonySatiation")))
+	   (!GetPersistantLocalInt(oPC, "PRC_AgonySatiation")))
 	{
 		//1d6 Dex, 1d6 Wis, 1d6 Con
 		ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
 		ApplyAbilityDamage(oPC, ABILITY_WISDOM, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
 		ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, d6(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
 		
-		DeletePersistantLocalInt(oPC, "PreviousAgonySave");
+		DeletePersistantLocalInt(oPC, "PRC_PreviousAgonySave");
 	}
 	
 	else 
 	{
 		//Two successful saves
-		if(GetPersistantLocalInt(oPC, "PreviousAgonySave"))
+		if(GetPersistantLocalInt(oPC, "PRC_PreviousAgonySave"))
 		{
 			//Remove addiction
 			//Find the disease effect
@@ -44,7 +44,7 @@ void main()
 				if(eDisease == eTest)
 				{
 					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PreviousAgonySave");
+					DeletePersistantLocalInt(oPC, "PRC_PreviousAgonySave");
 					break;
 				}
 				
@@ -54,17 +54,17 @@ void main()
 		//Saved, but no previous
 		else
 		{
-			SetPersistantLocalInt(oPC, "PreviousAgonySave", 1);
+			SetPersistantLocalInt(oPC, "PRC_PreviousAgonySave", 1);
 		}
 	}
 	
 	//Handle DC increase from addiction.  
-	if(!GetPersistantLocalInt(oPC, "AgonySatiation"))
+	if(!GetPersistantLocalInt(oPC, "PRC_AgonySatiation"))
 	{
-		SetPersistantLocalInt(oPC, "Addiction_Agony_DC", (nDC + 5));
+		SetPersistantLocalInt(oPC, "PRC_Addiction_Agony_DC", (nDC + 5));
 	}
 	
 	//Remove the int, as it only lasts 1 day
-	DeletePersistantLocalInt(oPC, "AgonySatiation");
+	DeletePersistantLocalInt(oPC, "PRC_AgonySatiation");
 }
 

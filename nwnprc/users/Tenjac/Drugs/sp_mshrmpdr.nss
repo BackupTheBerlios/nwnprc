@@ -12,16 +12,17 @@ Created:   5/23/06
 // Mushroom powder initial effects and side effects
 
 #include "spinc_common"
+#include "prc_inc_drugfunc"
 
 void main()
 {
 	object oPC = OBJECT_SELF;
 	
 	//Handle resetting addiction DC
-	SetPersistantLocalInt(oPC, "Addiction_Mushroom_DC", 10);
+	SetPersistantLocalInt(oPC, "PRC_Addiction_Mushroom_DC", 10);
 	
 	//Handle satiation
-	SetPersistantLocalInt(oPC, "MushroomSatiation", 5);
+	SetPersistantLocalInt(oPC, "PRC_MushroomSatiation", 5);
 	
 	//Make addiction check
 	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
@@ -54,14 +55,14 @@ void main()
 	DelayCommand(60.0f, ApplyAbilityDamage(oPC, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
 	
 	//Overdose - simplified slightly
-	if(GetLocalInt(oPC, "MushroomOD")
+	if(GetLocalInt(oPC, "PRC_MushroomOD")
 	{
 		effect eDam = EffectDamage(d6(2));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
 	}	
 	
-	SetLocalInt(oPC, "MushrooomOD", 1);
-	DelayCommand(HoursToSeconds(12), DeleteLocalInt(oPC, "MushroomOD"));
+	SetLocalInt(oPC, "PRC_MushrooomOD", 1);
+	DelayCommand(HoursToSeconds(12), DeleteLocalInt(oPC, "PRC_MushroomOD"));
 	
 }
 

@@ -27,8 +27,8 @@ Created:   5/24/06
 void main()
 {
 	object oPC = OBJECT_SELF;
-	int nDC    = GetPersistantLocalInt(oPC, "Addiction_Devilweed_DC");
-	int nSatiation = GetPersistantLocalInt(oPC, "DevilweedSatiation") ;
+	int nDC    = GetPersistantLocalInt(oPC, "PRC_Addiction_Devilweed_DC");
+	int nSatiation = GetPersistantLocalInt(oPC, "PRC_DevilweedSatiation") ;
 		
 	//make save vs nasty bad things or have satiation
 	if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, nDC, SAVING_THROW_TYPE_DISEASE) &&
@@ -37,13 +37,13 @@ void main()
 	{
 		//1d3 Dex
 		ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, d3(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f, FALSE);
-		DeletePersistantLocalInt(oPC, "PreviousDevilweedSave");
+		DeletePersistantLocalInt(oPC, "PRC_PreviousDevilweedSave");
 	}
 
         else 
         {
 		//Two successful saves
-		if(GetPersistantLocalInt(oPC, "PreviousDevilweedSave"))
+		if(GetPersistantLocalInt(oPC, "PRC_PreviousDevilweedSave"))
 		{
 			//Remove addiction
 			//Find the disease effect
@@ -55,7 +55,7 @@ void main()
 				if(eDisease == eTest)
 				{
 					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PreviousDevilweedSave");
+					DeletePersistantLocalInt(oPC, "PRC_PreviousDevilweedSave");
 					break;
 				}
 				eDisease = GetNextEffect(OBJECT_SELF);
@@ -64,17 +64,17 @@ void main()
 		//Saved, but no previous
 		else
 		{
-			SetPersistantLocalInt(oPC, "PreviousDevilweedSave", 1);
+			SetPersistantLocalInt(oPC, "PRC_PreviousDevilweedSave", 1);
 		}
 		
 		//Handle DC increase from addiction.  
 		if(nSatiation < 1)
 		{
-			SetPersistantLocalInt(oPC, "Addiction_Devilweed_DC", (nDC + 5));
+			SetPersistantLocalInt(oPC, "PRC_Addiction_Devilweed_DC", (nDC + 5));
 		}
 		
 		//Decrement satiation
 		nSatiation--;
-		SetPersistantLocalInt(oPC, "DevilweedSatiation", nSatiation);
+		SetPersistantLocalInt(oPC, "PRC_DevilweedSatiation", nSatiation);
 	}
 }

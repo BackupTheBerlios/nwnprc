@@ -11,6 +11,7 @@ Created:   5/23/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "prc_inc_drugfunc"
 
 void main()
 {

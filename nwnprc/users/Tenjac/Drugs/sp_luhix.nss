@@ -11,16 +11,17 @@ Created:   5/23/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "prc_inc_drugfunc"
 
 void main()
 {
 	object oPC = OBJECT_SELF;
 	
 	//Handle resetting addiction DC
-	SetPersistantLocalInt(oPC, "Addiction_Luhix_DC", 36);
+	SetPersistantLocalInt(oPC, "PRC_Addiction_Luhix_DC", 36);
 	
 	//Handle satiation
-	SetPersistantLocalInt(oPC, "AgonySatiation", 1);	
+	SetPersistantLocalInt(oPC, "PRC_AgonySatiation", 1);	
 	
 	//Make addiction check
 	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
@@ -67,7 +68,7 @@ void main()
 	
 	
 	// Luhix overdose
-	if(GetLocalInt(oPC, "LuhixOD"))
+	if(GetLocalInt(oPC, "PRC_LuhixOD"))
 	{
 		if(!FortitudeSave(oPC, 25, SAVING_THROW_TYPE_POISON))
 		{
@@ -76,6 +77,6 @@ void main()
 		}
 	}
 	
-	SetLocalInt(oPC, "LuhixOD", 1);
-	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "LuhixOD"));
+	SetLocalInt(oPC, "PRC_LuhixOD", 1);
+	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "PRC_LuhixOD"));
 }

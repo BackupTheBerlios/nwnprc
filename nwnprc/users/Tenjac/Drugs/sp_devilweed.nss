@@ -11,16 +11,17 @@ Created:   5/23/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "prc_inc_drugfunc"
 
 void main()
 {
 	object oPC = OBJECT_SELF;
 	
 	//Handle resetting addiction DC
-	SetPersistantLocalInt(oPC, "Addiction_Devilweed_DC", 6);
+	SetPersistantLocalInt(oPC, "PRC_Addiction_Devilweed_DC", 6);
 			
 	//Handle satiation
-	SetPersistantLocalInt(oPC, "DevilweedSatiation", 10);
+	SetPersistantLocalInt(oPC, "PRC_DevilweedSatiation", 10);
 	
 	//Make addiction check
 	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
@@ -48,5 +49,6 @@ void main()
 	effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH,4);
 	
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStr, oPC, HoursToSeconds(d3(1))));
-	
+
+}
 	

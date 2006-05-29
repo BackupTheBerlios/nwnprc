@@ -11,6 +11,7 @@ Created:   5/18/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "prc_inc_drugfunc"
 
 void main()
 {
@@ -21,10 +22,10 @@ void main()
 	float fDaze = ((d6(1) + 1) * 60.0f);
 	
 	//Handle resetting addiction DC
-	SetPersistantLocalInt(oPC, "Addiction_Agony_DC", 25);
+	SetPersistantLocalInt(oPC, "PRC_Addiction_Agony_DC", 25);
 	
 	//Handle satiation
-	SetPersistantLocalInt(oPC, "AgonySatiation", 1);	
+	SetPersistantLocalInt(oPC, "PRC_AgonySatiation", 1);	
 	
 	//Make addiction check
 	if(!GetHasSpellEffect(oPC, SPELL_DRUG_RESISTANCE))
@@ -49,7 +50,7 @@ void main()
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCha, oPC, fDur2));
 		
 	//overdose
-	if(GetLocalInt(oPC, "AgonyOD"))
+	if(GetLocalInt(oPC, "PRC_AgonyOD"))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 18, SAVING_THROW_TYPE_POISON))
 		{
@@ -74,6 +75,6 @@ void main()
 			DelayCommand((fDur - 0.2), SetCommandable(TRUE, oPC));
 		}
 	}
-	SetLocalInt(oPC, "AgonyOD", 1);
-	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "AgonyOD"));
+	SetLocalInt(oPC, "PRC_AgonyOD", 1);
+	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "PRC_AgonyOD"));
 }

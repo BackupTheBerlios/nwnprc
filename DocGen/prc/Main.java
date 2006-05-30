@@ -79,6 +79,9 @@ public class Main {
 		else if(toCall.equals("prec2dagen")){
 			prc.utils.Precache2daGen.main(paramsToPass);
 		}
+		else if(toCall.equals("scrmrchgen")){
+			prc.utils.ScrollMerchantGen.main(paramsToPass);
+		}
 
 		else{
 			System.out.println("Unknown class: " + toCall);
@@ -114,6 +117,7 @@ public class Main {
 						   "             letoxml    - Creates Leto XML lists from 2da and TLK\n" +
 						   "             prec2dagen - Creates a 2da file that lists spells/feat.2da rows\n" +
 						   "                          that should be precached\n" +
+						   "             scrmrchgen - Creates scroll merchant based on des_crft_scroll.2da\n" +
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

@@ -55,7 +55,7 @@ public class ScrollMerchantGen {
 		Data_2da scrolls2da = Data_2da.load2da(filePath);
 
 		// Loop over the scroll entries and get a list of unique resrefs
-		Set<String> scrollResRefs = new HashSet<String>();
+		Set<String> scrollResRefs = new TreeSet<String>();
 		String entry;
 		for(int i = 0; i < scrolls2da.getEntryCount(); i++) {
 			if(!(entry = scrolls2da.getEntry("Wiz_Sorc", i)).equals("****"))
@@ -115,12 +115,12 @@ public class ScrollMerchantGen {
 		int posCounter = 0;
 		for(String resref : scrollResRefs){
 			xmlString.append(
-"                    <struct id=\"0\" >"                                                             + "\n" +
-"                        <element name=\"InventoryRes\" type=\"11\" value=" + resref + " />"         + "\n" +
-"                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                       + "\n" +
-"                        <element name=\"Repos_PosX\" type=\"0\" value=" + (posCounter % 10) + " />" + "\n" +
-"                        <element name=\"Repos_Posy\" type=\"0\" value=" + (posCounter / 10) + " />" + "\n" +
-"                    </struct>"                                                                      + "\n"
+"                    <struct id=\"0\" >"                                                                 + "\n" +
+"                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "\n" +
+"                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                           + "\n" +
+"                        <element name=\"Repos_PosX\" type=\"0\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
+"                        <element name=\"Repos_Posy\" type=\"0\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
+"                    </struct>"                                                                          + "\n"
 					);
 			posCounter++;
 		}

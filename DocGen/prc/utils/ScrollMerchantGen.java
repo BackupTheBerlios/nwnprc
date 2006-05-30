@@ -59,21 +59,21 @@ public class ScrollMerchantGen {
 		String entry;
 		for(int i = 0; i < scrolls2da.getEntryCount(); i++) {
 			if(!(entry = scrolls2da.getEntry("Wiz_Sorc", i)).equals("****"))
-				scrollResRefs.add(entry.toUpperCase());
+				scrollResRefs.add(entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Cleric", i)).equals("****"))
-				scrollResRefs.add(entry.toUpperCase());
+				scrollResRefs.add(entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Paladin", i)).equals("****"))
-				scrollResRefs.add(entry.toUpperCase());
+				scrollResRefs.add(entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Druid", i)).equals("****"))
-				scrollResRefs.add(entry.toUpperCase());
+				scrollResRefs.add(entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Ranger", i)).equals("****"))
-				scrollResRefs.add(entry.toUpperCase());
+				scrollResRefs.add(entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Bard", i)).equals("****"))
-				scrollResRefs.add(entry.toUpperCase());
+				scrollResRefs.add(entry.toLowerCase());
 		}
 
 		String xmlPrefix =
-"<gff name=\"prc_wiz_recipe.utm\" type=\"UTM \" version=\"V3.2\" >"     + "\n" +
+"<gff name=\"prc_scrolls.utm\" type=\"UTM \" version=\"V3.2\" >"        + "\n" +
 "    <struct id=\"-1\" >"                                               + "\n" +
 "        <element name=\"ResRef\" type=\"11\" value=\"prc_scrolls\" />" + "\n" +
 "        <element name=\"LocName\" type=\"12\" value=\"64113\" >"       + "\n" +
@@ -96,7 +96,7 @@ public class ScrollMerchantGen {
 "            </struct>"                                                 + "\n" +
 "        </element>"                                                    + "\n" +
 "        <element name=\"StoreList\" type=\"15\" >"                     + "\n" +
-"            struct id=\"0\" />"                                        + "\n" +
+"            <struct id=\"0\" />"                                       + "\n" +
 "            <struct id=\"4\" />"                                       + "\n" +
 "            <struct id=\"2\" >"                                        + "\n" +
 "                <element name=\"ItemList\" type=\"15\" >"              + "\n";
@@ -117,9 +117,9 @@ public class ScrollMerchantGen {
 			xmlString.append(
 "                    <struct id=\"0\" >"                                                                 + "\n" +
 "                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "\n" +
-"                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                           + "\n" +
 "                        <element name=\"Repos_PosX\" type=\"0\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
 "                        <element name=\"Repos_Posy\" type=\"0\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
+"                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                           + "\n" +
 "                    </struct>"                                                                          + "\n"
 					);
 			posCounter++;

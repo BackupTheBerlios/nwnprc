@@ -119,6 +119,7 @@ PRC_INSTALLVERSION	= PRC_VERSION
 # Define the locations of the various EXE's used by the makefile.  All
 # should be in the tools folder, except the script compiler which
 # comes with NWN.
+PRCJAR                  = java -Xmx200m -jar tools\prc.jar
 RARCOMPILER             = tools\rar
 ERFCOMPILER             = tools\erf
 NSSCOMPILER             = tools\nwnnsscomp
@@ -313,7 +314,7 @@ database:
 	-@del "$(NWN_DATABASE)\PRC_DATA.FPT" 2>nul
 	-@del precacherows.2da 2>nul
 # Create the precacheable 2das listing
-	@java -jar -Xmx200m tools\prc.jar prec2dagen 2das
+	@$(PRCJAR) prec2dagen 2das
 # Copy it to nwn override
 	@copy /Y precacherows.2da "$(NWN_OVERRIDE)"
 # Copy the precacher module to nwn modules directory
@@ -336,6 +337,15 @@ database:
 	@copy /Y "$(NWN_DATABASE)\PRC_DATA.CDX" $(OUTPATH)
 	@copy /Y "$(NWN_DATABASE)\PRC_DATA.DBF" $(OUTPATH)
 	@copy /Y "$(NWN_DATABASE)\PRC_DATA.FPT" $(OUTPATH)
+
+# Rule to update the merchant files
+updatemerchants:
+	@echo Updating merchant files
+	@$(PRCJAR) scrmrchgen $(2DAPATH)\des_crft_scroll.2da
+	@java -cp .\tools\modpacker\log4j.jar;.\tools\modpacker\meta-jb-util.jar;.\tools\modpacker\meta-jb-xml.jar;.\tools\modpacker\nwn-tools.jar org.progeeks.nwn.XmlToGff . prc_scrolls.utm.xml
+	-@del prc_scrolls.utm.xml 2>nul
+	-@del System.out 2>nul
+	@move /y prc_scrolls.utm $(MISCPATH)
 
 
 # Rule to build the HAK file.
@@ -463,7 +473,7 @@ $(TEXTURESHAK): $(GFX)
 
 
 # Rule to build the 2.0 misc HAK file.
-$(MISCHAK): $(OTHERS)
+$(MISCHAK): updatemerchants $(OTHERS)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(MISCPATH)\*.*
@@ -491,10 +501,10 @@ $(HIF): PRCPackTemplate.hif config.make
 #
 depends:
 	@echo Updating dependencies
-	@java -jar tools\prc.jar makedep -a -n -s$(NSSINCLUDE),$(SRCPATH),$(SPELLSRCPATH),$(EPICSPELLSRCPATH),$(RACESRCPATH),$(PSIONICSSRCPATH),$(NEWSPELLBOOKSRCPATH),$(OCFIXERFPATH) -o$(MAKEFILE) objs.temp spellobjs.temp epicspellobjs.temp raceobjs.temp psionicsobjs.temp newspellbookobjs.temp ocfixobjs.temp
+	@$(PRCJAR) makedep -a -n -s$(NSSINCLUDE),$(SRCPATH),$(SPELLSRCPATH),$(EPICSPELLSRCPATH),$(RACESRCPATH),$(PSIONICSSRCPATH),$(NEWSPELLBOOKSRCPATH),$(OCFIXERFPATH) -o$(MAKEFILE) objs.temp spellobjs.temp epicspellobjs.temp raceobjs.temp psionicsobjs.temp newspellbookobjs.temp ocfixobjs.temp
 
 #	@echo Start: %TIME% >> time.txt
-#	@java -jar tools\prc.jar makedep -a -n -s$(NSSINCLUDE),$(SRCPATH),$(SPELLSRCPATH),$(EPICSPELLSRCPATH),$(RACESRCPATH),$(PSIONICSSRCPATH),$(NEWSPELLBOOKSRCPATH) -o$(MAKEFILE) objs.temp spellobjs.temp epicspellobjs.temp raceobjs.temp psionicsobjs.temp newspellbookobjs.temp
+#	@$(PRCJAR) makedep -a -n -s$(NSSINCLUDE),$(SRCPATH),$(SPELLSRCPATH),$(EPICSPELLSRCPATH),$(RACESRCPATH),$(PSIONICSSRCPATH),$(NEWSPELLBOOKSRCPATH) -o$(MAKEFILE) objs.temp spellobjs.temp epicspellobjs.temp raceobjs.temp psionicsobjs.temp newspellbookobjs.temp
 #	@echo End: %TIME% >> time.txt
 #
 #	@tools\makedep -a -w -n -l -s$(SRCPATH) -i$(NSSINCLUDE) -o$(MAKEFILE) $(OBJS)

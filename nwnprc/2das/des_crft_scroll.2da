@@ -125,7 +125,7 @@
 121  Ethereal_Visage                            NW_IT_SPARSCR608 ****             ****             ****             ****             NW_IT_SPARSCR608 
 122  Mordenkainens_Disjunction                  NW_IT_SPARSCR901 ****             ****             ****             ****             ****             
 123  Mordenkainens_Sword                        NW_IT_SPARSCR705 ****             ****             ****             ****             ****             
-124  Natures_Balance                            ****             *****            ****             X2_IT_SPDVSCR802 ****             ****             
+124  Natures_Balance                            ****             ****             ****             X2_IT_SPDVSCR802 ****             ****             
 125  Negative_Energy_Protection                 ****             X2_IT_SPDVSCR311 ****             ****             ****             ****             
 126  Neutralize_Poison                          nw_it_spdvscr402 nw_it_spdvscr402 nw_it_spdvscr402 nw_it_spdvscr402 nw_it_spdvscr402 nw_it_spdvscr402 
 127  Phantasmal_Killer                          NW_IT_SPARSCR409 ****             ****             ****             ****             ****             
@@ -149,7 +149,7 @@
 145  Remove_Blindness_and_Deafness              ****             nw_it_spdvscr301 nw_it_spdvscr301 nw_it_spdvscr301 ****             ****             
 146  Remove_Curse                               NW_IT_SPARSCR402 nw_it_sparscr402 ****             ****             ****             NW_IT_SPARSCR402 
 147  Remove_Disease                             ****             nw_it_spdvscr302 nw_it_spdvscr302 nw_it_spdvscr302 nw_it_spdvscr302 ****             
-148  Remove_Fear                                ****             X2_IT_SPDVSCR107 ****             *****            ****             ****             
+148  Remove_Fear                                ****             X2_IT_SPDVSCR107 ****             ****             ****             ****             
 149  Remove_Paralysis                           ****             X2_IT_SPDVSCR205 X2_IT_SPDVSCR205 ****             ****             ****             
 150  Resist_Elements                            NW_IT_SPARSCR201 NW_IT_SPARSCR201 NW_IT_SPARSCR201 NW_IT_SPARSCR201 NW_IT_SPARSCR201 ****             
 151  Resistance                                 NW_IT_SPARSCR001 NW_IT_SPARSCR001 NW_IT_SPARSCR001 NW_IT_SPARSCR001 ****             NW_IT_SPARSCR001 
@@ -163,9 +163,9 @@
 159  Shadow_Conjuration                         NW_IT_SPARSCR410 ****             ****             ****             ****             ****             
 160  Shadow_Shield                              X2_IT_SPARSCR703 ****             ****             ****             ****             ****             
 161  Shapechange                                NW_IT_SPARSCR910 ****             ****             NW_IT_SPARSCR910 ****             ****             
-162  Shield_of_Law                              *****            *****            ****             *****            ****             ****             
-163  Silence                                    *****            nw_it_spdvscr203 ****             nw_it_spdvscr203 ****             *****            
-164  Slay_Living                                *****            X2_IT_SPDVSCR506 ****             X2_IT_SPDVSCR506 ****             ****             
+162  Shield_of_Law                              ****             ****             ****             ****             ****             ****             
+163  Silence                                    ****             nw_it_spdvscr203 ****             nw_it_spdvscr203 ****             ****             
+164  Slay_Living                                ****             X2_IT_SPDVSCR506 ****             X2_IT_SPDVSCR506 ****             ****             
 165  Sleep                                      NW_IT_SPARSCR108 ****             ****             NW_IT_SPARSCR108 NW_IT_SPARSCR108 NW_IT_SPARSCR108 
 166  Slow                                       NW_IT_SPARSCR313 ****             ****             ****             ****             NW_IT_SPARSCR313 
 167  Sound_Burst                                nw_it_spdvscr204 nw_it_spdvscr204 ****             ****             ****             nw_it_spdvscr204 
@@ -185,7 +185,7 @@
 181  Summon_Creature_VII                        NW_IT_SPARSCR703 NW_IT_SPARSCR703 ****             NW_IT_SPARSCR703 ****             ****             
 182  Summon_Creature_VIII                       NW_IT_SPARSCR805 NW_IT_SPARSCR805 ****             NW_IT_SPARSCR805 ****             ****             
 183  Sunbeam                                    ****             X2_IT_SPDVSCR803 ****             X2_IT_SPDVSCR803 ****             ****             
-184  Tensers_Transformation                     nw_it_sparscr614 ****             ****             *****            ****             ****             
+184  Tensers_Transformation                     nw_it_sparscr614 ****             ****             ****             ****             ****             
 185  Time_Stop                                  NW_IT_SPARSCR911 ****             ****             ****             ****             ****             
 186  True_Seeing                                NW_IT_SPARSCR606 NW_IT_SPARSCR606 ****             NW_IT_SPARSCR606 ****             ****             
 187  Unholy_Aura                                ****             ****             ****             ****             ****             ****             
@@ -451,7 +451,7 @@
 447  Isaacs_Lesser_Missile_Storm                X1_IT_SPARSCR401 ****             ****             ****             ****             ****             
 448  Isaacs_Greater_Missile_Storm               x1_it_sparscr603 ****             ****             ****             ****             ****             
 449  Bane                                       ****             x1_it_spdvscr101 ****             ****             ****             ****             
-450  Shield_of_Faith                            *****            x1_it_spdvscr105 ****             ****             ****             ****             
+450  Shield_of_Faith                            ****             x1_it_spdvscr105 ****             ****             ****             ****             
 451  Planar_Ally                                ****             x1_it_spdvscr603 ****             ****             ****             ****             
 452  Magic_Fang                                 ****             ****             ****             x1_it_spdvscr106 x1_it_spdvscr106 ****             
 453  Greater_Magic_Fang                         ****             ****             ****             X1_IT_SPDVSCR303 X1_IT_SPDVSCR303 ****             

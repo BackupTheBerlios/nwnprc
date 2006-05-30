@@ -426,7 +426,7 @@ void SpendXP(object oPC, int nCost);
 #include "prc_inc_switch"   // Should be after inc_pers_array, as it needs inc_array
 #include "inc_ecl"          // Depends on inc_2dacache, prc_inc_switch and inc_class_by_pos
 #include "inc_metalocation" // Depends on inc_persist_loca
-
+#include "inc_array_sort"   // Depends on inc_array and inc_debug
 
 
 /**********************\
@@ -987,7 +987,7 @@ float GetRelativeAngleBetweenLocations(location lFrom, location lTo)
     vector vPos2 = GetPositionFromLocation(lTo);
     //sanity check
     if(GetDistanceBetweenLocations(lFrom, lTo) == 0.0)
-        return 0.0; 
+        return 0.0;
 
     float fAngle = acos((vPos2.x - vPos1.x) / GetDistanceBetweenLocations(lFrom, lTo));
     // The above formula only returns values [0, 180], so test for negative y movement

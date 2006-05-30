@@ -1164,9 +1164,9 @@
 1160 Detect_Chaos                      16832050  3         1         1500   3204       0         1       1          iss_detect_chaos 
 1161 UndetectableAignment              16832051  5         2         7500   3205       1         1       1          iss_undet_align  
 1162 DeeperDarkness                    16832053  5         3         11250  3206       1         1       1          is_Darkness      
-1163 Blur                              16832053  5         2         7500   3208       1         1       1          iss_blur         
-1164 MirrorImage                       16832053  5         2         7500   3209       1         1       1          iss_mirror_image 
-1165 Insanity                          16832053  13        7         68250  3212       0         0       1          iss_insanity     
+1163 Blur                              16832055  5         2         7500   3208       1         1       1          iss_blur         
+1164 MirrorImage                       16832057  5         2         7500   3209       1         1       1          iss_mirror_image 
+1165 Insanity                          16832060  13        7         68250  3212       0         0       1          iss_insanity     
 1166 Maze                              16825706  15        8         90000  2888       0         0       1          iss_maze         
 1167 Dimensional_Anchor                16825683  7         4         21000  2889       0         1       1          iss_dimanch      
 1168 Dimensional_Lock                  16825686  15        8         90000  2898       0         0       1          iss_dimlock      

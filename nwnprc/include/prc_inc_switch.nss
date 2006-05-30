@@ -428,6 +428,12 @@ const string PRC_PNP_DULLBLADES                      = "PRC_PNP_DULLBLADES";
 /** 20h instead of rounds per level */
 const string PRC_PNP_CHAMPIONS_VALOR                  = "PRC_PNP_CHAMPIONS_VALOR";
 
+/*
+ * Disable learning epic spells via the PRC OPtions Convo
+ * Does not need PRC_EPIC_INGORE_DEFAULTS to be set
+ */
+const string PRC_EPIC_CONVO_LEARNING_DISABLE         = "PRC_EPIC_CONVO_LEARNING_DISABLE";
+
 
 
 
@@ -2432,6 +2438,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_IMPENETRABILITY);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_DULLBLADES);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_CHAMPIONS_VALOR);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_EPIC_CONVO_LEARNING_DISABLE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_STAFF_CASTER_LEVEL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_NPC_HAS_PC_SPELLCASTING);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ECL_USES_XP_NOT_HD);

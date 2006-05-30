@@ -177,7 +177,54 @@ DoDebug("GetSpellslotLevel("+IntToString(nClass)+", "+GetName(oPC)+") = "+IntToS
     return nLevel;
 }
 
-int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
+int GetItemBonusSlotCount(object oPC, int nClass, int nSpellLevel)
+{
+    //check cache
+    int nCache = GetLocalInt(oPC, "BonusSpellSlots_"+IntToString(nClass)+"_"+IntToString(nSpellLevel));
+    //remove offset
+    nCache --;
+    if(nCache == -1)
+    {
+        int nBonusCount = 0;
+        int nSlot;
+        for(nSlot = 0; nSlot <= NUM_INVENTORY_SLOTS; nSlot++)
+        {
+            object oTest = GetItemInSlot(nSlot, oPC);
+            if(GetIsObjectValid(oTest))
+            {
+                itemproperty ipTest = GetFirstItemProperty(oTest);
+                while(GetIsItemPropertyValid(ipTest))
+                {
+                    int nIPType = GetItemPropertyType(ipTest);
+                    int nIPSubType = GetItemPropertySubType(ipTest);
+                    int nIPCost = GetItemPropertyCostTableValue(ipTest);
+                    if(nIPType == ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N)
+                    {
+                        SetLocalInt(oPC, 
+                            "BonusSpellSlots_"+IntToString(nIPSubType)+"_"+IntToString(nIPCost), 
+                            GetLocalInt(oPC, 
+                                "BonusSpellSlots_"+IntToString(nIPSubType)+"_"+IntToString(nIPCost))+1);
+                        if(nIPSubType == nClass
+                            && nIPCost == nSpellLevel)
+                        {
+                            nBonusCount++;
+                            //assume one item can only give 1 slot of any particular class/level combo
+                            break;
+                        }
+                    }
+                    ipTest = GetNextItemProperty(oTest);
+                }
+            }
+            nSlot++;
+            oTest = GetItemInSlot(nSlot, oPC);
+        }
+        return nBonusCount;
+    }
+    else
+        return nCache;
+}
+
+int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass, object oItemPosessor = OBJECT_INVALID)
 {
     //check wisdom modifier
     if(nAbilityScore < nSpellLevel+10)
@@ -209,6 +256,9 @@ int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass)
         nSlots = StringToInt(sSlots);
     if(nSlots == -1)
         return 0;
+    //add item slots
+    if(GetIsObjectValid(oItemPosessor))
+        nSlots += GetItemBonusSlotCount(oItemPosessor, nClass, nSpellLevel);
     //cantrips dont get bonus slots
     if(nSpellLevel == 0)
         return nSlots;
@@ -420,7 +470,7 @@ void SetupSpells(object oPC, int nClass)
         int nSpellLevel;
         for(nSpellLevel = 0; nSpellLevel <=9; nSpellLevel++)
         {
-            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass, oPC);
             persistant_array_set_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel, nSlots);
         }
         int i;
@@ -450,7 +500,7 @@ void SetupSpells(object oPC, int nClass)
         int nSpellLevel;
         for(nSpellLevel = 0; nSpellLevel <=9; nSpellLevel++)
         {
-            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
+            int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass, oPC);
             int nSlot;
             for(nSlot = 0; nSlot < nSlots; nSlot++)
             {

@@ -213,26 +213,26 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 
     //clean up afterwards
     if (iCasterLev != 0)
-        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERLEVEL_OVERRIDE)));
     if (iTotalDC != 0)
-        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_DC_TOTAL_OVERRIDE)));
     if (iBaseDC != 0)
-        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE)));
     if (nClass != CLASS_TYPE_INVALID)
-        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_CASTERCLASS_OVERRIDE)));
     if (nMetaMagic != METAMAGIC_NONE)
-        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_METAMAGIC_OVERRIDE)));
     if (bUseOverrideTargetLocation)
     {
-        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_LOCATION_OVERRIDE)));
         //location must be set outside of this function at the moment
         //cant pass a location into a function as an optional parameter
         //go bioware for not defining an invalid location constant
     }
     if (bUseOverrideTargetObject)
     {
-        DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
-        DelayCommand(2.0, DeleteLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE)));
+        ActionDoCommand(DelayCommand(2.0, DeleteLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE)));
     }
 
 

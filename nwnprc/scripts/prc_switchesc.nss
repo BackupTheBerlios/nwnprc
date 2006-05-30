@@ -192,7 +192,7 @@ void main()
                 if(GetCastableFeatCount(oPC)<7)
                     AddChoice("Add an Epic Spell to the radial menu.", 2);
                 AddChoice("Manage any active contingencies.", 3);
-                if(!GetPRCSwitch(PRC_SPELLSLAB))
+                if(!GetPRCSwitch(PRC_EPIC_CONVO_LEARNING_DISABLE))
                     AddChoice("Research an Epic Spell.", 4);
 
                 MarkStageSetUp(nStage, oPC);

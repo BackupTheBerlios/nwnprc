@@ -127,7 +127,7 @@ void main()
                 int nSpellLevel = GetLocalInt(oPC, "SpellLevel");
                 int nClassLevel = GetSpellslotLevel(nSpellClass, oPC);
                 int nAbilityScore = GetAbilityForClass(nSpellClass, oPC);
-                int nSlots = GetSlotCount(nClassLevel, nSpellLevel, nAbilityScore, nSpellClass);
+                int nSlots = GetSlotCount(nClassLevel, nSpellLevel, nAbilityScore, nSpellClass, oPC);
                 int nSlot, nFeatID, nSpellbookID;
                 string sChoice, sFile;
                 for(nSlot = 0; nSlot < nSlots; nSlot++)

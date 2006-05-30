@@ -239,6 +239,7 @@ void main()
                 if(!GetIsObjectValid(oCopy))
                     DoDebug("Copy not valid");
                 SetIdentified(oCopy, TRUE);
+                SetPlotFlag(oCopy, FALSE);
                 int nOldValue = GetGoldPieceValue(oCopy);
                 IPSafeAddItemProperty(oCopy, ipToAdd);
                 int nNewValue = GetGoldPieceValue(oCopy);

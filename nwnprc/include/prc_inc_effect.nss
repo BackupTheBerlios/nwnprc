@@ -49,9 +49,485 @@ struct PRCeffect{
 void             SetLocalPRCEffect(object oObject, string sVarName, struct PRCeffect eValue);
 struct PRCeffect GetLocalPRCEffect(object oObject, string sVarName);
 void             DeleteLocalPRCEffect(object oObject, string sVarName);
+
 //default constructor
 struct PRCeffect GetNewPRCEffectBase();
 
+// Get the next in-game effect on oCreature.
+struct PRCeffect PRCGetNextEffect(object oCreature);
+
+effect GetEffectOnObjectFromPRCEffect(struct PRCeffect prceEffect, object oObject);
+
+// Remove eEffect from oCreature.
+// * No return value
+void PRCRemoveEffect(object oCreature, struct PRCeffect eEffect);
+
+// Set the subtype of eEffect to Magical and return eEffect.
+// (Effects default to magical if the subtype is not set)
+// Magical effects are removed by resting, and by dispel magic
+struct PRCeffect PRCMagicalEffect(struct PRCeffect eEffect);
+
+// Set the subtype of eEffect to Supernatural and return eEffect.
+// (Effects default to magical if the subtype is not set)
+// Permanent supernatural effects are not removed by resting
+struct PRCeffect PRCSupernaturalEffect(struct PRCeffect eEffect);
+
+// Set the subtype of eEffect to Extraordinary and return eEffect.
+// (Effects default to magical if the subtype is not set)
+// Extraordinary effects are removed by resting, but not by dispel magic
+struct PRCeffect PRCExtraordinaryEffect(struct PRCeffect eEffect);
+
+// Set eEffect to be versus a specific alignment.
+// - eEffect
+// - nLawChaos: ALIGNMENT_LAWFUL/ALIGNMENT_CHAOTIC/ALIGNMENT_ALL
+// - nGoodEvil: ALIGNMENT_GOOD/ALIGNMENT_EVIL/ALIGNMENT_ALL
+struct PRCeffect PRCVersusAlignmentEffect(struct PRCeffect eEffect, int nLawChaos=ALIGNMENT_ALL, int nGoodEvil=ALIGNMENT_ALL);
+
+// Set eEffect to be versus nRacialType.
+// - eEffect
+// - nRacialType: RACIAL_TYPE_*
+struct PRCeffect PRCVersusRacialTypeEffect(struct PRCeffect eEffect, int nRacialType);
+
+// Set eEffect to be versus traps.
+struct PRCeffect PRCVersusTrapEffect(struct PRCeffect eEffect);
+
+// Create a Heal effect. This should be applied as an instantaneous effect.
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nDamageToHeal < 0.
+struct PRCeffect PRCEffectHeal(int nDamageToHeal);
+
+// Create a Damage effect
+// - nDamageAmount: amount of damage to be dealt. This should be applied as an
+//   instantaneous effect.
+// - nDamageType: DAMAGE_TYPE_*
+// - nDamagePower: DAMAGE_POWER_*
+struct PRCeffect PRCEffectDamage(int nDamageAmount, int nDamageType=DAMAGE_TYPE_MAGICAL, int nDamagePower=DAMAGE_POWER_NORMAL);
+
+// Create an Ability Increase effect
+// - bAbilityToIncrease: ABILITY_*
+struct PRCeffect PRCEffectAbilityIncrease(int nAbilityToIncrease, int nModifyBy);
+
+// Create a Damage Resistance effect that removes the first nAmount points of
+// damage of type nDamageType, up to nLimit (or infinite if nLimit is 0)
+// - nDamageType: DAMAGE_TYPE_*
+// - nAmount
+// - nLimit
+struct PRCeffect PRCEffectDamageResistance(int nDamageType, int nAmount, int nLimit=0);
+
+// Create a Summon Creature effect.  The creature is created and placed into the
+// caller's party/faction.
+// - sCreatureResref: Identifies the creature to be summoned
+// - nVisualEffectId: VFX_*
+// - fDelaySeconds: There can be delay between the visual effect being played, and the
+//   creature being added to the area
+// - nUseAppearAnimation: should this creature play it's "appear" animation when it is
+//   summoned. If zero, it will just fade in somewhere near the target.  If the value is 1
+//   it will use the appear animation, and if it's 2 it will use appear2 (which doesn't exist for most creatures)
+struct PRCeffect PRCEffectSummonCreature(string sCreatureResref, int nVisualEffectId=VFX_NONE, float fDelaySeconds=0.0f, int nUseAppearAnimation=0);
+
+// Create a Resurrection effect. This should be applied as an instantaneous effect.
+struct PRCeffect PRCEffectResurrection();
+
+// Create an AC Increase effect
+// - nValue: size of AC increase
+// - nModifyType: AC_*_BONUS
+// - nDamageType: DAMAGE_TYPE_*
+//   * Default value for nDamageType should only ever be used in this function prototype.
+struct PRCeffect PRCEffectACIncrease(int nValue, int nModifyType=AC_DODGE_BONUS, int nDamageType=AC_VS_DAMAGE_TYPE_ALL);
+
+// Create a Saving Throw Increase effect
+// - nSave: SAVING_THROW_* (not SAVING_THROW_TYPE_*)
+//          SAVING_THROW_ALL
+//          SAVING_THROW_FORT
+//          SAVING_THROW_REFLEX
+//          SAVING_THROW_WILL
+// - nValue: size of the Saving Throw increase
+// - nSaveType: SAVING_THROW_TYPE_* (e.g. SAVING_THROW_TYPE_ACID )
+struct PRCeffect PRCEffectSavingThrowIncrease(int nSave, int nValue, int nSaveType=SAVING_THROW_TYPE_ALL);
+
+// Create an Attack Increase effect
+// - nBonus: size of attack bonus
+// - nModifierType: ATTACK_BONUS_*
+struct PRCeffect PRCEffectAttackIncrease(int nBonus, int nModifierType=ATTACK_BONUS_MISC);
+
+// Create a Damage Reduction effect
+// - nAmount: amount of damage reduction
+// - nDamagePower: DAMAGE_POWER_*
+// - nLimit: How much damage the effect can absorb before disappearing.
+//   Set to zero for infinite
+struct PRCeffect PRCEffectDamageReduction(int nAmount, int nDamagePower, int nLimit=0);
+
+// Create a Damage Increase effect
+// - nBonus: DAMAGE_BONUS_*
+// - nDamageType: DAMAGE_TYPE_*
+// NOTE! You *must* use the DAMAGE_BONUS_* constants! Using other values may
+//       result in odd behaviour.
+struct PRCeffect PRCEffectDamageIncrease(int nBonus, int nDamageType=DAMAGE_TYPE_MAGICAL);
+
+
+// Create an Entangle effect
+// When applied, this effect will restrict the creature's movement and apply a
+// (-2) to all attacks and a -4 to AC.
+struct PRCeffect PRCEffectEntangle();
+
+// Create a Death effect
+// - nSpectacularDeath: if this is TRUE, the creature to which this effect is
+//   applied will die in an extraordinary fashion
+// - nDisplayFeedback
+struct PRCeffect PRCEffectDeath(int nSpectacularDeath=FALSE, int nDisplayFeedback=TRUE);
+
+// Create a Knockdown effect
+// This effect knocks creatures off their feet, they will sit until the effect
+// is removed. This should be applied as a temporary effect with a 3 second
+// duration minimum (1 second to fall, 1 second sitting, 1 second to get up).
+struct PRCeffect PRCEffectKnockdown();
+
+// Create a Curse effect.
+// - nStrMod: strength modifier
+// - nDexMod: dexterity modifier
+// - nConMod: constitution modifier
+// - nIntMod: intelligence modifier
+// - nWisMod: wisdom modifier
+// - nChaMod: charisma modifier
+struct PRCeffect PRCEffectCurse(int nStrMod=1, int nDexMod=1, int nConMod=1, int nIntMod=1, int nWisMod=1, int nChaMod=1);
+
+// Create a Paralyze effect
+struct PRCeffect PRCEffectParalyze();
+
+// Create a Spell Immunity effect.
+// There is a known bug with this function. There *must* be a parameter specified
+// when this is called (even if the desired parameter is SPELL_ALL_SPELLS),
+// otherwise an effect of type EFFECT_TYPE_INVALIDEFFECT will be returned.
+// - nImmunityToSpell: SPELL_*
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nImmunityToSpell is
+//   invalid.
+struct PRCeffect PRCEffectSpellImmunity(int nImmunityToSpell=SPELL_ALL_SPELLS);
+
+// Create a Deaf effect
+struct PRCeffect PRCEffectDeaf();
+
+// Create a Sleep effect
+struct PRCeffect PRCEffectSleep();
+
+// Create a Charm effect
+struct PRCeffect PRCEffectCharmed();
+
+// Create a Confuse effect
+struct PRCeffect PRCEffectConfused();
+
+// Create a Frighten effect
+struct PRCeffect PRCEffectFrightened();
+
+// Create a Dominate effect
+struct PRCeffect PRCEffectDominated();
+
+// Create a Daze effect
+struct PRCeffect PRCEffectDazed();
+
+// Create a Stun effect
+struct PRCeffect PRCEffectStunned();
+
+// Create a Regenerate effect.
+// - nAmount: amount of damage to be regenerated per time interval
+// - fIntervalSeconds: length of interval in seconds
+struct PRCeffect PRCEffectRegenerate(int nAmount, float fIntervalSeconds);
+
+// Create a Movement Speed Increase effect.
+// - nPercentChange - range 0 through 99
+// eg.
+//    0 = no change in speed
+//   50 = 50% faster
+//   99 = almost twice as fast
+struct PRCeffect PRCEffectMovementSpeedIncrease(int nPercentChange);
+
+// Create an Area Of struct PRCeffect PRCEffect in the area of the creature it is applied to.
+// If the scripts are not specified, default ones will be used.
+struct PRCeffect PRCEffectAreaOfEffect(int nAreaEffectId, string sOnEnterScript="", string sHeartbeatScript="", string sOnExitScript="");
+
+// * Create a Visual Effect that can be applied to an object.
+// - nVisualEffectId
+// - nMissEffect: if this is TRUE, a random vector near or past the target will
+//   be generated, on which to play the effect
+struct PRCeffect PRCEffectVisualEffect(int nVisualEffectId, int nMissEffect=FALSE);
+
+// Link the two supplied effects, returning eChildEffect as a child of
+// eParentEffect.
+// Note: When applying linked effects if the target is immune to all valid
+// effects all other effects will be removed as well. This means that if you
+// apply a visual effect and a silence effect (in a link) and the target is
+// immune to the silence effect that the visual effect will get removed as well.
+// Visual Effects are not considered "valid" effects for the purposes of
+// determining if an effect will be removed or not and as such should never be
+// packaged *only* with other visual effects in a link.
+struct PRCeffect PRCEffectLinkEffects(struct PRCeffect  eChildEffect, struct PRCeffect  eParentEffect );
+
+// Create a Beam effect.
+// - nBeamVisualEffect: VFX_BEAM_*
+// - oEffector: the beam is emitted from this creature
+// - nBodyPart: BODY_NODE_*
+// - bMissEffect: If this is TRUE, the beam will fire to a random vector near or
+//   past the target
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nBeamVisualEffect is
+//   not valid.
+struct PRCeffect PRCEffectBeam(int nBeamVisualEffect, object oEffector, int nBodyPart, int bMissEffect=FALSE);
+
+// Create a Spell Resistance Increase effect.
+// - nValue: size of spell resistance increase
+struct PRCeffect PRCEffectSpellResistanceIncrease(int nValue);
+
+// Create a Poison effect.
+// - nPoisonType: POISON_*
+struct PRCeffect PRCEffectPoison(int nPoisonType);
+
+// Create a Disease effect.
+// - nDiseaseType: DISEASE_*
+struct PRCeffect PRCEffectDisease(int nDiseaseType);
+
+// Create a Silence effect.
+struct PRCeffect PRCEffectSilence();
+
+// Create a Haste effect.
+struct PRCeffect PRCEffectHaste();
+
+// Create a Slow effect.
+struct PRCeffect PRCEffectSlow();
+
+// Create an Immunity effect.
+// - nImmunityType: IMMUNITY_TYPE_*
+struct PRCeffect PRCEffectImmunity(int nImmunityType);
+
+// Creates a Damage Immunity Increase effect.
+// - nDamageType: DAMAGE_TYPE_*
+// - nPercentImmunity
+struct PRCeffect PRCEffectDamageImmunityIncrease(int nDamageType, int nPercentImmunity);
+
+// Create a Temporary Hitpoints effect.
+// - nHitPoints: a positive integer
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nHitPoints < 0.
+struct PRCeffect PRCEffectTemporaryHitpoints(int nHitPoints);
+
+// Create a Skill Increase effect.
+// - nSkill: SKILL_*
+// - nValue
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nSkill is invalid.
+struct PRCeffect PRCEffectSkillIncrease(int nSkill, int nValue);
+
+// Create a Turned effect.
+// Turned effects are supernatural by default.
+struct PRCeffect PRCEffectTurned();
+
+// Create a Hit Point Change When Dying effect.
+// - fHitPointChangePerRound: this can be positive or negative, but not zero.
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if fHitPointChangePerRound is 0.
+struct PRCeffect PRCEffectHitPointChangeWhenDying(float fHitPointChangePerRound);
+
+// Create an Ability Decrease effect.
+// - nAbility: ABILITY_*
+// - nModifyBy: This is the amount by which to decrement the ability
+struct PRCeffect PRCEffectAbilityDecrease(int nAbility, int nModifyBy);
+
+// Create an Attack Decrease effect.
+// - nPenalty
+// - nModifierType: ATTACK_BONUS_*
+struct PRCeffect PRCEffectAttackDecrease(int nPenalty, int nModifierType=ATTACK_BONUS_MISC);
+
+// Create a Damage Decrease effect.
+// - nPenalty
+// - nDamageType: DAMAGE_TYPE_*
+struct PRCeffect PRCEffectDamageDecrease(int nPenalty, int nDamageType=DAMAGE_TYPE_MAGICAL);
+
+// Create a Damage Immunity Decrease effect.
+// - nDamageType: DAMAGE_TYPE_*
+// - nPercentImmunity
+struct PRCeffect PRCEffectDamageImmunityDecrease(int nDamageType, int nPercentImmunity);
+
+// Create an AC Decrease effect.
+// - nValue
+// - nModifyType: AC_*
+// - nDamageType: DAMAGE_TYPE_*
+//   * Default value for nDamageType should only ever be used in this function prototype.
+struct PRCeffect PRCEffectACDecrease(int nValue, int nModifyType=AC_DODGE_BONUS, int nDamageType=AC_VS_DAMAGE_TYPE_ALL);
+
+// Create a Movement Speed Decrease effect.
+// - nPercentChange - range 0 through 99
+// eg.
+//    0 = no change in speed
+//   50 = 50% slower
+//   99 = almost immobile
+struct PRCeffect PRCEffectMovementSpeedDecrease(int nPercentChange);
+
+// Create a Saving Throw Decrease effect.
+// - nSave: SAVING_THROW_* (not SAVING_THROW_TYPE_*)
+//          SAVING_THROW_ALL
+//          SAVING_THROW_FORT
+//          SAVING_THROW_REFLEX
+//          SAVING_THROW_WILL
+// - nValue: size of the Saving Throw decrease
+// - nSaveType: SAVING_THROW_TYPE_* (e.g. SAVING_THROW_TYPE_ACID )
+struct PRCeffect PRCEffectSavingThrowDecrease(int nSave, int nValue, int nSaveType=SAVING_THROW_TYPE_ALL);
+
+// Create a Skill Decrease effect.
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nSkill is invalid.
+struct PRCeffect PRCEffectSkillDecrease(int nSkill, int nValue);
+
+// Create a Spell Resistance Decrease effect.
+struct PRCeffect PRCEffectSpellResistanceDecrease(int nValue);
+
+// Create an Invisibility effect.
+// - nInvisibilityType: INVISIBILITY_TYPE_*
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nInvisibilityType
+//   is invalid.
+struct PRCeffect PRCEffectInvisibility(int nInvisibilityType);
+
+// Create a Concealment effect.
+// - nPercentage: 1-100 inclusive
+// - nMissChanceType: MISS_CHANCE_TYPE_*
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nPercentage < 1 or
+//   nPercentage > 100.
+struct PRCeffect PRCEffectConcealment(int nPercentage, int nMissType=MISS_CHANCE_TYPE_NORMAL);
+
+// Create a Darkness effect.
+struct PRCeffect PRCEffectDarkness();
+
+// Create a Dispel Magic All effect.
+// If no parameter is specified, USE_CREATURE_LEVEL will be used. This will
+// cause the dispel effect to use the level of the creature that created the
+// effect.
+struct PRCeffect PRCEffectDispelMagicAll(int nCasterLevel=USE_CREATURE_LEVEL);
+
+// Create an Ultravision effect.
+struct PRCeffect PRCEffectUltravision();
+
+// Create a Negative Level effect.
+// - nNumLevels: the number of negative levels to apply.
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nNumLevels > 100.
+struct PRCeffect PRCEffectNegativeLevel(int nNumLevels, int bHPBonus=FALSE);
+
+// Create a Polymorph effect.
+struct PRCeffect PRCEffectPolymorph(int nPolymorphSelection, int nLocked=FALSE);
+
+// Create a Sanctuary effect.
+// - nDifficultyClass: must be a non-zero, positive number
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nDifficultyClass <= 0.
+struct PRCeffect PRCEffectSanctuary(int nDifficultyClass);
+
+// Create a True Seeing effect.
+struct PRCeffect PRCEffectTrueSeeing();
+
+// Create a See Invisible effect.
+struct PRCeffect PRCEffectSeeInvisible();
+
+// Create a Time Stop effect.
+struct PRCeffect PRCEffectTimeStop();
+
+// Create a Blindness effect.
+struct PRCeffect PRCEffectBlindness();
+
+// Create a Spell Level Absorption effect.
+// - nMaxSpellLevelAbsorbed: maximum spell level that will be absorbed by the
+//   effect
+// - nTotalSpellLevelsAbsorbed: maximum number of spell levels that will be
+//   absorbed by the effect
+// - nSpellSchool: SPELL_SCHOOL_*
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if:
+//   nMaxSpellLevelAbsorbed is not between -1 and 9 inclusive, or nSpellSchool
+//   is invalid.
+struct PRCeffect PRCEffectSpellLevelAbsorption(int nMaxSpellLevelAbsorbed, int nTotalSpellLevelsAbsorbed=0, int nSpellSchool=SPELL_SCHOOL_GENERAL );
+
+// Create a Dispel Magic Best effect.
+// If no parameter is specified, USE_CREATURE_LEVEL will be used. This will
+// cause the dispel effect to use the level of the creature that created the
+// effect.
+struct PRCeffect PRCEffectDispelMagicBest(int nCasterLevel=USE_CREATURE_LEVEL);
+
+// Create a Miss Chance effect.
+// - nPercentage: 1-100 inclusive
+// - nMissChanceType: MISS_CHANCE_TYPE_*
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nPercentage < 1 or
+//   nPercentage > 100.
+struct PRCeffect PRCEffectMissChance(int nPercentage, int nMissChanceType=MISS_CHANCE_TYPE_NORMAL);
+
+// Create a Disappear/Appear effect.
+// The object will "fly away" for the duration of the effect and will reappear
+// at lLocation.
+// - nAnimation determines which appear and disappear animations to use. Most creatures
+// only have animation 1, although a few have 2 (like beholders)
+struct PRCeffect PRCEffectDisappearAppear(location lLocation, int nAnimation=1);
+
+// Create a Disappear effect to make the object "fly away" and then destroy
+// itself.
+// - nAnimation determines which appear and disappear animations to use. Most creatures
+// only have animation 1, although a few have 2 (like beholders)
+struct PRCeffect PRCEffectDisappear(int nAnimation=1);
+
+// Create an Appear effect to make the object "fly in".
+// - nAnimation determines which appear and disappear animations to use. Most creatures
+// only have animation 1, although a few have 2 (like beholders)
+struct PRCeffect PRCEffectAppear(int nAnimation=1);
+
+// Create a Modify Attacks effect to add attacks.
+// - nAttacks: maximum is 5, even with the effect stacked
+// * Returns an effect of type EFFECT_TYPE_INVALIDEFFECT if nAttacks > 5.
+struct PRCeffect PRCEffectModifyAttacks(int nAttacks);
+
+// Create a Damage Shield effect which does (nDamageAmount + nRandomAmount)
+// damage to any melee attacker on a successful attack of damage type nDamageType.
+// - nDamageAmount: an integer value
+// - nRandomAmount: DAMAGE_BONUS_*
+// - nDamageType: DAMAGE_TYPE_*
+// NOTE! You *must* use the DAMAGE_BONUS_* constants! Using other values may
+//       result in odd behaviour.
+struct PRCeffect PRCEffectDamageShield(int nDamageAmount, int nRandomAmount, int nDamageType);
+
+// Create a Swarm effect.
+// - nLooping: If this is TRUE, for the duration of the effect when one creature
+//   created by this effect dies, the next one in the list will be created.  If
+//   the last creature in the list dies, we loop back to the beginning and
+//   sCreatureTemplate1 will be created, and so on...
+// - sCreatureTemplate1
+// - sCreatureTemplate2
+// - sCreatureTemplate3
+// - sCreatureTemplate4
+struct PRCeffect PRCEffectSwarm(int nLooping, string sCreatureTemplate1, string sCreatureTemplate2="", string sCreatureTemplate3="", string sCreatureTemplate4="");
+
+// Create a Turn Resistance Decrease effect.
+// - nHitDice: a positive number representing the number of hit dice for the
+///  decrease
+struct PRCeffect PRCEffectTurnResistanceDecrease(int nHitDice);
+
+// Create a Turn Resistance Increase effect.
+// - nHitDice: a positive number representing the number of hit dice for the
+//   increase
+struct PRCeffect PRCEffectTurnResistanceIncrease(int nHitDice);
+
+// returns an effect that will petrify the target
+// * currently applies EffectParalyze and the stoneskin visual effect.
+struct PRCeffect PRCEffectPetrify();
+
+// returns an effect that is guaranteed to paralyze a creature.
+// this effect is identical to EffectParalyze except that it cannot be resisted.
+struct PRCeffect PRCEffectCutsceneParalyze();
+
+// Returns an effect that is guaranteed to dominate a creature
+// Like EffectDominated but cannot be resisted
+struct PRCeffect PRCEffectCutsceneDominated();
+
+// Creates an effect that inhibits spells
+// - nPercent - percentage of failure
+// - nSpellSchool - the school of spells affected.
+struct PRCeffect PRCEffectSpellFailure(int nPercent=100, int nSpellSchool=SPELL_SCHOOL_GENERAL);
+
+// Returns an effect of type EFFECT_TYPE_ETHEREAL which works just like EffectSanctuary
+// except that the observers get no saving throw
+struct PRCeffect PRCEffectEthereal();
+
+// Creates a cutscene ghost effect, this will allow creatures
+// to pathfind through other creatures without bumping into them
+// for the duration of the effect.
+struct PRCeffect PRCEffectCutsceneGhost();
+
+// Returns an effect that when applied will paralyze the target's legs, rendering
+// them unable to walk but otherwise unpenalized. This effect cannot be resisted.
+struct PRCeffect PRCEffectCutsceneImmobilize();
 
 //get/set local handlers
 void             SetLocalPRCEffect(object oObject, string sVarName, struct PRCeffect eValue)

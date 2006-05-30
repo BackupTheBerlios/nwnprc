@@ -64,9 +64,11 @@ void main()
             return;
         eTest = GetNextEffect(oPC);
     }
-    if(CheckMissingSpells(oPC, CLASS_TYPE_BARD, 0, 6))
+    if(!GetPRCSwitch(PRC_BARD_DISALLOW_NEWSPELLBOOK)
+        && CheckMissingSpells(oPC, CLASS_TYPE_BARD, 0, 6))
         return;
-    if(CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, 0, 9))
+    if(!GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK)
+        && CheckMissingSpells(oPC, CLASS_TYPE_SORCERER, 0, 9))
         return;
     if(CheckMissingSpells(oPC, CLASS_TYPE_SUEL_ARCHANAMACH, 1, 5))
         return;  

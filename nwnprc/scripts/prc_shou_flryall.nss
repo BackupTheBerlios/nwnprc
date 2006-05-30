@@ -11,25 +11,14 @@
 
 #include "nw_i0_spells"
 
-int isNotShield(object oItem)
-{
-     int isNotAShield = 1;
-     
-     if(GetBaseItemType(oItem) == BASE_ITEM_LARGESHIELD)       isNotAShield == 0;
-     else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield == 0;
-     else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield == 0;
-
-     return isNotAShield;
-}
-
 void main()
 {
-	object oPC = PRCGetSpellTargetObject();
-	
-	// Removes effects
-	RemoveEffectsFromSpell(oPC, GetSpellId());
-	if(DEBUG) DoDebug("Shou Flurry All: Removing Spell Effects");
-	
+    object oPC = PRCGetSpellTargetObject();
+    
+    // Removes effects
+    RemoveEffectsFromSpell(oPC, GetSpellId());
+    if(DEBUG) DoDebug("Shou Flurry All: Removing Spell Effects");
+    
           string nMesA = "";
           object oArmorA = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
           object oWeapRA = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
@@ -60,27 +49,27 @@ void main()
 
 
 
-	//check armor type
-	if(armorTypeA < ARMOR_TYPE_MEDIUM)
-	{
-		if(DEBUG) DoDebug("Shou Flurry All: Armour is light");
-		if(isNotShield(oWeapLA) )
-		{
-			if(DEBUG) DoDebug("Shou Flurry All: Shou Disciple not carrying a shield");
-			effect addAttA = SupernaturalEffect( EffectModifyAttacks(numAddAttacksA) );
-			effect attPenA = SupernaturalEffect( EffectAttackDecrease(attackPenaltyA) );
-			effect eLinkA = EffectLinkEffects(addAttA, attPenA);
-			ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkA, oPC);
-			SetLocalInt(oPC, "HasMFlurry", 2);
-	                nMesA = "*Martial Flurry Activated*";
-	                if(DEBUG) DoDebug("Shou Flurry All: Applied Spell Effects");
-		}
-	}
-	else
-	{
-		nMesA = "*Invalid Weapon.  Ability Not Activated!*";
-	}
+    //check armor type
+    if(armorTypeA < ARMOR_TYPE_MEDIUM)
+    {
+        if(DEBUG) DoDebug("Shou Flurry All: Armour is light");
+        if(isNotShield(oWeapLA) )
+        {
+            if(DEBUG) DoDebug("Shou Flurry All: Shou Disciple not carrying a shield");
+            effect addAttA = SupernaturalEffect( EffectModifyAttacks(numAddAttacksA) );
+            effect attPenA = SupernaturalEffect( EffectAttackDecrease(attackPenaltyA) );
+            effect eLinkA = EffectLinkEffects(addAttA, attPenA);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLinkA, oPC);
+            SetLocalInt(oPC, "HasMFlurry", 2);
+                    nMesA = "*Martial Flurry Activated*";
+                    if(DEBUG) DoDebug("Shou Flurry All: Applied Spell Effects");
+        }
+    }
+    else
+    {
+        nMesA = "*Invalid Weapon.  Ability Not Activated!*";
+    }
 
-	FloatingTextStringOnCreature(nMesA, oPC, FALSE);
-	if(DEBUG) DoDebug("Shou Flurry All: Exiting script");
+    FloatingTextStringOnCreature(nMesA, oPC, FALSE);
+    if(DEBUG) DoDebug("Shou Flurry All: Exiting script");
 }

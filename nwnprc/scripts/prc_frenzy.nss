@@ -61,38 +61,32 @@ void main()
 
         // Change the strength bonus at level 8
         if (nLevel < 8)
-        {
             nIncrease = 6;
-        }
         else
-        {
             nIncrease = 10;
-        }
 
-        // Check for haste
-        if(GetHasSpellEffect(SPELL_MASS_HASTE, oTarget) == TRUE)
-        {
-          hasHaste = 1;
-     }
-     if(GetHasSpellEffect(647, oTarget) == TRUE) // blinding speed
-     {
-          hasHaste = 1;
-     }
-     if(GetHasSpellEffect(78, oTarget) == TRUE) // haste
-     {
-          hasHaste = 1;
-     }
-
-     // Checks all equiped items for haste
-     for (nSlot=0; nSlot<NUM_INVENTORY_SLOTS; nSlot++)
-     {
-         object oItem = GetItemInSlot(nSlot, OBJECT_SELF);
-
-         if (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HASTE))
+         // Check for haste
+         if(GetHasSpellEffect(SPELL_MASS_HASTE, oTarget) == TRUE)
          {
-               hasHaste = 1;
-            }
-     }
+          hasHaste = 1;
+         }
+         if(GetHasSpellEffect(647, oTarget) == TRUE) // blinding speed
+         {
+              hasHaste = 1;
+         }
+         if(GetHasSpellEffect(78, oTarget) == TRUE) // haste
+         {
+              hasHaste = 1;
+         }
+
+         // Checks all equiped items for haste
+         for (nSlot=0; nSlot<NUM_INVENTORY_SLOTS; nSlot++)
+         {
+             object oItem = GetItemInSlot(nSlot, OBJECT_SELF);
+
+            if (GetItemHasItemProperty(oItem, ITEM_PROPERTY_HASTE))
+                hasHaste = 1;
+         }
 
         // ac penalty applied to skin
         object oSkin = GetPCSkin(OBJECT_SELF);
@@ -108,14 +102,11 @@ void main()
 
         if(hasHaste == 0)
         {
-          effect eHaste = EffectHaste();
-          effect eMove = EffectMovementSpeedDecrease(50);
-          eLink = EffectLinkEffects(eLink, eHaste);
-          eLink = EffectLinkEffects(eLink, eMove);
-
-          //effect eExAtt = EffectModifyAttacks(1);
-          //eLink = EffectLinkEffects(eLink, eExAtt);
-     }
+            effect eHaste = EffectHaste();
+            effect eMove = EffectMovementSpeedDecrease(50);
+            eLink = EffectLinkEffects(eLink, eHaste);
+            eLink = EffectLinkEffects(eLink, eMove);
+        }
 
         SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_FRENZY, FALSE));
 

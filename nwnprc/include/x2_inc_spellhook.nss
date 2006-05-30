@@ -199,10 +199,6 @@ int NullPsionicsField()
 
 int BardSorcPrCCheck()
 {
-    //check they have bard/sorc levels
-    if(!GetLevelByClass(CLASS_TYPE_BARD)
-        && !GetLevelByClass(CLASS_TYPE_SORCERER))
-        return TRUE;
     //check its a bard/sorc spell
     if(PRCGetLastSpellCastClass() != CLASS_TYPE_BARD
         && PRCGetLastSpellCastClass() != CLASS_TYPE_SORCERER)
@@ -217,6 +213,16 @@ int BardSorcPrCCheck()
         return TRUE;
     //check they have arcane PrC
     if(!GetArcanePRCLevels(OBJECT_SELF))
+        return TRUE;
+    //check if the newspellbooks are disabled    
+    if((GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK)
+            && PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER)
+        || (GetPRCSwitch(PRC_BARD_DISALLOW_NEWSPELLBOOK)
+            && PRCGetLastSpellCastClass() == CLASS_TYPE_BARD))
+        return TRUE;
+    //check they have bard/sorc levels
+    if(!GetLevelByClass(CLASS_TYPE_BARD)
+        && !GetLevelByClass(CLASS_TYPE_SORCERER))
         return TRUE;
     //at this point, they must be using the bioware spellbook
     //from a class that adds to sorc

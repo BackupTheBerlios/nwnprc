@@ -164,53 +164,182 @@ void DoNaturalAttack(object oWeapon)
         oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
         OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
         );        
-    DoDebug("Performing an attack with "+GetName(oWeapon));     
+    if(DEBUG) DoDebug("Performing an secondary natural attack with "+GetName(oWeapon));     
+}
+
+void DoOffhandAttack(int nAttackMod)
+{
+    object oPC = OBJECT_SELF;
+    object oTarget = GetAttackTarget(); 
+    object oWeapon = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+    //if target is not valid, abort
+    if(!GetIsObjectValid(oTarget))
+        return;
+    //if target is dead, abort    
+    if(GetIsDead(oTarget))
+        return;
+    //if target is not hostile, abort    
+    if(!GetIsEnemy(oTarget))
+        return;
+    //no point attacking plot
+    if(GetPlotFlag(oTarget))
+        return;
+    //attack not in melee range abort
+    if(!GetIsInMeleeRange(oTarget, oPC))
+        return;
+    //dont attack with a shield/torch    
+    if(!isNotShield(oWeapon))
+        return;
+        
+    
+    //null effect
+    effect eInvalid;
+    //secondary attacks are half strength
+    //apply this as a reduced damage amount
+    int nDamageMod;// = -GetAbilityModifier(ABILITY_STRENGTH, oPC)/2;
+
+    PerformAttack(oTarget, 
+        oPC,                //
+        eInvalid,           //effect eSpecialEffect,
+        0.0,                //float eDuration = 0.0
+        nAttackMod,         //int iAttackBonusMod = 0
+        nDamageMod,         //int iDamageModifier = 0
+        0,                  //int iDamageType = 0
+        "",//sMessageSuccess,    //string sMessageSuccess = ""   
+        "",//sMessageFailure,    //string sMessageFailure = ""
+        FALSE,              //int iTouchAttackType = FALSE
+        oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
+        OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
+        );        
+    if(DEBUG) DoDebug("Performing a scripted offhand attack with "+GetName(oWeapon));     
+}
+
+void DoOverflowOnhandAttack(int nAttackMod)
+{
+    object oPC = OBJECT_SELF;
+    object oTarget = GetAttackTarget(); 
+    object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    //if target is not valid, abort
+    if(!GetIsObjectValid(oTarget))
+        return;
+    //if target is dead, abort    
+    if(GetIsDead(oTarget))
+        return;
+    //if target is not hostile, abort    
+    if(!GetIsEnemy(oTarget))
+        return;
+    //no point attacking plot
+    if(GetPlotFlag(oTarget))
+        return;
+    //attack not in melee range abort
+    if(!GetIsInMeleeRange(oTarget, oPC))
+        return;
+    
+    //null effect
+    effect eInvalid;
+    //secondary attacks are half strength
+    //apply this as a reduced damage amount
+    int nDamageMod;// = -GetAbilityModifier(ABILITY_STRENGTH, oPC)/2;
+
+    PerformAttack(oTarget, 
+        oPC,                //
+        eInvalid,           //effect eSpecialEffect,
+        0.0,                //float eDuration = 0.0
+        nAttackMod,         //int iAttackBonusMod = 0
+        nDamageMod,         //int iDamageModifier = 0
+        0,                  //int iDamageType = 0
+        "",//sMessageSuccess,    //string sMessageSuccess = ""   
+        "",//sMessageFailure,    //string sMessageFailure = ""
+        FALSE,              //int iTouchAttackType = FALSE
+        oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
+        OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
+        );        
+    if(DEBUG) DoDebug("Performing a overflow onhand attack with "+GetName(oWeapon));     
 }
 
 void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
 {
+    float fInitialDelay = IntToFloat(Random(20))/10.0;
     //no natural weapons, abort
-    if(!array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
-        return; 
-    //in a different form, abort for now fix it later    
-    if (GetIsPolyMorphedOrShifted(oPC)) 
-        return;
-    UpdateSecondaryWeaponSizes(oPC);
-    int i;
-    float fDelay = IntToFloat(Random(20))/10.0;
-    while(i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
+    //in a different form, abort for now fix it later   
+    if(array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF)
+        && !GetIsPolyMorphedOrShifted(oPC))
+    {   
+        UpdateSecondaryWeaponSizes(oPC);
+        int i;
+        float fDelay = fInitialDelay;
+        while(i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
+        {
+            //get the resref to use
+            string sResRef = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
+            //if null, move to next
+            if(sResRef == "")
+                continue;
+            //get the created item
+            object oWeapon = GetObjectByTag(sResRef);
+            if(!GetIsObjectValid(oWeapon))
+            {
+                object oLimbo = GetObjectByTag("HEARTOFCHAOS");
+                location lLimbo = GetLocation(oLimbo);
+                if(!GetIsObjectValid(oLimbo))
+                    lLimbo = GetStartingLocation();
+                oWeapon = CreateObject(OBJECT_TYPE_ITEM, sResRef, lLimbo);
+            }
+            if(!GetIsObjectValid(oWeapon))
+            {
+                //something odd here, abort to be safe
+                continue;
+            }
+
+            //do the attack within a delay
+            AssignCommand(oPC, 
+                DelayCommand(fDelay,
+                    DoNaturalAttack(oWeapon)));
+            DoDebug("Assigning an attack with "+GetName(oWeapon));
+            i++;
+            //calculate the delay to use
+            fDelay += 2.0;
+            if(fDelay > 6.0)
+                fDelay -= 6.0;
+        }
+    }
+    int nOverflowAttackCount = GetLocalInt(oPC, "OverflowBaseAttackCount");
+    if(nOverflowAttackCount)
     {
-        //get the resref to use
-        string sResRef = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
-        //if null, move to next
-        if(sResRef == "")
-            continue;
-        //get the created item
-        object oWeapon = GetObjectByTag(sResRef);
-        if(!GetIsObjectValid(oWeapon))
+        int i;
+        int nAttackPenalty = -30;
+        float fDelay = fInitialDelay;
+        for(i=0;i<nOverflowAttackCount;i++)
         {
-            object oLimbo = GetObjectByTag("HEARTOFCHAOS");
-            location lLimbo = GetLocation(oLimbo);
-            if(!GetIsObjectValid(oLimbo))
-                lLimbo = GetStartingLocation();
-            oWeapon = CreateObject(OBJECT_TYPE_ITEM, sResRef, lLimbo);
-        }
-        if(!GetIsObjectValid(oWeapon))
+            AssignCommand(oPC, 
+                DelayCommand(fDelay,
+                    DoOverflowOnhandAttack(nAttackPenalty)));
+            //calculate the delay to use
+            fDelay += 2.0;
+            if(fDelay > 6.0)
+                fDelay -= 6.0;        
+            //calculate new attack penalty   
+            nAttackPenalty -= 5;
+        }    
+    }
+    int nOffhandAttackCount = GetLocalInt(oPC, "OffhandOverflowAttackCount");
+    if(nOffhandAttackCount)
+    {
+        int i;
+        int nAttackPenalty = -15;
+        float fDelay = fInitialDelay;
+        for(i=0;i<nOverflowAttackCount;i++)
         {
-            //something odd here, abort to be safe
-            continue;
-        }
-        
-        //do the attack within a delay
-        AssignCommand(oPC, 
-            DelayCommand(fDelay,
-                DoNaturalAttack(oWeapon)));
-        DoDebug("Assigning an attack with "+GetName(oWeapon));
-        i++;
-        //calculate the delay to use
-        fDelay += 2.0;
-        if(fDelay > 6.0)
-            fDelay -= 6.0;
+            AssignCommand(oPC, 
+                DelayCommand(fDelay,
+                    DoOffhandAttack(nAttackPenalty)));
+            //calculate the delay to use
+            fDelay += 2.0;
+            if(fDelay > 6.0)
+                fDelay -= 6.0;        
+            //calculate new attack penalty   
+            nAttackPenalty -= 5;
+        }    
     }
 }
 
@@ -232,10 +361,11 @@ string GetAffixForSize(int nSize)
     return sResRef;        
 }
 
-void EquipNaturalWeapon(object oPC, string sResRef)
+object EquipNaturalWeapon(object oPC, string sResRef)
 {
     object oObject = CreateItemOnObject(sResRef, oPC);
     AssignCommand(oPC, ActionEquipItem(oObject, INVENTORY_SLOT_CWEAPON_L));
+    return oObject;
 }
 
 void UpdateNaturalWeaponSizes(object oPC)
@@ -288,27 +418,6 @@ void UpdateNaturalWeaponSizes(object oPC)
     }
 }
 
-void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1)
-{
-    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
-        array_create(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
-    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS))
-        array_create(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
-    //check if it was already added
-    int i;
-    for(i=0;i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);i++)
-    {
-        string sTest = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
-        if(sTest == sResRef)
-            return;
-    }
-    //add it/them
-    array_set_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF,
-        array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF), sResRef);
-    array_set_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS,
-        array_get_size(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS), nCount);
-}
-
 void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1)
 {
     if(!array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF))
@@ -350,6 +459,27 @@ void ClearNaturalWeapons(object oPC)
     array_delete(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
 }
 
+void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1)
+{
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
+    //check if it was already added
+    int i;
+    for(i=0;i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
+        if(sTest == sResRef)
+            return;
+    }
+    //add it/them
+    array_set_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF,
+        array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF), sResRef);
+    array_set_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS,
+        array_get_size(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS), nCount);
+}
+
 int GetIsUsingPrimaryNaturalWeapons(object oPC)
 {
     object oObject = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
@@ -368,31 +498,28 @@ int GetIsUsingPrimaryNaturalWeapons(object oPC)
 
 void SetPrimaryNaturalWeapon(object oPC, int nIndex)
 {
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
     string sResRef = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, nIndex);
     if(sResRef == "")
         return;
-    EquipNaturalWeapon(oPC, sResRef);
+    object oNaturalWeapon = EquipNaturalWeapon(oPC, sResRef);
     int nAttackCount = array_get_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS, nIndex);
     //set the number of attacks correctly
     //note this function does set the number, not BAB
     //note this function does work on PCs, despite the description
-    if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)))
-        //dont set it directly, instead set the local which is checked in OnUnEquip
-        SetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT, nAttackCount);
-    else
-        SetBaseAttackBonus(nAttackCount);
-    //unlike PnP where they should all be at full AB, here they will be at -5 a time
-    //to compensate, apply +2AB per attack above 1
+    //dont set it directly, instead set the local which is checked in prc_bab_caller
+    SetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT, nAttackCount);
+    //unlike PnP where they should all be at full AB, here they will be at -5 a time (test for confirmation)
+    //to compensate, apply +2AB per attack above 1 as an itemproperty on the natural weapon
     if(nAttackCount > 1)
     {
-        //get the object thats going to apply the effect
-        object oWP = GetObjectToApplyNewEffect("WP_NatWeapABEffect", oPC);
-        int nBonus = (nAttackCount-1)*2;
-        AssignCommand(oWP, 
-            ActionDoCommand(
-                ApplyEffectToObject(DURATION_TYPE_PERMANENT,
-                    SupernaturalEffect(
-                        EffectAttackIncrease(nBonus)),
-                    oPC)));              
+        int nBonus = (nAttackCount-1)*2;     
+        if(nBonus > 20)
+            nBonus = 20;
+        IPSafeAddItemProperty(oNaturalWeapon, ItemPropertyAttackBonus(nBonus));
+        
     }   
 }

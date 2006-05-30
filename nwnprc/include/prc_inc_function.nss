@@ -276,6 +276,10 @@ void EvalPRCFeats(object oPC)
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
     ExecuteScript("unarmed_caller", oPC);
+
+    // Gathers all the calls to SetBaseAttackBonus() to one place
+    // Must be after all evaluationscripts that need said function.
+    ExecuteScript("prc_bab_caller", oPC);
 }
 
 void DeletePRCLocalInts(object oSkin)

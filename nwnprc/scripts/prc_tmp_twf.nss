@@ -16,20 +16,6 @@
 #include "prc_class_const"
 #include "prc_spell_const"
 
-int isNotShield(object oItem)
-{
-     int isNotAShield = 1;
-     
-     if(GetBaseItemType(oItem) == BASE_ITEM_LARGESHIELD)       isNotAShield = 0;
-     else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield = 0;
-     else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield = 0;
-     
-     // Added torches to the check as they should not count either
-     else if (GetBaseItemType(oItem) == BASE_ITEM_TORCH) isNotAShield = 0;
-     
-     return isNotAShield;
-}
-
 void main()
 {
      object oPC = PRCGetSpellTargetObject();

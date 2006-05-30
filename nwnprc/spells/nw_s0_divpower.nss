@@ -81,10 +81,22 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     effect eStrength = EffectAbilityIncrease(ABILITY_STRENGTH, nStrength);
     effect eHP = EffectTemporaryHitpoints(nHP);
     effect eAttack = EffectAttackIncrease(nAttack);
-    effect eAttackMod = EffectModifyAttacks(1);
+//accounted for in prc_bab_caller    
+//    effect eAttackMod = EffectModifyAttacks(1);
+    int nAttackCount;
+    if(CasterLvl<6)
+        nAttackCount = 1;
+    else if(CasterLvl<11)
+        nAttackCount = 2;
+    else if(CasterLvl<16)
+        nAttackCount = 3;
+    else if(CasterLvl>=16)
+        nAttackCount = 4;
+    SetLocalInt(oTarget, "AttackCount_DivinePower", nAttackCount);
+    ExecuteScript("prc_bab_caller", OBJECT_SELF);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
-    effect eLink = EffectLinkEffects(eAttack, eAttackMod);
+    effect eLink = eAttack;//EffectLinkEffects(eAttack, eAttackMod);
     eLink = EffectLinkEffects(eLink, eDur);
 
 //    effect eLink = EffectLinkEffects(eAttack, eHP);

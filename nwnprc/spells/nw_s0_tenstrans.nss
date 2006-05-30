@@ -192,7 +192,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nDex);
         effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, nCon);
         effect eBAB = EffectAttackIncrease(nBAB);
-        effect eAttacks = EffectModifyAttacks(nAttacks);
+//accounted for in prc_bab_caller    
+//        effect eAttacks = EffectModifyAttacks(nAttacks);
+        SetLocalInt(OBJECT_SELF, "AttackCount_TensersTrans", nTotalAttacks);
+        ExecuteScript("prc_bab_caller", OBJECT_SELF);
         effect eHP = EffectTemporaryHitpoints(nHP); //apply separately
         effect eFort = EffectSavingThrowIncrease(SAVING_THROW_FORT, 5);
         effect eVis = EffectVisualEffect(VFX_IMP_SUPER_HEROISM);
@@ -200,7 +203,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         eLink = EffectLinkEffects(eStr, eDex);
         eLink = EffectLinkEffects(eLink, eCon);
         eLink = EffectLinkEffects(eLink, eBAB);
-        eLink = EffectLinkEffects(eLink, eAttacks);
+//        eLink = EffectLinkEffects(eLink, eAttacks);
         eLink = EffectLinkEffects(eLink, eFort);
         itemproperty ipSimple = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_SIMPLE);
         itemproperty ipMartial = PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL);

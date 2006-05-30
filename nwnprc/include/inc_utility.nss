@@ -402,6 +402,11 @@ int GetHasXPToSpend(object oPC, int nCost);
  */
 void SpendXP(object oPC, int nCost);
 
+/*
+ *  Convinence function for testing off-hand weapons
+ */
+int isNotShield(object oItem);
+
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -1047,6 +1052,22 @@ void SpendXP(object oPC, int nCost)
     {
         SetXP(oPC, GetXP(oPC) - nCost);
     }
+}
+
+
+
+int isNotShield(object oItem)
+{
+     int isNotAShield = 1;
+     
+     if(GetBaseItemType(oItem) == BASE_ITEM_LARGESHIELD)       isNotAShield = 0;
+     else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield = 0;
+     else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield = 0;
+     
+     // Added torches to the check as they should not count either
+     else if (GetBaseItemType(oItem) == BASE_ITEM_TORCH) isNotAShield = 0;
+     
+     return isNotAShield;
 }
 
 // Test main

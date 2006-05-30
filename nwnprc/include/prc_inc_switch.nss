@@ -341,6 +341,16 @@ const string PRC_THRALLHERD_LEADERSHIP             = "PRC_THRALLHERD_LEADERSHIP"
  */
 const string PRC_SPELLFIRE_DISALLOW_CHARGE_SELF     = "PRC_SPELLFIRE_DISALLOW_CHARGE_SELF";
 
+/*
+ * Disables the PRCs sorcerer newspelbook extension
+ */
+const string PRC_SORC_DISALLOW_NEWSPELLBOOK     = "PRC_SORC_DISALLOW_NEWSPELLBOOK";
+
+/*
+ * Disables the PRCs bards newspelbook extension
+ */
+const string PRC_BARD_DISALLOW_NEWSPELLBOOK     = "PRC_BARD_DISALLOW_NEWSPELLBOOK";
+
 /******************************************************************************\
 *                               Epic Spell switches                            *
 \******************************************************************************/
@@ -2455,6 +2465,8 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_SLINGS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BEBILITH_CLAWS_DESTROY);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_CHARGE_SELF);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SORC_DISALLOW_NEWSPELLBOOK);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BARD_DISALLOW_NEWSPELLBOOK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_REMOVE_PLAYER_SPEED);

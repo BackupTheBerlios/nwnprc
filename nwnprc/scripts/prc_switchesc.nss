@@ -708,12 +708,11 @@ void main()
             else if (nChoice == 3)
             {
                 //Spell scrolls
-                //NOTE: This is the store within the epic spell lab at the moment
-                object oStore = GetObjectByTag("prc_wiz_store");
+                object oStore = GetObjectByTag("prc_scrolls");
                 if(!GetIsObjectValid(oStore))
                 {
                     location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_wiz_store", lLimbo);
+                    oStore = CreateObject(OBJECT_TYPE_STORE, "prc_scrolls", lLimbo);
                 }
                 DelayCommand(1.0, OpenStore(oStore, oPC));
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);

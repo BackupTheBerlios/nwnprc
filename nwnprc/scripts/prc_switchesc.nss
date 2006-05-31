@@ -17,6 +17,7 @@
 #include "prc_alterations"
 #include "inc_epicspells"
 #include "prc_inc_leadersh"
+#include "prc_inc_natweap"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -124,7 +125,7 @@ void main()
                     AddChoice("Register this character as a cohort.", 6);
                 if(GetMaximumCohortCount(oPC))
                     AddChoice("Manage cohorts.", 7);
-                if(GetPrimaryNaturalWeaponCount(oPC)
+                if(GetPrimaryNaturalWeaponCount(oPC))
                     AddChoice("Select primary natural weapon.", 8);
 
 
@@ -514,7 +515,7 @@ void main()
                 string sHeader = "Select a natural weapon to use.";
                 SetHeader(sHeader);
                 AddChoice("Unarmed", -512);
-                in ti;
+                int i;
                 for(i=0;i<GetPrimaryNaturalWeaponCount(oPC);i++)
                 {
                     string sName;

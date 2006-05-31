@@ -13,6 +13,7 @@
 int GetECL(object oTarget);
 void GiveXPReward(object oPC, object oTarget, int nCR = 0);
 void GiveXPRewardToParty(object oPC, object oTarget, int nCR = 0);
+int GetXPReward(object oPC, object oTarget, int nCR = 0);
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -84,6 +85,22 @@ void GiveXPRewardToParty(object oPC, object oTarget, int nCR = 0)
 
 void GiveXPReward(object oPC, object oTarget, int nCR = 0)
 {
+    int nXPAward = GetXPReward(oPC, oTarget, nCR);
+
+    //actually give the XP
+    if(GetXP(oPC))
+    {
+        if(GetPRCSwitch(PRC_XP_USE_SETXP))
+            SetXP(oPC, GetXP(oPC)+nXPAward);
+        else
+            GiveXPToCreature(oPC, nXPAward);
+    }
+    else if(GetPRCSwitch(PRC_XP_GIVE_XP_TO_NPCS))
+        SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")+nXPAward);
+}
+
+int GetXPReward(object oPC, object oTarget, int nCR = 0)
+{
     if(GetIsObjectValid(oTarget))
     {
         nCR = FloatToInt(GetChallengeRating(oTarget));
@@ -101,7 +118,7 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
         ECL = 60;
     int nBaseXP = StringToInt(Get2DACache("dmgxp", IntToString(nCR), ECL-1));
     if(nBaseXP == 0)
-        return;
+        return 0;
 
     //count the size of the party
 
@@ -127,7 +144,7 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
     }
     //incase something weird is happenening
     if(fPartyCount == 0.0)
-        return;
+        return 0;
     int nXPAward = FloatToInt(IntToFloat(nBaseXP)/fPartyCount);
 
     //now do multiclass penalty
@@ -163,18 +180,9 @@ void GiveXPReward(object oPC, object oTarget, int nCR = 0)
         fPCAdjust = 1.0;
     nXPAward = FloatToInt(IntToFloat(nXPAward)*fPCAdjust);
     if(nXPAward < 0)
-        return;
-
-    //actually give the XP
-    if(GetIsPC(oPC))
-    {
-        if(GetPRCSwitch(PRC_XP_USE_SETXP))
-            SetXP(oPC, GetXP(oPC)+nXPAward);
-        else
-            GiveXPToCreature(oPC, nXPAward);
-    }
-    else if(GetPRCSwitch(PRC_XP_GIVE_XP_TO_NPCS))
-        SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")+nXPAward);
+        nXPAward = 0;
+        
+    return nXPAward;    
 }
 
 //::///////////////////////////////////////////////

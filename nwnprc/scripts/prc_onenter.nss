@@ -118,7 +118,7 @@ void main()
     if(GetPRCSwitch(PRC_PW_LOCATION_TRACKING))
     {
         struct metalocation lLoc = GetPersistantLocalMetalocation(oPC, "persist_loc");
-        DelayCommand(1.0, AssignCommand(oPC, JumpToLocation(MetalocationToLocation(lLoc))));
+        DelayCommand(6.0, AssignCommand(oPC, JumpToLocation(MetalocationToLocation(lLoc))));
     }
     if(GetPRCSwitch(PRC_PW_MAPPIN_TRACKING)
         && !GetLocalInt(oPC, "PRC_PW_MAPPIN_TRACKING_Done"))

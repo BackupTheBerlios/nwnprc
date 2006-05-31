@@ -215,8 +215,6 @@ int GetItemBonusSlotCount(object oPC, int nClass, int nSpellLevel)
                     ipTest = GetNextItemProperty(oTest);
                 }
             }
-            nSlot++;
-            oTest = GetItemInSlot(nSlot, oPC);
         }
         return nBonusCount;
     }

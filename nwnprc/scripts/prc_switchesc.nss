@@ -42,6 +42,7 @@ const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM   = 17;
 const int STAGE_LEADERSHIP_REMOVE               = 18;
 const int STAGE_LEADERSHIP_DELETE               = 19;
 const int STAGE_LEADERSHIP_DELETE_CONFIRM       = 20;
+const int STAGE_NATURAL_WEAPON                  = 30;
 
 const int CHOICE_RETURN_TO_PREVIOUS             = 0xEFFFFFFF;
 const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;
@@ -123,6 +124,8 @@ void main()
                     AddChoice("Register this character as a cohort.", 6);
                 if(GetMaximumCohortCount(oPC))
                     AddChoice("Manage cohorts.", 7);
+                if(GetPrimaryNaturalWeaponCount(oPC)
+                    AddChoice("Select primary natural weapon.", 8);
 
 
                 MarkStageSetUp(nStage, oPC);
@@ -506,6 +509,24 @@ void main()
 
                 MarkStageSetUp(nStage, oPC);
             }
+            else if (nStage == STAGE_NATURAL_WEAPON)
+            {
+                string sHeader = "Select a natural weapon to use.";
+                SetHeader(sHeader);
+                AddChoice("Unarmed", -512);
+                in ti;
+                for(i=0;i<GetPrimaryNaturalWeaponCount(oPC);i++)
+                {
+                    string sName;
+                    //use resref for now
+                    sName = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
+                    AddChoice(sName, i);
+                }
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);
+            
+            }
         }
 
         // Do token setup
@@ -563,6 +584,8 @@ void main()
             }
             else if(nChoice == 7)
                 nStage = STAGE_LEADERSHIP;
+            else if(nChoice == 8)
+                nStage = STAGE_NATURAL_WEAPON;
 
             // Mark the target stage to need building if it was changed (ie, selection was other than ID all)
             if(nStage != STAGE_ENTRY)
@@ -931,6 +954,18 @@ void main()
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_LEADERSHIP_DELETE;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if (nStage == STAGE_NATURAL_WEAPON)
+        {
+            if(nChoice = -512)
+                //no primary natural weapon
+                SetPrimaryNaturalWeapon(oPC, -1);           
+            else
+                //specific natural weapon
+                SetPrimaryNaturalWeapon(oPC, nChoice);
+        
+            nStage = STAGE_ENTRY;
             MarkStageNotSetUp(nStage, oPC);
         }
 

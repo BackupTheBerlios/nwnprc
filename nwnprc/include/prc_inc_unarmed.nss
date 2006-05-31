@@ -256,16 +256,6 @@ int FindUnarmedDamage(object oCreature)
     if(GetPRCSwitch(PRC_BRAWLER_SIZE) && iBrawler > 0)
         iBrawlerDamage = iBrawler / 6 + iSizeModifier;
 
-    // Certain race pack creatures use different damages.
-    //if      (GetRacialType(oCreature) == RACIAL_TYPE_MINOTAUR)   iRacialDamage = 3;
-    //else if (GetRacialType(oCreature) == RACIAL_TYPE_TROLL)      iRacialDamage = 2;
-    //else if (GetRacialType(oCreature) == RACIAL_TYPE_RAKSHASA)   iRacialDamage = 2;
-    //else if (GetRacialType(oCreature) == RACIAL_TYPE_LIZARDFOLK) iRacialDamage = 1;
-    //else if (GetRacialType(oCreature) == RACIAL_TYPE_TANARUKK)   iRacialDamage = 2;
-    if (GetRacialType(oCreature) == RACIAL_TYPE_CENTAUR)    iRacialDamage = 2;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_WEMIC)      iRacialDamage = 2;
-    else if (GetRacialType(oCreature) == RACIAL_TYPE_ILLITHID)   iRacialDamage = 1;
-
     // For Initiate of Draconic Mysteries
     if      (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
     else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
@@ -478,18 +468,10 @@ void UnarmedFists(object oCreature)
     
         // Determine the type of damage the character should do.
         string sWeapType;
-        if (GetHasFeat(FEAT_CLAWDRAGON, oCreature) ||
-            //iRace == RACIAL_TYPE_TROLL             ||
-            //iRace == RACIAL_TYPE_RAKSHASA          ||
-            //iRace == RACIAL_TYPE_LIZARDFOLK        ||
-            iRace == RACIAL_TYPE_WEMIC)
-        {
+        if (GetHasFeat(FEAT_CLAWDRAGON, oCreature))
             sWeapType = "PRC_UNARMED_S";
-        }
         else
-        {
             sWeapType = "PRC_UNARMED_B";
-        }
     
     
         // Equip the creature weapon.

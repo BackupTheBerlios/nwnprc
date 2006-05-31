@@ -93,6 +93,7 @@ void SetIsUsingPrimaryNaturalWeapons(object oPC, int nNatural);
 void ClearNaturalWeapons(object oPC);
 void UpdateSecondaryWeaponSizes(object oPC);
 string GetAffixForSize(int nSize);
+void SetPrimaryNaturalWeapon(object oPC, int nIndex);
 
 //the name of the array that the resrefs of the natural weapons are stored in
 const string ARRAY_NAT_SEC_WEAP_RESREF   = "ARRAY_NAT_SEC_WEAP_RESREF";
@@ -461,8 +462,12 @@ void ClearNaturalWeapons(object oPC)
 
 void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1)
 {
+    int nFirstNaturalWeapon = FALSE;
     if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
+    {
         array_create(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
+        nFirstNaturalWeapon = TRUE;
+    }    
     if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS))
         array_create(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
     //check if it was already added
@@ -478,6 +483,11 @@ void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1)
         array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF), sResRef);
     array_set_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS,
         array_get_size(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS), nCount);
+    //if this is the first natural weapon, use it    
+    if(nFirstNaturalWeapon 
+        && !GetLevelByClass(CLASS_TYPE_MONK)
+        && !GetLevelByClass(CLASS_TYPE_BRAWLER))
+        SetPrimaryNaturalWeapon(oPC, 0);
 }
 
 int GetIsUsingPrimaryNaturalWeapons(object oPC)
@@ -502,6 +512,15 @@ void SetPrimaryNaturalWeapon(object oPC, int nIndex)
         array_create(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
     if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS))
         array_create(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
+    if(nIndex == -1)
+    {
+        //remove natural weapons
+        DestroyObject(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC));
+        DestroyObject(GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC));
+        DestroyObject(GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC));
+        DeleteLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT);
+        return;
+    }
     string sResRef = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, nIndex);
     if(sResRef == "")
         return;
@@ -519,7 +538,11 @@ void SetPrimaryNaturalWeapon(object oPC, int nIndex)
         int nBonus = (nAttackCount-1)*2;     
         if(nBonus > 20)
             nBonus = 20;
-        IPSafeAddItemProperty(oNaturalWeapon, ItemPropertyAttackBonus(nBonus));
-        
+        IPSafeAddItemProperty(oNaturalWeapon, ItemPropertyAttackBonus(nBonus));        
     }   
+}
+
+int GetPrimaryNaturalWeaponCount(object oPC)
+{
+    return array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
 }

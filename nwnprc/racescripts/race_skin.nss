@@ -549,6 +549,10 @@ void main()
         int nSize = PRCGetCreatureSize(oPC);
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6l_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
     else if(nRace==RACIAL_TYPE_RAKSHASA)
     {
@@ -556,6 +560,10 @@ void main()
         int nSize = PRCGetCreatureSize(oPC);
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6l_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
     else if(nRace==RACIAL_TYPE_LIZARDFOLK)
     {
@@ -563,6 +571,10 @@ void main()
         int nSize = PRCGetCreatureSize(oPC);
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
+        //primary weapon
+        sResRef = "prc_claw_1d6m_";
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
     else if(nRace==RACIAL_TYPE_TANARUKK)
     {
@@ -570,5 +582,26 @@ void main()
         int nSize = PRCGetCreatureSize(oPC);
         sResRef += GetAffixForSize(nSize);
         AddNaturalSecondaryWeapon(oPC, sResRef);
+    }
+    else if(nRace==RACIAL_TYPE_WEMIC)
+    {
+        string sResRef = "prc_claw_1d6l_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
+    }
+    else if(nRace==RACIAL_TYPE_ILLITHID)
+    {
+        string sResRef = "prc_ill_tent_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 4);
+    }
+    else if(nRace==RACIAL_TYPE_CENTAUR)
+    {
+        string sResRef = "prc_cent_hoof_";
+        int nSize = PRCGetCreatureSize(oPC);
+        sResRef += GetAffixForSize(nSize);
+        AddNaturalPrimaryWeapon(oPC, sResRef, 2);
     }
 }

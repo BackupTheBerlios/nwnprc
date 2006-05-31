@@ -248,7 +248,7 @@ void EvalPRCFeats(object oPC)
     // Miscellaneous
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
-    ExecuteScript("race_unarmed", oPC);
+    
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
     {

@@ -28,4 +28,18 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDC;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	location lLoc = GetSpellTargetLocation();	
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	effect eVis = EffectVisualEffect(?????); 

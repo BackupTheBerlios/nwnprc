@@ -22,14 +22,12 @@ characters perceive the brilliant light emanating
 from the caster, but are not blinded by it and do 
 not suffer any negative effects from it. Evil 
 characters that make their saving throw are not 
-blinded, but are dis­tracted, taking a -1 penalty 
+blinded, but are distracted, taking a -1 penalty 
 on any attacks made within the spell's area for 
 the duration of the spell. Creatures must be able 
 to see visible light to be affected by this spell.
 
 Sacrifice: 1d3 points of Strength damage. 
-
-
 
 Author:    Tenjac
 Created:   

@@ -40,6 +40,7 @@ void DieMaggot(int nSpellID, object oManifester, object oTarget)
          )
        )
     {
+        DeathlessFrenzyCheck(oTarget);
         effect eVis   = EffectVisualEffect(VFX_IMP_DEATH_L);
         effect eVis2  = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
         effect eDeath = EffectDeath();

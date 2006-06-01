@@ -101,6 +101,7 @@ void main()
                     // Failed save -> Death
                     else
                     {
+                            DeathlessFrenzyCheck(oTarget);
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeathLink, oTarget);
                     }// end else - Save failure
                 }// end if - SR check

@@ -43,84 +43,85 @@ int GetHasSoulRot(object oPC);
 
 void main()
 {
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDelay = (d3(1) - 1);
-	int nType = MyPRCGetRacialType(oTarget);
-		
-	//Spellhook
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HEARTCLUTCH, oPC);
-	
-	if(nType != RACIAL_TYPE_OOZE &&
-	   nType != RACIAL_TYPE_UNDEAD &&
-	   nType != RACIAL_TYPE_CONSTRUCT &&
-	   nType != RACIAL_TYPE_ELEMENTAL)
-	   
-	{
-		//Check for Soul rot
-		
-		if(GetHasSoulRot(oPC))
-		{
-			//Check for Spell resistance
-			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-			{
-				//Clutching loop
-				ClutchLoop(oTarget, nDelay, oPC);
-			}
-		}
-	}
-	SPEvilShift(oPC);
-	SPSetSchool();
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nDelay = (d3(1) - 1);
+    int nType = MyPRCGetRacialType(oTarget);
+        
+    //Spellhook
+    if(!X2PreSpellCastCode()) return;
+    
+    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    
+    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HEARTCLUTCH, oPC);
+    
+    if(nType != RACIAL_TYPE_OOZE &&
+       nType != RACIAL_TYPE_UNDEAD &&
+       nType != RACIAL_TYPE_CONSTRUCT &&
+       nType != RACIAL_TYPE_ELEMENTAL)
+       
+    {
+        //Check for Soul rot
+        
+        if(GetHasSoulRot(oPC))
+        {
+            //Check for Spell resistance
+            if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+            {
+                //Clutching loop
+                ClutchLoop(oTarget, nDelay, oPC);
+            }
+        }
+    }
+    SPEvilShift(oPC);
+    SPSetSchool();
 }
 
 void ClutchLoop(object oTarget, int nDelay, object oPC)
-{		
-	if(nDelay < 1)
-	{
-		int nDC = SPGetSpellSaveDC(oTarget, oPC);
-		//Save
-		if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-		{
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3)), oTarget);
-			
-		}
-		else
-		{
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
-		}
-	}
-	
-	nDelay--;
-	
-	//Round we go...
-	ClutchLoop(oTarget, nDelay, oPC);
+{       
+    if(nDelay < 1)
+    {
+        int nDC = SPGetSpellSaveDC(oTarget, oPC);
+        //Save
+        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+        {
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3)), oTarget);
+            
+        }
+        else
+        {
+                            DeathlessFrenzyCheck(oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
+        }
+    }
+    
+    nDelay--;
+    
+    //Round we go...
+    ClutchLoop(oTarget, nDelay, oPC);
 }
 
 int GetHasSoulRot(object oPC)
 {
-	int bHasDisease = FALSE;
-	effect eTest = GetFirstEffect(oPC);
-	effect eDisease = EffectDisease(DISEASE_SOUL_ROT);
-	
-	if (GetHasEffect(EFFECT_TYPE_DISEASE, oPC))
-	{
-		while (GetIsEffectValid(eTest))
-		{
-			if(eTest == eDisease)
-			{
-				bHasDisease = TRUE;
-				
-			}
-			eTest = GetNextEffect(oPC);
-		}
-	}
-	return bHasDisease;
+    int bHasDisease = FALSE;
+    effect eTest = GetFirstEffect(oPC);
+    effect eDisease = EffectDisease(DISEASE_SOUL_ROT);
+    
+    if (GetHasEffect(EFFECT_TYPE_DISEASE, oPC))
+    {
+        while (GetIsEffectValid(eTest))
+        {
+            if(eTest == eDisease)
+            {
+                bHasDisease = TRUE;
+                
+            }
+            eTest = GetNextEffect(oPC);
+        }
+    }
+    return bHasDisease;
 }
-		
-		 
-			
+        
+         
+            

@@ -184,6 +184,7 @@ void DoPower(struct manifestation manif, object oMainTarget, int nDC, int nPen, 
                             effect eDeath = EffectDeath(FALSE, FALSE);
                             DelayCommand(0.25, ApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget));
                             DelayCommand(0.25, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));
+                            DeathlessFrenzyCheck(oTarget);
                         }
                     }
                 }

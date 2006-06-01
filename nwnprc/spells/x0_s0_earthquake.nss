@@ -98,7 +98,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 {
                   if(ReflexSave(oTarget, 20, SAVING_THROW_REFLEX, OBJECT_SELF) == 0)
                   {
-                     EffectDeath(nSpectacularDeath, nDisplayFeedback);
+                            DeathlessFrenzyCheck(oTarget);
+                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(nSpectacularDeath, nDisplayFeedback), oTarget);
                   }
                 }
         }

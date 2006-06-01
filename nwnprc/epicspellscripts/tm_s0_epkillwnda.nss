@@ -47,6 +47,7 @@ void main()
                 effect eDeath = EffectDeath();
                 DelayCommand( fDelay,
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget) );
+                DeathlessFrenzyCheck(oTarget);
             }
         }
     }

@@ -166,7 +166,7 @@ int GetIsUnarmed(object oPC);
 int GetHasMonkWeaponEquipped(object oPC);
 
 // Returns number of attacks per round for main hand
-int GetMainHandAttacks(object oPC);
+int GetMainHandAttacks(object oPC, int nIncludeMonk = TRUE);
 
 // Returns number of attacks per round for off-hand
 int GetOffHandAttacks(object oPC, int iBonusAttacks = 0);
@@ -1111,8 +1111,11 @@ int GetHasMonkWeaponEquipped(object oPC)
     return bIsMonkWeapon;
 }
 
-int GetMainHandAttacks(object oPC)
+int GetMainHandAttacks(object oPC, int nIncludeMonk = TRUE)
 {
+    if(GetLocalInt(oPC, "OverrideBaseAttackCount"))
+        return GetLocalInt(oPC, "OverrideBaseAttackCount");
+
     int iBAB = GetBaseAttackBonus(oPC);
     int iCharLevel = GetHitDice(oPC);
 
@@ -1126,31 +1129,36 @@ int GetMainHandAttacks(object oPC)
     int iNumAttacks = ( (iBAB - 1) / 5 ) + 1;
     if(iNumAttacks > 4)  iNumAttacks = 4;
 
-    int iMonkLevel = 0;
-    int iNumMonkAttack = 0;
-    if( GetHasMonkWeaponEquipped(oPC) )
+    if(nIncludeMonk)
     {
-         // add in unarmed PrC's so that they stack for number of unarmed attacks
-         iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
-         iMonkLevel += GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC);
-         iMonkLevel += GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC);
-         iMonkLevel += GetLevelByClass(CLASS_TYPE_RED_AVENGER, oPC);
-         iMonkLevel += GetLevelByClass(CLASS_TYPE_SHOU, oPC);
-         iMonkLevel += GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC);
-         iMonkLevel += GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC);
-         iMonkLevel += GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC);
+        //note this is the correct PnP monk 3.0 progression
+        //not biowares progression including other classes
+        int iMonkLevel = 0;
+        int iNumMonkAttack = 0;
+        if( GetHasMonkWeaponEquipped(oPC) )
+        {
+             // add in unarmed PrC's so that they stack for number of unarmed attacks
+             iMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_RED_AVENGER, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_SHOU, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC);
 
-         if(iMonkLevel < 6)                             iNumMonkAttack = 1;
-         else if (iMonkLevel >= 6  && iMonkLevel < 10)  iNumMonkAttack = 2;
-         else if (iMonkLevel >= 10 && iMonkLevel < 14)  iNumMonkAttack = 3;
-         else if (iMonkLevel >= 14 && iMonkLevel < 18)  iNumMonkAttack = 4;
-         else if (iMonkLevel >= 18 )                    iNumMonkAttack = 5;
-    }
+             if(iMonkLevel < 6)                             iNumMonkAttack = 1;
+             else if (iMonkLevel >= 6  && iMonkLevel < 10)  iNumMonkAttack = 2;
+             else if (iMonkLevel >= 10 && iMonkLevel < 14)  iNumMonkAttack = 3;
+             else if (iMonkLevel >= 14 && iMonkLevel < 18)  iNumMonkAttack = 4;
+             else if (iMonkLevel >= 18 )                    iNumMonkAttack = 5;
+        }
 
-    if(iNumMonkAttack > iNumAttacks)
-    {
-         iNumAttacks = iNumMonkAttack;
-         bUseMonkAttackMod = TRUE;
+        if(iNumMonkAttack > iNumAttacks)
+        {
+             iNumAttacks = iNumMonkAttack;
+             bUseMonkAttackMod = TRUE;
+        }
     }
 
     // crossbows special rules
@@ -1162,9 +1170,6 @@ int GetMainHandAttacks(object oPC)
     {
          iNumAttacks = 1;
     }
-
-    //string test = "iMonkLevel = " + IntToString(iMonkLevel) + " iNumAttacks = " + IntToString(iNumAttacks) + " iNumMonkAttack = " + IntToString(iNumMonkAttack);
-    //FloatingTextStringOnCreature(test, oPC);
 
     return iNumAttacks;
 }

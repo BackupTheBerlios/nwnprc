@@ -64,6 +64,7 @@ if (iHP < 10)
         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
         {
                 //Apply the VFX impact and effects
+                            DeathlessFrenzyCheck(oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                 

@@ -244,7 +244,8 @@ void DoDied(object oPC, int nIsPC)
     if(!GetPRCSwitch(PRC_PNP_DEATH_ENABLE))
         return;
     //check it wasnt a real death
-    if(!GetLocalInt(oPC, "DeadDying"))
+    if(!GetLocalInt(oPC, "DeadDying")
+        && !GetLocalInt(oPC, "PRC_PNP_EfectDeathApplied"))
     {
         SetLocalInt(oPC, "DeadDying", 1);
         DelayCommand(0.01,
@@ -285,6 +286,7 @@ int DoDeadHealingAI()
     if(!GetPRCSwitch(PRC_PNP_DEATH_ENABLE))
         return FALSE;
     object oDead;
+    //test if you can heal stuff
     talent tHeal = GetCreatureTalentRandom(TALENT_CATEGORY_BENEFICIAL_HEALING_TOUCH);
     if(!GetIsTalentValid(tHeal))
         tHeal = GetCreatureTalentRandom(TALENT_CATEGORY_BENEFICIAL_HEALING_AREAEFFECT);

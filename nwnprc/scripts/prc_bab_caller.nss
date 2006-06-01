@@ -27,20 +27,23 @@ void main()
         //creature weapon test
         //get the value
         int nNaturalPrimary = GetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT);
-        if(nNaturalPrimary > nAttackCount)
-            nAttackCount = nNaturalPrimary;
+        nAttackCount = nNaturalPrimary;
     }
     else
     {    
+        //monk correction
+        if(GetLevelByClass(CLASS_TYPE_MONK, oPC))
+            nAttackCount = nBAB;
+        
         //temporary type ones
-        if(GetHasSpellEffect(SPELL_DIVINE_POWER)
+        if(GetHasSpellEffect(SPELL_DIVINE_POWER, oPC)
             && nBAB < 4)
         {
             int nDPAttackCount = GetLocalInt(oPC, "AttackCount_DivinePower");
             if(nDPAttackCount > nAttackCount)
                 nAttackCount = nDPAttackCount;
         }
-        if(GetHasSpellEffect(SPELL_TENSERS_TRANSFORMATION)
+        if(GetHasSpellEffect(SPELL_TENSERS_TRANSFORMATION, oPC)
             && nBAB < 4)
         {
             int nTTAttackCount = GetLocalInt(oPC, "AttackCount_TensersTrans");
@@ -58,11 +61,15 @@ void main()
     }    
     else
     {
+        
         if(nAttackCount > 5)
-        {
-            nOverflowAttackCount = nAttackCount-5;
+        {       
+            nOverflowAttackCount += nAttackCount-5;
+            nAttackCount = 5;
+        }    
+        if(nOverflowAttackCount)    
+        {    
             SetLocalInt(oPC, "OverflowBaseAttackCount", nOverflowAttackCount);
-            nAttackCount -= 5;
         }
         SetBaseAttackBonus(nAttackCount, oPC);
         SetLocalInt(oPC, "OverrideBaseAttackCount", nAttackCount);

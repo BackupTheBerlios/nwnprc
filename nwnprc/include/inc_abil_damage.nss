@@ -270,7 +270,11 @@ void ApplyAbilityDamage(object oTarget, int nAbility, int nAmount, int nDuration
                     if(!(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD ||
                          MyPRCGetRacialType(oTarget) == RACIAL_TYPE_CONSTRUCT
                       ) )
+                      {
+                            DeathlessFrenzyCheck(oTarget);
                         ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oTarget);
+                        
+                    }
                     break;
 
                 default:

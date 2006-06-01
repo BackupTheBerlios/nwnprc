@@ -115,6 +115,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
                                 //OnDeath script... so lets kill it.
                                 effect eKill = EffectDamage(GetCurrentHitPoints(oTarget));
                                 //just to be extra-sure... :)
+                            DeathlessFrenzyCheck(oTarget);
                                 effect eDeath = EffectDeath(FALSE, FALSE);
                                 DelayCommand(0.25, ApplyEffectToObject(DURATION_TYPE_INSTANT, eKill, oTarget));
                                 DelayCommand(0.25, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));

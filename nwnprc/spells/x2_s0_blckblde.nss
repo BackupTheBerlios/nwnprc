@@ -73,7 +73,7 @@ void DoPnPAttack(object oSummon)
                 else
                 {
                      // If FB passes saving throw it survives, else it dies
-                     DeathlessFrenzyCheck(oTarget);
+                     //DeathlessFrenzyCheck(oTarget);
 
                      // For targets with > 9999 HP. Uncomment if you have such in your module and would like Disintegrate
                      // to be sure to blast them

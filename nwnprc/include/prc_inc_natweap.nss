@@ -362,10 +362,17 @@ string GetAffixForSize(int nSize)
     return sResRef;        
 }
 
+void EquipNautralWeaponCheck(object oPC, object oItem)
+{
+    if(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC) != oItem)
+        DestroyObject(oItem);
+}
+
 object EquipNaturalWeapon(object oPC, string sResRef)
 {
     object oObject = CreateItemOnObject(sResRef, oPC);
-    AssignCommand(oPC, ActionEquipItem(oObject, INVENTORY_SLOT_CWEAPON_L));
+    ForceEquip(oPC, oObject, INVENTORY_SLOT_CWEAPON_L);
+    DelayCommand(10.0, EquipNautralWeaponCheck(oPC, oObject));
     return oObject;
 }
 
@@ -530,16 +537,22 @@ void SetPrimaryNaturalWeapon(object oPC, int nIndex)
     //note this function does set the number, not BAB
     //note this function does work on PCs, despite the description
     //dont set it directly, instead set the local which is checked in prc_bab_caller
-    SetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT, nAttackCount);
-    //unlike PnP where they should all be at full AB, here they will be at -5 a time (test for confirmation)
-    //to compensate, apply +2AB per attack above 1 as an itemproperty on the natural weapon
+    SetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT, 1);
+    
+    //rather than using SetBaseAttackBonus, use an effect instead
+    //this makes it all at full AB without the -5 a time penalty
     if(nAttackCount > 1)
     {
-        int nBonus = (nAttackCount-1)*2;     
-        if(nBonus > 20)
-            nBonus = 20;
-        IPSafeAddItemProperty(oNaturalWeapon, ItemPropertyAttackBonus(nBonus));        
-    }   
+        //get the object thats going to apply the effect
+        //this strips previous effects too
+        object oWP = GetObjectToApplyNewEffect("WP_PrimaryNaturalWeapEffect", oPC, TRUE);
+        AssignCommand(oWP, 
+            ActionDoCommand(
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT,
+                    SupernaturalEffect(
+                        EffectModifyAttacks(nAttackCount-1)),
+                    oPC)));  
+    }                
 }
 
 int GetPrimaryNaturalWeaponCount(object oPC)

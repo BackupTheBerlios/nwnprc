@@ -32,60 +32,61 @@ Created:   3/26/05
 
 void FesterLoop(object oTarget, int nConc, int nHP)
 {
-	if (nConc == FALSE)
-	{
-		return;
-	}
-	
-	int nDam = d6(2);
-	nHP = GetCurrentHitPoints(oTarget);
-	effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
-	
-	if(nDam > nHP)
-	{
-		//esplode!
-		effect eDeath = EffectDeath(TRUE, TRUE);		
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
-	}
-	else
-	{
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-	}		
-	
-	//Loop
-	DelayCommand(6.0f, FesterLoop(oTarget, nConc, nHP));
-	
+    if (nConc == FALSE)
+    {
+        return;
+    }
+    
+    int nDam = d6(2);
+    nHP = GetCurrentHitPoints(oTarget);
+    effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
+    
+    if(nDam > nHP)
+    {
+        //esplode!
+                            DeathlessFrenzyCheck(oTarget);
+        effect eDeath = EffectDeath(TRUE, TRUE);        
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
+    }
+    else
+    {
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+    }       
+    
+    //Loop
+    DelayCommand(6.0f, FesterLoop(oTarget, nConc, nHP));
+    
 }
 
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	// Run the spellhook. 
-	if (!X2PreSpellCastCode()) return;
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nConc = TRUE;
-	int nDC = PRCGetSaveDC(oTarget, oPC);
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nHP = GetCurrentHitPoints(oTarget);
-	
-	//Check for skill
-	if(GetIsSkillSuccessful(oPC, SKILL_PERFORM, 20))
-	{
-		//Spell Resist
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-		{
-			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL, oPC, 1.0))
-			{
-				FesterLoop(oTarget, nConc, nHP);
-			}
-		}
-	}
-	
-	SPEvilShift(oPC);
-	SPSetSchool();
+    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    
+    // Run the spellhook. 
+    if (!X2PreSpellCastCode()) return;
+    
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nConc = TRUE;
+    int nDC = PRCGetSaveDC(oTarget, oPC);
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nHP = GetCurrentHitPoints(oTarget);
+    
+    //Check for skill
+    if(GetIsSkillSuccessful(oPC, SKILL_PERFORM, 20))
+    {
+        //Spell Resist
+        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+        {
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL, oPC, 1.0))
+            {
+                FesterLoop(oTarget, nConc, nHP);
+            }
+        }
+    }
+    
+    SPEvilShift(oPC);
+    SPSetSchool();
 }
-	
+    

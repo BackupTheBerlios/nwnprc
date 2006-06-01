@@ -48,6 +48,7 @@ void main()
     if(DEBUG) DoDebug("prc_speed NewSpeed = "+IntToString(nNewSpeed)+" OldSpeed = "+IntToString(nCurrentSpeed)+" SpeedChange = "+FloatToString(fSpeedChange));  
     if(DEBUG) DoDebug("GetMovementRate() = "+IntToString(GetMovementRate(oPC)));
     //get the object thats going to apply the effect
+    //this strips previous effects too
     object oWP = GetObjectToApplyNewEffect("WP_SpeedEffect", oPC, TRUE);
     //its an increase
     if(fSpeedChange > 1.0)

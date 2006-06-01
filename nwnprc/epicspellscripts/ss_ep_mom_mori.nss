@@ -36,6 +36,7 @@ void main()
                  //Make Fortitude save
                  if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetEpicSpellSaveDC(OBJECT_SELF, oTarget)+10, SAVING_THROW_TYPE_DEATH))
                  {
+                    DeathlessFrenzyCheck(oTarget);
                     //Apply the death effect and VFX impact
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
                     //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

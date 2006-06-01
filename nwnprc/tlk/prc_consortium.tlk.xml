@@ -21802,19 +21802,21 @@ Large - 1d6
 Huge - 1d8
 Gigantic - 2d6 
 Colossal - 3d6</entry>
-  <entry id="54986" lang="en" sex="m">Draconic Bite</entry>
-  <entry id="54987" lang="en" sex="m">At 2nd level, a dragon disciple gains a bite that can be used to make a natural attack with. You can use your bite in addition to any weapons weilding in your hands.
+  <entry id="54986" lang="en" sex="m">Draconic Bite and Claws</entry>
+  <entry id="54987" lang="en" sex="m">At 2nd level, a dragon disciple gains a bite that can be used to make a natural attack with. You can use your bite in addition to any weapons weilding in your hands. 
+  
+  At 2nd level, a dragon disciple also gains 2 claw attacks that can be used to make a natural attack with. You cannot use your claws in addition to any weapons weilding in your hands.
 
-Size - Damage
-Fine - 1d2
-Diminutive - 1d2
-Timy - 1d3
-Small - 1d4
-Medium - 1d6
-Large - 1d8
-Huge - 2d6
-Gigantic - 3d6 
-Colossal - 4d6</entry>
+Size - Damage (bite/claw)
+Fine - 1d2/1d2
+Diminutive - 1d2/1d2
+Timy - 1d3/1d2
+Small - 1d4/1d3
+Medium - 1d6/1d4
+Large - 1d8/1d6
+Huge - 2d6/1d8
+Gigantic - 3d6/2d6
+Colossal - 4d6/3d6</entry>
   <entry id="54988" lang="en" sex="m">Draconic Wing Slams</entry>
   <entry id="54989" lang="en" sex="m">At 12nd level, a dragon disciple gains the ability to make 2 natural attacks with their wings, if of medium size or bigger. You can use your wing slams in addition to any weapons weilding in your hands.
 

@@ -102,6 +102,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     {
                         if (GetAssociateType(oTarget) == ASSOCIATE_TYPE_SUMMONED)
                         {
+                            DeathlessFrenzyCheck(oTarget);
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eUnsummon, oTarget));
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(eDeath), oTarget));
                          }

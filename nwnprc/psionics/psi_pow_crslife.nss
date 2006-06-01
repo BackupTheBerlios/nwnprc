@@ -79,8 +79,8 @@ void main()
 
         // Let the AI know
         SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
-	
-	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         // Check immunities
         if(!GetIsImmune(oTarget, IMMUNITY_TYPE_DEATH,       oManifester) &&
            !GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS, oManifester)
@@ -96,8 +96,10 @@ void main()
                     // Can the target die outright and if it can, does it fail the save?
                     if(nTargetHD <= nMaxHD && !PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                     {
+                        DeathlessFrenzyCheck(oTarget);
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
                         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisDeath, oTarget);
+                        
                     }
                     else
                     {

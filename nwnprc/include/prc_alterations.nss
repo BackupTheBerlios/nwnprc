@@ -248,10 +248,24 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 // Added by Oni5115
 void DeathlessFrenzyCheck(object oTarget)
 {
-     if(GetHasFeat(FEAT_DEATHLESS_FRENZY, oTarget) && GetHasFeatEffect(FEAT_FRENZY, oTarget) )
-     {
+    //if its immune to death, e.g via items
+    //then dont do this
+    if(GetIsImmune( oTarget, IMMUNITY_TYPE_DEATH))
+        return;
+    if(GetHasFeat(FEAT_DEATHLESS_FRENZY, oTarget) 
+        && GetHasFeatEffect(FEAT_FRENZY, oTarget)
+        && GetImmortal(oTarget))
           SetImmortal(oTarget, FALSE);
-     }
+    //mark them as being magically killed for death system
+    if(GetPRCSwitch(PRC_PNP_DEATH_ENABLE))
+    {
+        SetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied", 
+            GetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied")+1);
+        AssignCommand(oTarget,
+            DelayCommand(1.0, 
+                SetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied", 
+                    GetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied")-1)));
+    }
 }
 
 //return a location that PCs will never be able to access

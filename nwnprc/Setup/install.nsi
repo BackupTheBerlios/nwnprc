@@ -82,9 +82,10 @@ Section "PRC Pack" Section1
 	File "..\CompiledResources\PRC_DATA.DBF"
 	File "..\CompiledResources\PRC_DATA.FPT"
 
-	CreateShortCut "$DESKTOP\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
+	CreateShortCut "$DESKTOP\PRC Module Updater - Install PRC.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
 	CreateDirectory "$SMPROGRAMS\PRC Pack"
-	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
+	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater - Install PRC" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\"" "$\"PRC Pack.HIF$\""
+	CreateShortCut "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk" "$\"$NWNPRCPATH\PRCPack\PRCModuleUpdater.exe$\""
 	CreateShortCut "$SMPROGRAMS\PRC Pack\Uninstall.lnk" "$NWNPRCPATH\PRCPack\uninstall.exe"
 
 
@@ -121,6 +122,7 @@ Section Uninstall
 
 	; Delete Shortcuts
 	Delete "$DESKTOP\PRC Module Updater.lnk"
+	Delete "$SMPROGRAMS\PRC Pack\PRC Module Updater - Install PRC"
 	Delete "$SMPROGRAMS\PRC Pack\PRC Module Updater.lnk"
 	Delete "$SMPROGRAMS\PRC Pack\Uninstall.lnk"
 	Delete "$SMPROGRAMS\PRC Pack\Read Me.lnk"

@@ -107,18 +107,18 @@ void main()
             }
             else if(nStage == STAGE_STAT_AMOUNT)//Stat to burn
             {
-               	// Set the header
-               	string sAmount = "How much would you like to burn and increase your stat by?\n";
-               	sAmount += "If you select a value higher than your manifester level, it will be set to your manifester leve.\n";
-               	sAmount += "Your manifester level is " + IntToString(GetLocalInt(oPC, "PsychoFeedManifesterLevel")) + "\n";
-               	sAmount += "Your current value is " + IntToString(GetLocalInt(oPC, "PsychoFeedbackAmount"));
+                // Set the header
+                string sAmount = "How much would you like to burn and increase your stat by?\n";
+                sAmount += "If you select a value higher than your manifester level, it will be set to your manifester leve.\n";
+                sAmount += "Your manifester level is " + IntToString(GetLocalInt(oPC, "PsychoFeedManifesterLevel")) + "\n";
+                sAmount += "Your current value is " + IntToString(GetLocalInt(oPC, "PsychoFeedbackAmount"));
                 SetHeader(sAmount);
 
                 AddChoice("Add 1", 1);
                 AddChoice("Add 5", 5);
                 AddChoice("Add 10", 10);
                 AddChoice("Subtract 1", -1);
-		AddChoice("Subtract 5", -5);
+                AddChoice("Subtract 5", -5);
                 AddChoice("Subtract 10", -10);
                 AddChoice("Finished", 666);
 
@@ -188,39 +188,41 @@ void main()
             // Exit value for this stage
             if (nChoice == 666)
             {
-            	nStage = STAGE_CONFIRMATION;
+                nStage = STAGE_CONFIRMATION;
             }
             else
             {
-            	int nPFAmount = GetLocalInt(oPC, "PsychoFeedbackAmount");
-            	SetLocalInt(oPC, "PsychoFeedbackAmount", (nPFAmount + nChoice));
-            	nStage = STAGE_STAT_AMOUNT;
+                int nPFAmount = GetLocalInt(oPC, "PsychoFeedbackAmount");
+                SetLocalInt(oPC, "PsychoFeedbackAmount", (nPFAmount + nChoice));
+                nStage = STAGE_STAT_AMOUNT;
             }
+            ClearCurrentStage();
         }
         else if(nStage == STAGE_CONFIRMATION)//confirmation
         {
             // No point in letting them finish if they haven't burned anything
             if(nChoice == TRUE && GetLocalInt(oPC, "PsychoFeedbackAmount") > 0)
             {
-            	int nStat = GetLocalInt(oPC, "PsychoFeedbackStat");
-            	int nBurn = GetLocalInt(oPC, "PsychoFeedbackBurn");
-            	int nAmount = GetLocalInt(oPC, "PsychoFeedbackAmount");
-            	if (nAmount > GetLocalInt(oPC, "PsychoFeedManifesterLevel")) nAmount = GetLocalInt(oPC, "PsychoFeedManifesterLevel");
+                int nStat = GetLocalInt(oPC, "PsychoFeedbackStat");
+                int nBurn = GetLocalInt(oPC, "PsychoFeedbackBurn");
+                int nAmount = GetLocalInt(oPC, "PsychoFeedbackAmount");
+                if (nAmount > GetLocalInt(oPC, "PsychoFeedManifesterLevel")) nAmount = GetLocalInt(oPC, "PsychoFeedManifesterLevel");
 
-    		effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-    		effect eVis2 = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-    		effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+                effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
+                effect eVis2 = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
+                effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
-		ApplyAbilityDamage(oPC, nBurn, nAmount, DURATION_TYPE_PERMANENT, FALSE);
-        	effect eStr = EffectAbilityIncrease(nStat,nAmount);
-    		effect eLink = EffectLinkEffects(eStr, eDur);
+                ApplyAbilityDamage(oPC, nBurn, nAmount, DURATION_TYPE_TEMPORARY, FALSE, -1.0f);
 
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, GetLocalFloat(oPC, "PsychoFeedDuration"), TRUE, POWER_PSYCHOFEEDBACK, GetLocalInt(oPC, "PsychoFeedManifesterLevel"));
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oPC);
+                effect eStr = EffectAbilityIncrease(nStat,nAmount);
+                effect eLink = EffectLinkEffects(eStr, eDur);
+
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, GetLocalFloat(oPC, "PsychoFeedDuration"), TRUE, POWER_PSYCHOFEEDBACK, GetLocalInt(oPC, "PsychoFeedManifesterLevel"));
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oPC);
 
                 // And we're all done
-               	AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
 
             }
             else

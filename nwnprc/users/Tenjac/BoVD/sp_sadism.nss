@@ -51,16 +51,17 @@ void main()
 	}
 		
 	//Start the loop
-	SadisticLoop(oPC, nCounter, nDamage);
+	SadisticLoop(oPC, nCounter);
 	
 	SPEvilShift(oPC)
 	SPSetSchool();
 }
 
-void SadisticLoop(object oPC, int nCounter, int nDamage)
+void SadisticLoop(object oPC, int nCounter)
 {
 	if(nCounter > 0)
 	{
+		int nDamage = GetLocalInt(oPC, "PRC_SadismDamDealt");
 		if(nDamage > 0)
 		{
 			int nBonus = nDamage/10;
@@ -76,7 +77,7 @@ void SadisticLoop(object oPC, int nCounter, int nDamage)
 		nCounter--;
 		
 		//Schedule next go-round
-		DelayCommand(6.0f, SadisticLoop(oPC, nCounter, nDamage));
+		DelayCommand(6.0f, SadisticLoop(oPC, nCounter));
 	}
 }
 	

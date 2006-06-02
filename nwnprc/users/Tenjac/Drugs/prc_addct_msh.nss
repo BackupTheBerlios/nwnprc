@@ -66,5 +66,5 @@ void main()
 	
 	//Decrement satiation
 	nSatiation--;
-	SetPersistantLocalInt(oPC, "PRC_ushroomSatiation", nSatiation);
+	SetPersistantLocalInt(oPC, "PRC_MushroomSatiation", nSatiation);
 }

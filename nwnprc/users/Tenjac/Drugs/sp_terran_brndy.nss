@@ -23,8 +23,13 @@ void main()
 	SetPersistantLocalInt(oPC, "PRC_TerranBrandySatiation", 10);
 	
 	//Primary - +2 Caster level 1d20 +20 min
+	float fDur = IntToFloat(d20(1) + 20) * 60.0f);
 	
+	//Set VFX in order to make spell duration the duration of the caster level boost 
+	//and check for spell effect in PRCGetCasterLevel
 	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oPC, fDur);
+		
 	//Secondary - 2 Con damage
 	Delaycommand(60.0f, ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, 2, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
 	

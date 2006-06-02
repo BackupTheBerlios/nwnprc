@@ -45,13 +45,13 @@ void main()
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eWis, oPC, HoursToSeconds(d2())));
 	
 	//Overdose
-	if(GetLocalInt(oPC, "PRC_BaccaranOD"))
+	if(GetOverdoseCounter(oPC, "PRC_BaccaranOD"))
 	{
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oPC, HoursToSeconds(d4(2)));
 	}
 	
-	SetLocalInt(oPC, "PRC_BaccaranOD", 1);
-	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "PRC_BaccaranOD"));
+	//OD increment
+	IncrementOverdoseTracker(oPC, "PRC_BaccaranOD", HoursToSeconds(24));
 }
 		

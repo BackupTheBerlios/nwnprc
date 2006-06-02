@@ -54,15 +54,22 @@ void main()
 	
 	DelayCommand(60.0f, ApplyAbilityDamage(oPC, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f));
 	
-	//Overdose - simplified slightly
-	if(GetLocalInt(oPC, "PRC_MushroomOD")
+	//Overdose 
+	if(GetOverdoseCounter(oPC, "PRC_MushroomOD2") == 4)
+	{
+		effect eDam2 = EffectDamage(d6(4));
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam2, oPC);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectParalyze(), oPC, HoursToSeconds(d4(2)));		
+	
+	else if(GetOverdoseCounter(oPC, "PRC_MushroomOD") == 1)
 	{
 		effect eDam = EffectDamage(d6(2));
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oPC);
-	}	
+	}
 	
-	SetLocalInt(oPC, "PRC_MushrooomOD", 1);
-	DelayCommand(HoursToSeconds(12), DeleteLocalInt(oPC, "PRC_MushroomOD"));
+	//OD increment
+	IncrementOverdoseTracker(oPC, "PRC_MushroomOD", HoursToSeconds(12));
+	IncrementOverdoseTracker(oPC, "PRC_MushroomOD2", HoursToSeconds(24));
 	
 }
 

@@ -50,7 +50,7 @@ void main()
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCha, oPC, fDur2));
 		
 	//overdose
-	if(GetLocalInt(oPC, "PRC_AgonyOD"))
+	if(GetOverdoseCounter(oPC, "PRC_AgonyOD"))
 	{
 		if(!PRCMySavingThrow(SAVING_THROW_FORT, oPC, 18, SAVING_THROW_TYPE_POISON))
 		{
@@ -75,6 +75,6 @@ void main()
 			DelayCommand((fDur - 0.2), SetCommandable(TRUE, oPC));
 		}
 	}
-	SetLocalInt(oPC, "PRC_AgonyOD", 1);
-	DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "PRC_AgonyOD"));
+	//OD increment
+	IncrementOverdoseTracker(oPC, "PRC_AgonyOD", HoursToSeconds(24));
 }

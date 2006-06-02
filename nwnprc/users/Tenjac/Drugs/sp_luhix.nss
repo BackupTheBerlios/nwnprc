@@ -40,14 +40,14 @@ void main()
     ApplyAbilityDamage(oPC, ABILITY_STRENGTH, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
     ApplyAbilityDamage(oPC, ABILITY_DEXTERITY, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
     ApplyAbilityDamage(oPC, ABILITY_CONSTITUTION, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
-        ApplyAbilityDamage(oPC, ABILITY_INTELLIGENCE, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
-        ApplyAbilityDamage(oPC, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
-        ApplyAbilityDamage(oPC, ABILITY_CHARISMA, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+    ApplyAbilityDamage(oPC, ABILITY_INTELLIGENCE, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+    ApplyAbilityDamage(oPC, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+    ApplyAbilityDamage(oPC, ABILITY_CHARISMA, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
         
-        //Secondary
-        
-        float fDur = HoursToSeconds(d3());
-        
+    //Secondary
+    
+    float fDur = HoursToSeconds(d3());
+    
     effect eCha = EffectAbilityIncrease(ABILITY_CHARISMA, 2);
     DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eCha, oPC, fDur));
     
@@ -68,16 +68,15 @@ void main()
     
     
     // Luhix overdose
-    if(GetLocalInt(oPC, "PRC_LuhixOD"))
+    if(GetOverdoseCounter(oPC, "PRC_LuhixOD"))
     {
-        if(!FortitudeSave(oPC, 25, SAVING_THROW_TYPE_POISON))
-        {
-            PlayVoiceChat(VOICE_CHAT_PAIN3);
-                            DeathlessFrenzyCheck(oPC);
-            DelayCommand(3.0,SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC));
-        }
+	    if(!FortitudeSave(oPC, 25, SAVING_THROW_TYPE_POISON))
+	    {
+		    PlayVoiceChat(VOICE_CHAT_PAIN3);
+		    DeathlessFrenzyCheck(oPC);
+		    DelayCommand(3.0,SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC));
+	    }
     }
-    
-    SetLocalInt(oPC, "PRC_LuhixOD", 1);
-    DelayCommand(HoursToSeconds(24), DeleteLocalInt(oPC, "PRC_LuhixOD"));
+    //OD increment
+    IncrementOverdoseTracker(oPC, "PRC_LuhixOD", HoursToSeconds(24));
 }

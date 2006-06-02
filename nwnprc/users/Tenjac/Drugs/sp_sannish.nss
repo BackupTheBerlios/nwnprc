@@ -16,21 +16,27 @@ Created:   5/23/06
 void main()
 {
 	object oPC = OBJECT_SELF;
+	float fDur = HoursToSeconds(d4());
 	
 	// Initial effect
 	ApplyAbilityDamage(oPC, ABILITY_WISDOM, 1, DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 	
 	effect eNerf = EffectAttackDecrease(1);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eNerf, oPC, HoursToSeconds(d4()));
-	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eNerf, oPC, fDur);
+			
 	//Secondary - Immune to pain
+	SetLocalInt(oPC, "PRC_ImmuneToPain_Sannish", 1)
+	DelayCommand(HoursToSeconds(d4(1)), DeleteLocalInt(oPC, "PRC_ImmuneToPain_Sannish"));
 	
 	//Overdose
-	//if(overdose)
+	if(GetOverdoseCounter(oPC, "PRC_SannishOD"))
 	{
 		effect eDaze = EffectDazed();
 		float fDur = HoursToSeconds(d4(2));
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDaze, oPC, fDur);
 	}
+	
+	//OD increment
+	IncrementOverdoseTracker(oPC, "PRC_Sannish", fDur);
 }
 

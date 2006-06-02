@@ -59,10 +59,14 @@ void main()
 			   GetHasSpellEffect(SPELL_AVASCULAR_MASS, oTarget) ||
 			   GetHasSpellEffect(SPELL_RED_FESTER, oTarget))
 			{
-				//Create liquid pain in caster's inventory
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-				//CreateItemOnObject("whateveritis", oPC, 1);
-			}
+				if(!GetLocalInt(oTarget, "PRC_AgonyExtracted"))
+				{
+					//Create liquid pain in caster's inventory
+					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+					//CreateItemOnObject("whateveritis", oPC, 1);
+					SetLocalInt(oTarget, "PRC_AgonyExtracted", 1);
+					DelayCommand(HoursToSeconds(24), DeleteLocalInt(oTarget, "PRC_AgonyExtracted"));
+				}
 		}
 	   
 	 }

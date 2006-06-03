@@ -743,6 +743,8 @@ void FeatSpecialUsePerDay(object oPC)
     FeatNinja(oPC);
     FeatContender(oPC);
     FeatUsePerDay(oPC, FEAT_LASHER_STUNNING_SNAP, -1, GetLevelByClass(CLASS_TYPE_LASHER, oPC));
+    FeatUsePerDay(oPC, FEAT_AD_FALSE_KEENNESS, -1, GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC));
+    FeatUsePerDay(oPC, FEAT_AD_BLUR, -1, GetLevelByClass(CLASS_TYPE_ARCANE_DUELIST, oPC));
     FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_1, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_2, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_MOS_UNDEAD_3, ABILITY_CHARISMA, 3);

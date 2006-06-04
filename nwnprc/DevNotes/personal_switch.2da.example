@@ -1,0 +1,6 @@
+2DA V2.0
+
+   SwitchName SwitchType SwitchValue                             
+0  FOO        float      3.14159                                 
+1  BAR        int        12321                                   
+2  BAZ        string     "Go For The Eyes Boo, Go For The Eyes!" 

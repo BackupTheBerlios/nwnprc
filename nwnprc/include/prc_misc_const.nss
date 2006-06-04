@@ -227,3 +227,11 @@ const int DOMAIN_RUNE          = 56;
 const int DOMAIN_SPELLS        = 57;
 const int DOMAIN_SCALEYKIND    = 58;
 const int DOMAIN_BLIGHTBRINGER = 59;
+
+
+//:://////////////////////////////////////////////
+//:: Trap Const
+//:://////////////////////////////////////////////
+
+const int TRAP_BASE_TYPE_PRGT       = 100;
+const int TRAP_BASE_TYPE_TELECIRCLE = 101;

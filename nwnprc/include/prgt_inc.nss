@@ -6,11 +6,11 @@
 /*
         This was orignally designed to allow respawning ground traps
         However, as of NWN 1.67 this is no longer needed.
-        
+
         The secondary purpose of this is now most useful and that
         is to provide a system where a wide variety of traps
         can be set and used.
-        
+
         This particular file provides interface functions
 */
 //:://////////////////////////////////////////////
@@ -35,8 +35,8 @@ int    DAMAGE_TYPE_SONIC        = 2048;
 
 #include "prgt_inc_trap"
 #include "inc_utility"
+#include "prc_misc_const"
 
-const int TRAP_BASE_TYPE_PRGT  = 100;
 const int TRAP_EVENT_TRIGGERED = 1;
 const int TRAP_EVENT_DISARMED  = 2;
 const int TRAP_EVENT_RECOVERED = 3;    //this is in addition to being disarmed
@@ -45,8 +45,8 @@ const int TRAP_EVENT_RECOVERED = 3;    //this is in addition to being disarmed
 object PRGT_CreateTrapAtLocation(location lLoc, struct trap tTrap)
 {
     object oTrap;
-    oTrap = CreateTrapAtLocation(TRAP_BASE_TYPE_PRGT, 
-        lLoc,    
+    oTrap = CreateTrapAtLocation(TRAP_BASE_TYPE_PRGT,
+        lLoc,
         tTrap.fSize,
         "",//tag
         STANDARD_FACTION_HOSTILE,
@@ -62,8 +62,8 @@ object PRGT_CreateTrapAtLocation(location lLoc, struct trap tTrap)
 
 void PRGT_CreateTrapOnObject(object oTrap, struct trap tTrap)
 {
-    CreateTrapOnObject(TRAP_BASE_TYPE_PRGT, 
-        oTrap,    
+    CreateTrapOnObject(TRAP_BASE_TYPE_PRGT,
+        oTrap,
         STANDARD_FACTION_HOSTILE,
         tTrap.sDisarmScript,
         tTrap.sTriggerScript);

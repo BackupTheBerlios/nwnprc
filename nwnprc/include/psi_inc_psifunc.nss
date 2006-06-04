@@ -322,12 +322,12 @@ int GetManifesterLevel(object oManifester, int nSpecificClass = CLASS_TYPE_INVAL
     else if(GetManifestingClass(oManifester) != CLASS_TYPE_INVALID)
     {
         //Gets the level of the manifesting class
-//        if(DEBUG) SendMessageToPC(oManifester, "Manifesting class: " + IntToString(GetManifestingClass(oManifester)));
         int nManifestingClass = GetManifestingClass(oManifester);
+//        if(DEBUG) DoDebug("Manifesting class: " + IntToString(nManifestingClass), oManifester);
         nLevel = GetLevelByClass(nManifestingClass, oManifester);
         // Add levels from +ML PrCs only for the first manifesting class
         nLevel += nManifestingClass == GetFirstPsionicClass(oManifester) ? GetPsionicPRCLevels(oManifester) : 0;
-//        if(DEBUG) SendMessageToPC(oManifester, "Level gotten via GetLevelByClass: " + IntToString(nLevel));
+//        if(DEBUG) DoDebug("Level gotten via GetLevelByClass: " + IntToString(nLevel), oManifester);
     }
 
     // If everything else fails, use the character's first class position

@@ -8,22 +8,24 @@
     both itself and the AoE object.
 
     @author Ornedan
-    @data   Created - 2005.10.26
+    @date   Created  - 2005.10.26
+    @date   Modified - 2006.06.04
  */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "spinc_telecircle"
 
 void main()
 {
-    if(DEBUG) DoDebug("ERROR: prc_telecirc_dis running, shouldn't be run!");
-    /* Disabled for time being.
-    if(DEBUG) DoDebug("prc_telecirc_dis running, disarmed by '" + GetName(GetLastDisarmed()) + "' - '" + GetTag(GetLastDisarmed()) + "'");
+    if(DEBUG) DoDebug("prc_telecirc_dis running, disarmed by " + DebugObject2Str(GetLastDisarmed()));
 
-    object oTrigger = OBJECT_SELF;
-    object oAoE     = GetLocalObject(oTrigger, "AreaOfEffectObject");
+    object oTrap = OBJECT_SELF;
+    object oAoE  = GetLocalObject(oTrap, "AreaOfEffectObject");
+
+    // Destroy all traps linked to the AoE and the AoE itself
+    int i;
+    for(i = 0; i < TC_NUM_TRAPS; i++)
+        DestroyObject(GetLocalObject(oAoE, "Trap_" + IntToString(i)));
     DestroyObject(oAoE);
-    DestroyObject(oTrigger);
-    */
 }

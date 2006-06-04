@@ -7,12 +7,9 @@
     Teleportation Circle -type spells, powers
     and SLAs.
 
-    @note At this time, the circle does not act as a trap, merely as a normal area of effect.
-          This means that though it can be dispelled, it cannot be disarmed. Due to this, the
-          option to have the circle be hidden is also disabled.
-
     @author Ornedan
-    @date   Created - 2005.11.12
+    @date   Created  - 2005.11.12
+    @date   Modified - 2006.06.04
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -31,6 +28,8 @@ const string TC_ISVISIBLE        = "PRC_TeleportCircle_IsVisible";
 const string TC_ISEXTENDED       = "PRC_TeleportCircle_Extended";
 const string TC_FIRSTSTAGE_DONE  = "PRC_TeleportCircle_FirstPartDone";
 const string TC_LOCATION         = "PRC_TeleportCircle_TargetLocation";
+
+const int TC_NUM_TRAPS = 4;
 
 //////////////////////////////////////////////////
 /* Function prototypes                          */
@@ -148,7 +147,7 @@ void TeleportationCircle(object oCaster, int nCasterLvl, int bVisible, int bExte
         // Store the caster level
         SetLocalInt(oCaster, TC_CASTERLEVEL, nCasterLvl);
         // Store the spellID
-        SetLocalInt(oCaster, TC_ISVISIBLE, TRUE/*bVisible*/); ///FIXME
+        SetLocalInt(oCaster, TC_ISVISIBLE, bVisible);
         // Store whether the spell is extended
         SetLocalInt(oCaster, TC_ISEXTENDED, bExtended);
         // Mark the first part done

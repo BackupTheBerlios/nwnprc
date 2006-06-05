@@ -42,5 +42,5 @@ void main()
 	//check for Vodare
 	if(GetHasSpellEffect(SPELL_VODARE, oPC))
 	{
-		//only aginast
+		//only against
 	

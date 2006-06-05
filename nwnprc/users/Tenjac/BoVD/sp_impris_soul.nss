@@ -34,9 +34,48 @@ Focus: A Tiny or smaller object to be the receptacle
 for the subject's soul. 
 
 Author:    Tenjac
-Created:   
+Created:   6/5/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+void DamageLoop(object oTarget);
 
 #include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nHP = GetCurrentHitPoints(oTarget);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_IMPRISON_SOUL, oPC);
+	
+	if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+	{
+		DamageLoop(oTarget, oPC, nMetaMagic);		
+	}
+	SPEvilShift(oPC);
+}
+
+void DamageLoop(object oTarget, object oPC, int nMetaMagic)
+{
+	int nDam = d4();
+	
+	if(nMetaMagic == METAMAGIC_MAXIMIZE)
+	{
+		nDam = 4;
+	}
+	if(nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nDam += (nDam/2);
+	}
+	
+	//1d4 CON
+	ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nDam, DURATION_TYPE_PERMANENT, 0.0f, FALSE, SPELL_IMPRISON_SOUL, PRCGetCasterLevel(oPC), oPC);
+	
+	DelayCommand(HoursToSeconds(24), DamageLoop(oTarget, oPC, nMetaMagic);
+}
+	
+	

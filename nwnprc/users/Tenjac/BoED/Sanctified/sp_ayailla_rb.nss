@@ -60,7 +60,7 @@ void main()
 	}
 	
 	//VFX
-	ApplyEffectAtLocation(    );
+	//ApplyEffectAtLocation(    );
 	
 	while(GetIsObjectValid(oTarget))
 	{				

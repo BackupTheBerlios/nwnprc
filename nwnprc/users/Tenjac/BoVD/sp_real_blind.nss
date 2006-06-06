@@ -32,9 +32,57 @@ Material Component: A 2-inch diameter multicolored
 disk of paper or ribbon.
 
 Author:    Tenjac
-Created:   
+Created:   6/6/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ILLUSION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	
+	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_REALITY_BLIND, oPC);
+	
+	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        {	
+		//Loop
+		BlindLoop(oTarget, oPC);
+	}
+			
+			
+	
+	
+void BlindLoop(object oTarget, object oPC)
+{
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);	
+	
+	if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL)) //&& Conc check successful
+	{
+		effect eBlind = EffectLinkEffects(EffectBlindness(), EffectStunned());		
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBlind, oTarget, 6.0f);
+		
+		//Schedule next round
+		DelayCommand(6.0f, BlindLoop(oTarget, oPC));
+	}
+	
+	else
+	{
+		//Non healing code
+	}
+}
+
+
+		
+			
+		
+		
+		

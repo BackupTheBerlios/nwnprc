@@ -43,4 +43,10 @@ void main()
 	if(GetHasSpellEffect(SPELL_VODARE, oPC))
 	{
 		//only against
+		
+		
+	}
+	
+	PRCEvilShift(oPC);
+}
 	

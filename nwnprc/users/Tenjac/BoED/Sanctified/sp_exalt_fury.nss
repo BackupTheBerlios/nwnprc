@@ -37,9 +37,40 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDC;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	location lLoc = GetSpellTargetLocation();	
 	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	effect eVis = EffectVisualEffect(?????); 
+	effect eVisLink = EffectLinkEffects(EffectVisualEffect(VFX_FNF_STRIKE_HOLY), EffectVisualEffect(VFX_FNF_SCREEN_BUMP));
+	       eVisLink = EffectLinkEffects(eVisLink, EffectVisualEffect(VFX_FNF_SUNBEAM));
+	
+	//Damage = Hitpoints + 50
+	int nDam = (GetCurrentHitPoints(oPC) + 50);
+	
+	if(nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nDam += (nDam/2);
+	}
+	
+	//You die, make it spectacular
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisLink, oPC);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
+	
+	//Loop
+	while(GetIsObjectValid(oTarget))
+	{
+		//only looking for evil
+		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+		{
+			//SR
+			if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+			{
+				//Hit 'em
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget)
+			}
+		}
+		
+		//cycle
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	}	
+	SPSetSchool();
+}

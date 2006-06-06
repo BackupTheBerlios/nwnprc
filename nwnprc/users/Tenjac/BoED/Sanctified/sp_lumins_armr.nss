@@ -1,0 +1,23 @@
+//::///////////////////////////////////////////////
+//:: Name      Luminous Armor/Greater Luminous Armor
+//:: FileName  sp_lumins_armr.nss
+//:://////////////////////////////////////////////
+/**@file 
+
+Level: 
+Components: 
+Casting Time: 
+Range: 
+Target: 
+Duration: 
+Saving Throw: 
+Spell Resistance:
+ 
+
+Author:    Tenjac
+Created:   
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+#include "spinc_common"

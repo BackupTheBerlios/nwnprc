@@ -42,9 +42,8 @@ void main()
 	//check for Vodare
 	if(GetHasSpellEffect(SPELL_VODARE, oPC))
 	{
-		//only against
-		
-		
+		//Make sure the spell effect hangs around for the duration
+		//to be checked by prc_add_spell_dc.nss			
 	}
 	
 	PRCEvilShift(oPC);

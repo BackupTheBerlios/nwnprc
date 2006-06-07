@@ -440,7 +440,7 @@ int SpellSchoolToDiscipline(int nSpellSchool)
 {
     int nDiscipline = DISCIPLINE_NONE;
 
-    switch(nDiscipline)
+    switch(nSpellSchool)
     {
         case SPELL_SCHOOL_GENERAL:       nDiscipline = DISCIPLINE_NONE;             break;
         case SPELL_SCHOOL_ABJURATION:    nDiscipline = DISCIPLINE_NONE;             break;

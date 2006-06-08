@@ -38,12 +38,18 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
+	int nCasterLevel = PRCGetCasterLevel(oPC);
+	float fDur = (600.0f * nCasterLevel);
 	
 	//check for Vodare
 	if(GetHasSpellEffect(SPELL_VODARE, oPC))
 	{
 		//Make sure the spell effect hangs around for the duration
-		//to be checked by prc_add_spell_dc.nss			
+		//to be checked by prc_add_spell_dc.nss
+		
+		effect eVis = EffectVisualEffect(VFX_DUR_UNHEAVENED);
+		
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur);
 	}
 	
 	PRCEvilShift(oPC);

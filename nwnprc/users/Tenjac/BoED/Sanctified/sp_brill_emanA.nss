@@ -39,19 +39,3 @@ Created:   6/8/06
 
 void main()
 {
-	//spellhook
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	object oPC = OBJECT_SELF;
-	location lLoc = GetLocation(oPC);
-	float fDur = RoundsToSeconds(d4());
-		
-	//VFX on caster
-	effect eVis = EffectVisualEffect(VFX_DUR_ );
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oPC, fDur);
-	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 30.48f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	
-}

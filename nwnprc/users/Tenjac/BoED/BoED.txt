@@ -17,10 +17,8 @@ Rain of Embers
 Sicken Evil
 Storm of Shards
 Sunmantle
-Twilight Luck
 
 Standard:
-Affliction
 Amber Sarcophagus
 Bastion of Good
 Blessed Sight
@@ -40,7 +38,6 @@ End to Strife
 Energize Potion
 Estanna's Stew
 Eyes of the Avoral
-Glory of the Martyr
 Healing Touch
 Heart's Ease
 Inspired Aim

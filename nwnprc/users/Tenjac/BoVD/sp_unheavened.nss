@@ -47,7 +47,8 @@ void main()
 		//Make sure the spell effect hangs around for the duration
 		//to be checked by prc_add_spell_dc.nss
 		
-		effect eVis = EffectVisualEffect(VFX_DUR_UNHEAVENED);
+		//effect eVis = EffectVisualEffect(VFX_DUR_UNHEAVENED);
+		effect eVis = EffectVisualeffect(VFX_DUR_CESSATE_NEGATIVE);
 		
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur);
 	}

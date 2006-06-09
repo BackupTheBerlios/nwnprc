@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Brilliant Emanation
-//:: FileName  sp_brill_eman.nss
+//:: Name      Brilliant Emanation - On Enter
+//:: FileName  sp_brill_emanA.nss
 //:://////////////////////////////////////////////
 /**@file Brilliant Emanation
 Evocation [Good] 
@@ -38,4 +38,40 @@ Created:   6/8/06
 #include "spinc_common"
 
 void main()
-{
+{	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+		
+	object oTarget = GetEnteringObject();
+	object oPC = GetAreaOfEffectCreator();
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nCasterLvl = PRCGetCasterLevel(oPC);	
+	
+	//if valid                    
+	if(GetIsObjectValid(oTarget))
+	{
+		//and evil
+		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+		{
+			//Spell resistance
+			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			{
+				//Save
+				if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+				{
+					SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectBlindness(), oTarget);
+				}
+				
+				//if saved, just -1 to attacks
+				else
+				{
+					SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAttackDecrease(1), oTarget);
+				}
+			}
+		}
+	}
+	SPSetSchool();
+}
+					
+				
+	
+		

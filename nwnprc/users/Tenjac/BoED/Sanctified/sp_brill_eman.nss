@@ -47,11 +47,18 @@ void main()
 	object oPC = OBJECT_SELF;
 	location lLoc = GetLocation(oPC);
 	float fDur = RoundsToSeconds(d4());
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	//Check Extend metamagic feat.
+	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+	{
+		fDur = (fDur * 2);    //Duration is +100%
+	}
 		
 	//VFX on caster
-	effect eVis = EffectVisualEffect(VFX_DUR_ );
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oPC, fDur);
+	effect eAOE = EffectAreaOfEffect(VFX_MOB_BRILLIANT_EMANATION);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
 	
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 30.48f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
-	
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(), 0);
+	SPSetSchool();		
 }

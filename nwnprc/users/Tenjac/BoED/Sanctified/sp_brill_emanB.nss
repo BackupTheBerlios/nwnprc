@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Brilliant Emanation
-//:: FileName  sp_brill_eman.nss
+//:: Name      Brilliant Emanation - On Exit
+//:: FileName  sp_brill_emanB.nss
 //:://////////////////////////////////////////////
 /**@file Brilliant Emanation
 Evocation [Good] 
@@ -39,3 +39,40 @@ Created:   6/8/06
 
 void main()
 {
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oTarget = GetExitingObject();
+	effect eAOE = GetFirstEffect(oTarget);
+	
+	//Search through the valid effects on the target.	
+	while (GetIsEffectValid(eAOE))
+	{
+		if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
+		{
+			if(GetEffectType(eAOE) == EFFECT_TYPE_BLINDNESS)
+			{
+				//If the effect was created by Brilliant Emanation then remove it
+				if(GetEffectSpellId(eAOE) == SPELL_BRILLIAN_EMANATION)
+				{
+					RemoveEffect(oTarget, eAOE);
+				}
+			}
+			
+			if(GetEffectType(eAOE) == EFFECT_TYPE_ATTACK_DECREASE)
+			{
+				//If the effect was created by Brilliant Emanation then remove it
+				if(GetEffectSpellId(eAOE) == SPELL_BRILLIAN_EMANATION)
+				{
+					RemoveEffect(oTarget, eAOE);
+				}
+			}			
+		}
+		//Get next effect on the target
+		eAOE = GetNextEffect(oTarget);
+	}
+	SPSetSchool();
+}
+				
+		
+	
+	

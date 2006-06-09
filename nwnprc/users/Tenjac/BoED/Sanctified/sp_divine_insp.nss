@@ -25,9 +25,24 @@ non-evil creatures.
 Sacrifice: 1d2 points of Strength damage.
 
 Author:    Tenjac
-Created:   
+Created:   6/9/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	object oSkin = GetPCSkin(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	itemproperty iBonus = ItemPropertyAttackBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 3);
+	float fDur = RoundsToSeconds(d4(1));
+	
+	IPSafeAddItemProperty(oSkin, iBonus, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
+	
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 0);
+}
+	

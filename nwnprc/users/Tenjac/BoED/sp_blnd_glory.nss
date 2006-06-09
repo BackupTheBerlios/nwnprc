@@ -8,7 +8,7 @@ Level: Glory 9, Sor/Wiz 9
 Components: V, S, M/DF 
 Casting Time: 1 hour
 Range: Close (25 ft. + 5 ft./2 levels) 
-Area: 100-ft./level radius spread, cen­tered on you
+Area: 100-ft./level radius spread, centered on you
 Duration: 1 hour/level 
 Saving Throw: None 
 Spell Resistance: No
@@ -20,7 +20,7 @@ darkness counters or dispels it. Furthermore,
 evil-aligned creatures are blinded within this light.
 
 Blinding glory brought into an area of magical 
-darkness (or vice versa), includ­ing an utterdark 
+darkness (or vice versa), including an utterdark 
 spell, is temporarily negated, so that the otherwise
 prevailing light conditions exist in the overlapping
 areas of effect.

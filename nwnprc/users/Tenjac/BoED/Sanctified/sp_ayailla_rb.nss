@@ -45,7 +45,7 @@ void main()
 	location lLoc = GetSpellTargetLocation();	
 	object oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, 18.28f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	float fDur = 6.0f;
-	effect eVis = EffectVisualEffect(?????); 
+	//effect eVis = EffectVisualEffect(?????); 
 	
 	//make sure it's not the PC
 	if(oTarget == oPC)
@@ -60,7 +60,7 @@ void main()
 	}
 	
 	//VFX
-	//ApplyEffectAtLocation(    );
+	//SPApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
 	
 	while(GetIsObjectValid(oTarget))
 	{				

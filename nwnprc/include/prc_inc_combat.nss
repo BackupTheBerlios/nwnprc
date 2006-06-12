@@ -340,10 +340,10 @@ void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int i
  * @param bInstantAttack    If TRUE, all attacks are performed at the same time, instead of over a round.
  *                          Default: FALSE
  */
-void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect, 
-    float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, 
-    int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "", 
-    string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE, 
+void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffect,
+    float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0,
+    int iDamageType = 0, int bEffectAllAttacks = FALSE, string sMessageSuccess = "",
+    string sMessageFailure = "", int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE,
     int bInstantAttack = FALSE);
 
 // Performs a single attack and can add in bonus damage damage/effects
@@ -364,17 +364,17 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
 // iTouchAttackType - TOUCH_ATTACK_* const - melee, ranged, spell melee, spell ranged
 // oRightHandOverride - item to use as if in the right hand
 // oLeftHandOverride - item to use as if in the left hand
-void PerformAttack(object oDefender, 
-    object oAttacker, 
-    effect eSpecialEffect, 
-    float eDuration = 0.0, 
-    int iAttackBonusMod = 0, 
-    int iDamageModifier = 0, 
-    int iDamageType = 0, 
-    string sMessageSuccess = "", 
-    string sMessageFailure = "", 
-    int iTouchAttackType = FALSE, 
-    object oRightHandOverride = OBJECT_INVALID, 
+void PerformAttack(object oDefender,
+    object oAttacker,
+    effect eSpecialEffect,
+    float eDuration = 0.0,
+    int iAttackBonusMod = 0,
+    int iDamageModifier = 0,
+    int iDamageType = 0,
+    string sMessageSuccess = "",
+    string sMessageFailure = "",
+    int iTouchAttackType = FALSE,
+    object oRightHandOverride = OBJECT_INVALID,
     object oLeftHandOverride = OBJECT_INVALID);
 
 //:://///////////////////////////////////////
@@ -592,353 +592,353 @@ int GetFeatByWeaponType(int iType, string sFeat)
         if(sFeat == "Focus")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_WEAPON_FOCUS_BASTARD_SWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_WEAPON_FOCUS_BATTLE_AXE;
-                case BASE_ITEM_CLUB: return FEAT_WEAPON_FOCUS_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_WEAPON_FOCUS_DAGGER;
-                case BASE_ITEM_DART: return FEAT_WEAPON_FOCUS_DART;
-                case BASE_ITEM_DIREMACE: return FEAT_WEAPON_FOCUS_DIRE_MACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_WEAPON_FOCUS_DOUBLE_AXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_WEAPON_FOCUS_DWAXE;
-                case BASE_ITEM_GREATAXE: return FEAT_WEAPON_FOCUS_GREAT_AXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_WEAPON_FOCUS_GREAT_SWORD;
-                case BASE_ITEM_HALBERD: return FEAT_WEAPON_FOCUS_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_WEAPON_FOCUS_HAND_AXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_WEAPON_FOCUS_HEAVY_FLAIL;
-                case BASE_ITEM_KAMA: return FEAT_WEAPON_FOCUS_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_WEAPON_FOCUS_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_WEAPON_FOCUS_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_WEAPON_FOCUS_LIGHT_FLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_WEAPON_FOCUS_LIGHT_HAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_WEAPON_FOCUS_LIGHT_MACE;
-                case BASE_ITEM_LONGBOW: return FEAT_WEAPON_FOCUS_LONG_SWORD;
-                case BASE_ITEM_LONGSWORD: return FEAT_WEAPON_FOCUS_LONGBOW;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_WEAPON_FOCUS_MORNING_STAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_WEAPON_FOCUS_STAFF;
-                case BASE_ITEM_RAPIER: return FEAT_WEAPON_FOCUS_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_WEAPON_FOCUS_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_WEAPON_FOCUS_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return FEAT_WEAPON_FOCUS_SHORTBOW;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_WEAPON_FOCUS_SPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_WEAPON_FOCUS_SHORT_SWORD;
-                case BASE_ITEM_SHURIKEN: return FEAT_WEAPON_FOCUS_SHURIKEN;
-                case BASE_ITEM_SICKLE: return FEAT_WEAPON_FOCUS_SICKLE;
-                case BASE_ITEM_SLING: return FEAT_WEAPON_FOCUS_SLING;
-                case BASE_ITEM_THROWINGAXE: return FEAT_WEAPON_FOCUS_THROWING_AXE;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_WEAPON_FOCUS_BASTARD_SWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_WEAPON_FOCUS_BATTLE_AXE;
+                case BASE_ITEM_CLUB:           return FEAT_WEAPON_FOCUS_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_WEAPON_FOCUS_DAGGER;
+                case BASE_ITEM_DART:           return FEAT_WEAPON_FOCUS_DART;
+                case BASE_ITEM_DIREMACE:       return FEAT_WEAPON_FOCUS_DIRE_MACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_WEAPON_FOCUS_DOUBLE_AXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_WEAPON_FOCUS_DWAXE;
+                case BASE_ITEM_GREATAXE:       return FEAT_WEAPON_FOCUS_GREAT_AXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_WEAPON_FOCUS_GREAT_SWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_WEAPON_FOCUS_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_WEAPON_FOCUS_HAND_AXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_WEAPON_FOCUS_HEAVY_FLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_WEAPON_FOCUS_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_WEAPON_FOCUS_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_WEAPON_FOCUS_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_WEAPON_FOCUS_LIGHT_FLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_WEAPON_FOCUS_LIGHT_HAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_WEAPON_FOCUS_LIGHT_MACE;
+                case BASE_ITEM_LONGBOW:        return FEAT_WEAPON_FOCUS_LONGBOW;
+                case BASE_ITEM_LONGSWORD:      return FEAT_WEAPON_FOCUS_LONG_SWORD;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_WEAPON_FOCUS_MORNING_STAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_WEAPON_FOCUS_STAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_WEAPON_FOCUS_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_WEAPON_FOCUS_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_WEAPON_FOCUS_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return FEAT_WEAPON_FOCUS_SHORTBOW;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_WEAPON_FOCUS_SPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_WEAPON_FOCUS_SHORT_SWORD;
+                case BASE_ITEM_SHURIKEN:       return FEAT_WEAPON_FOCUS_SHURIKEN;
+                case BASE_ITEM_SICKLE:         return FEAT_WEAPON_FOCUS_SICKLE;
+                case BASE_ITEM_SLING:          return FEAT_WEAPON_FOCUS_SLING;
+                case BASE_ITEM_THROWINGAXE:    return FEAT_WEAPON_FOCUS_THROWING_AXE;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_WEAPON_FOCUS_WAR_HAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_WEAPON_FOCUS_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_WEAPON_FOCUS_WAR_HAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_WEAPON_FOCUS_WHIP;
             }
 
         else if(sFeat == "Specialization")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_WEAPON_SPECIALIZATION_BASTARD_SWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_WEAPON_SPECIALIZATION_BATTLE_AXE;
-                case BASE_ITEM_CLUB: return FEAT_WEAPON_SPECIALIZATION_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_WEAPON_SPECIALIZATION_DAGGER;
-                case BASE_ITEM_DART: return FEAT_WEAPON_SPECIALIZATION_DART;
-                case BASE_ITEM_DIREMACE: return FEAT_WEAPON_SPECIALIZATION_DIRE_MACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_WEAPON_SPECIALIZATION_DOUBLE_AXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_WEAPON_SPECIALIZATION_DWAXE ;
-                case BASE_ITEM_GREATAXE: return FEAT_WEAPON_SPECIALIZATION_GREAT_AXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_WEAPON_SPECIALIZATION_GREAT_SWORD;
-                case BASE_ITEM_HALBERD: return FEAT_WEAPON_SPECIALIZATION_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_WEAPON_SPECIALIZATION_HAND_AXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return FEAT_WEAPON_SPECIALIZATION_HEAVY_CROSSBOW;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_WEAPON_SPECIALIZATION_HEAVY_FLAIL;
-                case BASE_ITEM_KAMA: return FEAT_WEAPON_SPECIALIZATION_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_WEAPON_SPECIALIZATION_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_WEAPON_SPECIALIZATION_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return FEAT_WEAPON_SPECIALIZATION_LIGHT_CROSSBOW;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_WEAPON_SPECIALIZATION_LIGHT_FLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_WEAPON_SPECIALIZATION_LIGHT_HAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_WEAPON_SPECIALIZATION_LIGHT_MACE;
-                case BASE_ITEM_LONGBOW: return FEAT_WEAPON_SPECIALIZATION_LONG_SWORD;
-                case BASE_ITEM_LONGSWORD: return FEAT_WEAPON_SPECIALIZATION_LONGBOW;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_WEAPON_SPECIALIZATION_MORNING_STAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_WEAPON_SPECIALIZATION_STAFF;
-                case BASE_ITEM_RAPIER: return FEAT_WEAPON_SPECIALIZATION_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_WEAPON_SPECIALIZATION_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_WEAPON_SPECIALIZATION_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return FEAT_WEAPON_SPECIALIZATION_SHORTBOW;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_WEAPON_SPECIALIZATION_SPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD;
-                case BASE_ITEM_SHURIKEN: return FEAT_WEAPON_SPECIALIZATION_SHURIKEN;
-                case BASE_ITEM_SICKLE: return FEAT_WEAPON_SPECIALIZATION_SICKLE;
-                case BASE_ITEM_SLING: return FEAT_WEAPON_SPECIALIZATION_SLING;
-                case BASE_ITEM_THROWINGAXE: return FEAT_WEAPON_SPECIALIZATION_THROWING_AXE;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_WEAPON_SPECIALIZATION_BASTARD_SWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_WEAPON_SPECIALIZATION_BATTLE_AXE;
+                case BASE_ITEM_CLUB:           return FEAT_WEAPON_SPECIALIZATION_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_WEAPON_SPECIALIZATION_DAGGER;
+                case BASE_ITEM_DART:           return FEAT_WEAPON_SPECIALIZATION_DART;
+                case BASE_ITEM_DIREMACE:       return FEAT_WEAPON_SPECIALIZATION_DIRE_MACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_WEAPON_SPECIALIZATION_DOUBLE_AXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_WEAPON_SPECIALIZATION_DWAXE ;
+                case BASE_ITEM_GREATAXE:       return FEAT_WEAPON_SPECIALIZATION_GREAT_AXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_WEAPON_SPECIALIZATION_GREAT_SWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_WEAPON_SPECIALIZATION_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_WEAPON_SPECIALIZATION_HAND_AXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return FEAT_WEAPON_SPECIALIZATION_HEAVY_CROSSBOW;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_WEAPON_SPECIALIZATION_HEAVY_FLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_WEAPON_SPECIALIZATION_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_WEAPON_SPECIALIZATION_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_WEAPON_SPECIALIZATION_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return FEAT_WEAPON_SPECIALIZATION_LIGHT_CROSSBOW;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_WEAPON_SPECIALIZATION_LIGHT_FLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_WEAPON_SPECIALIZATION_LIGHT_HAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_WEAPON_SPECIALIZATION_LIGHT_MACE;
+                case BASE_ITEM_LONGBOW:        return FEAT_WEAPON_SPECIALIZATION_LONGBOW;
+                case BASE_ITEM_LONGSWORD:      return FEAT_WEAPON_SPECIALIZATION_LONG_SWORD;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_WEAPON_SPECIALIZATION_MORNING_STAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_WEAPON_SPECIALIZATION_STAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_WEAPON_SPECIALIZATION_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_WEAPON_SPECIALIZATION_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_WEAPON_SPECIALIZATION_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return FEAT_WEAPON_SPECIALIZATION_SHORTBOW;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_WEAPON_SPECIALIZATION_SPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_WEAPON_SPECIALIZATION_SHORT_SWORD;
+                case BASE_ITEM_SHURIKEN:       return FEAT_WEAPON_SPECIALIZATION_SHURIKEN;
+                case BASE_ITEM_SICKLE:         return FEAT_WEAPON_SPECIALIZATION_SICKLE;
+                case BASE_ITEM_SLING:          return FEAT_WEAPON_SPECIALIZATION_SLING;
+                case BASE_ITEM_THROWINGAXE:    return FEAT_WEAPON_SPECIALIZATION_THROWING_AXE;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_WEAPON_SPECIALIZATION_TWO_BLADED_SWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_WEAPON_SPECIALIZATION_WAR_HAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_WEAPON_SPECIALIZATION_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_WEAPON_SPECIALIZATION_WAR_HAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_WEAPON_SPECIALIZATION_WHIP;
             }
 
         else if(sFeat == "EpicFocus")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_EPIC_WEAPON_FOCUS_BASTARDSWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_EPIC_WEAPON_FOCUS_BATTLEAXE;
-                case BASE_ITEM_CLUB: return FEAT_EPIC_WEAPON_FOCUS_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_EPIC_WEAPON_FOCUS_DAGGER;
-                case BASE_ITEM_DART: return FEAT_EPIC_WEAPON_FOCUS_DART;
-                case BASE_ITEM_DIREMACE: return FEAT_EPIC_WEAPON_FOCUS_DIREMACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_EPIC_WEAPON_FOCUS_DOUBLEAXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_EPIC_WEAPON_FOCUS_DWAXE;
-                case BASE_ITEM_GREATAXE: return FEAT_EPIC_WEAPON_FOCUS_GREATAXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_EPIC_WEAPON_FOCUS_GREATSWORD;
-                case BASE_ITEM_HALBERD: return FEAT_EPIC_WEAPON_FOCUS_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_EPIC_WEAPON_FOCUS_HANDAXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return FEAT_EPIC_WEAPON_FOCUS_HEAVYCROSSBOW;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_EPIC_WEAPON_FOCUS_HEAVYFLAIL;
-                case BASE_ITEM_KAMA: return FEAT_EPIC_WEAPON_FOCUS_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_EPIC_WEAPON_FOCUS_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_EPIC_WEAPON_FOCUS_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return FEAT_EPIC_WEAPON_FOCUS_LIGHTCROSSBOW;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_EPIC_WEAPON_FOCUS_LIGHTFLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_EPIC_WEAPON_FOCUS_LIGHTHAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_EPIC_WEAPON_FOCUS_LIGHTMACE;
-                case BASE_ITEM_LONGBOW: return FEAT_EPIC_WEAPON_FOCUS_LONGSWORD;
-                case BASE_ITEM_LONGSWORD: return FEAT_EPIC_WEAPON_FOCUS_LONGBOW;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_EPIC_WEAPON_FOCUS_MORNINGSTAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_EPIC_WEAPON_FOCUS_QUARTERSTAFF;
-                case BASE_ITEM_RAPIER: return FEAT_EPIC_WEAPON_FOCUS_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_EPIC_WEAPON_FOCUS_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_EPIC_WEAPON_FOCUS_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return FEAT_EPIC_WEAPON_FOCUS_SHORTBOW;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_EPIC_WEAPON_FOCUS_SHORTSPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_EPIC_WEAPON_FOCUS_SHORTSWORD;
-                case BASE_ITEM_SHURIKEN: return FEAT_EPIC_WEAPON_FOCUS_SHURIKEN;
-                case BASE_ITEM_SICKLE: return FEAT_EPIC_WEAPON_FOCUS_SICKLE;
-                case BASE_ITEM_SLING: return FEAT_EPIC_WEAPON_FOCUS_SLING;
-                case BASE_ITEM_THROWINGAXE: return FEAT_EPIC_WEAPON_FOCUS_THROWINGAXE;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_EPIC_WEAPON_FOCUS_BASTARDSWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_EPIC_WEAPON_FOCUS_BATTLEAXE;
+                case BASE_ITEM_CLUB:           return FEAT_EPIC_WEAPON_FOCUS_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_EPIC_WEAPON_FOCUS_DAGGER;
+                case BASE_ITEM_DART:           return FEAT_EPIC_WEAPON_FOCUS_DART;
+                case BASE_ITEM_DIREMACE:       return FEAT_EPIC_WEAPON_FOCUS_DIREMACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_EPIC_WEAPON_FOCUS_DOUBLEAXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_EPIC_WEAPON_FOCUS_DWAXE;
+                case BASE_ITEM_GREATAXE:       return FEAT_EPIC_WEAPON_FOCUS_GREATAXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_EPIC_WEAPON_FOCUS_GREATSWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_EPIC_WEAPON_FOCUS_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_EPIC_WEAPON_FOCUS_HANDAXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return FEAT_EPIC_WEAPON_FOCUS_HEAVYCROSSBOW;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_EPIC_WEAPON_FOCUS_HEAVYFLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_EPIC_WEAPON_FOCUS_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_EPIC_WEAPON_FOCUS_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_EPIC_WEAPON_FOCUS_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return FEAT_EPIC_WEAPON_FOCUS_LIGHTCROSSBOW;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_EPIC_WEAPON_FOCUS_LIGHTFLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_EPIC_WEAPON_FOCUS_LIGHTHAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_EPIC_WEAPON_FOCUS_LIGHTMACE;
+                case BASE_ITEM_LONGBOW:        return FEAT_EPIC_WEAPON_FOCUS_LONGBOW;
+                case BASE_ITEM_LONGSWORD:      return FEAT_EPIC_WEAPON_FOCUS_LONGSWORD;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_EPIC_WEAPON_FOCUS_MORNINGSTAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_EPIC_WEAPON_FOCUS_QUARTERSTAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_EPIC_WEAPON_FOCUS_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_EPIC_WEAPON_FOCUS_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_EPIC_WEAPON_FOCUS_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return FEAT_EPIC_WEAPON_FOCUS_SHORTBOW;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_EPIC_WEAPON_FOCUS_SHORTSPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_EPIC_WEAPON_FOCUS_SHORTSWORD;
+                case BASE_ITEM_SHURIKEN:       return FEAT_EPIC_WEAPON_FOCUS_SHURIKEN;
+                case BASE_ITEM_SICKLE:         return FEAT_EPIC_WEAPON_FOCUS_SICKLE;
+                case BASE_ITEM_SLING:          return FEAT_EPIC_WEAPON_FOCUS_SLING;
+                case BASE_ITEM_THROWINGAXE:    return FEAT_EPIC_WEAPON_FOCUS_THROWINGAXE;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_EPIC_WEAPON_FOCUS_TWOBLADEDSWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_EPIC_WEAPON_FOCUS_WARHAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_EPIC_WEAPON_FOCUS_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_EPIC_WEAPON_FOCUS_WARHAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_EPIC_WEAPON_FOCUS_WHIP;
             }
 
         else if(sFeat == "EpicSpecialization")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_EPIC_WEAPON_SPECIALIZATION_BASTARDSWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_EPIC_WEAPON_SPECIALIZATION_BATTLEAXE;
-                case BASE_ITEM_CLUB: return FEAT_EPIC_WEAPON_SPECIALIZATION_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_EPIC_WEAPON_SPECIALIZATION_DAGGER;
-                case BASE_ITEM_DART: return FEAT_EPIC_WEAPON_SPECIALIZATION_DART;
-                case BASE_ITEM_DIREMACE: return FEAT_EPIC_WEAPON_SPECIALIZATION_DIREMACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_EPIC_WEAPON_SPECIALIZATION_DOUBLEAXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_EPIC_WEAPON_SPECIALIZATION_DWAXE;
-                case BASE_ITEM_GREATAXE: return FEAT_EPIC_WEAPON_SPECIALIZATION_GREATAXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_EPIC_WEAPON_SPECIALIZATION_GREATSWORD;
-                case BASE_ITEM_HALBERD: return FEAT_EPIC_WEAPON_SPECIALIZATION_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_EPIC_WEAPON_SPECIALIZATION_HANDAXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return FEAT_EPIC_WEAPON_SPECIALIZATION_HEAVYCROSSBOW;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_EPIC_WEAPON_SPECIALIZATION_HEAVYFLAIL;
-                case BASE_ITEM_KAMA: return FEAT_EPIC_WEAPON_SPECIALIZATION_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_EPIC_WEAPON_SPECIALIZATION_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_EPIC_WEAPON_SPECIALIZATION_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTCROSSBOW;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTFLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTHAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTMACE;
-                case BASE_ITEM_LONGBOW: return FEAT_EPIC_WEAPON_SPECIALIZATION_LONGSWORD;
-                case BASE_ITEM_LONGSWORD: return FEAT_EPIC_WEAPON_SPECIALIZATION_LONGBOW;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_EPIC_WEAPON_SPECIALIZATION_MORNINGSTAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_EPIC_WEAPON_SPECIALIZATION_QUARTERSTAFF;
-                case BASE_ITEM_RAPIER: return FEAT_EPIC_WEAPON_SPECIALIZATION_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_EPIC_WEAPON_SPECIALIZATION_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_EPIC_WEAPON_SPECIALIZATION_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTBOW;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTSPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTSWORD;
-                case BASE_ITEM_SHURIKEN: return FEAT_EPIC_WEAPON_SPECIALIZATION_SHURIKEN;
-                case BASE_ITEM_SICKLE: return FEAT_EPIC_WEAPON_SPECIALIZATION_SICKLE;
-                case BASE_ITEM_SLING: return FEAT_EPIC_WEAPON_SPECIALIZATION_SLING;
-                case BASE_ITEM_THROWINGAXE: return FEAT_EPIC_WEAPON_SPECIALIZATION_THROWINGAXE;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_EPIC_WEAPON_SPECIALIZATION_BASTARDSWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_EPIC_WEAPON_SPECIALIZATION_BATTLEAXE;
+                case BASE_ITEM_CLUB:           return FEAT_EPIC_WEAPON_SPECIALIZATION_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_EPIC_WEAPON_SPECIALIZATION_DAGGER;
+                case BASE_ITEM_DART:           return FEAT_EPIC_WEAPON_SPECIALIZATION_DART;
+                case BASE_ITEM_DIREMACE:       return FEAT_EPIC_WEAPON_SPECIALIZATION_DIREMACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_EPIC_WEAPON_SPECIALIZATION_DOUBLEAXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_EPIC_WEAPON_SPECIALIZATION_DWAXE;
+                case BASE_ITEM_GREATAXE:       return FEAT_EPIC_WEAPON_SPECIALIZATION_GREATAXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_EPIC_WEAPON_SPECIALIZATION_GREATSWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_EPIC_WEAPON_SPECIALIZATION_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_EPIC_WEAPON_SPECIALIZATION_HANDAXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return FEAT_EPIC_WEAPON_SPECIALIZATION_HEAVYCROSSBOW;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_EPIC_WEAPON_SPECIALIZATION_HEAVYFLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_EPIC_WEAPON_SPECIALIZATION_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_EPIC_WEAPON_SPECIALIZATION_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_EPIC_WEAPON_SPECIALIZATION_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTCROSSBOW;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTFLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTHAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_EPIC_WEAPON_SPECIALIZATION_LIGHTMACE;
+                case BASE_ITEM_LONGBOW:        return FEAT_EPIC_WEAPON_SPECIALIZATION_LONGSWORD;
+                case BASE_ITEM_LONGSWORD:      return FEAT_EPIC_WEAPON_SPECIALIZATION_LONGBOW;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_EPIC_WEAPON_SPECIALIZATION_MORNINGSTAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_EPIC_WEAPON_SPECIALIZATION_QUARTERSTAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_EPIC_WEAPON_SPECIALIZATION_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_EPIC_WEAPON_SPECIALIZATION_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_EPIC_WEAPON_SPECIALIZATION_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTBOW;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTSPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_EPIC_WEAPON_SPECIALIZATION_SHORTSWORD;
+                case BASE_ITEM_SHURIKEN:       return FEAT_EPIC_WEAPON_SPECIALIZATION_SHURIKEN;
+                case BASE_ITEM_SICKLE:         return FEAT_EPIC_WEAPON_SPECIALIZATION_SICKLE;
+                case BASE_ITEM_SLING:          return FEAT_EPIC_WEAPON_SPECIALIZATION_SLING;
+                case BASE_ITEM_THROWINGAXE:    return FEAT_EPIC_WEAPON_SPECIALIZATION_THROWINGAXE;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_EPIC_WEAPON_SPECIALIZATION_TWOBLADEDSWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_EPIC_WEAPON_SPECIALIZATION_WARHAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_EPIC_WEAPON_SPECIALIZATION_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_EPIC_WEAPON_SPECIALIZATION_WARHAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_EPIC_WEAPON_SPECIALIZATION_WHIP;
             }
 
         else if(sFeat == "ImprovedCrit")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_IMPROVED_CRITICAL_BASTARD_SWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_IMPROVED_CRITICAL_BATTLE_AXE;
-                case BASE_ITEM_CLUB: return FEAT_IMPROVED_CRITICAL_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_IMPROVED_CRITICAL_DAGGER;
-                case BASE_ITEM_DART: return FEAT_IMPROVED_CRITICAL_DART;
-                case BASE_ITEM_DIREMACE: return FEAT_IMPROVED_CRITICAL_DIRE_MACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_IMPROVED_CRITICAL_DOUBLE_AXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_IMPROVED_CRITICAL_DWAXE ;
-                case BASE_ITEM_GREATAXE: return FEAT_IMPROVED_CRITICAL_GREAT_AXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_IMPROVED_CRITICAL_GREAT_SWORD;
-                case BASE_ITEM_HALBERD: return FEAT_IMPROVED_CRITICAL_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_IMPROVED_CRITICAL_HAND_AXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return FEAT_IMPROVED_CRITICAL_HEAVY_CROSSBOW;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_IMPROVED_CRITICAL_HEAVY_FLAIL;
-                case BASE_ITEM_KAMA: return FEAT_IMPROVED_CRITICAL_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_IMPROVED_CRITICAL_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_IMPROVED_CRITICAL_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return FEAT_IMPROVED_CRITICAL_LIGHT_CROSSBOW;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_IMPROVED_CRITICAL_LIGHT_FLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_IMPROVED_CRITICAL_LIGHT_HAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_IMPROVED_CRITICAL_LIGHT_MACE;
-                case BASE_ITEM_LONGBOW: return FEAT_IMPROVED_CRITICAL_LONG_SWORD;
-                case BASE_ITEM_LONGSWORD: return FEAT_IMPROVED_CRITICAL_LONGBOW;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_IMPROVED_CRITICAL_MORNING_STAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_IMPROVED_CRITICAL_STAFF;
-                case BASE_ITEM_RAPIER: return FEAT_IMPROVED_CRITICAL_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_IMPROVED_CRITICAL_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_IMPROVED_CRITICAL_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return FEAT_IMPROVED_CRITICAL_SHORTBOW;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_IMPROVED_CRITICAL_SPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_IMPROVED_CRITICAL_SHORT_SWORD;
-                case BASE_ITEM_SHURIKEN: return FEAT_IMPROVED_CRITICAL_SHURIKEN;
-                case BASE_ITEM_SICKLE: return FEAT_IMPROVED_CRITICAL_SICKLE;
-                case BASE_ITEM_SLING: return FEAT_IMPROVED_CRITICAL_SLING;
-                case BASE_ITEM_THROWINGAXE: return FEAT_IMPROVED_CRITICAL_THROWING_AXE;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_IMPROVED_CRITICAL_BASTARD_SWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_IMPROVED_CRITICAL_BATTLE_AXE;
+                case BASE_ITEM_CLUB:           return FEAT_IMPROVED_CRITICAL_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_IMPROVED_CRITICAL_DAGGER;
+                case BASE_ITEM_DART:           return FEAT_IMPROVED_CRITICAL_DART;
+                case BASE_ITEM_DIREMACE:       return FEAT_IMPROVED_CRITICAL_DIRE_MACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_IMPROVED_CRITICAL_DOUBLE_AXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_IMPROVED_CRITICAL_DWAXE ;
+                case BASE_ITEM_GREATAXE:       return FEAT_IMPROVED_CRITICAL_GREAT_AXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_IMPROVED_CRITICAL_GREAT_SWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_IMPROVED_CRITICAL_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_IMPROVED_CRITICAL_HAND_AXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return FEAT_IMPROVED_CRITICAL_HEAVY_CROSSBOW;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_IMPROVED_CRITICAL_HEAVY_FLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_IMPROVED_CRITICAL_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_IMPROVED_CRITICAL_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_IMPROVED_CRITICAL_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return FEAT_IMPROVED_CRITICAL_LIGHT_CROSSBOW;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_IMPROVED_CRITICAL_LIGHT_FLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_IMPROVED_CRITICAL_LIGHT_HAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_IMPROVED_CRITICAL_LIGHT_MACE;
+                case BASE_ITEM_LONGBOW:        return FEAT_IMPROVED_CRITICAL_LONGBOW;
+                case BASE_ITEM_LONGSWORD:      return FEAT_IMPROVED_CRITICAL_LONG_SWORD;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_IMPROVED_CRITICAL_MORNING_STAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_IMPROVED_CRITICAL_STAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_IMPROVED_CRITICAL_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_IMPROVED_CRITICAL_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_IMPROVED_CRITICAL_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return FEAT_IMPROVED_CRITICAL_SHORTBOW;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_IMPROVED_CRITICAL_SPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_IMPROVED_CRITICAL_SHORT_SWORD;
+                case BASE_ITEM_SHURIKEN:       return FEAT_IMPROVED_CRITICAL_SHURIKEN;
+                case BASE_ITEM_SICKLE:         return FEAT_IMPROVED_CRITICAL_SICKLE;
+                case BASE_ITEM_SLING:          return FEAT_IMPROVED_CRITICAL_SLING;
+                case BASE_ITEM_THROWINGAXE:    return FEAT_IMPROVED_CRITICAL_THROWING_AXE;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_IMPROVED_CRITICAL_TWO_BLADED_SWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_IMPROVED_CRITICAL_WAR_HAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_IMPROVED_CRITICAL_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_IMPROVED_CRITICAL_WAR_HAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_IMPROVED_CRITICAL_WHIP;
             }
 
         else if(sFeat == "OverwhelmingCrit")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_EPIC_OVERWHELMING_CRITICAL_BASTARDSWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_EPIC_OVERWHELMING_CRITICAL_BATTLEAXE;
-                case BASE_ITEM_CLUB: return FEAT_EPIC_OVERWHELMING_CRITICAL_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_EPIC_OVERWHELMING_CRITICAL_DAGGER;
-                case BASE_ITEM_DART: return FEAT_EPIC_OVERWHELMING_CRITICAL_DART;
-                case BASE_ITEM_DIREMACE: return FEAT_EPIC_OVERWHELMING_CRITICAL_DIREMACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_EPIC_OVERWHELMING_CRITICAL_DOUBLEAXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_EPIC_OVERWHELMING_CRITICAL_DWAXE ;
-                case BASE_ITEM_GREATAXE: return FEAT_EPIC_OVERWHELMING_CRITICAL_GREATAXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_EPIC_OVERWHELMING_CRITICAL_GREATSWORD;
-                case BASE_ITEM_HALBERD: return FEAT_EPIC_OVERWHELMING_CRITICAL_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_EPIC_OVERWHELMING_CRITICAL_HANDAXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return FEAT_EPIC_OVERWHELMING_CRITICAL_HEAVYCROSSBOW;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_EPIC_OVERWHELMING_CRITICAL_HEAVYFLAIL;
-                case BASE_ITEM_KAMA: return FEAT_EPIC_OVERWHELMING_CRITICAL_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_EPIC_OVERWHELMING_CRITICAL_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_EPIC_OVERWHELMING_CRITICAL_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTCROSSBOW;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTFLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTHAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTMACE;
-                case BASE_ITEM_LONGBOW: return FEAT_EPIC_OVERWHELMING_CRITICAL_LONGSWORD;
-                case BASE_ITEM_LONGSWORD: return FEAT_EPIC_OVERWHELMING_CRITICAL_LONGBOW;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_EPIC_OVERWHELMING_CRITICAL_MORNINGSTAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_EPIC_OVERWHELMING_CRITICAL_QUARTERSTAFF;
-                case BASE_ITEM_RAPIER: return FEAT_EPIC_OVERWHELMING_CRITICAL_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_EPIC_OVERWHELMING_CRITICAL_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_EPIC_OVERWHELMING_CRITICAL_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTBOW;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTSPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTSWORD;
-                case BASE_ITEM_SHURIKEN: return FEAT_EPIC_OVERWHELMING_CRITICAL_SHURIKEN;
-                case BASE_ITEM_SICKLE: return FEAT_EPIC_OVERWHELMING_CRITICAL_SICKLE;
-                case BASE_ITEM_SLING: return FEAT_EPIC_OVERWHELMING_CRITICAL_SLING;
-                case BASE_ITEM_THROWINGAXE: return FEAT_EPIC_OVERWHELMING_CRITICAL_THROWINGAXE;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_EPIC_OVERWHELMING_CRITICAL_BASTARDSWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_EPIC_OVERWHELMING_CRITICAL_BATTLEAXE;
+                case BASE_ITEM_CLUB:           return FEAT_EPIC_OVERWHELMING_CRITICAL_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_EPIC_OVERWHELMING_CRITICAL_DAGGER;
+                case BASE_ITEM_DART:           return FEAT_EPIC_OVERWHELMING_CRITICAL_DART;
+                case BASE_ITEM_DIREMACE:       return FEAT_EPIC_OVERWHELMING_CRITICAL_DIREMACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_EPIC_OVERWHELMING_CRITICAL_DOUBLEAXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_EPIC_OVERWHELMING_CRITICAL_DWAXE ;
+                case BASE_ITEM_GREATAXE:       return FEAT_EPIC_OVERWHELMING_CRITICAL_GREATAXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_EPIC_OVERWHELMING_CRITICAL_GREATSWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_EPIC_OVERWHELMING_CRITICAL_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_EPIC_OVERWHELMING_CRITICAL_HANDAXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return FEAT_EPIC_OVERWHELMING_CRITICAL_HEAVYCROSSBOW;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_EPIC_OVERWHELMING_CRITICAL_HEAVYFLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_EPIC_OVERWHELMING_CRITICAL_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_EPIC_OVERWHELMING_CRITICAL_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_EPIC_OVERWHELMING_CRITICAL_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTCROSSBOW;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTFLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTHAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_EPIC_OVERWHELMING_CRITICAL_LIGHTMACE;
+                case BASE_ITEM_LONGBOW:        return FEAT_EPIC_OVERWHELMING_CRITICAL_LONGBOW;
+                case BASE_ITEM_LONGSWORD:      return FEAT_EPIC_OVERWHELMING_CRITICAL_LONGSWORD;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_EPIC_OVERWHELMING_CRITICAL_MORNINGSTAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_EPIC_OVERWHELMING_CRITICAL_QUARTERSTAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_EPIC_OVERWHELMING_CRITICAL_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_EPIC_OVERWHELMING_CRITICAL_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_EPIC_OVERWHELMING_CRITICAL_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTBOW;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTSPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_EPIC_OVERWHELMING_CRITICAL_SHORTSWORD;
+                case BASE_ITEM_SHURIKEN:       return FEAT_EPIC_OVERWHELMING_CRITICAL_SHURIKEN;
+                case BASE_ITEM_SICKLE:         return FEAT_EPIC_OVERWHELMING_CRITICAL_SICKLE;
+                case BASE_ITEM_SLING:          return FEAT_EPIC_OVERWHELMING_CRITICAL_SLING;
+                case BASE_ITEM_THROWINGAXE:    return FEAT_EPIC_OVERWHELMING_CRITICAL_THROWINGAXE;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_EPIC_OVERWHELMING_CRITICAL_TWOBLADEDSWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_EPIC_OVERWHELMING_CRITICAL_WARHAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_EPIC_OVERWHELMING_CRITICAL_WARHAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP;
             }
 
         else if(sFeat == "DevastatingCrit")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_EPIC_DEVASTATING_CRITICAL_BASTARDSWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_EPIC_DEVASTATING_CRITICAL_BATTLEAXE;
-                case BASE_ITEM_CLUB: return FEAT_EPIC_DEVASTATING_CRITICAL_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_EPIC_DEVASTATING_CRITICAL_DAGGER;
-                case BASE_ITEM_DART: return FEAT_EPIC_DEVASTATING_CRITICAL_DART;
-                case BASE_ITEM_DIREMACE: return FEAT_EPIC_DEVASTATING_CRITICAL_DIREMACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_EPIC_DEVASTATING_CRITICAL_DOUBLEAXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_EPIC_DEVASTATING_CRITICAL_DWAXE ;
-                case BASE_ITEM_GREATAXE: return FEAT_EPIC_DEVASTATING_CRITICAL_GREATAXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_EPIC_DEVASTATING_CRITICAL_GREATSWORD;
-                case BASE_ITEM_HALBERD: return FEAT_EPIC_DEVASTATING_CRITICAL_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_EPIC_DEVASTATING_CRITICAL_HANDAXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return FEAT_EPIC_DEVASTATING_CRITICAL_HEAVYCROSSBOW;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_EPIC_DEVASTATING_CRITICAL_HEAVYFLAIL;
-                case BASE_ITEM_KAMA: return FEAT_EPIC_DEVASTATING_CRITICAL_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_EPIC_DEVASTATING_CRITICAL_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_EPIC_DEVASTATING_CRITICAL_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTCROSSBOW;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTFLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTHAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTMACE;
-                case BASE_ITEM_LONGBOW: return FEAT_EPIC_DEVASTATING_CRITICAL_LONGSWORD;
-                case BASE_ITEM_LONGSWORD: return FEAT_EPIC_DEVASTATING_CRITICAL_LONGBOW;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_EPIC_DEVASTATING_CRITICAL_MORNINGSTAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_EPIC_DEVASTATING_CRITICAL_QUARTERSTAFF;
-                case BASE_ITEM_RAPIER: return FEAT_EPIC_DEVASTATING_CRITICAL_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_EPIC_DEVASTATING_CRITICAL_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_EPIC_DEVASTATING_CRITICAL_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return FEAT_EPIC_DEVASTATING_CRITICAL_SHORTBOW;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSWORD;
-                case BASE_ITEM_SHURIKEN: return FEAT_EPIC_DEVASTATING_CRITICAL_SHURIKEN;
-                case BASE_ITEM_SICKLE: return FEAT_EPIC_DEVASTATING_CRITICAL_SICKLE;
-                case BASE_ITEM_SLING: return FEAT_EPIC_DEVASTATING_CRITICAL_SLING;
-                case BASE_ITEM_THROWINGAXE: return FEAT_EPIC_DEVASTATING_CRITICAL_THROWINGAXE;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_EPIC_DEVASTATING_CRITICAL_BASTARDSWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_EPIC_DEVASTATING_CRITICAL_BATTLEAXE;
+                case BASE_ITEM_CLUB:           return FEAT_EPIC_DEVASTATING_CRITICAL_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_EPIC_DEVASTATING_CRITICAL_DAGGER;
+                case BASE_ITEM_DART:           return FEAT_EPIC_DEVASTATING_CRITICAL_DART;
+                case BASE_ITEM_DIREMACE:       return FEAT_EPIC_DEVASTATING_CRITICAL_DIREMACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_EPIC_DEVASTATING_CRITICAL_DOUBLEAXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_EPIC_DEVASTATING_CRITICAL_DWAXE ;
+                case BASE_ITEM_GREATAXE:       return FEAT_EPIC_DEVASTATING_CRITICAL_GREATAXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_EPIC_DEVASTATING_CRITICAL_GREATSWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_EPIC_DEVASTATING_CRITICAL_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_EPIC_DEVASTATING_CRITICAL_HANDAXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return FEAT_EPIC_DEVASTATING_CRITICAL_HEAVYCROSSBOW;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_EPIC_DEVASTATING_CRITICAL_HEAVYFLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_EPIC_DEVASTATING_CRITICAL_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_EPIC_DEVASTATING_CRITICAL_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_EPIC_DEVASTATING_CRITICAL_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTCROSSBOW;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTFLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTHAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_EPIC_DEVASTATING_CRITICAL_LIGHTMACE;
+                case BASE_ITEM_LONGBOW:        return FEAT_EPIC_DEVASTATING_CRITICAL_LONGBOW;
+                case BASE_ITEM_LONGSWORD:      return FEAT_EPIC_DEVASTATING_CRITICAL_LONGSWORD;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_EPIC_DEVASTATING_CRITICAL_MORNINGSTAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_EPIC_DEVASTATING_CRITICAL_QUARTERSTAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_EPIC_DEVASTATING_CRITICAL_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_EPIC_DEVASTATING_CRITICAL_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_EPIC_DEVASTATING_CRITICAL_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return FEAT_EPIC_DEVASTATING_CRITICAL_SHORTBOW;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_EPIC_DEVASTATING_CRITICAL_SHORTSWORD;
+                case BASE_ITEM_SHURIKEN:       return FEAT_EPIC_DEVASTATING_CRITICAL_SHURIKEN;
+                case BASE_ITEM_SICKLE:         return FEAT_EPIC_DEVASTATING_CRITICAL_SICKLE;
+                case BASE_ITEM_SLING:          return FEAT_EPIC_DEVASTATING_CRITICAL_SLING;
+                case BASE_ITEM_THROWINGAXE:    return FEAT_EPIC_DEVASTATING_CRITICAL_THROWINGAXE;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_EPIC_DEVASTATING_CRITICAL_TWOBLADEDSWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_EPIC_DEVASTATING_CRITICAL_WARHAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_EPIC_DEVASTATING_CRITICAL_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_EPIC_DEVASTATING_CRITICAL_WARHAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_EPIC_DEVASTATING_CRITICAL_WHIP;
             }
 
         else if(sFeat == "WeaponOfChoice")
             switch(iType)
             {
-                case BASE_ITEM_BASTARDSWORD: return FEAT_WEAPON_OF_CHOICE_BASTARDSWORD;
-                case BASE_ITEM_BATTLEAXE: return FEAT_WEAPON_OF_CHOICE_BATTLEAXE;
-                case BASE_ITEM_CLUB: return FEAT_WEAPON_OF_CHOICE_CLUB;
-                case BASE_ITEM_DAGGER: return FEAT_WEAPON_OF_CHOICE_DAGGER;
-                case BASE_ITEM_DART: return -1;
-                case BASE_ITEM_DIREMACE: return FEAT_WEAPON_OF_CHOICE_DIREMACE;
-                case BASE_ITEM_DOUBLEAXE: return FEAT_WEAPON_OF_CHOICE_DOUBLEAXE;
-                case BASE_ITEM_DWARVENWARAXE: return FEAT_WEAPON_OF_CHOICE_DWAXE ;
-                case BASE_ITEM_GREATAXE: return FEAT_WEAPON_OF_CHOICE_GREATAXE;
-                case BASE_ITEM_GREATSWORD: return FEAT_WEAPON_OF_CHOICE_GREATSWORD;
-                case BASE_ITEM_HALBERD: return FEAT_WEAPON_OF_CHOICE_HALBERD;
-                case BASE_ITEM_HANDAXE: return FEAT_WEAPON_OF_CHOICE_HANDAXE;
-                case BASE_ITEM_HEAVYCROSSBOW: return -1;
-                case BASE_ITEM_HEAVYFLAIL: return FEAT_WEAPON_OF_CHOICE_HEAVYFLAIL;
-                case BASE_ITEM_KAMA: return FEAT_WEAPON_OF_CHOICE_KAMA;
-                case BASE_ITEM_KATANA: return FEAT_WEAPON_OF_CHOICE_KATANA;
-                case BASE_ITEM_KUKRI: return FEAT_WEAPON_OF_CHOICE_KUKRI;
-                case BASE_ITEM_LIGHTCROSSBOW: return -1;
-                case BASE_ITEM_LIGHTFLAIL: return FEAT_WEAPON_OF_CHOICE_LIGHTFLAIL;
-                case BASE_ITEM_LIGHTHAMMER: return FEAT_WEAPON_OF_CHOICE_LIGHTHAMMER;
-                case BASE_ITEM_LIGHTMACE: return FEAT_WEAPON_OF_CHOICE_LIGHTMACE;
-                case BASE_ITEM_LONGBOW: return FEAT_WEAPON_OF_CHOICE_LONGSWORD;
-                case BASE_ITEM_LONGSWORD: return -1;
-                case BASE_ITEM_MORNINGSTAR: return FEAT_WEAPON_OF_CHOICE_MORNINGSTAR;
-                case BASE_ITEM_QUARTERSTAFF: return FEAT_WEAPON_OF_CHOICE_QUARTERSTAFF;
-                case BASE_ITEM_RAPIER: return FEAT_WEAPON_OF_CHOICE_RAPIER;
-                case BASE_ITEM_SCIMITAR: return FEAT_WEAPON_OF_CHOICE_SCIMITAR;
-                case BASE_ITEM_SCYTHE: return FEAT_WEAPON_OF_CHOICE_SCYTHE;
-                case BASE_ITEM_SHORTBOW: return -1;
-                case BASE_ITEM_SHORTSPEAR: return FEAT_WEAPON_OF_CHOICE_SHORTSPEAR;
-                case BASE_ITEM_SHORTSWORD: return FEAT_WEAPON_OF_CHOICE_SHORTSWORD;
-                case BASE_ITEM_SHURIKEN: return -1;
-                case BASE_ITEM_SICKLE: return FEAT_WEAPON_OF_CHOICE_SICKLE;
-                case BASE_ITEM_SLING: return -1;
-                case BASE_ITEM_THROWINGAXE: return -1;
+                case BASE_ITEM_BASTARDSWORD:   return FEAT_WEAPON_OF_CHOICE_BASTARDSWORD;
+                case BASE_ITEM_BATTLEAXE:      return FEAT_WEAPON_OF_CHOICE_BATTLEAXE;
+                case BASE_ITEM_CLUB:           return FEAT_WEAPON_OF_CHOICE_CLUB;
+                case BASE_ITEM_DAGGER:         return FEAT_WEAPON_OF_CHOICE_DAGGER;
+                case BASE_ITEM_DART:           return -1;
+                case BASE_ITEM_DIREMACE:       return FEAT_WEAPON_OF_CHOICE_DIREMACE;
+                case BASE_ITEM_DOUBLEAXE:      return FEAT_WEAPON_OF_CHOICE_DOUBLEAXE;
+                case BASE_ITEM_DWARVENWARAXE:  return FEAT_WEAPON_OF_CHOICE_DWAXE ;
+                case BASE_ITEM_GREATAXE:       return FEAT_WEAPON_OF_CHOICE_GREATAXE;
+                case BASE_ITEM_GREATSWORD:     return FEAT_WEAPON_OF_CHOICE_GREATSWORD;
+                case BASE_ITEM_HALBERD:        return FEAT_WEAPON_OF_CHOICE_HALBERD;
+                case BASE_ITEM_HANDAXE:        return FEAT_WEAPON_OF_CHOICE_HANDAXE;
+                case BASE_ITEM_HEAVYCROSSBOW:  return -1;
+                case BASE_ITEM_HEAVYFLAIL:     return FEAT_WEAPON_OF_CHOICE_HEAVYFLAIL;
+                case BASE_ITEM_KAMA:           return FEAT_WEAPON_OF_CHOICE_KAMA;
+                case BASE_ITEM_KATANA:         return FEAT_WEAPON_OF_CHOICE_KATANA;
+                case BASE_ITEM_KUKRI:          return FEAT_WEAPON_OF_CHOICE_KUKRI;
+                case BASE_ITEM_LIGHTCROSSBOW:  return -1;
+                case BASE_ITEM_LIGHTFLAIL:     return FEAT_WEAPON_OF_CHOICE_LIGHTFLAIL;
+                case BASE_ITEM_LIGHTHAMMER:    return FEAT_WEAPON_OF_CHOICE_LIGHTHAMMER;
+                case BASE_ITEM_LIGHTMACE:      return FEAT_WEAPON_OF_CHOICE_LIGHTMACE;
+                case BASE_ITEM_LONGBOW:        return -1;
+                case BASE_ITEM_LONGSWORD:      return FEAT_WEAPON_OF_CHOICE_LONGSWORD;
+                case BASE_ITEM_MORNINGSTAR:    return FEAT_WEAPON_OF_CHOICE_MORNINGSTAR;
+                case BASE_ITEM_QUARTERSTAFF:   return FEAT_WEAPON_OF_CHOICE_QUARTERSTAFF;
+                case BASE_ITEM_RAPIER:         return FEAT_WEAPON_OF_CHOICE_RAPIER;
+                case BASE_ITEM_SCIMITAR:       return FEAT_WEAPON_OF_CHOICE_SCIMITAR;
+                case BASE_ITEM_SCYTHE:         return FEAT_WEAPON_OF_CHOICE_SCYTHE;
+                case BASE_ITEM_SHORTBOW:       return -1;
+                case BASE_ITEM_SHORTSPEAR:     return FEAT_WEAPON_OF_CHOICE_SHORTSPEAR;
+                case BASE_ITEM_SHORTSWORD:     return FEAT_WEAPON_OF_CHOICE_SHORTSWORD;
+                case BASE_ITEM_SHURIKEN:       return -1;
+                case BASE_ITEM_SICKLE:         return FEAT_WEAPON_OF_CHOICE_SICKLE;
+                case BASE_ITEM_SLING:          return -1;
+                case BASE_ITEM_THROWINGAXE:    return -1;
                 case BASE_ITEM_TWOBLADEDSWORD: return FEAT_WEAPON_OF_CHOICE_TWOBLADEDSWORD;
-                case BASE_ITEM_WARHAMMER: return FEAT_WEAPON_OF_CHOICE_WARHAMMER;
-                case BASE_ITEM_WHIP: return -1;
-                //case BASE_ITEM_WHIP: return FEAT_WEAPON_OF_CHOICE_WHIP;
+                case BASE_ITEM_WARHAMMER:      return FEAT_WEAPON_OF_CHOICE_WARHAMMER;
+                //case BASE_ITEM_WHIP:           return -1;
+                case BASE_ITEM_WHIP: return FEAT_WEAPON_OF_CHOICE_WHIP;
             }
 
     return -1;
@@ -4143,15 +4143,15 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
           // if you hit enemy
           if(iAttackRoll > 0)
           {
-          
+
               // This sets a local variable on the target that is struck
               // Allows you to apply saves and such based on the success or failure
               if(bFirstAttack)
               {
                    SetLocalInt(oDefender, "PRCCombat_StruckByAttack", TRUE);
                    DelayCommand(1.0, DeleteLocalInt(oDefender, "PRCCombat_StruckByAttack"));
-              }          
-          
+              }
+
               DelayCommand(0.01, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oDefender));
 
               // apply any on hit abilities from attackers weapon to defender

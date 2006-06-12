@@ -33,9 +33,56 @@ cannot pass through liquids or solid objects.
 Sacrifice: 1d3 points of Constitution damage.
 
 Author:    Tenjac
-Created:   
+Created:   6/11/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLevel = PRCGetCasterLevel(oPC);
+	object oArea = GetArea(oPC);
+	location lLoc = GetSpellTargetLocation();
+	int nAbove = GetIsAreaAboveGround(oArea);
+			
+	if(nAbove == AREA_ABOVEGROUND)
+	{
+		Delaycommand(60.0f, SummonDragonCloud(lLoc);
+			
+		effect eVis = EffectVisualEffect(VFX_FNF_SUMMONDRAGON);
+		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
+		
+	}
+	
+	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, d3(), 0);
+	SPSetSchool();
+}
+
+void SummonDragonCloud(location lLoc)
+{
+	float fDur = 60.0f + (nCasterLevel * 60.0f);
+	
+	//Get original max henchmen
+	int nMax = GetMaxHenchmen();
+	
+	//Set new max henchmen high
+	SetMaxHenchmen(150);
+	
+	object oDragon = CreateObject(OBJECT_TYPE_CREATURE, "prc_drag_cld", lLoc, TRUE);
+	DestroyObject(oDragon, fDur);
+	
+	//Make henchman
+	AddHenchman(oPC, oDragon);
+	
+	//Restore original max henchmen
+	SetMaxHenchmen(nMax);
+}
+	
+	

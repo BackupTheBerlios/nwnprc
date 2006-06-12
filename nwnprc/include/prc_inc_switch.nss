@@ -2228,8 +2228,16 @@ void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
     if(!GetPRCSwitch(PRC_MULTISUMMON) && !bOverride)
         return;
     int i=1;
+    int nCount = GetPRCSwitch(PRC_MULTISUMMON);
+    if(bOverride)
+        nCount = bOverride;
+    if(nCount < 0
+        || nCount == 1)
+        nCount = 99;
+    if(nCount > 99)
+        nCount = 99;
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
-    while(GetIsObjectValid(oSummon))
+    while(GetIsObjectValid(oSummon) && i < nCount)
     {
         AssignCommand(oSummon, SetIsDestroyable(FALSE, FALSE, FALSE));
         AssignCommand(oSummon, DelayCommand(0.1, SetIsDestroyable(TRUE, FALSE, FALSE)));

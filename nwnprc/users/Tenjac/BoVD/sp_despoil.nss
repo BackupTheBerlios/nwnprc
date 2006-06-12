@@ -35,9 +35,86 @@ Material Component: Corpse of a freshly dead or
 preserved (still bloody) living creature.
 
 Author:    Tenjac
-Created:   
+Created:   6/12/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLevel = PRCGetCasterLevel(oPC);
+	location lLoc = GetSpellTargetLocation();
+	
+	
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, (10.0f * nCasterLevel), lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+	
+	while(GetIsObjectValid)
+	{
+		//Spell resistance
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{	
+			int nType = GetObjectType(oTarget);
+			int nRace = MyPRCGetRacialType(oTarget);
+			int nDC = SPGetSpellSaveDC(oTarget, oPC);
+			
+			if(nType == OBJECT_TYPE_CREATURE)
+			{
+				/*if(nRace == RACIAL_TYPE_PLANT)
+				{
+					//Check HD
+					if(GetHitDice(oTarget) == 1)
+					{
+						SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
+					}
+					else
+					{						
+						//Save
+						if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+						{
+							SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
+						}
+						
+						else
+						{
+							SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(5)), oTarget);
+						}
+					}
+				}*/
+				
+				//nonliving
+				if((nRace == RACIAL_TYPE_CONSTRUCT) ||
+				(nRace == RACIAL_TYPE_UNDEAD) ||
+				(nRace == RACIAL_TYPE_ELEMENTAL))
+				
+				{
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oTarget, 1.0f);
+				}
+				
+				//living
+				else
+				{
+					if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+					{
+						ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f)
+					}
+				}
+			}
+			if(nType == OBJECT_TYPE_DOOR || nType == OBJECT_TYPE_PLACEABLE)
+			{
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(1)), oTarget);
+			}
+		}
+		
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, (10.0f * nCasterLevel), lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+	}
+	
+	SPEvilShift(oPC);
+	SPSetSchool
+}

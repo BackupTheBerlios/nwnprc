@@ -371,8 +371,11 @@ void EquipNautralWeaponCheck(object oPC, object oItem)
 object EquipNaturalWeapon(object oPC, string sResRef)
 {
     object oObject = CreateItemOnObject(sResRef, oPC);
+    SetIdentified(oObject, TRUE);
     ForceEquip(oPC, oObject, INVENTORY_SLOT_CWEAPON_L);
-    DelayCommand(10.0, EquipNautralWeaponCheck(oPC, oObject));
+    AssignCommand(oObject, 
+        DelayCommand(10.0, 
+            EquipNautralWeaponCheck(oPC, oObject)));
     return oObject;
 }
 

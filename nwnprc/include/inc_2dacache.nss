@@ -172,7 +172,7 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
     SQL+= "CREATE TABLE ";
     SQL+= ""+q+"prc_cached2da_feat"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_',";
     SQL+= ""+q+"FEAT"+q+" varchar(255) DEFAULT '_',";
     SQL+= ""+q+"DESCRIPTION"+q+" varchar(255) DEFAULT '_',";
@@ -220,7 +220,7 @@ void PRCMakeTables()
 
     SQL+= "CREATE TABLE ";
     SQL+= ""+q+"prc_cached2da_soundset"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"RESREF"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"STRREF"+q+" varchar(255) DEFAULT '_', ";
@@ -230,7 +230,7 @@ void PRCMakeTables()
 
     SQL+= "CREATE TABLE ";
     SQL+= ""+q+"prc_cached2da_portraits"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"BaseResRef"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Sex"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Race"+q+" varchar(255) DEFAULT '_', ";
@@ -241,7 +241,7 @@ void PRCMakeTables()
 
     SQL+= "CREATE TABLE ";
     SQL+= ""+q+"prc_cached2da_appearance"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"STRING_REF"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"NAME"+q+" varchar(255) DEFAULT '_', ";
@@ -282,7 +282,7 @@ void PRCMakeTables()
 
     SQL+= "CREATE TABLE ";
     SQL+= ""+q+"prc_cached2da_spells"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"IconResRef"+q+" varchar(255) DEFAULT '_', ";
@@ -341,8 +341,8 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE "+q+"prc_cached2da_cls_feat"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
-    SQL+= ""+q+"file"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
+    SQL+= ""+q+"file"+q+" varchar(20),";
     SQL+= ""+q+"class"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"FeatLabel"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"FeatIndex"+q+" varchar(255) DEFAULT '_', ";
@@ -352,7 +352,7 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE "+q+"prc_cached2da_classes"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Plural"+q+" varchar(255) DEFAULT '_', ";
@@ -411,7 +411,7 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL = "CREATE TABLE "+q+"prc_cached2da_racialtypes"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"Label"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Abrev"+q+"  varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"Name"+q+" varchar(255) DEFAULT '_', ";
@@ -438,8 +438,8 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
-    SQL+= ""+q+"file"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
+    SQL+= ""+q+"file"+q+" varchar(20),";
     SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"ReqType"+q+" varchar(255) DEFAULT '_', ";
     SQL+= ""+q+"ReqParam1"+q+" varchar(255) DEFAULT '_', ";
@@ -447,13 +447,13 @@ void PRCMakeTables()
     PRC_SQLExecDirect(SQL); SQL = "";
 
     SQL+= "CREATE TABLE "+q+"prc_cached2da_item_to_ireq"+q+" ( ";
-    SQL+= ""+q+"rowid"+q+" varchar(255),";
+    SQL+= ""+q+"rowid"+q+" integer,";
     SQL+= ""+q+"LABEL"+q+" varchar(255) DEFAULT '_', ";
-    SQL+= ""+q+"L_RESREF"+q+" varchar(255) DEFAULT '_', ";
+    SQL+= ""+q+"L_RESREF"+q+" varchar(20) DEFAULT '_', ";
     SQL+= ""+q+"RECIPE_TAG"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
-    SQL = "CREATE TABLE "+q+"prc_cached2da"+q+" ("+q+"file"+q+" varchar(255) DEFAULT '_', "+q+"columnid"+q+" varchar(255) DEFAULT '_', "+q+"rowid"+q+" varchar(255), "+q+"data"+q+" varchar(255) DEFAULT '_'); ";
+    SQL = "CREATE TABLE "+q+"prc_cached2da"+q+" ("+q+"file"+q+" varchar(20) DEFAULT '_', "+q+"columnid"+q+" varchar(255) DEFAULT '_', "+q+"rowid"+q+" integer, "+q+"data"+q+" varchar(255) DEFAULT '_'); ";
     PRC_SQLExecDirect(SQL); SQL = "";
 
     //non2dacaching table

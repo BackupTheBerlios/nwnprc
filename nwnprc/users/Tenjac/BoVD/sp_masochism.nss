@@ -24,9 +24,47 @@ Material Component: A leather strap that has been
 soaked in the caster's blood.
 
 Author:    Tenjac
-Created:   
+Created:   6/13/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	object oPC = OBJECT_SELF;
+	int nCounter = PRCGetCasterLevel(oPC);
+	int nHP = GetCurrentHitPoints(oPC);
+	
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
+	
+	MasochLoop(oPC, nHP, nCounter);
+	
+	SPSetSchool();
+	SPEvilShift(oPC);
+}
+
+void MasochLoop(object oPC, int nHP, int nCounter);
+{
+	if(nCounter > 0)
+	{		
+		int nHPChange = nHP - GetCurrentHitPoints(oPC);
+		nHP = GetCurrentHitPoints(oPC);
+		int nBonus == nHPChange/10;
+		
+		effect eLink = EffectAttackIncrease(nBonus);
+		eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus, SAVING_THROW_TYPE_ALL));
+		eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_ALL_SKILLS, nBonus));
+		
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 6.0f);
+		
+		nCounter--;
+				
+		DelayCommand(6.0f, MasochLoop(oPC, nHP, nCounter));
+	}
+}

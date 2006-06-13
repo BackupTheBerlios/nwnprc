@@ -52,5 +52,4 @@ void SetupTimeTokens()
     SetToken(82003, sMonth);
 
     SetToken(82004, IntToString(GetCalendarYear()));
-    return TRUE;
 }

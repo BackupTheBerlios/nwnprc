@@ -57,16 +57,16 @@ public final class SQLMaker{
 					);
 		//create a few tables
     	sql.append("CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ("	+
-    			   ""+q+"rowid"+q+"     varchar(255) DEFAULT '_', "        			+
-    	           ""+q+"file"+q+"      varchar(255) DEFAULT '_', "					+
+    			   ""+q+"rowid"+q+"     integer DEFAULT '_', "        			+
+    	           ""+q+"file"+q+"      varchar(20) DEFAULT '_', "					+
     	           ""+q+"LABEL"+q+"     varchar(255) DEFAULT '_', "					+
     	           ""+q+"ReqType"+q+"   varchar(255) DEFAULT '_', "  		        +
     	           ""+q+"ReqParam1"+q+" varchar(255) DEFAULT '_', "					+
     	           ""+q+"ReqParam2"+q+" varchar(255) DEFAULT '_');\n"				+
 
     	           "CREATE TABLE "+q+"prc_cached2da_cls_feat"+q+" ("				+
-    	           ""+q+"rowid"+q+" 			varchar(255) DEFAULT '_', "         +
-    	           ""+q+"file"+q+" 				varchar(255) DEFAULT '_', "			+
+    	           ""+q+"rowid"+q+" 			integer DEFAULT '_', "         +
+    	           ""+q+"file"+q+" 				varchar(20) DEFAULT '_', "			+
     	           ""+q+"FeatLabel"+q+" 		varchar(255) DEFAULT '_', "			+
     	           ""+q+"FeatIndex"+q+" 		varchar(255) DEFAULT '_', "		    +
     	           ""+q+"List"+q+" 				varchar(255) DEFAULT '_', "			+
@@ -74,9 +74,9 @@ public final class SQLMaker{
     	           ""+q+"OnMenu"+q+" 			varchar(255) DEFAULT '_');\n" 		+
 
     	           "CREATE TABLE "+q+"prc_cached2da"+q+" ("							+
-    	           ""+q+"file"+q+" 				varchar(255) DEFAULT '_', "         +
+    	           ""+q+"file"+q+" 				varchar(20) DEFAULT '_', "         +
     		       ""+q+"columnid"+q+" 			varchar(255) DEFAULT '_', "			+
-    		       ""+q+"rowid"+q+" 			varchar(255) DEFAULT '_', "			+
+    		       ""+q+"rowid"+q+" 			integer DEFAULT '_', "			+
     		       ""+q+"data"+q+" 				varchar(255) DEFAULT '_');\n"
     	           );
 		printSQL(true); //start a new file
@@ -187,7 +187,7 @@ public final class SQLMaker{
 	private static void addSQLForSingleTable(Data_2da data, String filename) throws Exception{
 
 		StringBuilder entry;
-		entry = new StringBuilder("CREATE TABLE "+q+"prc_cached2da_"+filename+q+" ("+q+"rowid"+q+" varchar(255)");
+		entry = new StringBuilder("CREATE TABLE "+q+"prc_cached2da_"+filename+q+" ("+q+"rowid"+q+" integer");
 		String[] labels = data.getLabels();
 		for(int i = 0 ; i < labels.length ; i++){
 			entry.append(", "+q+labels[i]+q+" varchar(255) DEFAULT '_'");

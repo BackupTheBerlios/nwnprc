@@ -38,26 +38,6 @@ Created:   6/13/06
 
 void main()
 {
-	if (!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
-	effect eAOE = EffectAreaOfEffect(AOE_PER_BLNDGLORY);
-	float fDuration = HoursToSeconds(nCasterLvl);
-	int nMetaMagic = PRCGetMetaMagicFeat();
 	
-	//Check Extend metamagic feat.
-	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-	{
-		fDuration = fDuration *2;    //Duration is +100%
-	}
-	
-	//Create an instance of the AOE Object using the Apply Effect function
-	
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
-	
-	SPGoodShift(oPC);
-	SPSetSchool();
-}

@@ -50,7 +50,7 @@ Location Component: An area under the effect of a
 desecrate or unhallow spell.
 
 Author:    Tenjac
-Created:   
+Created:   6/13/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////

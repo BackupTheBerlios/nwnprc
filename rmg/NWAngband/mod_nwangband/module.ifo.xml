@@ -21,9 +21,10 @@ By Primogenitor
 
 This module uses:
 
-PRC v3.0a or higher
+PRC v3.0d or higher
 CTP door pack
 CTP bioware tile fixes
+CEP2 Beta 2 or higher
 
 NWAngband is designed to give a module that is so unpredictable that even I can't tell whats going to happen next, yet still follows coherent rules and without contradictions. It is also designed to get as close to the spirit and balance of a Pen and Paper game, yet still retaining the benefits of it being run on a computer.
 
@@ -231,19 +232,19 @@ This module is in general high-magic, combat-heavy, and role-playing light; howe
                 <element name="Mod_Hak" type="10" value="id1_creaturepack" />
             </struct>
             <struct id="8" >
-                <element name="Mod_Hak" type="10" value="cep2_1" />
+                <element name="Mod_Hak" type="10" value="cep2_top_vb2" />
             </struct>
             <struct id="8" >
-                <element name="Mod_Hak" type="10" value="cep2_2" />
+                <element name="Mod_Hak" type="10" value="cep2_core1_vb2" />
             </struct>
             <struct id="8" >
-                <element name="Mod_Hak" type="10" value="cep2_3" />
+                <element name="Mod_Hak" type="10" value="cep2_core2_vb2" />
             </struct>
             <struct id="8" >
-                <element name="Mod_Hak" type="10" value="cep2_4" />
+                <element name="Mod_Hak" type="10" value="cep2_core3_vb2" />
             </struct>
             <struct id="8" >
-                <element name="Mod_Hak" type="10" value="cep2_5" />
+                <element name="Mod_Hak" type="10" value="cep2_core4_vb2" />
             </struct>
             <struct id="8" >
                 <element name="Mod_Hak" type="10" value="cep2_acp2" />

@@ -113,6 +113,9 @@ void DoScoreForBaseItemType(int nBaseItemType, object oObject)
 //DoDebug(IntToString(nBaseItemType)+" is equipable");
         nScore += 100; //add a hundred for being equipable
         //adjust the value based on feats for it
+        //DevCrit
+        if(GetHasFeat(GetFeatForBaseItem(nBaseItemType, 7), oObject))
+            nScore +=  500;
         //Weapon Specialization
         if(GetHasFeat(GetFeatForBaseItem(nBaseItemType, 7), oObject))
             nScore +=  100;

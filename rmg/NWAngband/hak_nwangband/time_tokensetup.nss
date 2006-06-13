@@ -1,4 +1,6 @@
-int StartingConditional()
+#include "inc_dynconv"
+
+void SetupTimeTokens()
 {
     //setup time tokens
     //82001         part of day
@@ -6,15 +8,15 @@ int StartingConditional()
     //82003         month
     //82004         year
     if(GetIsDawn())
-        SetCustomToken(82001, "dawn");
+        SetToken(82001, "dawn");
     else if(GetIsDusk())
-        SetCustomToken(82001, "dusk");
+        SetToken(82001, "dusk");
     else if(GetIsNight())
-        SetCustomToken(82001, "night");
+        SetToken(82001, "night");
     else if(GetIsDay() && GetTimeHour() < 12)
-        SetCustomToken(82001, "morning");
+        SetToken(82001, "morning");
     else if(GetIsDay() && GetTimeHour() >= 12)
-        SetCustomToken(82001, "afternoon");
+        SetToken(82001, "afternoon");
 
     int nDay = GetCalendarDay();
     string sDay = IntToString(nDay);
@@ -29,7 +31,7 @@ int StartingConditional()
         sDay += "rd";
     else
         sDay += "th";
-    SetCustomToken(82002, sDay);
+    SetToken(82002, sDay);
 
     string sMonth;
     switch(GetCalendarMonth())
@@ -47,8 +49,8 @@ int StartingConditional()
         case 11: sMonth = "November";  break;
         case 12: sMonth = "December";  break;
     }
-    SetCustomToken(82003, sMonth);
+    SetToken(82003, sMonth);
 
-    SetCustomToken(82004, IntToString(GetCalendarYear()));
+    SetToken(82004, IntToString(GetCalendarYear()));
     return TRUE;
 }

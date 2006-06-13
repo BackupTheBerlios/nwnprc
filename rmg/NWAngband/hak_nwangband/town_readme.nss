@@ -76,6 +76,8 @@
     The DC of an item is d20+LevelOfStore+(2*InventoryArea)+Weight
     Failing by 10 is equivalent to getting caught.
     Failing by less than 10 puts the item back.
+    Shoplifting is a significantly non-good act when a shop is non-evil and a 
+    significantly non-lawful act when shop is non-chaotic.
 
     Merchants that accept stolen good have an additional +50% markup and -50% markdown.
     By default, all merchants have -50% markdown.

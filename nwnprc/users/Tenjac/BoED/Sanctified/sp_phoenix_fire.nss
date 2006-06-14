@@ -40,80 +40,98 @@ return to life are the sacrifice cost for this spell.
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-void Rebirth(object oPC)
 
-	//Rebirth VFX
+void Rebirth(object oPC);
+
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	//Define vars
+	object oPC = OBJECT_SELF;
+	location lLoc = GetLocation(OPC);	
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	
+		
+	//Immolate VFX on caster - VFX_IMP_HOLY_AID for casting VFX
+	effect eFire = EffectVisualEffect(VFX_FNF_FIREBALL);
+	effect eDivine = EffectVisualEffect(VFX_FNF_STRIKE_HOLY);
+		
+	DelayCommand(0.3f, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eFire, oPC));
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDivine, oPC));
+							
+	//Ash/smoke VFX at player's location?
+			
+	//Kill player
+	DeathlessFrenzyCheck();
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oPC);
+			
+	//Get first object in shape
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	
+	//While object valid
+	while(GetIsObjectValid(oTarget))
+	{
+		if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			//If alignment evil
+			if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+			{
+				//Damage = 2d6/level
+				nDam = d6(min(40, (2 * nCasterLvl)));
+				
+				//Reflex save for 1/2 damage
+				if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+				{
+					nDam = nDam/2;
+				}
+			}
+			//If alignment neutral
+			if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_NEUTRAL)
+			{
+				//Half damage for neutrality, Damage = 1d6
+				nDam = d6(min(20,nCasterLvl));
+				
+				//Reflex for further 1/2
+				if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+				{
+					nDam = nDam/2;
+				}				
+			}
+			
+			//Half divine, half fire
+			int nDiv = nDam/2;
+			nDam = nDam - nDiv;
+			
+			//Apply damage
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nDiv), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_FIRE, nDam), oTarget);			
+		}
+		//Get next object in shape
+		object oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	}
+	
+	//Wait 10 minutes, then rebirth
+	DelayCommand(600.0f, Rebirth(oPC));
+	
+	SPSetSchool();
+	SPGoodShift(oPC);
+}
+	
+void Rebirth(object oPC);
+{
+	//Rebirth VFX ?
 	
 	//Resurrection
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oPC);
 		
 	//Level loss via death is going to be handled in different ways
 	//in different modules, so I'm going to leave this out of the script
 	//and opt to let the default death penalty of the module handle it
 	//This provides continuity and ease of scripting.
-
-
-
-void main()
-{
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
-	//Define vars
-	object oPC = OBJECT_SELF;
-	object oTarget =GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nDam = 0;
-	int nAlign;
-		
-	//Immolate VFX on caster
-	
-	//AoE VFX centered on you
-					
-	//Ash/smoke VFX at player's location
-			
-	//Kill player
-	DeathlessFrenzyCheck();
-			
-	//Get first object in shape
-	
-	//While object valid
-	while(GetIsObjectValid(oTarget))
-	{
-		//Get alignment
-										
-		//If alignment evil
-		{
-			//Spell Resistance
-			{
-				//Damage = 2d6/level
-				
-				//Reflex save for 1/2 damage
-				
-			}
-		}
-		
-		//If alignment neutral
-		{
-			//Half damage for neutrality, Damage = 1d6
-			nDam = d6(nCasterLvl)
-			
-			//Reflex for further 1/2
-			
-		}
-		
-		//Half divine, half fire
-		
-		//Apply damage
-		
-		//Get next object in shape
-	}
-	//Wait 10 minutes, then Rebirth
-	DelayCommand(600.0f, Rebirth(oPC));
-	
-	SPSetSchool();
 }
-	
-			
-			
-			
-			
 

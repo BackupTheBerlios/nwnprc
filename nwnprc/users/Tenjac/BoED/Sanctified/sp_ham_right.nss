@@ -33,9 +33,25 @@ halves the damage.
 Sacrifice: 1d3 points of Strength damage.
 
 Author:    Tenjac
-Created:   
+Created:   6/14/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLevel = PRCGetCasterLevel(oPC);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HAMMER_OF_RIGHTEOUSNESS, oPC);
+	
+	if
+	

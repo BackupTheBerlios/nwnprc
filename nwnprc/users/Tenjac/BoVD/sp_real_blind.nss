@@ -56,10 +56,7 @@ void main()
         {	
 		//Loop
 		BlindLoop(oTarget, oPC);
-	}
-			
-			
-	
+	}	
 	
 void BlindLoop(object oTarget, object oPC)
 {
@@ -77,6 +74,7 @@ void BlindLoop(object oTarget, object oPC)
 	else
 	{
 		//Non healing code
+		SetLocalInt(oPC, "PRC_NoNaturalHeal", 1);
 	}
 }
 

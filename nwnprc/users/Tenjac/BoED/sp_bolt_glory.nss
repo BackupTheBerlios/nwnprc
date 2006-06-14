@@ -101,6 +101,11 @@ void main()
 			}
 			
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nDam), oTarget);
+		}
+	}
+	SPGoodShift(oPC);
+	SPSetSchool();
+}
 		
 		
 		

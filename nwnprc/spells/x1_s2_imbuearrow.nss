@@ -9,6 +9,7 @@
 //Last Edited : 7-26-2004                                                     //
 ////////////////////////////////////////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 

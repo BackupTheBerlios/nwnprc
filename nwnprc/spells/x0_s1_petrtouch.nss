@@ -7,6 +7,7 @@
 //:: Created On: 11/14/2002
 //::///////////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "x0_i0_spells"
 
 void main()

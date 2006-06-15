@@ -227,9 +227,9 @@ rar: hak database $(RAR)
 hak110: $(ERF110) $(HAK) install
 
 # Rule to build the 2.0 haks
-hak: $(SCRIPTSHAK) $(2DASHAK) $(MISCHAK) $(TEXTURESHAK) $(ERF) $(OCFIX_ERF) $(TLK)\
+hak: $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(ERF) $(OCFIX_ERF) $(TLK)\
 	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
-	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) install
+	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) $(MISCHAK) install
 
 # Rule to build the NSIS installer.
 nsis:

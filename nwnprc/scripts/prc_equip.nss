@@ -10,6 +10,8 @@
 //:: Created By: Georg Zoeller
 //:: Created On: 2003-07-16
 //:://////////////////////////////////////////////
+
+#include "prc_alterations"
 #include "prc_inc_function"
 #include "inc_utility"
 #include "inc_timestop"
@@ -52,16 +54,16 @@ void main()
     //Handle lack of fingers/hands
     if(GetPersistantLocalInt(OBJECT_SELF, "LEFT_HAND_USELESS"))
     {
-	    //Force unequip
-	    ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, OBJECT_SELF), INVENTORY_SLOT_LEFTHAND, TRUE);
-	    SendMessageToPC(OBJECT_SELF, "You cannot use your left hand");
+        //Force unequip
+        ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, OBJECT_SELF), INVENTORY_SLOT_LEFTHAND, TRUE);
+        SendMessageToPC(OBJECT_SELF, "You cannot use your left hand");
     }
     
     if(GetPersistantLocalInt(OBJECT_SELF, "RIGHT_HAND_USELESS"))
     {
-	    //Force unequip
-	    ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF), INVENTORY_SLOT_RIGHTHAND, TRUE);
-	    SendMessageToPC(OBJECT_SELF, "You cannot use your right hand");
+        //Force unequip
+        ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF), INVENTORY_SLOT_RIGHTHAND, TRUE);
+        SendMessageToPC(OBJECT_SELF, "You cannot use your right hand");
     }    
 
     // Execute scripts hooked to this event for the creature and item triggering it

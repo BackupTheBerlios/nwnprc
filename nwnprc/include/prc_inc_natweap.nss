@@ -94,6 +94,11 @@ void ClearNaturalWeapons(object oPC);
 void UpdateSecondaryWeaponSizes(object oPC);
 string GetAffixForSize(int nSize);
 void SetPrimaryNaturalWeapon(object oPC, int nIndex);
+void RemoveNaturalPrimaryWeapon(object oPC, string sResRef);
+void NaturalSecondaryWeaponTempCheck(object oManifester, object oTarget, int nSpellID, 
+    int nBeatsRemaining, string sResref);
+void NaturalPrimaryWeaponTempCheck(object oManifester, object oTarget, int nSpellID, 
+    int nBeatsRemaining, string sResref);
 
 //the name of the array that the resrefs of the natural weapons are stored in
 const string ARRAY_NAT_SEC_WEAP_RESREF   = "ARRAY_NAT_SEC_WEAP_RESREF";
@@ -149,21 +154,20 @@ void DoNaturalAttack(object oWeapon)
     //else
         nAttackMod = -5;
     //secondary attacks are half strength
-    //apply this as a reduced damage amount
-    int nDamageMod;// = -GetAbilityModifier(ABILITY_STRENGTH, oPC)/2;
 
     PerformAttack(oTarget, 
         oPC,                //
         eInvalid,           //effect eSpecialEffect,
         0.0,                //float eDuration = 0.0
         nAttackMod,         //int iAttackBonusMod = 0
-        nDamageMod,         //int iDamageModifier = 0
+        0,                  //int iDamageModifier = 0
         0,                  //int iDamageType = 0
         "",//sMessageSuccess,    //string sMessageSuccess = ""   
         "",//sMessageFailure,    //string sMessageFailure = ""
         FALSE,              //int iTouchAttackType = FALSE
         oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
-        OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
+        OBJECT_INVALID,      //object oLeftHandOverride = OBJECT_INVALID
+        1                  //offhand override
         );        
     if(DEBUG) DoDebug("Performing an secondary natural attack with "+GetName(oWeapon));     
 }
@@ -196,21 +200,20 @@ void DoOffhandAttack(int nAttackMod)
     //null effect
     effect eInvalid;
     //secondary attacks are half strength
-    //apply this as a reduced damage amount
-    int nDamageMod;// = -GetAbilityModifier(ABILITY_STRENGTH, oPC)/2;
 
     PerformAttack(oTarget, 
         oPC,                //
         eInvalid,           //effect eSpecialEffect,
         0.0,                //float eDuration = 0.0
         nAttackMod,         //int iAttackBonusMod = 0
-        nDamageMod,         //int iDamageModifier = 0
+        0,                  //int iDamageModifier = 0
         0,                  //int iDamageType = 0
         "",//sMessageSuccess,    //string sMessageSuccess = ""   
         "",//sMessageFailure,    //string sMessageFailure = ""
         FALSE,              //int iTouchAttackType = FALSE
         oWeapon,            //object oRightHandOverride = OBJECT_INVALID,
-        OBJECT_INVALID      //object oLeftHandOverride = OBJECT_INVALID
+        OBJECT_INVALID,      //object oLeftHandOverride = OBJECT_INVALID
+        1                  //off
         );        
     if(DEBUG) DoDebug("Performing a scripted offhand attack with "+GetName(oWeapon));     
 }
@@ -463,6 +466,27 @@ void RemoveNaturalSecondaryWeapons(object oPC, string sResRef)
     }    
 }
 
+void NaturalSecondaryWeaponTempCheck(object oManifester, object oTarget, int nSpellID, 
+    int nBeatsRemaining, string sResRef)
+{
+    if(!((nBeatsRemaining-- == 0)                                         || // Has the power ended since the last beat, or does the duration run out now
+         GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
+         GetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
+         )
+       )
+    {
+        // Schedule next HB
+        DelayCommand(6.0f, NaturalSecondaryWeaponTempCheck(oManifester, oTarget, nSpellID, nBeatsRemaining, sResRef));
+    }
+    // Power expired
+    else
+    {
+        if(DEBUG) DoDebug(sResRef+": Power expired, exiting HB");
+        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        RemoveNaturalSecondaryWeapons(oTarget, sResRef);
+    }
+}
+
 void ClearNaturalWeapons(object oPC)
 {
     array_delete(oPC, ARRAY_NAT_SEC_WEAP_RESREF);
@@ -470,7 +494,7 @@ void ClearNaturalWeapons(object oPC)
     array_delete(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
 }
 
-void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1)
+void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1, int nForceUse = FALSE)
 {
     int nFirstNaturalWeapon = FALSE;
     if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
@@ -494,10 +518,33 @@ void AddNaturalPrimaryWeapon(object oPC, string sResRef, int nCount = 1)
     array_set_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS,
         array_get_size(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS), nCount);
     //if this is the first natural weapon, use it    
-    if(nFirstNaturalWeapon 
-        && !GetLevelByClass(CLASS_TYPE_MONK)
-        && !GetLevelByClass(CLASS_TYPE_BRAWLER))
+    if((nFirstNaturalWeapon 
+             && !GetLevelByClass(CLASS_TYPE_MONK)
+             && !GetLevelByClass(CLASS_TYPE_BRAWLER))
+        || nForceUse)
         SetPrimaryNaturalWeapon(oPC, 0);
+}
+
+void RemoveNaturalPrimaryWeapon(object oPC, string sResRef)
+{
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
+    if(!array_exists(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS))
+        array_create(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS);
+    int nPos;
+    for(nPos = 0; nPos < array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF); nPos++)
+    {
+        string sTempResRef = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, nPos);
+        if(sResRef == sTempResRef)
+            break;
+    }
+    if(nPos < array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF))
+    {
+        array_set_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF,
+            array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF), "");
+        array_set_int(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS,
+            array_get_size(oPC, ARRAY_NAT_PRI_WEAP_ATTACKS), 0);           
+    }   
 }
 
 int GetIsUsingPrimaryNaturalWeapons(object oPC)
@@ -561,4 +608,26 @@ void SetPrimaryNaturalWeapon(object oPC, int nIndex)
 int GetPrimaryNaturalWeaponCount(object oPC)
 {
     return array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);
+}
+
+
+void NaturalPrimaryWeaponTempCheck(object oManifester, object oTarget, int nSpellID, 
+    int nBeatsRemaining, string sResRef)
+{
+    if(!((nBeatsRemaining-- == 0)                                         || // Has the power ended since the last beat, or does the duration run out now
+         GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
+         GetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
+         )
+       )
+    {
+        // Schedule next HB
+        DelayCommand(6.0f, NaturalPrimaryWeaponTempCheck(oManifester, oTarget, nSpellID, nBeatsRemaining, sResRef));
+    }
+    // Power expired
+    else
+    {
+        if(DEBUG) DoDebug(sResRef+": Power expired, exiting HB");
+        RemoveSpellEffects(nSpellID, oManifester, oTarget);
+        RemoveNaturalPrimaryWeapon(oTarget, sResRef);
+    }
 }

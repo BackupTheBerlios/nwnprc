@@ -1,8 +1,5 @@
 
-#include "prc_inc_function"
-#include "inc_utility"
-#include "pnp_shft_poly"
-#include "prc_inc_clsfunc"
+#include "prc_alterations"
 
 void main()
 {
@@ -32,8 +29,8 @@ void main()
        iPoly = POLYMORPH_TYPE_ELDER_WATER_ELEMENTAL;
     }
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(OBJECT_SELF);
+    //this command will make shore that polymorph plays nice with the shifter
+    ShifterCheck(OBJECT_SELF);
 
         ClearAllActions(); // prevents an exploit
   

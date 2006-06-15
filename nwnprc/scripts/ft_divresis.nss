@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "x0_i0_spells"
 #include "x2_inc_itemprop"
 #include "prc_feat_const"
@@ -53,8 +54,8 @@ void main()
        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE );
     } 
     
-     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_TURN_UNDEAD);  	
-   	
+     DecrementRemainingFeatUses(OBJECT_SELF, FEAT_TURN_UNDEAD);     
+    
    }
    
    

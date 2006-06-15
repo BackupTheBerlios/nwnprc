@@ -5,6 +5,7 @@
 
 const int DISEASE_TALONAS_BLIGHT = 52;
 
+#include "prc_alterations"
 #include "spinc_common"
 
 void main()
@@ -16,16 +17,16 @@ void main()
     int iPenalty = d4(1);
 
 
-	if (TouchAttackMelee(oTarget) > 0)
-	{
-	    //Make a saving throw check
-	    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iDC, SAVING_THROW_TYPE_SPELL))
-	    {
-	        SetLocalInt(oTarget, "BlightDC", iDC);
-	        SetLocalObject(oTarget, "BlightspawnCreator", oPC);   
-	    	//The effect is permament because the disease subsystem has its own internal resolution
-	        //system in place.
-	        SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDisease, oTarget,0.0f,TRUE,-1,iDC);
-	    }
-	}
+    if (TouchAttackMelee(oTarget) > 0)
+    {
+        //Make a saving throw check
+        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, iDC, SAVING_THROW_TYPE_SPELL))
+        {
+            SetLocalInt(oTarget, "BlightDC", iDC);
+            SetLocalObject(oTarget, "BlightspawnCreator", oPC);   
+            //The effect is permament because the disease subsystem has its own internal resolution
+            //system in place.
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDisease, oTarget,0.0f,TRUE,-1,iDC);
+        }
+    }
 }

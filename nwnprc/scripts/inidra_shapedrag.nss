@@ -11,7 +11,7 @@
 //:: Created On: Jan 22, 2002
 //:://////////////////////////////////////////////
 //:: Last Updated By: Andrew Nobbs May 20, 2003
-
+#include "prc_alterations"
 #include "prc_inc_function"
 #include "inc_utility"
 #include "pnp_shft_poly"
@@ -47,8 +47,8 @@ void main()
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_WILD_SHAPE, FALSE));
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(OBJECT_SELF);
+    //this command will make shore that polymorph plays nice with the shifter
+    ShifterCheck(OBJECT_SELF);
 
         ClearAllActions(); // prevents an exploit
 

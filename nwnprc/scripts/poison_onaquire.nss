@@ -36,6 +36,7 @@
 //:: Created On: 10.01.2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "inc_poison"
 #include "spinc_common"
 

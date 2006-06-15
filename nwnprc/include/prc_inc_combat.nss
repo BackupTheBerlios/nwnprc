@@ -375,7 +375,8 @@ void PerformAttack(object oDefender,
     string sMessageFailure = "",
     int iTouchAttackType = FALSE,
     object oRightHandOverride = OBJECT_INVALID,
-    object oLeftHandOverride = OBJECT_INVALID);
+    object oLeftHandOverride = OBJECT_INVALID,
+    int nHandednessOverride = -1);
 
 //:://///////////////////////////////////////
 //::  Structs
@@ -4374,7 +4375,10 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
      DelayCommand(sAttackVars.fDelay, AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage) );
 }
 
-void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, int iTouchAttackType = FALSE)
+void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, 
+    int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, 
+    struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, 
+    int iTouchAttackType = FALSE)
 {
      if(DEBUG) DoDebug("Entered AttackLoopMain()");
      // turn off touch attack if var says it only applies to first attack
@@ -4746,7 +4750,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainHandAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
 }
 
-void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE, object oRightHandOverride = OBJECT_INVALID, object oLeftHandOverride = OBJECT_INVALID)
+void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, float eDuration = 0.0, int iAttackBonusMod = 0, int iDamageModifier = 0, int iDamageType = 0, string sMessageSuccess = "", string sMessageFailure = "", int iTouchAttackType = FALSE, object oRightHandOverride = OBJECT_INVALID, object oLeftHandOverride = OBJECT_INVALID, int nHandednessOverride = -1)
 {
      // create struct for attack loop logic
      struct AttackLoopVars sAttackVars;
@@ -5023,5 +5027,9 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
      iMod += iAttackBonusMod;
 
      // run this with no bonus or off-hand attacks, and only 1 main hand attack
-     AttackLoopMain(oDefender, oAttacker, 0, 1, 0, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
+     //if its overriden to be off-hand, use that instead
+     if(nHandednessOverride)
+        AttackLoopMain(oDefender, oAttacker, 0, 0, 1, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
+     else
+        AttackLoopMain(oDefender, oAttacker, 0, 1, 0, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage);
 }

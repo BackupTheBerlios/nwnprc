@@ -11,6 +11,7 @@
 //:: Created By: Brent
 //:: Created On: Sep 13, 2002
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 #include "x0_i0_spells"
 #include "x2_inc_itemprop"
 #include "prc_feat_const"
@@ -33,8 +34,8 @@ void main()
         effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
         int nCharismaBonus = GetAbilityModifier(ABILITY_CHARISMA);
-	 
-	  if (GetHasFeat(FEAT_EPIC_DIVINE_SHIELD, OBJECT_SELF)) nCharismaBonus+= nCharismaBonus;
+     
+      if (GetHasFeat(FEAT_EPIC_DIVINE_SHIELD, OBJECT_SELF)) nCharismaBonus+= nCharismaBonus;
 
         effect eAC = EffectACIncrease(nCharismaBonus);
         effect eLink = EffectLinkEffects(eAC, eDur);

@@ -521,7 +521,8 @@ void main()
                     string sName;
                     //use resref for now
                     sName = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
-                    AddChoice(sName, i);
+                    if(sName != "")
+                        AddChoice(sName, i);
                 }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 

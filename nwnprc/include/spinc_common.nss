@@ -52,6 +52,8 @@
 //      oCaster - caster object.
 
 ///////////////////////////////////////////////////////////////////////////
+
+#include "prc_alterations"
 #include "prc_inc_function"
 #include "X2_I0_SPELLS"
 #include "x2_inc_spellhook"

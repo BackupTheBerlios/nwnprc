@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 // Death Attack for the assassin
 
+#include "prc_alterations"
 #include "prc_inc_function"
 #include "NW_I0_GENERIC"
 
@@ -43,7 +44,7 @@ void main()
     {
         SendMessageToPC(oPC,"Your are still studying your target wait "+IntToString(FloatToInt(fApplyDATime))+ " seconds before you can perform the death attack");
         return;
-    }	
+    }   
 
     // Set a variable that tells us we are in the middle of a DA
     // Must study the target for three rounds

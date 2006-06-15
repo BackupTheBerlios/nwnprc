@@ -84,45 +84,27 @@ void main()
         float fDuration           = 60.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;
 
-        // Determine base damage
-        switch(PRCGetCreatureSize(oTarget))
-        {
-            case CREATURE_SIZE_FINE:       nBaseDamage = IP_CONST_MONSTERDAMAGE_1d2; break;
-            case CREATURE_SIZE_DIMINUTIVE: nBaseDamage = IP_CONST_MONSTERDAMAGE_1d3; break;
-            case CREATURE_SIZE_TINY:       nBaseDamage = IP_CONST_MONSTERDAMAGE_1d4; break;
-            case CREATURE_SIZE_SMALL:      nBaseDamage = IP_CONST_MONSTERDAMAGE_1d6; break;
-            case CREATURE_SIZE_MEDIUM:     nBaseDamage = IP_CONST_MONSTERDAMAGE_1d8; break;
-            case CREATURE_SIZE_LARGE:      nBaseDamage = IP_CONST_MONSTERDAMAGE_2d6; break;
-            case CREATURE_SIZE_HUGE:       nBaseDamage = IP_CONST_MONSTERDAMAGE_2d8; break;
-            case CREATURE_SIZE_GARGANTUAN: nBaseDamage = IP_CONST_MONSTERDAMAGE_4d6; break;
-            case CREATURE_SIZE_COLOSSAL:   nBaseDamage = IP_CONST_MONSTERDAMAGE_6d6; break;
-
-            default:{
-                string sErr = "psi_pow_bitewolf: ERROR: Unknown creature size (" + IntToString(PRCGetCreatureSize(oTarget)) + ") on creature " + DebugObject2Str(oTarget);
-                if(DEBUG) DoDebug(sErr);
-                else      WriteTimestampedLogEntry(sErr);
-            }
-        }
-
-        // Determine bonus damage from Psychic Warrior levels
-        if     (nEffectivePsyWarLevel >= 20) nBonusDamage = IP_CONST_DAMAGEBONUS_4d8;
-        else if(nEffectivePsyWarLevel >= 15) nBonusDamage = IP_CONST_DAMAGEBONUS_3d8;
-        else if(nEffectivePsyWarLevel >= 10) nBonusDamage = IP_CONST_DAMAGEBONUS_2d8;
-        else if(nEffectivePsyWarLevel >= 5)  nBonusDamage = IP_CONST_DAMAGEBONUS_1d8;
-
-        // Create the creature weapon
-        oCWeapon = GetPsionicCreatureWeapon(oTarget, "PRC_UNARMED_S", INVENTORY_SLOT_CWEAPON_B, fDuration);
-
-        // Add the base damage
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyMonsterDamage(nBaseDamage), oCWeapon, fDuration);
-
-        // Add the bonus damage
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SLASHING, nBonusDamage), oCWeapon, fDuration);
+        
 
         // Do VFX
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
         DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, FALSE);
+        
+        // Determine bonus damage from Psychic Warrior levels
+        int nBonus = 0;
+        if     (nEffectivePsyWarLevel >= 20) nBonus = 4;
+        else if(nEffectivePsyWarLevel >= 15) nBonus = 3;
+        else if(nEffectivePsyWarLevel >= 10) nBonus = 2;
+        else if(nEffectivePsyWarLevel >= 5)  nBonus = 1;
+        
+        string sResRef = "prc_bw"+IntToString(nBonus)+"_bite_";
+        sResRef += GetAffixForSize(PRCGetCreatureSize(oTarget));
+        AddNaturalSecondaryWeapon(oTarget, sResRef, 1);
+        // Start dispelling monitor and heartbeat
+        DelayCommand(6.0f, 
+            NaturalSecondaryWeaponTempCheck(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6, sResRef));
+        
     }// end if - Successfull manifestation
 }

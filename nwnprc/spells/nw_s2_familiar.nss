@@ -11,9 +11,9 @@
 //:: Created On: Sept 27, 2001
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "inc_npc"
 #include "inc_dynconv"
-#include "prc_alterations"
 #include "inc_utility"
 #include "inc_dispel"
 

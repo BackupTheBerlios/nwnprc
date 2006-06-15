@@ -11,6 +11,7 @@
 //:: Created On: July 18, 2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "spinc_common"
 #include "x2_inc_spellhook"
 #include "prc_feat_const"
@@ -20,8 +21,8 @@
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 /*
   Spellcast Hook Code
   Added 2003-06-23 by GeorgZ
@@ -29,96 +30,96 @@ void main()
   check x2_inc_spellhook.nss to find out more
 
 */
-	int iContinue = 0;
-	object oCaster = OBJECT_SELF;
-	if ( GetHasEffect( EFFECT_TYPE_CHARMED, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_CONFUSED, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_CUTSCENE_PARALYZE, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_CUTSCENEIMMOBILIZE, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_DAZED, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_DOMINATED, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_FRIGHTENED, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_PARALYZE, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_PETRIFY, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_SLEEP, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( GetHasEffect( EFFECT_TYPE_STUNNED, oCaster ) ) 
-	{
-		iContinue++;
-	}
-	if ( iContinue > 0 ) 
-	{
-		IncrementRemainingFeatUses(oCaster, FEAT_GFKILL_GHOST_STEP);
-		return;
-	}
-	if (!Ninja_AbilitiesEnabled(OBJECT_SELF))
-	{
-		IncrementRemainingFeatUses(OBJECT_SELF, FEAT_GHOST_STEP);
-		SendMessageToPC(OBJECT_SELF, "Your ki powers will not function while encumbered or wearing armor");
-		return;
-	}	
-	if (!X2PreSpellCastCode())
-	{
-		// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-		return;
-	}
-	Ninja_DecrementKi(OBJECT_SELF, FEAT_GHOST_STEP);
-	
-	// End of Spell Cast Hook
-	
-	
-	//Declare major variables
-	object oTarget = GetSpellTargetObject();
-	
-	//effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    int iContinue = 0;
+    object oCaster = OBJECT_SELF;
+    if ( GetHasEffect( EFFECT_TYPE_CHARMED, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_CONFUSED, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_CUTSCENE_PARALYZE, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_CUTSCENEIMMOBILIZE, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_DAZED, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_DOMINATED, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_FRIGHTENED, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_PARALYZE, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_PETRIFY, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_SLEEP, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( GetHasEffect( EFFECT_TYPE_STUNNED, oCaster ) ) 
+    {
+        iContinue++;
+    }
+    if ( iContinue > 0 ) 
+    {
+        IncrementRemainingFeatUses(oCaster, FEAT_GFKILL_GHOST_STEP);
+        return;
+    }
+    if (!Ninja_AbilitiesEnabled(OBJECT_SELF))
+    {
+        IncrementRemainingFeatUses(OBJECT_SELF, FEAT_GHOST_STEP);
+        SendMessageToPC(OBJECT_SELF, "Your ki powers will not function while encumbered or wearing armor");
+        return;
+    }   
+    if (!X2PreSpellCastCode())
+    {
+        // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+        return;
+    }
+    Ninja_DecrementKi(OBJECT_SELF, FEAT_GHOST_STEP);
+    
+    // End of Spell Cast Hook
+    
+    
+    //Declare major variables
+    object oTarget = GetSpellTargetObject();
+    
+    //effect eVis = EffectVisualEffect(VFX_DUR_INVISIBILITY);
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
-	// a major hack here, if we're a level 10 or higher ninja, Ghost Step also makes you ethereal
-	// probably should be a replacing feat so other classes can use it
-	
-	effect eLink;
-	
-	effect eSanc = EffectEthereal();
-	eLink = EffectLinkEffects(eDur, eSanc);
+    // a major hack here, if we're a level 10 or higher ninja, Ghost Step also makes you ethereal
+    // probably should be a replacing feat so other classes can use it
+    
+    effect eLink;
+    
+    effect eSanc = EffectEthereal();
+    eLink = EffectLinkEffects(eDur, eSanc);
 
-	//Fire cast spell at event for the specified target
-	SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GHOST_STEP, FALSE));
-	
-	float nDuration = RoundsToSeconds(1);
-	
-	//Apply the VFX impact and effects
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, nDuration,TRUE,-1, 1);
-	
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	// Getting rid of the local integer storing the spellschool name
+    //Fire cast spell at event for the specified target
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GHOST_STEP, FALSE));
+    
+    float nDuration = RoundsToSeconds(1);
+    
+    //Apply the VFX impact and effects
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, nDuration,TRUE,-1, 1);
+    
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    // Getting rid of the local integer storing the spellschool name
 }
 

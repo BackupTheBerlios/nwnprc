@@ -62,14 +62,13 @@
        step on the table above. This increase may be used up to 3 times.
     2. For every 4 power points spent, the size of the claws increases by one
        step on the table above. This increase may be used up to 3 times.
-
-    @todo Invent a trick to make this dispellable
 */
 
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
-#include "prc_alterations"
+#include "prc_inc_natweap"
+
 
 void main()
 {
@@ -147,5 +146,25 @@ void main()
         DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
         DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, FALSE);
+        
+        string sResRef;        
+        switch(nClawSize)
+        {
+            case 0: sResRef = "prc_claw_1d6l_"; break;
+            case 1: sResRef = "prc_claw_1d6m_"; break;
+            case 2: sResRef = "prc_claw_1d8m_"; break;
+            case 3: sResRef = "prc_claw_2d6m_"; break;
+            case 4: sResRef = "prc_claw_3d6m_"; break;
+            case 5: sResRef = "prc_claw_4d6m_"; break;
+            case 6: sResRef = "prc_claw_5d6m_"; break;
+            case 7: sResRef = "prc_claw_6d6m_"; break;        
+        }
+        sResRef += GetAffixForSize(PRCGetCreatureSize(oTarget));
+        
+        AddNaturalPrimaryWeapon(oTarget, sResRef, 2, TRUE);
+        DelayCommand(6.0f, 
+            NaturalPrimaryWeaponTempCheck(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6, sResRef));
+            
+        
     }// end if - Successfull manifestation
 }

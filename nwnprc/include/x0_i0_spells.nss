@@ -33,15 +33,6 @@
 //Added code into spellsInflictTouchAttack to maximize for Faith Healing and Blast Infidel
 //Aaon Graywolf - Jan 6, 2003
 
-#include "prc_alterations"
-//#include "NW_I0_SPELLS"
-//#include "x0_i0_match"
-#include "x2_inc_switches"
-#include "x2_inc_itemprop"
-#include "x0_i0_henchman"
-#include "prc_inc_combat"
-#include "prc_inc_sp_tch"
-#include "prc_spellf_inc"
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);
@@ -145,7 +136,15 @@ void spellApplyMindBlank(object oTarget, int nSpellId, float fDelay=0.0);
 // * Handle dispel magic of AoEs
 void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 
-
+#include "prc_alterations"
+//#include "NW_I0_SPELLS"
+//#include "x0_i0_match"
+#include "x2_inc_switches"
+#include "x2_inc_itemprop"
+#include "x0_i0_henchman"
+#include "prc_inc_combat"
+#include "prc_inc_sp_tch"
+#include "prc_spellf_inc"
 
 //::///////////////////////////////////////////////
 //:: DoTrapSpike

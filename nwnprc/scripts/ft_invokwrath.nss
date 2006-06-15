@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "x0_i0_spells"
 #include "x2_inc_itemprop"
 #include "prc_feat_const"
@@ -58,13 +59,13 @@ void main()
     
     if (!FortitudeSave(oTarget,nDC))
     {
-    	effect eVis = EffectVisualEffect(VFX_IMP_HARM);
-    	effect eDmg = EffectDamage(d8(nClassLevel/2),DAMAGE_TYPE_DIVINE,DAMAGE_POWER_ENERGY);
-    	effect eLink =EffectLinkEffects(eVis,eDmg);
+        effect eVis = EffectVisualEffect(VFX_IMP_HARM);
+        effect eDmg = EffectDamage(d8(nClassLevel/2),DAMAGE_TYPE_DIVINE,DAMAGE_POWER_ENERGY);
+        effect eLink =EffectLinkEffects(eVis,eDmg);
         ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget);
-   	
+    
     }
-    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_TURN_UNDEAD);	
+    DecrementRemainingFeatUses(OBJECT_SELF, FEAT_TURN_UNDEAD);  
    
    
 }

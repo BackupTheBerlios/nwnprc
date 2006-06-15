@@ -22,21 +22,22 @@
 //:: Created On: 10.01.2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "inc_poison"
 #include "spinc_common"
 
 
 void main()
 {
-	object oFood   = GetLocalObject(GetModule(), "poison_eat_hook_item");
-	object oTarget = OBJECT_SELF;
-	
-	// Check for presence of poison on the food. Only TRUE aka 1 is valid here.
-	if(GetLocalInt(oFood, "pois_food") != TRUE) return;
-	
-	int nPoisonIdx = GetLocalInt(oFood, "pois_food_idx");
-	
-	// Apply the poison to target
-	effect ePoison = EffectPoison(nPoisonIdx);
-	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oTarget, 0.0f, FALSE);
+    object oFood   = GetLocalObject(GetModule(), "poison_eat_hook_item");
+    object oTarget = OBJECT_SELF;
+    
+    // Check for presence of poison on the food. Only TRUE aka 1 is valid here.
+    if(GetLocalInt(oFood, "pois_food") != TRUE) return;
+    
+    int nPoisonIdx = GetLocalInt(oFood, "pois_food_idx");
+    
+    // Apply the poison to target
+    effect ePoison = EffectPoison(nPoisonIdx);
+    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoison, oTarget, 0.0f, FALSE);
 }

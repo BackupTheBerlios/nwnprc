@@ -7,6 +7,7 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "x2_i0_spells"
 void main()
 {

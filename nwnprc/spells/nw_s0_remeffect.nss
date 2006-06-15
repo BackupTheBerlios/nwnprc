@@ -16,6 +16,7 @@
 //:: Created On: Jan 8, 2002
 //:://////////////////////////////////////////////
 //#include "NW_I0_SPELLS"
+#include "prc_alterations"
 #include "X0_I0_SPELLS"
 #include "spinc_common"
 
@@ -64,7 +65,7 @@ void main()
         // is a criteria for ending the spell.
         nEffect1 = EFFECT_TYPE_DISEASE;
         if(GetPRCSwitch(PRC_BIOWARE_NEUTRALIZE_POISON))
-        	nEffect2 = EFFECT_TYPE_ABILITY_DECREASE;
+            nEffect2 = EFFECT_TYPE_ABILITY_DECREASE;
     }
     else if(nSpellID == SPELL_NEUTRALIZE_POISON)
     {
@@ -75,7 +76,7 @@ void main()
         nEffect1 = EFFECT_TYPE_POISON;
         nEffect2 = EFFECT_TYPE_DISEASE;
         if(GetPRCSwitch(PRC_BIOWARE_REMOVE_DISEASE))
-        	nEffect3 = EFFECT_TYPE_ABILITY_DECREASE;
+            nEffect3 = EFFECT_TYPE_ABILITY_DECREASE;
     }
 
 /*

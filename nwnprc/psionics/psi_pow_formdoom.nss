@@ -57,9 +57,8 @@
 #include "psi_inc_pwresist"
 #include "psi_spellhook"
 #include "spinc_common"
+#include "prc_inc_natweap"
 
-void FormOfDoomHB(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining);
-void TentacleAttack(object oAttacker);
 
 
 void main()
@@ -121,64 +120,11 @@ void main()
 
         // Apply the effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID ,manif.nManifesterLevel);
-
+        string sResRef = "prc_fod_tent_";
+        sResRef += GetAffixForSize(PRCGetCreatureSize(oTarget));
+        AddNaturalSecondaryWeapon(oTarget, sResRef, 4);
         // Start dispelling monitor and tentacles heartbeat
-        FormOfDoomHB(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6);
+        DelayCommand(6.0f, 
+            NaturalSecondaryWeaponTempCheck(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6, sResRef));
     }// end if - Successfull manifestation
-}
-
-void FormOfDoomHB(object oManifester, object oTarget, int nSpellID, int nBeatsRemaining)
-{
-    if(!((nBeatsRemaining-- == 0)                                         || // Has the power ended since the last beat, or does the duration run out now
-         GZGetDelayedSpellEffectsExpired(nSpellID, oTarget, oManifester)  || // Has the power been dispelled
-         GetHasEffect(EFFECT_TYPE_POLYMORPH, oTarget)                        // Has the target been polymorphed
-         )
-       )
-    {
-        // Determine if we are in combat
-        if(GetIsInCombat(oTarget))
-        {
-            // Spread the attacks out over a round, there's 4 total
-            //bioware splits attacks over 3 flurries/round
-            TentacleAttack(oTarget);
-            TentacleAttack(oTarget);
-            DelayCommand(2.0f, TentacleAttack(oTarget));
-            DelayCommand(4.0f, TentacleAttack(oTarget));
-        }
-
-        // Schedule next HB
-        DelayCommand(6.0f, FormOfDoomHB(oManifester, oTarget, nSpellID, nBeatsRemaining));
-    }
-    // Power expired
-    else
-    {
-        if(DEBUG) DoDebug("psi_pow_formdoom: Power expired, exiting HB");
-        RemoveSpellEffects(nSpellID, oManifester, oTarget);
-    }
-}
-
-void TentacleAttack(object oAttacker)
-{
-    // Get the target
-    object oTarget = GetAttackTarget(oAttacker);
-
-    // Make sure this is melee combat
-    if(GetIsInMeleeRange(oTarget, oAttacker))
-    {
-        // Roll the attack
-        int nAttack = GetAttackRoll(oTarget, oAttacker, OBJECT_INVALID, 0, 0, -5);
-        // If the tentacle hits
-        if(nAttack > 0)
-        {
-            // Do damage and visual effects
-            effect eHit = EffectVisualEffect(VFX_COM_HIT_ACID);
-            int nDamage = d8(2) + (GetAbilityModifier(ABILITY_STRENGTH, oAttacker) / 2);
-            // Critical hit, double damage
-            if (nAttack == 2) nDamage += d8(2) + (GetAbilityModifier(ABILITY_STRENGTH, oAttacker) / 2);
-            effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
-
-            // Extraordinarify the effect, since the damage is non-magical
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, ExtraordinaryEffect(EffectLinkEffects(eHit, eDam)), oTarget);
-        }
-    }
 }

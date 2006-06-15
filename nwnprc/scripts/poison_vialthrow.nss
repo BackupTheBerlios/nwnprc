@@ -25,6 +25,7 @@
 //:: Updated On: 20.12.2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "inc_poison"
 #include "spinc_common"
 

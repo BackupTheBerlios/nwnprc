@@ -43,28 +43,25 @@ void main()
     //DelayCommand(0.3, PrcFeats(oPC));
     PrcFeats(oPC);
 
-    // Handle someone equipping a poisoned item
-    //ExecuteScript("poison_onequip", OBJECT_SELF);
-
     // Handle ability skill limited items
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
     //timestop noncombat equip
     DoTimestopEquip();
-    
+
     //Handle lack of fingers/hands
-    if(GetPersistantLocalInt(OBJECT_SELF, "LEFT_HAND_USELESS"))
+    if(GetPersistantLocalInt(oPC, "LEFT_HAND_USELESS"))
     {
         //Force unequip
-        ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, OBJECT_SELF), INVENTORY_SLOT_LEFTHAND, TRUE);
-        SendMessageToPC(OBJECT_SELF, "You cannot use your left hand");
+        ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), INVENTORY_SLOT_LEFTHAND, TRUE);
+        SendMessageToPC(oPC, "You cannot use your left hand");
     }
-    
-    if(GetPersistantLocalInt(OBJECT_SELF, "RIGHT_HAND_USELESS"))
+
+    if(GetPersistantLocalInt(oPC, "RIGHT_HAND_USELESS"))
     {
         //Force unequip
-        ForceUnequip(OBJECT_SELF, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, OBJECT_SELF), INVENTORY_SLOT_RIGHTHAND, TRUE);
-        SendMessageToPC(OBJECT_SELF, "You cannot use your right hand");
-    }    
+        ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC), INVENTORY_SLOT_RIGHTHAND, TRUE);
+        SendMessageToPC(oPC, "You cannot use your right hand");
+    }
 
     // Execute scripts hooked to this event for the creature and item triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYEREQUIPITEM);

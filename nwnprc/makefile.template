@@ -161,7 +161,18 @@ NWN_DATABASE            = $(NWN_DIR)\database
 NWN_MODULES             = $(NWN_DIR)\modules
 
 # Arguments for various rules
+!IFDEF DEBUG
+NSS_FLAGS		= -cq -I "$(MAKEDIR)\include"
+!ELSE
 NSS_FLAGS		= -cgoq -I "$(MAKEDIR)\include"
+!ENDIF
+
+!IFDEF DEBUG
+MOVE_DEBUGFILE_TO_OVERRIDE = move /Y "$(MAKEDIR)\$*.ndb" "$(NWN_OVERRIDE)"
+!ELSE
+MOVE_DEBUGFILE_TO_OVERRIDE =
+!ENDIF
+
 
 # suffixes for inference rules.
 .SUFFIXES: .nss .ncs .erf .hak .zip .rar
@@ -528,30 +539,37 @@ depends:
 {$(SRCPATH)\}.nss{$(OBJPATH)\}.ncs:
 	@echo $(<F) $(COMPILER_CALL_SUFFIX)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
+	$(MOVE_DEBUGFILE_TO_OVERRIDE)
 
 {$(SPELLSRCPATH)\}.nss{$(SPELLOBJPATH)\}.ncs:
 	@echo $(<F) $(COMPILER_CALL_SUFFIX)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
+	$(MOVE_DEBUGFILE_TO_OVERRIDE)
 
 {$(EPICSPELLSRCPATH)\}.nss{$(EPICSPELLOBJSPATH)\}.ncs:
 	@echo $(<F) $(COMPILER_CALL_SUFFIX)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
+	$(MOVE_DEBUGFILE_TO_OVERRIDE)
 
 {$(RACESRCPATH)\}.nss{$(RACEOBJSPATH)\}.ncs:
 	@echo $(<F) $(COMPILER_CALL_SUFFIX)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
+	$(MOVE_DEBUGFILE_TO_OVERRIDE)
 
 {$(PSIONICSSRCPATH)\}.nss{$(PSIONICSOBJSPATH)\}.ncs:
 	@echo $(<F) $(COMPILER_CALL_SUFFIX)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
+	$(MOVE_DEBUGFILE_TO_OVERRIDE)
 
 {$(NEWSPELLBOOKSRCPATH)\}.nss{$(NEWSPELLBOOKOBJSPATH)\}.ncs:
 	@echo $(<F) $(COMPILER_CALL_SUFFIX)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
+	$(MOVE_DEBUGFILE_TO_OVERRIDE)
 
 {$(OCFIXERFPATH)\}.nss{$(OCFIXERFOBJSPATH)\}.ncs:
 	@echo $(<F) $(COMPILER_CALL_SUFFIX)
 	@"$(NSSCOMPILER)" $(NSS_FLAGS) "$(MAKEDIR)\$<" "$(MAKEDIR)\$@" $(COMPILER_CALL_SUFFIX)
+	$(MOVE_DEBUGFILE_TO_OVERRIDE)
 
 #################################################################################
 # Depends updates will go here. DO NOT ADD ANYTING BELOW THIS LINE!

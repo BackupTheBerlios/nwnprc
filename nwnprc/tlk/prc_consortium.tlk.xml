@@ -7988,10 +7988,7 @@ You create a circle on the floor or other horizontal surface that teleports, as 
 
 The circle itself is subtle and nearly impossible to notice. If you intend to keep creatures from activating it accidentally, you need to mark the circle in some way.
 
-Note: Magic traps such as teleportation circle are hard to detect and disable. A rogue (only) can use the Search skill to find the circle and Disable Device to thwart it. The DC in each case is 25 + spell level, or 34 in the case of teleportation circle.
-
-
-Implementation: At this time, the circle does not act as a trap, merely as a normal area of effect. This means that though it can be dispelled, it cannot be disarmed. Due to this, the option to have the circle be hidden is also disabled.</entry>
+Note: Magic traps such as teleportation circle are hard to detect and disable. A rogue (only) can use the Search skill to find the circle and Disable Device to thwart it. The DC in each case is 25 + spell level, or 34 in the case of teleportation circle.</entry>
   <entry id="46803" lang="en" sex="m">Wild Surge 1 - 5</entry>
   <entry id="46804" lang="en" sex="m">Wild Surge 6 - 10</entry>
   <entry id="46805" lang="en" sex="m">Wild Surge 7</entry>
@@ -13155,10 +13152,7 @@ You create a circle on the floor or other horizontal surface that teleports, as 
 
 The circle itself is subtle and nearly impossible to notice. If you intend to keep creatures from activating it accidentally, you need to mark the circle in some way.
 
-Note: Magic traps such as teleportation circle are hard to detect and disable. A rogue (only) can use the Search skill to find the circle and Disable Device to thwart it. The DC in each case is 25 + spell level, or 34 in the case of teleportation circle.
-
-
-Implementation: At this time, the circle does not act as a trap, merely as a normal area of effect. This means that though it can be dispelled, it cannot be disarmed. Due to this, the option to have the circle be hidden is also disabled.</entry>
+Note: Magic traps such as teleportation circle are hard to detect and disable. A rogue (only) can use the Search skill to find the circle and Disable Device to thwart it. The DC in each case is 25 + spell level, or 34 in the case of teleportation circle.</entry>
   <entry id="48493" lang="en" sex="m">Teleportation Circle - Visible</entry>
   <entry id="48494" lang="en" sex="m">Teleportation Circle - Hidden</entry>
   <entry id="48495" lang="en" sex="m">Teleportation Circle (17)</entry>
@@ -21800,11 +21794,11 @@ Small - 1d3
 Medium - 1d4
 Large - 1d6
 Huge - 1d8
-Gigantic - 2d6 
+Gigantic - 2d6
 Colossal - 3d6</entry>
   <entry id="54986" lang="en" sex="m">Draconic Bite and Claws</entry>
-  <entry id="54987" lang="en" sex="m">At 2nd level, a dragon disciple gains a bite that can be used to make a natural attack with. You can use your bite in addition to any weapons weilding in your hands. 
-  
+  <entry id="54987" lang="en" sex="m">At 2nd level, a dragon disciple gains a bite that can be used to make a natural attack with. You can use your bite in addition to any weapons weilding in your hands.
+
   At 2nd level, a dragon disciple also gains 2 claw attacks that can be used to make a natural attack with. You cannot use your claws in addition to any weapons weilding in your hands.
 
 Size - Damage (bite/claw)
@@ -21824,7 +21818,7 @@ Size - Damage
 Medium - 1d3
 Large - 1d4
 Huge - 1d6
-Gigantic - 1d8 
+Gigantic - 1d8
 Colossal - 2d6</entry>
   <entry id="54990" lang="en" sex="m">Draconic Tail</entry>
   <entry id="54991" lang="en" sex="m">At 17nd level, a dragon disciple grows a tail that can be used to make a natural attack with, if of large size or bigger. You can use your tail slap in addition to any weapons weilding in your hands.
@@ -21832,7 +21826,7 @@ Colossal - 2d6</entry>
 Size - Damage
 Large - 1d6
 Huge - 1d8
-Gigantic - 2d6 
+Gigantic - 2d6
 Colossal - 3d6</entry>
   <entry id="55004" lang="en" sex="m">End of DD reserved</entry>
   <entry id="55100" lang="en" sex="m">Ninja</entry>

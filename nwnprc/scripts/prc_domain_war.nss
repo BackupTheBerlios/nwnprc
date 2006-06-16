@@ -63,31 +63,31 @@ void main()
             // Function AddChoice to add a response option for the PC. The responses are show in order added
             if(nStage == STAGE_WEAPON_CHOICE)
             {
-            	string sHeader1 = "Select your Deity's favoured weapon.\n";
-            	sHeader1 += "This will grant you proficiency and weapon focus in that weapon.";
+                string sHeader1 = "Select your Deity's favoured weapon.\n";
+                sHeader1 += "This will grant you proficiency and weapon focus in that weapon.";
                 // Set the header
                 SetHeader(sHeader1);
                 // Add responses for the PC
 
                 // This reads all of the legal choices from baseitems.2da
                 int i;
-		for(i = 0; i < 112; i++) //Total rows in baseitems.2da
-		{
-			// If the selection is a legal weapon
-			if (StringToInt(Get2DACache("baseitems", "WeaponType", i)) > 0)
-			{
-				// If the selection is a martial weapon
-				// Everything that needs Martial weapon pro has it in this column
-				if (StringToInt(Get2DACache("baseitems", "ReqFeat0", i)) == 45)
-				{
-					string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
-					// Just in case its a blank entry, don't put it here
-					if (sWeaponName != "")
-					{
-						AddChoice(sWeaponName, i, oPC);
-					}
-				}
-			}
+                for(i = 0; i < GetPRCSwitch(FILE_END_BASEITEMS); i++) //Total rows in baseitems.2da
+                {
+                    // If the selection is a legal weapon
+                    if (StringToInt(Get2DACache("baseitems", "WeaponType", i)) > 0)
+                    {
+                        // If the selection is a martial weapon
+                        // Everything that needs Martial weapon pro has it in this column
+                        if (StringToInt(Get2DACache("baseitems", "ReqFeat0", i)) == FEAT_WEAPON_PROFICIENCY_MARTIAL)
+                        {
+                            string sWeaponName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", i)));
+                            // Just in case its a blank entry, don't put it here
+                            if (sWeaponName != "")
+                            {
+                                AddChoice(sWeaponName, i, oPC);
+                            }
+                        }
+                    }
                 }
 
                 MarkStageSetUp(STAGE_WEAPON_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
@@ -142,17 +142,17 @@ void main()
         {
             if(nChoice == TRUE)
             {
-            	object oSkin = GetPCSkin(oPC);
-            	int nWeapon = GetLocalInt(oPC, "WarDomainWeapon");
-		int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
-		int nWFIprop = FeatToIprop(nWeaponFocus);
-		
-		IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-		IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-		
-		// Store the weapon feat for later reuse
-		// The reason we use the feat and not the iprop constant is so we can check using GetHasFeat whether to reapply
-		SetPersistantLocalInt(oPC, "WarDomainWeaponPersistent", nWeaponFocus);
+                object oSkin = GetPCSkin(oPC);
+                int nWeapon = GetLocalInt(oPC, "WarDomainWeapon");
+                int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
+                int nWFIprop = FeatToIprop(nWeaponFocus);
+
+                IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+                IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+
+                // Store the weapon feat for later reuse
+                // The reason we use the feat and not the iprop constant is so we can check using GetHasFeat whether to reapply
+                SetPersistantLocalInt(oPC, "WarDomainWeaponPersistent", nWeaponFocus);
 
                 // And we're all done
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);

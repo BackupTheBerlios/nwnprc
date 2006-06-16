@@ -23,7 +23,7 @@
  * Prefix all your debug calls with an if(DEBUG) so that they get stripped away
  * during compilation as dead code when this is turned off.
  */
-const int DEBUG = FALSE;
+const int DEBUG = TRUE;
 
 
 //////////////////////////////////////////////////
@@ -92,6 +92,7 @@ void Assert(int bAssertion, string sAssertion, string sMessage = "", string sFil
 {
     if(bAssertion == FALSE)
     {
+        //SpawnScriptDebugger();
         string sErr = "Assertion failed: " + sAssertion;
 
         if(sMessage != "" || sFileName != "" || sFunction != "")

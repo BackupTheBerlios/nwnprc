@@ -295,6 +295,8 @@ int GetHasItem(object oPC, string sResRef)
 
 object GetPCSkin(object oPC)
 {
+// According to a bug report, this is being called on non-creature objects. This should catch the culprit
+if(DEBUG) Assert(GetObjectType(oPC) == OBJECT_TYPE_CREATURE, "GetObjectType(oPC) == OBJECT_TYPE_CREATURE", "GetPRCSkin() called on non-creature object: " + DebugObject2Str(oPC), "inc_item_props", "object GetPCSkin(object oPC)");
     object oSkin = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
     if (!GetIsObjectValid(oSkin))
     {
@@ -1463,7 +1465,7 @@ int FeatToIprop(int nFeat)
             case FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD: return IP_CONST_FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD;
             case FEAT_WEAPON_FOCUS_WAR_HAMMER: return IP_CONST_FEAT_WEAPON_FOCUS_WAR_HAMMER;
             case FEAT_WEAPON_FOCUS_WHIP: return IP_CONST_FEAT_WEAPON_FOCUS_WHIP;
-            
+
             case FEAT_WEAPON_SPECIALIZATION_DAGGER: return            IP_CONST_FEAT_WEAPON_SPECIALIZATION_CLUB          ;
             case FEAT_WEAPON_SPECIALIZATION_DAGGER: return            IP_CONST_FEAT_WEAPON_SPECIALIZATION_DAGGER            ;
         case FEAT_WEAPON_SPECIALIZATION_DART: return              IP_CONST_FEAT_WEAPON_SPECIALIZATION_DART              ;
@@ -1503,17 +1505,17 @@ int FeatToIprop(int nFeat)
         case FEAT_WEAPON_SPECIALIZATION_TWO_BLADED_SWORD: return      IP_CONST_FEAT_WEAPON_SPECIALIZATION_TWO_BLADED_SWORD  ;
         case FEAT_WEAPON_SPECIALIZATION_DWAXE: return             IP_CONST_FEAT_WEAPON_SPECIALIZATION_DWAXE             ;
         case FEAT_WEAPON_SPECIALIZATION_WHIP: return              IP_CONST_FEAT_WEAPON_SPECIALIZATION_WHIP              ;
-            }                                      
-    return - 1;            
+            }
+    return - 1;
 }
 
-itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID) 
+itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID)
 {
     string sTag = "PRC_IPBF_"+IntToString(nBonusFeatID);
     object oTemp = GetObjectByTag(sTag);
     if(!GetIsObjectValid(oTemp))
     {
-        DoDebug("PRCItemPropertyBonusFeat() : "+sTag+" is not valid");    
+        DoDebug("PRCItemPropertyBonusFeat() : "+sTag+" is not valid");
         location lLimbo;
         object oLimbo = GetObjectByTag("HEARTOFCHAOS");
         if(GetIsObjectValid(oLimbo))
@@ -1525,7 +1527,7 @@ itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID)
     itemproperty ipReturn = GetFirstItemProperty(oTemp);
     if(!GetIsItemPropertyValid(ipReturn))
     {
-        DoDebug("PRCItemPropertyBonusFeat() : ipReturn is not valid");   
+        DoDebug("PRCItemPropertyBonusFeat() : ipReturn is not valid");
         ipReturn = ItemPropertyBonusFeat(nBonusFeatID);
         AddItemProperty(DURATION_TYPE_PERMANENT,ipReturn, oTemp);
     }

@@ -607,6 +607,27 @@ public class Data_2da implements Cloneable{
 			mainData.get(label).add("****");
 		}
 	}
+	
+	/**
+	 * Appends a new, empty row to the end of the 2da file. The new row will be filled with the values
+	 * given as parameter.
+	 *
+	 * @param data  the strings that will be used to fill the new row
+	 *
+	 * @throws IllegalArgumentException if the number of elements in <code>data</code> array is not
+	 *                                   same as number of columns in the 2da
+	 */
+	public void appendRow(String[] data){
+		String[] labels = this.getLabels();
+
+		// Sanity check
+		if(labels.length != data.length)
+			throw new IllegalArgumentException("Differing column width when attempting to insert row");
+
+		for(int i = 0; i < labels.length; i++){
+			mainData.get(labels[i]).add(data[i]);
+		}
+	}
 
 	/**
 	 * Inserts a new row into the given index in the 2da file. The row currently at the index and all

@@ -51,16 +51,16 @@ public class Data_2da implements Cloneable{
 	/**
 	 * Private constructor for use in cloning.
 	 *
-	 * @param defaultValue the default value
-	 * @param mainData     the contents
 	 * @param name         the file name
+	 * @param defaultValue the default value
 	 * @param realLabels   the labels with original case
+	 * @param mainData     the contents
 	 */
-	public Data_2da(String defaultValue, LinkedHashMap<String, ArrayList<String>> mainData, String name, ArrayList<String> realLabels){
-		this.defaultValue = defaultValue;
-		this.mainData = mainData;
+	public Data_2da(String name, String defaultValue, ArrayList<String> realLabels, LinkedHashMap<String, ArrayList<String>> mainData){
 		this.name = name;
+		this.defaultValue = defaultValue;
 		this.realLabels = realLabels;
+		this.mainData = mainData;
 	}
 
 	/**
@@ -1001,10 +1001,10 @@ public class Data_2da implements Cloneable{
 		// Create a new Data_2da. The Strings are immutable, so they can be used as-is and clone()
 		// on an array produces a sufficiently deep copy right away
 		return new Data_2da(
-				this.defaultValue,
-				cloneData,
 				this.name,
-				(ArrayList<String>)this.realLabels.clone()
+				this.defaultValue,
+				(ArrayList<String>)this.realLabels.clone(),
+				cloneData
 				);
 	}
 }

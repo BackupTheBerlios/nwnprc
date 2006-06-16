@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Blinding Glory
-//:: FileName  sp_blnd_glory.nss
+//:: Name      Blinding Glory on Enter
+//:: FileName  sp_blnd_gloryA.nss
 //:://////////////////////////////////////////////
 /**@file Blinding Glory
 Conjuration (Creation) [Good] 
@@ -38,6 +38,15 @@ Created:   6/13/06
 
 void main()
 {
-	object oPC = OBJECT_SELF;
-	location lLoc = GetSpellTargetLocation();
+	object oTarget = GetEnteringObject();
+	
+	if(!GetHasEffect(EFFECT_TYPE_DARKNESS, oTarget))
+	{
+		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+		{
+			SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectBlindness(), oTarget);
+		}
+	}
+}
+		
 	

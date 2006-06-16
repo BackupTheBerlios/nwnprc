@@ -43,7 +43,6 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_CONJURATION);
 	
 	object oPC = OBJECT_SELF;
-	location lLoc = GetSpellTargetLocation();
 	effect eAOE = EffectAreaOfEffect(AOE_PER_BLNDGLORY);
 	float fDuration = HoursToSeconds(nCasterLvl);
 	int nMetaMagic = PRCGetMetaMagicFeat();
@@ -56,7 +55,7 @@ void main()
 	
 	//Create an instance of the AOE Object using the Apply Effect function
 	
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration);
 	
 	SPGoodShift(oPC);
 	SPSetSchool();

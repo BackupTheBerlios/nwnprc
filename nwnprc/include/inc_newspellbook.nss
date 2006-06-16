@@ -1,7 +1,4 @@
-#include "x2_inc_itemprop"
-#include "inc_utility"
-#include "prc_inc_spells"
-//#include "prc_inc_clsfunc"
+
 
 /* Steps for adding a new spellbook
 
@@ -43,6 +40,11 @@ const int SPELLBOOK_TYPE_INVALID = 0;
 void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
 int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1);
 string GetFileForClass(int nClass);
+
+#include "x2_inc_itemprop"
+#include "inc_utility"
+#include "prc_inc_spells"
+//#include "prc_inc_clsfunc"
 
 
 int GetSpellbookTypeForClass(int nClass)

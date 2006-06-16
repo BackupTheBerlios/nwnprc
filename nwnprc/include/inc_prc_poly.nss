@@ -1,8 +1,6 @@
 //include file for new polymorph like functions using the pnp shifters shifting code
 //created by paradox_42 - 2005/07/01
 
-#include "pnp_shft_main"
-
 
 // used to shift by resref
 // oPC = PC to shift/polymorph
@@ -27,15 +25,17 @@ int PRC_Polymorph_Check(object oPC);
 // oPC = PC to unshift/unpolymorph
 void PRC_UnPolymorph(object oPC);
 
+#include "pnp_shft_main"
+
 
 
 int PRC_Polymorph_ResRef(object oPC, string sResRef, int iExtraAbilitys)
 {
-	StoreAppearance(oPC);
-	if (!CanShift(oPC))
-	{
-		return FALSE;
-	}
+    StoreAppearance(oPC);
+    if (!CanShift(oPC))
+    {
+        return FALSE;
+    }
     int i = 0;
     object oLimbo = GetObjectByTag("Limbo", i);
     location lLimbo;
@@ -72,7 +72,7 @@ int PRC_Polymorph_ResRef(object oPC, string sResRef, int iExtraAbilitys)
         DestroyObject(oTarget);
         return FALSE;
     }
-	else
+    else
     {
         //get the appearance before changing it
         SetLocalInt(oTarget,"Appearance",GetAppearanceType(oTarget));
@@ -91,40 +91,40 @@ int PRC_Polymorph_ResRef(object oPC, string sResRef, int iExtraAbilitys)
 
 int PRC_Polymorph_Object(object oPC, object oTarget, int iExtraAbilitys, int iDeleteTarget, int iUseClone)
 {
-	StoreAppearance(oPC);
-	if (!CanShift(oPC))
-	{
-		return FALSE;
-	}
-	if (iUseClone == TRUE)
-	{
-		string sResRef = GetResRef(oTarget);
-		int i = 0;
-		object oLimbo = GetObjectByTag("Limbo", i);
-		location lLimbo;
-		while (i < 100)
-		{
-			if (GetIsObjectValid(oLimbo))
-			{
-				if (GetName(oLimbo) == "Limbo")
-				{
-					i = 2000;
-					vector vLimbo = Vector(0.0f, 0.0f, 0.0f);
-					lLimbo = Location(oLimbo, vLimbo, 0.0f);
-				}
-			}
-			i++;
-			object oLimbo = GetObjectByTag("Limbo", i);
-		}
-		if (i>=2000)
-		{
-			oTarget = CreateObject(OBJECT_TYPE_CREATURE,sResRef,lLimbo);
-		}
-		else
-		{
-			oTarget = CreateObject(OBJECT_TYPE_CREATURE,sResRef,GetLocation(oPC));
-		}
-	}
+    StoreAppearance(oPC);
+    if (!CanShift(oPC))
+    {
+        return FALSE;
+    }
+    if (iUseClone == TRUE)
+    {
+        string sResRef = GetResRef(oTarget);
+        int i = 0;
+        object oLimbo = GetObjectByTag("Limbo", i);
+        location lLimbo;
+        while (i < 100)
+        {
+            if (GetIsObjectValid(oLimbo))
+            {
+                if (GetName(oLimbo) == "Limbo")
+                {
+                    i = 2000;
+                    vector vLimbo = Vector(0.0f, 0.0f, 0.0f);
+                    lLimbo = Location(oLimbo, vLimbo, 0.0f);
+                }
+            }
+            i++;
+            object oLimbo = GetObjectByTag("Limbo", i);
+        }
+        if (i>=2000)
+        {
+            oTarget = CreateObject(OBJECT_TYPE_CREATURE,sResRef,lLimbo);
+        }
+        else
+        {
+            oTarget = CreateObject(OBJECT_TYPE_CREATURE,sResRef,GetLocation(oPC));
+        }
+    }
     if (!GetIsObjectValid(oTarget))
     {
         SendMessageToPC(oPC, "Not a valid creature.");
@@ -135,14 +135,14 @@ int PRC_Polymorph_Object(object oPC, object oTarget, int iExtraAbilitys, int iDe
         DestroyObject(oTarget);
         return FALSE;
     }
-	else
+    else
     {
         SetLocalInt(oTarget,"Appearance",GetAppearanceType(oTarget));
-		if (iDeleteTarget == TRUE)
-		{
-        	//set oTarget for deletion
-	        SetLocalInt(oTarget,"pnp_shifter_deleteme",1);
-		}
+        if (iDeleteTarget == TRUE)
+        {
+            //set oTarget for deletion
+            SetLocalInt(oTarget,"pnp_shifter_deleteme",1);
+        }
         //Shift the PC to it
         if (iExtraAbilitys == TRUE)
             SetShiftEpic(oPC, oTarget);
@@ -154,13 +154,13 @@ int PRC_Polymorph_Object(object oPC, object oTarget, int iExtraAbilitys, int iDe
 
 int PRC_Polymorph_Check(object oPC)
 {
-	object oHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
-	return GetLocalInt(oHide, "nPCShifted");
+    object oHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oPC);
+    return GetLocalInt(oHide, "nPCShifted");
 }
 
 void PRC_UnPolymorph(object oPC)
 {
-	ExecuteScript("pnp_shft_true", oPC);
+    ExecuteScript("pnp_shft_true", oPC);
 }
 
 

@@ -1,7 +1,4 @@
-#include "inc_epicspells"
-#include "inc_epicspelldef"
-#include "inc_epicspellfnc"
-#include "inc_utility"
+
 /*
 for reference
 SpellRngPers       0
@@ -17,6 +14,10 @@ int TestConditions(int nSpellID);
 object GetSuitableTaget(int nSpellID);
 void MakeEpicSpellsKnownAIList();
 
+#include "inc_epicspells"
+#include "inc_epicspelldef"
+#include "inc_epicspellfnc"
+#include "inc_utility"
 
 //returns True if it casts something
 int DoEpicSpells()

@@ -8,12 +8,6 @@
 //:: Last Updated On: March 18, 2004
 //:://////////////////////////////////////////////
 
-#include "prc_inc_spells"
-#include "prc_class_const"
-#include "inc_epicspelldef"
-#include "inc_epicspellfnc"
-#include "inc_utility"
-
 /*
 CONSTANTS FOR OPTIONAL FEATURES
 */
@@ -198,6 +192,15 @@ void UnequipAnyImmunityItems(object oTarget, int nImmType);
 // Finds a given spell's DC
 int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INVALID, int nSpellID = -1);
 
+
+
+
+#include "prc_inc_spells"
+#include "prc_class_const"
+#include "inc_epicspelldef"
+#include "inc_epicspellfnc"
+#include "inc_utility"
+
 /******************************************************************************
 FUNCTION BODIES
 ******************************************************************************/
@@ -359,10 +362,10 @@ int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nRe
 {
     if(DEBUG)
     {
-    	DoDebug("Requirement #1: " + IntToString(nReq1));
-    	DoDebug("Requirement #2: " + IntToString(nReq2));
-    	DoDebug("Requirement #3: " + IntToString(nReq3));
-    	DoDebug("Requirement #4: " + IntToString(nReq4));
+        DoDebug("Requirement #1: " + IntToString(nReq1));
+        DoDebug("Requirement #2: " + IntToString(nReq2));
+        DoDebug("Requirement #3: " + IntToString(nReq3));
+        DoDebug("Requirement #4: " + IntToString(nReq4));
     }
     
     if (GetHasFeat(nReq1, oPC))

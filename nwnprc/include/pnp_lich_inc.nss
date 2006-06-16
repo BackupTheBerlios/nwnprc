@@ -11,9 +11,6 @@
 //:: Created On:
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
-#include "pnp_shft_main"
-
 // Returns the lich amulet level
 int GetAmuletLevel(object oAmulet);
 // Sets the passed in amulet to nLevel
@@ -24,6 +21,9 @@ int GetHideLevel(object oHide);
 void LevelUpHide(object oPC, object oHide, int nLevel);
 // Creates some VFX on the object when crafting
 void CraftVFX(object oObject);
+
+#include "inc_utility"
+#include "pnp_shft_main"
 
 void LichSkills(object oHide, int iLevel)
 {

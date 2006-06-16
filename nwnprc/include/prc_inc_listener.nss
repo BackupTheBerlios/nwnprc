@@ -59,9 +59,6 @@
 //:: Created On: 19.06.2005
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
-#include "x0_i0_position"
-
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -124,6 +121,11 @@ void AddPattern(object oListener, string sPattern, string sScriptToCall);
  *                      this to default (ie, TRUE).
  */
 void DestroyListener(object oListener, int bFirst = TRUE);
+
+
+#include "inc_utility"
+#include "x0_i0_position"
+
 
 //////////////////////////////////////////////////
 /* Function defintions                          */

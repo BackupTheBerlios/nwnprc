@@ -1,10 +1,5 @@
 // Soul Eater Shifting Include
 
-#include "prc_alterations"
-#include "nw_o0_itemmaker"
-#include "nw_i0_spells"
-#include "prc_inc_function"
-
 
 // Adds a creature to the list of valid GWS shift possibilities
 void RecognizeCreature( object oPC, string sTemplate, string sCreatureName );
@@ -92,6 +87,11 @@ void DeleteFromKnownArray(int nIndex, object oPC);
 // based on the players RACIAL type
 int GetTrueForm(object oPC);
 
+
+#include "prc_alterations"
+#include "nw_o0_itemmaker"
+#include "nw_i0_spells"
+#include "prc_inc_function"
 
 
 

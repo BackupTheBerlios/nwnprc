@@ -7,9 +7,6 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_inc_function"
-#include "x0_i0_assoc"
-
 // Get the master of oAssociate.
 object GetMasterNPC(object oAssociate=OBJECT_SELF);
 
@@ -45,6 +42,9 @@ object CreateLocalNextNPC(object oMaster,int nAssociateType,string sTemplate,loc
 // Create a AssociateType creature
 object CreateLocalNPC(object oMaster,int nAssociateType,string sTemplate,location loc,int Nth=1,string sTag="");
 
+
+#include "prc_inc_function"
+#include "x0_i0_assoc"
 
 void SetLocalNPC(object oMaster,object oAssociate,int nAssociateType ,int nNth=1)
 {

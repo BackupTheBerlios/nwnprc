@@ -420,6 +420,22 @@ int RunecasterRunePowerDC(object oCaster)
         }
         return nDC;
 }
+ 
+ //Unheavened spell
+int UnheavenedAdjustment(object oTarget, object oCaster)
+{
+	int nAdjust = 0;
+	
+	if(GetHasSpellEffect(SPELL_UNHEAVENED, oTarget))
+	{
+		if((MyPRCGetRacialType(oCaster) == RACIAL_TYPE_OUTSIDER) && (GetAlignmentGoodEvil(oCaster) == ALIGNMENT_GOOD))
+		{
+			nAdjust = 4;
+		}
+	}
+	return nAdjust;
+}
+	
 
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
@@ -567,6 +583,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += KOTCSpellFocusVsDemons(oTarget, oCaster);
     nDC += BloodMagusBloodComponent(oCaster);
     nDC += RunecasterRunePowerDC(oCaster);
+    nDC -= UnheavenedAdjustment(oTarget, oCaster);   
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
 

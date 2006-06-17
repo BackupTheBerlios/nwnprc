@@ -2029,6 +2029,9 @@ const int FEAT_TURNING_IMMUNITY               = 3593;
 //Mother Cyst
 const int FEAT_MOTHER_CYST                    = 3594;
 
+//Tenjac's spell related
+const int FEAT_DETECT_GOOD_AT_WILL            = 3595;
+
 //Lasher
 const int FEAT_LASHER_SNEAK1D6                = 4075;
 const int FEAT_LASHER_SNEAK2D6                = 4076;

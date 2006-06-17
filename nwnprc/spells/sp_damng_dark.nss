@@ -1,56 +1,51 @@
 //::///////////////////////////////////////////////
-//:: Name      Cloud of the Achaierai  
-//:: FileName  sp_cloud_achai  
+//:: Name      Damning Darkness
+//:: FileName  sp_damng_dark.nss
 //:://////////////////////////////////////////////
-/**@file Cloud of the Achaierai
-Conjuration (Creation) [Evil]
-Level: Clr 6, Demonologist 4
-Components: V, S, Disease
+/**@file Damning Darkness
+Evocation [Darkness, Evil]
+Level: Clr 4, Darkness 4, Sor/Wiz 4
+Components: V, M/DF
 Casting Time: 1 action
-Range: Personal
-Area: 10-ft.radius spread
-Duration: 10 minutes/level
-Saving Throw: Fortitude partial
-Spell Resistance: Yes
+Range: Touch
+Target: Object touched
+Duration: 10 minutes/level (D)
+Saving Throw: None
+Spell Resistance: No 
 
-The caster conjures a choking, toxic cloud of inky 
-blackness. Those other than the caster within the 
-cloud take 2d6 points of damage. They must also 
-succeed at a Fortitude save or be subject to a 
-confusion effect for the duration of the spell.
+This spell is similar to darkness, except that those
+within the area of darkness also take unholy damage.
+Creatures of good alignment take 2d6 points of 
+damage per round in the darkness, and creatures
+neither good nor evil take 1d6 points of damage. As 
+with the darkness spell, the area of darkness is a 
+20-foot radius, and the object that serves as the 
+spell's target can be shrouded to block the darkness
+(and thus the dam­aging effect).
 
-Disease Component: Soul rot. 
+Damning darkness counters or dispels any light spell 
+of equal or lower level.
+
+Arcane Material Component: A dollop of pitch with a 
+tiny needle hidden inside it.
 
 Author:    Tenjac
-Created:   03/24/06
+Created:   
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
-#include "prc_misc_const"
 
 void main()
 {
 	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	/*
-	Spellcast Hook Code
-	Added 2003-06-20 by Georg
-	If you want to make changes to all spells,
-	check x2_inc_spellhook.nss to find out more
-	*/
-	
-	if (!X2PreSpellCastCode())
-	{
-		// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-		return;
-	}
-	// End of Spell Cast Hook
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+			
+	if(!X2PreSpellCastCode()) return;
 	
 	//Declare major variables including Area of Effect Object
-	effect eAOE = EffectAreaOfEffect(AOE_PER_ACHAIERAI);
+	effect eAOE = EffectAreaOfEffect(AOE_PER_DAMNDARK);
 	object oPC = OBJECT_SELF;
 	object oTarget = PRCGetSpellTargetObject();
 	object oItemTarget = oTarget;

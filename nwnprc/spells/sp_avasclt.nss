@@ -47,6 +47,8 @@ void main()
     
     SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AVASCULATE, oPC);
     
+    SPEvilShift(oPC);
+    
     // Gotta be a living critter
         int nType = MyPRCGetRacialType(oTarget);
         if ((nType == RACIAL_TYPE_CONSTRUCT) ||
@@ -90,5 +92,4 @@ void main()
             }
         }
     }
-    SPEvilShift(oPC);
 }

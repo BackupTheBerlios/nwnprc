@@ -17607,9 +17607,9 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
   <entry id="51114" lang="en" sex="m">The module settings prevent this creature from being polymorphed into.</entry>
   <entry id="51115" lang="en" sex="m">You cannot use PnP Shifter abilities to polymorph into this creature.</entry>
   <entry id="51116" lang="en" sex="m">more PnP Shifter levels before you can take on that form.</entry>
-  <entry id="51117" lang="en" sex="m">Your inventory is too full for the PRC Shifting system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again.</entry>
-  <entry id="51118" lang="en" sex="m">The PRC Shifting system will not work while you are affected by a polymorph effect. Please remove it before trying again.</entry>
-  <entry id="51119" lang="en" sex="m"></entry>
+  <entry id="51117" lang="en" sex="m">Your inventory is too full for the PRC Polymorphing system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again.</entry>
+  <entry id="51118" lang="en" sex="m">The PRC Polymorphing system will not work while you are affected by a polymorph effect. Please remove it before trying again.</entry>
+  <entry id="51119" lang="en" sex="m">Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again.</entry>
   <entry id="51120" lang="en" sex="m"></entry>
   <entry id="51121" lang="en" sex="m"></entry>
   <entry id="51122" lang="en" sex="m"></entry>

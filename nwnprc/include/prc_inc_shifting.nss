@@ -49,8 +49,9 @@ const int STRREF_FORBIDPOLY          = 16828329; // "Target cannot be polymorphe
 const int STRREF_SETTINGFORBID       = 16828330; // "The module settings prevent this creature from being polymorphed into."
 const int STRREF_PNPSFHT_FEYORSSHIFT = 16828331; // "You cannot use PnP Shifter abilities to polymorph into this creature."
 const int STRREF_PNPSHFT_MORELEVEL   = 16828332; // "more PnP Shifter levels before you can take on that form."
-const int STRREF_NEED_SPACE          = 16828333; // "Your inventory is too full for the PRC Shifting system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again."
-const int STRREF_POLYMORPH_MUTEX     = 16828334; // "The PRC Shifting system will not work while you are affected by a polymorph effect. Please remove it before trying again."
+const int STRREF_NEED_SPACE          = 16828333; // "Your inventory is too full for the PRC Polymorphing system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again."
+const int STRREF_POLYMORPH_MUTEX     = 16828334; // "The PRC Polymorphing system will not work while you are affected by a polymorph effect. Please remove it before trying again."
+const int STRREF_SHIFTING_MUTEX      = 16828335; // "Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again."
 
 
 //////////////////////////////////////////////////
@@ -223,8 +224,27 @@ void DeleteStoredTemplate(object oShifter, int nShifterType, int nIndex);
  */
 int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate);
 
+/**
+ * Attempts to shift into the given template creature. This functions as a wrapper
+ * for ShiftIntoResRef(), which is supplied with oTemplate's resref.
+ *
+ * @param oShifter                The creature doing the shifting
+ * @param nShifterType            SHIFTER_TYPE_*
+ * @param oTemplate               The creature to shift into
+ * @param bGainSpellLikeAbilities Whether to give the shifter access the template's SLAs
+ */
 void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE);
 
+/**
+ * Attempts to shift into the given template creature. If the shifter is already
+ * shifted, this will unshift them first. Any errors will result in a message
+ * being sent to the shifter.
+ *
+ * @param oShifter                The creature doing the shifting
+ * @param nShifterType            SHIFTER_TYPE_*
+ * @param sResRef                 Resref of the creature to shift into
+ * @param bGainSpellLikeAbilities Whether to give the shifter access the template's SLAs
+ */
 void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE);
 
 /**
@@ -568,7 +588,10 @@ int _prc_inc_shifting_GetCanShift(object oShifter)
 {
     // Mutex - If another shifting process is active, fail immediately without disturbing it
     if(GetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX))
+    {
+        SendMessageToPCByStrRef(oShifter, STRREF_SHIFTING_MUTEX); // "Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again."
         return FALSE;
+    }
 
     // Test space in inventory for creating the creature items
     int bReturn = TRUE;
@@ -938,7 +961,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
     return bReturn;
 }
 
-void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE)
+void ShiftIntoCreature(object oShifter, /*int nShifterType, */object oTemplate, int bGainSpellLikeAbilities = FALSE)
 {
     // Just grab the resref and move on
     ShiftIntoResRef(oShifter, nShifterType, GetResRef(oTemplate), bGainSpellLikeAbilities);
@@ -973,7 +996,7 @@ void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int 
     */
 }
 
-void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE)
+void ShiftIntoResRef(object oShifter, /*int nShifterType, */string sResRef, int bGainSpellLikeAbilities = FALSE)
 {/*
     // Spawn an instance of the template creature in Limbo
     location lSpawn  = GetLocation(GetWaypointByTag("PRC_SHIFTING_TEMPLATE_SPAWN"));

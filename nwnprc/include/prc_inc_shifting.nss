@@ -632,6 +632,53 @@ int _prc_inc_shifting_GetCanShift(object oShifter)
     return bReturn;
 }
 
+/** Internal function.
+ * Does the actual work in unshifting. Restores creature items and
+ * appearance.
+ *
+ * NOTE: This assumes that all polymorph effects have already been removed.
+ *
+ * @param oShifter Creature to unshift
+ *
+ *  Reshift parameters:
+ * @param nShifterType            Passed to _prc_inc_shifting_ShiftIntoResRefAux() when reshifting.
+ * @param sResRef                 Passed to _prc_inc_shifting_ShiftIntoResRefAux() when reshifting.
+ * @param bGainSpellLikeAbilities Passed to _prc_inc_shifting_ShiftIntoResRefAux() when reshifting.
+ */
+void _prc_inc_shifting_UnShiftAux(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities)
+{
+    /// @todo Do
+}
+
+/** Internal function.
+ * A polymorph effect was encountered during unshifting and removed. We need to
+ * wait until it's actually removed (instead of merely gone from the active effects
+ * list on oShifter) before calling _prc_inc_shifting_UnShiftAux().
+ * This is done by tracking the contents of the creature armour slot. The object in
+ * it will change when the polymorph is really removed.
+ *
+ * @param oShifter The creature whose creature armour slot to monitor.
+ * @param oSkin    The skin object that was in the slot when the UnShift() call that triggered
+ *                 this was run.
+ * @param nRepeats Number of times this function has repeated the delay. Used to track timeout
+ */
+void _prc_inc_shifting_UnShiftAux_SeekPolyEnd(object oShifter, object oSkin, int nRepeats = 0)
+{
+    // Over 15 seconds passed, something is wrong
+    if(nRepeats++ > 100)
+    {
+        if(DEBUG) DoDebug("prc_inc_shifting: _UnShiftAux_SeekPolyEnd(): ERROR: Repeated over 100 times, skin object remains the same.");
+        return;
+    }
+
+    // See if the skin object has changed. When it does, the polymorph is genuinely gone instead of just being removed from the effects list
+    if(GetItemInSlot(INVENTORY_SLOT_CARMOUR, oShifter) == oSkin)
+        DelayCommand(0.15f, _prc_inc_shifting_UnShiftAux_SeekPolyEnd(oShifter, oSkin, nRepeats));
+    // It's gone, finish unshifting
+    else
+        _prc_inc_shifting_UnShiftAux(oShifter);
+}
+
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -961,7 +1008,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
     return bReturn;
 }
 
-void ShiftIntoCreature(object oShifter, /*int nShifterType, */object oTemplate, int bGainSpellLikeAbilities = FALSE)
+void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE)
 {
     // Just grab the resref and move on
     ShiftIntoResRef(oShifter, nShifterType, GetResRef(oTemplate), bGainSpellLikeAbilities);
@@ -996,7 +1043,7 @@ void ShiftIntoCreature(object oShifter, /*int nShifterType, */object oTemplate, 
     */
 }
 
-void ShiftIntoResRef(object oShifter, /*int nShifterType, */string sResRef, int bGainSpellLikeAbilities = FALSE)
+void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE)
 {/*
     // Spawn an instance of the template creature in Limbo
     location lSpawn  = GetLocation(GetWaypointByTag("PRC_SHIFTING_TEMPLATE_SPAWN"));

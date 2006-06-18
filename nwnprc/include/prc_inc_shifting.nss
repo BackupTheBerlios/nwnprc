@@ -31,6 +31,10 @@ const int SHIFTER_TYPE_POLYMORPH = 3;
 
 const int SHIFTER_ABILITIESITEM_MAXPROPS = 8;
 
+const int UNSHIFT_FAIL            = 0;
+const int UNSHIFT_SUCCESS         = 1;
+const int UNSHIFT_SUCCESS_DELAYED = 2;
+
 const string SHIFTER_RESREFS_ARRAY    = "PRC_ShiftingResRefs_";
 const string SHIFTER_NAMES_ARRAY      = "PRC_ShiftingNames_";
 const string SHIFTER_TRUEAPPEARANCE   = "PRC_ShiftingTrueAppearance";
@@ -135,10 +139,16 @@ int StoreCurrentAppearanceAsTrueAppearance(object oShifter, int bCarefull = TRUE
 /**
  * Restores the given creature to it's stored true appearance.
  *
+ * NOTE: This will function will fail if any polymorph effect is present on the creature.
+ *
+ *
  * @param oShifter The creature whose appearance to set into an appearance
  *                 previously stored as it's true appearance.
+ *
+ * @return         TRUE if appearance was restored, FALSE if not. Causes for failure
+ *                 are being polymorphed and not having a true appearance stored.
  */
-void RestoreTrueAppearance(object oShifter);
+int RestoreTrueAppearance(object oShifter);
 
 // Storage functions  //
 
@@ -216,6 +226,27 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
 void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE);
 
 void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE);
+
+/**
+ * Undoes any currently active shifting, restoring original appearance &
+ * creature items.
+ * NOTE: Will fail if any of the following conditions are true
+ * - oShifter is polymorphed and bRemovePoly is false
+ * - SHIFTER_SHIFT_MUTEX flag is true on oShifter and bIgnoreShiftingMutex is false
+ * - There is no true form stored for oShifter
+ *
+ * @param oShifter             The creature to unshift
+ * @param bRemovePoly          Whether to also remove polymorph effects
+ * @param bIgnoreShiftingMutex Whether to ignore the value of SHIFTER_SHIFT_MUTEX
+ *
+ * @return                     One of following:
+ *                             - UNSHIFT_FAIL if one of the abovementioned failure conditions occurs.
+ *                               If this is returned, nothing is done to oShifter.
+ *                             - UNSHIFT_SUCCESS if the unshifting was completed immediately
+ *                             - UNSHIFT_SUCCESS_DELAYED if the unshifting is doable, but delayed to
+ *                               wait while a polymorph effect is being removed.
+ */
+int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = FALSE);
 
 // Appearance data functions
 
@@ -320,7 +351,7 @@ string DebugAppearancevalues2Str(struct appearancevalues appval);
 /*             Internal functions               */
 //////////////////////////////////////////////////
 
-void _RestoreCreatureItems(object oShifter)
+void _prc_inc_shifting_RestoreCreatureItems(object oShifter)
 {/// @todo Do
 }
 
@@ -330,7 +361,7 @@ void _RestoreCreatureItems(object oShifter)
  *
  * @param oShifter The creature through whose inventory to look
  */
-void _RemoveExtraCreatureItems(object oShifter)
+void _prc_inc_shifting_RemoveExtraCreatureItems(object oShifter)
 {
     int nItemType;
     object oItem  = GetFirstItemInInventory(oShifter);
@@ -365,7 +396,7 @@ void _RemoveExtraCreatureItems(object oShifter)
  * Determines if beings of the given creature's racial type
  * could usually cast spells.
  */
-int _GetCanFormCast(object oTemplate)
+int _prc_inc_shifting_GetCanFormCast(object oTemplate)
 {
     int nRacialType = MyPRCGetRacialType(oTemplate);
 
@@ -379,7 +410,7 @@ int _GetCanFormCast(object oTemplate)
         case RACIAL_TYPE_BEAST:
         case RACIAL_TYPE_ANIMAL:
         case RACIAL_TYPE_OOZE:
-//    case RACIAL_TYPE_PLANT:
+        case RACIAL_TYPE_PLANT:
             // These forms can't cast spells
             return FALSE;
         case RACIAL_TYPE_SHAPECHANGER:
@@ -414,7 +445,7 @@ int _GetCanFormCast(object oTemplate)
  * Checks a creature's challenge rating to determine if it could be
  * considered harmless.
  */
-int _GetIsCreatureHarmless(object oTemplate)
+int _prc_inc_shifting_GetIsCreatureHarmless(object oTemplate)
 {
     /* This is likely to cause problems - Ornedan
     string sCreatureName = GetName(oTemplate);
@@ -438,7 +469,7 @@ int _GetIsCreatureHarmless(object oTemplate)
     return GetChallengeRating(oTemplate) < 1.0;
 }
 
-void _CopyAllItemProperties(object oFrom, object oTo)
+void _prc_inc_shifting_CopyAllItemProperties(object oFrom, object oTo)
 {
     itemproperty iProp = GetFirstItemProperty(oFrom);
 
@@ -456,7 +487,7 @@ void _CopyAllItemProperties(object oFrom, object oTo)
  * @param oItem     The item to create the activatable itemproperties on.
  * @return          oItem, or the item created by the function
  */
-void _CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
+void _prc_inc_shifting_CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
 {
     string sNumUses;
     int nSpell, nNumUses, nProps;
@@ -509,7 +540,7 @@ void _CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
  * @param sResRef      The resref to look for
  * @return             TRUE if the resref is present in the array
  */
-int _GetIsTemplateStored(object oShifter, int nShifterType, string sResRef)
+int _prc_inc_shifting_GetIsTemplateStored(object oShifter, int nShifterType, string sResRef)
 {
     string sResRefsArray = SHIFTER_RESREFS_ARRAY + IntToString(nShifterType);
     int i, nArraySize    = persistant_array_get_size(oShifter, sResRefsArray);
@@ -533,7 +564,7 @@ int _GetIsTemplateStored(object oShifter, int nShifterType, string sResRef)
  * @param oShifter The creature that would be shifted
  * @return         TRUE if all is OK, FALSE otherwise
  */
-int _GetCanShift(object oShifter)
+int _prc_inc_shifting_GetCanShift(object oShifter)
 {
     // Mutex - If another shifting process is active, fail immediately without disturbing it
     if(GetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX))
@@ -571,6 +602,10 @@ int _GetCanShift(object oShifter)
         eTest = GetNextEffect(oShifter);
     }
 
+    // True form must be stored in order to be allowed to shift
+    if(!GetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE))
+        bReturn = FALSE;
+
     return bReturn;
 }
 
@@ -603,29 +638,39 @@ int StoreCurrentAppearanceAsTrueAppearance(object oShifter, int bCarefull = TRUE
     // Store it
     SetPersistantLocalAppearancevalues(oShifter, SHIFTER_TRUEAPPEARANCE, appval);
 
+    // Set a marker that tells that the true appearance is stored
+    SetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE, TRUE);
+
     return TRUE;
 }
 
-void RestoreTrueAppearance(object oShifter)
+int RestoreTrueAppearance(object oShifter);
 {
-    // Remove polymorph - if present - first
-    int bPolymorphed = FALSE;
+    // Check fo the the "true appearance stored" marker. Abort if it's not present
+    if(!GetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE))
+        return FALSE;
+
+    // See if the character is polymorphed. Won't restore the appearance if it is
     effect eTest = GetFirstEffect(oShifter);
     while(GetIsEffectValid(eTest))
     {
         if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
-        {
-            bPolymorphed = TRUE;
-            RemoveEffect(oShifter, eTest);
-        }
+            return FALSE;
 
         eTest = GetNextEffect(oShifter);
     }
 
+    // We got this far, everything should be OK
     // Retrieve the appearance data
     struct appearancevalues appval = GetPersistantLocalAppearancevalues(oShifter, SHIFTER_TRUEAPPEARANCE);
-    /// @todo finish
+
+    // Apply it to the creature
+    SetAppearanceData(oShifter, appval);
+
+    // Inform caller of success
+    return TRUE;
 }
+
 
 // Storage functions  //
 
@@ -650,7 +695,7 @@ void StoreShiftingTemplate(object oShifter, int nShifterType, object oTarget)
     int nArraySize = persistant_array_get_size(oShifter, sResRefArray);
 
     // Check for the template already being present
-    if(_GetIsTemplateStored(oShifter, nShifterType, sResRef))
+    if(_prc_inc_shifting_GetIsTemplateStored(oShifter, nShifterType, sResRef))
         return;
 
     persistant_array_set_string(oShifter, sResRefArray, nArraySize, sResRef);
@@ -895,8 +940,12 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
 
 void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE)
 {
+    // Just grab the resref and move on
+    ShiftIntoResRef(oShifter, nShifterType, GetResRef(oTemplate), bGainSpellLikeAbilities);
+
+    /*
     // Make sure there is nothing that would prevent the successfull execution of the shift from happening
-    if(!_GetCanShift(oShifter))
+    if(!_prc_inc_shifting_GetCanShift(oShifter))
         return;
 
     // Mutex
@@ -906,7 +955,7 @@ void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int 
     if(GetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER))
         UnShift(oShifter);
 
-    /* Start the actual shifting */
+    /* Start the actual shifting /
     // Get the shifter's creature items
     object oShifterHide = GetPCSkin(oShifter); // Use the PRC wrapper for this to make sure we get the right object
     object oShifterCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oShifter);
@@ -921,10 +970,11 @@ void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int 
 
     // Handle hide
     _ShifterCopyItemProps(oTemplateHide, oShifterHide);
+    */
 }
 
 void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE)
-{
+{/*
     // Spawn an instance of the template creature in Limbo
     location lSpawn  = GetLocation(GetWaypointByTag("PRC_SHIFTING_TEMPLATE_SPAWN"));
     object oTemplate = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
@@ -934,7 +984,63 @@ void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGai
 
     // Destroy the template creature
     MyDestroyObject(oTemplate);
+    */
+
+    // Make sure there is nothing that would prevent the successfull execution of the shift from happening
+    if(!_prc_inc_shifting_GetCanShift(oShifter))
+        return;
+
+    // Activate mutex
+    SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, TRUE);
+
+    // Unshift if already shifted
+    if(GetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER))
+        _prc_inc_shifting_UnShiftAux(oShifter, nShifterType, sResRef, bGainSpellLikeAbilities);
+    else
+        _prc_inc_shifting_ShiftIntoResRefAux(oShifter, nShifterType, sResRef, bGainSpellLikeAbilities);
 }
+
+int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = FALSE)
+{
+    // Shifting mutex is set and we are not told to ignore it, so abort right away
+    if(GetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX) && !bIgnoreShiftingMutex)
+        return UNSHIFT_FAIL;
+
+    // Check for polymorph effects
+    int bHadPoly = FALSE;
+    effect eTest = GetFirstEffect(oShifter);
+    while(GetIsEffectValid(eTest))
+    {
+        if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
+            // Depending on whether we are supposed to remove them or not either remove the effect or abort
+            if(bRemovePoly)
+            {
+                bHadPoly = UNSHIFT_FAIL;
+                RemoveEffect(oShifter, eTest);
+            }
+            else
+                return FALSE;
+
+        eTest = GetNextEffect(oShifter);
+    }
+
+    // Check for true form being stored
+    if(!GetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE))
+        return UNSHIFT_FAIL;
+
+    // If we had a polymorph effect present, start the removal monitor
+    if(bHadPoly)
+    {
+        DelayCommand(0.0f, _prc_inc_shifting_UnShiftAux_SeekPolyEnd(oShifter, GetItemInSlot(INVENTORY_SLOT_CARMOUR, oShifter)));
+        return UNSHIFT_SUCCESS_DELAYED;
+    }
+    else
+    {
+        _prc_inc_shifting_UnShiftAux(oShifter);
+        return UNSHIFT_SUCCESS;
+    }
+}
+
 
 // Appearance data functions
 

@@ -58,19 +58,22 @@ void main()
 		{
 			//Remove addiction
 			//Find the disease effect
-			effect eDisease = GetFirstEffect(OBJECT_SELF);
+			effect eDisease = GetFirstEffect(oPC);
 			effect eTest = EffectDisease(DISEASE_TERRAN_BRANDY_ADDICTION);
 			
 			while(GetIsEffectValid(eDisease))
 			{
-				if(eDisease == eTest)
+				if(GetEffectType(eDisease == EFFECT_TYPE_DISEASE))
 				{
-					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PRC_PreviousTerranBrandySave");
-					break;
+					if(GetEffectSpellId(eDisease) == SPELL_DEVILWEED)
+					{
+						RemoveEffect(oPC, eDisease);
+						DeletePersistantLocalInt(oPC, "PRC_PreviousTerranBrandySave");
+						break;
+					}
 				}
 				
-				eDisease = GetNextEffect(OBJECT_SELF);
+				eDisease = GetNextEffect(oPC);
 			}			
 		}
 		//Saved, but no previous

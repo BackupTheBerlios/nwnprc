@@ -40,11 +40,14 @@ void main()
 			
 			while(GetIsEffectValid(eDisease))
 			{
-				if(eDisease == eTest)
+				if(GetEffectType(eDisease == EFFECT_TYPE_DISEASE))
 				{
-					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PRC_PreviousLuhixSave");
-					break;
+					if(GetEffectSpellId(eDisease) == SPELL_LUHIX)
+					{
+						RemoveEffect(oPC, eDisease);
+						DeletePersistantLocalInt(oPC, "PRC_PreviousLuhixSave");
+						break;
+					}
 				}
 				
 				eDisease = GetNextEffect(OBJECT_SELF);

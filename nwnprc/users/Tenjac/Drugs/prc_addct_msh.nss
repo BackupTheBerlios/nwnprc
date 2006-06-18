@@ -36,19 +36,21 @@ void main()
 		{
 			//Remove addiction
 			//Find the disease effect
-			effect eDisease = GetFirstEffect(OBJECT_SELF);
-			effect eTest = EffectDisease(DISEASE_MUSHROOM_POWDER_ADDICTION);
-			
+			effect eDisease = GetFirstEffect(oPC);
+						
 			while(GetIsEffectValid(eDisease))
 			{
-				if(eDisease == eTest)
+				if(GetEffectType(eDisease == EFFECT_TYPE_DISEASE))
 				{
-					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PRC_PreviousMushroomSave");
-					break;
+					if(GetEffectSpellId(eDisease) == SPELL_MUSHROOM_POWDER)
+					{
+						RemoveEffect(oPC, eDisease);
+						DeletePersistantLocalInt(oPC, "PRC_PreviousMushroomSave");
+						break;
+					}
 				}
 				
-				eDisease = GetNextEffect(OBJECT_SELF);
+				eDisease = GetNextEffect(oPC);
 			}			
 		}
 		//Saved, but no previous

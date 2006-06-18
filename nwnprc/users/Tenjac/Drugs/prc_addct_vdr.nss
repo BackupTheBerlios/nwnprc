@@ -10,29 +10,6 @@ Created:   5/24/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-//::///////////////////////////////////////////////
-//:: Name      Addiction: Sannish
-//:: FileName  sp_addct_snh.nss 
-//:://////////////////////////////////////////////
-/** Script for addiction to the drug Sannish
-
-Author:    Tenjac
-Created:   5/24/06
-*/
-//:://////////////////////////////////////////////
-//:://////////////////////////////////////////////
-//::///////////////////////////////////////////////
-//:: Name      Addiction: Mushroom Powder 
-//:: FileName  sp_addct_msh.nss 
-//:://////////////////////////////////////////////
-/** Script for addiction to the drug Mushroom Powder
-
-Author:    Tenjac
-Created:   5/24/06
-*/
-//:://////////////////////////////////////////////
-//:://////////////////////////////////////////////
-
 #include "spinc_common"
 
 void main()
@@ -60,19 +37,22 @@ void main()
 		{
 			//Remove addiction
 			//Find the disease effect
-			effect eDisease = GetFirstEffect(OBJECT_SELF);
+			effect eDisease = GetFirstEffect(oPC);
 			effect eTest = EffectDisease(DISEASE_VODARE_ADDICTION);
 			
 			while(GetIsEffectValid(eDisease))
 			{
-				if(eDisease == eTest)
+				if(GetEffectType(eDisease == EFFECT_TYPE_DISEASE))
 				{
-					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PRC_PreviousVodareSave");
-					break;
+					if(GetEffectSpellId(eDisease) == SPELL_DEVILWEED)
+					{
+						RemoveEffect(oPC, eDisease);
+						DeletePersistantLocalInt(oPC, "PRC_PreviousVodareSave");
+						break;
+					}
 				}
 				
-				eDisease = GetNextEffect(OBJECT_SELF);
+				eDisease = GetNextEffect(oPC);
 			}			
 		}
 		//Saved, but no previous

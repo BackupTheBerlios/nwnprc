@@ -37,17 +37,18 @@ void main()
 			//Remove addiction
 			//Find the disease effect
 			effect eDisease = GetFirstEffect(OBJECT_SELF);
-			effect eTest = EffectDisease(DISEASE_AGONY_ADDICTION);
-			
+						
 			while(GetIsEffectValid(eDisease))
 			{
-				if(eDisease == eTest)
+				if(GetEffectType(eDisease == EFFECT_TYPE_DISEASE))
 				{
-					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PRC_PreviousAgonySave");
-					break;
+					if(GetEffectSpellId(eDisease) == SPELL_AGONY)
+					{
+						RemoveEffect(oPC, eDisease);
+						DeletePersistantLocalInt(oPC, "PRC_PreviousAgonySave");
+						break;
+					}
 				}
-				
 				eDisease = GetNextEffect(OBJECT_SELF);
 			}			
 		}

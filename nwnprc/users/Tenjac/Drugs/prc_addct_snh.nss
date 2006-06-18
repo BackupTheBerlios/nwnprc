@@ -47,19 +47,23 @@ void main()
 		{
 			//Remove addiction
 			//Find the disease effect
-			effect eDisease = GetFirstEffect(OBJECT_SELF);
+			effect eDisease = GetFirstEffect(oPC);
 			effect eTest = EffectDisease(DISEASE_SANNISH_ADDICTION);
 			
 			while(GetIsEffectValid(eDisease))
 			{
-				if(eDisease == eTest)
+				if(GetEffectType(eDisease == EFFECT_TYPE_DISEASE))
 				{
-					RemoveEffect(oPC, eDisease);
-					DeletePersistantLocalInt(oPC, "PRC_PreviousSannishSave");
-					break;
+					if(GetEffectSpellId(eDisease) == SPELL_SANNISH)
+					{
+						
+						RemoveEffect(oPC, eDisease);
+						DeletePersistantLocalInt(oPC, "PRC_PreviousSannishSave");
+						break;
+					}
 				}
-				
-				eDisease = GetNextEffect(OBJECT_SELF);
+					
+				eDisease = GetNextEffect(PC);
 			}			
 		}
 		//Saved, but no previous

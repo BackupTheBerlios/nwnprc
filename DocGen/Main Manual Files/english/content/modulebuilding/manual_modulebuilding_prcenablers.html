@@ -1,84 +1,166 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
-<head>
-<title>Player Resource Consortium :: Manual :: Module Building :: PrC Enablers</title>
-<link type="text/css" href="../../../styles/manual_common.css" rel="stylesheet">
-<link type="text/css" href="../../../styles/manual_content_common.css" rel="stylesheet">
-</head>
-<body scroll="auto">
-<br>
-<div><h1>:: Module Building :: PrC Enablers ::</h1></div>
-<br>
-<div class="div_paddedcontent">
-In a future release these variables will be in an onload script for easy access to enabling and disabling.
-<br><br>
-Setting these variables to 1 on a PC will make it so they can't take any levels in that Prestige Class.
-<br><br>
-NOTE: Beware that as of 2.0c, the Champion of Torm and Champion of Bane share the same variable as do the Elemental Savant and Acolyte of the Skin classes.
-<br><br>
-<table cellpadding="0" cellspacing="0" align="center" border="0" class="table_contenttable">
-<tr><th colspan="2">Shadows of Undrentide Variables</th></tr>
-<tr><td>X1_AllowAsasin</td> <td>Assassin</td></tr>
-<tr><td>X1_AllowArcher</td> <td>Arcane Archer</td></tr>
-<tr><td>X1_AllowBlkGrd</td> <td>Black Guard</td></tr>
-<tr><td>X1_AllowHarper</td> <td>Harper Scout</td></tr>
-<tr><td>X1_AllowShadow</td> <td>Shadow Dancer</td></tr>
-<tr><td>&nbsp;</td> <td>&nbsp;</td></tr>
-<tr><th colspan="2">Hordes of the Underdark Variables</th></tr>
-<tr><td>X1_AllowDrDis</td> <td>Dragon Disciple</td></tr>
-<tr><td>X1_AllowDwDef</td> <td>Dwarven Defender</td></tr>
-<tr><td>X2_AllowDivcha</td> <td>Champion of Torm</td></tr>
-<tr><td>X2_AllowPalema</td> <td>Palemaster</td></tr>
-<tr><td>X2_AllowShiftr</td> <td>Shifter</td></tr>
-<tr><td>X2_AllowWM </td> <td>Weapon Master</td></tr>
-<tr><td>&nbsp;</td> <td>&nbsp;</td></tr>
+    <head>
+        <title>Player Resource Consortium :: Manual :: Module Building :: PrC Enablers</title>
+        <link type="text/css" href="../../../styles/manual_common.css" rel="stylesheet">
+        <link type="text/css" href="../../../styles/manual_content_common.css" rel="stylesheet">
+    </head>
+    <body scroll="auto">
+        <div><h1>:: Module Building :: PrC Enablers ::</h1></div>
+        <div class="div_paddedcontent">
+            <p>
+                In a future release these variables will be in an onload script for easy access to enabling and disabling.
+            </p>
+            <p>
+                Setting these variables to 1 on a PC will make it so they can't take any levels in that Prestige Class.
+            </p>
+            <p>
+                NOTE: This document may be out of date. Refer to file prc_allow_const.nss in prc_include.hak or the class prerequisite files (cls_pres_*)
+                themselves for an up-to-date list.
+            </p>
+            <table cellpadding="0" cellspacing="0" align="center" border="0" class="table_contenttable">
+                <tr><th colspan="2">Base classes - BioWare</th></tr>
+                <tr><td>PRC_AllowBarbarian</td> <td>Barbarian</td></tr>
+                <tr><td>PRC_AllowBard</td>      <td>Bard</td></tr>
+                <tr><td>PRC_AllowCleric</td>    <td>Cleric</td></tr>
+                <tr><td>PRC_AllowDruid</td>     <td>Druid</td></tr>
+                <tr><td>PRC_AllowFighter</td>   <td>Fighter</td></tr>
+                <tr><td>PRC_AllowMonk</td>      <td>Monk</td></tr>
+                <tr><td>PRC_AllowPaladin</td>   <td>Paladin</td></tr>
+                <tr><td>PRC_AllowRanger</td>    <td>Ranger</td></tr>
+                <tr><td>PRC_AllowRogue</td>     <td>Rogue</td></tr>
+                <tr><td>PRC_AllowSorcerer</td>  <td>Sorcerer</td></tr>
+                <tr><td>PRC_AllowWizard</td>    <td>Wizard</td></tr>
+                <tr><td>&nbsp;</td> <td>&nbsp;</td></tr>
 
-<tr><th colspan="2">Player Resource Consortium Pack Variables (v 2.2+)</th></tr>
-<tr><td colspan="2">As of PrC 2.2 all class variables start with PRC_</td></tr>
+                <tr><th colspan="2">Base classes - Player Resource Consortium</th></tr>
+                <tr><td>PRC_AllowAntiPal</td>    <td>Anti-Paladin</td></tr>
+                <tr><td>PRC_AllowArcherCore</td> <td>Archer</td></tr>
+                <tr><td>PRC_AllowBrawler</td>    <td>Brawler</td></tr>
+                <tr><td>PRC_AllowMarshal</td>    <td>Marshal</td></tr>
+                <tr><td>PRC_AllowNinjaCA</td>    <td>Ninja</td></tr>
+                <tr><td>PRC_AllowPsion</td>      <td>Psion</td></tr>
+                <tr><td>PRC_AllowPsyWar</td>     <td>Psychic Warrior</td></tr>
+                <tr><td>PRC_AllowSamurai</td>    <td>Samurai</td></tr>
+                <tr><td>PRC_AllowCWSam</td>      <td>Samurai CW</td></tr>
+                <tr><td>PRC_AllowSoulKnife</td>  <td>Soulknife</td></tr>
+                <tr><td>PRC_AllowSwash</td>      <td>Swashbuckler</td></tr>
+                <tr><td>PRC_Allow_URanger</td>   <td>Ultimate Ranger</td></tr>
+                <tr><td>PRC_AllowWilder</td>     <td>Wilder</td></tr>
+                <tr><td>&nbsp;</td> <td>&nbsp;</td></tr>
 
-<tr><th colspan="2">Player Resource Consortium Pack Variables (v 2.0c - 2.1d)</th></tr>
-<tr><td>X2_AllowAcolyte</td> <td>Acolyte of the Skin</td></tr>
-<tr><td>PNP_AllowArcTrick</td> <td>Arcane Trickster</td></tr>
-<tr><td>PRC_AllowArchmage</td> <td>Archmage</td></tr>
-<tr><td>X1_AllowTempus</td> <td>Battleguard Tempus</td></tr>
-<tr><td>X1_AllowBRage</td> <td>Battlerager</td></tr>
-<tr><td>X1_AllowBonded</td> <td>Bonded Summoner</td></tr>
-<tr><td>X2_AllowDivcha</td> <td>Champion of Bane</td></tr>
-<tr><td>X2_AllowBaal</td> <td>Disciple of Baalzebul</td></tr>
-<tr><td>X2_AllowDiscmep</td> <td>Disciple of Mephistopheles</td></tr>
-<tr><td>X2_AllowDuel</td> <td>Duelist</td></tr>
-<tr><td>PRC_AllowEldknight</td> <td>Eldrich Knight</td></tr>
-<tr><td>X2_AllowAcolyte</td> <td>Elemental Savant</td></tr>
-<tr><td>X1_AllowFistRaz</td> <td>Fist of Raziel</td></tr>
-<tr><td>X2_AllowFH</td> <td>Foe Hunter</td></tr>
-<tr><td>X2_AllowFrebzk</td> <td>Frenzied Beserker</td></tr>
-<tr><td>X1_AllowHarperM</td> <td>Harper Mage</td></tr>
-<tr><td>X1_AllowHeartW</td> <td>Heartwarder</td></tr>
-<tr><td>X2_AllowHiero</td> <td>Heirophant</td></tr>
-<tr><td>X1_AllowHosp</td> <td>Hospitaler</td></tr>
-<tr><td>X1_AllowIaij</td> <td>Iaijutsu Master</td></tr>
-<tr><td>X1_AllowIniDra</td> <td>Initiate of Draconic Mysteries</td></tr>
-<tr><td>X2_AllowKnghtCh</td> <td>Knight of the Chalice</td></tr>
-<tr><td>X1_AllowLgDr</td> <td>Legendary Dreadnaught</td></tr>
-<tr><td>PNP_AllowLich</td> <td>Lich</td></tr>
-<tr><td>X2_AllowMageK</td> <td>Mage Killer</td></tr>
-<tr><td>mh_AllowMaster</td> <td>Master Harper</td></tr>
-<tr><td>X2_AllowShrouds</td> <td>Master of Shrouds</td></tr>
-<tr><td>X2_AllowMystic</td> <td>Mystic Theurge</td></tr>
-<tr><td>X1_AllowNinja</td> <td>Ninja Spy</td></tr>
-<tr><td>X1_AllowOccAd</td> <td>Ocular Adept</td></tr>
-<tr><td>PRC_AllowUzi</td> <td>Oozemaster</td></tr>
-<tr><td>PNP_AllowPArcher</td> <td>Peerless Archer</td></tr>
-<tr><td>X2_AllowRedavng</td> <td>Red Avenger</td></tr>
-<tr><td>X2_AllowPNPSfr</td> <td>Shifter (PnP)</td></tr>
-<tr><td>X2_AllowSpellS</td> <td>Spellsword</td></tr>
-<tr><td>X1_AllowStormL</td> <td>Stormlord</td></tr>
-<tr><td>X1_AllowShaLow</td> <td>Telflammar Shadowlord</td></tr>
-<tr><td>X2_AllowTempest</td> <td>Tempest</td></tr>
-<tr><td>X1_AllowVassal</td> <td>Vassal of Bahamut</td></tr>
-<tr><td>codi_allow_warpr</td> <td>Warpriest</td></tr>
-</table>
-<br><br>
-</div>
-</body>
+                <tr><th colspan="2">Prestige Classes - Shadows of Undrentide</th></tr>
+                <tr><td>X1_AllowAsasin</td> <td>Assassin</td></tr>
+                <tr><td>X1_AllowArcher</td> <td>Arcane Archer</td></tr>
+                <tr><td>X1_AllowBlkGrd</td> <td>Black Guard</td></tr>
+                <tr><td>X1_AllowHarper</td> <td>Harper Scout</td></tr>
+                <tr><td>X1_AllowShadow</td> <td>Shadow Dancer</td></tr>
+                <tr><td>&nbsp;</td> <td>&nbsp;</td></tr>
+                <tr><th colspan="2">Prestige Classes - Hordes of the Underdark</th></tr>
+                <tr><td>X1_AllowDrDis</td> <td>Dragon Disciple</td></tr>
+                <tr><td>X1_AllowDwDef</td> <td>Dwarven Defender</td></tr>
+                <tr><td>X2_AllowDivcha</td> <td>Champion of Torm</td></tr>
+                <tr><td>X2_AllowPalema</td> <td>Palemaster</td></tr>
+                <tr><td>X2_AllowShiftr</td> <td>Shifter</td></tr>
+                <tr><td>X2_AllowWM </td> <td>Weapon Master</td></tr>
+                <tr><td>&nbsp;</td> <td>&nbsp;</td></tr>
+
+                <tr><th colspan="2">Prestige Classes - Player Resource Consortium</th></tr>
+                <tr><td>PRC_AllowAcolyte</td>          <td>Acolyte of the Skin</td></tr>
+                <tr><td>PRC_AllowAlag</td>             <td>Alaghar</td></tr>
+                <tr><td>PRC_AllowArcDuel</td>          <td>Arcane Duelist</td></tr>
+                <tr><td>PRC_AllowArcTrick</td>         <td>Arcane Trickster</td></tr>
+                <tr><td>PRC_AllowArchmage</td>         <td>Archmage</td></tr>
+                <tr><td>PRC_AllowBaeln</td>            <td>Baelnorn</td></tr>
+                <tr><td>PRC_AllowTempus</td>           <td>Battleguard of Tempus</td></tr>
+                <tr><td>PRC_AllowBRage</td>            <td>Battlerager</td></tr>
+                <tr><td>PRC_AllowBFZ</td>              <td>Black Flame Zealot</td></tr>
+                <tr><td>PRC_AllowBlades</td>           <td>Bladesinger</td></tr>
+                <tr><td>PRC_AllowBLArcher</td>         <td>Blood Archer</td></tr>
+                <tr><td>PRC_AllowBonded</td>           <td>Bonded Summoner</td></tr>
+                <tr><td>PRC_AllowCereb</td>            <td>Cerebremancer</td></tr>
+                <tr><td>PRC_AllowChaBane</td>          <td>Champion of Bane</td></tr>
+                <tr><td>PRC_AllowCbtMed</td>           <td>Combat Medic</td></tr>
+                <tr><td>PRC_AllowContemp</td>          <td>Contemplative</td></tr>
+                <tr><td>PRC_AllowDiablo</td>           <td>Diabolist</td></tr>
+                <tr><td>PRC_AllowBaal</td>             <td>Disciple of Baalzebul</td></tr>
+                <tr><td>PRC_AllowDisp</td>             <td>Disciple of Dispater</td></tr>
+                <tr><td>PRC_AllowDiscmep</td>          <td>Disciple of Mephistopheles</td></tr>
+                <tr><td>PRC_AllowDraSong</td>          <td>Dragonsong Lyrist</td></tr>
+                <tr><td>PRC_AllowDrowJud</td>          <td>Drow Judicator</td></tr>
+                <tr><td>PRC_AllowDrnknfdisp</td>       <td>Drunken Master</td></tr>
+                <tr><td>PRC_AllowDuel</td>             <td>Duelist</td></tr>
+                <tr><td>PRC_AllowEldknight</td>        <td>Eldritch Knight</td></tr>
+                <tr><td>PRC_AllowElSav</td>            <td>Elemental Savant (Arcane)</td></tr>
+                <tr><td>PRC_AllowDivSav</td>           <td>Elemental Savant (Divine)</td></tr>
+                <tr><td>PRC_AllowEoG</td>              <td>Eye of Gruumsh</td></tr>
+                <tr><td>PRC_AllowHextor</td>           <td>Fist of Hextor</td></tr>
+                <tr><td>PRC_AllowFistRaz</td>          <td>Fist of Raziel</td></tr>
+                <tr><td>PRC_AllowFoZ</td>              <td>Fist of Zuoken</td></tr>
+                <tr><td>PRC_AllowFH</td>               <td>Foe Hunter</td></tr>
+                <tr><td>PRC_AllowFrebzk</td>           <td>Frenzied Berserker</td></tr>
+                <tr><td>PRC_AllowGhostFacedKiller</td> <td>Ghost-Faced Killer</td></tr>
+                <tr><td>PRC_AllowHarperM</td>          <td>Harper Mage</td></tr>
+                <tr><td>PRC_AllowHath</td>             <td>Hathran</td></tr>
+                <tr><td>PRC_AllowHavocM</td>           <td>Havoc Mage</td></tr>
+                <tr><td>PRC_AllowHeartW</td>           <td>Heartwarder</td></tr>
+                <tr><td>PRC_AllowHnshn</td>            <td>Henshin Mystic</td></tr>
+                <tr><td>PRC_AllowHiero</td>            <td>Hierophant</td></tr>
+                <tr><td>PRC_AllowHosp</td>             <td>Hospitaler</td></tr>
+                <tr><td>PRC_AllowIaij</td>             <td>Iaijutsu Master</td></tr>
+                <tr><td>PRC_AllowIniDra</td>           <td>Initiate of Draconic Mysteries</td></tr>
+                <tr><td>PRC_AllowKnghtCh</td>          <td>Knight of the Chalice</td></tr>
+                <tr><td>PRC_AllowKotMC</td>            <td>Knight of the Middle Circle</td></tr>
+                <tr><td>PRC_AllowLash</td>             <td>Lasher</td></tr>
+                <tr><td>PRC_AllowLgDr</td>             <td>Legendary Dreadnought</td></tr>
+                <tr><td>PRC_AllowLich</td>             <td>Lich</td></tr>
+                <tr><td>PRC_AllowMaester</td>          <td>Maester</td></tr>
+                <tr><td>PRC_AllowMageK</td>            <td>Mage Killer</td></tr>
+                <tr><td>PRC_AllowManAt</td>            <td>Man at Arms</td></tr>
+                <tr><td>PRC_AllowMaster</td>           <td>Master Harper</td></tr>
+                <tr><td>PRC_AllowShrouds</td>          <td>Master of Shrouds</td></tr>
+                <tr><td>PRC_AllowKord</td>             <td>Mighty Contender of Kord</td></tr>
+                <tr><td>PRC_AllowMinstrel</td>         <td>Minsterl of the Edge</td></tr>
+                <tr><td>PRC_AllowMystic</td>           <td>Mystic Theurge</td></tr>
+                <tr><td>PRC_AllowNights</td>           <td>Nightshade</td></tr>
+                <tr><td>PRC_AllowNinja</td>            <td>Ninja Spy</td></tr>
+                <tr><td>PRC_AllowOccAd</td>            <td>Ocular Adept</td></tr>
+                <tr><td>PRC_AllowOllam</td>            <td>Ollam</td></tr>
+                <tr><td>PRC_AllowUzi</td>              <td>Oozemaster</td></tr>
+                <tr><td>PRC_AllowOrcWar</td>           <td>Orc Warlord</td></tr>
+                <tr><td>PRC_AllowPArcher</td>          <td>Peerless Archer</td></tr>
+                <tr><td>PRC_AllowPsychic</td>          <td>Psychic Theurge</td></tr>
+                <tr><td>PRC_AllowPDK</td>              <td>Purple Dragon Knight</td></tr>
+                <tr><td>PRC_Allow_Rava</td>            <td>Ravager</td></tr>
+                <tr><td>PRC_AllowRedavng</td>          <td>Red Avenger</td></tr>
+                <tr><td>PRC_AllowRedWiz</td>           <td>Red Wizard of Thay</td></tr>
+                <tr><td>PRC_AllowRunecaster</td>       <td>Runecaster</td></tr>
+                <tr><td>PRC_Allow_Rune</td>            <td>Runescarred Berserker</td></tr>
+                <tr><td>PRC_AllowSacFist</td>          <td>Sacred Fist</td></tr>
+                <tr><td>PRC_AllowShadAde</td>          <td>Shadow Adept</td></tr>
+                <tr><td>PRC_AllowPNPSfr</td>           <td>Shifter (PnP)</td></tr>
+                <tr><td>PRC_AllowSBHeir</td>           <td>Shining Blade of Heironeous</td></tr>
+                <tr><td>PRC_AllowShou</td>             <td>Shou Disciple</td></tr>
+                <tr><td>PRC_AllowSoLight</td>          <td>Soldier of Lights</td></tr>
+                <tr><td>PRC_AllowSoulEater</td>        <td>Soul Eater</td></tr>
+                <tr><td>PRC_AllowSpellS</td>           <td>Spellsword</td></tr>
+                <tr><td>PRC_AllowStormL</td>           <td>Stormlord</td></tr>
+                <tr><td>PRC_AllowBlightlord</td>       <td>Talontar Blightlord</td></tr>
+                <tr><td>PRC_AllowShaLow</td>           <td>Telflammar Shadowlord</td></tr>
+                <tr><td>PRC_AllowTempest</td>          <td>Tempest</td></tr>
+                <tr><td>PRC_AllowThayKt</td>           <td>Thayan Knight</td></tr>
+                <tr><td>PRC_AllowTOG</td>              <td>Thrall of Graz'zt</td></tr>
+                <tr><td>PRC_AllowOrcus</td>            <td>Thrall of Orcus</td></tr>
+                <tr><td>PRC_AllowThrallherd</td>       <td>Thrallherd</td></tr>
+                <tr><td>PRC_AllowTNecro</td>           <td>True Necromancer</td></tr>
+                <tr><td>PRC_AllowVassal</td>           <td>Vassal of Bahamut</td></tr>
+                <tr><td>PRC_AllowVigil</td>            <td>Vigilant</td></tr>
+                <tr><td>PRC_AllowWarmind</td>          <td>War Mind</td></tr>
+                <tr><td>PRC_AllowWarchief</td>         <td>Warchief</td></tr>
+                <tr><td>PRC_AllowWarPrst</td>          <td>Warpriest</td></tr>
+                <tr><td>PRC_AllowWarsling</td>         <td>Warsling Sniper</td></tr>
+                <tr><td>PRC_AllowWWolf</td>            <td>Werewolf</td></tr>
+            </table>
+        </div>
+    </body>
 </html>

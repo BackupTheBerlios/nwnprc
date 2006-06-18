@@ -1170,98 +1170,140 @@ const string PRC_PSI_IMP_METAPSIONICS_USE_SUM        = "PRC_PSI_IMP_METAPSIONICS
 const string PRC_PLAYER_SWITCH_AUGMENT_IS_PP         = "PRC_PLAYER_SWITCH_AUGMENT_IS_PP";
 
 /******************************************************************************\
-*                               PnP shifter switches                              *
+*                               PnP Polymorphing switches                      *
 \******************************************************************************/
 
-/*
- * These are used to restrict what forms the PnP shifter can use
+/**
+ * These switches are used to limit the targets that can be used with the
+ * PRC Polymorph / Shifting mechanics.
+ *
  * Remember, mimicing uses the targetting instance, whereas
  * shifting into that form again later creats a new instance from
  * the resref. Thus if you modify creatures after they have been
  * placed from the palette, odd things may happen.
  *
- * Also if you give any monster the "Anomalous Form" feat, the players
+ * Also if you give any monster the "Archetypal Form" feat, the players
  * will not be able to take that monsters shape.
  */
 
-/*
- * if set to 1 uses CR for target level checks instead of HD
+/**
+ * If set, the system compares user HD to target CR.
+ * Default: user HD is compared to target HD
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_USECR                     = "PNP_SHFT_USECR";
-/*
- * if set to 1 cannot take huge shapes
+
+/**
+ * If set, the system does not allow target creatures of size Huge or greater.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_S_HUGE                    = "PNP_SHFT_S_HUGE";
-/*
- * if set to 1 cannot take large shapes
+
+/**
+ * If set, the system does not allow target creatures of size Large.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_S_LARGE                   = "PNP_SHFT_S_LARGE";
-/*
- * if set to 1 cannot take medium shapes
+
+/**
+ * If set, the system does not allow target creatures of size Medium.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_S_MEDIUM                  = "PNP_SHFT_S_MEDIUM";
-/*
- * if set to 1 cannot take small shapes
+
+/**
+ * If set, the system does not allow target creatures of size Small.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_S_SMALL                   = "PNP_SHFT_S_SMALL";
-/*
- * if set to 1 cannot take tiny shapes
+
+/**
+ * If set, the system does not allow target creatures of size Tiny or smaller.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_S_TINY                    = "PNP_SHFT_S_TINY";
-/*
- * if set to 1 cannot take outsider shapes
+
+/**
+ * If set, the system does not allow target creatures of type Outsider.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_OUTSIDER                = "PNP_SHFT_F_OUTSIDER";
-/*
- * if set to 1 cannot take elemental shapes
+
+/**
+ * If set, the system does not allow target creatures of type Elemental.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_ELEMENTAL               = "PNP_SHFT_F_ELEMENTAL";
-/*
- * if set to 1 cannot take construct shapes
+
+/**
+ * If set, the system does not allow target creatures of type Construct.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_CONSTRUCT               = "PNP_SHFT_F_CONSTRUCT";
-/*
- * if set to 1 cannot take undead shapes
+
+/**
+ * If set, the system does not allow target creatures of type Undead.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_UNDEAD                  = "PNP_SHFT_F_UNDEAD";
-/*
- * if set to 1 cannot take dragon shapes
+
+/**
+ * If set, the system does not allow target creatures of type Dragon.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_DRAGON                  = "PNP_SHFT_F_DRAGON";
-/*
- * if set to 1 cannot take aberration shapes
+
+/**
+ * If set, the system does not allow target creatures of type Aberration.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_ABERRATION              = "PNP_SHFT_F_ABERRATION";
-/*
- * if set to 1 cannot take ooze shapes
+
+/**
+ * If set, the system does not allow target creatures of type Ooze.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_OOZE                    = "PNP_SHFT_F_OOZE";
-/*
- * if set to 1 cannot take magical beast shapes
+
+/**
+ * If set, the system does not allow target creatures of type Magical Beast.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_MAGICALBEAST            = "PNP_SHFT_F_MAGICALBEAST";
-/*
- * if set to 1 cannot take giant shapes
+
+/**
+ * If set, the system does not allow target creatures of type Giant.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_GIANT                   = "PNP_SHFT_F_GIANT";
-/*
- * if set to 1 cannot take vermin shapes
+
+/**
+ * If set, the system does not allow target creatures of type Vermin.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_VERMIN                  = "PNP_SHFT_F_VERMIN";
-/*
- * if set to 1 cannot take beast shapes
+
+/**
+ * If set, the system does not allow target creatures of type Beast.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_BEAST                   = "PNP_SHFT_F_BEAST";
-/*
- * if set to 1 cannot take animal shapes
+
+/**
+ * If set, the system does not allow target creatures of type Animal.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_ANIMAL                  = "PNP_SHFT_F_ANIMAL";
-/*
- * if set to 1 cannot take monstrous humanoid shapes
+
+/**
+ * If set, the system does not allow target creatures of type Monstrous Humanoid.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_MONSTROUSHUMANOID       = "PNP_SHFT_F_MONSTROUSHUMANOID";
-/*
- * if set to 1 cannot take humanoid shapes
+
+/**
+ * If set, the system does not allow target creatures of type Humanoid.
+ * Values: 0 is not set, anything else is set.
  */
 const string PNP_SHFT_F_HUMANOID                = "PNP_SHFT_F_HUMANOID";
 

@@ -29,9 +29,11 @@ const int SHIFTER_TYPE_SHIFTER   = 1;
 const int SHIFTER_TYPE_SOULEATER = 2;
 const int SHIFTER_TYPE_POLYMORPH = 3;
 
-const string SHIFTER_FORMS_ARRAY      = "PRC_ShiftingForms_";
+const int SHIFTER_ABILITIESITEM_MAXPROPS = 8;
+
+const string SHIFTER_RESREFS_ARRAY    = "PRC_ShiftingResRefs_";
 const string SHIFTER_NAMES_ARRAY      = "PRC_ShiftingNames_";
-const string SHIFTER_TRUEFORM         = "PRC_ShiftingTrueForm";
+const string SHIFTER_TRUEAPPEARANCE   = "PRC_ShiftingTrueAppearance";
 const string SHIFTER_ISSHIFTED_MARKER = "PRC_IsShifted";
 const string SHIFTER_SHIFT_MUTEX      = "PRC_Shifting_InProcess";
 
@@ -118,7 +120,7 @@ struct appearancevalues{
 /*             Function prototypes              */
 //////////////////////////////////////////////////
 
-// True form stuff //
+// True appearance stuff //
 
 /**
  * Stores the given creature's current appearance as it's true appearance.
@@ -141,7 +143,7 @@ void RestoreTrueAppearance(object oShifter);
 // Storage functions  //
 
 /**
- * Stores the target's resref in the 'shifting forms' list of the given creature.
+ * Stores the target's resref in the 'shifting template's list of the given creature.
  * Will silently fail if either the shifter or the target are not valid objects
  * or if the target is a PC.
  *
@@ -149,19 +151,19 @@ void RestoreTrueAppearance(object oShifter);
  * @param nShifterType SHIFTER_TYPE_* of the list to store in
  * @param oTarget      The creature whose resref to store for later use in shifting
  */
-void StoreForm(object oShifter, int nShifterType, object oTarget);
+void StoreShiftingTemplate(object oShifter, int nShifterType, object oTarget);
 
 /**
- * Gets the number of 'forms' stored in the given creature's list.
+ * Gets the number of 'template's stored in the given creature's list.
  *
  * @param oShifter     The creature whose list to examine
  * @param nShifterType SHIFTER_TYPE_* of the list to store examine
  * @return             The number of entries in the arrays making up the list
  */
-int GetNumberOfStoredForms(object oShifter, int nShifterType);
+int GetNumberOfStoredTemplates(object oShifter, int nShifterType);
 
 /**
- * Reads the resref stored at the given index at a creature's 'forms'
+ * Reads the resref stored at the given index at a creature's 'template's
  * list.
  *
  * @param oShifter     The creature from whose list to read
@@ -171,10 +173,10 @@ int GetNumberOfStoredForms(object oShifter, int nShifterType);
  * @return             The resref stored at the given index. "" on failure (ex.
  *                     reading from an index outside the list.
  */
-string GetStoredForm(object oShifter, int nShifterType, int nIndex);
+string GetStoredTemplate(object oShifter, int nShifterType, int nIndex);
 
 /**
- * Reads the name stored at the given index at a creature's 'forms'
+ * Reads the name stored at the given index at a creature's 'templates's
  * list.
  *
  * @param oShifter     The creature from whose list to read
@@ -184,10 +186,10 @@ string GetStoredForm(object oShifter, int nShifterType, int nIndex);
  * @return             The name stored at the given index. "" on failure (ex.
  *                     reading from an index outside the list.
  */
-string GetStoredFormName(object oShifter, int nShifterType, int nIndex);
+string GetStoredTemplateName(object oShifter, int nShifterType, int nIndex);
 
 /**
- * Deletes the 'shifting forms' entry in a creature's list at a given
+ * Deletes the 'shifting template's entry in a creature's list at a given
  * index.
  *
  * @param oShifter     The creature from whose list to delete
@@ -195,7 +197,7 @@ string GetStoredFormName(object oShifter, int nShifterType, int nIndex);
  * @param nIndex       The index of the entry to delete in the list. Standard
  *                     base-0 indexing.
  */
-void DeleteStoredForm(object oShifter, int nShifterType, int nIndex);
+void DeleteStoredTemplate(object oShifter, int nShifterType, int nIndex);
 
 
 // Shifting-related functions
@@ -319,7 +321,7 @@ string DebugAppearancevalues2Str(struct appearancevalues appval);
 //////////////////////////////////////////////////
 
 void _RestoreCreatureItems(object oShifter)
-{/// @todo
+{/// @todo Do
 }
 
 /** Internal function.
@@ -448,73 +450,6 @@ void _CopyAllItemProperties(object oFrom, object oTo)
 }
 
 /** Internal function.
- * Determines the IP_CONST_FEAT_* for the given feat.
- */
-int _GetIPFeatFromFeat(int nFeat)
-{
-    switch (nFeat)
-    {
-        case FEAT_ALERTNESS:                        return IP_CONST_FEAT_ALERTNESS;
-        case FEAT_AMBIDEXTERITY:                    return IP_CONST_FEAT_AMBIDEXTROUS;
-        case FEAT_ARMOR_PROFICIENCY_HEAVY:          return IP_CONST_FEAT_ARMOR_PROF_HEAVY;
-        case FEAT_ARMOR_PROFICIENCY_LIGHT:          return IP_CONST_FEAT_ARMOR_PROF_LIGHT;
-        case FEAT_ARMOR_PROFICIENCY_MEDIUM:         return IP_CONST_FEAT_ARMOR_PROF_MEDIUM;
-        case FEAT_CLEAVE:                           return IP_CONST_FEAT_CLEAVE;
-        case FEAT_COMBAT_CASTING:                   return IP_CONST_FEAT_COMBAT_CASTING;
-        case FEAT_DODGE:                            return IP_CONST_FEAT_DODGE;
-        case FEAT_EXTRA_TURNING:                    return IP_CONST_FEAT_EXTRA_TURNING;
-        case FEAT_IMPROVED_CRITICAL_UNARMED_STRIKE: return IP_CONST_FEAT_IMPCRITUNARM;
-        case FEAT_IMPROVED_KNOCKDOWN:               return IP_CONST_FEAT_IMPROVED_KNOCKDOWN;
-        case FEAT_KNOCKDOWN:                        return IP_CONST_FEAT_KNOCKDOWN;
-        case FEAT_POINT_BLANK_SHOT:                 return IP_CONST_FEAT_POINTBLANK;
-        case FEAT_IMPROVED_POWER_ATTACK:            // Missing IPFeat
-        case FEAT_POWER_ATTACK:                     return IP_CONST_FEAT_POWERATTACK;
-        case FEAT_GREATER_SPELL_FOCUS_ABJURATION:   // Missing IPFeat
-        case FEAT_EPIC_SPELL_FOCUS_ABJURATION:      // Missing IPFeat
-        case FEAT_SPELL_FOCUS_ABJURATION:           return IP_CONST_FEAT_SPELLFOCUSABJ;
-        case FEAT_GREATER_SPELL_FOCUS_CONJURATION:  // Missing IPFeat
-        case FEAT_EPIC_SPELL_FOCUS_CONJURATION:     // Missing IPFeat
-        case FEAT_SPELL_FOCUS_CONJURATION:          return IP_CONST_FEAT_SPELLFOCUSCON;
-        case FEAT_GREATER_SPELL_FOCUS_DIVINIATION:  // Missing IPFeat
-        case FEAT_EPIC_SPELL_FOCUS_DIVINATION:      // Missing IPFeat
-        case FEAT_SPELL_FOCUS_DIVINATION:           return IP_CONST_FEAT_SPELLFOCUSDIV;
-        case FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT:  // Missing IPFeat
-        case FEAT_EPIC_SPELL_FOCUS_ENCHANTMENT:     // Missing IPFeat
-        case FEAT_SPELL_FOCUS_ENCHANTMENT:          return IP_CONST_FEAT_SPELLFOCUSENC;
-        case FEAT_GREATER_SPELL_FOCUS_EVOCATION:    // Missing IPFeat
-        case FEAT_EPIC_SPELL_FOCUS_EVOCATION:       // Missing IPFeat
-        case FEAT_SPELL_FOCUS_EVOCATION:            return IP_CONST_FEAT_SPELLFOCUSEVO;
-        case FEAT_GREATER_SPELL_FOCUS_ILLUSION:     // Missing IPFeat
-        case FEAT_EPIC_SPELL_FOCUS_ILLUSION:        // Missing IPFeat
-        case FEAT_SPELL_FOCUS_ILLUSION:             return IP_CONST_FEAT_SPELLFOCUSILL;
-        case FEAT_GREATER_SPELL_FOCUS_NECROMANCY:   // Missing IPFeat
-        case FEAT_EPIC_SPELL_FOCUS_NECROMANCY:      // Missing IPFeat
-        case FEAT_SPELL_FOCUS_NECROMANCY:           return IP_CONST_FEAT_SPELLFOCUSNEC;
-        case FEAT_GREATER_SPELL_PENETRATION:        // Missing IPFeat
-        case FEAT_EPIC_SPELL_PENETRATION:           // Missing IPFeat
-        case FEAT_SPELL_PENETRATION:                return IP_CONST_FEAT_SPELLPENETRATION;
-        case FEAT_IMPROVED_TWO_WEAPON_FIGHTING:     // Missing IPFeat
-        case FEAT_TWO_WEAPON_FIGHTING:              return IP_CONST_FEAT_TWO_WEAPON_FIGHTING;
-        case FEAT_WEAPON_FINESSE:                   return IP_CONST_FEAT_WEAPFINESSE;
-        case FEAT_WEAPON_PROFICIENCY_EXOTIC:        return IP_CONST_FEAT_WEAPON_PROF_EXOTIC;
-        case FEAT_WEAPON_PROFICIENCY_MARTIAL:       return IP_CONST_FEAT_WEAPON_PROF_MARTIAL;
-        case FEAT_WEAPON_PROFICIENCY_SIMPLE:        return IP_CONST_FEAT_WEAPON_PROF_SIMPLE;
-        case FEAT_IMPROVED_UNARMED_STRIKE:          return IP_CONST_FEAT_WEAPSPEUNARM;
-        case FEAT_DISARM:                           return IP_CONST_FEAT_DISARM;
-        case FEAT_HIDE_IN_PLAIN_SIGHT:              return IP_CONST_FEAT_HIDE_IN_PLAIN_SIGHT;
-        case FEAT_MOBILITY:                         return IP_CONST_FEAT_MOBILITY;
-        case FEAT_RAPID_SHOT:                       return IP_CONST_FEAT_RAPID_SHOT;
-        case FEAT_SHIELD_PROFICIENCY:               return IP_CONST_FEAT_SHIELD_PROFICIENCY;
-        case FEAT_SNEAK_ATTACK:                     return IP_CONST_FEAT_SNEAK_ATTACK_1D6;
-        case FEAT_USE_POISON:                       return IP_CONST_FEAT_USE_POISON;
-        case FEAT_WHIRLWIND_ATTACK:                 return IP_CONST_FEAT_WHIRLWIND;
-        case FEAT_WEAPON_PROFICIENCY_CREATURE:      return IP_CONST_FEAT_WEAPON_PROF_CREATURE;
-    }
-    // If no match was found, return an invalid value
-    return -1;
-}
-
-/** Internal function.
  * Builds the shifter spell-like and activatable supernatural abilities item.
  *
  * @param oTemplate The target creature of an ongoing shift
@@ -523,723 +458,50 @@ int _GetIPFeatFromFeat(int nFeat)
  */
 void _CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
 {
-    itemproperty iProp;
-    int total_props = 0; //max of 8 properties on one item
-    int max_props = 7;
+    string sNumUses;
+    int nSpell, nNumUses, nProps;
+    int i = 0;
 
-    //first, auras--only want to allow one aura power to transfer
-    if ( GetHasSpell(SPELLABILITY_AURA_BLINDING, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(750, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_COLD, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(751, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_ELECTRICITY, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(752, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_FEAR, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(753, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_FIRE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(754, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_MENACE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(755, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_PROTECTION, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(756, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_STUN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(757, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_UNEARTHLY_VISAGE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(758, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_AURA_UNNATURAL, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(759, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //now, bolts
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_CHARISMA, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(760, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_CONSTITUTION, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(761, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_DEXTERITY, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(762, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_INTELLIGENCE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(763, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_STRENGTH, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(764, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ABILITY_DRAIN_WISDOM, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(765, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_ACID, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(766, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_CHARM, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(767, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_COLD, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(768, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_CONFUSE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(769, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DAZE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(770, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DEATH, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(771, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DISEASE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(772, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_DOMINATE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(773, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_FIRE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(774, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_KNOCKDOWN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(775, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_LEVEL_DRAIN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(776, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_LIGHTNING, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(777, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_PARALYZE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(778, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_POISON, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(779, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_SHARDS, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(780, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_SLOW, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(781, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_STUN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(782, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_BOLT_WEB, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(783, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //now, cones
-    if ( GetHasSpell(SPELLABILITY_CONE_ACID, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(784, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_CONE_COLD, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(785, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_CONE_DISEASE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(786, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_CONE_FIRE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(787, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_CONE_LIGHTNING, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(788, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_CONE_POISON, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(789, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_CONE_SONIC, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(790, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //various petrify attacks
-    if ( GetHasSpell(SPELLABILITY_BREATH_PETRIFY, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(791, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_PETRIFY, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(792, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_TOUCH_PETRIFY, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(793, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //dragon stuff (fear aura, breaths)
-    if ( GetHasSpell(SPELLABILITY_DRAGON_FEAR, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(796, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_ACID, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(400, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_COLD, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(401, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_FEAR, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(402, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_FIRE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(403, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_GAS, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(404, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_LIGHTNING, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(405, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(698, oTemplate) && (total_props <= max_props) ) //NEGATIVE
-    {
-        iProp = ItemPropertyCastSpell(794, IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_PARALYZE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(406, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_SLEEP, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(407, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_SLOW, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(408 ,IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_DRAGON_BREATH_WEAKEN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(409, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(771, oTemplate) && (total_props <= max_props) ) //PRISMATIC
-    {
-        iProp = ItemPropertyCastSpell(795, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //gaze attacks
-    if ( GetHasSpell(SPELLABILITY_GAZE_CHARM, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(797, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_CONFUSION, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(798, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DAZE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(799, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DEATH, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(800, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_CHAOS, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(801, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_EVIL, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(802, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_GOOD, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(803, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DESTROY_LAW, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(804, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DOMINATE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(805, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_DOOM, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(806, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_FEAR, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(807, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_PARALYSIS, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(808, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_GAZE_STUNNED, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(809, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //miscellaneous abilities
-    if ( GetHasSpell(SPELLABILITY_GOLEM_BREATH_GAS, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(810, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HELL_HOUND_FIREBREATH, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(811, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_KRENSHAR_SCARE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(812, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //howls
-    if ( GetHasSpell(SPELLABILITY_HOWL_CONFUSE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(813, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HOWL_DAZE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(814, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HOWL_DEATH, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(815, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HOWL_DOOM, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(816, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HOWL_FEAR, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(817, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HOWL_PARALYSIS, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(818, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HOWL_SONIC, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(819, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_HOWL_STUN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(820, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //pulses
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_CHARISMA, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(821, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_CONSTITUTION, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(822, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_DEXTERITY, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(823, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_INTELLIGENCE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(824, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_STRENGTH, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(825, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_ABILITY_DRAIN_WISDOM, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(826, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_COLD, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(827, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_DEATH, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(828, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_DISEASE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(829, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_DROWN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(830, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_FIRE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(831, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_HOLY, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(832, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_LEVEL_DRAIN, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(833, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_LIGHTNING, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(834, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_NEGATIVE, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(835, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_POISON, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(836, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_SPORES, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(837, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_PULSE_WHIRLWIND, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(838, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //monster summon abilities
-    if ( GetHasSpell(SPELLABILITY_SUMMON_SLAAD, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(839, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(SPELLABILITY_SUMMON_TANARRI, oTemplate) && (total_props <= max_props) )
-    {
-        iProp = ItemPropertyCastSpell(840, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //abilities without const refs
-    if ( GetHasSpell(552, oTemplate) && (total_props <= max_props) ) //PSIONIC CHARM
-    {
-        iProp = ItemPropertyCastSpell(841, IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(551, oTemplate) && (total_props <= max_props) ) //PSIONIC MINDBLAST
-    {
-        iProp = ItemPropertyCastSpell(842, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(713, oTemplate) && (total_props <= max_props) ) //MINDBLAST 10M
-    {
-        iProp = ItemPropertyCastSpell(843, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(741, oTemplate) && (total_props <= max_props) ) //PSIONIC BARRIER
-    {
-        iProp = ItemPropertyCastSpell(844, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(763, oTemplate) && (total_props <= max_props) ) //PSIONIC CONCUSSION
-    {
-        iProp = ItemPropertyCastSpell(845, IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(731, oTemplate) && (total_props <= max_props) ) //BEBILITH WEB
-    {
-        iProp = ItemPropertyCastSpell(846, IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(736, oTemplate) && (total_props <= max_props) ) //BEHOLDER EYES
-    {
-        iProp = ItemPropertyCastSpell(847, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(770, oTemplate) && (total_props <= max_props) ) //CHAOS SPITTLE
-    {
-        iProp = ItemPropertyCastSpell(848, IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(757, oTemplate) && (total_props <= max_props) ) //SHADOWBLEND
-    {
-        iProp = ItemPropertyCastSpell(849, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ( GetHasSpell(774, oTemplate) && (total_props <= max_props) ) //DEFLECTING FORCE
-    {
-        iProp = ItemPropertyCastSpell(850, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    //some spell-like abilities
-    if ((GetHasSpell(SPELL_DARKNESS, oTemplate)          ||
-         GetHasSpell(SPELLABILITY_AS_DARKNESS, oTemplate)
-         ) &&
-        (total_props <= max_props)
-        )
-    {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_DARKNESS_3, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ((GetHasSpell(SPELL_DISPLACEMENT, oTemplate)) && (total_props <= max_props))
-    {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_DISPLACEMENT_9, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if (((GetHasSpell(SPELLABILITY_AS_INVISIBILITY, oTemplate)) ||
-        (GetHasSpell(SPELL_INVISIBILITY, oTemplate))) &&
-        (total_props <= max_props))
-    {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_INVISIBILITY_3, IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
-    }
-    if ((GetHasSpell(SPELL_WEB, oTemplate)) && (total_props <= max_props))
-    {
-        iProp = ItemPropertyCastSpell(IP_CONST_CASTSPELL_WEB_3, IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY);
-        AddItemProperty(DURATION_TYPE_PERMANENT, iProp, oItem);
-        total_props++;
+    // Loop over shifter_abilitie.2da
+    while((nProps < SHIFTER_ABILITIESITEM_MAXPROPS) && (nSpell = StringToInt(Get2DACache("shifter_abilitie", "Spell", i))))
+    {
+        // See if the template has this spell
+        if(GetHasSpell(nSpell, oTemplate))
+        {
+            // Determine the number of uses from the 2da
+            sNumUses = Get2DACache("shifter_abilitie", "IPCSpellNumUses", i);
+            if(sNumUses == "1_USE_PER_DAY")
+                nNumUses = IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY;
+            else if(sNumUses == "2_USES_PER_DAY")
+                nNumUses = IP_CONST_CASTSPELL_NUMUSES_2_USES_PER_DAY;
+            else if(sNumUses == "3_USES_PER_DAY")
+                nNumUses = IP_CONST_CASTSPELL_NUMUSES_3_USES_PER_DAY;
+            else if(sNumUses == "4_USES_PER_DAY")
+                nNumUses = IP_CONST_CASTSPELL_NUMUSES_4_USES_PER_DAY;
+            else if(sNumUses == "5_USES_PER_DAY")
+                nNumUses = IP_CONST_CASTSPELL_NUMUSES_5_USES_PER_DAY;
+            else if(sNumUses == "UNLIMITED_USE")
+                nNumUses = IP_CONST_CASTSPELL_NUMUSES_UNLIMITED_USE;
+            else{
+                if(DEBUG) DoDebug("prc_inc_shifting: _CreateShifterActiveAbilitiesItem(): Unknown IPCSpellNumUses in shifter_abilitie.2da line " + IntToString(i) + ": " + sNumUses);
+                nNumUses = -1;
+            }
+
+            // Create the itemproperty and add it to the item
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyCastSpell(Get2DACache("shifter_abilitie", "IPSpell", i), nNumUses), oItem);
+
+            // Increment property counter
+            nProps += 1;
+        }
+
+        // Increment loop counter
+        i += 1;
     }
 }
 
 /** Internal function.
  * Determines if the given resref has already been stored in the
- * forms array of the given creature's shifting list for
+ * templates array of the given creature's shifting list for
  * a particular shifting type.
  *
  * @param oShifter     The creature
@@ -1247,17 +509,17 @@ void _CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
  * @param sResRef      The resref to look for
  * @return             TRUE if the resref is present in the array
  */
-int _GetIsFormStored(object oShifter, int nShifterType, string sResRef)
+int _GetIsTemplateStored(object oShifter, int nShifterType, string sResRef)
 {
-    string sFormsArray = SHIFTER_FORMS_ARRAY + IntToString(nShifterType);
-    int i, nArraySize  = persistant_array_get_size(oShifter, sFormsArray);
+    string sResRefsArray = SHIFTER_RESREFS_ARRAY + IntToString(nShifterType);
+    int i, nArraySize    = persistant_array_get_size(oShifter, sResRefsArray);
 
     // Lowercase the searched for string
     sResRef = GetStringLowerCase(sResRef);
 
     for(i = 0; i < nArraySize; i++)
     {
-        if(sResRef == persistant_array_get_string(oShifter, sFormsArray, i))
+        if(sResRef == persistant_array_get_string(oShifter, sResRefsArray, i))
             return TRUE;
     }
 
@@ -1335,84 +597,101 @@ int StoreCurrentAppearanceAsTrueAppearance(object oShifter, int bCarefull = TRUE
         }
     }
 
-    // Get the form data
+    // Get the appearance data
     struct appearancevalues appval = GetAppearanceData(oShifter);
 
     // Store it
-    SetPersistantLocalAppearancevalues(oShifter, SHIFTER_TRUEFORM, appval);
+    SetPersistantLocalAppearancevalues(oShifter, SHIFTER_TRUEAPPEARANCE, appval);
 
     return TRUE;
 }
 
 void RestoreTrueAppearance(object oShifter)
-{/// @todo
+{
+    // Remove polymorph - if present - first
+    int bPolymorphed = FALSE;
+    effect eTest = GetFirstEffect(oShifter);
+    while(GetIsEffectValid(eTest))
+    {
+        if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
+        {
+            bPolymorphed = TRUE;
+            RemoveEffect(oShifter, eTest);
+        }
+
+        eTest = GetNextEffect(oShifter);
+    }
+
+    // Retrieve the appearance data
+    struct appearancevalues appval = GetPersistantLocalAppearancevalues(oShifter, SHIFTER_TRUEAPPEARANCE);
+    /// @todo finish
 }
 
 // Storage functions  //
 
-void StoreForm(object oShifter, int nShifterType, object oTarget)
+void StoreShiftingTemplate(object oShifter, int nShifterType, object oTarget)
 {
     // Some paranoia - both the target and the object to store on must be valid. And PCs are never legal for storage - PC resref should be always empty
     if(!(GetIsObjectValid(oShifter) && GetIsObjectValid(oTarget) && GetResRef(oTarget) != ""))
         return;
 
-    string sFormsArray = SHIFTER_FORMS_ARRAY + IntToString(nShifterType);
-    string sNamesArray = SHIFTER_NAMES_ARRAY + IntToString(nShifterType);
+    string sResRefsArray = SHIFTER_RESREFS_ARRAY + IntToString(nShifterType);
+    string sNamesArray   = SHIFTER_NAMES_ARRAY   + IntToString(nShifterType);
 
     // Determine array existence
-    if(!persistant_array_exists(oShifter, sFormsArray))
-        persistant_array_create(oShifter, sFormsArray);
+    if(!persistant_array_exists(oShifter, sResRefArray))
+        persistant_array_create(oShifter, sResRefArray);
     if(!persistant_array_exists(oShifter, sNamesArray))
         persistant_array_create(oShifter, sNamesArray);
 
     // Get the storeable data
     string sResRef = GetResRef(oTarget);
     string sName   = GetName(oTarget);
-    int nArraySize = persistant_array_get_size(oShifter, sFormsArray);
+    int nArraySize = persistant_array_get_size(oShifter, sResRefArray);
 
-    // Check for the form already being present
-    if(_GetIsFormStored(oShifter, nShifterType, sResRef))
+    // Check for the template already being present
+    if(_GetIsTemplateStored(oShifter, nShifterType, sResRef))
         return;
 
-    persistant_array_set_string(oShifter, sFormsArray, nArraySize, sResRef);
+    persistant_array_set_string(oShifter, sResRefArray, nArraySize, sResRef);
     persistant_array_set_string(oShifter, sNamesArray, nArraySize, sName);
 }
 
-int GetNumberOfStoredForms(object oShifter, int nShifterType)
+int GetNumberOfStoredTemplates(object oShifter, int nShifterType)
 {
-    if(!persistant_array_exists(oShifter, SHIFTER_FORMS_ARRAY + IntToString(nShifterType)))
+    if(!persistant_array_exists(oShifter, SHIFTER_RESREFS_ARRAY + IntToString(nShifterType)))
         return 0;
 
-    return persistant_array_get_size(oShifter, SHIFTER_FORMS_ARRAY + IntToString(nShifterType));
+    return persistant_array_get_size(oShifter, SHIFTER_RESREFS_ARRAY + IntToString(nShifterType));
 }
 
-string GetStoredForm(object oShifter, int nShifterType, int nIndex)
+string GetStoredTemplate(object oShifter, int nShifterType, int nIndex)
 {
-    return persistant_array_get_string(oShifter, SHIFTER_FORMS_ARRAY + IntToString(nShifterType), nIndex);
+    return persistant_array_get_string(oShifter, SHIFTER_RESREFS_ARRAY + IntToString(nShifterType), nIndex);
 }
 
-string GetStoredFormName(object oShifter, int nShifterType, int nIndex)
+string GetStoredTemplateName(object oShifter, int nShifterType, int nIndex)
 {
     return persistant_array_get_string(oShifter, SHIFTER_NAMES_ARRAY + IntToString(nShifterType), nIndex);
 }
 
-void DeleteStoredForm(object oShifter, int nShifterType, int nIndex)
+void DeleteStoredTemplate(object oShifter, int nShifterType, int nIndex)
 {
-    string sFormsArray = SHIFTER_FORMS_ARRAY + IntToString(nShifterType);
-    string sNamesArray = SHIFTER_NAMES_ARRAY + IntToString(nShifterType);
+    string sResRefsArray = SHIFTER_RESREFS_ARRAY + IntToString(nShifterType);
+    string sNamesArray   = SHIFTER_NAMES_ARRAY   + IntToString(nShifterType);
 
     // Determine array existence
-    if(!persistant_array_exists(oShifter, sFormsArray))
+    if(!persistant_array_exists(oShifter, sResRefsArray))
         return;
     if(!persistant_array_exists(oShifter, sNamesArray))
         return;
 
     // Move array entries
-    int i, nArraySize = persistant_array_get_size(oShifter, sFormsArray);
+    int i, nArraySize = persistant_array_get_size(oShifter, sResRefsArray);
     for(i = nIndex; i < nArraySize - 1; i++)
     {
-        persistant_array_set_string(oShifter, sFormsArray, i,
-                                    persistant_array_get_string(oShifter, sFormsArray, i + 1)
+        persistant_array_set_string(oShifter, sResRefsArray, i,
+                                    persistant_array_get_string(oShifter, sResRefsArray, i + 1)
                                     );
         persistant_array_set_string(oShifter, sNamesArray, i,
                                     persistant_array_get_string(oShifter, sNamesArray, i + 1)
@@ -1420,8 +699,8 @@ void DeleteStoredForm(object oShifter, int nShifterType, int nIndex)
     }
 
     // Shrink the arrays
-    persistant_array_shrink(oShifter, sFormsArray, nArraySize - 1);
-    persistant_array_shrink(oShifter, sNamesArray, nArraySize - 1);
+    persistant_array_shrink(oShifter, sResRefsArray, nArraySize - 1);
+    persistant_array_shrink(oShifter, sNamesArray,   nArraySize - 1);
 }
 
 

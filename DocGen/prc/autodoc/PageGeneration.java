@@ -152,6 +152,10 @@ public final class PageGeneration{
 					// Assume that if there are any, the first slot is always non-****
 					if(!spells2da.getEntry("SubRadSpell1", i).equals("****")){
 						for(int j = 1; j <= 5; j++) {
+							// Also assume that all the valid entries are in order, such that if Nth SubRadSpell entry
+							// is ****, all > N are also **** 
+							if(spells2da.getEntry("SubRadSpell" + j, i).equals("****"))
+								break;
 							try {
 								subRadial = Integer.parseInt(spells2da.getEntry("SubRadSpell" + j, i));
 								

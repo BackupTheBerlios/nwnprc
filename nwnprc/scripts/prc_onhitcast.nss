@@ -34,7 +34,6 @@
 void SetRancorVar(object oPC);
 void SetImprovedRicochetVar(object oPC);
 void DoImprovedRicochet(object oPC, object oTarget);
-void DoBebilithGrapple(object oSpellTarget, object oSpellOrigin);
 
 void main()
 {
@@ -204,18 +203,7 @@ void main()
             }
         }
     }
-    
-    //Boneblade +1d6 damage vs living
-    if (GetHasSpellEffect(SPELL_BONEBLADE, oItem))
-    {
-	    if(MyPRCGetRacialType(oSpellTarget) != RACIAL_TYPE_UNDEAD &&
-	       MyPRCGetRacialType(oSpellTarget) != RACIAL_TYPE_CONSTRUCT)
-	    {
-		    effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
-		    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellTarget);
-	    }
-    }
-    
+        
     //Creatures with a necrotic cyst take +1d6 damage from natural attacks of undead
     
     if(GetHasNecroticCyst(oSpellOrigin))
@@ -234,14 +222,6 @@ void main()
 	     }
      }
     
-    //Claws of the Bebilith 
-    if(GetHasSpellEffect(SPELL_CLAWS_OF_THE_BEBILITH, oSpellOrigin))
-    {
-	    DoBebilithGrapple(oSpellTarget, oSpellOrigin);
-    }	    	   
-     
-     
-	    
     
     /*//////////////////////////////////////////////////
     //////////////// PSIONICS //////////////////////////
@@ -486,103 +466,4 @@ void SetImprovedRicochetVar(object oPC)
         DelayCommand(2.0, SetLocalInt(oPC, "CanRicochet", 1));
         DelayCommand(2.1, SetLocalInt(oPC, "ImpRicochetVarRunning", 2));
     }
-}
-
-void DoBebilithGrapple(object oSpellTarget, object oSpellOrigin)
-{		
-	//Check for target's armor/shield
-	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oSpellTarget);
-	object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget);
-	int bArmor;
-	int bShield;
-	
-	if(GetIsObjectValid(oShield))
-	{
-		//Make sure it's a shield
-		int nShield = GetBaseItemType(oShield);	
-		
-		if(nShield != BASE_ITEM_SMALLSHIELD &&
-		   nShield != BASE_ITEM_LARGESHIELD &&
-		   nShield != BASE_ITEM_TOWERSHIELD)
-	       {
-		       int bShield = TRUE;
-	       }
-       }
-       
-       if(GetIsObjectValid(oArmor))
-       {
-	       int bArmor = TRUE;
-       }	       
-	
-	object oAffected = oArmor;
-	int nAffectedSlot = INVENTORY_SLOT_CHEST;
-	
-	//if both Armor and Shield present
-	if(bArmor == TRUE && bShield == TRUE)
-	{
-		//roll the dice
-		int nRoll = d6();
-		
-		if(nRoll > 4)
-		{
-			oAffected = oShield;
-			nAffectedSlot = INVENTORY_SLOT_LEFTHAND;
-		}
-	}
-	
-	else if(bShield == TRUE)
-	{
-		oAffected = oShield;
-		nAffectedSlot = INVENTORY_SLOT_LEFTHAND;
-	}
-	
-	else
-	{
-		SendMessageToPC(oSpellOrigin, "Your target has no valid items");
-		return;
-	}
-	
-	//The caster makes a grapple check whenever she hits with a claw attack,
-	//adding to the opponent's roll any enhancement bonus from magic possessed 
-	//by the opponent's armor or shield.
-	
-	int nEnhance;
-	itemproperty ip = GetFirstItemProperty(oAffected);
-	while(GetIsItemPropertyValid(ip))
-	{
-		if(GetItemPropertyType(ip) == ITEM_PROPERTY_ENHANCEMENT_BONUS)
-		{
-			nEnhance = GetItemPropertyCostTableValue(ip);
-			break;
-		}
-	        ip = GetNextItemProperty(oAffected);
-	}
-	//Check
-	if(DoGrappleCheck(oSpellOrigin, oSpellTarget, 0, nEnhance))
-	{
-		//check switch
-		if(GetPRCSwitch(PRC_BEBILITH_CLAWS_DESTROY))
-		{
-			if(!GetPlotFlag(oAffected))
-			{
-				DestroyObject(oAffected);
-			}
-		}
-		
-		else
-		{
-			if(oAffected == oShield)
-			{
-				ForceUnequip(oSpellTarget, oAffected, nAffectedSlot, TRUE);
-			}
-			
-			//if oArmor, copy to inventory then destroy
-			else
-			{
-				CopyItem(oArmor, oSpellTarget, TRUE);
-				DestroyObject(oArmor);
-			}
-		}
-		
-	}
 }

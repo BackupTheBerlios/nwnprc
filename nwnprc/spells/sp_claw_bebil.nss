@@ -96,11 +96,14 @@ void main()
 	//Set up property
 	itemproperty ipClaws = (ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1));
 	
+	//Add event script
+	AddEventScript(oLClaw, EVENT_ONHIT, "prc_evnt_clbebil", TRUE, FALSE);
+	AddEventScript(oRClaw, EVENT_ONHIT, "prc_evnt_clbebil", TRUE, FALSE);
+	
 	//Add props
 	IPSafeAddItemProperty(oLClaw, ipClaws, fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
 	IPSafeAddItemProperty(oRClaw, ipClaws, fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
-	
-		
+			
 	SPEvilShift(oPC);
 	SPSetSchool();
 }

@@ -117,6 +117,8 @@ void main()
 		itemproperty ipBlade = (ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1));
 		IPSafeAddItemProperty(oSword, ipBlade, 0.0f, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
 		
+		AddEventScript(oSword, EVENT_ONHIT, "prc_evnt_bonebld", TRUE, FALSE); 
+				
 		//Check metamagic
 		if (nMetaMagic == METAMAGIC_EXTEND)
 		{

@@ -128,6 +128,9 @@ void DoNaturalAttack(object oWeapon)
     //attack not in melee range abort
     if(!GetIsInMeleeRange(oTarget, oPC))
         return;
+    //if weapon is not valid, abort    
+    if(!GetIsObjectValid(oWeapon))
+        return;
     
     //null effect
     effect eInvalid;
@@ -277,34 +280,30 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
             //get the resref to use
             string sResRef = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
             //if null, move to next
-            if(sResRef == "")
-                continue;
-            //get the created item
-            object oWeapon = GetObjectByTag(sResRef);
-            if(!GetIsObjectValid(oWeapon))
+            if(sResRef != "")
             {
-                object oLimbo = GetObjectByTag("HEARTOFCHAOS");
-                location lLimbo = GetLocation(oLimbo);
-                if(!GetIsObjectValid(oLimbo))
-                    lLimbo = GetStartingLocation();
-                oWeapon = CreateObject(OBJECT_TYPE_ITEM, sResRef, lLimbo);
-            }
-            if(!GetIsObjectValid(oWeapon))
-            {
-                //something odd here, abort to be safe
-                continue;
-            }
+                //get the created item
+                object oWeapon = GetObjectByTag(sResRef);
+                if(!GetIsObjectValid(oWeapon))
+                {
+                    object oLimbo = GetObjectByTag("HEARTOFCHAOS");
+                    location lLimbo = GetLocation(oLimbo);
+                    if(!GetIsObjectValid(oLimbo))
+                        lLimbo = GetStartingLocation();
+                    oWeapon = CreateObject(OBJECT_TYPE_ITEM, sResRef, lLimbo);
+                }
 
-            //do the attack within a delay
-            AssignCommand(oPC, 
-                DelayCommand(fDelay,
-                    DoNaturalAttack(oWeapon)));
-            DoDebug("Assigning an attack with "+GetName(oWeapon));
+                //do the attack within a delay
+                AssignCommand(oPC, 
+                    DelayCommand(fDelay,
+                        DoNaturalAttack(oWeapon)));
+                DoDebug("Assigning an attack with "+GetName(oWeapon));
+                //calculate the delay to use next time
+                fDelay += 2.0;
+                if(fDelay > 6.0)
+                    fDelay -= 6.0;
+            }
             i++;
-            //calculate the delay to use
-            fDelay += 2.0;
-            if(fDelay > 6.0)
-                fDelay -= 6.0;
         }
     }
     int nOverflowAttackCount = GetLocalInt(oPC, "OverflowBaseAttackCount");
@@ -392,7 +391,7 @@ void UpdateNaturalWeaponSizes(object oPC)
     string sCurrent = "_"+GetAffixForSize(nSize);
     //secondary
     int i;
-    for(i=0;i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF);i++)
+    for(i=0; i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF); i++)
     {
         string sTest = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
         string sTestSize = GetStringRight(sTest, 2);
@@ -404,7 +403,7 @@ void UpdateNaturalWeaponSizes(object oPC)
         }
     }    
     //primary
-    for(i=0;i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);i++)
+    for(i=0; i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF); i++)
     {
         string sTest = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
         string sTestSize = GetStringRight(sTest, 2);
@@ -426,8 +425,7 @@ void UpdateNaturalWeaponSizes(object oPC)
         {
             DestroyObject(oObject);
             string sNewResRef = GetStringLeft(sTest, GetStringLength(sTest)-2)+sCurrent;
-            EquipNaturalWeapon(oPC, sNewResRef);
-            
+            EquipNaturalWeapon(oPC, sNewResRef);            
         }
     }
 }

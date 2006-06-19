@@ -16,6 +16,7 @@ const int AOE_PER_ACHAIERAI                     = 206;
 const int AOE_PER_UTTERDARK                     = 205;
 const int AOE_PER_DAMNDARK                      = 203;
 const int VFX_MOB_BRILLIANT_EMANATION           = 204;
+const int AOE_PER_BLNDGLORY                     = 183;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

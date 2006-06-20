@@ -641,3 +641,8 @@ const int IP_CONST_FEAT_SPELLFIRE_QUICKSELECT   =  268;
 // Status markers
 const int IP_CONST_FEAT_INCORPOREAL             = 227;
 const int IP_CONST_FEAT_ETHEREAL                = 228;
+
+
+// Template Feats
+const int IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL = 16301;
+const int IP_CONST_FEAT_TEMPLATE_CELESTIAL_MARKER     = 16302;

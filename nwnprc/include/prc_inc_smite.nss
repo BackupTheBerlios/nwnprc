@@ -24,11 +24,19 @@ CW Samurai
     Kiai
 */
 
-const int SMITE_TYPE_GOOD       = 1;
-const int SMITE_TYPE_EVIL       = 2;
-const int SMITE_TYPE_UNDEAD     = 3;
-const int SMITE_TYPE_INFIDEL    = 4;
-const int SMITE_TYPE_KIAI       = 5;
+const int SMITE_TYPE_GOOD_ANTIPALADIN               = 11;
+const int SMITE_TYPE_GOOD_BLACKGUARD                = 12; //not used, biowares is adequate
+
+const int SMITE_TYPE_EVIL_PALADIN                   = 21; //not used, biowares is adequate
+const int SMITE_TYPE_EVIL_FIST_OF_RAZIEL            = 22;
+const int SMITE_TYPE_EVIL_TEMPLATE_CELESTIAL        = 23;
+const int SMITE_TYPE_EVIL_TEMPLATE_HALF_CELESTIAL   = 24;
+
+const int SMITE_TYPE_UNDEAD                         = 31;
+
+const int SMITE_TYPE_INFIDEL                        = 41;
+
+const int SMITE_TYPE_KIAI                           = 51;
 
 //this calculates damage and stuff from class and type
 //takes epic smiting feats etc into account
@@ -53,33 +61,63 @@ void DoSmite(object oPC, object oTarget, int nType)
     string sFailedSmiter;
     int nTargetInvalid = !GetIsObjectValid(oTarget);
     int nSmiterInvalid = !GetIsObjectValid(oPC);
-    switch(nType)
+    if(nType == SMITE_TYPE_EVIL_FIST_OF_RAZIEL
+        || nType == SMITE_TYPE_EVIL_PALADIN
+        || nType == SMITE_TYPE_EVIL_TEMPLATE_CELESTIAL
+        || nType == SMITE_TYPE_EVIL_TEMPLATE_HALF_CELESTIAL)
     {
-        case SMITE_TYPE_EVIL:
+        eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+        
+        if(nType == SMITE_TYPE_EVIL_PALADIN)
         {
-            eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+            nDamage = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
             nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-            nDamage = GetLevelByClass(CLASS_TYPE_PALADIN, oPC)
-                +GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oPC);
-            nDamageType = DAMAGE_TYPE_DIVINE;
-            sFailedTarget = "Smite Failed: target is not Evil";
-            sFailedSmiter = "Smite Failed: you are not Good";
-            sHit =  "Smite Evil Hit";
-            sMiss = "Smite Evil Missed";
-            if(GetAlignmentGoodEvil(oTarget)        != ALIGNMENT_EVIL)
-                nTargetInvalid = TRUE;
-            if(GetAlignmentGoodEvil(oPC)            != ALIGNMENT_GOOD)
-                nSmiterInvalid = TRUE;
+            if(nAttack < 1)
+                nAttack = 1;
+        }   
+        else if(nType == SMITE_TYPE_EVIL_FIST_OF_RAZIEL)
+        {
+            nDamage = GetLevelByClass(CLASS_TYPE_FISTRAZIEL, oPC);
+            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+            if(nAttack < 1)
+                nAttack = 1;
+        }   
+        else if(nType == SMITE_TYPE_EVIL_TEMPLATE_CELESTIAL)
+        {
+            nDamage = GetHitDice(oPC);
+            if(nDamage > 20)
+                nDamage = 20;
+        }   
+        else if(nType == SMITE_TYPE_EVIL_TEMPLATE_HALF_CELESTIAL)
+        {
+            nDamage = GetHitDice(oPC);
+            if(nDamage > 20)
+                nDamage = 20;
+        }   
+            
+        nDamageType = DAMAGE_TYPE_DIVINE;
+        sFailedTarget = "Smite Failed: target is not Evil";
+        sFailedSmiter = "Smite Failed: you are not Good";
+        sHit =  "Smite Evil Hit";
+        sMiss = "Smite Evil Missed";
+        if(GetAlignmentGoodEvil(oTarget)        != ALIGNMENT_EVIL)
+            nTargetInvalid = TRUE;
+        if(GetAlignmentGoodEvil(oPC)            != ALIGNMENT_GOOD)
+            nSmiterInvalid = TRUE;
 
-            //Fist of Raziel special stuff
+        //Fist of Raziel special stuff
+        if(nType == SMITE_TYPE_EVIL_FIST_OF_RAZIEL)
+        {
             //good aligned weapon (+1 enhancement to break DR)
             if(GetHasFeat(FEAT_SMITE_GOOD_ALIGN, oPC))
                 AddItemProperty(DURATION_TYPE_TEMPORARY,
                     ItemPropertyEnhancementBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 1),
                     oWeapon, 0.1);
+
             //criticals always hit
             if(GetHasFeat(FEAT_SMITE_CONFIRMING, oPC))
                 SetLocalInt(oPC, "FistOfRazielSpecialSmiteCritical", TRUE);
+
             //2d8 vs outsiders or undead
             if(GetHasFeat(FEAT_SMITE_FIEND, oPC)
                 && (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER
@@ -88,12 +126,14 @@ void DoSmite(object oPC, object oTarget, int nType)
                     ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,
                         DAMAGE_TYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d8),
                     oWeapon, 0.1);
+
             //these are either or, not both
             else if(GetHasFeat(FEAT_SMITE_HOLY, oPC))
                 AddItemProperty(DURATION_TYPE_TEMPORARY,
                     ItemPropertyDamageBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL,
                         DAMAGE_TYPE_DIVINE, IP_CONST_DAMAGEBONUS_2d6),
                     oWeapon, 0.1);
+
             //chain bolt stuff
             if(GetHasFeat(FEAT_SMITE_CHAIN, oPC))
             {
@@ -131,85 +171,94 @@ void DoSmite(object oPC, object oTarget, int nType)
                 }
             }
         }
-        break;
+    }
 
-        case SMITE_TYPE_GOOD:
+    else if(nType == SMITE_TYPE_GOOD_ANTIPALADIN
+        || nType == SMITE_TYPE_GOOD_BLACKGUARD)
+    {
+        eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+        if(nType == SMITE_TYPE_GOOD_BLACKGUARD)
         {
-            eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
-            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-            nDamage = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, oPC)
-                +GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
-            nDamageType = DAMAGE_TYPE_DIVINE;
-            sFailedTarget = "Smite Failed: target is not Good";
-            sFailedSmiter = "Smite Failed: you are not Evil";
-            sHit =  "Smite Good Hit";
-            sMiss = "Smite Good Missed";
-            if(GetAlignmentGoodEvil(oTarget)        != ALIGNMENT_GOOD)
-                nTargetInvalid = TRUE;
-            if(GetAlignmentGoodEvil(OBJECT_SELF)    != ALIGNMENT_EVIL)
-                nSmiterInvalid = TRUE;
-        }
-        break;
-
-        case SMITE_TYPE_UNDEAD:
-        {
-            eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
-            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-            nDamage = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oPC);
-            nDamageType = DAMAGE_TYPE_POSITIVE;
-            sFailedTarget = "Smite Failed: target is not Undead";
-            sFailedSmiter = "Smite Failed: you are not Good";
-            sHit =  "Smite Undead Hit";
-            sMiss = "Smite Undead Missed";
-            if(MyPRCGetRacialType(oTarget)            != RACIAL_TYPE_UNDEAD)
-                nTargetInvalid = TRUE;
-            if(GetAlignmentGoodEvil(OBJECT_SELF)    != ALIGNMENT_GOOD)
-                nSmiterInvalid = TRUE;
-        }
-        break;
-
-        case SMITE_TYPE_INFIDEL:
-        {
-            eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
-            nDamage = GetLevelByClass(CLASS_TYPE_DIVINE_CHAMPION, oPC); //CoT
-            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-            string sDeity = "Torm";
-            //if bane levels higher, use that
-            if(GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC) > nDamage)
-            {
-                nDamage = GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC);
-                sDeity = "Bane";
-            }
-            nDamageType = DAMAGE_TYPE_POSITIVE;
-            sFailedTarget = "Smite Failed: target has the same deity";
-            sFailedSmiter = "Smite Failed: you do not follow your deity";
-            sHit =  "Smite Infidel Hit";
-            sMiss = "Smite Infidel Missed";
-            if(GetStringLowerCase(GetDeity(oTarget))== GetStringLowerCase(GetDeity(oPC)))
-                nTargetInvalid = TRUE;
-            if(GetStringLowerCase(GetDeity(oPC))    != GetStringLowerCase(sDeity))
-                nSmiterInvalid = TRUE;
-        }
-        break;
-
-        case SMITE_TYPE_KIAI:
-        {
-            eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
-            nDamage = GetAbilityModifier(ABILITY_CHARISMA, oPC);
-            if(nDamage < 1)
-                nDamage = 1;
+            nDamage = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oPC);
             nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
             if(nAttack < 1)
                 nAttack = 1;
-            nDamageType = DAMAGE_TYPE_DIVINE;
-            sFailedTarget = "Taget cannot be invalid";
-            sFailedSmiter = "Smite Failed: you are not Lawful";
-            sHit =  "Kiai Smite Hit";
-            sMiss = "Kiai Smite Missed";
-            if(GetAlignmentLawChaos(OBJECT_SELF)    != ALIGNMENT_LAWFUL)
-                nSmiterInvalid = TRUE;
+        }   
+        else if(nType == SMITE_TYPE_GOOD_ANTIPALADIN)
+        {
+            nDamage = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, oPC);
+            nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+            if(nAttack < 1)
+                nAttack = 1;
+        }   
+        nDamageType = DAMAGE_TYPE_DIVINE;
+        sFailedTarget = "Smite Failed: target is not Good";
+        sFailedSmiter = "Smite Failed: you are not Evil";
+        sHit =  "Smite Good Hit";
+        sMiss = "Smite Good Missed";
+        if(GetAlignmentGoodEvil(oTarget)        != ALIGNMENT_GOOD)
+            nTargetInvalid = TRUE;
+        if(GetAlignmentGoodEvil(OBJECT_SELF)    != ALIGNMENT_EVIL)
+            nSmiterInvalid = TRUE;
+    }
+
+    else if(nType == SMITE_TYPE_UNDEAD)
+    {
+        eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+        nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+        nDamage = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT, oPC);
+        nDamageType = DAMAGE_TYPE_POSITIVE;
+        sFailedTarget = "Smite Failed: target is not Undead";
+        sFailedSmiter = "Smite Failed: you are not Good";
+        sHit =  "Smite Undead Hit";
+        sMiss = "Smite Undead Missed";
+        if(MyPRCGetRacialType(oTarget)            != RACIAL_TYPE_UNDEAD)
+            nTargetInvalid = TRUE;
+        if(GetAlignmentGoodEvil(OBJECT_SELF)    != ALIGNMENT_GOOD)
+            nSmiterInvalid = TRUE;
+    }
+
+    else if(nType == SMITE_TYPE_INFIDEL)
+    {
+        eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+        nDamage = GetLevelByClass(CLASS_TYPE_DIVINE_CHAMPION, oPC); //CoT
+        nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+        string sDeity = "Torm";
+        //if bane levels higher, use that
+        if(GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC) > nDamage)
+        {
+            nDamage = GetLevelByClass(CLASS_TYPE_CHAMPION_BANE, oPC);
+            sDeity = "Bane";
         }
-        break;
+        nDamageType = DAMAGE_TYPE_POSITIVE;
+        if(nAttack < 1)
+            nAttack = 1;
+        sFailedTarget = "Smite Failed: target has the same deity";
+        sFailedSmiter = "Smite Failed: you do not follow your deity";
+        sHit =  "Smite Infidel Hit";
+        sMiss = "Smite Infidel Missed";
+        if(GetStringLowerCase(GetDeity(oTarget))== GetStringLowerCase(GetDeity(oPC)))
+            nTargetInvalid = TRUE;
+        if(GetStringLowerCase(GetDeity(oPC))    != GetStringLowerCase(sDeity))
+            nSmiterInvalid = TRUE;
+    }
+
+    else if(nType == SMITE_TYPE_KIAI)
+    {
+        eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
+        nDamage = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+        if(nDamage < 1)
+            nDamage = 1;
+        nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
+        if(nAttack < 1)
+            nAttack = 1;
+        nDamageType = DAMAGE_TYPE_DIVINE;
+        sFailedTarget = "Taget cannot be invalid";
+        sFailedSmiter = "Smite Failed: you are not Lawful";
+        sHit =  "Kiai Smite Hit";
+        sMiss = "Kiai Smite Missed";
+        if(GetAlignmentLawChaos(OBJECT_SELF)    != ALIGNMENT_LAWFUL)
+            nSmiterInvalid = TRUE;
     }
 
     //check target is valid

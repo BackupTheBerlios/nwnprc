@@ -1,10 +1,10 @@
 2DA V2.0
 
     Label                           Name LA   Type  TestScript   SetupScript MaintainScript
-0   Fiendish                        **** +2   1     tmp_t_fiend  ****        tmp_m_fiend
-1   Celestial                       **** +2   1     tmp_t_celest ****        tmp_m_celest
-2   HalfFiend                       **** +4   1     tmp_t_hfiend ****        tmp_m_hceles
-3   HalfCelest                      **** +4   1     tmp_t_hceles ****        tmp_m_hfiend
+0   Fiendish                        6717 +2   1     tmp_t_fiend  ****        tmp_m_fiend
+1   Celestial                       6716 +2   1     tmp_t_celest ****        tmp_m_celest
+2   HalfFiend                       5638 +4   1     tmp_t_hfiend ****        tmp_m_hceles
+3   HalfCelest                      5639 +4   1     tmp_t_hceles ****        tmp_m_hfiend
 4   LycanNatBear                    **** **** 1     ****         ****        ****
 5   LycanNatBoar                    **** **** 1     ****         ****        ****
 6   LycanNatRat                     **** **** 1     ****         ****        ****
@@ -102,7 +102,7 @@
 98  ****                            **** **** ****  ****         ****        **** 
 99  ****                            **** **** ****  ****         ****        **** 
 100 ****                            **** **** ****  ****         ****        **** 
-101 Lich                            **** +4   2     tmp_t_lich   ****        tmp_m_lich
-102 DemiLich                        **** +8   2     tmp_t_lichd  ****        tmp_m_lich
+101 Lich                            5571 +4   2     tmp_t_lich   ****        tmp_m_lich
+102 DemiLich                        3087 +8   2     tmp_t_lichd  ****        tmp_m_lich
 103 Vampire                         **** +8   ****  ****         ****        **** 
 104 VampireSpawn                    **** **** ****  ****         ****        **** 

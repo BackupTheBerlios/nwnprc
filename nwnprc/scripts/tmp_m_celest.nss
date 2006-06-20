@@ -13,8 +13,6 @@
     for half-celestials, more powerful creatures that are created when a celestial mates with a non-celestial 
     creature.
     
-    Creating A Celestial Creature
-
     "Celestial" is an inherited template that can be added to any corporeal aberration, animal, dragon, fey, giant, 
     humanoid, magical beast, monstrous humanoid, plant, or vermin of good or neutral alignment (referred to 
     hereafter as the base creature).
@@ -27,16 +25,13 @@
     Size is unchanged. Celestial creatures encountered on the Material Plane have the extraplanar subtype.
     
     Special Attacks
-
     A celestial creature retains all the special attacks of the base creature and also gains the following attack.
     
     Smite Evil (Su)
-
     Once per day a celestial creature can make a normal melee attack to deal extra damage equal to its HD (maximum 
     of +20) against an evil foe.
     
     Special Qualities
-
     A celestial creature retains all the special qualities of the base creature and also gains the following qualities.
 
         * Darkvision out to 60 feet.
@@ -56,23 +51,18 @@
     purpose of overcoming damage reduction.
     
     Abilities
-
     Same as the base creature, but Intelligence is at least 3.
     
     Environment
-
     Any good-aligned plane.
     
     Challenge Rating
-
     HD 3 or less, as base creature; HD 4 to 7, as base creature +1; HD 8 or more, as base creature +2.
     
     Alignment
-
     Always good (any).
     
     Level Adjustment
-
     Same as the base creature +2. 
 
 */
@@ -131,7 +121,9 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
     //smite evil
-    //TO BE ADDED
+    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);    
     //marker feat
-    //TO BE ADDED
+    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_MARKER);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);   
 }

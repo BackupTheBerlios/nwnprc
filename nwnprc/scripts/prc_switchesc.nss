@@ -18,6 +18,7 @@
 #include "inc_epicspells"
 #include "prc_inc_leadersh"
 #include "prc_inc_natweap"
+#include "prc_inc_template"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -44,6 +45,8 @@ const int STAGE_LEADERSHIP_REMOVE               = 18;
 const int STAGE_LEADERSHIP_DELETE               = 19;
 const int STAGE_LEADERSHIP_DELETE_CONFIRM       = 20;
 const int STAGE_NATURAL_WEAPON                  = 30;
+const int STAGE_TEMPLATE                        = 31;
+const int STAGE_TEMPLATE_CONFIRM                = 32;
 
 const int CHOICE_RETURN_TO_PREVIOUS             = 0xEFFFFFFF;
 const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;
@@ -127,6 +130,7 @@ void main()
                     AddChoice("Manage cohorts.", 7);
                 if(GetPrimaryNaturalWeaponCount(oPC))
                     AddChoice("Select primary natural weapon.", 8);
+                AddChoice("Gain a template.", 9);
 
 
                 MarkStageSetUp(nStage, oPC);
@@ -526,8 +530,52 @@ void main()
                 }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
-                MarkStageSetUp(nStage, oPC);
-            
+                MarkStageSetUp(nStage, oPC);            
+            }
+            else if (nStage == STAGE_TEMPLATE)
+            {
+                string sHeader = "Select a template to gain:";
+                SetHeader(sHeader);
+                int i;
+                for(i=0;i<150;i++)
+                {
+                    string sName;
+                    int nNameID = StringToInt(Get2DACache("templates", "Name", i));
+                    if(nNameID != 0)
+                        sName = GetStringByStrRef(nNameID);
+                    else
+                        sName = Get2DACache("templates", "Label", i);
+                    //check type 
+                    //inherited templates can only be taken with 1 HD
+                    if((StringToInt(Get2DACache("templates", "Type", i)) & 1)
+                        || !ApplyTemplateToObject(i, oPC, FALSE))
+                    {
+                        if(GetHitDice(oPC) > 1)
+                            sName = "";
+                    }
+                    if(sName != "")
+                        AddChoice(sName, i);
+                }
+                AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+
+                MarkStageSetUp(nStage, oPC);            
+            }
+            else if (nStage == STAGE_TEMPLATE_CONFIRM)
+            {
+                int nTemplateID = GetLocalInt(oPC, "TemplateIDToGain");
+                string sName;
+                int nNameID = StringToInt(Get2DACache("templates", "Name", nTemplateID));
+                if(nNameID != 0)
+                    sName = GetStringByStrRef(nNameID);
+                else
+                    sName = Get2DACache("templates", "Label", nTemplateID);
+                string sHeader = "You have selected: "+sName;
+                sHeader += "\nAre you sure you want this template?";
+                SetHeader(sHeader);
+                AddChoice("Yes", TRUE);
+                AddChoice("No", FALSE);
+
+                MarkStageSetUp(nStage, oPC);            
             }
         }
 
@@ -545,6 +593,7 @@ void main()
         DeleteLocalInt(oPC, "CustomCohortMoral");
         DeleteLocalInt(oPC, "CustomCohortOrder");
         DeleteLocalInt(oPC, "CustomCohortGender");
+        DeleteLocalInt(oPC, "TemplateIDToGain");
     }
     else if(nValue == DYNCONV_ABORTED)
     {
@@ -557,6 +606,7 @@ void main()
         DeleteLocalInt(oPC, "CustomCohortMoral");
         DeleteLocalInt(oPC, "CustomCohortOrder");
         DeleteLocalInt(oPC, "CustomCohortGender");
+        DeleteLocalInt(oPC, "TemplateIDToGain");
     }
     else
     {
@@ -588,6 +638,8 @@ void main()
                 nStage = STAGE_LEADERSHIP;
             else if(nChoice == 8)
                 nStage = STAGE_NATURAL_WEAPON;
+            else if(nChoice == 9)
+                nStage = STAGE_TEMPLATE;
 
             // Mark the target stage to need building if it was changed (ie, selection was other than ID all)
             if(nStage != STAGE_ENTRY)
@@ -966,6 +1018,24 @@ void main()
             else
                 //specific natural weapon
                 SetPrimaryNaturalWeapon(oPC, nChoice);
+        
+            nStage = STAGE_ENTRY;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if (nStage == STAGE_TEMPLATE)
+        {
+            SetLocalInt(oPC, "TemplateIDToGain", nChoice);
+        
+            nStage = STAGE_TEMPLATE_CONFIRM;
+            MarkStageNotSetUp(nStage, oPC);
+        }
+        else if (nStage == STAGE_TEMPLATE_CONFIRM)
+        {
+            if(nChoice)
+            {       
+                int nTemplateID = GetLocalInt(oPC, "TemplateIDToGain");
+                ApplyTemplateToObject(nTemplateID, oPC);
+            }    
         
             nStage = STAGE_ENTRY;
             MarkStageNotSetUp(nStage, oPC);

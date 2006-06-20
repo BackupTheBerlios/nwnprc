@@ -2098,3 +2098,8 @@ const int FEAT_WWOC_ENLARGE_SPELL_AREA        = 2474;
 // Status markers
 const int FEAT_INCORPOREAL                    = 4166;
 const int FEAT_ETHEREAL                       = 4167;
+
+
+// Template Feats
+const int FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL  = 22601;
+const int FEAT_TEMPLATE_CELESTIAL_MARKER      = 22602;

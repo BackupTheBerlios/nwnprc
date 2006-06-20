@@ -17610,18 +17610,6 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
   <entry id="51117" lang="en" sex="m">Your inventory is too full for the PRC Polymorphing system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again.</entry>
   <entry id="51118" lang="en" sex="m">The PRC Polymorphing system will not work while you are affected by a polymorph effect. Please remove it before trying again.</entry>
   <entry id="51119" lang="en" sex="m">Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again.</entry>
-  <entry id="51120" lang="en" sex="m"></entry>
-  <entry id="51121" lang="en" sex="m"></entry>
-  <entry id="51122" lang="en" sex="m"></entry>
-  <entry id="51123" lang="en" sex="m"></entry>
-  <entry id="51124" lang="en" sex="m"></entry>
-  <entry id="51125" lang="en" sex="m"></entry>
-  <entry id="51126" lang="en" sex="m"></entry>
-  <entry id="51127" lang="en" sex="m"></entry>
-  <entry id="51128" lang="en" sex="m"></entry>
-  <entry id="51129" lang="en" sex="m"></entry>
-
-
   <entry id="51200" lang="en" sex="m">This conversation manages your augmentation profiles and augmentation quickselections.</entry>
   <entry id="51201" lang="en" sex="m">View / modify augmentation profiles</entry>
   <entry id="51202" lang="en" sex="m">View / modify quickselections</entry>
@@ -25539,4 +25527,38 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="64486" lang="en" sex="m">Favoured Soul Silent Resistance</entry>
   <entry id="64487" lang="en" sex="m">Favoured Soul Still Resistance</entry>
   <entry id="70000" lang="en" sex="m">####END_OF_NEW_SPELLBOOK_RESERVE</entry>
+  <entry id="70001" lang="en" sex="m">START OF TEMPLATE SYSTEM RESERVE</entry>
+  <entry id="70002" lang="en" sex="m">Type of Feat: Template
+Prerequisite: Celestial Template, Half-Celestial Template.
+Specifics: This feat allows the character to make a special attack against evil creatures. Once per day a celestial creature can make a normal melee attack to deal extra damage equal to its HD (maximum of +20) against an evil foe.
+Use: Selected. Smite Evil only affects evil creatures.</entry>
+  <entry id="70003" lang="en" sex="m">Template: Celestial</entry>
+  <entry id="70004" lang="en" sex="m">Celestial creatures dwell on the upper planes, the realms of good, although they resemble beings found on the Material Plane. They are more regal and more beautiful than their earthly counterparts.
+
+Celestial creatures often come in metallic colors (usually silver, gold, or platinum). They can be mistaken for half-celestials, more powerful creatures that are created when a celestial mates with a non-celestial creature.
+    
+"Celestial" is an inherited template that can be added to any corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, plant, or vermin of good or neutral alignment (referred to hereafter as the base creature).
+
+Size and Type
+Animals or vermin with this template become magical beasts, but otherwise the creature type is unchanged. Size is unchanged. Celestial creatures encountered on the Material Plane have the extraplanar subtype.
+    
+Special Attacks
+A celestial creature retains all the special attacks of the base creature and also gains the following attack.
+    
+Smite Evil (Su)
+Once per day a celestial creature can make a normal melee attack to deal extra damage equal to its HD (maximum of +20) against an evil foe.
+    
+Special Qualities
+A celestial creature retains all the special qualities of the base creature and also gains the following qualities:
+
+Darkvision.
+Damage reduction. 4-11 HD, 5/+1. 12+ HD 10/+1.
+Resistance to acid, cold, and electricity 1-7 HD 5. 8+ HD 10
+Spell resistance equal to HD + 5 (maximum 25).
+
+Abilities
+Same as the base creature, but Intelligence is at least 3.
+    
+Level Adjustment
+Same as the base creature +2. </entry>
 </tlk>

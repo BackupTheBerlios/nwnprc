@@ -12,10 +12,6 @@
 //:: Created On: 18/4/06
 //:://////////////////////////////////////////////
 
-#include "x2_inc_switches"
-#include "prc_template_const"
-#include "inc_persist_loca"
-
 //Checks if the target has the template or not.
 //returns 1 if it does, 0 if it doesnt or if its an invalid target
 int GetHasTemplate(int nTemplate, object oPC = OBJECT_SELF);
@@ -28,6 +24,10 @@ int GetTemplateLA(object oPC);
 //will not work on non-creatures
 //if bApply is false, this can test if the template is applicable or not
 int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = TRUE);
+
+#include "x2_inc_switches"
+#include "prc_template_const"
+#include "inc_persist_loca"
 
 int GetHasTemplate(int nTemplate, object oPC = OBJECT_SELF)
 {

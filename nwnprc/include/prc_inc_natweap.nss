@@ -269,8 +269,10 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
     float fInitialDelay = IntToFloat(Random(20))/10.0;
     //no natural weapons, abort
     //in a different form, abort for now fix it later   
+    //not in combat, abort
     if(array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF)
-        && !GetIsPolyMorphedOrShifted(oPC))
+        && !GetIsPolyMorphedOrShifted(oPC)
+        && GetIsInCombat(oPC))
     {   
         UpdateSecondaryWeaponSizes(oPC);
         int i;
@@ -456,7 +458,7 @@ void RemoveNaturalSecondaryWeapons(object oPC, string sResRef)
         array_create(oPC, ARRAY_NAT_SEC_WEAP_RESREF);
     //check if it was already added
     int i;
-    for(i=0;i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF);i++)
+    for(i=0; i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF); i++)
     {
         string sTest = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
         if(sTest == sResRef)

@@ -80,6 +80,8 @@ void main()
         int nBaseDamage;
         effect eVis               = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
         effect eDur               = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+        eDur = EffectLinkEffects(eDur, EffectSkillIncrease(SKILL_HIDE, 1));
+        eDur = EffectLinkEffects(eDur, EffectSkillDecrease(SKILL_HIDE, 1));
         object oCWeapon;
         float fDuration           = 60.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;

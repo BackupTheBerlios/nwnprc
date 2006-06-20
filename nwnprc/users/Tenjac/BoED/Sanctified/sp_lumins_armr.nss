@@ -47,7 +47,7 @@ This spell functions like luminous armor, except
 that it imparts the benefits of full plate (+8 
 armor bonus to AC).
 
-Sacrifice: 1d3 points of Strenght damage.
+Sacrifice: 1d3 points of Strength damage.
 
 Author:    Tenjac
 Created:   6/20/06

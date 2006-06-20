@@ -48,10 +48,52 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
-	int nCasterLevel = PRCGetCasterLevel(oPC);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
-	
+	int nAlign = GetAlignmentGoodEvil(oTarget);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+		
 	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HAMMER_OF_RIGHTEOUSNESS, oPC);
 	
-	if
+	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        {
+		int nDam = d6(nCasterLvl);
+			
+		if(nMetaMagic == METAMAGIC_MAXIMIZE)
+		{
+			nDam = 6 * (nCasterLvl);
+		}
+		
+		if(nAlign == ALIGNMENT_EVIL)
+		{
+			nDam = d8(nCasterLvl);
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 8 * (nCasterLvl);
+			}
+		}
+		
+		if(nMetaMagic == METAMAGIC_EMPOWER)
+		{
+			nDam += (nDam/2);
+		}
+		
+		//Save for 1/2
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+		{
+			nDam = (nDam/2);
+		}
+		
+		//Play VFX
+		
+		
+		//Apply damage
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+	}
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 0);
+	SPSetSchool();
+}
+		
+		
 	

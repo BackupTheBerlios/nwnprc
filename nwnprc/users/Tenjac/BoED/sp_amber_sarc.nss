@@ -44,7 +44,7 @@ Created:   6/19/06
 //:://////////////////////////////////////////////
 
 void SarcMonitor(object oTarget, object oPC, int nNormHP);
-void RemoveSarc(object oTarget);
+void RemoveSarc(object oTarget, object oPC, object oCopy);
 
 #include "spinc_common"
 
@@ -74,27 +74,40 @@ void main()
 	{
 		//Sphere VFX		
 		
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
-			//VFX - simple amber coating
+			//Apply effects
+			effect eSarc = EffectLinkEffects(EffectCutsceneGhost(), EffectCutsceneParalyze());
+			       eSarc = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eSarc);
+			     //eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS));			
+			
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur);
+			
+			//swap out the target
+			object oCopy = CopyObject(oTarget, GetLocation(oTarget));
+			
+			//Apply VFX
+			//SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS), oCopy, fDur);
+			
+			RemoveEffect(oCopy, eLink);
 			
 			//Paralyze
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectParalyze(), oTarget, fDur);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectParalyze(), oCopy, fDur);
 			
-			int nNormHP = GetCurrentHitPoints(oTarget);
+			int nNormHP = GetCurrentHitPoints(oCopy);
 			
 			//Add 200 temp HP
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitPoints(10 * min(20, nCasterLvl)), oTarget, fDur);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitPoints(10 * min(20, nCasterLvl)), oCopy, fDur);
 			
-			SarcMonitor(oTarget, oPC, nNormHP);
+			SarcMonitor(oCopy, oPC, oTarget, nNormHP);
 		}
 	}
 	SPSetSchool();
 }
 
-void SarcMonitor(object oTarget, object oPC, int nNormHP)
+void SarcMonitor(object oCopy, object oPC, object oTarget, int nNormHP)
 {
-	int nHP = GetCurrentHitPoints(oTarget);
+	int nHP = GetCurrentHitPoints(oCopy);
 	int bRemove = FALSE;
 		
 	while(bRemove == FALSE)
@@ -102,12 +115,12 @@ void SarcMonitor(object oTarget, object oPC, int nNormHP)
 		if(nHP <= nNormHP)
 		{
 			bRemove = TRUE;
-			RemoveSarc(oTarget);
+			RemoveSarc(oCopy, oPC);
 		}
 	}
 }
 
-void RemoveSarc(object oTarget)
+void RemoveSarc(object oCopy, object oTarget)
 {
 	effect eTest = GetFirstEffect(oTarget);
 	

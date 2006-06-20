@@ -19,7 +19,7 @@ light that illuminates an area around the target
 its ability to generate bright light is not the 
 spell's primary function.
 
-The sunmantle grants the target dam­age reduction 
+The sunmantle grants the target damage reduction 
 5/-. Furthermore, if the target is struck by a melee
 attack that deals hit point damage, a tendril of 
 light lashes out at the attacker, striking 
@@ -33,9 +33,24 @@ light radius of the sunmantle.
 Sacrifice: 1d4 points of Strength damage.
 
 Author:    Tenjac
-Created:   
+Created:   6/20/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	effect eLink = EffectLinkEffects(EffectDamageShield(4, DAMAGE_BONUS_1, DAMAGE_TYPE_MAGICAL), EffectDamageResistance());
+	
+	SP
+	

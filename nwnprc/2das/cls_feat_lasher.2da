@@ -227,4 +227,8 @@
 223 FEAT_TYRANNY_DOMAIN                  4062      0    99             0      
 224 FEAT_OCEAN_DOMAIN                    4063      0    99             0      
 225 FEAT_BLIGHTBRINGER                   2250      0    99             1      
-226 ###cls_feat_allBaseClasses_END###    ****      **** ****           ****   
+226 ****                                 ****      **** ****           ****   
+227 ****                                 ****      **** ****           ****   
+228 **Templates**                        ****      **** ****           ****   
+229 Celestial_Smite_Evil                 22601     0    99             1      
+230 ###cls_feat_allBaseClasses_END###    ****      **** ****           ****   

@@ -170,5 +170,9 @@
 165   FEAT_SPIDER_DOMAIN                                 4061        0      99               1        
 166   FEAT_TYRANNY_DOMAIN                                4062        0      99               0        
 167   FEAT_OCEAN_DOMAIN                                  4063        0      99               0        
-168   FEAT_BLIGHTBRINGER                                 2250        0      99               1        
-169   ###cls_feat_allBaseClasses_END###                  ****        ****   ****             ****     
+168   FEAT_BLIGHTBRINGER                                 2250        0      99               1      
+169   ****                                               ****        ****   ****             ****     
+170   ****                                               ****        ****   ****             ****     
+171   **Templates**                                      ****        ****   ****             **** 
+172   Celestial_Smite_Evil                               22601       0      99               1
+173   ###cls_feat_allBaseClasses_END###                  ****        ****   ****             ****     

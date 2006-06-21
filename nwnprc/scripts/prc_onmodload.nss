@@ -63,7 +63,7 @@ void main()
         SetPRCSwitch(PRC_USE_LETOSCRIPT, TRUE);
     }
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE) == 0)
-        SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 100);//100 HBs = 600sec = 10min
+        SetPRCSwitch(PRC_USE_BIOWARE_DATABASE, 300);//100 HBs = 1800sec = 30min
     if(GetPRCSwitch(PRC_USE_BIOWARE_DATABASE))
         DelayCommand(1.0, CheckDB());
 

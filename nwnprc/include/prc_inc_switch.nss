@@ -1799,7 +1799,7 @@ const string PRC_XP_GIVE_XP_TO_NON_PC_FACTIONS       = "PRC_XP_GIVE_XP_TO_NON_PC
 /**
  * Set this if you want to use the bioware db for 2da caching
  * the value is the number of Hbs between caching runs
- * Defaults to 600 (10 mins) if not set
+ * Defaults to 300 (30 mins) if not set
  * cache will be flushed automatically when the PRC version changes
  * If this is set to -1 or lower, it is never stored for persistance over
  * module restarts.

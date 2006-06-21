@@ -370,4 +370,8 @@
 366 FEAT_TYRANNY_DOMAIN                            4062      0    99             0      
 367 FEAT_OCEAN_DOMAIN                              4063      0    99             0      
 368 FEAT_BLIGHTBRINGER                             2250      0    99             1      
-369 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
+369 ****                                           ****      **** ****           ****   
+370 ****                                           ****      **** ****           ****   
+371 **Templates**                                  ****      **** ****           ****   
+372 Celestial_Smite_Evil                           22601     0    99             1      
+373 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   

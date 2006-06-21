@@ -506,4 +506,8 @@
 502 FEAT_TYRANNY_DOMAIN                            4062      0    99             0      
 503 FEAT_OCEAN_DOMAIN                              4063      0    99             0      
 504 FEAT_BLIGHTBRINGER                             2250      0    99             1      
-505 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
+505 ****                                           ****      **** ****           ****   
+506 ****                                           ****      **** ****           ****   
+507 **Templates**                                  ****      **** ****           ****   
+508 Celestial_Smite_Evil                           22601     0    99             1      
+509 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   

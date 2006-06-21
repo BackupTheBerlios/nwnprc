@@ -131,6 +131,7 @@ void DoNaturalAttack(object oWeapon)
     //if weapon is not valid, abort    
     if(!GetIsObjectValid(oWeapon))
         return;
+    DoDebug("Performing an attack with "+GetName(oWeapon));
     
     //null effect
     effect eInvalid;
@@ -299,7 +300,6 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
                 AssignCommand(oPC, 
                     DelayCommand(fDelay,
                         DoNaturalAttack(oWeapon)));
-                DoDebug("Assigning an attack with "+GetName(oWeapon));
                 //calculate the delay to use next time
                 fDelay += 2.0;
                 if(fDelay > 6.0)

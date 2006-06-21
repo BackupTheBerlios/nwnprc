@@ -365,6 +365,10 @@
 361 FEAT_TYRANNY_DOMAIN                            4062      0    99             0      
 362 FEAT_OCEAN_DOMAIN                              4063      0    99             0      
 363 FEAT_BLIGHTBRINGER                             2250      0    99             1      
-364 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
-365 ####START_OF_NEW_SPELLBOOK_RESERVE             ****      **** ****           ****   
-366 ####END_OF_NEW_SPELLBOOK_RESERVE               ****      **** ****           ****   
+364 ****                                           ****      **** ****           ****   
+365 ****                                           ****      **** ****           ****   
+366 **Templates**                                  ****      **** ****           ****   
+367 Celestial_Smite_Evil                           22601     0    99             1      
+368 ###cls_feat_allBaseClasses_END###              ****      **** ****           ****   
+369 ####START_OF_NEW_SPELLBOOK_RESERVE             ****      **** ****           ****   
+370 ####END_OF_NEW_SPELLBOOK_RESERVE               ****      **** ****           ****   

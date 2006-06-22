@@ -22,9 +22,65 @@ Sacrificed hit points count as normal lethal damage,
 even if you have the regenration ability.
 
 Author:    Tenjac
-Created:   
+Created:   6/22/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nSpell = GetSpellId();
+	int nDam;
+	int nHPLoss;
+	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	if(nSpell == SPELL_DIVINE_SACRIFICE_2)
+	{
+		nDam = d6(1);
+		nHPLoss = 2;
+	}
+	
+	if(nSpell == SPELL_DIVINE_SACRIFICE_4)
+	{
+		nDam = d6(2);
+		nHPLoss = 4;
+	}
+	
+	if(nSpell == SPELL_DIVINE_SACRIFICE_6)
+	{
+		nDam = d6(3);
+		nHPLoss = 6;
+	}
+	
+	if(nSpell == SPELL_DIVINE_SACRIFICE_8)
+	{
+		nDam = d6(4);
+		nHPLoss = 8;
+	}
+	
+	if(nSpell == SPELL_DIVINE_SACRIFICE_9)
+	{
+		nDam = d6(5);
+		nHPLoss = 10;
+	}
+	
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nHPLoss), oPC);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDam, DAMAGE_TYPE_MAGICAL), oPC, fDur);
+	
+	//hook to remove effect on hit
+	
+	
+	SPSetSchool();
+}
+		
+	
+	
+	

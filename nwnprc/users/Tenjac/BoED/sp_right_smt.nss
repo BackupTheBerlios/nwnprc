@@ -31,9 +31,90 @@ to one quarter of the roll) with a successful Will
 save.
 
 Author:    Tenjac
-Created:   
+Created:   6/22/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 6.10, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDam;
+	int nAlign;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = RoundsToSeconds(d4(1));
+	
+	while(GetIsObjectValid)
+	{
+		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			nAlign = GetAlignmentGoodEvil(oTarget);
+			
+			if(MyPRCGetRacialType(oTarget == RACIAL_TYPE_OUTSIDER) && (nAlign == ALIGNMENT_EVIL));
+			{
+				nDam = d8(min(nCasterLvl, 20));
+				
+				if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDam = 8 * (min(nCasterLvl, 20));
+					fDur = 24.0f;
+				}
+			}
+			
+			else
+			{
+				nDam = d6(min(nCasterLvl, 20));
+				
+				if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDam = 6 * (min(nCasterLvl, 20));
+					fDur = 24.0f;
+				}
+			}
+			
+			if(nMetaMagic == METAMAGIC_EMPOWER)
+			{
+				nDam += (nDam/2);
+			}
+			
+			//Save for 1/2
+			if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+			{
+				nDam = (nDam/2);
+			}
+			
+			if(nAlign == ALIGNMENT_EVIL)
+			{
+				if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+				{			
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur);
+				}				
+			}
+			
+			if(nAlign == ALIGNMENT_NEUTRAL)
+			{
+				// neutral takes 1/2 damage
+				nDam = (nDam/2);
+			}
+			
+			//Deal damage to non-good
+			if(nAlign != ALIGNMENT_GOOD)
+			{
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+			}	
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 6.10, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
+	}
+	SPGoodShift(oPC);
+	SPSetSchool();
+}
+			
+			

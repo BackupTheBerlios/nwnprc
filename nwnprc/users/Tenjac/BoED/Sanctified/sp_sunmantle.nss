@@ -47,10 +47,22 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_ABJURATION);
 	
 	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = RoundsToSeconds(nCasterLvl);
 	
-	effect eLink = EffectLinkEffects(EffectDamageShield(4, DAMAGE_BONUS_1, DAMAGE_TYPE_MAGICAL), EffectDamageResistance());
+	//Darkness dispelling
 	
-	SP
+	//DR
+	effect eLink = EffectLinkEffects(EffectDamageShield(4, DAMAGE_BONUS_1, DAMAGE_TYPE_MAGICAL), EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 5, 0));
+	       eLink = EffectLinkEffects(EffectDamageResistance(DAMAGE_TYPE_PIERCING, 5, 0), eLink);
+	       eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_SLASHING, 5, 0);
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur);
+	
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(1), 0);
+	SPSetSchool();
+}
+	
+
 	

@@ -6,15 +6,8 @@
 
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
-#include "x2_inc_spellhook"
-
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
-
-
     //Declare major variables
     object oTarget = GetSpellTargetObject();
     effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
@@ -27,7 +20,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     effect eLink = EffectLinkEffects(eMind, eCharm);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    int nMetaMagic = PRCGetMetaMagicFeat();
     int CasterLvl = 13;
     int nDuration = 2 + CasterLvl/3;
     int nPenetr = CasterLvl + SPGetPenetr();
@@ -41,12 +33,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_MIND, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
     
     if (nTouch)
-    {
-	    //Make Metamagic check for extend
-	    if ((nMetaMagic & METAMAGIC_EXTEND))
-	    {
-		    nDuration = nDuration * 2;
-	    }
+    {    
 	    if(!GetIsReactionTypeFriendly(oTarget))
 	    {
 		    //Fire cast spell at event for the specified target

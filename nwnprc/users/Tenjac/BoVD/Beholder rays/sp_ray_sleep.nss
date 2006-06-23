@@ -1,20 +1,8 @@
 //::///////////////////////////////////////////////
-//:: Sleep
-//:: NW_S0_Sleep
-//:: Copyright (c) 2001 Bioware Corp.
+//:: Name      Eye of the Beholder: Charm Person
+//:: FileName  sp_ray_charmp.nss
 //:://////////////////////////////////////////////
-/*
-    Goes through the area and sleeps the lowest 4+d4
-    HD of creatures first.
-*/
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: March 7 , 2001
-//:://////////////////////////////////////////////
-//:: Last Updated By: Preston Watamaniuk, On: April 11, 2001
-//:: VFX Pass By: Preston W, On: June 25, 2001
 
-//:: modified by mr_bumpkin  Dec 4, 2003
 #include "spinc_common"
 
 #include "prc_alterations"

@@ -21,22 +21,22 @@ and any charges that were depleted remain so. The
 spell level of the wand determines how powerful a
 healing instrument the wand becomes: 
 
-                Spell Level   New Wand Type
+Spell Level   New Wand Type
 
-                0                      Wand of cure minor wounds
-
-                1st                   Wand of cure light wounds 
-
-                2nd                 Wand of cure moderate wounds
-
-                3rd                  Wand of cure serious wounds
-
-                4th                  Wand of cure critical wounds
-
+ 0            Wand of cure minor wounds
+ 
+ 1st          Wand of cure light wounds 
+ 
+ 2nd          Wand of cure moderate wounds
+ 
+ 3rd          Wand of cure serious wounds
+ 
+ 4th          Wand of cure critical wounds
  
 
-For example, a 10th-level cleric can transform a wand of lightning bolt (3rd­level spell) into a wand of cure serious wounds for 10 minutes.
-
+For example, a 10th-level cleric can transform a wand 
+of lightning bolt (3rd­level spell) into a wand of 
+cure serious wounds for 10 minutes.
 
 Author:    Tenjac
 Created:   
@@ -45,3 +45,5 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+

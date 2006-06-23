@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Eye of the Beholder: Charm Person
-//:: FileName  sp_ray_charmp.nss
+//:: Name      Eye of the Beholder: Sleep
+//:: FileName  sp_ray_sleep.nss
 //:://////////////////////////////////////////////
 
 #include "spinc_common"

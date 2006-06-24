@@ -38,9 +38,16 @@ Sacrifice: 1d2 points of Strength drain.
 
 
 Author:    Tenjac
-Created:   
+Created:   6/21/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	

@@ -85,6 +85,7 @@ void main()
 		
 		//-4 penalty to enemy attacks
 		
+		
 		int nArmor;
 		if(nSpell == SPELL_LUMINOUS_ARMOR)
 		{

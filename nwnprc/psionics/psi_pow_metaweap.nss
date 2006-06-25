@@ -106,6 +106,11 @@ void main()
         // Add the enhancement bonus
         AddItemProperty(DURATION_TYPE_TEMPORARY, ipBonus, oTarget, fDuration);
 
+
+        // If the target is in someone's inventory, apply the visuals to the possessor instead
+        if(GetItemPossessor(oTarget) != OBJECT_INVALID)
+            oTarget = GetItemPossessor(oTarget);
+
         // Do VFX
                           SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));

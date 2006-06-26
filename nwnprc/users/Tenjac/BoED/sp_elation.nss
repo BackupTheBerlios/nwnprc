@@ -23,9 +23,47 @@ but it does offset most of the penalties for being
 fatigued.
 
 Author:    Tenjac
-Created:   
+Created:   6/25/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.4f, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDure = RoundsToSeconds(nCasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if (nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+		
+	if (oTarget == oPC)
+	{
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.4f, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
+	}
+	
+	effect eBuff = EffectLinkEffects(EffectAbilityIncrease(ABILITY_STRENGTH, 2), EffectAbilityIncrease(ABILITY_DEXTERITY, 2));
+	
+	while(GetIsObjectValid)
+	{
+		if(!GetIsEnemy(oTarget, oPC))
+		{
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur);
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.4f, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
+	}
+	SPSetSchool();
+}
+	
+	

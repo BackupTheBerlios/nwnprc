@@ -179,8 +179,11 @@ void main()
 			int nHP = GetCurrentHitPoints(oTarget);
 			int nHD = GetHitDice(oTarget);
 			int nDam;
-								
-			Gauntlet(oTarget, oPC, nHP, nHD);			
+			
+			if(!GetPlotFlag(oTarget);
+			{
+				Gauntlet(oTarget, oPC, nHP, nHD);			
+			}
 		}
 	}
 }

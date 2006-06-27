@@ -46,4 +46,53 @@ Created:
 
 #include "spinc_common"
 
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTargetWand = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = (60.0f * nCasterLvl);
+	
+	int nOrigCharge = GetItemCharges(oTargetWand);
+	int nNewCharge;
+	object oNewWand;
+	
+	//Get spell level
+	int nLevel = ;
+	
+	//Copy item to hide
+		
+	//Destroy old
+	DestroyObject(oTargetWand);
+	
+	//Determine wand to create
+	switch(nLevel)
+	{
+		case 0: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		
+		case 1: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		
+		case 2: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		
+		case 3: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		
+		case 4: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		
+		default: return;
+	}
+	
+	//Schedule deletion
+		
+	SPSetSchool();
+}
+
+	
+	
+	
+	
+
 

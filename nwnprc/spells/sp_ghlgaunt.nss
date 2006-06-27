@@ -180,7 +180,7 @@ void main()
 			int nHD = GetHitDice(oTarget);
 			int nDam;
 			
-			if(!GetPlotFlag(oTarget);
+			if(!GetPlotFlag(oTarget))
 			{
 				Gauntlet(oTarget, oPC, nHP, nHD);			
 			}

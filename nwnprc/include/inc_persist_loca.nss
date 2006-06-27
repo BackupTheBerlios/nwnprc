@@ -27,7 +27,7 @@
  * Gets the token item inside the given creature's hide, on which the persistant
  * variables are stored on.
  * If a token does not exist already, one is created.
- * WARNING: Behaviour is not determined if this is called on a non-creature object.
+ * WARNING: If called on a non-creature object, returns the object itself.
  *
  * @param oPC The creature whose storage token to get
  * @return    The creature's storage token
@@ -191,6 +191,10 @@ void DeletePersistantLocalObject(object oPC, string sName);
 
 object GetHideToken(object oPC)
 {
+    // Creatureness check - non-creatures don't get persistent storage from here
+    if(!(GetObjectType(oPC) == OBJECT_TYPE_CREATURE))
+        return oPC; // Just return a reference to the object itself
+
     object oHide = GetPCSkin(oPC);
     object oToken = GetLocalObject(oPC, "PRC_HideTokenCache");
 

@@ -29,3 +29,5 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+//edit spell resistance function

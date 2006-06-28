@@ -11,16 +11,16 @@
 void main()
 {
     object oItem = GetModuleItemLost();
-    object oPC = GetModuleItemLostBy();
-    // Do not run for the Ability Score clone, since it's getting destroyed in a moment anyway
-    if(GetStringLeft(GetTag(oPC), 23) == "PRC_AbilityScore_Clone_")
-        return;
-    // Do not run for the Manifestation tokens
-    if(GetTag(oItem) == PRC_MANIFESTATION_TOKEN_NAME)
+    object oPC   = GetModuleItemLostBy();
+
+    // Do not run for some of the PRC special items
+    if(GetTag(oItem) == PRC_MANIFESTATION_TOKEN_NAME ||
+       GetTag(oItem) == "HideToken"                  ||
+       GetResRef(oItem) == "base_prc_skin"
+       )
         return;
 
 //if(DEBUG) DoDebug("Running OnUnaquireItem, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
-
 
     // Remove all temporary item properties when dropped/given away/stolen/sold.
     if(GetIsObjectValid(oItem))//needed for last of stack etc items

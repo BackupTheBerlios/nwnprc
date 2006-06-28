@@ -41,9 +41,7 @@ void main()
 {
      object oItem = GetItemLastUnequipped();
      object oPC   = GetItemLastUnequippedBy();
-     // Do not run for the Ability Score clone, since it's getting destroyed in a moment anyway
-     if(GetStringLeft(GetTag(oPC), 23) == "PRC_AbilityScore_Clone_")
-        return;
+
 //if(DEBUG) DoDebug("Running OnUnEquip, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
      DoTimestopUnEquip();

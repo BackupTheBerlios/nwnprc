@@ -35,9 +35,7 @@ void main()
 {
     object oItem = GetItemLastEquipped();
     object oPC   = GetItemLastEquippedBy();
-    // Do not run the event for ability score testing clones. Their equipments gets deleted in a few milliseconds anyway
-    if(GetStringLeft(GetTag(oPC), 23) == "PRC_AbilityScore_Clone_")
-        return;
+
 //if(DEBUG) DoDebug("Running OnEquip, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
     //DelayCommand(0.3, PrcFeats(oPC));

@@ -85,6 +85,7 @@ void main()
 		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
+	SPGoodShift(oPC);
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 1);
 	SPSetSchool();
 }

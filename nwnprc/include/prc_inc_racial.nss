@@ -52,6 +52,10 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_SHAPECHANGER;
 
     //race pack racial types
+    if(GetHasFeat(FEAT_OUTSIDER, oCreature))
+        return RACIAL_TYPE_OUTSIDER;    
+    if(GetHasFeat(FEAT_UNDEAD, oCreature))
+        return RACIAL_TYPE_UNDEAD;        
     if(GetHasFeat(FEAT_DWARVEN, oCreature))
         return RACIAL_TYPE_DWARF;
     if(GetHasFeat(FEAT_ELVEN, oCreature))
@@ -70,8 +74,6 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_HUMANOID_REPTILIAN;
     if(GetHasFeat(FEAT_MONSTEROUS, oCreature))
         return RACIAL_TYPE_HUMANOID_MONSTROUS;
-    if(GetHasFeat(FEAT_UNDEAD, oCreature))
-        return RACIAL_TYPE_UNDEAD;
     if(GetHasFeat(FEAT_BEAST, oCreature))
         return RACIAL_TYPE_BEAST;
     if(GetHasFeat(FEAT_VERMIN, oCreature))
@@ -86,8 +88,6 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_FEY;
     if(GetHasFeat(FEAT_ABERRATION, oCreature))
         return RACIAL_TYPE_ABERRATION;
-    if(GetHasFeat(FEAT_OUTSIDER, oCreature))
-        return RACIAL_TYPE_OUTSIDER;
 
     // check for a local variable that overrides the race
     // the shifter will use this everytime they change

@@ -108,7 +108,8 @@
 103   FEAT_FEYRI_REVERT                                  4680        0      99               1        
 104   FEAT_DUERGAR_INVIS                                 4681        0      99               1        
 105   FEAT_DROW_DARKNESS                                 4682        0      99               1        
-106   FEAT_DROW_FAERIE_FIRE                              4683        0      99               1        
+106   FEAT_DROW_FAERIE_FIRE                              4683        0      99               1 
+107   BrownieHideInPlainSight                            3457        0      99               1
 107   ****                                               ****        ****   ****             ****     
 108   ****                                               ****        ****   ****             ****     
 109   **BonusDomains**                                   ****        ****   ****             ****     

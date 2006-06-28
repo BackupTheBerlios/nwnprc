@@ -25,9 +25,69 @@ halves the damage, which is of divine origin.
 Sacrifice: 1d3 points of Strength drain. 
 
 Author:    Tenjac
-Created:   
+Created:   6/28/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	location lLoc = GetLocation(oPC);
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nAlign;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	//VFX
+	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_FIRESTORM), lLoc);
+	
+	while(GetIsObjectValid(oTarget))
+	{
+		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			nAlign = GetAlignmentGoodEvil(oTarget);
+			
+			if(nAlign == ALIGNMENT_EVIL)
+			{
+				if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DIVINE))
+				{
+					SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectBlindness(), oTarget);
+				}
+				
+				int nDam = d6(min(nCasterLvl, 20));
+				
+				if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDam = 6 *(min(nCasterLvl, 20));
+				}
+				
+				if(nMetaMagic == METAMAGIC_EMPOWER)
+				{
+					nDam += (nDam/2);
+				}
+				
+				if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_DIVINE))
+				{
+					nDam = nDam/2;
+				}
+				
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nDam), oTarget);
+			}
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	}
+	
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 1);
+	SPSetSchool();
+}
+		
+				
+	

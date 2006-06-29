@@ -115,6 +115,8 @@ void main()
 		IPSafeAddItemProperty(oMyArmor, ipArmor, fDur);
 		IPSafeAddItemProperty(oMyArmor, ipDR, fDur);
 		IPSafeAddItemProperty(oMyArmor, ipSR, fDur);
+		SetLocalInt(oPC, "PRC_Has_Exalted_Raiment", 1);
+		DelayCommand(fDur, DeleteLocalInt(oPC, "PRC_Has_Exalted_Raiment");
 	}
 	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(1), 0);

@@ -48,47 +48,131 @@ int GetERSpellResistance(int nCasterLvl)
 	
 	switch(nSRBonus)
 	{
-		case 0: return;
+		case 0:
+		{
+			return;
+		}
 		
-		case 1: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_6;
+		case 1:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_6;
+			break;
+		}
 		
-		case 2: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_7;
+		case 2: 
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_7;
+			break;
+		}
 		
-		case 3: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_8;
+		case 3: 
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_8;
+			break;
+		}
 		
-		case 4: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_9;
+		case 4:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_9;
+			break;
+		}
 		
-		case 5: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_10;
 		
-		case 6: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_11;
+		case 5:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_10;
+			break;
+		}
 		
-		case 7: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_12;
+		case 6:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_11;
+			break;
+		}
+				
+		case 7:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_12;
+			break;
+		}
 		
-		case 8: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_13;
+		case 8:
+		{ 
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_13;
+			break;
+		}
 		
-		case 9: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_14;
+		case 9:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_14;
+			break;
+		}
+				
+		case 10:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_15;
+			break;
+		}
 		
-		case 10: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_15;
+		case 11:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_16;
+			break;
+		}
 		
-		case 11: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_16;
+		case 12:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_17;
+			break;
+		}
+				
+		case 13:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_18;
+			break;
+		}
+				
+		case 14:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_19;
+			break;
+		}
 		
-		case 12: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_17;
+		case 15:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_20;
+			break;
+		}
 		
-		case 13: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_18;
+		case 16:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_21;
+			break;
+		}
 		
-		case 14: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_19;
+		case 17:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_22;
+			break;
+		}
 		
-		case 15: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_20;
+		case 18:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_23;
+			break;
+		}
 		
-		case 16: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_21;
+		case 19:
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_24;
+			break;
+		}
 		
-		case 17: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_22;
-		
-		case 18: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_23;
-		
-		case 19: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_24;
-		
-		case 20: nIPConst = IP_CONST_SPELLRESISTANCEBONUS_25;
+		case 20: 
+		{
+			nIPConst = IP_CONST_SPELLRESISTANCEBONUS_25;
+			break;
+		}
 	}
 	
 	return nIPConst;

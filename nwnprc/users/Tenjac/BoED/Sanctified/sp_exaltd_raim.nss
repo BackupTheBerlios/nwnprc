@@ -112,7 +112,14 @@ void main()
 	//object is valid but has no AC value (clothes, robes, etc).
 	if((GetIsObjectValid(oMyArmor)) && (nAC < 1))
 	{
-		IPSafeAddItemProperty
+		IPSafeAddItemProperty(oMyArmor, ipArmor, fDur);
+		IPSafeAddItemProperty(oMyArmor, ipDR, fDur);
+		IPSafeAddItemProperty(oMyArmor, ipSR, fDur);
+	}
+	
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(1), 0);
+	SPSetSchool();
+}
 		
 		
 	

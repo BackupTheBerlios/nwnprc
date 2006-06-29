@@ -35,8 +35,6 @@ cannot use it for defense in combat.
 
 Sacrifice: 1d2 points of Strength drain.
 
-
-
 Author:    Tenjac
 Created:   6/21/06
 */
@@ -50,4 +48,82 @@ void main()
 	if(!X2PreSpellCastCode()) return;
 	
 	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	location lLoc = GetSpellTargetLocation();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = RoundsToSeconds(nCasterLvl);
+	int nCounter = FloatToInt(fDur/6);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	//VFX
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_FNF_FIRESTORM), lLoc, fDur);
+	
+	EmberLoop(nCounter, nCasterLvl, nMetaMagic);
+	
+	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 1);
+	SPSetSchool();
+	SPGoodShift(oPC);
+}
+	
+void EmberLoop(int nCounter, int nCasterLvl, int nMetaMagic)
+{
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 12.19f, FALSE, OBJECT_TYPE_CREATURE);
+	int nDam;
+	int nDam2;
+		
+	while(GetIsObjectValid(oTarget))
+	{
+		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+		{
+			//Spell Resist
+			if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+			{
+				int nDC = SPGetSpellSaveDC(oTarget, oPC);
+				//Save
+				
+				nDam = d6(10);
+				
+				if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDam = 60;
+				}
+				
+				if(nMetaMagic == METAMAGIC_EMPOWER)
+				{
+					nDam += (nDam/2);
+				}
+				
+				if (PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+				{
+					nDam = (nDam/2);
+				}
+				
+				nDam2 = (nDam/2);
+				nDam = (nDam - nDam2);
+				
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_FIRE, nDam), oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nDam2), oTarget);
+			}
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 12.19f, FALSE, OBJECT_TYPE_CREATURE);
+	}	
+	nCounter--;
+	
+	if(nCounter > 0)
+	{
+		DelayCommand(6.0f, EmberLoop(nCounter, nCasterLvl, nMetaMagic));
+	}
+}
+		
+		
+		
+		
+		
+	
 	

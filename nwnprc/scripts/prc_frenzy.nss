@@ -138,7 +138,7 @@ void main()
 
             // The delay is because you have to delay the command if you want the function to be able
             // to determine what the ability scores become after adding the bonuses to them.
-            DelayCommand(0.1, GiveExtraRageBonuses(nCon,StrBeforeBonuses, ConBeforeBonuses, nIncrease, 0, 0, DAMAGE_TYPE_DIVINE, OBJECT_SELF));
+            DelayCommand(0.1, GiveExtraRageBonuses(nCon,StrBeforeBonuses, ConBeforeBonuses, nIncrease, 0, 0, DAMAGE_TYPE_BASE_WEAPON, OBJECT_SELF));
         }
 
         // if they have PTWF and frenzy, they should get their attacks re-checked.

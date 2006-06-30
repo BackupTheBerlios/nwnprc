@@ -51,6 +51,6 @@ void main()
    	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur));
     	
-    	DelayCommand(0.1, GiveExtraRageBonuses(nDur, nStrBeforeBonuses, nConBeforeBonuses, nBoost, 0, 0, DAMAGE_TYPE_BLUDGEONING, OBJECT_SELF));
+    	DelayCommand(0.1, GiveExtraRageBonuses(nDur, nStrBeforeBonuses, nConBeforeBonuses, nBoost, 0, 0, DAMAGE_TYPE_BASE_WEAPON, OBJECT_SELF));
 }
 

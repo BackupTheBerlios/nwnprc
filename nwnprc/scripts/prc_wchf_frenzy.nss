@@ -34,7 +34,7 @@ void FrenzyHB(object oPC, int nStr)
 			int ConBeforeBonuses = GetAbilityScore(oTarget, ABILITY_CONSTITUTION);
 			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eStr, oTarget, 6.5);
 			// Because +10 is almost certain to hit the cap
-			DelayCommand(0.1, GiveExtraRageBonuses(1, StrBeforeBonuses, ConBeforeBonuses, nStr, 0, 0, DAMAGE_TYPE_SLASHING, oTarget));
+			DelayCommand(0.1, GiveExtraRageBonuses(1, StrBeforeBonuses, ConBeforeBonuses, nStr, 0, 0, DAMAGE_TYPE_BASE_WEAPON, oTarget));
 		}
 		
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, GetLocation(oPC), TRUE, OBJECT_TYPE_CREATURE);

@@ -113,7 +113,7 @@ void main()
 
             // The delay is because you have to delay the command if you want the function to be able
             // to determine what the ability scores become after adding the bonuses to them.
-            DelayCommand(0.1, GiveExtraRageBonuses(nCon, StrBeforeBonuses, ConBeforeBonuses, iStr, iCon, nSave, DAMAGE_TYPE_FIRE, OBJECT_SELF));
+            DelayCommand(0.1, GiveExtraRageBonuses(nCon, StrBeforeBonuses, ConBeforeBonuses, iStr, iCon, nSave, DAMAGE_TYPE_BASE_WEAPON, OBJECT_SELF));
 
 
             // 2004-2-24 Oni5115: Intimidating Rage

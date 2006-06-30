@@ -17,10 +17,12 @@ void main()
     object oPC = GetEnteringObject();
     if(!GetIsPC(oPC))
         return;
+    object oTown = GetObjectByTag("AngbandTown");    
 
     if(GetPersistantLocalInt(oPC, "Angband_Enter"))
     {
         //comming back from a mission
+        ApplyTaxToPlayer(oPC, oTown);
         //start the town dynconvo
         StartTownConvo(oPC);
     }
@@ -38,6 +40,6 @@ void main()
 
         //do the intro cutscene
         //start the town dynconvo
-        StartTownConvo(oPC);
+        AssingCommand(Town, StartTownConvo(oPC);
     }
 }

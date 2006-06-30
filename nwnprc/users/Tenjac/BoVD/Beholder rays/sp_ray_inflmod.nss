@@ -1,0 +1,1 @@
+ void DoSpellRay(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);

@@ -31,3 +31,5 @@ Created:
 #include "spinc_common"
 
 //edit spell resistance function
+
+//check hide for SR item prop

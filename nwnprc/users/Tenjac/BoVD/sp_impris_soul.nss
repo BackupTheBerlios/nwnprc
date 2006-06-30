@@ -78,4 +78,10 @@ void DamageLoop(object oTarget, object oPC, int nMetaMagic)
 	DelayCommand(HoursToSeconds(24), DamageLoop(oTarget, oPC, nMetaMagic);
 }
 	
-	
+/*
+ Imprison Soul... traps the soul in a gem, but when destroyed or opened the soul is released
+[16:09] <Annihilator-X17> store the resref on it as a localstring
+[16:09] <Annihilator-X17> and spawn it when damage
+[16:10] <Annihilator-X17> d
+[16:10] <Annihilator-X17> i would think
+*/

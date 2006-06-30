@@ -78,9 +78,8 @@ void main()
             {
                 // Generate the RTA beam.
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                                      EffectBeam(VFX_BEAM_DISINTEGRATE, oPC, BODY_NODE_HAND),
-                                      oTarget, 1.0, !nTouchAttack
-                                      );
+                                      EffectBeam(VFX_BEAM_DISINTEGRATE, oPC, BODY_NODE_HAND, !nTouchAttack),
+                                      oTarget, 1.0);
 
                 // Fort save or die time, but we implement death by doing massive damage
                 // since disintegrate works on constructs, undead, etc.  At some point EffectDie()

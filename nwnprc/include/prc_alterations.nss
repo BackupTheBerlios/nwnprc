@@ -139,6 +139,7 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
 #include "x0_I0_spells"
 #include "x2_i0_spells"
 //#include "prc_inc_s_det"
+#include "prc_inc_descrptr"
 
 
 
@@ -252,18 +253,18 @@ void DeathlessFrenzyCheck(object oTarget)
     //then dont do this
     if(GetIsImmune( oTarget, IMMUNITY_TYPE_DEATH))
         return;
-    if(GetHasFeat(FEAT_DEATHLESS_FRENZY, oTarget) 
+    if(GetHasFeat(FEAT_DEATHLESS_FRENZY, oTarget)
         && GetHasFeatEffect(FEAT_FRENZY, oTarget)
         && GetImmortal(oTarget))
           SetImmortal(oTarget, FALSE);
     //mark them as being magically killed for death system
     if(GetPRCSwitch(PRC_PNP_DEATH_ENABLE))
     {
-        SetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied", 
+        SetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied",
             GetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied")+1);
         AssignCommand(oTarget,
-            DelayCommand(1.0, 
-                SetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied", 
+            DelayCommand(1.0,
+                SetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied",
                     GetLocalInt(oTarget, "PRC_PNP_EfectDeathApplied")-1)));
     }
 }
@@ -351,7 +352,7 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nAbilityAdjust = FALSE)
         // Expansion: Size increase by one or two categories, depending on augmentation
         if(GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease"))
             nSize += GetLocalInt(oObject, "PRC_Power_Expansion_SizeIncrease");
-    }    
+    }
 
 
     if(nSize < CREATURE_SIZE_FINE)
@@ -673,19 +674,19 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
         {
             if(GetEffectCreator(eTest) == oWP
                 && GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL)
-            {   
+            {
                 if(DEBUG) DoDebug("Stripping previous effect");
                 RemoveEffect(oPC, eTest);
-            }    
+            }
             eTest = GetNextEffect(oPC);
         }
     }
     //jump to PC
     //must be in same area to apply effect
     if(GetArea(oWP) != GetArea(oPC))
-        AssignCommand(oWP, 
+        AssignCommand(oWP,
             ActionJumpToObject(oPC));
-    return oWP;     
+    return oWP;
 }
 
 

@@ -432,6 +432,7 @@ int isNotShield(object oItem);
 #include "inc_ecl"          // Depends on inc_2dacache, prc_inc_switch and inc_class_by_pos
 #include "inc_metalocation" // Depends on inc_persist_loca
 #include "inc_array_sort"   // Depends on inc_array and inc_debug
+#include "inc_uniqueid"     // Depends on inc_array
 
 
 /**********************\
@@ -1059,14 +1060,14 @@ void SpendXP(object oPC, int nCost)
 int isNotShield(object oItem)
 {
      int isNotAShield = 1;
-     
+
      if(GetBaseItemType(oItem) == BASE_ITEM_LARGESHIELD)       isNotAShield = 0;
      else if (GetBaseItemType(oItem) == BASE_ITEM_TOWERSHIELD) isNotAShield = 0;
      else if (GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD) isNotAShield = 0;
-     
+
      // Added torches to the check as they should not count either
      else if (GetBaseItemType(oItem) == BASE_ITEM_TORCH) isNotAShield = 0;
-     
+
      return isNotAShield;
 }
 

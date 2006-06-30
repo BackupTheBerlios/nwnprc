@@ -27,6 +27,9 @@ void main()
         DestroyObject(Asso);
     }*/
 
+    // Clear a damage tracking variable. Oni's stuff uses this
+    SetLocalInt(oDead, "PC_Damage", 0);
+
     // Do Lolth's Meat for the killer
     if(GetAbilityScore(oDead, ABILITY_INTELLIGENCE)>4)
     {

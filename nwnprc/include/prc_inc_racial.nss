@@ -18,6 +18,7 @@ void DoRacialSLA(int nSpellID, int nCasterlevel = 0, int nTotalDC = 0);
 
 int MyPRCGetRacialType(object oCreature)
 {
+    // Class-based racial type changes
     if (GetLevelByClass(CLASS_TYPE_LICH,oCreature) >= 4)
         return RACIAL_TYPE_UNDEAD;
     if (GetLevelByClass(CLASS_TYPE_MONK,oCreature) >= 20)
@@ -51,11 +52,16 @@ int MyPRCGetRacialType(object oCreature)
     if (GetLevelByClass(CLASS_TYPE_WEREWOLF,oCreature) >= 10)
         return RACIAL_TYPE_SHAPECHANGER;
 
-    //race pack racial types
+    // PRC Shifting Polymorph -caused racial type override. Stored with offset +1 to differentiate value 0 from non-existence
+    int nShiftingOverrideRace = GetLocalInt(oCreature, "PRC_ShiftingOverride_Race");
+    if(nShiftingOverrideRace)
+        return nShiftingOverrideRace - 1;
+
+    // Race pack racial type feats
     if(GetHasFeat(FEAT_OUTSIDER, oCreature))
-        return RACIAL_TYPE_OUTSIDER;    
+        return RACIAL_TYPE_OUTSIDER;
     if(GetHasFeat(FEAT_UNDEAD, oCreature))
-        return RACIAL_TYPE_UNDEAD;        
+        return RACIAL_TYPE_UNDEAD;
     if(GetHasFeat(FEAT_DWARVEN, oCreature))
         return RACIAL_TYPE_DWARF;
     if(GetHasFeat(FEAT_ELVEN, oCreature))
@@ -88,13 +94,6 @@ int MyPRCGetRacialType(object oCreature)
         return RACIAL_TYPE_FEY;
     if(GetHasFeat(FEAT_ABERRATION, oCreature))
         return RACIAL_TYPE_ABERRATION;
-
-    // check for a local variable that overrides the race
-    // the shifter will use this everytime they change
-    // the racial types are zero based, use 1 based to ensure the variable is set
-    int nRace = GetLocalInt(oCreature,"RACIAL_TYPE");
-    if (nRace)
-        return (nRace-1);
 
     return GetRacialType(oCreature);
 }

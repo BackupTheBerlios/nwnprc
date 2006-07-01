@@ -14,6 +14,11 @@
       original creature from which the resref was
       gotten
 
+
+    @todo unshift on login
+    @todo spell restriction checks to spellhook
+    @todo effect application spell
+
     @author Ornedan
     @date   Created - 2006.03.04
 */
@@ -25,6 +30,7 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
+const int SHIFTER_TYPE_NONE      = 0;
 const int SHIFTER_TYPE_SHIFTER   = 1;
 const int SHIFTER_TYPE_SOULEATER = 2;
 const int SHIFTER_TYPE_POLYMORPH = 3;
@@ -35,12 +41,18 @@ const int UNSHIFT_FAIL            = 0;
 const int UNSHIFT_SUCCESS         = 1;
 const int UNSHIFT_SUCCESS_DELAYED = 2;
 
+const float SHIFTER_MUTEX_UNSET_DELAY = 3.0f;
+
 const string SHIFTER_RESREFS_ARRAY    = "PRC_ShiftingResRefs_";
 const string SHIFTER_NAMES_ARRAY      = "PRC_ShiftingNames_";
 const string SHIFTER_TRUEAPPEARANCE   = "PRC_ShiftingTrueAppearance";
 const string SHIFTER_ISSHIFTED_MARKER = "PRC_IsShifted";
 const string SHIFTER_SHIFT_MUTEX      = "PRC_Shifting_InProcess";
+const string SHIFTER_RESTRICT_SPELLS  = "PRC_Shifting_RestrictSpells";
+const string SHIFTER_OVERRIDE_RACE    = "PRC_ShiftingOverride_Race";
 
+const string SHIFTING_TEMPLATE_WP_TAG = "PRC_SHIFTING_TEMPLATE_SPAWN";
+const string SHIFTING_RESREF_SLAITEM  = "epicshifterpower";
 
 const int STRREF_YOUNEED             = 16828326; // "You need"
 const int STRREF_MORECHARLVL         = 16828327; // "more character levels before you can take on that form."
@@ -52,6 +64,7 @@ const int STRREF_PNPSHFT_MORELEVEL   = 16828332; // "more PnP Shifter levels bef
 const int STRREF_NEED_SPACE          = 16828333; // "Your inventory is too full for the PRC Polymorphing system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again."
 const int STRREF_POLYMORPH_MUTEX     = 16828334; // "The PRC Polymorphing system will not work while you are affected by a polymorph effect. Please remove it before trying again."
 const int STRREF_SHIFTING_MUTEX      = 16828335; // "Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again."
+const int STRREF_TEMPLATE_FAILURE    = 16828336; // "Polymorph failed: Failed to create a template of the creature to polymorph into."
 
 
 //////////////////////////////////////////////////
@@ -430,7 +443,7 @@ int _prc_inc_shifting_GetCanFormCast(object oTemplate)
         case RACIAL_TYPE_BEAST:
         case RACIAL_TYPE_ANIMAL:
         case RACIAL_TYPE_OOZE:
-        case RACIAL_TYPE_PLANT:
+//        case RACIAL_TYPE_PLANT:
             // These forms can't cast spells
             return FALSE;
         case RACIAL_TYPE_SHAPECHANGER:
@@ -489,6 +502,9 @@ int _prc_inc_shifting_GetIsCreatureHarmless(object oTemplate)
     return GetChallengeRating(oTemplate) < 1.0;
 }
 
+/** Internal function.
+ * @todo Finish function & comments
+ */
 void _prc_inc_shifting_CopyAllItemProperties(object oFrom, object oTo)
 {
     itemproperty iProp = GetFirstItemProperty(oFrom);
@@ -505,7 +521,6 @@ void _prc_inc_shifting_CopyAllItemProperties(object oFrom, object oTo)
  *
  * @param oTemplate The target creature of an ongoing shift
  * @param oItem     The item to create the activatable itemproperties on.
- * @return          oItem, or the item created by the function
  */
 void _prc_inc_shifting_CreateShifterActiveAbilitiesItem(object oTemplate, object oItem)
 {
@@ -539,11 +554,39 @@ void _prc_inc_shifting_CreateShifterActiveAbilitiesItem(object oTemplate, object
             }
 
             // Create the itemproperty and add it to the item
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyCastSpell(Get2DACache("shifter_abilitie", "IPSpell", i), nNumUses), oItem);
+            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyCastSpell(StringToInt(Get2DACache("shifter_abilitie", "IPSpell", i)), nNumUses), oItem);
 
             // Increment property counter
             nProps += 1;
         }
+
+        // Increment loop counter
+        i += 1;
+    }
+}
+
+/** Internal function.
+ * Adds bonus feats granting feats defined in shifter_feats.2da to the shifter's hide if
+ * the template has the given feat.
+ *
+ * @param oTemplate    The target creature of an ongoing shift
+ * @param oShifterHide The shifter's hide object
+ */
+void _prc_inc_shifting_CopyFeats(object oTemplate, object oShifterHide)
+{
+    string sFeat;
+    int i = 0;
+
+    // Loop over shifter_feats.2da. Assume there are no more entries when
+    while((sFeat = Get2DACache("shifter_feats", "Feat", i)) != "")
+    {
+        // See if the template creature has the given feat
+        if(GetHasFeat(StringToInt(sFeat), oTemplate))
+            // Add an itemproperty granting that feat to the shifter's hide
+            AddItemProperty(DURATION_TYPE_PERMANENT,
+                            ItemPropertyBonusFeat(StringToInt(Get2DACache("shifter_feats", "IPFeat", i))),
+                            oShifterHide
+                            );
 
         // Increment loop counter
         i += 1;
@@ -633,19 +676,297 @@ int _prc_inc_shifting_GetCanShift(object oShifter)
 }
 
 /** Internal function.
+ *
+ */
+void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities)
+{
+    if(DEBUG) DoDebug("prc_inc_shifting: _ShiftIntoResRefAux():\n"
+                    + "oShifter = " + DebugObject2Str(oShifter) + "\n"
+                    + "nShifterType = " + IntToString(nShifterType) + "\n"
+                    + "oTemplate = " + DebugObject2Str(oTemplate) + "\n"
+                    + "bGainSpellLikeAbilities = " + BooleanToString(bGainSpellLikeAbilities) + "\n"
+                      );
+
+    // Make sure the template creature is still valid
+    if(!GetIsObjectValid(oTemplate))
+    {
+        if(DEBUG) DoDebug("prc_inc_shifting: _ShiftIntoTemplateAux(): ERROR: oTemplate is not a valid object");
+        /// @todo Write a better error message
+        SendMessageToPCByStrRef(oShifter, STRREF_TEMPLATE_FAILURE); // "Polymorph failed: Failed to create a template of the creature to polymorph into."
+
+        // On failure, unset the mutex right away
+        SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE);
+    }
+    else
+    {
+        /* Start the actual shifting */
+        int bNeedSpellCast = FALSE;
+        int i;
+
+        // First, clear the shifter's action queue. We'll be assigning a bunch of commands that should get executed ASAP
+        AssignCommand(oShifter, ClearAllActions(TRUE));
+
+        // Get the shifter's creature items
+        object oShifterHide = GetPCSkin(oShifter); // Use the PRC wrapper for this to make sure we get the right object
+        object oShifterCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oShifter);
+        object oShifterCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oShifter);
+        object oShifterCWpB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oShifter);
+
+        // Get the template's creature items
+        object oTemplateHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR,   oTemplate);
+        object oTemplateCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTemplate);
+        object oTemplateCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTemplate);
+        object oTemplateCWpB = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTemplate);
+
+        // Handle hide
+        // Nuke old props and composite bonus tracking - they will be re-evaluated later
+        ScrubPCSkin(oShifter, oShifterHide);
+        DeletePRCLocalInts(oShifterHide);
+        // Copy all itemproperties from the source's hide. No need to check for validity of oTemplateHide - it not
+        // existing works the same as it existing, but having no iprops.
+        _prc_inc_shifting_CopyAllItemProperties(oTemplateHide, oShifterHide);
+
+        // This may be necessary. Unknown if relevant BioBugs are still present - 20060630, Ornedan
+        /*DelayCommand(0.05, */AssignCommand(oShifter, ActionEquipItem(oShifterHide, INVENTORY_SLOT_CARMOUR))/*)*/;
+
+        // Handle creature weapons - replace any old weapons with new
+        // Delete old natural weapons
+        if(GetIsObjectValid(oShifterCWpR)) MyDestroyObject(oShifterCWpR);
+        if(GetIsObjectValid(oShifterCWpL)) MyDestroyObject(oShifterCWpL);
+        if(GetIsObjectValid(oShifterCWpB)) MyDestroyObject(oShifterCWpB);
+
+        // Copy the template's weapons and assign equipping
+        if(GetIsObjectValid(oTemplateCWpR))
+        {
+            oShifterCWpR = CopyObject(oTemplateCWpR, oShifter, TRUE);
+            AssignCommand(oShifter, ActionEquipItem(oShifterCWpR, INVENTORY_SLOT_CWEAPON_R));
+        }
+        if(GetIsObjectValid(oTemplateCWpL))
+        {
+            oShifterCWpL = CopyObject(oTemplateCWpL, oShifter, TRUE);
+            AssignCommand(oShifter, ActionEquipItem(oShifterCWpL, INVENTORY_SLOT_CWEAPON_L));
+        }
+        if(GetIsObjectValid(oTemplateCWpB))
+        {
+            oShifterCWpB = CopyObject(oTemplateCWpB, oShifter, TRUE);
+            AssignCommand(oShifter, ActionEquipItem(oShifterCWpB, INVENTORY_SLOT_CWEAPON_B));
+        }
+
+        // Ability score adjustments
+        // Get the base delta
+        int nDeltaSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH,     TRUE) - GetAbilityScore(oShifter, ABILITY_STRENGTH,     TRUE);
+        int nDeltsDEX = GetAbilityScore(oTemplate, ABILITY_DEXTERITY,    TRUE) - GetAbilityScore(oShifter, ABILITY_DEXTERITY,    TRUE);
+        int nDeltaCON = GetAbilityScore(oTemplate, ABILITY_CONSTITUTION, TRUE) - GetAbilityScore(oShifter, ABILITY_CONSTITUTION, TRUE);
+        int nExtraSTR = 0, nExtraDEX = 0, nExtraCON = 0;
+
+        // Adjust for caps
+        /// @todo Think of a more accurate calculation method
+        if     (nDeltaSTR >  12) { nExtraSTR = 12 - nDeltaSTR; nDeltaSTR =  12; }
+        else if(nDeltaSTR < -10) { nExtraSTR = 10 + nDeltaSTR; nDeltaSTR = -10; }
+        if     (nDeltaDEX > 12)  { nExtraDEX = 12 - nDeltaDEX; nDeltaDEX =  12; }
+        else if(nDeltaDEX < -10) { nExtraDEX = 10 + nDeltaDEX; nDeltaDEX = -10; }
+        if     (nDeltaCON > 12)  { nExtraCON = 12 - nDeltaCON; nDeltaCON =  12; }
+        else if(nDeltaCON < -10) { nExtraCON = 10 + nDeltaCON; nDeltaCON = -10; }
+
+        // Set the ability score adjustments as composite bonuses
+        if(nDeltaSTR > 0)
+            SetCompositeBonus(oSkin, "Shifting_AbilityAdjustmentSTRBonus", nDeltaSTR, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_STR);
+        else if(nDeltaSTR < 0)
+            SetCompositeBonus(oSkin, "Shifting_AbilityAdjustmentSTRPenalty", -nDeltaSTR, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_STR);
+        if(nDeltaDEX > 0)
+            SetCompositeBonus(oSkin, "Shifting_AbilityAdjustmentDEXBonus", nDeltaDEX, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_DEX);
+        else if(nDeltaDEX < 0)
+            SetCompositeBonus(oSkin, "Shifting_AbilityAdjustmentDEXPenalty", -nDeltaDEX, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_DEX);
+        if(nDeltaCON > 0)
+            SetCompositeBonus(oSkin, "Shifting_AbilityAdjustmentCONBonus", nDeltaCON, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CON);
+        else if(nDeltaCON < 0)
+            SetCompositeBonus(oSkin, "Shifting_AbilityAdjustmentCONPenalty", -nDeltaCON, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
+
+        // Extra Strength - Attack and damage bonus / penalty
+        // Convert to stat bonus and see if it's non-zero
+        if((nExtraSTR /= 2) != 0)
+        {
+            // Determine damage type. Default to bludgeoning
+            int nDamageType = DAMAGE_TYPE_BLUDGEONING;
+            int nCWpItemType;
+
+            // Check the creature weapons. The first valid weapon encountered takes precedence
+            if(GetIsObjectValid(oShifterCWpR))
+            {
+                nCWpItemType = GetBaseItemType(oShifterCWpR);
+                if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
+                   nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
+                   )
+                    nDamageType = DAMAGE_TYPE_SLASHING;
+                else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
+                    nDamageType = DAMAGE_TYPE_PIERCING;
+            }
+            else if(GetIsObjectValid(oShifterCWpL))
+            {
+                nCWpItemType = GetBaseItemType(oShifterCWpL);
+                if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
+                   nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
+                   )
+                    nDamageType = DAMAGE_TYPE_SLASHING;
+                else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
+                    nDamageType = DAMAGE_TYPE_PIERCING;
+            }
+            else if(GetIsObjectValid(oShifterCWpB))
+            {
+                nCWpItemType = GetBaseItemType(oShifterCWpB);
+                if(nCWpItemType == BASE_ITEM_CSLASHWEAPON ||
+                   nCWpItemType == BASE_ITEM_CSLSHPRCWEAP   // Slashing takes precedence over piercing in case of slashing & piercing
+                   )
+                    nDamageType = DAMAGE_TYPE_SLASHING;
+                else if(nCWpItemType == BASE_ITEM_CPIERCWEAPON)
+                    nDamageType = DAMAGE_TYPE_PIERCING;
+            }
+
+            bNeedSpellCast = TRUE;
+            SetLocalInt(oShifter, "PRC_Shifter_ExtraSTR", nExtraSTR);
+            SetLocalInt(oShifter, "PRC_Shifter_DamageType", nDamageType);
+
+            /* @todo Migrate to a spell
+            // Determine whether we need to apply a bonus or a penalty
+            if(nExtraSTR > 0)
+            {
+                // Determine damage bonus constant
+                int nDamageBonus;
+                switch(nExtraSTR)
+                {
+                    case 1 : nDamageBonus = DAMAGE_BONUS_1 ; break;
+                    case 2 : nDamageBonus = DAMAGE_BONUS_2 ; break;
+                    case 3 : nDamageBonus = DAMAGE_BONUS_3 ; break;
+                    case 4 : nDamageBonus = DAMAGE_BONUS_4 ; break;
+                    case 5 : nDamageBonus = DAMAGE_BONUS_5 ; break;
+                    case 6 : nDamageBonus = DAMAGE_BONUS_6 ; break;
+                    case 7 : nDamageBonus = DAMAGE_BONUS_7 ; break;
+                    case 8 : nDamageBonus = DAMAGE_BONUS_8 ; break;
+                    case 9 : nDamageBonus = DAMAGE_BONUS_9 ; break;
+                    case 10: nDamageBonus = DAMAGE_BONUS_10; break;
+                    case 11: nDamageBonus = DAMAGE_BONUS_11; break;
+                    case 12: nDamageBonus = DAMAGE_BONUS_12; break;
+                    case 13: nDamageBonus = DAMAGE_BONUS_13; break;
+                    case 14: nDamageBonus = DAMAGE_BONUS_14; break;
+                    case 15: nDamageBonus = DAMAGE_BONUS_15; break;
+                    case 16: nDamageBonus = DAMAGE_BONUS_16; break;
+                    case 17: nDamageBonus = DAMAGE_BONUS_17; break;
+                    case 18: nDamageBonus = DAMAGE_BONUS_18; break;
+                    case 19: nDamageBonus = DAMAGE_BONUS_19; break;
+
+                    // The value is >= 20, the bonus limit is +20
+                    default: nDamageBonus = DAMAGE_BONUS_20;
+                }
+            }
+            else
+            {
+            }
+            */
+        }
+
+        // Extra Dex - AC penalty or dodge bonus
+        if((nExtraDEX /= 2) != 0)
+        {
+            bNeedSpellCast = TRUE;
+            SetLocalInt(oShifter, "PRC_Shifter_ExtraDEX", nExtraDEX);
+        }
+
+        // Extra Con bonus gets applied as temporary HP
+        if((nExtraCON =/ 2) > 0)
+        {
+            bNeedSpellCast = TRUE;
+            SetLocalInt(oShifter, "PRC_Shifter_ExtraCON", nExtraCON);
+        }
+
+        // Approximately figure out the template's natural AC bonus
+        int nNaturalAC = GetAC(oTemplate)
+                       - 10                                                // Adjust for base AC
+                       - GetAbilityModifier(ABILITY_DEXTERITY, oTemplate); // And Dex bonus
+        // Decrement by AC from armor
+        for(i = 0; i < NUM_INVENTORY_SLOTS; i++)
+            nNaturalAC -= GetItemACValue(GetItemInSlot(i, oTemplate));
+
+        // If there is any AC bonus to apply
+        if(nNaturalAC > 0)
+        {
+            bNeedSpellCast = TRUE;
+            SetLocalInt(oShifter, "PRC_Shifter_NaturalAC", nNaturalAC);
+        }
+
+
+        // Feats - read from shifter_feats.2da, check if template has it and copy over if it does
+        _prc_inc_shifting_CopyFeats(oTemplate, oShifterHide);
+
+        // Casting restrictions if our - inaccurate - check indicates the template can't cast spells
+        if(!_prc_inc_shifting_GetCanFormCast(oTemplate))
+        {
+            // Check for the Natural Spell feat which prevents this restriction
+            if(!GetHasFeat(FEAT_PRESTIGE_SHIFTER_NATURALSPELL, oShifter))
+            {
+                SetLocalInt(oShifter, SHIFTER_RESTRICT_SPELLS, TRUE);
+            }
+        }
+
+        // Harmless stuff gets invisibility
+        if(_prc_inc_shifting_GetIsCreatureHarmless(oTemplate))
+        {
+            bNeedSpellCast = TRUE;
+            SetLocalInt(oShifter, "PRC_Shifter_HarmlessInvisible", TRUE);
+        }
+
+
+        // If requested, generate an item for using SLAs
+        if(bGainSpellLikeAbilities)
+        {
+            object oSLAItem = CreateItemOnObject(SHIFTING_RESREF_SLAITEM, oShifter);
+            _prc_inc_shifting_CreateShifterActiveAbilitiesItem(oTemplate, oSLAItem);
+        }
+
+        // Change the appearance to that of the template
+        SetAppearanceData(oShifter, GetAppearanceData(oTemplate));
+
+        // Set a local variable to override racial type. Offset by +1 to differentiate value 0 from non-existence
+        SetLocalInt(oShifter, SHIFTER_OVERRIDE_RACE, MyPRCGetRacialType(oTemplate) + 1)
+
+        // Heal as if rested - this is a side-effect of polymorphing
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(GetHitDice(oShifter) * d4()), oShifter);
+
+        // Some VFX
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POLYMORPH), oShifter);
+
+        // If something needs permanent effects applied, create a placeable to do the casting in order to bind the effects to a spellID
+        object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(oShifter));
+        AssignCommand(oCastingObject, ActionCastSpellAtObject(SPELL_SHIFTING_EFFECTS, oShifter, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+
+        // Run the class & feat evaluation code
+        // In case of TMIs, uncomment the delaycommand
+        /*DelayCommand(0.0f, */
+                       EvalPRCFeats(oShifter)
+                       /*)*/;
+
+        // Delay unsetting the mutex a bit to give the assigned commands time to execute
+        DelayCommand(SHIFTER_MUTEX_UNSET_DELAY, SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE));
+    }
+
+    // Destroy the template creature
+    MyDestroyObject(oTemplate);
+}
+
+/** Internal function.
  * Does the actual work in unshifting. Restores creature items and
- * appearance.
+ * appearance. If oTemplate is valid, _prc_inc_shifting_ShiftIntoTemplateAux()
+ * will be called once unshifting is finished.
  *
  * NOTE: This assumes that all polymorph effects have already been removed.
  *
  * @param oShifter Creature to unshift
  *
  *  Reshift parameters:
- * @param nShifterType            Passed to _prc_inc_shifting_ShiftIntoResRefAux() when reshifting.
- * @param sResRef                 Passed to _prc_inc_shifting_ShiftIntoResRefAux() when reshifting.
- * @param bGainSpellLikeAbilities Passed to _prc_inc_shifting_ShiftIntoResRefAux() when reshifting.
+ * @param nShifterType            Passed to _prc_inc_shifting_ShiftIntoTemplateAux() when reshifting.
+ * @param oTemplate               Passed to _prc_inc_shifting_ShiftIntoTemplateAux() when reshifting.
+ * @param bGainSpellLikeAbilities Passed to _prc_inc_shifting_ShiftIntoTemplateAux() when reshifting.
  */
-void _prc_inc_shifting_UnShiftAux(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities)
+void _prc_inc_shifting_UnShiftAux(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities)
 {
     /// @todo Do
 }
@@ -676,7 +997,7 @@ void _prc_inc_shifting_UnShiftAux_SeekPolyEnd(object oShifter, object oSkin, int
         DelayCommand(0.15f, _prc_inc_shifting_UnShiftAux_SeekPolyEnd(oShifter, oSkin, nRepeats));
     // It's gone, finish unshifting
     else
-        _prc_inc_shifting_UnShiftAux(oShifter);
+        _prc_inc_shifting_UnShiftAux(oShifter, SHIFTER_TYPE_NONE, OBJECT_INVALID, FALSE);
 }
 
 
@@ -714,7 +1035,7 @@ int StoreCurrentAppearanceAsTrueAppearance(object oShifter, int bCarefull = TRUE
     return TRUE;
 }
 
-int RestoreTrueAppearance(object oShifter);
+int RestoreTrueAppearance(object oShifter)
 {
     // Check fo the the "true appearance stored" marker. Abort if it's not present
     if(!GetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE))
@@ -754,21 +1075,21 @@ void StoreShiftingTemplate(object oShifter, int nShifterType, object oTarget)
     string sNamesArray   = SHIFTER_NAMES_ARRAY   + IntToString(nShifterType);
 
     // Determine array existence
-    if(!persistant_array_exists(oShifter, sResRefArray))
-        persistant_array_create(oShifter, sResRefArray);
+    if(!persistant_array_exists(oShifter, sResRefsArray))
+        persistant_array_create(oShifter, sResRefsArray);
     if(!persistant_array_exists(oShifter, sNamesArray))
         persistant_array_create(oShifter, sNamesArray);
 
     // Get the storeable data
     string sResRef = GetResRef(oTarget);
     string sName   = GetName(oTarget);
-    int nArraySize = persistant_array_get_size(oShifter, sResRefArray);
+    int nArraySize = persistant_array_get_size(oShifter, sResRefsArray);
 
     // Check for the template already being present
     if(_prc_inc_shifting_GetIsTemplateStored(oShifter, nShifterType, sResRef))
         return;
 
-    persistant_array_set_string(oShifter, sResRefArray, nArraySize, sResRef);
+    persistant_array_set_string(oShifter, sResRefsArray, nArraySize, sResRef);
     persistant_array_set_string(oShifter, sNamesArray, nArraySize, sName);
 }
 
@@ -932,7 +1253,7 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
                 int nRacialType = MyPRCGetRacialType(oTemplate);
 
                 // Fey and shapechangers are forbidden targets for PnP Shifter
-                if(nTRacialType == RACIAL_TYPE_FEY || nTRacialType == RACIAL_TYPE_SHAPECHANGER)
+                if(nRacialType == RACIAL_TYPE_FEY || nRacialType == RACIAL_TYPE_SHAPECHANGER)
                 {
                     bReturn = FALSE;
                     SendMessageToPCByStrRef(oShifter, STRREF_PNPSFHT_FEYORSSHIFT); // "You cannot use PnP Shifter abilities to polymorph into this creature."
@@ -1012,62 +1333,53 @@ void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int 
 {
     // Just grab the resref and move on
     ShiftIntoResRef(oShifter, nShifterType, GetResRef(oTemplate), bGainSpellLikeAbilities);
-
-    /*
-    // Make sure there is nothing that would prevent the successfull execution of the shift from happening
-    if(!_prc_inc_shifting_GetCanShift(oShifter))
-        return;
-
-    // Mutex
-    SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, TRUE);
-
-    // Unshift if already shifted
-    if(GetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER))
-        UnShift(oShifter);
-
-    /* Start the actual shifting /
-    // Get the shifter's creature items
-    object oShifterHide = GetPCSkin(oShifter); // Use the PRC wrapper for this to make sure we get the right object
-    object oShifterCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oShifter);
-    object oShifterCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oShifter);
-    object oShifterCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oShifter);
-
-    // Get the template's creature items
-    object oTemplateHide = GetItemInSlot(INVENTORY_SLOT_CARMOUR,   oTemplate);
-    object oTemplateCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oTemplate);
-    object oTemplateCWpL = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oTemplate);
-    object oTemplateCWpR = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oTemplate);
-
-    // Handle hide
-    _ShifterCopyItemProps(oTemplateHide, oShifterHide);
-    */
 }
 
 void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE)
-{/*
-    // Spawn an instance of the template creature in Limbo
-    location lSpawn  = GetLocation(GetWaypointByTag("PRC_SHIFTING_TEMPLATE_SPAWN"));
-    object oTemplate = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
-
-    // Call the primary shifting function
-    ShiftIntoCreature(oShifter, nShifterType, oTemplate, bGainSpellLikeAbilities);
-
-    // Destroy the template creature
-    MyDestroyObject(oTemplate);
-    */
-
+{
     // Make sure there is nothing that would prevent the successfull execution of the shift from happening
     if(!_prc_inc_shifting_GetCanShift(oShifter))
         return;
 
-    // Activate mutex
-    SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, TRUE);
+    /* Create the template to shift into */
+    // Get the waypoint in Limbo where shifting template creatures are spawned
+    object oSpawnWP = GetWaypointByTag(SHIFTING_TEMPLATE_WP_TAG);
+    // Paranoia check - the WP should be built into the area data of Limbo
+    if(!GetIsObjectValid(oSpawnWP))
+    {
+        if(DEBUG) DoDebug("prc_inc_shifting: ShiftIntoResRef(): ERROR: Template spawn waypoint does not exist.");
+        // Create the WP
+        oSpawnWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, SHIFTING_TEMPLATE_WP_TAG);
+    }
 
-    // Unshift if already shifted
-    if(GetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER))
-        _prc_inc_shifting_UnShiftAux(oShifter, nShifterType, sResRef, bGainSpellLikeAbilities);
+    // Get the WP's location
+    location lSpawn  = GetLocation(oSpawnWP);
+
+    // And spawn an instance of the given template there
+    object oTemplate = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
+
+    // Make sure the template creature was successfully created. We have nothing to do if it wasn't
+    if(!GetIsObjectValid(oTemplate))
+    {
+        if(DEBUG) DoDebug("prc_inc_shifting: ShiftIntoResRef(): ERROR: Failed to create creature from template resref: " + sResRef);
+        SendMessageToPCByStrRef(oShifter, STRREF_TEMPLATE_FAILURE); // "Polymorph failed: Failed to create a template of the creature to polymorph into."
+    }
     else
-        _prc_inc_shifting_ShiftIntoResRefAux(oShifter, nShifterType, sResRef, bGainSpellLikeAbilities);
+    {
+        // See if the shifter can in fact shift into the given template
+        if(GetCanShiftIntoCreature(oShifter, nShifterType, oTemplate))
+        {
+            // It can - activate mutex
+            SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, TRUE);
+
+            // Unshift if already shifted and then proceed with shifting into the template
+            // Also, give other stuff 100ms to execute in between
+            if(GetPersistantLocalInt(oShifter, SHIFTER_ISSHIFTED_MARKER))
+                DelayCommand(0.1f, _prc_inc_shifting_UnShiftAux(oShifter, nShifterType, oTemplate, bGainSpellLikeAbilities));
+            else
+                DelayCommand(0.1f, _prc_inc_shifting_ShiftIntoTemplateAux(oShifter, nShifterType, oTemplate, bGainSpellLikeAbilities));
+        }
+    }
 }
 
 int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = FALSE)
@@ -1106,7 +1418,7 @@ int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = 
     }
     else
     {
-        _prc_inc_shifting_UnShiftAux(oShifter);
+        _prc_inc_shifting_UnShiftAux(oShifter, SHIFTER_TYPE_NONE, OBJECT_INVALID, FALSE);
         return UNSHIFT_SUCCESS;
     }
 }

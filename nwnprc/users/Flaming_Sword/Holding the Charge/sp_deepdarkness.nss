@@ -7,7 +7,7 @@
 
     By: Preston Watamaniuk
     Created: Jan 7, 2002
-    Modified: July 1, 2006
+    Modified: Jul 1, 2006
 */
 
 #include "prc_sp_func"

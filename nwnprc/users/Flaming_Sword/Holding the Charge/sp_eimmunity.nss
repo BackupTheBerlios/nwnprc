@@ -4,8 +4,8 @@
     Energy Immunity scripts combined
 
     By: Flaming_Sword
-    Created: July 1, 2006
-    Modified: July 1, 2006
+    Created: Jul 1, 2006
+    Modified: Jul 1, 2006
 */
 
 #include "prc_sp_func"

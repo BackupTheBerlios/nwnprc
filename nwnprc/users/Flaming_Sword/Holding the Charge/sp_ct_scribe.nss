@@ -5,7 +5,7 @@
 
     By: ???
     Created: ???
-    Modified: July 1, 2006
+    Modified: Jul 1, 2006
 
     fixed spelling of tattoo
 */

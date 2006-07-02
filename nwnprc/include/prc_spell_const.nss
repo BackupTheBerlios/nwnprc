@@ -38,16 +38,17 @@ const int SPELL_SLIME_WAVE = 2023;
 
 //damage increase spells for ActionCastSpellOnSelf
 const int SPELL_SET_COMPOSITE_ATTACK_BONUS  = 2732;
-const int SPELL_UNARMED_ATTACK_PEN      = 2734;
-const int SPELL_BATTLERAGER_DAMAGE      = 2728;
-const int SPELL_HEXTOR_DAMAGE           = 2729;
-const int SPELL_THAYANKNIGHT_DAMAGE     = 2730;
-const int SPELL_MANATARMS_DAMAGE        = 2731;
+const int SPELL_UNARMED_ATTACK_PEN          = 2734;
+const int SPELL_BATTLERAGER_DAMAGE          = 2728;
+const int SPELL_HEXTOR_DAMAGE               = 2729;
+const int SPELL_THAYANKNIGHT_DAMAGE         = 2730;
+const int SPELL_MANATARMS_DAMAGE            = 2731;
 const int SPELL_KNIGHTCHALICE_DAMAGE        = 2733;
-const int SPELL_SWASH_DAMAGE                    = 3210;
-const int SPELL_SWASH_DAMAGE_B                  = 3211;
-const int SPELL_OOTBI_GREATER_WEAPON_FOCUS      = 2436;
-const int SPELL_INTUITIVE_ATK           = 2090;
+const int SPELL_SWASH_DAMAGE                = 3210;
+const int SPELL_SWASH_DAMAGE_B              = 3211;
+const int SPELL_OOTBI_GREATER_WEAPON_FOCUS  = 2436;
+const int SPELL_INTUITIVE_ATK               = 2090;
+const int SPELL_SHIFTING_EFFECTS            = 1918;
 
 //heartwarder
 const int SPELL_LIPS_RAPTUR      = 2210;

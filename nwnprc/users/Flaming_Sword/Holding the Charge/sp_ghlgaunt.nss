@@ -123,8 +123,6 @@ void Gauntlet(object oTarget, object oPC, int nHD)
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     SPRaiseSpellCastAt(oTarget, TRUE, SPELL_GHOUL_GAUNTLET, oCaster);
-    //Shift alignment if applicable
-    SPEvilShift(oCaster);
     if(GetLocalInt(oTarget, "HAS_GAUNTLET"))
     {
         return TRUE;
@@ -165,6 +163,7 @@ void main()
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
     if(!nEvent) //normal cast
     {
+        SPEvilShift(oCaster);
         if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
         {   //holding the charge, casting spell on self
             SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges

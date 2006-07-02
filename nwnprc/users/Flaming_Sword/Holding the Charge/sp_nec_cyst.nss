@@ -71,7 +71,6 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     //Resolve Spell if failed save
     if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_EVIL))
         GiveNecroticCyst(oTarget);
-    SPEvilShift(oCaster);
 
     return TRUE;    //return TRUE if spell charges should be decremented
 }
@@ -86,6 +85,7 @@ void main()
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
     if(!nEvent) //normal cast
     {
+        SPEvilShift(oCaster);
         if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
         {   //holding the charge, casting spell on self
             SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges

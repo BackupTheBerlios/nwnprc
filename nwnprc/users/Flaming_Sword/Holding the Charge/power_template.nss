@@ -28,11 +28,10 @@
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)
 {
-    int nPen          = GetPsiPenetration(oManifester);
+    int nPen = GetPsiPenetration(oManifester);
     int nDamage, nTouchAttack;
     int bHit = 0;
 
-    // Let the AI know
     SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
     // Handle Twin Power
@@ -45,35 +44,20 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
         {
             bHit = 1;
             // Roll against SR
-            if(PRCMyResistPower(oManifester, oTarget, nPen))
+            if(PRCMyResistPower(oManifester, oTarget, nPen) == POWER_RESIST_FAIL)
             {
 
 
-            }// end if - SR check
-        }// end if - Touch attack hit
-    }// end for - Twin Power
+            }
+        }
+    }
 
     return bHit;    //Held charge is used if at least 1 touch from twinned power hits
 }
 
 void main()
 {
-/*
-  Spellcast Hook Code
-  Added 2004-11-02 by Stratovarius
-  If you want to make changes to all powers,
-  check psi_spellhook to find out more
-
-*/
-
-    if (!PsiPrePowerCastCode())
-    {
-    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
+    if (!PsiPrePowerCastCode()) return;
     object oManifester = OBJECT_SELF;
     object oTarget     = PRCGetSpellTargetObject();
 
@@ -90,17 +74,16 @@ void main()
                                   METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
                                   );
 
-
         if(manif.bCanManifest)
         {
             if(GetLocalInt(oManifester, PRC_SPELL_HOLD) && oManifester == oTarget)
             {   //holding the charge, manifesting power on self
                 SetLocalSpellVariables(oManifester, 1);   //change 1 to number of charges
+                SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
                 return;
             }
-            SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
             DoPower(oManifester, oTarget, manif);
-        }// end if - Successfull manifestation
+        }
     }
     else
     {
@@ -112,6 +95,3 @@ void main()
         }
     }
 }
-
-//Old Code
-

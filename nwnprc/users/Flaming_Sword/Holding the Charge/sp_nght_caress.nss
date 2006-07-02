@@ -86,7 +86,6 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
             }
         }
     }
-    //if undead
 
     return nTouch;    //return TRUE if spell charges should be decremented
 }

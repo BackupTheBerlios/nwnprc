@@ -104,7 +104,7 @@ void Gauntlet(object oTarget, object oPC, int nHD)
         DelayCommand(6.0f, Gauntlet(oTarget, oPC, nHD));
     else
     {
-        DeleteLocalInt(oTarget, "HAS_GAUNTLET", 1);
+        DeleteLocalInt(oTarget, "HAS_GAUNTLET");
         //Get location of corpse
         location lCorpse = GetLocation(oTarget);
         //Apply VFX

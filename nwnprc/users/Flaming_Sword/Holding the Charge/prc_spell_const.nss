@@ -682,7 +682,6 @@ const int SPELL_MASS_INFLICT_LIGHT                  = 3213;
 const int SPELL_MASS_INFLICT_MODERATE               = 3214;
 const int SPELL_MASS_INFLICT_SERIOUS                = 3215;
 const int SPELL_MASS_INFLICT_CRITICAL               = 3216;
-
 const int SPELL_GREATER_HARM                        = 3217;
 const int SPELL_MASS_HARM                           = 3218;
 

@@ -20,6 +20,7 @@
 */
 
 #include "prc_sp_func"
+#include "x2_inc_toollib"
 
 void DeleteTheInts(object oTarget)
 {

@@ -245,18 +245,3 @@ int CheckRemoveEffects(int nSpellID, int nEffectType)
     }
     return FALSE;
 }
-
-int WeaponSpellSchool(int nSpellID)
-{
-    switch(nSpellID)
-    {
-        case SPELL_HOLY_SWORD:
-        case SPELL_FLAME_WEAPON:
-        case SPELL_DARKFIRE:
-        {
-            return SPELL_SCHOOL_EVOCATION;
-            break;
-        }
-    }
-    return SPELL_SCHOOL_TRANSMUTATION;
-}

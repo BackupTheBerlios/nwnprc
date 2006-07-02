@@ -1,12 +1,12 @@
 /*
     prc_sp_func
 
-    Additional spell functions, including holding the
-        charge and concentration spells
+    Additional spell functions for holding the
+        charge (also works for psionics)
 
     By: Flaming_Sword
     Created: January 31, 2006   *complete rewrite
-    Modified: May 3, 2006
+    Modified: May 27, 2006
 
     From Player's Handbook 3.5ed p141:
 
@@ -36,45 +36,18 @@
     Conclusion:
         Holy crap! Charges stay if your touch attacks miss!
 
-    FEATURES:
-        Stores data for a spell (ranged attack defaulted
-            to medium range) and concentration
-            spell (with target)
-
-
-    LIMITATIONS:
-        Currently only supports one valid target
-            for all spells
-
-    IMPLEMENTATION:
-        Run as thread for caster?
-
-        Local int for spellid
-        Local int for number of charges
-        Local object for target object
-
-        Variables must be deleted on rest
-
-        Needs new feat(s) for changing targets
-
-    USE:
-        Modify new and existing spell/power scripts
-
-
-NOTE: Code can be put in functions to avoid duplication
-
-NOTES TO SELF:
-
 */
 
 #include "prc_alterations"
 #include "psi_inc_manifest"
 #include "spinc_common"
+#include "prc_spell_const"
 
 //constant declarations in case they change
 const string PRC_SPELL_CHARGE_COUNT             = "PRC_SPELL_CHARGE_COUNT";
 const string PRC_SPELL_CHARGE_SPELLID           = "PRC_SPELL_CHARGE_SPELLID";
 const string PRC_SPELL_CONC_TARGET              = "PRC_SPELL_CONC_TARGET";
+const string PRC_SPELL_METAMAGIC                = "PRC_SPELL_METAMAGIC";
 
 const string PRC_POWER_HOLD_MANIFESTATION       = "PRC_POWER_HOLD_MANIFESTATION";
 
@@ -96,6 +69,7 @@ const int SPELLS_SPELLS_RANGED_ATTACK           = 3043;
 const int SPELLS_SPELLS_CONCENTRATION_TARGET    = 3044;
 const int SPELLS_SPELLS_HOLD_CHARGE_TOGGLE      = 3045;
 
+
 //Deletes local variables used for spell functions
 //  To be called (or copied) on rest, from spellhook
 void CleanSpellVariables(object oPC)
@@ -104,6 +78,7 @@ void CleanSpellVariables(object oPC)
     DeleteLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
     DeleteLocalObject(oPC, PRC_SPELL_CONC_TARGET);
     DeleteLocalInt(oPC, PRC_SPELL_HOLD);
+    DeleteLocalInt(oPC, PRC_SPELL_METAMAGIC);
     DeleteLocalManifestation(oPC, PRC_POWER_HOLD_MANIFESTATION);
 }
 
@@ -120,9 +95,10 @@ int IsTouchSpell(int nSpellID)
 //  int nSpellIDOverride, for overriding a SpellID
 void SetLocalSpellVariables(object oCaster, int nCharges = 1, int nSpellIDOverride = -1)
 {
-    int nTemp = (nSpellIDOverride == -1) ? GetSpellId() : nSpellIDOverride;
+    int nTemp = (nSpellIDOverride == -1) ? PRCGetSpellId() : nSpellIDOverride;
     SetLocalInt(oCaster, PRC_SPELL_CHARGE_SPELLID, nTemp);
     SetLocalInt(oCaster, PRC_SPELL_CHARGE_COUNT, nCharges);
+    SetLocalInt(oCaster, PRC_SPELL_METAMAGIC, PRCGetMetaMagicFeat());
     FloatingTextStringOnCreature("*Holding the Charge*", oCaster);
 }
 
@@ -144,9 +120,128 @@ void DecrementSpellCharges(object oPC)
 //  int nEventType, an integer containing flags defining events to use
 void RunSpellScript(object oPC, int nSpellID, int nEventType)
 {
-    //string sScript = Get2DACache("spells", "ImpactScript", nSpellID);
     SetLocalInt(oPC, PRC_SPELL_EVENT, nEventType);
-    ActionCastSpell(nSpellID);
+    ActionCastSpell(nSpellID, 0, 0, 0, GetLocalInt(oPC, PRC_SPELL_METAMAGIC));
     DelayCommand(0.3, DeleteLocalInt(oPC, PRC_SPELL_EVENT));
 }
 
+//Returns true if the spell is one of the cure spells
+int IsCure(int nSpellID)
+{
+    return ((nSpellID >= SPELL_CURE_CRITICAL_WOUNDS) && (nSpellID <= SPELL_CURE_SERIOUS_WOUNDS));
+}
+
+//Returns true if the spell is one of the mass cure spells
+int IsMassCure(int nSpellID)
+{
+    return ((nSpellID >= SPELL_MASS_CURE_LIGHT) && (nSpellID <= SPELL_MASS_CURE_CRITICAL));
+}
+
+//Returns true if the spell is one of the mass inflict spells
+int IsMassInflict(int nSpellID)
+{
+    return ((nSpellID >= SPELL_MASS_INFLICT_LIGHT) && (nSpellID <= SPELL_MASS_INFLICT_CRITICAL));
+}
+
+//Returns true for the spell Heal
+int IsHeal(int nSpellID)
+{
+    return ((nSpellID == SPELL_HEAL) || (nSpellID == SPELL_MASS_HEAL));
+}
+
+//Returns true for the Mass Heal spell (Mass Harm if it ever gets made)
+int IsMassHealHarm(int nSpellID)
+{
+    return ((nSpellID == SPELL_MASS_HEAL) || (nSpellID == SPELL_MASS_HARM));
+}
+
+//Returns whether an effect should be removed
+int CheckRemoveEffects(int nSpellID, int nEffectType)
+{
+    switch(nSpellID)
+    {
+        case SPELL_GREATER_RESTORATION:
+        {
+            return(nEffectType == EFFECT_TYPE_ABILITY_DECREASE ||
+                nEffectType == EFFECT_TYPE_AC_DECREASE ||
+                nEffectType == EFFECT_TYPE_ATTACK_DECREASE ||
+                nEffectType == EFFECT_TYPE_DAMAGE_DECREASE ||
+                nEffectType == EFFECT_TYPE_DAMAGE_IMMUNITY_DECREASE ||
+                nEffectType == EFFECT_TYPE_SAVING_THROW_DECREASE ||
+                nEffectType == EFFECT_TYPE_SPELL_RESISTANCE_DECREASE ||
+                nEffectType == EFFECT_TYPE_SKILL_DECREASE ||
+                nEffectType == EFFECT_TYPE_BLINDNESS ||
+                nEffectType == EFFECT_TYPE_DEAF ||
+                nEffectType == EFFECT_TYPE_CURSE ||
+                nEffectType == EFFECT_TYPE_DISEASE ||
+                nEffectType == EFFECT_TYPE_POISON ||
+                nEffectType == EFFECT_TYPE_PARALYZE ||
+                nEffectType == EFFECT_TYPE_CHARMED ||
+                nEffectType == EFFECT_TYPE_DOMINATED ||
+                nEffectType == EFFECT_TYPE_DAZED ||
+                nEffectType == EFFECT_TYPE_CONFUSED ||
+                nEffectType == EFFECT_TYPE_FRIGHTENED ||
+                nEffectType == EFFECT_TYPE_NEGATIVELEVEL ||
+                nEffectType == EFFECT_TYPE_PARALYZE ||
+                nEffectType == EFFECT_TYPE_SLOW ||
+                nEffectType == EFFECT_TYPE_STUNNED);
+            break;
+        }
+        case SPELL_RESTORATION:
+        {
+            return(nEffectType == EFFECT_TYPE_ABILITY_DECREASE ||
+                nEffectType == EFFECT_TYPE_AC_DECREASE ||
+                nEffectType == EFFECT_TYPE_ATTACK_DECREASE ||
+                nEffectType == EFFECT_TYPE_DAMAGE_DECREASE ||
+                nEffectType == EFFECT_TYPE_DAMAGE_IMMUNITY_DECREASE ||
+                nEffectType == EFFECT_TYPE_SAVING_THROW_DECREASE ||
+                nEffectType == EFFECT_TYPE_SPELL_RESISTANCE_DECREASE ||
+                nEffectType == EFFECT_TYPE_SKILL_DECREASE ||
+                nEffectType == EFFECT_TYPE_BLINDNESS ||
+                nEffectType == EFFECT_TYPE_DEAF ||
+                nEffectType == EFFECT_TYPE_PARALYZE ||
+                nEffectType == EFFECT_TYPE_NEGATIVELEVEL);
+            break;
+        }
+        case SPELL_LESSER_RESTORATION:
+        {
+            return(nEffectType == EFFECT_TYPE_ABILITY_DECREASE ||
+                nEffectType == EFFECT_TYPE_AC_DECREASE ||
+                nEffectType == EFFECT_TYPE_ATTACK_DECREASE ||
+                nEffectType == EFFECT_TYPE_DAMAGE_DECREASE ||
+                nEffectType == EFFECT_TYPE_DAMAGE_IMMUNITY_DECREASE ||
+                nEffectType == EFFECT_TYPE_SAVING_THROW_DECREASE ||
+                nEffectType == EFFECT_TYPE_SPELL_RESISTANCE_DECREASE ||
+                nEffectType == EFFECT_TYPE_SKILL_DECREASE);
+            break;
+        }
+        case SPELL_REMOVE_BLINDNESS_AND_DEAFNESS:
+        {
+            return (nEffectType == EFFECT_TYPE_BLINDNESS ||
+                nEffectType == EFFECT_TYPE_DEAF);
+            break;
+        }
+        case SPELL_REMOVE_CURSE:
+        {
+            return (nEffectType == EFFECT_TYPE_CURSE);
+            break;
+        }
+        case SPELLABILITY_REMOVE_DISEASE:
+        case SPELL_REMOVE_DISEASE:
+        {
+            return (nEffectType == EFFECT_TYPE_DISEASE ||
+                (GetPRCSwitch(PRC_BIOWARE_NEUTRALIZE_POISON) &&
+                    nEffectType == EFFECT_TYPE_ABILITY_DECREASE));
+            break;
+        }
+        case SPELL_NEUTRALIZE_POISON:
+        {
+            return (nEffectType == EFFECT_TYPE_POISON ||
+                nEffectType == EFFECT_TYPE_DISEASE ||
+                (GetPRCSwitch(PRC_BIOWARE_REMOVE_DISEASE) &&
+                    nEffectType == EFFECT_TYPE_ABILITY_DECREASE));
+            break;
+        }
+    }
+    return FALSE;
+}

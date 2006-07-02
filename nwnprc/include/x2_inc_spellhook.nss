@@ -107,6 +107,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "inc_utility"
 #include "prc_inc_itmrstr"
 #include "inc_newspellbook"
+#include "prc_sp_func"
 
 int RedWizRestrictedSchool()
 {
@@ -214,7 +215,7 @@ int BardSorcPrCCheck()
     //check they have arcane PrC
     if(!GetArcanePRCLevels(OBJECT_SELF))
         return TRUE;
-    //check if the newspellbooks are disabled    
+    //check if the newspellbooks are disabled
     if((GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK)
             && PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER)
         || (GetPRCSwitch(PRC_BARD_DISALLOW_NEWSPELLBOOK)
@@ -1077,6 +1078,10 @@ DoDebug("x2_inc_spellhook pre-spellfire");
             }
         }
     }
+
+    //Cleaning spell variables used for holding the charge
+    if(!GetLocalInt(OBJECT_SELF, PRC_SPELL_EVENT))
+        CleanSpellVariables(OBJECT_SELF);
 
     return nContinue;
 }

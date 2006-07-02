@@ -102,7 +102,7 @@ void main()
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oMainTarget);
                     ApplyTouchAttackDamage(oManifester, oMainTarget, nTouchAttack,
                                            GetTargetSpecificChangesToDamage(oMainTarget, oManifester, nDamage, TRUE, TRUE),
-                                           DAMAGE_TYPE_ACID, TRUE
+                                           DAMAGE_TYPE_ACID
                                            );
                     // Apply damage to Chain targets
                     if(manif.bChain)

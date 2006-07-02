@@ -92,7 +92,7 @@ void main()
                 // Target-specific stuff
                 nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, FALSE);
 
-                ApplyTouchAttackDamage(oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_PIERCING, TRUE);
+                ApplyTouchAttackDamage(oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_PIERCING);
             }
 
             // Is there a secondary target?

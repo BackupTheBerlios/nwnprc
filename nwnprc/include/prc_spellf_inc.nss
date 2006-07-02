@@ -157,7 +157,7 @@ int ExpendSpellfire(object oPC)
 //Applies spellfire damage to target
 void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage)
 {
-    ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_TYPE_FIRE)
+    ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_TYPE_FIRE);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SPELLF_FLAME), oTarget);
 }
 

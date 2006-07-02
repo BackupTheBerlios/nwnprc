@@ -34,8 +34,6 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     else if ((iMeta & METAMAGIC_MAXIMIZE))
         iNegDam = 6;
 
-    iNegDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-
     int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
     if (iAttackRoll > 0)
     {

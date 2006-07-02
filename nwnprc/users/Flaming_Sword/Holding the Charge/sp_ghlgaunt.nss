@@ -1,5 +1,5 @@
 /*
-    <SCRIPT NAME>
+    sp_ghlgaunt
 
     Ghoul Gauntlet
     Necromancy [Death, Evil]

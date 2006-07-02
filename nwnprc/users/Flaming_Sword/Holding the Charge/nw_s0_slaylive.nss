@@ -53,7 +53,6 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                     {
                         nDamage = nDamage + (nDamage/2);
                     }
-                    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
                     ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
                 }

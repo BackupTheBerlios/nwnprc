@@ -38,7 +38,6 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if(nMax < nDamage)
         nDamage = nMax;
 
-    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
     effect eHeal = EffectTemporaryHitpoints(nDamage);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

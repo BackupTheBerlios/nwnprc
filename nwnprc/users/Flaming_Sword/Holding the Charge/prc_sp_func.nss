@@ -242,6 +242,20 @@ int CheckRemoveEffects(int nSpellID, int nEffectType)
                     nEffectType == EFFECT_TYPE_ABILITY_DECREASE));
             break;
         }
+        case SPELL_PANACEA:
+        {
+            return (EFFECT_TYPE_BLINDNESS == nEffectType ||
+                EFFECT_TYPE_CONFUSED == nEffectType ||
+                EFFECT_TYPE_DAZED == nEffectType ||
+                EFFECT_TYPE_DEAF == nEffectType ||
+                EFFECT_TYPE_DISEASE == nEffectType ||
+                EFFECT_TYPE_FRIGHTENED == nEffectType ||
+                EFFECT_TYPE_PARALYZE == nEffectType ||
+                EFFECT_TYPE_POISON == nEffectType ||
+                EFFECT_TYPE_SLEEP == nEffectType ||
+                EFFECT_TYPE_STUNNED == nEffectType);
+            break;
+        }
     }
     return FALSE;
 }

@@ -12,21 +12,21 @@
         Restoration
         Greater Restoration
 
+        Panacea
+
     By: Preston Watamaniuk
     Created: Jan 8, 2002
     Modified: Jun 16, 2006
 
     Flaming_Sword: Added Restoration spells, cleaned up
+    added panacea, attack roll before SR check
 */
 
 #include "prc_sp_func"
 
 int GetIsSupernaturalCurse(effect eEff)
 {
-    object oCreator = GetEffectCreator(eEff);
-    if(GetTag(oCreator) == "q6e_ShaorisFellTemple")
-        return TRUE;
-    return FALSE;
+    return GetTag(GetEffectCreator(eEff)) == "q6e_ShaorisFellTemple";
 }
 
 //Implements the spell impact, put code here
@@ -40,6 +40,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int nSpellID = PRCGetSpellId();
     SpellRemovalCheck(oCaster, oTarget);
     int nVis;
+    int iAttackRoll = TRUE;
     switch(nSpellID)
     {   //Setting visual effect
         case SPELL_GREATER_RESTORATION: nVis = VFX_IMP_RESTORATION_GREATER; break;
@@ -57,11 +58,14 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         return TRUE;
     }
     effect eEffect = GetFirstEffect(oTarget);
-    while(GetIsEffectValid(eEffect))
-    {   //Effect removal - see prc_sp_func for list of effects removed
-        if(CheckRemoveEffects(nSpellID, GetEffectType(eEffect)) && !GetIsSupernaturalCurse(eEffect))
-            RemoveEffect(oTarget, eEffect);
-        eEffect = GetNextEffect(oTarget);
+    if(!((nSpellID == SPELL_PANACEA) && (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)))
+    {
+        while(GetIsEffectValid(eEffect))
+        {   //Effect removal - see prc_sp_func for list of effects removed
+            if(CheckRemoveEffects(nSpellID, GetEffectType(eEffect)) && !GetIsSupernaturalCurse(eEffect))
+                RemoveEffect(oTarget, eEffect);
+            eEffect = GetNextEffect(oTarget);
+        }
     }
     if(nSpellID == SPELL_GREATER_RESTORATION && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
     {   //Greater Restoration healing
@@ -72,10 +76,44 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         SetLocalInt(oTarget, "WasRestored", TRUE);
         DelayCommand(HoursToSeconds(1), DeleteLocalInt(oTarget, "WasRestored"));
     }
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
+    if(nSpellID == SPELL_PANACEA)
+    {
+        int nAdd = (nCasterLevel > 20) ? 20 : nCasterLevel;
+        if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD && (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster)))
+        {
+            SPRaiseSpellCastAt(oTarget);
+            if (!SPResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+            {
+                iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+                if (iAttackRoll)
+                {
+                    // Roll the damage (allowing for a critical) and let the target make a will save to
+                    // halve the damage.
+                    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == iAttackRoll ? 1 : 2, 8, 0, nAdd);
+                    if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))
+                    {
+                        nDamage /= 2;
+                        if (GetHasMettle(oTarget, SAVING_THROW_WILL)) nDamage = 0;
+                    }
+                    // Apply damage and VFX.
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUNSTRIKE), oTarget);
+                }
+            }
+        }
+        else
+        {
+            // Roll the healing 'damage'.
+            int nHeal = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
+            // Apply the healing and VFX.
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_M), oTarget);
+        }
+    }
+    SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, FALSE));
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nVis), oTarget);
 
-    return TRUE;    //return TRUE if spell charges should be decremented
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
 }
 
 void main()

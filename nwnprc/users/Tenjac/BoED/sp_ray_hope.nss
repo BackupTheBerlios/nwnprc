@@ -18,9 +18,48 @@ Powerful hope wells up in the subject, who gains a
 ability checks, and skill checks.
 
 Author:    Tenjac
-Created:   
+Created:   7/2/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	//Make touch attack
+	int nTouch = PRCDoRangedTouchAttack(oTarget);
+	
+	//Beam VFX.  Ornedan is my hero.
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_HOLY, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
+	
+	if(nTouch)
+	{
+		effect eLink = EffectAttackIncrease(2, ATTACK_BONUS_MISC);
+		       eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
+		       eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_ALL_SKILLS, 2));
+		       
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur);
+	}
+	
+	SPGoodShift(oPC);
+	SPSetSchool()'
+}
+	       
+	       
+		       
+		
+	        
+	
+	
+	
+	

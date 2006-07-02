@@ -26,7 +26,6 @@ Shadowmind - All to do, (Mass) Cloud Mind powers
 Normal PrCs:
 Slayer of Domiel - cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
 Disciple of Asmodeus - cls_feat.2da, (Greater) Command class abilities
-Dirgesinger - cls_feat.2da
 Suel Archanamach - cls_feat.2da
 
 -----------------------------------------------------

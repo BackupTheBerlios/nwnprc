@@ -166,8 +166,8 @@ void EvalPRCFeats(object oPC)
     // It also runs things that clerics with those domains need
     if (GetPersistantLocalInt(oPC, "PRCBonusDomain1") > 0 ||
         GetLevelByClass(CLASS_TYPE_CLERIC, oPC))                  ExecuteScript("prc_domain_skin", oPC);
-    
-    // Templates 
+
+    // Templates
     //these go here so feats can be reused
     ExecuteScript("prc_templates", oPC);
 
@@ -218,7 +218,7 @@ void EvalPRCFeats(object oPC)
     int nPRCSize = PRCGetCreatureSize(oPC);
     if(nBiowareSize != nPRCSize)
         ExecuteScript("prc_size", oPC);
-        
+
     // Speed changes
     ExecuteScript("prc_speed", oPC);
 
@@ -249,15 +249,15 @@ void EvalPRCFeats(object oPC)
     // Miscellaneous
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
-    
+
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
     {
         if(GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_SLING)
-            IPSafeAddItemProperty(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC), 
+            IPSafeAddItemProperty(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC),
                 ItemPropertyMaxRangeStrengthMod(20),
                 999999.9);
-    }       
+    }
 
     if(GetLevelByClass(CLASS_TYPE_PSION, oPC)
         || GetLevelByClass(CLASS_TYPE_WILDER, oPC)
@@ -276,7 +276,8 @@ void EvalPRCFeats(object oPC)
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
-    ExecuteScript("unarmed_caller", oPC);
+    if(GetLocalInt(oPC, CALL_UNARMED_FEATS) || GetLocalInt(oPC, CALL_UNARMED_FISTS)) // ExecuteScript() is pretty expensive, do not run it needlessly - 20060702, Ornedan
+        ExecuteScript("unarmed_caller", oPC);
 
     // Gathers all the calls to SetBaseAttackBonus() to one place
     // Must be after all evaluationscripts that need said function.
@@ -403,9 +404,9 @@ void DeletePRCLocalInts(object oSkin)
 
     // Ironmind
     DeleteLocalInt(oSkin, "IronMind_DR");
-    
+
     // Suel Archanamach
-    DeleteLocalInt(oSkin, "SuelArchanamachSpellFailure");    
+    DeleteLocalInt(oSkin, "SuelArchanamachSpellFailure");
 
     // Favoured Soul
     DeleteLocalInt(oSkin, "FavouredSoulResistElementAcid");
@@ -437,7 +438,7 @@ void ScrubPCSkin(object oPC, object oSkin)
             //also spare the new spellbook feats (1000-12000)
             //also spare the psionic feats (12000+)
             //also spare Pnp spellschool feats (231-249)
-            //also spare 
+            //also spare
             if ((st < 400 || st > 570)
                 && st != 398
                 && st < 1000
@@ -460,7 +461,7 @@ void ScrubPCSkin(object oPC, object oSkin)
 
     // Schedule restoring the unhealable ability damage
     DelayCommand(0.0f, ReApplyUnhealableAbilityDamage(oPC));
-    
+
     // Remove all natural weapons too
     ClearNaturalWeapons(oPC);
 }
@@ -525,79 +526,6 @@ void FeatUsePerDay(object oPC,int iFeat, int iAbiMod = ABILITY_CHARISMA, int iMo
       IncrementRemainingFeatUses(oPC,iFeat);
       iLeftUse--;
     }
-
-}
-
-void SpellCorup(object oPC)
-{
-
-   int Corup = GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC);
-   int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
-   if (Corup>20) Corup = 20;
-
-   if (!Corup) return ;
-
-   int iLvl1 = (Corup>5)+ (Corup>13)+ (Corup>17);
-   int iLvl2 = (Corup>9)+ (Corup>15)+ (Corup>18);
-   int iLvl3 = (Corup>11)+ (Corup>16)+ (Corup>18);
-   int iLvl4 = (Corup>14)+ (Corup>18)+ (Corup>19);
-
-   iLvl1 +=  (iWis<12 ? 0 :(iWis-4)/8) ;
-   iLvl2 +=  (iWis<14 ? 0 :(iWis-6)/8) ;
-   iLvl3 +=  (iWis<16 ? 0 :(iWis-8)/8) ;
-   iLvl4 +=  (iWis<18 ? 0 :(iWis-10)/8) ;
-
-   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL1,-1,iLvl1);
-   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL2,-1,iLvl2);
-   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL3,-1,iLvl3);
-   FeatUsePerDay(oPC,FEAT_CO_SPELLLVL4,-1,iLvl4);
-
-}
-
-void SpellAPal(object oPC)
-{
-
-   int APal = GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC);
-   int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
-   if (APal>20) APal = 20;
-
-   if (!APal) return ;
-
-   int iLvl1 = (APal>5)+ (APal>13)+ (APal>17);
-   int iLvl2 = (APal>9)+ (APal>15)+ (APal>18);
-   int iLvl3 = (APal>11)+ (APal>16)+ (APal>18);
-   int iLvl4 = (APal>14)+ (APal>18)+ (APal>19);
-
-   iLvl1 +=  (iWis<12 ? 0 :(iWis-4)/8) ;
-   iLvl2 +=  (iWis<14 ? 0 :(iWis-6)/8) ;
-   iLvl3 +=  (iWis<16 ? 0 :(iWis-8)/8) ;
-   iLvl4 +=  (iWis<18 ? 0 :(iWis-10)/8) ;
-
-   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL1,-1,iLvl1);
-   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL2,-1,iLvl2);
-   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL3,-1,iLvl3);
-   FeatUsePerDay(oPC,FEAT_AP_SPELLLVL4,-1,iLvl4);
-
-}
-
-void SpellSol(object oPC)
-{
-
-   int Sol = GetLevelByClass(CLASS_TYPE_SOLDIER_OF_LIGHT,oPC);
-   int iWis = GetAbilityScore(oPC,ABILITY_WISDOM);
-   if (Sol>10) Sol=10;
-
-   if (!Sol) return ;
-
-   int iLvl1 = (Sol+3)/5 + (iWis<12 ? 0 :(iWis-4)/8) ;
-   int iLvl2 = (Sol+1)/5 + (iWis<14 ? 0 :(iWis-6)/8) ;
-   int iLvl3 = (Sol-1)/5 + (iWis<16 ? 0 :(iWis-8)/8) ;
-   int iLvl4 = (Sol-3)/5 + (iWis<18 ? 0 :(iWis-10)/8) ;
-
-   FeatUsePerDay(oPC,FEAT_SPELLLVL1,-1,iLvl1);
-   FeatUsePerDay(oPC,FEAT_SPELLLVL2,-1,iLvl2);
-   FeatUsePerDay(oPC,FEAT_SPELLLVL3,-1,iLvl3);
-   FeatUsePerDay(oPC,FEAT_SPELLLVL4,-1,iLvl4);
 
 }
 
@@ -722,7 +650,7 @@ void BardSong(object oPC)
     // or other classes can grant it on their own
     int nTotal = GetLevelByClass(CLASS_TYPE_BARD, oPC);
     nTotal += GetLevelByClass(CLASS_TYPE_DIRGESINGER, oPC);
-    
+
     FeatUsePerDay(oPC, FEAT_BARD_SONGS, -1, nTotal);
 }
 
@@ -730,11 +658,8 @@ void FeatSpecialUsePerDay(object oPC)
 {
     FeatUsePerDay(oPC,FEAT_FIST_OF_IRON, ABILITY_WISDOM, 3);
     FeatUsePerDay(oPC,FEAT_SMITE_UNDEAD, ABILITY_CHARISMA, 3);
-    SpellSol(oPC);
     SpellKotMC(oPC);
     SpellShadow(oPC);
-    SpellAPal(oPC);
-    SpellCorup(oPC);
     FeatDiabolist(oPC);
     FeatAlaghar(oPC);
     FeatUsePerDay(oPC,FEAT_SA_SHIELDSHADOW,-1,GetCasterLvl(TYPE_ARCANE,oPC));

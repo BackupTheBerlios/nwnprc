@@ -1257,15 +1257,11 @@ const int FEAT_POSITIVE_FORTITUDE                = 3140;
 const int FEAT_ENERGON_COMPANION                 = 3141;
 const int FEAT_POSITIVE_ENERGY_BURST             = 3146;
 const int FEAT_DIVINE_VENGEANCE                  = 3142;
-const int FEAT_SOL_FAST_HEALING_1                     = 3137;
-const int FEAT_SOL_FAST_HEALING_2                     = 3138;
-const int FEAT_SOL_FAST_HEALING_3                     = 3314;
+const int FEAT_SOL_FAST_HEALING_1                = 3137;
+const int FEAT_SOL_FAST_HEALING_2                = 3138;
+const int FEAT_SOL_FAST_HEALING_3                = 3314;
 const int FEAT_MAXIMIZE_TURNING                  = 3315;
 const int FEAT_SUP_POSITIVE_ENERGY_BURST         = 3316;
-const int FEAT_SPELLLVL1                         = 3110;
-const int FEAT_SPELLLVL2                         = 3111;
-const int FEAT_SPELLLVL3                         = 3112;
-const int FEAT_SPELLLVL4                         = 3113;
 
 
 
@@ -1492,14 +1488,6 @@ const int FEAT_FOM_ENCORE_PERFORMANCE         = 4436;
 // Evil-Paladin
 const int FEAT_HIDDENFAITH                       = 3484;
 const int FEAT_AP_TURN_OUTSIDER                  = 3486;
-const int FEAT_AP_SPELLLVL1                      = 3488;
-const int FEAT_AP_SPELLLVL2                      = 3489;
-const int FEAT_AP_SPELLLVL3                      = 3490;
-const int FEAT_AP_SPELLLVL4                      = 3491;
-const int FEAT_CO_SPELLLVL1                      = 3001;
-const int FEAT_CO_SPELLLVL2                      = 3002;
-const int FEAT_CO_SPELLLVL3                      = 3003;
-const int FEAT_CO_SPELLLVL4                      = 3004;
 
 // Outlaw Crimson Road
 const int FEAT_FUGITIVE_LUCK1                    = 2798;

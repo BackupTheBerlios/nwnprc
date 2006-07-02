@@ -48,9 +48,9 @@ int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE)
 {
     //can't absorb spells without feat
     if(!GetHasFeat(FEAT_SPELLFIRE_WIELDER, oTarget)) return 0;
-    
+
     //Can't absorb own spells/powers if switch is set
-    if(GetPRCSwitch(PRC_SPELLFIRE_DISALLOW_CHARGE_SELF) && oTarget == oCaster) return 0;    
+    if(GetPRCSwitch(PRC_SPELLFIRE_DISALLOW_CHARGE_SELF) && oTarget == oCaster) return 0;
 
     //abilities rely on access to weave
     if(GetHasFeat(FEAT_SHADOWWEAVE, oTarget)) return 0;
@@ -157,12 +157,7 @@ int ExpendSpellfire(object oPC)
 //Applies spellfire damage to target
 void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage)
 {
-    int nFire = nDamage / 2;
-    int nMagic = nDamage - nFire;   //bias towards magic damage
-
-    //sneak attack only once
-    ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nMagic, DAMAGE_TYPE_MAGICAL, TRUE);
-    ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nFire, DAMAGE_TYPE_FIRE, FALSE, FALSE);
+    ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_TYPE_FIRE)
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SPELLF_FLAME), oTarget);
 }
 

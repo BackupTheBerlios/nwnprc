@@ -48,30 +48,36 @@ int SpellSneakAttackDamage(object oCaster, object oTarget)
      }
 }
 
-// Applies damage from a ranged touch attack including critical damage and sneak attack damage
-// the target to attack, the original damage ammount (will get doubled if critical)
-// TouchAttackType  0 = melee, 1 = ranged  , 3 non-sneak melee, 4 non-sneak ranged
-// DisplayFeedBack - default is true
-int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int iDamage, int iDamageType, int bCanSneakAttack = TRUE, int bSpellBetrayalStrike = TRUE)
+//Applies damage from touch attacks,
+//  returns result of attack roll
+//
+//  object oCaster, the attacker
+//  object oTarget, the victim
+//  int iAttackRoll, the result of a touch
+//      attack roll, 1 for hit, 2 for
+//      critical hit
+//  int iDamage, the normal amount of damage done
+//  int iDamageType, the damage type
+//  int iDamageType2, the 2nd damage type
+//      if 2 types of damage are applied
+int ApplyTouchAttackDamage(object oCaster, object oTarget, int iAttackRoll, int iDamage, int iDamageType, int iDamageType2 = -1)
 {
-     // perform critical
-     if(iAttackRoll == 2)  iDamage *= 2;
+    if(iAttackRoll == 2)  iDamage *= 2;
+    if(!GetPRCSwitch(PRC_SPELL_SNEAK_DISABLE))
+        iDamage += SpellSneakAttackDamage(oCaster, oTarget);
+    iDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
+    if(iAttackRoll > 0)
+    {
+        if(iDamageType2 == -1)
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iDamage, iDamageType), oTarget);
+        else
+        {   //for touch attacks with 2 damage types, 1st damage type has priority
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iDamage / 2, iDamageType2), oTarget);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(iDamage - (iDamage / 2), iDamageType), oTarget);
+        }
+    }
 
-     // add sneak attack damage if applicable
-     if(bCanSneakAttack && !GetPRCSwitch(PRC_SPELL_SNEAK_DISABLE))
-          iDamage += SpellSneakAttackDamage(oCaster, oTarget);
-
-     // adds the bonus for spell bretrayal or spell strike for touch spells
-     if(bSpellBetrayalStrike)
-     iDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
-     // apply damage
-     if(iAttackRoll > 0)
-     {
-          effect eDamage = EffectDamage(iDamage, iDamageType);
-          ApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-     }
-
-     return iAttackRoll;
+    return iAttackRoll;
 }
 
 //routes to DoRacialSLA, but checks that the ray hits first

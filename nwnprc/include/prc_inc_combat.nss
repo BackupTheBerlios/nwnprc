@@ -1255,6 +1255,13 @@ int GetItemPropAlignment(int iGoodEvil,int iLawChaos)
 //::  Attack Bonus Functions
 //:://////////////////////////////////////////////
 
+/** @todo
+ * This needs fixing. Possible fixes:
+ * 1) Wait until Primo gets the effects code done
+ * 2) Add all missing stuff here
+ * 3) Make all spells that apply AB bonus or penalty update a local variable that tracks the total of such effects.
+ *    Have dispellation monitors to decrement the variable by same when the spell ends
+ */
 int GetMagicalAttackBonus(object oAttacker)
 {
      int iMagicBonus = 0;
@@ -1459,50 +1466,6 @@ int GetMagicalAttackBonus(object oAttacker)
                          iMagicBonus -= 15;
                          break;
                }
-               /* Power Attack handled differently now. The AB calculation is done in GetAttackBonus() - Ornedan
-               // prevents power shot and power attack from stacking
-               if(!GetHasFeatEffect(FEAT_PA_POWERSHOT, oAttacker) &&
-                  !GetHasFeatEffect(FEAT_PA_IMP_POWERSHOT, oAttacker) &&
-                  !GetHasFeatEffect(FEAT_PA_SUP_POWERSHOT, oAttacker) )
-               {
-                    switch(nSpell)
-                    {
-                         case SPELL_POWER_ATTACK10:
-                              iMagicBonus -= 10;
-                              break;
-                         case SPELL_POWER_ATTACK9:
-                              iMagicBonus -= 9;
-                              break;
-                         case SPELL_POWER_ATTACK8:
-                              iMagicBonus -= 8;
-                              break;
-                         case SPELL_POWER_ATTACK7:
-                              iMagicBonus -= 7;
-                              break;
-                         case SPELL_POWER_ATTACK6:
-                              iMagicBonus -= 6;
-                              break;
-                         case SPELL_POWER_ATTACK5:
-                              iMagicBonus -= 5;
-                              break;
-                         case SPELL_POWER_ATTACK4:
-                              iMagicBonus -= 4;
-                              break;
-                         case SPELL_POWER_ATTACK3:
-                              iMagicBonus -= 3;
-                              break;
-                         case SPELL_POWER_ATTACK2:
-                              iMagicBonus -= 2;
-                              break;
-                         case SPELL_POWER_ATTACK1:
-                              iMagicBonus -= 1;
-                              break;
-                         case SPELL_SUPREME_POWER_ATTACK:
-                              iMagicBonus -= 10;
-                              break;
-                    }
-               }
-               */
           }
 
           eEffect = GetNextEffect(oAttacker);
@@ -1699,11 +1662,12 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
 
 int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHand = 0, int iTouchAttackType = FALSE)
 {
-     int iAttackBonus = 0;
-     int iStatMod = 0;
-     int iBAB = GetBaseAttackBonus(oAttacker);
+     int iAttackBonus       = 0;
+     int iStatMod           = 0;
+     int iBAB               = GetBaseAttackBonus(oAttacker);
      int iWeaponAttackBonus = GetWeaponAttackBonusItemProperty(oWeap, oDefender);
-     int iWeaponType = GetBaseItemType(oWeap);
+     int iWeaponType        = GetBaseItemType(oWeap);
+     int iCombatMode        = GetLastAttackMode(oAttacker);
 
      int iStr = GetAbilityModifier(ABILITY_STRENGTH, oAttacker);
      int iDex = GetAbilityModifier(ABILITY_DEXTERITY, oAttacker);
@@ -1714,12 +1678,12 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      //removed since they arent a ranged WEAPON
      // || iTouchAttackType == TOUCH_ATTACK_RANGED || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL;
 
-     int bFinesse = GetHasFeat(FEAT_WEAPON_FINESSE, oAttacker);
-     int bKatanaFinesse = GetHasFeat(FEAT_KATANA_FINESSE, oAttacker);
+     int bFinesse        = GetHasFeat(FEAT_WEAPON_FINESSE, oAttacker);
+     int bKatanaFinesse  = GetHasFeat(FEAT_KATANA_FINESSE, oAttacker);
      int bInuitiveAttack = GetHasFeat(FEAT_INTUITIVE_ATTACK, oAttacker);
-     int bZenArchery = GetHasFeat(FEAT_ZEN_ARCHERY, oAttacker);
+     int bZenArchery     = GetHasFeat(FEAT_ZEN_ARCHERY, oAttacker);
      int bPointBlankShot = GetHasFeat(FEAT_POINT_BLANK_SHOT,oAttacker);
-     int bIsInMelee = GetMeleeAttackers15ft(oAttacker);
+     int bIsInMelee      = GetMeleeAttackers15ft(oAttacker);
 
      // cache result, might increase speed if this is an issue
      int bLight = StringToInt(Get2DACache("baseitems", "WeaponSize", iWeaponType)) < GetCreatureSize(oAttacker);
@@ -1729,8 +1693,23 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      // uses GetMonkEnhancement in case a glove/creature weapon is passed as oWeapon
      int iEnhancement = GetMonkEnhancement(oWeap, oDefender, oAttacker);
 
-     int bFocus = GetHasFeat(GetFeatByWeaponType(iWeaponType, "Focus"), oAttacker);
-     int bEpicFocus = GetHasFeat(GetFeatByWeaponType(iWeaponType, "EpicFocus"), oAttacker);
+     // Feats
+     int bFocus       = GetHasFeat(GetFeatByWeaponType(iWeaponType, "Focus"), oAttacker) ||
+                        // Weapon Focus(Ray) applies to touch attacks
+                        ((iTouchAttackType == TOUCH_ATTACK_RANGED ||
+                          iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL
+                          ) &&
+                          GetHasFeat(FEAT_WEAPON_FOCUS_RAY, oAttacker)
+                         )
+                        ;
+     int bEpicFocus   = GetHasFeat(GetFeatByWeaponType(iWeaponType, "EpicFocus"), oAttacker) ||
+                        // Epic Weapon Focus(Ray) applies to touch attacks
+                        ((iTouchAttackType == TOUCH_ATTACK_RANGED ||
+                          iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL
+                          ) &&
+                          GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAY, oAttacker)
+                         )
+                        ;
      int bEpicProwess = GetHasFeat(FEAT_EPIC_PROWESS, oAttacker);
 
      int bWeaponOfChoice = GetHasFeat(GetFeatByWeaponType(iWeaponType, "WeaponOfChoice"), oAttacker);
@@ -1824,6 +1803,10 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
 
                 // Handle the PRC Power Attack BA pay, if any.
                 iAttackBonus -= GetLocalInt(oAttacker, "PRC_PowerAttack_Level");
+
+                // Power Attack combat modes. The stacking of these with PRC Power attack is handled by the PRC PA scripts
+                if     (iCombatMode == COMBAT_MODE_POWER_ATTACK)          iAttackBonus -= 5;
+                else if(iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK) iAttackBonus -= 10;
            }
      }
      // Ranged Specific Rules
@@ -1872,54 +1855,8 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      // Adds all spell bonuses / penalties on the PC
      iAttackBonus += GetMagicalAttackBonus(oAttacker);
 
-     // support for power attack and expertise modes
-     int iCombatMode = GetLastAttackMode(oAttacker);
-     if( iCombatMode == COMBAT_MODE_POWER_ATTACK /*&&      // Whether BW and PRC power attacks stack or not is handled by the PRC PA script now - Ornedan
-         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK10) &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
-     {
-          iAttackBonus -= 5;
-     }
-     else if( iCombatMode == COMBAT_MODE_IMPROVED_POWER_ATTACK /*&&
-         !GetHasSpellEffect(SPELL_SUPREME_POWER_ATTACK) &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK10) &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK9)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK8)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK7)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK6)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK5)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK4)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK3)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK2)  &&
-         !GetHasSpellEffect(SPELL_POWER_ATTACK1) */)
-     {
-          iAttackBonus -= 10;
-     }
-
-
-     //Handle touch attacks and weapon focus
-     //Epic Weapon Focus: Ray
-     if((iTouchAttackType == TOUCH_ATTACK_RANGED
-            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
-        && GetHasFeat(FEAT_EPIC_WEAPON_FOCUS_RAY, oAttacker))
-        iAttackBonus += 2;
-
-     //Weapon Focus: Ray
-     if((iTouchAttackType == TOUCH_ATTACK_RANGED
-            || iTouchAttackType == TOUCH_ATTACK_RANGED_SPELL)
-        && GetHasFeat(FEAT_WEAPON_FOCUS_RAY, oAttacker))
-        iAttackBonus += 1;
-
-     if(iCombatMode == COMBAT_MODE_EXPERTISE) iAttackBonus -= 5;
+     // Expertise penalties apply to all attack rolls
+     if     (iCombatMode == COMBAT_MODE_EXPERTISE)          iAttackBonus -= 5;
      else if(iCombatMode == COMBAT_MODE_IMPROVED_EXPERTISE) iAttackBonus -= 10;
 
      return iAttackBonus;
@@ -4375,9 +4312,9 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
      DelayCommand(sAttackVars.fDelay, AttackLoopMain(oDefender, oAttacker, iBonusAttacks, iMainAttacks, iOffHandAttacks, iMod, sAttackVars, sMainWeaponDamage, sOffHandWeaponDamage, sSpellBonusDamage) );
 }
 
-void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks, 
-    int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage, 
-    struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE, 
+void AttackLoopMain(object oDefender, object oAttacker, int iBonusAttacks, int iMainAttacks, int iOffHandAttacks,
+    int iMod, struct AttackLoopVars sAttackVars, struct BonusDamage sMainWeaponDamage,
+    struct BonusDamage sOffHandWeaponDamage, struct BonusDamage sSpellBonusDamage, int bApplyTouchToAll = FALSE,
     int iTouchAttackType = FALSE)
 {
      if(DEBUG) DoDebug("Entered AttackLoopMain()");

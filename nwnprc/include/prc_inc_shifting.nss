@@ -935,14 +935,25 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POLYMORPH), oShifter);
 
         // If something needs permanent effects applied, create a placeable to do the casting in order to bind the effects to a spellID
-        object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(oShifter));
-        AssignCommand(oCastingObject, ActionCastSpellAtObject(SPELL_SHIFTING_EFFECTS, oShifter, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        if(bNeedSpellCast)
+        {
+            object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(oShifter));
+            if(!GetIsObjectValid(oCastingObject))
+                if(DEBUG) DoDebug("prc_inc_shifting: _ShiftIntoTemplateAux(): ERROR: Unable to create x0_rodwonder object for casting effect application spell");
+            else
+                AssignCommand(oCastingObject, ActionCastSpellAtObject(SPELL_SHIFTING_EFFECTS, oShifter, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        }
 
         // Run the class & feat evaluation code
-        // In case of TMIs, uncomment the delaycommand
-        /*DelayCommand(0.0f, */
-                       EvalPRCFeats(oShifter)
-                       /*)*/;
+        // In case of TMIs, add two domino blocks
+        /*
+        DelayCommand(0.0f,
+        // */
+                     EvalPRCFeats(oShifter)
+        /*
+                     )
+        // */
+                      ;
 
         // Delay unsetting the mutex a bit to give the assigned commands time to execute
         DelayCommand(SHIFTER_MUTEX_UNSET_DELAY, SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE));

@@ -22,10 +22,10 @@
 18  FEAT_CO_CONTAGION3                             3471      3    16             1      
 19  FEAT_CO_CONTAGION4                             3472      3    20             1      
 20  FEAT_AP_AURAFEAR                               3487      3    3              1      
-21  FEAT_COSPELLLV01                               3001      3    4              1      
-22  FEAT_COSPELLLV02                               3002      3    8              1      
-23  FEAT_COSPELLLV03                               3003      3    11             1      
-24  FEAT_COSPELLLV04                               3004      3    14             1      
+21  ****                                           ****      **** ****           ****   
+22  ****                                           ****      **** ****           ****   
+23  ****                                           ****      **** ****           ****   
+24  ****                                           ****      **** ****           ****   
 25  FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0      
 26  FEAT_EPIC_DEVASTATING_CRITICAL_WHIP            996       1    -1             0      
 27  FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP           999       1    -1             0      

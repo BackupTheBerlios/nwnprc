@@ -208,10 +208,10 @@
 204 FEAT_FAST_HEALING1                                    3137      3    7              0      
 205 FEAT_POSITIVE_ENERGY_BURST                            3146      3    8              1      
 206 FEAT_FAST_HEALING2                                    3138      3    10             0      
-207 FEAT_SOLSPELLLV01                                     3110      3    99             1      
-208 FEAT_SOLSPELLLV02                                     3111      3    99             1      
-209 FEAT_SOLSPELLLV03                                     3112      3    99             1      
-210 FEAT_SOLSPELLLV04                                     3113      3    99             1      
+207 ****                                                  ****      **** ****           ****   
+208 ****                                                  ****      **** ****           ****   
+209 ****                                                  ****      **** ****           ****   
+210 ****                                                  ****      **** ****           ****   
 211 Healing_Domain_Power                                  318       3    13             0      
 212 FEAT_MAXIMIZE_TURNING                                 3315      3    16             0      
 213 FEAT_SUP_POSITIVE_ENERGY_BURST                        3316      3    22             0      

@@ -652,9 +652,11 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
         object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lSelf);
         while(GetIsObjectValid(oTarget))
         {
+string sFoo = "GetTeleportingObjects(): Testing " + DebugObject2Str(oTarget) + " for taking along. Faction result: ";
             // Check if the target is member of the same faction as the caster. If it is, teleport it along.
-            if(GetFactionLeader(oTarget) == GetFactionLeader(oCaster) && oTarget != oCaster)
+            if(GetFactionEqual(oCaster, oTarget) && oTarget != oCaster)
             {
+sFoo += "Yes\n";
                 // Calculate how many carry slots the creature would take
                 nIncrease = GetCreatureSize(oTarget) == CREATURE_SIZE_HUGE ? 4 :
                              GetCreatureSize(oTarget) == CREATURE_SIZE_LARGE ? 2 :
@@ -670,6 +672,8 @@ void GetTeleportingObjects(object oCaster, int nCasterLvl, int bSelfOrParty)
                 else // "You do not have anough carrying capacity to teleport X"
                     SendMessageToPC(oCaster, GetStringByStrRef(16825302) + " " + GetName(oTarget));
             }
+else sFoo += "No\n";
+DoDebug(sFoo);
 
             oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(10.0f), lSelf);
         }

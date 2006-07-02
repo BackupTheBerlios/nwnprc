@@ -1032,7 +1032,7 @@ void _prc_inc_shifting_UnShiftAux(object oShifter, int nShifterType, object oTem
              nEffectSpellID == SPELLABILITY_AURA_STUN             ||
              nEffectSpellID == SPELLABILITY_AURA_UNEARTHLY_VISAGE ||
              nEffectSpellID == SPELLABILITY_AURA_UNNATURAL        ||
-             nEffectSpellID ==SPELLABILITY_DRAGON_FEAR            ||
+             nEffectSpellID == SPELLABILITY_DRAGON_FEAR
              )
             )
            )

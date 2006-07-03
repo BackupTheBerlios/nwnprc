@@ -1,132 +1,145 @@
-//::///////////////////////////////////////////////
-//:: Remove Effects
-//:: NW_SO_RemEffect
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_remeffect
+
     Takes the place of
         Remove Disease
         Neutralize Poison
         Remove Paralysis
         Remove Curse
         Remove Blindness / Deafness
-*/
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: Jan 8, 2002
-//:://////////////////////////////////////////////
-//#include "NW_I0_SPELLS"
-#include "prc_alterations"
-#include "X0_I0_SPELLS"
-#include "spinc_common"
 
-#include "x2_inc_spellhook"
+        Lesser Restoration
+        Restoration
+        Greater Restoration
+
+        Panacea
+
+    By: Preston Watamaniuk
+    Created: Jan 8, 2002
+    Modified: Jun 16, 2006
+
+    Flaming_Sword: Added Restoration spells, cleaned up
+    added panacea, attack roll before SR check
+*/
+
+#include "prc_sp_func"
+
+int GetIsSupernaturalCurse(effect eEff)
+{
+    return GetTag(GetEffectCreator(eEff)) == "q6e_ShaorisFellTemple";
+}
+
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    int nSpellID = PRCGetSpellId();
+    SpellRemovalCheck(oCaster, oTarget);
+    int nVis;
+    int iAttackRoll = TRUE;
+    switch(nSpellID)
+    {   //Setting visual effect
+        case SPELL_GREATER_RESTORATION: nVis = VFX_IMP_RESTORATION_GREATER; break;
+        case SPELL_RESTORATION: nVis = VFX_IMP_RESTORATION; break;
+        case SPELL_LESSER_RESTORATION: nVis = VFX_IMP_RESTORATION_LESSER; break;
+        default: nVis = VFX_IMP_REMOVE_CONDITION; break;
+    }
+    if(nSpellID == SPELL_REMOVE_BLINDNESS_AND_DEAFNESS)
+    {   //Remove Blindness and Deafness aoe hack largely untouched
+        effect eLink;
+        spellsGenericAreaOfEffect(OBJECT_SELF, GetSpellTargetLocation(), SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,
+            SPELL_REMOVE_BLINDNESS_AND_DEAFNESS, EffectVisualEffect(VFX_FNF_LOS_HOLY_30), eLink, EffectVisualEffect(nVis),
+            DURATION_TYPE_INSTANT, 0.0,
+            SPELL_TARGET_ALLALLIES, FALSE, TRUE, EFFECT_TYPE_BLINDNESS, EFFECT_TYPE_DEAF);
+        return TRUE;
+    }
+    effect eEffect = GetFirstEffect(oTarget);
+    if(!((nSpellID == SPELL_PANACEA) && (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)))
+    {
+        while(GetIsEffectValid(eEffect))
+        {   //Effect removal - see prc_sp_func for list of effects removed
+            if(CheckRemoveEffects(nSpellID, GetEffectType(eEffect)) && !GetIsSupernaturalCurse(eEffect))
+                RemoveEffect(oTarget, eEffect);
+            eEffect = GetNextEffect(oTarget);
+        }
+    }
+    if(nSpellID == SPELL_GREATER_RESTORATION && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+    {   //Greater Restoration healing
+        int nHeal = 10 * nCasterLevel;
+        if(nHeal > 250 && !GetPRCSwitch(PRC_BIOWARE_GRRESTORE))
+            nHeal = 250;
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget);
+        SetLocalInt(oTarget, "WasRestored", TRUE);
+        DelayCommand(HoursToSeconds(1), DeleteLocalInt(oTarget, "WasRestored"));
+    }
+    if(nSpellID == SPELL_PANACEA)
+    {
+        int nAdd = (nCasterLevel > 20) ? 20 : nCasterLevel;
+        if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD && (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster)))
+        {
+            SPRaiseSpellCastAt(oTarget);
+            if (!SPResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+            {
+                iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+                if (iAttackRoll)
+                {
+                    // Roll the damage (allowing for a critical) and let the target make a will save to
+                    // halve the damage.
+                    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1 == iAttackRoll ? 1 : 2, 8, 0, nAdd);
+                    if (PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF)))
+                    {
+                        nDamage /= 2;
+                        if (GetHasMettle(oTarget, SAVING_THROW_WILL)) nDamage = 0;
+                    }
+                    // Apply damage and VFX.
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_POSITIVE), oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUNSTRIKE), oTarget);
+                }
+            }
+        }
+        else
+        {
+            // Roll the healing 'damage'.
+            int nHeal = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
+            // Apply the healing and VFX.
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_M), oTarget);
+        }
+    }
+    SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, FALSE));
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nVis), oTarget);
+
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
 
 void main()
 {
-    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-    // This deletes the int used to store spell school, so a new one can be assigned
-
-    //Declare major variables
-    int nSpellID = GetSpellId();
-    object oTarget = GetSpellTargetObject();
-    int nEffect1;
-    int nEffect2;
-    int nEffect3;
-    int bAreaOfEffect = FALSE;
-    
-    //Spell Removal Check - Tenjac
-    SpellRemovalCheck(OBJECT_SELF, oTarget);
-
-    effect eVis = EffectVisualEffect(VFX_IMP_REMOVE_CONDITION);
-    //Check for which removal spell is being cast.
-    if(nSpellID == SPELL_REMOVE_BLINDNESS_AND_DEAFNESS)
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
     {
-
-        SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
-         // Must set which school the spell is before the spell hook, in case spell school
-         // is a criteria for ending the spell.
-        nEffect1 = EFFECT_TYPE_BLINDNESS;
-        nEffect2 = EFFECT_TYPE_DEAF;
-        bAreaOfEffect = TRUE;
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
     }
-    else if(nSpellID == SPELL_REMOVE_CURSE)
+    else
     {
-
-        SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-        // Must set which school the spell is before the spell hook, in case spell school
-         // is a criteria for ending the spell.
-        nEffect1 = EFFECT_TYPE_CURSE;
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
     }
-    else if(nSpellID == SPELL_REMOVE_DISEASE || nSpellID == SPELLABILITY_REMOVE_DISEASE)
-    {
-        SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-        // Must set which school the spell is before the spell hook, in case spell school
-        // is a criteria for ending the spell.
-        nEffect1 = EFFECT_TYPE_DISEASE;
-        if(GetPRCSwitch(PRC_BIOWARE_NEUTRALIZE_POISON))
-            nEffect2 = EFFECT_TYPE_ABILITY_DECREASE;
-    }
-    else if(nSpellID == SPELL_NEUTRALIZE_POISON)
-    {
-
-        SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-        // Must set which school the spell is before the spell hook, in case spell school
-         // is a criteria for ending the spell.
-        nEffect1 = EFFECT_TYPE_POISON;
-        nEffect2 = EFFECT_TYPE_DISEASE;
-        if(GetPRCSwitch(PRC_BIOWARE_REMOVE_DISEASE))
-            nEffect3 = EFFECT_TYPE_ABILITY_DECREASE;
-    }
-
-/*
-  Spellcast Hook Code
-  Added 2003-06-20 by Georg
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-// Moved the spell hook down here, so the spell school int would be set to the caster before it runs.
-
-    // * March 2003. Remove blindness and deafness should be an area of effect spell
-    if (bAreaOfEffect == TRUE)
-    {
-        effect eImpact = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
-        effect eLink;
-
-        spellsGenericAreaOfEffect(OBJECT_SELF, GetSpellTargetLocation(), SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,
-            SPELL_REMOVE_BLINDNESS_AND_DEAFNESS, eImpact, eLink, eVis,
-            DURATION_TYPE_INSTANT, 0.0,
-            SPELL_TARGET_ALLALLIES, FALSE, TRUE, nEffect1, nEffect2);
-        return;
-    }
-    //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
-    //Remove effects
-    RemoveSpecificEffect(nEffect1, oTarget);
-    if(nEffect2 != 0)
-    {
-        RemoveSpecificEffect(nEffect2, oTarget);
-    }
-    if(nEffect3 != 0)
-    {
-        RemoveSpecificEffect(nEffect3, oTarget); 
-    }
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Gets rid of the local int used  to store spell school - for the sake of tidiness.
-
+    SPSetSchool();
 }
-
-

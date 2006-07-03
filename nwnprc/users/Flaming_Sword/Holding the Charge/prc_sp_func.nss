@@ -43,6 +43,11 @@
 #include "spinc_common"
 #include "prc_spell_const"
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
+#include "spinc_common"
+
 //constant declarations in case they change
 const string PRC_SPELL_CHARGE_COUNT             = "PRC_SPELL_CHARGE_COUNT";
 const string PRC_SPELL_CHARGE_SPELLID           = "PRC_SPELL_CHARGE_SPELLID";

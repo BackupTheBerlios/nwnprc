@@ -19,6 +19,7 @@
 #include "inc_utility"
 #include "prc_inc_itmrstr"
 #include "psi_inc_psifunc"
+#include "prc_sp_func"
 
 
 // This function holds all functions that are supposed to run before the actual
@@ -63,7 +64,7 @@ int PsiPrePowerCastCode()
         int nPower = GetPowerLevel(oManifester);
         nContinue = GetIsSkillSuccessful(oManifester, SKILL_CONCENTRATION, (20 + nPower));
     }
-    
+
     //---------------------------------------------------------------------------
     // Run Disrupting Strike Check
     //---------------------------------------------------------------------------
@@ -145,6 +146,17 @@ int PsiPrePowerCastCode()
         if (nContinue) {
             nContinue = X2CastOnItemWasAllowed(oTarget);
         }
+    }
+
+    //Cleaning spell variables used for holding the charge
+    if(!GetLocalInt(OBJECT_SELF, PRC_SPELL_EVENT))
+    {
+        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_CHARGE_COUNT);
+        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_CHARGE_SPELLID);
+        DeleteLocalObject(OBJECT_SELF, PRC_SPELL_CONC_TARGET);
+        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_HOLD);
+        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_METAMAGIC);
+        DeleteLocalManifestation(OBJECT_SELF, PRC_POWER_HOLD_MANIFESTATION);
     }
 
     return nContinue;

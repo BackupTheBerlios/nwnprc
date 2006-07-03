@@ -1,31 +1,41 @@
 /*
-    <SCRIPT NAME>
+    psi_pow_destdiss
 
-    <DESCRIPTION>
+    Destiny Dissonance
 
-    By:
-    Created:
-    Modified:
+    Clairsentience
+    Level: Seer 1
+    Manifesting Time: 1 standard action
+    Range: Touch
+    Target: Creature touched
+    Duration: 1 round/level
+    Saving Throw: None
+    Power Resistance: Yes
+    Power Points: 1
+    Metapsionics: Extend, Twin
 
-    <EXTRA NOTES>
+    Your mere touch grants your foe an imperfect, unfocused glimpse of the many
+    possible futures in store. Unaccustomed to and unable to process the information,
+    the subject becomes sickened for 1 round per level of the manifester.
 
-    <BEGIN NOTES TO SCRIPTER - MAY BE DELETED LATER>
-    Modify as necessary
-    Most code should be put in DoSpell()
-
-    PRC_SPELL_EVENT_ATTACK is set when a
-        touch or ranged attack is used
-    <END NOTES TO SCRIPTER>
+    By: Stratovarius
+    Created: Jul 15, 2005
+    Modified: Jul 3, 2006
 */
 
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)
 {
-    int nPen = GetPsiPenetration(oManifester);
-    int nDamage, nTouchAttack;
-    int bHit = 0;
+    int nDC         = GetManifesterDC(oManifester);
+    int nPen        = GetPsiPenetration(oManifester);
+    effect eShaken  = CreateDoomEffectsLink();
+    effect eImpact  = EffectVisualEffect(VFX_IMP_DOOM);
+    float fDuration = RoundsToSeconds(manif.nManifesterLevel);
+    if(manif.bExtend) fDuration *= 2;
 
+    int bHit = 0;
+    int nTouchAttack;
     SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
 
     int nRepeats = manif.bTwin ? 2 : 1;
@@ -37,7 +47,9 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
             bHit = 1;
             if(PRCMyResistPower(oManifester, oTarget, nPen) == POWER_RESIST_FAIL)
             {
-
+                //Apply VFX Impact and shaken effect
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShaken, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
             }
         }
     }
@@ -55,10 +67,10 @@ void main()
     if(!nEvent) //normal cast
     {
         manif =
-            EvaluateManifestation(oManifester, oTarget,
-                                  PowerAugmentationProfile(),
-                                  METAPSIONIC_NONE
-                                  );    //fill in augmentation and metapsionic options here
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND | METAPSIONIC_TWIN
+                              );
 
         if(manif.bCanManifest)
         {

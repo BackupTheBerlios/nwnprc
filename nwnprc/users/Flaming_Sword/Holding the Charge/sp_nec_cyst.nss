@@ -70,7 +70,10 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     if (MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr())) return TRUE;
     //Resolve Spell if failed save
     if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_EVIL))
+    {
+        ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, 0, DAMAGE_TYPE_POSITIVE, DAMAGE_TYPE_MAGICAL);
         GiveNecroticCyst(oTarget);
+    }
 
     return TRUE;    //return TRUE if spell charges should be decremented
 }

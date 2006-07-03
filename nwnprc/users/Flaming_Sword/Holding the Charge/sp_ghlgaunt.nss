@@ -135,22 +135,27 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         {
         return TRUE;
     }
-    //Spell Resistance
-    if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+    int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+    if(iAttackRoll)
     {
-        int nDC = SPGetSpellSaveDC(oTarget, oCaster);
-        //Saving Throw
-        if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+        //Spell Resistance
+        if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
         {
-            if(!GetPlotFlag(oTarget))
+            int nDC = SPGetSpellSaveDC(oTarget, oCaster);
+            //Saving Throw
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
             {
-                SetLocalInt(oTarget, "HAS_GAUNTLET", 1);
-                Gauntlet(oTarget, oCaster, GetHitDice(oTarget));
+                if(!GetPlotFlag(oTarget))
+                {
+                    SetLocalInt(oTarget, "HAS_GAUNTLET", 1);
+                    ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, 0, DAMAGE_TYPE_NEGATIVE);
+                    Gauntlet(oTarget, oCaster, GetHitDice(oTarget));
+                }
             }
         }
     }
 
-    return TRUE;    //return TRUE if spell charges should be decremented
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
 }
 
 void main()

@@ -19,7 +19,7 @@
 #include "inc_utility"
 #include "prc_inc_itmrstr"
 #include "psi_inc_psifunc"
-//#include "prc_sp_func"
+//#include "prc_sp_func" // Provided by x2_inc_spellhook
 
 
 // This function holds all functions that are supposed to run before the actual
@@ -59,7 +59,7 @@ int PsiPrePowerCastCode()
     }
 
     // Ectoplasmic Form conc check
-    if (GetLocalInt(oTarget, "EctoForm"))
+    if (GetLocalInt(oTarget, "PRC_Power_EctoForm"))
     {
         int nPower = GetPowerLevel(oManifester);
         nContinue = GetIsSkillSuccessful(oManifester, SKILL_CONCENTRATION, (20 + nPower));
@@ -149,13 +149,13 @@ int PsiPrePowerCastCode()
     }
 
     //Cleaning spell variables used for holding the charge
-    if(!GetLocalInt(OBJECT_SELF, "PRC_SPELL_EVENT"))
+    if(!GetLocalInt(oManifester, "PRC_SPELL_EVENT"))
     {
-        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_CHARGE_COUNT");
-        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_CHARGE_SPELLID");
-        DeleteLocalObject(OBJECT_SELF, "PRC_SPELL_CONC_TARGET");
-        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_METAMAGIC");
-        DeleteLocalManifestation(OBJECT_SELF, "PRC_POWER_HOLD_MANIFESTATION");
+        DeleteLocalInt(oManifester, "PRC_SPELL_CHARGE_COUNT");
+        DeleteLocalInt(oManifester, "PRC_SPELL_CHARGE_SPELLID");
+        DeleteLocalObject(oManifester, "PRC_SPELL_CONC_TARGET");
+        DeleteLocalInt(oManifester, "PRC_SPELL_METAMAGIC");
+        DeleteLocalManifestation(oManifester, "PRC_POWER_HOLD_MANIFESTATION");
     }
 
     return nContinue;

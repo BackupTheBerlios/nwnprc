@@ -85,7 +85,7 @@ void main()
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
         // Set marker for use in powerhook
-        SetLocalInt(oTarget, "EctoForm", TRUE);
+        SetLocalInt(oTarget, "PRC_Power_EctoForm", TRUE);
         // Start effect end monitor
         DelayCommand(6.0f, DispelMonitor(manif.oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6));
     }
@@ -100,7 +100,7 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsR
     {
         if(DEBUG) DoDebug("psi_pow_ectoform: Removing marker");
         // Clear the effect presence marker
-        DeleteLocalInt(oTarget, "EctoForm");
+        DeleteLocalInt(oTarget, "PRC_Power_EctoForm");
     }
     else
        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));

@@ -18,9 +18,25 @@ receiving a +8 racial bonus on Spot checks for
 the duration of the spell. 
 
 Author:    Tenjac
-Created:   
+Created:   7/3/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = HoursToSeconds(nCasterLvl/10);
+		
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_SPOT, 8), oTarget, fDur);
+	
+	SPSetSchool();
+}

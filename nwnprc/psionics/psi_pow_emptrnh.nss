@@ -1,12 +1,5 @@
 /*
-   ----------------
-   Empathic Transfer, Hostile
-
-   psi_pow_emptrnh
-   ----------------
-
-   19/4/05 by Stratovarius
-*/ /** @file
+    psi_pow_emptrnh
 
     Empathic Transfer, Hostile
 
@@ -42,159 +35,12 @@
        in a 20-foot-radius spread centered on you. The amount of damage
        transferred is divided evenly among all hostile creatures in the area.
 
+    By: Stratovarius
+    Created: Apr 19, 2005
+    Modified: Jul 3, 2006
 */
 
-#include "psi_inc_psifunc"
-#include "psi_inc_pwresist"
-#include "psi_spellhook"
-#include "spinc_common"
-
-void AvoidDR(object oTarget, int nDamage);
-
-void main()
-{
-/*
-  Spellcast Hook Code
-  Added 2004-11-02 by Stratovarius
-  If you want to make changes to all powers,
-  check psi_spellhook to find out more
-
-*/
-
-    if (!PsiPrePowerCastCode())
-    {
-    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oManifester = OBJECT_SELF;
-    object oTarget     = PRCGetSpellTargetObject();
-    struct manifestation manif =
-        EvaluateManifestation(oManifester, oTarget,
-                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
-                                                       1, 4,
-                                                       6, 1
-                                                       ),
-                              METAPSIONIC_TWIN | METAPSIONIC_WIDEN
-                              );
-
-    if(manif.bCanManifest)
-    {
-        int nDC          = GetManifesterDC(oManifester);
-        int nPen         = GetPsiPenetration(oManifester);
-        int nMaxTran     = min(50 + (10 * manif.nTimesAugOptUsed_1),                           // Maximum transferrable is 50 + 10* augmentation
-                               GetMaxHitPoints(oManifester) - GetCurrentHitPoints(oManifester) // Limited to the amount of damage the manifester has actually suffered
-                               );
-        float fRadius    = EvaluateWidenPower(manif, FeetToMeters(20.0f));
-        location lTarget = PRCGetSpellTargetLocation();
-
-        // Handle Twin Power
-        int nRepeats = manif.bTwin ? 2 : 1;
-        for(; nRepeats > 0; nRepeats--)
-        {
-            // Touch or burst
-            if(manif.nTimesAugOptUsed_2 != 1)
-            {
-                // Let the AI know
-                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
-
-                // Try to touch the single target
-                if(PRCDoMeleeTouchAttack(oTarget) > 0) // No need to store the result, critical hits nor precision-based damage work with this power
-                {
-                    // Mind-affecting immunity
-                    if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
-                    {
-                        if(PRCMyResistPower(oManifester, oTarget, nPen))
-                        {
-                            // Save for half
-                            if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-                            {
-                                nMaxTran /= 2;
-                    		
-                    		if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
-                    		{
-                			nMaxTran = 0;
-                    		}                                  
-                            }
-
-                            // Apply the healing
-                            effect eHeal = EffectHeal(nMaxTran);
-                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oManifester);
-
-                            // Use some trickery to attempt passing damage resistance / immunity
-                            AvoidDR(oTarget, nMaxTran);
-                        }// end if - SR check
-                    }// end if - Mind-affecting immunity check
-                }// end if - Hit with a touch attack
-            }// end if - Single target
-            else
-            {
-                // Delete the array if one exists already
-                if(array_exists(oManifester, "PRC_Power_EmpTranHostile_Targets"))
-                    array_delete(oManifester, "PRC_Power_EmpTranHostile_Targets");
-                // Create array
-                array_create(oManifester, "PRC_Power_EmpTranHostile_Targets");
-
-                // Determine eligible targets
-                oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-                while(GetIsObjectValid(oTarget))
-                {
-                    if(oTarget != oManifester                                             && // Only hurt other people
-                       //!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)                   && // Mind-affecting immunity check
-                       spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, oManifester)   // User can select targets
-                       )
-                    {
-                        // Add target to list
-                        array_set_object(oManifester, "PRC_Power_EmpTranHostile_Targets",
-                	                     array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets"),
-                	                     oTarget
-                	                     );
-                    }// end if - Is this something to target?
-                }// end while - Target getting loop
-
-                // Calculate damage per target
-                int nDamagePerTarget = nMaxTran / array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets");
-                // Calculate the remainder. This will be applied only to the first target
-                int nRemainder       = nMaxTran - (nDamagePerTarget * array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets"));
-                int nDamage;
-
-                // Loop over targets and apply damage
-                int i;
-                for(i = 0; i < array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets"); i++)
-                {
-                    // Let the AI know
-                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
-
-                    // Mind-affecting immunity
-                    if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
-                    {
-                        if(PRCMyResistPower(oManifester, oTarget, nPen))
-                        {
-                            // Set the initial damage
-                            nDamage = nDamagePerTarget;
-                            if(i == 0) nDamage += nRemainder; // First target may get extra
-
-                            // Save for half
-                            if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-                            {
-                                nDamage /= 2;
-                            }
-
-                            // Apply the healing
-                            effect eHeal = EffectHeal(nDamage);
-                            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oManifester);
-
-                            // Use some trickery to attempt passing damage resistance / immunity
-                            AvoidDR(oTarget, nDamage);
-                        }// end if - SR check
-                    }// end if - Mind-affecting immunity check
-                }// end for - Target affecting loop
-            }// end else - Augmented to affect an area
-        }// end for - Twin Power
-    }// end if - Successfull manifestation
-}
+#include "prc_sp_func"
 
 void AvoidDR(object oTarget, int nDamage)
 {
@@ -227,6 +73,168 @@ void AvoidDR(object oTarget, int nDamage)
 
             // If it still didn't work, just give up. The blighter probably has immunities to everything else, too, anyway
             return;
+        }
+    }
+}
+
+int DoPower(object oManifester, object oTarget, struct manifestation manif)
+{
+    int nDC          = GetManifesterDC(oManifester);
+    int nPen         = GetPsiPenetration(oManifester);
+    int nMaxTran     = min(50 + (10 * manif.nTimesAugOptUsed_1),                           // Maximum transferrable is 50 + 10* augmentation
+                           GetMaxHitPoints(oManifester) - GetCurrentHitPoints(oManifester) // Limited to the amount of damage the manifester has actually suffered
+                           );
+    float fRadius    = EvaluateWidenPower(manif, FeetToMeters(20.0f));
+    location lTarget = PRCGetSpellTargetLocation();
+
+    int bHit = 0;
+
+    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+    int nRepeats = manif.bTwin ? 2 : 1;
+    for(; nRepeats > 0; nRepeats--)
+    {
+        // Touch or burst
+        if(manif.nTimesAugOptUsed_2 != 1)
+        {
+            // Let the AI know
+            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+            // Try to touch the single target
+            if(PRCDoMeleeTouchAttack(oTarget) > 0) // No need to store the result, critical hits nor precision-based damage work with this power
+            {
+                bHit = 1;
+                // Mind-affecting immunity
+                if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+                {
+                    if(PRCMyResistPower(oManifester, oTarget, nPen))
+                    {
+                        // Save for half
+                        if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                        {
+                            nMaxTran /= 2;
+
+                        if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                        {
+                        nMaxTran = 0;
+                        }
+                        }
+
+                        // Apply the healing
+                        effect eHeal = EffectHeal(nMaxTran);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oManifester);
+
+                        // Use some trickery to attempt passing damage resistance / immunity
+                        AvoidDR(oTarget, nMaxTran);
+                    }// end if - SR check
+                }// end if - Mind-affecting immunity check
+            }// end if - Hit with a touch attack
+        }// end if - Single target
+        else
+        {
+            bHit = 1;
+            // Delete the array if one exists already
+            if(array_exists(oManifester, "PRC_Power_EmpTranHostile_Targets"))
+                array_delete(oManifester, "PRC_Power_EmpTranHostile_Targets");
+            // Create array
+            array_create(oManifester, "PRC_Power_EmpTranHostile_Targets");
+
+            // Determine eligible targets
+            oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+            while(GetIsObjectValid(oTarget))
+            {
+                if(oTarget != oManifester                                             && // Only hurt other people
+                   //!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS)                   && // Mind-affecting immunity check
+                   spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, oManifester)   // User can select targets
+                   )
+                {
+                    // Add target to list
+                    array_set_object(oManifester, "PRC_Power_EmpTranHostile_Targets",
+                                     array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets"),
+                                     oTarget
+                                     );
+                }// end if - Is this something to target?
+            }// end while - Target getting loop
+
+            // Calculate damage per target
+            int nDamagePerTarget = nMaxTran / array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets");
+            // Calculate the remainder. This will be applied only to the first target
+            int nRemainder       = nMaxTran - (nDamagePerTarget * array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets"));
+            int nDamage;
+
+            // Loop over targets and apply damage
+            int i;
+            for(i = 0; i < array_get_size(oManifester, "PRC_Power_EmpTranHostile_Targets"); i++)
+            {
+                // Let the AI know
+                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+                // Mind-affecting immunity
+                if(!GetIsImmune(oTarget, IMMUNITY_TYPE_MIND_SPELLS))
+                {
+                    if(PRCMyResistPower(oManifester, oTarget, nPen))
+                    {
+                        // Set the initial damage
+                        nDamage = nDamagePerTarget;
+                        if(i == 0) nDamage += nRemainder; // First target may get extra
+
+                        // Save for half
+                        if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                        {
+                            nDamage /= 2;
+                        }
+
+                        // Apply the healing
+                        effect eHeal = EffectHeal(nDamage);
+                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oManifester);
+
+                        // Use some trickery to attempt passing damage resistance / immunity
+                        AvoidDR(oTarget, nDamage);
+                    }// end if - SR check
+                }// end if - Mind-affecting immunity check
+            }// end for - Target affecting loop
+        }// end else - Augmented to affect an area
+    }
+
+    return bHit;    //Held charge is used if at least 1 touch from twinned power hits
+}
+
+void main()
+{
+    if(!PsiPrePowerCastCode()) return;
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif;
+    int nEvent = GetLocalInt(oManifester, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, 4,
+                                                       6, 1
+                                                       ),
+                              METAPSIONIC_TWIN | METAPSIONIC_WIDEN
+                              );
+
+        if(manif.bCanManifest)
+        {
+            if(GetLocalInt(oManifester, PRC_SPELL_HOLD) && oManifester == oTarget && manif.nTimesAugOptUsed_2 != 1)
+            {   //holding the charge, manifesting power on self
+                SetLocalSpellVariables(oManifester, 1);   //change 1 to number of charges
+                SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
+                return;
+            }
+            DoPower(oManifester, oTarget, manif);
+        }
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            manif = GetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION);
+            if(DoPower(oManifester, oTarget, manif))
+                DecrementSpellCharges(oManifester);
         }
     }
 }

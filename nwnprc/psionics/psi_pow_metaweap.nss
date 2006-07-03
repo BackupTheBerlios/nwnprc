@@ -1,12 +1,5 @@
 /*
-   ----------------
-   Metaphysical Weapon
-
-   psi_pow_metaweap
-   ----------------
-
-   29/10/05 by Stratovarius
-*/ /** @file
+    psi_pow_metaweap
 
     Metaphysical Weapon
 
@@ -37,34 +30,67 @@
              In addition, for every 4 additional power points you spend, this
              power improves the weapon’s enhancement bonus on attack rolls and
              damage rolls by 1.
+
+    By: Stratovarius
+    Created: Oct 29, 2005
+    Modified: Jul 3, 2006
 */
 
-#include "psi_inc_psifunc"
-#include "psi_inc_pwresist"
-#include "psi_spellhook"
-#include "prc_alterations"
+#include "prc_sp_func"
+
+int DoPower(object oManifester, object oTarget, struct manifestation manif)
+{
+    int nBonus           = 1 + manif.nTimesAugOptUsed_1;
+    effect eDur          = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    effect eVis          = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
+    itemproperty ipBonus = ItemPropertyEnhancementBonus(nBonus);
+    float fDuration      = (manif.nTimesAugOptUsed_1 == 0 ? 60.0f : HoursToSeconds(1)) * manif.nManifesterLevel;
+    if(manif.bExtend) fDuration *= 2;
+
+    // Determine if we targeted a weapon or a creature
+    if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+    {
+        // It's a creature, target their primary weapon
+        oTarget = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+    }
+    // Make sure the target is either weapon or ammo
+    if(!(GetWeaponRanged(oTarget) || IPGetIsMeleeWeapon(oTarget) ||
+         GetBaseItemType(oTarget) == BASE_ITEM_ARROW ||
+         GetBaseItemType(oTarget) == BASE_ITEM_BOLT  ||
+         GetBaseItemType(oTarget) == BASE_ITEM_BULLET
+       ) )
+        oTarget = OBJECT_INVALID;
+
+    // Make sure we have a valid target
+    if(!GetIsObjectValid(oTarget))
+    {
+        // "Target is not a weapon!"
+        FloatingTextStrRefOnCreature(16826667, oManifester, FALSE);
+        return TRUE;
+    }
+
+    // Add the enhancement bonus
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ipBonus, oTarget, fDuration);
+
+    // Do VFX
+                      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+    DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDur, oTarget, fDuration);
+
+    return TRUE;    //Held charge is used if at least 1 touch from twinned power hits
+}
 
 void main()
 {
-/*
-  Spellcast Hook Code
-  Added 2004-11-02 by Stratovarius
-  If you want to make changes to all powers,
-  check psi_spellhook to find out more
-
-*/
-
-    if (!PsiPrePowerCastCode())
-    {
-    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
+    if(!PsiPrePowerCastCode()) return;
     object oManifester = OBJECT_SELF;
     object oTarget     = PRCGetSpellTargetObject();
-    struct manifestation manif =
+    struct manifestation manif;
+    int nEvent = GetLocalInt(oManifester, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        manif =
         EvaluateManifestation(oManifester, oTarget,
                               PowerAugmentationProfile(4,
                                                        4, PRC_UNLIMITED_AUGMENTATION
@@ -72,49 +98,24 @@ void main()
                               METAPSIONIC_EXTEND
                               );
 
-    if(manif.bCanManifest)
+        if(manif.bCanManifest)
+        {
+            if(GetLocalInt(oManifester, PRC_SPELL_HOLD) && oManifester == oTarget)
+            {   //holding the charge, manifesting power on self
+                SetLocalSpellVariables(oManifester, 1);   //change 1 to number of charges
+                SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
+                return;
+            }
+            DoPower(oManifester, oTarget, manif);
+        }
+    }
+    else
     {
-        int nBonus           = 1 + manif.nTimesAugOptUsed_1;
-        effect eDur          = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-        effect eVis          = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
-        itemproperty ipBonus = ItemPropertyEnhancementBonus(nBonus);
-        float fDuration      = (manif.nTimesAugOptUsed_1 == 0 ? 60.0f : HoursToSeconds(1)) * manif.nManifesterLevel;
-        if(manif.bExtend) fDuration *= 2;
-
-        // Determine if we targeted a weapon or a creature
-        if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
         {
-            // It's a creature, target their primary weapon
-            oTarget = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+            manif = GetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION);
+            if(DoPower(oManifester, oTarget, manif))
+                DecrementSpellCharges(oManifester);
         }
-        // Make sure the target is either weapon or ammo
-        if(!(GetWeaponRanged(oTarget) || IPGetIsMeleeWeapon(oTarget) ||
-             GetBaseItemType(oTarget) == BASE_ITEM_ARROW ||
-             GetBaseItemType(oTarget) == BASE_ITEM_BOLT  ||
-             GetBaseItemType(oTarget) == BASE_ITEM_BULLET
-           ) )
-            oTarget = OBJECT_INVALID;
-
-        // Make sure we have a valid target
-        if(!GetIsObjectValid(oTarget))
-        {
-            // "Target is not a weapon!"
-            FloatingTextStrRefOnCreature(16826667, oManifester, FALSE);
-            return;
-        }
-
-        // Add the enhancement bonus
-        AddItemProperty(DURATION_TYPE_TEMPORARY, ipBonus, oTarget, fDuration);
-
-
-        // If the target is in someone's inventory, apply the visuals to the possessor instead
-        if(GetItemPossessor(oTarget) != OBJECT_INVALID)
-            oTarget = GetItemPossessor(oTarget);
-
-        // Do VFX
-                          SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-        DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-        DelayCommand(2.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDur, oTarget, fDuration);
-    }// end if - Successfull manifestation
+    }
 }

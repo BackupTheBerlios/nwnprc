@@ -1,12 +1,5 @@
 /*
-   ----------------
-   Fuse Flesh
-
-   psi_pow_fuseflsh
-   ----------------
-
-   24/2/05 by Stratovarius
-*/ /** @file
+    psi_pow_fuseflsh
 
     Fuse Flesh
 
@@ -33,34 +26,70 @@
 
     Augment: For every 2 additional power points you spend, this power’s save DC
              increases by 1.
+
+    By: Stratovarius
+    Created: Feb 24, 2005
+    Modified: Jul 3, 2006
 */
 
-#include "psi_inc_psifunc"
-#include "psi_inc_pwresist"
-#include "psi_spellhook"
-#include "spinc_common"
+#include "prc_sp_func"
+
+int DoPower(object oManifester, object oTarget, struct manifestation manif)
+{
+    int nDC           = GetManifesterDC(oManifester);
+    int nPen          = GetPsiPenetration(oManifester);
+    effect ePrimary   =                             EffectParalyze();
+           ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_PARALYZED));
+           ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_PARALYZE_HOLD));
+           ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
+    effect eSecondary =                               EffectBlindness();
+           eSecondary = EffectLinkEffects(eSecondary, EffectDeaf());
+           eSecondary = EffectLinkEffects(eSecondary, EffectVisualEffect(VFX_IMP_BLIND_DEAF_M));
+    float fDuration   = 6.0f * manif.nManifesterLevel;
+    if(manif.bExtend) fDuration *= 2;
+
+    // Let the AI know
+    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+    int nTouchAttack;
+    int bHit = 0;
+
+    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+    int nRepeats = manif.bTwin ? 2 : 1;
+    for(; nRepeats > 0; nRepeats--)
+    {
+        nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
+        if(nTouchAttack > 0)
+        {
+            bHit = 1;
+            if(PRCMyResistPower(oManifester, oTarget, nPen) == POWER_RESIST_FAIL)
+            {
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                {
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePrimary, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSecondary, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                    }// end if - Save vs secondary effect
+                }// end if - Save vs primary effect
+            }
+        }
+    }
+
+    return bHit;    //Held charge is used if at least 1 touch from twinned power hits
+}
 
 void main()
 {
-/*
-  Spellcast Hook Code
-  Added 2004-11-02 by Stratovarius
-  If you want to make changes to all powers,
-  check psi_spellhook to find out more
-
-*/
-
-    if (!PsiPrePowerCastCode())
-    {
-    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
+    if(!PsiPrePowerCastCode()) return;
     object oManifester = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    struct manifestation manif =
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif;
+    int nEvent = GetLocalInt(oManifester, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        manif =
         EvaluateManifestation(oManifester, oTarget,
                               PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
                                                        2, PRC_UNLIMITED_AUGMENTATION
@@ -68,42 +97,24 @@ void main()
                               METAPSIONIC_EXTEND | METAPSIONIC_TWIN
                               );
 
-    if(manif.bCanManifest)
-    {
-        int nDC           = GetManifesterDC(oManifester);
-        int nPen          = GetPsiPenetration(oManifester);
-        effect ePrimary   =                             EffectParalyze();
-               ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_PARALYZED));
-               ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_PARALYZE_HOLD));
-               ePrimary   = EffectLinkEffects(ePrimary, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
-        effect eSecondary =                               EffectBlindness();
-               eSecondary = EffectLinkEffects(eSecondary, EffectDeaf());
-               eSecondary = EffectLinkEffects(eSecondary, EffectVisualEffect(VFX_IMP_BLIND_DEAF_M));
-        float fDuration   = 6.0f * manif.nManifesterLevel;
-        if(manif.bExtend) fDuration *= 2;
-
-        // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
-
-        // Handle Twin Power
-        int nRepeats = manif.bTwin ? 2 : 1;
-        for(; nRepeats > 0; nRepeats--)
+        if(manif.bCanManifest)
         {
-            if(PRCDoMeleeTouchAttack(oTarget))
-            {
-                if(PRCMyResistPower(oManifester, oTarget, nPen))
-                {
-                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-                    {
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePrimary, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
-
-                        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-                        {
-                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSecondary, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
-                        }// end if - Save vs secondary effect
-                    }// end if - Save vs primary effect
-                }// end if - SR check
-            }// end if - Touch attack hit
-        }// end for - Twin Power
-    }// end if - Successfull manifestation
+            if(GetLocalInt(oManifester, PRC_SPELL_HOLD) && oManifester == oTarget)
+            {   //holding the charge, manifesting power on self
+                SetLocalSpellVariables(oManifester, 1);   //change 1 to number of charges
+                SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
+                return;
+            }
+            DoPower(oManifester, oTarget, manif);
+        }
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            manif = GetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION);
+            if(DoPower(oManifester, oTarget, manif))
+                DecrementSpellCharges(oManifester);
+        }
+    }
 }

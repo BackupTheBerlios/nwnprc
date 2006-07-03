@@ -1,12 +1,5 @@
 /*
-   ----------------
-   Share Pain
-
-   psi_pow_shrpain
-   ----------------
-
-   19/2/04 by Stratovarius
-*/ /** @file
+    psi_pow_shrpain
 
     Share Pain
 
@@ -37,54 +30,13 @@
     You may not have more than one Share Pain or Share Pain, Forced active at
     any one time. Any subsequent uses override the previous.
     We're lazy bastards :P
+
+    By: Stratovarius
+    Created: Feb 19, 2004
+    Modified: Jul 3, 2006
 */
 
-#include "psi_inc_psifunc"
-#include "psi_inc_pwresist"
-#include "psi_spellhook"
-#include "spinc_common"
-
-void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManifesterLevel, int nBeatsRemaining);
-
-void main()
-{
-    // Power use hook
-    if(!PsiPrePowerCastCode()) return;
-
-    object oManifester = OBJECT_SELF;
-    object oTarget     = PRCGetSpellTargetObject();
-    struct manifestation manif =
-        EvaluateManifestation(oManifester, oTarget,
-                              PowerAugmentationProfile(),
-                              METAPSIONIC_EXTEND
-                              );
-
-    if(manif.bExtend)
-    {
-        effect eDur     = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
-        float fDuration = HoursToSeconds(manif.nManifesterLevel);
-        if(manif.bExtend) fDuration *= 2;
-
-        // Let the AI know
-        SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
-
-        // Get the OnHitCast: Unique on the manifester's armor / hide
-        ExecuteScript("prc_keep_onhit_a", oManifester);
-
-        // Hook eventscript
-        AddEventScript(oManifester, EVENT_ONHIT, "psi_pow_shrpnaux", TRUE, FALSE);
-
-        // Store the target for use in the damage script
-        SetLocalObject(oManifester, "PRC_Power_SharePain_Target", oTarget);
-
-        // Do VFX for the monitor to look for
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget,     fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oManifester, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
-
-        // Start effect end monitor
-        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID, manif.nManifesterLevel, FloatToInt(fDuration) / 6));
-    }// end if - Successfull manifestation
-}
+#include "prc_sp_func"
 
 void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManifesterLevel, int nBeatsRemaining)
 {
@@ -108,4 +60,69 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManife
     }
     else
        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nManifesterLevel, nBeatsRemaining));
+}
+
+int DoPower(object oManifester, object oTarget, struct manifestation manif)
+{
+    effect eDur     = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
+    float fDuration = HoursToSeconds(manif.nManifesterLevel);
+    if(manif.bExtend) fDuration *= 2;
+
+    // Let the AI know
+    SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+
+    // Get the OnHitCast: Unique on the manifester's armor / hide
+    ExecuteScript("prc_keep_onhit_a", oManifester);
+
+    // Hook eventscript
+    AddEventScript(oManifester, EVENT_ONHIT, "psi_pow_shrpnaux", TRUE, FALSE);
+
+    // Store the target for use in the damage script
+    SetLocalObject(oManifester, "PRC_Power_SharePain_Target", oTarget);
+
+    // Do VFX for the monitor to look for
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget,     fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oManifester, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+
+    // Start effect end monitor
+    DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID, manif.nManifesterLevel, FloatToInt(fDuration) / 6));
+
+    return TRUE;    //Held charge is used if at least 1 touch from twinned power hits
+}
+
+void main()
+{
+    if(!PsiPrePowerCastCode()) return;
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif;
+    int nEvent = GetLocalInt(oManifester, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(),
+                              METAPSIONIC_EXTEND
+                              );
+
+        if(manif.bCanManifest)
+        {
+            if(GetLocalInt(oManifester, PRC_SPELL_HOLD) && oManifester == oTarget)
+            {   //holding the charge, manifesting power on self
+                SetLocalSpellVariables(oManifester, 1);   //change 1 to number of charges
+                SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
+                return;
+            }
+            DoPower(oManifester, oTarget, manif);
+        }
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            manif = GetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION);
+            if(DoPower(oManifester, oTarget, manif))
+                DecrementSpellCharges(oManifester);
+        }
+    }
 }

@@ -1,12 +1,5 @@
 /*
-   ----------------
-   Empathic Transfer
-
-   psi_pow_emptrn
-   ----------------
-
-   11/5/05 by Stratovarius
-*/ /** @file
+    psi_pow_emptrn
 
     Empathic Transfer
 
@@ -34,72 +27,12 @@
              additional 2d10 points of damage (to a maximum of 10d10 points per
              manifestation).
 
-
-    @todo 2da entries
+    By: Stratovarius
+    Created: May 11, 2005
+    Modified: Jul 3, 2006
 */
 
-#include "psi_inc_psifunc"
-#include "psi_inc_pwresist"
-#include "psi_spellhook"
-#include "spinc_common"
-
-void AvoidDR(object oTarget, int nDamage);
-
-void main()
-{
-/*
-  Spellcast Hook Code
-  Added 2004-11-02 by Stratovarius
-  If you want to make changes to all powers,
-  check psi_spellhook to find out more
-
-*/
-
-    if (!PsiPrePowerCastCode())
-    {
-    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    object oManifester = OBJECT_SELF;
-    object oTarget     = PRCGetSpellTargetObject();
-    struct manifestation manif =
-        EvaluateManifestation(oManifester, oTarget,
-                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
-                                                       1, 4
-                                                       ),
-                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
-                              );
-
-    if(manif.bCanManifest)
-    {
-        // Target needs to be willing
-        if(!GetIsEnemy(oTarget))
-        {
-            int nNumberOfDice = 2 + (2 * manif.nTimesAugOptUsed_1);
-            int nDieSize      = 10;
-            int nHeal;
-            effect eHeal, eDam;
-
-            // Let the AI know
-            SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
-
-            // Handle Twin Power
-            int nRepeats = manif.bTwin ? 2 : 1;
-            for(; nRepeats > 0; nRepeats--)
-            {
-                nHeal = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, FALSE, FALSE);
-                eHeal = EffectHeal(nHeal);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
-
-                // Apply damage to manifester
-                AvoidDR(oManifester, nHeal/2);
-            }
-        }
-    }
-}
+#include "prc_sp_func"
 
 void AvoidDR(object oTarget, int nDamage)
 {
@@ -132,6 +65,74 @@ void AvoidDR(object oTarget, int nDamage)
 
             // If it still didn't work, just give up. The blighter probably has immunities to everything else, too, anyway
             return;
+        }
+    }
+}
+
+int DoPower(object oManifester, object oTarget, struct manifestation manif)
+{
+    // Target needs to be willing
+    if(!GetIsEnemy(oTarget))
+    {
+        int nNumberOfDice = 2 + (2 * manif.nTimesAugOptUsed_1);
+        int nDieSize      = 10;
+        int nHeal;
+        effect eHeal, eDam;
+
+        // Let the AI know
+        SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
+
+        // Handle Twin Power
+        int nRepeats = manif.bTwin ? 2 : 1;
+        for(; nRepeats > 0; nRepeats--)
+        {
+            nHeal = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, FALSE, FALSE);
+            eHeal = EffectHeal(nHeal);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
+
+            // Apply damage to manifester
+            AvoidDR(oManifester, nHeal/2);
+        }
+    }
+
+    return TRUE;    //Held charge is used if at least 1 touch from twinned power hits
+}
+
+void main()
+{
+    if(!PsiPrePowerCastCode()) return;
+    object oManifester = OBJECT_SELF;
+    object oTarget     = PRCGetSpellTargetObject();
+    struct manifestation manif;
+    int nEvent = GetLocalInt(oManifester, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        manif =
+        EvaluateManifestation(oManifester, oTarget,
+                              PowerAugmentationProfile(PRC_NO_GENERIC_AUGMENTS,
+                                                       1, 4
+                                                       ),
+                              METAPSIONIC_EMPOWER | METAPSIONIC_MAXIMIZE | METAPSIONIC_TWIN
+                              );
+
+        if(manif.bCanManifest)
+        {
+            if(GetLocalInt(oManifester, PRC_SPELL_HOLD) && oManifester == oTarget)
+            {   //holding the charge, manifesting power on self
+                SetLocalSpellVariables(oManifester, 1);   //change 1 to number of charges
+                SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
+                return;
+            }
+            DoPower(oManifester, oTarget, manif);
+        }
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            manif = GetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION);
+            if(DoPower(oManifester, oTarget, manif))
+                DecrementSpellCharges(oManifester);
         }
     }
 }

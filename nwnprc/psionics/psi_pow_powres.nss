@@ -1,12 +1,5 @@
 /*
-   ----------------
-   Power Resistance
-
-   psi_pow_powres
-   ----------------
-
-   23/2/04 by Stratovarius
-*/ /** @file
+    psi_pow_powres
 
     Power Resistance
 
@@ -22,50 +15,63 @@
     Metapsionics: Extend
 
     The creature gains power resistance equal to 12 + your manifester level.
+
+    By: Stratovarius
+    Created: Feb 23, 2004
+    Modified: Jul 3, 2005
 */
 
-#include "psi_inc_psifunc"
-#include "psi_inc_pwresist"
-#include "psi_spellhook"
-#include "prc_alterations"
+#include "prc_sp_func"
+
+int DoPower(object oManifester, object oTarget, struct manifestation manif)
+{
+    int nSR         = 12 + manif.nManifesterLevel;
+    effect eLink    =                          EffectSpellResistanceIncrease(nSR);
+           eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+           eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE));
+    effect eVis     = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
+    float fDuration = 60.0f * manif.nManifesterLevel;
+    if(manif.bExtend) fDuration *= 2;
+
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+
+    return TRUE;    //Held charge is used if at least 1 touch from twinned power hits
+}
 
 void main()
 {
-/*
-  Spellcast Hook Code
-  Added 2004-11-02 by Stratovarius
-  If you want to make changes to all powers,
-  check psi_spellhook to find out more
-
-*/
-
-    if (!PsiPrePowerCastCode())
-    {
-    // If code within the PrePowerCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
+    if(!PsiPrePowerCastCode()) return;
     object oManifester = OBJECT_SELF;
     object oTarget     = PRCGetSpellTargetObject();
-    struct manifestation manif =
+    struct manifestation manif;
+    int nEvent = GetLocalInt(oManifester, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        manif =
         EvaluateManifestation(oManifester, oTarget,
                               PowerAugmentationProfile(),
                               METAPSIONIC_EXTEND
                               );
 
-    if(manif.bCanManifest)
+        if(manif.bCanManifest)
+        {
+            if(GetLocalInt(oManifester, PRC_SPELL_HOLD) && oManifester == oTarget)
+            {   //holding the charge, manifesting power on self
+                SetLocalSpellVariables(oManifester, 1);   //change 1 to number of charges
+                SetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION, manif);
+                return;
+            }
+            DoPower(oManifester, oTarget, manif);
+        }
+    }
+    else
     {
-        int nSR         = 12 + manif.nManifesterLevel;
-        effect eLink    =                          EffectSpellResistanceIncrease(nSR);
-               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_MAGIC_RESISTANCE));
-        effect eVis     = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
-        float fDuration = 60.0f * manif.nManifesterLevel;
-        if(manif.bExtend) fDuration *= 2;
-
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            manif = GetLocalManifestation(oManifester, PRC_POWER_HOLD_MANIFESTATION);
+            if(DoPower(oManifester, oTarget, manif))
+                DecrementSpellCharges(oManifester);
+        }
     }
 }

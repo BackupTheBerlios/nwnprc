@@ -66,7 +66,7 @@ void main()
 		nHPLoss = 8;
 	}
 	
-	if(nSpell == SPELL_DIVINE_SACRIFICE_9)
+	if(nSpell == SPELL_DIVINE_SACRIFICE_10)
 	{
 		nDam = d6(5);
 		nHPLoss = 10;
@@ -75,8 +75,10 @@ void main()
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nHPLoss), oPC);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDam, DAMAGE_TYPE_MAGICAL), oPC, fDur);
 	
-	//hook to remove effect on hit
+	//Set up removal
+	itemproperty ipHook = ItemProperty
 	
+	AddEventScript(oPC, EVENT_ONHIT, "prc_divine_sac", TRUE, FALSE);
 	
 	SPSetSchool();
 }

@@ -105,8 +105,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nLoss, DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE);
                 }
-
-                ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, 0, DAMAGE_TYPE_NEGATIVE);
              }
          }
     }

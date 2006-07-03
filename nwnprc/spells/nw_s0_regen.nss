@@ -1,66 +1,65 @@
-//::///////////////////////////////////////////////
-//:: Regenerate
-//:: NW_S0_Regen
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_regen
+
     Grants the selected target 6 HP of regeneration
     every round.
+
+    By: Preston Watamaniuk
+    Created: Oct 22, 2001
+    Modified: Jun 16, 2006
 */
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: Oct 22, 2001
-//:://////////////////////////////////////////////
 
-//:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
+#include "prc_sp_func"
 
-#include "x2_inc_spellhook"
-
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
     effect eRegen = EffectRegenerate(6, 6.0);
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-
     effect eLink = EffectLinkEffects(eRegen, eDur);
-
-
-    int nMeta = GetMetaMagicFeat();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nLevel = CasterLvl;
+    int nMeta = PRCGetMetaMagicFeat();
+    int nDur = PRCGetCasterLevel(OBJECT_SELF);
     //Meta-Magic Checks
     if (nMeta == METAMAGIC_EXTEND)
-    {
-        nLevel *= 2;
-
-    }
+        nDur *= 2;
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_REGENERATE, FALSE));
     //Apply effects and VFX
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nLevel),TRUE,-1,CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,-1,nCasterLevel);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the integer used to hold the spells spell school
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

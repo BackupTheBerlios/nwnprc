@@ -1,74 +1,60 @@
-//::///////////////////////////////////////////////
-//:: Amplify
-//:: x0_s0_amplify.nss
-//:: Copyright (c) 2002 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    x0_s0_amplify
+
     The caster or target is able to hear sounds better.
     Listen skill increases by 20.
     DURATION: 1 round/level
+
+    By: Brent Knowles
+    Created: July 30, 2002
+    Modified: Jun 29, 2006
 */
-//:://////////////////////////////////////////////
-//:: Created By: Brent Knowles
-//:: Created On: July 30, 2002
-//:://////////////////////////////////////////////
 
-//:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_sp_func"
 
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    effect eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_LISTEN, 20), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+    int nDuration = nCasterLevel;
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND)) nDuration *= 2;
+    SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_AMPLIFY, FALSE));
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE), oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCasterLevel);
 
-#include "x2_inc_spellhook"
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
-/*
-  Spellcast Hook Code
-  Added 2003-06-20 by Georg
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
     {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
     }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-    int nMetaMagic = GetMetaMagicFeat();
-
-    effect eHide = EffectSkillIncrease(SKILL_LISTEN, 20);
-
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eLink = EffectLinkEffects(eHide, eDur);
-
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDuration = CasterLvl; // * Duration 1 turn/level
-     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))    //Duration is +100%
+    else
     {
-         nDuration = nDuration * 2;
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
     }
-
-    //Fire spell cast at event for target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_AMPLIFY, FALSE));
-    //Apply VFX impact and bonus effects
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SPSetSchool();
 }
-
-
-
-
-
-
-

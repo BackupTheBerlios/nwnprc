@@ -1,47 +1,25 @@
-//::///////////////////////////////////////////////
-//:: Ironguts
-//:: X2_S0_Ironguts
-//:: Copyright (c) 2000 Bioware Corp.
-//:://////////////////////////////////////////////
-//:: When touched the target creature gains a +4
-//:: circumstance bonus on Fortitude saves against
-//:: all poisons.
-//:://////////////////////////////////////////////
-//:: Created By: Andrew Nobbs
-//:: Created On: Nov 22, 2002
-//:://////////////////////////////////////////////
-//:: Last Updated By: Georg 19/10/2003
-
-//:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
-
-#include "x2_inc_spellhook"
-#include "prc_alterations"
-
-void main()
-{
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-
 /*
-  Spellcast Hook Code
-  Added 2003-07-07 by Georg Zoeller
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
+    x2_s0_ironguts
 
+    When touched the target creature gains a +4
+    circumstance bonus on Fortitude saves against
+    all poisons.
+
+    By: Andrew Nobbs
+    Created: Nov 22, 2002
+    Modified: Jun 30, 2006
 */
 
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
+#include "prc_sp_func"
 
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    object oTarget = PRCGetSpellTargetObject();
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
     effect eSave;
     effect eVis2 = EffectVisualEffect(VFX_IMP_HEAD_ACID);
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
@@ -52,10 +30,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
     int nBonus = 4; //Saving throw bonus to be applied
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nCasterLvl = nCasterLevel;
     int nDuration = nCasterLvl * 10; // Turns
     //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(oCaster, GetSpellId(), FALSE));
     //Check for metamagic extend
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
@@ -70,8 +48,33 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
     DelayCommand(0.3f,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Erasing the variable used to store the spell's spell school
+    return TRUE;    //return TRUE if spell charges should be decremented
 }
 
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}

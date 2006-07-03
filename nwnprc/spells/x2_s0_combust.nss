@@ -1,183 +1,40 @@
-//::///////////////////////////////////////////////
-//:: Combust
-//:: X2_S0_Combust
-//:: Copyright (c) 2000 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
-   The initial eruption of flame causes  2d6 fire damage +1
-   point per caster level(maximum +10)
-   with no saving throw.
+    x2_s0_combust
 
-   Further, the creature must make
-   a Reflex save or catch fire taking a further 1d6 points
-   of damage. This will continue until the Reflex save is
-   made.
+    The initial eruption of flame causes  2d6 fire damage +1
+    point per caster level(maximum +10)
+    with no saving throw.
 
-   There is an undocumented artificial limit of
-   10 + casterlevel rounds on this spell to prevent
-   it from running indefinitly when used against
-   fire resistant creatures with bad saving throws
+    Further, the creature must make
+    a Reflex save or catch fire taking a further 1d6 points
+    of damage. This will continue until the Reflex save is
+    made.
 
+    There is an undocumented artificial limit of
+    10 + casterlevel rounds on this spell to prevent
+    it from running indefinitly when used against
+    fire resistant creatures with bad saving throws
+
+    By: Georg Zoeller
+    Created: 2003/09/05
+    Modified: Jun 30, 2006
 */
-//:://////////////////////////////////////////////
-// Created: 2003/09/05 Georg Zoeller
-//:://////////////////////////////////////////////
 
-//:: modified by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
-
-#include "x2_I0_SPELLS"
+#include "prc_sp_func"
 #include "x2_inc_toollib"
-#include "x2_inc_spellhook"
-
-void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic,int EleDmg);
-
-void main()
-{
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
-
-    object oTarget = GetSpellTargetObject();
-    object oCaster = OBJECT_SELF;
-
-    //--------------------------------------------------------------------------
-    // Spellcast Hook Code
-    // Added 2003-06-20 by Georg
-    // If you want to make changes to all spells, check x2_inc_spellhook.nss to
-    // find out more
-    //--------------------------------------------------------------------------
-    if (!X2PreSpellCastCode())
-    {
-        return;
-    }
-    // End of Spell Cast Hook
-
-    //--------------------------------------------------------------------------
-    // Calculate the save DC
-    //--------------------------------------------------------------------------
-    int nLevel = PRCGetCasterLevel(OBJECT_SELF);
-
-    int nDC = (PRCGetSaveDC(oTarget,OBJECT_SELF));
-    int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_FIRE);
-
-
-    //--------------------------------------------------------------------------
-    // Calculate the damage, 2d6 + casterlevel, capped at +10
-    //--------------------------------------------------------------------------
-    int nDamage=nLevel;
-    if (nDamage > 10)
-    {
-        nDamage = 10;
-    }
-    int nMetaMagic = PRCGetMetaMagicFeat();
-    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-    {
-        nDamage += 12;//Damage is at max
-    }
-    else
-    {
-        nDamage  += d6(2);
-        if ((nMetaMagic & METAMAGIC_EMPOWER))
-        {
-            nDamage = nDamage + (nDamage/2);//Damage/Healing is +50%
-        }
-    }
-    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-
-    //--------------------------------------------------------------------------
-    // Calculate the duration (we need a duration or bad things would happen
-    // if someone is immune to fire but fails his safe all the time)
-    //--------------------------------------------------------------------------
-    int nDuration = 10 + nLevel;
-    if (nDuration < 1)
-    {
-        nDuration = 10;
-    }
-
-    //--------------------------------------------------------------------------
-    // Setup Effects
-    //--------------------------------------------------------------------------
-    effect eDam      = EffectDamage(nDamage, EleDmg);
-    effect eDur      = EffectVisualEffect(498);
-
-    if(!GetIsReactionTypeFriendly(oTarget))
-    {
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
-
-       //-----------------------------------------------------------------------
-       // Check SR
-       //-----------------------------------------------------------------------
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nLevel+SPGetPenetr()))
-        {
-
-           //-------------------------------------------------------------------
-           // Apply VFX
-           //-------------------------------------------------------------------
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-            TLVFXPillar(VFX_IMP_FLAME_M, GetLocation(oTarget), 5, 0.1f,0.0f, 2.0f);
-
-            //------------------------------------------------------------------
-            // This spell no longer stacks. If there is one of that type,
-            // that's enough
-            //------------------------------------------------------------------
-            if (GetHasSpellEffect(GetSpellId(),oTarget) || GetHasSpellEffect(SPELL_INFERNO,oTarget)  )
-            {
-                FloatingTextStrRefOnCreature(100775,OBJECT_SELF,FALSE);
-                return;
-            }
-
-            //------------------------------------------------------------------
-            // Apply the VFX that is used to track the spells duration
-            //------------------------------------------------------------------
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(nDuration));
-
-            //------------------------------------------------------------------
-            // Save the spell save DC as a variable for later retrieval
-            //------------------------------------------------------------------
-            SetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_COMBUST), nDC);
-
-            //------------------------------------------------------------------
-            // Tick damage after 6 seconds again
-            //------------------------------------------------------------------
-            DelayCommand(6.0, RunCombustImpact(oTarget,oCaster,nLevel, nMetaMagic,EleDmg));
-        }
-    }
-
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Erasing the variable used to store the spell's spell school
-
-}
 
 void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic,int EleDmg)
 {
-     //--------------------------------------------------------------------------
-    // Check if the spell has expired (check also removes effects)
-    //--------------------------------------------------------------------------
-    if (GZGetDelayedSpellEffectsExpired(SPELL_COMBUST,oTarget,oCaster))
-    {
-        return;
-    }
+    if (GZGetDelayedSpellEffectsExpired(SPELL_COMBUST,oTarget,oCaster)) return;
 
     if (GetIsDead(oTarget) == FALSE)
     {
-
         int nDC = GetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_COMBUST));
-
         if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE))
         {
-            //------------------------------------------------------------------
-            // Calculate the damage, 1d6 + casterlevel, capped at +10
-            //------------------------------------------------------------------
             int nDamage = nLevel;
-            if (nDamage > 10)
-            {
-                nDamage = 10;
-            }
-            if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-            {
-                nDamage += 6;
-            }
+            if (nDamage > 10) nDamage = 10;
+            if ((nMetaMagic & METAMAGIC_MAXIMIZE)) nDamage += 6;
             else
             {
                 nDamage  += d6();
@@ -194,9 +51,6 @@ void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic
             PRCBonusDamage(oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVFX,oTarget);
 
-            //------------------------------------------------------------------
-            // After six seconds (1 round), check damage again
-            //------------------------------------------------------------------
             DelayCommand(6.0f,RunCombustImpact(oTarget,oCaster, nLevel,nMetaMagic,EleDmg));
         }
         else
@@ -204,12 +58,91 @@ void RunCombustImpact(object oTarget, object oCaster, int nLevel, int nMetaMagic
             DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_COMBUST));
             GZRemoveSpellEffects(SPELL_COMBUST, oTarget);
         }
-
    }
-
 }
 
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    int nDC = (PRCGetSaveDC(oTarget,oCaster));
+    int EleDmg = ChangedElementalDamage(oCaster, DAMAGE_TYPE_FIRE);
+    int nDamage = nCasterLevel;
+    if (nDamage > 10)
+    {
+        nDamage = 10;
+    }
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+    {
+        nDamage += 12;//Damage is at max
+    }
+    else
+    {
+        nDamage  += d6(2);
+        if ((nMetaMagic & METAMAGIC_EMPOWER))
+        {
+            nDamage += nDamage / 2;//Damage/Healing is +50%
+        }
+    }
+    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+    int nDuration = 10 + nCasterLevel;
+    if (nDuration < 1)
+    {
+        nDuration = 10;
+    }
+    effect eDam      = EffectDamage(nDamage, EleDmg);
+    effect eDur      = EffectVisualEffect(498);
 
+    if(!GetIsReactionTypeFriendly(oTarget))
+    {
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_COMBUST));
+        if(!MyPRCResistSpell(OBJECT_SELF, oTarget,nCasterLevel+SPGetPenetr()))
+        {
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            TLVFXPillar(VFX_IMP_FLAME_M, GetLocation(oTarget), 5, 0.1f,0.0f, 2.0f);
+            if (GetHasSpellEffect(GetSpellId(),oTarget) || GetHasSpellEffect(SPELL_INFERNO,oTarget)  )
+            {
+                FloatingTextStrRefOnCreature(100775,oCaster,FALSE);
+                return TRUE;
+            }
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, RoundsToSeconds(nDuration));
+            SetLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (SPELL_COMBUST), nDC);
+            DelayCommand(6.0, RunCombustImpact(oTarget,oCaster,nCasterLevel, nMetaMagic,EleDmg));
+        }
+    }
 
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
 
-
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}

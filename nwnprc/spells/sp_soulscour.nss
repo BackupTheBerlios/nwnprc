@@ -1,5 +1,16 @@
-#include "spinc_common"
-#include "prc_inc_sp_tch"
+/*
+    sp_soulscour
+
+    This spell deal 2d6 points of charisma damage
+    and 1d6 points of wisdom damage. It then deals
+    an additional 1d6 charisma damage 1 minute later.
+
+    By: ???
+    Created: ???
+    Modified: Jul 3, 2006
+*/
+
+#include "prc_sp_func"
 
 //
 // Does the secondary charisma drain that happens 1 minute after initial effect.
@@ -16,28 +27,27 @@ void DoSecondaryDrain(object oTarget, int nChaDrain)
      ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nChaDrain, DURATION_TYPE_PERMANENT, TRUE);
 }
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-     // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-     if (!X2PreSpellCastCode()) return;
-
-     SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-
-     object oTarget = GetSpellTargetObject();
-
-     // Determine damage dice.
-     int nCasterLvl = PRCGetCasterLevel();
+     int nCasterLvl = nCasterLevel;
      int nDice = nCasterLvl;
      if (nDice > 5) nDice = 5;
      int nPenetr = nCasterLvl + SPGetPenetr();
 
+    int nTouchAttack;
      if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
      {
           // Fire cast spell at event for the specified target
           SPRaiseSpellCastAt(oTarget);
 
           // Make touch attack, saving result for possible critical
-          int nTouchAttack = PRCDoMeleeTouchAttack(oTarget);;
+          nTouchAttack = PRCDoMeleeTouchAttack(oTarget);
           if (nTouchAttack > 0)
           {
                if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
@@ -72,5 +82,33 @@ void main()
           }
      }
 
-     SPSetSchool();
+    return nTouchAttack;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

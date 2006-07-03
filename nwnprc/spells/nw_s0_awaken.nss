@@ -1,49 +1,28 @@
-//::///////////////////////////////////////////////
-//:: Awaken
-//:: NW_S0_Awaken
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_awaken
+
     This spell makes an animal ally more
     powerful, intelligent and robust for the
     duration of the spell.  Requires the caster to
     make a Will save to succeed.
+
+    By: Preston Watamaniuk
+    Created: Aug 10, 2001
+    Modified: Jun 12, 2006
 */
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: Aug 10, 2001
-//:://////////////////////////////////////////////
 
+#include "prc_sp_func"
 
-//:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
-
-#include "x2_inc_spellhook"
-
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-
     //Declare major variables
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    object oTarget = GetSpellTargetObject();
+    int CasterLvl = nCasterLevel;
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
     effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, 4);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
@@ -52,7 +31,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
     int nInt = d10();
     int nDuration = 24;
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
     if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
     {
@@ -86,6 +65,33 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         }
     }
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

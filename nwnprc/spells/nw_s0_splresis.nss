@@ -1,68 +1,70 @@
-//::///////////////////////////////////////////////
-//:: Spell Resistance
-//:: NW_S0_SplResis
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_splresis
+
     The target creature gains 12 + Caster Level SR.
+
+    By: Preston Watamaniuk
+    Created: Mar 19, 2001
+    Modified: Jun 28, 2006
+
+    Cleaned up slightly
 */
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: March 19, 2001
-//:://////////////////////////////////////////////
-//:: Last Updated By: Preston Watamaniuk, On: April 11, 2001
-//:: VFX Pass By: Preston W, On: June 25, 2001
 
-//:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
+#include "prc_sp_func"
 
-#include "x2_inc_spellhook"
-
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    int nMetaMagic = GetMetaMagicFeat();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nLevel = CasterLvl;
-    int nBonus = 12 + nLevel;
-    effect eSR = EffectSpellResistanceIncrease(nBonus);
+    int nLevel = nCasterLevel;
+    effect eSR = EffectSpellResistanceIncrease(12 + nLevel);
     effect eVis = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eDur2 = EffectVisualEffect(249);
     effect eLink = EffectLinkEffects(eSR, eDur);
     eLink = EffectLinkEffects(eLink, eDur2);
 
-    //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SPELL_RESISTANCE, FALSE));
-    //Check for metamagic extension
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
     {
-        nLevel = nLevel *2; //Duration is +100%
+        nLevel *= 2; //Duration is +100%
     }
-    //Apply VFX impact and SR bonus effect
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nLevel),TRUE,-1,CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nLevel),TRUE,-1,nCasterLevel);
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the integer used to hold the spells spell school
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

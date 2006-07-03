@@ -1,68 +1,60 @@
-//::///////////////////////////////////////////////
-//:: Resistance
-//:: NW_S0_Resis
-//:: Copyright (c) 2000 Bioware Corp.
-//:://////////////////////////////////////////////
-//:: This spell gives the recipiant a +1 bonus to
-//:: all saves.  It lasts for 1 Turn.
-//:://////////////////////////////////////////////
-//:: Created By: Aidan Scanlan
-//:: Created On: 01/12/01
-//:://////////////////////////////////////////////
-//:: Last Updated By: Preston Watamaniuk, On: April 11, 2001
-//:: VFX Pass By: Preston W, On: Aug 7, 2001
+/*
+    nw_s0_resis
 
-#include "spinc_common"
-#include "x2_inc_spellhook"
+    +1 to all saves for 2 turns
 
+    By: Aidan Scanlan
+    Created: Jan 12, 2001
+    Modified: Jun 26, 2006
+
+    Tried to minimise number of lines used
+*/
+
+#include "prc_sp_func"
+
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nDuration = CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND) ? 4 : 2; // Turns
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RESISTANCE, FALSE));
+    effect eLink = EffectLinkEffects(EffectSavingThrowIncrease(SAVING_THROW_ALL, 1), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+    //Apply the bonus effect and VFX impact
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,nCasterLevel);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEAD_HOLY), oTarget);
+
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
     {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
     }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    effect eSave;
-    effect eVis = EffectVisualEffect(VFX_IMP_HEAD_HOLY);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nBonus = 1; //Saving throw bonus to be applied
-    int nMetaMagic = GetMetaMagicFeat();
-    int nDuration = 2; // Turns
-    //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_RESISTANCE, FALSE));
-    //Check for metamagic extend
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    else
     {
-        nDuration = nDuration * 2;
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
     }
-    //Set the bonus save effect
-    eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nBonus);
-    effect eLink = EffectLinkEffects(eSave, eDur);
-
-    //Apply the bonus effect and VFX impact
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Gets rid of the local int used  to store spell school - for the sake of tidiness.
+    SPSetSchool();
 }

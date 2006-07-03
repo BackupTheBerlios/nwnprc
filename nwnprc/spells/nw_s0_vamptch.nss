@@ -1,99 +1,43 @@
-//::///////////////////////////////////////////////
-//:: Vampiric Touch
-//:: NW_S0_VampTch
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_vamptch
+
     drain 1d6
     HP per 2 caster levels from the target.
-*/
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: Oct 29, 2001
-//:://////////////////////////////////////////////
 
-/*
-bugfix by Kovi 2002.07.22
-- did double damage with maximize
-- temporary hp was stacked
-2002.08.25
-- got temporary hp some immune creatures (Negative Energy Protection), lost
-temporary hp against other resistant (SR, Shadow Shield)
+    By: Preston Watamaniuk
+    Created: Oct 29, 2001
+    Modified: Jun 28, 2006
 
-Georg 2003-09-11
-- Put in melee touch attack check, as the fixed attack bonus is now calculated correctly
-
+    Cleaned up
 */
 
-//:: modified by mr_bumpkin  Dec 4, 2003
-#include "spinc_common"
-#include "prc_inc_sp_tch"
+#include "prc_sp_func"
 
-#include "x0_I0_SPELLS"
-#include "x2_inc_spellhook"
-
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
-    //--------------------------------------------------------------------------
-    /*  Spellcast Hook Code
-       Added 2003-06-20 by Georg
-       If you want to make changes to all spells,
-       check x2_inc_spellhook.nss to find out more
-    */
-    //--------------------------------------------------------------------------
-
-    if (!X2PreSpellCastCode())
-    {
-        return;
-    }
-    //--------------------------------------------------------------------------
-    // End of Spell Cast Hook
-    //--------------------------------------------------------------------------
-
-
-    object oTarget = PRCGetSpellTargetObject();
     int nMetaMagic = PRCGetMetaMagicFeat();
-
-    int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
-    int nDDice = nCasterLevel /2;
+    int nDDice = nCasterLevel / 2;
     if ((nDDice) == 0)
-    {
         nDDice = 1;
-    }
-    //--------------------------------------------------------------------------
-    // GZ: Cap according to the book
-    //--------------------------------------------------------------------------
-    else if (nDDice>10)
-    {
+    else if (nDDice > 10)
         nDDice = 10;
-    }
 
-    int nDamage = d6(nDDice);
-
-    //--------------------------------------------------------------------------
-    //Enter Metamagic conditions
-    //--------------------------------------------------------------------------
-
-    nDamage = PRCMaximizeOrEmpower(6,nDDice,nMetaMagic);
+    int nDamage = PRCMaximizeOrEmpower(6,nDDice,nMetaMagic);
     int nDuration = nCasterLevel/2;
 
     if ((nMetaMagic & METAMAGIC_EXTEND))
-    {
         nDuration *= 2;
-    }
 
-    //--------------------------------------------------------------------------
-    //Limit damage to max hp + 10
-    //--------------------------------------------------------------------------
     int nMax = GetCurrentHitPoints(oTarget) + 10;
     if(nMax < nDamage)
-    {
         nDamage = nMax;
-    }
-    
-    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+
 
     effect eHeal = EffectTemporaryHitpoints(nDamage);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
@@ -102,9 +46,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //effect eDamage = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
     effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
     effect eVisHeal = EffectVisualEffect(VFX_IMP_HEALING_M);
-    
+
     int nPenetr = nCasterLevel + SPGetPenetr();
-    
+    int iAttackRoll;
     if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
     {
         if(!GetIsReactionTypeFriendly(oTarget) &&
@@ -112,30 +56,53 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             MyPRCGetRacialType(oTarget) != RACIAL_TYPE_CONSTRUCT &&
             !GetHasSpellEffect(SPELL_NEGATIVE_ENERGY_PROTECTION, oTarget))
         {
-
-
-            SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_VAMPIRIC_TOUCH, FALSE));
+            SignalEvent(oCaster, EventSpellCastAt(OBJECT_SELF, SPELL_VAMPIRIC_TOUCH, FALSE));
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_VAMPIRIC_TOUCH, TRUE));
-           
-            // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property    
-            int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);;
-           
+
+            iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+
             if (iAttackRoll > 0)
             {
-                if(MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr) == 0)
+                if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
                  {
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                    //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
-                    ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
+                    ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_NEGATIVE);
                     PRCBonusDamage(oTarget);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, OBJECT_SELF);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVisHeal, oCaster);
                     RemoveTempHitPoints();
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, OBJECT_SELF, HoursToSeconds(nDuration),TRUE,-1,nCasterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oCaster, HoursToSeconds(nDuration),TRUE,-1,nCasterLevel);
                  }
             }
         }
     }
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the integer used to hold the spells spell school
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

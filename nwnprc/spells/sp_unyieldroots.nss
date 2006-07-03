@@ -1,7 +1,21 @@
-#include "spinc_common"
+/*
+    sp_unyieldroots
 
-#include "NW_I0_SPELLS"
-#include "x0_i0_spells"
+    The target you touch grow thick tree roots that
+    anchor him to the ground and provide him with
+    life-sustaining healing. The creature can't move
+    but gains immunity to Bigby's Forceful Hand,
+    Earthquake, Poison, Negative level (as the
+    Restoration spell ) and healing up 30 point of
+    damage per round. The Target gets a +4 to Fort
+    and Will saves, but -4 to Ref saves.
+
+    By: ???
+    Created: ???
+    Modified: Jul 2, 2006
+*/
+
+#include "prc_sp_func"
 
 int GetIsSupernaturalCurse(effect eEff)
 {
@@ -11,33 +25,23 @@ int GetIsSupernaturalCurse(effect eEff)
     return FALSE;
 }
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-
     //Declare major variables
     effect eHold = EffectCutsceneImmobilize();
     effect eEntangle = EffectVisualEffect(VFX_DUR_ENTANGLE);
-    
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
-    int nDuration = CasterLvl;
-    
-    if (nDuration < 1)
-    {
-        nDuration = 1;
-    }
-    
-    int nMetaMagic = GetMetaMagicFeat();
-
+    int nDuration = nCasterLevel;
+    if (nDuration < 1) nDuration = 1;
+    int nMetaMagic = PRCGetMetaMagicFeat();
     //Check Extend metamagic feat.
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
        nDuration = nDuration *2;    //Duration is +100%
-
-
     effect eBad = GetFirstEffect(oTarget);
     //Search for negative effects
     while(GetIsEffectValid(eBad))
@@ -62,13 +66,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         eBad = GetNextEffect(oTarget);
     }
 
-
     //Link Entangle and Hold effects
     effect eLink = EffectLinkEffects(eHold, eEntangle);
-
-
- 
- 
     eLink = EffectLinkEffects(eLink,EffectSpellImmunity(SPELL_BIGBYS_FORCEFUL_HAND));
     eLink = EffectLinkEffects(eLink,EffectSpellImmunity(SPELL_EARTHQUAKE));
     eLink = EffectLinkEffects(eLink,EffectImmunity(IMMUNITY_TYPE_ABILITY_DECREASE));
@@ -85,19 +84,42 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     eLink = EffectLinkEffects(eLink,EffectImmunity(IMMUNITY_TYPE_NEGATIVE_LEVEL));
     eLink = EffectLinkEffects(eLink,EffectImmunity(IMMUNITY_TYPE_KNOCKDOWN));
     eLink = EffectLinkEffects(eLink,EffectImmunity(IMMUNITY_TYPE_POISON));
-
     eLink = EffectLinkEffects(eLink,EffectRegenerate(30,6.0));
-    
+
     effect eSave = EffectSavingThrowIncrease(SAVING_THROW_FORT,4);
     eSave = EffectLinkEffects(eSave,EffectSavingThrowIncrease(SAVING_THROW_WILL,4));
     eSave = EffectLinkEffects(eSave,EffectSavingThrowDecrease(SAVING_THROW_REFLEX,4));
 
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSave, oTarget, TurnsToSeconds(nDuration),TRUE,-1,nCasterLevel);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,nCasterLevel);
 
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSave, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
 
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration),TRUE,-1,CasterLvl);
-
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Erasing the variable used to store the spell's spell school
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

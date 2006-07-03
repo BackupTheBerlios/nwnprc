@@ -1,19 +1,26 @@
-// Armor of Darkness
-// lvl 4
-// +3 bonus to ac plus additional +1 per every 4 lvl of caster to max of +8 .
-// Gives Darkvision , +2 save against holy , light , or good spells.
+/*
+    sp_armordark
 
+    lvl 4
+    +3 bonus to ac plus additional +1 per every 4 lvl of caster to max of +8 .
+    Gives Darkvision , +2 save against holy , light , or good spells.
 
-#include "spinc_common"
+    By: ???
+    Created: ???
+    Modified: Jul 1, 2006
+*/
 
-#include "x2_inc_spellhook"
-#include "prc_alterations"
+#include "prc_sp_func"
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-
-    SPSetSchool(SPELL_SCHOOL_ABJURATION);
-    int nCasterLvl = PRCGetCasterLevel();
+    int nCasterLvl = nCasterLevel;
     int nMetaMagic = PRCGetMetaMagicFeat();
     float fDuration = SPGetMetaMagicDuration(TenMinutesToSeconds(nCasterLvl));
 
@@ -40,6 +47,33 @@ void main()
        eLinks=EffectLinkEffects(eLinks,eTurn);
     }
 
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinks, oTarget,fDuration);
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
     SPSetSchool();
 }

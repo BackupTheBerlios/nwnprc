@@ -1,153 +1,120 @@
-//::///////////////////////////////////////////////
-//:: Name    Night's Caress 
-//:: FileName   sp_nght_caress.nss
-//:: 
-//:: Author: Tenjac
-//:: Created: 12/13/05
-//:://////////////////////////////////////////////
-/** @file
-   School: Necromancy [Evil]
-   Level: Sorc/Wiz 5
-   Compnents: V,S
-   Range: Touch
-   Duration: Instantaneous
-   Save: Fortitude partial
-   Spell Resistance: Yes
-   
-   A touch from your hand, which sheds darkness like 
-   the blackest of night, disrupts the life force of
-   a living creature.  Your touch deals 1d6 points of
-   damage per caster level (max 15d6), and 1d6+2 
-   points of Constituion damage (a sucessful Fortitude
-   saving throw negates the Constitution damage.)
-   
-   The spell has a special effect on an undead creature.
-   An undead touched by you takes no damage, but it 
-   must make a successful Will saving throw or flee
-   as if panicked for 1d4 rounds + 1 round per caster
-   level.
-   
-*/
-//:://////////////////////////////////////////////
-//:: Created By: Tenjac
-//:: Created On: 12/13/05
-//::
-//:://////////////////////////////////////////////
+/*
+    sp_nght_caress
 
-#include "prc_alterations"
-#include "inc_abil_damage"
-#include "spinc_common"
-#include "prc_inc_spells"
+    School: Necromancy [Evil]
+    Level: Sorc/Wiz 5
+    Compnents: V,S
+    Range: Touch
+    Duration: Instantaneous
+    Save: Fortitude partial
+    Spell Resistance: Yes
+
+    A touch from your hand, which sheds darkness like
+    the blackest of night, disrupts the life force of
+    a living creature.  Your touch deals 1d6 points of
+    damage per caster level (max 15d6), and 1d6+2
+    points of Constituion damage (a sucessful Fortitude
+    saving throw negates the Constitution damage.)
+
+    The spell has a special effect on an undead creature.
+    An undead touched by you takes no damage, but it
+    must make a successful Will saving throw or flee
+    as if panicked for 1d4 rounds + 1 round per caster
+    level.
+
+    By: Tenjac
+    Created: Dec 13, 2005
+    Modified: Jul 2, 2006
+
+    added spell betrayal/spellstrike damage, touch attack damage
+    set vfx to DURATION_TYPE_INSTANT
+*/
+
+#include "prc_sp_func"
+
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
+    int nDC = SPGetSpellSaveDC(oTarget, oCaster);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NIGHTS_CARESS, oCaster);
+
+    //Make touch attack
+    int nTouch = PRCDoMeleeTouchAttack(oTarget);
+    if(nTouch)
+    {
+        if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
+        {
+            //Will saving throw
+            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+            {
+                float fRounds = RoundsToSeconds(d4(1) + nCasterLevel);
+                if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND)) fRounds *= 2;
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(EffectFrightened(), EffectVisualEffect(VFX_IMP_HEAD_EVIL)), oTarget, fRounds);
+            }
+        }
+        //Spell Resistance
+        else if (!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+        {
+            //Max of 15 caster levels
+            if (nCasterLevel > 15) nCasterLevel = 15;
+            int nDam = d6(nCasterLevel);
+            //Metmagic: Maximize
+            if (nMetaMagic & METAMAGIC_MAXIMIZE) nDam = 6 * nCasterLevel;
+            //Metmagic: Empower
+            if (nMetaMagic & METAMAGIC_EMPOWER) nDam += (nDam/2);
+            nDam += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
+            //Apply damage as magical
+            ApplyTouchAttackDamage(oCaster, oTarget, nTouch, nDam, DAMAGE_TYPE_MAGICAL);
+
+            // Fort saving throw
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+            {
+                int nConDam = (d6(1) + 2);
+                if (nMetaMagic & METAMAGIC_MAXIMIZE) nConDam = 8;
+                if (nMetaMagic & METAMAGIC_EMPOWER) nConDam += (nConDam/2);
+                //Ability damage healing 1 point per hour
+                ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nConDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0, FALSE, SPELL_NIGHTS_CARESS);
+                //Drain VFX
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
+            }
+        }
+    }
+
+    return nTouch;    //return TRUE if spell charges should be decremented
+}
 
 void main()
 {
-	if (!X2PreSpellCastCode())
-	{
-		// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-		return;
-	}
-	
-// End of Spell Cast Hook
-	
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
-	//define vars
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
-        int nMetaMagic = PRCGetMetaMagicFeat();
-        
-        SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NIGHTS_CARESS, oPC);
-        
-	//Make touch attack
-	int nTouch = PRCDoMeleeTouchAttack(oTarget);
-		
-	// if fails touch
-	if(!nTouch)
-	{
-			return;
-	}
-	
-	//if undead
-	int nType = MyPRCGetRacialType(oTarget);
-	
-	if(nType == RACIAL_TYPE_UNDEAD)
-	{
-		//Will saving throw
-		if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
-		{
-			float fRounds = RoundsToSeconds(d4(1) + nCasterLevel);
-			
-			if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-			{
-				fRounds = (fRounds * 2);
-			}
-			
-			effect eFear = EffectFrightened();
-			effect eVis = EffectVisualEffect(VFX_IMP_HEAD_EVIL);
-			effect eLink = EffectLinkEffects(eFear, eVis);
-			
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fRounds);
-			return;
-		}
-	}
-			
-	//Spell Resistance
-	if (!MyPRCResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
-	{	
-		//Max of 15 caster levels
-		if (nCasterLevel > 15) 
-		{
-			nCasterLevel = 15;
-		}
-		
-		int nDam = d6(nCasterLevel);
-		
-		//Metmagic: Maximize
-		if (nMetaMagic == METAMAGIC_MAXIMIZE)
-		{
-			nDam = 6 * (nCasterLevel);
-		}
-		
-		//Metmagic: Empower
-		if (nMetaMagic == METAMAGIC_EMPOWER)
-		{
-			nDam += (nDam/2);
-		}
-		
-		effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
-		
-		//Apply damage as magical
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-						
-		// Fort saving throw 
-		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
-		{
-			int nConDam = (d6(1) + 2);
-			
-			if (nMetaMagic == METAMAGIC_MAXIMIZE)
-			{
-				nConDam = 8;
-			}
-			
-			if (nMetaMagic == METAMAGIC_EMPOWER)
-			{
-				nConDam += (nConDam/2);
-			}
-			
-			//Drain VFX
-			effect eVis2 = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-			
-			//Ability damage healing 1 point per hour
-			ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, nConDam, DURATION_TYPE_TEMPORARY, TRUE, -1.0, FALSE, SPELL_NIGHTS_CARESS);
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis2, oTarget);
-		}
-	}
-	SPEvilShift(oPC);
-	
-	SPSetSchool();
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        SPEvilShift(oCaster);
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }
-		
-
-			

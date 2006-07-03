@@ -1,45 +1,69 @@
-#include "spinc_common"
+/*
+    sp_natureavatar
+
+    The target animal companion gains +10 to attack and
+    damage rolls and add 1d8 temporary hit points per
+    caster level, plus the effects of haste.
+
+    By: ???
+    Created: ???
+    Modified: Jul 2, 2006
+*/
+
+#include "prc_sp_func"
+
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
+    {
+        SPRaiseSpellCastAt(oTarget, FALSE);
+        effect eff = EffectAttackIncrease(10);
+        eff = EffectLinkEffects(eff,EffectDamageIncrease(DAMAGE_BONUS_10,DAMAGE_TYPE_SLASHING));
+        eff = EffectLinkEffects(eff, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+        eff = EffectLinkEffects(eff, EffectHaste());
+
+        int HP = SPGetMetaMagicDamage(-1, nCasterLevel, 8);
+        float fDuration = SPGetMetaMagicDuration(TurnsToSeconds(nCasterLevel));
+        RemoveEffectsFromSpell(oTarget, PRCGetSpellId());
+        // Apply effects and VFX to target
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitpoints(HP), oTarget, fDuration,TRUE,-1,nCasterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff, oTarget, fDuration,TRUE,-1,nCasterLevel);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HOLY_AID), oTarget);
+    }
+
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
 
 void main()
 {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
     if (!X2PreSpellCastCode()) return;
-
-
-
-    SPSetSchool(SPELL_SCHOOL_EVOCATION);
-    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
-    // Declare major variables
     object oTarget = PRCGetSpellTargetObject();
-
-    if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
     {
-      // Signal the spell cast at event
-      SPRaiseSpellCastAt(oTarget, FALSE);
-
-      int nCasterLevel = PRCGetCasterLevel();
-
-      effect eff = EffectAttackIncrease(10);
-      eff = EffectLinkEffects(eff,EffectDamageIncrease(DAMAGE_BONUS_10,DAMAGE_TYPE_SLASHING));
-      eff = EffectLinkEffects(eff, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-      eff = EffectLinkEffects(eff, EffectHaste());
-
-      int HP = SPGetMetaMagicDamage(-1, nCasterLevel, 8);
-
-      // Get duration, 1 minute / level unless extended.
-      float fDuration = SPGetMetaMagicDuration(TurnsToSeconds(nCasterLevel));
-
-      // Build the list of fancy visual effects to apply when the spell goes off.
-      effect eVFX = EffectVisualEffect(VFX_IMP_HOLY_AID);
-
-      // Remove existing effect, if any.
-      RemoveEffectsFromSpell(oTarget, GetSpellId());
-
-      // Apply effects and VFX to target
-      SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitpoints(HP), oTarget, fDuration,TRUE,-1,nCasterLvl);
-      SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eff, oTarget, fDuration,TRUE,-1,nCasterLvl);
-      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, oTarget);
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
     }
     SPSetSchool();
 }

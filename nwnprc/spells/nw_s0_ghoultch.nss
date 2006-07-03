@@ -1,53 +1,28 @@
-//::///////////////////////////////////////////////
-//:: Ghoul Touch
-//:: NW_S0_GhoulTch.nss
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_ghoultch.nss
+
     The caster attempts a touch attack on a target
     creature.  If successful creature must save
     or be paralyzed. Target exudes a stench that
     causes all enemies to save or be stricken with
     -2 Attack, Damage, Saves and Skill Checks for
     1d6+2 rounds.
+
+    By: Preston Watamaniuk
+    Created: Nov 7, 2001
+    Modified: Jun 12, 2006
 */
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: Nov 7, 2001
-//:://////////////////////////////////////////////
 
-/*  Georg 2003-09-11
-    - Put in melee touch attack check, as the fixed attack bonus is now calculated correctly
- */
+#include "prc_sp_func"
 
-//:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "spinc_common"
-
-#include "prc_alterations"
-#include "x2_inc_spellhook"
-
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables including Area of Effect Object
     effect eAOE = EffectAreaOfEffect(AOE_PER_FOGGHOUL);
     effect eParal = EffectParalyze();
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
@@ -56,7 +31,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eLink = EffectLinkEffects(eDur2, eDur);
     eLink = EffectLinkEffects(eLink, eParal);
 
-    object oTarget = PRCGetSpellTargetObject();
+    int iAttackRoll = 0;
+
     int nDuration = d6()+2;
     int nMetaMagic = PRCGetMetaMagicFeat();
     //Enter Metamagic conditions
@@ -79,7 +55,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Make a touch attack to afflict target
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
-        if (PRCDoMeleeTouchAttack(oTarget))
+        iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+        if (iAttackRoll)
         {
             //SR and Saves
             if(!MyPRCResistSpell(OBJECT_SELF, oTarget) && !/*Fort Save*/ PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (PRCGetSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
@@ -91,8 +68,33 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         }
     }
 
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
 }
 
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}

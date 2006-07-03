@@ -1,75 +1,62 @@
-//::///////////////////////////////////////////////
-//:: Owl's Insight
-//:: x0_S0_OwlIns
-//:: Copyright (c) 2002 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    x0_s0_owlins
+
     Target's widsom bonus becomes equal to half caster's level
     Duration: 1 hr/ caster level
+
+    By: Preston Watamaniuk
+    Created: Aug 15, 2001
+    Modified: Jun 29, 2006
 */
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: Aug 15, 2001
-//:://////////////////////////////////////////////
-//:: July 2002: Modified for Owl's Insight
 
-//:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_sp_func"
 
-#include "x2_inc_spellhook"
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = nCasterLevel;
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+        nDuration *= 2; //Duration is +100%
+    effect eLink = EffectLinkEffects(EffectAbilityIncrease(ABILITY_WISDOM, nCasterLevel / 2), EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 438, FALSE));
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,nCasterLevel);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
-/*
-  Spellcast Hook Code
-  Added 2003-06-20 by Georg
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
     {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
     }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    effect eRaise;
-    effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-
-
-    int nMetaMagic = GetMetaMagicFeat();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
-    int nRaise = CasterLvl / 2;
-    int nDuration = CasterLvl;
-
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    else
     {
-        nDuration = nDuration *2; //Duration is +100%
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
     }
-    //Set Adjust Ability Score effect
-    eRaise = EffectAbilityIncrease(ABILITY_WISDOM, nRaise);
-    effect eLink = EffectLinkEffects(eRaise, eDur);
-
-    //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, 438, FALSE));
-
-    //Apply the VFX impact and effects
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,CasterLvl);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Erasing the variable used to store the spell's spell school
+    SPSetSchool();
 }
-
-

@@ -1,63 +1,37 @@
-//::///////////////////////////////////////////////
-//:: Monstrous Regeneration
-//:: X2_S0_MonRegen
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    x2_s0_monregen
+
     Grants the selected target 3 HP of regeneration
     every round.
+
+    By: Andrew Nobbs
+    Created: Nov 25, 2002
+    Modified: Jun 30, 2006
 */
-//:://////////////////////////////////////////////
-//:: Created By: Andrew Nobbs
-//:: Created On: Nov 25, 2002
-//:://////////////////////////////////////////////
-//:: Last Updated By: Andrew Nobbs May 09, 2003
-//:: 2003-07-07: Stacking Spell Pass, Georg Zoeller
 
-//:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
+#include "prc_sp_func"
 
-#include "x2_inc_spellhook"
-#include "prc_alterations"
-
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
-
-    //--------------------------------------------------------------------------
-    // Spellcast Hook Code
-    // Added 2003-06-20 by Georg
-    // If you want to make changes to all spells, check x2_inc_spellhook.nss to
-    // find out more
-    //--------------------------------------------------------------------------
-    if (!X2PreSpellCastCode())
-    {
-        return;
-    }
-    // End of Spell Cast Hook
-
-
-    object oTarget = PRCGetSpellTargetObject();
-
-    /* Bug fix 21/07/03: Andrew. Lowered regen to 3 HP per round, instead of 10. */
     effect eRegen = EffectRegenerate(3, 6.0);
-
     effect eVis = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-
     effect eLink = EffectLinkEffects(eRegen, eDur);
-
     int nMeta = PRCGetMetaMagicFeat();
-    int nLevel = (PRCGetCasterLevel(OBJECT_SELF) / 2) + 1;
-
+    int nLevel = (nCasterLevel / 2) + 1;
     if (nMeta == METAMAGIC_EXTEND)
     {
         nLevel *= 2;
     }
 
     // Stacking Spellpass, 2003-07-07, Georg   ... just in case
-    RemoveEffectsFromSpell(oTarget, GetSpellId());
+    RemoveEffectsFromSpell(oTarget, PRCGetSpellId());
 
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId(), FALSE));
 
@@ -65,8 +39,33 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nLevel));
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
+    return TRUE;    //return TRUE if spell charges should be decremented
+}
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Erasing the variable used to store the spell's spell school
-
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

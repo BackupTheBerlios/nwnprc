@@ -20,16 +20,9 @@ void main()
 	
 	if (nTouch)
 	{
-		//SR
-		if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
-		{
-			//Save
-			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
-			{
-				//Petrify
-				DoPetrification(13, oPC, oTarget, 0, 18);
-			}
-		}
+		ActionDoCommand(SetLocalInt(OBJECT_SELF, "AttackHasHit", nTouch)); //preserve crits
+		DoRacialSLA(SPELL_FLESH_TO_STONE, 13, 18);
+		ActionDoCommand(DeleteLocalInt(OBJECT_SELF, "AttackHasHit"));
 	}
 }
 			

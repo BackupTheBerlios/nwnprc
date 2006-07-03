@@ -1,98 +1,109 @@
-//::///////////////////////////////////////////////
-//:: Contagion
-//:: NW_S0_Contagion.nss
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_contagion
+
     The target must save or be struck down with
     Blidning Sickness, Cackle Fever, Filth Fever
     Mind Fire, Red Ache, the Shakes or Slimy Doom.
+
+    By: Preston Watamaniuk
+    Created: June 6, 2001
+    Modified: Jun 12, 2006
+
+    Flaming_Sword: Added touch attack roll
 */
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: June 6, 2001
-//:://////////////////////////////////////////////
 
+#include "prc_sp_func"
 
-//:: modified by mr_bumpkin Dec 4, 2003
-#include "spinc_common"
-
-#include "NW_I0_SPELLS"
-#include "x2_inc_spellhook"
-
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
+    int CasterLvl = nCasterLevel;
+    int nDC = PRCGetSaveDC(oTarget, oCaster);
 
-*/
-
-    if (!X2PreSpellCastCode())
+    //INSERT SPELL CODE HERE
+    int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+    if (iAttackRoll > 0)
     {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-   
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    int nDC = PRCGetSaveDC(oTarget, OBJECT_SELF);
-    int nRand = Random(7)+1;
-    int nDisease;
-    //Use a random seed to determine the disease that will be delivered.
-    switch (nRand)
-    {
-        case 1:
-            nDisease = DISEASE_CONTAGION_BLINDING_SICKNESS;
-        break;
-        case 2:
-            nDisease = DISEASE_CONTAGION_CACKLE_FEVER;
-        break;
-        case 3:
-            nDisease = DISEASE_CONTAGION_FILTH_FEVER;
-        break;
-        case 4:
-            nDisease = DISEASE_CONTAGION_MINDFIRE;
-        break;
-        case 5:
-            nDisease = DISEASE_CONTAGION_RED_ACHE;
-        break;
-        case 6:
-            nDisease = DISEASE_CONTAGION_SHAKES;
-        break;
-        case 7:
-            nDisease = DISEASE_CONTAGION_SLIMY_DOOM;
-        break;
-    }
-    if(!GetIsReactionTypeFriendly(oTarget))
-    {
-        //Fire cast spell at event for the specified target
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONTAGION));
-        effect eDisease = EffectDisease(nDisease);
-        //Make SR check
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, CasterLvl + SPGetPenetr()))
+        int nRand = Random(7)+1;
+        int nDisease;
+        //Use a random seed to determine the disease that will be delivered.
+        switch (nRand)
         {
-            // Make the real first save against the spell's DC
-            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+            case 1:
+                nDisease = DISEASE_CONTAGION_BLINDING_SICKNESS;
+            break;
+            case 2:
+                nDisease = DISEASE_CONTAGION_CACKLE_FEVER;
+            break;
+            case 3:
+                nDisease = DISEASE_CONTAGION_FILTH_FEVER;
+            break;
+            case 4:
+                nDisease = DISEASE_CONTAGION_MINDFIRE;
+            break;
+            case 5:
+                nDisease = DISEASE_CONTAGION_RED_ACHE;
+            break;
+            case 6:
+                nDisease = DISEASE_CONTAGION_SHAKES;
+            break;
+            case 7:
+                nDisease = DISEASE_CONTAGION_SLIMY_DOOM;
+            break;
+        }
+        if(!GetIsReactionTypeFriendly(oTarget))
+        {
+            //Fire cast spell at event for the specified target
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CONTAGION));
+            effect eDisease = EffectDisease(nDisease);
+            //Make SR check
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, CasterLvl + SPGetPenetr()))
             {
-                //The effect is permament because the disease subsystem has its own internal resolution
-                //system in place.
-                // The first disease save is against an impossible fake DC, since at this point the
-                // target has already failed their real first save.
-                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDisease, oTarget, 0.0f, TRUE, -1, CasterLvl);
+                // Make the real first save against the spell's DC
+                if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SPELL))
+                {
+                    //The effect is permament because the disease subsystem has its own internal resolution
+                    //system in place.
+                    // The first disease save is against an impossible fake DC, since at this point the
+                    // target has already failed their real first save.
+                    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDisease, oTarget, 0.0f, TRUE, -1, CasterLvl);
+                }
             }
         }
     }
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
 }
 
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}

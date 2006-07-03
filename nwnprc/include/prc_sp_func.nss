@@ -40,9 +40,6 @@
 
 #include "prc_alterations"
 #include "psi_inc_manifest"
-#include "spinc_common"
-#include "prc_spell_const"
-
 #include "psi_inc_psifunc"
 #include "psi_inc_pwresist"
 #include "psi_spellhook"

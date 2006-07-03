@@ -99,8 +99,8 @@ void VFX_HB(object oCaster, location lCaster)
     if(GetLocalInt(oCaster, TP_FIRSTSTAGE_DONE) && GetLocation(oCaster) == lCaster)
     {
         // Draw to circles, going in the opposite directions
-        DrawCircle(DURATION_TYPE_INSTANT, VFX_IMP_CONFUSION_S, lCaster, FeetToMeters(10.0f), 0.0, 100, 1.0, 6.0, 0.0, "z");
-        DrawCircle(DURATION_TYPE_INSTANT, VFX_IMP_CONFUSION_S, lCaster, FeetToMeters(10.0f), 0.0, 100, 1.0, 6.0, 180.0, "z");
+        DrawCircle(DURATION_TYPE_INSTANT, VFX_IMP_CONFUSION_S, lCaster, FeetToMeters(10.0f), 0.0, 50, 1.0, 6.0, 0.0, "z");
+        DrawCircle(DURATION_TYPE_INSTANT, VFX_IMP_CONFUSION_S, lCaster, FeetToMeters(10.0f), 0.0, 50, 1.0, 6.0, 180.0, "z");
         DelayCommand(6.0f, VFX_HB(oCaster, lCaster));
     }
 }

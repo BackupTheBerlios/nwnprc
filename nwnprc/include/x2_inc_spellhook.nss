@@ -107,7 +107,8 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "inc_utility"
 #include "prc_inc_itmrstr"
 #include "inc_newspellbook"
-#include "prc_sp_func"
+//#include "prc_sp_func"
+#include "psi_inc_manifest"
 
 int RedWizRestrictedSchool()
 {
@@ -991,7 +992,7 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
 
             // spell has to be wiz/sorc and cast on self to be shared
             if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
-                (!(GetLocalInt(OBJECT_SELF, PRC_SPELL_HOLD) && (Get2DACache("spells", "Range", PRCGetSpellId()) == "T"))) &&
+                (!(GetLocalInt(OBJECT_SELF, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", PRCGetSpellId()) == "T"))) &&
                 (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
                 (PRCGetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
                 (PRCGetSpellId()!=SPELL_POLYMORPH_SELF) &&
@@ -1007,7 +1008,7 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
     //Pnp familiar spellsharing
     if(nContinue
         && GetPRCSwitch(PRC_PNP_FAMILIARS)
-        && !(GetLocalInt(OBJECT_SELF, PRC_SPELL_HOLD) && (Get2DACache("spells", "Range", PRCGetSpellId()) == "T"))
+        && !(GetLocalInt(OBJECT_SELF, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", PRCGetSpellId()) == "T"))
         && !GetIsObjectValid(GetSpellCastItem())
         && oTarget == OBJECT_SELF
         && GetHasFeat(FEAT_SUMMON_FAMILIAR))
@@ -1082,13 +1083,13 @@ DoDebug("x2_inc_spellhook pre-spellfire");
     }
 
     //Cleaning spell variables used for holding the charge
-    if(!GetLocalInt(OBJECT_SELF, PRC_SPELL_EVENT))
+    if(!GetLocalInt(OBJECT_SELF, "PRC_SPELL_EVENT"))
     {
-        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_CHARGE_COUNT);
-        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_CHARGE_SPELLID);
-        DeleteLocalObject(OBJECT_SELF, PRC_SPELL_CONC_TARGET);
-        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_METAMAGIC);
-        DeleteLocalManifestation(OBJECT_SELF, PRC_POWER_HOLD_MANIFESTATION);
+        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_CHARGE_COUNT");
+        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_CHARGE_SPELLID");
+        DeleteLocalObject(OBJECT_SELF, "PRC_SPELL_CONC_TARGET");
+        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_METAMAGIC");
+        DeleteLocalManifestation(OBJECT_SELF, "PRC_POWER_HOLD_MANIFESTATION");
     }
 
     return nContinue;

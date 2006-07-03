@@ -653,11 +653,16 @@ void VoidCounterspellExploitCheck()
 //------------------------------------------------------------------------------
 int X2PreSpellCastCode()
 {
-    object oTarget = PRCGetSpellTargetObject();
+    object oCaster        = OBJECT_SELF;
+    object oTarget        = PRCGetSpellTargetObject();
+    object oSpellCastItem = GetSpellCastItem();
+    int nOrigSpellID = GetSpellId();
+    int nSpellID     = PRCGetSpellId();
+    string sComponent = GetStringUpperCase(Get2DACache("spells", "VS", nSpellID));
     int nContinue;
 
-    DeleteLocalInt(OBJECT_SELF, "SpellConc");
-    nContinue = !ExecuteScriptAndReturnInt("prespellcode",OBJECT_SELF);
+    DeleteLocalInt(oCaster, "SpellConc"); // Something to do with Drangosong Lyrist? - Ornedan
+    nContinue = !ExecuteScriptAndReturnInt("prespellcode", oCaster);
 
     //---------------------------------------------------------------------------
     // This stuff is only interesting for player characters we assume that use
@@ -666,10 +671,10 @@ int X2PreSpellCastCode()
     // with TRUE (unless they are DM possessed or in the Wild Magic Area in
     // Chapter 2 of Hordes of the Underdark.
     //---------------------------------------------------------------------------
-    if (!GetIsPC(OBJECT_SELF)
+    if (!GetIsPC(oCaster)
         && !GetPRCSwitch(PRC_NPC_HAS_PC_SPELLCASTING)
-        && !GetIsDMPossessed(OBJECT_SELF)
-        && !GetLocalInt(GetArea(OBJECT_SELF), "X2_L_WILD_MAGIC"))
+        && !GetIsDMPossessed(oCaster)
+        && !GetLocalInt(GetArea(oCaster), "X2_L_WILD_MAGIC"))
             return TRUE;
 
     //counterspell exploit check
@@ -702,8 +707,8 @@ int X2PreSpellCastCode()
             || GetHasSpellEffect(4032)          //epic spell: Greater Timestop
             || GetHasSpellEffect(14236))        //psionic power: Temporal Acceleration
         && (!GetIsObjectValid(oTarget)
-            || oTarget != OBJECT_SELF
-            || Get2DACache("spells", "HostileSetting", GetSpellId()) == "1")
+            || oTarget != oCaster
+            || Get2DACache("spells", "HostileSetting", nOrigSpellID) == "1")
         )
     {
         nContinue = FALSE;
@@ -713,47 +718,46 @@ int X2PreSpellCastCode()
         && GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS)
         && GetLevelByClass(CLASS_TYPE_WIZARD))
     {
-        int nSchool = GetSpellSchool(PRCGetSpellId());
+        int nSchool = GetSpellSchool(nSpellID);
         if(nSchool == SPELL_SCHOOL_ABJURATION
-            && GetHasFeat(2265))
+            && GetHasFeat(2265, oCaster))
             nContinue = FALSE;
         else if(nSchool == SPELL_SCHOOL_CONJURATION
-            && GetHasFeat(2266))
+            && GetHasFeat(2266, oCaster))
             nContinue = FALSE;
         else if(nSchool == SPELL_SCHOOL_DIVINATION
-            && GetHasFeat(2267))
+            && GetHasFeat(2267, oCaster))
             nContinue = FALSE;
         else if(nSchool == SPELL_SCHOOL_ENCHANTMENT
-            && GetHasFeat(2268))
+            && GetHasFeat(2268, oCaster))
             nContinue = FALSE;
         else if(nSchool == SPELL_SCHOOL_EVOCATION
-            && GetHasFeat(2269))
+            && GetHasFeat(2269, oCaster))
             nContinue = FALSE;
         else if(nSchool == SPELL_SCHOOL_ILLUSION
-            && GetHasFeat(2270))
+            && GetHasFeat(2270, oCaster))
             nContinue = FALSE;
         else if(nSchool == SPELL_SCHOOL_NECROMANCY
-            && GetHasFeat(2271))
+            && GetHasFeat(2271, oCaster))
             nContinue = FALSE;
         else if(nSchool == SPELL_SCHOOL_TRANSMUTATION
-            && GetHasFeat(2272))
+            && GetHasFeat(2272, oCaster))
             nContinue = FALSE;
         if(!nContinue)
-            FloatingTextStringOnCreature("You cannot cast spells of an opposition school.", OBJECT_SELF, FALSE);
+            FloatingTextStringOnCreature("You cannot cast spells of an opposition school.", oCaster, FALSE);
     }
     //Pnp somatic components
     if(nContinue
         && (GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS)
             || GetPRCSwitch(PRC_PNP_SOMATIC_ITEMS)))
     {
-        int nSpellId = GetSpellId(); //use the original spellID
         int nHandFree;
         int nHandRequired;
-        object oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND);
+        object oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCaster);
         if(!GetIsObjectValid(oItem)
             || GetBaseItemType(oItem) == BASE_ITEM_SMALLSHIELD)
             nHandFree = TRUE;
-        oItem = GetSpellCastItem();
+        oItem = oSpellCastItem;
         //check item is not equiped
         if(!nHandFree
             && GetIsObjectValid(oItem)
@@ -763,7 +767,7 @@ int X2PreSpellCastCode()
             nHandRequired = TRUE;
             for(nSlot = 0; nSlot<NUM_INVENTORY_SLOTS; nSlot++)
             {
-                if(GetItemInSlot(nSlot) == oItem)
+                if(GetItemInSlot(nSlot, oCaster) == oItem)
                     nHandRequired = FALSE;
             }
         }
@@ -773,7 +777,6 @@ int X2PreSpellCastCode()
             && !GetIsObjectValid(oItem)
             && GetPRCSwitch(PRC_PNP_SOMATIC_COMPOMENTS))
         {
-            string sComponent = Get2DACache("spells", "VS", nSpellId);
             if(sComponent == "VS"
                 || sComponent == "SV"
                 || sComponent == "S")
@@ -783,7 +786,7 @@ int X2PreSpellCastCode()
         if(nHandRequired && nHandFree)
         {
             nContinue = FALSE;
-            FloatingTextStringOnCreature("You do not have any free hands.", OBJECT_SELF, FALSE);
+            FloatingTextStringOnCreature("You do not have any free hands.", oCaster, FALSE);
         }
     }
 
@@ -793,38 +796,39 @@ int X2PreSpellCastCode()
     {
         int nClass = PRCGetLastSpellCastClass();
 
+        // This should probably check if the caster is a spontaneous caster instead? - Ornedan
         if(nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
         {
-            int nSpell = PRCGetSpellId();
 
             //Check for each Corrupt and Sanctified spell
-            if(nSpell == SPELL_ABSORB_STRENGTH ||
-            nSpell == SPELL_APOCALYPSE_FROM_THE_SKY ||
-            nSpell == SPELL_CLAWS_OF_THE_BEBILITH ||
-            nSpell == SPELL_DEATH_BY_THORNS ||
-            nSpell == SPELL_EVIL_WEATHER ||
-            nSpell == SPELL_FANGS_OF_THE_VAMPIRE_KING ||
-            nSpell == SPELL_LAHMS_FINGER_DARTS ||
-            nSpell == SPELL_POWER_LEECH ||
-            nSpell == SPELL_RAPTURE_OF_RUPTURE ||
-            nSpell == SPELL_RED_FESTER ||
-            nSpell == SPELL_ROTTING_CURSE_OF_URFESTRA ||
-            nSpell == SPELL_SEETHING_EYEBANE ||
-            nSpell == SPELL_TOUCH_OF_JUIBLEX ||
-            nSpell == SPELL_AYAILLAS_RADIANT_BURST ||
-            nSpell == SPELL_BRILLIANT_EMANATION ||
-            nSpell == SPELL_DIVINE_INSPIRATION ||
-            nSpell == SPELL_DIAMOND_SPRAY ||
-            nSpell == SPELL_DRAGON_CLOUD ||
-            nSpell == SPELL_EXALTED_FURY ||
-            nSpell == SPELL_HAMMER_OF_RIGHTEOUSNESS ||
-            nSpell == SPELL_PHIERANS_RESOLVE ||
-            nSpell == SPELL_PHOENIX_FIRE ||
-            nSpell == SPELL_RAIN_OF_EMBERS ||
-            nSpell == SPELL_SICKEN_EVIL ||
-            nSpell == SPELL_STORM_OF_SHARDS ||
-            nSpell == SPELL_SUNMANTLE ||
-            nSpell == SPELL_TWILIGHT_LUCK)
+            if(nSpellID == SPELL_ABSORB_STRENGTH           ||
+               nSpellID == SPELL_APOCALYPSE_FROM_THE_SKY   ||
+               nSpellID == SPELL_CLAWS_OF_THE_BEBILITH     ||
+               nSpellID == SPELL_DEATH_BY_THORNS           ||
+               nSpellID == SPELL_EVIL_WEATHER              ||
+               nSpellID == SPELL_FANGS_OF_THE_VAMPIRE_KING ||
+               nSpellID == SPELL_LAHMS_FINGER_DARTS        ||
+               nSpellID == SPELL_POWER_LEECH               ||
+               nSpellID == SPELL_RAPTURE_OF_RUPTURE        ||
+               nSpellID == SPELL_RED_FESTER                ||
+               nSpellID == SPELL_ROTTING_CURSE_OF_URFESTRA ||
+               nSpellID == SPELL_SEETHING_EYEBANE          ||
+               nSpellID == SPELL_TOUCH_OF_JUIBLEX          ||
+               nSpellID == SPELL_AYAILLAS_RADIANT_BURST    ||
+               nSpellID == SPELL_BRILLIANT_EMANATION       ||
+               nSpellID == SPELL_DIVINE_INSPIRATION        ||
+               nSpellID == SPELL_DIAMOND_SPRAY             ||
+               nSpellID == SPELL_DRAGON_CLOUD              ||
+               nSpellID == SPELL_EXALTED_FURY              ||
+               nSpellID == SPELL_HAMMER_OF_RIGHTEOUSNESS   ||
+               nSpellID == SPELL_PHIERANS_RESOLVE          ||
+               nSpellID == SPELL_PHOENIX_FIRE              ||
+               nSpellID == SPELL_RAIN_OF_EMBERS            ||
+               nSpellID == SPELL_SICKEN_EVIL               ||
+               nSpellID == SPELL_STORM_OF_SHARDS           ||
+               nSpellID == SPELL_SUNMANTLE                 ||
+               nSpellID == SPELL_TWILIGHT_LUCK
+               )
             {
                 nContinue = FALSE;
             }
@@ -901,19 +905,19 @@ int X2PreSpellCastCode()
     // Check for the new restricted itemproperties
     //---------------------------------------------------------------------------
     if(nContinue
-        && GetIsObjectValid(GetSpellCastItem())
-        && !CheckPRCLimitations(GetSpellCastItem(), OBJECT_SELF))
+        && GetIsObjectValid(oSpellCastItem)
+        && !CheckPRCLimitations(oSpellCastItem, oCaster))
     {
-        SendMessageToPC(OBJECT_SELF, "You cannot use "+GetName(GetSpellCastItem()));
+        SendMessageToPC(oCaster, "You cannot use "+GetName(oSpellCastItem));
         nContinue = FALSE;
     }
 
     //---------------------------------------------------------------------------
     // Baelnorn attempting to use items while projection
     //---------------------------------------------------------------------------
-    if(nContinue                                             && // No need to evaluate if casting has been cancelled already
-       GetLocalInt(OBJECT_SELF, "BaelnornProjection_Active") && // If projection is active AND
-       GetIsObjectValid(GetSpellCastItem())                     // Cast from an item
+    if(nContinue                                         && // No need to evaluate if casting has been cancelled already
+       GetLocalInt(oCaster, "BaelnornProjection_Active") && // If projection is active AND
+       GetIsObjectValid(oSpellCastItem)                     // Cast from an item
        )
     {
         nContinue = FALSE; // Prevent casting
@@ -932,7 +936,7 @@ DoDebug("x2_inc_spellhook pre-x2_pc_craft");
         // Check if spell was used to trigger item creation feat
         //-----------------------------------------------------------------------
         if (nContinue)
-            nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft",OBJECT_SELF);
+            nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft", oCaster);
 
 DoDebug("x2_inc_spellhook pre-sequencer");
         //-----------------------------------------------------------------------
@@ -945,13 +949,13 @@ DoDebug("x2_inc_spellhook pre-sequencer");
         // Check if spell was used for Arcane Archer Imbue Arrow
         //-----------------------------------------------------------------------
 //        if (nContinue)
-//            nContinue = !ExecuteScriptAndReturnInt("aa_spellhook",OBJECT_SELF);
+//            nContinue = !ExecuteScriptAndReturnInt("aa_spellhook", oCaster);
 
         //-----------------------------------------------------------------------
         // Check if spell was used for Spellsword ChannelSpell
         //-----------------------------------------------------------------------
 //        if (nContinue)
-//            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel",OBJECT_SELF);
+//            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel", oCaster);
 
 DoDebug("x2_inc_spellhook pre-tagbased");
         //-----------------------------------------------------------------------
@@ -961,7 +965,7 @@ DoDebug("x2_inc_spellhook pre-tagbased");
             && GetModuleSwitchValue(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS) == TRUE)
         {
             SetUserDefinedItemEventNumber(X2_ITEM_EVENT_SPELLCAST_AT);
-            int nRet =   ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget),OBJECT_SELF);
+            int nRet =   ExecuteScriptAndReturnInt(GetUserDefinedItemEventScriptName(oTarget), oCaster);
             if (nRet == X2_EXECUTE_SCRIPT_END)
                 return FALSE;
         }
@@ -983,7 +987,7 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
         && GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER)
         && !GetPRCSwitch(PRC_PNP_FAMILIARS))
     {
-        object oFam = GetLocalObject(OBJECT_SELF, "BONDED");
+        object oFam = GetLocalObject(oCaster, "BONDED");
         // Run the ShareSpell code to duplicate the spell on the familiar
         if (GetIsObjectValid(oFam))
         {
@@ -991,15 +995,15 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
                 PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER);
 
             // spell has to be wiz/sorc and cast on self to be shared
-            if ((oTarget == OBJECT_SELF) && (bIsWizSorc) &&
-                (!(GetLocalInt(OBJECT_SELF, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", PRCGetSpellId()) == "T"))) &&
-                (!GetIsObjectValid(GetSpellCastItem())) && // no item spells
-                (PRCGetSpellId()!=SPELL_SHAPECHANGE) &&       // no polymorphs
-                (PRCGetSpellId()!=SPELL_POLYMORPH_SELF) &&
-                (PRCGetSpellId()!=SPELL_TENSERS_TRANSFORMATION))
+            if ((oTarget == oCaster) && (bIsWizSorc) &&
+                (!(GetLocalInt(oCaster, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", nSpellID) == "T"))) &&
+                (!GetIsObjectValid(oSpellCastItem))  && // no item spells
+                (nSpellID!=SPELL_SHAPECHANGE)    &&       // no polymorphs
+                (nSpellID!=SPELL_POLYMORPH_SELF) &&
+                (nSpellID!=SPELL_TENSERS_TRANSFORMATION))
             {
                 SetLocalInt(oFam, PRC_CASTERLEVEL_OVERRIDE, PRCGetCasterLevel());
-                AssignCommand(oFam, ActionCastSpellAtObject (PRCGetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+                AssignCommand(oFam, ActionCastSpellAtObject (nSpellID, oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
                 // Make sure this variable gets deleted as quickly as possible in case it's added in error.
                 AssignCommand(oFam, DeleteLocalInt(oFam, PRC_CASTERLEVEL_OVERRIDE));
             }
@@ -1008,14 +1012,14 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
     //Pnp familiar spellsharing
     if(nContinue
         && GetPRCSwitch(PRC_PNP_FAMILIARS)
-        && !(GetLocalInt(OBJECT_SELF, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", PRCGetSpellId()) == "T"))
-        && !GetIsObjectValid(GetSpellCastItem())
-        && oTarget == OBJECT_SELF
+        && !(GetLocalInt(oCaster, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", nSpellID) == "T"))
+        && !GetIsObjectValid(oSpellCastItem)
+        && oTarget == oCaster
         && GetHasFeat(FEAT_SUMMON_FAMILIAR))
     {
-        object oFam = GetLocalObject(OBJECT_SELF, "Familiar");
+        object oFam = GetLocalObject(oCaster, "Familiar");
         AssignCommand(oFam, ActionDoCommand(SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel())));
-        AssignCommand(oFam, ActionCastSpellAtObject (PRCGetSpellId(), oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+        AssignCommand(oFam, ActionCastSpellAtObject (nSpellID, oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         // Make sure this variable gets deleted as quickly as possible in case it's added in error.
         AssignCommand(oFam, ActionDoCommand(DeleteLocalInt(oFam, "PRC_Castlevel_Override")));
 
@@ -1023,14 +1027,14 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
 
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))
     {
-        if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
+        if(GetLocalInt(oCaster, "UsingActionCastSpell"))
         {
         }
         else
         {
-            string sSpell = IntToString(GetSpellId())+"|"; //use original spellID
-            string sStored = GetPersistantLocalString(OBJECT_SELF, "persist_spells");
-            SetPersistantLocalString(OBJECT_SELF, "persist_spells", sStored+sSpell);
+            string sSpell = IntToString(nOrigSpellID)+"|"; //use original spellID
+            string sStored = GetPersistantLocalString(oCaster, "persist_spells");
+            SetPersistantLocalString(oCaster, "persist_spells", sStored+sSpell);
         }
     }
 
@@ -1044,14 +1048,14 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
 
     //casting from staffs uses caster DC calculations
     if(nContinue
-       && GetIsObjectValid(GetSpellCastItem())
-       && GetBaseItemType(GetSpellCastItem()) == BASE_ITEM_MAGICSTAFF
+       && GetIsObjectValid(oSpellCastItem)
+       && GetBaseItemType(oSpellCastItem) == BASE_ITEM_MAGICSTAFF
        && GetPRCSwitch(PRC_STAFF_CASTER_LEVEL))
     {
-        int nDC = 10 + StringToInt(lookup_spell_innate(PRCGetSpellId()));
-        nDC += (GetAbilityForClass(GetFirstArcaneClass(OBJECT_SELF), OBJECT_SELF)-10)/2;
-        SetLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE, nDC);
-        DelayCommand(0.01, DeleteLocalInt(OBJECT_SELF, PRC_DC_BASE_OVERRIDE));
+        int nDC = 10 + StringToInt(lookup_spell_innate(nSpellID));
+        nDC += (GetAbilityForClass(GetFirstArcaneClass(oCaster), oCaster)-10)/2;
+        SetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE, nDC);
+        DelayCommand(0.01, DeleteLocalInt(oCaster, PRC_DC_BASE_OVERRIDE));
     }
 DoDebug("x2_inc_spellhook pre-spellfire");
     //---------------------------------------------------------------------------
@@ -1059,37 +1063,48 @@ DoDebug("x2_inc_spellhook pre-spellfire");
     //---------------------------------------------------------------------------
     if(nContinue)
     {
-        if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, OBJECT_SELF))
+        if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oCaster))
         {
-            int nStored = GetPersistantLocalInt(OBJECT_SELF, "SpellfireLevelStored");
-            int nCON = GetAbilityScore(OBJECT_SELF, ABILITY_CONSTITUTION);
+            int nStored = GetPersistantLocalInt(oCaster, "SpellfireLevelStored");
+            int nCON = GetAbilityScore(oCaster, ABILITY_CONSTITUTION);
             if(nStored > 4 * nCON)
             {
-                if(!GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, 25)) nContinue = FALSE;
+                if(!GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, 25)) nContinue = FALSE;
             }
             else if(nStored > 3 * nCON)
             {
-                if(!GetIsSkillSuccessful(OBJECT_SELF, SKILL_CONCENTRATION, 20)) nContinue = FALSE;
+                if(!GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, 20)) nContinue = FALSE;
             }
         }
-        if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") && GetIsFriend(oTarget, OBJECT_SELF))
+        if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") && GetIsFriend(oTarget, oCaster))
         {
-            if(CheckSpellfire(OBJECT_SELF, oTarget, TRUE))
+            if(CheckSpellfire(oCaster, oTarget, TRUE))
             {
-                PRCShowSpellResist(OBJECT_SELF, oTarget, SPELL_RESIST_MANTLE);
+                PRCShowSpellResist(oCaster, oTarget, SPELL_RESIST_MANTLE);
                 nContinue = FALSE;
             }
         }
     }
 
+    //-----------------------------------------------------------------------
+    // Shifting casting restrictions
+    //-----------------------------------------------------------------------
+    // The variable tells that the new form is unable to cast spells (very inaccurate, determined by racial type)
+    // with somatic or vocal components and is lacking Natural Spell feat
+    if(nContinue                                                             && // Any point to checking this?
+       GetLocalInt(oCaster, "PRC_Shifting_RestrictSpells")                   && // See if the restriction might apply
+       (FindSubString(sComponent, "V") != -1 || FindSubString(sComponent, "S")) // And then check if the restriction does apply
+       )
+        nContinue = FALSE;
+
     //Cleaning spell variables used for holding the charge
-    if(!GetLocalInt(OBJECT_SELF, "PRC_SPELL_EVENT"))
+    if(!GetLocalInt(oCaster, "PRC_SPELL_EVENT"))
     {
-        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_CHARGE_COUNT");
-        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_CHARGE_SPELLID");
-        DeleteLocalObject(OBJECT_SELF, "PRC_SPELL_CONC_TARGET");
-        DeleteLocalInt(OBJECT_SELF, "PRC_SPELL_METAMAGIC");
-        DeleteLocalManifestation(OBJECT_SELF, "PRC_POWER_HOLD_MANIFESTATION");
+        DeleteLocalInt(oCaster, "PRC_SPELL_CHARGE_COUNT");
+        DeleteLocalInt(oCaster, "PRC_SPELL_CHARGE_SPELLID");
+        DeleteLocalObject(oCaster, "PRC_SPELL_CONC_TARGET");
+        DeleteLocalInt(oCaster, "PRC_SPELL_METAMAGIC");
+        DeleteLocalManifestation(oCaster, "PRC_POWER_HOLD_MANIFESTATION");
     }
 
     return nContinue;

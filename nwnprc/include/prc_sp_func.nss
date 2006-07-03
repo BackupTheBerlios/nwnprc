@@ -43,6 +43,11 @@
 #include "spinc_common"
 #include "prc_spell_const"
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
+#include "spinc_common"
+
 //constant declarations in case they change
 const string PRC_SPELL_CHARGE_COUNT             = "PRC_SPELL_CHARGE_COUNT";
 const string PRC_SPELL_CHARGE_SPELLID           = "PRC_SPELL_CHARGE_SPELLID";
@@ -240,6 +245,20 @@ int CheckRemoveEffects(int nSpellID, int nEffectType)
                 nEffectType == EFFECT_TYPE_DISEASE ||
                 (GetPRCSwitch(PRC_BIOWARE_REMOVE_DISEASE) &&
                     nEffectType == EFFECT_TYPE_ABILITY_DECREASE));
+            break;
+        }
+        case SPELL_PANACEA:
+        {
+            return (EFFECT_TYPE_BLINDNESS == nEffectType ||
+                EFFECT_TYPE_CONFUSED == nEffectType ||
+                EFFECT_TYPE_DAZED == nEffectType ||
+                EFFECT_TYPE_DEAF == nEffectType ||
+                EFFECT_TYPE_DISEASE == nEffectType ||
+                EFFECT_TYPE_FRIGHTENED == nEffectType ||
+                EFFECT_TYPE_PARALYZE == nEffectType ||
+                EFFECT_TYPE_POISON == nEffectType ||
+                EFFECT_TYPE_SLEEP == nEffectType ||
+                EFFECT_TYPE_STUNNED == nEffectType);
             break;
         }
     }

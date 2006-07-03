@@ -154,7 +154,6 @@ int PsiPrePowerCastCode()
         DeleteLocalInt(OBJECT_SELF, PRC_SPELL_CHARGE_COUNT);
         DeleteLocalInt(OBJECT_SELF, PRC_SPELL_CHARGE_SPELLID);
         DeleteLocalObject(OBJECT_SELF, PRC_SPELL_CONC_TARGET);
-        DeleteLocalInt(OBJECT_SELF, PRC_SPELL_HOLD);
         DeleteLocalInt(OBJECT_SELF, PRC_SPELL_METAMAGIC);
         DeleteLocalManifestation(OBJECT_SELF, PRC_POWER_HOLD_MANIFESTATION);
     }

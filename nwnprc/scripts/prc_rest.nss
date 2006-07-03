@@ -15,6 +15,7 @@
 #include "prc_power_const"
 #include "inc_utility"
 #include "psi_inc_psifunc"
+#include "prc_sp_func"
 
 void PrcFeats(object oPC)
 {
@@ -73,7 +74,12 @@ void RestStarted(object oPC)
     {
         LosePsionicFocus(oPC);
     }
-
+    DeleteLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
+    DeleteLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
+    DeleteLocalObject(oPC, PRC_SPELL_CONC_TARGET);
+    DeleteLocalInt(oPC, PRC_SPELL_HOLD);
+    DeleteLocalInt(oPC, PRC_SPELL_METAMAGIC);
+    DeleteLocalManifestation(oPC, PRC_POWER_HOLD_MANIFESTATION);
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
 }
@@ -155,10 +161,10 @@ void RestFinished(object oPC)
 
     //DelayCommand(1.0,PrcFeats(oPC));
     PrcFeats(oPC);
-    
+
     //allow players to recruit a new cohort
     DeleteLocalInt(oPC, "CohortRecruited");
-    
+
     //in large parties, sometimes people dont rest
     //loop over all and forcerest when nessicary
     //assumes NPCs start and finish resting after the PC
@@ -178,7 +184,7 @@ void RestFinished(object oPC)
                 oOldTest = oTest;
                 oTest = GetAssociate(nType, oPC, i);
             }
-        
+
         }
     }
 

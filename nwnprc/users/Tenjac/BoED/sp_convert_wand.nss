@@ -39,7 +39,7 @@ of lightning bolt (3rd­level spell) into a wand of
 cure serious wounds for 10 minutes.
 
 Author:    Tenjac
-Created:   
+Created:   7/3/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////

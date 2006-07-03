@@ -45,10 +45,6 @@
                         <element name="ID" type="0" value="9" />
                         <element name="LIST" type="15" >
                             <struct id="0" >
-                                <element name="NAME" type="10" value="Angband Helm" />
-                                <element name="RESREF" type="11" value="angbandhelm" />
-                            </struct>
-                            <struct id="0" >
                                 <element name="NAME" type="10" value="Baal Summon 2 Head" />
                                 <element name="RESREF" type="11" value="baalsummon2head" />
                             </struct>
@@ -75,12 +71,6 @@
                     <struct id="0" >
                         <element name="STRREF" type="4" value="6813" />
                         <element name="ID" type="0" value="58" />
-                        <element name="LIST" type="15" >
-                            <struct id="0" >
-                                <element name="NAME" type="10" value="Angband Robes" />
-                                <element name="RESREF" type="11" value="angbandrobes" />
-                            </struct>
-                        </element>
                     </struct>
                     <struct id="0" >
                         <element name="STRREF" type="4" value="6740" />
@@ -108,6 +98,222 @@
                         <element name="STRREF" type="4" value="6810" />
                         <element name="ID" type="0" value="55" />
                         <element name="LIST" type="15" >
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (colossal)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (fine)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (huge)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (large)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (medium)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (small)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf (tiny)" />
+                                <element name="RESREF" type="11" value="prc_bw0_bite_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (colossal)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (fine)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (huge)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (large)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (medium)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (small)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 10th level (tiny)" />
+                                <element name="RESREF" type="11" value="prc_bw2_bite_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (colossal)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (fine)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (huge)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (large)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (medium)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (small)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 15th level (tiny)" />
+                                <element name="RESREF" type="11" value="prc_bw3_bite_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (colossal)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (fine)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (huge)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (large)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (medium)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (small)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 20th level (tiny)" />
+                                <element name="RESREF" type="11" value="prc_bw4_bite_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (colossal)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (fine)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (huge)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (large)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (medium)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (small)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Bite of the Wolf 5th level (tiny)" />
+                                <element name="RESREF" type="11" value="prc_bw1_bite_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (colossal)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (fine)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (huge)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (large)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (medium)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (small)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Bite (tiny)" />
+                                <element name="RESREF" type="11" value="prc_rdd_bite_t" />
+                            </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Greater Wraith Bite lv 21" />
                                 <element name="RESREF" type="11" value="greaterwraithbit" />
@@ -141,6 +347,42 @@
                                 <element name="RESREF" type="11" value="hellcat_bite" />
                             </struct>
                             <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (colossal)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (fine)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (huge)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (large)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (medium)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (small)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Lizardman Bite (tiny)" />
+                                <element name="RESREF" type="11" value="prc_lizf_bite_t" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="NAME" type="10" value="Morsure de quasit niveau 15" />
                                 <element name="RESREF" type="11" value="quasit_m_15" />
                             </struct>
@@ -169,6 +411,114 @@
                                 <element name="RESREF" type="11" value="prc_nightwing" />
                             </struct>
                             <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (colossal)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (fine)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (huge)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (large)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (medium)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (small)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Rakshasa Bite (tiny)" />
+                                <element name="RESREF" type="11" value="prc_raks_bite_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (colossal)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (fine)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (huge)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (large)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (medium)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (small)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Tanarukk Bite (tiny)" />
+                                <element name="RESREF" type="11" value="prc_tana_bite_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (colossal)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (fine)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (huge)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (large)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (medium)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (small)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Troll Bite (tiny)" />
+                                <element name="RESREF" type="11" value="prc_troll_bite_t" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="NAME" type="10" value="ver_spider_b" />
                                 <element name="RESREF" type="11" value="ver_spider_b" />
                             </struct>
@@ -186,6 +536,294 @@
                         <element name="STRREF" type="4" value="6744" />
                         <element name="ID" type="0" value="13" />
                         <element name="LIST" type="15" >
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 10d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d2 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d2 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d2 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d2 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d2 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d2 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d3 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d3 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d3 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d3 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d4 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d4 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d4 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d4 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d4 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d6 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d6 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d6 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d6 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d6 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d6 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d8 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d8 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d8 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d8 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d8 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d8 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 1d8 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (fine)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 2d6 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6l_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 3d6 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 4d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d6m_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 4d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 4d6 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 4d6 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 4d6 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 4d6 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 4d6 (tiny)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 5d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_1d8m_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 5d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 5d6 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 5d6 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 5d6 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 5d6 (small)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 6d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_2d6m_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 6d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 6d6 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 6d6 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 6d6 (medium)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 7d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_3d6m_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 7d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 7d6 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 7d6 (large)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 8d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_4d6m_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 8d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 8d6 (huge)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 9d6 (colossal)" />
+                                <element name="RESREF" type="11" value="prc_claw_5d6m_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Claw 9d6 (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_claw_6d6m_g" />
+                            </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Cornugon Claw" />
                                 <element name="RESREF" type="11" value="prc_corn_claw" />
@@ -255,6 +893,46 @@
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Lesser Nightshade Bite" />
                                 <element name="RESREF" type="11" value="lessernightshade" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (colossal)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (fine)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (huge)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (large)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (medium)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (small)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Gore (tiny)" />
+                                <element name="RESREF" type="11" value="prc_mino_gore_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Minotaur Powerful Charge" />
+                                <element name="RESREF" type="11" value="prc_mino_char" />
                             </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Nightshade Bite" />
@@ -369,6 +1047,10 @@
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Nightwing Properties" />
                                 <element name="RESREF" type="11" value="prc_to_nighthide" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="ooz_ochre_h" />
+                                <element name="RESREF" type="11" value="ooz_ochre_h" />
                             </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Osyluth Hide" />
@@ -556,6 +1238,154 @@
                         <element name="STRREF" type="4" value="6811" />
                         <element name="ID" type="0" value="56" />
                         <element name="LIST" type="15" >
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (colossal)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (fine)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (huge)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (large)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (medium)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (small)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Centaur Hoof (tiny)" />
+                                <element name="RESREF" type="11" value="prc_cent_hoof_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Tail Slap (colossal)" />
+                                <element name="RESREF" type="11" value="prc_rdd_tail_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Tail Slap (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_rdd_tail_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Tail Slap (huge)" />
+                                <element name="RESREF" type="11" value="prc_rdd_tail_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Tail Slap (large)" />
+                                <element name="RESREF" type="11" value="prc_rdd_tail_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Wing Slam (colossal)" />
+                                <element name="RESREF" type="11" value="prc_rdd_wing_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Wing Slam (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_rdd_wing_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Wing Slam (huge)" />
+                                <element name="RESREF" type="11" value="prc_rdd_wing_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Wing Slam (large)" />
+                                <element name="RESREF" type="11" value="prc_rdd_wing_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Disciple Wing Slam (medium)" />
+                                <element name="RESREF" type="11" value="prc_rdd_wing_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (colossal)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (fine)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (huge)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (large)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (medium)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (small)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Form of Doom Tentacle (tiny)" />
+                                <element name="RESREF" type="11" value="prc_fod_tent_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (colossal)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_c" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (diminutive)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_d" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (fine)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_f" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (gargantuan)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_g" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (huge)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_h" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (large)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_l" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (medium)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_m" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (small)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_s" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Illthid Tentacle (tiny)" />
+                                <element name="RESREF" type="11" value="prc_ill_tent_t" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="ooz_ochre_s" />
+                                <element name="RESREF" type="11" value="ooz_ochre_s" />
+                            </struct>
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Slam1d4" />
                                 <element name="RESREF" type="11" value="slam1d4" />
@@ -1202,6 +2032,10 @@
                                 <element name="RESREF" type="11" value="sp_it_spdvscr405" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16823532" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr210" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="16830234" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr101" />
                             </struct>
@@ -1220,6 +2054,10 @@
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Command Undead" />
                                 <element name="RESREF" type="11" value="nw_it_sparscr223" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16829190" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr212" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16825353" />
@@ -1378,6 +2216,10 @@
                                 <element name="RESREF" type="11" value="sp_it_sparscr306" />
                             </struct>
                             <struct id="0" >
+                                <element name="STRREF" type="4" value="16832059" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr701" />
+                            </struct>
+                            <struct id="0" >
                                 <element name="STRREF" type="4" value="16830374" />
                                 <element name="RESREF" type="11" value="sp_it_spdvscr301" />
                             </struct>
@@ -1508,6 +2350,10 @@
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16825704" />
                                 <element name="RESREF" type="11" value="sp_it_sparscr803" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="16823538" />
+                                <element name="RESREF" type="11" value="sp_it_sparscr211" />
                             </struct>
                             <struct id="0" >
                                 <element name="STRREF" type="4" value="16830345" />

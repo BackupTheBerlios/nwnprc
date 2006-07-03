@@ -40,6 +40,10 @@
                         <element name="RESREF" type="11" value="plc_cocoon" />
                     </struct>
                     <struct id="0" >
+                        <element name="NAME" type="10" value="rad_sp_mushroom" />
+                        <element name="RESREF" type="11" value="rad_sp_mushroom" />
+                    </struct>
+                    <struct id="0" >
                         <element name="NAME" type="10" value="rad_sp_web" />
                         <element name="RESREF" type="11" value="rad_sp_web" />
                     </struct>

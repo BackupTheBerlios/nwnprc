@@ -100,6 +100,12 @@
                                 <element name="ID" type="0" value="9" />
                                 <element name="LIST" type="15" >
                                     <struct id="0" >
+                                        <element name="NAME" type="10" value="Dire Rat" />
+                                        <element name="RESREF" type="11" value="ver_rat_dire" />
+                                        <element name="CR" type="8" value="0.33333334" />
+                                        <element name="FACTION" type="10" value="Mindless" />
+                                    </struct>
+                                    <struct id="0" >
                                         <element name="NAME" type="10" value="PnP Bat Familiar" />
                                         <element name="RESREF" type="11" value="prc_pnpfam_bat" />
                                         <element name="CR" type="8" value="0.5" />
@@ -116,6 +122,12 @@
                                         <element name="RESREF" type="11" value="pseudoboardire" />
                                         <element name="CR" type="8" value="6.0" />
                                         <element name="FACTION" type="10" value="Hostile" />
+                                    </struct>
+                                    <struct id="0" >
+                                        <element name="NAME" type="10" value="Rat" />
+                                        <element name="RESREF" type="11" value="ver_rat" />
+                                        <element name="CR" type="8" value="0.125" />
+                                        <element name="FACTION" type="10" value="Mindless" />
                                     </struct>
                                     <struct id="0" >
                                         <element name="NAME" type="10" value="Winter Wolf" />
@@ -184,6 +196,14 @@
                     <struct id="0" >
                         <element name="STRREF" type="4" value="6713" />
                         <element name="ID" type="0" value="21" />
+                        <element name="LIST" type="15" >
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="Dragon Cloud" />
+                                <element name="RESREF" type="11" value="prc_drag_cld" />
+                                <element name="CR" type="8" value="18.0" />
+                                <element name="FACTION" type="10" value="Defender" />
+                            </struct>
+                        </element>
                     </struct>
                     <struct id="0" >
                         <element name="STRREF" type="4" value="6714" />
@@ -569,6 +589,12 @@
                                 <element name="ID" type="0" value="11" />
                                 <element name="LIST" type="15" >
                                     <struct id="0" >
+                                        <element name="NAME" type="10" value="Monsterous Spider" />
+                                        <element name="RESREF" type="11" value="ver_spider" />
+                                        <element name="CR" type="8" value="0.5" />
+                                        <element name="FACTION" type="10" value="Hostile" />
+                                    </struct>
+                                    <struct id="0" >
                                         <element name="NAME" type="10" value="Pseudonatural Dire Spider" />
                                         <element name="RESREF" type="11" value="pseudospiddire" />
                                         <element name="CR" type="8" value="9.0" />
@@ -585,6 +611,20 @@
                     <struct id="0" >
                         <element name="STRREF" type="4" value="1592" />
                         <element name="ID" type="0" value="13" />
+                        <element name="LIST" type="15" >
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="110742" />
+                                <element name="RESREF" type="11" value="ooz_grey" />
+                                <element name="CR" type="8" value="0.33333334" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                            <struct id="0" >
+                                <element name="STRREF" type="4" value="110835" />
+                                <element name="RESREF" type="11" value="ooz_ochre" />
+                                <element name="CR" type="8" value="0.125" />
+                                <element name="FACTION" type="10" value="Hostile" />
+                            </struct>
+                        </element>
                     </struct>
                     <struct id="0" >
                         <element name="STRREF" type="4" value="6715" />
@@ -10823,12 +10863,6 @@
                         <element name="RESREF" type="11" value="rad_dummy" />
                         <element name="CR" type="8" value="0.25" />
                         <element name="FACTION" type="10" value="Hostile" />
-                    </struct>
-                    <struct id="0" >
-                        <element name="NAME" type="10" value="Servant of Angband" />
-                        <element name="RESREF" type="11" value="angbandservant" />
-                        <element name="CR" type="8" value="0.33333334" />
-                        <element name="FACTION" type="10" value="Commoner" />
                     </struct>
                 </element>
             </struct>

@@ -18,16 +18,16 @@
 
 
 const float TAX_RATE            = 0.1;
-const float TAX_ITEM_SALE_VALUE = 0.25;//items are a quater of real value
+const float TAX_ITEM_SALE_VALUE = 0.25;//items are a quarter of real value
 
 
 void ApplyTaxToPlayer(object oPC, object oTown)
 {
     int nTotalWealth;
     int i;
-    for(i=0; i < 14; 1++)
+    for(i=0; i < 14; i++)
     {
-        object oItem = GetItemInSlot(oPC);
+        object oItem = GetItemInSlot(i, oPC);
         nTotalWealth += GetGoldPieceValue(oItem);
     }
     
@@ -243,8 +243,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable1)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable1)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable2))
@@ -260,8 +260,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable2)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable2)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable3))
@@ -277,8 +277,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable3)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable3)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable4))
@@ -294,8 +294,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable4)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable4)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable5))
@@ -311,8 +311,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable5)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable5)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable6))
@@ -328,8 +328,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable6)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable6)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable7))
@@ -345,8 +345,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable7)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable7)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable8))
@@ -362,8 +362,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable8)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable8)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable9))
@@ -379,8 +379,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable9)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable9)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     if(GetIsObjectValid(oValuable10))
@@ -396,8 +396,8 @@ void ApplyTaxToPlayer(object oPC, object oTown)
         }   
         else
         {
-            nTaxAmmount -= nItemValue
-            sMessage += "You have sold "+GetName(oValuable10)+" for "+IntToString(nItemValue)+" to pay for taxes."
+            nTaxAmmount -= nItemValue;
+            sMessage += "You have sold "+GetName(oValuable10)+" for "+IntToString(nItemValue)+" to pay for taxes.";
         }    
     }
     //if we still get to this point, the PC has had all their cash and their 10 most valuable items removed

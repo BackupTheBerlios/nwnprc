@@ -22,7 +22,7 @@
                 <element name="XPosition" type="8" value="60.323315" />
                 <element name="YPosition" type="8" value="59.828728" />
                 <element name="ZPosition" type="8" value="5.5999975" />
-                <element name="XOrientation" type="8" value="0.09801994" />
+                <element name="XOrientation" type="8" value="0.09802041" />
                 <element name="YOrientation" type="8" value="-0.9951844" />
                 <element name="TemplateResRef" type="11" value="nw_drgwhite003" />
                 <element name="Race" type="0" value="11" />
@@ -4831,7 +4831,7 @@
                 <element name="X" type="8" value="54.677635" />
                 <element name="Y" type="8" value="45.008675" />
                 <element name="Z" type="8" value="-0.60459363" />
-                <element name="Bearing" type="8" value="2.8225226" />
+                <element name="Bearing" type="8" value="2.8225222" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="GenesisExit06" />

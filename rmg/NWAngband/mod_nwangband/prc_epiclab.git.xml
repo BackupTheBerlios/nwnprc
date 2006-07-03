@@ -729,7 +729,7 @@
                 <element name="YPosition" type="8" value="17.008217" />
                 <element name="ZPosition" type="8" value="0.0" />
                 <element name="XOrientation" type="8" value="1.0" />
-                <element name="YOrientation" type="8" value="1.1483816E-6" />
+                <element name="YOrientation" type="8" value="1.2675908E-6" />
                 <element name="TemplateResRef" type="11" value="epicspellbookmer" />
                 <element name="Race" type="0" value="20" />
                 <element name="FirstName" type="12" value="-1" >
@@ -56191,7 +56191,7 @@ Use Read Magic to read the details of the recipe.]]></value>
                 <element name="X" type="8" value="16.296917" />
                 <element name="Y" type="8" value="35.634167" />
                 <element name="Z" type="8" value="9.536743E-6" />
-                <element name="Bearing" type="8" value="-0.98174405" />
+                <element name="Bearing" type="8" value="-0.981744" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="Bookshelf" />
@@ -56965,7 +56965,7 @@ You must also use the Epic Spell System rest to gain Epic Spell Slots for the da
                 <element name="X" type="8" value="14.218962" />
                 <element name="Y" type="8" value="5.3156385" />
                 <element name="Z" type="8" value="9.536743E-6" />
-                <element name="Bearing" type="8" value="0.49087295" />
+                <element name="Bearing" type="8" value="0.4908729" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="Bookshelf" />
@@ -57372,7 +57372,7 @@ You must also use the Epic Spell System rest to gain Epic Spell Slots for the da
                 <element name="X" type="8" value="7.5910535" />
                 <element name="Y" type="8" value="6.5812173" />
                 <element name="Z" type="8" value="9.536743E-6" />
-                <element name="Bearing" type="8" value="2.822519" />
+                <element name="Bearing" type="8" value="2.8225186" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="X2_PLC_PSHEETS" />
@@ -57720,7 +57720,7 @@ You must also use the Epic Spell System rest to gain Epic Spell Slots for the da
                 <element name="X" type="8" value="12.043986" />
                 <element name="Y" type="8" value="14.203541" />
                 <element name="Z" type="8" value="0.085542195" />
-                <element name="Bearing" type="8" value="0.2208927" />
+                <element name="Bearing" type="8" value="0.22089267" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="RugOriental2" />
@@ -57777,7 +57777,7 @@ You must also use the Epic Spell System rest to gain Epic Spell Slots for the da
                 <element name="X" type="8" value="9.910902" />
                 <element name="Y" type="8" value="9.050677" />
                 <element name="Z" type="8" value="-5.722046E-6" />
-                <element name="Bearing" type="8" value="1.5707945" />
+                <element name="Bearing" type="8" value="1.5707942" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="Chandelier" />
@@ -58005,7 +58005,7 @@ You must also use the Epic Spell System rest to gain Epic Spell Slots for the da
                 <element name="X" type="8" value="3.6002142" />
                 <element name="Y" type="8" value="18.895555" />
                 <element name="Z" type="8" value="-5.722046E-6" />
-                <element name="Bearing" type="8" value="-2.9452412" />
+                <element name="Bearing" type="8" value="-2.9452407" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="GolemPartsStone" />
@@ -58062,7 +58062,7 @@ You must also use the Epic Spell System rest to gain Epic Spell Slots for the da
                 <element name="X" type="8" value="2.7283823" />
                 <element name="Y" type="8" value="14.58615" />
                 <element name="Z" type="8" value="-5.722046E-6" />
-                <element name="Bearing" type="8" value="-1.3744458" />
+                <element name="Bearing" type="8" value="-1.3744456" />
             </struct>
         </element>
     </struct>

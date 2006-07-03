@@ -4102,7 +4102,7 @@
                 <element name="X" type="8" value="5.2599998" />
                 <element name="Y" type="8" value="5.51" />
                 <element name="Z" type="8" value="9.56" />
-                <element name="Bearing" type="8" value="-3.141587" />
+                <element name="Bearing" type="8" value="-3.1415865" />
             </struct>
             <struct id="8" >
                 <element name="Tag" type="10" value="CaveExit" />

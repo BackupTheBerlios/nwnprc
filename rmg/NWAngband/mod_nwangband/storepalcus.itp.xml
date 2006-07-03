@@ -28,6 +28,10 @@
                                 <element name="NAME" type="10" value="prc_recipe" />
                                 <element name="RESREF" type="11" value="prc_recipe" />
                             </struct>
+                            <struct id="0" >
+                                <element name="NAME" type="10" value="prc_scrolls" />
+                                <element name="RESREF" type="11" value="prc_scrolls" />
+                            </struct>
                         </element>
                     </struct>
                     <struct id="0" >

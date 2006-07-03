@@ -37,6 +37,7 @@ int GetAoEForRadius(float fRadius)
 
 object CreateDescriptiveSound(string sResRef, string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE, float fRadius = 10.0)
 {
+DoDebug("CreateDescriptiveSound() running");
     //sounds are in a nice shade of blue
     string sMess = GetRGB(100, 100, 200)+"* You hear: "+sDesc+GetRGB(100, 100, 200)+" *";
     //pick a suitable AoE effect based on radius size
@@ -62,6 +63,10 @@ object CreateDescriptiveSound(string sResRef, string sDesc, location lSpawn, int
         // Didn't find, get next
         oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lSpawn, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
     }
+    if(GetIsObjectValid(oAoE))
+        DoDebug("oAoE is valid");
+    else    
+        DoDebug("oAoE is *NOT* valid");
     //set information on the AoE object
     SetLocalInt(oAoE, "SoundDC", nDC);
     SetLocalString(oAoE, "SoundDesc", sDesc);

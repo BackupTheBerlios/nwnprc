@@ -72,7 +72,7 @@
                 <element name="X" type="8" value="25.0" />
                 <element name="Y" type="8" value="4.79" />
                 <element name="Z" type="8" value="0.2" />
-                <element name="Bearing" type="8" value="-3.141592" />
+                <element name="Bearing" type="8" value="-3.1415915" />
             </struct>
             <struct id="8" >
                 <element name="Tag" type="10" value="x2_dooreasy3" />
@@ -127,7 +127,7 @@
                 <element name="X" type="8" value="5.24" />
                 <element name="Y" type="8" value="48.5" />
                 <element name="Z" type="8" value="0.2" />
-                <element name="Bearing" type="8" value="1.5707964" />
+                <element name="Bearing" type="8" value="1.5707963" />
             </struct>
         </element>
         <element name="Encounter List" type="15" />
@@ -166,7 +166,7 @@
                 <element name="YPosition" type="8" value="24.880722" />
                 <element name="ZPosition" type="8" value="0.0" />
                 <element name="XOrientation" type="8" value="1.0" />
-                <element name="YOrientation" type="8" value="7.54979E-8" />
+                <element name="YOrientation" type="8" value="3.1391647E-7" />
             </struct>
             <struct id="5" >
                 <element name="Appearance" type="0" value="1" />
@@ -181,7 +181,7 @@
                 <element name="XPosition" type="8" value="24.834543" />
                 <element name="YPosition" type="8" value="6.055251" />
                 <element name="ZPosition" type="8" value="0.20000024" />
-                <element name="XOrientation" type="8" value="-3.8941437E-7" />
+                <element name="XOrientation" type="8" value="-8.662515E-7" />
                 <element name="YOrientation" type="8" value="-1.0" />
             </struct>
             <struct id="5" >
@@ -198,7 +198,7 @@
                 <element name="YPosition" type="8" value="44.904747" />
                 <element name="ZPosition" type="8" value="9.313226E-9" />
                 <element name="XOrientation" type="8" value="-1.0" />
-                <element name="YOrientation" type="8" value="7.54979E-8" />
+                <element name="YOrientation" type="8" value="3.1391647E-7" />
             </struct>
         </element>
         <element name="Placeable List" type="15" >
@@ -256,10 +256,10 @@
                 <element name="Useable" type="0" value="1" />
                 <element name="OnInvDisturbed" type="11" value="" />
                 <element name="OnUsed" type="11" value="ral_transition" />
-                <element name="X" type="8" value="25.121088" />
-                <element name="Y" type="8" value="24.94529" />
-                <element name="Z" type="8" value="4.600001" />
-                <element name="Bearing" type="8" value="-3.1415918" />
+                <element name="X" type="8" value="25.005064" />
+                <element name="Y" type="8" value="24.861933" />
+                <element name="Z" type="8" value="4.6000023" />
+                <element name="Bearing" type="8" value="-3.1415913" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="MerchantsShingle7" />
@@ -316,7 +316,7 @@
                 <element name="X" type="8" value="7.002574" />
                 <element name="Y" type="8" value="49.556488" />
                 <element name="Z" type="8" value="0.20000167" />
-                <element name="Bearing" type="8" value="-3.1415923" />
+                <element name="Bearing" type="8" value="-3.1415918" />
             </struct>
         </element>
     </struct>

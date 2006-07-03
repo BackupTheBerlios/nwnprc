@@ -39,9 +39,44 @@ Focus: 15 lb. or 1 cubic foot of the material in question.
 
 
 Author:    Tenjac
-Created:   
+Created:   7/3/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	object oPC = OBJECT_SELF;
+	int nSpell = GetSpellId();
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nSpell == SPELL_EXTRACT_BACCARAN)
+	{
+		ActionCastSpellAtObject(SPELL_BACCARAN, oPC, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+	}
+	
+	if(nSpell == SPELL_EXTRACT_VODARE)
+	{
+			ActionCastSpellAtObject(SPELL_VODARE, oPC, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+	}
+	
+	if(nSpell == SPELL_EXTRACT_SANNISH)
+	{
+			ActionCastSpellAtObject(SPELL_SANNISH, oPC, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+	}
+	
+	if(nSpell == SPELL_EXTRACT_MUSHROOM_POWDER)
+	{
+			ActionCastSpellAtObject(SPELL_MUSHROOM_POWDER, oPC, nMetaMagic, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+	}
+	
+	SPSetSchool();
+}
+	
+	

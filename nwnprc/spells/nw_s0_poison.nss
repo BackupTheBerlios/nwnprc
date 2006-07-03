@@ -1,25 +1,18 @@
-//::///////////////////////////////////////////////
-//:: Poison
-//:: NW_S0_Poison.nss
-//:: Copyright (c) 2001 Bioware Corp.
-//:://////////////////////////////////////////////
 /*
+    nw_s0_poison
+
     Must make a touch attack. If successful the target
     is struck down with wyvern poison.
+
+    By: Preston Watamaniuk
+    Created: May 22, 2001
+    Modified: Jun 15, 2006
+
+    Moved touch attack roll to after hostility
+        check
 */
-//:://////////////////////////////////////////////
-//:: Created By: Preston Watamaniuk
-//:: Created On: May 22, 2001
-//:://////////////////////////////////////////////
 
-//:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-//:: modified by Ornedan Dec 20, 2004 to PnP rules
-
-#include "spinc_common"
-
-#include "NW_I0_SPELLS"
-#include "x2_inc_spellhook"
-
+#include "prc_sp_func"
 
 void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaMagic){
    //Declare major variables
@@ -38,42 +31,31 @@ void DoPoison(object oTarget, object oCaster, int nDC, int CasterLvl, int nMetaM
    }
 }
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-   object oCaster = OBJECT_SELF;
-   object oTarget = GetSpellTargetObject();
-   int CasterLvl = PRCGetCasterLevel(oCaster);
-   int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
-   //not sure why it was doing this instead Primogenitor
+    int CasterLvl = nCasterLevel;
+    int nDC = PRCGetSaveDC(oTarget,oCaster);
+    //not sure why it was doing this instead Primogenitor
         //10 + (CasterLvl / 2) + GetAbilityModifier(ABILITY_WISDOM);
-   int nMetaMagic = SPGetMetaMagic();
+    int nMetaMagic = PRCGetMetaMagicFeat();
 
+    int iAttackRoll = 0;    //placeholder
 
-   int nTouch = PRCDoMeleeTouchAttack(oTarget);;// Was a constant 1. No idea why - Ornedan
+    int nTouch = PRCDoMeleeTouchAttack(oTarget);;// Was a constant 1. No idea why - Ornedan
 
-   if(!GetIsReactionTypeFriendly(oTarget))
-   {
+    if(!GetIsReactionTypeFriendly(oTarget))
+    {
+        iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
        //Fire cast spell at event for the specified target
        SignalEvent(oTarget, EventSpellCastAt(oCaster, SPELL_POISON));
        //Make touch attack
-       if (nTouch > 0)
+       if (iAttackRoll > 0)
        {
            //Make SR Check
            if (!MyPRCResistSpell(oCaster, oTarget))
@@ -85,9 +67,34 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                DelayCommand(MinutesToSeconds(1), DoPoison(oTarget, oCaster, nDC, CasterLvl, nMetaMagic));
            }
        }
-   }
-
-   // Getting rid of the integer used to hold the spells spell school
-   DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    }
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
 }
 
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}

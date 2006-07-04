@@ -76,9 +76,10 @@ void main()
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDam, DAMAGE_TYPE_MAGICAL), oPC, fDur);
 	
 	//Set up removal
-	itemproperty ipHook = ItemProperty
+	itemproperty ipHook = ItemPropertyItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+	object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)
 	
-	AddEventScript(oPC, EVENT_ONHIT, "prc_divine_sac", TRUE, FALSE);
+	AddEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_dvnsac", TRUE, FALSE);
 	
 	SPSetSchool();
 }

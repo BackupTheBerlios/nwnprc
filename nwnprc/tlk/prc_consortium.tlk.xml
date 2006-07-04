@@ -13650,7 +13650,7 @@ Notes:
   <entry id="48694" lang="en" sex="m">Holy Radiance</entry>
   <entry id="48695" lang="en" sex="m">Type of Feat: Exalted.
 Prerequisite: Cha 15, Nimbus of Light, Good Alignment*.
-Specifics: You can increase the intensity of the light surrounding you to damage undead creatures. At will, as a free action, you can empower the radiance surrounding you into a blazing glow that sheds bright light in a 10-foot radius. Undead within 10 feat of you take 1d4 damage per round they remain within your halo.
+Specifics: You can increase the intensity of the light surrounding you to damage undead creatures. At will, as a free action, you can empower the radiance surrounding you into a blazing glow that sheds bright light in a 10-foot radius. Undead within 10 feet of you take 1d4 damage per round they remain within your halo.
 Use: Selected.
 
 (*Note: You can select this feat even when evil or neutral, but it will not give you any benefits, so be smart and don't choose it if you can't use it.)</entry>
@@ -14566,7 +14566,7 @@ Specifics: The effects of the Mass Staredown ability last for 5 rounds instead o
   <entry id="48964" lang="en" sex="m">Frightful Presence</entry>
   <entry id="48965" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: CW Samurai Level 20
-Specifics: A 20th-level Samurais bravery, honor, and fighting prowess have become legendary. When the samurai draws his blade, opponents within 30 feet must succeed on a Will save(DC 20 + Cha Modifier) or become panicked for 4d6 rounds if they have 4 or less Hit Dice, or shaken for 4d6 rounds if they have from 5-19 Hit Dice or less Hit Die then the Samurai. Creatures with more Hit Dice then the Samurai are not affected.</entry>
+Specifics: A 20th-level Samurais bravery, honor, and fighting prowess have become legendary. When the samurai draws his blade, opponents within 30 feet must succeed on a Will save(DC 20 + Cha Modifier) or become panicked for 4d6 rounds (if they have 4 or fewer Hit Dice) or shaken for 4d6 rounds (if they have fewer Hit Dice than the Samurai). Creatures with more Hit Dice then the Samurai are not affected. Any foe that successfully resists the effect cannot be affected again by the same samurai's frightful presence for 24 hours.</entry>
   <entry id="48966" lang="en" sex="m">Shadow Walker Rites</entry>
   <entry id="48967" lang="en" sex="m">Making Contact with the Shadow Lords, you sacrifice 10000 gold for the honor of being able to take the Shadowlord Prestige Class.</entry>
   <entry id="48968" lang="en" sex="m">Soak 1 Damage</entry>
@@ -17715,6 +17715,17 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
   <entry id="51117" lang="en" sex="m">Your inventory is too full for the PRC Polymorphing system to work. Please make space for three (3) helmet-size items (4x4) in your inventory before trying again.</entry>
   <entry id="51118" lang="en" sex="m">The PRC Polymorphing system will not work while you are affected by a polymorph effect. Please remove it before trying again.</entry>
   <entry id="51119" lang="en" sex="m">Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again.</entry>
+  <entry id="51120" lang="en" sex="m">Polymorph failed: Failed to create a template of the creature to polymorph into.</entry>
+  <entry id="51121" lang="en" sex="m"></entry>
+  <entry id="51122" lang="en" sex="m"></entry>
+  <entry id="51123" lang="en" sex="m"></entry>
+  <entry id="51124" lang="en" sex="m"></entry>
+  <entry id="51125" lang="en" sex="m"></entry>
+  <entry id="51126" lang="en" sex="m"></entry>
+  <entry id="51127" lang="en" sex="m"></entry>
+  <entry id="51128" lang="en" sex="m"></entry>
+  <entry id="51129" lang="en" sex="m"></entry>
+
   <entry id="51200" lang="en" sex="m">This conversation manages your augmentation profiles and augmentation quickselections.</entry>
   <entry id="51201" lang="en" sex="m">View / modify augmentation profiles</entry>
   <entry id="51202" lang="en" sex="m">View / modify quickselections</entry>
@@ -22070,7 +22081,7 @@ Use: Automatic.</entry>
   <entry id="55138" lang="en" sex="m">ghost-faced killer</entry>
   <entry id="55139" lang="en" sex="m">(PRESTIGE CLASS)
 From out of nothing the spectre of death appears, an armoured shadow with a brilliant blade held high. In a flash the katana falls, severing life from limb in a bloody arc. All around, screams of terror and shours of fear erupt, as quaking hands draw blades to fight the masked murderer. His target dead, the ghost-faced killer walks calmly away as swords and fists pass harmlessly through his nearly transparent body.
-    Long ago, a persecuted clan of dangerous warriors sought a way to take revenge against their oppressors. Through sorcery, the spellcasters of the clan beseeched dark spirits to reveal a way that their clan might survive the coming strife and take revenge on the emperor who sought to crush them. The clan members struck a dark bargain, and the demon-spirits they had contacted provided the clan with a means to the bloody end they desired.Donning terrifying masks to hide their identities, warriors of the clan crept into the imperial palace, and through the evil power of the pact they had made, passed invisibly and intangibly into the imperial household and murdered the entire imperial family, plunging the country ing bloody civil war once again. No one ever discovered the clan's honourless actions, and to this day, no one knows what clan the ghost-faced killers came from. 
+    Long ago, a persecuted clan of dangerous warriors sought a way to take revenge against their oppressors. Through sorcery, the spellcasters of the clan beseeched dark spirits to reveal a way that their clan might survive the coming strife and take revenge on the emperor who sought to crush them. The clan members struck a dark bargain, and the demon-spirits they had contacted provided the clan with a means to the bloody end they desired.Donning terrifying masks to hide their identities, warriors of the clan crept into the imperial palace, and through the evil power of the pact they had made, passed invisibly and intangibly into the imperial household and murdered the entire imperial family, plunging the country ing bloody civil war once again. No one ever discovered the clan's honourless actions, and to this day, no one knows what clan the ghost-faced killers came from.
     Today ghost-faced killers act as assassins and spies for hire, a mercenary clan that hides behind a guise of open and and honourable conduct. When on a mission, they wear porcelain demon-masks of ghostly white to hide their identity and as a symbol of the pact their clan made with the demon spirits. Through training and discipline, ghost-faced killers learn to the deadliest and most terrifying way to attack foes, and through their mystic connection with spirits, ghost-faced killers learn to turn invisibile, walk through walls, and even see with the eyes of the spirits themselves.
 
 - Hit Die: d8
@@ -25642,18 +25653,18 @@ Use: Selected. Smite Evil only affects evil creatures.</entry>
   <entry id="70004" lang="en" sex="m">Celestial creatures dwell on the upper planes, the realms of good, although they resemble beings found on the Material Plane. They are more regal and more beautiful than their earthly counterparts.
 
 Celestial creatures often come in metallic colors (usually silver, gold, or platinum). They can be mistaken for half-celestials, more powerful creatures that are created when a celestial mates with a non-celestial creature.
-    
+
 "Celestial" is an inherited template that can be added to any corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, plant, or vermin of good or neutral alignment (referred to hereafter as the base creature).
 
 Size and Type
 Animals or vermin with this template become magical beasts, but otherwise the creature type is unchanged. Size is unchanged. Celestial creatures encountered on the Material Plane have the extraplanar subtype.
-    
+
 Special Attacks
 A celestial creature retains all the special attacks of the base creature and also gains the following attack.
-    
+
 Smite Evil (Su)
 Once per day a celestial creature can make a normal melee attack to deal extra damage equal to its HD (maximum of +20) against an evil foe.
-    
+
 Special Qualities
 A celestial creature retains all the special qualities of the base creature and also gains the following qualities:
 
@@ -25664,7 +25675,7 @@ Spell resistance equal to HD + 5 (maximum 25).
 
 Abilities
 Same as the base creature, but Intelligence is at least 3.
-    
+
 Level Adjustment
 Same as the base creature +2. </entry>
 </tlk>

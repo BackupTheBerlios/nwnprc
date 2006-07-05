@@ -155,9 +155,16 @@ int ExpendSpellfire(object oPC)
 }
 
 //Applies spellfire damage to target
-void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage)
+void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage, int bMaelstrom = FALSE)
 {
-    ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_TYPE_FIRE);
+    if(bMaelstrom)
+    {
+        nDamage += ApplySpellBetrayalStrikeDamage(oTarget, oCaster);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamage / 2, DAMAGE_TYPE_MAGICAL), oTarget);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamage - (nDamage / 2), DAMAGE_TYPE_FIRE), oTarget);
+    }
+    else
+        ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_TYPE_FIRE);
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SPELLF_FLAME), oTarget);
 }
 
@@ -182,7 +189,7 @@ void SpellfireAttackRoll(object oCaster, object oTarget, int nExpend, int iMod =
     if(bBeam)
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_SPELLFIRE, oCaster, BODY_NODE_HAND, !nRoll), oTarget, 1.2 /*+ (0.5 * IntToFloat(nAttacks))*/);
     if(nRoll && nDamage)
-        SpellfireDamage(oCaster, oTarget, nRoll, nDamage);
+        SpellfireDamage(oCaster, oTarget, nRoll, nDamage, bMaelstrom);
 }
 
 //Hits target with spellfire, implements rapid blast

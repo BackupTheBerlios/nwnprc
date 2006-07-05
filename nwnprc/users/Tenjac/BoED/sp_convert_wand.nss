@@ -23,7 +23,6 @@ healing instrument the wand becomes:
 
 Spell Level   New Wand Type
 
- 0            Wand of cure minor wounds
  
  1st          Wand of cure light wounds 
  
@@ -72,17 +71,19 @@ void main()
 	//Determine wand to create
 	switch(nLevel)
 	{
-		case 0: oNewWand = CreateItemOnObject(" ", oPC, 1);
-		
 		case 1: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		        break;
 		
 		case 2: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		        break;
 		
 		case 3: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		        break;
 		
 		case 4: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		        break;
 		
-		default: return;
+		default: break;
 	}
 	
 	//Schedule deletion

@@ -1,5 +1,4 @@
-/*
-    psi_pow_powres
+/** @file psi_pow_powres
 
     Power Resistance
 
@@ -16,11 +15,14 @@
 
     The creature gains power resistance equal to 12 + your manifester level.
 
-    By: Stratovarius
-    Created: Feb 23, 2004
-    Modified: Jul 3, 2005
+    @author Stratovarius
+    @date   Created: Feb 23, 2004
+    @date   Modified: Jul 3, 2005
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

@@ -1,5 +1,4 @@
-/*
-    psi_pow_bdyadjst
+/** @file psi_pow_bdyadjst
 
     Body Adjustment
 
@@ -18,11 +17,14 @@
     Augment: For every 2 additional power points you spend, this power heals an
              additional 1d12 points of damage.
 
-    By: Stratovarius
-    Created: Oct 22, 2004
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Oct 22, 2004
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

@@ -1,5 +1,4 @@
-/*
-    psi_pow_assim
+/** @file psi_pow_assim
 
     Assimilate
 
@@ -33,11 +32,14 @@
 
     @todo Gaining a temporary power
 
-    By: Stratovarius
-    Created: Feb 26, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Feb 26, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

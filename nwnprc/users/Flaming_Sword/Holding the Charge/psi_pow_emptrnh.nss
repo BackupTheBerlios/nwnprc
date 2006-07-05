@@ -1,5 +1,4 @@
-/*
-    psi_pow_emptrnh
+/** @file psi_pow_emptrnh
 
     Empathic Transfer, Hostile
 
@@ -35,11 +34,14 @@
        in a 20-foot-radius spread centered on you. The amount of damage
        transferred is divided evenly among all hostile creatures in the area.
 
-    By: Stratovarius
-    Created: Apr 19, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Apr 19, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 void AvoidDR(object oTarget, int nDamage)

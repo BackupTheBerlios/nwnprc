@@ -1,5 +1,4 @@
-/*
-    psi_pow_fuseflsh
+/** @file psi_pow_fuseflsh
 
     Fuse Flesh
 
@@ -27,11 +26,14 @@
     Augment: For every 2 additional power points you spend, this power’s save DC
              increases by 1.
 
-    By: Stratovarius
-    Created: Feb 24, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Feb 24, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

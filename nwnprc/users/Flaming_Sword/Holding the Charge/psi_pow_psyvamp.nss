@@ -1,5 +1,4 @@
-/*
-    psi_pow_psyvamp
+/** @file psi_pow_psyvamp
 
     Psychic Vampire
 
@@ -24,11 +23,14 @@
     Against a psionic being that has no power points or a nonpsionic foe, your
     attack instead deals 2 points of Intelligence, Wisdom, and Charisma damage.
 
-    By: Stratovarius
-    Created: May 17, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: May 17, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

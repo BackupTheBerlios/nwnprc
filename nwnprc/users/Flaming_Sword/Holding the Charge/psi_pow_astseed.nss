@@ -1,5 +1,4 @@
-/*
-    psi_pow_astseed
+/** @file psi_pow_astseed
 
     Astral Seed
 
@@ -19,11 +18,14 @@
     to the location of your astral seed, where you will spend a day regrowing a body. Respawning in this manner will cost a level.
     If your astral seed is destroyed, the power will fail.
 
-    By: Stratovarius
-    Created: Apr 9, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Apr 9, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

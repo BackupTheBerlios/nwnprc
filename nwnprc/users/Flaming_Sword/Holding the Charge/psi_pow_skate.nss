@@ -1,5 +1,4 @@
-/*
-    psi_pow_skate
+/** @file psi_pow_skate
 
     Skate
 
@@ -20,11 +19,14 @@
     gracefully skate along the ground, turn, or stop suddenly as desired. The
     skater’s speed increases by 50%.
 
-    By: Stratovarius
-    Created: Dec 7, 2004
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Dec 7, 2004
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

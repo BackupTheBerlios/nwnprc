@@ -1,5 +1,4 @@
-/*
-    psi_pow_metaweap
+/** @file psi_pow_metaweap
 
     Metaphysical Weapon
 
@@ -31,11 +30,14 @@
              power improves the weapon’s enhancement bonus on attack rolls and
              damage rolls by 1.
 
-    By: Stratovarius
-    Created: Oct 29, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Oct 29, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

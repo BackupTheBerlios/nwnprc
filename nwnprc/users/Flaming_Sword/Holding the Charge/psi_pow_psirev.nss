@@ -1,5 +1,4 @@
-/*
-    psi_pow_psirev
+/** @file psi_pow_psirev
 
     Psionic Revivify
 
@@ -25,11 +24,14 @@
 
     XP Cost: 200 XP.
 
-    By: Stratovarius
-    Created: May 17, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: May 17, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

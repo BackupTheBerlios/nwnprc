@@ -61,21 +61,27 @@
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     SPRaiseSpellCastAt(oTarget, TRUE, SPELL_NECROTIC_CYST, oCaster);
-    //Check for Mother Cyst
-    if(!GetCanCastNecroticSpells(oCaster)) return TRUE;
-    //Check for Protection from Evil/Magic Circle against Evil
-    if(GetHasSpellEffect(SPELL_PROTECTION_FROM_EVIL, oTarget) || GetHasSpellEffect(SPELL_MAGIC_CIRCLE_AGAINST_EVIL))
-        return TRUE;
-    //Check Spell Resistance
-    if (MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr())) return TRUE;
-    //Resolve Spell if failed save
-    if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_EVIL))
+
+    int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+    if (iAttackRoll > 0)
     {
-        ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, 0, DAMAGE_TYPE_POSITIVE, DAMAGE_TYPE_MAGICAL);
-        GiveNecroticCyst(oTarget);
+        if(GetCanCastNecroticSpells(oCaster))
+        {
+            if(!(GetHasSpellEffect(SPELL_PROTECTION_FROM_EVIL, oTarget) || GetHasSpellEffect(SPELL_MAGIC_CIRCLE_AGAINST_EVIL)))
+            {
+                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
+                {
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oCaster), SAVING_THROW_TYPE_EVIL))
+                    {
+                        ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, 0, DAMAGE_TYPE_POSITIVE, DAMAGE_TYPE_MAGICAL);
+                        GiveNecroticCyst(oTarget);
+                    }
+                }
+            }
+        }
     }
 
-    return TRUE;    //return TRUE if spell charges should be decremented
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
 }
 
 void main()

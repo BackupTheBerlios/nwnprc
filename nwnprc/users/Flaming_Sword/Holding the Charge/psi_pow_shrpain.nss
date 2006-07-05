@@ -1,5 +1,4 @@
-/*
-    psi_pow_shrpain
+/** @file psi_pow_shrpain
 
     Share Pain
 
@@ -31,11 +30,14 @@
     any one time. Any subsequent uses override the previous.
     We're lazy bastards :P
 
-    By: Stratovarius
-    Created: Feb 19, 2004
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Feb 19, 2004
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nManifesterLevel, int nBeatsRemaining)

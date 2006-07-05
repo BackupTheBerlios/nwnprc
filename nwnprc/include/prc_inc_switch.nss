@@ -225,7 +225,7 @@ const string PRC_METAMAGIC_OVERRIDE                   = "PRC_METAMAGIC_OVERRIDE"
 const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
 
 /*
- * This switch toggles whether items are destroyed by Claws of the Bebilith or 
+ * This switch toggles whether items are destroyed by Claws of the Bebilith or
  * simply unequipped.
  */
  const string PRC_BEBILITH_CLAWS_DESTROY              = "PRC_BEBILITH_CLAWS_DESTROY";
@@ -242,7 +242,7 @@ const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
 const string PRC_USE_NEW_IMBUE_ARROW                 = "PRC_USE_NEW_IMBUE_ARROW";
 
 /*
- * If this is set, the Dragon Disciple size increases at level 15 and 25 
+ * If this is set, the Dragon Disciple size increases at level 15 and 25
  * will give ability increases matching the new size
  * In any case, DDs will benefit from increased natural damage
 */
@@ -331,7 +331,7 @@ const string PRC_TRUE_NECROMANCER_ALTERNATE_VISUAL             = "PRC_TRUE_NECRO
 
 /*
  * Thrallherd uses leadership system rather than its own summons
- * They still cannot use Leadership, Epic Leadership or Legendary Commander feats 
+ * They still cannot use Leadership, Epic Leadership or Legendary Commander feats
  */
 const string PRC_THRALLHERD_LEADERSHIP             = "PRC_THRALLHERD_LEADERSHIP";
 
@@ -350,6 +350,12 @@ const string PRC_SORC_DISALLOW_NEWSPELLBOOK     = "PRC_SORC_DISALLOW_NEWSPELLBOO
  * Disables the PRCs bards newspelbook extension
  */
 const string PRC_BARD_DISALLOW_NEWSPELLBOOK     = "PRC_BARD_DISALLOW_NEWSPELLBOOK";
+
+/**
+ * By default, CW Samurai get a plain katana and a plain wakizashi (shortsword) at 1st level.
+ * Setting this to non-zero value prevents that.
+ */
+const string PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO = "PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO";
 
 /******************************************************************************\
 *                               Epic Spell switches                            *
@@ -711,7 +717,7 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   */
  const string PRC_SPELL_ALIGNMENT_SHIFT              = "PRC_SPELL_ALIGNMENT_SHIFT";
 
- 
+
  /*
   * Set this to give a number of Free cohorts as with leadership
   * This can be used to simulate a party of players
@@ -719,17 +725,17 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * do not have the -2 level lag.
   */
  const string PRC_BONUS_COHORTS                      = "PRC_BONUS_COHORTS";
- 
+
  /*
   * Disable the use of custom cohorts
   */
  const string PRC_DISABLE_CUSTOM_COHORTS                      = "PRC_DISABLE_CUSTOM_COHORTS";
- 
+
  /*
   * Disable the use of standard cohorts
   */
  const string PRC_DISABLE_STANDARD_COHORTS                      = "PRC_DISABLE_STANDARD_COHORTS";
- 
+
  /*
   * Disable registration of custom cohorts
   */
@@ -746,33 +752,33 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * in the OnSpawn event. Used for epic spells and other XP-burning stuff
   */
  const string PRC_NPC_XP                             = "PRC_NPC_XP";
- 
+
  /*
   * Applys speed increase/decrease effects
   * Simulates PnP rules where different races have different speeds
   */
  const string PRC_PNP_RACIAL_SPEED                      = "PRC_PNP_RACIAL_SPEED";
- 
+
  /*
   * Applys speed increase/decrease effects
   * Simulates PnP rules where different armors have different speeds
   * Medium armor is a 25% speed reduction, Heavy is a 33% reduction
   */
  const string PRC_PNP_ARMOR_SPEED                      = "PRC_PNP_ARMOR_SPEED";
- 
+
  /*
   * by Bioware rules, PCs have approximatly a 7th faster movement than NPCs
   * so they can outrun them quite easily.
   * This switch removes that so they are on even footings.
   */
  const string PRC_REMOVE_PLAYER_SPEED                      = "PRC_REMOVE_PLAYER_SPEED";
- 
- 
+
+
  /*
   * Turns on the PRC PnP Bleeding & Death system
   * see prc_inc_death for details
-  * NOTE: This will only work if the module has no other scripts for 
-  * OnPlayerDying and OnPlayerDeath events. Otherwise those will interfere with 
+  * NOTE: This will only work if the module has no other scripts for
+  * OnPlayerDying and OnPlayerDeath events. Otherwise those will interfere with
   * this system
   */
 const string PRC_PNP_DEATH_ENABLE                           = "PRC_PNP_DEATH_ENABLE";
@@ -781,26 +787,26 @@ const string PRC_PNP_DEATH_ENABLE                           = "PRC_PNP_DEATH_ENA
   *  if zero, dont bleed just die
   *  By PnP this would be 1 round, or 6 seconds
   */
-const string PRC_DEATH_TIME_BETWEEN_BLEEDING       = "PRC_DEATH_TIME_BETWEEN_BLEEDING";   
+const string PRC_DEATH_TIME_BETWEEN_BLEEDING       = "PRC_DEATH_TIME_BETWEEN_BLEEDING";
 
  /*
   *  if zero, dont stabilise
-  *  By PnP this would be 1 hour, or 2 minutes/120 
+  *  By PnP this would be 1 hour, or 2 minutes/120
   *  seconds by default NWN settings
   */
-const string PRC_DEATH_TIME_BETWEEN_STABLE         = "PRC_DEATH_TIME_BETWEEN_STABLE";   
+const string PRC_DEATH_TIME_BETWEEN_STABLE         = "PRC_DEATH_TIME_BETWEEN_STABLE";
 
  /*
   *  if zero, dont disabled
-  *  By PnP this would be 1 day, or 48 minutes/2880 
+  *  By PnP this would be 1 day, or 48 minutes/2880
   *  seconds by default NWN settings
   */
-const string PRC_DEATH_TIME_BETWEEN_DISABLED       = "PRC_DEATH_TIME_BETWEEN_DISABLED";   
+const string PRC_DEATH_TIME_BETWEEN_DISABLED       = "PRC_DEATH_TIME_BETWEEN_DISABLED";
 
  /*
   *  this is the checks once dead for raising
   */
-const string PRC_DEATH_TIME_BETWEEN_DEATH          = "PRC_DEATH_TIME_BETWEEN_DEATH";   
+const string PRC_DEATH_TIME_BETWEEN_DEATH          = "PRC_DEATH_TIME_BETWEEN_DEATH";
 
 /*
  * Damage when bleeding
@@ -860,7 +866,7 @@ const string PRC_DEATH_STABLE_TO_DISABLED_CHANCE   = "PRC_DEATH_STABLE_TO_DISABL
  *
  * As of NWN v1.67 there is no need to press the cancel button as the toolset no longer
  * attempts to compile scripts in haks.
- * 
+ *
  */
 
 /*
@@ -1348,7 +1354,7 @@ const string PRC_DISABLE_CRAFT                       = "PRC_DISABLE_CRAFT";
 
 /*
  * set this on an area to disable crafting within that area
- * Best used in conjunction with the time elapsing and no-rest 
+ * Best used in conjunction with the time elapsing and no-rest
  * This applies to both PRC Crafting and biowares scroll/wand/potions
  */
 const string PRC_AREA_DISABLE_CRAFTING               = "PRC_AREA_DISABLE_CRAFTING";
@@ -2524,6 +2530,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_CHARGE_SELF);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SORC_DISALLOW_NEWSPELLBOOK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BARD_DISALLOW_NEWSPELLBOOK);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_REMOVE_PLAYER_SPEED);

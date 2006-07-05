@@ -2083,6 +2083,13 @@ const int FEAT_ULTRAVISION                    = 3658;
 const int FEAT_WWOC_WIDEN_SPELL               = 2473;
 const int FEAT_WWOC_ENLARGE_SPELL_AREA        = 2474;
 
+// Complete Warrior Samurai
+const int FEAT_CWSM_STAREDOWN                 = 2356;
+const int FEAT_CWSM_MASS_STAREDOWN            = 2357;
+const int FEAT_CWSM_IMPROVED_STAREDOWN        = 2358;
+const int FEAT_CWSM_FRIGHTFUL_PRESENCE        = 2359;
+
+
 // Status markers
 const int FEAT_INCORPOREAL                    = 4166;
 const int FEAT_ETHEREAL                       = 4167;

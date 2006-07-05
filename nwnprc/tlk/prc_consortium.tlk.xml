@@ -14516,7 +14516,7 @@ CLASS SKILLS: Concentration, Craft, Persuade, Intimidate, Lore
 
 CLASS FEATURES:
 
-Level 1: Exotic Weapon Proficiency
+Level 1: Daisho Proficiency
 Level 2: Two-Weapon Fighting
 Level 3: Kiai Smite 1/Day
 Level 4: --
@@ -14537,36 +14537,43 @@ Level 18: --
 Level 19: --
 Level 20: Frightful Presence
 
-Kiai Smite: Once per day, a samurai of 3rd level or higher can give a great cry during combat that invigorates him. When a samurai shouts, his next attack gains a bonus on the attack roll and damage roll equal to his Charisma bonus(minimum +1). As a samurai gains levels, he can make a kiai smite more often.
+Daisho Proficiency (Ex): In melee combat, a samurai favors the katana and the wakizashi (a short sword). Many samurai receive an heirloom set of these two blades, known as the daisho. Because a samurai is trained in their use, he gains Exotic Weapon Proficiency as a bonus feat.
 
-Staredown: With an intimidate check you can demoralize an opponent. If the check is passed the target becomes shaken. A shaken character takes a -2 penalty on attack rolls, ability checks, and saving throws.
+Kiai Smite (Ex): Once per day, a samurai of 3rd level or higher can give a great cry during combat that invigorates him. When a samurai shouts, his next attack gains a bonus on the attack roll and damage roll equal to his Charisma bonus(minimum +1). As a samurai gains levels, he can make a kiai smite more often.
 
-Mass Staredown: As Staredown, but affects all enemies within 30 feet.
+Staredown (Ex): At 6th level, a samurai becomes able to strike fear into his foes by his mere presence. He gains a +4 bonus on Intimidate checks and can demoralize an opponent.
 
-Improved Staredown: As Mass Staredown, but effects last for 5 rounds instead of 2.
+Mass Staredown (Ex): At 10th level, a samurai has sufficient presence that he can cow multiple foes. Using a Intimidate check, the samurai can demoralize all opponents within 30 feet with a single action.
 
-Frightful Presence: A 20th-level Samurais bravery, honor, and fighting prowess have become legendary. When the samurai draws his blade, opponents within 30 feet must succeed on a Will save(DC 20 + Cha Modifier) or become panicked for 4d6 rounds if they have 4 or less Hit Dice, or shaken for 4d6 rounds if they have from 5-19 Hit Dice or less Hit Die then the Samurai. Creatures with more Hit Dice then the Samurai are not affected.</entry>
+Improved Staredown (Ex): At 14th level, even a glance from the hard eyes of a samurai is enough to give his foes a pause. The effects of Staredown and Mass Staredown now last 5 rounds instead of the standard 2.
+
+Frightful Presence (Ex): A 20th-level Samurais bravery, honor, and fighting prowess have become legendary. When the samurai draws his blade, opponents within 30 feet must succeed on a Will save(DC 20 + Cha Modifier) or become panicked for 4d6 rounds (if they have 4 or fewer Hit Dice) or shaken for 4d6 rounds (if they have more than 4 Hit Dice, but fewer than the Samurai). Creatures with more Hit Dice then the Samurai are not affected. Any foe that successfully resists the effect cannot be affected again by the same samurai's frightful presence for 24 hours.</entry>
   <entry id="48956" lang="en" sex="m">Kiai Smite</entry>
   <entry id="48957" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: CW Samurai Level 3
-Specifics:
-Once per day, a samurai of 3rd level or higher can give a great cry during combat that invigorates him. When a samurai shouts, his next attack gains a bonus on the attack roll and damage roll equal to his Charisma bonus(minimum +1). As a samurai gains levels, he can make a kiai smite more often.</entry>
+Specifics: Once per day, a samurai of 3rd level or higher can give a great cry during combat that invigorates him. When a samurai shouts, his next attack gains a bonus on the attack roll and damage roll equal to his Charisma bonus(minimum +1). As a samurai gains levels, he can make a kiai smite more often.</entry>
   <entry id="48958" lang="en" sex="m">Staredown</entry>
   <entry id="48959" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: CW Samurai Level 6
-Specifics: With an opposed intimidate check you can demoralize an opponent. If the check is passed the target becomes shaken. A shaken character takes a -2 penalty on attack rolls, ability checks, and saving throws.</entry>
+Specifics: At 6th level, a samurai becomes able to strike fear into his foes by his mere presence. He gains a +4 bonus on Intimidate checks and can demoralize an opponent.
+
+Demoralize Opponent: You can use Intimidate to weaken an opponent's resolve in combat. To do so, make an Intimidate check opposed by the target's modified level check (1d20 + hit dice + wisdom bonus, if any). If you win, the targe becomes shaken for 1 round. A shaken character takes a -2 penalty on attack rolls, ability checks and saving throws.</entry>
   <entry id="48960" lang="en" sex="m">Mass Staredown</entry>
   <entry id="48961" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: CW Samurai Level 10
-Specifics: With an opposed intimidate check you can demoralize all opponents within 30 feet. If the check is passed the target becomes shaken. A shaken character takes a -2 penalty on attack rolls, ability checks, and saving throws.</entry>
+Specifics: At 10th level, a samurai has sufficient presence that he can cow multiple foes. Using a Intimidate check, the samurai can demoralize all opponents within 30 feet with a single action.</entry>
   <entry id="48962" lang="en" sex="m">Improved Staredown</entry>
   <entry id="48963" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: CW Samurai Level 14
-Specifics: The effects of the Mass Staredown ability last for 5 rounds instead of 2 once this feat is granted.</entry>
+Specifics: At 14th level, even a glance from the hard eyes of a samurai is enough to give his foes a pause. The effects of Staredown and Mass Staredown now last 5 rounds instead of the standard 2.</entry>
   <entry id="48964" lang="en" sex="m">Frightful Presence</entry>
   <entry id="48965" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: CW Samurai Level 20
-Specifics: A 20th-level Samurais bravery, honor, and fighting prowess have become legendary. When the samurai draws his blade, opponents within 30 feet must succeed on a Will save(DC 20 + Cha Modifier) or become panicked for 4d6 rounds (if they have 4 or fewer Hit Dice) or shaken for 4d6 rounds (if they have fewer Hit Dice than the Samurai). Creatures with more Hit Dice then the Samurai are not affected. Any foe that successfully resists the effect cannot be affected again by the same samurai's frightful presence for 24 hours.</entry>
+Specifics: A 20th-level Samurais bravery, honor, and fighting prowess have become legendary. When the samurai draws his blade, opponents within 30 feet must succeed on a Will save(DC 20 + Cha Modifier) or become panicked for 4d6 rounds (if they have 4 or fewer Hit Dice) or shaken for 4d6 rounds (if they have more than 4 Hit Dice, but fewer than the Samurai). Creatures with more Hit Dice then the Samurai are not affected. Any foe that successfully resists the effect cannot be affected again by the same samurai's frightful presence for 24 hours.
+
+Panicked: A panicked creature must drop anything it holds and flee at top speed from the source of its fear, as well as any other dangers it encounters, along a random path. It can’t take any other actions. In addition, the creature takes a –2 penalty on all saving throws, skill checks, and ability checks. If cornered, a panicked creature cowers and does not attack.
+
+Shaken: A shaken character takes a –2 penalty on attack rolls, saving throws, skill checks, and ability checks.</entry>
   <entry id="48966" lang="en" sex="m">Shadow Walker Rites</entry>
   <entry id="48967" lang="en" sex="m">Making Contact with the Shadow Lords, you sacrifice 10000 gold for the honor of being able to take the Shadowlord Prestige Class.</entry>
   <entry id="48968" lang="en" sex="m">Soak 1 Damage</entry>

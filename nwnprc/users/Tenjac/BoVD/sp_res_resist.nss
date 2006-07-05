@@ -23,13 +23,29 @@ function. Spell resistance granted by a magic item or
 the spell resistance spell does not improve.
 
 Author:    Tenjac
-Created:   
+Created:   7/5/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
 
+void main()
+{
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = (60.0f * nCasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	effect eVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oPC, fDur);
+	
+	
 //edit spell resistance function
 
 //check hide for SR item prop

@@ -59,8 +59,21 @@ void main()
 	int nOrigCharge = GetItemCharges(oTargetWand);
 	int nNewCharge;
 	object oNewWand;
+	int nSpell = Get
 	
 	//Get spell level
+	itemproperty ipTest = GetFirstItemProperty(oTargetWand);
+		
+	while(GetIsItemPropertyValid(ipTest))
+	{
+		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
+		{
+			int nSubType = GetItemPropertySubType(ipTest);
+			string sLevel = Get2DAString(IntToString(nSubType), "InnateLvl", 
+		}
+		ipTest = GetNextItemProperty(oTargetWand);
+	}		
+		
 	int nLevel = ;
 	
 	//Copy item to hide

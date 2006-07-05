@@ -1106,6 +1106,10 @@ DoDebug("x2_inc_spellhook pre-spellfire");
         DeleteLocalInt(oCaster, "PRC_SPELL_METAMAGIC");
         DeleteLocalManifestation(oCaster, "PRC_POWER_HOLD_MANIFESTATION");
     }
+    else if(GetLocalInt(oCaster, "PRC_SPELL_CHARGE_SPELLID") != nSpellID)
+    {   //Sanity check, in case something goes wrong with the action queue
+        DeleteLocalInt(oCaster, "PRC_SPELL_EVENT");
+    }
 
     return nContinue;
 }

@@ -43,11 +43,6 @@
 #include "spinc_common"
 #include "prc_spell_const"
 
-#include "psi_inc_psifunc"
-#include "psi_inc_pwresist"
-#include "psi_spellhook"
-#include "spinc_common"
-
 //constant declarations in case they change
 const string PRC_SPELL_CHARGE_COUNT             = "PRC_SPELL_CHARGE_COUNT";
 const string PRC_SPELL_CHARGE_SPELLID           = "PRC_SPELL_CHARGE_SPELLID";
@@ -125,9 +120,10 @@ void DecrementSpellCharges(object oPC)
 //  int nEventType, an integer containing flags defining events to use
 void RunSpellScript(object oPC, int nSpellID, int nEventType)
 {
+    ClearAllActions();  //clears queue to prevent exploits
     SetLocalInt(oPC, PRC_SPELL_EVENT, nEventType);
     ActionCastSpell(nSpellID, 0, 0, 0, GetLocalInt(oPC, PRC_SPELL_METAMAGIC));
-    DelayCommand(0.3, DeleteLocalInt(oPC, PRC_SPELL_EVENT));
+    DelayCommand(3.0, DeleteLocalInt(oPC, PRC_SPELL_EVENT));
 }
 
 //Returns true if the spell is one of the cure spells

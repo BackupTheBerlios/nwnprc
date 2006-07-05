@@ -157,6 +157,10 @@ int PsiPrePowerCastCode()
         DeleteLocalInt(oManifester, "PRC_SPELL_METAMAGIC");
         DeleteLocalManifestation(oManifester, "PRC_POWER_HOLD_MANIFESTATION");
     }
+    else if(GetLocalInt(oManifester, "PRC_SPELL_CHARGE_SPELLID") != PRCGetSpellId())
+    {   //Sanity check, in case something goes wrong with the action queue
+        DeleteLocalInt(oManifester, "PRC_SPELL_EVENT");
+    }
 
     return nContinue;
 }

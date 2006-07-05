@@ -893,6 +893,9 @@ int InscribeRune()
 
     if (PRCGetLastSpellCastClass() == CLASS_TYPE_CLERIC) nSpellLevel = StringToInt(lookup_spell_cleric_level(nSpell));
     else if (PRCGetLastSpellCastClass() == CLASS_TYPE_DRUID) nSpellLevel = StringToInt(lookup_spell_druid_level(nSpell));
+    else if (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD || PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER) nSpellLevel = StringToInt(lookup_spell_level(nSpell));
+    // If none of these work, check the innate level of the spell
+    if (nSpellLevel == 0) nSpellLevel = StringToInt(lookup_spell_innate(nSpell));    
     // Minimum level.
     if (nSpellLevel == 0) nSpellLevel = 1;
 

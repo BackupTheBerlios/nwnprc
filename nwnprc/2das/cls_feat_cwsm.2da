@@ -344,7 +344,7 @@
 340 FEAT_STAREDOWN                                 2356      3    6              1      
 341 FEAT_MASSSTAREDOWN                             2357      3    10             1      
 342 FEAT_IMP_STARE                                 2358      3    14             0      
-343 FEAT_FRIGHTFUL                                 2359      3    20             1      
+343 FEAT_FRIGHTFUL                                 2359      3    20             0      
 344 OverWCrit_Mindblade                            3615      1    -1             0      
 345 DevCrit_Mindblade                              3616      1    -1             0      
 346 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      

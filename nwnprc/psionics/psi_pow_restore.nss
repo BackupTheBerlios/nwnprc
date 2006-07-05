@@ -1,5 +1,4 @@
-/*
-    psi_pow_restore
+/** @file psi_pow_restore
 
     Restoration, Psionic
 
@@ -16,11 +15,14 @@
 
     As the restoration spell, except as noted here.
 
-    By: Stratovarius
-    Created: Feb 19, 2004
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Feb 19, 2004
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 // Checks if the effect is specific to a plot and should not be removed normally

@@ -1,5 +1,4 @@
-/*
-    psi_pow_wepnrg
+/** @file psi_pow_wepnrg
 
     Weapon of Energy
 
@@ -22,11 +21,14 @@
     This power’s subtype is the same as the type of energy infused in the
     touched weapon.
 
-    By: Stratovarius
-    Created: Nov 5, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Nov 5, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

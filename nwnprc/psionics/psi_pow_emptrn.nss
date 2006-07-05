@@ -1,5 +1,4 @@
-/*
-    psi_pow_emptrn
+/** @file psi_pow_emptrn
 
     Empathic Transfer
 
@@ -27,11 +26,14 @@
              additional 2d10 points of damage (to a maximum of 10d10 points per
              manifestation).
 
-    By: Stratovarius
-    Created: May 11, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: May 11, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 void AvoidDR(object oTarget, int nDamage)

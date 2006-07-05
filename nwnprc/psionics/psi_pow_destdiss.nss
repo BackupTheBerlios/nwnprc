@@ -1,5 +1,4 @@
-/*
-    psi_pow_destdiss
+/** @file psi_pow_destdiss
 
     Destiny Dissonance
 
@@ -18,11 +17,14 @@
     possible futures in store. Unaccustomed to and unable to process the information,
     the subject becomes sickened for 1 round per level of the manifester.
 
-    By: Stratovarius
-    Created: Jul 15, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Jul 15, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

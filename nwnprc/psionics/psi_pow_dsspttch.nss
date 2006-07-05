@@ -1,5 +1,4 @@
-/*
-    psi_pow_dsspttch
+/** @file psi_pow_dsspttch
 
     Dissipating Touch
 
@@ -21,11 +20,14 @@
     Augment: For every additional power point you spend, this power’s damage
              increases by 1d6 points.
 
-    By: Stratovarius
-    Created: Oct 27, 2005
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Oct 27, 2005
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 #include "prc_inc_teleport"
 

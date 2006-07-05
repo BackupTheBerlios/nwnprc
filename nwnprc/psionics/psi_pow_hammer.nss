@@ -1,5 +1,4 @@
-/*
-    psi_pow_hammer
+/** @file psi_pow_hammer
 
     Hammer
 
@@ -25,11 +24,14 @@
     Augment: For every additional power point spent, this power's damage
              increases by 1d8.
 
-    By: Stratovarius
-    Created: Oct 31, 2004
-    Modified: Jul 3, 2006
+    @author Stratovarius
+    @date   Created: Oct 31, 2004
+    @date   Modified: Jul 3, 2006
 */
 
+#include "psi_inc_psifunc"
+#include "psi_inc_pwresist"
+#include "psi_spellhook"
 #include "prc_sp_func"
 
 int DoPower(object oManifester, object oTarget, struct manifestation manif)

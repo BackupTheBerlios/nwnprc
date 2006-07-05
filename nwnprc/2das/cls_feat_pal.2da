@@ -212,8 +212,8 @@
 208 DevCrit_Mindblade                              3616      1    -1             0      
 209 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
 210 FEAT_CRAFT_CONSTRUCT                           2920      0    -1             0      
-211 ****                                           ****      **** ****           ****   
-212 ****                                           ****      **** ****           ****   
+211 FEAT_EPIC_LEADERSHIP                           4366      1    -1             0
+212 FEAT_LEGENDARY_COMMANDER                       4367      1    -1             0 
 213 ****                                           ****      **** ****           ****   
 214 ****                                           ****      **** ****           ****   
 215 ****                                           ****      **** ****           ****   

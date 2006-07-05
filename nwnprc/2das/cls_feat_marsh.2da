@@ -168,9 +168,9 @@
 164 FEAT_EPIC_DEVASTATING_CRITICAL_WHIP            996       1    -1             0      
 165 FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP           999       1    -1             0      
 166 FEAT_IMPROVED_WHIRLWIND                        868       1    -1             0      
-167 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0      
-168 ****                                           ****      **** ****           ****   
-169 ****                                           ****      **** ****           ****   
+167 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0          
+168 FEAT_EPIC_LEADERSHIP                           4366      1    -1             0
+169 FEAT_LEGENDARY_COMMANDER                       4367      1    -1             0  
 170 ****                                           ****      **** ****           ****   
 171 ****                                           ****      **** ****           ****   
 172 ****                                           ****      **** ****           ****   

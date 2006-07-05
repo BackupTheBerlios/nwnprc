@@ -385,6 +385,12 @@ void SetToken(int nTokenID, string sString, object oPC = OBJECT_SELF)
     SetLocalString(oPC, GetTokenIDString(nTokenID), sString);
 }
 
+string GetToken(int nTokenID, object oPC = OBJECT_SELF)
+{
+    // Set a marker on the PC for the reply conditional scripts to check
+    return GetLocalString(oPC, GetTokenIDString(nTokenID));
+}
+
 void SetDefaultTokens()
 {
     SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_EXIT_CONVO));

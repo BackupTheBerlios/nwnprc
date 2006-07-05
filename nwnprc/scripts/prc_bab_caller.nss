@@ -79,14 +79,33 @@ void main()
     if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)))
     {
         int nOffhand = 1;
-        if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING, oPC))
-            nOffhand = 2;
-        else if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC) )
-            nOffhand = 3;
-        else if(GetHasFeat(FEAT_SUPREME_TWO_WEAPON_FIGHTING, oPC) )
-            nOffhand = 4;
-        else if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING, oPC) )
+        if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING, oPC))
             nOffhand = nAttackCount+nOverflowAttackCount;
+        else if(GetHasFeat(FEAT_SUPREME_TWO_WEAPON_FIGHTING, oPC))
+            nOffhand = 4;
+        else if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC))
+            nOffhand = 3;
+        else if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING, oPC))
+            nOffhand = 2;
+        //tempests in medium/heavy armor, or using double weapons, only have 1 off-hand attack
+        //this applies even if they take perfect 2-weapon fighting
+        if(GetLevelByClass(CLASS_TYPE_TEMPEST, oPC))            
+        {   
+            object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+            object oWeapR = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+            object oWeapL = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
+                      
+            int nArmorType = GetArmorType(oArmor);
+            if (oArmor == OBJECT_INVALID) 
+                nArmorType = ARMOR_TYPE_LIGHT;
+            if(nArmorType != ARMOR_TYPE_LIGHT
+                || oWeapL == OBJECT_INVALID 
+                || GetBaseItemType(oWeapL) == BASE_ITEM_LARGESHIELD 
+                || GetBaseItemType(oWeapL) == BASE_ITEM_TOWERSHIELD 
+                || GetBaseItemType(oWeapL) == BASE_ITEM_SMALLSHIELD 
+                || GetBaseItemType(oWeapL) == BASE_ITEM_TORCH)
+                nOffhand = 1;
+        }   
             
         if(nOffhand <= 2)
             DeleteLocalInt(oPC, "OffhandOverflowAttackCount");

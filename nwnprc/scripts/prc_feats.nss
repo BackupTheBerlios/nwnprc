@@ -52,8 +52,6 @@ void main()
     if(GetHasFeat(FEAT_IMMUNITY_SNEAKATTACK, oPC))               ExecuteScript("prc_ui_snattack", oPC);
     if(GetHasFeat(FEAT_POSITIVE_ENERGY_RESISTANCE, oPC))         ExecuteScript("prc_ud_poe", oPC);
 
-    if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC)
-       && GetLevelByClass(CLASS_TYPE_TEMPEST, oPC) == 0)         ExecuteScript("ft_gtwf", oPC);
     if(GetHasFeat(FEAT_LINGERING_DAMAGE, oPC) >0)                ExecuteScript("ft_lingdmg", oPC);
     if(GetHasFeat(FEAT_MAGICAL_APTITUDE, oPC))                   ExecuteScript("prc_magaptitude", oPC);
     if(GetHasFeat(FEAT_ETERNAL_FREEDOM, oPC))                    ExecuteScript("etern_free", oPC);

@@ -119,9 +119,9 @@
 115 FEAT_CRAFT_ROD                                   2927      0    9              0      
 116 FEAT_CRAFT_STAFF                                 2928      0    12             0      
 117 FEAT_FORGE_RING                                  2929      0    12             0      
-118 FEAT_CRAFT_CONSTRUCT                             2920      0    -1             0      
-119 ****                                             ****      **** ****           ****   
-120 ****                                             ****      **** ****           ****   
+118 FEAT_CRAFT_CONSTRUCT                             2920      0    -1             0     
+119 FEAT_EPIC_LEADERSHIP                             4366      1    -1             0
+120 FEAT_LEGENDARY_COMMANDER                         4367      1    -1             0  
 121 ****                                             ****      **** ****           ****   
 122 ****                                             ****      **** ****           ****   
 123 ###cls_feat_allBaseClasses_BEGIN###              ****      **** ****           ****   

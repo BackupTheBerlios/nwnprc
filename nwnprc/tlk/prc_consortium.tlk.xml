@@ -8855,13 +8855,13 @@ The Tempest is best in light armor. While wearing heavy or medium armor a tempes
   <entry id="47030" lang="en" sex="m">Greater Two-Weapon Fighting</entry>
   <entry id="47031" lang="en" sex="m">Type of Feat: General
 Prerequisite: Improved Two-Weapon Fighting, Two-Weapon Fighting, Ambidexterity, base attack bonus +15.
-Specifics: You are a master at fighting two-handed. While using Greater Two Weapon Fighting a player can make an additional attack per round, but takes a -2 penalty to all attacks.
-Tempests gain Greater Two-Weapon Fighting for free at level 5. They only gain this ability while in light armor.
+Specifics: You are a master at fighting two-handed. While using Greater Two Weapon Fighting a player can make an third off-hand attack per round.
+A Tempest gains Greater Two-Weapon Fighting for free at level 5. She loses this special ability when fighting in medium or heavy armor, or when using a double weapon (such as a two-bladed sword).
 Use: Automatic.</entry>
   <entry id="47032" lang="en" sex="m">Supreme Two-Weapon Fighting</entry>
   <entry id="47033" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Tempest Level 10
-Specifics: A Tempest has truly mastered two-weapon fighting. She may make two additional attacks per round, but takes a -4 penalty on all attacks.
+Specifics: A Tempest has truly mastered two-weapon fighting. While using Supreme Two Weapon Fighting a Tempest can make an fourth off-hand attack per round.
 She loses this special ability when fighting in medium or heavy armor, or when using a double weapon (such as a two-bladed sword).
 Use: Automatic.
 </entry>

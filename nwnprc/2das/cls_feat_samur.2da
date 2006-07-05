@@ -351,11 +351,11 @@
 347 FEAT_EPIC_ANCESTRAL_DAISHO_7                   1956      1    -1             0      
 348 FEAT_EPIC_ANCESTRAL_DAISHO_8                   1957      1    -1             0      
 349 FEAT_EPIC_ANCESTRAL_DAISHO_9                   1958      1    -1             0      
-350 FEAT_EPIC_ANCESTRAL_DAISHO_10                  1959      1    -1             0      
-351 ****                                           ****      **** ****           ****   
-352 ****                                           ****      **** ****           ****   
-353 ****                                           ****      **** ****           ****   
-354 ****                                           ****      **** ****           ****   
+350 FEAT_EPIC_ANCESTRAL_DAISHO_10                  1959      1    -1             0          
+351 GREATER_TWO_WEAPON_FIGHTING                    4315      1    -1             0   
+352 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0
+353 FEAT_EPIC_LEADERSHIP                           4366      1    -1             0
+354 FEAT_LEGENDARY_COMMANDER                       4367      1    -1             0 
 355 ###cls_feat_allBaseClasses_BEGIN###            ****      **** ****           ****   
 356 **FeatsGrantedToAll**                          ****      **** ****           ****   
 357 FEAT_SHADOW_LORD_CONVO                         2360      3    1              0      

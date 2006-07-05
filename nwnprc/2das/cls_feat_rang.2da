@@ -128,8 +128,8 @@
 124 FEAT_FORGE_RING                       2929      0    12             0      
 125 FEAT_ALTERNATE_FORM                   2931      3    15             0      
 126 Epic_WeaponFocus_Mindblade            3618      1    -1             0      
-127 FEAT_CRAFT_CONSTRUCT                  2920      0    -1             0      
-128 ****                                  ****      **** ****           ****   
+127 FEAT_CRAFT_CONSTRUCT                  2920      0    -1             0   
+128 PERFECT_TWO_WEAPON_FIGHTING           4320      1    -1             0 
 129 ****                                  ****      **** ****           ****   
 130 ****                                  ****      **** ****           ****   
 131 ****                                  ****      **** ****           ****   

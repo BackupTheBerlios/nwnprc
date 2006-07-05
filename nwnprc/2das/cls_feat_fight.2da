@@ -343,10 +343,10 @@
 339 ImpCrit_Mindblade                              3614      1    -1             0      
 340 WeaponSpecialization_Mindblade                 3617      1    -1             0      
 341 Epic_WeaponSpecialization_Mindblade            3619      1    -1             0      
-342 ****                                           ****      **** ****           ****   
-343 ****                                           ****      **** ****           ****   
-344 ****                                           ****      **** ****           ****   
-345 ****                                           ****      **** ****           ****   
+342 GREATER_TWO_WEAPON_FIGHTING                    4315      1    -1             0   
+343 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0
+344 FEAT_EPIC_LEADERSHIP                           4366      1    -1             0
+345 FEAT_LEGENDARY_COMMANDER                       4367      1    -1             0
 346 ****                                           ****      **** ****           ****   
 347 ****                                           ****      **** ****           ****   
 348 ****                                           ****      **** ****           ****   

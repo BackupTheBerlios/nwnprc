@@ -350,7 +350,7 @@ database:
 	@copy /Y "$(NWN_DATABASE)\PRC_DATA.FPT" $(OUTPATH)
 
 # Rule to update the merchant files
-updatemerchants:
+$(MISCPATH)\prc_scrolls.utm: $(2DAPATH)\des_crft_scroll.2da
 	@echo Updating merchant files
 	@$(PRCJAR) scrmrchgen $(2DAPATH)\des_crft_scroll.2da
 	@java -cp .\tools\modpacker\log4j.jar;.\tools\modpacker\meta-jb-util.jar;.\tools\modpacker\meta-jb-xml.jar;.\tools\modpacker\nwn-tools.jar org.progeeks.nwn.XmlToGff . prc_scrolls.utm.xml
@@ -484,7 +484,7 @@ $(TEXTURESHAK): $(GFX)
 
 
 # Rule to build the 2.0 misc HAK file.
-$(MISCHAK): updatemerchants $(OTHERS)
+$(MISCHAK): $(MISCPATH)\prc_scrolls.utm $(OTHERS)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(MISCPATH)\*.*

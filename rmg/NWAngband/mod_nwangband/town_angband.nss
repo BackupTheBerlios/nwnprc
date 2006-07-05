@@ -70,7 +70,7 @@ void main()
             if(nStage == STAGE_ENTRY)
             {
                 SetupTimeTokens();
-                SetHeader("It is "+GetTokenIDString(82001)+" on the "+GetTokenIDString(82002)+" of "+GetTokenIDString(82003)+" "+GetTokenIDString(82004)+" in the city of Angband.\nWhat do you want to do today?");
+                SetHeader("It is "+GetToken(82001)+" on the "+GetToken(82002)+" of "+GetToken(82003)+" "+GetTokenIDString(82004)+" in the city of Angband.\nWhat do you want to do today?");
                 AddChoice("Go to the portal",               1, oPC);
                 //can only go shopping 8am-8pm
                 if(GetTimeHour() >= 8 

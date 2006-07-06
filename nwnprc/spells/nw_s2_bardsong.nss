@@ -30,7 +30,7 @@ void main()
         return;
     }
     string sTag = GetTag(OBJECT_SELF);
-    
+
     //RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
 
     if (sTag == "x0_hen_dee" || sTag == "x2_hen_deekin")
@@ -54,16 +54,16 @@ void main()
 
 
     //Declare major variables
-    int nLevel = GetLevelByClass(CLASS_TYPE_BARD) + 
-                 GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE)/2 + 
+    int nLevel = GetLevelByClass(CLASS_TYPE_BARD) +
+                 GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE)/2 +
                  GetLevelByClass(CLASS_TYPE_DIRGESINGER);
-                 
+
     int nRanks = GetSkillRank(SKILL_PERFORM);
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nRanks+= 2;
     int nChr = GetAbilityModifier(ABILITY_CHARISMA);
     int nPerform = nRanks;
     int nDuration = 10; //+ nChr;
-    
+
 
     effect eAttack;
     effect eDamage;
@@ -397,7 +397,7 @@ void main()
 
     eHP = ExtraordinaryEffect(eHP);
     eLink = ExtraordinaryEffect(eLink);
-    
+
     int nRace;
 
     while(GetIsObjectValid(oTarget))
@@ -407,35 +407,35 @@ void main()
              {
                 RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
                 nRace = MyPRCGetRacialType(oTarget);
-                
+
                 // Undead and Constructs are immune to mind effecting abilities.
                 // A bard with requiem can effect undead
-                if ((nRace == RACIAL_TYPE_UNDEAD && GetHasFeat(FEAT_REQUIEM, OBJECT_SELF)) || nRace != RACIAL_TYPE_UNDEAD || nRace != RACIAL_TYPE_CONSTRUCT)
+                if ((nRace == RACIAL_TYPE_UNDEAD && GetHasFeat(FEAT_REQUIEM, OBJECT_SELF)) || (nRace != RACIAL_TYPE_UNDEAD && nRace != RACIAL_TYPE_CONSTRUCT))
                 {
-                	// Even with requiem, they have half duration
-                	if (nRace == RACIAL_TYPE_UNDEAD) nDuration /= 2;
-                	
-                	if(oTarget == OBJECT_SELF)
-                	{
-                	    effect eLinkBard = EffectLinkEffects(eLink, eVis);
-                	    eLinkBard = ExtraordinaryEffect(eLinkBard);
-                	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkBard, oTarget, RoundsToSeconds(nDuration));
-                	    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-                	    if (nHP > 0)
-                	    {
-                	        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
-                	    }
-                	}
-                	else if(GetIsFriend(oTarget))
-                	{
-                	    ApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
-                	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-                	    //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
-                	    if (nHP > 0)
-                	    {
-                	        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
-                	    }
-                	}
+                    // Even with requiem, they have half duration
+                    if (nRace == RACIAL_TYPE_UNDEAD) nDuration /= 2;
+
+                    if(oTarget == OBJECT_SELF)
+                    {
+                        effect eLinkBard = EffectLinkEffects(eLink, eVis);
+                        eLinkBard = ExtraordinaryEffect(eLinkBard);
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLinkBard, oTarget, RoundsToSeconds(nDuration));
+                        //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                        if (nHP > 0)
+                        {
+                            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
+                        }
+                    }
+                    else if(GetIsFriend(oTarget))
+                    {
+                        ApplyEffectToObject(DURATION_TYPE_INSTANT, eImpact, oTarget);
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+                        //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
+                        if (nHP > 0)
+                        {
+                            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, RoundsToSeconds(nDuration));
+                        }
+                    }
                 }
             }
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));

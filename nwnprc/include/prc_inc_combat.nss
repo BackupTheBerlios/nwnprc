@@ -1652,6 +1652,10 @@ int GetDefenderAC(object oDefender, object oAttacker, int bIsTouchAttack = FALSE
           if(!bIsHelpless && !bIsStunned)
                iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oDefender) );
 
+          // Remove AC from skin - only if it has not been removed already
+          if(!(bGetIsDeniedDexBonus || bIsHelpless))
+               iAC -= GetItemACValue( GetItemInSlot(INVENTORY_SLOT_CARMOUR, oDefender) );
+
           // Wilders get to add cha bonus to touch attacks only, but cannot exceed normal AC that way
           if(GetHasFeat(FEAT_WILDER_ELUDE_TOUCH, oDefender))
                iAC = min(iAC + GetAbilityModifier(ABILITY_CHARISMA, oDefender), nNormalAC);

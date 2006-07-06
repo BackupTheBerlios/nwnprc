@@ -33,9 +33,21 @@ can be recovered from the Lower Planes before the
 resurrection is cast.
 
 Author:    Tenjac
-Created:   
+Created:   7/6/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	
+	
+	

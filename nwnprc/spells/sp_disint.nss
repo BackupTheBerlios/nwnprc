@@ -71,16 +71,18 @@ void main()
 
         // Make the touch attack.
         int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
+
+        // Shoot the beam. Hit / miss animation
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
+                              EffectBeam(VFX_BEAM_DISINTEGRATE, oPC, BODY_NODE_HAND, !nTouchAttack),
+                              oTarget, 1.0, FALSE);
+
+        // If the beam hit, affect the target
         if (nTouchAttack > 0)
         {
             // Make SR check
             if (!SPResistSpell(oPC, oTarget))
             {
-                // Generate the RTA beam.
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                                      EffectBeam(VFX_BEAM_DISINTEGRATE, oPC, BODY_NODE_HAND, !nTouchAttack),
-                                      oTarget, 1.0);
-
                 // Fort save or die time, but we implement death by doing massive damage
                 // since disintegrate works on constructs, undead, etc.  At some point EffectDie()
                 // should be tested to see if it works on non-living targets, and if it does it should

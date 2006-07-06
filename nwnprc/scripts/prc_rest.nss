@@ -30,6 +30,18 @@ void PrcFeats(object oPC)
 
 void RestCancelled(object oPC)
 {
+    if(GetPRCSwitch(PRC_PNP_REST_HEALING))
+    {
+        int nHP = GetLocalInt(oPC, "PnP_Rest_InitialHP");
+        //cancelled, dont heal anything
+        //nHP += GetHitDice(oPC);
+        int nCurrentHP = GetCurrentHitPoints(oPC);
+        int nDamage = nCurrentHP-nHP;
+        //check its a positive number
+        if(nDamage > 0)
+            ApplyEffectToObject(DURATION_TYPE_INSTANT,
+                EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oPC);
+    }
     if(DEBUG) DoDebug("prc_rest: Rest cancelled for " + DebugObject2Str(oPC));
     DelayCommand(1.0,PrcFeats(oPC));
     // Execute scripts hooked to this event for the player triggering it

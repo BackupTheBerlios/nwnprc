@@ -52,35 +52,19 @@ void main()
         }       
     }
     
-    //default
-    if(nAttackCount == -1)
-    {
-        RestoreBaseAttackBonus(oPC);
-        DeleteLocalInt(oPC, "OverrideBaseAttackCount");
-        DeleteLocalInt(oPC, "OverflowBaseAttackCount");
-    }    
-    else
-    {
-        
-        if(nAttackCount > 5)
-        {       
-            nOverflowAttackCount += nAttackCount-5;
-            nAttackCount = 5;
-        }    
-        if(nOverflowAttackCount)    
-        {    
-            SetLocalInt(oPC, "OverflowBaseAttackCount", nOverflowAttackCount);
-        }
-        SetBaseAttackBonus(nAttackCount, oPC);
-        SetLocalInt(oPC, "OverrideBaseAttackCount", nAttackCount);
-    }
     
     //offhand calculations
+    int nOffhand = 0;
     if(GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC)))
     {
-        int nOffhand = 1;
+        nOffhand = 1;
         if(GetHasFeat(FEAT_PERFECT_TWO_WEAPON_FIGHTING, oPC))
-            nOffhand = nAttackCount+nOverflowAttackCount;
+        {
+            if(nAttackCount == -1)
+                nOffhand = nBAB;
+            else    
+                nOffhand = nAttackCount;
+        }    
         else if(GetHasFeat(FEAT_SUPREME_TWO_WEAPON_FIGHTING, oPC))
             nOffhand = 4;
         else if(GetHasFeat(FEAT_GREATER_TWO_WEAPON_FIGHTING, oPC))
@@ -112,4 +96,31 @@ void main()
         else 
             SetLocalInt(oPC, "OffhandOverflowAttackCount", nOffhand-2);
     }    
+    
+    //default
+    if(nAttackCount == -1)
+    {
+        RestoreBaseAttackBonus(oPC);
+        DeleteLocalInt(oPC, "OverrideBaseAttackCount");
+        DeleteLocalInt(oPC, "OverflowBaseAttackCount");
+    }    
+    if(nAttackCount != -1)
+    {
+        //apply the cap
+        //max is 12 attacks, 3 flurries of 4, for both on and off hands
+        //offhand can be 2 at most since th others are scripted anyway
+        int nCap = 12 - max(nOffhand,2);
+        if(nAttackCount > nCap)
+        {       
+            nOverflowAttackCount += nAttackCount-nCap;
+            nAttackCount = nCap;
+        }    
+        if(nOverflowAttackCount)    
+        {    
+            SetLocalInt(oPC, "OverflowBaseAttackCount", nOverflowAttackCount);
+        }
+        SetBaseAttackBonus(nAttackCount, oPC);
+        SetLocalInt(oPC, "OverrideBaseAttackCount", nAttackCount);
+    }
+    
 }

@@ -21,19 +21,83 @@ threads of magical energy for 1d6 rounds. An
 entangled creature takes a -2 penalty on attack 
 rolls and a -4 penalty to effective Dexterity; 
 the entangled target can move at half speed but
-can't run or charge. An entangled creature that 
-attempts to cast a spell must suc­ceed on a DC 15
-Concentration check or lose the spell. This spell
-affects only creatures-objects are unharmed.
+can't run or charge.
 
 Arcane Material Component: A bit of spider's web.
 
-
-
 Author:    Tenjac
-Created:   
+Created:   7/6/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	location lLoc = GetLocation(oPC);
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 6.10f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	float fDur;
+	int nMetaMagic = PRCGetMetaMagicFeat()
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDam;
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+		
+	while(GetIsObjectValid(oTarget))
+	{
+		//SR
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			//Should be non-lethal
+			nDam = d6(min(10, nCasterLvl));
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 6 * min(10, nCasterLvl);
+				fDur = RoundsToSeconds(6);
+			}
+			
+			if(nMetaMagic == METAMAGIC_EMPOWER)
+			{
+				nDam += (nDam/2);
+			}
+			
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+			
+			if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+			{
+				if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+				{
+					fDur = RoundsToSeconds(d6(1));
+					
+					if(nMetaMagic = METAMAGIC_EXTEND)
+					{
+						fDur += fDur;
+					}
+					
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectEntangle(), oTarget, fDur);
+				}
+			}
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 6.10f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
+	}
+	
+	SPGoodShift(oPC);
+	
+	SPSetSchool();
+}
+					
+					
+				
+		
+		
+		
+		
+		
+	
+	

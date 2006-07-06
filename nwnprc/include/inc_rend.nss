@@ -92,9 +92,10 @@ void DoRend(object oTarget, object oAttacker, object oWeapon)
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
 
         // Tell people what happened
-        FloatingTextStringOnCreature("*" + GetName(oAttacker) + " rends " + GetName(oTarget) + "*",
+        //                            * AttackerName rends TargetName *
+        FloatingTextStringOnCreature("* " + GetName(oAttacker) + " " + GetStringByStrRef(0x01000000 + 51197) + " " + GetName(oTarget) + " *",
                                      oAttacker,
-                                     FALSE);
+                                     TRUE);
 
         // Note the rend having happened in the locals
         SetLocalInt(oAttacker, REND_DONE, TRUE);

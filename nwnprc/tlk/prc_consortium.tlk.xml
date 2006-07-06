@@ -17733,6 +17733,12 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
   <entry id="51128" lang="en" sex="m"></entry>
   <entry id="51129" lang="en" sex="m"></entry>
 
+  <entry id="51197" lang="en" sex="m">rends</entry>
+  <entry id="51198" lang="en" sex="m">Two-Weapon Rend</entry>
+  <entry id="51199" lang="en" sex="m">Type of Feat: Epic
+Prerequisites: Dex 15, base attack bonus +9, Improved Two-Weapon Fighting, Two-Weapon Fighting.
+
+Specifics: If the character hits an opponent with a weapon in each hand in the same round, he or she may automatically rend the opponent. This deals additional damage equal to the base damage of the smaller weapon (if both weapons are of same size, the weapon in main hand is used) plus 1 1/2 times the character’s Strength modifier. Base weapon damage includes an enhancement bonus on damage, if any. The character can only rend once per round, regardless of how many successful attacks he or she makes.</entry>
   <entry id="51200" lang="en" sex="m">This conversation manages your augmentation profiles and augmentation quickselections.</entry>
   <entry id="51201" lang="en" sex="m">View / modify augmentation profiles</entry>
   <entry id="51202" lang="en" sex="m">View / modify quickselections</entry>

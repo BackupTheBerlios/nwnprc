@@ -268,6 +268,8 @@ const int FEAT_LEADERSHIP                              = 4365;
 const int FEAT_EPIC_LEADERSHIP                         = 4366;
 const int FEAT_LEGENDARY_COMMANDER                     = 4367;
 
+const int FEAT_TWO_WEAPON_REND                         = 3113;
+
 // Libris Mortis
 const int FEAT_REQUIEM                                 = 2455;
 

@@ -1,12 +1,12 @@
 /*
     prc_feats
-    
+
     This is the point all feat checks are routed through
     from EvalPRCFeats() in prc_inc_function.
-    
-    Done so that if anything applies custom feats as 
+
+    Done so that if anything applies custom feats as
     itemproperties (i.e. templates) the bonuses run
-    
+
     Otherwise, the if() checks before the feat is applied
 */
 
@@ -15,6 +15,7 @@
 void main()
 {
     object oPC = OBJECT_SELF;
+
     // Feats are checked here
     if(GetHasFeat(FEAT_SAC_VOW, oPC) >0)                         ExecuteScript("prc_vows", oPC);
     if(GetHasFeat(FEAT_LICHLOVED, oPC) >0)                       ExecuteScript("prc_lichloved", oPC);
@@ -70,5 +71,15 @@ void main()
 
     if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC))                  ExecuteScript("prc_spellf_eval", oPC);
     if(GetHasFeat(FEAT_ULTRAVISION, oPC))                        ExecuteScript("prc_ultravis", oPC);
+    if(GetHasFeat(FEAT_TWO_WEAPON_REND, oPC))                    ExecuteScript("prc_tw_rend", oPC);
 
+    // Feats that require OnHitCastSpell: Unique on armor
+    /* Commented out until needed
+    if(GetHasFeat(FEAT_, oPC)
+       )
+    {
+        AddEventScript(oPC, EVENT_ONPLAYEREQUIP,       "prc_keep_onhit_a", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_keep_onhit_a", TRUE, FALSE);
+    }
+    */
 }

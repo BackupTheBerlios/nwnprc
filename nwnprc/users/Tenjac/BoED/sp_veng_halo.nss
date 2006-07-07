@@ -25,13 +25,46 @@ reduce the damage by half. Once the vengeance halo
 unleashes its energy, it disappears and the spell 
 ends.
 
-Abstinence Component: You must ab­stain from alcohol 
+Abstinence Component: You must abstain from alcohol 
 for 1 week prior to casting this spell.
 
 Author:    Tenjac
-Created:   
+Created:   7/7/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = (60.0f * nCasterLvl);
+		
+	//VFX
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE), oTarget, fDur);
+	
+	DamageMonitor(oTarget);
+	
+	SPGoodShift(oPC);
+	SPSetSchool();
+}
+
+void DamageMonitor(object oTarget)
+{
+	if(GetIsDead(oTarget))
+	{
+		object oKiller = GetLastDamager()
+
+	
+	
+	
+	
+	
+	

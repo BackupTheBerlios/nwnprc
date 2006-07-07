@@ -45,9 +45,71 @@ Material Component: A pure crystal or clear
 gemstone worth at least 50 gp. 
 
 Author:    Tenjac
-Created:   
+Created:   7/7/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nConc = X2DoBreakConcentrationCheck(oPC);
+	
+	//Fire cast spell at event for the specified target
+	SignalEvent(oTarget, EventSpellCastAt(oPC, PRCGetSpellId()));
+	
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		if(PRCDoMeleeTouchAttack(oTarget));
+		{
+			if((GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL) && (PRCMyGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER))
+			{
+				TombLoop(oPC, oTarget, nConc);
+			}
+		}
+	}
+	
+	SPGoodShift(oPC);
+	SPSetSchool();
+}
+	
+
+void TombLoop(object oPC, object oTarget, int nConc)
+{
+	nConc = X2DoBreakConcentrationCheck(oPC);
+	
+	if(nConc == FALSE)
+	{
+		//Save
+		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_GOOD))
+		{
+			//Hold
+			effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_FREEZE_ANIMATION), EffectParalyze());
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.02f);
+			
+			//Ability Drain
+			ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d6(1), DURATION_TYPE_PERMANENT, TRUE, 0.0f);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
+			
+			
+			//Damage self
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(1)), oPC);
+			
+			DelayComand(6.0f, TombLoop(oPC, oTarget, nConc));
+		}
+	}
+}
+		
+		
+		
+		
+	
+	
+

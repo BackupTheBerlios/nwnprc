@@ -18,7 +18,7 @@ Reciting a list of the targets' evil deeds, you call
 down the judgment of the heavens upon their heads. 
 Creatures that fail their saving throw are struck 
 dead and bodily transported to the appropriate Lower
-Plane to suffer their eternal punishment. Creatures 
+Planes to suffer their eternal punishment. Creatures 
 that succeed nevertheless take 3d6 points of 
 temporary Wisdom damage as guilt for their misdeeds
 overwhelms their minds.
@@ -47,7 +47,65 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nToBeAffected = nCasterLvl / 2;
+	int nDC; 
+	location lLoc = GetSpellTargetLocation();
+	
+	//Must be Celestial
+	if((GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD) && (MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER))
+	{
+		object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+		
+		while GetIsObjectValid(oTarget)
+		{
+			if(nToBeAffected > 0)
+			{
+				int nType = MyPRCGetRacialType(oTarget);
+				
+				if(nType != RACIAL_TYPE_UNDEAD &&
+				   nType != RACIAL_TYPE_CONSTRUCT &&
+				   nType != RACIAL_TYPE_ELEMENTAL &&
+				   nType != RACIAL_TYPE_VERMIN    &&
+				   nType != RACIAL_TYPE_OOZE      &&
+				   nType != RACIAL_TYPE_ANIMAL    &&
+				   nType != RACIAL_TYPE_ABERRATION &&
+				   nType != RACIAL_TYPE_BEAST)
+				
+				{
+					if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+					{
+						//decrement the counter
+						nToBeAffected--;
+						
+						if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+						{
+							nDC = GetSpellSaveDC(oTarget, oPC);
+							
+							if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+							{
+								SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
+								
+								//Any module specific code for moving the body to another plane would go here
+							}
+							else
+							{
+								//made save, apply ability damage
+								ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d6(3), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+							}
+						}
+					}
+				}
+				oTarget = GetNextObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+			}
+		}
+	}
+	
+	SPGoodShift(oPC);
+	SPSetSchool();
+}
+								
+								
 	
 	
 	

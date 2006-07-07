@@ -350,11 +350,11 @@
 346 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
 347 ImpCrit_Mindblade                              3614      1    -1             0      
 348 WeaponSpecialization_Mindblade                 3617      1    -1             0      
-349 Epic_WeaponSpecialization_Mindblade            3619      1    -1             0    
-350 FEAT_EPIC_LEADERSHIP                           4366      1    -1             0
-351 FEAT_LEGENDARY_COMMANDER                       4367      1    -1             0   
-352 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0 
-353 ****                                           ****      **** ****           ****   
+349 Epic_WeaponSpecialization_Mindblade            3619      1    -1             0      
+350 FEAT_EPIC_LEADERSHIP                           4366      1    -1             0      
+351 FEAT_LEGENDARY_COMMANDER                       4367      1    -1             0      
+352 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0      
+353 Two-Weapon_Rend                                3113      1    -1             0      
 354 ****                                           ****      **** ****           ****   
 355 ****                                           ****      **** ****           ****   
 356 ###cls_feat_allBaseClasses_BEGIN###            ****      **** ****           ****   

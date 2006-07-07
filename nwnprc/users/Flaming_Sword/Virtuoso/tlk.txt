@@ -1,0 +1,112 @@
+  <entry id="51220" lang="en" sex="m">Virtuoso</entry>
+  <entry id="51221" lang="en" sex="m">Virtuosos</entry>
+  <entry id="51222" lang="en" sex="m">virtuoso</entry>
+  <entry id="51223" lang="en" sex="m">(PRESTIGE CLASS)
+The roar of the crowd, the praise of spectators after a great performance, the showers of gifts from attractive admirers - why would anyone trade all that for sleeping in the woods or poking around in smelly old dungeons? The virtuoso leaves creeping down dark corridors and matching wits against deadly traps to others. Her place is on the stage, surrounded by adoring fans. Fortunately for her, every place she goes becomes a stage, and as long as there's anyone around for her to impress, she's in the spotlight.
+
+The typical virtuoso is outgoing, charismatic, and gregarious. She loves to be around people and is quick to win friends with her charming manner. Some might call her a temperamental egomaniac, yet everyone feels a little better in her presence.
+
+Many virtuosos are musicians; others are accomplished dancers or actors. Still others choose to specialise in obscure and unusual forms of entertainment, such as stage magic or juggling.
+
+Since entertainers are often on the road, a virtuoso can travel wherever she likes, incorporating as much adventuring into her journeys as she wishes. Because of her talent for winning admirers, she usually remains above suspicion should anything underhanded occur in a place she is visiting on tour.
+
+Bards are most often drawn to this prestige class, although rogues, illusionists, and multiclass combinations of both can also excel in it. Bards tend to perform as musicians or actors, illusionists as stage magicians, and rogues as dancers, tumblers, or sleight-of-hand artists. Characters of most other classes are either not outgoing enough to enjoy being virtuosos, or they find other channels for their extrovertism.
+
+- Hit Die: d6.
+- Proficiencies: A virtuoso does not gain any additional weapon or armor proficiencies.
+- Skill Points: 4 + Int Modifier.
+
+REQUIREMENTS:
+
+Skills: Perform 10 ranks, Intimidate or Persuade 6 ranks.
+Spells: Able to cast 0-level arcane spells (cantrips).
+
+ABILITIES:
+
+Level
+1: Bardic Music (see below), Virtuoso performance (sustaining song)
+2:
+3: Virtuoso performance (calumny)
+4: Virtuoso performance (jarring song)
+5: Virtuoso performance (sharp note)
+6: Virtuoso performance (mindbending melody)
+7: Virtuoso performance (greater calumny)
+8: Virtuoso performance (magical melody)
+9: Virtuoso performance (song of fury)
+10: Virtuoso performance (revealing melody)
+
+SPELLS PER DAY/SPELLS KNOWN
+
+Since the virtuoso often uses magic to enhance her performances, it's important for her to maintain her magical studies. Thus, whenever she gains a new virtuoso level, she gains new spells per day and spells known as if she had also gained a level in a spellcasting class she belonged to before adding the prestige class. She does not, however, gain any other benefit a character of that class would have gained (metamagic or item creation feats, new familiar abilities, and so on). This means that she adds her new level of virtuoso to the level of some other spellcasting class she has, then determines spells per day, caster level, and spells known (if formerly a bard or sorcerer) accordingly.
+
+BARD SONG
+
+At 1st level, the virtuoso gains the Bard Song ability if she did not already have it from a previous class. A virtuoso's class level stacks with Bard when determining the power of her Bard Song.
+
+VIRTUOSO PERFORMANCE
+
+With an impassioned soliloquy or a haunting melody, the virtuoso can create magical effects beyond even the capabilities of Bard Song. Virtuoso performance can be used once per virtuoso level per day. If the virtuoso has bard levels, those stack with virtuoso levels to determine uses per day. Many virtuoso performance effects require more than one of the ability's allotted daily uses. Virtuoso Performance effects last 10 rounds unless otherwise specified.
+
+Sustaining Song: Stabilises unconcious allies
+Calumny: Makes others less friendly towards target [still not sure]
+Jarring Song: Inhibits spellcasting (forces concentration check, 3 uses)
+Sharp Note: Sharpens piercing and slashing weapons (adds keen property, 3 uses)
+Mindbending Melody: Dominates target (2 uses)
+Greater Calumny: Makes others hostile towards target [still not sure]
+Magical Melody: Increases caster level of allies by 1 (2 uses)
+Song of Fury: Enrages allies (3 uses)
+Revealing Melody: Gives True Seeing effect (2 uses per round)</entry>
+  <entry id="51224" lang="en" sex="m">Sustaining Song</entry>
+  <entry id="51225" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 1, Perform 11 ranks.
+Specifics: A 1st-level virtuoso with at least 11 ranks in Perform can sustain her unconcious allies, negating their need for stabilisation checks during her performance. Because they're not making stabilisation checks, the affected allies are neither stabilising nor losing hit points. Sustaining song is a supernatural ability.
+Use: Selected.</entry>
+  <entry id="51226" lang="en" sex="m">Calumny</entry>
+  <entry id="51227" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 3, Perform 13 ranks.
+Specifics: A 3rd-level virtuoso with at least 13 ranks in Perform has mastered the fine art of slander and can deliver a performance that makes a specific character appear in the worst light possible. Each member of the audience must make a Will save with a DC equal to the virtuoso's Perform check result. Success negates the calumny effect; failure shifts that individual's attitude toward the target by one category. Calumny is a supernatural, mind-affecting, language-dependent ability.
+Use: Selected.</entry>
+  <entry id="51228" lang="en" sex="m">Jarring Song</entry>
+  <entry id="51229" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 4, Perform 14 ranks.
+Specifics: A 4th-level virtuoso with at least 14 ranks in Perform can inhibit spellcasting. Anyone attempting to cast a spell during a jarring song must make a Concentration check (DC 15 + the spell level). Success allows the normal completion of the spell; failure means it is lost. A jarring song requires three daily uses of virtuoso performance and is a supernatural, sonic ability.
+Use: Selected.</entry>
+  <entry id="51230" lang="en" sex="m">Sharp Note</entry>
+  <entry id="51231" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 5, Perform 15 ranks.
+Specifics: A 5th-level virtuoso with at least 15 ranks in Perform can sharpen the blades of all piercing and slashing weapons within a 10-foot radius. The affected weapon function as if a 6th level sorcerer had cast a Keen Edge spell on them, except that the effect lasts only 10 minutes. Sharp note requires three daily uses of virtuoso performance and is a spell-like, transmutation ability.
+Use: Selected.</entry>
+  <entry id="51232" lang="en" sex="m">Mindbending Melody</entry>
+  <entry id="51233" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 6, Perform 16 ranks.
+Specifics: A 6th-level virtuoso with at least 16 ranks in Perform can dominate a humanoid. Thos ability functions exactly like a Dominate Person spell cast by a 9th-level sorcerer. The target can make a Will save (DC 15 + the virtuoso's Charisma modifier) to negate the effect. Mindbending melody requires two daily uses of virtuoso performance and is a spell-like, mind-affecting, language-dependent, charm ability.
+Use: Selected.</entry>
+  <entry id="51234" lang="en" sex="m">Greater Calumny</entry>
+  <entry id="51235" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 7, Perform 17 ranks.
+Specifics: A 7th-level virtuoso with at least 17 ranks in Perform can whip her audience into a frenzy of loathing. Greater Calumny functions exactly like Calumny, except that the audience's attitude is shifted two categories. Greater Calumny is a supernatural, mind-affecting, language-dependent ability.
+Use: Selected.</entry>
+  <entry id="51236" lang="en" sex="m">Magical Melody</entry>
+  <entry id="51237" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 8, Perform 18 ranks.
+Specifics: A 8th-level virtuoso with at least 18 ranks in Perform can empower allied spellcasters, raising their effective caster levels by +1 for the purposes of spell effects and spell resistance checks. This effect lasts as long as the performance does. Magical melody requires two daily uses of virtuoso performance per minute maintained. It is a supernatural ability.
+Use: Selected.</entry>
+  <entry id="51238" lang="en" sex="m">Song of Fury</entry>
+  <entry id="51239" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 9, Perform 19 ranks.
+Specifics: A 9th-level virtuoso with at least 19 ranks in Perform can enrage her allies. This ability functions exactly like barbarian rage on all willing allies within 20 feet, and lasts as long as the virtuoso continues her performance. Song of Fury requires three daily uses of virtuoso performance per round maintained and is a supernatural, mind-affecting ability.
+Use: Selected.</entry>
+  <entry id="51240" lang="en" sex="m">Revealing Melody</entry>
+  <entry id="51241" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Virtuoso Level 10, Perform 20 ranks.
+Specifics: A 10th-level virtuoso with at least 20 ranks in Perform can reveal all things as they actually are. All those who hear the Revealing Melody are affected as if by a True Seeing spell cast by a 17th-level sorcerer. The effect lasts as long as the song does. Revealing Melody requires two daily uses of virtuoso performance per round maintained and is a spell-like, divination ability.
+Use: Selected.</entry>
+  <entry id="51242" lang="en" sex="m">&lt;CUSTOM0&gt; sings Sustaining Song.</entry>
+  <entry id="51243" lang="en" sex="m">&lt;CUSTOM0&gt; sings Calumny.</entry>
+  <entry id="51244" lang="en" sex="m">&lt;CUSTOM0&gt; sings Jarring Song.</entry>
+  <entry id="51245" lang="en" sex="m">&lt;CUSTOM0&gt; sings Sharp Note.</entry>
+  <entry id="51246" lang="en" sex="m">&lt;CUSTOM0&gt; sings Mindbending Melody.</entry>
+  <entry id="51247" lang="en" sex="m">&lt;CUSTOM0&gt; sings Greater Calumny.</entry>
+  <entry id="51248" lang="en" sex="m">&lt;CUSTOM0&gt; sings Magical Melody.</entry>
+  <entry id="51249" lang="en" sex="m">&lt;CUSTOM0&gt; sings Song of Fury.</entry>
+  <entry id="51250" lang="en" sex="m">&lt;CUSTOM0&gt; sings Revealing Melody.</entry>

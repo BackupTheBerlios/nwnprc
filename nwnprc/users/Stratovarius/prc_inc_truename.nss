@@ -41,6 +41,13 @@ int GetUtteranceDC(object oTrueSpeaker = OBJECT_SELF);
  */
 int GetAbilityOfClass(int nClass);
 
+/**
+ * Gets the level of the utterance
+ *
+ * @return            The level of the utterance
+ */
+int GetUtteranceLevel(int nSpellId);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -88,4 +95,10 @@ int GetTruespeakingClass(object oTrueSpeaker)
 {
 	// Right now, this is the only class that speaks utterances
 	return CLASS_TYPE_TRUENAMER;
+}
+
+int GetUtteranceLevel(int nSpellId)
+{
+	// Return the Utterance level
+        return StringToInt(lookup_spell_innate(nSpellId));
 }

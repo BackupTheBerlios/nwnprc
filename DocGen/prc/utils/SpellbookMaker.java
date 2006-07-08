@@ -3,8 +3,7 @@ package prc.utils;
 import prc.autodoc.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 //for the spinner
 import static prc.Main.*;
@@ -133,10 +132,21 @@ public final class SpellbookMaker{
 							int metamagic = spells2da.getBiowareEntryAsInt("Metamagic", spellID);
 							if(metamagic == 0)
 								System.out.println("Check metamagic for spell " + spellID);
-	
-							//need to handle subradials here too
-							//subradials are handled within addNewSpellbookData()
-	
+							/*
+							// Hack - Determine how radial masters there might be: 1 + metamagics
+							int nMasterCount = 1 + Integer.bitCount(metamagic);
+							List<Integer> preReservedClassSpell2daRows = new ArrayList<Integer>();
+							// Reserve a number of cls_spell_ rows for the main entries.
+							for(int i = 0; i < nMasterCount; i++) {
+								// If needed, add rows to the file to prevent errors in addNewSpellbookData
+								if(classSpellRow >= classSpell2da.getEntryCount()){
+										classSpell2da.appendRow();
+								}
+								preReservedClassSpell2daRows.add(classSpellRow++);
+							}*/
+							// Generate an iterator for it
+							Iterator<Integer> preReservedClassSpell2daRowIterator = null;//preReservedClassSpell2daRows.iterator();
+							
 							//now loop over the metamagic varients
 							//-1 represents no metamagic
 							for(int metamagicNo = -1; metamagicNo < 6; metamagicNo++){
@@ -213,12 +223,14 @@ public final class SpellbookMaker{
 															spellNameMetamagic,
 															classLabel,
 															spellLabelMetamagic,
+															preReservedClassSpell2daRowIterator,
 															0);
 									}//end of level check
 								}//end of metamamgic check
 							}//end of metamagic loop
-						}
+						}// end if - The cls_spcr row contains an entry
 					}//end of cls_spells_*_core.2da loop
+					
 					//save the new cls_spell_*.2da file
 					classSpell2da.save2da("2das", true, true);
 					classFeat2da.save2da("2das", true, true);
@@ -245,7 +257,17 @@ public final class SpellbookMaker{
 											String spellNameMetamagic,
 											String classLabel,
 											String spellLabelMetamagic,
+											Iterator<Integer> preReservedClassSpell2daRows,
 											int subradialMaster){
+		// Hack - If not a subradial, use prereserved cls_spell row
+		int localClassSpellRow;
+		/*if(subradialMaster == 0) {
+			localClassSpellRow = preReservedClassSpell2daRows.next();
+		} else */{
+			// Grab the current value of classSpellRow for use and then increment it
+			localClassSpellRow = classSpellRow++;
+		}
+		
 		//get the name of the spell
 		String spellName = getCheckedTlkEntry(spells2da.getBiowareEntryAsInt("Name", spellID));
 		//get the label of the spell
@@ -367,35 +389,35 @@ public final class SpellbookMaker{
 		}
 
 		//add a cls_spell_*.2da line if needed
-		if(classSpellRow >= classSpell2da.getEntryCount()){
-				classSpell2da.appendRow();
+		if(localClassSpellRow >= classSpell2da.getEntryCount()){
+			classSpell2da.appendRow();
 		}
 		//set its label
-		classSpell2da.setEntry("Label", classSpellRow, label);
+		classSpell2da.setEntry("Label", localClassSpellRow, label);
 		//make it point to the new spells.2da
-		classSpell2da.setEntry("SpellID", classSpellRow, Integer.toString(spells2daRow));
+		classSpell2da.setEntry("SpellID", localClassSpellRow, Integer.toString(spells2daRow));
 		//make it point to the old spells.2da
-		classSpell2da.setEntry("RealSpellID", classSpellRow, Integer.toString(spellID));
+		classSpell2da.setEntry("RealSpellID", localClassSpellRow, Integer.toString(spellID));
 		
 		//if its a subradial, dont do this
 		if(subradialMaster == 0){
 			//make it point to the new feat.2da
-			classSpell2da.setEntry("FeatID", classSpellRow, Integer.toString(feat2daRow));
+			classSpell2da.setEntry("FeatID", localClassSpellRow, Integer.toString(feat2daRow));
 			//make it point to the new iprp_feats.2da
-			classSpell2da.setEntry("IPFeatID", classSpellRow, Integer.toString(iprp_feats2daRow));
+			classSpell2da.setEntry("IPFeatID", localClassSpellRow, Integer.toString(iprp_feats2daRow));
 			//add the metamagic checks
-			classSpell2da.setEntry("ReqFeat", classSpellRow, metamagicFeat);
+			classSpell2da.setEntry("ReqFeat", localClassSpellRow, metamagicFeat);
 			//set its level
-			classSpell2da.setEntry("Level", classSpellRow, Integer.toString(metamagicLevel+spellLevel));
+			classSpell2da.setEntry("Level", localClassSpellRow, Integer.toString(metamagicLevel+spellLevel));
 		} else {
 			//make it point to the new feat.2da
-			classSpell2da.setEntry("FeatID", classSpellRow, "****");
+			classSpell2da.setEntry("FeatID", localClassSpellRow, "****");
 			//make it point to the new iprp_feats.2da
-			classSpell2da.setEntry("IPFeatID", classSpellRow, "****");
+			classSpell2da.setEntry("IPFeatID", localClassSpellRow, "****");
 			//add the metamagic checks
-			classSpell2da.setEntry("ReqFeat", classSpellRow, "****");
+			classSpell2da.setEntry("ReqFeat", localClassSpellRow, "****");
 			//set its level
-			classSpell2da.setEntry("Level", classSpellRow, "****");
+			classSpell2da.setEntry("Level", localClassSpellRow, "****");
 		}
 
 		//cls_feat_*.2da
@@ -420,7 +442,6 @@ public final class SpellbookMaker{
 			// increase the subradial id ready for next one
 			subradialID++;
 		}
-		classSpellRow++;
 
 		//add subradial spells
 		if(subradialMaster == 0){
@@ -441,6 +462,7 @@ public final class SpellbookMaker{
 										spellNameMetamagic,
 										classLabel,
 										spellLabelMetamagic,
+										preReservedClassSpell2daRows,
 										masterSpellID);
 					//update the master rows with the subradial spell rows
 					//the -1 is because you want the last used row, not the current blank row

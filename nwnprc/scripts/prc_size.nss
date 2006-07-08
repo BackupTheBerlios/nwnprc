@@ -4,7 +4,21 @@ void main()
 {
     object oPC = OBJECT_SELF;
     int nBiowareSize = GetCreatureSize(oPC);
-    int nPRCSize = PRCGetCreatureSize(oPC, TRUE); //only include things that change ability scores
+    //CEP adds other sizes, take them into account too
+    if(nBiowareSize == 20)
+        nBiowareSize = CREATURE_SIZE_DIMINUTIVE;
+    else if(nBiowareSize == 21)
+        nBiowareSize = CREATURE_SIZE_FINE;
+    else if(nBiowareSize == 22)
+        nBiowareSize = CREATURE_SIZE_GARGANTUAN;
+    else if(nBiowareSize == 23)
+        nBiowareSize = CREATURE_SIZE_COLOSSAL;
+    int nPRCSize = PRCGetCreatureSize(oPC);              //things that dont change ability scores
+    int nPRCSizeAbility = PRCGetCreatureSize(oPC, TRUE); //things that change ability scores
+    //no size difference, abort
+    if(nBiowareSize == nPRCSize
+        && nBiowareSize == nPRCSizeAbility)
+        return;
     //change counters
     int nStr;
     int nDex;
@@ -13,11 +27,8 @@ void main()
     int nACDodge;
     int nAB;
     int nHide;
-    //no size difference, abort
-    if(nBiowareSize == nPRCSize)
-        return;
     //increase
-    else if(nPRCSize > nBiowareSize)
+    if(nPRCSize > nBiowareSize)
     {
         //smallest bioware size is tiny
         //these track if that change should be applied or not
@@ -45,9 +56,6 @@ void main()
         //each size category is cumulative
         if(nTinyToSmall)
         {
-            nStr        +=  4;
-            nDex        += -2;
-            nCon        +=  0;
             nACNatural  +=  0;
             nACDodge    += -1;
             nAB         += -1;
@@ -55,9 +63,6 @@ void main()
         }
         if(nSmallToMedium)
         {
-            nStr        +=  2;
-            nDex        += -2;
-            nCon        +=  2;
             nACNatural  +=  0;
             nACDodge    += -1;
             nAB         += -1;
@@ -65,9 +70,6 @@ void main()
         }
         if(nMediumToLarge)
         {
-            nStr        +=  8;
-            nDex        += -2;
-            nCon        +=  4;
             nACNatural  +=  2;
             nACDodge    += -1;
             nAB         += -1;
@@ -75,9 +77,6 @@ void main()
         }
         if(nLargeToHuge)
         {
-            nStr        +=  8;
-            nDex        += -2;
-            nCon        +=  4;
             nACNatural  +=  3;
             nACDodge    += -1;
             nAB         += -1;
@@ -85,9 +84,6 @@ void main()
         }
         if(nHugeToGargantuan)
         {
-            nStr        +=  8;
-            nDex        +=  0;
-            nCon        +=  4;
             nACNatural  +=  4;
             nACDodge    += -2;
             nAB         += -2;
@@ -95,9 +91,6 @@ void main()
         }
         if(nGargantuanToColossal)
         {
-            nStr        +=  8;
-            nDex        +=  0;
-            nCon        +=  4;
             nACNatural  +=  5;
             nACDodge    += -4;
             nAB         += -4;
@@ -133,9 +126,6 @@ void main()
         //each size category is cumulative
         if(nDiminuativeToFine)
         {
-            nStr        +=  0;
-            nDex        +=  2;
-            nCon        +=  0;
             nACNatural  +=  0;
             nACDodge    +=  4;
             nAB         +=  4;
@@ -143,9 +133,6 @@ void main()
         }
         if(nTinyToDiminuative)
         {
-            nStr        += -2;
-            nDex        +=  2;
-            nCon        +=  0;
             nACNatural  +=  0;
             nACDodge    +=  2;
             nAB         +=  2;
@@ -153,9 +140,6 @@ void main()
         }
         if(nSmallToTiny)
         {
-            nStr        += -4;
-            nDex        +=  2;
-            nCon        +=  0;
             nACNatural  +=  0;
             nACDodge    +=  1;
             nAB         +=  1;
@@ -163,9 +147,6 @@ void main()
         }
         if(nMediumToSmall)
         {
-            nStr        += -4;
-            nDex        +=  2;
-            nCon        += -2;
             nACNatural  +=  0;
             nACDodge    +=  1;
             nAB         +=  1;
@@ -173,9 +154,6 @@ void main()
         }
         if(nLargeToMedium)
         {
-            nStr        += -8;
-            nDex        +=  2;
-            nCon        += -4;
             nACNatural  += -2;
             nACDodge    +=  1;
             nAB         +=  1;
@@ -183,13 +161,138 @@ void main()
         }
         if(nHugeToLarge)
         {
-            nStr        += -8;
-            nDex        +=  2;
-            nCon        += -4;
             nACNatural  += -3;
             nACDodge    +=  1;
             nAB         +=  1;
             nHide       +=  4;
+        }    
+    }   
+    //increase
+    if(nPRCSizeAbility > nBiowareSize)
+    {
+        //smallest bioware size is tiny
+        //these track if that change should be applied or not
+        int nTinyToSmall;
+        int nSmallToMedium;
+        int nMediumToLarge;
+        int nLargeToHuge;
+        int nHugeToGargantuan;
+        int nGargantuanToColossal;
+        
+        if(nPRCSizeAbility >= CREATURE_SIZE_SMALL          && nBiowareSize <= CREATURE_SIZE_TINY)
+            nTinyToSmall = TRUE;    
+        if(nPRCSizeAbility >= CREATURE_SIZE_MEDIUM         && nBiowareSize <= CREATURE_SIZE_SMALL)
+            nSmallToMedium = TRUE;  
+        if(nPRCSizeAbility >= CREATURE_SIZE_LARGE          && nBiowareSize <= CREATURE_SIZE_MEDIUM)
+            nMediumToLarge = TRUE;   
+        if(nPRCSizeAbility >= CREATURE_SIZE_HUGE           && nBiowareSize <= CREATURE_SIZE_LARGE)
+            nLargeToHuge = TRUE;   
+        if(nPRCSizeAbility >= CREATURE_SIZE_GARGANTUAN     && nBiowareSize <= CREATURE_SIZE_HUGE)
+            nHugeToGargantuan = TRUE;   
+        if(nPRCSizeAbility >= CREATURE_SIZE_COLOSSAL       && nBiowareSize <= CREATURE_SIZE_COLOSSAL)
+            nGargantuanToColossal = TRUE; 
+        
+        //add in the bonuses
+        //each size category is cumulative
+        if(nTinyToSmall)
+        {
+            nStr        +=  4;
+            nDex        += -2;
+            nCon        +=  0;
+        }
+        if(nSmallToMedium)
+        {
+            nStr        +=  2;
+            nDex        += -2;
+            nCon        +=  2;
+        }
+        if(nMediumToLarge)
+        {
+            nStr        +=  8;
+            nDex        += -2;
+            nCon        +=  4;
+        }
+        if(nLargeToHuge)
+        {
+            nStr        +=  8;
+            nDex        += -2;
+            nCon        +=  4;
+        }
+        if(nHugeToGargantuan)
+        {
+            nStr        +=  8;
+            nDex        +=  0;
+            nCon        +=  4;
+        }
+        if(nGargantuanToColossal)
+        {
+            nStr        +=  8;
+            nDex        +=  0;
+            nCon        +=  4;
+        }
+    }
+    //decrease
+    else if(nPRCSizeAbility < nBiowareSize)
+    {
+        //largest bioware size is huge
+        //these track if that change should be applied or not
+        int nDiminuativeToFine;
+        int nTinyToDiminuative;
+        int nSmallToTiny;
+        int nMediumToSmall;
+        int nLargeToMedium;
+        int nHugeToLarge;
+        
+        if(nPRCSizeAbility <= CREATURE_SIZE_FINE           && nBiowareSize >= CREATURE_SIZE_DIMINUTIVE)
+            nDiminuativeToFine = TRUE;    
+        if(nPRCSizeAbility >= CREATURE_SIZE_DIMINUTIVE    && nBiowareSize <= CREATURE_SIZE_TINY)
+            nTinyToDiminuative = TRUE;  
+        if(nPRCSizeAbility >= CREATURE_SIZE_TINY           && nBiowareSize <= CREATURE_SIZE_SMALL)
+            nSmallToTiny = TRUE;   
+        if(nPRCSizeAbility >= CREATURE_SIZE_SMALL          && nBiowareSize <= CREATURE_SIZE_MEDIUM)
+            nMediumToSmall = TRUE;   
+        if(nPRCSizeAbility >= CREATURE_SIZE_MEDIUM         && nBiowareSize <= CREATURE_SIZE_LARGE)
+            nLargeToMedium = TRUE;   
+        if(nPRCSizeAbility >= CREATURE_SIZE_LARGE          && nBiowareSize <= CREATURE_SIZE_HUGE)
+            nHugeToLarge = TRUE; 
+        
+        //add in the bonuses
+        //each size category is cumulative
+        if(nDiminuativeToFine)
+        {
+            nStr        +=  0;
+            nDex        +=  2;
+            nCon        +=  0;
+        }
+        if(nTinyToDiminuative)
+        {
+            nStr        += -2;
+            nDex        +=  2;
+            nCon        +=  0;
+        }
+        if(nSmallToTiny)
+        {
+            nStr        += -4;
+            nDex        +=  2;
+            nCon        +=  0;
+        }
+        if(nMediumToSmall)
+        {
+            nStr        += -4;
+            nDex        +=  2;
+            nCon        += -2;
+        }
+        if(nLargeToMedium)
+        {
+            nStr        += -8;
+            nDex        +=  2;
+            nCon        += -4;
+        }
+        if(nHugeToLarge)
+        {
+            nStr        += -8;
+            nDex        +=  2;
+            nCon        += -4;
         }    
     }       
         

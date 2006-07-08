@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "nw_i0_spells"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
@@ -24,11 +25,11 @@ void BrawlerDamageReduction(object oCreature)
     object oSkin = GetPCSkin(oCreature);
 
     if (GetHasFeat(FEAT_BRAWLER_DAMAGE_REDUCTION_3, oCreature) && !GetHasFeat(FEAT_EPIC_DAMAGE_REDUCTION_3))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_3),oSkin);
+        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_3),oSkin);
     if (GetHasFeat(FEAT_BRAWLER_DAMAGE_REDUCTION_6, oCreature) && !GetHasFeat(FEAT_EPIC_DAMAGE_REDUCTION_6))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_6),oSkin);
+        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_6),oSkin);
     if (GetHasFeat(FEAT_BRAWLER_DAMAGE_REDUCTION_9, oCreature) && !GetHasFeat(FEAT_EPIC_DAMAGE_REDUCTION_9))
-        AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_9),oSkin);
+        AddItemProperty(DURATION_TYPE_PERMANENT,PRCItemPropertyBonusFeat(IP_CONST_FEAT_EPIC_DR_9),oSkin);
 }
 
 void BrawlerBlocking(object oCreature)

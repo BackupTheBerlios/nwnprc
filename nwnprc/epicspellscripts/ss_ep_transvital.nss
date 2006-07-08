@@ -7,6 +7,7 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 13, 2004
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "inc_epicspells"

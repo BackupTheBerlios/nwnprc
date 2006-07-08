@@ -13,11 +13,10 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 11, 2004
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "nw_i0_spells"
 #include "inc_epicspells"
 #include "inc_dispel"
-//#include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "inc_utility"
 #include "inc_timestop"

@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "NW_I0_SPELLS"
 #include "inc_utility"
 

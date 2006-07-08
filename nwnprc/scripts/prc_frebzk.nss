@@ -8,7 +8,7 @@
 //:: Created By: Oni5115
 //:: Created On: Feb 26, 2004
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "nw_i0_spells"
 
 #include "inc_utility"

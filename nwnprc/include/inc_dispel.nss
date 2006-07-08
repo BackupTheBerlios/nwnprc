@@ -626,6 +626,9 @@ void HandleInfestationOfMaggots(object oTarget)
 void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, float fDuration = 0.0f,
     int bDispellable = TRUE, int nSpellID = -1, int nCasterLevel = -1, object oCaster = OBJECT_SELF)
 {
+    //if it was cast from the new spellbook, remove previous effects
+    if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
+        GZRemoveSpellEffects(nSpellID, oTarget);
 
     // Extraordinary/Supernatural effects are not supposed to be dispellable.
     if (GetEffectSubType(eEffect) == SUBTYPE_EXTRAORDINARY
@@ -633,6 +636,9 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
     {
         bDispellable = FALSE;
     }
+        //if it was cast from the new spellbook, remove previous effects
+        if(GetLocalInt(OBJECT_SELF, "UsingActionCastSpell"))
+            GZRemoveSpellEffects(nSpellID, oTarget);
 
     // Instant duration effects can use BioWare code, the PRC code doesn't care about those
     if (DURATION_TYPE_INSTANT == nDurationType)

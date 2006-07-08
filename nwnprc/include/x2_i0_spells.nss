@@ -61,6 +61,7 @@ void CheckAndApplyTerrifyingRage(int nRounds);
 void DoMindBlast(int nDC, int nDuration, float fRange);
 
 
+void GZRemoveSpellEffects(int nID,object oTarget, int bMagicalEffectsOnly = TRUE);
 int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaster);
 
 //#include "x2_inc_itemprop"

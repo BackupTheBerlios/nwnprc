@@ -202,7 +202,7 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
         ActionDoCommand(SetLocalObject(OBJECT_SELF, PRC_SPELL_TARGET_OBJECT_OVERRIDE, oTarget));
     }
     SetLocalInt(OBJECT_SELF, "UsingActionCastSpell", TRUE);
-    DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
+    DelayCommand(2.0, DeleteLocalInt(OBJECT_SELF, "UsingActionCastSpell"));
 
     //cast the spell
     if (GetIsObjectValid(oOverrideTarget))
@@ -308,6 +308,16 @@ effect EffectShaken()
 int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nAbilityAdjust = FALSE)
 {
     int nSize = GetCreatureSize(oObject);
+    //CEP adds other sizes, take them into account too
+    if(nSize == 20)
+        nSize = CREATURE_SIZE_DIMINUTIVE;
+    else if(nSize == 21)
+        nSize = CREATURE_SIZE_FINE;
+    else if(nSize == 22)
+        nSize = CREATURE_SIZE_GARGANTUAN;
+    else if(nSize == 23)
+        nSize = CREATURE_SIZE_COLOSSAL;
+    
     if(GetHasFeat(FEAT_SIZE_DECREASE_6, oObject))
         nSize += -6;
     else if(GetHasFeat(FEAT_SIZE_DECREASE_5, oObject))

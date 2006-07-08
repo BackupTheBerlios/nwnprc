@@ -11,6 +11,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: May 9, 2001
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 #include "NW_I0_SPELLS"
 
 void main()

@@ -27,6 +27,7 @@ const int STAGE_IMPROVE_PARAM1      = 4;
 const int STAGE_IMPROVE_VALUE       = 5;
 const int STAGE_IMPROVE_ADD         = 6;
 
+const int ERROR_CODE_5_FIX =1;
 
 const int CHOICE_RETURN_TO_PREVIOUS = 0xFFFFFFFF;
 

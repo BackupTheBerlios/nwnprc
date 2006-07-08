@@ -15,6 +15,7 @@
 
 // Modified 2004/01/30 (Brian Greinke)
 // Added disable/reenable support
+#include "prc_alterations"
 #include "nw_i0_spells"
 
 void main()

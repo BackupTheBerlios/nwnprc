@@ -9,6 +9,7 @@
 //:: Created On: June 28, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "inc_utility"
 #include "nw_i0_spells"
 #include "prc_inc_unarmed"
@@ -102,8 +103,8 @@ void main()
     // This checks to make sure he doesnt have a non-light weapon equipped for Martial Flurry Light
     else if(StringToInt(Get2DACache("baseitems", "WeaponSize", iBaseL)) > 2 || StringToInt(Get2DACache("baseitems", "WeaponSize", iBaseR)) > 2)
     {
-    	RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-    	FloatingTextStringOnCreature("*Martial Flurry Light Disabled Due to Equipped Weapons*", oPC);
+        RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+        FloatingTextStringOnCreature("*Martial Flurry Light Disabled Due to Equipped Weapons*", oPC);
     }
     else
     {

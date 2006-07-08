@@ -8,7 +8,7 @@
 //:: Created By: Oni5115
 //:: Created On: Aug 23, 2004
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "nw_i0_spells"
 
 void main()
@@ -20,15 +20,15 @@ void main()
      {
             if (GetLevelByClass(CLASS_TYPE_SHOU, oPC) == 5)
             {
-          	RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-          	RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
+            RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+            RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
                 ActionCastSpellOnSelf(SPELL_MARTIAL_FLURRY_ALL);
                 nMes = "*Martial Flurry All Activated*";
             }
             else if (GetLevelByClass(CLASS_TYPE_SHOU, oPC) >= 3  && GetLevelByClass(CLASS_TYPE_SHOU, oPC) < 5)
             {
-            	RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
-          	RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
+                RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_LIGHT);
+            RemoveEffectsFromSpell(oPC, SPELL_MARTIAL_FLURRY_ALL);
                 ActionCastSpellOnSelf(SPELL_MARTIAL_FLURRY_LIGHT);
                 nMes = "*Martial Flurry Light Activated*";
             }

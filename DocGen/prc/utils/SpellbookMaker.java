@@ -80,6 +80,7 @@ public final class SpellbookMaker{
 					File classSpell2daFile = new File("2das" + File.separator + "cls_spell_" + classfilename + ".2da");
 					if(!classSpell2daFile.exists())
 					{
+						System.out.println("File " + classSpell2daFile.getPath() + " did not exist, creating");
 						classSpell2da = new Data_2da("cls_spell_" + classfilename, "");
 						classSpell2da.addColumn("Label");
 						classSpell2da.addColumn("Level");

@@ -8301,11 +8301,11 @@ Power Resistance: No
 Power Points: 1
 Metapsionics: Extend
 
-You call a weapon ?from thin air? into your waiting hand (actually, it is a real weapon hailing from another location in space and time). You don?t have to see or know of a weapon to call it-in fact, you can?t call a specific weapon; you just specify the kind. If you call a projectile weapon, it comes with 3d6 bolts, arrows, or sling bullets, as appropriate. The weapon is made of ordinary materials as appropriate for its kind.
+You call a weapon "from thin air" into your waiting hand (actually, it is a real weapon hailing from another location in space and time). You don't have to see or know of a weapon to call it-in fact, you can't call a specific weapon; you just specify the kind. If you call a projectile weapon, it comes with 3d6 bolts, arrows, or sling bullets, as appropriate. The weapon is made of ordinary materials as appropriate for its kind.
 
 Weapons gained by call weaponry are distinctive due to their astral glimmer. They are considered magic weapons and thus are effective against damage reduction that requires a magic weapon to overcome.
 
-Augment: For every 4 additional power points you spend, this power improves the weapon?s enhancement bonus on attack rolls and damage rolls by 1.</entry>
+Augment: For every 4 additional power points you spend, this power improves the weapon's enhancement bonus on attack rolls and damage rolls by 1.</entry>
   <entry id="46896" lang="en" sex="m">Claw of Energy</entry>
   <entry id="46897" lang="en" sex="m">Psychokinesis [see text]
 Level: Psychic warrior 4
@@ -8320,7 +8320,7 @@ If you have a claw attack (either from an actual natural weapon or from an effec
 
 If this power is manifested on a claw attack already benefiting from the effect of the power, the newer manifestation supersedes the older manifestation, even if both manifestations are of different energy types.
 
-This power?s subtype is the same as the type of energy infused in the natural weapon.</entry>
+This power's subtype is the same as the type of energy infused in the natural weapon.</entry>
   <entry id="46898" lang="en" sex="m">Claw of Fire</entry>
   <entry id="46899" lang="en" sex="m">Claw of Cold</entry>
   <entry id="46900" lang="en" sex="m">Claw of Electricity</entry>
@@ -8347,13 +8347,13 @@ Duration: 1 round/level
 Power Points: 1
 Metapsionics: Extend
 
-This power causes instant diminution, halving your height, length, and width and dividing your weight by 8. This decrease changes your size category to the next smaller one. You gain a +2 size bonus to Dexterity, a -2 size penalty to Strength (to a minimum effective Strength score of 1), a +1 size bonus on attack rolls, and a +1 size bonus to Armor Class due to your reduced size. This power doesn?t change your speed.
+This power causes instant diminution, halving your height, length, and width and dividing your weight by 8. This decrease changes your size category to the next smaller one. You gain a +2 size bonus to Dexterity, a -2 size penalty to Strength (to a minimum effective Strength score of 1), a +1 size bonus on attack rolls, and a +1 size bonus to Armor Class due to your reduced size. This power doesn't change your speed.
 
-Multiple effects that reduce size do not stack, which means (among other things) that you can?t use a second manifestation of this power to further reduce yourself.
+Multiple effects that reduce size do not stack, which means (among other things) that you can't use a second manifestation of this power to further reduce yourself.
 
 Augment: You can augment this power in one or more of the following ways.
 1. If you spend 6 additional power points, this power decreases your size by two size categories. You gain a +4 size bonus to Dexterity, a -4 size penalty to Strength (to a minimum effective Strength score of 1), a +2 size bonus on attack rolls, and a +2 size bonus to Armor Class due to your reduced size.
-2. If you spend 2 additional power points, this power?s duration is 1 minute per level rather than 1 round per level.</entry>
+2. If you spend 2 additional power points, this power's duration is 1 minute per level rather than 1 round per level.</entry>
   <entry id="46905" lang="en" sex="m">Control Object</entry>
   <entry id="46906" lang="en" sex="m">Psychokinesis
 Level: Kineticist 1
@@ -8366,7 +8366,7 @@ Power Resistance: No
 Power Points: 1
 Metapsionics: Extend
 
-You telekinetically ?bring to life? an inanimate object. Though it is not actually alive, the object moves under your control. If it is a weapon, it deals the weapons damage plus your Intelligence modifier, otherwise it deals 1d6 plus your intelligence modifier. This power only works on weapons and armour.</entry>
+You telekinetically "bring to life" an inanimate object. Though it is not actually alive, the object moves under your control. If it is a weapon, it deals the weapons damage plus your Intelligence modifier, otherwise it deals 1d6 plus your intelligence modifier. This power only works on weapons and armour.</entry>
   <entry id="46907" lang="en" sex="m">Dispelling Buffer</entry>
   <entry id="46908" lang="en" sex="m">Psychokinesis
 Level: Kineticist 6, psychic warrior 6
@@ -8405,13 +8405,13 @@ Metapsionics: Extend
 
 This power causes instant growth, doubling your height, length, and width and multiplying your weight by 8. This increase changes your size category to the next larger one. You gain a +2 size bonus to Strength, a -2 size penalty to Dexterity (to a minimum effective Dexterity score of 1), a -1 size penalty on attack rolls, and a -1 size penalty to Armor Class due to your increased size.
 
-This power doesn?t change your speed.
+This power doesn't change your speed.
 
-Multiple effects that increase size do not stack, which means (among other things) that you can?t use a second manifestation of this power to further expand yourself.
+Multiple effects that increase size do not stack, which means (among other things) that you can't use a second manifestation of this power to further expand yourself.
 
 Augment: You can augment this power in one or more of the following ways.
 1. If you spend 6 additional power points, this power increases your size by two size categories instead of one. You gain a +4 size bonus to Strength, a -4 size penalty to Dexterity (to a minimum effective Dexterity score of 1), a -2 size penalty on attack rolls, and a -2 size penalty to Armor Class due to your increased size.
-2. If you spend 2 additional power points, this power?s duration is 10 minutes per level rather than 1 round per level.</entry>
+2. If you spend 2 additional power points, this power's duration is 10 minutes per level rather than 1 round per level.</entry>
   <entry id="46913" lang="en" sex="m">Form of Doom</entry>
   <entry id="46914" lang="en" sex="m">Psychometabolism
 Level: Psychic warrior 6
@@ -8430,9 +8430,9 @@ Your horrific form grants you a natural armor bonus of +5, damage reduction 5/-,
 
 A nest of violently flailing black tentacles sprout from your hair and back. You can make up to four additional attacks with these tentacles in addition to your regular melee attacks. You can make tentacle attacks within the space you normally threaten. Each tentacle attacks at your highest base attack bonus with a -5 penalty. These tentacles deal 2d8 points of damage plus one-half your Strength bonus on each successful strike.
 
-This power functions only while you inhabit your base form (for instance, you can?t be metamorphed or polymorphed into another form, though you can use, claws of the beast, and bite of the wolf in conjunction with this power for your regular attacks), and while your mind resides within your own body.
+This power functions only while you inhabit your base form (for instance, you can't be metamorphed or polymorphed into another form, though you can use, claws of the beast, and bite of the wolf in conjunction with this power for your regular attacks), and while your mind resides within your own body.
 
-Augment: For every additional power point you spend, this power?s duration increases by 2 rounds.</entry>
+Augment: For every additional power point you spend, this power's duration increases by 2 rounds.</entry>
   <entry id="46915" lang="en" sex="m">Immovability</entry>
   <entry id="46916" lang="en" sex="m">Psychometabolism
 Level: Psychic warrior 4
@@ -8443,7 +8443,7 @@ Duration: Concentration
 Power Points: 7
 Metapsionics: None
 
-You are almost impossible to move. Your weight does not vary; instead, you mentally attach yourself to the underlying fabric of the plane. You gain a +20 bonus on Discipline skill checks. You can?t voluntarily move to a new location unless you stop concentrating, which ends the power.
+You are almost impossible to move. Your weight does not vary; instead, you mentally attach yourself to the underlying fabric of the plane. You gain a +20 bonus on Discipline skill checks. You can't voluntarily move to a new location unless you stop concentrating, which ends the power.
 
 You cannot apply your Dexterity bonus to Armor Class; however, your anchored body gains damage reduction 15/-.
 
@@ -8463,8 +8463,8 @@ Metapsionics: Extend
 
 If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast) or a bite attack (which could be a natural bite attack or one you gain by means of the power bite of the wolf), you can use this power to provide your natural weapons a +1 enhancement bonus on attack rolls and damage rolls.
 
-Augment: If you spend 4 additional power points, this power?s duration increases to 1 hour per level.
-In addition, for every 4 additional power points you spend, this power improves the natural weapon?s enhancement bonus on attack rolls and damage rolls by 1.</entry>
+Augment: If you spend 4 additional power points, this power's duration increases to 1 hour per level.
+In addition, for every 4 additional power points you spend, this power improves the natural weapon's enhancement bonus on attack rolls and damage rolls by 1.</entry>
   <entry id="46919" lang="en" sex="m">Metaphysical Weapon</entry>
   <entry id="46920" lang="en" sex="m">Metacreativity
 Level: Psychic warrior 1
@@ -8481,10 +8481,10 @@ Metaphysical weapon gives a weapon a +1 enhancement bonus on attack rolls and da
 
 Alternatively, you can affect up to 99 arrows, bolts, or bullets. The projectiles must be of the same type, and they have to be together (in the same stack).
 
-You can?t manifest this power on most natural weapons, including a psychic warrior?s claw strike. This power does work on a weapon brought into being by the graft weapon power.
+You can't manifest this power on most natural weapons, including a psychic warrior's claw strike. This power does work on a weapon brought into being by the graft weapon power.
 
-Augment: If you spend 4 additional power points, this power?s duration increases to 1 hour per level.
-In addition, for every 4 additional power points you spend, this power improves the weapon?s enhancement bonus on attack rolls and damage rolls by 1.</entry>
+Augment: If you spend 4 additional power points, this power's duration increases to 1 hour per level.
+In addition, for every 4 additional power points you spend, this power improves the weapon's enhancement bonus on attack rolls and damage rolls by 1.</entry>
   <entry id="46921" lang="en" sex="m">Null Psionics Field</entry>
   <entry id="46922" lang="en" sex="m">Psychokinesis
 Level: Kineticist 6
@@ -8527,7 +8527,7 @@ Metapsionics: Extend, Twin
 
 If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast), you can use this power to produce a mild venom that coats one of your claws. On your next successful melee attack, the venom deals 2 points of Constitution damage. A target struck by the poison can make a Fortitude save (DC 10 + 1/2 your manifester level + your key ability modifier) to negate the damage.
 
-Augment: For every 6 additional power points you spend, this power?s Constitution damage increases by 2 points.</entry>
+Augment: For every 6 additional power points you spend, this power's Constitution damage increases by 2 points.</entry>
   <entry id="46927" lang="en" sex="m">Prevenom Weapon</entry>
   <entry id="46928" lang="en" sex="m">Psychometabolism (Creation)
 Level: Psychic warrior 1
@@ -8542,7 +8542,7 @@ Metapsionics: Twin
 As prevenom, except your weapon gains the poison coating as long as it remains in your grip:
 This power produces a mild venom that coats a manufactured weapon you are wielding. On your next successful melee attack, the venom deals 2 points of Constitution damage. A target struck by the poison can make a Fortitude save (DC 10 + 1/2 your manifester level + your key ability modifier) to negate the damage.
 
-Augment: For every 6 additional power points you spend, this power?s Constitution damage increases by 2 points.</entry>
+Augment: For every 6 additional power points you spend, this power's Constitution damage increases by 2 points.</entry>
   <entry id="46929" lang="en" sex="m">Psychofeedback</entry>
   <entry id="46930" lang="en" sex="m">Psychometabolism
 Level: Egoist 5, Psychic Warrior 5
@@ -8566,7 +8566,7 @@ Duration: 10 min./level
 Power Points: 13
 Metapsionics: Extend
 
-When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can?t be reversed. Reddopsi also can?t reverse any power with a range of touch.
+When you manifest reddopsi, powers targeted against you rebound to affect the original manifester. This effect reverses powers that have only you as a target (except dispel psionics and similar powers or effects). Powers that affect an area can't be reversed. Reddopsi also can't reverse any power with a range of touch.
 
 Should you rebound a power back against a manifester who also is protected by reddopsi, the power rebounds once more upon you.</entry>
   <entry id="46933" lang="en" sex="m">Strength of my Enemy</entry>
@@ -8579,7 +8579,7 @@ Duration: 1 round/level
 Power Points: 3
 Metapsionics: Extend
 
-You gain the ability to siphon away your enemy?s strength for your own use. One of your natural or manufactured weapons becomes the instrument of your desire, and deals 1 point of Strength damage on each successful hit. You gain that point of Strength as an enhancement bonus to your Strength score. Strength you siphon from different foes is tracked separately - the total siphoned from each individual foe is considered a separate enhancement bonus to your Strength (maximum +8), and you gain only the highest total.
+You gain the ability to siphon away your enemy's strength for your own use. One of your natural or manufactured weapons becomes the instrument of your desire, and deals 1 point of Strength damage on each successful hit. You gain that point of Strength as an enhancement bonus to your Strength score. Strength you siphon from different foes is tracked separately - the total siphoned from each individual foe is considered a separate enhancement bonus to your Strength (maximum +8), and you gain only the highest total.
 
 Augment: For every 3 additional power points you spend, the maximum enhancement bonus you can add to your Strength increases by 2.</entry>
   <entry id="46935" lang="en" sex="m">Tornado Blast</entry>
@@ -8602,7 +8602,7 @@ Regardless of whether your ranged touch attack hits (and even if you forgo the a
 
 After being dashed about, each creature that was affected finds itself situated in a new space 1d4 x 10 feet away from its original space in a random direction. Walls and other barriers can restrict this relocation; in such a case, the creature ends up adjacent to the barrier.
 
-Augment: For every additional power point you spend, this power?s area damage (not the damage from direct contact dealt to a specific creature) increases by 1d6 points. For each extra 2d6 points of damage, this power?s save DC increases by 1.</entry>
+Augment: For every additional power point you spend, this power's area damage (not the damage from direct contact dealt to a specific creature) increases by 1d6 points. For each extra 2d6 points of damage, this power's save DC increases by 1.</entry>
   <entry id="46937" lang="en" sex="m">Truevenom</entry>
   <entry id="46938" lang="en" sex="m">Psychometabolism
 Level: Psychic warrior 4
@@ -8614,7 +8614,7 @@ Saving Throw: None and Fortitude negates; see text
 Power Points: 7
 Metapsionics: Extend, Empower, Maximize, Twin
 
-If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast), you can use this power to produce a horrible poison that coats one of your claws. On your next successful melee attack with the claw during the power?s duration, the poison deals 1d8 points of Constitution damage immediately and another 1d8 points of Constitution damage 1 minute later. The target of your attack can negate each instance of damage with a Fortitude save.</entry>
+If you have a claw attack (either from an actual natural weapon or from an effect such as claws of the beast), you can use this power to produce a horrible poison that coats one of your claws. On your next successful melee attack with the claw during the power's duration, the poison deals 1d8 points of Constitution damage immediately and another 1d8 points of Constitution damage 1 minute later. The target of your attack can negate each instance of damage with a Fortitude save.</entry>
   <entry id="46939" lang="en" sex="m">Truevenom Weapon</entry>
   <entry id="46940" lang="en" sex="m">Psychometabolism (Creation)
 Level: Psychic warrior 4
@@ -8627,7 +8627,7 @@ Power Points: 7
 Metapsionics: Extend, Empower, Maximize, Twin
 
 As truevenom, except your weapon gains the poison coating as long as it remains in your grip, until the effect is discharged, or until the duration expires, whichever occurs first.
-You can use this power to produce a horrible poison that coats a manufactured weapon you are wielding. On your next successful melee attack with the weapon during the power?s duration, the poison deals 1d8 points of Constitution damage immediately and another 1d8 points of Constitution damage 1 minute later. The target of your attack can negate each instance of damage with a Fortitude save.</entry>
+You can use this power to produce a horrible poison that coats a manufactured weapon you are wielding. On your next successful melee attack with the weapon during the power's duration, the poison deals 1d8 points of Constitution damage immediately and another 1d8 points of Constitution damage 1 minute later. The target of your attack can negate each instance of damage with a Fortitude save.</entry>
   <entry id="46941" lang="en" sex="m">Vampiric Weapon</entry>
   <entry id="46942" lang="en" sex="m">Psychometabolism
 Level: Psychic warrior 3
@@ -8654,7 +8654,7 @@ You can use this power to energize a weapon. That weapon deals an extra 1d8 poin
 
 If this power is manifested on a already benefiting from the effect of the power, the newer manifestation supersedes the older manifestation, even if both manifestations are of different energy types.
 
-This power?s subtype is the same as the type of energy infused in the touched weapon.</entry>
+This power's subtype is the same as the type of energy infused in the touched weapon.</entry>
   <entry id="46945" lang="en" sex="m">Weapon of Fire</entry>
   <entry id="46946" lang="en" sex="m">Weapon of Cold</entry>
   <entry id="46947" lang="en" sex="m">Weapon of Electricity</entry>
@@ -8676,7 +8676,7 @@ Powers that are not subject to power resistance are not affected by an intellect
 
 Manifesting this power is a swift action, like manifesting a quickened power, and it counts toward the normal limit of one quickened power per round.
 
-Augment: For every additional power point you spend, this power?s duration increases by 1 round.</entry>
+Augment: For every additional power point you spend, this power's duration increases by 1 round.</entry>
   <entry id="46950" lang="en" sex="m">Chameleon</entry>
   <entry id="46951" lang="en" sex="m">Psychometabolism
 Level: Egoist 2, Psychic Warrior 1
@@ -14571,9 +14571,9 @@ Specifics: At 14th level, even a glance from the hard eyes of a samurai is enoug
 Prerequisite: CW Samurai Level 20
 Specifics: A 20th-level Samurais bravery, honor, and fighting prowess have become legendary. When the samurai draws his blade, opponents within 30 feet must succeed on a Will save(DC 20 + Cha Modifier) or become panicked for 4d6 rounds (if they have 4 or fewer Hit Dice) or shaken for 4d6 rounds (if they have more than 4 Hit Dice, but fewer than the Samurai). Creatures with more Hit Dice then the Samurai are not affected. Any foe that successfully resists the effect cannot be affected again by the same samurai's frightful presence for 24 hours.
 
-Panicked: A panicked creature must drop anything it holds and flee at top speed from the source of its fear, as well as any other dangers it encounters, along a random path. It can’t take any other actions. In addition, the creature takes a –2 penalty on all saving throws, skill checks, and ability checks. If cornered, a panicked creature cowers and does not attack.
+Panicked: A panicked creature must drop anything it holds and flee at top speed from the source of its fear, as well as any other dangers it encounters, along a random path. It can't take any other actions. In addition, the creature takes a -2 penalty on all saving throws, skill checks, and ability checks. If cornered, a panicked creature cowers and does not attack.
 
-Shaken: A shaken character takes a –2 penalty on attack rolls, saving throws, skill checks, and ability checks.</entry>
+Shaken: A shaken character takes a -2 penalty on attack rolls, saving throws, skill checks, and ability checks.</entry>
   <entry id="48966" lang="en" sex="m">Shadow Walker Rites</entry>
   <entry id="48967" lang="en" sex="m">Making Contact with the Shadow Lords, you sacrifice 10000 gold for the honor of being able to take the Shadowlord Prestige Class.</entry>
   <entry id="48968" lang="en" sex="m">Soak 1 Damage</entry>
@@ -15078,11 +15078,11 @@ Blinding Speed, Epic Prowess, Weapon Focus: Long/Short Bow, Overwhelming Critica
 
 Ethereal creatures are invisible, inaudible, insubstantial, and scentless to creatures on the Material Plane. Even most magical attacks have no effect on them. See invisibility and true seeing reveal ethereal creatures.
 
-An ethereal creature can’t affect the Material Plane, not even magically. An ethereal creature, however, interacts with other ethereal creatures and objects the way material creatures interact with material creatures and objects.
+An ethereal creature can't affect the Material Plane, not even magically. An ethereal creature, however, interacts with other ethereal creatures and objects the way material creatures interact with material creatures and objects.
 
 Even if a creature on the Material Plane can see an ethereal creature the ethereal creature is on another plane. Only force effects can affect the ethereal creatures. If, on the other hand, both creatures are ethereal, they can affect each other normally. </entry>
   <entry id="49173" lang="en" sex="m">Incorporeal</entry>
-  <entry id="49174" lang="en" sex="m">You lack a physical body. Such creatures are insubstantial and can’t be touched by nonmagical matter or energy. Likewise, they cannot manipulate objects or exert physical force on objects. However, incorporeal beings have a tangible presence that sometimes seems like a physical attack against a corporeal creature.
+  <entry id="49174" lang="en" sex="m">You lack a physical body. Such creatures are insubstantial and can't be touched by nonmagical matter or energy. Likewise, they cannot manipulate objects or exert physical force on objects. However, incorporeal beings have a tangible presence that sometimes seems like a physical attack against a corporeal creature.
 
 Incorporeal creatures are present on the same plane as the characters, and characters have some chance to affect them.
 
@@ -17780,7 +17780,7 @@ Spell Resistance: Yes
 
 This spell allows you some degree of control over an undead creature. Asuming the subject is intelligent, it perceives your words and actions in the most favorable way (treat its attitude as friendly). It will not attack you while the spell lasts.
 
-A nonintelligent undead creature gets no saving throw against this spell. When you control a mindless being, you can communicate only basic commands. Nonintelligent undead won?t resist suicidal or obviously harmful orders.
+A nonintelligent undead creature gets no saving throw against this spell. When you control a mindless being, you can communicate only basic commands. Nonintelligent undead won't resist suicidal or obviously harmful orders.
 
 Any act by you or your apparent allies that threatens the commanded undead (regardless of its Intelligence)breaks the spell.
 

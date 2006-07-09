@@ -21,9 +21,33 @@ Fortitude saving throw negates the sonic damage,
 but not the other effects of the spell.
 
 Author:    Tenjac
-Created:   
+Created:   7/7/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetFirstObjectInShape(SHAPE_SHPERE, 12.192, GetSpellTargetLocation(oPC), TRUE, OBJECT_TYPE_CREATURE);
+	int nDC;
+	
+	while(GetIsObjectValid(oTarget))
+	{
+		nDC = GetSpellSaveDC(oTarget, oPC);
+		
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
+			{
+				SPApplyAffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_SONIC, nDam), 
+            {
+	
+	
+	

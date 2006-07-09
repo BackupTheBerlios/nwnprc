@@ -353,6 +353,37 @@ int Hextor(object oPC = OBJECT_SELF)
      return TRUE;
 }
 
+int FavouredSoul(object oPC = OBJECT_SELF)
+{
+
+     int nFS = GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oPC);
+     int nEnergy;
+     int nCheck;
+
+     if (nFS >= 5)
+     {
+
+     nEnergy += GetHasFeat(FEAT_FAVOURED_SOUL_ACID, oPC) +
+               GetHasFeat(FEAT_FAVOURED_SOUL_COLD, oPC) +
+               GetHasFeat(FEAT_FAVOURED_SOUL_ELEC, oPC) +
+               GetHasFeat(FEAT_FAVOURED_SOUL_FIRE, oPC) +
+               GetHasFeat(FEAT_FAVOURED_SOUL_SONIC, oPC);
+
+     if (nEnergy == 3 && nFS >= 15) { nCheck = TRUE; }
+     else if (nEnergy == 2 && nFS > 5 && nFS < 15) { nCheck = TRUE; }
+     else if (nEnergy == 1 && nFS >= 5) { nCheck = TRUE; }
+     else { nCheck = FALSE; }
+
+     if (nCheck != TRUE)
+     {
+
+          FloatingTextStringOnCreature("You must select an Energy Resistance Feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+     }
+
+     }
+     return TRUE;
+}
 
 int GenasaiFocus(object oPC)
 {
@@ -1016,6 +1047,7 @@ void main()
          || !CraftingFeats(oPC)
          || !RacialHD(oPC)
          || !LeadershipHD(oPC)
+         || !FavouredSoul(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

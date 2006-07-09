@@ -1985,7 +1985,7 @@ Level: 0 1 2 3 4 5 6 7 8 9
 Prerequisite: Favoured Soul level 3.
 Specifics: You gain Weapon Focus in your deity's chosen weapon.
 Use: Automatic.</entry>
-  <entry id="45400" lang="en" sex="m">Energy Resistance</entry>
+  <entry id="45400" lang="en" sex="m">Energy Resistance, Acid</entry>
   <entry id="45401" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Favoured Soul level 5.
 Specifics: Chose an energy type. You gain 10/- Resistance to damage from that energy type. At level 10 and level 15 you may choose a second and third energy type to gain resistance to.
@@ -2118,6 +2118,10 @@ Use: Selected.</entry>
 Prerequisite: War Wizard of Cormyr level 5.
 Specifics: When using your Widen Spell class ability, the area of the spell is now increased by 100%.
 Use: Automatic.</entry>
+  <entry id="45436" lang="en" sex="m">Energy Resistance, Cold</entry>
+  <entry id="45437" lang="en" sex="m">Energy Resistance, Electricity</entry>
+  <entry id="45438" lang="en" sex="m">Energy Resistance, Fire</entry>
+  <entry id="45439" lang="en" sex="m">Energy Resistance, Sonic</entry>
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>
   <entry id="45460" lang="en" sex="m">Elemental Focus +6</entry>

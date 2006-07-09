@@ -34,12 +34,13 @@ void main()
     }
 
     //RemoveOldSongEffects(OBJECT_SELF,GetSpellId());
-    
+
     //Declare major variables
-    int nLevel = GetLevelByClass(CLASS_TYPE_BARD) + 
-                 GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE)/2 + 
-                 GetLevelByClass(CLASS_TYPE_DIRGESINGER);
-                 
+    int nLevel = GetLevelByClass(CLASS_TYPE_BARD) +
+                 GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE)/2 +
+                 GetLevelByClass(CLASS_TYPE_DIRGESINGER) +
+                 GetLevelByClass(CLASS_TYPE_VIRTUOSO);
+
     int nRanks = GetSkillRank(SKILL_PERFORM);
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nRanks+= 2;
     int nPerform = nRanks;
@@ -390,13 +391,13 @@ void main()
             {
                 RemoveSongEffects(GetSpellId(),OBJECT_SELF,oTarget);
                 int nRace = MyPRCGetRacialType(oTarget);
-                
+
                 // Undead and Constructs are immune to mind effecting abilities.
                 // A bard with requiem can effect undead
                 if ((nRace == RACIAL_TYPE_UNDEAD && GetHasFeat(FEAT_REQUIEM, OBJECT_SELF)) || nRace != RACIAL_TYPE_UNDEAD || nRace != RACIAL_TYPE_CONSTRUCT)
                 {
                     // Even with requiem, they have half duration
-                    if (nRace == RACIAL_TYPE_UNDEAD) nDuration /= 2;                    
+                    if (nRace == RACIAL_TYPE_UNDEAD) nDuration /= 2;
 
                         if (nHP > 0 && !GetLocalInt(oTarget, sCurseSongHP))
                         {
@@ -405,7 +406,7 @@ void main()
                             SetLocalInt(oTarget, sCurseSongHP, TRUE);
                             DelayCommand(RoundsToSeconds(nDuration),DeleteLocalInt(oTarget, sCurseSongHP));
                         }
-    
+
                         if (!GetIsDead(oTarget))
                         {
                             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));

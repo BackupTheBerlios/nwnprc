@@ -56,7 +56,8 @@ void main()
     //Declare major variables
     int nLevel = GetLevelByClass(CLASS_TYPE_BARD) +
                  GetLevelByClass(CLASS_TYPE_MINSTREL_EDGE)/2 +
-                 GetLevelByClass(CLASS_TYPE_DIRGESINGER);
+                 GetLevelByClass(CLASS_TYPE_DIRGESINGER) +
+                 GetLevelByClass(CLASS_TYPE_VIRTUOSO);
 
     int nRanks = GetSkillRank(SKILL_PERFORM);
     if (GetHasFeat(FEAT_DRAGONSONG, OBJECT_SELF)) nRanks+= 2;

@@ -259,7 +259,7 @@ public final class ItempropMaker{
 		xml.append("    </struct>\n");
 		xml.append("</gff>");
 
-		File target = new File("xml_temp\\"+resref+".uti.xml");
+		File target = new File("xml_temp" + File.separator + resref + ".uti.xml");
 		// Clean up old version if necessary
 		if(target.exists()){
 			if(verbose) System.out.println("Deleting previous version of " + target.getName());

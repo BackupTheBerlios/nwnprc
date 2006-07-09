@@ -7,7 +7,6 @@ Primary
 -----------------------------------------------------
 
 Base Classes:
-Favoured Soul - cls_feat.2da
 Warmage - All to do, Spells
 Dread Necromancer - All to do, Spells
 Beguiler - All to do, Spells

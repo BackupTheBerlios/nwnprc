@@ -119,7 +119,7 @@ public final class SpellbookMaker{
 					//get the maximum spell level
 					int maxLevel = 0;
 					for(int row = 0; row < classCoreSpell2da.getEntryCount(); row ++)
-						Math.max(maxLevel, classCoreSpell2da.getBiowareEntryAsInt("Level", row));
+						maxLevel = Math.max(maxLevel, classCoreSpell2da.getBiowareEntryAsInt("Level", row));
 					
 					//loop over all the spells
 					for(int row = 0; row < classCoreSpell2da.getEntryCount(); row ++) {
@@ -133,7 +133,7 @@ public final class SpellbookMaker{
 							int metamagic = spells2da.getBiowareEntryAsInt("Metamagic", spellID);
 							if(metamagic == 0)
 								System.out.println("Check metamagic for spell " + spellID);
-							/*
+							
 							// Hack - Determine how radial masters there might be: 1 + metamagics
 							int nMasterCount = 1 + Integer.bitCount(metamagic);
 							List<Integer> preReservedClassSpell2daRows = new ArrayList<Integer>();
@@ -144,9 +144,9 @@ public final class SpellbookMaker{
 										classSpell2da.appendRow();
 								}
 								preReservedClassSpell2daRows.add(classSpellRow++);
-							}*/
+							}
 							// Generate an iterator for it
-							Iterator<Integer> preReservedClassSpell2daRowIterator = null;//preReservedClassSpell2daRows.iterator();
+							Iterator<Integer> preReservedClassSpell2daRowIterator = preReservedClassSpell2daRows.iterator();
 							
 							//now loop over the metamagic varients
 							//-1 represents no metamagic
@@ -262,9 +262,9 @@ public final class SpellbookMaker{
 											int subradialMaster){
 		// Hack - If not a subradial, use prereserved cls_spell row
 		int localClassSpellRow;
-		/*if(subradialMaster == 0) {
+		if(subradialMaster == 0) {
 			localClassSpellRow = preReservedClassSpell2daRows.next();
-		} else */{
+		} else {
 			// Grab the current value of classSpellRow for use and then increment it
 			localClassSpellRow = classSpellRow++;
 		}

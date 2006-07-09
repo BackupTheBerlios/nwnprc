@@ -157,10 +157,31 @@ public final class SpellbookMaker{
 								System.out.println("Check metamagic for spell " + spellID);
 							
 							// Hack - Determine how radial masters there might be: 1 + metamagics
-							int nMasterCount = 1 + Integer.bitCount(metamagic);
+							int masterCount = 1;
+							for(int metamagicFlag = 0x1; metamagicFlag <= 0x20; metamagicFlag <<= 1)
+								if((metamagic & metamagicFlag) != 0) {
+									/*
+									    * 0x01 = 1 = Empower
+									    * 0x02 = 2 = Extend
+									    * 0x04 = 4 = Maximize
+									    * 0x08 = 8 = Quicken
+									    * 0x10 = 16 = Silent
+		                                * 0x20 = 32 = Still
+		                            */
+									int metaCost = 0;
+									if     (metamagicFlag == 0x01) metaCost = 2;
+									else if(metamagicFlag == 0x02) metaCost = 1;
+									else if(metamagicFlag == 0x04) metaCost = 3;
+									else if(metamagicFlag == 0x08) metaCost = 4;
+									else if(metamagicFlag == 0x10) metaCost = 1;
+									else if(metamagicFlag == 0x20) metaCost = 1;
+									
+									if(spellLevel + metaCost <= maxLevel)
+										masterCount += 1;
+								}
 							List<Integer> preReservedClassSpell2daRows = new ArrayList<Integer>();
 							// Reserve a number of cls_spell_ rows for the main entries.
-							for(int i = 0; i < nMasterCount; i++) {
+							for(int i = 0; i < masterCount; i++) {
 								// If needed, add rows to the file to prevent errors in addNewSpellbookData
 								if(classSpellRow >= classSpell2da.getEntryCount()){
 										classSpell2da.appendRow();

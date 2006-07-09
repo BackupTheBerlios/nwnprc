@@ -2100,3 +2100,15 @@ const int FEAT_ETHEREAL                       = 4167;
 // Template Feats
 const int FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL  = 22601;
 const int FEAT_TEMPLATE_CELESTIAL_MARKER      = 22602;
+
+// Virtuoso Feats
+const int FEAT_VIRTUOSO_SUSTAINING_SONG       = 4168;
+const int FEAT_VIRTUOSO_CALUMNY               = 4169;
+const int FEAT_VIRTUOSO_JARRING_SONG          = 4170;
+const int FEAT_VIRTUOSO_SHARP_NOTE            = 4171;
+const int FEAT_VIRTUOSO_MINDBENDING_MELODY    = 4172;
+const int FEAT_VIRTUOSO_GREATER_CALUMNY       = 4173;
+const int FEAT_VIRTUOSO_MAGICAL_MELODY        = 4174;
+const int FEAT_VIRTUOSO_SONG_OF_FURY          = 4175;
+const int FEAT_VIRTUOSO_REVEALING_MELODY      = 4176;
+const int FEAT_VIRTUOSO_PERFORMANCE           = 4177;

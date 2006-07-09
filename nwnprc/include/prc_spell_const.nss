@@ -719,3 +719,14 @@ const int SPELL_MASS_INFLICT_SERIOUS                = 3215;
 const int SPELL_MASS_INFLICT_CRITICAL               = 3216;
 const int SPELL_GREATER_HARM                        = 3217;
 const int SPELL_MASS_HARM                           = 3218;
+
+// Virtuoso
+const int SPELL_VIRTUOSO_SUSTAINING_SONG            = 3046;
+const int SPELL_VIRTUOSO_CALUMNY                    = 3047;
+const int SPELL_VIRTUOSO_JARRING_SONG               = 3048;
+const int SPELL_VIRTUOSO_SHARP_NOTE                 = 3049;
+const int SPELL_VIRTUOSO_MINDBENDING_MELODY         = 3050;
+const int SPELL_VIRTUOSO_GREATER_CALUMNY            = 3051;
+const int SPELL_VIRTUOSO_MAGICAL_MELODY             = 3052;
+const int SPELL_VIRTUOSO_SONG_OF_FURY               = 3053;
+const int SPELL_VIRTUOSO_REVEALING_MELODY           = 3054;

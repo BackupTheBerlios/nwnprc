@@ -299,10 +299,10 @@ int GetArcanePRCLevels (object oCaster)
    if (nOozeMLevel)
    {
        if (GetIsArcaneClass(nFirstClass, oCaster)
-           || (!GetIsDivineClass(nFirstClass, oCaster) 
+           || (!GetIsDivineClass(nFirstClass, oCaster)
                 && GetIsArcaneClass(nSecondClass, oCaster))
-           || (!GetIsDivineClass(nFirstClass, oCaster) 
-                && !GetIsDivineClass(nSecondClass, oCaster) 
+           || (!GetIsDivineClass(nFirstClass, oCaster)
+                && !GetIsDivineClass(nSecondClass, oCaster)
                 && GetIsArcaneClass(nThirdClass, oCaster)))
            nArcane += nOozeMLevel / 2;
    }
@@ -365,10 +365,10 @@ int GetDivinePRCLevels (object oCaster)
    if (nOozeMLevel)
    {
        if (GetIsDivineClass(nFirstClass, oCaster)
-           || (!GetIsArcaneClass(nFirstClass, oCaster) 
+           || (!GetIsArcaneClass(nFirstClass, oCaster)
                 && GetIsDivineClass(nSecondClass, oCaster))
-           || (!GetIsArcaneClass(nFirstClass, oCaster) 
-                && !GetIsArcaneClass(nSecondClass, oCaster) 
+           || (!GetIsArcaneClass(nFirstClass, oCaster)
+                && !GetIsArcaneClass(nSecondClass, oCaster)
                 && GetIsDivineClass(nThirdClass, oCaster)))
            nDivine += nOozeMLevel / 2;
    }
@@ -736,6 +736,10 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         iReturnLevel = GetCasterLevel(oCaster);
 
     iReturnLevel += nAdjust;
+
+    //Adds 1 to caster level
+    if(GetHasSpellEffect(SPELL_VIRTUOSO_MAGICAL_MELODY, oCaster))
+        iReturnLevel++;
 
     return iReturnLevel;
 }
@@ -1354,14 +1358,14 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
              else
                  iTemp = iSue;
              return iTemp;
-             break; 
+             break;
         case CLASS_TYPE_FAVOURED_SOUL:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_FAVOURED_SOUL)
                  iTemp = iDiv;
              else
                  iTemp = iFav;
              return iTemp;
-             break;             
+             break;
         case CLASS_TYPE_BLACKGUARD:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_BLACKGUARD)
                  iTemp = iDiv;
@@ -1431,11 +1435,11 @@ location PRCGetSpellTargetLocation()
 {
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_LOCATION_OVERRIDE))
         return GetLocalLocation(GetModule(), PRC_SPELL_TARGET_LOCATION_OVERRIDE);
-    
-    object oItem     = GetSpellCastItem();    
+
+    object oItem     = GetSpellCastItem();
     // The rune always targets the one who activates it.
     if(GetResRef(oItem) == "prc_rune_1") return GetLocation(GetItemPossessor(oItem));
-        
+
     return GetSpellTargetLocation();
 }
 
@@ -1494,7 +1498,7 @@ object MyNextObjectInShape(int nShape,
         else if (GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, OBJECT_SELF) >= 3) fSize *= 1.5;
         DeleteLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen");
     }
-    
+
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
     if(nChannel != 1)
     {
@@ -1519,7 +1523,7 @@ object MyFirstObjectInShape(int nShape,
     string sName = "IsAOE_" + IntToString(GetSpellId());
     SetLocalInt(OBJECT_SELF, sName, 1);
     DelayCommand(0.1, DeleteLocalInt(OBJECT_SELF, sName));
-    
+
     // War Wizard of Cormyr's Widen Spell ability
     if (GetLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen"))
     {
@@ -1529,7 +1533,7 @@ object MyFirstObjectInShape(int nShape,
         else if (GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, OBJECT_SELF) >= 3) fSize *= 1.5;
         DeleteLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen");
     }
-    
+
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
     if(nChannel != 1)
     {
@@ -1569,9 +1573,9 @@ int PRCGetMetaMagicFeat()
         nFeat = nNewSpellMetamagic-1;
     if(nSSFeat)
         nFeat = nSSFeat;
-        
+
     // Suel Archanamach's Extend spells they cast on themselves.
-    // Only works for Suel Spells, and not any other caster type they might have 
+    // Only works for Suel Spells, and not any other caster type they might have
     // Since this is a spellscript, it assumes OBJECT_SELF is the caster
     if (GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH) >= 3 && PRCGetLastSpellCastClass() == CLASS_TYPE_SUEL_ARCHANAMACH)
     {
@@ -1580,7 +1584,7 @@ int PRCGetMetaMagicFeat()
         {
             // Add extend to the metamagic feat using bitwise math
             nFeat |= METAMAGIC_EXTEND;
-        }           
+        }
     }
 
     if(GetIsObjectValid(GetSpellCastItem()))
@@ -1849,7 +1853,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
         AssignCommand(oTarget, ActionForceMoveToObject(oCaster, TRUE));
     }
     // Creatures that can't be disarmed ignore this
-    else if ((nSpellId == SPELL_COMMAND_DROP && GetIsCreatureDisarmable(oTarget)) || 
+    else if ((nSpellId == SPELL_COMMAND_DROP && GetIsCreatureDisarmable(oTarget)) ||
              (nSpellId == SPELL_GREATER_COMMAND_DROP && GetIsCreatureDisarmable(oTarget)))
     {
         // Force the target to drop what its holding
@@ -1867,17 +1871,17 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
     {
         // Force the target to flee the caster
         AssignCommand(oTarget, ClearAllActions(TRUE));
-        AssignCommand(oTarget, ActionMoveAwayFromObject(oCaster, TRUE));    
+        AssignCommand(oTarget, ActionMoveAwayFromObject(oCaster, TRUE));
     }
     else if (nSpellId == SPELL_COMMAND_HALT || nSpellId == SPELL_GREATER_COMMAND_HALT)
     {
         // Force the target to stand still
         AssignCommand(oTarget, ClearAllActions(TRUE));
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectCutsceneParalyze(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);  
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectCutsceneParalyze(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);
     }
     else // Catch errors here
     {
-        if (!GetIsCreatureDisarmable(oTarget)) 
+        if (!GetIsCreatureDisarmable(oTarget))
         {
             FloatingTextStringOnCreature(GetName(oTarget) + " is not disarmable.", oCaster, FALSE);
         }
@@ -1891,7 +1895,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
 int GetIsIncorporeal(object oTarget)
 {
     int bIncorporeal = FALSE;
-    
+
     //base it on appearance
     int nAppear = GetAppearanceType(oTarget);
     if(nAppear == APPEARANCE_TYPE_ALLIP
@@ -1902,15 +1906,15 @@ int GetIsIncorporeal(object oTarget)
     {
         bIncorporeal = TRUE;
     }
-    
+
     //Check for local int
     if(GetPersistantLocalInt(oTarget, "Is_Incorporeal"))
         bIncorporeal = TRUE;
-    
+
     //check for feat
     if(GetHasFeat(FEAT_INCORPOREAL, oTarget))
-        bIncorporeal = TRUE;    
-    
+        bIncorporeal = TRUE;
+
     //Return value
     return bIncorporeal;
 }
@@ -1919,15 +1923,15 @@ int GetIsIncorporeal(object oTarget)
 int GetIsEthereal(object oTarget)
 {
     int bEthereal = FALSE;
-    
+
     //Check for local int
     if(GetPersistantLocalInt(oTarget, "Is_Ethereal"))
         bEthereal = TRUE;
-    
+
     //check for feat
     if(GetHasFeat(FEAT_ETHEREAL, oTarget))
-        bEthereal = TRUE;    
-    
+        bEthereal = TRUE;
+
     //Return value
     return bEthereal;
 }

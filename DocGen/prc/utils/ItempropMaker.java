@@ -24,16 +24,16 @@ public final class ItempropMaker{
 
 	public static void main(String[] args) throws Exception{
 		//load the 2das
-		itempropdef2da = Data_2da.load2da("2das\\itempropdef.2da",     true);
-		costtable2da   = Data_2da.load2da("2das\\iprp_costtable.2da",  true);
-		paramtable2da  = Data_2da.load2da("2das\\iprp_paramtable.2da", true);
+		itempropdef2da = Data_2da.load2da("2das" + File.separator + "itempropdef.2da",     true);
+		costtable2da   = Data_2da.load2da("2das" + File.separator + "iprp_costtable.2da",  true);
+		paramtable2da  = Data_2da.load2da("2das" + File.separator + "iprp_paramtable.2da", true);
 		cost2daarray = new Data_2da[costtable2da.getEntryCount()];
 		param12daarray = new Data_2da[paramtable2da.getEntryCount()];
 		for(int i = 0; i < cost2daarray.length; i ++) {
-			cost2daarray[i] = Data_2da.load2da("2das\\"+costtable2da.getBiowareEntry("Name", i)+".2da", true);
+			cost2daarray[i] = Data_2da.load2da("2das" + File.separator + costtable2da.getBiowareEntry("Name", i) + ".2da", true);
 		}
 		for(int i = 0; i < param12daarray.length; i ++) {
-			param12daarray[i] = Data_2da.load2da("2das\\"+paramtable2da.getBiowareEntry("TableResRef", i)+".2da", true);
+			param12daarray[i] = Data_2da.load2da("2das" + File.separator + paramtable2da.getBiowareEntry("TableResRef", i) + ".2da", true);
 		}
 		//loop over each row
 		for(int itempropdef2darow = 85;
@@ -58,7 +58,7 @@ public final class ItempropMaker{
 					param1 = 1;
 				//loop over each subtype
 				if(subtype != 0){
-					Data_2da subtype2da = Data_2da.load2da("2das\\"+itempropdef2da.getBiowareEntry("SubTypeResRef", type)+".2da", true);
+					Data_2da subtype2da = Data_2da.load2da("2das" + File.separator + itempropdef2da.getBiowareEntry("SubTypeResRef", type) + ".2da", true);
 
 					for(int subtypeID = 0; subtypeID < subtype2da.getEntryCount(); subtypeID ++) {
 						//loop over the param1s, if applicable

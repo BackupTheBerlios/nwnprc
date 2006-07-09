@@ -38,7 +38,29 @@ public final class SpellbookMaker{
 	 * @param args do I really need to explain this?
 	 * @throws Exception this is a simple tool, just let all failures blow up
 	 */
-	public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws Exception {
+		// Parse args
+		for(String param : args){//[--help]
+			// Parameter parseage
+			if(param.startsWith("-")){
+				if(param.equals("--help")) readMe();
+				else{
+					for(char c : param.substring(1).toCharArray()){
+						switch(c){
+						default:
+							System.out.println("Unknown parameter: " + c);
+							readMe();
+						}
+					}
+				}
+			}
+			else{
+				System.out.println("Unknown parameter: " + param);
+				readMe();
+			}
+		}
+		
+		
 		//load all the data files in advance
 		//this is quite slow, but needed
 		classes2da    = Data_2da.load2da("2das" + File.separator + "classes.2da",    true);
@@ -575,5 +597,22 @@ public final class SpellbookMaker{
 			return customtlk.getEntry(entryNo - MAGIC_TLK);
 		}
 		return dialogtlk.getEntry(entryNo);
+	}
+	
+	private static void readMe(){
+		//                  0        1         2         3         4         5         6         7         8
+		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890
+		System.out.println("Usage:\n"+
+                           "  [--help]\n"+
+                           "\n" +
+                           "  --help  prints this text\n" +
+                           "\n" +
+                           "\n" +
+                           "Creates and/or updates the new spellbooks data. Assumes it's being run from\n" +
+                           "the root of the nwnprc cvs module. Looks for dialog.tlk under tlk/.\n" +
+                           "Reads the cls_spcr_*.2da files and updates cls_feat_*.2da, cls_spell*.2da,\n" +
+                           "feat.2da, iprp_feats.2da and spells.2da."
+                );
+		System.exit(0);
 	}
 }

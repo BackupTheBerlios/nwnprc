@@ -19,14 +19,12 @@ Truenaming:
 30 feats
 
 Psionic PrCs:
-Sanctified Mind - cls_feat.2da
 Iron Mind - cls_feat.2da, Invest Armour feat.
 Shadowmind - All to do, (Mass) Cloud Mind powers
 
 Normal PrCs:
 Slayer of Domiel - cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
 Disciple of Asmodeus - cls_feat.2da, (Greater) Command class abilities
-Suel Archanamach - cls_feat.2da
 
 -----------------------------------------------------
 Secondary

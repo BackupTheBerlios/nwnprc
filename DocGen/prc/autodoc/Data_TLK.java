@@ -132,11 +132,11 @@ public class Data_TLK{
 	 *
 	 * @param name      the name of the resulting file, without extensions
 	 * @param path      the path to the directory to save the file to
+	 * @param allowOverWrite Whether to allow overwriting existing files
 	 *
 	 * @throws IOException if cannot overwrite, or the underlying IO throws one
 	 */
-	public void saveAsXML(String name, String path, boolean allowOverWrite) throws IOException{
-		String CRLF = "\r\n";
+	public void saveAsXML(String name, String path, boolean allowOverWrite) throws IOException {
 		if(path == null || path.equals(""))
 			path = "." + File.separator;
 		if(!path.endsWith(File.separator))
@@ -149,12 +149,12 @@ public class Data_TLK{
 		// Inform user
 		if(verbose) System.out.print("Saving tlk file: " + name + " ");
 
-		FileWriter fw = new FileWriter(file, false);
+		PrintWriter writer = new PrintWriter(file);
 
 		//write the header
-		fw.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"+CRLF);
-		fw.write("<!DOCTYPE tlk SYSTEM \"tlk2xml.dtd\">"+CRLF);
-		fw.write("<tlk>"+CRLF);
+		writer.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
+		writer.println("<!DOCTYPE tlk SYSTEM \"tlk2xml.dtd\">");
+		writer.println("<tlk>");
 
 		//loop over each row and write it
 		for(int row = 0; row < highestEntry; row++){
@@ -164,16 +164,16 @@ public class Data_TLK{
 				data = data.replace("&", "&amp;"); //this must be before the others
 				data = data.replace("<", "&lt;");
 				data = data.replace(">", "&gt;");
-				fw.write("  <entry id=\""+row+"\" lang=\"en\" sex=\"m\">"+data+"</entry>"+CRLF);
+				writer.println("  <entry id=\"" + row + "\" lang=\"en\" sex=\"m\">" + data + "</entry>");
 			}
 			if(verbose) spinner.spin();
 		}
 
 		//write the footer
-		fw.write("</tlk>"+CRLF);
+		writer.println("</tlk>");
 
-		fw.flush();
-		fw.close();
+		writer.flush();
+		writer.close();
 
 		if(verbose) System.out.println("- Done");
 	}

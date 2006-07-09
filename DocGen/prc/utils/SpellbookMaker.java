@@ -395,6 +395,9 @@ public final class SpellbookMaker{
 			for(String featLabel : feat2da.getLabels())
 				feat2da.setEntry(featLabel, feat2daRow, "****");
 			
+			// Reset the ReqAction column to 1
+			feat2da.setEntry("ReqAction", feat2daRow, "1");
+			
 			//make it point to the new spells.2da line
 			feat2da.setEntry("SPELLID", feat2daRow, Integer.toString(spells2daRow));
 			//change the Name

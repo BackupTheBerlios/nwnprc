@@ -37,6 +37,8 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetFirstObjectInShape(SHAPE_SHPERE, 12.192, GetSpellTargetLocation(oPC), TRUE, OBJECT_TYPE_CREATURE);
 	int nDC;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nDam;
 	
 	while(GetIsObjectValid(oTarget))
 	{
@@ -46,6 +48,18 @@ void main()
 		{
 			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_SONIC))
 			{
+				nDam = d6(2)
+				
+				if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDam = 12;
+				}
+				
+				if(nMetaMagic == METAMAGIC_EMPOWER)
+				{
+					nDam += (nDam/2);
+				}
+				
 				SPApplyAffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_SONIC, nDam), 
             {
 	

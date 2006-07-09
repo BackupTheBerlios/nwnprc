@@ -99,25 +99,27 @@ public class Main {
 		System.out.println("Usage:\n"+
 		                   "  java -jar prc.jar [--help] | class [parameters]\n"+
 		                   "\n"+
-		                   "class       name of the class to call. possible values:\n"+
-		                   "             manual     - Generates the manual\n"+
-						   "             2da        - Either verifies a single 2da file or compares two\n"+
-						   "             codegen    - Autogenerates scripts (or other files)\n"+
-						   "             radials    - Generates subradial FeatID values\n"+
-						   "             lssubrad   - Lists subradial IDs used in spells.2da\n" +
-						   "             dupsubrad  - Seeks through spells.2da and prints lines containing\n"+
-						   "                          duplicate subradial values\n"+
-						   "             makedep    - Builds include dependency lists\n" +
-						   "             upclsfeat  - Updates base cls_feat_*.2da based on given templates\n" +
-						   "             lsentries  - Lists the unique entries in given columns of a\n" +
+		                   "class   name of the class to call. possible values:\n"+
+		                   "         manual         - Generates the manual\n"+
+						   "         2da            - Either verifies a single 2da file or compares two\n"+
+						   "         codegen        - Autogenerates scripts (or other files)\n"+
+						   "         radials        - Generates subradial FeatID values\n"+
+						   "         lssubrad       - Lists subradial IDs used in spells.2da\n" +
+						   "         dupsubrad      - Seeks through spells.2da and prints lines\n"+
+						   "                          containing duplicate subradial values\n"+
+						   "         makedep        - Builds include dependency lists\n" +
+						   "         upclsfeat      - Updates base cls_feat_*.2da based on given templates\n" +
+						   "         lsentries      - Lists the unique entries in given columns of a\n" +
 						   "                          given 2da\n" +
-						   "             dupentries - Seeks for duplicate entries in the given columns\n" +
+						   "         dupentries     - Seeks for duplicate entries in the given columns\n" +
 						   "                          of a given 2da\n"+
-						   "             2datosql   - Creates a SQL file from 2das\n" +
-						   "             letoxml    - Creates Leto XML lists from 2da and TLK\n" +
-						   "             prec2dagen - Creates a 2da file that lists spells/feat.2da rows\n" +
+						   "         2datosql       - Creates a SQL file from 2das\n" +
+						   "         spellbookmaker - Creates and/or updates the new spellbooks data\n" +
+						   "         itempropmaker  - Creates the itemproperty cache item templates\n" +
+						   "         letoxml        - Creates Leto XML lists from 2da and TLK\n" +
+						   "         prec2dagen     - Creates a 2da file that lists spells/feat.2da rows\n" +
 						   "                          that should be precached\n" +
-						   "             scrmrchgen - Creates scroll merchant based on des_crft_scroll.2da\n" +
+						   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

@@ -496,8 +496,16 @@ public final class SpellbookMaker{
 			//will be incremented by subradials
 			//the -1 is because you want the last used row, not the current blank row
 			int masterSpellID = spells2daRow - 1;
+			boolean doOnce = false;
 			for(int subradial = 1; subradial <= 5; subradial++){
-				if(spells2da.getBiowareEntryAsInt("SubRadSpell" + subradial, spellID) != 0){
+				if(spells2da.getBiowareEntryAsInt("SubRadSpell" + subradial, spellID) != 0) {
+					// It is, in fact, a radial master, so set it's ImpactScript to tell people
+					// about the BioBug triggered by using subradial feats directly from class radial
+					if(!doOnce) {
+						doOnce = true;
+						
+						spells2da.setEntry("ImpactScript", masterSpellID, "prc_radialbug");
+					}
 					addNewSpellbookData(spells2da.getBiowareEntryAsInt("SubRadSpell" + subradial, spellID),
 										classfilename,
 										metaScript,

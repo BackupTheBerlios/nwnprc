@@ -59,7 +59,7 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = HoursToSeconds(24 * nCasterLvl);
-	
+		
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
 		fDur += fDur;
@@ -79,18 +79,18 @@ void main()
 			//Apply effects
 			effect eSarc = EffectLinkEffects(EffectCutsceneGhost(), EffectCutsceneParalyze());
 			       eSarc = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eSarc);
-			     //eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS));			
+			     //eSarc = EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS));			
 			
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur);
 			
 			//swap out the target
 			object oCopy = CopyObject(oTarget, GetLocation(oTarget));
 			
+			RemoveEffect(oCopy, eSarc);
+			
 			//Apply VFX
 			//SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS), oCopy, fDur);
-			
-			RemoveEffect(oCopy, eLink);
-			
+						
 			//Paralyze
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectParalyze(), oCopy, fDur);
 			

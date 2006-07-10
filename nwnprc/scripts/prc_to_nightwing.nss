@@ -4,6 +4,7 @@
  * Stratovarius
  */
 
+#include "prc_alterations"
 #include "inc_utility"
 #include "prc_inc_clsfunc"
 

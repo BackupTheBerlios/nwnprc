@@ -11,6 +11,7 @@
 //:: Created On: July 11, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "NW_I0_SPELLS"
 #include "prc_class_const"
 
@@ -29,9 +30,9 @@ void main()
                 //Make a saving throw check
                 if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_POISON))
                 {
-                   	//Apply the VFX impact and effects
-            		ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-           		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink , oTarget, RoundsToSeconds(nDur));
+                    //Apply the VFX impact and effects
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink , oTarget, RoundsToSeconds(nDur));
                 }
             }
 }

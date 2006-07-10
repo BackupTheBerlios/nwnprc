@@ -12,6 +12,7 @@
 //:: Created On: July 11, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "NW_I0_SPELLS"
 #include "prc_class_const"
 

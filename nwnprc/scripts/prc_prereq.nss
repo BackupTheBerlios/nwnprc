@@ -233,12 +233,12 @@ void BFZ(object oPC)
      if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
      {
           SetLocalInt(oPC, "PRC_PrereqBFZ", 1);
-     	  int nBFZ = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
-     	             GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) + 
-     	             GetHasFeat(FEAT_DOMAIN_POWER_RENEWAL, oPC);          
+          int nBFZ = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_DOMAIN_POWER_RENEWAL, oPC);
           if (nBFZ >= 2)
           {
-          	SetLocalInt(oPC, "PRC_PrereqBFZ", 0);
+            SetLocalInt(oPC, "PRC_PrereqBFZ", 0);
           }
      }
 }
@@ -292,15 +292,15 @@ void Stormlord(object oPC)
 {
      if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
      {
-     	SetLocalInt(oPC, "PRC_PrereqStormL", 1);
-     	int nStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
-     	             GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) + 
-     	             GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
-     	             GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC);
-     	
-     	if (nStorm >= 2)
+        SetLocalInt(oPC, "PRC_PrereqStormL", 1);
+        int nStorm = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_DESTRUCTION_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_EVIL_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC);
+
+        if (nStorm >= 2)
         {
-        	SetLocalInt(oPC, "PRC_PrereqStormL", 0);
+            SetLocalInt(oPC, "PRC_PrereqStormL", 0);
         }
      }
 }
@@ -309,13 +309,13 @@ void Tempus(object oPC)
 {
      if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
      {
-     	SetLocalInt(oPC, "PRC_PrereqTempus", 1);
-     	int nTempus = GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
-     	             GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC);
-     	
-     	if (nTempus >= 1 && GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC))
+        SetLocalInt(oPC, "PRC_PrereqTempus", 1);
+        int nTempus = GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_STRENGTH_DOMAIN_POWER, oPC);
+
+        if (nTempus >= 1 && GetHasFeat(FEAT_WAR_DOMAIN_POWER, oPC))
         {
-        	SetLocalInt(oPC, "PRC_PrereqTempus", 0);
+            SetLocalInt(oPC, "PRC_PrereqTempus", 0);
         }
      }
 }
@@ -324,14 +324,14 @@ void Heartwarder(object oPC)
 {
      if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
      {
-     	SetLocalInt(oPC, "PRC_PrereqHeartW", 1);
-     	int nStorm = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
-     	             GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) + 
-     	             GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC);
-     	
-     	if (nStorm >= 2)
+        SetLocalInt(oPC, "PRC_PrereqHeartW", 1);
+        int nStorm = GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_PROTECTION_DOMAIN_POWER, oPC) +
+                     GetHasFeat(FEAT_DOMAIN_POWER_CHARM, oPC);
+
+        if (nStorm >= 2)
         {
-        	SetLocalInt(oPC, "PRC_PrereqHeartW", 0);
+            SetLocalInt(oPC, "PRC_PrereqHeartW", 0);
         }
      }
 }
@@ -672,21 +672,21 @@ void DragonDis(object oPC)
 
 void SoulEater(object oPC)
 {
-	SetLocalInt(oPC, "PRC_PrereqSoulEater", 1);
-	
-	if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_ABERRATION ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_ANIMAL ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_BEAST ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_DRAGON ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_HUMANOID_MONSTROUS ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_MAGICAL_BEAST ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_FEY ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_GIANT ||
-	   MyPRCGetRacialType(oPC) == RACIAL_TYPE_ELEMENTAL)
-	{
-		SetLocalInt(oPC, "PRC_PrereqSoulEater", 0);
-	}	
+    SetLocalInt(oPC, "PRC_PrereqSoulEater", 1);
+
+    if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_ABERRATION ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_ANIMAL ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_BEAST ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_DRAGON ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_HUMANOID_MONSTROUS ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_MAGICAL_BEAST ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_FEY ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_GIANT ||
+       MyPRCGetRacialType(oPC) == RACIAL_TYPE_ELEMENTAL)
+    {
+        SetLocalInt(oPC, "PRC_PrereqSoulEater", 0);
+    }
 }
 
 void RacialHD(object oPC)
@@ -736,6 +736,13 @@ void RacialHD(object oPC)
     }
 }
 
+void Virtuoso(object oPC)
+{   //Needs 6 ranks of Persuade OR 6 ranks of Intimidate
+    SetLocalInt(oPC, "PRC_PrereqVirtuoso", 1);
+    if((GetSkillRank(SKILL_PERSUADE, oPC) >= 6) || (GetSkillRank(SKILL_INTIMIDATE, oPC) >= 6))
+        SetLocalInt(oPC, "PRC_PrereqVirtuoso", 0);
+}
+
 void main()
 {
      //Declare Major Variables
@@ -745,14 +752,14 @@ void main()
      int iArcSpell1;
      int iDivSpell1;
      int iSnkLevel;
-     
+
      FindTrueAbilityScores(oPC);
-     
+
 
      // Initialize all the variables.
      string sVariable;
      int iCount;
-     for (iCount = 1; iCount <= 9; iCount++)
+     for (iCount = 0; iCount <= 9; iCount++)
      {
         sVariable = "PRC_AllSpell" + IntToString(iCount);
         SetLocalInt(oPC, sVariable, 1);
@@ -798,7 +805,7 @@ void main()
             }
             int nAbility = GetAbilityForClass(nClass, oPC);
 
-            for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
+            for(nSpellLevel = 0; nSpellLevel <= 9; nSpellLevel++)
             {
                 int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
@@ -821,7 +828,7 @@ void main()
             }
             int nAbility = GetAbilityForClass(nClass, oPC);
 
-            for(nSpellLevel = 1; nSpellLevel <= 9; nSpellLevel++)
+            for(nSpellLevel = 0; nSpellLevel <= 9; nSpellLevel++)
             {
                 int nSlots = GetSlotCount(nLevel, nSpellLevel, nAbility, nClass);
                 if(nSlots > 0)
@@ -892,6 +899,7 @@ void main()
      Tempus(oPC);
      Asmodeus(oPC);
      RacialHD(oPC);
+     Virtuoso(oPC);
      // Truly massive debug message flood if activated.
      /*
      SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));

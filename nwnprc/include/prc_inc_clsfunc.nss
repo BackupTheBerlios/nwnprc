@@ -1688,3 +1688,53 @@ int Ninja_AbilitiesEnabled (object oPC)
         return FALSE;
     return TRUE;
 }
+
+////////////////End Ninja//////////////
+
+////////////////Begin Virtuoso//////////////
+
+//Decrements the daily uses of Virtuoso Performance by the
+//  correct amount, returns FALSE if there are insufficient
+//  uses remaining to use the current feat
+int VirtuosoPerformanceDecrement(object oPC, int nSpellID)
+{
+    int nDecrement = 0;
+    int nDifference = 1122; //hack, difference in number between feat and spell 2da lines
+    switch(nSpellID)
+    {
+        case SPELL_VIRTUOSO_SUSTAINING_SONG:
+        case SPELL_VIRTUOSO_CALUMNY:
+        case SPELL_VIRTUOSO_GREATER_CALUMNY: nDecrement = 1; break;
+
+        case SPELL_VIRTUOSO_MINDBENDING_MELODY:
+        case SPELL_VIRTUOSO_MAGICAL_MELODY:
+        case SPELL_VIRTUOSO_REVEALING_MELODY: nDecrement = 2; break;
+
+        case SPELL_VIRTUOSO_SHARP_NOTE:
+        case SPELL_VIRTUOSO_JARRING_SONG:
+        case SPELL_VIRTUOSO_SONG_OF_FURY: nDecrement = 3; break;
+    }
+    if(!nDecrement) return FALSE;   //sanity check
+    int nUses = GetPersistantLocalInt(oPC, "Virtuoso_Performance_Uses");
+    if(nUses >= nDecrement)
+    {
+        SetPersistantLocalInt(oPC, "Virtuoso_Performance_Uses", nUses - nDecrement);
+        int nFeat, nDec;
+        for(nFeat = FEAT_VIRTUOSO_SUSTAINING_SONG; nFeat <= FEAT_VIRTUOSO_PERFORMANCE; nFeat++)
+        {
+            nDec = nDecrement;
+            if(nFeat == (nSpellID + nDifference))
+                nDec--; //already decremented once by being used
+            for(; nDec > 0; nDec--)
+                DecrementRemainingFeatUses(oPC, nFeat);
+        }
+        return TRUE;
+    }
+    else
+    {   //refund feat use :P
+        IncrementRemainingFeatUses(oPC, nSpellID + nDifference);
+        return FALSE;
+    }
+}
+
+////////////////End Virtuoso//////////////

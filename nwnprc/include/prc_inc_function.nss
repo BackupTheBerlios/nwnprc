@@ -651,8 +651,27 @@ void BardSong(object oPC)
     // or other classes can grant it on their own
     int nTotal = GetLevelByClass(CLASS_TYPE_BARD, oPC);
     nTotal += GetLevelByClass(CLASS_TYPE_DIRGESINGER, oPC);
+    nTotal += GetLevelByClass(CLASS_TYPE_VIRTUOSO, oPC);
+
+    if(GetHasFeat(FEAT_EXTRA_MUSIC, oPC)) nTotal += 4;
 
     FeatUsePerDay(oPC, FEAT_BARD_SONGS, -1, nTotal);
+}
+
+void FeatVirtuoso(object oPC)
+{
+    int nUses = GetLevelByClass(CLASS_TYPE_BARD, oPC) + GetLevelByClass(CLASS_TYPE_VIRTUOSO, oPC);
+    if(GetHasFeat(FEAT_EXTRA_MUSIC, oPC)) nUses += 4;
+    SetPersistantLocalInt(oPC, "Virtuoso_Performance_Uses", nUses);
+    int nFeat, nTemp;
+    for(nFeat = FEAT_VIRTUOSO_SUSTAINING_SONG; nFeat <= FEAT_VIRTUOSO_PERFORMANCE; nFeat++)
+    {   //OMG nested loops!
+        nTemp = nUses;
+        while(GetHasFeat(nFeat, oPC))
+            DecrementRemainingFeatUses(oPC, nFeat);
+        for(; nTemp > 0; nTemp--)
+            IncrementRemainingFeatUses(oPC, nFeat);
+    }
 }
 
 void FeatSpecialUsePerDay(object oPC)
@@ -687,4 +706,5 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_PLANT_DOMAIN_POWER, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
     BardSong(oPC);
+    FeatVirtuoso(oPC);
 }

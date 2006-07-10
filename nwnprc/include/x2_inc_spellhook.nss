@@ -172,14 +172,20 @@ int EShamConc()
 {
     object oCaster     = OBJECT_SELF;
     int bInShambler    = GetLocalInt(oCaster, "PRC_IsInEctoplasmicShambler");
+    int bJarringSong   = GetHasSpellEffect(SPELL_VIRTUOSO_JARRING_SONG, oCaster);
     int bReturn        = TRUE;
-    if(bInShambler)
+    if(bInShambler || bJarringSong)
     {
         string nSpellLevel = lookup_spell_level(PRCGetSpellId());
 
         bReturn = GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
         if(!bReturn)
-            FloatingTextStrRefOnCreature(16824061, oCaster, FALSE); // "Ectoplasmic Shambler has disrupted your concentration."
+        {
+            if(bInShambler)
+                FloatingTextStrRefOnCreature(16824061, oCaster, FALSE); // "Ectoplasmic Shambler has disrupted your concentration."
+            else if(bJarringSong)
+                FloatingTextStringOnCreature("Jarring Song has disrupted your concentration.", oCaster, FALSE);
+        }
     }
 
     return bReturn;

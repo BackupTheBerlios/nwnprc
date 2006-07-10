@@ -56,4 +56,6 @@ void main()
 	SPApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3), lTarget);	
 	SPApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature("sp_crush_fist"), lTarget, fDuration);
 	
+	SPEvilShift(oPC);
+	SPSetSchool();	
 }

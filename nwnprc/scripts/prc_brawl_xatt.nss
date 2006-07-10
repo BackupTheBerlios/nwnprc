@@ -1,3 +1,5 @@
+
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_spell_const"
 #include "nw_i0_spells"

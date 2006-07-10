@@ -18,10 +18,7 @@ racialtypes.2da
 skills.2da
 spells.2da
 
-all cls_atk*.2da
-all cls_savthr*.2da
-all cls_skill*.2da
-all cls_feat*.2da
+all cls_*.2da
 all race_feat_*.2da
 
 

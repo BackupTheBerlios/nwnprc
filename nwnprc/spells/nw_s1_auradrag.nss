@@ -17,6 +17,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: April 17, 2001
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 #include "nw_i0_spells"
 
 // Modified 2004/01/30 (Brian Greinke)

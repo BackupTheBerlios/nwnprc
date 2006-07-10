@@ -16,6 +16,7 @@
 //:: Created On: Aug 13, 2001
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "spinc_common"
 #include "inc_addragebonus"
 

@@ -1,3 +1,5 @@
+
+#include "prc_alterations"
 #include "nw_i0_spells"
 #include "prc_inc_unarmed"
 #include "prc_inc_clsfunc"

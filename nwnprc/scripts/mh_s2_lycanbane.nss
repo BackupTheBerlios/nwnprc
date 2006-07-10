@@ -11,6 +11,7 @@
 //:: Created On: Jan 23, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "NW_I0_SPELLS"
 
 void main()

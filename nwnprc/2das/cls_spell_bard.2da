@@ -366,11 +366,11 @@
 362 Bard_Silent_Legend_Lore                          5     17362  8762     9362    376         33      
 363 Bard_Still_Legend_Lore                           5     17363  8763     9363    376         37      
 364 Bard_DimensionDoor_RadialMaster                  4     17364  8764     9364    2890        ****    
-365 Bard_DimensionDoor_SelfOnly                      ****  ****   ****     9365    2891        ****    
-366 Bard_DimensionDoor_Party                         ****  ****   ****     9366    2892        ****    
-367 Bard_DimensionDoor_DirDist_SelfOnly              ****  ****   ****     9367    2896        ****    
-368 Bard_DimensionDoor_DirDist_Party                 ****  ****   ****     9368    2897        ****    
-369 Bard_Silent_DimensionDoor_RadialMaster           5     17365  8765     9369    2890        33      
+365 Bard_Silent_DimensionDoor_RadialMaster           5     17365  8765     9369    2890        33      
+366 Bard_DimensionDoor_SelfOnly                      ****  ****   ****     9365    2891        ****    
+367 Bard_DimensionDoor_Party                         ****  ****   ****     9366    2892        ****    
+368 Bard_DimensionDoor_DirDist_SelfOnly              ****  ****   ****     9367    2896        ****    
+369 Bard_DimensionDoor_DirDist_Party                 ****  ****   ****     9368    2897        ****    
 370 Bard_Silent_DimensionDoor_SelfOnly               ****  ****   ****     9370    2891        ****    
 371 Bard_Silent_DimensionDoor_Party                  ****  ****   ****     9371    2892        ****    
 372 Bard_Silent_DimensionDoor_DirDist_SelfOnly       ****  ****   ****     9372    2896        ****    

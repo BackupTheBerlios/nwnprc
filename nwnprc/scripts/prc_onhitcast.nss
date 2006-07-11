@@ -110,7 +110,7 @@ void main()
     }
 
     // Blood Archer Poison Blood
-    if (nBArcher > 1 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
+    if (nBArcher > 0 && GetBaseItemType(oItem) != BASE_ITEM_ARMOR)
     {
         // poison number based on archer level
         // gives proper DC for poison
@@ -203,26 +203,26 @@ void main()
             }
         }
     }
-        
+
     //Creatures with a necrotic cyst take +1d6 damage from natural attacks of undead
-    
+
     if(GetHasNecroticCyst(oSpellOrigin))
     {
-	    //if enemy is undead
-	    if(MyPRCGetRacialType(oSpellTarget) == RACIAL_TYPE_UNDEAD)
-	    {
-		    //and unarmed
-		    if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget)) &&
-		        !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget)))
-		        
-		        {
-				effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellOrigin);
-			}
-	     }
+        //if enemy is undead
+        if(MyPRCGetRacialType(oSpellTarget) == RACIAL_TYPE_UNDEAD)
+        {
+            //and unarmed
+            if (!GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget)) &&
+                !GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget)))
+
+                {
+                effect eDam = EffectDamage(d6(1), DAMAGE_TYPE_MAGICAL);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oSpellOrigin);
+            }
+         }
      }
-    
-    
+
+
     /*//////////////////////////////////////////////////
     //////////////// PSIONICS //////////////////////////
     //////////////////////////////////////////////////*/

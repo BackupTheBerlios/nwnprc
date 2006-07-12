@@ -634,7 +634,12 @@ void Thrallherd(object oPC)
         GetHasPower(POWER_CRISISBREATH, oPC) || GetHasPower(POWER_EMPATHICTRANSFERHOSTILE, oPC) || GetHasPower(POWER_DOMINATE, oPC) ||
         GetHasPower(POWER_CRISISLIFE, oPC) || GetHasPower(POWER_PSYCHICCHIR_REPAIR, oPC))
     {
-        SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
+        // Technically, you must be able to manifest mindlink, and the only class that can do so is a Telepath Psion
+        // Thus, this restriction.
+    	if (GetHasFeat(FEAT_PSION_DIS_TELEPATH, oPC))
+    	{
+        	SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
+        }
     }
 }
 

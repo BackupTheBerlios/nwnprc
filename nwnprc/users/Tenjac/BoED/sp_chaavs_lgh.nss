@@ -17,7 +17,7 @@ You release a joyous, boistrous laugh that
 strengthens the resolve of good creatures and
 weakens the resolve of evil creatures.
 
-Good creatures within the soell's area gain the
+Good creatures within the spell's area gain the
 following benefits for the duration of the spell:
 a +2 morale bonus on attack rolls an saves against
 fear effects. plus temporary hit points equal to
@@ -53,9 +53,58 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDC;
 	int nAlign;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nModify = 2;
+	float fDur = (60.0f * nCasterLvl);
 	
+	if(nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nModify = 3;
+	}
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	effect eVilLink = EffectLinkEffects(EffectAttackDecrease(nModify, ATTACK_BONUS_MISC), EffectSavingThrowDecrease(SAVING_THROW_ALL, nModify, SAVING_THROW_TYPE_FEAR));
+	effect eGoodLink = EffectLinkEffects(EffectAttackIncrease(nModify, ATTACK_BONUS_MISC), EffectSavingThrowIncrease(SAVING_THROW_ALL, nModify, SAVING_THROW_TYPE_FEAR));
+	       eGoodLonk = EffectLinkEffects(eGoodLink, EffectTemporaryHitpoints(d8(1) + min(20, nCasterLvl)));
+	       
 	while(GetIsObjectValid(oTarget))
 	{
 		nAlign = GetAlignmentGoodEvil(oTarget);
+		nDC = SPGetSpellSaveDC(oTarget, oPC);
+		
+		if(!GetHasEffect(EFFECT_TYPE_DEAF, oTarget))
+		{
+			
+			if (nAlign == ALIGNMENT_EVIL)
+			{
+				//SR
+				if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+				{
+					//Save
+					if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+					{
+						SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVilLink, oTarget, fDur);				
+					}
+				}
+			}
+			
+			if(nAlign == ALIGNMENT_GOOD)
+			{
+				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGoodLink, oTarget, fDur);
+			}
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 12.19f, lLoc, TRUE, OBJECT_TYPE_CREATURE); 
+	}			
+	SPGoodShift(oPC);
+	SPSetSchool();
+}
+				
+		
+		
+		
 	
 	

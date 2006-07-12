@@ -16,6 +16,7 @@
 
 
 #include "prc_alterations"
+#include "inc_dynconv"
 #include "x0_inc_henai"
 #include "x0_i0_henchman"
 
@@ -76,7 +77,9 @@ void main()
             ClearActions(CLEAR_X0_CH_HEN_CONV_26);
 
 //PRC CHANGE
-            BeginConversation("prc_cohort");
+            //BeginConversation("prc_cohort");
+            //use a dynamic conversation instead
+            StartDynamicConversation("prc_cohort_convo", oShouter);
 //PRC CHANGE            
         }
     }

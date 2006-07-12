@@ -19,6 +19,7 @@ const int ARMOR_TYPE_LIGHT      = 1;
 const int ARMOR_TYPE_MEDIUM     = 2;
 const int ARMOR_TYPE_HEAVY      = 3;
 
+const int ACTION_USE_ITEM_TMI_LIMIT = 500;
 
 /*********************\
 * Function Prototypes *
@@ -406,6 +407,36 @@ void SpendXP(object oPC, int nCost);
  *  Convinence function for testing off-hand weapons
  */
 int isNotShield(object oItem);
+
+/**
+ * Makes self use a specific itemproperty on an object
+ *
+ * Note: This uses a loop so vulnerable to TMI errors
+ * Note: This is not 100% reliable, for example if uses/day finished
+ * Note: Uses talent system. Unsure what would happen if the creature
+ * can cast the same spell from some other means or if they
+ * had multiple items with the same spell on them
+ *
+ * @param oItem   Item to use
+ * @param ipIP    Itemproperty to use
+ * @param oTarget Target object
+ */
+void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarget = OBJECT_SELF);
+
+/**
+ * Makes self use a specific itemproperty at a location
+ *
+ * Note: This uses a loop so vulnerable to TMI errors
+ * Note: This is not 100% reliable, for example if uses/day finished
+ * Note: Uses talent system. Unsure what would happen if the creature
+ * can cast the same spell from some other means or if they
+ * had multiple items with the same spell on them
+ *
+ * @param oItem   Item to use
+ * @param ipIP    Itemproperty to use
+ * @param lTarget Target location
+ */
+void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location lTarget);
 
 
 //////////////////////////////////////////////////
@@ -1071,5 +1102,65 @@ int isNotShield(object oItem)
      return isNotAShield;
 }
 
-// Test main
-//void main(){}
+
+void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarget = OBJECT_SELF)
+{
+    int nIPSpellID = GetItemPropertySubType(ipIP);
+    string sSpellID = Get2DACache("iprp_spells", "SpellIndex", nIPSpellID);
+    int nSpellID = StringToInt(sSpellID);
+    string sCategory = Get2DACache("spells", "Category", nSpellID);
+    int nCategory = StringToInt(sCategory);
+
+    talent tItem;
+    tItem = GetCreatureTalentRandom(nCategory);
+    int nCount = 0;
+    while(GetIsTalentValid(tItem)
+        && nCount < ACTION_USE_ITEM_TMI_LIMIT) //this is the TMI limiting thing, change as appropriate
+    {
+        if(GetTypeFromTalent(tItem) == TALENT_TYPE_SPELL
+            && GetIdFromTalent(tItem) == nSpellID)
+        {
+            ActionUseTalentOnObject(tItem, oTarget);
+            //end while loop
+            return;
+        }
+        nCount++;
+        tItem = GetCreatureTalentRandom(nCategory);
+    }
+    //if you got to this point, something whent wrong
+    //rather than failing silently, well log it
+    //SendMessageToPC(GetFirstPC(), "ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
+    WriteTimestampedLogEntry("ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
+}
+
+
+void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location lTarget)
+{
+    int nIPSpellID = GetItemPropertySubType(ipIP);
+    string sSpellID = Get2DACache("iprp_spells", "SpellIndex", nIPSpellID);
+    int nSpellID = StringToInt(sSpellID);
+    string sCategory = Get2DACache("spells", "Category", nSpellID);
+    int nCategory = StringToInt(sCategory);
+
+    talent tItem;
+    tItem = GetCreatureTalentRandom(nCategory);
+    int nCount = 0;
+    while(GetIsTalentValid(tItem)
+        && nCount < ACTION_USE_ITEM_TMI_LIMIT) //this is the TMI limiting thing, change as appropriate
+    {
+        if(GetTypeFromTalent(tItem) == TALENT_TYPE_SPELL
+            && GetIdFromTalent(tItem) == nSpellID)
+        {
+            ActionUseTalentAtLocation(tItem, lTarget);
+            //end while loop
+            return;
+        }
+        nCount++;
+        tItem = GetCreatureTalentRandom(nCategory);
+    }
+    //if you got to this point, something whent wrong
+    //rather than failing silently, well log it
+    //SendMessageToPC(GetFirstPC(), "ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
+    WriteTimestampedLogEntry("ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
+}
+

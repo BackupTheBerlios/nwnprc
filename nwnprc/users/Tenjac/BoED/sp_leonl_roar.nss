@@ -60,8 +60,15 @@ void main()
 					nDam += (nDam/2);
 				}
 				
-				SPApplyAffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_SONIC, nDam), 
-            {
+				SPApplyAffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_SONIC, nDam); 								
+		}
+	}
+	
+	//Holy Word
+	ActionCastSpellAtLocation(SPELL_HOLY_WORD, GetLocation(oPC), nMetaMagic, TRUE, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
+	SPGoodShift(oPC);
+}
+				
 	
 	
 	

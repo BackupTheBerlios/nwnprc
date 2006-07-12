@@ -63,7 +63,7 @@ void main()
 				{
 					//Create liquid pain in caster's inventory
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-					//CreateItemOnObject("whateveritis", oPC, 1);
+					CreateItemOnObject("nw_it_agony", oPC, 1);
 					SetLocalInt(oTarget, "PRC_AgonyExtracted", 1);
 					DelayCommand(HoursToSeconds(24), DeleteLocalInt(oTarget, "PRC_AgonyExtracted"));
 				}

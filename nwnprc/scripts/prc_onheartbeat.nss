@@ -28,7 +28,7 @@ void main()
     int nMapPinCount, i;
     int bHasPoly;
     effect eTest;
-    
+
     // Run some autoexport stuff first. This determines if it needs to loop over players at all
     if(bPWPCAutoexport)
     {
@@ -44,7 +44,7 @@ void main()
     //decide if to cache bioware 2da yet
     if(bBiowareDBCache > 0)
     {
-        if(GetLocalInt(GetModule(), "Bioware2dacacheCount") == bBiowareDBCache)
+        if(GetLocalInt(GetModule(), "Bioware2dacacheCount") >= bBiowareDBCache)
             DeleteLocalInt(GetModule(), "Bioware2dacacheCount");
         else
         {

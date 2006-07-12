@@ -1393,7 +1393,8 @@ int GetIsMagicItem(object oItem)
             if((nType >= 0 && nType <= 9) ||    //read from itempropdef.2da
                 (nType >= 13 && nType <= 20) ||
                 (nType == 26) ||
-                (nType >= 32 && nType <= 46) ||
+                (nType >= 32 && nType <= 44) ||
+                (nType == 46) ||
                 (nType >= 51 && nType <= 59) ||
                 (nType == 61) ||
                 (nType >= 67 && nType <= 69) ||

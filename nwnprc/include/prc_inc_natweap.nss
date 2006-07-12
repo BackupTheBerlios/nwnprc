@@ -369,7 +369,7 @@ string GetAffixForSize(int nSize)
 void EquipNautralWeaponCheck(object oPC, object oItem)
 {
     if(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC) != oItem)
-        DestroyObject(oItem);
+        MyDestroyObject(oItem);
 }
 
 object EquipNaturalWeapon(object oPC, string sResRef)
@@ -549,6 +549,8 @@ void RemoveNaturalPrimaryWeapon(object oPC, string sResRef)
 
 int GetIsUsingPrimaryNaturalWeapons(object oPC)
 {
+    return GetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT);
+    /*
     object oObject = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
     if(!GetIsObjectValid(oObject))
         return FALSE;
@@ -561,6 +563,7 @@ int GetIsUsingPrimaryNaturalWeapons(object oPC)
             return TRUE;            
     }    
     return FALSE;
+    */
 }
 
 void SetPrimaryNaturalWeapon(object oPC, int nIndex)

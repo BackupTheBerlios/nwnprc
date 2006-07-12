@@ -16,6 +16,8 @@ void main()
     int nAttackCount = -1;
     int nOverflowAttackCount;
     
+    //delete this local so GetMainHandAttacks() does a full calculation
+    DeleteLocalInt(oPC, "OverrideBaseAttackCount");
     //count the number of class-derived attacks
     int nBAB = GetMainHandAttacks(oPC);
     
@@ -103,6 +105,7 @@ void main()
         RestoreBaseAttackBonus(oPC);
         DeleteLocalInt(oPC, "OverrideBaseAttackCount");
         DeleteLocalInt(oPC, "OverflowBaseAttackCount");
+        DeleteLocalInt(oPC, "OffhandOverflowAttackCount");
     }    
     if(nAttackCount != -1)
     {
@@ -119,6 +122,7 @@ void main()
         {    
             SetLocalInt(oPC, "OverflowBaseAttackCount", nOverflowAttackCount);
         }
+        DoDebug("SetBaseAttackBonus("+IntToString(nAttackCount)+", "+GetName(oPC)+"));");
         SetBaseAttackBonus(nAttackCount, oPC);
         SetLocalInt(oPC, "OverrideBaseAttackCount", nAttackCount);
     }

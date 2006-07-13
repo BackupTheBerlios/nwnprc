@@ -2110,7 +2110,7 @@ SPELLCASTING
 Every level in War Wizard of Cormyr, the character gains new spells per day as if he had also gained a level in his highest caster class (bard, sorcerer, or wizard). He does not learn any new spells through his abilities.</entry>
   <entry id="45432" lang="en" sex="m">Widen Spell</entry>
   <entry id="45433" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: War Wizard of Corymr level 3.
+Prerequisite: War Wizard of Cormyr level 3.
 Specifics: A number of times per day equal to your class level plus your Charisma modifier, you can increase the area of a spell by 50%. This only works on spells that are already area effect to begin with.
 Use: Selected.</entry>
   <entry id="45434" lang="en" sex="m">Enlarge Spell Area</entry>
@@ -4234,7 +4234,7 @@ Use: Automatic.</entry>
   <entry id="46080" lang="en" sex="m">Thundering Weapon</entry>
   <entry id="46081" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Stormlord Level 5
-Specifics: Any spear used by a Stormlord is treated as a thundering weapon (+1d10 sonic damage on critical). This stacks with the Shock Weapon Ability.
+Specifics: Any spear used by a Stormlord is treated as a thundering weapon (+1d8 sonic damage on critical). This stacks with the Shock Weapon Ability.
 Use: Automatic.</entry>
   <entry id="46082" lang="en" sex="m">Shocking Weapon</entry>
   <entry id="46083" lang="en" sex="m">Type of Feat: Class Specific
@@ -4274,7 +4274,7 @@ Level
 1: Electrical Resistance 10 - Stormlord gains 10 points of Electrical resistance.
 2: Shock Spear - Any spear used by a Stormlord is treated as a shock weapon (+1d6 electrical damage).
 4: Electrical Resistance 15
-5: Thundering Spear - Any spear used by a Stormlord is treated as a thundering weapon (+1d10 sonic damage on critical). This stacks with the Shock Weapon Ability.
+5: Thundering Spear - Any spear used by a Stormlord is treated as a thundering weapon (+1d8 sonic damage on critical). This stacks with the Shock Weapon Ability.
 7: Electrical Resistance 20
 8: Shocking Spear - Any spear used by a Stormlord is treated as a shocking weapon (+1d10 electrical damage on critical). This stacks with the Shock and Thundering Weapon Abilities.
 9: Electrical Immunity
@@ -10456,6 +10456,54 @@ Augment: For every 2 additional power points you spend, the level of the astral 
   <entry id="47648" lang="en" sex="m">Astral Construct Slot 2</entry>
   <entry id="47649" lang="en" sex="m">Astral Construct Slot 3</entry>
   <entry id="47650" lang="en" sex="m">Astral Construct Slot 4</entry>
+  <entry id="47651" lang="en" sex="m">Skullclan Hunter</entry>
+  <entry id="47652" lang="en" sex="m">Skullclan Hunters</entry>
+  <entry id="47653" lang="en" sex="m">skullclan hunter</entry>
+  <entry id="47654" lang="en" sex="m">(PRESTIGE CLASS)
+The Skullclan Hunter is the acclaimed foe of unlife. He champions life by tracking and eradicating all creatures that mock it with evil intent. His devotion to his task is such that he spends moonless nights and weary days tracking undead to their lairs, or, when possible, joining a military band that is likely to come across a legion of the dead. 
+
+- Hit Die: d6
+- Proficiencies: A Skullclan Hunter gains no additional proficiencies.
+- Skill Points: 6 + Int Modifier
+
+REQUIREMENTS:
+
+Alignment: Any Good. 
+Skills: Lore 8 ranks.
+Special: Able to turn undead, Sneak attack +2d6.
+
+ABILITIES:
+
+Level
+1: 
+2: Divine Strike - Skullclan Hunters can now sneak attack undead.
+3: Immunity to Fear, Sneak Attack +1d6. 
+4: Immunity to Disease, Protection from Evil (as the spell, but permanent).
+5: Sword of Light - Pierce all undead damage reduction.
+6: Sneak Attack + 2d6. 
+7: Immunity to Paralysis.
+8: Immunity to Ability Damage.
+9: Sneak Attack +3d6.
+10: Immunity to Energy Drain.</entry>
+  <entry id="47655" lang="en" sex="m">Divine Strike</entry>
+  <entry id="47656" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Skullclan Hunter level 2.
+Specifics: The Skullclan Hunter can now sneak attack the undead, dealing positive energy damage when he does so.
+Use: Automatic.</entry>
+  <entry id="47657" lang="en" sex="m">Sword of Light</entry>
+  <entry id="47658" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Skullclan Hunter level 5.
+Specifics: Any weapon wielded by the Skullclan Hunter now pierces the Damage Reduction of all Undead creatures.
+Use: Automatic.</entry>  
+  <entry id="47659" lang="en" sex="m">Immunity to Fear</entry>
+  <entry id="47660" lang="en" sex="m">Immunity to Disease</entry>
+  <entry id="47661" lang="en" sex="m">Immunity to Paralysis</entry>
+  <entry id="47662" lang="en" sex="m">Immunity to Ability Damage</entry>
+  <entry id="47663" lang="en" sex="m">Immunity to Energy Drain</entry>
+  <entry id="47664" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Skullclan Hunter level 3.
+Specifics: As the Skullclan Hunter gains in power and ability, he adds a number of immunities. At level 3, he is immune to fear, at level 4 disease, at level 7 paralysis, at level 8 ability damage, and at level 10, he is immune to energy drain.
+Use: Automatic.</entry>  
   <entry id="47671" lang="en" sex="m">Legendary Commander </entry>
   <entry id="47672" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Cha 25, Epic Leadership, Persuade 30 ranks

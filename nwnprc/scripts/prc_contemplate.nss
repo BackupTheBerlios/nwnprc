@@ -34,7 +34,7 @@ void ContemplativeSR(object oPC, int nLevel, object oSkin)
     effect eSR = EffectSpellResistanceIncrease(nSR);
     eSR = ExtraordinaryEffect(eSR);
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSR, oPC);
-    SetLocalInt(oSkin, "ContemplativeDR", nLevel);
+    SetLocalInt(oSkin, "ContemplativeSR", nLevel);
 }
 
 void main()

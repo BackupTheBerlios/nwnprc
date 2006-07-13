@@ -164,3 +164,4 @@ const int CLASS_TYPE_SHADOWBLADE             = 208;
 const int CLASS_TYPE_SHADOWSMITH             = 209;
 const int CLASS_TYPE_WAR_WIZARD_OF_CORMYR    = 226;
 const int CLASS_TYPE_VIRTUOSO                = 58;
+const int CLASS_TYPE_SKULLCLAN_HUNTER        = 227;

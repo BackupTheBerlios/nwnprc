@@ -110,6 +110,10 @@ int GetRogueSneak(object oPC)
    // Slayer of Domiel
    iClassLevel = GetLevelByClass(CLASS_TYPE_SLAYER_OF_DOMIEL, oPC);
    if (iClassLevel) iRogueSneak += (iClassLevel + 1) / 2;   
+   
+   // Skullclan Hunter
+   iClassLevel = GetLevelByClass(CLASS_TYPE_SKULLCLAN_HUNTER, oPC);
+   if (iClassLevel) iRogueSneak += iClassLevel / 3;      
 
    if (GetBaseItemType(oWeapon) == BASE_ITEM_LONGBOW || GetBaseItemType(oWeapon) == BASE_ITEM_SHORTBOW)
    {

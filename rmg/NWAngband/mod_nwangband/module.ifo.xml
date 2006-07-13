@@ -16,10 +16,10 @@
         <element name="Mod_Description" type="12" value="-1" />
         <element name="Mod_IsSaveGame" type="0" value="0" />
         <element name="Mod_CustomTlk" type="10" value="nwangband" />
-        <element name="Mod_Entry_Area" type="11" value="nwangband" />
-        <element name="Mod_Entry_X" type="8" value="54.96191" />
-        <element name="Mod_Entry_Y" type="8" value="24.745884" />
-        <element name="Mod_Entry_Z" type="8" value="4.5999994" />
+        <element name="Mod_Entry_Area" type="11" value="angband" />
+        <element name="Mod_Entry_X" type="8" value="25.005064" />
+        <element name="Mod_Entry_Y" type="8" value="24.861933" />
+        <element name="Mod_Entry_Z" type="8" value="4.6000023" />
         <element name="Mod_Entry_Dir_X" type="8" value="0.0" />
         <element name="Mod_Entry_Dir_Y" type="8" value="1.0" />
         <element name="Mod_Expan_List" type="15" />
@@ -52,9 +52,6 @@
         <element name="Mod_CutSceneList" type="15" />
         <element name="Mod_GVar_List" type="15" />
         <element name="Mod_Area_list" type="15" >
-            <struct id="6" >
-                <element name="Area_Name" type="11" value="area001" />
-            </struct>
             <struct id="6" >
                 <element name="Area_Name" type="11" value="desolateanddespa" />
             </struct>
@@ -90,9 +87,6 @@
             </struct>
             <struct id="6" >
                 <element name="Area_Name" type="11" value="mordmagman06" />
-            </struct>
-            <struct id="6" >
-                <element name="Area_Name" type="11" value="ooc" />
             </struct>
             <struct id="6" >
                 <element name="Area_Name" type="11" value="prc_maze_01" />
@@ -167,7 +161,7 @@
                 <element name="Area_Name" type="11" value="thequietofthemin" />
             </struct>
             <struct id="6" >
-                <element name="Area_Name" type="11" value="nwangband" />
+                <element name="Area_Name" type="11" value="angband" />
             </struct>
         </element>
         <element name="Mod_HakList" type="15" >

@@ -9390,7 +9390,7 @@ Mindcrusher             +2
 Psychokinetic Burst     +2
 Suppression             +2
 Wounding                +2
-Discrupting             +3
+Disrupting              +3
 Soulbreaker             +4</entry>
   <entry id="47248" lang="en" sex="m">Bladewind</entry>
   <entry id="47249" lang="en" sex="m">Type of Feat: Class
@@ -10460,7 +10460,7 @@ Augment: For every 2 additional power points you spend, the level of the astral 
   <entry id="47652" lang="en" sex="m">Skullclan Hunters</entry>
   <entry id="47653" lang="en" sex="m">skullclan hunter</entry>
   <entry id="47654" lang="en" sex="m">(PRESTIGE CLASS)
-The Skullclan Hunter is the acclaimed foe of unlife. He champions life by tracking and eradicating all creatures that mock it with evil intent. His devotion to his task is such that he spends moonless nights and weary days tracking undead to their lairs, or, when possible, joining a military band that is likely to come across a legion of the dead. 
+The Skullclan Hunter is the acclaimed foe of unlife. He champions life by tracking and eradicating all creatures that mock it with evil intent. His devotion to his task is such that he spends moonless nights and weary days tracking undead to their lairs, or, when possible, joining a military band that is likely to come across a legion of the dead.
 
 - Hit Die: d6
 - Proficiencies: A Skullclan Hunter gains no additional proficiencies.
@@ -10468,19 +10468,19 @@ The Skullclan Hunter is the acclaimed foe of unlife. He champions life by tracki
 
 REQUIREMENTS:
 
-Alignment: Any Good. 
+Alignment: Any Good.
 Skills: Lore 8 ranks.
 Special: Able to turn undead, Sneak attack +2d6.
 
 ABILITIES:
 
 Level
-1: 
+1:
 2: Divine Strike - Skullclan Hunters can now sneak attack undead.
-3: Immunity to Fear, Sneak Attack +1d6. 
+3: Immunity to Fear, Sneak Attack +1d6.
 4: Immunity to Disease, Protection from Evil (as the spell, but permanent).
 5: Sword of Light - Pierce all undead damage reduction.
-6: Sneak Attack + 2d6. 
+6: Sneak Attack + 2d6.
 7: Immunity to Paralysis.
 8: Immunity to Ability Damage.
 9: Sneak Attack +3d6.
@@ -10494,7 +10494,7 @@ Use: Automatic.</entry>
   <entry id="47658" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Skullclan Hunter level 5.
 Specifics: Any weapon wielded by the Skullclan Hunter now pierces the Damage Reduction of all Undead creatures.
-Use: Automatic.</entry>  
+Use: Automatic.</entry>
   <entry id="47659" lang="en" sex="m">Immunity to Fear</entry>
   <entry id="47660" lang="en" sex="m">Immunity to Disease</entry>
   <entry id="47661" lang="en" sex="m">Immunity to Paralysis</entry>
@@ -10503,7 +10503,7 @@ Use: Automatic.</entry>
   <entry id="47664" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Skullclan Hunter level 3.
 Specifics: As the Skullclan Hunter gains in power and ability, he adds a number of immunities. At level 3, he is immune to fear, at level 4 disease, at level 7 paralysis, at level 8 ability damage, and at level 10, he is immune to energy drain.
-Use: Automatic.</entry>  
+Use: Automatic.</entry>
   <entry id="47671" lang="en" sex="m">Legendary Commander </entry>
   <entry id="47672" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Cha 25, Epic Leadership, Persuade 30 ranks

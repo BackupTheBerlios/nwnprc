@@ -3556,6 +3556,12 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
           {
                ipSpellID = StringToInt( Get2DACache("iprp_onhitspell", "SpellIndex", ipSubType) );
                AssignCommand(oAttacker, ActionCastSpellAtObject(ipSpellID, oDefender, METAMAGIC_ANY, TRUE, ipCostVal, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
+               
+               // This is to catch OnHit: Unique
+               if (IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER == GetItemPropertySubType(ip))
+               {
+               		ExecuteScript("prc_onhitcast", oAttacker);
+               }
 
                // Store the weapon for retrieval in spellscripts.
                SetLocalObject(oAttacker, "PRC_CombatSystem_OnHitCastSpell_Item", oItem);

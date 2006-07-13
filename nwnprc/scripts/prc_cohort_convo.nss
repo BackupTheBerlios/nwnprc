@@ -115,6 +115,10 @@ void main()
                 }
                 else
                 {
+                    if(!GetIsObjectValid(GetMaster(oCohort)))
+                        DoDebug("Master not valid!");
+                    if(!GetIsObjectValid(oCohort))
+                        DoDebug("Cohort not valid!");
                     //speaker not their master
                     SetHeader("Sorry, I can't talk to you right now. Ask "+GetName(GetMaster(oCohort))+" and see if they can help.");
                     //no responces
@@ -221,27 +225,65 @@ void main()
                 int nItem       = nTargetType &  8;
                 int nDoor       = nTargetType & 16;
                 int nPlaceable  = nTargetType & 32;
-                
-                object oTest = GetFirstObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
+                //potions are caster only
+                if(GetBaseItemType(oItem) == BASE_ITEM_POTIONS
+                    || GetBaseItemType(oItem) == BASE_ITEM_ENCHANTED_POTION)
+                {
+                    nCaster = TRUE;
+                    nCreature = FALSE;
+                    nLocation = FALSE;
+                    nItem = FALSE;
+                    nDoor = FALSE;
+                    nPlaceable = FALSE;
+                }
                 int nCount;
                 if(array_exists(oCohort, "PRC_ItemsToUse_Target"))
                     array_delete(oCohort, "PRC_ItemsToUse_Target");    
                 array_create(oCohort, "PRC_ItemsToUse_Target");
-                while(GetIsObjectValid(oTest))
+                //self
+                if(nCaster)
                 {
-                    int nType = GetObjectType(oTest);
-                    if((nType == OBJECT_TYPE_CREATURE && nCreature)
-                        || (nType == OBJECT_TYPE_DOOR && nDoor)
-                        || (nType == OBJECT_TYPE_PLACEABLE && nPlaceable))
+                    AddChoice("Self ("+GetName(oCohort)+")", array_get_size(oCohort, "PRC_ItemsToUse_Target"));
+                    array_set_object(oCohort, "PRC_ItemsToUse_Target", 
+                        array_get_size(oCohort, "PRC_ItemsToUse_Target"), oCohort);
+                
+                }
+                //nearby objects or locations of those objects
+                if(nCreature 
+                    || nDoor 
+                    || nPlaceable
+                    || nLocation)
+                {   
+                    object oTest = GetFirstObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
+                    while(GetIsObjectValid(oTest))
+                    {
+                        int nType = GetObjectType(oTest);
+                        if((nType == OBJECT_TYPE_CREATURE && nCreature)
+                            || (nType == OBJECT_TYPE_DOOR && nDoor)
+                            || (nType == OBJECT_TYPE_PLACEABLE && nPlaceable)
+                            || nLocation)
+                        {
+                            AddChoice(GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
+                            array_set_object(oCohort, "PRC_ItemsToUse_Target", 
+                                array_get_size(oCohort, "PRC_ItemsToUse_Target"), oTest);
+                        }
+                        oTest = GetNextObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
+                    }
+                }
+                //items in inventory
+                if(nItem)
+                {
+                    object oTest = GetFirstItemInInventory(oCohort);
+                    while(GetIsObjectValid(oTest))
                     {
                         AddChoice(GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
                         array_set_object(oCohort, "PRC_ItemsToUse_Target", 
                             array_get_size(oCohort, "PRC_ItemsToUse_Target"), oTest);
-                    }
-                    oTest = GetNextObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
+                        oTest = GetNextItemInInventory(oCohort);
+                    }                
                 }
                 
-                SetHeader("Who or what do you want me to use "+GetName(oItem)+"on?");
+                SetHeader("Who or what do you want me to use "+GetName(oItem)+" on?");
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -321,7 +363,8 @@ void main()
                 AddChoice("Try to remain stealthy all the time.", 7, oPC);
                 AddChoice("Stay stealthy, but only until the next fight.", 8, oPC);
                 //x2_d1_instealth
-                if(GetActionMode(oCohort, ACTION_MODE_STEALTH))
+                //if(GetActionMode(oCohort, ACTION_MODE_STEALTH))
+                //not used, cohort drops stealth during conversation
                     AddChoice("Don't try to be stealthy anymore.", 9, oPC);
                 AddChoice("I don't want to change anything else right now.", 10, oPC);
 
@@ -421,6 +464,7 @@ void main()
         array_delete(oCohort, "PRC_ItemsToUse");
         array_delete(oCohort, "PRC_ItemsToUse_Target");
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
+        DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -432,6 +476,7 @@ void main()
         array_delete(oCohort, "PRC_ItemsToUse");
         array_delete(oCohort, "PRC_ItemsToUse_Target");
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
+        DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
     }
     // Handle PC responses
     else
@@ -480,9 +525,11 @@ void main()
             }    
             else    
             {
-                while(GetIsItemPropertyValid(ipTest)
-                    && GetItemPropertyType(ipTest) != ITEM_PROPERTY_CAST_SPELL)
+                ipTest = GetFirstItemProperty(oItem);
+                while(GetIsItemPropertyValid(ipTest))
                 {
+                    if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
+                        break;
                     ipTest = GetNextItemProperty(oItem);
                 }
                 int nSpellID = GetItemPropertySubType(ipTest);
@@ -503,9 +550,64 @@ void main()
             object oItem = GetLocalObject(oCohort, "PRC_ItemToUse");
             int nSpellID = GetLocalInt(oCohort, "PRC_ItemToUse_Spell");  
             object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
+            itemproperty ipIP;
+            ipIP = GetFirstItemProperty(oItem);
+            while(GetIsItemPropertyValid(ipIP))
+            {
+                if(GetItemPropertyType(ipIP) == ITEM_PROPERTY_CAST_SPELL)
+                {
+                    int nipSpellID = GetItemPropertySubType(ipIP);
+                    //convert that to a real ID
+                    nipSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nipSpellID));
+                    if(nipSpellID == nSpellID)
+                    {
+                        DoDebug("Ending itemprop loop "+IntToString(nipSpellID));
+                        break;//end while loop
+                    }    
+                }
+                ipIP = GetNextItemProperty(oItem);
+            }
             
+            //test if location or object
+            //use object by preference
+                
+            int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
+            /*
+            #  0x01 = 1 = Self
+            # 0x02 = 2 = Creature
+            # 0x04 = 4 = Area/Ground
+            # 0x08 = 8 = Items
+            # 0x10 = 16 = Doors
+            # 0x20 = 32 = Placeables 
+            */
+            int nCaster     = nTargetType &  1;
+            int nCreature   = nTargetType &  2;
+            int nLocation   = nTargetType &  4;
+            int nItem       = nTargetType &  8;
+            int nDoor       = nTargetType & 16;
+            int nPlaceable  = nTargetType & 32;
+            int nType = GetObjectType(oTarget);
             
-            nStage = STAGE_REENTRY;
+            if((oTarget == oCohort && nCaster)
+                || (nType == OBJECT_TYPE_CREATURE && nCreature)
+                || (nType == OBJECT_TYPE_DOOR && nDoor)
+                || (nType == OBJECT_TYPE_PLACEABLE && nPlaceable)
+                || (nType == OBJECT_TYPE_ITEM && nItem))
+            {
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort, 
+                    ActionUseItemPropertyAtObject(oItem, ipIP, oTarget));
+                DoDebug("Running ActionUseItemPropertyAtObject()");
+            }
+            else if(nLocation)
+            {
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort, 
+                    ActionUseItemPropertyAtLocation(oItem, ipIP, GetLocation(oTarget)));            
+                DoDebug("Running ActionUseItemPropertyAtLocation()");
+            }
+            
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT); 
         }
         else if(nStage == STAGE_IDENTIFY)
         {

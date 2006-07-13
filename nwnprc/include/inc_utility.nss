@@ -1129,8 +1129,7 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
     }
     //if you got to this point, something whent wrong
     //rather than failing silently, well log it
-    //SendMessageToPC(GetFirstPC(), "ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
-    WriteTimestampedLogEntry("ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
+    DoDebug("ERROR: ActionUseItemProperty() failed for "+GetName(OBJECT_SELF)+" using "+GetName(oItem)+" to cast "+IntToString(nSpellID));
 }
 
 
@@ -1160,7 +1159,6 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
     }
     //if you got to this point, something whent wrong
     //rather than failing silently, well log it
-    //SendMessageToPC(GetFirstPC(), "ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
-    WriteTimestampedLogEntry("ERROR: ActionUseItemProperty() failed for "+GetTag(OBJECT_SELF)+" using "+GetTag(oItem));
+    DoDebug("ERROR: ActionUseItemProperty() failed for "+GetName(OBJECT_SELF)+" using "+GetName(oItem)+" to cast "+IntToString(nSpellID));
 }
 

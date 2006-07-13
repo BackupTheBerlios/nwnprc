@@ -79,7 +79,7 @@ void main()
 //PRC CHANGE
             //BeginConversation("prc_cohort");
             //use a dynamic conversation instead
-            StartDynamicConversation("prc_cohort_convo", oShouter);
+            StartDynamicConversation("prc_cohort_convo", oShouter, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, FALSE, OBJECT_SELF);
 //PRC CHANGE            
         }
     }

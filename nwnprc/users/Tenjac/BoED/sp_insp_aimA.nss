@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Inspired Aim
-//:: FileName  sp_insp_aim.nss
+//:: Name      Inspired Aim: On Enter
+//:: FileName  sp_insp_aimA.nss
 //:://////////////////////////////////////////////
 /**@file Inspired Aim
 Enchantment(Compulsion)
@@ -29,14 +29,33 @@ Created:   7/12/06
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
+	object oTarget= GetEnteringObject();
+	object aoeCreator = GetAreaOfEffectCreator();
+	itemproprety iBonus = ItemPropertyAttackBonus(2);
 	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
-	
-	object oPC = OBJECT_SELF;
-	effect eAOE = EffectAreaOfEffect(VFX_AOE_INSPIRED_AIM);
+	if(GetIsFriend(oTarget, aoeCreator))
+	{
+		object oWeapon = GetFirstItemInInventory(oTarget);
+		object oEquipped = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
 		
-	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, oPC);
-	
-	SPSetSchool();
+		if(IPGetIsRangedWeapon(oEquipped))
+		{
+			IPSafeAddItemProperty(oEquipped, iBonus, 0.0f);
+		}
+		
+		while(GetIsObjectValid(oWeapon))
+		{
+			if(IPGetIsRangedWeapon(oWeapon))
+			{
+				IPSafeAddItemProperty(oWeapon, iBonus, 0.0f);
+				
+			}
+			oWeapon = GetNextItemInInventory(oTarget);
+		}
+	}
 }
+			
+			
+	
+	
+	

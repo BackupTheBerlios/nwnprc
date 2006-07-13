@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Inspired Aim
-//:: FileName  sp_insp_aim.nss
+//:: Name      Inspired Aim: On Exit
+//:: FileName  sp_insp_aimB.nss
 //:://////////////////////////////////////////////
 /**@file Inspired Aim
 Enchantment(Compulsion)
@@ -24,19 +24,3 @@ Created:   7/12/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-
-#include "spinc_common"
-
-void main()
-{
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
-	
-	object oPC = OBJECT_SELF;
-	effect eAOE = EffectAreaOfEffect(VFX_AOE_INSPIRED_AIM);
-		
-	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eAOE, oPC);
-	
-	SPSetSchool();
-}

@@ -5,8 +5,12 @@
 1     Caster_Level_7th              CASTERLVL   7                ****        
 2     CraftWondrousItem             FEAT        2925             ****        
 3     Aid                           SPELL       1                ****        
-4     Dimension_Door                ****        ****             ****        
+4     Dimension_Door                SPELL       2890             ****        
 5     Halfling                      RACE        3                ****        
-6     Good                          ALIGN       LG               ****        
-7     Good                          ALIGN       NG               ****        
-8     Good                          ALIGN       CG               ****        
+6     Ghostwise_Halfling            RACE        190              ****        
+7     Strongheart_Halfling          RACE        192              ****        
+8     Tallfellow_Halfling           RACE        193              ****        
+9     Deep_Halfling                 RACE        194              ****        
+10    Good                          ALIGN       LG               ****        
+11    Good                          ALIGN       NG               ****        
+12    Good                          ALIGN       CG               ****        

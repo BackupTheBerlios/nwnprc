@@ -7,4 +7,5 @@
 3     Barkskin                                         SPELL       3                ****        
 4     Bulls_Strength                                   SPELL       9                ****        
 5     6th_Level                                        LEVEL       6                ****        
-6     Magic_Circle_against_Alignment                   SPELL       322              ****        
+6     Magic_Circle_against_Evil                        SPELL       104              ****        
+7     Magic_Circle_against_Good                        SPELL       105              ****        

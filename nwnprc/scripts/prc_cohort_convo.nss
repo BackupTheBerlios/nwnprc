@@ -202,9 +202,10 @@ void main()
                 int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
                 int nHostileSpell = StringToInt(Get2DACache("spells", "HostileSetting", nSpellID));
                 string sRangeType = Get2DACache("spells", "Range", nSpellID);
-                float fRange;
+                float fRange = 50.0;
                 if(sRangeType == "S"
-                    || sRangeType == "T")
+                    || sRangeType == "T"
+                    || sRangeType == "P")
                     fRange = 8.0;
                 else if(sRangeType == "M")
                     fRange = 20.0;
@@ -276,7 +277,7 @@ void main()
                     object oTest = GetFirstItemInInventory(oCohort);
                     while(GetIsObjectValid(oTest))
                     {
-                        AddChoice(GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
+                        AddChoice("(in inventory) "+GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
                         array_set_object(oCohort, "PRC_ItemsToUse_Target", 
                             array_get_size(oCohort, "PRC_ItemsToUse_Target"), oTest);
                         oTest = GetNextItemInInventory(oCohort);
@@ -597,14 +598,14 @@ void main()
                 AssignCommand(oCohort, ClearAllActions());
                 AssignCommand(oCohort, 
                     ActionUseItemPropertyAtObject(oItem, ipIP, oTarget));
-                DoDebug("Running ActionUseItemPropertyAtObject()");
+                DoDebug("Running ActionUseItemPropertyAtObject() at "+GetName(oTarget));
             }
             else if(nLocation)
             {
                 AssignCommand(oCohort, ClearAllActions());
                 AssignCommand(oCohort, 
                     ActionUseItemPropertyAtLocation(oItem, ipIP, GetLocation(oTarget)));            
-                DoDebug("Running ActionUseItemPropertyAtLocation()");
+                DoDebug("Running ActionUseItemPropertyAtLocation() at "+GetName(oTarget));
             }
             
             AllowExit(DYNCONV_EXIT_FORCE_EXIT); 

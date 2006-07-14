@@ -1,4 +1,4 @@
-const int VFX_PER_NEW_TIMESTOP = 140;
+
 void DoTimestopEquip();
 void DoTimestopUnEquip();
 void ApplyTSToObject(object oTarget);

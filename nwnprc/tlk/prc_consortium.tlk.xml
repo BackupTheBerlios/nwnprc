@@ -25843,13 +25843,11 @@ Animals or vermin with this template become magical beasts, but otherwise the cr
 
 Special Attacks
 A celestial creature retains all the special attacks of the base creature and also gains the following attack.
-
 Smite Evil (Su)
 Once per day a celestial creature can make a normal melee attack to deal extra damage equal to its HD (maximum of +20) against an evil foe.
 
 Special Qualities
 A celestial creature retains all the special qualities of the base creature and also gains the following qualities:
-
 Darkvision.
 Damage reduction. 4-11 HD, 5/+1. 12+ HD 10/+1.
 Resistance to acid, cold, and electricity 1-7 HD 5. 8+ HD 10
@@ -25860,4 +25858,87 @@ Same as the base creature, but Intelligence is at least 3.
 
 Level Adjustment
 Same as the base creature +2. </entry>
+  <entry id="70005" lang="en" sex="m">Type of Feat: Template
+Prerequisite: Fiendish Template, Half-Fiend Template.
+Specifics: This feat allows the character to make a special attack against good creatures. Once per day a fiendish creature can make a normal melee attack to deal extra damage equal to its HD (maximum of +20) against an good foe.
+Use: Selected. Smite Good only affects good creatures.</entry>
+  <entry id="70006" lang="en" sex="m">Template: Fiendish</entry>
+  <entry id="70007" lang="en" sex="m">Fiendish creatures dwell on the lower planes, the realms of evil, although they resemble beings found on the Material Plane. They are more fearsome in appearance than their earthly counterparts.
+    
+"Fiendish" is an inherited template that can be added to any corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, ooze, plant, or vermin of nongood alignment (referred to hereafter as the base creature).
+
+A fiendish creature uses all the base creature’s statistics and abilities except as noted here. Do not recalculate the creature’s Hit Dice, base attack bonus, saves, or skill points if its type changes.
+
+Size and Type
+Animals or vermin with this template become magical beasts, but otherwise the creature type is unchanged. Size is unchanged. Fiendish creatures encountered on the Material Plane have the extraplanar subtype. 
+
+Special Attacks
+A fiendish creature retains all the special attacks of the base creature and also gains the following special attack.
+Smite Good (Su)
+Once per day the creature can make a normal melee attack to deal extra damage equal to its HD total (maximum of +20) against a good foe.
+
+Special Qualities
+A fiendish creature retains all the special qualities of the base creature and also gains the following.
+Darkvision
+Damage reduction. 4-11 HD, 5/+1. 12+ HD 10/+1.
+Resistance to cold and fire. 1-7 HD 5, 8+ HD 10
+Spell resistance equal to the HD + 5 (maximum 25).
+
+Abilities
+Same as the base creature, but Intelligence is at least 3.
+
+Level Adjustment
+Same as the base creature +2. </entry>
+  <entry id="70008" lang="en" sex="m">Template: Half-Celestial</entry>
+  <entry id="70009" lang="en" sex="m">No matter the form, half-celestials are always comely and delightful to the senses, having golden skin, sparkling eyes, angelic wings, or some other sign of their higher nature.
+    
+"Half-celestial" is an inherited template that can be added to any living, corporeal creature with an Intelligence score of 4 or higher and nonevil alignment (referred to hereafter as the base creature).
+
+A half-celestial uses all the base creature’s statistics and special abilities except as noted here.
+
+Size and Type
+The creature’s type changes to outsider. Do not recalculate the creature’s Hit Dice, base attack bonus, or saves. Size is unchanged. Half-celestials are normally native outsiders.
+
+Speed
+A half-celestial has feathered wings and can fly at twice the base creature’s base land speed (good maneuverability). If the base creature has a fly speed, use that instead.
+
+Armor Class
+Natural armor improves by +1 (this stacks with any natural armor bonus the base creature has).
+
+Special Attacks
+A half-celestial retains all the special attacks of the base creature and also gains the following special 
+abilities.
+Daylight (Su)
+Half-celestials can use a daylight effect (as the spell) at will.
+Smite Evil (Su)
+Once per day a half-celestial can make a normal melee attack to deal extra damage equal to its HD (maximum of +20) against an evil foe.
+
+Spell-Like Abilities
+A half-celestial with an Intelligence or Wisdom score of 8 or higher has two or more spell-like abilities, depending on its Hit Dice, as indicated on the table below. The abilities are cumulative. Unless otherwise noted, an ability is usable once per day. Caster level equals the creature’s HD, and the save DC is Charisma-based.
+
+1+ HD, Protection from evil 3/day, bless
+3+ HD, Aid, detect evil
+5+ HD, Cure serious wounds, neutralize poison
+7+ HD, Holy smite, remove disease
+9+ HD, Dispel evil
+11+ HD, Holy word
+13+ HD, Holy aura 3/day, hallow
+15+ HD, Mass charm monster
+17+ HD, Summon monster IX
+19+ HD, Resurrection
+
+Special Qualities
+A half-celestial has all the special qualities of the base creature, plus the following special qualities.
+Darkvision
+Immunity to disease.
+Resistance to acid 10, cold 10, and electricity 10.
+Damage reduction: 5/+1 (if HD 11 or less) or 10/+1 (if HD 12 or more).
+Spell resistance equal to creature’s HD + 10 (maximum 35).
++4 racial bonus on Fortitude saves against poison.
+
+Abilities
+Increase from the base creature as follows: Str +4, Dex +2, Con +4, Int +2, Wis +4, Cha +4.
+
+Level Adjustment
+Same as base creature +4.</entry>
 </tlk>

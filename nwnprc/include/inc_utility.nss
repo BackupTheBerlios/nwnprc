@@ -19,7 +19,7 @@ const int ARMOR_TYPE_LIGHT      = 1;
 const int ARMOR_TYPE_MEDIUM     = 2;
 const int ARMOR_TYPE_HEAVY      = 3;
 
-const int ACTION_USE_ITEM_TMI_LIMIT = 500;
+const int ACTION_USE_ITEM_TMI_LIMIT = 1500;
 
 /*********************\
 * Function Prototypes *

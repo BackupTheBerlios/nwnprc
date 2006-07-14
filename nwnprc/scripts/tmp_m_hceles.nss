@@ -156,32 +156,85 @@ void main()
     SetCompositeBonus(oSkin, "Template_hceles_int", 2, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_INT); 
     SetCompositeBonus(oSkin, "Template_hceles_wis", 4, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_WIS); 
     SetCompositeBonus(oSkin, "Template_hceles_cha", 4, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CHA); 
-    //daylight
     //smite evil
+    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_SMITE_EVIL);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
     //marker feat
-    //protection from evil 3/day
-    //bless 1/day
-    //if(nHD >= 3)
-        //aid 1/day
-        //detect evil 1/day
-    //if(nHD >= 5)
-        //cure serious wounds 1/day
-        //neutralize poison 1/day
-    //if(nHD >= 7)
-        //holy smite 1/day
-        //remove disease 1/day
-    //if(nHD >= 9)
-        //dispel evil 1/day
-    //if(nHD >= 11)
-        //holy word 1/day
-    //if(nHD >= 13)
-        //holy aura 3.day
-        //hallow 1/day
-    //if(nHD >= 15)
-        //mass charm monster 1/day
-    //if(nHD >= 17)
-        //summon monster IX 1/day
-    //if(nHD >= 19)
-        //resurrection
-    //TO BE ADDED   
+    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_MARKER);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+    //daylight
+//TO BE ADDED
+    //SLAs
+    if(GetAbilityScore(oPC,ABILITY_WISDOM, TRUE) >= 8 
+        || GetAbilityScore(oPC, ABILITY_INTELLIGENCE, TRUE) >= 8)
+    {   
+        //protection from evil 3/day
+        ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_PROTECTION);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        //bless 1/day
+        ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_BLESS);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        if(nHD >= 3)
+        {
+            //aid 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_AID);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            //detect evil 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_DETECT);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        }   
+        if(nHD >= 5)
+        {
+            //cure serious wounds 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_CURE_SERIOUS);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            //neutralize poison 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_NEUTRALIZE_POISON);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        }   
+        if(nHD >= 7)
+        {
+            //holy smite 1/day
+//TO BE ADDED
+            //remove disease 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_REMOVE_DISEASE);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        }   
+        if(nHD >= 9)
+        {
+            //dispel evil 1/day
+//TO BE ADDED
+        }   
+        if(nHD >= 11)
+        {
+            //holy word 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_HOLY_WORD);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        }   
+        if(nHD >= 13)
+        {
+            //holy aura 3.day
+//TO BE ADDED
+            //hallow 1/day
+//TO BE ADDED
+        }   
+        if(nHD >= 15)
+        {
+            //mass charm monster 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        }   
+        if(nHD >= 17)
+        {
+            //summon monster IX 1/day
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        }   
+        if(nHD >= 19)
+        {
+            //resurrection
+            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        }   
+    }    
 }

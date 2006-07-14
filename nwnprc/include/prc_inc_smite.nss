@@ -10,11 +10,15 @@ not evil, the smite has no effect but it is still used up for that day.
 */
 /*
 Good
-    Paladin
-    Fist of Raziel
-Evil
     Anti-paldin
     Blackguard
+    Fiendish Template
+    Half-fiend Template
+Evil
+    Paladin
+    Fist of Raziel
+    Celestial Template
+    Half-celestial Template
 Undead
     Soldier of Light
 Infidel
@@ -26,6 +30,8 @@ CW Samurai
 
 const int SMITE_TYPE_GOOD_ANTIPALADIN               = 11;
 const int SMITE_TYPE_GOOD_BLACKGUARD                = 12; //not used, biowares is adequate
+const int SMITE_TYPE_GOOD_TEMPLATE_FIENDISH         = 13;
+const int SMITE_TYPE_GOOD_TEMPLATE_HALF_FIEND       = 14;
 
 const int SMITE_TYPE_EVIL_PALADIN                   = 21; //not used, biowares is adequate
 const int SMITE_TYPE_EVIL_FIST_OF_RAZIEL            = 22;
@@ -190,6 +196,18 @@ void DoSmite(object oPC, object oTarget, int nType)
             nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
             if(nAttack < 1)
                 nAttack = 1;
+        }   
+        else if(nType == SMITE_TYPE_GOOD_TEMPLATE_FIENDISH)
+        {
+            nDamage = GetHitDice(oPC);
+            if(nDamage > 20)
+                nDamage = 20;
+        }   
+        else if(nType == SMITE_TYPE_GOOD_TEMPLATE_HALF_FIEND)
+        {
+            nDamage = GetHitDice(oPC);
+            if(nDamage > 20)
+                nDamage = 20;
         }   
         nDamageType = DAMAGE_TYPE_DIVINE;
         sFailedTarget = "Smite Failed: target is not Good";

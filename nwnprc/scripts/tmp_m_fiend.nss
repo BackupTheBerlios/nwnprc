@@ -123,7 +123,9 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
     //smite good
-    //TO BE ADDED
+    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_FIENDISH_SMITE_GOOD);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);    
     //marker feat
-    //TO BE ADDED
+    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_FIENDISH_MARKER);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);   
 }

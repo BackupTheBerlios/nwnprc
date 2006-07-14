@@ -1,0 +1,71 @@
+Masterwork: +1 Attack (weapons) reduced armour check penalty (armour)
+
+Material use off by default (use switch)
+
+Normal Item crafting DC:
+
+Armour/Shield                       = 10 + AC bonus
+Longbow/Shortbow                    = 12
+Composite Longbow/Shortbow (Mighty) = 15 + 2x Mighty
+Crossbow                            = 15
+Simple Melee/Thrown Weapon          = 12
+Martial Melee/Thrown Weapon         = 15
+Exotic Melee/Thrown Weapon          = 18
+
+Costs 1/3 of item price in materials
+
+Masterwork Component, DC 20, 300gp for weapon, 150gp for armour/shield
+
+placeable in PC's area - clutter, bad idea
+
+crafting magic items is capped at highest caster level requirement for any one property
+
+capped at +10 total enhancement (different rules for epic)
+
+unique ids for storage in limbo chest
+
+XXX_PRC_UID_PREFIX + <stuff> + PRC_CRAFT_UID_SUFFIX
+
+where XXX identifies masterwork, material
+
+Materials:
+
+Adamantine (steel): weapons ignore hardness < 20 (not doable), armour gets DR - 1/- light, 2/- medium, 3/- heavy
+
+auto-masterwork
+
+prices (inc. masterwork cost):
+
+ammo: +60
+light: +5000
+medium: +10000
+heavy: +15000
+weapon: +3000
+
+Darkwood (wood): 1/2 weight, armour check penalty -2 for shields
+
+auto-masterwork
+
+price: +10/lb to normal masterwork version
+
+Dragonhide: armour and shields only
+
+auto-masterwork
+
+price: x2
+
+Cold Iron (steel): not doable
+
+Mithral (steel); 1/2 weight (for all), armour check penalty -3, spell failure -10%, max dexterity bonus +2 (setcompositebonus on creature hide onequip) for armour/shields
+
+auto-masterwork
+
+prices (inc. masterwork cost):
+
+light: +1000
+medium: +4000
+heavy: +9000
+shield: +1000
+other: +500/lb
+
+Alchemical Silver (steel): not doable

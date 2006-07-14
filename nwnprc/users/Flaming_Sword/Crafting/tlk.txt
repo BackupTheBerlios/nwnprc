@@ -1,0 +1,4 @@
+  <entry id="1630" lang="en" sex="m">10% of Weight</entry>
+  
+  
+  <entry id="00000" lang="en" sex="m">50% of Weight</entry>

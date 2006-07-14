@@ -28,9 +28,66 @@ not the damage.
 Material Component: A black tulip. 
 
 Author:    Tenjac
-Created:   
+Created:   7/14/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION)
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	effect eAOE = EffectAreaOfEffect(VFX_AOE_RAIN_OF_BLACK_TULIPS);
+	location lLoc = GetLocation(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	int nDam;
+	int nAlign;
+	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	//Create AoE
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDur);
+	
+	//Loop through and damage creatures
+	while(GetIsObjectValid(oTarget))
+	{
+		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+		{
+			//SR
+			if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+			{
+				nDam = d6(5);
+				
+				if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				{
+					nDam = 30;
+				}
+				
+				if(nMetaMagic == METAMAGIC_EMPOWER)
+				{
+					nDam += (nDam/2);
+				}
+				
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+			}
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	}
+	SPGoodShift(oPC);
+	SPSetSchool();
+}
+				
+		
+
+

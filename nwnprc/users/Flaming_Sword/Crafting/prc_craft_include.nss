@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Jul 12, 2006
+    Modified: Jul 15, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -14,6 +14,10 @@
 
 itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue = 0, int nParam1Value = 0);
 
+//Partly ripped off the lexicon :P
+int GetItemBaseAC(object oItem);
+
+int GetItemArmourCheckPenalty(object oItem);
 
 #include "prc_alterations"
 
@@ -32,9 +36,53 @@ const int PRC_CRAFT_EXOTIC_WEAPON       = 3;
 const int PRC_CRAFT_MATERIAL_METAL      = 1;
 const int PRC_CRAFT_MATERIAL_WOOD       = 2;
 const int PRC_CRAFT_MATERIAL_LEATHER    = 3;
+const int PRC_CRAFT_MATERIAL_CLOTH      = 4;
 
 const string PRC_CRAFT_UID_SUFFIX       = "_UID_PRC";
+const string PRC_CRAFT_STORAGE_CHEST    = "PRC_CRAFT_STORAGE_CHEST";
+const string PRC_CRAFT_TEMPORARY_CHEST  = "PRC_CRAFT_TEMPORARY_CHEST";
 
+const int PRC_CRAFT_FLAG_NONE               = 0;
+const int PRC_CRAFT_FLAG_MASTERWORK         = 1;
+const int PRC_CRAFT_FLAG_ADAMANTINE         = 2;
+const int PRC_CRAFT_FLAG_DARKWOOD           = 4;
+const int PRC_CRAFT_FLAG_DRAGONHIDE         = 8;
+const int PRC_CRAFT_FLAG_MITHRAL            = 16;
+const int PRC_CRAFT_FLAG_COLD_IRON          = 32;   //not implemented
+const int PRC_CRAFT_FLAG_ALCHEMICAL_SILVER  = 64;   //not implemented
+
+const int PRC_CRAFT_ITEM_TYPE_WEAPON    = 1;
+const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
+const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
+
+object GetCraftChest()
+{
+    return GetObjectByTag(PRC_CRAFT_STORAGE_CHEST);
+}
+
+object GetTempCraftChest()
+{
+    return GetObjectByTag(PRC_CRAFT_TEMPORARY_CHEST);
+}
+
+string GetMaterialString(int nType)
+{
+    string sType = IntToString(nType);
+    int nLen = GetStringLength(sType);
+    switch(nLen)
+    {
+        case 1: sType = "0" + sType;
+        case 2: sType = "0" + sType; break;
+    }
+    return sType;
+}
+
+//Will replace first 3 chars of item's tag with material flags
+string GetNewItemTag(object oItem, int nType)
+{
+    string sTag = GetTag(oItem);
+    return GetMaterialString(nType) + GetStringRight(sTag, GetStringLength(sTag) - 3);
+}
 
 //Returns TRUE if nBaseItem can have nItemProp
 int ValidProperty(int nBaseItem, int nItemProp)
@@ -67,40 +115,6 @@ int ValidProperty(int nBaseItem, int nItemProp)
         case 21: sPropCloumn = "21_Glove"; break;
     }
     return(Get2DACache("itemprops", sPropCloumn, nItemProp) == "1");
-}
-
-//Returns whether the item can be made of a material
-int CheckMaterial(int nBaseItem, int nMaterial)
-{
-    if(nBaseItem == BASE_ITEM_WHIP) return (nMaterial == PRC_CRAFT_MATERIAL_LEATHER);
-
-    if((nBaseItem == BASE_ITEM_SMALLSHIELD) ||
-        (nBaseItem == BASE_ITEM_LARGESHIELD) ||
-        (nBaseItem == BASE_ITEM_TOWERSHIELD)
-        )
-        return (nMaterial != PRC_CRAFT_MATERIAL_LEATHER);
-
-    if((nBaseItem == BASE_ITEM_HEAVYCROSSBOW) ||
-        (nBaseItem == BASE_ITEM_LIGHTCROSSBOW) ||
-        (nBaseItem == BASE_ITEM_LONGBOW) ||
-        (nBaseItem == BASE_ITEM_SHORTBOW) ||
-        (nBaseItem == BASE_ITEM_QUARTERSTAFF) ||
-        (nBaseItem == BASE_ITEM_CLUB) ||
-        (nBaseItem == 304) ||   //nunchaku
-        (nBaseItem == BASE_ITEM_SCYTHE) ||
-        (nBaseItem == BASE_ITEM_SHORTSPEAR) ||
-        (nBaseItem == BASE_ITEM_TRIDENT) ||
-        (nBaseItem == BASE_ITEM_HALBERD) ||
-        (nBaseItem == 322) ||   //goad
-        (nBaseItem == BASE_ITEM_CLUB) ||
-        )
-    {
-        return (nMaterial == PRC_CRAFT_MATERIAL_WOOD);
-    }
-
-    //assume stuff is made of metal
-    return (nMaterial == PRC_CRAFT_MATERIAL_METAL);
-
 }
 
 //Returns an int depending on the weapon type
@@ -152,6 +166,73 @@ int GetItemBaseAC(object oItem)
     return nAC;
 }
 
+int GetItemArmourCheckPenalty(object oItem)
+{
+    int nPenalty = 0;
+    if(nBase == BASE_ITEM_SMALLSHIELD)
+        nPenalty = 1;
+    else if(nBase == BASE_ITEM_LARGESHIELD)
+        nPenalty = 2;
+    else if(nBase == BASE_ITEM_TOWERSHIELD)
+        nPenalty = 10;
+    else if(nBase == BASE_ITEM_ARMOR)
+    {
+        switch(GetBaseAC(oItem))
+        {
+            case 3: nPenalty = 1; break;
+            case 4: nPenalty = 2; break;
+            case 5: nPenalty = 5; break;
+            case 6: nPenalty = 7; break;
+            case 7: nPenalty = 7; break;
+            case 8: nPenalty = 8; break;
+        }
+    }
+    return nPenalty;
+}
+
+//Returns whether the item can be made of a material
+int CheckCraftingMaterial(object oItem, int nMaterial)
+{
+    int nBaseItem = GetBaseItemType(oItem);
+    if(nBaseItem == BASE_ITEM_WHIP) return (nMaterial == PRC_CRAFT_MATERIAL_LEATHER);
+
+    if((nBaseItem == BASE_ITEM_SMALLSHIELD) ||
+        (nBaseItem == BASE_ITEM_LARGESHIELD) ||
+        (nBaseItem == BASE_ITEM_TOWERSHIELD)
+        )
+        return (nMaterial != PRC_CRAFT_MATERIAL_LEATHER);
+
+    if(nBaseItem == BASE_ITEM_ARMOR)
+    {
+        int nAC = GetBaseAC(oItem);
+        if(nAC >= 0 && nAC <= 1)  return (nMaterial == PRC_CRAFT_MATERIAL_CLOTH);
+        if(nAC >= 2 && nAC <= 3)  return (nMaterial == PRC_CRAFT_MATERIAL_LEATHER);
+        else return (nMaterial == PRC_CRAFT_MATERIAL_METAL);
+    }
+
+    if((nBaseItem == BASE_ITEM_HEAVYCROSSBOW) ||
+        (nBaseItem == BASE_ITEM_LIGHTCROSSBOW) ||
+        (nBaseItem == BASE_ITEM_LONGBOW) ||
+        (nBaseItem == BASE_ITEM_SHORTBOW) ||
+        (nBaseItem == BASE_ITEM_QUARTERSTAFF) ||
+        (nBaseItem == BASE_ITEM_CLUB) ||
+        (nBaseItem == 304) ||   //nunchaku
+        (nBaseItem == BASE_ITEM_SCYTHE) ||
+        (nBaseItem == BASE_ITEM_SHORTSPEAR) ||
+        (nBaseItem == BASE_ITEM_TRIDENT) ||
+        (nBaseItem == BASE_ITEM_HALBERD) ||
+        (nBaseItem == 322) ||   //goad
+        (nBaseItem == BASE_ITEM_CLUB) ||
+        )
+    {
+        return (nMaterial == PRC_CRAFT_MATERIAL_WOOD);
+    }
+
+    //assume stuff is made of metal (most of it is)
+    return (nMaterial == PRC_CRAFT_MATERIAL_METAL);
+
+}
+
 //Returns the DC for crafting a particular item
 int GetCraftingDC(object oItem)
 {
@@ -195,10 +276,7 @@ int GetCraftingDC(object oItem)
 //Applies Masterwork properties to oItem
 void MakeMasterwork(object oItem)
 {
-    //if(GetIsMagicItem(oItem)) return;           //sanity checks
-    if(GetPlotFlag(oItem)) return;
-    //string sName = GetName(oItem);
-    //if(GetStringLeft(sName, 11) == "Masterwork ") return;
+    if(GetPlotFlag(oItem)) return;  //sanity check
     int nBase = GetBaseItemType(oItem);
     if(((nBase == BASE_ITEM_ARMOR) ||
         (nBase == BASE_ITEM_SMALLSHIELD) ||
@@ -216,13 +294,13 @@ void MakeMasterwork(object oItem)
         itemproperty ip5 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SET_TRAP, 1);
         itemproperty ip6 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE, 1);
         itemproperty ip7 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP, 1);
-        IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-        IPSafeAddItemProperty(oItem, ip2, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-        IPSafeAddItemProperty(oItem, ip3, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-        IPSafeAddItemProperty(oItem, ip4, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-        IPSafeAddItemProperty(oItem, ip5, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-        IPSafeAddItemProperty(oItem, ip6, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-        IPSafeAddItemProperty(oItem, ip7, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
+        IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip2, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip3, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip4, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip5, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip6, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip7, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
     }
     else if(GetWeaponType(nBase))
     {
@@ -231,12 +309,11 @@ void MakeMasterwork(object oItem)
     }
     else
         return;
-    //SetName(oItem, "Masterwork " + sName);
 }
 
 void MakeAdamantine(object oItem)
 {
-    if(GetPlotFlag(oItem)) return;
+    if(GetPlotFlag(oItem)) return;  //sanity check
     if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
         int nBonus = 0;
@@ -256,11 +333,90 @@ void MakeAdamantine(object oItem)
             itemproperty ip1 = ConstructIP(ITEM_PROPERTY_DAMAGE_RESISTANCE, IP_CONST_DAMAGETYPE_BLUDGEONING, nBonus);
             itemproperty ip2 = ConstructIP(ITEM_PROPERTY_DAMAGE_RESISTANCE, IP_CONST_DAMAGETYPE_PIERCING, nBonus);
             itemproperty ip3 = ConstructIP(ITEM_PROPERTY_DAMAGE_RESISTANCE, IP_CONST_DAMAGETYPE_SLASHING, nBonus);
-            IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-            IPSafeAddItemProperty(oItem, ip2, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
-            IPSafeAddItemProperty(oItem, ip3, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
+            IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+            IPSafeAddItemProperty(oItem, ip2, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+            IPSafeAddItemProperty(oItem, ip3, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
         }
     }
+}
+
+void MakeDarkwood(object oItem)
+{
+    if(GetPlotFlag(oItem)) return;  //sanity check
+    itemproperty ip = ConstructIP(ITEM_PROPERTY_BASE_ITEM_WEIGHT_REDUCTION, 0, IP_CONST_REDUCEDWEIGHT_50_PERCENT);
+    IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
+    int nBase = GetBaseItemType(oItem);
+    if(((nBase == BASE_ITEM_SMALLSHIELD) ||
+        (nBase == BASE_ITEM_LARGESHIELD) ||
+        (nBase == BASE_ITEM_TOWERSHIELD))
+        )
+    {
+        int nBonus = 2;
+        if(nBase == BASE_ITEM_SMALLSHIELD) nBonus = 1;
+        itemproperty ip1 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE, nBonus);
+        itemproperty ip2 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY, nBonus);
+        itemproperty ip3 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY, nBonus);
+        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PICK_POCKET, nBonus);
+        itemproperty ip5 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SET_TRAP, nBonus);
+        itemproperty ip6 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE, nBonus);
+        itemproperty ip7 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP, nBonus);
+        IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip2, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip3, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip4, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip5, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip6, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip7, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    }
+}
+
+void MakeDragonhide(object oItem)
+{
+    //Does nothing so far
+}
+
+void MakeMithral(object oItem)
+{
+    if(GetPlotFlag(oItem)) return;  //sanity check
+    itemproperty ip = ConstructIP(ITEM_PROPERTY_BASE_ITEM_WEIGHT_REDUCTION, 0, IP_CONST_REDUCEDWEIGHT_50_PERCENT);
+    IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    int nBase = GetBaseItemType(oItem);
+    if(((nBase == BASE_ITEM_ARMOR) ||
+        (nBase == BASE_ITEM_SMALLSHIELD) ||
+        (nBase == BASE_ITEM_LARGESHIELD) ||
+        (nBase == BASE_ITEM_TOWERSHIELD))
+        )
+    {
+        int nBonus = 3;
+        int nPenalty = GetItemArmourCheckPenalty(oItem);
+        if(nBonus > nPenalty) nBonus = nPenalty;
+        itemproperty ip1 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE, nBonus);
+        itemproperty ip2 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY, nBonus);
+        itemproperty ip3 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY, nBonus);
+        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PICK_POCKET, nBonus);
+        itemproperty ip5 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SET_TRAP, nBonus);
+        itemproperty ip6 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE, nBonus);
+        itemproperty ip7 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP, nBonus);
+        itemproperty ip8 = ConstructIP(ITEM_PROPERTY_ARCANE_SPELL_FAILURE, 0, IP_CONST_ARCANE_SPELL_FAILURE_MINUS_10_PERCENT);
+        IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip2, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip3, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip4, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip5, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip6, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip7, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oItem, ip8, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    }
+}
+
+void MakeColdIron(object oItem)
+{
+    //Does nothing so far
+}
+
+void MakeSilver(object oItem)
+{
+    //Does nothing so far
 }
 
 //Creates an item on oOwner, from the baseitemtype and base AC (for armour)
@@ -285,6 +441,55 @@ object CreateStandardItem(object oOwner, int nBaseItemType, int nBaseAC = -1)
     }
 
     return CreateItemOnObject(sResRef, oOwner, nStackSize);
+}
+
+//Creates an item for oPC of nBaseItemType, made of nMaterial
+object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial = 0)
+{
+    object oTemp = CreateStandardItem(GetTempCraftChest(), nBaseItemType, nBaseAC);
+    string sTag = GetMaterialString(nMaterial) + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
+    object oChest = GetCraftChest();
+    object oNew = CopyObject(oTemp, GetLocation(oChest), oChest, sTag);
+    string sPrefix = "";
+    DestroyObject(oTemp, 0.1);
+    if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)   //name prefix will be overridden by materials
+    {
+        sPrefix = "Masterwork ";
+        MakeMasterwork(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_ADAMANTINE)
+    {
+        sPrefix = "Adamantine ";
+        MakeAdamantine(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DARKWOOD)
+    {
+        sPrefix = "Darkwood ";
+        MakeDarkwood(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DRAGONHIDE)
+    {
+        sPrefix = "Dragonhide ";
+        MakeDragonhide(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_MITHRAL)
+    {
+        sPrefix = "Mithral ";
+        MakeMithral(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_COLD_IRON)
+    {
+        sPrefix = "Cold Iron ";
+        MakeColdIron(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_ALCHEMICAL_SILVER)
+    {
+        sPrefix = "Silver ";
+        MakeSilver(oNew);
+    }
+    SetName(oNew, sPrefix + GetName(oNew));
+
+    return oNew;
 }
 
 //Adds action highlight to a conversation string
@@ -359,7 +564,7 @@ int MaxListSize(string sTable)
 {
     sTable = GetStringLowerCase(sTable); //sanity check
 
-    if(sTable == "craft_gen_item")
+    if(sTable == "craft_gen_item")  //no support for cep weapons just yet
         return 113;
     if(sTable == "classes")
         return 256;

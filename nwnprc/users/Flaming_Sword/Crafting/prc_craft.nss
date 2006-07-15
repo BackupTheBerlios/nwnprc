@@ -86,6 +86,11 @@ const string PRC_CRAFT_PROPLIST         = "PRC_CRAFT_PROPLIST";
 const string PRC_CRAFT_COST             = "PRC_CRAFT_COST";
 const string PRC_CRAFT_CONVO_           = "PRC_CRAFT_CONVO_";
 
+const string PRC_CRAFT_SCRIPT_STATE     = "PRC_CRAFT_SCRIPT_STATE";
+
+const int PRC_CRAFT_STATE_NORMAL        = 1;
+const int PRC_CRAFT_STATE_MAGIC         = 2;
+
 const int SORT       = TRUE; // If the sorting takes too much CPU, set to FALSE
 const int DEBUG_LIST = FALSE;
 //////////////////////////////////////////////////
@@ -260,15 +265,34 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nStage
 
 void main()
 {
+    object oTarget = PRCGetSpellTargetObject();
     object oPC = GetPCSpeaker();
+    if(oTarget != OBJECT_INVALID)
+    {   //as part of a cast spell and not in the convo
+        if(oTarget == OBJECT_SELF)
+        {   //cast on self, crafting non-magical items
+            SetLocalInt(OBJECT_SELF, PRC_CRAFT_SCRIPT_STATE, PRC_CRAFT_STATE_NORMAL);
+        }
+        else if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
+        {   //cast on item, crafting targeted item
+            SetLocalInt(OBJECT_SELF, PRC_CRAFT_SCRIPT_STATE, PRC_CRAFT_STATE_MAGIC);
+            SetLocalObject(oPC, PRC_CRAFT_ITEM, oTarget);
+        }
+        StartDynamicConversation("prc_craft", OBJECT_SELF, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, OBJECT_SELF);
+        return;
+    }
+    /*
     if(!(GetIsObjectValid(oPC) || IsInConversation(GetLastUsedBy())))
     {
         oPC = GetLastUsedBy();
-        StartDynamicConversation("prc_craft", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, OBJECT_SELF);
+        StartDynamicConversation("prc_craft", OBJECT_SELF, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, OBJECT_SELF);
         return;
     }
+    */
     int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
     int nStage = GetStage(oPC);
+
+    int nState = GetLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
 
     object oItem = GetLocalObject(oPC, PRC_CRAFT_ITEM);
     int nType = GetLocalInt(oPC, PRC_CRAFT_TYPE);
@@ -303,16 +327,27 @@ void main()
             {
                 case STAGE_START:
                 {
-                    SetHeader("Please make a selection.");
+                    //SetHeader("Please make a selection.");
+                    if(nState == PRC_CRAFT_STATE_NORMAL)
+                    {
+                    }
+                    else if(nState == PRC_CRAFT_STATE_MAGIC)
+                    {
+                        SetHeader(ItemStats(oItem) + "\nSelect an item property.");
+                    }
                     SetDefaultTokens();
+                    AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
+                    MarkStageSetUp(nStage, oPC);
+
+
                     AddChoice(ActionString("Craft Item"), CHOICE_CRAFT, oPC);
                     AddChoice(ActionString("Forge Item"), CHOICE_FORGE, oPC);
                     AddChoice(ActionString("Boost Crafting Skills For 24 Hours"), CHOICE_BOOST, oPC);
                     SetCustomToken(DYNCONV_TOKEN_EXIT, ActionString("Leave"));
                     SetCustomToken(DYNCONV_TOKEN_NEXT, ActionString("Next"));
                     SetCustomToken(DYNCONV_TOKEN_PREV, ActionString("Previous"));
-                    AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
-                    MarkStageSetUp(nStage, oPC);
+
+
                     break;
                 }
                 case STAGE_SELECT_ITEM:
@@ -428,6 +463,7 @@ void main()
         DeleteLocalInt(oPC, PRC_CRAFT_PARAM1VALUE);
         DeleteLocalInt(oPC, PRC_CRAFT_PROPLIST);
         DeleteLocalInt(oPC, PRC_CRAFT_COST);
+        DeleteLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
         while(GetIsObjectValid(oNewItem))   //clearing inventory
         {
             DestroyObject(oNewItem);

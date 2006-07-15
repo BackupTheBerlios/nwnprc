@@ -26,7 +26,7 @@ unique ids for storage in limbo chest
 
 XXX_PRC_UID_PREFIX + <stuff> + PRC_CRAFT_UID_SUFFIX
 
-where XXX identifies masterwork, material
+where XXX identifies masterwork, material, bit flags
 
 Materials:
 
@@ -69,3 +69,7 @@ shield: +1000
 other: +500/lb
 
 Alchemical Silver (steel): not doable
+
+Armour with base AC 0 requires Craft Wonderous Item
+
+base AC 0-1 requires cloth

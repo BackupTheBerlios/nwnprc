@@ -28,7 +28,6 @@ Diamond Spray           *S*
 Divine Inspiration      *S*
 Divine Sacrifice
 Dragon Cloud            *S*
-Ease Pain
 Energize Potion
 Exalted Fury            *S*
 Exalted Raiment         *S*
@@ -45,7 +44,6 @@ Rain of Black Tulips
 Rain of Embers          *S*
 Rain of Roses
 Ray of Hope
-Remove Addiction
 Righteous Smite
 Sicken Evil            *S*
 Starmantle

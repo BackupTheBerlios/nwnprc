@@ -41,6 +41,9 @@ void main()
 	object aoeCreator = GetAreaOfEffectCreator();
 	int nCD = SPGetSpellSaveDC(oTarget, aoeCreator);
 	
+	//AoEInts
+	ActionDoCommand(SetAllAoEInts(SPELL_RAIN_OF_BLACK_TULIPS,OBJECT_SELF, GetSpellSaveDC()));
+	
 	if(GetAlignment(oTarget) == ALIGNMENT_EVIL)
 	{
 		if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))

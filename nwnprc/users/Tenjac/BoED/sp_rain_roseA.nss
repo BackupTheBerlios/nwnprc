@@ -48,12 +48,29 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oCreator);
 	int nAlign = GetAlignmentGoodEvil(oTarget);
 	
+	//AoEInts
+	ActionDoCommand(SetAllAoEInts(SPELL_RAIN_OF_ROSES,OBJECT_SELF, GetSpellSaveDC()));
+	
 	if(nAlign == ALIGNMENT_EVIL)
 	{
-		//Make reflex save
-		if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))
-		
-		
+		//Check Spell Resistance
+		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			//Make reflex save
+			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))
+			{
+				effect eLink = EffectAttackDecrease(2, ATTACK_BONUS_MISC);
+				eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, 2, SAVING_THROW_TYPE_ALL));
+				eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
+				eLink = EffectLinkEffects(eLink, EffectDamageDecrease(2, DAMAGE_TYPE_BASE_WEAPON);
+				
+				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget);
+			}
+		}
+	}
+	
+}
+			
 	
 	
 

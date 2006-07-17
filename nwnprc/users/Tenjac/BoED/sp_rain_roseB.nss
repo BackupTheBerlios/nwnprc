@@ -36,3 +36,33 @@ Created:   7/17/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+	object oTarget = GetExitingObject();
+	object oCreator = GetAreaOfEffectCreator();
+	
+	effect eAOE;
+	if(GetHasSpellEffect(SPELL_AVASCULAR_MASS, oTarget))
+	{
+		//Search through the valid effects on the target.
+		eAOE = GetFirstEffect(oTarget);
+		while (GetIsEffectValid(eAOE))
+		{
+			if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
+			{
+				//If the effect was created by Rain of Roses then remove it
+				if(GetEffectSpellId(eAOE) == SPELL_RAIN_OF_ROSES)
+				{
+					RemoveEffect(oTarget, eAOE);
+				}
+			}
+			//Get next effect on the target
+			eAOE = GetNextEffect(oTarget);
+		}
+	}
+}
+	
+	

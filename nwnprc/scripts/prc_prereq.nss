@@ -553,29 +553,15 @@ void RedWizard(object oPC)
     iFocus = GetHasFeat(FEAT_RW_TF_ABJ, oPC)+GetHasFeat(FEAT_RW_TF_CON, oPC)+GetHasFeat(FEAT_RW_TF_DIV, oPC)+
              GetHasFeat(FEAT_RW_TF_ENC, oPC)+GetHasFeat(FEAT_RW_TF_EVO, oPC)+GetHasFeat(FEAT_RW_TF_ILL, oPC)+
              GetHasFeat(FEAT_RW_TF_NEC, oPC)+GetHasFeat(FEAT_RW_TF_TRS, oPC);
-
-    iFeat = GetHasFeat(FEAT_ARCANE_DEFENSE_ABJURATION, oPC)             + GetHasFeat(FEAT_ARCANE_DEFENSE_CONJURATION, oPC) +
-            GetHasFeat(FEAT_ARCANE_DEFENSE_DIVINATION, oPC)             + GetHasFeat(FEAT_ARCANE_DEFENSE_ENCHANTMENT, oPC) +
-            GetHasFeat(FEAT_ARCANE_DEFENSE_EVOCATION, oPC)              + GetHasFeat(FEAT_ARCANE_DEFENSE_ILLUSION, oPC) +
-            GetHasFeat(FEAT_ARCANE_DEFENSE_NECROMANCY, oPC)             + GetHasFeat(FEAT_ARCANE_DEFENSE_TRANSMUTATION, oPC) +
-            GetHasFeat(FEAT_BREW_POTION, oPC)                           + GetHasFeat(FEAT_CRAFT_WAND, oPC) +
-            GetHasFeat(FEAT_EMPOWER_SPELL, oPC)                         + GetHasFeat(FEAT_COMBAT_CASTING, oPC) +
-            GetHasFeat(FEAT_EXTEND_SPELL, oPC)                          + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ABJURATION, oPC) +
-            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_CONJURATION, oPC) + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_DIVINATION, oPC) +
-            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ENCHATMENT, oPC)  + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_EVOCATION, oPC) +
-            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_ILLUSION, oPC)    + GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_NECROMANCY, oPC) +
-            GetHasFeat(FEAT_FOCUSED_SPELL_PENETRATION_TRANSMUTATION, oPC) + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ABJURATION, oPC) +
-            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_CONJURATION, oPC)       + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oPC) +
-            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ENCHANTMENT, oPC)       + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_EVOCATION, oPC) +
-            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_ILLUSION, oPC)          + GetHasFeat(FEAT_GREATER_SPELL_FOCUS_NECROMANCY, oPC) +
-            GetHasFeat(FEAT_GREATER_SPELL_FOCUS_TRANSMUTATION, oPC)     + GetHasFeat(FEAT_GREATER_SPELL_PENETRATION, oPC) +
-            GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC)                        + GetHasFeat(FEAT_PRACTISED_SPELLCASTER_WIZARD, oPC) +
-            GetHasFeat(FEAT_QUICKEN_SPELL, oPC)                         + GetHasFeat(FEAT_SCRIBE_SCROLL, oPC) +
-            GetHasFeat(FEAT_SPELL_FOCUS_ABJURATION, oPC)                + GetHasFeat(FEAT_SPELL_FOCUS_CONJURATION, oPC) +
-            GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oPC)                + GetHasFeat(FEAT_SPELL_FOCUS_ENCHANTMENT, oPC) +
-            GetHasFeat(FEAT_SPELL_FOCUS_EVOCATION, oPC)                 + GetHasFeat(FEAT_SPELL_FOCUS_ILLUSION, oPC) +
-            GetHasFeat(FEAT_SPELL_FOCUS_NECROMANCY, oPC)                + GetHasFeat(FEAT_SPELL_FOCUS_TRANSMUTATION, oPC) +
-            GetHasFeat(FEAT_SPELL_PENETRATION, oPC)                     + GetHasFeat(FEAT_STILL_SPELL, oPC);
+    // Metamagic or Item Creation feats
+    iFeat = GetHasFeat(FEAT_BREW_POTION, oPC)      + GetHasFeat(FEAT_CRAFT_WAND, oPC) +
+            GetHasFeat(FEAT_EMPOWER_SPELL, oPC)    + GetHasFeat(FEAT_EXTEND_SPELL, oPC) +
+            GetHasFeat(FEAT_MAXIMIZE_SPELL, oPC)   + GetHasFeat(FEAT_QUICKEN_SPELL, oPC) +
+            GetHasFeat(FEAT_SILENCE_SPELL, oPC)    + GetHasFeat(FEAT_QUICKEN_SPELL, oPC) +
+            GetHasFeat(FEAT_CRAFT_WONDROUS, oPC)   + GetHasFeat(FEAT_CRAFT_STAFF, oPC) +
+            GetHasFeat(FEAT_CRAFT_ARMS_ARMOR, oPC) + GetHasFeat(FEAT_FORGE_RING, oPC) +
+            GetHasFeat(FEAT_CRAFT_ROD, oPC)        + GetHasFeat(FEAT_CRAFT_CONSTRUCT, oPC) +
+            GetHasFeat(FEAT_SCRIBE_SCROLL, oPC)    + GetHasFeat(FEAT_STILL_SPELL, oPC);
 
 
     // At least two arcane feats, one tattoo focus

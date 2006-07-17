@@ -25,7 +25,7 @@ Fortitude save are sickened (-2 penalty on attack
 rolls, weapon damage rolls, saving throws, 
 ability checks, and skill checks) until they
 leave the spell's area. A successful Fortitude 
-save renders a creature im­mune to the sickening 
+save renders a creature immune to the sickening 
 effect of the roses, but not the ability damage 
 caused by their thorns.
 
@@ -37,4 +37,30 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION)
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	effect eAOE = EffectAreaOfEffect(VFX_AOE_RAIN_OF_ROSES);
+	location lLoc = GetLocation(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	//Create AoE
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDur);
+		
+	SPGoodShift(oPC);
+	SPSetSchool();
+}

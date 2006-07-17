@@ -25,14 +25,35 @@ Fortitude save are sickened (-2 penalty on attack
 rolls, weapon damage rolls, saving throws, 
 ability checks, and skill checks) until they
 leave the spell's area. A successful Fortitude 
-save renders a creature im­mune to the sickening 
+save renders a creature immune to the sickening 
 effect of the roses, but not the ability damage 
 caused by their thorns.
 
 Material Component: A red rose. 
 
 Author:    Tenjac
-Created:   
+Created:   7/17/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+	object oTarget = GetEnteringObject();
+	object oCreator = GetAreaOfEffectCreator();
+	
+	int nDC = SPGetSpellSaveDC(oTarget, oCreator);
+	int nCasterLvl = PRCGetCasterLevel(oCreator);
+	int nAlign = GetAlignmentGoodEvil(oTarget);
+	
+	if(nAlign == ALIGNMENT_EVIL)
+	{
+		//Make reflex save
+		if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, (PRCGetSaveDC(oTarget,aoeCreator))))
+		
+		
+	
+	
+

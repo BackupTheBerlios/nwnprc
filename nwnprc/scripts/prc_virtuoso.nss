@@ -199,7 +199,7 @@ void main()
         if(oAffected == oPC)
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAffected, fDuration,TRUE,-1,nCasterLevel);
-            eNew = ExtraordinaryEffect(EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_BARD_SONG)));
+            effect eNew = ExtraordinaryEffect(EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_BARD_SONG)));
         }
         switch(nSpellID)
         {

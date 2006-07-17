@@ -38,7 +38,8 @@ void SweepingStrike(object oCaster, object oTarget)
             {
                 // Perform the Attack
  		effect eVis = EffectVisualEffect(VFX_IMP_STUN);
-		PerformAttack(oAreaTarget, oCaster, eVis, 0.0, 0, 0, 0, "Sweeping Strike Hit", "Sweeping Strike Miss");
+ 		object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
+		PerformAttack(oAreaTarget, oCaster, eVis, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Sweeping Strike Hit", "Sweeping Strike Miss");
 
 		// End the loop
 		nValidTarget = TRUE;

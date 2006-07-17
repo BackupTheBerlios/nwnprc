@@ -165,7 +165,7 @@ void DoNaturalAttack(object oWeapon)
         0.0,                //float eDuration = 0.0
         nAttackMod,         //int iAttackBonusMod = 0
         0,                  //int iDamageModifier = 0
-        0,                  //int iDamageType = 0
+        DAMAGE_TYPE_SLASHING,    //int iDamageType = DAMAGE_TYPE_SLASHING, otherwise it uses magical damage.
         "",//sMessageSuccess,    //string sMessageSuccess = ""   
         "",//sMessageFailure,    //string sMessageFailure = ""
         FALSE,              //int iTouchAttackType = FALSE
@@ -211,7 +211,7 @@ void DoOffhandAttack(int nAttackMod)
         0.0,                //float eDuration = 0.0
         nAttackMod,         //int iAttackBonusMod = 0
         0,                  //int iDamageModifier = 0
-        0,                  //int iDamageType = 0
+        DAMAGE_TYPE_SLASHING,    //int iDamageType = DAMAGE_TYPE_SLASHING, otherwise it uses magical damage.
         "",//sMessageSuccess,    //string sMessageSuccess = ""   
         "",//sMessageFailure,    //string sMessageFailure = ""
         FALSE,              //int iTouchAttackType = FALSE
@@ -255,7 +255,7 @@ void DoOverflowOnhandAttack(int nAttackMod)
         0.0,                //float eDuration = 0.0
         nAttackMod,         //int iAttackBonusMod = 0
         nDamageMod,         //int iDamageModifier = 0
-        0,                  //int iDamageType = 0
+        DAMAGE_TYPE_SLASHING,    //int iDamageType = DAMAGE_TYPE_SLASHING, otherwise it uses magical damage.
         "",//sMessageSuccess,    //string sMessageSuccess = ""   
         "",//sMessageFailure,    //string sMessageFailure = ""
         FALSE,              //int iTouchAttackType = FALSE

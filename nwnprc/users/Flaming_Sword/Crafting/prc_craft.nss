@@ -47,8 +47,8 @@ const int STAGE_CRAFT                   = 101;
 const int STAGE_CRAFT_SELECT            = 102;
 const int STAGE_CRAFT_MASTERWORK        = 103;
 const int STAGE_CRAFT_AC                = 104;
-const int STAGE_CRAFT_CONFIRM           = 105;
-//const int STAGE_CRAFT                   = 106;
+const int STAGE_CRAFT_MIGHTY            = 105;
+const int STAGE_CRAFT_CONFIRM           = 106;
 
 //const int STAGE_CRAFT                   = 101;
 
@@ -89,6 +89,7 @@ const string PRC_CRAFT_COST             = "PRC_CRAFT_COST";
 const string PRC_CRAFT_CONVO_           = "PRC_CRAFT_CONVO_";
 const string PRC_CRAFT_BASEITEMTYPE     = "PRC_CRAFT_BASEITEMTYPE";
 const string PRC_CRAFT_AC               = "PRC_CRAFT_AC";
+const string PRC_CRAFT_MIGHTY           = "PRC_CRAFT_MIGHTY";
 const string PRC_CRAFT_MATERIAL         = "PRC_CRAFT_MATERIAL";
 const string PRC_CRAFT_TAG              = "PRC_CRAFT_TAG";
 
@@ -308,8 +309,6 @@ void main()
     }
     int nStage = GetStage(oPC);
 
-    int nState = GetLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
-
     object oItem = GetLocalObject(oPC, PRC_CRAFT_ITEM);
     int nType = GetLocalInt(oPC, PRC_CRAFT_TYPE);
     string sSubtype = GetLocalString(oPC, PRC_CRAFT_SUBTYPE);
@@ -321,13 +320,15 @@ void main()
 
     string sTag = GetLocalString(oPC, PRC_CRAFT_TAG);
 
-    int nBase = GetLocalInt(oPC, PRC_CRAFT_BASEITEMTYPE);
     int nAC = GetLocalInt(oPC, PRC_CRAFT_AC);
+    int nBase = GetLocalInt(oPC, PRC_CRAFT_BASEITEMTYPE);
+    int nCost = GetLocalInt(oPC, PRC_CRAFT_COST);
     int nMaterial = GetLocalInt(oPC, PRC_CRAFT_MATERIAL);
+    int nMighty = GetLocalInt(oPC, PRC_CRAFT_MIGHTY);
+    int nPropList = GetLocalInt(oPC, PRC_CRAFT_PROPLIST);
+    int nState = GetLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
 
     object oNewItem = GetItemPossessedBy(GetCraftChest(), sTag);
-    int nPropList = GetLocalInt(oPC, PRC_CRAFT_PROPLIST);
-    int nCost = GetLocalInt(oPC, PRC_CRAFT_COST);
 
     string sTemp = "";
     int nTemp = 0;
@@ -335,7 +336,6 @@ void main()
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
         return;
-    SendMessageToPC(oPC, "Init");
     if(nValue == DYNCONV_SETUP_STAGE)
     {
         //if(DEBUG) DoDebug("forge_conv: Running setup stage for stage " + IntToString(nStage));
@@ -344,7 +344,6 @@ void main()
         if(!GetIsStageSetUp(nStage, oPC))
         {
             int i;
-            SendMessageToPC(oPC, "Setup");
             switch(nStage)
             {
                 case STAGE_START:
@@ -354,6 +353,7 @@ void main()
                         SetHeader("Select an item to craft.");
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
                         SetLocalInt(oPC, PRC_CRAFT_AC, -1);
+                        SetLocalInt(oPC, PRC_CRAFT_MIGHTY, -1);
                         PopulateList(oPC, MaxListSize("craft_gen_item"), TRUE, "craft_gen_item");
                     }
                     else if(nState == PRC_CRAFT_STATE_MAGIC)
@@ -465,6 +465,9 @@ void main()
                     SetHeader("Select a base AC value.");
                     AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
+                    for(i = 0; i < 9; i++)
+                        AddChoice(ActionString(IntToString(i)), i, oPC);
+                    /*
                     AddChoice(ActionString("0"), 0, oPC);
                     AddChoice(ActionString("1"), 1, oPC);
                     AddChoice(ActionString("2"), 2, oPC);
@@ -474,6 +477,17 @@ void main()
                     AddChoice(ActionString("6"), 6, oPC);
                     AddChoice(ActionString("7"), 7, oPC);
                     AddChoice(ActionString("8"), 8, oPC);
+                    */
+                    MarkStageSetUp(nStage);
+                    break;
+                }
+                case STAGE_CRAFT_MIGHTY:
+                {
+                    SetHeader("Select a mighty value.");
+                    AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
+                    AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
+                    for(i = 0; i < 21; i++)
+                        AddChoice("+" + ActionString(IntToString(i)), i, oPC);
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -483,23 +497,26 @@ void main()
                     AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     AddChoice(ActionString("Normal"), PRC_CRAFT_FLAG_NONE, oPC);
-                    AddChoice(ActionString("Masterwork"), PRC_CRAFT_FLAG_MASTERWORK, oPC);
-                    //if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
-                    if(nBase == BASE_ITEM_ARMOR)    //because we can only have adamantine armour at this point
-                        AddChoice(ActionString("Adamantine"), PRC_CRAFT_FLAG_ADAMANTINE, oPC);
-                    if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_WOOD))
-                        AddChoice(ActionString("Darkwood"), PRC_CRAFT_FLAG_DARKWOOD, oPC);
-                    if((nBase == BASE_ITEM_ARMOR) ||
-                        (nBase == BASE_ITEM_SMALLSHIELD) ||
-                        (nBase == BASE_ITEM_LARGESHIELD) ||
-                        (nBase == BASE_ITEM_TOWERSHIELD))
-                        AddChoice(ActionString("Dragonhide"), PRC_CRAFT_FLAG_DRAGONHIDE, oPC);
-                    if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
-                        AddChoice(ActionString("Mithral"), PRC_CRAFT_FLAG_MITHRAL, oPC);
-                    if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
-                        AddChoice(ActionString("Cold Iron"), PRC_CRAFT_FLAG_COLD_IRON, oPC);
-                    if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
-                        AddChoice(ActionString("Alchemical Silver"), PRC_CRAFT_FLAG_ALCHEMICAL_SILVER, oPC);
+                    if(!((nBase == BASE_ITEM_ARMOR) && (GetItemBaseAC(oNewItem))))
+                    {
+                        AddChoice(ActionString("Masterwork"), PRC_CRAFT_FLAG_MASTERWORK, oPC);
+                        //if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
+                        if(nBase == BASE_ITEM_ARMOR)    //because we can only have adamantine armour at this point
+                            AddChoice(ActionString("Adamantine"), PRC_CRAFT_FLAG_ADAMANTINE, oPC);
+                        if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_WOOD))
+                            AddChoice(ActionString("Darkwood"), PRC_CRAFT_FLAG_DARKWOOD, oPC);
+                        if((nBase == BASE_ITEM_ARMOR) ||
+                            (nBase == BASE_ITEM_SMALLSHIELD) ||
+                            (nBase == BASE_ITEM_LARGESHIELD) ||
+                            (nBase == BASE_ITEM_TOWERSHIELD))
+                            AddChoice(ActionString("Dragonhide"), PRC_CRAFT_FLAG_DRAGONHIDE, oPC);
+                        if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
+                            AddChoice(ActionString("Mithral"), PRC_CRAFT_FLAG_MITHRAL, oPC);/*
+                        if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
+                            AddChoice(ActionString("Cold Iron"), PRC_CRAFT_FLAG_COLD_IRON, oPC);
+                        if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
+                            AddChoice(ActionString("Alchemical Silver"), PRC_CRAFT_FLAG_ALCHEMICAL_SILVER, oPC);*/
+                    }
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -580,7 +597,7 @@ void main()
                     nTemp /= 3;
                     if(nTemp < 1) nTemp = 1;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
-                    SetHeader("You have chosen to craft:\n\n" + ItemStats(oItem) + "\nPrice: " + IntToString(nTemp) + "gp");
+                    SetHeader("You have chosen to craft:\n\n" + ItemStats(oNewItem) + "\nPrice: " + IntToString(nTemp) + "gp");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     if(GetGold(oPC) >= nTemp)
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
@@ -608,8 +625,7 @@ void main()
     }
     else if(nValue == DYNCONV_EXITED)
     {
-        SendMessageToPC(oPC, "exit");
-        if(DEBUG) DoDebug("forge_conv: Running exit handler");
+        if(DEBUG) DoDebug("prc_craft: Running exit handler");
         // End of conversation cleanup
         DeleteLocalObject(oPC, PRC_CRAFT_ITEM);
         DeleteLocalInt(oPC, PRC_CRAFT_TYPE);
@@ -620,11 +636,14 @@ void main()
         DeleteLocalString(oPC, PRC_CRAFT_PARAM1);
         DeleteLocalInt(oPC, PRC_CRAFT_PARAM1VALUE);
         DeleteLocalInt(oPC, PRC_CRAFT_PROPLIST);
-        DeleteLocalInt(oPC, PRC_CRAFT_COST);
-        DeleteLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
-        DeleteLocalInt(oPC, PRC_CRAFT_BASEITEMTYPE);
         DeleteLocalInt(oPC, PRC_CRAFT_AC);
+        DeleteLocalInt(oPC, PRC_CRAFT_BASEITEMTYPE);
+        DeleteLocalInt(oPC, PRC_CRAFT_COST);
         DeleteLocalInt(oPC, PRC_CRAFT_MATERIAL);
+        DeleteLocalInt(oPC, PRC_CRAFT_MIGHTY);
+        DeleteLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
+        DestroyObject(oNewItem, 0.1);
+        DeleteLocalInt(oPC, PRC_CRAFT_TAG);
         /*
         while(GetIsObjectValid(oNewItem))   //clearing inventory
         {
@@ -635,7 +654,6 @@ void main()
     }
     else if(nValue == DYNCONV_ABORTED)
     {
-        SendMessageToPC(oPC, "abort");
         // This section should never be run, since aborting this conversation should
         // always be forbidden and as such, any attempts to abort the conversation
         // should be handled transparently by the system
@@ -652,7 +670,13 @@ void main()
                 if(nState == PRC_CRAFT_STATE_NORMAL)
                 {
                     SetLocalInt(oPC, PRC_CRAFT_BASEITEMTYPE, nChoice);
-                    nStage = (nChoice == BASE_ITEM_ARMOR) ? STAGE_CRAFT_AC : STAGE_CRAFT_MASTERWORK;
+                    if(nChoice == BASE_ITEM_ARMOR) nStage = STAGE_CRAFT_AC;
+                    else if((nChoice == BASE_ITEM_LONGBOW) ||
+                        (nChoice == BASE_ITEM_SHORTBOW)
+                        )
+                        nStage = STAGE_CRAFT_MIGHTY;
+                    else
+                        nStage = STAGE_CRAFT_MASTERWORK;
                     MarkStageNotSetUp(nStage, oPC);
                 }
                 else if(nState == PRC_CRAFT_STATE_MAGIC)
@@ -839,16 +863,35 @@ void main()
                 MarkStageNotSetUp(nStage, oPC);
                 break;
             }
+            case STAGE_CRAFT_MIGHTY:
+            {
+                if(nChoice == CHOICE_BACK)
+                    nStage = STAGE_START;
+                else
+                {
+                    SetLocalInt(oPC, PRC_CRAFT_MIGHTY, nChoice);
+                    nStage = STAGE_CRAFT_MASTERWORK;
+                }
+                MarkStageNotSetUp(nStage, oPC);
+                break;
+            }
             case STAGE_CRAFT_MASTERWORK:
             {   //automatically masterwork materials
                 if(nChoice == CHOICE_BACK)
-                    nStage = (nAC == -1) ? STAGE_START : STAGE_CRAFT_AC;
+                {
+                    if(nAC != -1)
+                        nStage = STAGE_CRAFT_AC;
+                    else if(nMighty != -1)
+                        nStage = STAGE_CRAFT_MIGHTY;
+                    else
+                        nStage = STAGE_START;
+                }
                 else
                 {
                     if((nChoice > PRC_CRAFT_FLAG_MASTERWORK) && (nChoice < PRC_CRAFT_FLAG_COLD_IRON))
                         nChoice |= PRC_CRAFT_FLAG_MASTERWORK;
                     SetLocalInt(oPC, PRC_CRAFT_MATERIAL, nChoice);
-                    oNewItem = MakeMyItem(oPC, nBase, nAC, nChoice);
+                    oNewItem = MakeMyItem(oPC, nBase, nAC, nChoice, nMighty);
                     SetIdentified(oNewItem, TRUE);  //just in case
                     SetLocalString(oPC, PRC_CRAFT_TAG, GetTag(oNewItem));
                     nStage = STAGE_CRAFT_CONFIRM;
@@ -861,21 +904,21 @@ void main()
                 if(nChoice == CHOICE_BACK)
                 {
                     nStage = STAGE_CRAFT_MASTERWORK;
+                    DestroyObject(oNewItem, 0.1);
                 }
                 else if(nChoice == CHOICE_CONFIRM)
                 {
                     int nSkill = GetCraftingSkill(oNewItem);
                     int bCheck = FALSE;
                     TakeGold(GetLocalInt(oPC, PRC_CRAFT_COST), oPC);
-                    if(GetIsSkillSuccessful(oPC, GetCraftingDC(oNewItem), nSkill))
+
+                    if(GetIsSkillSuccessful(oPC, nSkill, GetCraftingDC(oNewItem)))
                     {
-                        bCheck = (nMaterial & PRC_CRAFT_FLAG_MASTERWORK) ? GetIsSkillSuccessful(oPC, 20, nSkill) : TRUE;
+                        bCheck = (nMaterial & PRC_CRAFT_FLAG_MASTERWORK) ? GetIsSkillSuccessful(oPC, nSkill, 20) : TRUE;
                         if(bCheck)
                             CopyItem(oNewItem, oPC, TRUE);
-                        DestroyObject(oNewItem, 0.1)
                     }
-                    else
-                        nStage = STAGE_CRAFT_CONFIRM;
+                    ClearCurrentStage(oPC);
                 }
                 MarkStageNotSetUp(nStage, oPC);
                 break;

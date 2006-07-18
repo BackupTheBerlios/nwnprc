@@ -269,10 +269,15 @@ int GetCraftingDC(object oItem)
     {
         nDC = 12;
         itemproperty ip = GetFirstItemProperty(oItem);
-        if(GetIsItemPropertyValid(ip) &&
-            (GetItemPropertyType(ip) == ITEM_PROPERTY_MIGHTY)
-            )
-            nDC = 15 + 2 * GetItemPropertyCostTableValue(ip);
+        while(GetIsItemPropertyValid(ip))
+        {
+            if(GetItemPropertyType(ip) == ITEM_PROPERTY_MIGHTY)
+            {
+                nDC = 15 + 2 * GetItemPropertyCostTableValue(ip);
+                break;
+            }
+            ip = GetNextItemProperty(oItem);
+        }
     }
     else if(nType == PRC_CRAFT_SIMPLE_WEAPON)
         nDC = 12;
@@ -315,6 +320,12 @@ void MakeMasterwork(object oItem)
     else if(GetWeaponType(nBase))
     {
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_ATTACK_BONUS, 0, 1);
+        IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
+    }
+    else if(StringToInt(Get2DACache("craft_gen_item", "Type", nBase)) == PRC_CRAFT_ITEM_TYPE_AMMO)
+    {
+        int nDamageType = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;
+        itemproperty ip1 = ConstructIP(ITEM_PROPERTY_DAMAGE_BONUS, nDamageType, IP_CONST_DAMAGEBONUS_1);
         IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
     }
     else
@@ -456,13 +467,21 @@ object CreateStandardItem(object oOwner, int nBaseItemType, int nBaseAC = -1)
 }
 
 //Creates an item for oPC of nBaseItemType, made of nMaterial
-object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial = 0)
+object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial = 0, int nMighty = 0)
 {
     object oTemp = CreateStandardItem(GetTempCraftChest(), nBaseItemType, nBaseAC);
-    string sTag = GetMaterialString(nMaterial) + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
+    string sMaterial = GetMaterialString(nMaterial);
+    string sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
     object oChest = GetCraftChest();
+    while(GetIsObjectValid(GetItemPossessedBy(oChest, sTag)))//make sure there aren't any tag conflicts
+        sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
     object oNew = CopyObject(oTemp, GetLocation(oChest), oChest, sTag);
     string sPrefix = "";
+    if(nMighty)
+    {
+        itemproperty ip1 = ConstructIP(ITEM_PROPERTY_MIGHTY, 0, nMighty);
+        IPSafeAddItemProperty(oNew, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    }
     DestroyObject(oTemp, 0.1);
     if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)   //name prefix will be overridden by materials
     {
@@ -499,7 +518,11 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
         sPrefix = "Silver ";
         MakeSilver(oNew);
     }
+    if(nMighty) sPrefix += "Composite ";
+
     SetName(oNew, sPrefix + GetName(oNew));
+    if((nBaseItemType == BASE_ITEM_ARMOR) && (nBaseAC == 0))
+        SetName(oNew, "Robe");
 
     return oNew;
 }

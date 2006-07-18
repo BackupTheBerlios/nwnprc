@@ -66,11 +66,11 @@ int GetUtteranceDC(object oTrueSpeaker = OBJECT_SELF)
     // Stuff that applies only to utterances, not utterance-like abilities goes inside
     // Update once the feats are in
     /*
-    if(!GetLocalInt(oManifester, PRC_IS_PSILIKE))
+    if(!GetLocalInt(oTrueSpeaker, PRC_IS_PSILIKE))
     {
-        if (GetLocalInt(oManifester, "PsionicEndowmentActive") == TRUE && UsePsionicFocus(oManifester))
+        if (GetLocalInt(oTrueSpeaker, "PsionicEndowmentActive") == TRUE && UsePsionicFocus(oTrueSpeaker))
         {
-            nDC += GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT, oManifester) ? 4 : 2;
+            nDC += GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT, oTrueSpeaker) ? 4 : 2;
         }
     }
     */

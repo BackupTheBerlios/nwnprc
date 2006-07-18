@@ -12,6 +12,11 @@ Dread Necromancer - All to do, Spells
 Beguiler - All to do, Spells
 
 Truenaming:
+
+true_inc_utter: finish EvaluateUtterance function
+true_inc_metautr: finish EvaluateMetautterances function
+
+
 1 Base Class
 ~60 Utterances
 4 Prestige Classes

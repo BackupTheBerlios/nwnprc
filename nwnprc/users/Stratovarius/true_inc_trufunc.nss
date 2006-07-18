@@ -60,7 +60,7 @@ int GetUtteranceDC(object oTrueSpeaker = OBJECT_SELF)
 {
     int nClass = GetTruespeakingClass(oTrueSpeaker);
     int nDC = 10;
-    nDC += GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker);
+    nDC += GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker)/2;
     nDC += GetAbilityModifier(GetAbilityOfClass(nClass), oTrueSpeaker);
 
     // Stuff that applies only to utterances, not utterance-like abilities goes inside

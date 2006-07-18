@@ -116,6 +116,7 @@ const int VFX_PER_AVASMASS                      = 141;
 
 const int SKILL_IAIJUTSU_FOCUS  = 27;
 const int SKILL_JUMP            = 28;
+const int SKILL_TRUESPEAK       = 29;
 
 
 //:://////////////////////////////////////////////

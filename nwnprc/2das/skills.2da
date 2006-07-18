@@ -12,7 +12,7 @@
 8  MoveSilently   277      353         isk_movsilent  1         DEX        1                 1                ****     ****  SKILL_MOVE_SILENTLY    0            
 9  OpenLock       278      354         isk_olock      0         DEX        0                 1                ****     ****  SKILL_OPEN_LOCK        0            
 10 Parry          279      355         isk_parry      1         DEX        1                 1                ****     1     SKILL_PARRY            0            
-11 Perform        280      356         isk_perform    1         CHA        0                 0                ****     ****  SKILL_PERFORM          0            
+11 Perform        280      356         isk_perform    1         CHA        0                 1                ****     ****  SKILL_PERFORM          0            
 12 Persuade       281      357         isk_persuade   1         CHA        0                 1                ****     ****  SKILL_PERSUADE         0            
 13 PickPocket     282      358         isk_pocket     0         DEX        1                 1                ****     ****  SKILL_PICK_POCKET      1            
 14 Search         284      360         isk_search     1         INT        0                 1                ****     ****  SKILL_SEARCH           0            
@@ -30,3 +30,4 @@
 26 CraftWeapon    8789     8790        isk_X2CWeap    1         INT        0                 1                ****     ****  SKILL_CRAFT_WEAPON     0            
 27 IaijutsuFocus  16826112 16826113    is_iaijutsu    0         CHA        0                 1                ****     ****  SKILL_IAIJUTSU_FOCUS   0            
 28 Jump           16826011 16826012    is_jump        1         STR        1                 1                ****     ****  SKILL_JUMP             0            
+29 Truespeak      16828470 16828471    is_truespeak   0         INT        0                 1                ****     ****  SKILL_TRUESPEAK        0            

@@ -35,9 +35,53 @@ Material Component: A pinch of dust from a
 pixie's wing (20 gp).
 
 Author:    Tenjac
-Created:   
+Created:   7/17/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nType = MyPRCGetRacialType(oTarget);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = (60.0f * nCasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	if(nType == RACIAL_TYPE_UNDEAD || nType == RACIAL_TYPE_CONSTRUCT)
+	{
+		SPSetSchool();
+		return;
+	}
+	
+	//VFX
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_SANCTUARYoh), oTarget, fDur);
+	
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+	
+	itemproperty ipOnHit = ItemPropertyItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+	IPSafeAddItemProperty(oArmor, ipOnHit, fDur);
+	
+	//Add event script
+	AddEventScript(oTarget, EVENT_ONHIT, "prc_evnt_strmtl", TRUE, FALSE);
+	
+	SPSetSchool();
+}
+	
+	
+	
+	   
+	   
+	   

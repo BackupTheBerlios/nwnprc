@@ -71,7 +71,7 @@ void main()
             break;
         }
         case SPELL_VIRTUOSO_JARRING_SONG:
-        {   //dummy effect, good for checking if there is a spell effect
+        {
             if(nPerform < 14)
             {
                 SendMessageToPC(oPC, "You do not have enough ranks in Perform to use this ability.");
@@ -198,8 +198,7 @@ void main()
         RemoveEffectsFromSpell(oAffected, nSpellID);
         if(oAffected == oPC)
         {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAffected, fDuration,TRUE,-1,nCasterLevel);
-            effect eNew = ExtraordinaryEffect(EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_BARD_SONG)));
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_BARD_SONG)), oAffected, fDuration,TRUE,-1,nCasterLevel);
         }
         switch(nSpellID)
         {
@@ -218,8 +217,8 @@ void main()
             }
             case SPELL_VIRTUOSO_JARRING_SONG:
             {
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE), oAffected, fDuration,TRUE,-1,nCasterLevel);
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oAffected, fDuration,TRUE,-1,nCasterLevel);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE)), oAffected, fDuration,TRUE,-1,nCasterLevel);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE)), oAffected, fDuration,TRUE,-1,nCasterLevel);
 
                 break;
             }
@@ -246,8 +245,8 @@ void main()
             {
                 if(spellsIsTarget(oAffected, SPELL_TARGET_ALLALLIES, oPC))
                 {
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR), oAffected, fDuration,TRUE,-1,nCasterLevel);
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE), oAffected, fDuration,TRUE,-1,nCasterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR)), oAffected, fDuration,TRUE,-1,nCasterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ExtraordinaryEffect(EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE)), oAffected, fDuration,TRUE,-1,nCasterLevel);
                 }
                 break;
             }

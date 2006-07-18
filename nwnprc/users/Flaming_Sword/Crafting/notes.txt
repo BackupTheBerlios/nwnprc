@@ -52,7 +52,7 @@ Dragonhide: armour and shields only
 
 auto-masterwork
 
-price: x2
+price: x2 (after masterwork)
 
 Cold Iron (steel): not doable
 
@@ -73,3 +73,5 @@ Alchemical Silver (steel): not doable
 Armour with base AC 0 requires Craft Wonderous Item
 
 base AC 0-1 requires cloth
+
+Must make listing function skip over much of iprp_spells.2da

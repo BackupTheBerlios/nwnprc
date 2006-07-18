@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Jul 15, 2006
+    Modified: Jul 16, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -26,8 +26,9 @@ const int NUM_MAX_SUBTYPES              = 256;
 //const int NUM_MAX_FEAT_SUBTYPES         = 16384;    //because iprp_feats is frickin' huge
 const int NUM_MAX_FEAT_SUBTYPES         = 397;      //because the above screwed the game
 
-const int NUM_MAX_SPELL_SUBTYPES        = 540;      //restricted to bioware spells
+//const int NUM_MAX_SPELL_SUBTYPES        = 540;      //restricted to bioware spells
                                                     //  to avoid crashes
+const int NUM_MAX_SPELL_SUBTYPES        = 1172;     //new value for list skipping
 
 const int PRC_CRAFT_SIMPLE_WEAPON       = 1;
 const int PRC_CRAFT_MARTIAL_WEAPON      = 2;
@@ -54,6 +55,7 @@ const int PRC_CRAFT_FLAG_ALCHEMICAL_SILVER  = 64;   //not implemented
 const int PRC_CRAFT_ITEM_TYPE_WEAPON    = 1;
 const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
+const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
 
 object GetCraftChest()
 {
@@ -63,6 +65,14 @@ object GetCraftChest()
 object GetTempCraftChest()
 {
     return GetObjectByTag(PRC_CRAFT_TEMPORARY_CHEST);
+}
+
+int GetCraftingSkill(object oItem)
+{
+    int nType = StringToInt(Get2DACache("craft_gen_item", "Type", GetBaseItemType(oItem)));
+    if((nType == PRC_CRAFT_ITEM_TYPE_WEAPON) || (nType == PRC_CRAFT_ITEM_TYPE_AMMO))
+        return SKILL_CRAFT_WEAPON;
+    return SKILL_CRAFT_ARMOR;
 }
 
 string GetMaterialString(int nType)
@@ -85,9 +95,9 @@ string GetNewItemTag(object oItem, int nType)
 }
 
 //Returns TRUE if nBaseItem can have nItemProp
-int ValidProperty(int nBaseItem, int nItemProp)
+int ValidProperty(object oItem, int nItemProp)
 {
-    int nPropColumn = StringToInt(Get2DACache("baseitems", "PropColumn", nBaseItem));
+    int nPropColumn = StringToInt(Get2DACache("baseitems", "PropColumn", GetBaseItemType(oItem)));
     string sPropCloumn = "";
     switch(nPropColumn)
     {
@@ -135,7 +145,7 @@ int GetWeaponType(int nBaseItem)
 //Partly ripped off the lexicon :P
 int GetItemBaseAC(object oItem)
 {
-    int nAC;
+    int nAC = -1;
     int nBase = GetBaseItemType(oItem);
     int bID = GetIdentified(oItem);
     if(bID) SetIdentified(oItem, FALSE);
@@ -168,6 +178,7 @@ int GetItemBaseAC(object oItem)
 
 int GetItemArmourCheckPenalty(object oItem)
 {
+    int nBase = GetBaseItemType(oItem);
     int nPenalty = 0;
     if(nBase == BASE_ITEM_SMALLSHIELD)
         nPenalty = 1;
@@ -191,25 +202,26 @@ int GetItemArmourCheckPenalty(object oItem)
 }
 
 //Returns whether the item can be made of a material
-int CheckCraftingMaterial(object oItem, int nMaterial)
+int CheckCraftingMaterial(int nBaseItem, int nMaterial, int nBaseAC = -1)
 {
-    int nBaseItem = GetBaseItemType(oItem);
     if(nBaseItem == BASE_ITEM_WHIP) return (nMaterial == PRC_CRAFT_MATERIAL_LEATHER);
 
     if((nBaseItem == BASE_ITEM_SMALLSHIELD) ||
         (nBaseItem == BASE_ITEM_LARGESHIELD) ||
         (nBaseItem == BASE_ITEM_TOWERSHIELD)
         )
-        return (nMaterial != PRC_CRAFT_MATERIAL_LEATHER);
+        return ((nMaterial == PRC_CRAFT_MATERIAL_METAL) || (nMaterial == PRC_CRAFT_MATERIAL_WOOD));
 
     if(nBaseItem == BASE_ITEM_ARMOR)
     {
-        int nAC = GetBaseAC(oItem);
-        if(nAC >= 0 && nAC <= 1)  return (nMaterial == PRC_CRAFT_MATERIAL_CLOTH);
-        if(nAC >= 2 && nAC <= 3)  return (nMaterial == PRC_CRAFT_MATERIAL_LEATHER);
+        /*
+        if(nBaseAC >= 0 && nBaseAC <= 1) return (nMaterial == PRC_CRAFT_MATERIAL_CLOTH);
+        if(nBaseAC >= 2 && nBaseAC <= 3) return (nMaterial == PRC_CRAFT_MATERIAL_LEATHER);
         else return (nMaterial == PRC_CRAFT_MATERIAL_METAL);
+        */
+        return ((nMaterial == PRC_CRAFT_MATERIAL_METAL) || (nMaterial == PRC_CRAFT_MATERIAL_LEATHER));
     }
-
+    //since you can't make adamantine weapons at the moment
     if((nBaseItem == BASE_ITEM_HEAVYCROSSBOW) ||
         (nBaseItem == BASE_ITEM_LIGHTCROSSBOW) ||
         (nBaseItem == BASE_ITEM_LONGBOW) ||
@@ -222,15 +234,13 @@ int CheckCraftingMaterial(object oItem, int nMaterial)
         (nBaseItem == BASE_ITEM_TRIDENT) ||
         (nBaseItem == BASE_ITEM_HALBERD) ||
         (nBaseItem == 322) ||   //goad
-        (nBaseItem == BASE_ITEM_CLUB) ||
+        (nBaseItem == BASE_ITEM_CLUB)
         )
     {
         return (nMaterial == PRC_CRAFT_MATERIAL_WOOD);
     }
-
     //assume stuff is made of metal (most of it is)
     return (nMaterial == PRC_CRAFT_MATERIAL_METAL);
-
 }
 
 //Returns the DC for crafting a particular item
@@ -278,10 +288,10 @@ void MakeMasterwork(object oItem)
 {
     if(GetPlotFlag(oItem)) return;  //sanity check
     int nBase = GetBaseItemType(oItem);
-    if(((nBase == BASE_ITEM_ARMOR) ||
+    if((nBase == BASE_ITEM_ARMOR) ||
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
-        (nBase == BASE_ITEM_TOWERSHIELD))
+        (nBase == BASE_ITEM_TOWERSHIELD)
         )
     {
         //no armour check penalty here
@@ -398,6 +408,8 @@ void MakeMithral(object oItem)
         itemproperty ip6 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE, nBonus);
         itemproperty ip7 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP, nBonus);
         itemproperty ip8 = ConstructIP(ITEM_PROPERTY_ARCANE_SPELL_FAILURE, 0, IP_CONST_ARCANE_SPELL_FAILURE_MINUS_10_PERCENT);
+        if(GetItemBaseAC(oItem) == 1)
+            ip8 = ConstructIP(ITEM_PROPERTY_ARCANE_SPELL_FAILURE, 0, IP_CONST_ARCANE_SPELL_FAILURE_MINUS_5_PERCENT);
         IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
         IPSafeAddItemProperty(oItem, ip2, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
         IPSafeAddItemProperty(oItem, ip3, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
@@ -513,9 +525,9 @@ string ItemStats(object oItem)
     string sDesc = GetName(oItem) +
                     "\n\n" +
                     GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", GetBaseItemType(oItem)))) +
-                    "\n\n" +
+                    /*"\n\n" +
                     "Price: " +
-                    IntToString(GetGoldPieceValue(oItem)) +
+                    IntToString(GetGoldPieceValue(oItem)) +*/
                     "\n\n";
 
     itemproperty ip = GetFirstItemProperty(oItem);
@@ -687,7 +699,7 @@ int MaxListSize(string sTable)
     if(sTable == "iprp_walk")
         return 2;
     if(sTable == "iprp_weightcost")
-        return 6;
+        return 7;
     if(sTable == "iprp_weightinc")
         return 6;
     if(sTable == "poison")

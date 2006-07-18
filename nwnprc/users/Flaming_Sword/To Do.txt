@@ -2,3 +2,4 @@ Lasher - Activating Placeables for Third Hand
 
 Spellfire Channeler - Making itemprops removed by Drain Permanent Item come back across logons
 
+Forge - make closer to DM's Guide crafting

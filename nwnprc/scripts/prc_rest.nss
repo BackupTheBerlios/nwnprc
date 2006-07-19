@@ -89,6 +89,7 @@ void RestStarted(object oPC)
     DeleteLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
     DeleteLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
     DeleteLocalObject(oPC, PRC_SPELL_CONC_TARGET);
+    if(GetLocalInt(oPC, PRC_SPELL_HOLD)) FloatingTextStringOnCreature("*Normal Casting*", oPC);
     DeleteLocalInt(oPC, PRC_SPELL_HOLD);
     DeleteLocalInt(oPC, PRC_SPELL_METAMAGIC);
     DeleteLocalManifestation(oPC, PRC_POWER_HOLD_MANIFESTATION);

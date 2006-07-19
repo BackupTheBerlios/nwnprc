@@ -2311,6 +2311,15 @@ void SetDefaultFileEnds();
  */
 void CreateSwitchNameArray();
 
+/******************************************************************************\
+*                              Truenaming switches                             *
+\******************************************************************************/
+
+/**
+ * Blank for the moment: To-do, add options
+ */
+const string PRC_TRUENAME_DC                      = "PRC_TRUENAME_DC";
+
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -2717,4 +2726,5 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_MAX_STAT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_BONUS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_DC);
 }

@@ -29,7 +29,7 @@ const string PRC_DEBUG_IGNORE_CONSTRAINTS = "PRC_Debug_Ignore_Constraints";
  */
 const string PRC_UTTERANCE_TOKEN_VAR  = "PRC_UtteranceToken";
 const string PRC_UTTERANCE_TOKEN_NAME = "PRC_UtterTOKEN";
-const float PRC_UTTERANCE_HB_DELAY    = 0.5f;
+const float  PRC_UTTERANCE_HB_DELAY   = 0.5f;
 
 
 //////////////////////////////////////////////////
@@ -49,6 +49,8 @@ struct utterance{
     int nTruespeakerLevel;
     /// The utterance's spell ID
     int nSpellID;
+    /// The DC for speaking the utterance
+    int nUtterDC;
 
     /* Metautterances */
     /// Whether Empower utterance was used with this utterance
@@ -74,13 +76,15 @@ struct utterance{
  * @param nMetaUtterFlags The metautterances that may be used to modify this utterance. Any number
  *                      of METAUTTERANCE_* constants ORd together using the | operator.
  *                      For example (METAUTTERANCE_EMPOWER | METAUTTERANCE_EXTEND)
+ * @param nType         Whether it is of the Crafted Tool, Evolving Mind or Perfected Map
+ *                      Use one of three constants: TYPE_EVOLVING_MIND, TYPE_CRAFTED_TOOL, TYPE_PERFECTED_MAP
  *
  * @return              A utterance structure that contains the data about whether
  *                      the utterance was successfully truespeaked, what metautterances
  *                      were used and some other commonly used data, like the 
  *                      TrueNamer's truespeaker level for this utterance.
  */
-struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags);
+struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nType);
 
 /**
  * Causes OBJECT_SELF to use the given utterance.
@@ -446,7 +450,7 @@ void _UseUtteranceAux(object oTrueSpeaker, object oUtrToken, int nSpellId,
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags)
+struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nType)
 {
     /* Get some data */
     int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oTrueSpeaker, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
@@ -461,76 +465,38 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
     utter.bCanUtter         = TRUE;                                   // Assume successfull utterance by default
     utter.nTruespeakerLevel = nTruespeakerLevel;
     utter.nSpellID          = PRCGetSpellId();
+    utter.nUtterDC          = GetBaseUtteranceDC(oTarget, oTrueSpeaker, nType);
 
-    // Account for metautterances
+    // Account for metautterances. This includes adding the appropriate DC boosts.
     utter = EvaluateMetautterances(utter, nMetaUtterFlags);
+    // Account for the law of resistance
+    utter.nUtterDC += GetLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellID);
+    // DC change for targeting self and using a Personal Truename
+    utter.nUtterDC += AddPersonalTruenameDC(oTrueSpeaker, oTarget);  
+    // DC change for ignoring Spell Resistance
+    utter.nUtterDC += AddIgnoreSpellResistDC(oTrueSpeaker);
 
     // Skip paying anything if something has prevented successfull utterance already by this point
     if(utter.bCanUtter)
     {
-        /* The truespeaker level value includes the truespeaker level increase from
-         * Wild Surge, but since the calculated cost already contains the augmentation
-         * cost reduction provided by Wild Surge, it should not apply here.
+        /* Roll the dice, and see if we succeed or fail.
          */
-        if((nTruespeakerLevel - nWildSurge) >= utter.nPPCost || bIsPsiLike || bIgnoreConstraints)
+        if(GetIsSkillSuccessful(oTrueSpeaker, SKILL_TRUESPEAK, utter.nUtterDC) || bIgnoreConstraints)
         {
-            // Reduced cost of truespeaking a utterance, but does not allow you to exceed the truespeaker level cap
-            if(!bIsPsiLike) // Skipped for psi-like abilities
-                utter = _GetPPCostReduced(utter);
-
-            //If the truespeaker does not have enough points before hostile modifiers, cancel utterance
-            if(utter.nPPCost > ntruespeakerPP && !bIsPsiLike && !bIgnoreConstraints)
-            {
-                FloatingTextStrRefOnCreature(16826412, oTrueSpeaker, FALSE); // "You do not have enough utterance Points to truespeak this utterance"
-                utter.bCanUtter = FALSE;
-            }
-            // The truespeaker has enough utterance points that they would be able to use the utterance, barring extra costs
-            else
-            {
-                //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE utterance FAIL HERE *//
-                // Psionic Hole does not count against truespeaker level cap, but causes the utterance to fail if the truespeaker can't pay
-                utter.nPPCost += nPsionicHoleCost;
-                // Volatile Mind behaves the same
-                utter.nPPCost += nVolatileMindCost;
-                //* ADD ALL COST INCREASING FACTORS THAT WILL CAUSE PP LOSS EVEN IF THEY MAKE THE utterance FAIL ABOVE *//
-
-                if(utter.nPPCost > ntruespeakerPP && !bIsPsiLike && !bIgnoreConstraints)
-                {
-                    FloatingTextStrRefOnCreature(16826413, oTrueSpeaker, FALSE); // "Your target's abilities cause you to use more utterance Points than you have. The utterance fails"
-                    utter.bCanUtter = FALSE;
-                }
-
-                // Psi-like abilities ignore PP costs and metapsi
-                if(!bIsPsiLike)
-                {
-                    // Set the utterance points to their new value and inform the truespeaker
-                    LosePowerPoints(oTrueSpeaker, utter.nPPCost, TRUE);
-
-                    // Psionic focus loss from using metautterances. Has a side effect of telling the truespeaker which metautterances were actually active
-                    PaymetautterancesFocuses(utter);
-                }
-
-                //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL utterance HERE *//
-                // Damage from overchanneling happens only if one actually spends PP
-                _DoOverchannelDamage(oTrueSpeaker, bIsPsiLike);
-                // Apply Hostile Mind damage, as necessary
-                _HostileMind(oTrueSpeaker, oTarget);
-                // Apply Wild Surge side-effects
-                _SurgingEuphoriaOrPsychicEnervation(oTrueSpeaker, nWildSurge);
-                // Apply Mind Trap PP loss
-                _DoMindTrapPPLoss(oTrueSpeaker, oTarget);
+        	// Increases the DC of the subsequent utterances
+        	DoLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellID);
                 // Spellfire friendly absorption - This may set bCananifest to FALSE
                 utter = _DoSpellfireFriendlyAbsorption(utter, oTarget);
-                //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL utterance ABOVE *//
-            }
+                //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL UTTERANCE ABOVE *//
+
         }
-        // Cost was over the truespeaker cap
+        // Failed the DC roll
         else
-        {// "Your truespeaker level is not high enough to spend X utterance Points"
-            FloatingTextStringOnCreature(GetStringByStrRef(16826410) + " " + IntToString(utter.nPPCost) + " " + GetStringByStrRef(16826409), oTrueSpeaker, FALSE);
+        {
+            // No need for an output here because GetIsSkillSuccessful does it for us.
             utter.bCanUtter = FALSE;
         }
-    }//end if - Something hadn't prevented successfull utterance already before paying the utterance costs
+    }//end if
 
     if(DEBUG) DoDebug("EvaluateUtterance(): Final result:\n" + DebugUtterance2Str(utter));
 

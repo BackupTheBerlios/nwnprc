@@ -32,11 +32,11 @@ const int METAUTTERANCE_MIN           = 0x2;
 const int METAUTTERANCE_MAX           = 0x8;
 
 /// Empower Utterance variable name
-const string METAUTTERANCE_EMPOWER_VAR   = "PRC_PsiMeta_Empower";
+const string METAUTTERANCE_EMPOWER_VAR   = "PRC_TrueMeta_Empower";
 /// Extend Utterance variable name
-const string METAUTTERANCE_EXTEND_VAR    = "PRC_PsiMeta_Extend";
+const string METAUTTERANCE_EXTEND_VAR    = "PRC_TrueMeta_Extend";
 /// Quicken Utterance variable name
-const string METAUTTERANCE_QUICKEN_VAR   = "PRC_PsiMeta_Quicken";
+const string METAUTTERANCE_QUICKEN_VAR   = "PRC_TrueMeta_Quicken";
 
 
 /// The name of a marker variable that tells that the Utterance being truespoken had Quicken Utterance used on it
@@ -94,59 +94,40 @@ int MetautterancesDamage(struct utterance utter, int nDieSize, int nNumberOfDice
 struct utterance EvaluateMetautterances(struct utterance utter, int nMetaUtterFlags)
 {
     // Total PP cost of metautterances used
-    int nMetaPsiPP = 0;
+    int nUtterDC = 0;
     // A debug variable to make a Utterance ignore normal use constraints
     int bIgnoreConstr = (DEBUG) ? GetLocalInt(utter.oTrueSpeaker, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
-    // A switch value that governs how Improved metautterances epic feat works
-    int bUseSum = GetPRCSwitch(PRC_PSI_IMP_METAPSIONICS_USE_SUM);
-    // Epic feat Improved metautterances - 2 PP per.
-    int nImpMetapsiReduction, i = FEAT_IMPROVED_METAPSIONICS_1;
-    while(i < FEAT_IMPROVED_METAPSIONICS_10 && GetHasFeat(i, utter.oTrueSpeaker))
-    {
-        nImpMetapsiReduction += 2;
-        i++;
-    }
 
-    /* Calculate the added cost from metautterances and set the use markers for the utterances used */
+    /* Calculate the added DC from metautterances and set the use markers for the utterances used */
 
     // Quicken Utterance - special handling
     if(GetLocalInt(utter.oTrueSpeaker, PRC_UTTERANCE_IS_QUICKENED))
     {
-        // If Quicken could not have been used, the utterance fails
-        if(!(utter.nPsiFocUsesRemain > 0 || bIgnoreConstr))
-            utter.bCanManifest = FALSE;
-
-        nMetaPsiPP += _GetMetaPsiPPCost(METAUTTERANCE_QUICKEN_COST, nImpMetapsiReduction, bUseSum);
+	// Add the DC Boost and mark the utterance as quickened here
+        nUtterDC += 20;
         utter.bQuicken = TRUE;
-        utter.nPsiFocUsesRemain--;
 
         // Delete the marker var
         DeleteLocalInt(utter.oTrueSpeaker, PRC_UTTERANCE_IS_QUICKENED);
     }
 
-    if((nMetaUtterFlags & METAUTTERANCE_EMPOWER)             &&
-        GetLocalInt(utter.oTrueSpeaker, METAUTTERANCE_EMPOWER_VAR) &&
-        (utter.nPsiFocUsesRemain > 0 || bIgnoreConstr)
-        )
+    if((nMetaUtterFlags & METAUTTERANCE_EMPOWER) && GetLocalInt(utter.oTrueSpeaker, METAUTTERANCE_EMPOWER_VAR))
     {
-        nMetaPsiPP += _GetMetaPsiPPCost(METAUTTERANCE_EMPOWER_COST, nImpMetapsiReduction, bUseSum);
+	// Add the DC Boost and mark the utterance as quickened here
+        nUtterDC += 10;
         utter.bEmpower = TRUE;
-        utter.nPsiFocUsesRemain--;
     }
-    if((nMetaUtterFlags & METAUTTERANCE_EXTEND)            &&
-       GetLocalInt(utter.oTrueSpeaker, METAUTTERANCE_EXTEND_VAR) &&
-       (utter.nPsiFocUsesRemain > 0 || bIgnoreConstr)
-       )
+    if((nMetaUtterFlags & METAUTTERANCE_EXTEND) && GetLocalInt(utter.oTrueSpeaker, METAUTTERANCE_EXTEND_VAR))
     {
-        nMetaPsiPP += _GetMetaPsiPPCost(METAUTTERANCE_EXTEND_COST, nImpMetapsiReduction, bUseSum);
+        // Add the DC Boost and mark the utterance as quickened here
+        nUtterDC += 5;
         utter.bExtend = TRUE;
-        utter.nPsiFocUsesRemain--;
     }
 
-    // Add in the cost of the metautterances uses
-    utter.nPPCost += _GetMetaPsiPPCost(nMetaPsiPP, nImpMetapsiReduction, !bUseSum); // A somewhat hacky use of the function, but eh, it works
+    // Add in the DC boost of the metautterances
+    utter.nUtterDC += nUtterDC;
 
-    return manif;
+    return utter;
 }
 
 int MetautterancesDamage(struct utterance utter, int nDieSize, int nNumberOfDice, int nBonus = 0,

@@ -13,9 +13,7 @@ Beguiler - All to do, Spells
 
 Truenaming:
 
-true_inc_utter: finish EvaluateUtterance function
-true_inc_metautr: finish EvaluateMetautterances function
-
+true_inc_truespeak: ClearLawOfResistanceDCIncrease update numbers
 
 1 Base Class
 ~60 Utterances

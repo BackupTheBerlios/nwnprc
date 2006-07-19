@@ -17995,8 +17995,7 @@ Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +
 </entry>
   <entry id="51537" lang="en" sex="m">Arrow Deflection</entry>
   <entry id="51538" lang="en" sex="m">This shield protects the wielder as if he had the Deflect Arrows feat. Once per round when he would normally be struck by a ranged weapon, he can make a DC 20 Reflex save. If the ranged weapon has an enhancement bonus, the DC increases by that amount. If he succeeds, the shield deflects the weapon. He must be aware of the attack and not flat-footed. Attempting to deflect a ranged weapon doesn’t count as an action. Exceptional ranged weapons, such as boulders hurled by giants or acid arrows, can’t be deflected.
-Faint abjuration; CL 5th; Craft Magic Arms and Armor, shield; Price +2 bonus.
-</entry>
+Faint abjuration; CL 5th; Craft Magic Arms and Armor, shield; Price +2 bonus.</entry>
   <entry id="51539" lang="en" sex="m">Cold Resistance</entry>
   <entry id="51540" lang="en" sex="m">A suit of armor or a shield with this property normally has a bluish, icy hue or is adorned with furs and shaggy pelts. The armor absorbs the first 10 points of cold damage per attack that the wearer would normally take (similar to the resist energy spell).
 Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
@@ -18030,42 +18029,42 @@ Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +
   <entry id="51559" lang="en" sex="m">Invulnerability</entry>
   <entry id="51560" lang="en" sex="m">This suit of armor grants the wearer damage reduction of 5/magic.
 Strong abjuration and perhaps evocation (if miracle is used); CL 18th; Craft Magic Arms and Armor, stoneskin, wish or miracle; Price +3 bonus.</entry>
-  <entry id="51561" lang="en" sex="m">Reflecting: This shield seems like a mirror. Its surface is completely reflective. Once per day, it can be called on to reflect a spell back at its caster exactly like the spell turning spell.
+  <entry id="51561" lang="en" sex="m">Reflecting</entry>
+  <entry id="51562" lang="en" sex="m">This shield seems like a mirror. Its surface is completely reflective. Once per day, it can be called on to reflect a spell back at its caster exactly like the spell turning spell.
 Strong abjuration; CL 14th; Craft Magic Arms and Armor, spell turning; Price +5 bonus.</entry>
-  <entry id="51562" lang="en" sex="m">Shadow</entry>
-  <entry id="51563" lang="en" sex="m">This armor is jet black and blurs the wearer whenever she tries to hide, granting a +5 competence bonus on Hide checks. (The armor’s armor check penalty still applies normally.)
-Faint illusion; CL 5th; Craft Magic Arms and Armor, invisibility; Price +3,750 g</entry>
-  <entry id="51564" lang="en" sex="m">p.Shadow, Improv</entry>
-  <entry id="51565" lang="en" sex="m">edAs shadow, except it grants a +10 competence bonus on Hide checks.
-Moderate illusion; CL 10th; Craft Magic Arms and Armor, invisibility; Price +15,000 g</entry>
-  <entry id="51566" lang="en" sex="m">p.Shadow, Great</entry>
-  <entry id="51567" lang="en" sex="m">erAs shadow, except it grants a +15 competence bonus on Hide checks.
-Moderate illusion; CL 15th; Craft Magic Arms and Armor, invisibility; Price +33,750 g</entry>
-  <entry id="51568" lang="en" sex="m">p.Silent Mov</entry>
-  <entry id="51569" lang="en" sex="m">esThis armor is well oiled and magically constructed so that it not only makes little sound, but it dampens sound around it. It provides a +5 competence bonus on its wearer’s Move Silently checks. (The armor’s armor check penalty still applies normally.)
-Faint illusion; CL 5th; Craft Magic Arms and Armor, silence; Price +3,7</entry>
-  <entry id="51570" lang="en" sex="m">50 gp.Silent Moves, Im</entry>
-  <entry id="51571" lang="en" sex="m">provedAs silent moves, except it grants a +10 competence bonus on Move Silently checks.
-Moderate illusion; CL 10th; Craft Magic Arms and Armor, silence; Price +15,0</entry>
-  <entry id="51572" lang="en" sex="m">00 gp.Silent Moves, G</entry>
-  <entry id="51573" lang="en" sex="m">reaterAs silent moves, except it grants a +15 competence bonus on Move Silently checks.
-Moderate illusion; CL 15th; Craft Magic Arms and Armor, silence; Price +33,7</entry>
-  <entry id="51574" lang="en" sex="m">50 gp.Sonic Resi</entry>
-  <entry id="51575" lang="en" sex="m">stanceA suit of armor or a shield with this property normally has a glistening appearance. The armor absorbs the first 10 points of sonic damage per attack that the wearer would normally take (similar to the resist energy spell).
-Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,0</entry>
-  <entry id="51576" lang="en" sex="m">00 gp.Sonic Resistance, Im</entry>
-  <entry id="51577" lang="en" sex="m">provedAs sonic resistance, except it absorbs the first 20 points of sonic damage per attack.
-Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,0</entry>
-  <entry id="51578" lang="en" sex="m">00 gp.Sonic Resistance, G</entry>
-  <entry id="51579" lang="en" sex="m">reaterAs sonic resistance, except it absorbs the first 30 points of sonic damage per attack.
-Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,0</entry>
-  <entry id="51580" lang="en" sex="m">00 gp.Spell Resi</entry>
-  <entry id="51581" lang="en" sex="m">stanceThis property grants the armor’s wearer spell resistance while the armor is worn. The spell resistance can be 13, 15, 17, or 19, depending on the armor.
-Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price +2 bonus (SR 13), +3 bonus (SR 15), +4 bonus (SR 17), or +5 bonus </entry>
-  <entry id="51582" lang="en" sex="m">(SR 19).Undead Con</entry>
-  <entry id="51583" lang="en" sex="m">trollingThe wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
-Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49</entry>
-  <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
+  <entry id="51563" lang="en" sex="m">Shadow</entry>
+  <entry id="51564" lang="en" sex="m">This armor is jet black and blurs the wearer whenever she tries to hide, granting a +5 competence bonus on Hide checks. (The armor’s armor check penalty still applies normally.)
+Faint illusion; CL 5th; Craft Magic Arms and Armor, invisibility; Price +3,750 gp.</entry>
+  <entry id="51565" lang="en" sex="m">Shadow, Improved</entry>
+  <entry id="51566" lang="en" sex="m">As shadow, except it grants a +10 competence bonus on Hide checks.
+Moderate illusion; CL 10th; Craft Magic Arms and Armor, invisibility; Price +15,000 gp.</entry>
+  <entry id="51567" lang="en" sex="m">Shadow, Greater</entry>
+  <entry id="51568" lang="en" sex="m">As shadow, except it grants a +15 competence bonus on Hide checks.
+Moderate illusion; CL 15th; Craft Magic Arms and Armor, invisibility; Price +33,750 gp.</entry>
+  <entry id="51569" lang="en" sex="m">Silent Moves</entry>
+  <entry id="51570" lang="en" sex="m">This armor is well oiled and magically constructed so that it not only makes little sound, but it dampens sound around it. It provides a +5 competence bonus on its wearer’s Move Silently checks. (The armor’s armor check penalty still applies normally.)
+Faint illusion; CL 5th; Craft Magic Arms and Armor, silence; Price +3,750 gp.</entry>
+  <entry id="51571" lang="en" sex="m">Silent Moves, Improved</entry>
+  <entry id="51572" lang="en" sex="m">As silent moves, except it grants a +10 competence bonus on Move Silently checks.
+Moderate illusion; CL 10th; Craft Magic Arms and Armor, silence; Price +15,000 gp.</entry>
+  <entry id="51573" lang="en" sex="m">Silent Moves, Greater</entry>
+  <entry id="51574" lang="en" sex="m">As silent moves, except it grants a +15 competence bonus on Move Silently checks.
+Moderate illusion; CL 15th; Craft Magic Arms and Armor, silence; Price +33,750 gp.</entry>
+  <entry id="51575" lang="en" sex="m">Sonic Resistance</entry>
+  <entry id="51576" lang="en" sex="m">A suit of armor or a shield with this property normally has a glistening appearance. The armor absorbs the first 10 points of sonic damage per attack that the wearer would normally take (similar to the resist energy spell).
+Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
+  <entry id="51577" lang="en" sex="m">Sonic Resistance, Improved</entry>
+  <entry id="51578" lang="en" sex="m">As sonic resistance, except it absorbs the first 20 points of sonic damage per attack.
+Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
+  <entry id="51579" lang="en" sex="m">Sonic Resistance, Greater</entry>
+  <entry id="51580" lang="en" sex="m">As sonic resistance, except it absorbs the first 30 points of sonic damage per attack.
+Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
+  <entry id="51581" lang="en" sex="m">Spell Resistance</entry>
+  <entry id="51582" lang="en" sex="m">This property grants the armor’s wearer spell resistance while the armor is worn. The spell resistance can be 13, 15, 17, or 19, depending on the armor.
+Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price +2 bonus (SR 13), +3 bonus (SR 15), +4 bonus (SR 17), or +5 bonus (SR 19).</entry>
+  <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
+  <entry id="51584" lang="en" sex="m">The wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
+Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>  <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4
 

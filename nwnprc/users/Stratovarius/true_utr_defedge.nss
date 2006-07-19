@@ -71,5 +71,7 @@ void main()
         
         // Apply effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, utter.nSpellID, utter.nTruespeakerLevel);
+        // Mark for the Law of Sequence
+        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, fDuration)
     }// end if - Successful utterance
 }

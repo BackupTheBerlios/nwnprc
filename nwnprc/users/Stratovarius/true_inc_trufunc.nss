@@ -108,6 +108,34 @@ int GetTrueSpeakerDC(object oTrueSpeaker = OBJECT_SELF);
 int GetTrueSpeakPenetration(object oTrueSpeaker = OBJECT_SELF);
 
 /**
+ * Marks an utterance as active for the Law of Sequence.
+ * Called from the Utterance
+ *
+ * @param oTrueSpeaker    Caster of the Utterance
+ * @param nSpellId        SpellId of the Utterance
+ * @param fDur            Duration of the Utterance
+ */
+void DoLawOfSequence(object oTrueSpeaker, int nSpellId, int fDur);
+
+/**
+ * Checks to see whether the law of sequence is active
+ * Utterance fails if it is.
+ *
+ * @param oTrueSpeaker    Caster of the Utterance
+ * @param nSpellId        SpellId of the Utterance
+ *
+ * @return True if the Utterance is active, False if it is not.
+ */
+int CheckLawOfSequence(object oTrueSpeaker, int nSpellId);
+
+/**
+ * Returns the name of the Utterance
+ *
+ * @param nSpellId        SpellId of the Utterance
+ */
+string GetUtteranceName(int nSpellId);
+
+/**
  * Applies modifications to a utterance's damage that depend on some property
  * of the target.
  * Currently accounts for:
@@ -271,6 +299,22 @@ int GetTrueSpeakPenetration(object oTrueSpeaker = OBJECT_SELF)
     if (GetLocalInt(oTrueSpeaker, TRUE_IGNORE_SR)) nPen += 9000;
 
     return nPen;
+}
+
+void DoLawOfSequence(object oTrueSpeaker, int nSpellId, float fDur)
+{
+	SetLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(nSpellId), TRUE);
+	DelayCommand(fDur, DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(nSpellId)));
+}
+
+int CheckLawOfSequence(object oTrueSpeaker, int nSpellId)
+{
+	return GetLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(nSpellId));
+}
+
+string GetUtteranceName(int nSpellId)
+{
+	return Get2DACache("spells", "Name", nSpellId);
 }
 
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,

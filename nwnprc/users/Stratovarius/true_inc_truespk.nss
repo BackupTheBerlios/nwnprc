@@ -15,11 +15,12 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const string LAW_OF_RESIST_VARNAME = "PRC_LawOfResistance";
-const string TRUE_IGNORE_SR        = "PRC_True_IgnoreSR";
-const int    TYPE_EVOLVING_MIND    = 1;
-const int    TYPE_CRAFTED_TOOL     = 2;
-const int    TYPE_PERFECTED_MAP    = 3;
+const string LAW_OF_RESIST_VARNAME   = "PRC_LawOfResistance";
+const string LAW_OF_SEQUENCE_VARNAME = "PRC_LawOfSequence";
+const string TRUE_IGNORE_SR          = "PRC_True_IgnoreSR";
+const int    TYPE_EVOLVING_MIND      = 1;
+const int    TYPE_CRAFTED_TOOL       = 2;
+const int    TYPE_PERFECTED_MAP      = 3;
 
 
 //////////////////////////////////////////////////
@@ -56,12 +57,12 @@ int GetLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID);
 void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID);
 
 /**
- * Deletes all of the Local Ints storing the DC increase.
+ * Deletes all of the Local Ints stored by the laws.
+ * Called OnRest and OnEnter
  *
  * @param oTrueSpeaker    Caster of the Utterance
- * @param nSpellId        SpellId of the Utterance
  */
-void ClearLawOfResistanceDCIncrease(object oTrueSpeaker);
+void ClearLawLocalVars(object oTrueSpeaker);
 
 /**
  * Returns the Personal Truename DC increase
@@ -85,7 +86,6 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-#include "psi_inc_focus"
 
 
 //////////////////////////////////////////////////
@@ -146,7 +146,7 @@ void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID)
 	SetLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(nSpellId), (nNum + 1));
 }
 
-void ClearLawOfResistanceDCIncrease(object oTrueSpeaker)
+void ClearLawLocalVars(object oTrueSpeaker)
 {
 	// As long as the PC isn't a truenamer, don't run this.
 	if (!GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker)) return;
@@ -154,10 +154,11 @@ void ClearLawOfResistanceDCIncrease(object oTrueSpeaker)
 	// So we loop em all and blow em away
 	// Because there are only about 60, this should not TMI
 	// i is the SpellId
-	// Replace numbers whrn done
+	// Replace numbers when done
 	for(i = 17500; i < 18000; i++)
 	{
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(i));
+		DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(i));
 	}
 }
 

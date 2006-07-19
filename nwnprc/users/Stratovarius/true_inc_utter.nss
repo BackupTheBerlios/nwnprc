@@ -148,11 +148,8 @@ void DebugIgnoreConstraints(object oTrueSpeaker);
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
-/*
-#include "psi_inc_metapsi"
-#include "psi_inc_ppoints" // Provides psi_inc_focus and psi_inc_psifunc
-#include "psi_inc_augment" // Provides inc_utility
-*/
+#include "true_inc_metautr"
+#include "true_inc_truespk" 
 
 //////////////////////////////////////////////////
 /*             Internal functions               */
@@ -475,7 +472,14 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
     utter.nUtterDC += AddPersonalTruenameDC(oTrueSpeaker, oTarget);  
     // DC change for ignoring Spell Resistance
     utter.nUtterDC += AddIgnoreSpellResistDC(oTrueSpeaker);
-
+    
+    // Check the Law of Sequence. Returns True if the utterance is active
+    if (CheckLawOfSequence(oTrueSpeaker, nSpellId))
+    {
+    	utter.bCanUtter = FALSE;
+    	FloatingTextStringOnCreature("You already have " + GetUtteranceName(nSpellId) + " active. Utterance Failed.", oPC, FALSE);
+    }
+    
     // Skip paying anything if something has prevented successfull utterance already by this point
     if(utter.bCanUtter)
     {

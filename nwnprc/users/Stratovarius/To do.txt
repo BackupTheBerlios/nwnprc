@@ -6,21 +6,20 @@
 Primary
 -----------------------------------------------------
 
-Base Classes:
-Warmage - All to do, Spells
-Dread Necromancer - All to do, Spells
-Beguiler - All to do, Spells
-
 Truenaming:
 
-true_inc_truespeak: ClearLawOfResistanceDCIncrease update numbers, add to prc_rest
+true_inc_truespeak: ClearLawLocalVars update numbers, add to prc_rest
 true_inc_truknwn: GetMaxUtteranceCount needs to be adjusted for the three different lexicons. (partially done)
                   Add nType to GetKnownUtterancesModifier and related
+Do Utterance Gain Conversation.
+Make list of possible utterances.
+Make Truenamer Class
+                  
 
 1 Base Class
 ~60 Utterances
 4 Prestige Classes
-30 feats
+15+ feats
 
 Psionic PrCs:
 Iron Mind - cls_feat.2da, Invest Armour feat.
@@ -36,6 +35,9 @@ Secondary
 
 Base Classes:
 Healer - All to do
+Warmage - All to do, Spells
+Dread Necromancer - All to do, Spells
+Beguiler - All to do, Spells
 
 Psionic PrCs:
 Metamind - All to do

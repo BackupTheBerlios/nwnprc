@@ -1,1 +1,0 @@
- if(GetHasTemplate(TEMPLATE_CELESTIAL) || GetHasTemplate(TEMPLATE_HALF_CELESTIAL))

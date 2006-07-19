@@ -72,15 +72,14 @@ void main()
 		
 	if(nTouch)
 	{
-		//Sphere VFX		
+		//Sphere projectile VFX		
 		
 		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Apply effects
 			effect eSarc = EffectLinkEffects(EffectCutsceneGhost(), EffectCutsceneParalyze());
 			       eSarc = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), eSarc);
-			     //eSarc = EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS));			
-			
+			     			
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur);
 			
 			//swap out the target
@@ -96,7 +95,7 @@ void main()
 			
 			int nNormHP = GetCurrentHitPoints(oCopy);
 			
-			//Add 200 temp HP
+			//Add temp HP
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitPoints(10 * min(20, nCasterLvl)), oCopy, fDur);
 			
 			SarcMonitor(oCopy, oPC, oTarget, nNormHP);
@@ -110,12 +109,17 @@ void SarcMonitor(object oCopy, object oPC, object oTarget, int nNormHP)
 	int nHP = GetCurrentHitPoints(oCopy);
 	int bRemove = FALSE;
 		
-	while(bRemove == FALSE)
+	if(bRemove == FALSE)
 	{
 		if(nHP <= nNormHP)
 		{
 			bRemove = TRUE;
-			RemoveSarc(oCopy, oPC);
+			RemoveSarc(oCopy, oPC);						
+		}
+		
+		else
+		{
+			DelayCommand(3.0f, SarcMonitor(oCopy, oPC, oTarget, nNormHP));
 		}
 	}
 }

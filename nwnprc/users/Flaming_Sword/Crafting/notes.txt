@@ -75,3 +75,17 @@ Armour with base AC 0 requires Craft Wonderous Item
 base AC 0-1 requires cloth
 
 Must make listing function skip over much of iprp_spells.2da
+
+Cap of +5, +10 total (non-epic)
+
+SRD magic item crafting properties and prices
+
+Submenus:
+
+enhancement
+
+elemental resist: 10, 20, 30, 50
+
+damage reduction: 5/+1, 10/+1, 15/+1, 5/+6, 10/+6
+
+spell resistance: 13, 15, 17, 19, 21, 23, 25, 27

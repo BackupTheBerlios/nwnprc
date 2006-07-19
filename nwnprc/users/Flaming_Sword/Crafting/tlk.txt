@@ -1,4 +1,184 @@
-  <entry id="1630" lang="en" sex="m">10% of Weight</entry>
-  
-  
-  <entry id="00000" lang="en" sex="m">50% of Weight</entry>
+  <entry id="51501" lang="en" sex="m">50% of Weight</entry>
+  <entry id="51502" lang="en" sex="m">Craft Epic Wondrous Item</entry>
+  <entry id="51503" lang="en" sex="m">Type of Feat: General
+Prerequisite: Lore 26 ranks, Spellcraft 26 ranks
+Specifics: The character can craft wondrous items that exceed the normal limits for such items.
+Use: Automatic.</entry>
+  <entry id="51504" lang="en" sex="m">Craft Epic Magic Arms and Armor</entry>
+  <entry id="51505" lang="en" sex="m">Type of Feat: General
+Prerequisite: Lore 28 ranks, Spellcraft 28 ranks
+Specifics: The character can craft magic arms and armor that exceed the normal limits for such items.
+Use: Automatic.</entry>
+  <entry id="51506" lang="en" sex="m">Craft Epic Rod</entry>
+  <entry id="51507" lang="en" sex="m">Type of Feat: General
+Prerequisite: Lore 32 ranks, Spellcraft 32 ranks
+Specifics: The character can craft rods that exceed the normal limits for such items.
+Use: Automatic.</entry>
+  <entry id="51508" lang="en" sex="m">Craft Epic Staff</entry>
+  <entry id="51509" lang="en" sex="m">Type of Feat: General
+Prerequisite: Lore 35 ranks, Spellcraft 35 ranks
+Specifics: The character can craft staffs that exceed the normal limits for such items.
+Use: Automatic.</entry>
+  <entry id="51510" lang="en" sex="m">Enhancement +1</entry>
+  <entry id="51511" lang="en" sex="m">Enhancement +2</entry>
+  <entry id="51512" lang="en" sex="m">Enhancement +3</entry>
+  <entry id="51513" lang="en" sex="m">Enhancement +4</entry>
+  <entry id="51514" lang="en" sex="m">Enhancement +5</entry>
+  <entry id="51515" lang="en" sex="m">Enhancement +6</entry>
+  <entry id="51516" lang="en" sex="m">Enhancement +7</entry>
+  <entry id="51517" lang="en" sex="m">Enhancement +8</entry>
+  <entry id="51518" lang="en" sex="m">Enhancement +9</entry>
+  <entry id="51519" lang="en" sex="m">Enhancement +10</entry>
+  <entry id="51520" lang="en" sex="m">Enhancement +11</entry>
+  <entry id="51521" lang="en" sex="m">Enhancement +12</entry>
+  <entry id="51522" lang="en" sex="m">Enhancement +13</entry>
+  <entry id="51523" lang="en" sex="m">Enhancement +14</entry>
+  <entry id="51524" lang="en" sex="m">Enhancement +15</entry>
+  <entry id="51525" lang="en" sex="m">Enhancement +16</entry>
+  <entry id="51526" lang="en" sex="m">Enhancement +17</entry>
+  <entry id="51527" lang="en" sex="m">Enhancement +18</entry>
+  <entry id="51528" lang="en" sex="m">Enhancement +19</entry>
+  <entry id="51529" lang="en" sex="m">Enhancement +20</entry>
+  <entry id="51530" lang="en" sex="m">Increases the enhancement bonus of the item.</entry>
+  <entry id="51531" lang="en" sex="m">Acid Resistance</entry>
+  <entry id="51532" lang="en" sex="m">A suit of armor or a shield with this property normally has a dull gray appearance. The armor absorbs the first 10 points of acid damage per attack that the wearer would normally take (similar to the resist energy spell).
+Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.
+</entry>
+  <entry id="51533" lang="en" sex="m">Acid Resistance, Improved</entry>
+  <entry id="51534" lang="en" sex="m">As acid resistance, except it absorbs the first 20 points of acid damage per attack.
+Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.
+</entry>
+  <entry id="51535" lang="en" sex="m">Acid Resistance, Greater</entry>
+  <entry id="51536" lang="en" sex="m">As acid resistance, except it absorbs the first 30 points of acid damage per attack.
+Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.
+</entry>
+  <entry id="51537" lang="en" sex="m">Arrow Deflection</entry>
+  <entry id="51538" lang="en" sex="m">This shield protects the wielder as if he had the Deflect Arrows feat. Once per round when he would normally be struck by a ranged weapon, he can make a DC 20 Reflex save. If the ranged weapon has an enhancement bonus, the DC increases by that amount. If he succeeds, the shield deflects the weapon. He must be aware of the attack and not flat-footed. Attempting to deflect a ranged weapon doesn’t count as an action. Exceptional ranged weapons, such as boulders hurled by giants or acid arrows, can’t be deflected.
+Faint abjuration; CL 5th; Craft Magic Arms and Armor, shield; Price +2 bonus.</entry>
+  <entry id="51539" lang="en" sex="m">Cold Resistance</entry>
+  <entry id="51540" lang="en" sex="m">A suit of armor or a shield with this property normally has a bluish, icy hue or is adorned with furs and shaggy pelts. The armor absorbs the first 10 points of cold damage per attack that the wearer would normally take (similar to the resist energy spell).
+Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
+  <entry id="51541" lang="en" sex="m">Cold Resistance, Improved</entry>
+  <entry id="51542" lang="en" sex="m">As cold resistance, except it absorbs the first 20 points of cold damage per attack.
+Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
+  <entry id="51543" lang="en" sex="m">Cold Resistance, Greater</entry>
+  <entry id="51544" lang="en" sex="m">As cold resistance, except it absorbs the first 30 points of cold damage per attack.
+Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
+  <entry id="51545" lang="en" sex="m">Electricity Resistance</entry>
+  <entry id="51546" lang="en" sex="m">A suit of armor or a shield with this property normally has a bluish hue and often bears a storm or lightning motif. The armor absorbs the first 10 points of electricity damage per attack that the wearer would normally take (similar to the resist energy spell).
+Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
+  <entry id="51547" lang="en" sex="m">Electricity Resistance, Improved</entry>
+  <entry id="51548" lang="en" sex="m">As electricity resistance, except it absorbs the first 20 points of electricity damage per attack.
+Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
+  <entry id="51549" lang="en" sex="m">Electricity Resistance, Greater</entry>
+  <entry id="51550" lang="en" sex="m">As electricity resistance, except it absorbs the first 30 points of electricity damage per attack.
+Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
+  <entry id="51551" lang="en" sex="m">Etherealness</entry>
+  <entry id="51552" lang="en" sex="m">On command, this ability allows the wearer of the armor to become ethereal (as the ethereal jaunt spell) once per day. The character can remain ethereal for as long as desired, but once he returns to normal, he cannot become ethereal again that day.
+Strong transmutation; CL 13th; Craft Magic Arms and Armor, ethereal jaunt; Price +49,000 gp.</entry>
+  <entry id="51553" lang="en" sex="m">Fire Resistance</entry>
+  <entry id="51554" lang="en" sex="m">A suit of armor with this ability normally has a reddish hue and often is decorated with a draconic motif. The armor absorbs the first 10 points of fire damage per attack that the wearer would normally take (similar to the resist energy spell).
+Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
+  <entry id="51555" lang="en" sex="m">Fire Resistance, Improved</entry>
+  <entry id="51556" lang="en" sex="m">As fire resistance, except it absorbs the first 20 points of fire damage per attack.
+Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
+  <entry id="51557" lang="en" sex="m">Fire Resistance, Greater</entry>
+  <entry id="51558" lang="en" sex="m">As fire resistance, except it absorbs the first 30 points of fire damage per attack.
+Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
+  <entry id="51559" lang="en" sex="m">Invulnerability</entry>
+  <entry id="51560" lang="en" sex="m">This suit of armor grants the wearer damage reduction of 5/magic.
+Strong abjuration and perhaps evocation (if miracle is used); CL 18th; Craft Magic Arms and Armor, stoneskin, wish or miracle; Price +3 bonus.</entry>
+  <entry id="51561" lang="en" sex="m">Reflecting</entry>
+  <entry id="51562" lang="en" sex="m">This shield seems like a mirror. Its surface is completely reflective. Once per day, it can be called on to reflect a spell back at its caster exactly like the spell turning spell.
+Strong abjuration; CL 14th; Craft Magic Arms and Armor, spell turning; Price +5 bonus.</entry>
+  <entry id="51563" lang="en" sex="m">Shadow</entry>
+  <entry id="51564" lang="en" sex="m">This armor is jet black and blurs the wearer whenever she tries to hide, granting a +5 competence bonus on Hide checks. (The armor’s armor check penalty still applies normally.)
+Faint illusion; CL 5th; Craft Magic Arms and Armor, invisibility; Price +3,750 gp.</entry>
+  <entry id="51565" lang="en" sex="m">Shadow, Improved</entry>
+  <entry id="51566" lang="en" sex="m">As shadow, except it grants a +10 competence bonus on Hide checks.
+Moderate illusion; CL 10th; Craft Magic Arms and Armor, invisibility; Price +15,000 gp.</entry>
+  <entry id="51567" lang="en" sex="m">Shadow, Greater</entry>
+  <entry id="51568" lang="en" sex="m">As shadow, except it grants a +15 competence bonus on Hide checks.
+Moderate illusion; CL 15th; Craft Magic Arms and Armor, invisibility; Price +33,750 gp.</entry>
+  <entry id="51569" lang="en" sex="m">Silent Moves</entry>
+  <entry id="51570" lang="en" sex="m">This armor is well oiled and magically constructed so that it not only makes little sound, but it dampens sound around it. It provides a +5 competence bonus on its wearer’s Move Silently checks. (The armor’s armor check penalty still applies normally.)
+Faint illusion; CL 5th; Craft Magic Arms and Armor, silence; Price +3,750 gp.</entry>
+  <entry id="51571" lang="en" sex="m">Silent Moves, Improved</entry>
+  <entry id="51572" lang="en" sex="m">As silent moves, except it grants a +10 competence bonus on Move Silently checks.
+Moderate illusion; CL 10th; Craft Magic Arms and Armor, silence; Price +15,000 gp.</entry>
+  <entry id="51573" lang="en" sex="m">Silent Moves, Greater</entry>
+  <entry id="51574" lang="en" sex="m">As silent moves, except it grants a +15 competence bonus on Move Silently checks.
+Moderate illusion; CL 15th; Craft Magic Arms and Armor, silence; Price +33,750 gp.</entry>
+  <entry id="51575" lang="en" sex="m">Sonic Resistance</entry>
+  <entry id="51576" lang="en" sex="m">A suit of armor or a shield with this property normally has a glistening appearance. The armor absorbs the first 10 points of sonic damage per attack that the wearer would normally take (similar to the resist energy spell).
+Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
+  <entry id="51577" lang="en" sex="m">Sonic Resistance, Improved</entry>
+  <entry id="51578" lang="en" sex="m">As sonic resistance, except it absorbs the first 20 points of sonic damage per attack.
+Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
+  <entry id="51579" lang="en" sex="m">Sonic Resistance, Greater</entry>
+  <entry id="51580" lang="en" sex="m">As sonic resistance, except it absorbs the first 30 points of sonic damage per attack.
+Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
+  <entry id="51581" lang="en" sex="m">Spell Resistance</entry>
+  <entry id="51582" lang="en" sex="m">This property grants the armor’s wearer spell resistance while the armor is worn. The spell resistance can be 13, 15, 17, or 19, depending on the armor.
+Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price +2 bonus (SR 13), +3 bonus (SR 15), +4 bonus (SR 17), or +5 bonus (SR 19).</entry>
+  <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
+  <entry id="51584" lang="en" sex="m">The wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
+Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>
+
+
+  <entry id="51585" lang="en" sex="m">Acid Warding</entry>
+  <entry id="51586" lang="en" sex="m">The armor absorbs the first 50 points of acid damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51587" lang="en" sex="m">Cold Warding</entry>
+  <entry id="51588" lang="en" sex="m">The armor absorbs the first 50 points of cold damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51589" lang="en" sex="m">Fire Warding</entry>
+  <entry id="51590" lang="en" sex="m">The armor absorbs the first 50 points of fire damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51591" lang="en" sex="m">Great Invulnerability</entry>
+  <entry id="51592" lang="en" sex="m">This suit of armor or shield grants the wearer damage reduction. The damage reduction can be 10/magic, 15/magic, 5/epic, or 10/epic, depending on the armor. 
+Caster Level: 19th (10/magic), 20th (15/magic), 21st (5/epic), 22nd (10/epic); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, stoneskin, wish, or miracle; Market Price:+4 bonus (10/magic),+5 bonus (15/magic),+6 bonus (5/epic),+7 bonus (10/epic).</entry>
+  <entry id="51593" lang="en" sex="m">Great Reflection</entry>
+  <entry id="51594" lang="en" sex="m">Any time its bearer of this shield is targeted with a spell, it automatically reflects the spell back at the caster (as the spell turning spell). The wearer can lower or raise this effect as a free action (thus allowing beneficial spells in as desired). 
+Caster Level: 25th; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell turning; Market Price: +10 bonus.</entry>
+  <entry id="51595" lang="en" sex="m">Great Spell Resistance</entry>
+  <entry id="51596" lang="en" sex="m">This suit of armor or shield grants the wearer spell resistance. The spell resistance can be 21, 23, 25, or 27, depending on the armor. 
+Caster Level: 21st (SR 21), 22nd (SR 23), 23rd (SR 25), 24th (SR 27); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell resistance; Market Price: +6 bonus (SR 21), +7 bonus (SR 23), +8 bonus (SR 25), +9 bonus (SR 27).</entry>
+  <entry id="51597" lang="en" sex="m">Lightning Warding</entry>
+  <entry id="51598" lang="en" sex="m">The armor absorbs the first 50 points of lightning damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prereq-uisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51599" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51600" lang="en" sex="m">The armor absorbs the first 50 points of sonic damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51601" lang="en" sex="m">Spell Turning</entry>
+  <entry id="51602" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 7
+Innate Level: 7
+School: Abjuration
+Descriptor(s):
+Component(s): Verbal, Somatic
+Range: Personal
+Area of Effect / Target: Caster
+Duration: 10 Minutes / Level
+Additional Counter Spells: Spell Breach
+Save: Harmless
+Spell Resistance: No
+
+Spells and spell-like effects targeted on you are turned back upon the original caster. The abjuration turns only spells that have you as a target. Effect and area spells are not affected. Spell turning also fails to stop touch range spells. 
+From seven to ten (1d4+6) spell levels are affected by the turning.
+When you are targeted by a spell of higher level than the amount of spell turning you have left, that spell is partially turned. You and the caster each has a proportional chance to be affected.
+If you and a spellcasting attacker are both warded by spell turning effects in operation, both you and the caster have a proportional chance to be affected.</entry>
+  <entry id="51603" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51604" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51605" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51606" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51607" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51608" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51609" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51610" lang="en" sex="m">Sonic Warding</entry>
+
+
+      LABEL                                                     FEAT     DESCRIPTION ICON             MINATTACKBONUS MINSTR MINDEX MININT MINWIS MINCON MINCHA MINSPELLLVL PREREQFEAT1 PREREQFEAT2 GAINMULTIPLE EFFECTSSTACK ALLCLASSESCANUSE CATEGORY MAXCR SPELLID SUCCESSOR CRValue USESPERDAY MASTERFEAT TARGETSELF OrReqFeat0 OrReqFeat1 OrReqFeat2 OrReqFeat3 OrReqFeat4 REQSKILL ReqSkillMinRanks REQSKILL2 ReqSkillMinRanks2 Constant                                       TOOLSCATEGORIES HostileFeat MinLevel MinLevelClass MaxLevel MinFortSave PreReqEpic ReqAction 
+3488  CraftEpicWondrousItem                                     16828718 16828719    ife_crft_wonditm ****           ****   ****   ****   ****   ****   ****   ****        ****        ****        0            0            1                ****     ****  ****    ****      1       ****       ****       ****       ****       ****       ****       ****       ****       7        26               16        26                FEAT_CRAFT_EPIC_WONDROUS_ITEM                  4               ****        ****     ****          ****     ****        1          1         
+3489  CraftEpicMagicArmsArmor                                   16828720 16828721    ife_crftarmarmor ****           ****   ****   ****   ****   ****   ****   ****        ****        ****        0            0            1                ****     ****  ****    ****      1       ****       ****       ****       ****       ****       ****       ****       ****       7        28               16        28                FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR               4               ****        ****     ****          ****     ****        1          1         
+3490  CraftEpicRod                                              16828722 16828723    ife_craft_rod    ****           ****   ****   ****   ****   ****   ****   ****        ****        ****        0            0            1                ****     ****  ****    ****      1       ****       ****       ****       ****       ****       ****       ****       ****       7        32               16        32                FEAT_CRAFT_EPIC_ROD                            4               ****        ****     ****          ****     ****        1          1         
+3491  CraftEpicStaff                                            16828724 16828725    ife_craft_staff  ****           ****   ****   ****   ****   ****   ****   ****        ****        ****        0            0            1                ****     ****  ****    ****      1       ****       ****       ****       ****       ****       ****       ****       ****       7        35               16        35                FEAT_CRAFT_EPIC_STAFF                          4               ****        ****     ****          ****     ****        1          1         

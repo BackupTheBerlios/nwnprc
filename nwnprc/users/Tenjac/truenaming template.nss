@@ -1,77 +1,25 @@
-1  
-2  
-3  
-4  
-5  
-6  
-7  
-8  
-9  
-10  
-11  
-12  
-13  
-14  
-15  
-16  
-17  
-18  
-19  
-20  
-21  
-22  
-23  
-24  
-25  
-26  
-27  
-28  
-29  
-30  
-31  
-32  
-33  
-34  
-35  
-36  
-37  
-38  
-39  
-40  
-41  
-42  
-43  
-44  
-45  
-46  
-47  
-48  
-49  
-50  
-51  
-52  
-53  
-54  
-55  
-56  
-57  
-58  
-59  
-60  
-61  
-62  
-63  
-64  
-65  
-66  
-67  
-68  
-69  
-70  
-71  
-72  
-73  
-  
+/*
+[13:42] <Annihilator-X17> There's a function called EvaluateManifestation/Utterance
+[13:43] <Annihilator-X17> and you put into it all the things it needs to know, then it calculates and spits out whether you can manifest, and a whole bunch of other things ;P
+[13:43] <Annihilator-X17> basically, what this tells it is the power/utterance can have Empower and Extend
+[13:43] <Annihilator-X17> and so it checks for both of em
+[13:43] <Annihilator-X17> if they arent put in, it assumes the utterance cant have em and never even checks
+[13:43] <Annihilator-X17> Quicken is done seperately and is always assumed to be on
+[13:44] <Annihilator-X17> because you can quicken anything
+[13:44] <Annihilator-X17> since there are only 3 metautters
+[13:44] <Tenjac> right
+[13:44] <Annihilator-X17> the only time you'll ever use it is if there is an extend/empower utter
+[13:44] <Annihilator-X17> and that would look like (METAUTTERANCE_EXTEND | METAUTTERANCE_EMPOWER)
+[13:45] <Annihilator-X17> as for type, that just tells it which of the three lexicons its looking at
+[13:45] <Annihilator-X17> TYPE_EVOLVING_MIND, TYPE_CRAFTED_TOOL, TYPE_PERFECTED_MAP
+[13:45] <Annihilator-X17> DC and targetting is different for the different powers
+[13:45] <Annihilator-X17> utterances even
+[13:47] <Tenjac> hehe
+[13:48] <Annihilator-X17> easiest to use will end up being Perfected Map
+[13:48] <Annihilator-X17> the DC is static at 25
+[13:48] <Annihilator-X17> (there is erratta that makes the DC for it a formula, but who needs errata?)
+
+*/
 
 	
 

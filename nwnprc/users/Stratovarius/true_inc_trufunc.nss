@@ -48,7 +48,7 @@ int GetTruespeakingClass(object oTrueSpeaker = OBJECT_SELF);
  *                       is determined instead.
  * @return               The truespeaker level
  */
-int GetTruespeakingLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INVALID, int nUseHD = FALSE);
+int GetTruespeakerLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INVALID, int nUseHD = FALSE);
 
 /**
  * Determines the given creature's highest undmodified truespeaker level among it's

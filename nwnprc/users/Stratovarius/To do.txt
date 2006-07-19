@@ -13,7 +13,9 @@ Beguiler - All to do, Spells
 
 Truenaming:
 
-true_inc_truespeak: ClearLawOfResistanceDCIncrease update numbers
+true_inc_truespeak: ClearLawOfResistanceDCIncrease update numbers, add to prc_rest
+true_inc_truknwn: GetMaxUtteranceCount needs to be adjusted for the three different lexicons. (partially done)
+                  Add nType to GetKnownUtterancesModifier and related
 
 1 Base Class
 ~60 Utterances

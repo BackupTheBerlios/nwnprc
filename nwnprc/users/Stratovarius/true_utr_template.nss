@@ -49,7 +49,7 @@ void main()
     struct utterance utter = EvaluateUtterance(oTrueSpeaker, 
                                                oTarget, 
                                                (METAUTTERANCE_EXTEND | METAUTTERANCE_EMPOWER)/* Use METAUTTERANCE_NONE if it has no Metautterance usable*/, 
-                                               TYPE_* /* Pick One: TYPE_EVOLVING_MIND, TYPE_CRAFTED_TOOL, TYPE_PERFECTED_MAP*/);
+                                               TYPE_* /* Pick One: LEXICON_EVOLVING_MIND, LEXICON_CRAFTED_TOOL, LEXICON_PERFECTED_MAP*/);
 
     if(utter.bCanUtter)
     {

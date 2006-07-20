@@ -76,7 +76,7 @@ struct utterance{
  * @param nMetaUtterFlags The metautterances that may be used to modify this utterance. Any number
  *                      of METAUTTERANCE_* constants ORd together using the | operator.
  *                      For example (METAUTTERANCE_EMPOWER | METAUTTERANCE_EXTEND)
- * @param nType         Whether it is of the Crafted Tool, Evolving Mind or Perfected Map
+ * @param nLexicon      Whether it is of the Crafted Tool, Evolving Mind or Perfected Map
  *                      Use one of three constants: TYPE_EVOLVING_MIND, TYPE_CRAFTED_TOOL, TYPE_PERFECTED_MAP
  *
  * @return              A utterance structure that contains the data about whether
@@ -84,7 +84,7 @@ struct utterance{
  *                      were used and some other commonly used data, like the 
  *                      TrueNamer's truespeaker level for this utterance.
  */
-struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nType);
+struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nLexicon);
 
 /**
  * Causes OBJECT_SELF to use the given utterance.
@@ -447,7 +447,7 @@ void _UseUtteranceAux(object oTrueSpeaker, object oUtrToken, int nSpellId,
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nType)
+struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nLexicon)
 {
     /* Get some data */
     int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oTrueSpeaker, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
@@ -462,7 +462,7 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
     utter.bCanUtter         = TRUE;                                   // Assume successfull utterance by default
     utter.nTruespeakerLevel = nTruespeakerLevel;
     utter.nSpellID          = PRCGetSpellId();
-    utter.nUtterDC          = GetBaseUtteranceDC(oTarget, oTrueSpeaker, nType);
+    utter.nUtterDC          = GetBaseUtteranceDC(oTarget, oTrueSpeaker, nLexicon);
 
     // Account for metautterances. This includes adding the appropriate DC boosts.
     utter = EvaluateMetautterances(utter, nMetaUtterFlags);

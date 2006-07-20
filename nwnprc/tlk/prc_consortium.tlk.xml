@@ -17939,6 +17939,19 @@ Classes: All.
 
 A successful check allows a character to properly truespeak an utterance, changing the universe in some way. This skill is only used by those versed in truename magic.
 Use: Automatic.</entry>
+  <entry id="51256" lang="en" sex="m">Return to lexicon selection.</entry>
+  <entry id="51257" lang="en" sex="m">Select level of utterance to gain.
+
+NOTE:
+This may take a while when first browsing a particular level's utterances.</entry>
+  <entry id="51258" lang="en" sex="m">Select an utterance to gain.
+You can select</entry>
+  <entry id="51259" lang="en" sex="m">more utterancess.</entry>
+  <entry id="51260" lang="en" sex="m">You will be able to select more utterances after you gain another level in a truenaming caster class.</entry>
+  <entry id="51261" lang="en" sex="m">Select Lexicon to choose utterances in.</entry>
+  <entry id="51262" lang="en" sex="m">Lexicon of the Evolving Mind.</entry>
+  <entry id="51263" lang="en" sex="m">Lexicon of the Crafted Tool.</entry>
+  <entry id="51264" lang="en" sex="m">Lexicon of the Perfected Map.</entry>
   <entry id="51501" lang="en" sex="m">50% of Weight</entry>
   <entry id="51502" lang="en" sex="m">Craft Epic Wondrous Item</entry>
   <entry id="51503" lang="en" sex="m">Type of Feat: General

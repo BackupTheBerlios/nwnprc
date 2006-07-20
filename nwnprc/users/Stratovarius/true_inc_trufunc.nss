@@ -136,6 +136,13 @@ int CheckLawOfSequence(object oTrueSpeaker, int nSpellId);
 string GetUtteranceName(int nSpellId);
 
 /**
+ * Returns the name of the Lexicon
+ *
+ * @param nLexicon        LEXICON_* to name
+ */
+string GetLexiconName(int nLexicon);
+
+/**
  * Applies modifications to a utterance's damage that depend on some property
  * of the target.
  * Currently accounts for:
@@ -315,6 +322,16 @@ int CheckLawOfSequence(object oTrueSpeaker, int nSpellId)
 string GetUtteranceName(int nSpellId)
 {
 	return Get2DACache("spells", "Name", nSpellId);
+}
+
+string GetLexiconName(int nLexicon)
+{
+	string sName;
+	if (nLexicon == LEXICON_EVOLVING_MIND)      sName = GetStringByStrRef(16828478);
+	else if (nLexicon == LEXICON_CRAFTED_TOOL)  sName = GetStringByStrRef(16828479);
+	else if (nLexicon == LEXICON_PERFECTED_MAP) sName = GetStringByStrRef(16828480);
+	
+	return sName;
 }
 
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,

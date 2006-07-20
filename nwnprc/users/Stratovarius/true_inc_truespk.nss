@@ -18,9 +18,9 @@
 const string LAW_OF_RESIST_VARNAME   = "PRC_LawOfResistance";
 const string LAW_OF_SEQUENCE_VARNAME = "PRC_LawOfSequence";
 const string TRUE_IGNORE_SR          = "PRC_True_IgnoreSR";
-const int    TYPE_EVOLVING_MIND      = 1;
-const int    TYPE_CRAFTED_TOOL       = 2;
-const int    TYPE_PERFECTED_MAP      = 3;
+const int    LEXICON_EVOLVING_MIND   = 1;
+const int    LEXICON_CRAFTED_TOOL    = 2;
+const int    LEXICON_PERFECTED_MAP   = 3;
 
 
 //////////////////////////////////////////////////
@@ -33,11 +33,11 @@ const int    TYPE_PERFECTED_MAP      = 3;
  *
  * @param oTarget         Target of the Utterance
  * @param oTrueSpeaker    Caster of the Utterance
- * @param nType           Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
+ * @param nLexicon        Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  * @return                The base DC via formula to hit the target
  *                        This does not include MetaUtterances, increased DC to ignore SR, or the Laws.
  */
-int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nType);
+int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon);
 
 /**
  * Returns the Law of Resistance DC increase
@@ -96,12 +96,12 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker);
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nType)
+int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 {
 	int nDC;
 	
 	// We're targetting a creature
-	if (nType == TYPE_EVOLVING_MIND)
+	if (nLexicon == TYPE_EVOLVING_MIND)
 	{
 		// CR does not take into account floats, so this is converted.
 		int nCR = FloatToInt(GetChallengeRating(oTarget));
@@ -111,14 +111,14 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nType)
 		nDC = 15 + (2 * nCR);
 	}
 	// Targetting an Item here
-	else if (nType == TYPE_CRAFTED_TOOL)
+	else if (nLexicon == TYPE_CRAFTED_TOOL)
 	{
 		// The formula isn't finished, because there isn't caster level on NWN items.
 		int nCasterLvl = 0;
 		nDC = 15 + (2 * nCasterLvl);
 	}
 	// Targetting the land
-	else if (nType == TYPE_PERFECTED_MAP)
+	else if (nLexicon == TYPE_PERFECTED_MAP)
 	{
 		// Yup, thats it.
 		nDC = 25;

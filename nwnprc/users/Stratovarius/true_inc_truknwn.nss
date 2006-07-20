@@ -63,19 +63,21 @@ const string _UTTERANCE_LIST_GENERAL_ARRAY = "_UtterancesKnownGeneralArray";
  *                        is gained on. Otherwise, it's ignored.
  *                        The default value (-1) means that the current level of oCreature
  *                        will be used.
+ * @param nLexicon           Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  *
  * @return                TRUE if the Utterance was successfully stored and control feats added.
  *                        FALSE otherwise.
  */
-int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDependent = FALSE, int nLevelToTieTo = -1);
+int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDependent = FALSE, int nLevelToTieTo = -1, int nLexicon);
 
 /**
  * Removes all utterances gained from each list on the given level.
  *
  * @param oCreature The creature whose utterances to remove
  * @param nLevel    The level to clear
+ * @param nLexicon     Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  */
-void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel);
+void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel, int nLexicon);
 
 /**
  * Gets the value of the utterances known modifier, which is a value that is added
@@ -84,8 +86,9 @@ void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel);
  * @param oCreature The creature whose modifier to get
  * @param nList     The list the maximum utterances known from which the modifier
  *                  modifies. One of UTTERANCE_LIST_*
+ * @param nLexicon     Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  */
-int GetKnownUtterancesModifier(object oCreature, int nList);
+int GetKnownUtterancesModifier(object oCreature, int nList, int nLexicon);
 
 /**
  * Sets the value of the utterances known modifier, which is a value that is added
@@ -94,18 +97,20 @@ int GetKnownUtterancesModifier(object oCreature, int nList);
  * @param oCreature The creature whose modifier to set
  * @param nList     The list the maximum utterances known from which the modifier
  *                  modifies. One of UTTERANCE_LIST_*
+ * @param nLexicon     Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  */
-void SetKnownUtterancesModifier(object oCreature, int nList, int nNewValue);
+void SetKnownUtterancesModifier(object oCreature, int nList, int nNewValue, int nLexicon);
 
 /**
  * Gets the number of utterances a character character possesses from a
- * specific list.
+ * specific list and lexicon
  *
  * @param oCreature The creature whose utterances to check
  * @param nList     The list to check. One of UTTERANCE_LIST_*
+ * @param nLexicon     Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  * @return          The number of utterances known oCreature has from nList
  */
-int GetUtteranceCount(object oCreature, int nList);
+int GetUtteranceCount(object oCreature, int nList, int nLexicon);
 
 /**
  * Gets the maximum number of utterances a character may posses from a given list
@@ -114,10 +119,10 @@ int GetUtteranceCount(object oCreature, int nList);
  *
  * @param oCreature Character to determine maximum utterances for
  * @param nList     UTTERANCE_LIST_* of the list to determine maximum utterances for
- * @param nType     Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
+ * @param nLexicon     Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  * @return          Maximum number of utterances that oCreature may know from the given list.
  */
-int GetMaxUtteranceCount(object oCreature, int nList, int nType);
+int GetMaxUtteranceCount(object oCreature, int nList, int nLexicon);
 
 /**
  * Determines whether a character has a given utterance, gained via some Utterance list.
@@ -187,14 +192,15 @@ void _RecurseRemoveArray(object oCreature, string sArrayName, string sUtterFile,
     }
 }
 
-void _RemoveUtteranceArray(object oCreature, int nList, int nLevel)
+void _RemoveUtteranceArray(object oCreature, int nList, int nLevel, int nLexicon)
 {
     if(DEBUG) DoDebug("_RemoveUtteranceArray():\n"
                     + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                     + "nList = " + IntToString(nList) + "\n"
+                    + "nLexicon = " + IntToString(nLexicon) + "\n"
                       );
 
-    string sBase  = _UTTERANCE_LIST_NAME_BASE + IntToString(nList);
+    string sBase  = _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + IntToString(nLexicon);
     string sArray = sBase + _UTTERANCE_LIST_LEVEL_ARRAY + IntToString(nLevel);
     int nSize = persistant_array_get_size(oCreature, sArray);
 
@@ -215,9 +221,9 @@ void _RemoveUtteranceArray(object oCreature, int nList, int nLevel)
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDependent = FALSE, int nLevelToTieTo = -1)
+int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDependent = FALSE, int nLevelToTieTo = -1, int nLexicon)
 {
-    string sBase      = _UTTERANCE_LIST_NAME_BASE + IntToString(nList);
+    string sBase      = _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + IntToString(nLexicon);
     string sArray     = sBase;
     string sUtterFile = GetPsiBookFileName(nList);
     string sTestArray;
@@ -274,6 +280,7 @@ int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDepend
         if(DEBUG) DoDebug("true_inc_truknwn: AddUtteranceKnown(): ERROR: Unable to add Utterance to known array\n"
                         + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                         + "nList = " + IntToString(nList) + "\n"
+                        + "nLexicon = " + IntToString(nLexicon) + "\n"
                         + "n2daRow = " + IntToString(n2daRow) + "\n"
                         + "bLevelDependent = " + BooleanToString(bLevelDependent) + "\n"
                         + "nLevelToTieTo = " + IntToString(nLevelToTieTo) + "\n"
@@ -289,14 +296,14 @@ int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDepend
 
     // Give the utterance's control feats
     object oSkin        = GetPCSkin(oCreature);
-    string sPowerFeatIP = Get2DACache(sUtterFile, "IPFeatID", n2daRow);
-    itemproperty ipFeat = PRCItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
+    string sUtterFeatIP = Get2DACache(sUtterFile, "IPFeatID", n2daRow);
+    itemproperty ipFeat = PRCItemPropertyBonusFeat(StringToInt(sUtterFeatIP));
     IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     // Second Utterance feat, if any
-    sPowerFeatIP = Get2DACache(sUtterFile, "IPFeatID2", n2daRow);
-    if(sPowerFeatIP != "")
+    sUtterFeatIP = Get2DACache(sUtterFile, "IPFeatID2", n2daRow);
+    if(sUtterFeatIP != "")
     {
-        ipFeat = PRCItemPropertyBonusFeat(StringToInt(sPowerFeatIP));
+        ipFeat = PRCItemPropertyBonusFeat(StringToInt(sUtterFeatIP));
         IPSafeAddItemProperty(oSkin, ipFeat, 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
 
@@ -308,7 +315,7 @@ int RemoveSpecificPowerKnown(object oCreature, int nList, int n2daRow)
 {
 }
 */
-void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel)
+void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel, int nLexicon)
 {
     if(DEBUG) DoDebug("true_inc_truknwn: RemoveUtterancesKnownOnLevel():\n"
                     + "oCreature = " + DebugObject2Str(oCreature) + "\n"
@@ -316,31 +323,31 @@ void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel)
                       );
 
     string sPostFix = _UTTERANCE_LIST_LEVEL_ARRAY + IntToString(nLevel);
-    // For each Utterance list, determine if an array exists for this level.
-    if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_TRUENAMER) + sPostFix))
+    // For each Utterance list, determine if an array exists for this level and Lexicon.
+    if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_TRUENAMER) + IntToString(nLexicon) + sPostFix))
         // If one does exist, clear it
-        _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_TRUENAMER, nLevel);
+        _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_TRUENAMER, nLevel, nLexicon);
 
-    if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_MISC) + sPostFix))
-        _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_MISC, nLevel);
+    if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_MISC) + IntToString(nLexicon) + sPostFix))
+        _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_MISC, nLevel, nLexicon);
 }
 
-int GetKnownUtterancesModifier(object oCreature, int nList)
+int GetKnownUtterancesModifier(object oCreature, int nList, int nLexicon)
 {
-    return GetPersistantLocalInt(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + _UTTERANCE_LIST_MODIFIER);
+    return GetPersistantLocalInt(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + IntToString(nLexicon) + _UTTERANCE_LIST_MODIFIER);
 }
 
-void SetKnownUtterancesModifier(object oCreature, int nList, int nNewValue)
+void SetKnownUtterancesModifier(object oCreature, int nList, int nNewValue, int nLexicon)
 {
-    SetPersistantLocalInt(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + _UTTERANCE_LIST_MODIFIER, nNewValue);
+    SetPersistantLocalInt(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + IntToString(nLexicon) + _UTTERANCE_LIST_MODIFIER, nNewValue);
 }
 
-int GetUtteranceCount(object oCreature, int nList)
+int GetUtteranceCount(object oCreature, int nList, int nLexicon)
 {
-    return GetPersistantLocalInt(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + _UTTERANCE_LIST_TOTAL_KNOWN);
+    return GetPersistantLocalInt(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + IntToString(nLexicon) + _UTTERANCE_LIST_TOTAL_KNOWN);
 }
 
-int GetMaxUtteranceCount(object oCreature, int nList, int nType)
+int GetMaxUtteranceCount(object oCreature, int nList, int nLexicon)
 {
     int nMaxUtterances = 0;
 
@@ -352,11 +359,11 @@ int GetMaxUtteranceCount(object oCreature, int nList, int nType)
                 nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_TRUENAMER ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-                if (TYPE_EVOLVING_MIND == nType)
-            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "EvolvingMind", nLevel - 1));
-		else if (TYPE_CRAFTED_TOOL == nType)
-            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "CraftedTool", nLevel - 1));            		
-		else if (TYPE_PERFECTED_MAP == nType)
+                if (LEXICON_EVOLVING_MIND == nLexicon)
+            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_LEXICON_TRUENAMER), "EvolvingMind", nLevel - 1));
+		else if (LEXICON_CRAFTED_TOOL == nLexicon)
+            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_LEXICON_TRUENAMER), "CraftedTool", nLevel - 1));            		
+		else if (LEXICON_PERFECTED_MAP == nLexicon)
             		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "PerfectedMap", nLevel - 1));            		
 
             // Calculate feats
@@ -366,11 +373,11 @@ int GetMaxUtteranceCount(object oCreature, int nList, int nType)
             break;
         }
         case UTTERANCE_LIST_MISC:
-            DoDebug("GetMaxUtteranceCount(): ERROR: Using unfinishes Utterance list!");
+            DoDebug("GetMaxUtteranceCount(): ERROR: Using unfinished Utterance list!");
             break;
 
         default:{
-            string sErr = "GetMaxUtteranceCount(): ERROR: Unknown Utterance list value: " + IntToString(nList);
+            string sErr = "GetMaxUtteranceCount(): ERROR: Unknown Utterance list value: " + IntToString(nList) + IntToString(nLexicon);
             if(DEBUG) DoDebug(sErr);
             else      WriteTimestampedLogEntry(sErr);
         }

@@ -6,7 +6,7 @@
     <struct id="-1" >
         <element name="ID" type="5" value="-1" />
         <element name="Creator_ID" type="5" value="-1" />
-        <element name="Version" type="4" value="13" />
+        <element name="Version" type="4" value="14" />
         <element name="Tag" type="10" value="ral_area" />
         <element name="Name" type="12" value="-1" >
             <localString languageId="0" value="Template Sewers" />
@@ -265,31 +265,7 @@
                 <element name="Tile_AnimLoop3" type="0" value="1" />
             </struct>
             <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="0" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="3" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="0" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_ID" type="5" value="113" />
                 <element name="Tile_Orientation" type="5" value="2" />
                 <element name="Tile_Height" type="5" value="0" />
                 <element name="Tile_MainLight1" type="0" value="0" />
@@ -301,13 +277,37 @@
                 <element name="Tile_AnimLoop3" type="0" value="1" />
             </struct>
             <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_ID" type="5" value="117" />
                 <element name="Tile_Orientation" type="5" value="3" />
                 <element name="Tile_Height" type="5" value="0" />
                 <element name="Tile_MainLight1" type="0" value="0" />
                 <element name="Tile_MainLight2" type="0" value="0" />
                 <element name="Tile_SrcLight1" type="0" value="2" />
                 <element name="Tile_SrcLight2" type="0" value="2" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="1" />
+                <element name="Tile_Orientation" type="5" value="3" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="3" />
+                <element name="Tile_SrcLight2" type="0" value="3" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="115" />
+                <element name="Tile_Orientation" type="5" value="3" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="3" />
+                <element name="Tile_SrcLight2" type="0" value="3" />
                 <element name="Tile_AnimLoop1" type="0" value="1" />
                 <element name="Tile_AnimLoop2" type="0" value="1" />
                 <element name="Tile_AnimLoop3" type="0" value="1" />
@@ -361,22 +361,118 @@
                 <element name="Tile_AnimLoop3" type="0" value="1" />
             </struct>
             <struct id="1" >
+                <element name="Tile_ID" type="5" value="1" />
+                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="2" />
+                <element name="Tile_SrcLight2" type="0" value="2" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="4" />
+                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="1" />
+                <element name="Tile_SrcLight1" type="0" value="2" />
+                <element name="Tile_SrcLight2" type="0" value="2" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="4" />
+                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="2" />
+                <element name="Tile_SrcLight2" type="0" value="2" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="116" />
+                <element name="Tile_Orientation" type="5" value="0" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="2" />
+                <element name="Tile_SrcLight2" type="0" value="2" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
                 <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_Orientation" type="5" value="0" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="3" />
+                <element name="Tile_SrcLight2" type="0" value="3" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="1" />
+                <element name="Tile_SrcLight1" type="0" value="2" />
+                <element name="Tile_SrcLight2" type="0" value="2" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="1" />
+                <element name="Tile_SrcLight1" type="0" value="3" />
+                <element name="Tile_SrcLight2" type="0" value="3" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="1" />
+                <element name="Tile_SrcLight1" type="0" value="3" />
+                <element name="Tile_SrcLight2" type="0" value="3" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="118" />
+                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="3" />
+                <element name="Tile_SrcLight2" type="0" value="3" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="4" />
                 <element name="Tile_Orientation" type="5" value="1" />
                 <element name="Tile_Height" type="5" value="0" />
                 <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="1" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
                 <element name="Tile_MainLight2" type="0" value="0" />
                 <element name="Tile_SrcLight1" type="0" value="3" />
                 <element name="Tile_SrcLight2" type="0" value="3" />
@@ -385,121 +481,25 @@
                 <element name="Tile_AnimLoop3" type="0" value="1" />
             </struct>
             <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
+                <element name="Tile_ID" type="5" value="4" />
+                <element name="Tile_Orientation" type="5" value="0" />
                 <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="1" />
-                <element name="Tile_SrcLight1" type="0" value="3" />
-                <element name="Tile_SrcLight2" type="0" value="3" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight1" type="0" value="3" />
                 <element name="Tile_MainLight2" type="0" value="0" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
+                <element name="Tile_SrcLight1" type="0" value="0" />
+                <element name="Tile_SrcLight2" type="0" value="0" />
+                <element name="Tile_AnimLoop1" type="0" value="0" />
+                <element name="Tile_AnimLoop2" type="0" value="0" />
+                <element name="Tile_AnimLoop3" type="0" value="0" />
             </struct>
             <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_ID" type="5" value="150" />
                 <element name="Tile_Orientation" type="5" value="0" />
                 <element name="Tile_Height" type="5" value="0" />
                 <element name="Tile_MainLight1" type="0" value="0" />
                 <element name="Tile_MainLight2" type="0" value="0" />
                 <element name="Tile_SrcLight1" type="0" value="3" />
                 <element name="Tile_SrcLight2" type="0" value="3" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="1" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="1" />
-                <element name="Tile_SrcLight1" type="0" value="3" />
-                <element name="Tile_SrcLight2" type="0" value="3" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="1" />
-                <element name="Tile_SrcLight1" type="0" value="3" />
-                <element name="Tile_SrcLight2" type="0" value="3" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="3" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="1" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="1" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="0" />
-                <element name="Tile_SrcLight1" type="0" value="3" />
-                <element name="Tile_SrcLight2" type="0" value="3" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="1" />
-                <element name="Tile_SrcLight1" type="0" value="3" />
-                <element name="Tile_SrcLight2" type="0" value="3" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="0" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
                 <element name="Tile_AnimLoop1" type="0" value="1" />
                 <element name="Tile_AnimLoop2" type="0" value="1" />
                 <element name="Tile_AnimLoop3" type="0" value="1" />
@@ -553,31 +553,7 @@
                 <element name="Tile_AnimLoop3" type="0" value="1" />
             </struct>
             <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="0" />
-                <element name="Tile_SrcLight1" type="0" value="3" />
-                <element name="Tile_SrcLight2" type="0" value="3" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="2" />
-                <element name="Tile_Height" type="5" value="0" />
-                <element name="Tile_MainLight1" type="0" value="0" />
-                <element name="Tile_MainLight2" type="0" value="0" />
-                <element name="Tile_SrcLight1" type="0" value="2" />
-                <element name="Tile_SrcLight2" type="0" value="2" />
-                <element name="Tile_AnimLoop1" type="0" value="1" />
-                <element name="Tile_AnimLoop2" type="0" value="1" />
-                <element name="Tile_AnimLoop3" type="0" value="1" />
-            </struct>
-            <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
+                <element name="Tile_ID" type="5" value="115" />
                 <element name="Tile_Orientation" type="5" value="1" />
                 <element name="Tile_Height" type="5" value="0" />
                 <element name="Tile_MainLight1" type="0" value="0" />
@@ -589,13 +565,37 @@
                 <element name="Tile_AnimLoop3" type="0" value="1" />
             </struct>
             <struct id="1" >
-                <element name="Tile_ID" type="5" value="5" />
-                <element name="Tile_Orientation" type="5" value="3" />
+                <element name="Tile_ID" type="5" value="1" />
+                <element name="Tile_Orientation" type="5" value="1" />
                 <element name="Tile_Height" type="5" value="0" />
                 <element name="Tile_MainLight1" type="0" value="0" />
                 <element name="Tile_MainLight2" type="0" value="0" />
                 <element name="Tile_SrcLight1" type="0" value="3" />
                 <element name="Tile_SrcLight2" type="0" value="3" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="149" />
+                <element name="Tile_Orientation" type="5" value="1" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="2" />
+                <element name="Tile_SrcLight2" type="0" value="2" />
+                <element name="Tile_AnimLoop1" type="0" value="1" />
+                <element name="Tile_AnimLoop2" type="0" value="1" />
+                <element name="Tile_AnimLoop3" type="0" value="1" />
+            </struct>
+            <struct id="1" >
+                <element name="Tile_ID" type="5" value="113" />
+                <element name="Tile_Orientation" type="5" value="0" />
+                <element name="Tile_Height" type="5" value="0" />
+                <element name="Tile_MainLight1" type="0" value="0" />
+                <element name="Tile_MainLight2" type="0" value="0" />
+                <element name="Tile_SrcLight1" type="0" value="2" />
+                <element name="Tile_SrcLight2" type="0" value="2" />
                 <element name="Tile_AnimLoop1" type="0" value="1" />
                 <element name="Tile_AnimLoop2" type="0" value="1" />
                 <element name="Tile_AnimLoop3" type="0" value="1" />

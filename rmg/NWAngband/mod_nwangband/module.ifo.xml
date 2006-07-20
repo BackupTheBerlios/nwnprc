@@ -163,6 +163,15 @@
             <struct id="6" >
                 <element name="Area_Name" type="11" value="angband" />
             </struct>
+            <struct id="6" >
+                <element name="Area_Name" type="11" value="prc_epiclab" />
+            </struct>
+            <struct id="6" >
+                <element name="Area_Name" type="11" value="ral_02_xxx" />
+            </struct>
+            <struct id="6" >
+                <element name="Area_Name" type="11" value="ral_03_xxx" />
+            </struct>
         </element>
         <element name="Mod_HakList" type="15" >
             <struct id="8" >

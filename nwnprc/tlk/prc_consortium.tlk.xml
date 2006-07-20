@@ -18078,6 +18078,48 @@ Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price 
   <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
   <entry id="51584" lang="en" sex="m">The wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
 Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>  <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
+  <entry id="51585" lang="en" sex="m">Acid Warding</entry>
+  <entry id="51586" lang="en" sex="m">The armor absorbs the first 50 points of acid damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51587" lang="en" sex="m">Cold Warding</entry>
+  <entry id="51588" lang="en" sex="m">The armor absorbs the first 50 points of cold damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51589" lang="en" sex="m">Fire Warding</entry>
+  <entry id="51590" lang="en" sex="m">The armor absorbs the first 50 points of fire damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51591" lang="en" sex="m">Great Invulnerability</entry>
+  <entry id="51592" lang="en" sex="m">This suit of armor or shield grants the wearer damage reduction. The damage reduction can be 10/magic, 15/magic, 5/epic, or 10/epic, depending on the armor. 
+Caster Level: 19th (10/magic), 20th (15/magic), 21st (5/epic), 22nd (10/epic); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, stoneskin, wish, or miracle; Market Price:+4 bonus (10/magic),+5 bonus (15/magic),+6 bonus (5/epic),+7 bonus (10/epic).</entry>
+  <entry id="51593" lang="en" sex="m">Great Reflection</entry>
+  <entry id="51594" lang="en" sex="m">Any time its bearer of this shield is targeted with a spell, it automatically reflects the spell back at the caster (as the spell turning spell). The wearer can lower or raise this effect as a free action (thus allowing beneficial spells in as desired). 
+Caster Level: 25th; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell turning; Market Price: +10 bonus.</entry>
+  <entry id="51595" lang="en" sex="m">Great Spell Resistance</entry>
+  <entry id="51596" lang="en" sex="m">This suit of armor or shield grants the wearer spell resistance. The spell resistance can be 21, 23, 25, or 27, depending on the armor. 
+Caster Level: 21st (SR 21), 22nd (SR 23), 23rd (SR 25), 24th (SR 27); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell resistance; Market Price: +6 bonus (SR 21), +7 bonus (SR 23), +8 bonus (SR 25), +9 bonus (SR 27).</entry>
+  <entry id="51597" lang="en" sex="m">Lightning Warding</entry>
+  <entry id="51598" lang="en" sex="m">The armor absorbs the first 50 points of lightning damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prereq-uisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51599" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51600" lang="en" sex="m">The armor absorbs the first 50 points of sonic damage per round that the wearer would normally take (similar to the resist energy spell). 
+Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
+  <entry id="51601" lang="en" sex="m">Spell Turning</entry>
+  <entry id="51602" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 7
+Innate Level: 7
+School: Abjuration
+Descriptor(s):
+Component(s): Verbal, Somatic
+Range: Personal
+Area of Effect / Target: Caster
+Duration: 10 Minutes / Level
+Additional Counter Spells: Spell Breach
+Save: Harmless
+Spell Resistance: No
+
+Spells and spell-like effects targeted on you are turned back upon the original caster. The abjuration turns only spells that have you as a target. Effect and area spells are not affected. Spell turning also fails to stop touch range spells. 
+From seven to ten (1d4+6) spell levels are affected by the turning.
+When you are targeted by a spell of higher level than the amount of spell turning you have left, that spell is partially turned. You and the caster each has a proportional chance to be affected.
+If you and a spellcasting attacker are both warded by spell turning effects in operation, both you and the caster have a proportional chance to be affected.</entry>
+  <entry id="51603" lang="en" sex="m">Spell Turning (13)</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4
 

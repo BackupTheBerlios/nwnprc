@@ -92,6 +92,49 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker);
 /*             Internal functions               */
 //////////////////////////////////////////////////
 
+int GetCraftedToolCR(object oItem)
+{
+    int nID=0;
+    if (!GetIdentified(oItem))
+    {   
+        nID=1;
+        SetIdentified(oItem,TRUE);
+    }
+    int nGold = GetGoldPieceValue(oItem);
+    // If none of the statements trigger, the base is 0 (i.e, non-magical)
+    int nLore = 0;
+
+    if (nGold>1001)    nLore= 1;
+    if (nGold>2501)    nLore= 2;
+    if (nGold>3751)    nLore= 3;
+    if (nGold>4801)    nLore= 4;
+    if (nGold>6501)    nLore= 5;
+    if (nGold>9501)    nLore= 6;
+    if (nGold>13001)   nLore= 7;
+    if (nGold>17001)   nLore= 8;
+    if (nGold>20001)   nLore= 9;
+    if (nGold>30001)   nLore= 10;
+    if (nGold>40001)   nLore= 11;
+    if (nGold>50001)   nLore= 12;
+    if (nGold>60001)   nLore= 13;
+    if (nGold>80001)   nLore= 14;
+    if (nGold>100001)  nLore= 15;
+    if (nGold>150001)  nLore= 16;
+    if (nGold>200001)  nLore= 17;
+    if (nGold>250001)  nLore= 18;
+    if (nGold>300001)  nLore= 19;
+    if (nGold>350001)  nLore= 20;
+    if (nGold>400001)  nLore= 21;
+    if (nGold>500001)
+    {
+        nGold= nGold - 500000;
+        nGold = nGold / 100000;
+        nLore = nGold + 22;
+    }
+    if (nID) SetIdentified(oItem,FALSE);
+    return nLore;
+}
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -114,7 +157,7 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 	else if (nLexicon == TYPE_CRAFTED_TOOL)
 	{
 		// The formula isn't finished, because there isn't caster level on NWN items.
-		int nCasterLvl = 0;
+		int nCasterLvl = GetCraftedToolCR(oTarget);
 		nDC = 15 + (2 * nCasterLvl);
 	}
 	// Targetting the land

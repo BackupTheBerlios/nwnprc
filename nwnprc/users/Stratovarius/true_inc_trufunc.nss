@@ -143,6 +143,14 @@ string GetUtteranceName(int nSpellId);
 string GetLexiconName(int nLexicon);
 
 /**
+ * Returns the Lexicon the Utterance is in
+ * @param nSpellId   Utterance to check
+ *
+ * @return           LEXICON_*
+ */
+int GetLexiconByUtterance(int nSpellId)
+
+/**
  * Applies modifications to a utterance's damage that depend on some property
  * of the target.
  * Currently accounts for:
@@ -159,19 +167,18 @@ string GetLexiconName(int nLexicon);
  *
  * @return The amount of damage, modified by oTarget's abilities
  */
-int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,
+/*int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,
                                      int bIsHitPointDamage = TRUE, int bIsEnergyDamage = FALSE);
 
-
+*/
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
 
 #include "prc_utter_const"
 #include "prc_alterations"
-#include "true_inc_utter" // Provides psi_inc_augment, psi_inc_focus, psi_inc_metapsi and psi_inc_ppoints
+#include "true_inc_utter" 
 #include "true_inc_truknwn"
-
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -310,12 +317,16 @@ int GetTrueSpeakPenetration(object oTrueSpeaker = OBJECT_SELF)
 
 void DoLawOfSequence(object oTrueSpeaker, int nSpellId, float fDur)
 {
+	// This makes sure everything is stored using the Normal, and not the reverse
+	nSpellId = GetNormalUtterSpellId(nSpellId);
 	SetLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(nSpellId), TRUE);
 	DelayCommand(fDur, DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(nSpellId)));
 }
 
 int CheckLawOfSequence(object oTrueSpeaker, int nSpellId)
 {
+	// This makes sure everything is stored using the Normal, and not the reverse
+	nSpellId = GetNormalUtterSpellId(nSpellId);
 	return GetLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(nSpellId));
 }
 
@@ -334,6 +345,21 @@ string GetLexiconName(int nLexicon)
 	return sName;
 }
 
+int GetLexiconByUtterance(int nSpellId)
+{
+     int i, nUtter;
+     for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+     {
+         nUtter = StringToInt(Get2DACache("cls_true_utter", "SpellID", i));
+         if(nUtter == nSpellId)
+         {
+             return StringToInt(Get2DACache("cls_true_utter", "Lexicon", i));
+         }
+     }
+     // This should never happen
+     return -1;
+}
+/*
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,
                                      int bIsHitPointDamage = TRUE, int bIsEnergyDamage = FALSE)
 {
@@ -357,6 +383,6 @@ int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nD
 
     return nDamage;
 }
-
+*/
 // Test main
 //void main(){}

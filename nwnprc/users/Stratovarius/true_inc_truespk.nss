@@ -135,6 +135,21 @@ int GetCraftedToolCR(object oItem)
     return nLore;
 }
 
+/**
+ * Takes the REVERSE SpellId of an Utterance and returns the NORMAL
+ * This is used for the Law of Resistance and the Law of Sequence so its always stored on the one SpellId
+ *
+ * @param nSpellId        SpellId of the Utterance
+ * @return                SpellId of the NORMAL Utterance
+ */
+int GetNormalUtterSpellId(int nSpellId)
+{
+	if (nSpellId == UTTER_DEFENSIVE_EDGE_R || nSpellId == UTTER_DEFENSIVE_EDGE) return UTTER_DEFENSIVE_EDGE;
+	
+	// This should never be triggered
+	return -1;
+}
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -144,7 +159,7 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 	int nDC;
 	
 	// We're targetting a creature
-	if (nLexicon == TYPE_EVOLVING_MIND)
+	if (nLexicon == LEXICON_EVOLVING_MIND)
 	{
 		// CR does not take into account floats, so this is converted.
 		int nCR = FloatToInt(GetChallengeRating(oTarget));
@@ -154,14 +169,14 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 		nDC = 15 + (2 * nCR);
 	}
 	// Targetting an Item here
-	else if (nLexicon == TYPE_CRAFTED_TOOL)
+	else if (nLexicon == LEXICON_CRAFTED_TOOL)
 	{
 		// The formula isn't finished, because there isn't caster level on NWN items.
 		int nCasterLvl = GetCraftedToolCR(oTarget);
 		nDC = 15 + (2 * nCasterLvl);
 	}
 	// Targetting the land
-	else if (nLexicon == TYPE_PERFECTED_MAP)
+	else if (nLexicon == LEXICON_PERFECTED_MAP)
 	{
 		// Yup, thats it.
 		nDC = 25;
@@ -172,8 +187,10 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 	return nDC;
 }
 
-int GetLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID)
+int GetLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellId)
 {
+	// This makes sure everything is stored using the Normal, and not the reverse
+	nSpellId = GetNormalUtterSpellId(nSpellId);
 	// Law of resistance is stored for each utterance by SpellId
 	int nDC = GetLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(nSpellId));
 	// Its stored by the number of succesful attempts, so we double it to get the DC boost
@@ -181,8 +198,10 @@ int GetLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID)
 	return nDC;
 }
 
-void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID)
+void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellId)
 {
+	// This makes sure everything is stored using the Normal, and not the reverse
+	nSpellId = GetNormalUtterSpellId(nSpellId);
 	// Law of resistance is stored for each utterance by SpellId
 	int nNum = GetLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(nSpellId));
 	// Store the number of times per day its been cast succesfully
@@ -192,7 +211,7 @@ void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellID)
 void ClearLawLocalVars(object oTrueSpeaker)
 {
 	// As long as the PC isn't a truenamer, don't run this.
-	if (!GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker)) return;
+	if (!GetLevelByClass(CLASS_LEXICON_TRUENAMER, oTrueSpeaker)) return;
 	// Law of resistance is stored for each utterance by SpellId
 	// So we loop em all and blow em away
 	// Because there are only about 60, this should not TMI

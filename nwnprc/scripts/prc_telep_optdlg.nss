@@ -1,6 +1,6 @@
 //:://////////////////////////////////////////////
 //:: Teleport options dialog
-//:: prc_telp_optdlg
+//:: prc_telep_optdlg
 //:://////////////////////////////////////////////
 /** @file
     This file builds the entries for the teleport
@@ -56,8 +56,6 @@ const int STRREF_BACK_TO_MAIN = 16824794;  // "Back to main menu"
 //////////////////////////////////////////////////
 /* Function defintions                          */
 //////////////////////////////////////////////////
-
-
 
 
 
@@ -361,10 +359,4 @@ void main()
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);
     }
-}
-
-
-void main()
-{
-
 }

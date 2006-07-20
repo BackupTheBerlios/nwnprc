@@ -14,6 +14,7 @@ true_inc_truknwn: GetMaxUtteranceCount needs to be adjusted for the three differ
 Do Utterance Gain Conversation.
 Make list of possible utterances.
 Make Truenamer Class
+Speak Unto the Masses: Use racial type of the target creature
                   
 
 1 Base Class

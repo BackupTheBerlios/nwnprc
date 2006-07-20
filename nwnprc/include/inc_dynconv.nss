@@ -594,7 +594,7 @@ void StartDynamicConversation(string sConversationScript, object oPC,
     // Initiate conversation
     if(bForceStart) AssignCommand(oPC, ClearAllActions(TRUE));
     SetLocalString(oPC, DYNCONV_SCRIPT, sConversationScript);
-    AssignCommand(oConverseWith, ActionStartConversation(oPC, "dyncov_base", TRUE, FALSE));
+    AssignCommand(oPC, ActionStartConversation(oConverseWith, "dyncov_base", TRUE, FALSE));
 }
 
 void BranchDynamicConversation(string sConversationToEnter, int nStageToReturnTo,

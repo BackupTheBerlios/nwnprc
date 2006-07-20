@@ -1110,6 +1110,37 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
     int nSpellID = StringToInt(sSpellID);
     string sCategory = Get2DACache("spells", "Category", nSpellID);
     int nCategory = StringToInt(sCategory);
+    int nCategoryPotionRandom = FALSE;
+    //potions are strange
+    //seem to be hardcoded to certain categories
+    if(GetBaseItemType(oItem) == BASE_ITEM_POTIONS)
+    {
+        //potions are self-only
+        if(oTarget != OBJECT_SELF)
+            return;
+            
+        if(nCategory == TALENT_CATEGORY_BENEFICIAL_HEALING_AREAEFFECT
+            || nCategory == TALENT_CATEGORY_BENEFICIAL_HEALING_TOUCH)
+            nCategory = TALENT_CATEGORY_BENEFICIAL_HEALING_POTION;
+        else if(nCategory == TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_AREAEFFECT
+            || nCategory == TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_SINGLE)
+            nCategory = TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_POTION;            
+        else if(nCategory == TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_AREAEFFECT
+            || nCategory == TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_SINGLE
+            || nCategory == TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_SELF)
+            nCategory = TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_POTION;            
+        else if(nCategory == TALENT_CATEGORY_BENEFICIAL_PROTECTION_SELF
+            || nCategory == TALENT_CATEGORY_BENEFICIAL_PROTECTION_SINGLE
+            || nCategory == TALENT_CATEGORY_BENEFICIAL_PROTECTION_AREAEFFECT)
+            nCategory = TALENT_CATEGORY_BENEFICIAL_PROTECTION_POTION;
+        else
+        {
+            //something odd here add strage randomized coding inside the loop
+            nCategoryPotionRandom = TRUE;
+            nCategory = TALENT_CATEGORY_BENEFICIAL_HEALING_POTION;
+        }    
+        
+    }
 
     talent tItem;
     tItem = GetCreatureTalentRandom(nCategory);
@@ -1117,6 +1148,18 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
     while(GetIsTalentValid(tItem)
         && nCount < ACTION_USE_ITEM_TMI_LIMIT) //this is the TMI limiting thing, change as appropriate
     {
+        if(nCategoryPotionRandom)
+        {
+            switch(d4())
+            {
+                default:
+                case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_HEALING_POTION; break;
+                case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_POTION; break;
+                case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_POTION; break;
+                case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_PROTECTION_POTION; break;                
+            }
+        }
+        
         if(GetTypeFromTalent(tItem) == TALENT_TYPE_SPELL
             && GetIdFromTalent(tItem) == nSpellID)
         {
@@ -1140,6 +1183,9 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
     int nSpellID = StringToInt(sSpellID);
     string sCategory = Get2DACache("spells", "Category", nSpellID);
     int nCategory = StringToInt(sCategory);
+
+    //potions are odd
+    //but since they are self-only it doesnt matter
 
     talent tItem;
     tItem = GetCreatureTalentRandom(nCategory);

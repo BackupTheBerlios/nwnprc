@@ -1,6 +1,5 @@
 #include "inc_utility"
 #include "prc_ccc_inc"
-#include "prc_ccc_inc_b"
 #include "prc_ccc_inc_c"
 
 //a choice has been made

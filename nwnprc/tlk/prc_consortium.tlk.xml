@@ -5,7 +5,9 @@
   <entry id="12289" lang="en" sex="m">Ocular Adepts</entry>
   <entry id="12290" lang="en" sex="m">ocular adepts</entry>
   <entry id="12291" lang="en" sex="m">(PRESTIGE CLASS)
-Each beholder believes that it represents a state of true perfection. Among the desperate wastrels of decadent cities and debased explorers of the subterranean Underdark can be found humanoids who agree, and who have entered into a surgical pact with the beholder race in an attempt to achieve even a sliver of that perfection. These so-called Ocular Adepts, outcasts to their own societies, have pledged their services to one or more eye tyrants and pledged their religious devotion to the alien entity known as the Great Mother, the deity matron of all beholders.
+Each beholder believes that it represents a state of true perfection. Among the desperate wastrels of decadent cities and debased explorers of the subterranean Underdark can be found humanoids who agree, and who have entered into a surgical pact with the beholder race in an attempt to achieve even a sliver of that perfection. 
+
+These so-called Ocular Adepts, outcasts to their own societies, have pledged their services to one or more eye tyrants and pledged their religious devotion to the alien entity known as the Great Mother, the deity matron of all beholders.
 
 - Hit Die: d6.
 - Proficiencies: An Ocular Adept does not gain any additional weapon or armor proficiencies.
@@ -27,7 +29,7 @@ Level
 5: Fear Ray - Twice per day spell-like ability.
 6: Charm Monster Ray - Twice per day spell-like ability.
 7: Telekinesis Ray - Twice per day spell-like ability.
-8: Flesh to Stone Ray, - Twice per day spell-like ability.
+8: Flesh to Stone Ray - Twice per day spell-like ability.
 9: Disintegrate Ray - Twice per day spell-like ability.
 10: Finger of Death Ray - Twice per day spell-like ability.</entry>
   <entry id="12292" lang="en" sex="m">Charm Person Ray</entry>
@@ -42,49 +44,73 @@ Level
   <entry id="12301" lang="en" sex="m">Finger of Death Ray</entry>
   <entry id="12302" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Will save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, this ray makes the target friendly towards him for a number of rounds equal to his caster level. This spell only functions on humanoid targets.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the ray makes the target friendly towards the Adept for a number of rounds equal to the Adept's level. 
+This spell only functions on humanoid targets.
 Use: Combat mode.</entry>
   <entry id="12303" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Will save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, this ray makes the target fall asleep for a number of rounds equal to the caster's level.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the ray causes the target to fall asleep for a number of rounds equal to the Adept's level.
 Use: Combat mode.</entry>
   <entry id="12304" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 3 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Will save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, the target take 2d8+10 damage. If the save succeeds, the target takes half damage.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target takes 2d8+10 damage. If the save succeeds, the target takes half damage.
 Use: Combat mode.</entry>
   <entry id="12305" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 4 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Will save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, the target is slowed, their movement rate is halved, and they can only take a partial action every round.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target is slowed for a number of rounds equal to the Adept's level; their movement rate is halved and they can only take a partial action each round during this time.
 Use: Combat mode.</entry>
   <entry id="12306" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 5 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Will save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, the target is under the effects of fear, and must run away from the caster.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target is afflicted with fear and will flee from the Adept.
 Use: Combat mode.</entry>
   <entry id="12307" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 6 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Will save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, this ray makes the target friendly towards him for a number of rounds equal to his caster level.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the ray causes the target to be friendly towards the Adept for a number of rounds equal to the Adept's level.
 Use: Combat mode.</entry>
   <entry id="12308" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 7 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make two Will saves DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the first save fails, the target drops whatever is held, per disarm. If the second save fails, the target is knocked back. In addition, the target is pushed away from the caster.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make two Will saves vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the first save fails, the target is Disarmed as per the feat. 
+If the second save fails, the target is knocked back. In addition to this, the target is pushed away from the Adept.
 Use: Combat mode.</entry>
-  <entry id="12309" lang="en" sex="m">Type of Feat: Class Specific
+  <entry id="12309" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 8 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Fortitude save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, the target is petrified.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target is instantly petrified.
 Use: Combat mode.</entry>
   <entry id="12310" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 9 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Fortitude save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, the target is disintegrated, and all of their items fall to the ground. If the save succeeds, the target takes 5d6 damage.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target is instantly disintegrated and all of their items fall to the ground. 
+If the save succeeds, the target takes 5d6 damage instead.
 Use: Combat mode.</entry>
   <entry id="12311" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 10 Ocular Adept
-Specifics: The character creates a ray that makes a ranged touch attack. If successful, the creature must make a Fortitude save DC of 10 + 1/2 the adept's class level + the adept's Charisma modifier. If the save fails, the target dies. If the save succeeds, the target takes 3d6 + the caster's spell level.
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target dies instantly. 
+If the save succeeds, the target takes damage of (3d6 + the Adept's level) instead.
 Use: Combat mode.</entry>
-  <entry id="12312" lang="en" sex="m">Your faith in the Great Mother has brought you great power, your third eye spewing death about you with your slightest glance.
+  <entry id="12312" lang="en" sex="m">Your faith in the Great Mother has brought you great power - your third eye spews death all around you with the merest glance.
 
 Hit Die: d8
 Skill Points at Each Additional Level: 2 + Int modifier
-Bonus Feats: The epic ocular adept gains a bonus feat every other level after 10th
+Bonus Feats: The Epic Ocular Adept gains a bonus feat every other level after 10th.
 
 Epic Ocular Adept Bonus Feats List:
 Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Epic Spell Focus, Epic Spell Penetration, Great Wisdom, Improved Combat Casting, Planar Turning.
@@ -12757,8 +12783,11 @@ All creatures within the area of effect are shrouded in a haze of darkness which
   <entry id="48329" lang="en" sex="m">Anti-Paladins</entry>
   <entry id="48330" lang="en" sex="m">anti-paladin</entry>
   <entry id="48331" lang="en" sex="m">(BASE CLASS)
-Anti-Paladin is a loner, he eschews prolonged contact with all forms of society and companionship except on a temporary basis as his desires, needs.
+The Anti-paladin is, as the name suggests, the antithesis of the virtuous Paladin.  Whereas the Paladin uses divine favour to strike at the forces of evil, the Anti-paladin harnesses those very forces to wreak havoc among his foes.
 
+Mantled with unholy favour, this paragon of evil cuts a swathe of death and destruction everywhere he goes, leaving chaos and misery in his wake.  The Anti-paladin can call upon the powers of darkness to smite his foes in many different ways, inflicting pain, disease and terror on any who stand in his way.
+
+Fear him.  Loathe him.  Beware him.  This is a true champion of evil!
 - Alignment Restrictions: Chaotic Evil only.
 - Hit Die: d10.
 - Proficiencies: Simple, Martial, Shield and Light, Medium and Heavy Armor.

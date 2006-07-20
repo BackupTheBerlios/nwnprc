@@ -116,9 +116,9 @@ void main()
                 else
                 {
                     if(!GetIsObjectValid(GetMaster(oCohort)))
-                        DoDebug("Master not valid!");
+                        if(DEBUG) DoDebug("Master not valid!");
                     if(!GetIsObjectValid(oCohort))
-                        DoDebug("Cohort not valid!");
+                        if(DEBUG) DoDebug("Cohort not valid!");
                     //speaker not their master
                     SetHeader("Sorry, I can't talk to you right now. Ask "+GetName(GetMaster(oCohort))+" and see if they can help.");
                     //no responces
@@ -130,11 +130,11 @@ void main()
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
-            //using items            
+            //using items
             else if(nStage == STAGE_ITEM)
             {
                 SetHeader("If I must. Which item do you want me to activate?");
-                
+
                 object oItem = GetFirstItemInInventory(oCohort);
                 if(!array_exists(oCohort, "PRC_ItemsToUse"))
                 {
@@ -152,7 +152,7 @@ void main()
                                     AddChoice(GetName(oItem), array_get_size(oCohort, "PRC_ItemsToUse"));
                                     array_set_object(oCohort, "PRC_ItemsToUse", array_get_size(oCohort, "PRC_ItemsToUse"), oItem);
                                     ipTest = ipInvalid;
-                                }   
+                                }
                                 else
                                     ipTest = GetNextItemProperty(oItem);
                             }
@@ -166,13 +166,13 @@ void main()
                     for(i=0;i<array_get_size(oCohort, "PRC_ItemsToUse");i++)
                     {
                         object oItem = array_get_object(oCohort, "PRC_ItemsToUse", i);
-                        AddChoice(GetName(oItem), i);                    
+                        AddChoice(GetName(oItem), i);
                     }
                 }
-                
+
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
-            }            
+            }
             else if(nStage == STAGE_ITEM_SPELL)
             {
                 object oItem = GetLocalObject(oCohort, "PRC_ItemToUse");
@@ -188,9 +188,9 @@ void main()
                     }
                     ipTest = GetNextItemProperty(oItem);
                 }
-                
+
                 SetHeader("What do you want me to do with "+GetName(oItem)+"?");
-                
+
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
@@ -198,7 +198,7 @@ void main()
             {
                 object oItem = GetLocalObject(oCohort, "PRC_ItemToUse");
                 int nSpellID = GetLocalInt(oCohort, "PRC_ItemToUse_Spell");
-                
+
                 int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
                 int nHostileSpell = StringToInt(Get2DACache("spells", "HostileSetting", nSpellID));
                 string sRangeType = Get2DACache("spells", "Range", nSpellID);
@@ -211,14 +211,14 @@ void main()
                     fRange = 20.0;
                 else if(sRangeType == "L")
                     fRange = 40.0;
-                
+
                 /*
                 #  0x01 = 1 = Self
                 # 0x02 = 2 = Creature
                 # 0x04 = 4 = Area/Ground
                 # 0x08 = 8 = Items
                 # 0x10 = 16 = Doors
-                # 0x20 = 32 = Placeables 
+                # 0x20 = 32 = Placeables
                 */
                 int nCaster     = nTargetType &  1;
                 int nCreature   = nTargetType &  2;
@@ -239,22 +239,22 @@ void main()
                 }
                 int nCount;
                 if(array_exists(oCohort, "PRC_ItemsToUse_Target"))
-                    array_delete(oCohort, "PRC_ItemsToUse_Target");    
+                    array_delete(oCohort, "PRC_ItemsToUse_Target");
                 array_create(oCohort, "PRC_ItemsToUse_Target");
                 //self
                 if(nCaster)
                 {
                     AddChoice("Self ("+GetName(oCohort)+")", array_get_size(oCohort, "PRC_ItemsToUse_Target"));
-                    array_set_object(oCohort, "PRC_ItemsToUse_Target", 
+                    array_set_object(oCohort, "PRC_ItemsToUse_Target",
                         array_get_size(oCohort, "PRC_ItemsToUse_Target"), oCohort);
-                
+
                 }
                 //nearby objects or locations of those objects
-                if(nCreature 
-                    || nDoor 
+                if(nCreature
+                    || nDoor
                     || nPlaceable
                     || nLocation)
-                {   
+                {
                     object oTest = GetFirstObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
                     while(GetIsObjectValid(oTest))
                     {
@@ -265,7 +265,7 @@ void main()
                             || nLocation)
                         {
                             AddChoice(GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
-                            array_set_object(oCohort, "PRC_ItemsToUse_Target", 
+                            array_set_object(oCohort, "PRC_ItemsToUse_Target",
                                 array_get_size(oCohort, "PRC_ItemsToUse_Target"), oTest);
                         }
                         oTest = GetNextObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
@@ -278,12 +278,12 @@ void main()
                     while(GetIsObjectValid(oTest))
                     {
                         AddChoice("(in inventory) "+GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
-                        array_set_object(oCohort, "PRC_ItemsToUse_Target", 
+                        array_set_object(oCohort, "PRC_ItemsToUse_Target",
                             array_get_size(oCohort, "PRC_ItemsToUse_Target"), oTest);
                         oTest = GetNextItemInInventory(oCohort);
-                    }                
+                    }
                 }
-                
+
                 SetHeader("Who or what do you want me to use "+GetName(oItem)+" on?");
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
@@ -303,7 +303,7 @@ void main()
             {
                 string sList;
                 sList += "Okay, I have identified:\n";
-                
+
                 //taken from TryToIDItems() in inc_utility
                 int nLore = GetSkillRank(SKILL_LORE, oCohort);
                 int nGP;
@@ -328,7 +328,7 @@ void main()
                     }
                     oItem = GetNextItemInInventory(oPC);
                 }
-                
+
                 SetHeader(sList);
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
@@ -345,7 +345,7 @@ void main()
             else if(nStage == STAGE_TACTICS)
             {
                 SetHeader("*You* would advise *me* on tactics?");
-                
+
                 AddChoice("I want to adjust your equipment.", 1, oPC);
                 //x0_d2_hen_attck
                 if(!GetAssociateState(NW_ASC_MODE_DEFEND_MASTER, oCohort))
@@ -411,7 +411,7 @@ void main()
                     || nStage == STAGE_TACTICS_DISTANCE_LONG)
                     sMessage = "As you wish.";
                 SetHeader(sMessage+" Do you want to change anything else?");
-                
+
                 AddChoice("No, that is all.", 1, oPC);
                 AddChoice("Yes.", 2, oPC);
 
@@ -466,6 +466,7 @@ void main()
         array_delete(oCohort, "PRC_ItemsToUse_Target");
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
         DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
+        DeleteLocalInt(oCohort, "PRC_InCohortConvoMarker");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -478,6 +479,7 @@ void main()
         array_delete(oCohort, "PRC_ItemsToUse_Target");
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
         DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
+        DeleteLocalInt(oCohort, "PRC_InCohortConvoMarker");
     }
     // Handle PC responses
     else
@@ -522,9 +524,9 @@ void main()
             }
             if(nSpellCount > 1)
             {
-                nStage = STAGE_ITEM_SPELL;            
-            }    
-            else    
+                nStage = STAGE_ITEM_SPELL;
+            }
+            else
             {
                 ipTest = GetFirstItemProperty(oItem);
                 while(GetIsItemPropertyValid(ipTest))
@@ -537,19 +539,19 @@ void main()
                 //convert that to a real ID
                 nSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSpellID));
                 //store it
-                SetLocalInt(oCohort, "PRC_ItemToUse_Spell", nSpellID);    
+                SetLocalInt(oCohort, "PRC_ItemToUse_Spell", nSpellID);
                 nStage = STAGE_ITEM_TARGET;
-            }    
+            }
         }
         else if(nStage == STAGE_ITEM_SPELL)
         {
-            SetLocalInt(oCohort, "PRC_ItemToUse_Spell", nChoice);    
+            SetLocalInt(oCohort, "PRC_ItemToUse_Spell", nChoice);
             nStage = STAGE_ITEM_TARGET;
         }
         else if(nStage == STAGE_ITEM_TARGET)
         {
             object oItem = GetLocalObject(oCohort, "PRC_ItemToUse");
-            int nSpellID = GetLocalInt(oCohort, "PRC_ItemToUse_Spell");  
+            int nSpellID = GetLocalInt(oCohort, "PRC_ItemToUse_Spell");
             object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
             itemproperty ipIP;
             ipIP = GetFirstItemProperty(oItem);
@@ -562,16 +564,16 @@ void main()
                     nipSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nipSpellID));
                     if(nipSpellID == nSpellID)
                     {
-                        DoDebug("Ending itemprop loop "+IntToString(nipSpellID));
+                        if(DEBUG) DoDebug("Ending itemprop loop "+IntToString(nipSpellID));
                         break;//end while loop
-                    }    
+                    }
                 }
                 ipIP = GetNextItemProperty(oItem);
             }
-            
+
             //test if location or object
             //use object by preference
-                
+
             int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
             /*
             #  0x01 = 1 = Self
@@ -579,7 +581,7 @@ void main()
             # 0x04 = 4 = Area/Ground
             # 0x08 = 8 = Items
             # 0x10 = 16 = Doors
-            # 0x20 = 32 = Placeables 
+            # 0x20 = 32 = Placeables
             */
             int nCaster     = nTargetType &  1;
             int nCreature   = nTargetType &  2;
@@ -588,7 +590,7 @@ void main()
             int nDoor       = nTargetType & 16;
             int nPlaceable  = nTargetType & 32;
             int nType = GetObjectType(oTarget);
-            
+
             if((oTarget == oCohort && nCaster)
                 || (nType == OBJECT_TYPE_CREATURE && nCreature)
                 || (nType == OBJECT_TYPE_DOOR && nDoor)
@@ -596,19 +598,19 @@ void main()
                 || (nType == OBJECT_TYPE_ITEM && nItem))
             {
                 AssignCommand(oCohort, ClearAllActions());
-                AssignCommand(oCohort, 
+                AssignCommand(oCohort,
                     ActionUseItemPropertyAtObject(oItem, ipIP, oTarget));
-                DoDebug("Running ActionUseItemPropertyAtObject() at "+GetName(oTarget));
+                if(DEBUG) DoDebug("Running ActionUseItemPropertyAtObject() at "+GetName(oTarget));
             }
             else if(nLocation)
             {
                 AssignCommand(oCohort, ClearAllActions());
-                AssignCommand(oCohort, 
-                    ActionUseItemPropertyAtLocation(oItem, ipIP, GetLocation(oTarget)));            
-                DoDebug("Running ActionUseItemPropertyAtLocation() at "+GetName(oTarget));
+                AssignCommand(oCohort,
+                    ActionUseItemPropertyAtLocation(oItem, ipIP, GetLocation(oTarget)));
+                if(DEBUG) DoDebug("Running ActionUseItemPropertyAtLocation() at "+GetName(oTarget));
             }
-            
-            AllowExit(DYNCONV_EXIT_FORCE_EXIT); 
+
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);
         }
         else if(nStage == STAGE_IDENTIFY)
         {
@@ -623,28 +625,28 @@ void main()
             switch(nChoice)
             {
                 case 1: nStage = STAGE_TACTICS_EQUIP;       break;
-                case 2: nStage = STAGE_TACTICS_DEFEND;      
+                case 2: nStage = STAGE_TACTICS_DEFEND;
                         SetAssociateState(NW_ASC_MODE_DEFEND_MASTER, TRUE, oCohort);
                         break;
-                case 3: nStage = STAGE_TACTICS_ATTACK;      
+                case 3: nStage = STAGE_TACTICS_ATTACK;
                         SetAssociateState(NW_ASC_MODE_DEFEND_MASTER, FALSE, oCohort);
                         break;
                 case 4: nStage = STAGE_TACTICS_DISTANCE;        break;
-                case 5: nStage = STAGE_TACTICS_LOCK_HELP;       
+                case 5: nStage = STAGE_TACTICS_LOCK_HELP;
                         SetAssociateState(NW_ASC_RETRY_OPEN_LOCKS, TRUE, oCohort);
                         break;
-                case 6: nStage = STAGE_TACTICS_LOCK_NOHELP;     
+                case 6: nStage = STAGE_TACTICS_LOCK_NOHELP;
                         SetAssociateState(NW_ASC_RETRY_OPEN_LOCKS, FALSE, oCohort);
                         break;
-                case 7: nStage = STAGE_TACTICS_STEALTH_ALWAYS;      
+                case 7: nStage = STAGE_TACTICS_STEALTH_ALWAYS;
                         AssignCommand(oCohort, ClearAllActions());
                         SetLocalInt(oCohort, "X2_HENCH_STEALTH_MODE", 1);
                         break;
-                case 8: nStage = STAGE_TACTICS_STEALTH_COMBAT;      
+                case 8: nStage = STAGE_TACTICS_STEALTH_COMBAT;
                         AssignCommand(oCohort, ClearAllActions());
                         SetLocalInt(oCohort, "X2_HENCH_STEALTH_MODE", 2);
                         break;
-                case 9: nStage = STAGE_TACTICS_STEALTH_NEVER;        
+                case 9: nStage = STAGE_TACTICS_STEALTH_NEVER;
                         AssignCommand(oCohort, ClearAllActions());
                         SetLocalInt(oCohort, "X2_HENCH_STEALTH_MODE", 0);
                         SetActionMode(oCohort, ACTION_MODE_STEALTH, FALSE);
@@ -656,19 +658,19 @@ void main()
         {
             switch(nChoice)
             {
-                case 1: nStage = STAGE_TACTICS_DISTANCE_CLOSE;    
+                case 1: nStage = STAGE_TACTICS_DISTANCE_CLOSE;
                         //nw_ch_dist_6
                         SetAssociateState(NW_ASC_DISTANCE_2_METERS, TRUE, oCohort);
                         SetAssociateState(NW_ASC_DISTANCE_4_METERS, FALSE, oCohort);
                         SetAssociateState(NW_ASC_DISTANCE_6_METERS, FALSE, oCohort);
                         break;
-                case 2: nStage = STAGE_TACTICS_DISTANCE_MEDIUM;    
+                case 2: nStage = STAGE_TACTICS_DISTANCE_MEDIUM;
                         //nw_ch_dist_12
                         SetAssociateState(NW_ASC_DISTANCE_2_METERS, FALSE, oCohort);
                         SetAssociateState(NW_ASC_DISTANCE_4_METERS, TRUE, oCohort);
                         SetAssociateState(NW_ASC_DISTANCE_6_METERS, FALSE, oCohort);
                         break;
-                case 3: nStage = STAGE_TACTICS_DISTANCE_LONG;  
+                case 3: nStage = STAGE_TACTICS_DISTANCE_LONG;
                         //nw_ch_dist_18
                         SetAssociateState(NW_ASC_DISTANCE_2_METERS, FALSE, oCohort);
                         SetAssociateState(NW_ASC_DISTANCE_4_METERS, FALSE, oCohort);
@@ -691,7 +693,7 @@ void main()
             {
                 case 1: nStage = STAGE_TACTICS;        break;
                 case 2: AllowExit(DYNCONV_EXIT_FORCE_EXIT);     break;
-            }            
+            }
         }
         else if(nStage == STAGE_LEAVE)
         {

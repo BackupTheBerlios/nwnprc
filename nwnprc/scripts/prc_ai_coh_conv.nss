@@ -3,8 +3,8 @@
 /*
 
   OnDialogue event handler for henchmen/associates.
-  
-  This is used by the Cohorts for the PRC to trigger a 
+
+  This is used by the Cohorts for the PRC to trigger a
   generic henchman conversation
 
  */
@@ -79,8 +79,14 @@ void main()
 //PRC CHANGE
             //BeginConversation("prc_cohort");
             //use a dynamic conversation instead
-            StartDynamicConversation("prc_cohort_convo", oShouter, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, FALSE, OBJECT_SELF);
-//PRC CHANGE            
+
+            // Make sure we're not already inside the dynconvo
+            if(!GetLocalInt(OBJECT_SELF, "PRC_InCohortConvoMarker"))
+            {
+                SetLocalInt(OBJECT_SELF, "PRC_InCohortConvoMarker", TRUE);
+                StartDynamicConversation("prc_cohort_convo", oShouter, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, FALSE, OBJECT_SELF);
+            }
+//PRC CHANGE
         }
     }
     else

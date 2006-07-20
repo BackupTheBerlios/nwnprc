@@ -370,6 +370,9 @@ void EquipNautralWeaponCheck(object oPC, object oItem)
 {
     if(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC) != oItem)
         MyDestroyObject(oItem);
+    else 
+        DelayCommand(10.0, 
+            EquipNautralWeaponCheck(oPC, oItem));
 }
 
 object EquipNaturalWeapon(object oPC, string sResRef)
@@ -377,7 +380,7 @@ object EquipNaturalWeapon(object oPC, string sResRef)
     object oObject = CreateItemOnObject(sResRef, oPC);
     SetIdentified(oObject, TRUE);
     ForceEquip(oPC, oObject, INVENTORY_SLOT_CWEAPON_L);
-    AssignCommand(oObject, 
+    AssignCommand(oPC, 
         DelayCommand(10.0, 
             EquipNautralWeaponCheck(oPC, oObject)));
     return oObject;
@@ -549,11 +552,17 @@ void RemoveNaturalPrimaryWeapon(object oPC, string sResRef)
 
 int GetIsUsingPrimaryNaturalWeapons(object oPC)
 {
-    return GetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT);
-    /*
+    //check a creature weapon exists
     object oObject = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
     if(!GetIsObjectValid(oObject))
         return FALSE;
+    //check your hand is empty    
+    oObject = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    if(GetIsObjectValid(oObject))
+        return FALSE;        
+    //check if the local was set
+    return GetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT);
+    /*
     string sResRef = GetResRef(oObject);
     int i;
     for(i=0;i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF);i++)

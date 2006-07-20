@@ -30,6 +30,7 @@ void main()
         //get the value
         int nNaturalPrimary = GetLocalInt(oPC, NATURAL_WEAPON_ATTACK_COUNT);
         nAttackCount = nNaturalPrimary;
+        DoDebug("prc_bab_caller : Using natural primary weapons");
     }
     else
     {    

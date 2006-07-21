@@ -17,7 +17,11 @@
 
 const int SLOT_1 = 2356;
 const int SLOT_2 = 2357;
-const int SLOT_3 = 2358;
+const int SLOT_3 = 2392;
+const int SLOT_4 = 2393;
+const int SLOT_5 = 2394;
+const int SLOT_6 = 2395;
+const int SLOT_7 = 2396;
 
 
 void main()
@@ -32,6 +36,10 @@ void main()
         case SLOT_1: nSlot = 1; break;
         case SLOT_2: nSlot = 2; break;
         case SLOT_3: nSlot = 3; break;
+        case SLOT_4: nSlot = 4; break;
+        case SLOT_5: nSlot = 5; break;
+        case SLOT_6: nSlot = 6; break;
+        case SLOT_7: nSlot = 7; break;
 
         default: nSlot = -1;
     }

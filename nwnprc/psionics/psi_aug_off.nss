@@ -4,6 +4,8 @@
 //:://////////////////////////////////////////////
 /** @file
     Sets the augmentation profile pointer to 0.
+    Also sets the maximum augmentation toggle
+    off.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
@@ -16,5 +18,6 @@ void main()
 {
     object oCreature = OBJECT_SELF;
     SetLocalInt(oCreature, PRC_CURRENT_AUGMENT_PROFILE, PRC_AUGMENT_PROFILE_NONE);
+    SetLocalInt(oCreature, PRC_AUGMENT_MAXAUGMENT, FALSE);
     FloatingTextStrRefOnCreature(16823588, oCreature, FALSE); // "Augment Off"
 }

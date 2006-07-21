@@ -35,7 +35,7 @@ const string PRC_AUGMENT_QUICKSELECTION  = "PRC_Augment_Quickselection_";
 /// The lowest value the quickslot index can have
 const int PRC_AUGMENT_QUICKSELECTION_MIN = 1;
 /// The highest value the quickslot index can have
-const int PRC_AUGMENT_QUICKSELECTION_MAX = 3;
+const int PRC_AUGMENT_QUICKSELECTION_MAX = 7;
 /// An index that should never contain a profile
 const int PRC_AUGMENT_PROFILE_NONE = 0;
 
@@ -662,7 +662,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
             }
         }
 
-        // Calculate amount actually autodistributed
+        // Calculate amount actually autodistributed. nToAutoDistribute now contains the amount of PP that could not be auto-distributed
         nAutodistributed = (nAutodistributed - nToAutodistribute);
 
         // Calculate increase to generic augmentation

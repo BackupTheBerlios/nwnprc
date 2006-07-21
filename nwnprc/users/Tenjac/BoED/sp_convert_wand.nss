@@ -57,7 +57,6 @@ void main()
 	float fDur = (60.0f * nCasterLvl);
 	
 	int nOrigCharge = GetItemCharges(oTargetWand);
-	int nNewCharge;
 	object oNewWand;
 	int nSpell = Get
 	
@@ -68,21 +67,6 @@ void main()
 	{
 		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
 		{ 
-			/*[15:24] <Annihilator-X17> well, its a wand
-[15:24] <Annihilator-X17> so use ItemPropertyCostTableValue
-[15:24] <Annihilator-X17> which returns the line in that 2da
-[15:24] <Tenjac> got the table and table value
-[15:24] <Annihilator-X17> then grab the SpellId out of that table
-[15:25] <Annihilator-X17> then use that to grab the innate level out of spells.2da
-[15:27] <Tenjac> ok, so GetItemPropertyCostTableValue is going to return iprp_spellvcost
-[15:28] <Annihilator-X17> no
-[15:28] <Annihilator-X17> its going to return the ROW in that 2da
-15:43] <Annihilator-X17> Just have the function spit out CostTable and CostTableValue as strings in game so you can see what they are
-[15:43] <Annihilator-X17> then you can match em to the 2da and be done with it ;p
-[15:43] <Annihilator-X17> should take under 5 minutes
-*/
-			
-			
 			int nCostTable = GetItemPropertyCostTable(ipTest);
 			
 			//should return iprp_spellcost.2da line
@@ -93,11 +77,13 @@ void main()
 		}
 		ipTest = GetNextItemProperty(oTargetWand);
 	}		
-		
+	
+	//Get spell level
 	int nLevel = ;
 	
 	//Copy item to hide
-		
+	oNewWand = ;
+			
 	//Destroy old
 	DestroyObject(oTargetWand);
 	
@@ -119,13 +105,37 @@ void main()
 		default: break;
 	}
 	
-	//Schedule deletion
+	int nCounter = FloatToInt(fDur) / 6;
+	WandCounter(oNewWand, nCounter);
 		
 	SPSetSchool();
 }
 
+void WandCounter(object oNewWand, int nCounter)
+{
+	if(nCounter < 1)
+	{
+		//Get current charges
+		int nNewCharge = GetItemCharges(oNewWand);
+		
+		//Copy wand back over
+		object oOldWand = ;
+		
+		//Destroy item on hide
+		
+		
+		//Set charges
+		SetItemCharges(oOldWand, nNewCharge);
+		
+	}
 	
-	
+	else
+	{
+		nCounter--;
+		DelayCommand(6.0f, WandCounter(oNewWand, nCounter));
+	}
+}
+		
 	
 	
 

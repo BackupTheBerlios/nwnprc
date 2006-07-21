@@ -1518,6 +1518,11 @@ const int FEAT_CRAFT_STAFF               = 2928;
 const int FEAT_FORGE_RING                = 2929;
 const int FEAT_CRAFT_CONSTRUCT           = 2920;
 const int FEAT_CRAFT_ITEM                = 2919; //combined with read recepie, was 2899
+const int FEAT_CRAFT_EPIC_WONDROUS_ITEM  = 3488;
+const int FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR = 3489;
+const int FEAT_CRAFT_EPIC_ROD            = 3490;
+const int FEAT_CRAFT_EPIC_STAFF          = 3491;
+const int FEAT_FORGE_EPIC_RING           = 3528;
 
 // Exalted Companion
 const int FEAT_EXALTED_COMPANION         = 4199;

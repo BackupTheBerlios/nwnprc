@@ -52,26 +52,33 @@ void main()
 
     if(utter.bCanUtter)
     {
-        float fDuration = RoundsToSeconds(5);
-        if(utter.bExtend) fDuration *= 2;
-        effect eLink;
+        // This is done so Speak Unto the Masses can read it out of the structure
+        utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
+        utter.fDur       = RoundsToSeconds(5);
+        if(utter.bExtend) utter.fDur *= 2;
         
-        // Normal
+        // The NORMAL effect of the Utterance goes here
         if (PRCGetSpellId() == UTTER_DEFENSIVE_EDGE)
         {
-        	eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+        	// eLink is used for Duration Effects (Buff/Penalty to AC)
+        	utter.eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
         }
-        else // Its either one or the other, so use this as the default
+        // The REVERSE effect of the Utterance goes here
+        else 
         {
-        	eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
-        	// A return of true from this function means the target made its SR roll
-        	// If this is the case, the utterance has failed, so we exit
-        	if (MyPRCResistSpell(oTrueSpeaker, oTarget, GetTrueSpeakPenetration(oTrueSpeaker))) return;
+        	// If the Spell Penetration fails, don't apply any effects
+        	if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        	{
+       			// eLink is used for Duration Effects (Buff/Penalty to AC)
+       			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
+        	}
         }
+        // Duration Effects
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellID, utter.nTruespeakerLevel);
         
-        // Apply effects
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, utter.nSpellID, utter.nTruespeakerLevel);
-        // Mark for the Law of Sequence
-        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, fDuration)
-    }// end if - Successful utterance
+        // Speak Unto the Masses. Swats an area with the effects of this utterance
+        DoSpeakUntoTheMasses(oTarget, utter);
+        // Mark for the Law of Sequence. This only happens if the power succeeds, which is why its down here.
+        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur)
+    }// end if - Successful utterance    
 }

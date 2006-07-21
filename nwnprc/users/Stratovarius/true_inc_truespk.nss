@@ -18,6 +18,7 @@
 const string LAW_OF_RESIST_VARNAME   = "PRC_LawOfResistance";
 const string LAW_OF_SEQUENCE_VARNAME = "PRC_LawOfSequence";
 const string TRUE_IGNORE_SR          = "PRC_True_IgnoreSR";
+const string TRUE_SPEAK_UNTO_MASSES  = "PRC_True_SpeakMass";
 const int    LEXICON_EVOLVING_MIND   = 1;
 const int    LEXICON_CRAFTED_TOOL    = 2;
 const int    LEXICON_PERFECTED_MAP   = 3;
@@ -30,6 +31,7 @@ const int    LEXICON_PERFECTED_MAP   = 3;
 /**
  * Returns the base DC of an Utterance. 
  * This is where the various formulas can be chosen by switch
+ * Accounts for Speak Unto the Masses if used
  *
  * @param oTarget         Target of the Utterance
  * @param oTrueSpeaker    Caster of the Utterance
@@ -161,12 +163,50 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 	// We're targetting a creature
 	if (nLexicon == LEXICON_EVOLVING_MIND)
 	{
-		// CR does not take into account floats, so this is converted.
-		int nCR = FloatToInt(GetChallengeRating(oTarget));
-		// For PCs, use their HitDice
-		if (GetIsPC(oTarget)) nCR = GetHitDice(oTarget);
-		// Basic formula for the DC
-		nDC = 15 + (2 * nCR);
+		// Check for Speak Unto the Masses
+		if (GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES))
+			// Speak to the Masses affects all creatures of the same race in the AoE
+			// Grants a +2 DC for each of them
+			int nRacial = MyPRCGetRacialType(oTarget);
+			// The creature with the same race as the target and the highest CR is used as the base
+			// So we loop through and count all the targets, as well as figure out the highest CR
+			int nMaxCR = GetChallengeRating(oTarget);
+			int nCurCR, nTargets;
+			
+			// Loop over targets
+                        object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
+                        while(GetIsObjectValid(oAreaTarget))
+                        {
+                            // Skip the original target, it doesn't count as a target
+                            if (oAreaTarget == oTarget) continue;
+                            
+                            // Targeting limitations
+                            if(MyPRCGetRacialType(oAreaTarget) == nRacial)
+                            {
+                            	// CR Check
+				nCurCR = GetChallengeRating(oAreaTarget);
+				// Update if you find something bigger
+				if (nCurCR > nMaxCR) nMaxCR = nCurCR;
+				// Increment Targets
+				nTargets++;
+                            }// end if - Targeting check
+
+                            // Get next target
+                            oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
+    	    	    	}// end while - Target loop
+
+			// Formula for the DC. 
+			nDC = 15 + (2 * nMaxCR) + (2 * nTargets);    	    	    	
+    	    	} // end if - Speak unto the Masses check
+		else // Single Target Utterance. The normal result
+		{
+			// CR does not take into account floats, so this is converted.
+			int nCR = FloatToInt(GetChallengeRating(oTarget));
+			// For PCs, use their HitDice
+			if (GetIsPC(oTarget)) nCR = GetHitDice(oTarget);
+			// Formula for the DC. Targets is only non-zero for Speak Unto the Masses
+			nDC = 15 + (2 * nCR);
+		}
 	}
 	// Targetting an Item here
 	else if (nLexicon == LEXICON_CRAFTED_TOOL)
@@ -244,5 +284,6 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker)
 	
 	return nDC;
 }
+
 // Test main
 //void main(){}

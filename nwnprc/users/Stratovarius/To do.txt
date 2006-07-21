@@ -9,13 +9,9 @@ Primary
 Truenaming:
 
 true_inc_truespeak: ClearLawLocalVars update numbers, add to prc_rest
-true_inc_truknwn: GetMaxUtteranceCount needs to be adjusted for the three different lexicons. (partially done)
-                  Add nType to GetKnownUtterancesModifier and related
-Do Utterance Gain Conversation.
 Make list of possible utterances.
-Make Truenamer Class
-Speak Unto the Masses: Use racial type of the target creature
-                  
+Make Truenamer Class: Class feats and TLK left.
+"Say My Name" - PRC Options Conversation + a switch for the TrueNamer, "Accept/Deny 'Say my Name and I am There'"
 
 1 Base Class
 ~60 Utterances

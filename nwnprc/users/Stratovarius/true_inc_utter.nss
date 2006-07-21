@@ -59,6 +59,22 @@ struct utterance{
     int bExtend;
     /// Whether Quicken utterance was used with this utterance
     int bQuicken;
+    
+    /* Speak Unto the Masses */
+    // Saving Throw DC
+    int nSaveDC;
+    // Saving Throw
+    int nSaveThrow
+    // Saving Throw Type
+    int nSaveType
+    // Spell Pen
+    int nPen;
+    // Duration Effects
+    effect eLink;
+    // Impact Effects
+    effect eLink2;   
+    // Duration
+    float fDur;
 };
 
 //////////////////////////////////////////////////

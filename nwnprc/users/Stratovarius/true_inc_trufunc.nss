@@ -148,7 +148,19 @@ string GetLexiconName(int nLexicon);
  *
  * @return           LEXICON_*
  */
-int GetLexiconByUtterance(int nSpellId)
+int GetLexiconByUtterance(int nSpellId);
+
+/**
+ * Affects all of the creatures with Speak Unto the Masses
+ * @param oTarget   Original Target of Utterance
+ * @param eLink     Primary effect of utterance
+ * @param eVis      Impact VFX
+ * @param fDur      Duration of the Utterance
+ * @param nPen      Spell Pen of the TrueSpeaker
+ * @param nDC       Spell DC of the TrueSpeaker
+ * @param utter     The utterance structure returned by EvaluateUtterance
+ */
+void DoSpeakUntoTheMasses(object oTarget, struct utterance utter);
 
 /**
  * Applies modifications to a utterance's damage that depend on some property
@@ -358,6 +370,44 @@ int GetLexiconByUtterance(int nSpellId)
      }
      // This should never happen
      return -1;
+}
+
+void DoSpeakUntoTheMasses(object oTarget, struct utterance utter)
+{
+	// Check for Speak Unto the Masses, exit function if not set
+	if (!GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES)) return;
+	
+	// Speak to the Masses affects all creatures of the same race in the AoE
+	int nRacial = MyPRCGetRacialType(oTarget);
+	
+	// Loop over targets
+        object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
+        while(GetIsObjectValid(oAreaTarget))
+        {
+            // Skip the original target, its already been hit
+            if (oAreaTarget == oTarget) continue;
+            
+            // Targeting limitations
+            if(MyPRCGetRacialType(oAreaTarget) == nRacial)
+            {
+            	// Do SR
+        	if (!MyPRCResistSpell(utter.oTrueSpeaker, oTarget, utter.nPen))
+        	{
+        		// Saving throw, ignore it if there is no DC to check
+        		if(!PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF) ||
+        		   utter.nSaveDC == 0)
+                	{
+                              	// Duration Effects
+		              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellID, utter.nTruespeakerLevel);
+		              	// Impact Effects
+        			SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
+       			} // end if - Saving Throw
+       		} // end if - Spell Resistance
+            }// end if - Targeting check
+
+            // Get next target
+            oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
+	}// end while - Target loop
 }
 /*
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,

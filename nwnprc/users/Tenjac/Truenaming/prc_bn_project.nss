@@ -394,35 +394,5 @@ void UnNerfWeapons(object oPC)
     }
 
     array_delete(oPC, "PRC_BaelnornProj_Nerfed");
-/*
-    object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    if(GetLocalInt(oWeapon, "BaelnornProjection_NoDamage")){
-        IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
-    }
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-    if(GetLocalInt(oWeapon, "BaelnornProjection_NoDamage")){
-        IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
-    }
 
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
-    if(GetLocalInt(oWeapon, "BaelnornProjection_NoDamage")){
-        IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
-    }
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
-    if(GetLocalInt(oWeapon, "BaelnornProjection_NoDamage")){
-        IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
-    }
-    oWeapon = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
-    if(GetLocalInt(oWeapon, "BaelnornProjection_NoDamage")){
-        IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
-    }
-
-    // Remove no damage from unequipped weapons, too
-    oWeapon = GetFirstItemInInventory(oPC);
-    while(GetIsObjectValid(oWeapon)){
-        if(GetLocalInt(oWeapon, "BaelnornProjection_NoDamage")){
-            IPRemoveMatchingItemProperties(oWeapon, ITEM_PROPERTY_NO_DAMAGE, DURATION_TYPE_PERMANENT);
-        }
-        oWeapon = GetNextItemInInventory(oPC);
-    }*/
 }

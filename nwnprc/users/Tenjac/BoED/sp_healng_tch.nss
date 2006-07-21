@@ -30,3 +30,18 @@ Created:   7/6/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "inc_dynconv"
+
+void main()
+{
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	//Spellhook
+	if (!X2PreSpellCastCode()) return;
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);	
+	
+	StartDynamicConversation("healing_touch", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);

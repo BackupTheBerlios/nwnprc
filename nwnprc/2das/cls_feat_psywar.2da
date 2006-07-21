@@ -9,11 +9,11 @@
 5   WeapProfMar                                    45        3    1              0      
 6   WeapProfSim                                    46        3    1              0      
 7   FEAT_AUGMENT_PSIONICS_QUICKSELECTS             3550      3    1              1      
-8   FEAT_AUGMENT_PSIONICS_DIGITS_0_4               3551      3    1              1      
-9   FEAT_AUGMENT_PSIONICS_DIGITS_5_9               3552      3    1              1      
-10  FEAT_AUGMENT_PSIONICS_TENS                     3553      3    1              1      
-11  Psionic_Focus                                  4818      3    1              1      
-12  ****                                           ****      **** ****           ****   
+8   Augment_QuickSelects_2                         3563      3    1              1      
+9   FEAT_AUGMENT_PSIONICS_DIGITS_0_4               3551      3    1              1      
+10  FEAT_AUGMENT_PSIONICS_DIGITS_5_9               3552      3    1              1      
+11  FEAT_AUGMENT_PSIONICS_TENS                     3553      3    1              1      
+12  Psionic_Focus                                  4818      3    1              1      
 13  ****                                           ****      **** ****           ****   
 14  **Bonus_Feats**                                ****      **** ****           ****   
 15  Psionic_Endowment                              4802      1    -1             1      

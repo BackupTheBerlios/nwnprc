@@ -49,20 +49,20 @@ void main()
     struct utterance utter = EvaluateUtterance(oTrueSpeaker, 
                                                oTarget, 
                                                (METAUTTERANCE_EXTEND | METAUTTERANCE_EMPOWER)/* Use METAUTTERANCE_NONE if it has no Metautterance usable*/, 
-                                               LEXICON_* /* Pick One: LEXICON_EVOLVING_MIND, LEXICON_CRAFTED_TOOL, LEXICON_PERFECTED_MAP*/);
+                                               LEXICON_EVOLVING_MIND /* Pick One: LEXICON_EVOLVING_MIND, LEXICON_CRAFTED_TOOL, LEXICON_PERFECTED_MAP*/);
 
     if(utter.bCanUtter)
     {
         // This is done so Speak Unto the Masses can read it out of the structure
- 	utter.nSaveType  = SAVING_THROW_TYPE_*;
-    	utter.nSaveThrow = SAVING_THROW_*
+ 	utter.nSaveType  = SAVING_THROW_TYPE_NONE; // SAVING_THROW_TYPE_*
+    	utter.nSaveThrow = SAVING_THROW_FORT; // SAVING_THROW_WILL/_FORT/_REFLEX
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
         utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker);
         utter.fDur       = RoundsToSeconds(5);
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_NORMAL)
+        if (PRCGetSpellId() == UTTER_DEFENSIVE_EDGE /* Example Utterance */)
         {
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
         	utter.eLink = EffectLinkEffects();
@@ -70,7 +70,7 @@ void main()
         	utter.eLink2 = EffectVisualEffect();
         }
         // The REVERSE effect of the Utterance goes here
-        else 
+        else /* Effects of UTTER_DEFENSIVE_EDGE_R would be here */
         {
         	// If the Spell Penetration fails, don't apply any effects
         	if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
@@ -87,13 +87,13 @@ void main()
         }
         // If either of these ApplyEffect isn't needed, delete it.
         // Duration Effects
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellID, utter.nTruespeakerLevel);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
-        DoSpeakUntoTheMasses(oTarget, utter);
+        DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);
         // Mark for the Law of Sequence. This only happens if the power succeeds, which is why its down here.
-        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur)
+        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
     }// end if - Successful utterance
 }

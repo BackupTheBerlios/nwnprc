@@ -289,8 +289,7 @@ void main()
                     sFeatID = Get2DACache(sPowerFile, "FeatID", i);
                     if(sFeatID != ""                                                   // Non-blank row
                      && !GetHasFeat(StringToInt(sFeatID), oPC)                         // PC does not already posses the power
-                     && (StringToInt(Get2DACache(sPowerFile, "Lexicon", i) == nLexicon)// its part of the Lexicon we're browsing
-                         )
+                     && (StringToInt(Get2DACache(sPowerFile, "Lexicon", i)) == nLexicon)// its part of the Lexicon we're browsing
                        )
                     {
                         if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", i))), i);

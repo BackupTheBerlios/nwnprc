@@ -96,7 +96,7 @@ struct utterance EvaluateMetautterances(struct utterance utter, int nMetaUtterFl
     // Total PP cost of metautterances used
     int nUtterDC = 0;
     // A debug variable to make a Utterance ignore normal use constraints
-    int bIgnoreConstr = (DEBUG) ? GetLocalInt(utter.oTrueSpeaker, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
+    int bIgnoreConstr = (DEBUG) ? GetLocalInt(utter.oTrueSpeaker, TRUE_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
 
     /* Calculate the added DC from metautterances and set the use markers for the utterances used */
 

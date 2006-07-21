@@ -2,8 +2,8 @@
 
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
 0   **Class_Feats**                                ****      **** ****           ****   
-11  WeapProfWizard                                 51        3    1              0      
-12  Psionic_Focus                                  4818      3    1              1      
+11  WeapProfSim                                    46        3    1              0      
+12  ArmProfLgt                                     3         3    1              0      
 13  ****                                           ****      **** ****           ****   
 14  ****                                           ****      **** ****           ****   
 15  **Bonus_Feats**                                ****      **** ****           ****   
@@ -11,7 +11,7 @@
 149 **ClassRadial_BonusFeats**                     ****      **** ****           ****   
 163 ****                                           ****      **** ****           ****   
 164 **EpicBonusFeats**                             ****      **** ****           ****   
-462 "Remember to move all psionic feats"           ****      **** ****           ****   
+462 "Remember to move all utterance feats"         ****      **** ****           ****   
 463 "outside the autoupdate range"                 ****      **** ****           ****   
 464 ****                                           ****      **** ****           ****   
 465 ###cls_feat_allBaseClasses_BEGIN###            ****      **** ****           ****   
@@ -47,7 +47,7 @@
 495 FEAT_SPELLFIRE_DECREASE                        4370      0    99             1      
 496 FEAT_SPELLFIRE_QUICKSELECT                     4371      0    99             1      
 497 ****                                           ****      **** ****           ****   
-498 **PsionicFeats**                               ****      **** ****           ****   
+498 **UtteranceFeats**                             ****      **** ****           ****   
 499 ****                                           ****      **** ****           ****   
 500 **RacialFeats**                                ****      **** ****           ****   
 501 FEAT_URDINNIR_STONESKIN                        4644      0    99             1      

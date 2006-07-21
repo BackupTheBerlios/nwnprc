@@ -68,7 +68,7 @@ const string _UTTERANCE_LIST_GENERAL_ARRAY = "_UtterancesKnownGeneralArray";
  * @return                TRUE if the Utterance was successfully stored and control feats added.
  *                        FALSE otherwise.
  */
-int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDependent = FALSE, int nLevelToTieTo = -1, int nLexicon);
+int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int nLexicon, int bLevelDependent = FALSE, int nLevelToTieTo = -1);
 
 /**
  * Removes all utterances gained from each list on the given level.
@@ -143,9 +143,9 @@ int GetHasUtterance(int nUtter, object oCreature = OBJECT_SELF);
 /*             Internal functions               */
 //////////////////////////////////////////////////
 
-void _RecurseRemoveArray(object oCreature, string sArrayName, string sUtterFile, int nArraySize, int nCurIndex)
+void _TruenameRecurseRemoveArray(object oCreature, string sArrayName, string sUtterFile, int nArraySize, int nCurIndex)
 {
-    if(DEBUG) DoDebug("_RecurseRemoveArray():\n"
+    if(DEBUG) DoDebug("_TruenameRecurseRemoveArray():\n"
                     + "oCreature = " + DebugObject2Str(oCreature) + "\n"
                     + "sArrayName = '" + sArrayName + "'\n"
                     + "sUtterFile = '" + sUtterFile + "'\n"
@@ -156,7 +156,7 @@ void _RecurseRemoveArray(object oCreature, string sArrayName, string sUtterFile,
     // Determine whether we've already parsed the whole array or not
     if(nCurIndex >= nArraySize)
     {
-        if(DEBUG) DoDebug("_RecurseRemoveArray(): Running itemproperty removal loop.");
+        if(DEBUG) DoDebug("_TruenameRecurseRemoveArray(): Running itemproperty removal loop.");
         // Loop over itemproperties on the skin and remove each match
         object oSkin = GetPCSkin(oCreature);
         itemproperty ipTest = GetFirstItemProperty(oSkin);
@@ -167,7 +167,7 @@ void _RecurseRemoveArray(object oCreature, string sArrayName, string sUtterFile,
                GetLocalInt(oCreature, "PRC_UtterFeatRemovalMarker_" + IntToString(GetItemPropertySubType(ipTest)))
                )
             {
-                if(DEBUG) DoDebug("_RecurseRemoveArray(): Removing bonus feat itemproperty:\n" + DebugIProp2Str(ipTest));
+                if(DEBUG) DoDebug("_TruenameRecurseRemoveArray(): Removing bonus feat itemproperty:\n" + DebugIProp2Str(ipTest));
                 // If so, remove it
                 RemoveItemProperty(oSkin, ipTest);
             }
@@ -182,11 +182,11 @@ void _RecurseRemoveArray(object oCreature, string sArrayName, string sUtterFile,
         string sName = "PRC_UtterFeatRemovalMarker_" + Get2DACache(sUtterFile, "IPFeatID",
                                                                    GetPowerfileIndexFromSpellID(persistant_array_get_int(oCreature, sArrayName, nCurIndex))
                                                                    );
-        if(DEBUG) DoDebug("_RecurseRemoveArray(): Recursing through array, marker set:\n" + sName);
+        if(DEBUG) DoDebug("_TruenameRecurseRemoveArray(): Recursing through array, marker set:\n" + sName);
 
         SetLocalInt(oCreature, sName, TRUE);
         // Recurse to next array index
-        _RecurseRemoveArray(oCreature, sArrayName, sUtterFile, nArraySize, nCurIndex + 1);
+        _TruenameRecurseRemoveArray(oCreature, sArrayName, sUtterFile, nArraySize, nCurIndex + 1);
         // After returning, delete the local
         DeleteLocalInt(oCreature, sName);
     }
@@ -210,7 +210,7 @@ void _RemoveUtteranceArray(object oCreature, int nList, int nLevel, int nLexicon
                           );
 
     // Remove each Utterance in the array
-    _RecurseRemoveArray(oCreature, sArray, GetPsiBookFileName(nList), nSize, 0);
+    _TruenameRecurseRemoveArray(oCreature, sArray, GetPsiBookFileName(nList), nSize, 0);
 
     // Remove the array itself
     persistant_array_delete(oCreature, sArray);
@@ -221,7 +221,7 @@ void _RemoveUtteranceArray(object oCreature, int nList, int nLevel, int nLexicon
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int bLevelDependent = FALSE, int nLevelToTieTo = -1, int nLexicon)
+int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int nLexicon, int bLevelDependent = FALSE, int nLevelToTieTo = -1)
 {
     string sBase      = _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + IntToString(nLexicon);
     string sArray     = sBase;
@@ -356,20 +356,19 @@ int GetMaxUtteranceCount(object oCreature, int nList, int nLexicon)
         case UTTERANCE_LIST_TRUENAMER:{
             // Determine base utterances known
             int nLevel = GetLevelByClass(CLASS_TYPE_TRUENAMER, oCreature);
-                nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_TRUENAMER ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
                 if (LEXICON_EVOLVING_MIND == nLexicon)
-            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_LEXICON_TRUENAMER), "EvolvingMind", nLevel - 1));
+            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "EvolvingMind", nLevel - 1));
 		else if (LEXICON_CRAFTED_TOOL == nLexicon)
-            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_LEXICON_TRUENAMER), "CraftedTool", nLevel - 1));            		
+            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "CraftedTool", nLevel - 1));            		
 		else if (LEXICON_PERFECTED_MAP == nLexicon)
             		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "PerfectedMap", nLevel - 1));            		
 
             // Calculate feats
 
             // Add in the custom modifier
-            nMaxUtterances += GetKnownUtterancesModifier(oCreature, nList);
+            nMaxUtterances += GetKnownUtterancesModifier(oCreature, nList, nLexicon);
             break;
         }
         case UTTERANCE_LIST_MISC:

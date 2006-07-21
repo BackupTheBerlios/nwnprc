@@ -275,6 +275,8 @@ void EvalPRCFeats(object oPC)
             && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )
         DelayCommand(1.0, ExecuteScript("prc_spellgain", oPC));
+    if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC))        
+    	DelayCommand(1.0, ExecuteScript("true_uttergain", oPC));
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.

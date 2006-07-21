@@ -53,7 +53,6 @@ string GetPsionicFileName(int nClass);
  */
 string GetPsiBookFileName(int nClass);
 
-
 #include "inc_utility"
 #include "prc_class_const"
 
@@ -75,6 +74,10 @@ void MakeLookupLoopMaster()
     DelayCommand(2.6, MakeLookupLoop(CLASS_TYPE_WARMIND,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(2.8, MakeLookupLoop(CLASS_TYPE_WARMIND,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_WARMIND)));
     DelayCommand(2.9, MakeLookupLoop(CLASS_TYPE_WARMIND,          0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
+    // The Truenamer uses the same lookup loop style as the psionic classes. Time adjusted to put it after the last of the caster lookup loops
+    DelayCommand(7.3, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
+    DelayCommand(7.5, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_TRUENAMER)));
+    DelayCommand(7.6, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));    
     //add new psionic classes here
     //also add them later too
 
@@ -191,7 +194,8 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
        nClass == CLASS_TYPE_PSYWAR         ||
        nClass == CLASS_TYPE_WILDER         ||
        nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
-       nClass == CLASS_TYPE_WARMIND
+       nClass == CLASS_TYPE_WARMIND        ||
+       nClass == CLASS_TYPE_TRUENAMER //Uses this function as well
     //add new psionic classes here
         )
         sFile = GetPsiBookFileName(nClass);
@@ -272,7 +276,8 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
        nClass == CLASS_TYPE_PSYWAR         ||
        nClass == CLASS_TYPE_WILDER         ||
        nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
-       nClass == CLASS_TYPE_WARMIND
+       nClass == CLASS_TYPE_WARMIND        ||
+       nClass == CLASS_TYPE_TRUENAMER //Uses this function as well
     //add new psionic classes here
         )
         sFile = GetPsiBookFileName(nClass);
@@ -381,14 +386,31 @@ int GetClassFeatFromPower(int nPowerID, int nClass)
 string GetPsionicFileName(int nClass)
 {
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
-    sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    // Different naming structure
+    if (nClass == CLASS_TYPE_TRUENAMER) 
+    {
+    	sPsiFile = "cls_true_known";
+    }
+    else
+    {
+    	sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    }
+    
     return sPsiFile;
 }
 
 string GetPsiBookFileName(int nClass)
 {
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
-    sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    // Different naming structure
+    if (nClass == CLASS_TYPE_TRUENAMER) 
+    {
+    	sPsiFile = "cls_true_utter";
+    }
+    else
+    {
+    	sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+    }
     return sPsiFile;
 }
 

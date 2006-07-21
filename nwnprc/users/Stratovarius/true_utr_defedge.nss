@@ -48,7 +48,7 @@ void main()
 
     object oTrueSpeaker = OBJECT_SELF;
     object oTarget      = PRCGetSpellTargetObject();
-    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_EXTEND, TYPE_EVOLVING_MIND);
+    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_EXTEND, LEXICON_EVOLVING_MIND);
 
     if(utter.bCanUtter)
     {
@@ -74,11 +74,11 @@ void main()
         	}
         }
         // Duration Effects
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellID, utter.nTruespeakerLevel);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
-        DoSpeakUntoTheMasses(oTarget, utter);
+        DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);
         // Mark for the Law of Sequence. This only happens if the power succeeds, which is why its down here.
-        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur)
+        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
     }// end if - Successful utterance    
 }

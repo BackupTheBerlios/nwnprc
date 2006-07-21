@@ -165,12 +165,13 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 	{
 		// Check for Speak Unto the Masses
 		if (GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES))
+		{
 			// Speak to the Masses affects all creatures of the same race in the AoE
 			// Grants a +2 DC for each of them
 			int nRacial = MyPRCGetRacialType(oTarget);
 			// The creature with the same race as the target and the highest CR is used as the base
 			// So we loop through and count all the targets, as well as figure out the highest CR
-			int nMaxCR = GetChallengeRating(oTarget);
+			int nMaxCR = FloatToInt(GetChallengeRating(oTarget));
 			int nCurCR, nTargets;
 			
 			// Loop over targets
@@ -184,7 +185,7 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
                             if(MyPRCGetRacialType(oAreaTarget) == nRacial)
                             {
                             	// CR Check
-				nCurCR = GetChallengeRating(oAreaTarget);
+				nCurCR = FloatToInt(GetChallengeRating(oAreaTarget));
 				// Update if you find something bigger
 				if (nCurCR > nMaxCR) nMaxCR = nCurCR;
 				// Increment Targets
@@ -251,12 +252,13 @@ void DoLawOfResistanceDCIncrease(object oTrueSpeaker, int nSpellId)
 void ClearLawLocalVars(object oTrueSpeaker)
 {
 	// As long as the PC isn't a truenamer, don't run this.
-	if (!GetLevelByClass(CLASS_LEXICON_TRUENAMER, oTrueSpeaker)) return;
+	if (!GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker)) return;
 	// Law of resistance is stored for each utterance by SpellId
 	// So we loop em all and blow em away
 	// Because there are only about 60, this should not TMI
 	// i is the SpellId
 	// Replace numbers when done
+	int i;
 	for(i = 17500; i < 18000; i++)
 	{
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(i));

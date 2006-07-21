@@ -75,7 +75,7 @@ int GetUtteranceLevel(object oTrueSpeaker);
  * @param oTrueSpeaker Creature whose ability score to get
  * @param nClass      CLASS_TYPE_* constant of a uttering class
  */
-int GetAbilityScoreOfClass(object oTrueSpeaker, int nClass);
+int GetTruenameAbilityScoreOfClass(object oTrueSpeaker, int nClass);
 
 /**
  * Determines the uttering ability of a class.
@@ -84,7 +84,7 @@ int GetAbilityScoreOfClass(object oTrueSpeaker, int nClass);
  * @return       ABILITY_* of the uttering stat. ABILITY_CHARISMA for non-TrueSpeaker
  *               classes.
  */
-int GetAbilityOfClass(int nClass);
+int GetTruenameAbilityOfClass(int nClass);
 
 /**
  * Calculates the DC of the Utterance being currently truespoken.
@@ -115,7 +115,7 @@ int GetTrueSpeakPenetration(object oTrueSpeaker = OBJECT_SELF);
  * @param nSpellId        SpellId of the Utterance
  * @param fDur            Duration of the Utterance
  */
-void DoLawOfSequence(object oTrueSpeaker, int nSpellId, int fDur);
+void DoLawOfSequence(object oTrueSpeaker, int nSpellId, float fDur);
 
 /**
  * Checks to see whether the law of sequence is active
@@ -152,15 +152,12 @@ int GetLexiconByUtterance(int nSpellId);
 
 /**
  * Affects all of the creatures with Speak Unto the Masses
+ *
+ * @param oTrueSpeaker    Caster of the Utterance
  * @param oTarget   Original Target of Utterance
- * @param eLink     Primary effect of utterance
- * @param eVis      Impact VFX
- * @param fDur      Duration of the Utterance
- * @param nPen      Spell Pen of the TrueSpeaker
- * @param nDC       Spell DC of the TrueSpeaker
  * @param utter     The utterance structure returned by EvaluateUtterance
  */
-void DoSpeakUntoTheMasses(object oTarget, struct utterance utter);
+void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance utter);
 
 /**
  * Applies modifications to a utterance's damage that depend on some property
@@ -276,12 +273,12 @@ int GetUtteranceLevel(object oTrueSpeaker)
     return GetLocalInt(oTrueSpeaker, PRC_UTTERANCE_LEVEL);
 }
 
-int GetAbilityScoreOfClass(object oTrueSpeaker, int nClass)
+int GetTruenameAbilityScoreOfClass(object oTrueSpeaker, int nClass)
 {
-    return GetAbilityScore(oTrueSpeaker, GetAbilityOfClass(nClass));
+    return GetAbilityScore(oTrueSpeaker, GetTruenameAbilityOfClass(nClass));
 }
 
-int GetAbilityOfClass(int nClass){
+int GetTruenameAbilityOfClass(int nClass){
     switch(nClass)
     {
         case CLASS_TYPE_TRUENAMER:
@@ -300,7 +297,7 @@ int GetTrueSpeakerDC(object oTrueSpeaker = OBJECT_SELF)
     int nClass = GetUtteringClass(oTrueSpeaker);
     int nDC = 10;
     nDC += GetLevelByClass(nClass, oTrueSpeaker)/2;
-    nDC += GetAbilityModifier(GetAbilityOfClass(nClass), oTrueSpeaker);
+    nDC += GetAbilityModifier(GetTruenameAbilityOfClass(nClass), oTrueSpeaker);
 
     // This is where the feats will go once they're added
 /*
@@ -372,7 +369,7 @@ int GetLexiconByUtterance(int nSpellId)
      return -1;
 }
 
-void DoSpeakUntoTheMasses(object oTarget, struct utterance utter)
+void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance utter)
 {
 	// Check for Speak Unto the Masses, exit function if not set
 	if (!GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES)) return;
@@ -398,7 +395,7 @@ void DoSpeakUntoTheMasses(object oTarget, struct utterance utter)
         		   utter.nSaveDC == 0)
                 	{
                               	// Duration Effects
-		              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellID, utter.nTruespeakerLevel);
+		              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
 		              	// Impact Effects
         			SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
        			} // end if - Saving Throw

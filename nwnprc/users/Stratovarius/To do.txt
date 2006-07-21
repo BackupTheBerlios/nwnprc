@@ -8,6 +8,10 @@ Primary
 
 Truenaming:
 
+Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
+
+NEEDED TO TEST: Make Defensive Edge usable, do Class TLK enteries.
+
 true_inc_truespeak: ClearLawLocalVars update numbers, add to prc_rest
 Make list of possible utterances.
 Make Truenamer Class: Class feats and TLK left.

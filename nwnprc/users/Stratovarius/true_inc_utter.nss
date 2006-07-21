@@ -18,9 +18,9 @@
 /*                 Constants                    */
 //////////////////////////////////////////////////
 
-const string PRC_TRUESPEAKING_CLASS       = "PRC_CurrentUtterance_TrueSpeakingClass";
-const string PRC_UTTERANCE_LEVEL          = "PRC_CurrentUtterance_Level";
-const string PRC_DEBUG_IGNORE_CONSTRAINTS = "PRC_Debug_Ignore_Constraints";
+const string PRC_TRUESPEAKING_CLASS        = "PRC_CurrentUtterance_TrueSpeakingClass";
+const string PRC_UTTERANCE_LEVEL           = "PRC_CurrentUtterance_Level";
+const string TRUE_DEBUG_IGNORE_CONSTRAINTS = "TRUE_DEBUG_IGNORE_CONSTRAINTS";
 
 /**
  * The variable in which the utterance token is stored. If no token exists,
@@ -48,7 +48,7 @@ struct utterance{
     /// The creature's truespeaker level in regards to this utterance
     int nTruespeakerLevel;
     /// The utterance's spell ID
-    int nSpellID;
+    int nSpellId;
     /// The DC for speaking the utterance
     int nUtterDC;
 
@@ -64,9 +64,9 @@ struct utterance{
     // Saving Throw DC
     int nSaveDC;
     // Saving Throw
-    int nSaveThrow
+    int nSaveThrow;
     // Saving Throw Type
-    int nSaveType
+    int nSaveType;
     // Spell Pen
     int nPen;
     // Duration Effects
@@ -158,7 +158,7 @@ void DeleteLocalUtterance(object oObject, string sName);
  *
  * @param oTrueSpeaker A creature attempting to truespeak a utterance at this moment.
  */
-void DebugIgnoreConstraints(object oTrueSpeaker);
+void TruenameDebugIgnoreConstraints(object oTrueSpeaker);
 
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -175,7 +175,7 @@ void DebugIgnoreConstraints(object oTrueSpeaker);
  * Handles Spellfire absorption when a utterance is used on a friendly spellfire
  * user.
  */
-struct utterance _DoSpellfireFriendlyAbsorption(struct utterance utter, object oTarget)
+struct utterance _DoTruenameSpellfireFriendlyAbsorption(struct utterance utter, object oTarget)
 {
     if(GetLocalInt(oTarget, "SpellfireAbsorbFriendly") &&
        GetIsFriend(oTarget, utter.oTrueSpeaker)
@@ -466,10 +466,10 @@ void _UseUtteranceAux(object oTrueSpeaker, object oUtrToken, int nSpellId,
 struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMetaUtterFlags, int nLexicon)
 {
     /* Get some data */
-    int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oTrueSpeaker, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
+    int bIgnoreConstraints = (DEBUG) ? GetLocalInt(oTrueSpeaker, TRUE_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
     // truespeaker-related stuff
     int nTruespeakerLevel = GetTruespeakerLevel(oTrueSpeaker);
-    int nUtterLevel      = GetPowerLevel(oTrueSpeaker);
+    int nUtterLevel      = GetUtteranceLevel(oTrueSpeaker);
     int nClass           = GetTruespeakingClass(oTrueSpeaker);
 
     /* Initialise the utterance structure */
@@ -477,23 +477,23 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
     utter.oTrueSpeaker      = oTrueSpeaker;
     utter.bCanUtter         = TRUE;                                   // Assume successfull utterance by default
     utter.nTruespeakerLevel = nTruespeakerLevel;
-    utter.nSpellID          = PRCGetSpellId();
+    utter.nSpellId          = PRCGetSpellId();
     utter.nUtterDC          = GetBaseUtteranceDC(oTarget, oTrueSpeaker, nLexicon);
 
     // Account for metautterances. This includes adding the appropriate DC boosts.
     utter = EvaluateMetautterances(utter, nMetaUtterFlags);
     // Account for the law of resistance
-    utter.nUtterDC += GetLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellID);
+    utter.nUtterDC += GetLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellId);
     // DC change for targeting self and using a Personal Truename
     utter.nUtterDC += AddPersonalTruenameDC(oTrueSpeaker, oTarget);  
     // DC change for ignoring Spell Resistance
     utter.nUtterDC += AddIgnoreSpellResistDC(oTrueSpeaker);
     
     // Check the Law of Sequence. Returns True if the utterance is active
-    if (CheckLawOfSequence(oTrueSpeaker, nSpellId))
+    if (CheckLawOfSequence(oTrueSpeaker, utter.nSpellId))
     {
     	utter.bCanUtter = FALSE;
-    	FloatingTextStringOnCreature("You already have " + GetUtteranceName(nSpellId) + " active. Utterance Failed.", oPC, FALSE);
+    	FloatingTextStringOnCreature("You already have " + GetUtteranceName(utter.nSpellId) + " active. Utterance Failed.", oTrueSpeaker, FALSE);
     }
     
     // Skip paying anything if something has prevented successfull utterance already by this point
@@ -504,9 +504,9 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
         if(GetIsSkillSuccessful(oTrueSpeaker, SKILL_TRUESPEAK, utter.nUtterDC) || bIgnoreConstraints)
         {
         	// Increases the DC of the subsequent utterances
-        	DoLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellID);
+        	DoLawOfResistanceDCIncrease(oTrueSpeaker, utter.nSpellId);
                 // Spellfire friendly absorption - This may set bCananifest to FALSE
-                utter = _DoSpellfireFriendlyAbsorption(utter, oTarget);
+                utter = _DoTruenameSpellfireFriendlyAbsorption(utter, oTarget);
                 //* APPLY SIDE-EFFECTS THAT RESULT FROM SUCCESSFULL UTTERANCE ABOVE *//
 
         }
@@ -538,7 +538,7 @@ void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0)
     int bQuicken       = FALSE;
 
     // Normally swift action utterances check
-    if(Get2DACache("feat", "Constant", GetClassFeatFromUtterance(nUtter, nClass)) == "SWIFT_ACTION" && // The utterance is swift action to use
+    if(Get2DACache("feat", "Constant", GetClassFeatFromPower(nUtter, nClass)) == "SWIFT_ACTION" && // The utterance is swift action to use
        TakeSwiftAction(oTrueSpeaker)                                                                // And the truespeaker can take a swift action now
        )
     {
@@ -589,7 +589,7 @@ void UseUtterance(int nUtter, int nClass, int nLevelOverride = 0)
     }
 
     // Action queue the function that will cheatcast the actual utterance
-    DelayCommand(nUtterDur / 1000.0f, AssignCommand(oTrueSpeaker, ActionDoCommand(_UseUtteranceAux(oTrueSpeaker, oUtrToken, nSpellID, oTarget, lTarget, nUtter, nClass, bIsPsiLike, nLevelOverride, bQuicken))));
+    DelayCommand(nUtterDur / 1000.0f, AssignCommand(oTrueSpeaker, ActionDoCommand(_UseUtteranceAux(oTrueSpeaker, oUtrToken, nSpellID, oTarget, lTarget, nUtter, nClass, nLevelOverride, bQuicken))));
 }
 
 string DebugUtterance2Str(struct utterance utter)
@@ -614,7 +614,7 @@ void SetLocalUtterance(object oObject, string sName, struct utterance utter)
 
     SetLocalInt(oObject, sName + "_bCanUtter",      utter.bCanUtter);
     SetLocalInt(oObject, sName + "_nTruespeakerLevel",  utter.nTruespeakerLevel);
-    SetLocalInt(oObject, sName + "_nSpellID",          utter.nSpellID);
+    SetLocalInt(oObject, sName + "_nSpellID",          utter.nSpellId);
 
     SetLocalInt(oObject, sName + "_bEmpower",  utter.bEmpower);
     SetLocalInt(oObject, sName + "_bExtend",   utter.bExtend);
@@ -628,7 +628,7 @@ struct utterance GetLocalUtterance(object oObject, string sName)
 
     utter.bCanUtter      = GetLocalInt(oObject, sName + "_bCanUtter");
     utter.nTruespeakerLevel  = GetLocalInt(oObject, sName + "_nTruespeakerLevel");
-    utter.nSpellID          = GetLocalInt(oObject, sName + "_nSpellID");
+    utter.nSpellId          = GetLocalInt(oObject, sName + "_nSpellID");
 
     utter.bEmpower  = GetLocalInt(oObject, sName + "_bEmpower");
     utter.bExtend   = GetLocalInt(oObject, sName + "_bExtend");
@@ -650,10 +650,10 @@ void DeleteLocalUtterance(object oObject, string sName)
     DeleteLocalInt(oObject, sName + "_bQuicken");
 }
 
-void DebugIgnoreConstraints(object oTrueSpeaker)
+void TruenameDebugIgnoreConstraints(object oTrueSpeaker)
 {
-    SetLocalInt(oTrueSpeaker, PRC_DEBUG_IGNORE_CONSTRAINTS, TRUE);
-    DelayCommand(0.0f, DeleteLocalInt(oTrueSpeaker, PRC_DEBUG_IGNORE_CONSTRAINTS));
+    SetLocalInt(oTrueSpeaker, TRUE_DEBUG_IGNORE_CONSTRAINTS, TRUE);
+    DelayCommand(0.0f, DeleteLocalInt(oTrueSpeaker, TRUE_DEBUG_IGNORE_CONSTRAINTS));
 }
 
 // Test main

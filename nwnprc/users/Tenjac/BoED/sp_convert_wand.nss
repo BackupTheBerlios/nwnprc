@@ -45,6 +45,8 @@ Created:   7/3/06
 
 #include "spinc_common"
 
+void WandCounter(object oPC, object oSkin, object oNewWand, int nCounter);
+
 void main()
 {
 	if(!X2PreSpellCastCode()) return;
@@ -53,36 +55,32 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTargetWand = GetSpellTargetObject();
+	object oSkin = GetPCSkin(oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = (60.0f * nCasterLvl);
 	
 	int nOrigCharge = GetItemCharges(oTargetWand);
 	object oNewWand;
-	int nSpell = Get
-	
+		
 	//Get spell level
 	itemproperty ipTest = GetFirstItemProperty(oTargetWand);
 		
 	while(GetIsItemPropertyValid(ipTest))
 	{
 		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
-		{ 
-			int nCostTable = GetItemPropertyCostTable(ipTest);
+		{ 	
+			//Get row
+			string sRow = IntToString(GetItemPropertySubType(ipTest));
 			
-			//should return iprp_spellcost.2da line
-			int nCostTableValue = GetItemPropertyCostTableValue(ipTest);
-			
-			int nSpell = Get
+			//Get spell level
+			int nLevel = Get2daString("iprp_spells", "InnateLvl", sRow);
 			break;
 		}
 		ipTest = GetNextItemProperty(oTargetWand);
-	}		
-	
-	//Get spell level
-	int nLevel = ;
+	}
 	
 	//Copy item to hide
-	oNewWand = ;
+	oNewWand = CopyObject(oTargetWand, GetLocation(oSkin), oSkin, "ConvertedWand");
 			
 	//Destroy old
 	DestroyObject(oTargetWand);
@@ -104,35 +102,37 @@ void main()
 		
 		default: break;
 	}
-	
+		
 	int nCounter = FloatToInt(fDur) / 6;
-	WandCounter(oNewWand, nCounter);
+	WandCounter(oPC, oSkin, oNewWand, nCounter);
 		
 	SPSetSchool();
 }
 
-void WandCounter(object oNewWand, int nCounter)
+void WandCounter(object oPC, object oSkin, object oNewWand, int nCounter)
 {
 	if(nCounter < 1)
 	{
 		//Get current charges
 		int nNewCharge = GetItemCharges(oNewWand);
 		
+		//Get copied wand
+		object oCopied = GetItemPossessedBy(oSkin, "ConvertedWand")
+		
 		//Copy wand back over
-		object oOldWand = ;
+		object oOldWand = CopyObject(oCopied, GetLocation(oPC), oPC);
 		
 		//Destroy item on hide
-		
+		DestroyObject(oCopied);
 		
 		//Set charges
-		SetItemCharges(oOldWand, nNewCharge);
-		
+		SetItemCharges(oOldWand, nNewCharge);		
 	}
 	
 	else
 	{
 		nCounter--;
-		DelayCommand(6.0f, WandCounter(oNewWand, nCounter));
+		DelayCommand(6.0f, WandCounter(oPC, oSkin, oNewWand, nCounter));
 	}
 }
 		

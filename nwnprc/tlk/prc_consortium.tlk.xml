@@ -5279,13 +5279,13 @@ All psionic feats, Armor Skin, Bane of Enemies, Blinding Speed, Devastating Crit
   <entry id="46367" lang="en" sex="m">Type of Feat: Psionics
 Prerequisite: Ability to manifest powers.
 Specifics: This set of feats implements the augmentation feature of psionic powers. They act as toggles, so the selected augmentation level persist until you change the setting or exit the module.
- When you manifest an augmentable power, the power is augmented according to your augmentation level active at the time. If this would increase the power's cost beyong what you can pay, the manifestation fails.
+ When you manifest an augmentable power, the power is augmented according to your augmentation level active at the time. If this would increase the power's cost beyond what you can pay, the manifestation fails.
 Use: Selected.
 
-Technical: The augmentation feats are instant feats (NWN v1.66+) and take no action to activate.
+Technical: The augmentation feats are instant feats and take no action to activate.
 Your augmentation level is the sum of your selections from the Augment 0 - 40 and Augment 0-4 or Augment 5-9 radials.
 Normally, a quickselect sets your augmentation to whatever value you have placed in it (zero if unitialized).
-To change the value stored in a quickselect, first use the Change Quickselect feat under Augment Psionics - Quickselects radial. Then, use any of of the quickselect feats within the next 10 seconds. The old value for that feat will be overwritten with your current augment value.</entry>
+To change the value stored in a quickselect, use the Augmentation Options conversation.</entry>
   <entry id="46368" lang="en" sex="m">Augment Psionics: 0 - 4</entry>
   <entry id="46369" lang="en" sex="m">Augment Psionics: 5 - 9</entry>
   <entry id="46370" lang="en" sex="m">Augment Psionics: 00 - 40</entry>
@@ -5838,6 +5838,16 @@ Metapsionics: Chain, Empower, Maximize, Twin
 Your touch, claw, or bite is corrosive, and sizzling moisture visibly oozes from your natural weapon or hand. You deal 4d6 points of acid damage to any creature or object you touch with your successful melee touch attack.
 
 Augment: For every 2 additional power points you spend, this power's damage increases by 1d6 points.</entry>
+  <entry id="46461" lang="en" sex="m">Augment Psionics: Maximum</entry>
+  <entry id="46462" lang="en" sex="m">Type of Feat: Psionics
+Prerequisite: Ability to manifest powers.
+Specifics: When this feat is active, the augmentation evaluation code will attempt to automatically spend PP on augmentation beyond the amount specified by your augmentation profile, up to the manifester level cap.
+The automatic allocation works such that it first attempts to spend all of the PP on the power's first augmentation option. If any PP is left unallocated after the first augmentation option, the same operation is performed on the second augmentation option, etc.
+
+Note that this automatic allocation does not account for any effects that might increase the power's cost, such as Catapsi. This may result in the power's total cost exceeding the manifester level cap and thus causing the power to fail.
+Also note that if the power's cost was brought above the manifester level cap by (base cost + metapsionics + normal augmentation profile), this will not reduce it back below the cap.
+
+Use: Selecting toggles on/off. Also toggled off by use of Augment Off.</entry>
   <entry id="46463" lang="en" sex="m">Steadfast Perception</entry>
   <entry id="46464" lang="en" sex="m">Clairsentience
 Level: Psychic warrior 4
@@ -8718,6 +8728,10 @@ Power Points: 1
 Metapsionics: Extend
 
 Your skin and equipment take on the color and texture of nearby objects, including floors and walls. You receive a +10 enhancement bonus on Hide checks.</entry>
+  <entry id="46960" lang="en" sex="m">Augment Quickselect 4</entry>
+  <entry id="46961" lang="en" sex="m">Augment Quickselect 5</entry>
+  <entry id="46962" lang="en" sex="m">Augment Quickselect 6</entry>
+  <entry id="46963" lang="en" sex="m">Augment Quickselect 7</entry>
   <entry id="46964" lang="en" sex="m">Empty Quickselection</entry>
   <entry id="46965" lang="en" sex="m">Power Points Remaining:</entry>
   <entry id="46966" lang="en" sex="m">Quickselection set to</entry>
@@ -18108,28 +18122,28 @@ Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price 
   <entry id="51584" lang="en" sex="m">The wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
 Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>  <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51585" lang="en" sex="m">Acid Warding</entry>
-  <entry id="51586" lang="en" sex="m">The armor absorbs the first 50 points of acid damage per round that the wearer would normally take (similar to the resist energy spell). 
+  <entry id="51586" lang="en" sex="m">The armor absorbs the first 50 points of acid damage per round that the wearer would normally take (similar to the resist energy spell).
 Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51587" lang="en" sex="m">Cold Warding</entry>
-  <entry id="51588" lang="en" sex="m">The armor absorbs the first 50 points of cold damage per round that the wearer would normally take (similar to the resist energy spell). 
+  <entry id="51588" lang="en" sex="m">The armor absorbs the first 50 points of cold damage per round that the wearer would normally take (similar to the resist energy spell).
 Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51589" lang="en" sex="m">Fire Warding</entry>
-  <entry id="51590" lang="en" sex="m">The armor absorbs the first 50 points of fire damage per round that the wearer would normally take (similar to the resist energy spell). 
+  <entry id="51590" lang="en" sex="m">The armor absorbs the first 50 points of fire damage per round that the wearer would normally take (similar to the resist energy spell).
 Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51591" lang="en" sex="m">Great Invulnerability</entry>
-  <entry id="51592" lang="en" sex="m">This suit of armor or shield grants the wearer damage reduction. The damage reduction can be 10/magic, 15/magic, 5/epic, or 10/epic, depending on the armor. 
+  <entry id="51592" lang="en" sex="m">This suit of armor or shield grants the wearer damage reduction. The damage reduction can be 10/magic, 15/magic, 5/epic, or 10/epic, depending on the armor.
 Caster Level: 19th (10/magic), 20th (15/magic), 21st (5/epic), 22nd (10/epic); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, stoneskin, wish, or miracle; Market Price:+4 bonus (10/magic),+5 bonus (15/magic),+6 bonus (5/epic),+7 bonus (10/epic).</entry>
   <entry id="51593" lang="en" sex="m">Great Reflection</entry>
-  <entry id="51594" lang="en" sex="m">Any time its bearer of this shield is targeted with a spell, it automatically reflects the spell back at the caster (as the spell turning spell). The wearer can lower or raise this effect as a free action (thus allowing beneficial spells in as desired). 
+  <entry id="51594" lang="en" sex="m">Any time its bearer of this shield is targeted with a spell, it automatically reflects the spell back at the caster (as the spell turning spell). The wearer can lower or raise this effect as a free action (thus allowing beneficial spells in as desired).
 Caster Level: 25th; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell turning; Market Price: +10 bonus.</entry>
   <entry id="51595" lang="en" sex="m">Great Spell Resistance</entry>
-  <entry id="51596" lang="en" sex="m">This suit of armor or shield grants the wearer spell resistance. The spell resistance can be 21, 23, 25, or 27, depending on the armor. 
+  <entry id="51596" lang="en" sex="m">This suit of armor or shield grants the wearer spell resistance. The spell resistance can be 21, 23, 25, or 27, depending on the armor.
 Caster Level: 21st (SR 21), 22nd (SR 23), 23rd (SR 25), 24th (SR 27); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell resistance; Market Price: +6 bonus (SR 21), +7 bonus (SR 23), +8 bonus (SR 25), +9 bonus (SR 27).</entry>
   <entry id="51597" lang="en" sex="m">Lightning Warding</entry>
-  <entry id="51598" lang="en" sex="m">The armor absorbs the first 50 points of lightning damage per round that the wearer would normally take (similar to the resist energy spell). 
+  <entry id="51598" lang="en" sex="m">The armor absorbs the first 50 points of lightning damage per round that the wearer would normally take (similar to the resist energy spell).
 Caster Level: 21st; Prereq-uisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51599" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51600" lang="en" sex="m">The armor absorbs the first 50 points of sonic damage per round that the wearer would normally take (similar to the resist energy spell). 
+  <entry id="51600" lang="en" sex="m">The armor absorbs the first 50 points of sonic damage per round that the wearer would normally take (similar to the resist energy spell).
 Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51601" lang="en" sex="m">Spell Turning</entry>
   <entry id="51602" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 7
@@ -18144,7 +18158,7 @@ Additional Counter Spells: Spell Breach
 Save: Harmless
 Spell Resistance: No
 
-Spells and spell-like effects targeted on you are turned back upon the original caster. The abjuration turns only spells that have you as a target. Effect and area spells are not affected. Spell turning also fails to stop touch range spells. 
+Spells and spell-like effects targeted on you are turned back upon the original caster. The abjuration turns only spells that have you as a target. Effect and area spells are not affected. Spell turning also fails to stop touch range spells.
 From seven to ten (1d4+6) spell levels are affected by the turning.
 When you are targeted by a spell of higher level than the amount of spell turning you have left, that spell is partially turned. You and the caster each has a proportional chance to be affected.
 If you and a spellcasting attacker are both warded by spell turning effects in operation, both you and the caster have a proportional chance to be affected.</entry>
@@ -26081,13 +26095,13 @@ Specifics: This feat allows the character to make a special attack against good 
 Use: Selected. Smite Good only affects good creatures.</entry>
   <entry id="70006" lang="en" sex="m">Template: Fiendish</entry>
   <entry id="70007" lang="en" sex="m">Fiendish creatures dwell on the lower planes, the realms of evil, although they resemble beings found on the Material Plane. They are more fearsome in appearance than their earthly counterparts.
-    
+
 "Fiendish" is an inherited template that can be added to any corporeal aberration, animal, dragon, fey, giant, humanoid, magical beast, monstrous humanoid, ooze, plant, or vermin of nongood alignment (referred to hereafter as the base creature).
 
 A fiendish creature uses all the base creature’s statistics and abilities except as noted here. Do not recalculate the creature’s Hit Dice, base attack bonus, saves, or skill points if its type changes.
 
 Size and Type
-Animals or vermin with this template become magical beasts, but otherwise the creature type is unchanged. Size is unchanged. Fiendish creatures encountered on the Material Plane have the extraplanar subtype. 
+Animals or vermin with this template become magical beasts, but otherwise the creature type is unchanged. Size is unchanged. Fiendish creatures encountered on the Material Plane have the extraplanar subtype.
 
 Special Attacks
 A fiendish creature retains all the special attacks of the base creature and also gains the following special attack.
@@ -26108,7 +26122,7 @@ Level Adjustment
 Same as the base creature +2. </entry>
   <entry id="70008" lang="en" sex="m">Template: Half-Celestial</entry>
   <entry id="70009" lang="en" sex="m">No matter the form, half-celestials are always comely and delightful to the senses, having golden skin, sparkling eyes, angelic wings, or some other sign of their higher nature.
-    
+
 "Half-celestial" is an inherited template that can be added to any living, corporeal creature with an Intelligence score of 4 or higher and nonevil alignment (referred to hereafter as the base creature).
 
 A half-celestial uses all the base creature’s statistics and special abilities except as noted here.
@@ -26123,7 +26137,7 @@ Armor Class
 Natural armor improves by +1 (this stacks with any natural armor bonus the base creature has).
 
 Special Attacks
-A half-celestial retains all the special attacks of the base creature and also gains the following special 
+A half-celestial retains all the special attacks of the base creature and also gains the following special
 abilities.
 Daylight (Su)
 Half-celestials can use a daylight effect (as the spell) at will.

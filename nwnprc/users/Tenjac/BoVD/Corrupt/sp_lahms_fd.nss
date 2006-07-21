@@ -129,13 +129,13 @@ void main()
 		}
 				
 		//Determine usefullness of remaining stumps	
-		if(nLFingers < 3)
+		if(nLFingers < 2)
 		{
 			//mark left hand useless
 			SetPersistantLocalInt(oPC, "LEFT_HAND_USELESS", 1);
 		}
 		
-		if(nRFingers < 3)
+		if(nRFingers < 2)
 		{	
 			//mark right hand useless	
 			SetPersistantLocalInt(oPC, "RIGHT_HAND_USELESS", 1);

@@ -554,11 +554,15 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
         // Calculate autodistribution amount
         if(bMaxAugment)
         {
+            // Maximal augmentation ignores PP cost reductions here. They are instead handled at the end
             if(((manif.nManifesterLevel - manif.nPPCost) - nAugPPCost) > 0)
-                nToAutodistribute = (manif.nManifesterLevel - manif.nPPCost) - nAugPPCost;
+                nToAutodistribute = manif.nManifesterLevel // Maximum usable
+                                  - manif.nPPCost          // Reduced by what's already been used for other things
+                                  - nAugPPCost;            // Reduced by what's already been used for augmentation
         }
+        // No maximal augmentation, instead more PP cost reduction provided than PP has been used
         else if((nAugPPCost - nAugPPCostReductions) < 0)
-            nToAutodistribute += -(nAugPPCost - nAugPPCostReductions);
+            nToAutodistribute = -(nAugPPCost - nAugPPCostReductions); // The amount of PP cost reduction that's in excess of what's already been used for augmentation
 
         // Store the value for use in cost calculations
         nAutodistributed = nToAutodistribute;
@@ -670,14 +674,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
             manif.nTimesGenericAugUsed += nAutodistributed / pap.nGenericAugCost;
 
         // Determine new augmentation PP cost
-        /*if(bMaxAugment)
-        {*/
-            nAugPPCost += nAutodistributed;
-        /*}
-        // All PP autodistributed were just left-over free PP
-        else
-            // All PP unused at this point are dumped and the total augmentation cost is zero
-            nAugPPCost = 0;*/
+        nAugPPCost += nAutodistributed;
     }
 
     // Add in cost reduction

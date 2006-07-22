@@ -183,8 +183,10 @@ public class Precache2daGen {
 	private static void handleTruenaming(File dir) {
 		File[] files = dir.listFiles(new FileFilter(){
 			public boolean accept(File file){
-				return file.getName().toLowerCase().startsWith("cls_true_") &&
-				       file.getName().toLowerCase().endsWith(".2da");
+				return file.getName().toLowerCase().startsWith("cls_true_")       &&
+				       file.getName().toLowerCase().endsWith(".2da")              &&
+				       !file.getName().toLowerCase().equals("cls_true_known.2da") && // Skip special cases
+				       !file.getName().toLowerCase().equals("cls_true_maxlvl.2da");
 			}
 		});
 		

@@ -258,7 +258,7 @@ int SkipLine(int i)
 
 //Adds names to a list based on sTable (2da), delayed recursion
 //  to avoid TMI
-void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oItem = OBJECT_INVALID, int i = 0)
+void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCasterLevel = 0, object oItem = OBJECT_INVALID, int i = 0)
 {
     if(GetLocalInt(oPC, "DynConv_Waiting") == FALSE)
         return;
@@ -266,9 +266,10 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
     {
         int bValid = TRUE;
         string sTemp = "";
-        if(GetIsObjectValid(oItem)) bValid = ValidProperty(oItem, i);
+        //if(GetIsObjectValid(oItem)) bValid = ValidProperty(oItem, i);
         if(sTable == "iprp_spells")
             i = SkipLine(i);
+        //else if(GetStringLeft(sTable, 6) == "craft_")
         sTemp = Get2DACache(sTable, "Name", i);
         if((sTemp != "") && bValid)//this is going to kill
         {
@@ -285,7 +286,7 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
         FloatingTextStringOnCreature("*Done*", oPC, FALSE);
         return;
     }
-    DelayCommand(0.01, PopulateList(oPC, MaxValue, bSort, sTable, oItem, i + 1));
+    DelayCommand(0.01, PopulateList(oPC, MaxValue, bSort, sTable, nCasterLevel, oItem, i + 1));
 }
 
 void main()
@@ -301,6 +302,16 @@ void main()
         }
         else if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
         {   //cast on item, crafting targeted item
+            if(!GetHasFeat(GetCraftingFeat(GetBaseItemType(oTarget)), oPC))
+            {
+                SendMessageToPC(oPC, "You do not have the required feat to craft this item.");
+                return;
+            }
+            if(!StringToInt(GetStringLeft(GetTag(oItem), 3)))
+            {
+                SendMessageToPC(oPC, "This is not a magic item.");
+                return;
+            }
             SetLocalInt(OBJECT_SELF, PRC_CRAFT_SCRIPT_STATE, PRC_CRAFT_STATE_MAGIC);
             SetLocalObject(OBJECT_SELF, PRC_CRAFT_ITEM, oTarget);
         }
@@ -358,9 +369,26 @@ void main()
                     }
                     else if(nState == PRC_CRAFT_STATE_MAGIC)
                     {
-                        SetHeader(ItemStats(oItem) + "\nSelect an item property.");
+                        int nCasterLevel = PRCGetCasterLevel(oPC);
+                        int nBaseItem = GetBaseItemType(oItem);
+                        string sFile = GetCrafting2DA(nBaseItem);
+                        int nFeat = GetCraftingFeat(nBaseItem);
+                        int bEpic = GetHasFeat(GetEpicCraftingFeat(nFeat), oPC);
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
+                        if(sFile != "")
+                        {
+                            //PopulateList(oPC, MaxListSize(sFile), FALSE, sFile, nCasterLevel);
+                        }
+                        else
+                        {
+                            sFile = "iprp_spells";
+                            PopulateList(oPC, MaxListSize(sFile), TRUE, sFile, nCasterLevel);
+
+                        }
+
+                        SetHeader(ItemStats(oItem) + "\nSelect an item property.");
+                        AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
                         SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
                         SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
                         SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, -1);
@@ -368,7 +396,7 @@ void main()
                         SetLocalInt(oPC, PRC_CRAFT_COSTTABLEVALUE, -1);
                         SetLocalString(oPC, PRC_CRAFT_PARAM1, "");
                         SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, -1);
-                        PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, "itempropdef");
+                        //PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, "itempropdef");
                     }
                     SetDefaultTokens();
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);

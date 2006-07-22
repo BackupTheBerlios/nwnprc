@@ -42,6 +42,7 @@ const int PRC_CRAFT_MATERIAL_CLOTH      = 4;
 const string PRC_CRAFT_UID_SUFFIX       = "_UID_PRC";
 const string PRC_CRAFT_STORAGE_CHEST    = "PRC_CRAFT_STORAGE_CHEST";
 const string PRC_CRAFT_TEMPORARY_CHEST  = "PRC_CRAFT_TEMPORARY_CHEST";
+const string PRC_CRAFT_ITEMPROP_ARRAY   = "PRC_CRAFT_ITEMPROP_ARRAY";
 
 const int PRC_CRAFT_FLAG_NONE               = 0;
 const int PRC_CRAFT_FLAG_MASTERWORK         = 1;
@@ -51,11 +52,19 @@ const int PRC_CRAFT_FLAG_DRAGONHIDE         = 8;
 const int PRC_CRAFT_FLAG_MITHRAL            = 16;
 const int PRC_CRAFT_FLAG_COLD_IRON          = 32;   //not implemented
 const int PRC_CRAFT_FLAG_ALCHEMICAL_SILVER  = 64;   //not implemented
+const int PRC_CRAFT_FLAG_MAGICAL            = 128;
 
 const int PRC_CRAFT_ITEM_TYPE_WEAPON    = 1;
 const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
+
+
+//placeholder
+int PRCGetHasSpell(int nSpell)
+{
+    return TRUE;
+}
 
 object GetCraftChest()
 {
@@ -93,6 +102,201 @@ string GetNewItemTag(object oItem, int nType)
     string sTag = GetTag(oItem);
     return GetMaterialString(nType) + GetStringRight(sTag, GetStringLength(sTag) - 3);
 }
+
+int GetArmourCheckPenaltyReduction(object oItem)
+{
+    int nBase = GetBaseItemType(oItem);
+    if(((nBase == BASE_ITEM_ARMOR) ||
+        (nBase == BASE_ITEM_SMALLSHIELD) ||
+        (nBase == BASE_ITEM_LARGESHIELD) ||
+        (nBase == BASE_ITEM_TOWERSHIELD))
+        )
+    {
+        int nMaterial = StringToInt(GetStringLeft(GetTag(oItem), 3));
+        int nBonus = 0;
+        int nACPenalty = GetItemArmourCheckPenalty(oItem);
+        if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)
+        {
+            nBonus = min(1, nACPenalty);
+        }
+        if(nMaterial & PRC_CRAFT_FLAG_DARKWOOD)
+        {
+            nBonus = min(2, nACPenalty);
+        }
+        if(nMaterial & PRC_CRAFT_FLAG_MITHRAL)
+        {
+            nBonus = min(3, nACPenalty);
+        }
+    }
+    return -1;
+}
+
+int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
+{   //it's either hardcoding or large numbers of 2da reads
+    int nType = GetItemPropertyType(ip);
+    int nSubType = GetItemPropertySubType(ip);
+    int nCostTableValue = GetItemPropertyCostTableValue(ip);
+    int nParam1Value = GetItemPropertyParam1Value(ip);
+    if(sFile == "craft_armour")
+    {
+        switch(nType)
+        {
+            case ITEM_PROPERTY_AC_BONUS:
+            {
+                return (nCostTableValue - 1);
+                break;
+            }
+            case ITEM_PROPERTY_BONUS_FEAT:
+            {
+                if(nSubType == 201) return 24;
+                break;
+            }
+            case ITEM_PROPERTY_CAST_SPELL:
+            {
+                switch(nSubType)
+                {
+                    case IP_CONST_CASTSPELL_CONTROL_UNDEAD_13: return 63; break;
+                    case IP_CONST_CASTSPELL_ETHEREALNESS_18: return 33; break;
+                    case 928: return (GetItemPropertyCostTableValue(ip) == IP_CONST_CASTSPELL_NUMUSES_1_USE_PER_DAY) ? 43 : 44; break; //spell turning
+                }
+                break;
+            }
+            case ITEM_PROPERTY_DAMAGE_REDUCTION:
+            {
+                if(nSubType == IP_CONST_DAMAGEREDUCTION_1)
+                {
+                    switch(nCostTableValue)
+                    {
+                        case IP_CONST_DAMAGESOAK_5_HP: return 38; break;
+                        case IP_CONST_DAMAGESOAK_10_HP: return 39; break;
+                        case IP_CONST_DAMAGESOAK_15_HP: return 40; break;
+                    }
+                }
+                else if(nSubType == IP_CONST_DAMAGEREDUCTION_6)
+                {
+                    switch(nCostTableValue)
+                    {
+                        case IP_CONST_DAMAGESOAK_5_HP: return 41; break;
+                        case IP_CONST_DAMAGESOAK_10_HP: return 42; break;
+                    }
+                }
+                break;
+            }
+            case ITEM_PROPERTY_DAMAGE_RESISTANCE:
+            {
+                int nBaseValue = -1;
+                switch(nSubType)
+                {
+                    case IP_CONST_DAMAGETYPE_ACID: nBaseValue = 20; break;
+                    case IP_CONST_DAMAGETYPE_COLD: nBaseValue = 25; break;
+                    case IP_CONST_DAMAGETYPE_ELECTRICAL: nBaseValue = 29; break;
+                    case IP_CONST_DAMAGETYPE_FIRE: nBaseValue = 34; break;
+                    case IP_CONST_DAMAGETYPE_SONIC: nBaseValue = 51; break;
+                }
+                if(nBaseValue != -1)
+                {
+                    switch(nCostTableValue)
+                    {
+                        case IP_CONST_DAMAGERESIST_10: return nBaseValue; break;
+                        case IP_CONST_DAMAGERESIST_20: return nBaseValue + 1; break;
+                        case IP_CONST_DAMAGERESIST_30: return nBaseValue + 2; break;
+                        case IP_CONST_DAMAGERESIST_50: return nBaseValue + 3; break;
+                    }
+                }
+                break;
+            }
+            case ITEM_PROPERTY_SPELL_RESISTANCE:
+            {
+                if((nCostTableValue >= 27) && (nCostTableValue <= 34)) return (nCostTableValue + 28);
+                break;
+            }
+            case ITEM_PROPERTY_SKILL_BONUS:
+            {
+                int nBaseValue = -1;
+
+                if(nSubType == SKILL_HIDE)
+                {
+                    nCostTableValue -= GetArmourCheckPenaltyReduction(oItem);
+                    switch(nCostTableValue)
+                    {
+                        case 5: return 49; break;
+                        case 10: return 50; break;
+                        case 15: return 51; break;
+                    }
+
+                }
+                if(nSubType == SKILL_MOVE_SILENTLY)
+                {
+                    nCostTableValue -= GetArmourCheckPenaltyReduction(oItem);
+                    switch(nCostTableValue)
+                    {
+                        case 5: return 52; break;
+                        case 10: return 53; break;
+                        case 15: return 54; break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+    else if(sFile == "craft_weapon")
+    {
+    }
+    return -1;
+}
+
+void SetPropertyArray(object oItem, string sFile)
+{
+    int i = 0;
+    int j, k, bEnhanced;
+    int nEnhancement;
+    if(array_exists(oItem, PRC_CRAFT_ITEMPROP_ARRAY))
+        array_delete(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
+    array_create(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
+    for(; i < MaxListSize(sFile); i++)
+        array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+    itemproperty ip = GetFirstItemProperty(oItem);
+    while(GetIsItemPropertyValid(ip))
+    {   //assumes no duplicated enhancement itemprops
+        k = Get2DALineFromItemprop(sFile, ip, oItem);
+        if(k != -1)
+        {
+            if(k < 20) bEnhanced = TRUE;
+            for(j = StringToInt(Get2DACache(sFile, "ReplaceLast", k)); j >= 0; j--)
+            {
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
+            }
+            nEnhancement += StringToInt(Get2DACache(sFile, "Enhancement", k);
+        }
+        ip = GetNextItemProperty(oItem);
+    }
+    if(!bEnhanced)
+    {
+        array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
+        for(i = 1; i < MaxListSize(sFile); i++)
+            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+
+    }
+    return nEnhancement;
+}
+
+/*  TO BE REPLACED
+int CheckPrerequisites(string sFile, int nIndex, int nCasterLevel, int nEpic)
+{
+    string sSpell1 = Get2DACache(sFile, "Spell1", nIndex);
+    string sSpell2 = Get2DACache(sFile, "Spell2", nIndex);
+    string sSpell3 = Get2DACache(sFile, "Spell3", nIndex);
+    if((nCasterLevel >= StringToInt(Get2DACache(sFile, "CasterLevel", nIndex))) &&
+        ((GetStringLength(sSpell1) == 0) || (PRCGetHasSpell(StringToInt(sSpell1)))) &&
+        ((GetStringLength(sSpell2) == 0) || (PRCGetHasSpell(StringToInt(sSpell2)))) &&
+        ((GetStringLength(sSpell3) == 0) || (PRCGetHasSpell(StringToInt(sSpell3)))) &&
+        (1)
+        //<CHECK PREVIOUS ITEMPROPS HERE>
+        )
+        return TRUE;
+    return FALSE;
+}
+*/
 
 //Returns TRUE if nBaseItem can have nItemProp
 int ValidProperty(object oItem, int nItemProp)
@@ -140,6 +344,70 @@ int GetWeaponType(int nBaseItem)
         default: return 0; break;
     }
     return 0;
+}
+
+string GetCrafting2DA(int nBase)
+{
+    if(((nBase == BASE_ITEM_ARMOR) ||
+        (nBase == BASE_ITEM_SMALLSHIELD) ||
+        (nBase == BASE_ITEM_LARGESHIELD) ||
+        (nBase == BASE_ITEM_TOWERSHIELD))
+        )
+        return "craft_armour";
+
+    if(GetWeaponType(nBase)) return "craft_weapon";
+
+    //restrict to castspell itemprops?
+    /*
+    if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
+    if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
+    if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
+    if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
+    */
+    return "";
+}
+
+int GetCraftingFeat(int nBase)
+{
+    if(((nBase == BASE_ITEM_ARMOR) ||
+        (nBase == BASE_ITEM_SMALLSHIELD) ||
+        (nBase == BASE_ITEM_LARGESHIELD) ||
+        (nBase == BASE_ITEM_TOWERSHIELD)) ||
+        (GetWeaponType(nBase))
+        )
+        return FEAT_CRAFT_ARMS_ARMOR;
+
+    if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
+    if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
+    if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
+    if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
+
+    return FEAT_CRAFT_WONDROUS;
+}
+
+int GetEpicCraftingFeat(int nFeat)
+{
+    switch(nFeat)
+    {
+        case FEAT_CRAFT_WONDROUS: return FEAT_CRAFT_EPIC_WONDROUS_ITEM;
+        case FEAT_CRAFT_ARMS_ARMOR: return FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR;
+        case FEAT_CRAFT_ROD: return FEAT_CRAFT_EPIC_ROD;
+        case FEAT_CRAFT_STAFF: return FEAT_CRAFT_EPIC_STAFF;
+        case FEAT_FORGE_RING: return FEAT_FORGE_EPIC_RING;
+    }
+    return -1;
+}
+
+void ApplyItemProp(object oItem, string sFile, int nIndex)
+{
+    IPSafeAddItemProperty(oItem,
+                        ConstructIP(
+                                    StringToInt(Get2DACache(sFile, "Type", nIndex)),
+                                    StringToInt(Get2DACache(sFile, "SubType", nIndex)),
+                                    StringToInt(Get2DACache(sFile, "CostTableValue", nIndex)),
+                                    StringToInt(Get2DACache(sFile, "Param1Value", nIndex))
+                                    ),
+                                0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
 }
 
 //Partly ripped off the lexicon :P
@@ -300,7 +568,7 @@ void MakeMasterwork(object oItem)
         )
     {
         //no armour check penalty here
-        if((nBase == BASE_ITEM_ARMOR) && (GetBaseAC(oItem) < 3)) return;
+        if(GetItemArmourCheckPenalty(oItem) == 0) return;
 
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE, 1);
         itemproperty ip2 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY, 1);
@@ -488,7 +756,7 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
         sPrefix = "Masterwork ";
         MakeMasterwork(oNew);
     }
-    if(nMaterial & PRC_CRAFT_FLAG_ADAMANTINE)
+    if(nMaterial & PRC_CRAFT_FLAG_ADAMANTINE)   //assumes only 1 material at a time
     {
         sPrefix = "Adamantine ";
         MakeAdamantine(oNew);
@@ -601,6 +869,8 @@ int MaxListSize(string sTable)
 
     if(sTable == "craft_gen_item")  //no support for cep weapons just yet
         return 113;
+    if(sTable == "craft_armour")
+        return 64;
     if(sTable == "classes")
         return 256;
     if(sTable == "disease")

@@ -1,22 +1,22 @@
   <entry id="51501" lang="en" sex="m">50% of Weight</entry>
   <entry id="51502" lang="en" sex="m">Craft Epic Wondrous Item</entry>
   <entry id="51503" lang="en" sex="m">Type of Feat: General
-Prerequisite: Lore 26 ranks, Spellcraft 26 ranks
+Prerequisite: Craft Wondrous Item, Lore 26 ranks, Spellcraft 26 ranks
 Specifics: The character can craft wondrous items that exceed the normal limits for such items.
 Use: Automatic.</entry>
   <entry id="51504" lang="en" sex="m">Craft Epic Magic Arms and Armor</entry>
   <entry id="51505" lang="en" sex="m">Type of Feat: General
-Prerequisite: Lore 28 ranks, Spellcraft 28 ranks
+Prerequisite: Craft Magic Arms and Armor, Lore 28 ranks, Spellcraft 28 ranks
 Specifics: The character can craft magic arms and armor that exceed the normal limits for such items.
 Use: Automatic.</entry>
   <entry id="51506" lang="en" sex="m">Craft Epic Rod</entry>
   <entry id="51507" lang="en" sex="m">Type of Feat: General
-Prerequisite: Lore 32 ranks, Spellcraft 32 ranks
+Prerequisite: Craft Rod, Lore 32 ranks, Spellcraft 32 ranks
 Specifics: The character can craft rods that exceed the normal limits for such items.
 Use: Automatic.</entry>
   <entry id="51508" lang="en" sex="m">Craft Epic Staff</entry>
   <entry id="51509" lang="en" sex="m">Type of Feat: General
-Prerequisite: Lore 35 ranks, Spellcraft 35 ranks
+Prerequisite: Craft Epic Staff, Lore 35 ranks, Spellcraft 35 ranks
 Specifics: The character can craft staffs that exceed the normal limits for such items.
 Use: Automatic.</entry>
   <entry id="51510" lang="en" sex="m">Enhancement +1</entry>
@@ -124,8 +124,6 @@ Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price 
   <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
   <entry id="51584" lang="en" sex="m">The wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
 Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>
-
-
   <entry id="51585" lang="en" sex="m">Acid Warding</entry>
   <entry id="51586" lang="en" sex="m">The armor absorbs the first 50 points of acid damage per round that the wearer would normally take (similar to the resist energy spell). 
 Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
@@ -167,9 +165,15 @@ Spells and spell-like effects targeted on you are turned back upon the original 
 From seven to ten (1d4+6) spell levels are affected by the turning.
 When you are targeted by a spell of higher level than the amount of spell turning you have left, that spell is partially turned. You and the caster each has a proportional chance to be affected.
 If you and a spellcasting attacker are both warded by spell turning effects in operation, both you and the caster have a proportional chance to be affected.</entry>
-  <entry id="51603" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51604" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51605" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51603" lang="en" sex="m">Spell Turning (13)</entry>
+
+
+
+  <entry id="51604" lang="en" sex="m">Forge Epic Ring</entry>
+  <entry id="51605" lang="en" sex="m">Type of Feat: General
+Prerequisite: Forge Ring, Lore 35 ranks, Spellcraft 35 ranks
+Specifics: The character can forge magic rings that exceed the normal limits for such items.
+Use: Automatic.</entry>
   <entry id="51606" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51607" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51608" lang="en" sex="m">Sonic Warding</entry>

@@ -18,6 +18,7 @@ void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemai
        (!GetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS"))
        )
     {
+        RemoveEffectsFromSpell(oTarget, nSpellID);
         if(DEBUG) DoDebug("sp_spellturning: Spell expired, clearing");
         DeleteLocalInt(oTarget, "PRC_SPELL_TURNING");
         DeleteLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS");
@@ -30,18 +31,20 @@ void main()
 {
     object oCaster = OBJECT_SELF;
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    int nSpellID = PRCGetSpellId();
+    SPSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
     object oTarget = PRCGetSpellTargetObject();
-    effect eDur     = EffectVisualEffect(VFX_DUR_SPELLTURNING);
     float fDuration = 600.0 * nCasterLevel;
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nTurn = d4() + 6;
+    RemoveEffectsFromSpell(oTarget, nSpellID);
     if(nMetaMagic & METAMAGIC_MAXIMIZE) nTurn = 10;
+    if(nMetaMagic & METAMAGIC_EMPOWER) nTurn += nTurn / 2;
     if(nMetaMagic & METAMAGIC_EXTEND) fDuration *= 2;
     SetLocalInt(oTarget, "PRC_SPELL_TURNING", TRUE);
     SetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS", nTurn);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oTarget, fDuration, TRUE, -1, nCasterLevel);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_SPELLTURNING), oTarget, fDuration, TRUE, -1, nCasterLevel);
     DelayCommand(6.0f, DispelMonitor(oCaster, oTarget, PRCGetSpellId(), FloatToInt(fDuration) / 6));
     SPSetSchool();
 }

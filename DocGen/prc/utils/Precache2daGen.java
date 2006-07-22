@@ -16,7 +16,6 @@ public class Precache2daGen {
 	private static String path2daDir = null;
 	private static Data_2da output   = new Data_2da("precacherows");
 	static {
-		output.addColumn("Label");
 		output.addColumn("RowNum");
 		output.addColumn("Type");
 	}
@@ -78,10 +77,10 @@ public class Precache2daGen {
 		
 		handleNormalSpells();
 		handlePsionics(dir);
+		handleTruenaming(dir);
 		handleNewSpells();
 		
 		output.appendRow();
-		output.setEntry("Label", output.getEntryCount() - 1, "Stop");
 		
 		output.save2da(".", false, true);
 	}
@@ -129,7 +128,6 @@ public class Precache2daGen {
 				// It's a normal spell or a subradial of one
 				output.appendRow();
 				temp = output.getEntryCount() - 1;
-				output.setEntry("Label",  temp, "****");
 				output.setEntry("RowNum", temp, Integer.toString(i));
 				output.setEntry("Type",   temp, "N");
 			}
@@ -156,7 +154,6 @@ public class Precache2daGen {
 				if(!cls_psipw.getEntry("SpellID", i).equals("****")) {
 					output.appendRow();
 					temp = output.getEntryCount() - 1;
-					output.setEntry("Label",  temp, "****");
 					output.setEntry("RowNum", temp, cls_psipw.getEntry("SpellID", i));
 					output.setEntry("Type",   temp, "P");
 				}
@@ -164,7 +161,6 @@ public class Precache2daGen {
 				if(!cls_psipw.getEntry("FeatID", i).equals("****")) {
 					output.appendRow();
 					temp = output.getEntryCount() - 1;
-					output.setEntry("Label",  temp, "****");
 					output.setEntry("RowNum", temp, cls_psipw.getEntry("FeatID", i));
 					output.setEntry("Type",   temp, "F");
 				}
@@ -175,8 +171,53 @@ public class Precache2daGen {
 						realEntriesHandled.add(temp);
 						output.appendRow();
 						temp = output.getEntryCount() - 1;
-						output.setEntry("Label",  temp, "****");
 						output.setEntry("RowNum", temp, cls_psipw.getEntry("RealSpellID", i));
+						output.setEntry("Type",   temp, "N");
+					}
+				}
+			}
+		}
+	}
+	
+	// Pretty much a copy of psionics, at least for now
+	private static void handleTruenaming(File dir) {
+		File[] files = dir.listFiles(new FileFilter(){
+			public boolean accept(File file){
+				return file.getName().toLowerCase().startsWith("cls_true_") &&
+				       file.getName().toLowerCase().endsWith(".2da");
+			}
+		});
+		
+		Data_2da[] cls_true_2das = new Data_2da[files.length];
+		for(int i = 0; i < files.length; i++)
+			cls_true_2das[i] = Data_2da.load2da(files[i].getPath());
+		
+		int temp;
+		Set<Integer> realEntriesHandled = new HashSet<Integer>();
+		for(Data_2da cls_true : cls_true_2das) {
+			for(int i = 0; i < cls_true.getEntryCount(); i++) {
+				// Add the feat-linked spells.2da data
+				if(!cls_true.getEntry("SpellID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_true.getEntry("SpellID", i));
+					output.setEntry("Type",   temp, "P");
+				}
+				// The feat's data
+				if(!cls_true.getEntry("FeatID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_true.getEntry("FeatID", i));
+					output.setEntry("Type",   temp, "F");
+				}
+				// Add the real entry's data
+				if(!cls_true.getEntry("RealSpellID", i).equals("****")) {
+					temp = Integer.parseInt(cls_true.getEntry("RealSpellID", i));
+					if(!realEntriesHandled.contains(temp)) {
+						realEntriesHandled.add(temp);
+						output.appendRow();
+						temp = output.getEntryCount() - 1;
+						output.setEntry("RowNum", temp, cls_true.getEntry("RealSpellID", i));
 						output.setEntry("Type",   temp, "N");
 					}
 				}
@@ -205,7 +246,6 @@ public class Precache2daGen {
 		for(i = begin; i <= end; i++) {
 			output.appendRow();
 			temp = output.getEntryCount() - 1;
-			output.setEntry("Label",  temp, "****");
 			output.setEntry("RowNum", temp, String.valueOf(i));
 			output.setEntry("Type",   temp, "NS");
 		}

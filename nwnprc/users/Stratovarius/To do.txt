@@ -6,6 +6,8 @@
 Primary
 -----------------------------------------------------
 
+Bugs: Dwarf Domain, Strength Domain
+
 Truenaming:
 
 Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649

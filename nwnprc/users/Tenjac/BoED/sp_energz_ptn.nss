@@ -15,7 +15,7 @@ Spell Resistance: Yes
 
 This spell transforms a magic potion into a volatile
 substance that can be hurled out to the specified 
-range. The spell destroys the potion and realeases
+range. The spell destroys the potion and releases
 a 10-foot-radius burst of energy at the point of
 impact. The caster must specify the energy type
 (acid, cold, electricity, fire, or sonic) when the
@@ -45,6 +45,64 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oPotion = GetSpellTargetObject();
+	int nSpell = GetSpellId();
 	
+	//Get spell level
+	int nLevel = 0; //define it outside the loop
+	itemproperty ipTest = GetFirstItemProperty(oPotion);		
+	
+	while(GetIsItemPropertyValid(ipTest))
+	{
+		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
+		{ 	
+			//Get row
+			int nRow = GetItemPropertySubType(ipTest);
+			
+			//Get spellID
+			int nSpellID = StringToInt(Get2DACache("iprp_spells.2da", "SpellIndex", nRow));
+			
+			//Get spell level
+			nLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
+			
+			//no need to check rest of the ips
+			break;
+		}
+		ipTest = GetNextItemProperty(oTargetWand);		
+	}
+	
+	//Remove potion being converted
+	DestroyObject(oPotion);
+			
+	object oGrenade;
+	
+	if(nSpell == SPELL_ENERGIZE_POTION_ACID)
+	{
+		oGrenade = CreateItemOnObject("nw_it_enpotA", oPC, 1);
+	}
+	
+	if(nSpell == SPELL_ENERGIZE_POTION_COLD)
+	{
+		oGrenade = CreateItemOnObject("nw_it_enpotC", oPC, 1);		
+	}
+	
+	if(nSpell == SPELL_ENERGIZE_POTION_ELECTRICITY)
+	{
+		oGrenade = CreateItemOnObject("nw_it_enpotE", oPC, 1);	
+	}
+	
+	if(nSpell == SPELL_ENERGIZE_POTION_FIRE)
+	{
+		oGrenade = CreateItemOnObject("nw_it_enpotF", oPC, 1);	
+	}
+	
+	if(nSpell == SPELL_ENERGIZE_POTION_SONIC)
+	{
+		oGrenade = CreateItemOnObject("nw_it_enpotS", oPC, 1);	
+	}
+	
+	SetLocalInt(oGrenade, "GrenadeLevel", min(3, nLevel));
+	
+	SPSetSchool();
+}
 	
 	

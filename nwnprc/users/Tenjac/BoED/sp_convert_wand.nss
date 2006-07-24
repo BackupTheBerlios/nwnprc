@@ -49,6 +49,8 @@ cure serious wounds for 10 minutes.
 [11:44] <Primogenitor> (this copes with logoff symptoms where the temp ip is lost and after the temp ip has expired)
 [11:44] <Primogenitor> 6) Add lots of sanity checks. Not a wand, already a curing wand, etc.
 [11:44] <Primogenitor> done ;)
+[11:52] <Primogenitor> Oh, Tenjac dont forget to add a temporary Restricted Use : Cleric IP too ;)
+[11:53] <Primogenitor> And its probably worth adding a clause that says "if I target a creature, get the first wand in its inventory"
 
 Author:    Tenjac
 Created:   7/3/06

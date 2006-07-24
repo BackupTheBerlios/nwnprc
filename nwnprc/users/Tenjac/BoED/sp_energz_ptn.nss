@@ -46,6 +46,9 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oPotion = GetSpellTargetObject();
 	int nSpell = GetSpellId();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	SetLocalInt(oPotion, "PRC_EnergizePotionCL", nCasterLvl);
+	string sDamageType;
 	
 	//Get spell level
 	int nLevel = 0; //define it outside the loop
@@ -78,30 +81,56 @@ void main()
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_ACID)
 	{
-		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_ACID);
+		SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_ACID);
+		SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_ACID);
+		sDamageType = "Acid";
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_COLD)
 	{
-		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_COLD);	
+		SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_COLD);
+		SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_COLD);
+		sDamageType = "Cold";
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_ELECTRICITY)
 	{
-		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_ELECTRICAL);
+		SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_ELECTRICAL);
+		SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_ELECTRICITY);
+		sDamageType = "Electrical";
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_FIRE)
 	{
-		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_FIRE);
+		SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_FIRE);
+		SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_FIRE);
+		sDamageType = "Fire";
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_SONIC)
 	{
-		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_SONIC);
+		SetLocalInt(oGrenade, "PRC_GrenadeDamageType", DAMAGE_TYPE_SONIC);
+		SetLocalInt(oGrenade, "PRC_EnergizedPotionSave", SAVING_THROW_TYPE_SONIC);
+		sDamageType = "Sonic";
 	}
 	
-	SetLocalInt(oGrenade, "GrenadeLevel", min(3, nLevel));
+	SetLocalInt(oGrenade, "PRC_GrenadeLevel", min(3, nLevel));
+	
+	string sStrength;
+				
+	//Get strength string
+	switch(nLevel)
+	{
+		case 0: break;
+		
+		case 1: sStrength = "Weak";
+		
+		case 2: sStrength = "Moderate";
+		
+		case 3: sStrength = "Strong";
+	}
+	
+	SetName(oPotion, sStrength + " " + "Energized" + " " + sDamageType + " " + "Potion");	
 	
 	SPSetSchool();
 }

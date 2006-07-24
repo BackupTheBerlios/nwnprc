@@ -72,32 +72,33 @@ void main()
 	
 	//Remove potion being converted
 	DestroyObject(oPotion);
-			
-	object oGrenade;
+	
+	//Create the grenade		
+	object oGrenade = CreateItemOnObject("nw_it_enrgpot", oPC, 1);
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_ACID)
 	{
-		oGrenade = CreateItemOnObject("nw_it_enpotA", oPC, 1);
+		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_ACID);
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_COLD)
 	{
-		oGrenade = CreateItemOnObject("nw_it_enpotC", oPC, 1);		
+		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_COLD);	
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_ELECTRICITY)
 	{
-		oGrenade = CreateItemOnObject("nw_it_enpotE", oPC, 1);	
+		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_ELECTRICAL);
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_FIRE)
 	{
-		oGrenade = CreateItemOnObject("nw_it_enpotF", oPC, 1);	
+		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_FIRE);
 	}
 	
 	if(nSpell == SPELL_ENERGIZE_POTION_SONIC)
 	{
-		oGrenade = CreateItemOnObject("nw_it_enpotS", oPC, 1);	
+		SetLocalInt(oGrenade, "DamageType", DAMAGE_TYPE_SONIC);
 	}
 	
 	SetLocalInt(oGrenade, "GrenadeLevel", min(3, nLevel));

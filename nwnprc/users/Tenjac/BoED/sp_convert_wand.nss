@@ -37,6 +37,19 @@ For example, a 10th-level cleric can transform a wand
 of lightning bolt (3rd­level spell) into a wand of 
 cure serious wounds for 10 minutes.
 
+[11:43] <Primogenitor> Spam ahoy!
+[11:43] <Primogenitor> 1) Store the current spellID, caster level, DC, & spell level on the wand from cast spell itemproperty. 
+[11:43] <Primogenitor> Include PRC itemproperties for caster level & DC
+[11:43] <Primogenitor> 2) Add a new temporary cast spell itemproperty
+[11:43] <Primogenitor> Include PRC itemproperty for casterlevel & DC 
+[11:43] <Primogenitor> (since cures are hostile to undead).
+[11:43] <Primogenitor> 3) Mark the item with a local variable.
+[11:43] <Primogenitor> 4) Modify the spellhook so non-cure spells cast from an item with that variable dont work.
+[11:43] <Primogenitor> 5) Add a check to the spellhook that if the item has the local but no cure itemprops, clear the local and continue the spell.
+[11:44] <Primogenitor> (this copes with logoff symptoms where the temp ip is lost and after the temp ip has expired)
+[11:44] <Primogenitor> 6) Add lots of sanity checks. Not a wand, already a curing wand, etc.
+[11:44] <Primogenitor> done ;)
+
 Author:    Tenjac
 Created:   7/3/06
 */

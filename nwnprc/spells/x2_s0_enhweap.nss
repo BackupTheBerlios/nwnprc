@@ -77,7 +77,7 @@ void ApplyEffectsToWeapon(object oItem, int nSpellID, float fDuration, object oC
             SetLocalInt(oItem, "X2_Wep_Caster_Lvl", nCasterLevel);
 
             // If the spell is cast again, any previous itemproperties matching are removed.
-            if(bDarkfire && !(GetBaseItemType(oItem) == BASE_ITEM_SHORTSPEAR && GetHasFeat(FEAT_THUNDER_WEAPON, oCaster)))
+            if(!bDarkfire || (bDarkfire && !(GetBaseItemType(oItem) == BASE_ITEM_SHORTSPEAR && GetHasFeat(FEAT_THUNDER_WEAPON, oCaster))))
                 IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(bDarkfire ? 127 : 124,nCasterLevel), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
             IPSafeAddItemProperty(oItem, ItemPropertyVisualEffect(nAppearanceType), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
             DelayCommand(fDuration, DeleteTheInts(oItem));
@@ -89,7 +89,7 @@ void ApplyEffectsToWeapon(object oItem, int nSpellID, float fDuration, object oC
             IPSafeAddItemProperty(oItem,ItemPropertyDamageBonus(IP_CONST_DAMAGETYPE_SONIC, IP_CONST_DAMAGEBONUS_3), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING ,FALSE,TRUE);
             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(137, 5),fDuration,  X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE,FALSE);
             IPSafeAddItemProperty(oItem, ItemPropertyVisualEffect(ITEM_VISUAL_SONIC), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE );
-
+            break;
         }
         case SPELL_HOLY_SWORD:
         {

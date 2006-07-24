@@ -32,6 +32,7 @@ void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     int nSpellID = PRCGetSpellId();
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int bVision = (nSpellID == SPELL_DARKVISION) || (nSpellID == SPELL_MASS_ULTRAVISION);
     int bMass = (nSpellID >= SPELL_MASS_BULLS_STRENGTH) && (nSpellID <= SPELL_MASS_ULTRAVISION);
     effect eVis, eDur;
@@ -96,7 +97,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         }
     }
     float fDelay;
-    float fDuration = SPGetMetaMagicDuration(HoursToSeconds(nCasterLevel));
+    float fDuration = HoursToSeconds(nCasterLevel);
+    if(nMetaMagic & METAMAGIC_EXTEND) fDuration *= 2;
     location lTarget;
     if(bMass)
     {
@@ -109,7 +111,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         {
             SPRaiseSpellCastAt(oTarget, FALSE);
             if(bMass) fDelay = GetSpellEffectDelay(lTarget, oTarget);
-            int nStatMod = SPGetMetaMagicDamage(-1, 1, 4, 0, 1);
+            int nStatMod = d4() + 1;
+            if(nMetaMagic & METAMAGIC_MAXIMIZE) nStatMod = 5;
+            if(nMetaMagic & METAMAGIC_EMPOWER) nStatMod += (nStatMod / 2);
             effect eBuff;
             if(bVision)
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(EffectUltravision(), eDur), oTarget, fDuration,TRUE,-1,nCasterLevel));

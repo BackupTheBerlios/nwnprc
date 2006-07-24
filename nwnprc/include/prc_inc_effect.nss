@@ -53,9 +53,38 @@ void             DeleteLocalPRCEffect(object oObject, string sVarName);
 //default constructor
 struct PRCeffect GetNewPRCEffectBase();
 
+// Get the first in-game effect on oCreature.
+struct PRCeffect PRCGetFirstEffect(object oCreature);
+
 // Get the next in-game effect on oCreature.
 struct PRCeffect PRCGetNextEffect(object oCreature);
 
+// * Returns TRUE if eEffect is a valid effect. The effect must have been applied to
+// * an object or else it will return FALSE
+int PRCGetIsEffectValid(struct PRCeffect prceEffect);
+
+// Get the duration type (DURATION_TYPE_*) of eEffect.
+// * Return value if eEffect is not valid: -1
+int PRCGetEffectDurationType(struct PRCeffect prceEffect);
+
+// Get the subtype (SUBTYPE_*) of eEffect.
+// * Return value on error: 0
+int PRCGetEffectSubType(struct PRCeffect prceEffect);
+
+// Get the object that created eEffect.
+// * Returns OBJECT_INVALID if eEffect is not a valid effect.
+object PRCGetEffectCreator(struct PRCeffect prceEffect);
+
+// Get the effect type (EFFECT_TYPE_*) of eEffect.
+// * Return value if eEffect is invalid: EFFECT_INVALIDEFFECT
+int PRCGetEffectType(struct PRCeffect prceEffect);
+
+// Get the spell (SPELL_*) that applied eSpellEffect.
+// * Returns -1 if eSpellEffect was applied outside a spell script.
+int PRCGetEffectSpellId(struct PRCeffect prceEffect);
+
+// gets the real effect based on an effect structure
+// should never be needed outside the effect system itself
 effect GetEffectOnObjectFromPRCEffect(struct PRCeffect prceEffect, object oObject);
 
 // Remove eEffect from oCreature.
@@ -529,6 +558,16 @@ struct PRCeffect PRCEffectCutsceneGhost();
 // them unable to walk but otherwise unpenalized. This effect cannot be resisted.
 struct PRCeffect PRCEffectCutsceneImmobilize();
 
+// Apply eEffect at lLocation.
+void PRCApplyEffectAtLocation(int nDurationType, struct PRCeffect prceEffect, location lLocation, float fDuration=0.0f);
+
+#include "inc_dispel"
+
+void PRCApplyEffectAtLocation(int nDurationType, struct PRCeffect prceEffect, location lLocation, float fDuration=0.0f)
+{
+    ApplyEffectAtLocation(nDurationType, prceEffect.eEffect, lLocation, fDuration);
+}
+
 //get/set local handlers
 void             SetLocalPRCEffect(object oObject, string sVarName, struct PRCeffect eValue)
 {
@@ -770,6 +809,13 @@ struct PRCeffect PRCGetNextEffect(object oCreature)
     return prceEffect;
 }
 
+// * Returns TRUE if eEffect is a valid effect. The effect must have been applied to
+// * an object or else it will return FALSE
+int PRCGetIsEffectValid(struct PRCeffect prceEffect)
+{
+    return GetIsEffectValid(prceEffect.eEffect);
+}
+
 effect GetEffectOnObjectFromPRCEffect(struct PRCeffect prceEffect, object oObject)
 {
     effect eTest;
@@ -797,6 +843,41 @@ void PRCRemoveEffect(object oCreature, struct PRCeffect eEffect)
 {
 
 
+}
+
+// Get the duration type (DURATION_TYPE_*) of eEffect.
+// * Return value if eEffect is not valid: -1
+int PRCGetEffectDurationType(struct PRCeffect prceEffect)
+{
+    return prceEffect.nDurationType;
+}
+
+// Get the subtype (SUBTYPE_*) of eEffect.
+// * Return value on error: 0
+int PRCGetEffectSubType(struct PRCeffect prceEffect)
+{
+    return prceEffect.nEffectSubtype;
+}
+
+// Get the object that created eEffect.
+// * Returns OBJECT_INVALID if eEffect is not a valid effect.
+object PRCGetEffectCreator(struct PRCeffect prceEffect)
+{
+    return prceEffect.oCaster;
+}
+
+// Get the effect type (EFFECT_TYPE_*) of eEffect.
+// * Return value if eEffect is invalid: EFFECT_INVALIDEFFECT
+int PRCGetEffectType(struct PRCeffect prceEffect)
+{
+    return prceEffect.nEffectType;
+}
+
+// Get the spell (SPELL_*) that applied eSpellEffect.
+// * Returns -1 if eSpellEffect was applied outside a spell script.
+int PRCGetEffectSpellId(struct PRCeffect prceEffect)
+{
+    return prceEffect.nSpellID;
 }
 
 // Set the subtype of eEffect to Magical and return eEffect.

@@ -110,6 +110,7 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
 //////////////////////////////////////////////////
 
 // Generic includes
+//#include "prc_inc_effect"
 #include "inc_item_props"
 #include "inc_utility"
 #include "prc_inc_spells"

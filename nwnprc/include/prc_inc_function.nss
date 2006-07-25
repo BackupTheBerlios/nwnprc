@@ -647,13 +647,7 @@ if(iContenderLevel > 0)
 else
     iMod = 1;
 
-    int iDif = 50 - iMod;
-
-    while(iDif > 0)
-    {
-        DecrementRemainingFeatUses(oPC, FEAT_STRENGTH_DOMAIN_POWER);
-        iDif += -1;
-    }
+    FeatUsePerDay(oPC, FEAT_STRENGTH_DOMAIN_POWER, -1, iMod);
 }
 
 void BardSong(object oPC)

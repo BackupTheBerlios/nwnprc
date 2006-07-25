@@ -70,7 +70,7 @@ void main()
 			//no need to check rest of the ips
 			break;
 		}
-		ipTest = GetNextItemProperty(oTargetWand);		
+		ipTest = GetNextItemProperty(oPotion);		
 	}
 	
 	//Remove potion being converted

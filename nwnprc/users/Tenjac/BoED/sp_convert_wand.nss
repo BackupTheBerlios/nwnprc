@@ -70,88 +70,60 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTargetWand = GetSpellTargetObject();
-	object oSkin = GetPCSkin(oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = (60.0f * nCasterLvl);
-	
-	int nOrigCharge = GetItemCharges(oTargetWand);
-	object oNewWand;
-		
+			
 	//Get spell level
 	itemproperty ipTest = GetFirstItemProperty(oTargetWand);
 		
 	while(GetIsItemPropertyValid(ipTest))
 	{
 		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL)
-		{ 	
+		{ 
 			//Get row
-			string sRow = IntToString(GetItemPropertySubType(ipTest));
+			int nRow = GetItemPropertySubType(ipTest);
+			
+			//Get spellID
+			int nSpellID = StringToInt(Get2DACache("iprp_spells.2da", "SpellIndex", nRow));
 			
 			//Get spell level
-			int nLevel = Get2daString("iprp_spells", "InnateLvl", sRow);
+			nLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
+			
+			//no need to check rest of the ips
 			break;
 		}
 		ipTest = GetNextItemProperty(oTargetWand);
 	}
 	
-	//Copy item to hide
-	oNewWand = CopyObject(oTargetWand, GetLocation(oSkin), oSkin, "ConvertedWand");
-			
-	//Destroy old
-	DestroyObject(oTargetWand);
+	//Determine ip	
+	if(nLevel > 4)
+	{
+		nLevel = 4;
+	}
 	
-	//Determine wand to create
 	switch(nLevel)
 	{
-		case 1: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		case 0: ipSpell = ItemPropertyCastSpell(SPELL_CURE_MINOR_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
+		
+		case 1: ipSpell = ItemPropertyCastSpell(SPELL_CURE_LIGHT_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
 		        break;
 		
-		case 2: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		case 2: ipSpell = ItemPropertyCastSpell(SPELL_CURE_MODERATE_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
 		        break;
 		
-		case 3: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		case 3: ItemPropertyCastSpell(SPELL_CURE_SERIOUS_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
 		        break;
 		
-		case 4: oNewWand = CreateItemOnObject(" ", oPC, 1);
+		case 4: ItemPropertyCastSpell(SPELL_CURE_CRITICAL_WOUNDS, IP_CONST_CASTSPELL_NUMUSES_1_CHARGE_PER_USE);
 		        break;
 		
 		default: break;
 	}
-		
-	int nCounter = FloatToInt(fDur) / 6;
-	WandCounter(oPC, oSkin, oNewWand, nCounter);
-		
-	SPSetSchool();
+	
+	//Set up Cleric req
+	itemproperty ipCleric = ItemPropertyLimitUseByClass(IP_CONST_CLASS_CLERIC);	
+	
 }
 
-void WandCounter(object oPC, object oSkin, object oNewWand, int nCounter)
-{
-	if(nCounter < 1)
-	{
-		//Get current charges
-		int nNewCharge = GetItemCharges(oNewWand);
-		
-		//Get copied wand
-		object oCopied = GetItemPossessedBy(oSkin, "ConvertedWand")
-		
-		//Copy wand back over
-		object oOldWand = CopyObject(oCopied, GetLocation(oPC), oPC);
-		
-		//Destroy item on hide
-		DestroyObject(oCopied);
-		
-		//Set charges
-		SetItemCharges(oOldWand, nNewCharge);		
-	}
-	
-	else
-	{
-		nCounter--;
-		DelayCommand(6.0f, WandCounter(oPC, oSkin, oNewWand, nCounter));
-	}
-}
-		
-	
-	
 
 

@@ -17995,6 +17995,96 @@ You can select</entry>
   <entry id="51262" lang="en" sex="m">Lexicon of the Evolving Mind.</entry>
   <entry id="51263" lang="en" sex="m">Lexicon of the Crafted Tool.</entry>
   <entry id="51264" lang="en" sex="m">Lexicon of the Perfected Map.</entry>
+  <entry id="51265" lang="en" sex="m">Truenamer</entry>
+  <entry id="51266" lang="en" sex="m">Truenamers</entry>
+  <entry id="51267" lang="en" sex="m">truenamer</entry>
+  <entry id="51268" lang="en" sex="m">(BASE CLASS)
+  Truenamers study the words that comprise the fabric of existence. They seek to unravel and comprehend the mysteries of the Multiverse by learning the truenames of as many of its components as possible. A Truenamer learns new truenames as he progresses in level, which he can use as utterances to manipulate the world around him. All truenamers know the basic words of Truespeak that allow them to describe creatures they encounter, so the new words they learn enable them to alter those creatures in very specific ways. As they continue to advance, they also learn to describe - and thus affect - inanimate objects and even places, which are more difficult to describe using truenames.
+  
+  - Hit Die: d6
+  - Proficiencies: Truenamers gain Weapon Proficiency: Simple and Light Armour Proficiency.
+  - Skill Points at Each Level: 4 + Int modifier.
+  - Base Attack Bonus: +3/4.
+  - Strong Saves: Will
+  
+ABILITIES:
+
+Level
+1:
+2: Knowledge Focus - Gain +3 Lore.
+3: 
+4:
+5: 
+6:
+7: Knowledge Focus - Gain +3 Lore.
+8: Bonus Recitation Feat
+9: See The Named - Scry, once per day as the spell.
+10: Knowledge Focus - Gain +3 Lore.
+11:
+12: 
+13:
+14: Knowledge Focus - Gain +3 Lore.
+15: Bonus Recitation Feat
+16:
+17: Speak Unto The Masses - Affect all creatures of a creature type with utterance.
+18:
+19:
+20: Speak My Name and I am There - Teleport to party member.
+
+TRUENAMING
+
+The DC of a Truenamer's utterance is 10 + 1/2 Truenamer level + Charisma Modifier. A Truenamer's caster level is equal to his class level. 
+Truespeak DC for Lexicon of the Evolving Mind: 15 + (2 * Target's Challenge Rating).
+Truespeak DC for Lexicon of the Crafted Tool: 15 + (2 * Item's Caster Level).
+Truespeak DC for Lexicon of the Perfected Map: 25.
+
+
+Utterances Max Level:
+Level   EvolvingMind   CraftedTool   PerfectedMap
+1       1              -             -            
+2       1              -             -            
+3       2              -             -            
+4       2              1             -            
+5       2              1             -            
+6       3              1             -            
+7       3              2             -            
+8       3              2             1           
+9       3              2             1           
+10      4              2             1           
+11      4              3             1           
+12      4              3             2           
+13      4              3             2           
+14      5              3             2           
+15      5              4             2           
+16      5              4             3           
+17      5              4             3           
+18      6              4             3           
+19      6              5             3           
+20      6              5             4           
+
+
+Utterances Known
+Level   EvolvingMind   CraftedTool   PerfectedMap
+1       1              -             -            
+2       2              -             -            
+3       3              -             -            
+4       4              1             -            
+5       5              1             -            
+6       6              1             -            
+7       7              2             -            
+8       8              2             1           
+9       9              2             1           
+10      10             2             1           
+11      11             3             1           
+12      12             3             2           
+13      13             3             2           
+14      14             3             2           
+15      15             4             2           
+16      16             4             3           
+17      17             4             3           
+18      18             4             3           
+19      19             5             3           
+20      20             5             4</entry>
   <entry id="51501" lang="en" sex="m">50% of Weight</entry>
   <entry id="51502" lang="en" sex="m">Craft Epic Wondrous Item</entry>
   <entry id="51503" lang="en" sex="m">Type of Feat: General

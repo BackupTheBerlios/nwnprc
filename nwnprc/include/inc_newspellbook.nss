@@ -524,9 +524,9 @@ void SetupSpells(object oPC, int nClass)
             for(nSlot = 0; nSlot < nSlots; nSlot++)
             {
                 //done when spells are added to it
-                //doesnt do any harm to make it twice
-                sArrayName = "Spellbook" + IntToString(nSpellLevel) + "_" + sClass; // Minor optimisation: cache the array name string for multiple uses
-                persistant_array_create(oPC, sArrayName2);
+                sArrayName2 = "Spellbook" + IntToString(nSpellLevel) + "_" + sClass; // Minor optimisation: cache the array name string for multiple uses
+                if(!persistant_array_exists(oPC, sArrayName2))
+                    persistant_array_create(oPC, sArrayName2);
                 nSpellbookID = persistant_array_get_int(oPC, sArrayName2, nSlot);
                 if(nSpellbookID != 0)
                 {

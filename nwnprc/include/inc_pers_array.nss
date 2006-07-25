@@ -189,6 +189,8 @@ int persistant_array_create(object store, string name)
         return SDL_ERROR_NOT_VALID_OBJECT;
     else if(GetPersistantLocalInt(store,name))
         return SDL_ERROR_ALREADY_EXISTS;
+    else if(persistant_array_exists(store,name))
+        return SDL_ERROR_ALREADY_EXISTS;
     else
     {
         // Initialize the size (always one greater than the actual size)

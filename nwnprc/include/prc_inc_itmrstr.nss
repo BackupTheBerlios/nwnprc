@@ -261,7 +261,7 @@ int CheckPRCLimitations(object oItem, object oPC)
         }
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_PNP_HOLY_AVENGER)
         {
-            if(GetItemLastUnequipped() == oItem) //unequip event
+            if(GetItemLastEquipped() == oItem) //unequip event
             {
                 int nPaladinLevels = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
                 if(!nPaladinLevels)

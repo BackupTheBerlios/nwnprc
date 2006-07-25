@@ -227,6 +227,8 @@ int array_create(object store, string name)
         return SDL_ERROR_NOT_VALID_OBJECT;
     else if(GetLocalInt(store,name))
         return SDL_ERROR_ALREADY_EXISTS;
+    else if(array_exists(store, name))  
+        return SDL_ERROR_ALREADY_EXISTS;  
     else
     {
         // Initialize the size (always one greater than the actual size)

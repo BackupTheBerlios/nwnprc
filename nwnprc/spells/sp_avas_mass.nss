@@ -36,40 +36,30 @@
 //:: Created By: Tenjac
 //:: Created On: 10/05/05
 //:://////////////////////////////////////////////
+//::Added hold ray functionality - HackyKid
 
 #include "prc_alterations"
 #include "x2_inc_spellhook"
 #include "spinc_common"
 #include "prc_misc_const"
+#include "prc_sp_func"
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-	
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
-	
-	/*
-	Spellcast Hook Code
-	Added 2003-06-20 by Georg
-	If you want to make changes to all spells,
-	check x2_inc_spellhook.nss to find out more
-	*/
-	
-	if (!X2PreSpellCastCode())
-	{
-		// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-		return;
-	}
-	// End of Spell Cast Hook
-	
-	object oTarget = GetSpellTargetObject();
-	object oPC = OBJECT_SELF;
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+	int nPenetr = nCasterLevel + SPGetPenetr();
 	int nHP = GetCurrentHitPoints(oTarget);
-	int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 	effect eHold = EffectEntangle();
 	effect eSlow = EffectSlow();
 	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_AVASCULAR_MASS, oPC);
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_AVASCULAR_MASS, oCaster);
 	
 	// Gotta be a living critter
 	    int nType = MyPRCGetRacialType(oTarget);
@@ -77,7 +67,7 @@ void main()
 	        (nType == RACIAL_TYPE_UNDEAD) ||
 	        (nType == RACIAL_TYPE_ELEMENTAL))
 	        {
-			return;
+			return 0;
 		}
 	
 	{
@@ -113,15 +103,15 @@ void main()
 	effect eBlood = EffectVisualEffect(VFX_COM_BLOOD_LRG_RED);
 	
 	//Make touch attack
-	int nTouch = PRCDoRangedTouchAttack(oTarget);
+	int iAttackRoll= PRCDoRangedTouchAttack(oTarget);
 	
 	// Do attack beam VFX. Ornedan is my hero. 
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_EVIL, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_EVIL, oCaster, BODY_NODE_HAND, !iAttackRoll), oTarget, 1.0f); 
 	
-	if (nTouch)
+	if (iAttackRoll)
 	{	
 		//Spell Resistance
-		if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+		if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
 		{
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBlood, oTarget);
@@ -134,7 +124,7 @@ void main()
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2),FALSE);
 			
 			//Fortitude Save for Stun
-			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+			if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_EVIL))
 			{
 				effect eStun = EffectStunned();
 				effect eStunVis = EffectVisualEffect(VFX_IMP_STUN);
@@ -146,8 +136,7 @@ void main()
 			effect eAOE = EffectAreaOfEffect(VFX_PER_AVASMASS);
 			location lTarget = PRCGetSpellTargetLocation();
 			
-			int nDuration = 3 + PRCGetCasterLevel(OBJECT_SELF) / 2;
-			int nMetaMagic = PRCGetMetaMagicFeat();
+			int nDuration = 3 + nCasterLevel / 2;
 			
 			//Make sure duration does not equal 0
 			if(nDuration < 1)
@@ -167,7 +156,37 @@ void main()
 			// Getting rid of the local integer storing the spellschool name
 		}
 	}
-	SPEvilShift(oPC);
+	SPEvilShift(oCaster);
+
+	return iAttackRoll;    //return TRUE if spell charges should be decremented
 }
 
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if (GetLocalInt(oCaster, PRC_SPELL_HOLD) && GetHasFeat(FEAT_EF_HOLD_RAY, oCaster) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+	if (oCaster != oTarget)	//cant target self with this spell, only when holding charge
+	        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}
 

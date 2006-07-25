@@ -165,6 +165,7 @@ int FindUnarmedDamage(object oCreature)
     int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
     int iSacredFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
+    int iEnlightenedFist = GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oCreature);
     int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
     int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
     int iMonkDamage = 0;
@@ -214,6 +215,9 @@ int FindUnarmedDamage(object oCreature)
 
     // Henshin Mystic stacks with monk levels (or uses monk progression.)
     if (iHenshin) iMonk += iHenshin;
+
+    // Enlightened Fist stacks with monk levels (or uses monk progression.)
+    if (iEnlightenedFist) iMonk += iEnlightenedFist;
 
     // Shou Disciple stacks with monk levels (or uses monk progression.)
     if (iShou) iMonk += iShou;

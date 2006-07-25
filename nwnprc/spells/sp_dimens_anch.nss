@@ -35,48 +35,50 @@
     @date   Created  - 2005.10.20
 */
 //:://////////////////////////////////////////////
+//::Added hold ray functionality - HackyKid
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
 #include "prc_inc_teleport"
-
+#include "prc_sp_func"
 
 void DispelMonitor(object oCaster, object oTarget, int nSpellID, int nBeatsRemaining);
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    SPSetSchool(SPELL_SCHOOL_ABJURATION);
-    // Spellhook
-    if(!X2PreSpellCastCode()) return;
-
-    /* Main spellscript */
-    object oCaster = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
-    int nCasterLvl = PRCGetCasterLevel();
-    int nSpellID   = PRCGetSpellId();
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+    int nSpellID = PRCGetSpellId();
+    int nPenetr = nCasterLevel + SPGetPenetr();
     effect eVis    = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
-    float fDur     = 20.0f;//SPGetMetaMagicDuration(60.0 * nCasterLvl);
+    float fDur     = 20.0f;//SPGetMetaMagicDuration(60.0 * nCasterLevel);
 
     // Let the AI know
     SPRaiseSpellCastAt(oTarget, TRUE, nSpellID, oCaster);
 
     // Touch Attack
-    int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
+    int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
 
     // Shoot the ray
-    effect eRay = EffectBeam(VFX_BEAM_DISINTEGRATE, oCaster, BODY_NODE_HAND, !(nTouchAttack > 0));
+    effect eRay = EffectBeam(VFX_BEAM_DISINTEGRATE, oCaster, BODY_NODE_HAND, !(iAttackRoll > 0));
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7, FALSE);
 
     // Apply effect if hit
-    if(nTouchAttack > 0)
+    if(iAttackRoll > 0)
     {
         // Spell Resistance
-        if(!SPResistSpell(oCaster, oTarget))
+        if(!SPResistSpell(oCaster, oTarget, nPenetr))
         {
             // No duplicate dimensional anchor spell effects
             if(!GetLocalInt(oTarget, "PRC_DimAnch"))
             {
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur, TRUE, nSpellID, nCasterLvl);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDur, TRUE, nSpellID, nCasterLevel);
                 // Increase the teleportation prevention counter
                 DisallowTeleport(oTarget);
                 // Set a marker so the power won't apply duplicate effects
@@ -89,7 +91,35 @@ void main()
         }
     }
 
-    // Cleanup
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if (GetLocalInt(oCaster, PRC_SPELL_HOLD) && GetHasFeat(FEAT_EF_HOLD_RAY, oCaster) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+	if (oCaster != oTarget)	//cant target self with this spell, only when holding charge
+	        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
     SPSetSchool();
 }
 

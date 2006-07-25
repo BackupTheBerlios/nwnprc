@@ -13,39 +13,28 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
+
+//::Added hold ray functionality - HackyKid
+
 #include "spinc_common"
 #include "prc_inc_sp_tch"
-
 #include "NW_I0_SPELLS"
 #include "x2_inc_spellhook"
 #include "prc_inc_combat"
+#include "prc_sp_func"
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
-    int nDuration = CasterLvl;
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+    int nPenetr = nCasterLevel + SPGetPenetr();
+    int nDuration = nCasterLevel ;
     int nBonus = nDuration / 2;
     //Limit bonus ability damage
     if (nBonus > 5)
@@ -57,13 +46,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         nBonus = 1;
     }
     int nLoss = d6() + nBonus;
-    int nMetaMagic = PRCGetMetaMagicFeat();
     effect eFeeb;
     effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
     effect eRay;
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
-    int nPenetr = CasterLvl +=SPGetPenetr();
+    int iAttackRoll = 0;
 
     if(!GetIsReactionTypeFriendly(oTarget))
     {
@@ -72,7 +60,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         eRay = EffectBeam(VFX_BEAM_ODD, OBJECT_SELF, BODY_NODE_HAND);
 
         // attack roll
-        int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
+        iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
         if(iAttackRoll > 0)
         {
              //Make SR check
@@ -100,9 +88,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                     //effect eLink = EffectLinkEffects(eFeeb, eDur);
 
                    //Apply the ability damage effect and VFX impact
-                    //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFeeb, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                    ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nLoss, DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(nDuration), TRUE, -1, CasterLvl);
+                    //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCasterLevel);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFeeb, oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCasterLevel);
+                    ApplyAbilityDamage(oTarget, ABILITY_STRENGTH, nLoss, DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(nDuration), TRUE, -1, nCasterLevel);
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget,0.0f,FALSE);
                 }
              }
@@ -110,8 +98,34 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.0);
 
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the integer used to hold the spells spell school
-
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if (GetLocalInt(oCaster, PRC_SPELL_HOLD) && GetHasFeat(FEAT_EF_HOLD_RAY, oCaster) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+	if (oCaster != oTarget)	//cant target self with this spell, only when holding charge
+	        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

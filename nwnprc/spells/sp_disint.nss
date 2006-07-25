@@ -48,40 +48,46 @@
 //:: Created On: ????
 //::
 //:: Modified By: Tenjac 1/11/06
+//:: Added hold ray functionality - HackyKid
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
 #include "prc_inc_sp_tch"
+#include "prc_sp_func"
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+    int nPenetr = nCasterLevel + SPGetPenetr();
 
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-    if (!X2PreSpellCastCode()) return;
-
-    object oPC     = OBJECT_SELF;
-    object oTarget = PRCGetSpellTargetObject();
+    int iAttackRoll;
 
     // Target allowed check
-    if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oPC))
+    if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
     {
         // Fire cast spell at event for the specified target
         SPRaiseSpellCastAt(oTarget);
 
         // Make the touch attack.
-        int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
+        iAttackRoll = PRCDoRangedTouchAttack(oTarget);
 
         // Shoot the beam. Hit / miss animation
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                              EffectBeam(VFX_BEAM_DISINTEGRATE, oPC, BODY_NODE_HAND, !nTouchAttack),
+                              EffectBeam(VFX_BEAM_DISINTEGRATE, oCaster, BODY_NODE_HAND, !iAttackRoll),
                               oTarget, 1.0, FALSE);
 
         // If the beam hit, affect the target
-        if (nTouchAttack > 0)
+        if (iAttackRoll > 0)
         {
             // Make SR check
-            if (!SPResistSpell(oPC, oTarget))
+            if (!SPResistSpell(oCaster, oTarget, nPenetr))
             {
                 // Fort save or die time, but we implement death by doing massive damage
                 // since disintegrate works on constructs, undead, etc.  At some point EffectDie()
@@ -89,16 +95,16 @@ void main()
                 // be used instead.
                 // Test done. Result: It does kill them.
                 int bKills = FALSE;
-                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,oPC), SAVING_THROW_TYPE_SPELL))
+                if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
                 {
-                    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == nTouchAttack ? 5 : 10, 6);
+                    int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == iAttackRoll ? 5 : 10, 6);
 
                     // Determine if we should show the special kill VFX
                     if(nDamage >= GetCurrentHitPoints (oTarget))
                         bKills = TRUE;
 
                     // Run the touch attack damage applicator
-                    ApplyTouchAttackDamage(oPC, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_MAGICAL);
+                    ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, nDamage, DAMAGE_TYPE_MAGICAL);
                 }
                 else
                 {
@@ -121,5 +127,35 @@ void main()
         }
     }
 
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if (GetLocalInt(oCaster, PRC_SPELL_HOLD) && GetHasFeat(FEAT_EF_HOLD_RAY, oCaster) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+	if (oCaster != oTarget)	//cant target self with this spell, only when holding charge
+	        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
     SPSetSchool();
 }
+

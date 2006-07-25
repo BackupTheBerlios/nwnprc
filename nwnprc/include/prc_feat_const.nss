@@ -2137,3 +2137,18 @@ const int FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX    = 22619;
 const int FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION = 22620;
 //const int FEAT_TEMPLATE_HALF_CELESTIAL_DAYLIGHT     = 22621;
 const int FEAT_TEMPLATE_HALF_CELESTIAL_MARKER       = 22622;
+
+// PRC Extra Stunning Feat
+const int FEAT_PRC_EXTRA_STUNNING             = 1074;
+
+// Enlightened Fist Feats
+const int FEAT_EF_FIST_OF_ENERGY              = 1075;
+const int FEAT_EF_SPELL_SELECT                = 1076;
+const int FEAT_EF_ARCANE_FIST                 = 1077;
+const int FEAT_EF_ARCANE_REJUVENATION         = 1078;
+const int FEAT_EF_HOLD_RAY                    = 1079;
+const int FEAT_EF_DIAMOND_SOUL                = 1080;
+const int FEAT_EF_UNARMEDDMG                  = 1081;
+const int FEAT_EF_SPEED                       = 1082;
+const int FEAT_EF_EXTRA_STUNNING              = 1083;
+const int FEAT_EF_FIST_OF_ENERGY_BURST        = 1084;

@@ -18707,6 +18707,106 @@ Description:  You grow an internal cyst of undead flesh called a mother cyst. Th
   <entry id="52113" lang="en" sex="m">Sannish</entry>
   <entry id="52114" lang="en" sex="m">Terran Brandy</entry>
   <entry id="52115" lang="en" sex="m">Vodare</entry>
+  <entry id="52198" lang="en" sex="m">PrC Extra Stunning</entry>
+  <entry id="52199" lang="en" sex="m">Use this feat to convert your extra stunning uses to normal stunning uses.</entry>
+  <entry id="52200" lang="en" sex="m">Enlightened Fist</entry>
+  <entry id="52201" lang="en" sex="m">Enlightened Fists</entry>
+  <entry id="52202" lang="en" sex="m">enlightened fist</entry>
+  <entry id="52203" lang="en" sex="m">(PRESTIGE CLASS)
+Not all monks pursue metaphysical perfection to the exclusion of all other study. Some monks combine a rigorous discipline of academic study with martial arts and development of the body. For these monk, that study includes the practice of magic and the implementation of certain arcane tricks into their unarmed combat styles. These englightened fists master the use of touch spells, creating new forms of combat where their fists strike with blinding speed, phenomenal power, and magical energy.
+
+- Hit Die: d8.
+- Proficiencies: An enlightened fist does not gain any additional weapon or armor proficiencies.
+- Skill Points: 4 + Int Modifier.
+
+REQUIREMENTS:
+
+Arcane Spellcasting: Able to case 2nd-level spells.
+Feats: Combat Casting, Improved Unarmed Strike, Stunning Fist.
+Skills: Concentration 8 ranks, Lore 5 ranks, Spellcraft 5 ranks.
+
+BONUS SPELLS
+
+Every level in Enlightened Fist, the character gains new spells per day as if he had also gained a level in his highest arcane caster class.
+
+ABILITIES:
+
+Level
+1:  Unarmed Damage - Enlightened Fist's levels stack with his monk level.
+    Enlightened speed - Enlightened Fist's levels stack with his monk level.
+    Stunning Attacks - Gain extra stunning fist uses/day equal to Enlightened Fist level.
+    Ki Strike - Enleightened Fist's fists count as +1 for piercing damage reduction.
+2:  Fist of energy - Use stunning attempt to deal 1d6 extra fire/electricity damage for 1 round.
+3:  Arcane fist - Use stunning attempt to deliver touch spell with unarmed strikes as part of a full attack.
+4:  -
+5:  Arcane rejuvenation - Sacrifice spell to heal its spell level in hit points.
+6:  Fist of energy (burst) - Energy imbued attacks deal 1d10 extra damage on a critical hit.
+7:  Hold ray - Use spells with a ray affect as touch spells.
+8:  -
+9:  Diamond soul - Gain spell resistance of 10+monk levels+fist levels.
+10: -
+</entry>
+  <entry id="52204" lang="en" sex="m">Fist of Energy</entry>
+  <entry id="52205" lang="en" sex="m">Type of feat: Class
+Prerequisite: Level 2 Enlightened Fist
+Specifics: You can spend one of your daily stunning attempts to add 1d6 fire or electricity damage to all attacks for one round, you need to be fighting unarmed or with a kama to use this ability.
+Use: Selected.
+</entry>
+  <entry id="52206" lang="en" sex="m">Fist of Energy - Fire</entry>
+  <entry id="52207" lang="en" sex="m">Fist of Energy - Electricity</entry>
+  <entry id="52208" lang="en" sex="m">Spell Select</entry>
+  <entry id="52209" lang="en" sex="m">Spell Select - Configure Quickslots</entry>
+  <entry id="52210" lang="en" sex="m">Spell Select - Quickslot 1</entry>
+  <entry id="52211" lang="en" sex="m">Spell Select - Quickslot 2</entry>
+  <entry id="52212" lang="en" sex="m">Spell Select - Quickslot 3</entry>
+  <entry id="52213" lang="en" sex="m">Spell Select - Quickslot 4</entry>
+  <entry id="52214" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Level 3 Enlightened Fist
+Specifics: This feat allows you to select the spell to use the enlightened fist's arcane fist and arcane rejuvenation with. You can configure up to 4 quickslots, and then use those quickslots to select a spell. Arcane fist and arcane rejuvenation will use the selected spell.
+Use: Selected.
+</entry>
+  <entry id="52215" lang="en" sex="m">Arcane Fist</entry>
+  <entry id="52216" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Level 3 Enlightened Fist
+Specifics: You can spend one of your daily stunning attempts to cast and deliver a touch spell as part of an unarmed full attack action. At the start of the attack round, you will cast and be charged with the spell. Any unarmed attacks can then be used to deliver the charge. Use the 'select spell' feat to select the spell to use this ability with.
+Use: Selected.</entry>
+  <entry id="52217" lang="en" sex="m">Arcane Rejuvenation</entry>
+  <entry id="52218" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Level 5 Enlightened Fist
+Specifics: You can sacrifice one of your prepared spells or unused spell slots; doing this heals a number of hit points equal to the spell's level. Use the 'select spell' feat to select the spell to use this ability with.
+Use: Selected.
+</entry>
+  <entry id="52219" lang="en" sex="m">Hold Ray</entry>
+  <entry id="52220" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Level 7 Enlightened Fist
+Specifics: You can cast spells with a ray effect as a touch spell instead. This means you can use those spells with the 'hold the charge' and 'arcane fist' abilities.
+Use: Automatic.</entry>
+  <entry id="52221" lang="en" sex="m">Diamond Soul</entry>
+  <entry id="52222" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Level 9 Enlightened Fist
+Specifics: You gain spell resistance equal to 10 + monk class level + enlightened fist class level. 
+Use: Automatic.</entry>
+  <entry id="52223" lang="en" sex="m">Unarmed Damage</entry>
+  <entry id="52224" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Enlightened Fist level 1
+Specifics: Your enlightened fist levels stack with your monk levels for determining your monk unarmed damage.
+Use: Automatic.
+</entry>
+  <entry id="52225" lang="en" sex="m">Enlightened Speed</entry>
+  <entry id="52226" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Enlightened Fist level 1
+Specifics: Your enlightened fist levels stack with your monk levels for determining your monk speed increase.
+Use: Automatic.</entry>
+  <entry id="52227" lang="en" sex="m">Stunning Attacks</entry>
+  <entry id="52228" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Enlightened Fist level 1
+Specifics: You get extra stunning fist uses/day equal to your enlightened fist level. Use the 'PrC Extra Stunning' feat to convert these uses into normal stunning fist uses.
+Use: Automatic.</entry>
+  <entry id="52229" lang="en" sex="m">Fist of Energy - Burst</entry>
+  <entry id="52230" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Enlightened Fist level 6
+Specifics: Your fist of energy ability also adds an extra 1d10 damage when a critical hit is scored.
+Use: Automatic.</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

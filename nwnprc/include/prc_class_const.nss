@@ -166,3 +166,4 @@ const int CLASS_TYPE_WAR_WIZARD_OF_CORMYR    = 226;
 const int CLASS_TYPE_VIRTUOSO                = 58;
 const int CLASS_TYPE_SKULLCLAN_HUNTER        = 227;
 const int CLASS_TYPE_TRUENAMER               = 228;
+const int CLASS_TYPE_ENLIGHTENEDFIST         = 204;

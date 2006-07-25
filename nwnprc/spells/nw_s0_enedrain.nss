@@ -16,39 +16,27 @@
 //::Added code to maximize for Faith Healing and Blast Infidel
 //::Aaon Graywolf - Jan 7, 2003
 
+//::Added hold ray functionality - HackyKid
+
 #include "spinc_common"
-
 #include "NW_I0_SPELLS"
-
 #include "x2_inc_spellhook"
+#include "prc_sp_func"
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
-/*
-  Spellcast Hook Code
-  Added 2003-06-23 by GeorgZ
-  If you want to make changes to all spells,
-  check x2_inc_spellhook.nss to find out more
-
-*/
-
-    if (!X2PreSpellCastCode())
-    {
-    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
-
-    //Declare major variables
-    effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
-    object oTarget = GetSpellTargetObject();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = GetMetaMagicFeat();
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+    int nPenetr = nCasterLevel + SPGetPenetr();
     int nDrain = d4(2);
+
+    effect eVis = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
 
     //Undead Gain HP from Energy Drain
     int nHP = d4(2);
@@ -68,28 +56,53 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eDrain = EffectNegativeLevel(nDrain);
     eDrain = SupernaturalEffect(eDrain);
 
-        if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
-        {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,CasterLvl);
-        }
-
+    if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
+    {
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHP, oTarget, HoursToSeconds(1),TRUE,-1,nCasterLevel);
+    }
     else if(!GetIsReactionTypeFriendly(oTarget))
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_ENERGY_DRAIN));
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget))
+        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
         {
 
            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (GetSpellSaveDC()+ GetChangesToSaveDC(oTarget,OBJECT_SELF)), SAVING_THROW_TYPE_NEGATIVE))
             {
-                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oTarget,0.0f,TRUE,-1,CasterLvl);
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eDrain, oTarget,0.0f,TRUE,-1,nCasterLevel);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }
         }
     }
 
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    return TRUE;    //return TRUE if spell charges should be decremented
 }
 
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if (GetLocalInt(oCaster, PRC_SPELL_HOLD) && GetHasFeat(FEAT_EF_HOLD_RAY, oCaster) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+	if (oCaster != oTarget)	//cant target self with this spell, only when holding charge
+	        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}

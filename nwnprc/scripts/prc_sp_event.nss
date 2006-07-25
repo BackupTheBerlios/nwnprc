@@ -16,19 +16,39 @@ void main()
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
     int nID = GetSpellId();
+    int nEvent = GetRunningEvent();
 
-    if(nID == SPELLS_SPELLS_TOUCH_ATTACK || nID == SPELLS_SPELLS_RANGED_ATTACK)
+    if (nEvent == EVENT_ITEM_ONHIT) {
+        int nCharges = GetLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
+        int nSpellID = GetLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
+	
+        if(nCharges > 0)
+        {
+            SetLocalInt(oPC, "AttackHasHit", 1); // maybe do crit in 1/20 chance?
+            SetLocalInt(oPC, "NoSpellSneak", TRUE);
+            SetLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE, GetLocalInt(oPC, PRC_SPELL_CHARGE_LEVEL));
+            RunImpactScript(oPC, nSpellID, PRC_SPELL_EVENT_ATTACK);
+            DeleteLocalInt(oPC, "AttackHasHit");
+            DeleteLocalInt(oPC, "NoSpellSneak");
+            DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE);   
+        }
+    } 
+    else if(nID == SPELLS_SPELLS_TOUCH_ATTACK || nID == SPELLS_SPELLS_RANGED_ATTACK)
     {
         int nCharges = GetLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
         if(nCharges > 0)//sanity check
         {
             int nSpellID = GetLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
-            if(!IsTouchSpell(nSpellID) && nID == SPELLS_SPELLS_TOUCH_ATTACK)
+            SetLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE, GetLocalInt(oPC, PRC_SPELL_CHARGE_LEVEL));
+            if (nID == SPELLS_SPELLS_TOUCH_ATTACK && !IsTouchSpell(nSpellID) && !GetHasFeat(FEAT_EF_HOLD_RAY, oPC))
                 SendMessageToPC(oPC, "This is not a touch spell");  //sanity check
+            else if (nID == SPELLS_SPELLS_TOUCH_ATTACK && !IsTouchSpell(nSpellID) && !IsRaySpell(nSpellID) && GetHasFeat(FEAT_EF_HOLD_RAY, oPC))
+                SendMessageToPC(oPC, "This is not a touch or ray spell");  //sanity check
             else if(IsTouchSpell(nSpellID) && nID == SPELLS_SPELLS_RANGED_ATTACK)
                 SendMessageToPC(oPC, "This is not a ranged spell");  //sanity check
             else
                 RunSpellScript(oPC, nSpellID, PRC_SPELL_EVENT_ATTACK);
+            DelayCommand(1.0, DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE));   
         }
         else
             SendMessageToPC(oPC, "You have no charges remaining");

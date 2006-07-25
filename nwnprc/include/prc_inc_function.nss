@@ -41,6 +41,7 @@ void DeletePRCLocalInts(object oSkin);
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
+#include "prc_inc_stunfist"
 
 // PRC Spell Engine Utility Functions
 #include "lookup_2da_spell"
@@ -104,6 +105,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_IAIJUTSU_MASTER,oPC) >0)       ExecuteScript("prc_iaijutsu_mst", oPC);
     if(GetLevelByClass(CLASS_TYPE_FISTRAZIEL,oPC) > 0)           ExecuteScript("prc_fistraziel", oPC);
     if(GetLevelByClass(CLASS_TYPE_SACREDFIST,oPC) > 0)           ExecuteScript("prc_sacredfist", oPC);
+    if(GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST,oPC) > 0)      ExecuteScript("prc_enlfis", oPC);
     if(GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC,oPC) > 0)    ExecuteScript("prc_initdraconic", oPC);
     if(GetLevelByClass(CLASS_TYPE_BLADESINGER,oPC) > 0)          ExecuteScript("prc_bladesinger", oPC);
     if(GetLevelByClass(CLASS_TYPE_HEXTOR,oPC) > 0)               ExecuteScript("prc_hextor", oPC);
@@ -712,4 +714,5 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
     BardSong(oPC);
     FeatVirtuoso(oPC);
+    ResetExtraStunfistUses(oPC);
 }

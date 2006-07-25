@@ -15,10 +15,15 @@ void main()
         iSpeed = (nLevel > 5) ? 20 : iSpeed;
         iSpeed = (nLevel > 7) ? 30 : iSpeed;
 
+    int nEFLevel = GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oPC);
+    int nMonkLevel = GetLevelByClass(CLASS_TYPE_MONK, oPC);
+    iSpeed += (((nMonkLevel % 3) + nEFLevel) / 3) * 10;
+
     if (GetHasFeat(FEAT_TYPE_ELEMENTAL, oPC) >= 10 && GetHasFeat(FEAT_BONDED_AIR,oPC))
         iSpeed += 30;
 
     if (iSpeed > 99) iSpeed = 99;
 
-    ApplyEffectToObject(DURATION_TYPE_PERMANENT,ExtraordinaryEffect(EffectMovementSpeedIncrease(iSpeed)),oPC);
+    if (iSpeed != 0)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT,ExtraordinaryEffect(EffectMovementSpeedIncrease(iSpeed)),oPC);
 }

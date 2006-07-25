@@ -35,6 +35,9 @@ int PRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oC
 // requires caster, target, and spell damage type
 int SpellSneakAttackDamage(object oCaster, object oTarget)
 {
+     if (GetLocalInt(oCaster, "NoSpellSneak"))
+		return 0;
+
      int numDice = GetTotalSneakAttackDice(oCaster);
 
      if(numDice != 0 && GetCanSneakAttack(oTarget, oCaster) )

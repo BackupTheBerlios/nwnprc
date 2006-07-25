@@ -1147,6 +1147,7 @@ int GetMainHandAttacks(object oPC, int nIncludeMonk = TRUE)
              iMonkLevel += GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC);
              iMonkLevel += GetLevelByClass(CLASS_TYPE_SACREDFIST, oPC);
              iMonkLevel += GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oPC);
+             iMonkLevel += GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oPC);
 
              if(iMonkLevel < 6)                             iNumMonkAttack = 1;
              else if (iMonkLevel >= 6  && iMonkLevel < 10)  iNumMonkAttack = 2;

@@ -24,30 +24,31 @@
 //::
 //:: Modified By: Flaming_Sword
 //:: Modified On: 9/21/05
+//::
+//:: Added hold ray functionality - HackyKid
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
 #include "inc_item_props"
 #include "x2_inc_itemprop"
+#include "prc_sp_func"
 
-void main()
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
-    // Set the spellschool
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-
-    //Run the spellhook
-    if (!X2PreSpellCastCode()) return;
-
-    //define variables
-    object oTarget = GetSpellTargetObject();
-    object oPC = OBJECT_SELF;
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+    int nPenetr = nCasterLevel + SPGetPenetr();
     int nHP = GetCurrentHitPoints(oTarget);
-    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     
-    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AVASCULATE, oPC);
+    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_AVASCULATE, oCaster);
     
-    SPEvilShift(oPC);
+    SPEvilShift(oCaster);
     
     // Gotta be a living critter
         int nType = MyPRCGetRacialType(oTarget);
@@ -55,23 +56,23 @@ void main()
             (nType == RACIAL_TYPE_UNDEAD) ||
             (nType == RACIAL_TYPE_ELEMENTAL))
             {
-		    return;
+		    return 0;
 	    }
 
     //Make touch attack
-    int nTouch = PRCDoRangedTouchAttack(oTarget);
+    int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
     
     //Beam VFX.  Ornedan is my hero.
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_EVIL, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_EVIL, oCaster, BODY_NODE_HAND, !iAttackRoll), oTarget, 1.0f); 
 
-    if (nTouch)
+    if (iAttackRoll)
     {
-        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+        if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr))
         {
             //damage rounds up now
             int nDam = (nHP - (nHP / 2));
             effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
-            effect eBeam = EffectBeam(VFX_BEAM_EVIL, oPC, BODY_NODE_HAND);
+            effect eBeam = EffectBeam(VFX_BEAM_EVIL, oCaster, BODY_NODE_HAND);
             
             //Blood VFX.  Lots of em.
             effect eBlood = EffectVisualEffect(VFX_COM_BLOOD_LRG_RED);
@@ -83,7 +84,7 @@ void main()
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eBlood, oTarget);
 
-            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_EVIL))
             {
                 effect eStun = EffectStunned();
                 effect eStunVis = EffectVisualEffect(VFX_IMP_STUN);
@@ -92,4 +93,34 @@ void main()
             }
         }
     }
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
+
+void main()
+{
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if (GetLocalInt(oCaster, PRC_SPELL_HOLD) && GetHasFeat(FEAT_EF_HOLD_RAY, oCaster) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+	if (oCaster != oTarget)	//cant target self with this spell, only when holding charge
+	        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
 }

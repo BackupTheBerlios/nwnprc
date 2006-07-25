@@ -463,6 +463,81 @@ if(DEBUG) DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creat
     }
 }
 
+int GetSpellUses(object oPC, int nSpellID, int nClass)
+{
+    string sFile = GetFileForClass(nClass);
+    int nSpellbookID = SpellToSpellbookID(nSpellID, sFile);
+    if(nSpellbookID == -1)
+    {
+        if(DEBUG) DoDebug("Unable to resolve spell to spellbookID: "+IntToString(nSpellID)+" "+sFile);
+        return 0;
+    }
+
+    // check if this spell actually belong to this class
+    if (nSpellID != StringToInt(Get2DACache(sFile, "SpellID", nSpellbookID)))
+        return 0;
+
+    // check for the metamagic feat
+    string sReqFeat = Get2DACache(sFile, "ReqFeat", nSpellbookID);
+    if (sReqFeat != "" && !GetHasFeat(StringToInt(sReqFeat), oPC))
+        return 0;
+    
+    if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
+    {
+if(DEBUG) DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creating.");
+        persistant_array_create(oPC, "NewSpellbookMem_"+IntToString(nClass));
+    }
+    int nSpellbookType = GetSpellbookTypeForClass(nClass);
+    //get uses remaining
+    int nCount;
+
+    if(nSpellbookType == SPELLBOOK_TYPE_PREPARED)
+    {
+        nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellbookID);
+    }
+    else if(nSpellbookType == SPELLBOOK_TYPE_SPONTANEOUS)
+    {
+        int iSize = persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass));
+        int i = 0;
+        int bHas = FALSE;
+        while (i < iSize && !bHas)
+        {
+            if (nSpellbookID == persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i))
+                bHas = TRUE;
+            i++;
+        }
+        if (!bHas)
+            return 0;
+        int nSpellLevel = StringToInt(Get2DACache(sFile, "Level", nSpellbookID));
+        nCount = persistant_array_get_int(oPC, "NewSpellbookMem_"+IntToString(nClass), nSpellLevel);
+    }
+    return nCount;
+}
+
+int GetSpellLevel(object oPC, int nSpellID, int nClass)
+{
+    string sFile = GetFileForClass(nClass);
+    int nSpellbookID = SpellToSpellbookID(nSpellID, sFile);
+    if(nSpellbookID == -1)
+    {
+        if(DEBUG) DoDebug("Unable to resolve spell to spellbookID: "+IntToString(nSpellID)+" "+sFile);
+        return -1;
+    }
+
+    // check if this spell actually belong to this class
+    if (nSpellID != StringToInt(Get2DACache(sFile, "SpellID", nSpellbookID)))
+        return -1;
+
+    // get spell level
+    int nSpellLevel = -1;
+    string sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
+    
+    if (sSpellLevel != "")
+        nSpellLevel = StringToInt(sSpellLevel);
+
+    return nSpellLevel;
+}
+
 void SetupSpells(object oPC, int nClass)
 {
     string sFile = GetFileForClass(nClass);

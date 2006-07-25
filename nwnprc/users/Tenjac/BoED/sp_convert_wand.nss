@@ -84,16 +84,31 @@ void main()
 			int nRow = GetItemPropertySubType(ipTest);
 			
 			//Get spellID
-			int nSpellID = StringToInt(Get2DACache("iprp_spells.2da", "SpellIndex", nRow));
+			int nSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nRow));
 			
 			//Get spell level
 			nLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
 			
-			//no need to check rest of the ips
-			break;
+		}
+		
+		if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_CAST_SPELL_DC)
+		{
+			int nSubType = GetItemPropertySubType(ipTest);
+			nSubType = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nSubType));
+			if(nSubType == nSpellID)
+			{
+				int nDC = GetItemPropertyCostTableValue (ipTest);
+				break;//end while
+			}
 		}
 		ipTest = GetNextItemProperty(oTargetWand);
+		
 	}
+	
+	//Store the current spellID, caster level, DC, & spell level on the wand from cast spell itemproperty
+	SetLocalInt(oTargetWand, "PRC_ConvertWandSpellID", nSpellID);
+	SetLocalInt(oTargetWand, "PRC_ConvertWandDC", nDC);
+	SetLocalInt(oTargetWand, "PRC_ConvertWandCL", PRCGetCasterLevel(oTargetWand));
 	
 	//Determine ip	
 	if(nLevel > 4)

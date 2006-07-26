@@ -173,9 +173,9 @@ void main()
 
           if (bCreWeap)
           {
-              //1.67 Bioware fixed this so it should be disabled 
-//              if (iMod > 0)
-//                  SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iIABonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
+  
+              if (iMod > 0)
+                  SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iIABonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
 //              else
 //                  SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iWFBonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
           }

@@ -2,8 +2,8 @@
 //Reverse Utterances are denoted with a _R
 
 // Level 1 Utterances
-const int UTTER_DEFENSIVE_EDGE        = -1;
-const int UTTER_DEFENSIVE_EDGE_R      = -1;
+const int UTTER_DEFENSIVE_EDGE        = 3526;
+const int UTTER_DEFENSIVE_EDGE_R      = 3527;
 
 // Level 2 Utterances
 

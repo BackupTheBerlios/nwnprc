@@ -18029,7 +18029,7 @@ Level
 17: Speak Unto The Masses - Affect all creatures of a creature type with utterance.
 18:
 19:
-20: Speak My Name and I am There - Teleport to party member.
+20: Say My Name and I am There - Teleport to party member.
 
 TRUENAMING
 
@@ -18085,6 +18085,41 @@ Level   EvolvingMind   CraftedTool   PerfectedMap
 18      18             4             3           
 19      19             5             3           
 20      20             5             4</entry>
+  <entry id="51269" lang="en" sex="m">Knowledge Focus</entry>
+  <entry id="51270" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Truenamer 2
+Specifics: The Truenamer gains a +3 bonus to Lore. This bonus increases by a further +3 each at levels 7, 10 and 14, giving a final total of +12.
+Use: Automatic.</entry>
+  <entry id="51271" lang="en" sex="m">See the Named</entry>
+  <entry id="51272" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Truenamer 9
+Specifics: Once per day, the Truenamer can attempt to Scry a creature from afar. If he succeeds on a Truespeak check (normal DC), he views the subject for one round.
+Use: Selected.</entry>
+  <entry id="51273" lang="en" sex="m">Speak Unto the Masses</entry>
+  <entry id="51274" lang="en" sex="m">Type of Feat: Class
+  Prerequisite: Truenamer 17
+  Specifics: The Truenamer can choose to have his utterances from the Lexicon of the Evolving Mind affect all creatures of the same creature type as the target. These additional targets must be within thirty feet of the original target. This changes the DC of the Utterance to 15 + (2 * CR of the highest creature in the area) + (2 * The number of targets beyond the first). Thus, if there were three goblins and a goblin shaman in the area when the truenamer spoke an utterance, the highest CR would be the goblin shaman, while you would add 6 to the DC from the targets (2 * three additional targets).
+Use: Selected.</entry>
+  <entry id="51275" lang="en" sex="m">Say My Name and I am There</entry>
+  <entry id="51276" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Truenamer 20
+Specifics: Whenever a party member of the Truenamer speaks his name, he is teleported to them as per the Word of Recall spell. Party members can choose this from the PRC Options radial. The Truenamer can turn acceptance on or off by toggling this feat. If it is off, he does not teleport, and the summons is ignored.
+Use: Selected.</entry>
+  <entry id="51277" lang="en" sex="m">Defensive Edge</entry>
+  <entry id="51278" lang="en" sex="m">Level: Evolving Mind 1
+Range: 60 feet
+Target: One Creature
+Duration: 5 Rounds
+Spell Resistance: Yes
+Save: None
+Metautterances: Extend
+
+Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
+         Your ally gains +1 Armour Class.
+Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
+         Your foe takes a -1 to Armour Class.</entry>
+  <entry id="51279" lang="en" sex="m">Defensive Edge, Normal</entry>
+  <entry id="51280" lang="en" sex="m">Defensive Edge, Reverse</entry>
   <entry id="51501" lang="en" sex="m">50% of Weight</entry>
   <entry id="51502" lang="en" sex="m">Craft Epic Wondrous Item</entry>
   <entry id="51503" lang="en" sex="m">Type of Feat: General

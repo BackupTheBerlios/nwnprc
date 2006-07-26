@@ -59,6 +59,8 @@ void main()
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
         utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker);
         utter.fDur       = RoundsToSeconds(5);
+        int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        int nSaveCheck   = PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF);
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
@@ -73,10 +75,10 @@ void main()
         else /* Effects of UTTER_DEFENSIVE_EDGE_R would be here */
         {
         	// If the Spell Penetration fails, don't apply any effects
-        	if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        	if (!nSRCheck)
         	{
         		// Saving throw
-        		if(!PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF))
+        		if(!nSaveCheck)
                 	{
         			// eLink is used for Duration Effects (Buff/Penalty to AC)
         			utter.eLink = EffectLinkEffects();
@@ -93,7 +95,9 @@ void main()
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);
-        // Mark for the Law of Sequence. This only happens if the power succeeds, which is why its down here.
-        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
+        // Mark for the Law of Sequence. This only happens if the utterance succeeds, which is why its down here.
+        // The utterance isn't active if SR or Saves stop it
+        // Make sure to delete one if not needed
+        if (!nSRCheck && !nSaveCheck) DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
     }// end if - Successful utterance
 }

@@ -28,7 +28,7 @@ const string TRUE_DEBUG_IGNORE_CONSTRAINTS = "TRUE_DEBUG_IGNORE_CONSTRAINTS";
  * means the variable is unitialised.
  */
 const string PRC_UTTERANCE_TOKEN_VAR  = "PRC_UtteranceToken";
-const string PRC_UTTERANCE_TOKEN_NAME = "PRC_UtterTOKEN";
+const string PRC_UTTERANCE_TOKEN_NAME = "PRC_UTTERTOKEN";
 const float  PRC_UTTERANCE_HB_DELAY   = 0.5f;
 
 
@@ -249,7 +249,7 @@ void _DestroyUtteranceToken(object oTrueSpeaker, object oUtrToken)
 object _CreateUtteranceToken(object oTrueSpeaker)
 {
     object oUtrToken = _GetUtteranceToken(oTrueSpeaker);
-    object oStore   = GetObjectByTag("PRC_UtterTOKEN_STORE"); //GetPCSkin(oTrueSpeaker);
+    object oStore   = GetObjectByTag("PRC_MANIFTOKEN_STORE"); //GetPCSkin(oTrueSpeaker);
 
     // Delete any previous tokens
     if(GetIsObjectValid(oUtrToken))

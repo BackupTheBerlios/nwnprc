@@ -320,6 +320,8 @@ int GetTrueSpeakPenetration(object oTrueSpeaker = OBJECT_SELF)
     
     // Blow away SR totally, just add 9000
     if (GetLocalInt(oTrueSpeaker, TRUE_IGNORE_SR)) nPen += 9000;
+    
+    if(DEBUG) DoDebug("GetTrueSpeakPenetration(" + GetName(oTrueSpeaker) + "): " + IntToString(nPen));
 
     return nPen;
 }

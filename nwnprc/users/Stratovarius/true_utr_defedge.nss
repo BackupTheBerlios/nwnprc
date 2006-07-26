@@ -55,6 +55,7 @@ void main()
         // This is done so Speak Unto the Masses can read it out of the structure
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
         utter.fDur       = RoundsToSeconds(5);
+        int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
@@ -67,7 +68,7 @@ void main()
         else 
         {
         	// If the Spell Penetration fails, don't apply any effects
-        	if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
+        	if (!nSRCheck)
         	{
        			// eLink is used for Duration Effects (Buff/Penalty to AC)
        			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
@@ -78,7 +79,8 @@ void main()
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);
-        // Mark for the Law of Sequence. This only happens if the power succeeds, which is why its down here.
-        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
+        // Mark for the Law of Sequence. This only happens if the utterance succeeds, which is why its down here.
+        // The utterance isn't active if SR stops it
+        if (!nSRCheck) DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
     }// end if - Successful utterance    
 }

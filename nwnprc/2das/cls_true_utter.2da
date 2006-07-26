@@ -3,7 +3,9 @@
    Label                   Name     Level FeatID IPFeatID SpellID RealSpellID Lexicon 
 0  ****                    ****     ****  ****   ****     ****    ****        0          
 1  **Level_1_TN_Utters**   ****     ****  ****   ****     ****    ****        0          
-2  DefensiveEdge           ****     1     ****   ****     ****    ****        1          
+2  DefensiveEdge           16828493 1     2059   13451    3225    ****        1          
+3  DefensiveEdge_Normal    ****     ****  ****   ****     3226    3526        0          
+4  DefensiveEdge_Reverse   ****     ****  ****   ****     3227    3527        0          
 31 **Level_2_TN_Utters**   ****     ****  ****   ****     ****    ****        0          
 52 **Level_3_TN_Utters**   ****     ****  ****   ****     ****    ****        0          
 67 **Level_4_TN_Utters**   ****     ****  ****   ****     ****    ****        0          

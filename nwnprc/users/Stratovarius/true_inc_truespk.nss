@@ -259,7 +259,7 @@ void ClearLawLocalVars(object oTrueSpeaker)
 	// i is the SpellId
 	// Replace numbers when done
 	int i;
-	for(i = 17500; i < 18000; i++)
+	for(i = 3224; i < 3649; i++)
 	{
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_RESIST_VARNAME + IntToString(i));
 		DeleteLocalInt(oTrueSpeaker, LAW_OF_SEQUENCE_VARNAME + IntToString(i));

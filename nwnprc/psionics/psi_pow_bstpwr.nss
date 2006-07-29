@@ -77,7 +77,7 @@ void main()
                                          );
         int nPPGiven = 2 + 2 * manif.nTimesAugOptUsed_1;
         // Can't give more than the target has manifester levels
-        nPPGiven = max(nPPGiven, nTargetManifesterLevel);
+        nPPGiven = min(nPPGiven, nTargetManifesterLevel);
 
         // Let the AI know the power was used on it
         SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);

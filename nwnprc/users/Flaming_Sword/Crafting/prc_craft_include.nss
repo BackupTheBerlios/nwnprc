@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Jul 16, 2006
+    Modified: Jul 25, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -18,6 +18,9 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
 int GetItemBaseAC(object oItem);
 
 int GetItemArmourCheckPenalty(object oItem);
+
+//Extra function for speed, minimises 2da reads
+int MaxListSize(string sTable);
 
 #include "prc_alterations"
 
@@ -59,10 +62,18 @@ const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
 
+struct itemcostvars
+{
+    int enhancement;
+    int additionalcost;
+    int epic;
+};
+
 
 //placeholder
 int PRCGetHasSpell(int nSpell)
 {
+    //if(nSpell = -1) return TRUE;
     return TRUE;
 }
 
@@ -131,6 +142,7 @@ int GetArmourCheckPenaltyReduction(object oItem)
     return -1;
 }
 
+//Returns -1 if itemprop is not in the list, -2 if similar and should disallow type
 int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
 {   //it's either hardcoding or large numbers of 2da reads
     int nType = GetItemPropertyType(ip);
@@ -180,6 +192,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case IP_CONST_DAMAGESOAK_10_HP: return 42; break;
                     }
                 }
+                else return -2;
                 break;
             }
             case ITEM_PROPERTY_DAMAGE_RESISTANCE:
@@ -203,11 +216,13 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case IP_CONST_DAMAGERESIST_50: return nBaseValue + 3; break;
                     }
                 }
+                else return -2;
                 break;
             }
             case ITEM_PROPERTY_SPELL_RESISTANCE:
             {
                 if((nCostTableValue >= 27) && (nCostTableValue <= 34)) return (nCostTableValue + 28);
+                else return -2;
                 break;
             }
             case ITEM_PROPERTY_SKILL_BONUS:
@@ -225,7 +240,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                     }
 
                 }
-                if(nSubType == SKILL_MOVE_SILENTLY)
+                else if(nSubType == SKILL_MOVE_SILENTLY)
                 {
                     nCostTableValue -= GetArmourCheckPenaltyReduction(oItem);
                     switch(nCostTableValue)
@@ -235,6 +250,8 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case 15: return 54; break;
                     }
                 }
+                else
+                    return -2;
                 break;
             }
         }
@@ -245,90 +262,143 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
     return -1;
 }
 
-void SetPropertyArray(object oItem, string sFile)
+void DisallowType(object oItem, string sFile, itemproperty ip)
 {
-    int i = 0;
+    int i;
+    int nType = GetItemPropertyType(ip);
+    if(sFile == "craft_armour")
+    {
+        switch(nType)
+        {
+            /*
+            case ITEM_PROPERTY_AC_BONUS:
+            {
+            }
+            case ITEM_PROPERTY_BONUS_FEAT:
+            {
+            }
+            case ITEM_PROPERTY_CAST_SPELL:
+            {
+            }
+            */
+            case ITEM_PROPERTY_DAMAGE_REDUCTION:
+            {
+                for(i = 38; i <= 42; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            }
+            case ITEM_PROPERTY_DAMAGE_RESISTANCE:
+            {
+                for(i = 20; i <= 23; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                for(i = 25; i <= 32; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                for(i = 34; i <= 37; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                for(i = 51; i <= 54; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            }
+            case ITEM_PROPERTY_SPELL_RESISTANCE:
+            {
+                for(i = 55; i <= 62; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            }
+            case ITEM_PROPERTY_SKILL_BONUS:
+            {
+                for(i = 45; i <= 50; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            }
+        }
+    }
+    else if(sFile == "craft_weapon")
+    {
+    }
+}
+
+//Returns a struct containing enhancement and additional cost values
+struct itemcostvars SetPropertyArray(object oItem, string sFile, int nCasterLevel, int bEpic)
+{
+    struct itemcostvars strTemp;
+    int i;
     int j, k, bEnhanced;
     int nEnhancement;
+    int nSpellPattern;
+    int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
     if(array_exists(oItem, PRC_CRAFT_ITEMPROP_ARRAY))
         array_delete(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
     array_create(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
-    for(; i < MaxListSize(sFile); i++)
+
+    //Setup
+    for(i = 0; i < MaxListSize(sFile); i++)
         array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
     itemproperty ip = GetFirstItemProperty(oItem);
+
+    //Checking itemprops
     while(GetIsItemPropertyValid(ip))
     {   //assumes no duplicated enhancement itemprops
         k = Get2DALineFromItemprop(sFile, ip, oItem);
-        if(k != -1)
+        if(k >= 0)
         {
             if(k < 20) bEnhanced = TRUE;
             for(j = StringToInt(Get2DACache(sFile, "ReplaceLast", k)); j >= 0; j--)
             {
                 array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
             }
-            nEnhancement += StringToInt(Get2DACache(sFile, "Enhancement", k);
+            nEnhancement = StringToInt(Get2DACache(sFile, "Enhancement", k));
+            strTemp.enhancement += nEnhancement;
+            if(nEnhancement > 5) strTemp.epic = TRUE;
+            strTemp.additionalcost += StringToInt(Get2DACache(sFile, "AdditionalCost", k));
+        }
+        else if(k == -2)
+        {
+            DisallowType(oItem, sFile, ip);
         }
         ip = GetNextItemProperty(oItem);
     }
-    if(!bEnhanced)
-    {
+    if(strTemp.enhancement > 10) strTemp.epic = TRUE;
+    if(!bEpic && strTemp.epic)
+    {   //attempting to craft epic item without epic crafting feat, fails
+        for(i = 0; i < MaxListSize(sFile); i++)
+            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+        return strTemp;
+    }
+    if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
+    {   //no enhancement value, cannot add more itemprops, stop right there
         array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
         for(i = 1; i < MaxListSize(sFile); i++)
             array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-
+        return strTemp;
     }
-    return nEnhancement;
-}
 
-/*  TO BE REPLACED
-int CheckPrerequisites(string sFile, int nIndex, int nCasterLevel, int nEpic)
-{
-    string sSpell1 = Get2DACache(sFile, "Spell1", nIndex);
-    string sSpell2 = Get2DACache(sFile, "Spell2", nIndex);
-    string sSpell3 = Get2DACache(sFile, "Spell3", nIndex);
-    if((nCasterLevel >= StringToInt(Get2DACache(sFile, "CasterLevel", nIndex))) &&
-        ((GetStringLength(sSpell1) == 0) || (PRCGetHasSpell(StringToInt(sSpell1)))) &&
-        ((GetStringLength(sSpell2) == 0) || (PRCGetHasSpell(StringToInt(sSpell2)))) &&
-        ((GetStringLength(sSpell3) == 0) || (PRCGetHasSpell(StringToInt(sSpell3)))) &&
-        (1)
-        //<CHECK PREVIOUS ITEMPROPS HERE>
-        )
-        return TRUE;
-    return FALSE;
-}
-*/
-
-//Returns TRUE if nBaseItem can have nItemProp
-int ValidProperty(object oItem, int nItemProp)
-{
-    int nPropColumn = StringToInt(Get2DACache("baseitems", "PropColumn", GetBaseItemType(oItem)));
-    string sPropCloumn = "";
-    switch(nPropColumn)
-    {
-        case 0: sPropCloumn = "0_Melee"; break;
-        case 1: sPropCloumn = "1_Ranged"; break;
-        case 2: sPropCloumn = "2_Thrown"; break;
-        case 3: sPropCloumn = "3_Staves"; break;
-        case 4: sPropCloumn = "4_Rods"; break;
-        case 5: sPropCloumn = "5_Ammo"; break;
-        case 6: sPropCloumn = "6_Arm_Shld"; break;
-        case 7: sPropCloumn = "7_Helm"; break;
-        case 8: sPropCloumn = "8_Potions"; break;
-        case 9: sPropCloumn = "9_Scrolls"; break;
-        case 10: sPropCloumn = "10_Wands"; break;
-        case 11: sPropCloumn = "11_Thieves"; break;
-        case 12: sPropCloumn = "12_TrapKits"; break;
-        case 13: sPropCloumn = "13_Hide"; break;
-        case 14: sPropCloumn = "14_Claw"; break;
-        case 15: sPropCloumn = "15_Misc_Uneq"; break;
-        case 16: sPropCloumn = "16_Misc"; break;
-        case 17: sPropCloumn = "17_No_Props"; break;
-        case 18: sPropCloumn = "18_Containers"; break;
-        case 19: sPropCloumn = "19_HealerKit"; break;
-        case 20: sPropCloumn = "20_Torch"; break;
-        case 21: sPropCloumn = "21_Glove"; break;
+    //Checking available spells, epic flag, caster level
+    for(i = 0; i < MaxListSize(sFile); i++)
+    {   //will skip over properties already disallowed
+        if(array_get_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i))
+        {
+            if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            else if(nCasterLevel < StringToInt(Get2DACache(sFile, "CasterLevel", i)))
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            else
+            {   //attempting to minimise 2da reads for spell prerequisite checking
+                nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", i));
+                if(
+                    !(
+                    (nSpellPattern & 1) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell1", i))) : 1 &&
+                    (nSpellPattern & 2) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell2", i))) : 1 &&
+                    (nSpellPattern & 4) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell3", i))) : 1 &&
+                    ((nSpellPattern & 8) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR1", i))) : 1 ||
+                    (nSpellPattern & 16) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR2", i))) : 1)
+                    )
+                    )
+                {
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                }
+            }
+        }
     }
-    return(Get2DACache("itemprops", sPropCloumn, nItemProp) == "1");
+    return strTemp;
 }
 
 //Returns an int depending on the weapon type
@@ -344,58 +414,6 @@ int GetWeaponType(int nBaseItem)
         default: return 0; break;
     }
     return 0;
-}
-
-string GetCrafting2DA(int nBase)
-{
-    if(((nBase == BASE_ITEM_ARMOR) ||
-        (nBase == BASE_ITEM_SMALLSHIELD) ||
-        (nBase == BASE_ITEM_LARGESHIELD) ||
-        (nBase == BASE_ITEM_TOWERSHIELD))
-        )
-        return "craft_armour";
-
-    if(GetWeaponType(nBase)) return "craft_weapon";
-
-    //restrict to castspell itemprops?
-    /*
-    if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
-    if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
-    if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
-    if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
-    */
-    return "";
-}
-
-int GetCraftingFeat(int nBase)
-{
-    if(((nBase == BASE_ITEM_ARMOR) ||
-        (nBase == BASE_ITEM_SMALLSHIELD) ||
-        (nBase == BASE_ITEM_LARGESHIELD) ||
-        (nBase == BASE_ITEM_TOWERSHIELD)) ||
-        (GetWeaponType(nBase))
-        )
-        return FEAT_CRAFT_ARMS_ARMOR;
-
-    if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
-    if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
-    if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
-    if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
-
-    return FEAT_CRAFT_WONDROUS;
-}
-
-int GetEpicCraftingFeat(int nFeat)
-{
-    switch(nFeat)
-    {
-        case FEAT_CRAFT_WONDROUS: return FEAT_CRAFT_EPIC_WONDROUS_ITEM;
-        case FEAT_CRAFT_ARMS_ARMOR: return FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR;
-        case FEAT_CRAFT_ROD: return FEAT_CRAFT_EPIC_ROD;
-        case FEAT_CRAFT_STAFF: return FEAT_CRAFT_EPIC_STAFF;
-        case FEAT_FORGE_RING: return FEAT_FORGE_EPIC_RING;
-    }
-    return -1;
 }
 
 void ApplyItemProp(object oItem, string sFile, int nIndex)
@@ -467,6 +485,87 @@ int GetItemArmourCheckPenalty(object oItem)
         }
     }
     return nPenalty;
+}
+
+string GetCrafting2DA(object oItem)
+{
+    int nBase = GetBaseItemType(oItem);
+    if(((nBase == BASE_ITEM_ARMOR) ||
+        (nBase == BASE_ITEM_SMALLSHIELD) ||
+        (nBase == BASE_ITEM_LARGESHIELD) ||
+        (nBase == BASE_ITEM_TOWERSHIELD))
+        )
+    {
+        if(GetItemBaseAC(oItem) == 0) return "craft_wonderous";
+        return "craft_armour";
+    }
+
+    if(GetWeaponType(nBase)) return "craft_weapon";
+    if(nBase == BASE_ITEM_RING) return "craft_ring";
+    if(((nBase == BASE_ITEM_HELMET) ||
+        (nBase == BASE_ITEM_AMULET) ||
+        (nBase == BASE_ITEM_BELT) ||
+        (nBase == BASE_ITEM_BOOTS) ||
+        (nBase == BASE_ITEM_GLOVES) ||
+        (nBase == BASE_ITEM_BRACER) ||
+        (nBase == BASE_ITEM_CLOAK))
+        )
+        return "craft_wonderous";
+
+    //restrict to castspell itemprops?
+    /*
+    if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
+    if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
+    if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
+    */
+    return "";
+}
+
+int GetCraftingFeat(object oItem)
+{
+    int nBase = GetBaseItemType(oItem);
+    if(((nBase == BASE_ITEM_ARMOR) ||
+        (nBase == BASE_ITEM_SMALLSHIELD) ||
+        (nBase == BASE_ITEM_LARGESHIELD) ||
+        (nBase == BASE_ITEM_TOWERSHIELD)) ||
+        (GetWeaponType(nBase))
+        )
+    {
+        if(GetItemBaseAC(oItem) == 0) return FEAT_CRAFT_WONDROUS;
+        return FEAT_CRAFT_ARMS_ARMOR;
+    }
+
+    if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
+    /*
+    if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
+    if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
+    if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
+    */
+
+    if(((nBase == BASE_ITEM_HELMET) ||
+        (nBase == BASE_ITEM_AMULET) ||
+        (nBase == BASE_ITEM_BELT) ||
+        (nBase == BASE_ITEM_BOOTS) ||
+        (nBase == BASE_ITEM_GLOVES) ||
+        (nBase == BASE_ITEM_BRACER) ||
+        (nBase == BASE_ITEM_CLOAK))
+        )
+    return FEAT_CRAFT_WONDROUS;
+
+    return -1;
+}
+
+int GetEpicCraftingFeat(int nFeat)
+{
+    switch(nFeat)
+    {
+        case FEAT_CRAFT_WONDROUS: return FEAT_CRAFT_EPIC_WONDROUS_ITEM;
+        case FEAT_CRAFT_ARMS_ARMOR: return FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR;
+        case FEAT_CRAFT_ROD: return FEAT_CRAFT_EPIC_ROD;
+        case FEAT_CRAFT_STAFF: return FEAT_CRAFT_EPIC_STAFF;
+        case FEAT_FORGE_RING: return FEAT_FORGE_EPIC_RING;
+    }
+    return -1;
 }
 
 //Returns whether the item can be made of a material
@@ -862,7 +961,6 @@ string ItemStats(object oItem)
     return sDesc;
 }
 
-//Extra function for speed, minimises 2da reads
 int MaxListSize(string sTable)
 {
     sTable = GetStringLowerCase(sTable); //sanity check
@@ -1003,7 +1101,40 @@ int MaxListSize(string sTable)
         return 29;
 
     if(DEBUG) DoDebug("MaxListSize: Unrecognised 2da file: " + sTable);
-    return NUM_MAX_SUBTYPES;
+    return 0;
+}
+
+//Returns TRUE if nBaseItem can have nItemProp
+int ValidProperty(object oItem, int nItemProp)
+{
+    int nPropColumn = StringToInt(Get2DACache("baseitems", "PropColumn", GetBaseItemType(oItem)));
+    string sPropCloumn = "";
+    switch(nPropColumn)
+    {
+        case 0: sPropCloumn = "0_Melee"; break;
+        case 1: sPropCloumn = "1_Ranged"; break;
+        case 2: sPropCloumn = "2_Thrown"; break;
+        case 3: sPropCloumn = "3_Staves"; break;
+        case 4: sPropCloumn = "4_Rods"; break;
+        case 5: sPropCloumn = "5_Ammo"; break;
+        case 6: sPropCloumn = "6_Arm_Shld"; break;
+        case 7: sPropCloumn = "7_Helm"; break;
+        case 8: sPropCloumn = "8_Potions"; break;
+        case 9: sPropCloumn = "9_Scrolls"; break;
+        case 10: sPropCloumn = "10_Wands"; break;
+        case 11: sPropCloumn = "11_Thieves"; break;
+        case 12: sPropCloumn = "12_TrapKits"; break;
+        case 13: sPropCloumn = "13_Hide"; break;
+        case 14: sPropCloumn = "14_Claw"; break;
+        case 15: sPropCloumn = "15_Misc_Uneq"; break;
+        case 16: sPropCloumn = "16_Misc"; break;
+        case 17: sPropCloumn = "17_No_Props"; break;
+        case 18: sPropCloumn = "18_Containers"; break;
+        case 19: sPropCloumn = "19_HealerKit"; break;
+        case 20: sPropCloumn = "20_Torch"; break;
+        case 21: sPropCloumn = "21_Glove"; break;
+    }
+    return(Get2DACache("itemprops", sPropCloumn, nItemProp) == "1");
 }
 
 //Makes an item property from values - total pain in the arse, need 1 per itemprop

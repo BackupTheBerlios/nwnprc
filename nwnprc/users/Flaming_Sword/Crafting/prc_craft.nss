@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Jul 16, 2006
+    Modified: Jul 29, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -17,10 +17,6 @@
                 since anything much higher produced TMIs
         Not all item properties have returning functions
         Needs updating if item property 2da files increase in size
-
-    USE:
-        Place this script in the OnUsed event of a placable object
-        Placeable must be plot, have inventory, locked
 
     CHECK:
         89 properties with constants, 15 without
@@ -43,6 +39,7 @@ const int STAGE_SELECT_SUBTYPE          = 3;
 const int STAGE_SELECT_COSTTABLEVALUE   = 4;
 const int STAGE_SELECT_PARAM1VALUE      = 5;
 const int STAGE_CONFIRM                 = 6;
+const int STAGE_CONFIRM_MAGIC           = 7;
 const int STAGE_CRAFT                   = 101;
 const int STAGE_CRAFT_SELECT            = 102;
 const int STAGE_CRAFT_MASTERWORK        = 103;
@@ -269,7 +266,8 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
         //if(GetIsObjectValid(oItem)) bValid = ValidProperty(oItem, i);
         if(sTable == "iprp_spells")
             i = SkipLine(i);
-        //else if(GetStringLeft(sTable, 6) == "craft_")
+        else if(GetStringLeft(sTable, 6) == "craft_")
+            bValid = array_get_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i);
         sTemp = Get2DACache(sTable, "Name", i);
         if((sTemp != "") && bValid)//this is going to kill
         {
@@ -302,14 +300,15 @@ void main()
         }
         else if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
         {   //cast on item, crafting targeted item
-            if(!GetHasFeat(GetCraftingFeat(GetBaseItemType(oTarget)), oPC))
+            if(!GetHasFeat(GetCraftingFeat(oTarget), oPC))
             {
                 SendMessageToPC(oPC, "You do not have the required feat to craft this item.");
                 return;
             }
-            if(!StringToInt(GetStringLeft(GetTag(oItem), 3)))
-            {
-                SendMessageToPC(oPC, "This is not a magic item.");
+            string sMaterial = GetStringLeft(GetTag(oTarget), 3);
+            if(GetMaterialString(StringToInt(sMaterial)) != sMaterial)
+            {   //REPLACE LATER
+                SendMessageToPC(oPC, "This is not a craftable magic item.");
                 return;
             }
             SetLocalInt(OBJECT_SELF, PRC_CRAFT_SCRIPT_STATE, PRC_CRAFT_STATE_MAGIC);
@@ -371,24 +370,33 @@ void main()
                     {
                         int nCasterLevel = PRCGetCasterLevel(oPC);
                         int nBaseItem = GetBaseItemType(oItem);
-                        string sFile = GetCrafting2DA(nBaseItem);
-                        int nFeat = GetCraftingFeat(nBaseItem);
+                        string sFile = GetCrafting2DA(oItem);
+                        int nFeat = GetCraftingFeat(oItem);
                         int bEpic = GetHasFeat(GetEpicCraftingFeat(nFeat), oPC);
+                        struct itemcostvars strTemp = SetPropertyArray(oItem, sFile, nCasterLevel, bEpic);
+                        SetHeader(ItemStats(oItem) + "\nPlease make a selection.");
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
-                        if(sFile != "")
-                        {
-                            //PopulateList(oPC, MaxListSize(sFile), FALSE, sFile, nCasterLevel);
-                        }
-                        else
+                        if(sFile == "")
                         {
                             sFile = "iprp_spells";
                             PopulateList(oPC, MaxListSize(sFile), TRUE, sFile, nCasterLevel);
-
                         }
+                        else
+                        {
+                            PopulateList(oPC, MaxListSize(sFile), FALSE, sFile, nCasterLevel);
+                        }
+                        string sMaterial = GetStringLeft(GetTag(oTarget), 3);
+                        object oChest = GetCraftChest();
+                        string sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
+                        while(GetIsObjectValid(GetItemPossessedBy(oChest, sTag)))//make sure there aren't any tag conflicts
+                            sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;    //may choke if all uids are taken :P
+                        oNewItem = CopyObject(oItem, GetLocation(oChest), oChest, sTag);
+                        SetIdentified(oNewItem, TRUE);  //just in case
+                        SetLocalString(oPC, PRC_CRAFT_TAG, GetTag(oNewItem));
 
-                        SetHeader(ItemStats(oItem) + "\nSelect an item property.");
-                        AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
+                        //AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
+
                         SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
                         SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
                         SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, -1);
@@ -397,6 +405,7 @@ void main()
                         SetLocalString(oPC, PRC_CRAFT_PARAM1, "");
                         SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, -1);
                         //PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, "itempropdef");
+
                     }
                     SetDefaultTokens();
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
@@ -495,17 +504,6 @@ void main()
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     for(i = 0; i < 9; i++)
                         AddChoice(ActionString(IntToString(i)), i, oPC);
-                    /*
-                    AddChoice(ActionString("0"), 0, oPC);
-                    AddChoice(ActionString("1"), 1, oPC);
-                    AddChoice(ActionString("2"), 2, oPC);
-                    AddChoice(ActionString("3"), 3, oPC);
-                    AddChoice(ActionString("4"), 4, oPC);
-                    AddChoice(ActionString("5"), 5, oPC);
-                    AddChoice(ActionString("6"), 6, oPC);
-                    AddChoice(ActionString("7"), 7, oPC);
-                    AddChoice(ActionString("8"), 8, oPC);
-                    */
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -549,7 +547,7 @@ void main()
                     break;
                 }
                 case STAGE_CRAFT_CONFIRM:
-                {   //approximate PHB item prices stored in baseitems.2da (accurate except for shields)
+                {   //PHB item prices stored in baseitems.2da
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
                     SetIdentified(oNewItem, FALSE);
                     nTemp = GetGoldPieceValue(oNewItem) / StringToInt(Get2DACache("baseitems", "ItemMultiplier", nType));
@@ -632,6 +630,15 @@ void main()
                     MarkStageSetUp(nStage);
                     break;
                 }
+                case STAGE_CONFIRM_MAGIC:
+                {
+                    AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
+                    SetHeader("");
+                    AddChoice(ActionString(""), <CONSTANT>, oPC);
+                    MarkStageSetUp(nStage);
+                    break;
+                }
+
                 /*
                 case <CONSTANT>:
                 {
@@ -717,8 +724,19 @@ void main()
                     }
                     else
                     {
-                        nType = nChoice;
+                        string sFile = GetCrafting2DA(oItem);
+                        nType = StringToInt(Get2DACache(sFile, "Type", nChoice));
                         SetLocalInt(oPC, PRC_CRAFT_TYPE, nType);
+                        sSubtype = Get2DACache(sFile, "SubType", nChoice);
+                        sCostTable = Get2DACache(sFile, "CostTableValue", nChoice);
+                        sParam1 = Get2DACache(sFile, "Param1Value", nChoice);
+                        if(sSubtype != "")
+                            SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, StringToInt(sSubtype));
+                        if(sCostTable != "")
+                            SetLocalInt(oPC, PRC_CRAFT_COSTTABLEVALUE, StringToInt(sCostTable));
+                        if(sParam1 != "")
+                            SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, StringToInt(sParam1));
+
                         sSubtype = Get2DACache("itempropdef", "SubTypeResRef", nType);
                         SetLocalString(oPC, PRC_CRAFT_SUBTYPE, sSubtype);
                         sCostTable = Get2DACache("itempropdef", "CostTableResRef", nType);
@@ -741,7 +759,7 @@ void main()
                             nPropList |= HAS_PARAM1;
                         SetLocalInt(oPC, PRC_CRAFT_PROPLIST, nPropList);
                     }
-                    nStage = GetNextItemPropStage(nStage, oPC, nPropList);
+                    nStage = STAGE_CONFIRM_MAGIC; //GetNextItemPropStage(nStage, oPC, nPropList);
                 }
                 break;
             }
@@ -949,6 +967,10 @@ void main()
                     ClearCurrentStage(oPC);
                 }
                 MarkStageNotSetUp(nStage, oPC);
+                break;
+            }
+            case STAGE_CONFIRM_MAGIC:
+            {
                 break;
             }
         }

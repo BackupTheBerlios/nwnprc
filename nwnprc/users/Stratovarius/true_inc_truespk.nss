@@ -163,8 +163,8 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 	// We're targetting a creature
 	if (nLexicon == LEXICON_EVOLVING_MIND)
 	{
-		// Check for Speak Unto the Masses
-		if (GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES))
+		// Check for Speak Unto the Masses. Syllables use the Evolving Mind formula, but can't Speak Unto Masses
+		if (GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES) && !GetIsSyllable(PRCGetSpellId()))
 		{
 			// Speak to the Masses affects all creatures of the same race in the AoE
 			// Grants a +2 DC for each of them

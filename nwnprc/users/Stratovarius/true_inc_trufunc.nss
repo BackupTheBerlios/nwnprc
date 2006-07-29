@@ -160,6 +160,14 @@ int GetLexiconByUtterance(int nSpellId);
 void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance utter);
 
 /**
+ * Returns TRUE if it is a Syllable (Bereft class ability).
+ * @param nSpellId   Utterance to check
+ *
+ * @return           TRUE or FALSE
+ */
+int GetIsSyllable(int nSpellId);
+
+/**
  * Applies modifications to a utterance's damage that depend on some property
  * of the target.
  * Currently accounts for:
@@ -193,7 +201,7 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
 /*             Function definitions             */
 //////////////////////////////////////////////////
 
-int GetUtteringClass(object oTrueSpeaker = OBJECT_SELF)
+int GetTruespeakingClass(object oTrueSpeaker = OBJECT_SELF)
 {
     return GetLocalInt(oTrueSpeaker, PRC_TRUESPEAKING_CLASS) - 1;
 }
@@ -202,6 +210,8 @@ int GetTrueSpeakerLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INV
 {
     int nLevel;
     int nAdjust = GetLocalInt(oTrueSpeaker, PRC_CASTERLEVEL_ADJUSTMENT);
+    // Bereft's speak syllables and use their character level.
+    if (GetIsSyllable(PRCGetSpellId()) nUseHD = TRUE;
     
     // If this is set, return the user's HD
     if (nUseHD) return GetHitDice(oTrueSpeaker);
@@ -407,6 +417,17 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
             // Get next target
             oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
 	}// end while - Target loop
+}
+
+int GetIsSyllable(int nSpellId)
+{
+	if (SYLLABLE_DETACHMENT == nSpellId)  return TRUE;
+	if (SYLLABLE_AFFLICATION == nSpellId) return TRUE;
+	if (SYLLABLE_EXILE == nSpellId)       return TRUE;
+	if (SYLLABLE_DISSOLUTION == nSpellId) return TRUE;
+	if (SYLLABLE_ENERVATION == nSpellId)  return TRUE;
+	
+	return FALSE;
 }
 /*
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,

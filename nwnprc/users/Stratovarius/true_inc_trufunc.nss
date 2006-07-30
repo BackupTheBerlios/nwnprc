@@ -421,11 +421,13 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
 
 int GetIsSyllable(int nSpellId)
 {
-	if (SYLLABLE_DETACHMENT == nSpellId)  return TRUE;
-	if (SYLLABLE_AFFLICATION == nSpellId) return TRUE;
-	if (SYLLABLE_EXILE == nSpellId)       return TRUE;
-	if (SYLLABLE_DISSOLUTION == nSpellId) return TRUE;
-	if (SYLLABLE_ENERVATION == nSpellId)  return TRUE;
+	if (SYLLABLE_DETACHMENT == nSpellId)        return TRUE;
+	else if (SYLLABLE_AFFLICATION_SIGHT == nSpellId) return TRUE;
+	else if (SYLLABLE_AFFLICATION_SOUND == nSpellId) return TRUE;
+	else if (SYLLABLE_AFFLICATION_TOUCH == nSpellId) return TRUE;
+	else if (SYLLABLE_EXILE == nSpellId)             return TRUE;
+	else if (SYLLABLE_DISSOLUTION == nSpellId)       return TRUE;
+	else if (SYLLABLE_ENERVATION == nSpellId)        return TRUE;
 	
 	return FALSE;
 }

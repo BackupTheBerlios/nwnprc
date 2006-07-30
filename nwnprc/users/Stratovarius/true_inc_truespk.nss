@@ -147,6 +147,8 @@ int GetCraftedToolCR(object oItem)
 int GetNormalUtterSpellId(int nSpellId)
 {
 	if (nSpellId == UTTER_DEFENSIVE_EDGE_R || nSpellId == UTTER_DEFENSIVE_EDGE) return UTTER_DEFENSIVE_EDGE;
+	else if (nSpellId == SYLLABLE_AFFLICATION_SIGHT || nSpellId == SYLLABLE_AFFLICATION_SOUND || nSpellId == SYLLABLE_AFFLICATION_TOUCH) return SYLLABLE_AFFLICATION_SIGHT;
+	else if (nSpellId == BRIMSTONE_FIRE_3D6 || nSpellId == BRIMSTONE_FIRE_5D6 || nSpellId == BRIMSTONE_FIRE_8D6) return BRIMSTONE_FIRE_3D6;
 	
 	// This should never be triggered
 	return -1;

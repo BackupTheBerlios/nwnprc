@@ -10,6 +10,11 @@ Bugs: Dwarf Domain, Strength Domain
 
 Truenaming:
 
+Truenamer
+10/71 Utterances
+4 Prestige Classes
+15+ feats
+
 Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
 
 NEEDED TO TEST: Make Defensive Edge usable, do Class TLK enteries.
@@ -19,10 +24,12 @@ Make list of possible utterances.
 Make Truenamer Class: Class feats and TLK left.
 "Say My Name" - PRC Options Conversation + a switch for the TrueNamer, "Accept/Deny 'Say my Name and I am There'"
 
-1 Base Class
-~60 Utterances
-4 Prestige Classes
-15+ feats
+Truename PrCs:
+Bereft - 2das/TLK
+Brimstone Speaker - 2das/TLK, add as a spellcaster. Heavenly Entreaty. Add Utterances/feats to Word Archon summon. Do Astral Deva
+Acolyte of the Ego - Unstarted
+Fiendbinder - Unstarted
+
 
 Psionic PrCs:
 Iron Mind - cls_feat.2da, Invest Armour feat.

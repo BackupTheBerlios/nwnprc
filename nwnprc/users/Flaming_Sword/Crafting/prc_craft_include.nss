@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Jul 25, 2006
+    Modified: Aug 1, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -62,8 +62,9 @@ const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
 
-struct itemcostvars
+struct itemvars
 {
+    object item;
     int enhancement;
     int additionalcost;
     int epic;
@@ -314,22 +315,25 @@ void DisallowType(object oItem, string sFile, itemproperty ip)
     }
 }
 
-//Returns a struct containing enhancement and additional cost values
-struct itemcostvars SetPropertyArray(object oItem, string sFile, int nCasterLevel, int bEpic)
+//Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
+struct itemvars GetItemVars(object oItem, string sFile, int nCasterLevel = 0, int bEpic = 0, int bSet = 0)
 {
-    struct itemcostvars strTemp;
+    struct itemvars strTemp;
     int i;
     int j, k, bEnhanced;
     int nEnhancement;
     int nSpellPattern;
     int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
-    if(array_exists(oItem, PRC_CRAFT_ITEMPROP_ARRAY))
-        array_delete(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
-    array_create(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
-
+    strTemp.item = oItem;
+    if(bSet)
+    {
+        if(array_exists(oItem, PRC_CRAFT_ITEMPROP_ARRAY))
+            array_delete(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
+        array_create(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
     //Setup
-    for(i = 0; i < MaxListSize(sFile); i++)
-        array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+        for(i = 0; i < MaxListSize(sFile); i++)
+            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+    }
     itemproperty ip = GetFirstItemProperty(oItem);
 
     //Checking itemprops
@@ -339,22 +343,28 @@ struct itemcostvars SetPropertyArray(object oItem, string sFile, int nCasterLeve
         if(k >= 0)
         {
             if(k < 20) bEnhanced = TRUE;
-            for(j = StringToInt(Get2DACache(sFile, "ReplaceLast", k)); j >= 0; j--)
+            if(bSet)
             {
-                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
+                for(j = StringToInt(Get2DACache(sFile, "ReplaceLast", k)); j >= 0; j--)
+                {
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
+                }
             }
             nEnhancement = StringToInt(Get2DACache(sFile, "Enhancement", k));
             strTemp.enhancement += nEnhancement;
             if(nEnhancement > 5) strTemp.epic = TRUE;
             strTemp.additionalcost += StringToInt(Get2DACache(sFile, "AdditionalCost", k));
         }
-        else if(k == -2)
+        else if(bSet && k == -2)
         {
             DisallowType(oItem, sFile, ip);
         }
         ip = GetNextItemProperty(oItem);
     }
     if(strTemp.enhancement > 10) strTemp.epic = TRUE;
+
+    if(!bSet) return strTemp;   //don't bother with array
+
     if(!bEpic && strTemp.epic)
     {   //attempting to craft epic item without epic crafting feat, fails
         for(i = 0; i < MaxListSize(sFile); i++)
@@ -831,6 +841,106 @@ object CreateStandardItem(object oOwner, int nBaseItemType, int nBaseAC = -1)
     }
 
     return CreateItemOnObject(sResRef, oOwner, nStackSize);
+}
+
+int GetEnhancementBaseCost(object oItem)
+{
+    string sFile = GetCrafting2DA(oItem);
+    if(sFile == "craft_armour") return 1000;
+    if(sFile == "craft_weapon") return 2000;
+
+    return 0;
+}
+
+//returns pnp market price of an item
+int GetPnPItemCost(struct itemvars strTemp)
+{
+    int nTemp, nMaterial, nEnhancement;
+    int nType = GetBaseItemType(strTemp.item);
+    SetIdentified(strTemp.item, FALSE);
+    nTemp = GetGoldPieceValue(strTemp.item) / StringToInt(Get2DACache("baseitems", "ItemMultiplier", nType));
+    SetIdentified(strTemp.item, TRUE);
+    int nFlag = StringToInt(Get2DACache("craft_gen_item", "Type", nType));
+    int nAdd = 0;
+    if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)
+    {
+        switch(nFlag)
+        {
+            case PRC_CRAFT_ITEM_TYPE_WEAPON: nAdd = 300; break;
+            case PRC_CRAFT_ITEM_TYPE_ARMOUR: nAdd = 150; break;
+            case PRC_CRAFT_ITEM_TYPE_SHIELD: nAdd = 150; break;
+            case PRC_CRAFT_ITEM_TYPE_AMMO: nAdd = 594; break;
+        }
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_ADAMANTINE)
+    {
+        switch(GetItemBaseAC(strTemp.item))
+        {
+            case 1:
+            case 2:
+            case 3: nAdd = 5000; break;
+            case 4:
+            case 5: nAdd = 10000; break;
+            case 6:
+            case 7:
+            case 8: nAdd = 15000; break;
+        }
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DARKWOOD)
+    {
+        nAdd += StringToInt(Get2DACache("baseitems", "TenthLBS", nType));
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DRAGONHIDE)
+    {
+        nAdd += nAdd + nTemp;
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_MITHRAL)
+    {
+        if(nType == BASE_ITEM_ARMOR)
+        {
+            switch(GetItemBaseAC(strTemp.item))
+            {
+                case 1:
+                case 2:
+                case 3: nAdd = 1000; break;
+                case 4:
+                case 5: nAdd = 4000; break;
+                case 6:
+                case 7:
+                case 8: nAdd = 9000; break;
+            }
+        }
+        else
+        {
+            switch(nFlag)
+            {
+                case PRC_CRAFT_ITEM_TYPE_WEAPON: nAdd = 50 * StringToInt(Get2DACache("baseitems", "TenthLBS", nType)); break;
+                case PRC_CRAFT_ITEM_TYPE_SHIELD: nAdd = 1000; break;
+            }
+        }
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_COLD_IRON)
+    {
+        //not implemented
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_ALCHEMICAL_SILVER)
+    {
+        //not implemented
+    }
+    nTemp += nAdd;
+    nEnhancement = GetEnhancementBaseCost(strTemp.item) * strTemp.enhancement * strTemp.enhancement;
+    if(strTemp.epic) nEnhancement *= 10;
+    nTemp += nEnhancement + strTemp.additionalcost;
+    if(nTemp < 1) nTemp = 1;
+
+    return nTemp;
+}
+
+int GetPnPItemXPCost(struct itemvars strTemp, int nCost)
+{
+    int nXP = nCost / 25;
+    if(strTemp.epic) nXP = (nCost / 100) + 10000;
+    return nXP;
 }
 
 //Creates an item for oPC of nBaseItemType, made of nMaterial

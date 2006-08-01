@@ -51,6 +51,8 @@ struct utterance{
     int nSpellId;
     /// The DC for speaking the utterance
     int nUtterDC;
+    //  Used to mark friendly utterances
+    int bIgnoreSR;
 
     /* Metautterances */
     /// Whether Empower utterance was used with this utterance

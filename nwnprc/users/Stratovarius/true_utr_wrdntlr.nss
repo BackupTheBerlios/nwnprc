@@ -1,27 +1,26 @@
 /*
    ----------------
-   Defensive Edge
-
-   true_utr_defedge
+   Word of Nurturing, Lesser
+   true_utr_wrdntlr
    ----------------
 
    19/7/06 by Stratovarius
 */ /** @file
 
-    Defensive Edge
+    Word of Nurturing, Lesser
 
-    Level: Evolving Mind 1
+    Level: Evolving Mind 2
     Range: 60 feet
     Target: One Creature
-    Duration: 5 Rounds
+    Duration: 5 Rounds or 1 round
     Spell Resistance: Yes
     Save: None
-    Metautterances: Extend
+    Metautterances: Extend, Empower
 
-    Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
-             Your ally gains +1 Armour Class.
-    Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
-             Your foe takes a -1 to Armour Class.            
+    Normal:  You speak a more complex utterance of health, providing an ally with the soothing balm of healing
+             Your ally gains regeneration +3.
+    Reverse: You speak a word that tears at an enemy's flesh, causing it to bleed from several wounds.
+             Your foe takes a 2d6 damage, and 2d6 damage the next round if you concentrate. Concentration involves doing nothing more strenous than moving.
 */
 
 #include "true_inc_trufunc"
@@ -48,36 +47,50 @@ void main()
 
     object oTrueSpeaker = OBJECT_SELF;
     object oTarget      = PRCGetSpellTargetObject();
-    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_EXTEND, LEXICON_EVOLVING_MIND);
+    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, (METAUTTERANCE_EXTEND | METAUTTERANCE_EMPOWER), LEXICON_EVOLVING_MIND);
 
     if(utter.bCanUtter)
     {
         // This is done so Speak Unto the Masses can read it out of the structure
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        utter.fDur       = RoundsToSeconds(5);
         int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
-        if(utter.bExtend) utter.fDur *= 2;
+        
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_DEFENSIVE_EDGE)
+        if (PRCGetSpellId() == UTTER_WORD_NURTURING_LESSER)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
-        	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+        	utter.fDur       = RoundsToSeconds(5);
+        	// Regeneration
+        	utter.eLink = EffectRegenerate(3, 6.0);
+        	// Impact VFX 
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_L_CYA);
         }
         // The REVERSE effect of the Utterance goes here
-        else 
+        else // UTTER_WORD_NURTURING_LESSER_R
         {
+        	utter.fDur       = RoundsToSeconds(1);
+        	
         	// If the Spell Penetration fails, don't apply any effects
         	if (!nSRCheck)
         	{
-       			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
+       			// Skill Penalty
+       			utter.eLink = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+			int nDamage = d6(2);
+			// Empower it
+			if(utter.bEmpower) nDamage += (nDamage/2);       			
+       			// Impact VFX 
+        		utter.eLink2 = EffecLinkEffects(EffectVisualEffect(VFX_IMP_MAGPUR), EffectDamage(nDamage));
+        		// This takes care of the concentration bit of the utterance
+        		DelayCommand(6.0, DoWordOfNurturingReverse(oTrueSpeaker, oTarget, utter));
         	}
         }
+        if(utter.bExtend) utter.fDur *= 2;
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
+        // Impact Effects
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);

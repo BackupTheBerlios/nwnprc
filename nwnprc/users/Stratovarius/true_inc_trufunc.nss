@@ -160,6 +160,13 @@ int GetLexiconByUtterance(int nSpellId);
 void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance utter);
 
 /**
+ * Affects all of the creatures with Speak Unto the Masses
+ *
+ * @param oTrueSpeaker    Caster of the Utterance
+ * @param oTarget         Original Target of Utterance
+ * @param utter           The utterance structure returned by EvaluateUtterance
+ */
+void DoWordOfNurturingReverse(object oTrueSpeaker, object oTarget, struct utterance utter);
  * Returns TRUE if it is a Syllable (Bereft class ability).
  * @param nSpellId   Utterance to check
  *
@@ -399,17 +406,19 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
             // Targeting limitations
             if(MyPRCGetRacialType(oAreaTarget) == nRacial)
             {
-            	// Do SR
-        	if (!MyPRCResistSpell(utter.oTrueSpeaker, oTarget, utter.nPen))
+            	// Do SR, or ignore if its a friendly utterance.
+        	if (!MyPRCResistSpell(utter.oTrueSpeaker, oAreaTarget, utter.nPen) || utter.bIgnoreSR)
         	{
         		// Saving throw, ignore it if there is no DC to check
-        		if(!PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF) ||
+        		if(!PRCMySavingThrow(utter.nSaveThrow, oAreaTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF) ||
         		   utter.nSaveDC == 0)
                 	{
                               	// Duration Effects
 		              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
 		              	// Impact Effects
         			SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
+        			// Word of Nurturing Impact
+        			DoWordOfNurturingReverse(oTrueSpeaker, oAreaTarget, utter);
        			} // end if - Saving Throw
        		} // end if - Spell Resistance
             }// end if - Targeting check
@@ -417,6 +426,25 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
             // Get next target
             oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
 	}// end while - Target loop
+}
+void DoWordOfNurturingReverse(object oTrueSpeaker, object oTarget, struct utterance utter)
+{
+	// Returns TRUE upon concentration failure
+	if (GetBreakConcentrationCheck(oTrueSpeaker)) return;
+
+	int nDamage;
+	// First, find out what utterance we're using
+	if (utter.nSpellId == UTTER_WORD_NURTURING_MINOR_R)    nDamage = d6().
+	else if (utter.nSpellId == UTTER_WORD_NURTURING_LESSER_R)   nDamage = d6(2).
+	else if (utter.nSpellId == UTTER_WORD_NURTURING_MODERATE_R) nDamage = d6(4).
+	else if (utter.nSpellId == UTTER_WORD_NURTURING_POTENT_R)   nDamage = d6(6).
+	else if (utter.nSpellId == UTTER_WORD_NURTURING_CRITICAL_R) nDamage = d6(8).
+	else if (utter.nSpellId == UTTER_WORD_NURTURING_GREATER_R)  nDamage = d6(10).
+	// Empower it
+	if(utter.bEmpower) nDamage += (nDamage/2);
+	// If we're using this, target has already failed SR and Saves
+	effect eImp = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGLAW), EffectDamage(nDamage));
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
 }
 
 int GetIsSyllable(int nSpellId)

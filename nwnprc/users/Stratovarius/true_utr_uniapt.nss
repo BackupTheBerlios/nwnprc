@@ -1,14 +1,14 @@
 /*
    ----------------
-   Defensive Edge
+   Universal Aptitude
 
-   true_utr_defedge
+   true_utr_uniapt
    ----------------
 
    19/7/06 by Stratovarius
 */ /** @file
 
-    Defensive Edge
+    Universal Aptitude
 
     Level: Evolving Mind 1
     Range: 60 feet
@@ -18,10 +18,10 @@
     Save: None
     Metautterances: Extend
 
-    Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
-             Your ally gains +1 Armour Class.
-    Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
-             Your foe takes a -1 to Armour Class.            
+    Normal:  You speak a word of proficiency and ability, increasing the natural aptitude of your ally.
+             Your ally gains +5 to all Skill checks.
+    Reverse: You instruct the universe to hinder your foe's ability to perform even everyday tasks.
+             Your foe takes a -5 penalty to all Skill checks.
 */
 
 #include "true_inc_trufunc"
@@ -59,25 +59,31 @@ void main()
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_DEFENSIVE_EDGE)
+        if (PRCGetSpellId() == UTTER_UNIVERSAL_APTITUDE)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
-        	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+        	// Skill Boost
+        	utter.eLink = EffectSkillIncrease(SKILL_ALL_SKILLS, 5);
+        	// Impact VFX 
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_S_CYA);
         }
         // The REVERSE effect of the Utterance goes here
-        else 
+        else // UTTER_UNIVERSAL_APTITUDE_R
         {
         	// If the Spell Penetration fails, don't apply any effects
         	if (!nSRCheck)
         	{
-       			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
+       			// Skill Penalty
+       			utter.eLink = EffectSkillDecrease(SKILL_ALL_SKILLS, 5);
+       			// Impact VFX 
+        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_S_RED);
         	}
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
+        // Impact Effects
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);

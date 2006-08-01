@@ -4,16 +4,34 @@
 // Level 1 Utterances
 const int UTTER_DEFENSIVE_EDGE        = 3526;
 const int UTTER_DEFENSIVE_EDGE_R      = 3527;
+const int UTTER_INERTIAL_SURGE          = -1;
+const int UTTER_INERTIAL_SURGE_R        = -1;
+const int UTTER_KNIGHTS_PUISSANCE       = -1;
+const int UTTER_KNIGHTS_PUISSANCE_R     = -1;
+const int UTTER_UNIVERSAL_APTITUDE      = -1;
+const int UTTER_UNIVERSAL_APTITUDE_R    = -1;
+const int UTTER_WORD_NURTURING_MINOR    = -1;
+const int UTTER_WORD_NURTURING_MINOR_R  = -1;
 
 // Level 2 Utterances
+const int UTTER_WORD_NURTURING_LESSER    = -1;
+const int UTTER_WORD_NURTURING_LESSER_R  = -1;
 
 // Level 3 Utterances
+const int UTTER_WORD_NURTURING_MODERATE    = -1;
+const int UTTER_WORD_NURTURING_MODERATE_R  = -1;
 
 // Level 4 Utterances
+const int UTTER_WORD_NURTURING_POTENT    = -1;
+const int UTTER_WORD_NURTURING_POTENT_R  = -1;
 
 // Level 5 Utterances
+const int UTTER_WORD_NURTURING_CRITICAL    = -1;
+const int UTTER_WORD_NURTURING_CRITICAL_R  = -1;
 
 // Level 6 Utterances
+const int UTTER_WORD_NURTURING_GREATER    = -1;
+const int UTTER_WORD_NURTURING_GREATER_R  = -1;
 
 // Level 7 Utterances
 

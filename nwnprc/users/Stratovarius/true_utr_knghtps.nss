@@ -1,14 +1,14 @@
 /*
    ----------------
-   Defensive Edge
+   Knight's Puissance
 
-   true_utr_defedge
+   true_utr_knghtps
    ----------------
 
    19/7/06 by Stratovarius
 */ /** @file
 
-    Defensive Edge
+    Knight's Puissance
 
     Level: Evolving Mind 1
     Range: 60 feet
@@ -18,10 +18,10 @@
     Save: None
     Metautterances: Extend
 
-    Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
-             Your ally gains +1 Armour Class.
-    Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
-             Your foe takes a -1 to Armour Class.            
+    Normal:  Your words show your ally a way to strike more accurately.
+             Your ally gains +2 Attack Bonus
+    Reverse: By speaking the reverse of this utterance, you impede an enemy's ability to strike.
+             Your foe takes a -2 to Attacks.
 */
 
 #include "true_inc_trufunc"
@@ -59,25 +59,31 @@ void main()
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_DEFENSIVE_EDGE)
+        if (PRCGetSpellId() == UTTER_KNIGHTS_PUISSANCE)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+        	utter.eLink = EffectLinkEffects(EffectAttackIncrease(2), EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR));
+        	// Impact VFX 
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
         }
         // The REVERSE effect of the Utterance goes here
-        else 
+        else // UTTER_KNIGHTS_PUISSANCE_R
         {
         	// If the Spell Penetration fails, don't apply any effects
         	if (!nSRCheck)
         	{
        			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
+       			utter.eLink = EffectLinkEffects(EffectAttackDecrease(2), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
+       			// Impact VFX 
+        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
         	}
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
+        // Impact Effects
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);

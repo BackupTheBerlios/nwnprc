@@ -1,3 +1,11 @@
+
+int GetFeatForSeed(int nSeedID);
+int GetIPForSeed(int nSeedID);
+int GetDCForSeed(int nSeedID);
+int GetClassForSeed(int nSeedID);
+int GetSeedFromAbrev(string sAbrev);
+string GetNameForSeed(int nSeedID);
+
 int GetDCForSpell(int nSpellID);
 int GetFeatForSpell(int nSpellID);
 int GetResearchFeatForSpell(int nSpellID);
@@ -58,6 +66,13 @@ int GetSeedFromAbrev(string sAbrev)
     return -1;
 }
 
+string GetNameForSeed(int nSeedID)
+{
+    int nFeat = GetFeatForSeed(nSeedID);
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("feats", "FEAT", nFeat)));
+    return sName;
+}
+
 // SPELL FUNCTIONS
 
 int GetDCForSpell(int nSpellID)
@@ -115,6 +130,46 @@ int GetR4ForSpell(int nSpellID)
     return StringToInt(Get2DACache("epicspells", "Prereq4", nSpellID));
 }
 
+int GetS1ForSpell(int nSpellID)
+{
+    string sSeed = Get2DACache("epicspells", "PrereqSeed1", nSpellID);
+    if(sSeed == "")
+        return -1;
+    return StringToInt(sSeed);
+}
+
+int GetS2ForSpell(int nSpellID)
+{
+    string sSeed = Get2DACache("epicspells", "PrereqSeed2", nSpellID);
+    if(sSeed == "")
+        return -1;
+    return StringToInt(sSeed);
+}
+
+int GetS3ForSpell(int nSpellID)
+{
+    string sSeed = Get2DACache("epicspells", "PrereqSeed3", nSpellID);
+    if(sSeed == "")
+        return -1;
+    return StringToInt(sSeed);
+}
+
+int GetS4ForSpell(int nSpellID)
+{
+    string sSeed = Get2DACache("epicspells", "PrereqSeed4", nSpellID);
+    if(sSeed == "")
+        return -1;
+    return StringToInt(sSeed);
+}
+
+int GetS5ForSpell(int nSpellID)
+{
+    string sSeed = Get2DACache("epicspells", "PrereqSeed5", nSpellID);
+    if(sSeed == "")
+        return -1;
+    return StringToInt(sSeed);
+}
+
 int GetSpellFromAbrev(string sAbrev)
 {
     sAbrev = GetStringLowerCase(sAbrev);
@@ -137,228 +192,9 @@ int GetSpellFromAbrev(string sAbrev)
     return -1;
 }
 
-/// @todo These should be looked up in TLK
 string GetNameForSpell(int nSpellID)
 {
-    string sReturn;
-    switch(nSpellID)
-    {
-        case SPELL_EPIC_ACHHEEL:
-            sReturn = "Achilles Heel";
-            break;
-        case SPELL_EPIC_ALLHOPE:
-            sReturn = "All Hope Lost";
-            break;
-        case SPELL_EPIC_AL_MART:
-            sReturn = "Allied Martyr";
-            break;
-        case SPELL_EPIC_ANARCHY:
-            sReturn = "Anarchy's Call";
-            break;
-        case SPELL_EPIC_ANBLAST:
-            sReturn = "Animus Blast";
-            break;
-        case SPELL_EPIC_ANBLIZZ:
-            sReturn = "Animus Blizzard";
-            break;
-        case SPELL_EPIC_ARMY_UN:
-            sReturn = "Army Unfallen";
-            break;
-        case SPELL_EPIC_A_STONE:
-            sReturn = "Audience of Stone";
-            break;
-        case SPELL_EPIC_BATTLEB:
-            sReturn = "Battle Bounding";
-            break;
-        case SPELL_EPIC_CELCOUN:
-            sReturn = "Celestial Council";
-            break;
-        case SPELL_EPIC_CHAMP_V:
-            sReturn = "Champion's Valor";
-            break;
-        case SPELL_EPIC_CON_RES:
-            sReturn = "Contingent Resurrection";
-            break;
-        case SPELL_EPIC_CON_REU:
-            sReturn = "Contingent Reunion";
-            break;
-        case SPELL_EPIC_DEADEYE:
-            sReturn = "Deadeye Sense";
-            break;
-        case SPELL_EPIC_DTHMARK:
-            sReturn = "Deathmark";
-            break;
-        case SPELL_EPIC_DIREWIN:
-            sReturn = "Dire Winter";
-            break;
-        case SPELL_EPIC_DRG_KNI:
-            sReturn = "Dragon Knight";
-            break;
-        case SPELL_EPIC_DREAMSC:
-            sReturn = "Dreamscape";
-            break;
-        case SPELL_EPIC_DULBLAD:
-            sReturn = "Dullblades";
-            break;
-        case SPELL_EPIC_DWEO_TH:
-            sReturn = "Dweomer Thief";
-            break;
-        case SPELL_EPIC_ENSLAVE:
-            sReturn = "Enslave";
-            break;
-        case SPELL_EPIC_EP_M_AR:
-            sReturn = "Epic Mage Armor";
-            break;
-        case SPELL_EPIC_EP_RPLS:
-            sReturn = "Epic Repulsion";
-            break;
-        case SPELL_EPIC_EP_SP_R:
-            sReturn = "Epic Spell Reflection";
-            break;
-        case SPELL_EPIC_EP_WARD:
-            sReturn = "Epic Warding";
-            break;
-        case SPELL_EPIC_ET_FREE:
-            sReturn = "Eternal Freedom";
-            break;
-        case SPELL_EPIC_FIEND_W:
-            sReturn = "Fiendish Words";
-            break;
-        case SPELL_EPIC_FLEETNS:
-            sReturn = "Fleetness of Foot";
-            break;
-        case SPELL_EPIC_GEMCAGE:
-            sReturn = "Gem Cage";
-            break;
-        case SPELL_EPIC_GODSMIT:
-            sReturn = "Godsmite";
-            break;
-        case SPELL_EPIC_GR_RUIN:
-            sReturn = "Greater Ruin";
-            break;
-        case SPELL_EPIC_GR_SP_RE:
-            sReturn = "Greater Spell Resistance";
-            break;
-        case SPELL_EPIC_GR_TIME:
-            sReturn = "Greater Timestop";
-            break;
-        case SPELL_EPIC_HELSEND:
-            sReturn = "Hell Send";
-            break;
-        case SPELL_EPIC_HELBALL:
-            sReturn = "Hellball";
-            break;
-        case SPELL_EPIC_HERCALL:
-            sReturn = "Herculean Alliance";
-            break;
-        case SPELL_EPIC_HERCEMP:
-            sReturn = "Herculean Empowerment";
-            break;
-        case SPELL_EPIC_IMPENET:
-            sReturn = "Impenetrability";
-            break;
-        case SPELL_EPIC_LEECH_F:
-            sReturn = "Leech Field";
-            break;
-        case SPELL_EPIC_LEG_ART:
-            sReturn = "Legendary Artisan";
-            break;
-        case SPELL_EPIC_LIFE_FT:
-            sReturn = "Life Force Transfer";
-            break;
-        case SPELL_EPIC_MAGMA_B:
-            sReturn = "Magma Burst";
-            break;
-        case SPELL_EPIC_MASSPEN:
-            sReturn = "Mass Penguin";
-            break;
-        case SPELL_EPIC_MORI:
-            sReturn = "Momento Mori";
-            break;
-        case SPELL_EPIC_MUMDUST:
-            sReturn = "Mummy Dust";
-            break;
-        case SPELL_EPIC_NAILSKY:
-            sReturn = "Nailed to the Sky";
-            break;
-        case SPELL_EPIC_NIGHTSU:
-            sReturn = "Night's Undoing";
-            break;
-        case SPELL_EPIC_ORDER_R:
-            sReturn = "Order Restored";
-            break;
-        case SPELL_EPIC_PATHS_B:
-            sReturn = "Paths Become Known";
-            break;
-        case SPELL_EPIC_PEERPEN:
-            sReturn = "Peerless Penitence";
-            break;
-        case SPELL_EPIC_PESTIL:
-            sReturn = "Pestilence";
-            break;
-        case SPELL_EPIC_PIOUS_P:
-            sReturn = "Pious Parley";
-            break;
-        case SPELL_EPIC_PLANCEL:
-            sReturn = "Planar Cell";
-            break;
-        case SPELL_EPIC_PSION_S:
-            sReturn = "Psionic Salvo";
-            break;
-        case SPELL_EPIC_RAINFIR:
-            sReturn = "Rain of Fire";
-            break;
-        case SPELL_EPIC_RISEN_R:
-            sReturn = "Risen Reunited";
-            break;
-        case SPELL_EPIC_RUINN://nonstandard
-            sReturn = "Ruin";
-            break;
-        case SPELL_EPIC_SINGSUN:
-            sReturn = "Singular Sunder";
-            break;
-        case SPELL_EPIC_SP_WORM:
-            sReturn = "Spell Worm";
-            break;
-        case SPELL_EPIC_STORM_M:
-            sReturn = "Storm Mantle";
-            break;
-        case SPELL_EPIC_SUMABER:
-            sReturn = "Summon Aberration";
-            break;
-        case SPELL_EPIC_SUP_DIS:
-            sReturn = "Superb Dispelling";
-            break;
-        case SPELL_EPIC_SYMRUST:
-            sReturn = "Symrustar's Spellbinding";
-            break;
-        case SPELL_EPIC_THEWITH:
-            sReturn = "The Withering";
-            break;
-        case SPELL_EPIC_TOLO_KW:
-            sReturn = "Tolodine's Killing Wind";
-            break;
-        case SPELL_EPIC_TRANVIT:
-            sReturn = "Transcendent Vitality";
-            break;
-        case SPELL_EPIC_TWINF:
-            sReturn = "Twinfiend";
-            break;
-        case SPELL_EPIC_UNHOLYD:
-            sReturn = "Unholy Disciple";
-            break;
-        case SPELL_EPIC_UNIMPIN:
-            sReturn = "Unimpinged";
-            break;
-        case SPELL_EPIC_UNSEENW:
-            sReturn = "Unseen Wanderer";
-            break;
-        case SPELL_EPIC_WHIP_SH:
-            sReturn = "Whip of Shar";
-            break;
-    }
-    return sReturn;
+    int nFeat = GetFeatForSpell(nSpellID);
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("feats", "FEAT", nFeat)));
+    return sName;
 }
-
-// Test main
-//void main(){}

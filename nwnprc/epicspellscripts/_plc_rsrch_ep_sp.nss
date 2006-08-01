@@ -49,6 +49,11 @@ void main()
         int nR2 = GetR2ForSpell(nEpicSpell);
         int nR3 = GetR3ForSpell(nEpicSpell);
         int nR4 = GetR4ForSpell(nEpicSpell);
+        int nS1 = GetS1ForSpell(nEpicSpell);
+        int nS2 = GetS2ForSpell(nEpicSpell);
+        int nS3 = GetS3ForSpell(nEpicSpell);
+        int nS4 = GetS4ForSpell(nEpicSpell);
+        int nS5 = GetS5ForSpell(nEpicSpell);
         string sSc = GetSchoolForSpell(nEpicSpell);
         // Make sure the player is allowed to research from this placeable.
         int nAllowed = FALSE;
@@ -64,7 +69,7 @@ void main()
         if (nAllowed == TRUE)
         {
             // Make sure the player doesn't already know this spell.
-            if (!GetHasFeat(nFE, oPC))
+            if (!GetHasEpicSpellKnown(nEpicSpell, oPC))
             {
                 // If applicable, adjust the spell's DC.
                 if (GetPRCSwitch(PRC_EPIC_FOCI_ADJUST_DC) == TRUE)
@@ -76,9 +81,9 @@ void main()
                     if (GetHasEnoughExperienceToResearch(oPC, nDC))
                     {
                         // Does the player have all of the other requirements?
-                        if (GetHasRequiredFeatsForResearch(oPC, nR1, nR2, nR3, nR4))
+                        if (GetHasRequiredFeatsForResearch(oPC, nR1, nR2, nR3, nR4, nS1, nS2, nS3, nS4, nS5))
                         {
-                            DoSpellResearch(oPC, nDC, nIP, sSc, oBook);
+                            DoSpellResearch(oPC, nDC, nEpicSpell, sSc, oBook);
                             return;
                         }
                         else

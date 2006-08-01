@@ -150,7 +150,8 @@ int GetHasEnoughGoldToResearch(object oPC, int nSpellDC);
 int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC);
 
 // Returns TRUE if oPC has the passed in required feats (Seeds or other Epic spells)... needs BLAH_IP's
-int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0);
+int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0, 
+    int nSeed1 = 0, int nSeed2 = 0, int nSeed3 = 0, int nSeed4 = 0, int nSeed5 = 0);
 
 // Returns success (TRUE) or failure (FALSE) in oPC's researching of a spell.
 int GetResearchResult(object oPC, int nSpellDC);
@@ -193,7 +194,11 @@ void UnequipAnyImmunityItems(object oTarget, int nImmType);
 int GetEpicSpellSaveDC(object oCaster = OBJECT_SELF, object oTarget = OBJECT_INVALID, int nSpellID = -1);
 
 
+int GetHasEpicSpellKnown(int nEpicSpell, object oPC);
+void SetEpicSpellKnown(int nEpicSpell, object oPC, int nState = TRUE);
 
+int GetHasEpicSeedKnown(int nEpicSeed, object oPC);
+void SetEpicSeedKnown(int nEpicSeed, object oPC, int nState = TRUE);
 
 #include "prc_inc_spells"
 #include "prc_class_const"
@@ -308,6 +313,33 @@ void MessageSpellSlots(object oPC)
         " Epic spell slots available.");
 }
 
+int GetHasEpicSpellKnown(int nEpicSpell, object oPC)
+{
+    int nReturn = GetPersistantLocalInt(oPC, "EpicSpellKnown_"+IntToString(nEpicSpell));
+    if(!nReturn)
+        nReturn = GetHasFeat(GetResearchFeatForSpell(nEpicSpell), oPC);
+    return nReturn;
+}
+
+void SetEpicSpellKnown(int nEpicSpell, object oPC, int nState = TRUE)
+{
+    SetPersistantLocalInt(oPC, "EpicSpellKnown_"+IntToString(nEpicSpell), nState);
+}
+
+int GetHasEpicSeedKnown(int nEpicSeed, object oPC)
+{
+    int nReturn = GetPersistantLocalInt(oPC, "EpicSeedKnown_"+IntToString(nEpicSeed));
+    if(!nReturn)
+        nReturn = GetHasFeat(GetFeatForSeed(nEpicSeed), oPC);
+    return nReturn;
+}
+
+void SetEpicSeedKnown(int nEpicSeed, object oPC, int nState = TRUE)
+{
+    SetPersistantLocalInt(oPC, "EpicSeedKnown_"+IntToString(nEpicSeed), nState);
+}
+
+
 int GetSpellcraftCheck(object oPC)
 {
     // Get oPC's skill rank.
@@ -358,7 +390,8 @@ int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
     return FALSE;
 }
 
-int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0)
+int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0, 
+    int nSeed1 = 0, int nSeed2 = 0, int nSeed3 = 0, int nSeed4 = 0, int nSeed5 = 0)
 {
     if(DEBUG)
     {
@@ -366,18 +399,24 @@ int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nRe
         DoDebug("Requirement #2: " + IntToString(nReq2));
         DoDebug("Requirement #3: " + IntToString(nReq3));
         DoDebug("Requirement #4: " + IntToString(nReq4));
+        DoDebug("Seed #1: " + IntToString(nSeed1));
+        DoDebug("Seed #2: " + IntToString(nSeed2));
+        DoDebug("Seed #3: " + IntToString(nSeed3));
+        DoDebug("Seed #4: " + IntToString(nSeed4));
+        DoDebug("Seed #4: " + IntToString(nSeed5));
     }
     
-    if (GetHasFeat(nReq1, oPC))
+    if ((GetHasFeat(nReq1, oPC) || nReq1 == 0)
+        && (GetHasFeat(nReq2, oPC) || nReq2 == 0)
+        && (GetHasFeat(nReq3, oPC) || nReq3 == 0)
+        && (GetHasFeat(nReq4, oPC) || nReq4 == 0)
+        && (GetHasEpicSeedKnown(nSeed1, oPC) || nSeed1 == -1)
+        && (GetHasEpicSeedKnown(nSeed2, oPC) || nSeed2 == -1)
+        && (GetHasEpicSeedKnown(nSeed3, oPC) || nSeed3 == -1)
+        && (GetHasEpicSeedKnown(nSeed4, oPC) || nSeed4 == -1)
+        && (GetHasEpicSeedKnown(nSeed5, oPC) || nSeed5 == -1))
     {
-        if (GetHasFeat(nReq2, oPC) || nReq2 == 0)
-        {
-            if (GetHasFeat(nReq3, oPC) || nReq3 == 0)
-            {
-                if (GetHasFeat(nReq4, oPC) || nReq4 == 0)
-                    return TRUE;
-            }
-        }
+        return TRUE;
     }
     return FALSE;
 }
@@ -422,10 +461,10 @@ int GetCanCastSpell(object oPC, int nEpicSpell)
     // Adjust the DC to account for Spell Foci feats.
     nSpellDC -= GetDCSchoolFocusAdjustment(oPC, sChool);
     int nCheck = GetSpellcraftCheck(oPC);
-    // Does oPC have any epic spell slots available?
-    if (!GetIsPC(oPC))
+    // Does oPC already know it
+    if (!GetHasEpicSpellKnown(nEpicSpell, oPC))
     {
-        return TRUE;
+        return FALSE;
     }
     if (!(GetSpellSlots(oPC) >= 1))
     { // No? Cancel spell, then.
@@ -464,9 +503,7 @@ void GiveFeat(object oPC, int nFeatIP)
 {
     object oSkin = GetPCSkin(oPC);
     if (oSkin != OBJECT_INVALID)
-        //AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(nFeatIP), oSkin);
         IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nFeatIP), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-    SetLocalInt(oPC, "nEpicSpellFeatCastable", GetCastableFeatCount(oPC));
 }
 
 void TakeFeat(object oPC, int nFeatIP)
@@ -494,6 +531,7 @@ int GetCastableFeatCount(object oPC)
     int nFeat = GetFeatForSpell(i);
     while(nFeat != 0)
     {
+        //test for the castable feat 
         if(GetHasFeat(nFeat, oPC))
             nX += 1;
         i++;
@@ -542,7 +580,8 @@ void DoSpellResearch(object oCaster, int nSpellDC, int nSpellIP, string sSchool,
     if (nResult == TRUE)
     {
         DelayCommand(fDelay, SendMessageToPC(oCaster, MES_RESEARCH_SUCCESS));
-        DelayCommand(fDelay, GiveFeat(oCaster, nSpellIP));
+        //DelayCommand(fDelay, GiveFeat(oCaster, nSpellIP));
+        DelayCommand(fDelay, SetEpicSpellKnown(nSpellIP, oCaster, TRUE));
         DelayCommand(fDelay, DestroyObject(oBook));
         //research time
         //1 day per 50,000GP +1

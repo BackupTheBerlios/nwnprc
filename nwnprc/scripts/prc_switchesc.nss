@@ -202,6 +202,8 @@ void main()
                 AddChoice("Manage any active contingencies.", 3);
                 if(!GetPRCSwitch(PRC_EPIC_CONVO_LEARNING_DISABLE))
                     AddChoice("Research an Epic Spell.", 4);
+                AddChoice("List known epic spells.", 5);
+                AddChoice("List known epic seeds.", 6);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -211,12 +213,11 @@ void main()
                 int i;
                 for(i = 0; i < 71; i++)
                 {
-                    int nResearchedFeat = StringToInt(Get2DACache("epicspells", "ResFeatID", i));
-                    int nSpellFeat = StringToInt(Get2DACache("epicspells", "SpellFeatID", i));
-                    if(GetHasFeat(nResearchedFeat, oPC) && !GetHasFeat(nSpellFeat, oPC))
+                    int nSpellFeat = GetFeatForSpell(i);
+                    if(GetHasEpicSpellKnown(i, oPC) 
+                        && !GetHasFeat(nSpellFeat, oPC))
                     {
-                        string sName = GetStringByStrRef(
-                            StringToInt(Get2DACache("feat", "FEAT", nSpellFeat)));
+                        string sName = GetNameForSpell(i);
                         AddChoice(sName, i, oPC);
                     }
                 }
@@ -230,12 +231,10 @@ void main()
                 int i;
                 for(i = 0; i < 71; i++)
                 {
-                    int nFeat = StringToInt(Get2DACache("epicspells", "SpellFeatID", i));
+                    int nFeat = GetFeatForSpell(i);
                     if(GetHasFeat(nFeat, oPC))
                     {
-                        string sName = GetStringByStrRef(
-                            StringToInt(Get2DACache("feat", "FEAT", StringToInt(
-                                Get2DACache("epicspells", "SpellFeatID", i)))));
+                        string sName = GetNameForSpell(i);
                         AddChoice(sName, i, oPC);
                     }
                 }
@@ -718,6 +717,28 @@ void main()
                 DestroyObject(oPlaceable, 60.0);
                 //end the conversation
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+            }
+            else if (nChoice == 5)
+            {
+                int i;
+                for(i = 0; i < 71; i++)
+                {
+                    if(GetHasEpicSpellKnown(i, oPC))
+                    {
+                        SendMessageToPC(oPC, GetNameForSpell(i)+" is known.");
+                    }
+                }
+            }
+            else if (nChoice == 6)
+            {
+                int i;
+                for(i = 0; i < 28; i++)
+                {
+                    if(GetHasEpicSeedKnown(i, oPC))
+                    {
+                        SendMessageToPC(oPC, GetNameForSeed(i)+" is known.");
+                    }
+                }
             }
 
             MarkStageNotSetUp(nStage, oPC);

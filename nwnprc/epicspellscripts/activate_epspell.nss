@@ -25,6 +25,11 @@ void main()
     int nR2 = GetR2ForSpell(nEpicSpell);
     int nR3 = GetR3ForSpell(nEpicSpell);
     int nR4 = GetR4ForSpell(nEpicSpell);
+    int nS1 = GetS1ForSpell(nEpicSpell);
+    int nS2 = GetS2ForSpell(nEpicSpell);
+    int nS3 = GetS3ForSpell(nEpicSpell);
+    int nS4 = GetS4ForSpell(nEpicSpell);
+    int nS5 = GetS5ForSpell(nEpicSpell);
     int nXC = GetCastXPForSpell(nEpicSpell);
     string sSc = GetSchoolForSpell(nEpicSpell);
     // If applicable, adjust the spell's DC.
@@ -49,6 +54,21 @@ void main()
         IntToString(nXP) + ".");
     SendMessageToPC(OBJECT_SELF, " - The gold cost for you to research is " +
         IntToString(nGP) + ".");
+    if (nS1 != -1)
+        SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
+        (Get2DACache("feat", "feat", StringToInt(Get2DACache("epicspellseeds", "FeatID", nS1))))));
+    if (nS2 != -1)
+        SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
+        (Get2DACache("feat", "feat", StringToInt(Get2DACache("epicspellseeds", "FeatID", nS2))))));
+    if (nS3 != -1)
+        SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
+        (Get2DACache("feat", "feat", StringToInt(Get2DACache("epicspellseeds", "FeatID", nS3))))));
+    if (nS4 != -1)
+        SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
+        (Get2DACache("feat", "feat", StringToInt(Get2DACache("epicspellseeds", "FeatID", nS4))))));
+    if (nS5 != -1)
+        SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
+        (Get2DACache("feat", "feat", StringToInt(Get2DACache("epicspellseeds", "FeatID", nS5))))));
     if (nR1 != 0)
         SendMessageToPC(OBJECT_SELF, " - " + GetStringByStrRef(StringToInt
         (Get2DACache("feat", "feat", nR1))));

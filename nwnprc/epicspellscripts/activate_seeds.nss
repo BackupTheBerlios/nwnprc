@@ -58,13 +58,13 @@ void main()
     // have it, and is allowed to learn it.
     if (nAllowed == TRUE)
     {
-        if (!GetHasFeat(nFE, OBJECT_SELF))
+        if (!GetHasEpicSeedKnown(nSeed, OBJECT_SELF))
         {
             if (GetSpellcraftSkill(OBJECT_SELF) >= nDC)
             {
                 if (PLAY_SPELLSEED_CUT == TRUE)
                     ExecuteScript(SPELLSEEDS_CUT, OBJECT_SELF);
-                GiveFeat(OBJECT_SELF, nIP);
+                SetEpicSeedKnown(nSeed, OBJECT_SELF, TRUE);
                 SendMessageToPC(OBJECT_SELF, MES_LEARN_SEED);
                 DoBookDecay(oBook, OBJECT_SELF);
             }

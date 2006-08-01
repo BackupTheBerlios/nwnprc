@@ -7,11 +7,12 @@ This package includes:
 NWNX               2.6.1
 NWNX-ODBC        0.9.2.4
 NWNX-Letoscript  build 23 beta 4
-SQLite             3.2.1
+NWNX-Profiler      1.60
+SQLite             3.3.6
 Precacher, part of prc.jar
 
 You do not need to download anything else, buf for reference:
-NWNX and NWNX-ODBC are avaliable from www.nwnx.org Source code for these applications are in nwnxsrc.exe and odbc2src.exe in accordance with the lisence.
+NWNX, NWNX profiler and NWNX-ODBC are avaliable from www.nwnx.org Source code for these applications are in nwnxsrc.exe and odbc2src.exe in accordance with the lisence.
 NWNX-Letoscript is avaliable from http://weathersong.infopop.cc/groupee/forums/a/frm/f/9616039431
 SQLite is avaliable from www.sqlite.org
 The Precacher is based on a version made for the PRC by Yuritch, but rewritten into java by the PRC. As a jar file its source code is included in the jar

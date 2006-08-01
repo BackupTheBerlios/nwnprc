@@ -1,16 +1,16 @@
 ; Script generated with the Venis Install Wizard
 
-!ifndef PRCVERSION
-	!define PRCVERSION ""
+!ifndef PRCSPVERSION
+	!define PRCSPVERSION "15"
 !endif
 
-!ifndef PRCINSTALLVERSION
-	!define PRCINSTALLVERSION ""
+!ifndef PRCSPINSTALLVERSION
+	!define PRCSPINSTALLVERSION "1.5"
 !endif
 
 ; Define your application name
 !define APPNAME "PRC Server Pack"
-!define APPNAMEANDVERSION "PRC Server Pack ${PRCINSTALLVERSION}"
+!define APPNAMEANDVERSION "PRC Server Pack ${PRCSPINSTALLVERSION}"
 
 ; Enable LZMA compression for the smallest EXE.
 SetCompressor lzma
@@ -19,7 +19,7 @@ SetCompressor lzma
 Name "${APPNAMEANDVERSION}"
 InstallDir "$PROGRAMFILES\PRC Server Pack"
 InstallDirRegKey HKLM "Software\${APPNAME}" ""
-OutFile "Setup PRC Server ${PRCVERSION}.exe"
+OutFile "Setup PRC Server ${PRCSPINSTALLVERSION}.exe"
 Var NWNVERSION
 Var NWNPATH
 Var NWNPRCPATH
@@ -67,9 +67,12 @@ Section "PRC Pack" Section1
 	File "nwnxsrc.exe"
 	File "odbc2 changelog.txt"
 	File "odbc2src.exe"
+    File "nwnx_profiler.dll"
+    File "nwnx_profiler.html"
+    File "profilersrc.exe"
 	
 	;Precacher specifics
-	File "precacher sqlite.bat"
+	File "precacher sqlite prc.bat"
 	File "precacher mysql.bat"
 	File "sqlite.exe"
 	File "7za.exe"
@@ -143,10 +146,13 @@ Section Uninstall
 	Delete "$NWNPATH\nwnxsrc.exe"
 	Delete "$NWNPATH\odbc2 changelog.txt"
 	Delete "$NWNPATH\odbc2src.exe"
+    Delete "$NWNPATH\nwnx_profiler.dll"
+    Delete "$NWNPATH\nwnx_profiler.html"
+    Delete "$NWNPATH\profilersrc.exe"
         Delete "$NWNPATH\override\directory.2da"
 	
 	;Precacher specifics
-	Delete "$NWNPATH\precacher sqlite.bat"
+	Delete "$NWNPATH\precacher sqlite prc.bat"
 	Delete "$NWNPATH\precacher mysql.bat"
 	Delete "$NWNPATH\sqlite.exe"
 	Delete "$NWNPATH\7za.exe"

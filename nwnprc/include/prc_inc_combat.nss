@@ -419,6 +419,9 @@ struct AttackLoopVars
 
      // special effect applied on first attack, or all attacks
      effect eSpecialEffect;
+     //when the new PRC effect system is in place, this will be a reference to a local effect on the module
+     //that exists temporarilly and will be destroyed at the end
+     //string sEffectLocalName,
 
      //  the damage modifier and damage type for extra damage from special attacks
      int iDamageModifier, iDamageType;
@@ -3561,7 +3564,7 @@ void ApplyOnHitAbilities(object oDefender, object oAttacker, object oItem)
                // This is to catch OnHit: Unique
                if (IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER == GetItemPropertySubType(ip))
                {
-               		ExecuteScript("prc_onhitcast", oAttacker);
+                    ExecuteScript("prc_onhitcast", oAttacker);
                }
 
                // Store the weapon for retrieval in spellscripts.
@@ -4369,6 +4372,10 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      sAttackVars.iDamageType = iDamageType;
 
      sAttackVars.eSpecialEffect = eSpecialEffect;
+     //post prc-effectness
+     //sAttackVars.sEffectLocalName = "CombatStructEffect_"+ObjectToString(oDefender)+"_"+ObjectToString(oAttacker);
+     //SetLocalEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);
+     //this says e but is really a float
      sAttackVars.eDuration = eDuration;
      sAttackVars.bEffectAllAttacks = bEffectAllAttacks;
      sAttackVars.sMessageSuccess = sMessageSuccess;
@@ -4718,6 +4725,10 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
      sAttackVars.iDamageType = iDamageType;
 
      sAttackVars.eSpecialEffect = eSpecialEffect;
+     //post prc-effectness
+     //sAttackVars.sEffectLocalName = "CombatStructEffect_"+ObjectToString(oDefender)+"_"+ObjectToString(oAttacker);
+     //SetLocalEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);
+     //this says e but is really a float
      sAttackVars.eDuration = eDuration;
      sAttackVars.bEffectAllAttacks = FALSE;
      sAttackVars.sMessageSuccess = sMessageSuccess;

@@ -68,7 +68,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
     
 
     int nDuration = CasterLvl;
-    nDuration = 3 + GetScaledDuration(nDuration, oTarget);
+    int nScaledDuration;
+    nDuration = 3 + nDuration;
     int nPenetr = CasterLvl + SPGetPenetr();
 
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
@@ -133,7 +134,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if(oLowest != OBJECT_INVALID)
         {
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_SLEEP));
+            SignalEvent(oLowest, EventSpellCastAt(OBJECT_SELF, SPELL_SLEEP));
             //Make SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oLowest,nPenetr))
             {
@@ -145,7 +146,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                     if (GetIsImmune(oLowest, IMMUNITY_TYPE_SLEEP) == FALSE)
                     {
                         effect eLink2 = EffectLinkEffects(eLink, eVis);
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oLowest, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
+                        nScaledDuration = GetScaledDuration(nDuration, oLowest);
+                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oLowest, RoundsToSeconds(nScaledDuration));
                     }
                     else
                     // * even though I am immune apply just the sleep effect for the immunity message

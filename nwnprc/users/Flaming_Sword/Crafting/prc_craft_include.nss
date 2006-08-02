@@ -316,7 +316,7 @@ void DisallowType(object oItem, string sFile, itemproperty ip)
 }
 
 //Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
-struct itemvars GetItemVars(object oItem, string sFile, int nCasterLevel = 0, int bEpic = 0, int bSet = 0)
+struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterLevel = 0, int bEpic = 0, int bSet = 0)
 {
     struct itemvars strTemp;
     int i;
@@ -327,12 +327,12 @@ struct itemvars GetItemVars(object oItem, string sFile, int nCasterLevel = 0, in
     strTemp.item = oItem;
     if(bSet)
     {
-        if(array_exists(oItem, PRC_CRAFT_ITEMPROP_ARRAY))
-            array_delete(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
-        array_create(oItem, PRC_CRAFT_ITEMPROP_ARRAY);
+        if(array_exists(oPC, PRC_CRAFT_ITEMPROP_ARRAY))
+            array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
+        array_create(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
     //Setup
         for(i = 0; i < MaxListSize(sFile); i++)
-            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
     }
     itemproperty ip = GetFirstItemProperty(oItem);
 
@@ -347,7 +347,7 @@ struct itemvars GetItemVars(object oItem, string sFile, int nCasterLevel = 0, in
             {
                 for(j = StringToInt(Get2DACache(sFile, "ReplaceLast", k)); j >= 0; j--)
                 {
-                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
                 }
             }
             nEnhancement = StringToInt(Get2DACache(sFile, "Enhancement", k));
@@ -368,14 +368,14 @@ struct itemvars GetItemVars(object oItem, string sFile, int nCasterLevel = 0, in
     if(!bEpic && strTemp.epic)
     {   //attempting to craft epic item without epic crafting feat, fails
         for(i = 0; i < MaxListSize(sFile); i++)
-            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
     if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
     {   //no enhancement value, cannot add more itemprops, stop right there
-        array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
+        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
         for(i = 1; i < MaxListSize(sFile); i++)
-            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
 
@@ -385,11 +385,11 @@ struct itemvars GetItemVars(object oItem, string sFile, int nCasterLevel = 0, in
         if(array_get_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i))
         {
             if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
-                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
-                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else if(nCasterLevel < StringToInt(Get2DACache(sFile, "CasterLevel", i)))
-                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else
             {   //attempting to minimise 2da reads for spell prerequisite checking
                 nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", i));
@@ -403,7 +403,7 @@ struct itemvars GetItemVars(object oItem, string sFile, int nCasterLevel = 0, in
                     )
                     )
                 {
-                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
                 }
             }
         }
@@ -1075,7 +1075,7 @@ int MaxListSize(string sTable)
 {
     sTable = GetStringLowerCase(sTable); //sanity check
 
-    if(sTable == "craft_gen_item")  //no support for cep weapons just yet
+    if(sTable == "prc_craft_gen_item")  //no support for cep weapons just yet
         return 113;
     if(sTable == "craft_armour")
         return 64;

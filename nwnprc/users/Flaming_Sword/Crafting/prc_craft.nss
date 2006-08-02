@@ -272,7 +272,7 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
         if(sTable == "iprp_spells")
             i = SkipLine(i);
         else if(GetStringLeft(sTable, 6) == "craft_")
-            bValid = array_get_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i);
+            bValid = array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i);
         sTemp = Get2DACache(sTable, "Name", i);
         if((sTemp != "") && bValid)//this is going to kill
         {
@@ -375,7 +375,7 @@ void main()
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
                         SetLocalInt(oPC, PRC_CRAFT_AC, -1);
                         SetLocalInt(oPC, PRC_CRAFT_MIGHTY, -1);
-                        PopulateList(oPC, MaxListSize("craft_gen_item"), TRUE, "craft_gen_item");
+                        PopulateList(oPC, MaxListSize("prc_craft_gen_item"), TRUE, "prc_craft_gen_item");
                     }
                     else if(nState == PRC_CRAFT_STATE_MAGIC)
                     {
@@ -384,7 +384,7 @@ void main()
                         string sFile = GetCrafting2DA(oItem);
                         int nFeat = GetCraftingFeat(oItem);
                         int bEpic = GetHasFeat(GetEpicCraftingFeat(nFeat), oPC);
-                        struct itemvars strTemp = GetItemVars(oItem, sFile, nCasterLevel, bEpic, 1);
+                        struct itemvars strTemp = GetItemVars(oPC, oItem, sFile, nCasterLevel, bEpic, 1);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ENHANCE, strTemp.enhancement);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ADDITIONAL, strTemp.additionalcost);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC, strTemp.epic);
@@ -537,7 +537,7 @@ void main()
                     AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     AddChoice(ActionString("Normal"), PRC_CRAFT_FLAG_NONE, oPC);
-                    if(!((nBase == BASE_ITEM_ARMOR) && (GetItemBaseAC(oNewItem))))
+                    if(!((nBase == BASE_ITEM_ARMOR) && (!GetItemBaseAC(oNewItem))))
                     {
                         AddChoice(ActionString("Masterwork"), PRC_CRAFT_FLAG_MASTERWORK, oPC);
                         //if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
@@ -658,8 +658,8 @@ void main()
                     itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
                     IPSafeAddItemProperty(oNewItem, ip, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
 
-                    struct itemvars strTempOld = GetItemVars(oItem, sFile);
-                    struct itemvars strTempNew = GetItemVars(oNewItem, sFile);
+                    struct itemvars strTempOld = GetItemVars(oPC, oItem, sFile);
+                    struct itemvars strTempNew = GetItemVars(oPC, oNewItem, sFile);
                     int nCostOld = GetPnPItemCost(strTempOld);
                     int nCostNew = GetPnPItemCost(strTempNew);
                     int nCostDiff = nCostNew - nCostOld;    //assumes cost increases with addition of itemprops :P

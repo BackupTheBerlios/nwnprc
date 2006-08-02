@@ -658,7 +658,16 @@ void CheckNewSpellbooks(object oPC)
 if(DEBUG) DoDebug("CheckNewSpellbooks");
 if(DEBUG) DoDebug("nClass="+IntToString(nClass));
 if(DEBUG) DoDebug("nLevel="+IntToString(nLevel));
-        if(nLevel)
+        //if bard/sorc newspellbook is disabled after selecting
+        //remove those from radial
+        if((GetPRCSwitch(PRC_BARD_DISALLOW_NEWSPELLBOOK)
+                && nClass == CLASS_TYPE_BARD)
+            ||(GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK)
+                && nClass == CLASS_TYPE_SORCERER))
+        {
+            //do nothing
+        }        
+        else if(nLevel)
         {
             //raks cast as sorcs
             if(nClass == CLASS_TYPE_OUTSIDER

@@ -32,6 +32,7 @@
 const int STAGE_ENTRY                   =   0;
 const int STAGE_REENTRY                 =   1;
 const int STAGE_SPELL                   = 100;
+const int STAGE_SPELL_TARGET            = 101;
 const int STAGE_FEAT                    = 200;
 const int STAGE_FEAT_TARGET             = 201;
 const int STAGE_ITEM                    = 300;
@@ -63,7 +64,6 @@ const int STAGE_LEAVE_NO                = 602;
 //////////////////////////////////////////////////
 
 
-void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort);
 void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort)
 {
     int i;
@@ -89,6 +89,23 @@ void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort)
         }
     }
     if(i<GetPRCSwitch(FILE_END_FEAT))
+    {
+        DelayCommand(0.0, AddUseableFeats(nMax, nMax+(nMax-nMin), oPC, oCohort));
+    }
+}
+
+void AddUseableSpells(int nMin, int nMax, object oPC, object oCohort)
+{
+    int i;
+    for(i=nMin;i<nMax;i++)
+    {
+        if(GetHasSpell(i, oCohort))
+        {
+            string sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", i)));
+            AddChoice(sName, i, oPC);
+        }
+    }
+    if(i<GetPRCSwitch(FILE_END_SPELLS))
     {
         DelayCommand(0.0, AddUseableFeats(nMax, nMax+(nMax-nMin), oPC, oCohort));
     }
@@ -163,6 +180,15 @@ void main()
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
+            //using spellss
+            else if(nStage == STAGE_SPELL)
+            {
+                SetHeader("If I must. Which spell do you want me to cast?");
+                AddUseableFeats(0, 1000, oPC, oCohort);
+                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+            }
+            //targetting spells is combined with feats
             //using feats
             else if(nStage == STAGE_FEAT)
             {
@@ -171,10 +197,13 @@ void main()
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
-            else if(nStage == STAGE_FEAT_TARGET)
+            else if(nStage == STAGE_FEAT_TARGET
+                || nStage == STAGE_SPELL_TARGET)
             {
                 int nFeat = GetLocalInt(oCohort, "PRC_FeatToUse");
                 int nSpellID = StringToInt(Get2DACache("feat", "SPELLID", nFeat));
+                if(nStage == STAGE_SPELL_TARGET)
+                    nSpellID = GetLocalInt(oCohort, "PRC_SpellToUse");
 
                 int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
                 int nHostileSpell = StringToInt(Get2DACache("spells", "HostileSetting", nSpellID));
@@ -250,7 +279,10 @@ void main()
                     }
                 }
 
-                SetHeader("Who or what do you want me to use "+GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)))+" on?");
+                if(nStage == STAGE_FEAT_TARGET) 
+                    SetHeader("Who or what do you want me to use "+GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)))+" on?");
+                if(nStage == STAGE_SPELL_TARGET)
+                    SetHeader("Who or what do you want me to cast "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)))+" on?");
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -592,6 +624,7 @@ void main()
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
         DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
         DeleteLocalInt(oCohort, "PRC_FeatToUse");
+        DeleteLocalInt(oCohort, "PRC_SpellToUse");
         DeleteLocalInt(oCohort, "PRC_InCohortConvoMarker");
     }
     // Abort conversation cleanup.
@@ -606,6 +639,7 @@ void main()
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
         DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
         DeleteLocalInt(oCohort, "PRC_FeatToUse");
+        DeleteLocalInt(oCohort, "PRC_SpellToUse");
         DeleteLocalInt(oCohort, "PRC_InCohortConvoMarker");
     }
     // Handle PC responses
@@ -635,6 +669,53 @@ void main()
                 case 1: nStage = STAGE_LEAVE_YES;       break;
                 case 2: nStage = STAGE_LEAVE_NO;        break;
             }
+        }
+        else if(nStage == STAGE_SPELL)
+        {
+            SetLocalInt(oCohort, "PRC_SpellToUse", nChoice);
+            nStage = STAGE_SPELL_TARGET;
+        }
+        else if(nStage == STAGE_SPELL_TARGET)
+        {
+            int nSpellID = GetLocalInt(oCohort, "PRC_SpellToUse");
+            object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
+                       
+            //test if location or object
+            //use object by preference
+
+            int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
+            /*
+            # 0x01 = 1 = Self
+            # 0x02 = 2 = Creature
+            # 0x04 = 4 = Area/Ground
+            # 0x08 = 8 = Items
+            # 0x10 = 16 = Doors
+            # 0x20 = 32 = Placeables
+            */
+            int nCaster     = nTargetType &  1;
+            int nCreature   = nTargetType &  2;
+            int nLocation   = nTargetType &  4;
+            int nItem       = nTargetType &  8;
+            int nDoor       = nTargetType & 16;
+            int nPlaceable  = nTargetType & 32;
+            int nType = GetObjectType(oTarget);
+
+            if((oTarget == oCohort && nCaster)
+                || (nType == OBJECT_TYPE_CREATURE && nCreature)
+                || (nType == OBJECT_TYPE_DOOR && nDoor)
+                || (nType == OBJECT_TYPE_PLACEABLE && nPlaceable)
+                || (nType == OBJECT_TYPE_ITEM && nItem))
+            {
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort, ActionCastSpellAtObject(nSpellID, oTarget));
+            }
+            else if(nLocation)
+            {
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort, ActionCastSpellAtLocation(nSpellID, GetLocation(oTarget)));
+            }
+            
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);  
         }
         else if(nStage == STAGE_FEAT)
         {

@@ -1,0 +1,8 @@
+baseitems.2da : 0
+itempropdef.2da : 0
+itemprops.2da : 0
+traps.2da : 0
+vfx_persistent.2da : 0
+prc_consortium.tlk : 0
+cep.tlk : 0
+prccep.tlk : 0

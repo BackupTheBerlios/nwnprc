@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!--  
+	TLKTools - TLK<->XML generation tools
+	sample.xml
+
+	Copyright (C) 2004-2005 Guido Imperiale
+	This code is released under the terms of the GNU GPL.
+	Please refer to tlktools.h for more info.
+-->
+ 
+<!-- This is a comment -->
+
+<tlk>
+	<tlkread sex="m">prc_consortium.tlk</tlkread>
+	<tlkread sex="m">cep.tlk</tlkread>
+	<tlkwrite sex="m" lang="en">prccep.tlk</tlkwrite>
+	<xmlwrite>prccep.xml</xmlwrite>
+</tlk>

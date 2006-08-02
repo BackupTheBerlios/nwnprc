@@ -5,7 +5,6 @@
 1 Ethran        FEAT    2567          ****      
 2 ScriptVar     VAR     PRC_AllowHath 0         
 3 ScriptVar     VAR     PRC_DivSpell2 0         
-4 Spellcraft    SKILL   16            9         
-5 ScriptVar     VAR     PRC_Female    0         
-6 Human         RACE    6             ****      
-7 Deep_Imaskari RACE    230           ****      
+4 ScriptVar     VAR     PRC_Female    0         
+5 Human         RACE    6             ****      
+6 Deep_Imaskari RACE    230           ****      

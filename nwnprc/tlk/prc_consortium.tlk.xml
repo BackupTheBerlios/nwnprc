@@ -5,7 +5,7 @@
   <entry id="12289" lang="en" sex="m">Ocular Adepts</entry>
   <entry id="12290" lang="en" sex="m">ocular adepts</entry>
   <entry id="12291" lang="en" sex="m">(PRESTIGE CLASS)
-Each beholder believes that it represents a state of true perfection. Among the desperate wastrels of decadent cities and debased explorers of the subterranean Underdark can be found humanoids who agree, and who have entered into a surgical pact with the beholder race in an attempt to achieve even a sliver of that perfection. 
+Each beholder believes that it represents a state of true perfection. Among the desperate wastrels of decadent cities and debased explorers of the subterranean Underdark can be found humanoids who agree, and who have entered into a surgical pact with the beholder race in an attempt to achieve even a sliver of that perfection.
 
 These so-called Ocular Adepts, outcasts to their own societies, have pledged their services to one or more eye tyrants and pledged their religious devotion to the alien entity known as the Great Mother, the deity matron of all beholders.
 
@@ -44,66 +44,66 @@ Level
   <entry id="12301" lang="en" sex="m">Finger of Death Ray</entry>
   <entry id="12302" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
-If the save fails, the ray makes the target friendly towards the Adept for a number of rounds equal to the Adept's level. 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+If the save fails, the ray makes the target friendly towards the Adept for a number of rounds equal to the Adept's level.
 This spell only functions on humanoid targets.
 Use: Combat mode.</entry>
   <entry id="12303" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
 If the save fails, the ray causes the target to fall asleep for a number of rounds equal to the Adept's level.
 Use: Combat mode.</entry>
   <entry id="12304" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 3 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
 If the save fails, the target takes 2d8+10 damage. If the save succeeds, the target takes half damage.
 Use: Combat mode.</entry>
   <entry id="12305" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 4 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
 If the save fails, the target is slowed for a number of rounds equal to the Adept's level; their movement rate is halved and they can only take a partial action each round during this time.
 Use: Combat mode.</entry>
   <entry id="12306" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 5 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
 If the save fails, the target is afflicted with fear and will flee from the Adept.
 Use: Combat mode.</entry>
   <entry id="12307" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 6 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
 If the save fails, the ray causes the target to be friendly towards the Adept for a number of rounds equal to the Adept's level.
 Use: Combat mode.</entry>
   <entry id="12308" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 7 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make two Will saves vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
-If the first save fails, the target is Disarmed as per the feat. 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make two Will saves vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+If the first save fails, the target is Disarmed as per the feat.
 If the second save fails, the target is knocked back. In addition to this, the target is pushed away from the Adept.
 Use: Combat mode.</entry>
   <entry id="12309" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 8 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
 If the save fails, the target is instantly petrified.
 Use: Combat mode.</entry>
   <entry id="12310" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 9 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
-If the save fails, the target is instantly disintegrated and all of their items fall to the ground. 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+If the save fails, the target is instantly disintegrated and all of their items fall to the ground.
 If the save succeeds, the target takes 5d6 damage instead.
 Use: Combat mode.</entry>
   <entry id="12311" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 10 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack. 
-If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
-If the save fails, the target dies instantly. 
+Specifics: The Adept projects a ray that makes a ranged touch attack.
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+If the save fails, the target dies instantly.
 If the save succeeds, the target takes damage of (3d6 + the Adept's level) instead.
 Use: Combat mode.</entry>
   <entry id="12312" lang="en" sex="m">Your faith in the Great Mother has brought you great power - your third eye spews death all around you with the merest glance.
@@ -6275,7 +6275,7 @@ Augment: You can augment this power in one or both of the following ways.
 1. For every 2 additional power points you spend, this power's save DC increases by 1.
 2. For every 2 additional power points you spend, this power's range and the radius of its area both increase by 5 feet.</entry>
   <entry id="46534" lang="en" sex="m">Swarm of Crystals</entry>
-  <entry id="46535" lang="en" sex="m">CMetacreativity (Creation)
+  <entry id="46535" lang="en" sex="m">Metacreativity (Creation)
 Level: Psion/wilder 2
 Manifesting Time: 1 standard action
 Range: 15 ft.
@@ -11297,11 +11297,12 @@ Hathran, also known as the Witches of Rashemen, comprise an elite sisterhood of 
 
 REQUIREMENTS:
 
-Race: Human or Human Subrace
+Alignment: Lawful good, lawful neutral or neutral good.
 Gender: Female.
-Feats: Ethran. (This feat requires 11 Cha).
-Spellcasting: Able to cast 2nd-level arcane and divine spells.
-Skill: Spellcraft 9 ranks.
+Race: Human or Human Subrace.
+Spellcasting: Able to cast 2nd-level arcane spells and 2nd-level divine spells.
+Feats: Ethran.
+
 
 ABILITIES:
 
@@ -18000,28 +18001,28 @@ You can select</entry>
   <entry id="51267" lang="en" sex="m">truenamer</entry>
   <entry id="51268" lang="en" sex="m">(BASE CLASS)
   Truenamers study the words that comprise the fabric of existence. They seek to unravel and comprehend the mysteries of the Multiverse by learning the truenames of as many of its components as possible. A Truenamer learns new truenames as he progresses in level, which he can use as utterances to manipulate the world around him. All truenamers know the basic words of Truespeak that allow them to describe creatures they encounter, so the new words they learn enable them to alter those creatures in very specific ways. As they continue to advance, they also learn to describe - and thus affect - inanimate objects and even places, which are more difficult to describe using truenames.
-  
+
   - Hit Die: d6
   - Proficiencies: Truenamers gain Weapon Proficiency: Simple and Light Armour Proficiency.
   - Skill Points at Each Level: 4 + Int modifier.
   - Base Attack Bonus: +3/4.
   - Strong Saves: Will
-  
+
 ABILITIES:
 
 Level
 1:
 2: Knowledge Focus - Gain +3 Lore.
-3: 
+3:
 4:
-5: 
+5:
 6:
 7: Knowledge Focus - Gain +3 Lore.
 8: Bonus Recitation Feat
 9: See The Named - Scry, once per day as the spell.
 10: Knowledge Focus - Gain +3 Lore.
 11:
-12: 
+12:
 13:
 14: Knowledge Focus - Gain +3 Lore.
 15: Bonus Recitation Feat
@@ -18033,7 +18034,7 @@ Level
 
 TRUENAMING
 
-The DC of a Truenamer's utterance is 10 + 1/2 Truenamer level + Charisma Modifier. A Truenamer's caster level is equal to his class level. 
+The DC of a Truenamer's utterance is 10 + 1/2 Truenamer level + Charisma Modifier. A Truenamer's caster level is equal to his class level.
 Truespeak DC for Lexicon of the Evolving Mind: 15 + (2 * Target's Challenge Rating).
 Truespeak DC for Lexicon of the Crafted Tool: 15 + (2 * Item's Caster Level).
 Truespeak DC for Lexicon of the Perfected Map: 25.
@@ -18041,49 +18042,49 @@ Truespeak DC for Lexicon of the Perfected Map: 25.
 
 Utterances Max Level:
 Level   EvolvingMind   CraftedTool   PerfectedMap
-1       1              -             -            
-2       1              -             -            
-3       2              -             -            
-4       2              1             -            
-5       2              1             -            
-6       3              1             -            
-7       3              2             -            
-8       3              2             1           
-9       3              2             1           
-10      4              2             1           
-11      4              3             1           
-12      4              3             2           
-13      4              3             2           
-14      5              3             2           
-15      5              4             2           
-16      5              4             3           
-17      5              4             3           
-18      6              4             3           
-19      6              5             3           
-20      6              5             4           
+1       1              -             -
+2       1              -             -
+3       2              -             -
+4       2              1             -
+5       2              1             -
+6       3              1             -
+7       3              2             -
+8       3              2             1
+9       3              2             1
+10      4              2             1
+11      4              3             1
+12      4              3             2
+13      4              3             2
+14      5              3             2
+15      5              4             2
+16      5              4             3
+17      5              4             3
+18      6              4             3
+19      6              5             3
+20      6              5             4
 
 
 Utterances Known
 Level   EvolvingMind   CraftedTool   PerfectedMap
-1       1              -             -            
-2       2              -             -            
-3       3              -             -            
-4       4              1             -            
-5       5              1             -            
-6       6              1             -            
-7       7              2             -            
-8       8              2             1           
-9       9              2             1           
-10      10             2             1           
-11      11             3             1           
-12      12             3             2           
-13      13             3             2           
-14      14             3             2           
-15      15             4             2           
-16      16             4             3           
-17      17             4             3           
-18      18             4             3           
-19      19             5             3           
+1       1              -             -
+2       2              -             -
+3       3              -             -
+4       4              1             -
+5       5              1             -
+6       6              1             -
+7       7              2             -
+8       8              2             1
+9       9              2             1
+10      10             2             1
+11      11             3             1
+12      12             3             2
+13      13             3             2
+14      14             3             2
+15      15             4             2
+16      16             4             3
+17      17             4             3
+18      18             4             3
+19      19             5             3
 20      20             5             4</entry>
   <entry id="51269" lang="en" sex="m">Knowledge Focus</entry>
   <entry id="51270" lang="en" sex="m">Type of Feat: Class
@@ -18114,7 +18115,7 @@ Spell Resistance: Yes
 Save: None
 Metautterances: Extend
 
-Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
+Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself.
          Your ally gains +1 Armour Class.
 Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
          Your foe takes a -1 to Armour Class.</entry>
@@ -18819,7 +18820,7 @@ Use: Automatic.</entry>
   <entry id="52221" lang="en" sex="m">Diamond Soul</entry>
   <entry id="52222" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 9 Enlightened Fist
-Specifics: You gain spell resistance equal to 10 + monk class level + enlightened fist class level. 
+Specifics: You gain spell resistance equal to 10 + monk class level + enlightened fist class level.
 Use: Automatic.</entry>
   <entry id="52223" lang="en" sex="m">Unarmed Damage</entry>
   <entry id="52224" lang="en" sex="m">Type of Feat: Class

@@ -61,21 +61,21 @@ void AddCohortRaces(int nMin, int nMax, object oPC)
 {
     int i;
     int nMaxHD = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
+    int bUseSimpleRacialHD = GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD);
+    string sName;
     for(i=nMin;i<nMax;i++)
     {
         if(Get2DACache("racialtypes", "PlayerRace", i) == "1")
         {
-            string sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", i)));
+            sName = GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", i)));
             //if using racial HD, dont add them untill they can afford the minimum racial hd
-            if(GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD))
+            if(bUseSimpleRacialHD)
             {
-                //get the real race
-                int nRacialHD = StringToInt(Get2DACache("ECL", "RaceHD", i));
-                if(nMaxHD > nRacialHD)
-                    AddChoice(sName, i);
+                if(nMaxHD > StringToInt(Get2DACache("ECL", "RaceHD", i)))
+                    AddChoice(sName, i, oPC);
             }
             else
-                AddChoice(sName, i);
+                AddChoice(sName, i, oPC);
         }
     }
 }
@@ -350,10 +350,10 @@ void main()
             else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_RACE)
             {
                 SetHeader("Select a race for the cohort:");
-                AddCohortRaces(  0, 100, oPC);
-                DelayCommand(0.01, AddCohortRaces(101, 200, oPC));
-                DelayCommand(0.02, AddCohortRaces(201, 255, oPC));
-
+                AddCohortRaces(  0, 255, oPC);/*
+                DelayCommand(0.0f, AddCohortRaces(101, 200, oPC));
+                DelayCommand(0.0f, AddCohortRaces(201, 255, oPC));
+*/
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_LEADERSHIP_ADD_CUSTOM_GENDER)
@@ -529,7 +529,7 @@ void main()
                 }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
-                MarkStageSetUp(nStage, oPC);            
+                MarkStageSetUp(nStage, oPC);
             }
             else if (nStage == STAGE_TEMPLATE)
             {
@@ -544,7 +544,7 @@ void main()
                         sName = GetStringByStrRef(nNameID);
                     else
                         sName = Get2DACache("templates", "Label", i);
-                    //check type 
+                    //check type
                     //inherited templates can only be taken with 1 HD
                     if((StringToInt(Get2DACache("templates", "Type", i)) & 1)
                         || !ApplyTemplateToObject(i, oPC, FALSE))
@@ -557,7 +557,7 @@ void main()
                 }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 
-                MarkStageSetUp(nStage, oPC);            
+                MarkStageSetUp(nStage, oPC);
             }
             else if (nStage == STAGE_TEMPLATE_CONFIRM)
             {
@@ -574,7 +574,7 @@ void main()
                 AddChoice("Yes", TRUE);
                 AddChoice("No", FALSE);
 
-                MarkStageSetUp(nStage, oPC);            
+                MarkStageSetUp(nStage, oPC);
             }
         }
 
@@ -1036,29 +1036,29 @@ void main()
         {
             if(nChoice = -512)
                 //no primary natural weapon
-                SetPrimaryNaturalWeapon(oPC, -1);           
+                SetPrimaryNaturalWeapon(oPC, -1);
             else
                 //specific natural weapon
                 SetPrimaryNaturalWeapon(oPC, nChoice);
-        
+
             nStage = STAGE_ENTRY;
             MarkStageNotSetUp(nStage, oPC);
         }
         else if (nStage == STAGE_TEMPLATE)
         {
             SetLocalInt(oPC, "TemplateIDToGain", nChoice);
-        
+
             nStage = STAGE_TEMPLATE_CONFIRM;
             MarkStageNotSetUp(nStage, oPC);
         }
         else if (nStage == STAGE_TEMPLATE_CONFIRM)
         {
             if(nChoice)
-            {       
+            {
                 int nTemplateID = GetLocalInt(oPC, "TemplateIDToGain");
                 ApplyTemplateToObject(nTemplateID, oPC);
-            }    
-        
+            }
+
             nStage = STAGE_ENTRY;
             MarkStageNotSetUp(nStage, oPC);
         }

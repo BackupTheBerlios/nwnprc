@@ -1,27 +1,27 @@
 /*
    ----------------
-   Defensive Edge
+   Temporal Twist
 
-   true_utr_defedge
+   true_utr_tmptwst
    ----------------
 
    19/7/06 by Stratovarius
 */ /** @file
 
-    Defensive Edge
+    Temporal Twist
 
-    Level: Evolving Mind 1
+    Level: Evolving Mind 2
     Range: 60 feet
     Target: One Creature
-    Duration: 5 Rounds
+    Duration: Instantaneous (Normal) or 1 Round (Reverse)
     Spell Resistance: Yes
-    Save: None
+    Save: None (Normal) or Will Negates (Reverse)
     Metautterances: Extend
 
-    Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
-             Your ally gains +1 Armour Class.
-    Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
-             Your foe takes a -1 to Armour Class.            
+    Normal:  With a word of Truespeech, you grant a creature incredible reflexes, enabling it to make an immediate attack.
+             Your ally gains one extra attack this round.
+    Reverse: You cause a creature to lose its focus and become bewildered.
+             Your foe is dazed for one round.
 */
 
 #include "true_inc_trufunc"
@@ -52,11 +52,14 @@ void main()
 
     if(utter.bCanUtter)
     {
-        // This is done so Speak Unto the Masses can read it out of the structure
+	// This is done so Speak Unto the Masses can read it out of the structure
+ 	utter.nSaveType  = SAVING_THROW_TYPE_NONE;
+    	utter.nSaveThrow = SAVING_THROW_WILL;
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        utter.fDur       = RoundsToSeconds(5);
+        utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker);    	
+        utter.fDur       = RoundsToSeconds(1);
         int nSRCheck;
-        if(utter.bExtend) utter.fDur *= 2;
+        int nSaveCheck;
         
         // The NORMAL effect of the Utterance goes here
         if (utter.nSpellId == UTTER_DEFENSIVE_EDGE)
@@ -66,27 +69,38 @@ void main()
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+        	utter.eLink = EffectModifyAttacks(1);
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HASTE);
         }
         // The REVERSE effect of the Utterance goes here
         else 
         {
+        	// Can only extend this part of the utterance.
+        	if(utter.bExtend) utter.fDur *= 2;
         	// If the Spell Penetration fails, don't apply any effects
         	// Its done this way so the law of sequence is applied properly
         	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
-       			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
+        		// Saving throw
+        		nSaveCheck = PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF);
+        		if(!nSaveCheck)
+                	{
+                		// Concealment
+				utter.eLink = EffectDazed();
+				utter.eLink2 = EffectVisualEffect(VFX_IMP_DAZED_S);
+			}
         	}
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
+        // Impact Effects
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);
         // Mark for the Law of Sequence. This only happens if the utterance succeeds, which is why its down here.
         // The utterance isn't active if SR stops it
-        if (!nSRCheck) DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
+        if (!nSRCheck && !nSaveCheck) DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
     }// end if - Successful utterance    
 }

@@ -59,12 +59,16 @@ void main()
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
         utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker);
         utter.fDur       = RoundsToSeconds(5);
-        int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
-        int nSaveCheck   = PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF);
+        int nSRCheck;
+        int nSaveCheck;
         if(utter.bExtend) utter.fDur *= 2;
+        // This utterance applies only to friends
+	utter.bFriend = TRUE;
+	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
+        utter.bIgnoreSR = TRUE;
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_DEFENSIVE_EDGE /* Example Utterance */)
+        if (utter.nSpellId == UTTER_DEFENSIVE_EDGE /* Example Utterance */)
         {
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
         	utter.eLink = EffectLinkEffects();
@@ -75,9 +79,11 @@ void main()
         else /* Effects of UTTER_DEFENSIVE_EDGE_R would be here */
         {
         	// If the Spell Penetration fails, don't apply any effects
+        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
         		// Saving throw
+        		nSaveCheck = PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF);
         		if(!nSaveCheck)
                 	{
         			// eLink is used for Duration Effects (Buff/Penalty to AC)

@@ -395,32 +395,53 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
 	
 	// Speak to the Masses affects all creatures of the same race in the AoE
 	int nRacial = MyPRCGetRacialType(oTarget);
+	object oSkin;
 	
 	// Loop over targets
         object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
         while(GetIsObjectValid(oAreaTarget))
         {
-            // Skip the original target, its already been hit
-            if (oAreaTarget == oTarget) continue;
+            // Skip the original target/truespeaker, its already been hit
+            if (oAreaTarget == oTarget || oAreaTarget == oTrueSpeaker) continue;
             
             // Targeting limitations
             if(MyPRCGetRacialType(oAreaTarget) == nRacial)
             {
-            	// Do SR, or ignore if its a friendly utterance.
-        	if (!MyPRCResistSpell(utter.oTrueSpeaker, oAreaTarget, utter.nPen) || utter.bIgnoreSR)
-        	{
-        		// Saving throw, ignore it if there is no DC to check
-        		if(!PRCMySavingThrow(utter.nSaveThrow, oAreaTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF) ||
-        		   utter.nSaveDC == 0)
-                	{
-                              	// Duration Effects
-		              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
-		              	// Impact Effects
-        			SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
-        			// Word of Nurturing Impact
-        			DoWordOfNurturingReverse(oTrueSpeaker, oAreaTarget, utter);
-       			} // end if - Saving Throw
-       		} // end if - Spell Resistance
+            	// Only affect friends or ignore it
+            	if (GetIsFriend(oAreaTarget, oTrueSpeaker) || !utter.bFriend)
+            	{
+            		// Do SR, or ignore if its a friendly utterance.
+        		if (!MyPRCResistSpell(utter.oTrueSpeaker, oAreaTarget, utter.nPen) || utter.bIgnoreSR)
+        		{
+        			// Saving throw, ignore it if there is no DC to check
+        			if(!PRCMySavingThrow(utter.nSaveThrow, oAreaTarget, utter.nSaveDC, utter.nSaveType, OBJECT_SELF) ||
+        			   utter.nSaveDC == 0)
+                		{
+                			// Itemproperty, if there is one
+                			oSkin = GetPCSkin(oAreaTarget);
+                			if (GetIsItemPropertyValid(utter.ipIProp1))
+                			{
+                				IPSafeAddItemProperty(oSkin, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+                			}
+                			// Itemproperty, if there is one
+                			if (GetIsItemPropertyValid(utter.ipIProp2))
+                			{
+                				IPSafeAddItemProperty(oSkin, utter.ipIProp2, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+                			}
+                			// Itemproperty, if there is one
+                			if (GetIsItemPropertyValid(utter.ipIProp3))
+                			{
+                				IPSafeAddItemProperty(oSkin, utter.ipIProp3, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+                			}                			
+                	              	// Duration Effects
+			              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oAreaTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
+			              	// Impact Effects
+        				SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oAreaTarget);
+        				// Word of Nurturing Impact
+        				DoWordOfNurturingReverse(oTrueSpeaker, oAreaTarget, utter);
+       				} // end if - Saving Throw
+       			} // end if - Spell Resistance
+       		} // end if - Friend Check
             }// end if - Targeting check
 
             // Get next target

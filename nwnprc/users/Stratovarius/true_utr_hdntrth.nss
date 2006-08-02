@@ -1,27 +1,27 @@
 /*
    ----------------
-   Defensive Edge
+   Hidden Truth
 
-   true_utr_defedge
+   true_utr_hdntrth
    ----------------
 
-   19/7/06 by Stratovarius
+   1/8/06 by Stratovarius
 */ /** @file
 
-    Defensive Edge
-
-    Level: Evolving Mind 1
+    Hidden Truth
+    
+    Level: Evolving Mind 2
     Range: 60 feet
     Target: One Creature
-    Duration: 5 Rounds
-    Spell Resistance: Yes
+    Duration: 1 Round
+    Spell Resistance: No
     Save: None
     Metautterances: Extend
 
-    Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
-             Your ally gains +1 Armour Class.
-    Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
-             Your foe takes a -1 to Armour Class.            
+    Normal:  Your words allow your target to tap into a reserve of knowledge
+             Your ally gains +10 to all Lore checks.
+    Reverse: Your target's words ring true thanks to this utterance - even if they actually are not.
+             Your ally gains +10 to all Bluff checks.
 */
 
 #include "true_inc_trufunc"
@@ -52,33 +52,26 @@ void main()
 
     if(utter.bCanUtter)
     {
-        // This is done so Speak Unto the Masses can read it out of the structure
-        utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        utter.fDur       = RoundsToSeconds(5);
-        int nSRCheck;
+        // This utterance applies only to friends
+        utter.bFriend = TRUE;
+        utter.fDur = RoundsToSeconds(1);
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_DEFENSIVE_EDGE)
+        if (utter.nSpellId == UTTER_HIDDEN_TRUTH)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
-        	utter.bIgnoreSR = TRUE;
-        	// This utterance applies only to friends
+		utter.bIgnoreSR = TRUE;
+		// This utterance applies only to friends
         	utter.bFriend = TRUE;
-        	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+        	// Lore
+        	utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_LORE, 10), EffectVisualEffect(VFX_DUR_SHIELD_OF_LAW));
         }
         // The REVERSE effect of the Utterance goes here
-        else 
+        else // UTTER_HIDDEN_TRUTH_R
         {
-        	// If the Spell Penetration fails, don't apply any effects
-        	// Its done this way so the law of sequence is applied properly
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
-        	if (!nSRCheck)
-        	{
-       			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
-        	}
+		// Bluff
+		utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_BLUFF, 10), EffectVisualEffect(VFX_DUR_ENTROPIC_SHIELD));
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
@@ -87,6 +80,6 @@ void main()
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);
         // Mark for the Law of Sequence. This only happens if the utterance succeeds, which is why its down here.
         // The utterance isn't active if SR stops it
-        if (!nSRCheck) DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
+        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
     }// end if - Successful utterance    
 }

@@ -1,27 +1,27 @@
 /*
    ----------------
-   Defensive Edge
+   Speed of the Zephyr
 
-   true_utr_defedge
+   true_utr_zephyr
    ----------------
 
-   19/7/06 by Stratovarius
+   1/8/06 by Stratovarius
 */ /** @file
 
-    Defensive Edge
-
-    Level: Evolving Mind 1
+    Speed of the Zephyr
+    
+    Level: Evolving Mind 2
     Range: 60 feet
     Target: One Creature
-    Duration: 5 Rounds
-    Spell Resistance: Yes
+    Duration: 5 Round
+    Spell Resistance: No
     Save: None
     Metautterances: Extend
 
-    Normal:  You grant a greater awareness of foes in the area, increasing an ally's ability to protect herself. 
-             Your ally gains +1 Armour Class.
-    Reverse: Your dire whispers seep into your foe's mind, disrupting its ability to defend itself.
-             Your foe takes a -1 to Armour Class.            
+    Normal:  You urge your ally on to greater speed with this utterance.
+             Your ally gains 20' per round speed boost.
+    Reverse: The target of this utterance cannot move as quickly as it had just a moment before.
+             Your target takes a 10' per round speed penalty.
 */
 
 #include "true_inc_trufunc"
@@ -52,36 +52,40 @@ void main()
 
     if(utter.bCanUtter)
     {
-        // This is done so Speak Unto the Masses can read it out of the structure
-        utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        utter.fDur       = RoundsToSeconds(5);
-        int nSRCheck;
+        utter.fDur = RoundsToSeconds(5);
         if(utter.bExtend) utter.fDur *= 2;
+        utter.nPen = GetTrueSpeakPenetration(oTrueSpeaker);
+        int nSRCheck;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_DEFENSIVE_EDGE)
+        if (utter.nSpellId == UTTER_SPEED_ZEPHYR)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
-        	utter.bIgnoreSR = TRUE;
-        	// This utterance applies only to friends
+		utter.bIgnoreSR = TRUE;
+		// This utterance applies only to friends
         	utter.bFriend = TRUE;
-        	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectACIncrease(1, AC_DODGE_BONUS), EffectVisualEffect(VFX_DUR_PROT_BARKSKIN));
+        	// Movement boost
+        	utter.eLink = EffectMovementSpeedIncrease(66);
+        	// Impact VFX 
+		utter.eLink2 = EffectVisualEffect(VFX_IMP_HASTE);
         }
         // The REVERSE effect of the Utterance goes here
-        else 
+        else // UTTER_SPEED_ZEPHYR_R
         {
-        	// If the Spell Penetration fails, don't apply any effects
-        	// Its done this way so the law of sequence is applied properly
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
-        	if (!nSRCheck)
-        	{
-       			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			utter.eLink = EffectLinkEffects(EffectACDecrease(1), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
+		// If the Spell Penetration fails, don't apply any effects
+		nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+		if (!nSRCheck)
+		{
+			// eLink is used for Duration Effects (Speed Decrease)
+			utter.eLink = EffectMovementSpeedDecrease(33)
+			// Impact VFX 
+			utter.eLink2 = EffectVisualEffect(VFX_IMP_SLOW);
         	}
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
+        // Impact Effects
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);

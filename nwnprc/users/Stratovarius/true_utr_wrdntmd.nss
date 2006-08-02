@@ -53,13 +53,15 @@ void main()
     {
         // This is done so Speak Unto the Masses can read it out of the structure
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        int nSRCheck;
         
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_WORD_NURTURING_MODERATE)
+        if (utter.nSpellId == UTTER_WORD_NURTURING_MODERATE)
         {
-        	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
+        	// This utterance applies only to friends
+		utter.bFriend = TRUE;
+		// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
         	utter.fDur       = RoundsToSeconds(5);
         	// Regeneration
@@ -73,6 +75,7 @@ void main()
         	utter.fDur       = RoundsToSeconds(1);
         	
         	// If the Spell Penetration fails, don't apply any effects
+        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// Skill Penalty

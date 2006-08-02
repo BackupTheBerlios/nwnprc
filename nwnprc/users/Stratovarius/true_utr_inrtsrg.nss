@@ -56,14 +56,16 @@ void main()
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
         utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker);
         utter.fDur       = RoundsToSeconds(1);
-        int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        int nSRCheck;
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_INERTIAL_SURGE)
+        if (utter.nSpellId == UTTER_INERTIAL_SURGE)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
-        	utter.bIgnoreSR = TRUE;
+		utter.bIgnoreSR = TRUE;
+		// This utterance applies only to friends
+        	utter.bFriend = TRUE;
         	// Freedom of Movement
     		effect eParal = EffectImmunity(IMMUNITY_TYPE_PARALYSIS);
     		effect eEntangle = EffectImmunity(IMMUNITY_TYPE_ENTANGLE);
@@ -83,6 +85,7 @@ void main()
         else /* Effects of UTTER_INERTIAL_SURGE_R go here */
         {
         	// If the Spell Penetration fails, don't apply any effects
+        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// Hold the Target

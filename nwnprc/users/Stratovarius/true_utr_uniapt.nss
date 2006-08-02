@@ -55,13 +55,15 @@ void main()
         // This is done so Speak Unto the Masses can read it out of the structure
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
         utter.fDur       = RoundsToSeconds(5);
-        int nSRCheck     = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+        int nSRCheck;
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (PRCGetSpellId() == UTTER_UNIVERSAL_APTITUDE)
+        if (utter.nSpellId == UTTER_UNIVERSAL_APTITUDE)
         {
-        	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
+        	// This utterance applies only to friends
+	        utter.bFriend = TRUE;
+	        // Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
         	// Skill Boost
         	utter.eLink = EffectSkillIncrease(SKILL_ALL_SKILLS, 5);
@@ -72,6 +74,7 @@ void main()
         else // UTTER_UNIVERSAL_APTITUDE_R
         {
         	// If the Spell Penetration fails, don't apply any effects
+        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// Skill Penalty

@@ -63,6 +63,8 @@ struct utterance{
     int bQuicken;
     
     /* Speak Unto the Masses */
+    // Check if the target is a friend of not
+    int bFriend;
     // Saving Throw DC
     int nSaveDC;
     // Saving Throw
@@ -74,7 +76,13 @@ struct utterance{
     // Duration Effects
     effect eLink;
     // Impact Effects
-    effect eLink2;   
+    effect eLink2; 
+    // Any Item Property
+    itemproperty ipIProp1;
+    // Any Item Property
+    itemproperty ipIProp2;
+    // Any Item Property
+    itemproperty ipIProp3;
     // Duration
     float fDur;
 };

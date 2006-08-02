@@ -14,6 +14,18 @@ const int UTTER_WORD_NURTURING_MINOR    = -1;
 const int UTTER_WORD_NURTURING_MINOR_R  = -1;
 
 // Level 2 Utterances
+const int UTTER_ARCHERS_EYE              = -1;
+const int UTTER_ARCHERS_EYE_R            = -1;
+const int UTTER_HIDDEN_TRUTH             = -1;
+const int UTTER_HIDDEN_TRUTH_R           = -1;
+const int UTTER_PERCEIVE_UNSEEN          = -1;
+const int UTTER_PERCEIVE_UNSEEN_R        = -1;
+const int UTTER_SILENT_CASTER            = -1;
+const int UTTER_SILENT_CASTER_R          = -1;
+const int UTTER_SPEED_ZEPHYR             = -1;
+const int UTTER_SPEED_ZEPHYR_R           = -1;
+const int UTTER_STRIKE_MIGHT             = -1;
+const int UTTER_STRIKE_MIGHT_R           = -1;
 const int UTTER_WORD_NURTURING_LESSER    = -1;
 const int UTTER_WORD_NURTURING_LESSER_R  = -1;
 

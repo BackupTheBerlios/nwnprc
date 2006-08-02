@@ -1,27 +1,27 @@
 /*
    ----------------
-   Knight's Puissance
+   Strike of Might
 
-   true_utr_knghtps
+   true_utr_strkmi
    ----------------
 
-   19/7/06 by Stratovarius
+   1/8/06 by Stratovarius
 */ /** @file
 
-    Knight's Puissance
-
-    Level: Evolving Mind 1
+    Strike of Might
+    
+    Level: Evolving Mind 2
     Range: 60 feet
     Target: One Creature
-    Duration: 5 Rounds
-    Spell Resistance: Yes
+    Duration: 1 Round
+    Spell Resistance: No
     Save: None
     Metautterances: Extend
 
-    Normal:  Your words show your ally a way to strike more accurately.
-             Your ally gains +2 Attack Bonus
-    Reverse: By speaking the reverse of this utterance, you impede an enemy's ability to strike.
-             Your foe takes a -2 to Attacks.
+    Normal:  You tap into an ally's damage potential, augmenting his combat abilities substantially
+             Your ally gains +10 damage on his next strike
+    Reverse: You briefly enfeeble an enemy, causing its swing to slow and deal less damage
+             Your target deals 5 less damage on his next attack.
 */
 
 #include "true_inc_trufunc"
@@ -48,39 +48,41 @@ void main()
 
     object oTrueSpeaker = OBJECT_SELF;
     object oTarget      = PRCGetSpellTargetObject();
-    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_EXTEND, LEXICON_EVOLVING_MIND);
+    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_NONE, LEXICON_EVOLVING_MIND);
 
     if(utter.bCanUtter)
     {
-        // This is done so Speak Unto the Masses can read it out of the structure
-        utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        utter.fDur       = RoundsToSeconds(5);
+    	// An attempt to apply it to only one attack
+    	int nAttacks = GetMainHandAttacks(oTarget) + GetOffHandAttacks(oTarget);
+        utter.fDur = 6.0 / nAttacks;
+        utter.nPen = GetTrueSpeakPenetration(oTrueSpeaker);
         int nSRCheck;
-        if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_KNIGHTS_PUISSANCE)
+        if (utter.nSpellId == UTTER_STRIKE_MIGHT)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
-        	utter.bIgnoreSR = TRUE;
-        	// This utterance applies only to friends
+		utter.bIgnoreSR = TRUE;
+		// This utterance applies only to friends
         	utter.bFriend = TRUE;
-        	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectAttackIncrease(2), EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR));
+        	// Damage boost
+        	utter.eLink = EffectDamageIncrease(DAMAGE_BONUS_10);
         	// Impact VFX 
-        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
+		utter.eLink2 = EffectVisualEffect(VFX_IMP_DIVINE_STRIKE_HOLY);
         }
         // The REVERSE effect of the Utterance goes here
-        else // UTTER_KNIGHTS_PUISSANCE_R
+        else // UTTER_STRIKE_MIGHT_R
         {
-        	// If the Spell Penetration fails, don't apply any effects
-        	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
-        	if (!nSRCheck)
-        	{
-       			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			utter.eLink = EffectLinkEffects(EffectAttackDecrease(2), EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR));
-       			// Impact VFX 
-        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
+		// If the Spell Penetration fails, don't apply any effects
+		nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+		if (!nSRCheck)
+		{
+			// Damage Decrease
+			object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+			int nDamage = GetWeaponDamageType(oItem);
+			utter.eLink = EffectDamageDecrease(5, nDamage);
+			// Impact VFX 
+			utter.eLink2 = EffectVisualEffect(VFX_IMP_DOOM);
         	}
         }
         // Duration Effects

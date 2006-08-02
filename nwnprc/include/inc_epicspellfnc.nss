@@ -69,7 +69,7 @@ int GetSeedFromAbrev(string sAbrev)
 string GetNameForSeed(int nSeedID)
 {
     int nFeat = GetFeatForSeed(nSeedID);
-    string sName = GetStringByStrRef(StringToInt(Get2DACache("feats", "FEAT", nFeat)));
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)));
     return sName;
 }
 
@@ -195,6 +195,6 @@ int GetSpellFromAbrev(string sAbrev)
 string GetNameForSpell(int nSpellID)
 {
     int nFeat = GetFeatForSpell(nSpellID);
-    string sName = GetStringByStrRef(StringToInt(Get2DACache("feats", "FEAT", nFeat)));
+    string sName = GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)));
     return sName;
 }

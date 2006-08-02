@@ -55,6 +55,7 @@ const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
+void AddCohortRaces(int nMin, int nMax, object oPC);
 
 void AddCohortRaces(int nMin, int nMax, object oPC)
 {
@@ -78,7 +79,6 @@ void AddCohortRaces(int nMin, int nMax, object oPC)
         }
     }
 }
-
 
 void main()
 {
@@ -697,6 +697,7 @@ void main()
         }
         else if(nStage == STAGE_EPIC_SPELLS)
         {
+            int nOldStage = nStage;
             if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
                 nStage = STAGE_ENTRY;
             else if (nChoice == 1)
@@ -740,8 +741,8 @@ void main()
                     }
                 }
             }
-
-            MarkStageNotSetUp(nStage, oPC);
+            if(nOldStage != nStage)
+                MarkStageNotSetUp(nStage, oPC);
         }
         else if(nStage == STAGE_EPIC_SPELLS_ADD)
         {

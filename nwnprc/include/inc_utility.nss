@@ -1154,9 +1154,9 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
             {
                 default:
                 case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_HEALING_POTION; break;
-                case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_POTION; break;
-                case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_POTION; break;
-                case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_PROTECTION_POTION; break;                
+                case 2: nCategory = TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_POTION; break;
+                case 3: nCategory = TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_POTION; break;
+                case 4: nCategory = TALENT_CATEGORY_BENEFICIAL_PROTECTION_POTION; break;                
             }
         }
         

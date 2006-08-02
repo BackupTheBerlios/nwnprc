@@ -33,6 +33,7 @@ const int STAGE_ENTRY                   =   0;
 const int STAGE_REENTRY                 =   1;
 const int STAGE_SPELL                   = 100;
 const int STAGE_FEAT                    = 200;
+const int STAGE_FEAT_TARGET             = 201;
 const int STAGE_ITEM                    = 300;
 const int STAGE_ITEM_SPELL              = 301;
 const int STAGE_ITEM_TARGET             = 302;
@@ -60,6 +61,38 @@ const int STAGE_LEAVE_NO                = 602;
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
+
+
+void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort);
+void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort)
+{
+    int i;
+    for(i=nMin;i<nMax;i++)
+    {
+        if(GetHasFeat(i, oCohort))
+        {
+            //test if its useable
+            if(Get2DACache("feat", "SPELLID", i) != "")
+            {
+                //test if it has a sucessor
+                string sSucessor = Get2DACache("feat", "SUCCESSOR", i);
+                if(sSucessor == ""
+                    || (sSucessor != "" 
+                        && !GetHasFeat(StringToInt(sSucessor), oCohort)
+                        )
+                    )
+                {    
+                    string sName = GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", i)));
+                    AddChoice(sName, i, oPC);
+                }    
+            }
+        }
+    }
+    if(i<GetPRCSwitch(FILE_END_FEAT))
+    {
+        DelayCommand(0.0, AddUseableFeats(nMax, nMax+(nMax-nMin), oPC, oCohort));
+    }
+}
 
 
 
@@ -107,7 +140,7 @@ void main()
                     else if(nStage == STAGE_REENTRY)
                         SetHeader("What do you *really* want?");
                     //AddChoice("I need you to cast a spell", 1, oPC);
-                    //AddChoice("I need you to use a feat", 2, oPC);
+                    AddChoice("I need you to use a feat", 2, oPC);
                     AddChoice("I need you to use an item", 3, oPC);
                     AddChoice("I need you to identify my equipment", 4, oPC);
                     AddChoice("I need you to change your tactics", 5, oPC);
@@ -126,6 +159,98 @@ void main()
                 //SetHeader("Foo.");
                 //AddChoice("Bar", 1, oPC);
                 //AddChoice("Baz!", 2, oPC);
+
+                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+            }
+            //using feats
+            else if(nStage == STAGE_FEAT)
+            {
+                SetHeader("If I must. Which feat do you want me to use?");
+                AddUseableFeats(0, 1000, oPC, oCohort);
+                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+            }
+            else if(nStage == STAGE_FEAT_TARGET)
+            {
+                int nFeat = GetLocalInt(oCohort, "PRC_FeatToUse");
+                int nSpellID = StringToInt(Get2DACache("feat", "SPELLID", nFeat));
+
+                int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
+                int nHostileSpell = StringToInt(Get2DACache("spells", "HostileSetting", nSpellID));
+                string sRangeType = Get2DACache("spells", "Range", nSpellID);
+                float fRange = 50.0;
+                if(sRangeType == "S"
+                    || sRangeType == "T"
+                    || sRangeType == "P")
+                    fRange = 8.0;
+                else if(sRangeType == "M")
+                    fRange = 20.0;
+                else if(sRangeType == "L")
+                    fRange = 40.0;
+
+                /*
+                #  0x01 = 1 = Self
+                # 0x02 = 2 = Creature
+                # 0x04 = 4 = Area/Ground
+                # 0x08 = 8 = Items
+                # 0x10 = 16 = Doors
+                # 0x20 = 32 = Placeables
+                */
+                int nCaster     = nTargetType &  1;
+                int nCreature   = nTargetType &  2;
+                int nLocation   = nTargetType &  4;
+                int nItem       = nTargetType &  8;
+                int nDoor       = nTargetType & 16;
+                int nPlaceable  = nTargetType & 32;
+                int nCount;
+                if(array_exists(oCohort, "PRC_ItemsToUse_Target"))
+                    array_delete(oCohort, "PRC_ItemsToUse_Target");
+                array_create(oCohort, "PRC_ItemsToUse_Target");
+                //self
+                if(nCaster)
+                {
+                    AddChoice("Self ("+GetName(oCohort)+")", array_get_size(oCohort, "PRC_ItemsToUse_Target"));
+                    array_set_object(oCohort, "PRC_ItemsToUse_Target",
+                        array_get_size(oCohort, "PRC_ItemsToUse_Target"), oCohort);
+
+                }
+                //nearby objects or locations of those objects
+                if(nCreature
+                    || nDoor
+                    || nPlaceable
+                    || nLocation)
+                {
+                    object oTest = GetFirstObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
+                    while(GetIsObjectValid(oTest))
+                    {
+                        int nType = GetObjectType(oTest);
+                        if((nType == OBJECT_TYPE_CREATURE && nCreature)
+                            || (nType == OBJECT_TYPE_DOOR && nDoor)
+                            || (nType == OBJECT_TYPE_PLACEABLE && nPlaceable)
+                            || nLocation)
+                        {
+                            AddChoice(GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
+                            array_set_object(oCohort, "PRC_ItemsToUse_Target",
+                                array_get_size(oCohort, "PRC_ItemsToUse_Target"), oTest);
+                        }
+                        oTest = GetNextObjectInShape(SHAPE_SPHERE, fRange, GetLocation(oCohort));
+                    }
+                }
+                //items in inventory
+                if(nItem)
+                {
+                    object oTest = GetFirstItemInInventory(oCohort);
+                    while(GetIsObjectValid(oTest))
+                    {
+                        AddChoice("(in inventory) "+GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
+                        array_set_object(oCohort, "PRC_ItemsToUse_Target",
+                            array_get_size(oCohort, "PRC_ItemsToUse_Target"), oTest);
+                        oTest = GetNextItemInInventory(oCohort);
+                    }
+                }
+
+                SetHeader("Who or what do you want me to use "+GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)))+" on?");
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -466,6 +591,7 @@ void main()
         array_delete(oCohort, "PRC_ItemsToUse_Target");
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
         DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
+        DeleteLocalInt(oCohort, "PRC_FeatToUse");
         DeleteLocalInt(oCohort, "PRC_InCohortConvoMarker");
     }
     // Abort conversation cleanup.
@@ -479,6 +605,7 @@ void main()
         array_delete(oCohort, "PRC_ItemsToUse_Target");
         DeleteLocalObject(oCohort, "PRC_ItemToUse");
         DeleteLocalObject(oCohort, "PRC_ItemToUse_Spell");
+        DeleteLocalInt(oCohort, "PRC_FeatToUse");
         DeleteLocalInt(oCohort, "PRC_InCohortConvoMarker");
     }
     // Handle PC responses
@@ -508,6 +635,27 @@ void main()
                 case 1: nStage = STAGE_LEAVE_YES;       break;
                 case 2: nStage = STAGE_LEAVE_NO;        break;
             }
+        }
+        else if(nStage == STAGE_FEAT)
+        {
+            SetLocalInt(oCohort, "PRC_FeatToUse", nChoice);
+            //if its self only, use it
+            if(StringToInt(Get2DACache("feat", "TARGETSELF", nChoice)))
+            {
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort, ActionUseFeat(nChoice, oCohort));
+                //feat used, end conversation
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);            
+            }
+            nStage = STAGE_FEAT_TARGET;
+        }
+        else if(nStage == STAGE_FEAT_TARGET)
+        {
+            int nFeat = GetLocalInt(oCohort, "PRC_FeatToUse");
+            object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
+            AssignCommand(oCohort, ClearAllActions());
+            AssignCommand(oCohort, ActionUseFeat(nFeat, oTarget));
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);  
         }
         else if(nStage == STAGE_ITEM)
         {
@@ -546,6 +694,45 @@ void main()
         else if(nStage == STAGE_ITEM_SPELL)
         {
             SetLocalInt(oCohort, "PRC_ItemToUse_Spell", nChoice);
+            //check if its self-only, if so use it
+            
+            object oItem = GetLocalObject(oCohort, "PRC_ItemToUse");
+            int nSpellID = GetLocalInt(oCohort, "PRC_ItemToUse_Spell");
+            object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
+            itemproperty ipIP;
+            ipIP = GetFirstItemProperty(oItem);
+            while(GetIsItemPropertyValid(ipIP))
+            {
+                if(GetItemPropertyType(ipIP) == ITEM_PROPERTY_CAST_SPELL)
+                {
+                    int nipSpellID = GetItemPropertySubType(ipIP);
+                    //convert that to a real ID
+                    nipSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nipSpellID));
+                    if(nipSpellID == nSpellID)
+                    {
+                        if(DEBUG) DoDebug("Ending itemprop loop "+IntToString(nipSpellID));
+                        break;//end while loop
+                    }
+                }
+                ipIP = GetNextItemProperty(oItem);
+            }
+
+            //test if location or object
+            //use object by preference
+            
+            int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
+            
+            if(nTargetType == 1)
+            {
+                //self only item, use it
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort,
+                    ActionUseItemPropertyAtObject(oItem, ipIP, oCohort));
+                if(DEBUG) DoDebug("Running ActionUseItemPropertyAtObject() at "+GetName(oCohort));
+                //item used, end conversation
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+            }
+            
             nStage = STAGE_ITEM_TARGET;
         }
         else if(nStage == STAGE_ITEM_TARGET)
@@ -576,7 +763,7 @@ void main()
 
             int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
             /*
-            #  0x01 = 1 = Self
+            # 0x01 = 1 = Self
             # 0x02 = 2 = Creature
             # 0x04 = 4 = Area/Ground
             # 0x08 = 8 = Items

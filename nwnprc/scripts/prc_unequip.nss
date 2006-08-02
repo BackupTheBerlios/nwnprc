@@ -39,16 +39,35 @@ void PrcFeats(object oPC)
 //  Aaon Graywolf - Jan 6, 2004
 void main()
 {
-     object oItem = GetItemLastUnequipped();
-     object oPC   = GetItemLastUnequippedBy();
+    object oItem = GetItemLastUnequipped();
+    object oPC   = GetItemLastUnequippedBy();
 
 //if(DEBUG) DoDebug("Running OnUnEquip, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
-     DoTimestopUnEquip();
-     /*DelayCommand(0.2,*/PrcFeats(oPC)/*)*/; // Removed delay since it has the possiblity of screwing up association between the event and the objects involved - Ornedan
+    DoTimestopUnEquip();
+
+    // Delay a bit to prevent TMI due to polymorph effect being braindead and running the unequip script for each and
+    // bloody every item the character has equipped at the moment of effect application. Without detaching the script
+    // executions from the script that does the effect application. So no instruction counter resets.
+    // This will probably smash some scripts to pieces, at least when multiple unequips happen at once. Hatemail
+    // to nwbugs@bioware.com please.
+
+    DelayCommand(0.0f, PrcFeats(oPC));
+
+    /* Does not seem to work, the effect is not listed yet when the unequip scripts get run
+    if(GetHasEffect(EFFECT_TYPE_POLYMORPH, oPC))
+    {
+        DoDebug("prc_unequip: delayed call");
+        DelayCommand(0.0f, PrcFeats(oPC));
+    }
+    else
+    {
+        DoDebug("prc_unequip: direct call");
+        PrcFeats(oPC);
+    }*/
 
 
-     // Execute scripts hooked to this event for the player triggering it
-     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERUNEQUIPITEM);
-     ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONPLAYERUNEQUIPITEM);
+    // Execute scripts hooked to this event for the player triggering it
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERUNEQUIPITEM);
+    ExecuteAllScriptsHookedToEvent(oItem, EVENT_ITEM_ONPLAYERUNEQUIPITEM);
 }

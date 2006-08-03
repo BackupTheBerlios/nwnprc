@@ -5,7 +5,7 @@
   <entry id="12289" lang="en" sex="m">Ocular Adepts</entry>
   <entry id="12290" lang="en" sex="m">ocular adepts</entry>
   <entry id="12291" lang="en" sex="m">(PRESTIGE CLASS)
-Each beholder believes that it represents a state of true perfection. Among the desperate wastrels of decadent cities and debased explorers of the subterranean Underdark can be found humanoids who agree, and who have entered into a surgical pact with the beholder race in an attempt to achieve even a sliver of that perfection.
+Each beholder believes that it represents a state of true perfection. Among the desperate wastrels of decadent cities and debased explorers of the subterranean Underdark can be found humanoids who agree, and who have entered into a surgical pact with the beholder race in an attempt to achieve even a sliver of that perfection. 
 
 These so-called Ocular Adepts, outcasts to their own societies, have pledged their services to one or more eye tyrants and pledged their religious devotion to the alien entity known as the Great Mother, the deity matron of all beholders.
 
@@ -16,7 +16,7 @@ These so-called Ocular Adepts, outcasts to their own societies, have pledged the
 REQUIREMENTS:
 
 Alignment: Lawful Evil or Neutral Evil.
-Skills: Concentration 8 or more ranks.
+Skills: Concentration (8 ranks).
 Feats: Endurance.
 
 ABILITIES:
@@ -44,67 +44,87 @@ Level
   <entry id="12301" lang="en" sex="m">Finger of Death Ray</entry>
   <entry id="12302" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
-If the save fails, the ray makes the target friendly towards the Adept for a number of rounds equal to the Adept's level.
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the ray makes the target friendly towards the Adept for a number of rounds equal to the Adept's level. 
 This spell only functions on humanoid targets.
+
 Use: Combat mode.</entry>
   <entry id="12303" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 2 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the ray causes the target to fall asleep for a number of rounds equal to the Adept's level.
+
 Use: Combat mode.</entry>
   <entry id="12304" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 3 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target takes 2d8+10 damage. If the save succeeds, the target takes half damage.
+
 Use: Combat mode.</entry>
   <entry id="12305" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 4 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target is slowed for a number of rounds equal to the Adept's level; their movement rate is halved and they can only take a partial action each round during this time.
+
 Use: Combat mode.</entry>
   <entry id="12306" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 5 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target is afflicted with fear and will flee from the Adept.
+
 Use: Combat mode.</entry>
   <entry id="12307" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 6 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the ray causes the target to be friendly towards the Adept for a number of rounds equal to the Adept's level.
+
 Use: Combat mode.</entry>
   <entry id="12308" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 7 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make two Will saves vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
-If the first save fails, the target is Disarmed as per the feat.
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make two Will saves vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the first save fails, the target is Disarmed as per the feat. 
 If the second save fails, the target is knocked back. In addition to this, the target is pushed away from the Adept.
+
 Use: Combat mode.</entry>
   <entry id="12309" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 8 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target is instantly petrified.
+
 Use: Combat mode.</entry>
   <entry id="12310" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 9 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
-If the save fails, the target is instantly disintegrated and all of their items fall to the ground.
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target is instantly disintegrated and all of their items fall to the ground. 
 If the save succeeds, the target takes 5d6 damage instead.
+
 Use: Combat mode.</entry>
   <entry id="12311" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 10 Ocular Adept
-Specifics: The Adept projects a ray that makes a ranged touch attack.
-If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier).
-If the save fails, the target dies instantly.
+
+Specifics: The Adept projects a ray that makes a ranged touch attack. 
+If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
+If the save fails, the target dies instantly. 
 If the save succeeds, the target takes damage of (3d6 + the Adept's level) instead.
+
 Use: Combat mode.</entry>
   <entry id="12312" lang="en" sex="m">Your faith in the Great Mother has brought you great power - your third eye spews death all around you with the merest glance.
 
@@ -112,64 +132,75 @@ Hit Die: d8
 Skill Points at Each Additional Level: 2 + Int modifier
 Bonus Feats: The Epic Ocular Adept gains a bonus feat every other level after 10th.
 
-Epic Ocular Adept Bonus Feats List:
+Epic Ocular Adept Bonus Feat List:
 Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Epic Spell Focus, Epic Spell Penetration, Great Wisdom, Improved Combat Casting, Planar Turning.
 </entry>
   <entry id="12313" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Battlerager.
-Specifics: The Battlerager may rage, gaining a +4 morale bonus to Strength and Constitution and +2 to all Will saving throws, in exchange for a -2 penalty to Armor Class. The battlerager may use this ability once per day at first level, +1 use per day at level 3, and a total of 3 times a day at level 5. He gains an additional use per day every two levels after level 5.
+
+Specifics: The Battlerager enters a rage, gaining a +4 bonus to Strength and Constitution and +2 to all Will saving throws, but incurring a -2 penalty to Armor Class. The Battlerager may use this ability once per day at first level, twice per day at level 3, and three times per day at level 5.  One additional use per day is gained every two levels after level 5.
+
 Use: Activated.</entry>
   <entry id="12314" lang="en" sex="m">Battlerager</entry>
   <entry id="12315" lang="en" sex="m">Battleragers</entry>
   <entry id="12316" lang="en" sex="m">battlerager</entry>
   <entry id="12317" lang="en" sex="m">(PRESTIGE CLASS)
-Dwarven Battleragers, or kuldjargh (axe idiots), are legendary berserker warriors who can enter a battle frenzy through ritualistic singing. They are believed to have been touched by the dwarven gods of battle, who taught them that if they die in battle, they will return stronger than before as a just reward. Therefore, they have no fear of death. Battleragers command a grudging, if fearful, respect within dwarven society, where they are known to have coined such philosophically complex dwarven maxims like "head first" and "if it moves, kill it." Most live short, glorious lives.
+Dwarven Battleragers, or Kuldjargh (Axe Idiots), are legendary berserkers who can enter a battle frenzy through ritualistic singing. 
+
+They are believed to have been touched by the dwarven gods of war, who taught them that by dying in battle they will return even stronger than before as a just reward. As a consequence, these warriors have no fear of death. 
+
+Battleragers command a grudging (if fearful) respect within dwarven society and are credited with having coined such philosophically complex dwarven maxims as "Head first!" and "If it moves, kill it!" 
+
+Most Battleragers live short, glorious lives.
 
 - Hit Die: d12.
-- Proficiencies: A battlerager does not gain any additional weapon or armor proficiencies.
+- Proficiencies: A Battlerager does not gain any additional weapon or armor proficiencies.
 - Skill Points: 2 + Int Modifier.
 
 REQUIREMENTS:
 
 Class: Barbarian.
-Alignment: Any non lawful.
-Race: any Dwarven race.
+Alignment: Any non-lawful.
+Race: Any Dwarven race.
 Feats: Cleave, Toughness, Power Attack.
 Base Attack Bonus: +5
-Skills: Intimidate 8 ranks, Lore 2 ranks.
+Skills: Intimidate (8 ranks), Lore (2 ranks).
 
 ABILITIES:
 
 Level
-1: Battle Rage - +4 bonus to Strength and Constitution, +2 morale bonus to Will saving throws. Lasts for 3 rounds + Constitution modifier. Can be used once per day. When the battlerager's level + the barbarian's level + (any other applicable barbarian PrC's level) add up to 15 or more, this effect is increased to +6 Strength and Constitution and it becomes a +3 morale bonus to will saves. i.e. A Barbarian 10 / Battlerager 5 has Greater Battle Rage and Greater Rage.
-  Resist Poison - +4 bonus to all Fortitude saving throws vs. poison.
-  Skill Focus: Intimidate - +3 bonus to all skill checks involving Intimidate.
-2: Aura of Courage - Character becomes immune to fear.
-  Knockdown - Battlerager can attempt to knock an opponent to the ground at a -4 penalty to attack.
-3: Battle Rage - Can now be used twice a day.
-  Improved Unarmed Strike - Player no longer incurs an attack of opportunity while attacking unarmed.
-4: Great Cleave - As Cleave, except there is no longer a limit on subsequent attacks.
-  Improved Knockdown - As knockdown, but now the character can an attempt a knockdown attack as if he were one size category larger.
-5: Armor Skin - Character's skin hardens and receives a +2 bonus to his natural AC.
-  Battle Rage - Can now be used three times a day.
+1: Battle Rage once per day (as per Barbarian Rage).
+   Resist Poison - Bestows a +4 bonus to all Fortitude saving throws vs. poison.
+   Skill Focus: Intimidate - Provides a +3 bonus to all skill checks involving Intimidate.
+2: Aura of Courage - The Battlerager becomes immune to fear.
+   Feat - Knockdown
+3: Battle Rage twice per day.
+   Feat - Improved Unarmed Strike
+4: Feat - Great Cleave
+   Feat - Improved Knockdown
+5: Battle Rage three times per day.
+   Feat - Armor Skin - The Battlerager's skin hardens, granting a +2 bonus to natural AC.
+   
 
-EPIC BATTLERAGER (after char level 20, you may continue progression to become one of the greatest kuldjargh ever to walk the planes of existence)
+Epic Battlerager:
 
-6: Epic Skill Focus: Intimidate - +10 bonus to skill checks involving intimidate, Intimidating Rage
-7: Battle Rage 4/day
-8: Ferocious Prowess - The epic battlerager receives a +1 to his attack bonus and a +1 bonus to his damage while wielding a melee weapon.
-9: Battle Rage 5/day
-10: Terrifying Rage, Bonus Feat
-11: Battle Rage 6/day
-13: Battle Rage 7/day
-15: Battle Rage 8/day, Bonus Feat
-17: Battle Rage 9/day
-19: Battle Rage 10/day
+Level
+6: Epic Skill Focus: Intimidate - provides a +10 bonus to skill checks involving intimidate
+   Feat - Intimidating Rage
+7: Battle Rage 4 times per day
+8: Ferocious Prowess - The Epic Battlerager receives +1 to attack bonus and +1 to damage while wielding a melee weapon.
+9: Battle Rage 5 times per day
+10: Feat - Terrifying Rage
+    Bonus Feat
+11: Battle Rage 6 times per day
+13: Battle Rage 7 times per day
+15: Battle Rage 8 times per day
+    Bonus Feat
+17: Battle Rage 9 times per day
+19: Battle Rage 10 times per day
 20: Bonus Feat
 
-The battle
-
-Bonus feats list: Thundering Rage, Mighty Rage, Epic Damage Reduction, Epic Prowess, Overwhelming Critical, Devastating Critical, Epic Weapon Focus, Great Strength.</entry>
+Epic Battlerager Bonus Feat List: Thundering Rage, Mighty Rage, Epic Damage Reduction, Epic Prowess, Overwhelming Critical, Devastating Critical, Epic Weapon Focus, Great Strength.</entry>
   <entry id="12318" lang="en" sex="m">Battle Rage (1x per day)</entry>
   <entry id="12319" lang="en" sex="m">Battle Rage (2x per day)</entry>
   <entry id="12320" lang="en" sex="m">Battle Rage (3x per day)</entry>
@@ -187,7 +218,7 @@ Samurai are professional warriors, members of the noble class who are trained in
   <entry id="12326" lang="en" sex="m">Warpriests</entry>
   <entry id="12327" lang="en" sex="m">warpriest</entry>
   <entry id="12328" lang="en" sex="m">(PRESTIGE CLASS)
-Warpriests are fierce, earthy clerics who pray for peace but prepare for war. Their strong wills, powerful personalities, and devotion to their deities make them fearsome combatants. Clerics make good warpriests; members of other classes need levels as a cleric before they can qualify as warpriests because of the domain requirements.
+Warpriests are fierce, earthy clerics who pray for peace but prepare for war. Their strong wills, powerful personalities and devotion to their deities make them fearsome combatants. Clerics make good warpriests; members of other classes need levels as a cleric before they can qualify as warpriests because of the domain requirements.
 
 - Hit Die: d8.
 - Proficiencies: All simple and martial weapons, with all types of armor, shields.

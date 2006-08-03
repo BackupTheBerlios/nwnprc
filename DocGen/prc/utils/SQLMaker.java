@@ -57,7 +57,7 @@ public final class SQLMaker{
 					);
 		//create a few tables
     	sql.append("CREATE TABLE "+q+"prc_cached2da_ireq"+q+" ("	+
-    			   ""+q+"rowid"+q+"     integer DEFAULT '_', "        			+
+    			   ""+q+"rowid"+q+"     integer DEFAULT -1, "        			+
     	           ""+q+"file"+q+"      varchar(20) DEFAULT '_', "					+
     	           ""+q+"LABEL"+q+"     varchar(255) DEFAULT '_', "					+
     	           ""+q+"ReqType"+q+"   varchar(255) DEFAULT '_', "  		        +
@@ -65,7 +65,7 @@ public final class SQLMaker{
     	           ""+q+"ReqParam2"+q+" varchar(255) DEFAULT '_');\n"				+
 
     	           "CREATE TABLE "+q+"prc_cached2da_cls_feat"+q+" ("				+
-    	           ""+q+"rowid"+q+" 			integer DEFAULT '_', "         +
+    	           ""+q+"rowid"+q+" 			integer DEFAULT -1, "         +
     	           ""+q+"file"+q+" 				varchar(20) DEFAULT '_', "			+
     	           ""+q+"FeatLabel"+q+" 		varchar(255) DEFAULT '_', "			+
     	           ""+q+"FeatIndex"+q+" 		varchar(255) DEFAULT '_', "		    +
@@ -76,7 +76,7 @@ public final class SQLMaker{
     	           "CREATE TABLE "+q+"prc_cached2da"+q+" ("							+
     	           ""+q+"file"+q+" 				varchar(20) DEFAULT '_', "         +
     		       ""+q+"columnid"+q+" 			varchar(255) DEFAULT '_', "			+
-    		       ""+q+"rowid"+q+" 			integer DEFAULT '_', "			+
+    		       ""+q+"rowid"+q+" 			integer DEFAULT -1, "			+
     		       ""+q+"data"+q+" 				varchar(255) DEFAULT '_');\n"
     	           );
 		printSQL(true); //start a new file
@@ -203,7 +203,7 @@ public final class SQLMaker{
 			//	entry += ", "+labels[i];
 			//}
 			//entry += ")"
-			entry.append(" VALUES ("+q+row+q);
+			entry.append(" VALUES ("+row);
 			for(int column = 0; column < labels.length ; column ++) {
 				entry.append(", ");
 
@@ -233,7 +233,7 @@ public final class SQLMaker{
 			//	entry += ", "+labels[i];
 			//}
 			//entry += ", file)";
-			entry.append(" VALUES ("+q+row+q);
+			entry.append(" VALUES ("+row);
 			entry.append(", '"+filename+"'");
 			for(int column = 0; column < labels.length ; column ++) {
 				entry.append(", ");

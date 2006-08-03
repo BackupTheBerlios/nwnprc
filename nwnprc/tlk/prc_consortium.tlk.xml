@@ -22,16 +22,16 @@ Feats: Endurance.
 ABILITIES:
 
 Level
-1: Charm Person Ray - Twice per day spell-like ability.
-2: Sleep Ray - Twice per day spell-like ability.
-3: Inflict Moderate Wounds Ray - Twice per day spell-like ability.
-4: Slow Ray - Twice per day spell-like ability.
-5: Fear Ray - Twice per day spell-like ability.
-6: Charm Monster Ray - Twice per day spell-like ability.
-7: Telekinesis Ray - Twice per day spell-like ability.
-8: Flesh to Stone Ray - Twice per day spell-like ability.
-9: Disintegrate Ray - Twice per day spell-like ability.
-10: Finger of Death Ray - Twice per day spell-like ability.</entry>
+1: Charm Person Ray - 2/day (spell-like ability).
+2: Sleep Ray - 2/day (spell-like ability).
+3: Inflict Moderate Wounds Ray - 2/day (spell-like ability).
+4: Slow Ray - 2/day (spell-like ability).
+5: Fear Ray - 2/day (spell-like ability).
+6: Charm Monster Ray - 2/day (spell-like ability).
+7: Telekinesis Ray - 2/day (spell-like ability).
+8: Flesh to Stone Ray - 2/day (spell-like ability).
+9: Disintegrate Ray - 2/day (spell-like ability).
+10: Finger of Death Ray - 2/day (spell-like ability).</entry>
   <entry id="12292" lang="en" sex="m">Charm Person Ray</entry>
   <entry id="12293" lang="en" sex="m">Sleep Ray</entry>
   <entry id="12294" lang="en" sex="m">Inflict Moderate Wounds Ray</entry>
@@ -43,6 +43,7 @@ Level
   <entry id="12300" lang="en" sex="m">Disintegrate Ray</entry>
   <entry id="12301" lang="en" sex="m">Finger of Death Ray</entry>
   <entry id="12302" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 1 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -52,6 +53,7 @@ This spell only functions on humanoid targets.
 
 Use: Combat mode.</entry>
   <entry id="12303" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 2 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -60,6 +62,7 @@ If the save fails, the ray causes the target to fall asleep for a number of roun
 
 Use: Combat mode.</entry>
   <entry id="12304" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 3 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -68,6 +71,7 @@ If the save fails, the target takes 2d8+10 damage. If the save succeeds, the tar
 
 Use: Combat mode.</entry>
   <entry id="12305" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 4 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -76,6 +80,7 @@ If the save fails, the target is slowed for a number of rounds equal to the Adep
 
 Use: Combat mode.</entry>
   <entry id="12306" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 5 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -84,6 +89,7 @@ If the save fails, the target is afflicted with fear and will flee from the Adep
 
 Use: Combat mode.</entry>
   <entry id="12307" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 6 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -92,6 +98,7 @@ If the save fails, the ray causes the target to be friendly towards the Adept fo
 
 Use: Combat mode.</entry>
   <entry id="12308" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 7 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -101,6 +108,7 @@ If the second save fails, the target is knocked back. In addition to this, the t
 
 Use: Combat mode.</entry>
   <entry id="12309" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 8 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -109,6 +117,7 @@ If the save fails, the target is instantly petrified.
 
 Use: Combat mode.</entry>
   <entry id="12310" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 9 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -118,6 +127,7 @@ If the save succeeds, the target takes 5d6 damage instead.
 
 Use: Combat mode.</entry>
   <entry id="12311" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 10 Ocular Adept
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -169,35 +179,35 @@ Skills: Intimidate (8 ranks), Lore (2 ranks).
 ABILITIES:
 
 Level
-1: Battle Rage once per day (as per Barbarian Rage).
+1: Battle Rage - 1/day (as per Barbarian Rage).
    Resist Poison - Bestows a +4 bonus to all Fortitude saving throws vs. poison.
    Skill Focus: Intimidate - Provides a +3 bonus to all skill checks involving Intimidate.
 2: Aura of Courage - The Battlerager becomes immune to fear.
    Feat - Knockdown
-3: Battle Rage twice per day.
+3: Battle Rage - 2/day.
    Feat - Improved Unarmed Strike
 4: Feat - Great Cleave
    Feat - Improved Knockdown
-5: Battle Rage three times per day.
+5: Battle Rage - 3/day.
    Feat - Armor Skin - The Battlerager's skin hardens, granting a +2 bonus to natural AC.
    
 
 Epic Battlerager:
 
 Level
-6: Epic Skill Focus: Intimidate - provides a +10 bonus to skill checks involving intimidate
+6: Epic Skill Focus: Intimidate - Provides a +10 bonus to skill checks involving intimidate
    Feat - Intimidating Rage
-7: Battle Rage 4 times per day
+7: Battle Rage - 4/day
 8: Ferocious Prowess - The Epic Battlerager receives +1 to attack bonus and +1 to damage while wielding a melee weapon.
-9: Battle Rage 5 times per day
+9: Battle Rage - 5/day
 10: Feat - Terrifying Rage
     Bonus Feat
-11: Battle Rage 6 times per day
-13: Battle Rage 7 times per day
-15: Battle Rage 8 times per day
+11: Battle Rage - 6/day
+13: Battle Rage - 7/day
+15: Battle Rage - 8/day
     Bonus Feat
-17: Battle Rage 9 times per day
-19: Battle Rage 10 times per day
+17: Battle Rage - 9/day
+19: Battle Rage - 10/day
 20: Bonus Feat
 
 Epic Battlerager Bonus Feat List: Thundering Rage, Mighty Rage, Epic Damage Reduction, Epic Prowess, Overwhelming Critical, Devastating Critical, Epic Weapon Focus, Great Strength.</entry>
@@ -208,26 +218,37 @@ Epic Battlerager Bonus Feat List: Thundering Rage, Mighty Rage, Epic Damage Redu
   <entry id="12322" lang="en" sex="m">Samurais</entry>
   <entry id="12323" lang="en" sex="m">samurai</entry>
   <entry id="12324" lang="en" sex="m">(BASE CLASS)
-Samurai are professional warriors, members of the noble class who are trained in the arts of warfare. They are not only trained for their role in society, they are born for It born into a system of allegiance, loyalty, and honor that influences every stage of their lives. A samurai cut loose from this system is no longer a samurai; he is an ordinary fighter, a ronin with no honor and no standing in society.
+Samurai are professional warriors; members of the noble class, trained in the art of warfare. Born into a society which values unswerving loyalty and honour above all else, the Samurai is trained from childhood in a value system that influences every area of life. 
+
+A disgraced or masterless Samurai cut loose from this all-pervading value system is no longer considered a Samurai, but rather a common mercenary fighter - a Ronin with no honour and no standing in society.
 
 - Alignment Restrictions: Any lawful.
 - Hit Die: d10.
-- Proficiencies: All simple, martial and exotic weapons, with medium and light armor.
-- Skill Points (*4 at 1st level): 4 + Int Modifier.</entry>
+- Proficiencies: All simple, martial and exotic weapons.  Medium and light armor.
+- Skill Points: 4 + Int Modifier.
+
+ABILITIES:
+
+Ancestral Daisho
+All Samurai carry two masterwork weapons - a katana and a wakizashi.  These weapons have been handed down over generations from the Samurai's ancestors, and protecting them is an important point of honor for the Samurai. As a Samurai acquires wealth, he can awaken the supernatural abilities latent in the weapons by sacrificing gold or items to enhance them.
+
+</entry>
   <entry id="12325" lang="en" sex="m">Warpriest</entry>
   <entry id="12326" lang="en" sex="m">Warpriests</entry>
   <entry id="12327" lang="en" sex="m">warpriest</entry>
   <entry id="12328" lang="en" sex="m">(PRESTIGE CLASS)
-Warpriests are fierce, earthy clerics who pray for peace but prepare for war. Their strong wills, powerful personalities and devotion to their deities make them fearsome combatants. Clerics make good warpriests; members of other classes need levels as a cleric before they can qualify as warpriests because of the domain requirements.
+Warpriests are fierce, earthy clerics who pray for peace but prepare for war. Their strong wills, powerful personalities and devotion to their deities make them fearsome combatants. 
+
+Clerics make natural warpriests.  Other classes must have at least one Cleric level to qualify as warpriests because of the domain requirements.
 
 - Hit Die: d8.
-- Proficiencies: All simple and martial weapons, with all types of armor, shields.
+- Proficiencies: All simple and martial weapons.  All types of armor and shields.
 - Skill Points: 2 + Int Modifier.
 
 REQUIREMENTS:
 
 Base Attack Bonus: +5
-Skills: Persuade 5 or more ranks.
+Skills: Persuade (5 ranks).
 Feats: Combat Casting.
 Class: Cleric.
 Domains: At least one of the following: Destruction, Protection, Strength, War.
@@ -235,24 +256,24 @@ Domains: At least one of the following: Destruction, Protection, Strength, War.
 ABILITIES:
 
 Level
-1: Rally - Allies within 60 feet who are suffering from any fear effect are allowed an immediate Will saving throw at the DC of the fear effect, with a +1 morale bonus per warpriest level.
-2: Inflame - provides those who listen a morale bonus on saving throws against any mind influencing effect. The bonus begins at +2 for a 2nd level warpriest and increases by +2 each even numbered level thereafter (+4 at 4th level, etc). This effect lasts 5 minutes, plus 1 minute per level of the warpriest.
-3: Healing Circle - Per the spell, once a day.
-6: Fear Aura - Once per day spell-like ability.
-7: Mass Haste - Per the spell, once a day.
-8: Mass Heal - Per the spell, once a day.
-9: Fear Aura - Increases to twice per day spell-like ability.
+1: Rally - Allies within 60 feet who are suffering from any fear effect are allowed an immediate Will saving throw at the DC of the fear effect, with a +1 morale bonus per Warpriest level.
+2: Inflame - Provides those who listen a morale bonus on saving throws against any mind influencing effect. The bonus begins at +2 for a 2nd level Warpriest and increases by +2 each even numbered level thereafter. This effect lasts 5 minutes, plus 1 minute per level of the Warpriest.
+3: Healing Circle once per day  (as the spell).
+6: Fear Aura - 1/day (spell-like ability).
+7: Mass Haste - 1/day (as the spell).
+8: Mass Heal - 1/day (as the spell).
+9: Fear Aura - 2/day.
 10: Implacable Foe - While in use, allies within the radius who take enough damage to become disabled or dying ignore the effects of that damage and continue fighting. Death occurs instantly at -20 hit points.
 
 BONUS SPELLS
 
-Upon reaching level 2, 4, 6, 8, and 10 the character gains new spells per day as if he had also gained a level in his highest divine caster class (cleric).</entry>
+Every 2 levels the character gains new spells per day as if they had also gained a level in their highest divine caster class.</entry>
   <entry id="12329" lang="en" sex="m">Epic Samurai</entry>
-  <entry id="12330" lang="en" sex="m">You are a paragon of honor and loyalty. No one would dare question your word or your will.
+  <entry id="12330" lang="en" sex="m">Having become a paragon of the way of Bushido and achieved enlightenment, tales of your bravery and honour have spread far and wide.  None dare oppose you or question your will.
 
-Hit Die: d10
-Skill Points at Each Additional Level: 4+ Int Modifier
-Bonus Feats: The epic samurai gains a bonus feat every two levels after 20th
+Hit Die: d10.
+Skill Points at Each Additional Level: 4 + Int Modifier.
+Bonus Feats: The epic samurai gains a bonus feat every two levels after 20th.
 To further improve your Ancestral Daisho ability, you must take the Epic Ancestral Daisho feats.
 
 Epic Samurai Bonus Feats List:
@@ -260,36 +281,46 @@ Armor Skin, Damage Reduction, Devastating Critical, Epic Toughness, Epic Weapon 
   <entry id="12331" lang="en" sex="m">Ancestral Daisho</entry>
   <entry id="12332" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Samurai
-Specifics: All samurai have two masterwork weapons - a katana and a wakizashi. These are weapons that belonged to the samurais' ancestors, and protecting the weapons is an important point of honor for the samurai. As a samurai acquires treasure through adventuring, he has the option of awakening the supernatural abilities latent in the weapons. He may spend gold or sacrifice items to further enchant his weapon.
+
+Specifics: All Samurai carry two masterwork weapons - a katana and a wakizashi.  These weapons have been handed down over generations from the Samurai's ancestors, and protecting them is an important point of honor for the Samurai. As a Samurai acquires wealth, he can awaken the supernatural abilities latent in the weapons by sacrificing gold or items to enhance them.
+
 Use: Selected.</entry>
-  <entry id="12333" lang="en" sex="m">Listen to me comrades! The evil we face this day is great, but the strength of my patron is with us! Our faith will guide us to victory in battle!</entry>
+  <entry id="12333" lang="en" sex="m">Listen to me, comrades! The evil we face this day is great, but the strength of my patron is with us! Our faith will guide us to victory in battle!</entry>
   <entry id="12334" lang="en" sex="m">Hear me! Today we partake in glorious battle. With the power of my patron at our sides, we will crush our adversaries! To battle!</entry>
   <entry id="12335" lang="en" sex="m">Friends! The time for battle has come, and I have called on the strength of my patron to aid us. We will be victorious this day!</entry>
-  <entry id="12336" lang="en" sex="m">Listen to me comrades! The evil we face this day is great, but the strength of the gods is with us! Our faith will guide us to victory in battle!</entry>
+  <entry id="12336" lang="en" sex="m">Listen to me, comrades! The evil we face this day is great, but the strength of the gods is with us! Our faith will guide us to victory in battle!</entry>
   <entry id="12337" lang="en" sex="m">Hear me! Today we partake in glorious battle. With the power of the gods at our sides, we will crush our adversaries! To battle!</entry>
   <entry id="12338" lang="en" sex="m">Friends! The time for battle has come, and I have called on the strength of the gods to aid us. We will be victorious this day!</entry>
   <entry id="12339" lang="en" sex="m">Rally</entry>
-  <entry id="12340" lang="en" sex="m">Type of Feat: Class Specific
+  <entry id="12340" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Level 1 Warpriest
-Specifics: A warpriest who currently is not suffering from a fear effect can use this ability as a standard action. Allies within 60 feet who are suffering from any fear effect are allowed an immediate Will saving throw at the DC of the fear effect, with a +1 morale bonus per warpriest level.
+
+Specifics: A Warpriest who is not currently suffering from a fear effect can use this ability as a standard action. Allies within 60 feet who are suffering from any fear effect are allowed an immediate Will saving throw at the DC of the fear effect, with a +1 morale bonus per Warpriest level.
+
 Use: Selected.
 </entry>
   <entry id="12341" lang="en" sex="m">Inflame</entry>
-  <entry id="12342" lang="en" sex="m">Type of Feat: Class Specific
+  <entry id="12342" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 2 Warpriest
-Specifics: By giving a stirring speech the warpriest provides those who listen a morale bonus on saving throws against any mind influencing effect. The bonus begins at +2 for a 2nd level warpriest and increases by +2 each even numbered level thereafter (+4 at 4th level, etc). This effect lasts 5 minutes, plus 1 minute per level of the warpriest. The warpriest also gains the bonus.
+
+Specifics: By giving a stirring speech, the Warpriest provides listeners with a morale bonus on saving throws against mind influencing effects. The bonus begins at +2 for a 2nd level Warpriest and increases by +2 each even numbered level thereafter. This effect lasts for 5 minutes, plus 1 minute per level of the Warpriest. The Warpriest also gains the bonus.
+
 Use: Selected.</entry>
   <entry id="12343" lang="en" sex="m">Implacable Foe</entry>
   <entry id="12344" lang="en" sex="m">Type of Feat: Class
+  
 Prerequisite: Level 10 Warpriest
-Specifics: At 10th level, the warpriest can channel enough positive energy to allies within a 100-foot radius that they will continue to fight even after suffering mortal wounds. Using this ability is a move equivalent action and requires concentration. While in use, allies within the radius who take enough damage to become disabled or dying ignore the effects of that damage and continue fighting. Death occurs instantly at -20 hit points. When the ability ends, either because the warpriest stops concentrating, fails a Concentration check, or becomes disabled or worse, then the full effects of all damage take effect immediately.
+
+Specifics: At 10th level, the Warpriest can channel so much positive energy to allies within a 100-foot radius that they will continue to fight even though suffering mortal wounds. Using this ability is a move-equivalent action and requires concentration. While in use, allies within the radius who take enough damage to become disabled or dying ignore the effects of that damage and continue fighting. Death occurs instantly at -20 hit points. When use of the ability ends, either because the Warpriest stops concentrating, fails a Concentration check, or becomes disabled (or worse), then the full effects of all damage take immediate effect.
+
 Use: Activated.</entry>
   <entry id="12345" lang="en" sex="m">Epic Warpriest</entry>
-  <entry id="12346" lang="en" sex="m">You are the ultimate expression of the faith in your god with the power of your sword. Your armies are fearless and your name is respected and feared throughout the realms.
+  <entry id="12346" lang="en" sex="m">You have become the ultimate expression of the hand of your god - a peerless weapon to be wielded from on high. Your armies know no fear and your name is respected and feared throughout the realms.
 
-Hit Die: d8
-Skill Points at Each Additional Level: 2 + Int modifier
-Bonus Feats: The epic warpriest gains a bonus feat every other level after 10th
+Hit Die: d8.
+Skill Points at Each Additional Level: 2 + Int Modifier.
+Bonus Feats: The Epic Warpriest gains a bonus feat every other level after 10th
 
 Epic Warpriest Bonus Feats List:
 Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Epic Spell Focus, Epic Spell Penetration, Great Wisdom, Improved Combat Casting, Planar Turning.</entry>

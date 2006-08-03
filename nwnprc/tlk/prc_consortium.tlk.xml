@@ -13478,6 +13478,50 @@ Use: Automatic.</entry>
 Prerequisite: Warmind Level 10.
 Specifics: Once per day, the Warmind can perfectly execute an attack, dealing an extra 10d6 damage on his attempt.
 Use: Selected.</entry>
+  <entry id="48522" lang="en" sex="m">7d4 Damage</entry>
+  <entry id="48523" lang="en" sex="m">7d4</entry>
+  <entry id="48524" lang="en" sex="m">8d4 Damage</entry>
+  <entry id="48525" lang="en" sex="m">8d4</entry>
+  <entry id="48526" lang="en" sex="m">9d4 Damage</entry>
+  <entry id="48527" lang="en" sex="m">9d4</entry>
+  <entry id="48528" lang="en" sex="m">10d4 Damage</entry>
+  <entry id="48529" lang="en" sex="m">10d4</entry>
+  <entry id="48530" lang="en" sex="m">9d6 Damage</entry>
+  <entry id="48531" lang="en" sex="m">9d6</entry>
+  <entry id="48532" lang="en" sex="m">10d6 Damage</entry>
+  <entry id="48533" lang="en" sex="m">10d6</entry>
+  <entry id="48534" lang="en" sex="m">3d10 Damage</entry>
+  <entry id="48535" lang="en" sex="m">3d10</entry>
+  <entry id="48536" lang="en" sex="m">4d10 Damage</entry>
+  <entry id="48537" lang="en" sex="m">4d10</entry>
+  <entry id="48538" lang="en" sex="m">5d10 Damage</entry>
+  <entry id="48539" lang="en" sex="m">5d10</entry>
+  <entry id="48540" lang="en" sex="m">6d10 Damage</entry>
+  <entry id="48541" lang="en" sex="m">6d10</entry>
+  <entry id="48542" lang="en" sex="m">7d10 Damage</entry>
+  <entry id="48543" lang="en" sex="m">7d10</entry>
+  <entry id="48544" lang="en" sex="m">8d10 Damage</entry>
+  <entry id="48545" lang="en" sex="m">8d10</entry>
+  <entry id="48546" lang="en" sex="m">9d10 Damage</entry>
+  <entry id="48547" lang="en" sex="m">9d10</entry>
+  <entry id="48548" lang="en" sex="m">10d10 Damage</entry>
+  <entry id="48549" lang="en" sex="m">10d10</entry>
+  <entry id="48550" lang="en" sex="m">3d12 Damage</entry>
+  <entry id="48551" lang="en" sex="m">3d12</entry>
+  <entry id="48552" lang="en" sex="m">4d12 Damage</entry>
+  <entry id="48553" lang="en" sex="m">4d12</entry>
+  <entry id="48554" lang="en" sex="m">5d12 Damage</entry>
+  <entry id="48555" lang="en" sex="m">5d12</entry>
+  <entry id="48556" lang="en" sex="m">6d12 Damage</entry>
+  <entry id="48557" lang="en" sex="m">6d12</entry>
+  <entry id="48558" lang="en" sex="m">7d12 Damage</entry>
+  <entry id="48559" lang="en" sex="m">7d12</entry>
+  <entry id="48560" lang="en" sex="m">8d12 Damage</entry>
+  <entry id="48561" lang="en" sex="m">8d12</entry>
+  <entry id="48562" lang="en" sex="m">9d12 Damage</entry>
+  <entry id="48563" lang="en" sex="m">9d12</entry>
+  <entry id="48564" lang="en" sex="m">10d12 Damage</entry>
+  <entry id="48565" lang="en" sex="m">10d12</entry>
   <entry id="48612" lang="en" sex="m">Man at Arms</entry>
   <entry id="48613" lang="en" sex="m">Men at Arms</entry>
   <entry id="48614" lang="en" sex="m">man at arms</entry>
@@ -17819,16 +17863,6 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
   <entry id="51118" lang="en" sex="m">The PRC Polymorphing system will not work while you are affected by a polymorph effect. Please remove it before trying again.</entry>
   <entry id="51119" lang="en" sex="m">Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again.</entry>
   <entry id="51120" lang="en" sex="m">Polymorph failed: Failed to create a template of the creature to polymorph into.</entry>
-  <entry id="51121" lang="en" sex="m"></entry>
-  <entry id="51122" lang="en" sex="m"></entry>
-  <entry id="51123" lang="en" sex="m"></entry>
-  <entry id="51124" lang="en" sex="m"></entry>
-  <entry id="51125" lang="en" sex="m"></entry>
-  <entry id="51126" lang="en" sex="m"></entry>
-  <entry id="51127" lang="en" sex="m"></entry>
-  <entry id="51128" lang="en" sex="m"></entry>
-  <entry id="51129" lang="en" sex="m"></entry>
-
   <entry id="51197" lang="en" sex="m">rends</entry>
   <entry id="51198" lang="en" sex="m">Two-Weapon Rend</entry>
   <entry id="51199" lang="en" sex="m">Type of Feat: Epic
@@ -18246,7 +18280,7 @@ Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +
 Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price +2 bonus (SR 13), +3 bonus (SR 15), +4 bonus (SR 17), or +5 bonus (SR 19).</entry>
   <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
   <entry id="51584" lang="en" sex="m">The wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
-Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>  <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
+Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>
   <entry id="51585" lang="en" sex="m">Acid Warding</entry>
   <entry id="51586" lang="en" sex="m">The armor absorbs the first 50 points of acid damage per round that the wearer would normally take (similar to the resist energy spell).
 Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
@@ -18289,6 +18323,7 @@ From seven to ten (1d4+6) spell levels are affected by the turning.
 When you are targeted by a spell of higher level than the amount of spell turning you have left, that spell is partially turned. You and the caster each has a proportional chance to be affected.
 If you and a spellcasting attacker are both warded by spell turning effects in operation, both you and the caster have a proportional chance to be affected.</entry>
   <entry id="51603" lang="en" sex="m">Spell Turning (13)</entry>
+  <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4
 

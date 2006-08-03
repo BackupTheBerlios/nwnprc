@@ -130,7 +130,8 @@ void main()
                     AddChoice("Manage cohorts.", 7);
                 if(GetPrimaryNaturalWeaponCount(oPC))
                     AddChoice("Select primary natural weapon.", 8);
-                AddChoice("Gain a template.", 9);
+                //reenble this for 3.1ab1    
+                //AddChoice("Gain a template.", 9);
 
 
                 MarkStageSetUp(nStage, oPC);

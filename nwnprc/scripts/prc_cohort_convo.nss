@@ -156,7 +156,7 @@ void main()
                         SetHeader("What do you want?");
                     else if(nStage == STAGE_REENTRY)
                         SetHeader("What do you *really* want?");
-                    //AddChoice("I need you to cast a spell", 1, oPC);
+                    AddChoice("I need you to cast a spell", 1, oPC);
                     AddChoice("I need you to use a feat", 2, oPC);
                     AddChoice("I need you to use an item", 3, oPC);
                     AddChoice("I need you to identify my equipment", 4, oPC);

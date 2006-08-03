@@ -1,27 +1,27 @@
 /*
    ----------------
-   Speed of the Zephyr
+   Speed of the Zephyr, Greater
 
-   true_utr_zephyr
+   true_utr_zephyrg
    ----------------
 
-   1/8/06 by Stratovarius
+   2/8/06 by Stratovarius
 */ /** @file
 
-    Speed of the Zephyr
+    Speed of the Zephyr, Greater
     
-    Level: Evolving Mind 2
+    Level: Evolving Mind 3
     Range: 60 feet
     Target: One Creature
-    Duration: 5 Round
+    Duration: 3 Rounds
     Spell Resistance: Yes
     Save: None
     Metautterances: Extend
 
-    Normal:  You urge your ally on to greater speed with this utterance.
-             Your ally gains 20' per round speed boost.
-    Reverse: The target of this utterance cannot move as quickly as it had just a moment before.
-             Your target takes a 10' per round speed penalty.
+    Normal:  Your ally's movements are quicker, enhacing his offensive and defensive capabilities
+             Your ally gains haste.
+    Reverse: When you speak this utterance, your target moves as though through molasses
+             Your target is slowed.
 */
 
 #include "true_inc_trufunc"
@@ -52,32 +52,32 @@ void main()
 
     if(utter.bCanUtter)
     {
-        utter.fDur = RoundsToSeconds(5);
+        utter.fDur = RoundsToSeconds(3);
         if(utter.bExtend) utter.fDur *= 2;
         utter.nPen = GetTrueSpeakPenetration(oTrueSpeaker);
         int nSRCheck;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_SPEED_ZEPHYR)
+        if (utter.nSpellId == UTTER_SPEED_ZEPHYR_GREATER)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
 		utter.bIgnoreSR = TRUE;
 		// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// Movement boost
-        	utter.eLink = EffectMovementSpeedIncrease(66);
+        	utter.eLink = EffectHaste();
         	// Impact VFX 
 		utter.eLink2 = EffectVisualEffect(VFX_IMP_HASTE);
         }
         // The REVERSE effect of the Utterance goes here
-        else // UTTER_SPEED_ZEPHYR_R
+        else // UTTER_SPEED_ZEPHYR_GREATER_R
         {
 		// If the Spell Penetration fails, don't apply any effects
 		nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
 		if (!nSRCheck)
 		{
 			// eLink is used for Duration Effects (Speed Decrease)
-			utter.eLink = EffectMovementSpeedDecrease(33)
+			utter.eLink = EffectSlow();
 			// Impact VFX 
 			utter.eLink2 = EffectVisualEffect(VFX_IMP_SLOW);
         	}

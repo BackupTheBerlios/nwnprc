@@ -167,12 +167,25 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
  * @param utter           The utterance structure returned by EvaluateUtterance
  */
 void DoWordOfNurturingReverse(object oTrueSpeaker, object oTarget, struct utterance utter);
+
+/*
  * Returns TRUE if it is a Syllable (Bereft class ability).
  * @param nSpellId   Utterance to check
  *
  * @return           TRUE or FALSE
  */
 int GetIsSyllable(int nSpellId);
+
+/**
+ * Affects all of the creatures with Speak Unto the Masses
+ *
+ * @param oTrueSpeaker    Caster of the Utterance
+ * @param oTarget         Original Target of Utterance
+ * @param utter           The utterance structure returned by EvaluateUtterance
+ * @param nBeats          Number of rounds to fire this utterance
+ * @param nDamageType     DAMAGE_TYPE_*
+ */
+void DoEnergyNegation(object oTrueSpeaker, object oTarget, struct utterance utter, int nBeats, int nDamageType);
 
 /**
  * Applies modifications to a utterance's damage that depend on some property
@@ -437,8 +450,10 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
 			              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oAreaTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
 			              	// Impact Effects
         				SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oAreaTarget);
-        				// Word of Nurturing Impact
+        				// Utterance Specific code down here
         				DoWordOfNurturingReverse(oTrueSpeaker, oAreaTarget, utter);
+        				if (utter.nSpellId == UTTER_ENERGY_NEGATION_R)
+        					DoEnergyNegation(oTrueSpeaker, oTarget, utter, FloatToInt(utter.fDur / 6.0), GetLocalInt(oTrueSpeaker, "TrueEnergyNegation"));
        				} // end if - Saving Throw
        			} // end if - Spell Resistance
        		} // end if - Friend Check
@@ -448,6 +463,7 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
             oAreaTarget = MyNextObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
 	}// end while - Target loop
 }
+
 void DoWordOfNurturingReverse(object oTrueSpeaker, object oTarget, struct utterance utter)
 {
 	// Returns TRUE upon concentration failure
@@ -470,7 +486,7 @@ void DoWordOfNurturingReverse(object oTrueSpeaker, object oTarget, struct uttera
 
 int GetIsSyllable(int nSpellId)
 {
-	if (SYLLABLE_DETACHMENT == nSpellId)        return TRUE;
+	if (SYLLABLE_DETACHMENT == nSpellId)             return TRUE;
 	else if (SYLLABLE_AFFLICATION_SIGHT == nSpellId) return TRUE;
 	else if (SYLLABLE_AFFLICATION_SOUND == nSpellId) return TRUE;
 	else if (SYLLABLE_AFFLICATION_TOUCH == nSpellId) return TRUE;
@@ -479,6 +495,19 @@ int GetIsSyllable(int nSpellId)
 	else if (SYLLABLE_ENERVATION == nSpellId)        return TRUE;
 	
 	return FALSE;
+}
+
+void DoEnergyNegation(object oTrueSpeaker, object oTarget, struct utterance utter, int nBeats, int nDamageType)
+{
+	int nDamage = d6(2);
+	// Empower it
+	if(utter.bEmpower) nDamage += (nDamage/2);
+       	// Impact VFX 
+        utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGVIO), EffectDamage(nDamage, nDamageType));
+        
+        nBeats -= 1;
+        if (nBeats > 0)
+        	DelayCommand(6.0, DoEnergyNegation(oTrueSpeaker, oTarget, utter, nBeats, nDamageType));
 }
 /*
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,

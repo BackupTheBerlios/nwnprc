@@ -1,27 +1,27 @@
 /*
    ----------------
-   Temporal Twist
+   Temporal Spiral
 
-   true_utr_tmptwst
+   true_utr_tmpsprl
    ----------------
 
-   19/7/06 by Stratovarius
+   2/8/06 by Stratovarius
 */ /** @file
 
-    Temporal Twist
+    Temporal Spiral
 
-    Level: Evolving Mind 2
+    Level: Evolving Mind 3
     Range: 60 feet
     Target: One Creature
-    Duration: Instantaneous (Normal) or 1 Round (Reverse)
+    Duration: 1 Round (Normal) or 3 Rounds (Reverse)
     Spell Resistance: Yes
     Save: None (Normal) or Will Negates (Reverse)
     Metautterances: Extend
 
-    Normal:  With a word of Truespeech, you grant a creature incredible reflexes, enabling it to make an immediate attack.
-             Your ally gains one extra attack this round.
-    Reverse: You cause a creature to lose its focus and become bewildered.
-             Your foe is dazed for one round.
+    Normal:  Everything your target does seems quicker.
+             Your ally gains an additional move action (haste).
+    Reverse: This powerful utterance sounds like the churning of ancient earth, freezing your target in place.
+             Your foe is dazed for three rounds.
 */
 
 #include "true_inc_trufunc"
@@ -57,26 +57,26 @@ void main()
     	utter.nSaveThrow = SAVING_THROW_WILL;
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
         utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker);    	
-        utter.fDur       = RoundsToSeconds(1);
         int nSRCheck;
         int nSaveCheck;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_TEMPORAL_TWIST)
+        if (utter.nSpellId == UTTER_TEMPORAL_SPIRAL)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectModifyAttacks(1);
+        	utter.fDur       = RoundsToSeconds(1);
+        	utter.eLink = EffectHaste();
         	utter.eLink2 = EffectVisualEffect(VFX_IMP_HASTE);
         }
         // The REVERSE effect of the Utterance goes here
-        else // UTTER_TEMPORAL_TWIST_R
+        else // UTTER_TEMPORAL_SPIRAL_R
         {
-        	// Can only extend this part of the utterance.
-        	if(utter.bExtend) utter.fDur *= 2;
+        	// Duration for this part
+        	utter.fDur       = RoundsToSeconds(3);
         	// If the Spell Penetration fails, don't apply any effects
         	// Its done this way so the law of sequence is applied properly
         	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
@@ -92,6 +92,7 @@ void main()
 			}
         	}
         }
+        if(utter.bExtend) utter.fDur *= 2;
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
         // Impact Effects

@@ -11,13 +11,11 @@ Bugs: Dwarf Domain, Strength Domain
 Truenaming:
 
 Truenamer
-10/71 Utterances
+22/71 Utterances
 4 Prestige Classes
 15+ feats
 
 Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
-
-NEEDED TO TEST: Make Defensive Edge usable, do Class TLK enteries.
 
 true_inc_truespeak: ClearLawLocalVars update numbers, add to prc_rest
 Make list of possible utterances.
@@ -30,6 +28,7 @@ Brimstone Speaker - 2das/TLK, add as a spellcaster. Heavenly Entreaty. Add Utter
 Acolyte of the Ego - Unstarted
 Fiendbinder - Unstarted
 
+Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
 
 Psionic PrCs:
 Iron Mind - cls_feat.2da, Invest Armour feat.

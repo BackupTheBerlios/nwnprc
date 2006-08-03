@@ -26,10 +26,25 @@ const int UTTER_SPEED_ZEPHYR             = -1;
 const int UTTER_SPEED_ZEPHYR_R           = -1;
 const int UTTER_STRIKE_MIGHT             = -1;
 const int UTTER_STRIKE_MIGHT_R           = -1;
+const int UTTER_TEMPORAL_TWIST           = -1;
+const int UTTER_TEMPORAL_TWIST_R         = -1;
 const int UTTER_WORD_NURTURING_LESSER    = -1;
 const int UTTER_WORD_NURTURING_LESSER_R  = -1;
 
 // Level 3 Utterances
+const int UTTER_ACCELERATED_ATTACK         = -1
+const int UTTER_ACCELERATED_ATTACK_R       = -1
+const int UTTER_ENERGY_NEGATION            = -1;
+const int UTTER_ENERGY_NEGATION_R          = -1;
+const int UTTER_ENERGY_NEGATION_CHOICE     = -1;
+const int UTTER_INCARNATION_ANGELS         = -1;
+const int UTTER_INCARNATION_ANGELS_R       = -1;
+const int UTTER_SPEED_ZEPHYR_GREATER       = -1;
+const int UTTER_SPEED_ZEPHYR_GREATER_R     = -1;
+const int UTTER_TEMPORAL_SPIRAL            = -1;
+const int UTTER_TEMPORAL_SPIRAL_R          = -1;
+const int UTTER_VISION_SHARPENED           = -1;
+const int UTTER_VISION_SHARPENED_R         = -1;
 const int UTTER_WORD_NURTURING_MODERATE    = -1;
 const int UTTER_WORD_NURTURING_MODERATE_R  = -1;
 

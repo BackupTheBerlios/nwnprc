@@ -1482,7 +1482,7 @@ object PRCGetSpellTargetObject()
 
     if(GetLocalInt(oCaster, "PRC_EF_ARCANE_FIST"))
         return oCaster;
-	
+
     if(GetLocalInt(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE))
         return GetLocalObject(GetModule(), PRC_SPELL_TARGET_OBJECT_OVERRIDE);
 
@@ -2015,22 +2015,19 @@ int GetIsEthereal(object oTarget)
 // returns if a character should be using the newspellbook when casting
 int UseNewSpellBook(object oCreature)
 {
+    int nFirstArcane = GetFirstArcaneClass(oCreature);
     //check they have bard/sorc in first arcane slot
-    if(GetFirstArcaneClass(oCreature) != CLASS_TYPE_BARD
-        && GetFirstArcaneClass(oCreature) != CLASS_TYPE_SORCERER)
+    if(nFirstArcane != CLASS_TYPE_BARD && nFirstArcane != CLASS_TYPE_SORCERER)
         return FALSE;
     //check they have arcane PrC
     if(!GetArcanePRCLevels(oCreature))
         return FALSE;
     //check if the newspellbooks are disabled
-    if((GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK)
-            && GetFirstArcaneClass(oCreature) == CLASS_TYPE_SORCERER)
-        || (GetPRCSwitch(PRC_BARD_DISALLOW_NEWSPELLBOOK)
-            && GetFirstArcaneClass(oCreature) == CLASS_TYPE_BARD))
+    if((GetPRCSwitch(PRC_SORC_DISALLOW_NEWSPELLBOOK) && nFirstArcane == CLASS_TYPE_SORCERER) ||
+        (GetPRCSwitch(PRC_BARD_DISALLOW_NEWSPELLBOOK) && nFirstArcane == CLASS_TYPE_BARD))
         return FALSE;
     //check they have bard/sorc levels
-    if(!GetLevelByClass(CLASS_TYPE_BARD)
-        && !GetLevelByClass(CLASS_TYPE_SORCERER))
+    if(!(GetLevelByClass(CLASS_TYPE_BARD) || GetLevelByClass(CLASS_TYPE_SORCERER)))
         return FALSE;
 
     //at this point, they should be using the new spellbook
@@ -2040,89 +2037,89 @@ int UseNewSpellBook(object oCreature)
 // wrapper for DecrementRemainingSpellUses, works for newspellbook 'fake' spells too
 void PRCDecrementRemainingSpellUses(object oCreature, int nSpell)
 {
-	if (!UseNewSpellBook(oCreature) && GetHasSpell(nSpell, oCreature)) {
-		DecrementRemainingSpellUses(oCreature, nSpell);
-		return;
-	}
+    if (!UseNewSpellBook(oCreature) && GetHasSpell(nSpell, oCreature)) {
+        DecrementRemainingSpellUses(oCreature, nSpell);
+        return;
+    }
 
-	int i;
-	for(i=1;i<=3;i++)
-	{
-		int nClass = PRCGetClassByPosition(i, oCreature);
-		int nLevel = GetLevelByClass(nClass, oCreature);
-		if (nLevel && GetSpellUses(oCreature, nSpell, nClass))
-		{
-			RemoveSpellUse(oCreature, nSpell, nClass);
-			return;
-		}
-	}
+    int i;
+    for(i=1;i<=3;i++)
+    {
+        int nClass = PRCGetClassByPosition(i, oCreature);
+        int nLevel = GetLevelByClass(nClass, oCreature);
+        if (nLevel && GetSpellUses(oCreature, nSpell, nClass))
+        {
+            RemoveSpellUse(oCreature, nSpell, nClass);
+            return;
+        }
+    }
 }
 
 // wrapper for GetHasSpell, works for newspellbook 'fake' spells too
 // should return 0 if called with a normal spell when a character should be using the newspellbook
 int PRCGetHasSpell(int nSpell, object oCreature = OBJECT_SELF)
 {
-	int nUses = 0;
-	
-	if (!UseNewSpellBook(oCreature))
-	{
-		nUses += GetHasSpell(nSpell, oCreature);
-	}
+    int nUses = 0;
 
-	int nSpellbookID = SpellToSpellbookID(nSpell);
-	if (nSpellbookID != -1)
-	{
-		int i;
-		for(i=1;i<=3;i++)
-		{
-			int nClass = PRCGetClassByPosition(i, oCreature);
-			int nLevel = GetLevelByClass(nClass, oCreature);
-			if (nLevel)
-				nUses += GetSpellUses(oCreature, nSpell, nClass);
-		}
-	}
-	return nUses;
+    if (!UseNewSpellBook(oCreature))
+    {
+        nUses += GetHasSpell(nSpell, oCreature);
+    }
+
+    int nSpellbookID = SpellToSpellbookID(nSpell);
+    if (nSpellbookID != -1)
+    {
+        int i;
+        for(i=1;i<=3;i++)
+        {
+            int nClass = PRCGetClassByPosition(i, oCreature);
+            if(GetLevelByClass(nClass, oCreature))
+                nUses += GetSpellUses(oCreature, nSpell, nClass);
+        }
+    }
+    if(DEBUG) DoDebug("PRCGetHasSpell: " + IntToString(nSpell) + ", " + IntToString(nUses));
+    return nUses;
 }
 
 // returns the spelllevel of nSpell as it can be cast by oCreature
 int PRCGetSpellLevel(object oCreature, int nSpell)
 {
-	if (!PRCGetHasSpell(nSpell, oCreature))
-		return -1;
+    if (!PRCGetHasSpell(nSpell, oCreature))
+        return -1;
 
-	int i;
-	for(i=1;i<=3;i++)
-	{
-		int nClass = PRCGetClassByPosition(i, oCreature);
-		int nCharLevel = GetLevelByClass(nClass, oCreature);
-		if (nCharLevel)
-		{
+    int i;
+    for(i=1;i<=3;i++)
+    {
+        int nClass = PRCGetClassByPosition(i, oCreature);
+        int nCharLevel = GetLevelByClass(nClass, oCreature);
+        if (nCharLevel)
+        {
 
-			string sSpellLevel = "";
-			if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER)
-				sSpellLevel = Get2DACache("spells", "Wiz_Sorc", nSpell);
-			if (nClass == CLASS_TYPE_RANGER)
-				sSpellLevel = Get2DACache("spells", "Ranger", nSpell);
-			if (nClass == CLASS_TYPE_PALADIN)
-				sSpellLevel = Get2DACache("spells", "Paladin", nSpell);
-			if (nClass == CLASS_TYPE_DRUID)
-				sSpellLevel = Get2DACache("spells", "Druid", nSpell);
-			if (nClass == CLASS_TYPE_CLERIC)
-				sSpellLevel = Get2DACache("spells", "Cleric", nSpell);
-			if (nClass == CLASS_TYPE_BARD)
-				sSpellLevel = Get2DACache("spells", "Bard", nSpell);
+            string sSpellLevel = "";
+            if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER)
+                sSpellLevel = Get2DACache("spells", "Wiz_Sorc", nSpell);
+            else if (nClass == CLASS_TYPE_RANGER)
+                sSpellLevel = Get2DACache("spells", "Ranger", nSpell);
+            else if (nClass == CLASS_TYPE_PALADIN)
+                sSpellLevel = Get2DACache("spells", "Paladin", nSpell);
+            else if (nClass == CLASS_TYPE_DRUID)
+                sSpellLevel = Get2DACache("spells", "Druid", nSpell);
+            else if (nClass == CLASS_TYPE_CLERIC)
+                sSpellLevel = Get2DACache("spells", "Cleric", nSpell);
+            else if (nClass == CLASS_TYPE_BARD)
+                sSpellLevel = Get2DACache("spells", "Bard", nSpell);
 
-			if (sSpellLevel != "")
-				return StringToInt(sSpellLevel);
-			
-			int nSpellLevel = GetSpellLevel(oCreature, nSpell, nClass);
+            if (sSpellLevel != "")
+                return StringToInt(sSpellLevel);
 
-			if (nSpellLevel != -1)
-				return nSpellLevel;
-			
-		}
-	}
+            int nSpellLevel = GetSpellLevel(oCreature, nSpell, nClass);
 
-	//return innate level?
-	return -1;
+            if (nSpellLevel != -1)
+                return nSpellLevel;
+
+        }
+    }
+
+    //return innate level?
+    return -1;
 }

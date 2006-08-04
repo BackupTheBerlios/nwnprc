@@ -1,0 +1,362 @@
+#MAXMODEL ASCII
+# model: vim_abil_cha
+filedependancy vim_abil_cha.max
+newmodel vim_abil_cha
+setsupermodel vim_abil_cha NULL
+classification effect
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom vim_abil_cha
+node dummy vim_abil_cha
+  parent NULL
+  #part-number 0
+endnode
+node dummy Dummy01
+  parent vim_abil_cha
+  #part-number 1
+  position 0 0 0.0419173017
+  orientation 0 0 0 0
+endnode
+node emitter OmenEmitter02
+  parent Dummy01
+  #part-number 2
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 1
+  inherit 0
+  inheritvel 0
+  inherit_local 1
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Normal
+  blend Lighten
+  texture fxpa_Flare1
+  xgrid 2
+  ygrid 2
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.803391993 -0.00119383004 0.144154996
+  orientation 0 0 0 0
+  xsize 0
+  ysize 0
+  threshold 0
+  combinetime 0
+  colorStart 1 1 0
+  colorEnd 1 1 0
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.400000006
+  sizeEnd 0.200000003
+  sizeStart_y 0
+  sizeEnd_y 0
+  birthrate 90
+  lifeExp 1
+  mass -0.300000012
+  spread 0
+  particleRot 0
+  velocity 0
+  randvel 0.400000006
+  bounce_co 0.100000001
+  blurlength 10
+  fps 15
+  frameStart 0
+  frameEnd 3
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  grav 0
+  drag 0
+endnode
+node emitter OmenEmitter01
+  parent Dummy01
+  #part-number 3
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 1
+  inherit 0
+  inheritvel 0
+  inherit_local 1
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Fountain
+  render Normal
+  blend Lighten
+  texture fxpa_Flare1
+  xgrid 2
+  ygrid 2
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0.80290103 -0.00108323002 0.129252002
+  orientation -1 0 0 -3.14159012
+  xsize 0
+  ysize 0
+  threshold 0
+  combinetime 0
+  colorStart 1.0 0.6 0
+  colorEnd 1.0 0.6 0
+  alphaStart 1
+  alphaEnd 0
+  sizeStart 0.400000006
+  sizeEnd 0.200000003
+  sizeStart_y 0
+  sizeEnd_y 0
+  birthrate 80
+  lifeExp 1
+  mass -0.300000012
+  spread 6.28318977
+  particleRot 0
+  velocity 0
+  randvel 0.5
+  bounce_co 0.100000001
+  blurlength 10
+  fps 30
+  frameStart 0
+  frameEnd 3
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  grav 0
+  drag 0
+endnode
+node light AuroraLight03
+  parent OmenEmitter01
+  #part-number 4
+  ambientonly 0
+  shadow 0
+  isdynamic 0
+  affectdynamic 1
+  lightpriority 3
+  fadingLight 0
+  flareradius 0
+  position 0.00124191004 -0.115566 -0.270752996
+  orientation -1 0 0 -3.14159012
+  radius 5
+  multiplier 1
+  color 0 0 0
+endnode
+node emitter OmenEmitter03
+  parent vim_abil_cha
+  #part-number 5
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 0
+  random 0
+  inherit 1
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Single
+  render Normal
+  blend Lighten
+  texture tof_vanimal
+  xgrid 3
+  ygrid 2
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position 0 0 1.15
+  orientation 0 0 0 0
+  colorStart 1 1 0
+  colorEnd 1 1 0
+  alphaStart 0
+  alphaEnd 0
+  sizeStart 0.5
+  sizeEnd 0.5
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 5
+  frameEnd 5
+  birthrate 1
+  lifeExp 4
+  mass 0
+  spread 0
+  particleRot 0
+  velocity 0
+  randvel 0
+  fps 0
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter WIND_Dummy
+  parent vim_abil_cha
+  #part-number 6
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 0
+  random 0
+  inherit 0
+  inheritvel 0
+  inherit_local 0
+  splat 0
+  inherit_part 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Lighten
+  texture fxpa_flare1
+  xgrid 2
+  ygrid 2
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 8
+  blastLength 1.29999995
+  position 0 0 1.15
+  orientation 0 0 0 0
+  colorStart 1 1 0
+  colorEnd 1.0 0.5 0
+  alphaStart 1
+  alphaEnd 0
+  sizeStart 0.2
+  sizeEnd 0.2
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 0
+  birthrate 30
+  lifeExp 1
+  mass 0
+  spread 360
+  particleRot 0.1
+  velocity 1
+  randvel 0.5
+  fps 7
+  xsize 0
+  ysize 0
+  bounce_co 0
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+endmodelgeom vim_abil_cha
+
+#MAXANIM ASCII
+newanim impact vim_abil_cha
+  length 3.01
+  transtime 0.25
+  animroot vim_abil_cha
+  event 1.5 detonate
+node dummy vim_abil_cha
+  parent NULL
+  #part-number 0
+endnode
+node dummy Dummy01
+  parent vim_abil_cha
+  #part-number 1
+  orientationkey 9
+    0 0 0 0 0
+    0.133332998 0 0 1 -1.57079995
+    0.300000012 0 0 1 -3.14159012
+    0.466666996 0 0 1 -4.71238995
+    0.633333027 0 0 0 0
+    0.800000012 0 0 -1 -4.71238995
+    0.966666996 0 0 -1 -3.14159012
+    1.13332999 0 0 -1 -1.57079995
+    1.29999995 0 0 0 0
+endnode
+node emitter OmenEmitter02
+  parent Dummy01
+  #part-number 2
+  positionkey 2
+    0 0.803391993 -0.00119383004 0.144154996
+    1.29999995 0.0127218999 -0.00119387999 1.16108
+  birthratekey 3
+    0 90
+    1.29999995 60
+    1.33333004 0
+endnode
+node emitter OmenEmitter01
+  parent Dummy01
+  #part-number 3
+  positionkey 2
+    0 0.80290103 -0.00108323002 0.129252002
+    1.29999995 0.0122311004 -0.00108327996 1.14618003
+  birthratekey 3
+    0 80
+    1.29999995 59
+    1.33333004 0
+endnode
+node light AuroraLight03
+  parent OmenEmitter01
+  #part-number 4
+  colorkey 7
+    0            1 1 0
+    0.0333333015 1.0 0.5 0
+    0.433333009  1 1 0
+    0.899999976  1.0 0.5 0
+    1.29999995   1 1 0
+    1.33333004   1.0 0.5 0
+    1.96667004   0 0 0
+endnode
+node emitter OmenEmitter03
+  parent vim_abil_cha
+  #part-number 5
+  alphaStartkey 5
+    0.0333333015 0
+    1.5 0
+    1.6 1
+    2.0 1
+    3.0 0
+  alphaEndkey 5
+    0.0333333015 0
+    1.5 0
+    1.6 1
+    2.0 1
+    3.0 0
+endnode
+node emitter WIND_Dummy
+  parent vim_abil_cha
+  #part-number 6
+endnode
+doneanim impact vim_abil_cha
+
+donemodel vim_abil_cha

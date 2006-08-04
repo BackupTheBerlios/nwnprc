@@ -18940,6 +18940,126 @@ Use: Automatic.</entry>
 Prerequisite: Enlightened Fist level 6
 Specifics: Your fist of energy ability also adds an extra 1d10 damage when a critical hit is scored.
 Use: Automatic.</entry>
+  <entry id="52250" lang="en" sex="m">Aberrate</entry>
+  <entry id="52252" lang="en" sex="m">Absorb Strength</entry>
+  <entry id="52254" lang="en" sex="m">Abyssal Might</entry>
+  <entry id="52256" lang="en" sex="m">Angry Ache</entry>
+  <entry id="52258" lang="en" sex="m">Apocalypse from the Sky</entry>
+  <entry id="52260" lang="en" sex="m">Apocalypse from the Sky: Fire</entry>
+  <entry id="52261" lang="en" sex="m">Apocalypse from the Sky: Acid</entry>
+  <entry id="52262" lang="en" sex="m">Apocalypse from the Sky: Sonic</entry>
+  <entry id="52263" lang="en" sex="m">Bestow Wound</entry>
+  <entry id="52265" lang="en" sex="m">Bodak Birth</entry>
+  <entry id="52267" lang="en" sex="m">Boneblade</entry>
+  <entry id="52269" lang="en" sex="m">Boneblade: Greatsword</entry>
+  <entry id="52270" lang="en" sex="m">Boneblade: Longsword</entry>
+  <entry id="52271" lang="en" sex="m">Boneblade: Shortsword</entry>
+  <entry id="52272" lang="en" sex="m">Boneblast</entry>
+  <entry id="52274" lang="en" sex="m">Call Dretch Horde</entry>
+  <entry id="52276" lang="en" sex="m">Call Lemure Horde</entry>
+  <entry id="52278" lang="en" sex="m">Claws of the Bebilith</entry>
+  <entry id="52280" lang="en" sex="m">Claws of the Savage</entry>
+  <entry id="52282" lang="en" sex="m">Cloud of the Achaierai</entry>
+  <entry id="52284" lang="en" sex="m">Clutch of Orcus</entry>
+  <entry id="52286" lang="en" sex="m">Crushing Fist of Spite</entry>
+  <entry id="52288" lang="en" sex="m">Curse of the Putrid Husk</entry>
+  <entry id="52290" lang="en" sex="m">Damning Darkness</entry>
+  <entry id="52292" lang="en" sex="m">Death by Thorns</entry>
+  <entry id="52294" lang="en" sex="m">Demoncall</entry>
+  <entry id="52296" lang="en" sex="m">Demonflesh</entry>
+  <entry id="52298" lang="en" sex="m">Despoil</entry>
+  <entry id="52300" lang="en" sex="m">Devil's Ego</entry>
+  <entry id="52302" lang="en" sex="m">Devil's Eye</entry>
+  <entry id="52304" lang="en" sex="m">Devil's Tail</entry>
+  <entry id="52306" lang="en" sex="m">Dread Word</entry>
+  <entry id="52308" lang="en" sex="m">Drug Resistance</entry>
+  <entry id="52310" lang="en" sex="m">Ectoplasmic Enhancement</entry>
+  <entry id="52312" lang="en" sex="m">Eternity of Torture</entry>
+  <entry id="52314" lang="en" sex="m">Evil Eye</entry>
+  <entry id="52316" lang="en" sex="m">Eye of the Beholder</entry>
+  <entry id="52318" lang="en" sex="m">Evil Weather</entry>
+  <entry id="52320" lang="en" sex="m">Rain of Blood</entry>
+  <entry id="52321" lang="en" sex="m">Violet Rain</entry>
+  <entry id="52322" lang="en" sex="m">Green Fog</entry>
+  <entry id="52323" lang="en" sex="m">Rain of Fish</entry>
+  <entry id="52324" lang="en" sex="m">Extract Drug</entry>
+  <entry id="52326" lang="en" sex="m">Fangs of the Vampire King</entry>
+  <entry id="52328" lang="en" sex="m">Fiendish Clarity</entry>
+  <entry id="52330" lang="en" sex="m">Flesh Armor</entry>
+  <entry id="52332" lang="en" sex="m">Flesh Ripper</entry>
+  <entry id="52334" lang="en" sex="m">Grim Revenge</entry>
+  <entry id="52336" lang="en" sex="m">Gutwrench</entry>
+  <entry id="52338" lang="en" sex="m">Heartache</entry>
+  <entry id="52340" lang="en" sex="m">Heartclutch</entry>
+  <entry id="52342" lang="en" sex="m">Hellfire</entry>
+  <entry id="52344" lang="en" sex="m">Hellfire Storm</entry>
+  <entry id="52346" lang="en" sex="m">Hell's Power</entry>
+  <entry id="52348" lang="en" sex="m">Lahm's Finger Darts</entry>
+  <entry id="52350" lang="en" sex="m">Liquid Pain</entry>
+  <entry id="52352" lang="en" sex="m">Morality Undone</entry>
+  <entry id="52354" lang="en" sex="m">Power Leech</entry>
+  <entry id="52356" lang="en" sex="m">Rapture of Rupture</entry>
+  <entry id="52358" lang="en" sex="m">Reality Blind</entry>
+  <entry id="52360" lang="en" sex="m">Red Fester</entry>
+  <entry id="52362" lang="en" sex="m">Resonating Resistance</entry>
+  <entry id="52364" lang="en" sex="m">Rotting Curse of Urfestra</entry>
+  <entry id="52366" lang="en" sex="m">Seething Eyebane</entry>
+  <entry id="52368" lang="en" sex="m">Shriveling</entry>
+  <entry id="52370" lang="en" sex="m">Song of Festering Death</entry>
+  <entry id="52372" lang="en" sex="m">Sorrow</entry>
+  <entry id="52374" lang="en" sex="m">Vision of Heaven</entry>
+  <entry id="52376" lang="en" sex="m">Spores of the Vrock</entry>
+  <entry id="52378" lang="en" sex="m">Stunning Screech</entry>
+  <entry id="52380" lang="en" sex="m">Stop Heart</entry>
+  <entry id="52382" lang="en" sex="m">Thousand Needles</entry>
+  <entry id="52384" lang="en" sex="m">Tongue of Baalzebul</entry>
+  <entry id="52386" lang="en" sex="m">Touch of Juiblex</entry>
+  <entry id="52388" lang="en" sex="m">Unheavened</entry>
+  <entry id="52390" lang="en" sex="m">Unliving Weapon</entry>
+  <entry id="52392" lang="en" sex="m">Utterdark</entry>
+  <entry id="52394" lang="en" sex="m">Wave of Grief</entry>
+  <entry id="52396" lang="en" sex="m">Wave of Pain</entry>
+  <entry id="52398" lang="en" sex="m">Wrack</entry>
+  <entry id="52400" lang="en" sex="m">Wretched Blight</entry>
+  <entry id="52402" lang="en" sex="m">Lesser Shivering Touch</entry>
+  <entry id="52404" lang="en" sex="m">Shivering Touch</entry>
+  <entry id="52406" lang="en" sex="m">Ayailla's Radiant Burst</entry>
+  <entry id="52408" lang="en" sex="m">Brilliant Emanation</entry>
+  <entry id="52410" lang="en" sex="m">Divine Inspiration</entry>
+  <entry id="52412" lang="en" sex="m">Diamond Spray</entry>
+  <entry id="52414" lang="en" sex="m">Dragon Cloud</entry>
+  <entry id="52416" lang="en" sex="m">Exalted Fury</entry>
+  <entry id="52418" lang="en" sex="m">Hammer of Righteousness</entry>
+  <entry id="52420" lang="en" sex="m">Phieran's Resolve</entry>
+  <entry id="52422" lang="en" sex="m">Phoenix Fire</entry>
+  <entry id="52424" lang="en" sex="m">Rain of Embers</entry>
+  <entry id="52426" lang="en" sex="m">Sicken Evil</entry>
+  <entry id="52428" lang="en" sex="m">Storm of Shards</entry>
+  <entry id="52430" lang="en" sex="m">Sunmantle</entry>
+  <entry id="52432" lang="en" sex="m">Twilight Luck</entry>
+  <entry id="52434" lang="en" sex="m">Amber Sarcophagus</entry>
+  <entry id="52436" lang="en" sex="m">Blinding Glory</entry>
+  <entry id="52438" lang="en" sex="m">Bolt of Glory</entry>
+  <entry id="52440" lang="en" sex="m">Call Faithful Servants</entry>
+  <entry id="52442" lang="en" sex="m">Celestial Blood</entry>
+  <entry id="52444" lang="en" sex="m">Chaav's Laugh</entry>
+  <entry id="52446" lang="en" sex="m">Convert Wand</entry>
+  <entry id="52448" lang="en" sex="m">Dancing Web</entry>
+  <entry id="52450" lang="en" sex="m">Divine Sacrifice</entry>
+  <entry id="52452" lang="en" sex="m">Elation</entry>
+  <entry id="52454" lang="en" sex="m">Energize Potion</entry>
+  <entry id="52456" lang="en" sex="m">Eyes of the Avoral</entry>
+  <entry id="52458" lang="en" sex="m">Inspired Aim</entry>
+  <entry id="52460" lang="en" sex="m">Lantern Light</entry>
+  <entry id="52462" lang="en" sex="m">Last Judgement</entry>
+  <entry id="52464" lang="en" sex="m">Luminous Armor</entry>
+  <entry id="52466" lang="en" sex="m">Greater Luminous Armor</entry>
+  <entry id="52468" lang="en" sex="m">Rain of Black Tulips</entry>
+  <entry id="52470" lang="en" sex="m">Rain of Roses</entry>
+  <entry id="52472" lang="en" sex="m">Ray of Hope</entry>
+  <entry id="52474" lang="en" sex="m">Righteous Smite</entry>
+  <entry id="52476" lang="en" sex="m">Starmantle</entry>
+  <entry id="52478" lang="en" sex="m">Tomb of Light</entry>
   <entry id="52985" lang="en" sex="m">This feat opens the spellbook for this class. This is a conversation and feat driven version of the normal spellbook. Instead of appearing on the spell radial, they will appear on the class radial instead. Also, you may be able to use the spell after you have cast all your uses. No spell will result, but you will spend a round trying to cast it.</entry>
   <entry id="52986" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 9
 Innate Level: 9

@@ -49,6 +49,18 @@ const int UTTER_WORD_NURTURING_MODERATE    = -1;
 const int UTTER_WORD_NURTURING_MODERATE_R  = -1;
 
 // Level 4 Utterances
+const int UTTER_BREATH_CLEANSING         = -1;
+const int UTTER_BREATH_CLEANSING_R       = -1;
+const int UTTER_CASTER_LENS              = -1;
+const int UTTER_CASTER_LENS_R            = -1;
+const int UTTER_CONFOUNDING_RESISTANCE   = -1;
+const int UTTER_CONFOUNDING_RESISTANCE_R = -1;
+const int UTTER_MORALE_BOOST             = -1;
+const int UTTER_MORALE_BOOST_R           = -1;
+const int UTTER_MAGICAL_CONTRACTION      = -1;
+const int UTTER_MAGICAL_CONTRACTION_R    = -1;
+const int UTTER_SPELL_REBIRTH            = -1;
+const int UTTER_SPELL_REBIRTH_R          = -1;
 const int UTTER_WORD_NURTURING_POTENT    = -1;
 const int UTTER_WORD_NURTURING_POTENT_R  = -1;
 

@@ -352,6 +352,12 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
 
         //:: Since the effect has been removed, delete the references to it.
         //:: This will help out the sweeping function when it gets called next (not now, though)
+        // These are stored for one round for Spell Rebirth
+        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry))); 
+        SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry)));
+        DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
+        DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
+        
         DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry));
         DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));
         DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nCurrentEntry));
@@ -367,6 +373,12 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
     }// end if is still a valid spell.
     else
     {
+        // These are stored for one round for Spell Rebirth
+        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry))); 
+        SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry)));
+        DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
+        DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
+        
       // If it's not a real effect anymore, then delete the variables that refer to it.
       DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nCurrentEntry));
       DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nCurrentEntry));

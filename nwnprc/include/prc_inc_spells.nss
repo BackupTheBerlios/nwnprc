@@ -665,6 +665,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     int nItemLevel;
     object oItem = GetSpellCastItem();
     int nAdjust = GetLocalInt(oCaster, PRC_CASTERLEVEL_ADJUSTMENT);//this is for builder use
+    nAdjust += GetLocalInt(oCaster, "TrueCasterLens");
     //DelayCommand(1.0, DeleteLocalInt(oCaster, "PRC_Castlevel_Adjustment"));
     int iArcLevel;
     int iDivLevel;
@@ -1244,6 +1245,18 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         nDC -= 3;
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
         nDC -= 1+(GetHitDice(oTarget)/5);
+    
+    // This ability removes evasion from the target
+    if (GetLocalInt(oTarget, "TrueConfoundingResistance"))
+    {
+    	// return the damage cut in half
+    	if (PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, nSaveType, oSaveVersus))
+    	{
+    		return nDamage / 2;
+    	}
+    	
+    	return nDamage;
+    }
 
     // Do save
     nDamage = GetReflexAdjustedDamage(nDamage, oTarget, nDC, nSaveType, oSaveVersus);
@@ -1643,6 +1656,11 @@ int PRCGetMetaMagicFeat()
             // Add extend to the metamagic feat using bitwise math
             nFeat |= METAMAGIC_EXTEND;
         }
+    }
+    // Magical Contraction, Truenaming Utterance
+    if (GetLocalInt(OBJECT_SELF, "TrueMagicalContraction"))
+    {
+    	nFeat |= METAMAGIC_EXTEND;
     }
 
     if(GetIsObjectValid(GetSpellCastItem()))

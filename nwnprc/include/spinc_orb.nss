@@ -26,31 +26,18 @@ void DoOrb(effect eVis, effect eFailSave, int nSaveType, int nDamageType, int nS
           //Fire cast spell at event for the specified target
           SPRaiseSpellCastAt(oTarget, TRUE, nSpellID);
 
-          //Make SR Check
-          if (!SPResistSpell(OBJECT_SELF, oTarget,nPenetr))
-          {
-               //Roll damage for each target
-               int nDamage = SPGetMetaMagicDamage(nDamageType, nDice, 6);
-               nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
+	  //Roll damage for each target
+          int nDamage = SPGetMetaMagicDamage(nDamageType, nDice, 6);
+          nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
 
-               // Let the target make a fort save, if they succeed half damage and no bad effect, if they fail
-               // then full damage and the bad effect.
-               int nSaved = 0;
-               if (FortitudeSave(oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), nSaveType))
-               {
-                    nSaved = 1;
-                    nDamage /= 2;
-               }
+          // Apply the damage and the damage visible effect to the target.
+          SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, nDamageType), oTarget);
+          PRCBonusDamage(oTarget);
+          SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 
-               // Apply the damage and the damage visible effect to the target.
-               SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, nDamageType), oTarget);
-               PRCBonusDamage(oTarget);
-               SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-
-               // If the target failed it's save then apply the failed save effect as well for 1 round.
-               if (!nSaved)
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFailSave, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
-          }
+          // If the target failed it's save then apply the failed save effect as well for 1 round.
+          if (!PRCMySavingThrow(nSaveType, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF)))
+               SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eFailSave, oTarget, RoundsToSeconds(1),TRUE,-1,nCasterLvl);
      }
 
      SPSetSchool();

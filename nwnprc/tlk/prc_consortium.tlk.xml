@@ -19133,8 +19133,8 @@ Range: Close
 Area of Effect / Target: Single.
 Duration: Instant
 Additional Counter Spells:
-Save: Fort 1/2
-Spell Resistance: Yes
+Save: Fort
+Spell Resistance: No
 The caster targets a single creature with acid orb. The orb deals 1d6/lvl dmg (max 15d6), and stunning the target for 1 round on a failed save.
 </entry>
   <entry id="53002" lang="en" sex="m">Cold Orb</entry>
@@ -19147,8 +19147,8 @@ Range: Close
 Area of Effect / Target: Single
 Duration: Instant
 Additional Counter Spells:
-Save: Fort 1/2
-Spell Resistance: Yes
+Save: Fort
+Spell Resistance: No
 The caster targets a single creature with cold orb. The orb deals 1d6/lvl dmg (max 15d6), blinding the target for 1 round on a failed save.
 </entry>
   <entry id="53004" lang="en" sex="m">Electric Orb</entry>
@@ -19161,8 +19161,8 @@ Range: Close
 Area of Effect / Target: Single.
 Duration: Instant
 Additional Counter Spells:
-Save: Fort 1/2
-Spell Resistance: Yes
+Save: Fort
+Spell Resistance: No
 The caster targets a single creature with Lightning orb. The orb deals 1d6/lvl dmg (max 15d6), slowing the target for 1 round on a failed save.</entry>
   <entry id="53006" lang="en" sex="m">Fire Orb</entry>
   <entry id="53007" lang="en" sex="m">Caster Level(s): Sorc/Wiz 4
@@ -19174,8 +19174,8 @@ Range: Close
 Area of Effect / Target: Single
 Duration: Instant
 Additional Counter Spells:
-Save: Fort 1/2
-Spell Resistance: Yes
+Save: Fort
+Spell Resistance: No
 The caster targets a single creature with fire orb. The orb deals 1d6/lvl dmg (max 15d6), dazing the target for 1 round on a failed save.
 </entry>
   <entry id="53008" lang="en" sex="m">Sonic Orb</entry>
@@ -19188,8 +19188,8 @@ Range: Close
 Area of Effect / Target: Single
 Duration: Instant
 Additional Counter Spells:
-Save: Fort 1/2
-Spell Resistance: Yes
+Save: Fort
+Spell Resistance: No
 The caster targets a single creature with sonic orb. The orb deals 1d6/lvl dmg (max 15d6), deafening the target for 1 round on a failed save.
 </entry>
   <entry id="53010" lang="en" sex="m">Ice Burst</entry>

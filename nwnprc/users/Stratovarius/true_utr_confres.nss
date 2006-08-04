@@ -1,27 +1,27 @@
 /*
    ----------------
-   Accelerated Attack
-
-   true_utr_accatk
+   Confounding Resistance
+   
+   true_utr_confres
    ----------------
 
-   2/8/06 by Stratovarius
+   3/8/06 by Stratovarius
 */ /** @file
 
-    Perceive the Unseen
+    Confounding Resistance
 
-    Level: Evolving Mind 3
+    Level: Evolving Mind 4
     Range: 60 feet
     Target: One Creature
-    Duration: 1 Rounds
-    Spell Resistance: None
+    Duration: 5 Rounds
+    Spell Resistance: Yes
     Save: None
     Metautterances: Extend
 
-    Normal:  Your utterance allows your target to move quickly through the crowded battlefield, striking and darting away
-             Your target gains Spring Attack.
-    Reverse: A spellcaster you target gains the ability to cast a spell quickly while moving.
-             Your target spellcaster gains a 20' speed boost.
+    Normal:  Your target becomes more mobile, able to entirely avoid effects that might otherwise have some dire consequence.
+             Your target gains Evasion.
+    Reverse: Your utterance strips your target of its ability to evade harm.
+             Your target loses Evasion.
 */
 
 #include "true_inc_trufunc"
@@ -48,13 +48,14 @@ void main()
 
     object oTrueSpeaker = OBJECT_SELF;
     object oTarget      = PRCGetSpellTargetObject();
+    object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
     struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_EXTEND, LEXICON_EVOLVING_MIND);
         
     if(DEBUG) DoDebug("true_utr_archeye running, event: " + IntToString(nEvent));
 
     if(utter.bCanUtter)
     {
-        utter.fDur       = RoundsToSeconds(1);
+        utter.fDur       = RoundsToSeconds(5);
         if(utter.bExtend) utter.fDur *= 2;
         // This utterance applies only to friends
         utter.bFriend = TRUE;
@@ -62,29 +63,24 @@ void main()
         utter.bIgnoreSR = TRUE;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_ACCELERATED_ATTACK)
+        if (utter.nSpellId == UTTER_CONFOUNDING_RESISTANCE)
         {
-       		utter.ipIProp1 = PRCItemPropertyBonusFeat(IP_CONST_FEAT_SPRINGATTACK);
+       		utter.ipIProp1 = PRCItemPropertyBonusFeat(IP_CONST_FEAT_EVASION);
        		object oSkin = GetPCSkin(oTrueSpeaker);
        		IPSafeAddItemProperty(oSkin, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
        		// Visuals 
-       		utter.eLink = EffectVisualEffect(VFX_DUR_SMOKE);
-       		utter.eLink2 = EffectVisualEffect(VFX_IMP_HASTE);
+       		utter.eLink = EffectVisualEffect(VFX_DUR_BLUESHIELDPROTECT);
+       		utter.eLink2 = EffectVisualEffect(VFX_IMP_HOLY_AID);
         }
         // The REVERSE effect of the Utterance goes here
-        else /* Effects of UTTER_ACCELERATED_ATTACK_R would be here */
+        else /* Effects of UTTER_CONFOUNDING_RESISTANCE_R */
         {
-        	// See if the target is a caster
-        	int nArc = GetLevelByTypeArcane(oTarget);
-        	int nDiv = GetLevelByTypeDivine(oTarget);
-        	int nPsi = GetHighestManifesterLevel(oTarget);
-        	if (nPsi > 0 || nDiv > 0 || nArc > 0)
-        	{
-        		// Movement boost
-		       	utter.eLink = EffectMovementSpeedIncrease(66);
-		       	// Impact VFX 
-			utter.eLink2 = EffectVisualEffect(VFX_IMP_HASTE);
-		}
+        	// Concealment
+		SetLocalInt(oTarget, "TrueConfoundingResistance", TRUE);
+		DelayCommand(fDur, DeleteLocalInt(oTarget, "TrueConfoundingResistance"));
+		// Visuals 
+		utter.eLink = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+       		utter.eLink2 = EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_GREEN);
         }
         // If either of these ApplyEffect isn't needed, delete it.
         // Duration Effects

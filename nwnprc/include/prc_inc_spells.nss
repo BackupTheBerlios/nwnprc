@@ -2027,7 +2027,7 @@ int UseNewSpellBook(object oCreature)
         (GetPRCSwitch(PRC_BARD_DISALLOW_NEWSPELLBOOK) && nFirstArcane == CLASS_TYPE_BARD))
         return FALSE;
     //check they have bard/sorc levels
-    if(!(GetLevelByClass(CLASS_TYPE_BARD) || GetLevelByClass(CLASS_TYPE_SORCERER)))
+    if(!GetLevelByClass(CLASS_TYPE_BARD) && !GetLevelByClass(CLASS_TYPE_SORCERER))
         return FALSE;
 
     //at this point, they should be using the new spellbook

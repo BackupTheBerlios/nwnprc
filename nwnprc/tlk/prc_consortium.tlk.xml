@@ -42,100 +42,100 @@ Level
   <entry id="12299" lang="en" sex="m">Flesh to Stone Ray</entry>
   <entry id="12300" lang="en" sex="m">Disintegrate Ray</entry>
   <entry id="12301" lang="en" sex="m">Finger of Death Ray</entry>
-  <entry id="12302" lang="en" sex="m">Type of Feat: Class
+  <entry id="12302" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 1 Ocular Adept
+Prerequisite: Level 1 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the ray makes the target friendly towards the Adept for a number of rounds equal to the Adept's level. 
 This spell only functions on humanoid targets.
 
-Use: Combat mode.</entry>
-  <entry id="12303" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12303" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 2 Ocular Adept
+Prerequisite: Level 2 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the ray causes the target to fall asleep for a number of rounds equal to the Adept's level.
 
-Use: Combat mode.</entry>
-  <entry id="12304" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12304" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 3 Ocular Adept
+Prerequisite: Level 3 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target takes 2d8+10 damage. If the save succeeds, the target takes half damage.
 
-Use: Combat mode.</entry>
-  <entry id="12305" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12305" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 4 Ocular Adept
+Prerequisite: Level 4 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target is slowed for a number of rounds equal to the Adept's level; their movement rate is halved and they can only take a partial action each round during this time.
 
-Use: Combat mode.</entry>
-  <entry id="12306" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12306" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 5 Ocular Adept
+Prerequisite: Level 5 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target is afflicted with fear and will flee from the Adept.
 
-Use: Combat mode.</entry>
-  <entry id="12307" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12307" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 6 Ocular Adept
+Prerequisite: Level 6 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Will save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the ray causes the target to be friendly towards the Adept for a number of rounds equal to the Adept's level.
 
-Use: Combat mode.</entry>
-  <entry id="12308" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12308" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 7 Ocular Adept
+Prerequisite: Level 7 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make two Will saves vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the first save fails, the target is Disarmed as per the feat. 
 If the second save fails, the target is knocked back. In addition to this, the target is pushed away from the Adept.
 
-Use: Combat mode.</entry>
-  <entry id="12309" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12309" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 8 Ocular Adept
+Prerequisite: Level 8 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target is instantly petrified.
 
-Use: Combat mode.</entry>
-  <entry id="12310" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12310" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 9 Ocular Adept
+Prerequisite: Level 9 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target is instantly disintegrated and all of their items fall to the ground. 
 If the save succeeds, the target takes 5d6 damage instead.
 
-Use: Combat mode.</entry>
-  <entry id="12311" lang="en" sex="m">Type of Feat: Class
+Use: Selected.</entry>
+  <entry id="12311" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 10 Ocular Adept
+Prerequisite: Level 10 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
 If successful, the target must make a Fortitude save vs. DC of (10 + 1/2 the Adept's class level + the Adept's Charisma modifier). 
 If the save fails, the target dies instantly. 
 If the save succeeds, the target takes damage of (3d6 + the Adept's level) instead.
 
-Use: Combat mode.</entry>
+Use: Selected.</entry>
   <entry id="12312" lang="en" sex="m">Your faith in the Great Mother has brought you great power - your third eye spews death all around you with the merest glance.
 
 Hit Die: d8
@@ -145,12 +145,12 @@ Bonus Feats: The Epic Ocular Adept gains a bonus feat every other level after 10
 Epic Ocular Adept Bonus Feat List:
 Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Epic Spell Focus, Epic Spell Penetration, Great Wisdom, Improved Combat Casting, Planar Turning.
 </entry>
-  <entry id="12313" lang="en" sex="m">Type of Feat: Class
+  <entry id="12313" lang="en" sex="m">Type of Feat: Class.
 Prerequisite: Battlerager.
 
 Specifics: The Battlerager enters a rage, gaining a +4 bonus to Strength and Constitution and +2 to all Will saving throws, but incurring a -2 penalty to Armor Class. The Battlerager may use this ability once per day at first level, twice per day at level 3, and three times per day at level 5.  One additional use per day is gained every two levels after level 5.
 
-Use: Activated.</entry>
+Use: Selected.</entry>
   <entry id="12314" lang="en" sex="m">Battlerager</entry>
   <entry id="12315" lang="en" sex="m">Battleragers</entry>
   <entry id="12316" lang="en" sex="m">battlerager</entry>
@@ -181,13 +181,13 @@ ABILITIES:
 Level
 1: Battle Rage - 1/day (as per Barbarian Rage).
    Resist Poison - Bestows a +4 bonus to all Fortitude saving throws vs. poison.
-   Skill Focus: Intimidate - Provides a +3 bonus to all skill checks involving Intimidate.
+   Feat - Skill Focus: Intimidate - Provides a +3 bonus to all skill checks involving Intimidate.
 2: Aura of Courage - The Battlerager becomes immune to fear.
-   Feat - Knockdown
+   Feat - Knockdown.
 3: Battle Rage - 2/day.
-   Feat - Improved Unarmed Strike
-4: Feat - Great Cleave
-   Feat - Improved Knockdown
+   Feat - Improved Unarmed Strike.
+4: Feat - Great Cleave.
+   Feat - Improved Knockdown.
 5: Battle Rage - 3/day.
    Feat - Armor Skin - The Battlerager's skin hardens, granting a +2 bonus to natural AC.
    
@@ -195,20 +195,20 @@ Level
 Epic Battlerager:
 
 Level
-6: Epic Skill Focus: Intimidate - Provides a +10 bonus to skill checks involving intimidate
-   Feat - Intimidating Rage
-7: Battle Rage - 4/day
+6: Feat - Epic Skill Focus: Intimidate - Provides a +10 bonus to skill checks involving intimidate.
+   Feat - Intimidating Rage.
+7: Battle Rage - 4/day.
 8: Ferocious Prowess - The Epic Battlerager receives +1 to attack bonus and +1 to damage while wielding a melee weapon.
-9: Battle Rage - 5/day
-10: Feat - Terrifying Rage
-    Bonus Feat
-11: Battle Rage - 6/day
-13: Battle Rage - 7/day
-15: Battle Rage - 8/day
-    Bonus Feat
-17: Battle Rage - 9/day
-19: Battle Rage - 10/day
-20: Bonus Feat
+9: Battle Rage - 5/day.
+10: Feat - Terrifying Rage.
+    Bonus Feat.
+11: Battle Rage - 6/day.
+13: Battle Rage - 7/day.
+15: Battle Rage - 8/day.
+    Bonus Feat.
+17: Battle Rage - 9/day.
+19: Battle Rage - 10/day.
+20: Bonus Feat.
 
 Epic Battlerager Bonus Feat List: Thundering Rage, Mighty Rage, Epic Damage Reduction, Epic Prowess, Overwhelming Critical, Devastating Critical, Epic Weapon Focus, Great Strength.</entry>
   <entry id="12318" lang="en" sex="m">Battle Rage (1x per day)</entry>
@@ -258,10 +258,10 @@ ABILITIES:
 Level
 1: Rally - Allies within 60 feet who are suffering from any fear effect are allowed an immediate Will saving throw at the DC of the fear effect, with a +1 morale bonus per Warpriest level.
 2: Inflame - Provides those who listen a morale bonus on saving throws against any mind influencing effect. The bonus begins at +2 for a 2nd level Warpriest and increases by +2 each even numbered level thereafter. This effect lasts 5 minutes, plus 1 minute per level of the Warpriest.
-3: Healing Circle once per day  (as the spell).
+3: Healing Circle - 1/day  (spell-like ability).
 6: Fear Aura - 1/day (spell-like ability).
-7: Mass Haste - 1/day (as the spell).
-8: Mass Heal - 1/day (as the spell).
+7: Mass Haste - 1/day (spell-like ability).
+8: Mass Heal - 1/day (spell-like ability).
 9: Fear Aura - 2/day.
 10: Implacable Foe - While in use, allies within the radius who take enough damage to become disabled or dying ignore the effects of that damage and continue fighting. Death occurs instantly at -20 hit points.
 
@@ -292,31 +292,32 @@ Use: Selected.</entry>
   <entry id="12337" lang="en" sex="m">Hear me! Today we partake in glorious battle. With the power of the gods at our sides, we will crush our adversaries! To battle!</entry>
   <entry id="12338" lang="en" sex="m">Friends! The time for battle has come, and I have called on the strength of the gods to aid us. We will be victorious this day!</entry>
   <entry id="12339" lang="en" sex="m">Rally</entry>
-  <entry id="12340" lang="en" sex="m">Type of Feat: Class
-Prerequisite: Level 1 Warpriest
+  <entry id="12340" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 1 Warpriest.
 
 Specifics: A Warpriest who is not currently suffering from a fear effect can use this ability as a standard action. Allies within 60 feet who are suffering from any fear effect are allowed an immediate Will saving throw at the DC of the fear effect, with a +1 morale bonus per Warpriest level.
 
 Use: Selected.
 </entry>
   <entry id="12341" lang="en" sex="m">Inflame</entry>
-  <entry id="12342" lang="en" sex="m">Type of Feat: Class
+  <entry id="12342" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 2 Warpriest
+Prerequisite: Level 2 Warpriest.
 
 Specifics: By giving a stirring speech, the Warpriest provides listeners with a morale bonus on saving throws against mind influencing effects. The bonus begins at +2 for a 2nd level Warpriest and increases by +2 each even numbered level thereafter. This effect lasts for 5 minutes, plus 1 minute per level of the Warpriest. The Warpriest also gains the bonus.
 
 Use: Selected.</entry>
   <entry id="12343" lang="en" sex="m">Implacable Foe</entry>
-  <entry id="12344" lang="en" sex="m">Type of Feat: Class
+  <entry id="12344" lang="en" sex="m">Type of Feat: Class.
   
-Prerequisite: Level 10 Warpriest
+Prerequisite: Level 10 Warpriest.
 
 Specifics: At 10th level, the Warpriest can channel so much positive energy to allies within a 100-foot radius that they will continue to fight even though suffering mortal wounds. Using this ability is a move-equivalent action and requires concentration. While in use, allies within the radius who take enough damage to become disabled or dying ignore the effects of that damage and continue fighting. Death occurs instantly at -20 hit points. When use of the ability ends, either because the Warpriest stops concentrating, fails a Concentration check, or becomes disabled (or worse), then the full effects of all damage take immediate effect.
 
-Use: Activated.</entry>
+Use: Selected.</entry>
   <entry id="12345" lang="en" sex="m">Epic Warpriest</entry>
-  <entry id="12346" lang="en" sex="m">You have become the ultimate expression of the hand of your god - a peerless weapon to be wielded from on high. Your armies know no fear and your name is respected and feared throughout the realms.
+  <entry id="12346" lang="en" sex="m">You have become the ultimate expression of the hand of your god - a peerless weapon, wielded from on high. Your armies know no fear and your name is respected and feared throughout the realms.
 
 Hit Die: d8.
 Skill Points at Each Additional Level: 2 + Int Modifier.
@@ -330,48 +331,70 @@ Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spe
   <entry id="12353" lang="en" sex="m">Ninja Spies</entry>
   <entry id="12354" lang="en" sex="m">ninja spy</entry>
   <entry id="12355" lang="en" sex="m">(PRESTIGE CLASS)
-Ninja spies are perhaps the most enigmatic and mysterious class. While some ninja are little more than assassins, true ninja spies are masters of exotic weapons, tools of stealth and strange powers.
+The Ninja Spy is an enigmatic and mysterious character. While most ninja are little more than assassins, the Ninja Spy uses stealth, cunning and mystical powers to accomplish almost any task for their master.
+
+Appearing and disappearing seemingly at will, the Ninja Spy moves invisibly through enemy ranks.  No matter the mission - be it infiltration, sabotage or cold-blooded murder - the presence of this black-garbed shadow of death spells disaster for all who stand in the way.
+
+Shrouded in secrecy, the Ninja Spy is sworn to keep his or her profession a secret and to protect the identity of other members of their clan.  A blind beggar by the roadside, a drunken fighter staggering homeward, a giggling geisha hiding her face - any one of them could be a disguise, hiding the dark and deadly secret identity of the Ninja Spy.
 
 - Hit Die: d8.
-- Proficiencies: A ninja spy gains the exotic weapon proficiency.
+- Proficiencies: A Ninja Spy gains the Exotic weapon proficiency.
 - Skill Points: 6 + Int Modifier.
 
 REQUIREMENTS:
 
-Alignment: Any non chaotic, non good
-Skills: Bluff 10 ranks, Hide 10 ranks, Tumble 10 ranks.
+Alignment Restrictions: Any non-chaotic, non-good.
+Skills: Bluff (10 ranks), Hide (10 ranks), Tumble (10 ranks).
 Feats: Dodge, Evasion.
 
 ABILITIES:
 
 Level
-1: Use Poison - Character can now apply poison to their weapons.
-  Exotic Weapon Proficiency.
-2: Sneak Attack +1d6.
-  Improved Evasion - Upon a failed Reflex saving throw, player receives only half damage.
-3: Epic Skill Focus: Tumble - Player gains +3 bonus to all skill checks with Tumble.
-4: Hide in Plain Sight - Character can hide even while being observed.
-5: Sneak Attack +1d6.
-7: Mask of a Thousand Faces.
-8: Venom Immunity - Ninja spy becomes immune to forms of poisons.
-  Sneak Attack +1d6.
-9: Slippery Mind - Failed Will saving throws now receive an automatic re-roll.
-10: Improved Invisibility - As per the spell, once a day.</entry>
-  <entry id="12356" lang="en" sex="m">1000 Faces Holder 1 Desc</entry>
-  <entry id="12357" lang="en" sex="m">1000 Faces Holder 2 Desc</entry>
-  <entry id="12358" lang="en" sex="m">1000 Faces Holder 3 Desc</entry>
-  <entry id="12359" lang="en" sex="m">You are all but a ghost, and you pass through the world on your missions with no one the wiser. Whether it be spying, assassination or thievery - you are not seen.
+1: Use Poison - The Ninja Spy can apply poison to weapons.
+   Feat - Weapon Proficiency: Exotic.
+2: Feat - Sneak Attack (+1d6).
+   Feat - Improved Evasion.
+3: Feat - Epic Skill Focus: Tumble - Player gains +3 bonus to all skill checks with Tumble.
+4: Feat - Hide in Plain Sight.
+5: Feat - Sneak Attack (+2d6).
+7: Thousand Faces - The Ninja Spy gains the ability to change their appearance at will.
+8: Venom Immunity - The Ninja Spy becomes immune to all forms of poison.
+   Feat - Sneak Attack (+3d6).
+9: Feat - Slippery Mind.
+10: Improved Invisibility - 1/day (spell-like ability).</entry>
+  <entry id="12356" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 7 Ninja Spy.
 
-Hit Die: d8
-Skill Points at Each Additional Level: 6 +Int Modifier
-Bonus Feats: The epic ninja spy gains a bonus feat every four levels after 10th.
+Specifics: Using masterful skills of disguise, a Ninja Spy can mask their identity, even altering their appearance to resemble a member of a different race.  Use of this skill allows the Ninja Spy to take on the appearance of an Elf, Dwarf, Half-orc, Half-elf or Human.  The change is purely cosmetic and no racial feats or bonuses from the race imitated are bestowed through use of this skill.
+
+Use: Selected.</entry>
+  <entry id="12357" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 7 Ninja Spy.
+
+Specifics: Using masterful skills of disguise, a Ninja Spy can mask their identity, even altering their overall stature to resemble a member of a smaller race.  Use of this skill allows the Ninja Spy to take on the appearance of a Gnome or Halfling.  The change is purely cosmetic and no racial feats or bonuses from the race imitated are bestowed through use of this skill.
+
+Use: Selected.</entry>
+  <entry id="12358" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 7 Ninja Spy.
+
+Specifics: By using this skill the Ninja Spy can discard their disguise, returning instantly to their normal appearance.
+
+Use: Selected.</entry>
+  <entry id="12359" lang="en" sex="m">You move like a ghost, sound like the wind, strike like a cobra.  Whether hiding in the shadows or disappearing in a crowd, your presence goes unnoticed... until it is too late!
+
+Hit Die: d8.
+Skill Points at Each Additional Level: 6 + Int Modifier.
+Bonus Feats: The Epic Ninja Spy gains a bonus feat every four levels after 10th.
 
 Epic Ninja Spy Bonus Feats:
 Epic Reflexes, Epic Skill Focus: Hide, Epic Skill Focus: Move Silently, Great Dexterity, Improved Combat Casting, Improved Sneak Attack, Self-Concealment, Superior Initiative.</entry>
   <entry id="12360" lang="en" sex="m">Epic Ninja Spy</entry>
-  <entry id="12361" lang="en" sex="m">A Thousand Faces - Medium</entry>
-  <entry id="12362" lang="en" sex="m">A Thousand Faces - Small</entry>
-  <entry id="12363" lang="en" sex="m">A Thousand Faces - Off</entry>
+  <entry id="12361" lang="en" sex="m">Thousand Faces - Medium</entry>
+  <entry id="12362" lang="en" sex="m">Thousand Faces - Small</entry>
+  <entry id="12363" lang="en" sex="m">Thousand Faces - Off</entry>
   <entry id="12364" lang="en" sex="m">Epic Ocular Adept</entry>
   <entry id="12365" lang="en" sex="m">Thundering Battle Rage</entry>
   <entry id="12366" lang="en" sex="m">Battle Rage (4x per day)</entry>
@@ -380,7 +403,9 @@ Epic Reflexes, Epic Skill Focus: Hide, Epic Skill Focus: Move Silently, Great De
   <entry id="12369" lang="en" sex="m">Mystic Theurges</entry>
   <entry id="12370" lang="en" sex="m">mystic theurge</entry>
   <entry id="12371" lang="en" sex="m">(PRESTIGE CLASS)
-Blurring the line between divine and arcane, Mystic Theurges draw power from divine sources and musty tomes alike. While most spellcasters choose one path to magical power, Mystic Theurges walk two roads at once, mastering spells common to clerics and wizards. Mystic Theurges have an unparalleled diversity of spells. In time, a Mystic Theurge can cast almost any spell. Mystic theurges are often obsessed with magical lore, traveling to the ends of the earth to learn some arcane secret or divine insight.
+Blurring the line between divine and arcane, the Mystic Theurge draws power from divine sources and musty tomes alike. While most spellcasters choose but one path to magical power, the Mystic Theurge chooses to walk two roads at once, mastering spells common to both cleric and wizard.  This weaving of both the arcane and the divine allows the Mystic Theurge an unparalleled diversity of spells and, in time, a Mystic Theurge can learn to cast almost any spell. 
+
+Mystic theurges are often obsessed with magical lore, and will travel to the ends of the earth to gain access to some new arcane secret or divine insight.
 
 - Hit Die: d4.
 - Proficiencies: A Mystic Theurge does not gain any additional weapon or armor proficiencies.
@@ -388,56 +413,78 @@ Blurring the line between divine and arcane, Mystic Theurges draw power from div
 
 REQUIREMENTS:
 
-Skills: Lore 6 ranks, Concentration 6 ranks, Spellcraft 6 ranks.
+Skills: Lore (6 ranks), Concentration (6 ranks), Spellcraft (6 ranks).
 Arcane Spellcasting: Can cast level 2 spells or higher.
 Divine Spellcasting: Can cast level 2 spells or higher.
 
-BONUS SPELLS
+BONUS SPELLS:
 
-Upon reaching level 1, 2, 3, 4, 5, 6, 7, 8, 9, and 10 the character gains new spells per day as if he had also gained a level in both his arcane spellcasting class (Bard, Sorcerer, Wizard) and divine spellcasting class (Cleric, Druid). He does not learn any new arcane spells through this ability, however.</entry>
-  <entry id="12372" lang="en" sex="m">You are one of the most knowledgeable spellcasters ever, but ever hungry for more as you search the world for more power and lore.
+Each level, the Mystic Theurge gains new spells per day as if they had also gained a level in both their arcane spellcasting class and their divine spellcasting class.  No new spells are learned through this ability, however.</entry>
+  <entry id="12372" lang="en" sex="m">Though your knowledge of all matters arcane and divine is second to none, still your thirst for power drives you forward.  Your search for the deep secrets of magic continues to lead you to every corner of this world and beyond.
 
-Hit Die: d4
-Skill Points at Each Additional Level: 2+Int Modifier
-Bonus Feats: The epic mystic theurge gains a bonus feat every four levels after 10th.
+Hit Die: d4.
+Skill Points at Each Additional Level: 2+Int Modifier.
+Bonus Feats: The Epic Mystic Theurge gains a bonus feat every four levels after 10th.
 
 Epic Mystic Theurge Bonus Feats:
 Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Energy Resistance, Epic Spell Focus, Epic Spell Penetration, Improved Combat Casting, Planar Turning, Epic Spells.</entry>
   <entry id="12373" lang="en" sex="m">Epic Mystic Theurge</entry>
-  <entry id="12374" lang="en" sex="m">Battle Rage (6x per day)</entry>
-  <entry id="12375" lang="en" sex="m">Battle Rage (7x per day)</entry>
-  <entry id="12376" lang="en" sex="m">Battle Rage (8x per day)</entry>
-  <entry id="12377" lang="en" sex="m">Battle Rage (9x per day)</entry>
-  <entry id="12378" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 3 Warpriest
-Specifics: All friendly creatures within the area of effect are healed for 1d8 Hit Points, +1 points per caster level up to a maximum of +20. Healing spells have a reverse effect when used on undead, harming instead of healing them.
+  <entry id="12374" lang="en" sex="m">Battle Rage (6/day)</entry>
+  <entry id="12375" lang="en" sex="m">Battle Rage (7/day)</entry>
+  <entry id="12376" lang="en" sex="m">Battle Rage (8/day)</entry>
+  <entry id="12377" lang="en" sex="m">Battle Rage (9/day)</entry>
+  <entry id="12378" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 3 Warpriest.
+
+Specifics: All friendly creatures within the area of effect are healed for 1d8 Hit Points, +1 point per level of the Warpriest up to a maximum of +20. Healing spells have a reverse effect when used on undead, harming instead of healing them.
+
 Use: Selected.</entry>
-  <entry id="12379" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 6 Warpriest
-Specifics: Once per day the warpriest can project a fear aura to a radius of 20 feet for 1 round per warpriest level. Foes must make a Will save (DC 10+ warpriest level + Cha bonus) or be affected as if by a fear spell.
-Use: Activated.</entry>
-  <entry id="12380" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 7 Warpriest
-Specifics: All allies within the area of effect gain 1 extra action per round (allowing an additional attack or spell casting) and have their movement speed increased by 50%.
+  <entry id="12379" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 6 Warpriest.
+
+Specifics: Once per day the Warpriest can project an aura of fear to a radius of 20 feet.  The effect lasts for 1 round per Warpriest level. Foes within the area of effect must make a Will save (DC 10 + Warpriest level + Cha bonus) or be affected as if by a fear spell.
+
 Use: Selected.</entry>
-  <entry id="12381" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 9 Warpriest
+  <entry id="12380" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 7 Warpriest.
+
+Specifics: All allies within the area of effect gain 1 extra action per round and have their movement speed increased by 50%.
+
+Use: Selected.</entry>
+  <entry id="12381" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 9 Warpriest.
+
 Specifics: All allies within the area of effect are restored to full Hit Points. Healing spells have a reverse effect on undead, harming instead of healing them (undead are reduced to 1d4 Hit Points with this spell).
+
 Use: Selected.</entry>
-  <entry id="12382" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 9 Warpriest
-Specifics: Twice per day the warpriest can project a fear aura to a radius of 20 feet for 1 round per warpriest level. Foes must make a Will save (DC 10+ warpriest level + Cha bonus) or be affected as if by a fear spell.
-Use: Activated.</entry>
+  <entry id="12382" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 9 Warpriest.
+
+Specifics: Twice per day, the Warpriest can project an aura of fear to a radius of 20 feet.  The effect lasts for 1 round per Warpriest level. Foes within the area of effect must make a Will save (DC 10 + Warpriest level + Cha bonus) or be affected as if by a fear spell.
+
+Use: Selected.</entry>
   <entry id="12383" lang="en" sex="m">Fear Aura</entry>
-  <entry id="12384" lang="en" sex="m">Battle Rage (10x per day)</entry>
-  <entry id="12385" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 8 Battlerager
-Specifics: The epic battlerager receives a +1 to his attack bonus and a +1 bonus to his damage while wielding a melee weapon.
+  <entry id="12384" lang="en" sex="m">Battle Rage (10/day)</entry>
+  <entry id="12385" lang="en" sex="m">Type of Feat: Class.
+  
+Prerequisite: Level 8 Battlerager.
+
+Specifics: The Epic Battlerager receives a +1 attack bonus and a +1 bonus to damage while wielding a melee weapon.
+
 Use: Automatic.</entry>
-  <entry id="12386" lang="en" sex="m">Type of Feat: General
-Prerequisite: Strength 21+, Constitution 21+ and Greater Rage ability. (NOTE: This feat does not actually require greater rage for purposes of selecting, only normal rage. HOWEVER, THIS FEAT WILL DO NOTHING if you do not have 15+ added barbarian/battlerager/&lt;barbarian PrC&gt; together.)
-Specifics: When the character enters a battle rage, they gain +8 to Strength and Constitution and a +4 morale bonus to Will saves. These bonuses replace the normal rage bonuses.
-Use: Automatic when rage.</entry>
+  <entry id="12386" lang="en" sex="m">Type of Feat: General.
+  
+Prerequisite: Strength 21+, Constitution 21+, Greater Rage. 
+(NOTE: This feat does not actually require greater rage for purposes of selecting, only normal rage. HOWEVER, THIS FEAT WILL DO NOTHING if you do not have 15+ added barbarian/battlerager/&lt;barbarian PrC&gt; together).
+
+Specifics: When the Epic Battlerager enters a rage, they gain a +8 bonus to Strength and Constitution, and a +4 morale bonus to Will saves. These bonuses replace the normal rage bonuses.
+
+Use: Automatic.</entry>
   <entry id="12388" lang="en" sex="m">Epic Ancestral Daisho I</entry>
   <entry id="12389" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: 21 Samurai Levels, 19 Wisdom

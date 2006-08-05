@@ -72,6 +72,7 @@ void SPApplyEffectToObject(int nDurationType, effect eEffect, object oTarget, fl
 #include "lookup_2da_spell"
 #include "prcsp_spell_adjs"
 #include "nw_i0_spells"
+#include "x2_i0_spells"
 #include "spinc_remeffct"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -21,6 +21,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "prc_inc_leadersh"
 #include "inc_dynconv"
 #include "x0_inc_henai"
 #include "x0_i0_henchman"
@@ -72,18 +73,39 @@ void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort)
         if(GetHasFeat(i, oCohort))
         {
             //test if its useable
-            if(Get2DACache("feat", "SPELLID", i) != "")
+            int nSpellID = StringToInt(Get2DACache("feat", "SPELLID", i));
+            //0 is Aid so this is a safe comparison
+            if(nSpellID)
             {
                 //test if it has a sucessor
                 string sSucessor = Get2DACache("feat", "SUCCESSOR", i);
                 if(sSucessor == ""
                     || (sSucessor != "" 
-                        && !GetHasFeat(StringToInt(sSucessor), oCohort)
-                        )
-                    )
+                        && !GetHasFeat(StringToInt(sSucessor), oCohort)))
                 {    
                     string sName = GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", i)));
-                    AddChoice(sName, i, oPC);
+                    //test for subradials
+                    if(Get2DACache("spells", "SubRadSpell1", nSpellID) != "")
+                    {
+                        int j;
+                        for(j=1;j<=5;j++)
+                        {
+                            string sSubName;
+                            int nSubSpellID = StringToInt(Get2DACache("spells", "SubRadSpell"+IntToString(j), nSpellID));
+                            if(nSubSpellID)
+                            {
+                                sSubName = sName+" : "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSubSpellID)));
+                                //set them less than zero so we know its a subradial
+                                AddChoice(sSubName, 0-nSubSpellID, oPC);
+                                //store the feat to decrement
+                                SetLocalInt(oCohort, "SubradialSpellFeatID"+IntToString(nSubSpellID), i);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        AddChoice(sName, i, oPC);
+                    }    
                 }    
             }
         }
@@ -102,12 +124,31 @@ void AddUseableSpells(int nMin, int nMax, object oPC, object oCohort)
         if(GetHasSpell(i, oCohort))
         {
             string sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", i)));
-            AddChoice(sName, i, oPC);
+            //test for subradials
+            if(Get2DACache("spells", "SubRadSpell1", i) != "")
+            {
+                int j;
+                for(j=1;j<=5;j++)
+                {
+                    string sSubName;
+                    int nSubSpellID = StringToInt(Get2DACache("spells", "SubRadSpell"+IntToString(j), i));
+                    if(nSubSpellID)
+                    {
+                        sSubName = sName+" : "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSubSpellID)));
+                        //set them less than zero so we know its a subradial
+                        AddChoice(sSubName, 0-nSubSpellID, oPC);
+                    }
+                }
+            }
+            else
+            {
+                AddChoice(sName, i, oPC);
+            }    
         }
     }
     if(i<GetPRCSwitch(FILE_END_SPELLS))
     {
-        DelayCommand(0.0, AddUseableFeats(nMax, nMax+(nMax-nMin), oPC, oCohort));
+        DelayCommand(0.0, AddUseableSpells(nMax, nMax+(nMax-nMin), oPC, oCohort));
     }
 }
 
@@ -184,7 +225,7 @@ void main()
             else if(nStage == STAGE_SPELL)
             {
                 SetHeader("If I must. Which spell do you want me to cast?");
-                AddUseableFeats(0, 1000, oPC, oCohort);
+                AddUseableSpells(0, 1000, oPC, oCohort);
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
@@ -202,6 +243,12 @@ void main()
             {
                 int nFeat = GetLocalInt(oCohort, "PRC_FeatToUse");
                 int nSpellID = StringToInt(Get2DACache("feat", "SPELLID", nFeat));
+                if(nFeat < 0)
+                {
+                    //subradial feat
+                    nSpellID = 0-nFeat;
+                    nFeat = GetLocalInt(oCohort, "SubradialSpellFeatID"+IntToString(nSpellID));
+                }
                 if(nStage == STAGE_SPELL_TARGET)
                     nSpellID = GetLocalInt(oCohort, "PRC_SpellToUse");
 
@@ -280,8 +327,11 @@ void main()
                 }
 
                 if(nStage == STAGE_FEAT_TARGET) 
-                    SetHeader("Who or what do you want me to use "+GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat)))+" on?");
-                if(nStage == STAGE_SPELL_TARGET)
+                {
+                    
+                    SetHeader("Who or what do you want me to use "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)))+" on?");
+                }    
+                else if(nStage == STAGE_SPELL_TARGET)
                     SetHeader("Who or what do you want me to cast "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)))+" on?");
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
@@ -598,7 +648,7 @@ void main()
             else if(nStage == STAGE_LEAVE_YES)
             {
                 SetHeader("Bah! Leave if you will, but you shall not get far without me!");
-
+                DelayCommand(3.0, RemoveCohortFromPlayer(oCohort, oPC));
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
@@ -720,6 +770,20 @@ void main()
         else if(nStage == STAGE_FEAT)
         {
             SetLocalInt(oCohort, "PRC_FeatToUse", nChoice);
+            //a few hardcoded feats are fuggly
+            if(nChoice == FEAT_ANIMAL_COMPANION)
+            {
+                DecrementRemainingFeatUses(oCohort, FEAT_ANIMAL_COMPANION);
+                AssignCommand(oCohort, SummonAnimalCompanion());
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);                               
+            }
+            else if(nChoice == FEAT_SUMMON_FAMILIAR)
+            {
+                DecrementRemainingFeatUses(oCohort, FEAT_SUMMON_FAMILIAR);
+                AssignCommand(oCohort, SummonFamiliar());
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);               
+            }
+            
             //if its self only, use it
             if(StringToInt(Get2DACache("feat", "TARGETSELF", nChoice)))
             {
@@ -734,8 +798,22 @@ void main()
         {
             int nFeat = GetLocalInt(oCohort, "PRC_FeatToUse");
             object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
-            AssignCommand(oCohort, ClearAllActions());
-            AssignCommand(oCohort, ActionUseFeat(nFeat, oTarget));
+            if(nFeat < 0)
+            {
+                //subradial feat
+                int nSpellID;
+                nSpellID = 0-nFeat;
+                nFeat = GetLocalInt(oCohort, "SubradialSpellFeatID"+IntToString(nSpellID));
+                DecrementRemainingFeatUses(oCohort, nFeat);
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort, ActionCastSpellAtObject(nSpellID, oTarget, METAMAGIC_ANY, TRUE));
+            }
+            else
+            {
+
+                AssignCommand(oCohort, ClearAllActions());
+                AssignCommand(oCohort, ActionUseFeat(nFeat, oTarget));
+            }
             AllowExit(DYNCONV_EXIT_FORCE_EXIT);  
         }
         else if(nStage == STAGE_ITEM)

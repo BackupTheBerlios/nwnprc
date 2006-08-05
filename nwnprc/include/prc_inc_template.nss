@@ -25,6 +25,7 @@ int GetTemplateLA(object oPC);
 //if bApply is false, this can test if the template is applicable or not
 int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = TRUE);
 
+#include "prc_inc_function"
 #include "x2_inc_switches"
 #include "prc_template_const"
 #include "inc_persist_loca"

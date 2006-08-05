@@ -108,6 +108,7 @@ const string NATURAL_WEAPON_ATTACK_COUNT = "NATURAL_WEAPON_ATTACK_COUNT";
 
 #include "prc_alterations"
 #include "prc_inc_combat"
+#include "x2_i0_spells"
 
 void DoNaturalAttack(object oWeapon)
 {

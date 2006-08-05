@@ -20,7 +20,7 @@ int GetXPReward(object oPC, object oTarget, int nCR = 0);
 //////////////////////////////////////////////////
 
 #include "inc_utility"
-
+#include "prc_inc_template"
 
 //////////////////////////////////////////////////
 /* Function definitions                         */
@@ -56,6 +56,7 @@ int GetECL(object oTarget)
         nLevel += StringToInt(Get2DACache("ECL", "LA", nRace));
     if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
         nLevel += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
+    nLevel += GetTemplateLA(oTarget);
     return nLevel;
 }
 
@@ -225,6 +226,7 @@ void ApplyECLToXP(object oPC)
     int iLvlAdj = StringToInt(Get2DACache("ECL", "LA", nRace));
     if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
         iLvlAdj += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
+    iLvlAdj += GetTemplateLA(oPC);    
     if(iLvlAdj != 0 && iLastXP != iCurXP)
     {
         int iPCLvl = GetHitDice(oPC);

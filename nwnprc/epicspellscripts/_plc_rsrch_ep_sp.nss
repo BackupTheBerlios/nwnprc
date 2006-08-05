@@ -87,19 +87,19 @@ void main()
                             return;
                         }
                         else
-                            SendMessageToPC(oPC, MES_NOT_HAVE_REQ_FEATS);
+                            SendMessageToPC(oPC, GetName(oPC) + " " + MES_NOT_HAVE_REQ_FEATS);
                     }
                     else
-                        SendMessageToPC(oPC, MES_NOT_ENOUGH_XP);
+                        SendMessageToPC(oPC, GetName(oPC) + " " + MES_NOT_ENOUGH_XP);
                 }
                 else
-                    SendMessageToPC(oPC, MES_NOT_ENOUGH_GOLD);
+                    SendMessageToPC(oPC, GetName(oPC) + " " + MES_NOT_ENOUGH_GOLD);
             }
             else
-                SendMessageToPC(oPC, MES_KNOW_SPELL);
+                SendMessageToPC(oPC, GetName(oPC) + " " + MES_KNOW_SPELL);
         }
         else
-            SendMessageToPC(oPC, MES_CANNOT_RESEARCH_HERE);
+            SendMessageToPC(oPC, GetName(oPC) + " " + MES_CANNOT_RESEARCH_HERE);
         //couldnt research, give the book back.
         CopyItem(oBook, oPC, TRUE);
         DestroyObject(oBook);

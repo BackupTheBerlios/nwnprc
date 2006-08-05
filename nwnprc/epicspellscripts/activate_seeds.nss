@@ -70,7 +70,7 @@ void main()
             }
             else
             {
-                SendMessageToPC(OBJECT_SELF, MES_NOT_ENOUGH_SKILL);
+                SendMessageToPC(OBJECT_SELF, GetName(OBJECT_SELF) + " " + MES_NOT_ENOUGH_SKILL);
                 SendMessageToPC(OBJECT_SELF, "You need a spellcraft skill of " +
                     IntToString(nDC) + " or greater.");
             }

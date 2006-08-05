@@ -579,7 +579,7 @@ void DoSpellResearch(object oCaster, int nSpellDC, int nSpellIP, string sSchool,
     DelayCommand(fDelay, TakeResourcesFromPC(oCaster, nSpellDC, nResult));
     if (nResult == TRUE)
     {
-        DelayCommand(fDelay, SendMessageToPC(oCaster, MES_RESEARCH_SUCCESS));
+        DelayCommand(fDelay, SendMessageToPC(oCaster, GetName(oCaster) + " " + MES_RESEARCH_SUCCESS));
         //DelayCommand(fDelay, GiveFeat(oCaster, nSpellIP));
         DelayCommand(fDelay, SetEpicSpellKnown(nSpellIP, oCaster, TRUE));
         DelayCommand(fDelay, DestroyObject(oBook));
@@ -592,7 +592,7 @@ void DoSpellResearch(object oCaster, int nSpellDC, int nSpellIP, string sSchool,
     }
     else
     {
-        DelayCommand(fDelay, SendMessageToPC(oCaster, MES_RESEARCH_FAILURE));
+        DelayCommand(fDelay, SendMessageToPC(oCaster, GetName(oCaster) + " " + MES_RESEARCH_FAILURE));
     }
 }
 

@@ -43,6 +43,9 @@ void CombatMedicHealingKicker();
 // This prevents casting spells into or out of a Null Psionics Field
 int NullPsionicsField();
 
+// Utterance. Prevents the casting of hostile spells by the target
+int WardOfPeace();
+
 // Bard / Sorc PrC handling
 // returns FALSE if it is a bard or a sorcerer spell from a character
 // with an arcane PrC via bioware spellcasting rather than via PrC spellcasting
@@ -203,6 +206,18 @@ int NullPsionicsField()
          nTest = FALSE;
     }
     return nTest;
+}
+
+int WardOfPeace()
+{
+	object oCaster = OBJECT_SELF;
+	int nReturn = TRUE;
+	if (GetLocalInt(oCaster, "TrueWardOfPeace") && GetLastSpellHarmful())
+	{
+		nReturn = FALSE;
+	}
+	
+	return nReturn;
 }
 
 int BardSorcPrCCheck()
@@ -865,6 +880,12 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = NullPsionicsField();
+        
+    //---------------------------------------------------------------------------
+    // Run WardOfPeace Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = WardOfPeace();        
 
     //---------------------------------------------------------------------------
     // Run Ectoplasmic Shambler Concentration Check

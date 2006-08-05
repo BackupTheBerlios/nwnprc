@@ -52,7 +52,9 @@ void main()
 
     if(utter.bCanUtter)
     {
-        // This utterance applies only to friends
+        // Used to Ignore SR in Speak Unto the Masses for friendly utterances.
+	utter.bIgnoreSR = TRUE;
+	// This utterance applies only to friends
         utter.bFriend = TRUE;
         utter.fDur = RoundsToSeconds(1);
         if(utter.bExtend) utter.fDur *= 2;
@@ -60,10 +62,6 @@ void main()
         // The NORMAL effect of the Utterance goes here
         if (utter.nSpellId == UTTER_HIDDEN_TRUTH)
         {
-        	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
-		utter.bIgnoreSR = TRUE;
-		// This utterance applies only to friends
-        	utter.bFriend = TRUE;
         	// Lore
         	utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_LORE, 10), EffectVisualEffect(VFX_DUR_SHIELD_OF_LAW));
         }

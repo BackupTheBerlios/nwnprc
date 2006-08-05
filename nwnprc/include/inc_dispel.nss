@@ -469,7 +469,12 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
         }// end of while loop
 
 
-
+	// These are stored for one round for Spell Rebirth
+        SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex))); 
+        SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex)));
+        DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
+        DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
+        
         // Delete the saved references to the spell's effects.
         // This will save some time when reordering things a bit.
         DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex));

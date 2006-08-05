@@ -65,18 +65,37 @@ const int UTTER_WORD_NURTURING_POTENT    = -1;
 const int UTTER_WORD_NURTURING_POTENT_R  = -1;
 
 // Level 5 Utterances
-const int UTTER_WORD_NURTURING_CRITICAL    = -1;
-const int UTTER_WORD_NURTURING_CRITICAL_R  = -1;
+const int UTTER_ELDRITCH_ATTRACTION            = -1;
+const int UTTER_ELDRITCH_ATTRACTION_R          = -1;
+const int UTTER_ENERGY_NEGATION_GREATER        = -1;
+const int UTTER_ENERGY_NEGATION_GREATER_R      = -1;
+const int UTTER_ENERGY_NEGATION_GREATER_CHOICE = -1;
+const int UTTER_ESSENCE_LIFESPARK              = -1;
+const int UTTER_ESSENCE_LIFESPARK_R            = -1;
+const int UTTER_PRETERNATURAL_CLARITY_ATTACK   = -1;
+const int UTTER_PRETERNATURAL_CLARITY_SKILL    = -1;
+const int UTTER_PRETERNATURAL_CLARITY_SAVE     = -1;
+const int UTTER_PRETERNATURAL_CLARITY_R        = -1;
+const int UTTER_SENSORY_FOCUS                  = -1;
+const int UTTER_SENSORY_FOCUS_R                = -1;
+const int UTTER_WARD_PEACE                     = -1;
+const int UTTER_WARD_PEACE_R                   = -1;
+const int UTTER_WORD_NURTURING_CRITICAL        = -1;
+const int UTTER_WORD_NURTURING_CRITICAL_R      = -1;
 
 // Level 6 Utterances
-const int UTTER_WORD_NURTURING_GREATER    = -1;
-const int UTTER_WORD_NURTURING_GREATER_R  = -1;
-
-// Level 7 Utterances
-
-// Level 8 Utterances
-
-// Level 9 Utterances
+const int UTTER_BREATH_RECOVERY             = -1;
+const int UTTER_BREATH_RECOVERY_R           = -1;
+const int UTTER_ETHER_REFORGED              = -1;
+const int UTTER_ETHER_REFORGED_R            = -1;
+const int UTTER_KNIGHTS_PUISSANCE_GREATER   = -1;
+const int UTTER_KNIGHTS_PUISSANCE_GREATER_R = -1;
+const int UTTER_MYSTIC_RAMPART              = -1;
+const int UTTER_MYSTIC_RAMPART_R            = -1;
+const int UTTER_SINGULAR_MIND               = -1;
+const int UTTER_SINGULAR_MIND_R             = -1;
+const int UTTER_WORD_NURTURING_GREATER      = -1;
+const int UTTER_WORD_NURTURING_GREATER_R    = -1;
 
 // Syllables
 const int SYLLABLE_DETACHMENT	       = -1;

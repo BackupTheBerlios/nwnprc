@@ -1,27 +1,27 @@
 /*
    ----------------
-   Caster Lens
+   Essence of Lifespark
 
-   true_utr_castlns
+   true_utr_esslife
    ----------------
 
-   3/8/06 by Stratovarius
+    4/8/06 by Stratovarius
 */ /** @file
 
-    Caster Lens
+    Essence of Lifespark
 
-    Level: Evolving Mind 4
+    Level: Evolving Mind 5
     Range: 60 feet
     Target: One Creature
-    Duration: 3 Rounds
+    Duration: Instantaneous
     Spell Resistance: Yes
     Save: None
-    Metautterances: Extend
+    Metautterances: None
 
-    Normal:  Your utterance creates an intangible lens that improves your target's potency and aptitude with magic.
-             Your ally gains +2 Caster Level.
-    Reverse: The reverse of this utterance impedes the flow of magical energy through your enemy, inhibiting its ability to cast spells.
-             Your foe takes a -2 to Caster Level.
+    Normal:  With soothing words, you revitalize an ally and restore some of his lost vitality. 
+             You clean your target of negative levels.
+    Reverse: You instruct the universe to sap some of the life force of a target creature.
+             Your target gains a negative level.
 */
 
 #include "true_inc_trufunc"
@@ -48,49 +48,49 @@ void main()
 
     object oTrueSpeaker = OBJECT_SELF;
     object oTarget      = PRCGetSpellTargetObject();
-    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_EXTEND, LEXICON_EVOLVING_MIND);
+    struct utterance utter = EvaluateUtterance(oTrueSpeaker, oTarget, METAUTTERANCE_NONE, LEXICON_EVOLVING_MIND);
 
     if(utter.bCanUtter)
     {
-        // This is done so Speak Unto the Masses can read it out of the structure
-        utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        utter.fDur       = RoundsToSeconds(3);
+	// This is done so Speak Unto the Masses can read it out of the structure
+        utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker); 	
         int nSRCheck;
-        if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_CASTER_LENS)
+        if (utter.nSpellId == UTTER_ESSENCE_LIFESPARK)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
-        	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	SetLocalInt(oTarget, "TrueCasterLens", 2);
-        	utter.eLink = EffectVisualEffect(VFX_DUR_ENTROPIC_SHIELD);
-        	// Impact VFX 
-        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_MIND);
+        	
+            	effect eFear = GetFirstEffect(oTarget);
+            	//Get the first effect on the current target
+            	while(GetIsEffectValid(eFear))
+            	{
+            	    if (GetEffectType(eFear) == EFFECT_TYPE_NEGATIVELEVEL)
+            	    {
+            	        //Remove any fear effects and apply the VFX impact
+            	        RemoveEffect(oTarget, eFear);
+            	    }
+            	    //Get the next effect on the target
+            	    eFear = GetNextEffect(oTarget);
+            	}
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_REMOVE_CONDITION);
         }
         // The REVERSE effect of the Utterance goes here
-        else // UTTER_CASTER_LENS_R
+        else // UTTER_ESSENCE_LIFESPARK_R
         {
         	// If the Spell Penetration fails, don't apply any effects
+        	// Its done this way so the law of sequence is applied properly
         	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
-       			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			SetLocalInt(oTarget, "TrueCasterLens", -2);
-       			utter.eLink = EffectVisualEffect(VFX_DUR_SHADOWS_ANTILIGHT);
-       			// Impact VFX 
-        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
+			utter.eLink2 = EffectLinkEffects(EffectNegativeLevel(1), EffectVisualEffect(VFX_IMP_NEGBLAST_ENERGY));
         	}
         }
-        // Duration Effects
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
-        // Clean Up
-        DelayCommand(fDur, DeleteLocalInt(oTarget, "TrueCasterLens"));
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);

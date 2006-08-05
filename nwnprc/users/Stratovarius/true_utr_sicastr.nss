@@ -14,7 +14,7 @@
     Target: One Creature
     Duration: 1 Round
     Spell Resistance: Yes
-    Save: Will Negates
+    Save: None (Normal) or Will Negates (Reverse)
     Metautterances: Extend
 
     Normal:  Your ally can cast spells without making a sound.

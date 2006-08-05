@@ -1,27 +1,27 @@
 /*
    ----------------
-   Caster Lens
+   Mystic Rampart
 
-   true_utr_castlns
+   true_utr_mysrmp
    ----------------
 
-   3/8/06 by Stratovarius
+    4/8/06 by Stratovarius
 */ /** @file
 
-    Caster Lens
+    Mystic Rampart
 
-    Level: Evolving Mind 4
+    Level: Evolving Mind 6
     Range: 60 feet
     Target: One Creature
-    Duration: 3 Rounds
+    Duration: 5 Rounds
     Spell Resistance: Yes
     Save: None
     Metautterances: Extend
 
-    Normal:  Your utterance creates an intangible lens that improves your target's potency and aptitude with magic.
-             Your ally gains +2 Caster Level.
-    Reverse: The reverse of this utterance impedes the flow of magical energy through your enemy, inhibiting its ability to cast spells.
-             Your foe takes a -2 to Caster Level.
+    Normal:  With a complex string of syllables, an intagible tower superimposes itself over your ally, greatly enhancing his ability to protect himself.
+             Your ally gains 5/- Damage Resistance, and +5 saves.
+    Reverse: You speak words of cursing, significantly reducing your target's effectiveness in battle.
+             Your target takes a -5 Attack and Damage Penalty.
 */
 
 #include "true_inc_trufunc"
@@ -54,43 +54,43 @@ void main()
     {
         // This is done so Speak Unto the Masses can read it out of the structure
         utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
-        utter.fDur       = RoundsToSeconds(3);
+        utter.fDur       = RoundsToSeconds(5);
         int nSRCheck;
         if(utter.bExtend) utter.fDur *= 2;
         
         // The NORMAL effect of the Utterance goes here
-        if (utter.nSpellId == UTTER_CASTER_LENS)
+        if (utter.nSpellId == UTTER_MYSTIC_RAMPART)
         {
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         	utter.bIgnoreSR = TRUE;
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	SetLocalInt(oTarget, "TrueCasterLens", 2);
-        	utter.eLink = EffectVisualEffect(VFX_DUR_ENTROPIC_SHIELD);
+        	utter.eLink = EffectLinkEffects(EffectSavingThrowIncrease(SAVING_THROW_ALL, 5), EffectVisualEffect(PSI_DUR_INTELLECT_FORTRESS));
+        	utter.eLink = EffectLinkEffects(utter.eLink, EffectDamageResistance(DAMAGE_TYPE_SLASHING,    5));
+		utter.eLink = EffectLinkEffects(utter.eLink, EffectDamageResistance(DAMAGE_TYPE_PIERCING,    5));
+                utter.eLink = EffectLinkEffects(utter.eLink, EffectDamageResistance(DAMAGE_TYPE_BLUDGEONING, 5));
         	// Impact VFX 
-        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_MIND);
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_DRAGONBLAST);
         }
         // The REVERSE effect of the Utterance goes here
-        else // UTTER_CASTER_LENS_R
+        else // UTTER_MYSTIC_RAMPART_R
         {
         	// If the Spell Penetration fails, don't apply any effects
         	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
        			// eLink is used for Duration Effects (Buff/Penalty to AC)
-       			SetLocalInt(oTarget, "TrueCasterLens", -2);
-       			utter.eLink = EffectVisualEffect(VFX_DUR_SHADOWS_ANTILIGHT);
+			utter.eLink = EffectLinkEffects(EffectACDecrease(5), EffectVisualEffect(VFX_DUR_ARMOR_OF_DARKNESS));
+			utter.eLink = EffectLinkEffects(utter.eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, 5));
        			// Impact VFX 
-        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
+        		utter.eLink2 = EffectVisualEffect(VFX_IMP_DIMENSIONLOCK);
         	}
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
-        // Clean Up
-        DelayCommand(fDur, DeleteLocalInt(oTarget, "TrueCasterLens"));
         
         // Speak Unto the Masses. Swats an area with the effects of this utterance
         DoSpeakUntoTheMasses(oTrueSpeaker, oTarget, utter);

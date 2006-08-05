@@ -59,6 +59,7 @@ void main()
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.
     DelayCommand(0.1, EvalPRCFeats(oPC));
+    DelayCommand(0.1, FeatSpecialUsePerDay(oPC));
     // Check to see which special prc requirements (i.e. those that can't be done)
     // through the .2da's, the entering player already meets.
     ExecuteScript("prc_prereq", oPC);

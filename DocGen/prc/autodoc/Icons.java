@@ -50,6 +50,13 @@ public class Icons{
 			}
 		});
 		
+		// Ensure the icons directory exists
+		if(tgas == null) {
+			err_pr.println("Icons directory is missing!");
+			if(tolErr) return;
+			else       System.exit(1);
+		}
+		
 		for(File tga : tgas)
 			rawIcons.put(tga.getName().toLowerCase(), tga);
 	}

@@ -294,6 +294,16 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
     DelayCommand(0.01, PopulateList(oPC, MaxValue, bSort, sTable, nCasterLevel, oItem, i + 1));
 }
 
+//use heartbeat
+void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine)
+{
+    IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
+    TakeGoldFromCreature(nCost, oPC, TRUE);
+    SetXP(oPC, GetXP(oPC) - nXP);
+    DecrementCraftingSpells(oPC, sFile, nLine);
+}
+
 void main()
 {
     object oTarget = GetSpellTargetObject();
@@ -1009,11 +1019,14 @@ void main()
                         nCostTableValue += GetArmourCheckPenaltyReduction(oNewItem);
                     }
                     itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
+                    /*
                     IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
-                    TakeGoldFromCreature(GetLocalInt(oPC, PRC_CRAFT_COST), oPC, TRUE);
+                    TakeGoldFromCreature(nCost, oPC, TRUE);
                     SetXP(oPC, GetXP(oPC) - nXP);
                     DecrementCraftingSpells(oPC, sFile, nLine);
+                    */
+                    DelayCommand(GetCraftingTime(nCost), ApplyProperties(oPC, oItem, ip, nCost, nXP, sFile, nLine));
                     AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }
                 break;

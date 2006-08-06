@@ -72,6 +72,23 @@ struct itemvars
     int epic;
 };
 
+float GetCraftingTime(int nCost)
+{
+    int nTemp = nCost / 1000;
+    if(nCost % 1000) nTemp++;
+    float fDelay;
+    switch(GetPRCSwitch(PRC_CRAFTING_TIME_SCALE))
+    {
+        case 0: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp, default
+        case 1: fDelay = 0.0; break;                            //off, no delay
+        case 2: fDelay = RoundsToSeconds(nTemp); break;         //1 round/1000gp
+        case 3: fDelay = TurnsToSeconds(nTemp); break;          //1 turn/1000gp
+        case 4: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp
+        case 5: fDelay = 24 * HoursToSeconds(nTemp); break;     //1 day/1000gp
+    }
+    return fDelay;
+}
+
 object GetCraftChest()
 {
     return GetObjectByTag(PRC_CRAFT_STORAGE_CHEST);
@@ -324,9 +341,12 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
         if(array_exists(oPC, PRC_CRAFT_ITEMPROP_ARRAY))
             array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         array_create(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
-    //Setup
+        //Setup
         for(i = 0; i < MaxListSize(sFile); i++)
-            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+        {
+            if(!GetPRCSwitch("PRC_CRAFT_PROP_" + sFile + "_" + IntToString(i)))
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+        }
     }
     itemproperty ip = GetFirstItemProperty(oItem);
     if(DEBUG) DoDebug("GetItemVars: " + GetName(oItem) + ", before itemprop loop");
@@ -374,7 +394,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
             array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
-    if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
+    if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon") || (sFile == "craft_wondrous")))
     {   //no enhancement value, cannot add more itemprops, stop right there
         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
         for(i = 1; i < MaxListSize(sFile); i++)
@@ -529,7 +549,7 @@ string GetCrafting2DA(object oItem)
         (nBase == BASE_ITEM_TOWERSHIELD))
         )
     {
-        if(GetItemBaseAC(oItem) == 0) return "craft_wonderous";
+        if(GetItemBaseAC(oItem) == 0) return "craft_wondrous";
         return "craft_armour";
     }
 
@@ -543,7 +563,7 @@ string GetCrafting2DA(object oItem)
         (nBase == BASE_ITEM_BRACER) ||
         (nBase == BASE_ITEM_CLOAK))
         )
-        return "craft_wonderous";
+        return "craft_wondrous";
 
     //restrict to castspell itemprops?
     /*
@@ -958,6 +978,12 @@ int GetPnPItemCost(struct itemvars strTemp)
     nEnhancement = GetEnhancementBaseCost(strTemp.item) * strTemp.enhancement * strTemp.enhancement;
     if(strTemp.epic) nEnhancement *= 10;
     nTemp += nEnhancement + strTemp.additionalcost;
+
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(nScale) / 100.0);
+    }
     if(nTemp < 1) nTemp = 1;
 
     return nTemp;

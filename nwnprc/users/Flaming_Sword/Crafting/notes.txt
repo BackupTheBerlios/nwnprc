@@ -1,22 +1,12 @@
 Material use off by default (use switch)
 
-placeable in PC's area - clutter, bad idea
-
-crafting magic items is capped at highest caster level requirement for any one property
-
 unique ids for storage in limbo chest
 
 XXX_PRC_UID_PREFIX + <stuff> + PRC_CRAFT_UID_SUFFIX
 
 where XXX identifies masterwork, material, bit flags
 
-Armour with base AC 0 requires Craft Wonderous Item
-
 base AC 0-1 requires cloth
-
-Must make listing function skip over much of iprp_spells.2da
-
-Cap of +5, +10 total (non-epic)
 
 SRD magic item crafting properties and prices
 
@@ -24,6 +14,8 @@ wearable wonderous items only?
 
 Crafting delays: 
 Here's a compromise: Make it a switch. 5 options: Off, Round/1000, Turn/1000, Hour/1000, Day/1000, and have the default be Hour
+potions excepted, always 1 day (depending on switch)
+
 
 add truespeaking bonuses to wonderous item 2da
 

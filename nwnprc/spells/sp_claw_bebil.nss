@@ -67,7 +67,13 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nClawSize = PRCGetCreatureSize(oTarget);
 	int nBaseDamage;
+	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDuration = (600.0f * nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDuration += fDuration;
+	}
 	
 	// Determine base damage
 	switch(nClawSize)

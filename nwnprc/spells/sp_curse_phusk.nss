@@ -35,6 +35,12 @@ void PassOut(object oTarget)
 	effect eDeaf = EffectDeaf();
 	effect eLink2 = EffectLinkEffects(eBlind, eDeaf);
 	float fDur = (d10(1) * 60.0f);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
 	
 	//Blind/deaf
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oTarget, (fDur - 1.0f));
@@ -63,7 +69,6 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	effect eLink = EffectLinkEffects(EffectDazed(), EffectFrightened());
 	       eLink = EffectLinkEffects(eLink,EffectVisualEffect(VFX_IMP_DAZED_S));
@@ -71,14 +76,13 @@ void main()
 	
 	
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CURSE_OF_THE_PUTRID_HUSK, oPC);
-	
-	
+			
 	//Check Spell Resistance
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		//Will save
 		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-		{
+		{					
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0f);
 			
 			DelayCommand(6.0f, PassOut(oTarget));

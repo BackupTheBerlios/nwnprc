@@ -73,7 +73,7 @@ void main()
         return;
     }*/
 
-    SPSetSchool(SPELL_SCHOOL_GENERAL);  //Put Spell School Here
+    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 
     /*
       Spellcast Hook Code
@@ -107,6 +107,7 @@ void main()
             return;
         }
         DoSpell(oCaster, oTarget, nCasterLevel, nEvent, sScript);
+        SPEvilShift(oCaster);
     }
     else
     {
@@ -115,12 +116,9 @@ void main()
             if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent, sScript))
                 DecrementSpellCharges(oCaster);
         }
-    }
+    }   
     
-    SPEvilShift(oCaster);
-    
-    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-    // Getting rid of the local integer storing the spellschool name
+   SPSetSchool();
 }
 
 //Implements the spell impact, put code here

@@ -21,3 +21,9 @@ Cap of +5, +10 total (non-epic)
 SRD magic item crafting properties and prices
 
 wearable wonderous items only?
+
+Crafting delays: 
+Here's a compromise: Make it a switch. 5 options: Off, Round/1000, Turn/1000, Hour/1000, Day/1000, and have the default be Hour
+
+add truespeaking bonuses to wonderous item 2da
+

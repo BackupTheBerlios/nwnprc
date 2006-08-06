@@ -18432,6 +18432,11 @@ From seven to ten (1d4+6) spell levels are affected by the turning.
 When you are targeted by a spell of higher level than the amount of spell turning you have left, that spell is partially turned. You and the caster each has a proportional chance to be affected.
 If you and a spellcasting attacker are both warded by spell turning effects in operation, both you and the caster have a proportional chance to be affected.</entry>
   <entry id="51603" lang="en" sex="m">Spell Turning (13)</entry>
+  <entry id="51604" lang="en" sex="m">Forge Epic Ring</entry>
+  <entry id="51605" lang="en" sex="m">Type of Feat: General
+Prerequisite: Forge Ring, Lore 35 ranks, Spellcraft 35 ranks
+Specifics: The character can forge magic rings that exceed the normal limits for such items.
+Use: Automatic.</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4

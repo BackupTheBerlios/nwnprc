@@ -253,6 +253,7 @@ void EvalPRCFeats(object oPC)
     // Miscellaneous
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
+    ExecuteScript("prc_mithral", oPC);
 
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
@@ -277,8 +278,8 @@ void EvalPRCFeats(object oPC)
             && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )
         DelayCommand(1.0, ExecuteScript("prc_spellgain", oPC));
-    if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC))        
-    	DelayCommand(1.0, ExecuteScript("true_uttergain", oPC));
+    if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC))
+        DelayCommand(1.0, ExecuteScript("true_uttergain", oPC));
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
@@ -423,7 +424,7 @@ void DeletePRCLocalInts(object oSkin)
 
     // Domains
     DeleteLocalInt(oSkin, "StormDomainPower");
-    
+
     // Skullclan Hunter
     DeleteLocalInt(oSkin, "SkullClanFear");
     DeleteLocalInt(oSkin, "SkullClanDisease");
@@ -431,7 +432,7 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SkullClanSwordLight");
     DeleteLocalInt(oSkin, "SkullClanParalysis");
     DeleteLocalInt(oSkin, "SkullClanAbilityDrain");
-    DeleteLocalInt(oSkin, "SkullClanLevelDrain");    
+    DeleteLocalInt(oSkin, "SkullClanLevelDrain");
 
     // future PRCs Go below here
 }

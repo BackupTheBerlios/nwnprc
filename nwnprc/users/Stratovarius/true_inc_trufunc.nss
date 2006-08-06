@@ -188,6 +188,19 @@ int GetIsSyllable(int nSpellId);
 void DoEnergyNegation(object oTrueSpeaker, object oTarget, struct utterance utter, int nBeats, int nDamageType);
 
 /**
+ * Checks to see if the chosen target of the Crafted Tool utterance is valid.
+ * If it is not valid, it will search through all slots, starting with right hand weapon
+ * to try and find a valid target.
+ *
+ * @param oTrueSpeaker    Caster of the Utterance
+ * @param oTarget         Target of the utterance
+ *
+ * @return                Item in slot, or, if there are no valid objects on the creature, OBJECT_INVALID.
+ *                        If the target is an item, it returns the item.
+ */
+object CraftedToolTarget(object oTrueSpeaker, object oTarget);
+
+/**
  * Applies modifications to a utterance's damage that depend on some property
  * of the target.
  * Currently accounts for:
@@ -504,10 +517,111 @@ void DoEnergyNegation(object oTrueSpeaker, object oTarget, struct utterance utte
 	if(utter.bEmpower) nDamage += (nDamage/2);
        	// Impact VFX 
         utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGVIO), EffectDamage(nDamage, nDamageType));
+        // Impact Effects
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
         
         nBeats -= 1;
         if (nBeats > 0)
         	DelayCommand(6.0, DoEnergyNegation(oTrueSpeaker, oTarget, utter, nBeats, nDamageType));
+}
+
+object CraftedToolTarget(object oTrueSpeaker, object oTarget)
+{
+	// Check to see if its a weapon or item of some sort
+	// Return it if its a valid base item type
+	if (GetBaseItemType(oTarget) != BASE_ITEM_INVALID) return oTarget;
+	
+	object oItem = OBJECT_INVALID;
+	
+	// These are utterances that only target weapons
+	if (PRCGetSpellId() == UTTER_KEEN_WEAPON || PRCGetSpellId() == UTTER_SUPPRESS_WEAPON || PRCGetSpellId() == UTTER_TRANSMUTE_WEAPON)
+	{
+		// By the time we're here, it should only be creatures, not items as targets
+		oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+		// Only do this for Keen
+		if (PRCGetSpellId() == UTTER_KEEN_WEAPON)
+		{
+			// Put the bonus on the ammo rather than the bow if its ranged
+			if( GetBaseItemType(oItem) == BASE_ITEM_LONGBOW || GetBaseItemType(oItem) == BASE_ITEM_SHORTBOW )
+			{
+			     oItem = GetItemInSlot(INVENTORY_SLOT_ARROWS, oTarget);
+			}
+			else if(GetBaseItemType(oItem) == BASE_ITEM_LIGHTCROSSBOW || GetBaseItemType(oItem) == BASE_ITEM_HEAVYCROSSBOW)
+			{
+			     oItem = GetItemInSlot(INVENTORY_SLOT_BOLTS, oTarget);
+			}
+			else if(GetBaseItemType(oWeap) == BASE_ITEM_SLING)
+			{
+			     oItem = GetItemInSlot(INVENTORY_SLOT_BULLETS, oTarget);
+      			}
+      		}
+		// If its a valid weapon, return it
+		if (GetBaseItemType(oItem) != BASE_ITEM_INVALID) return oItem;
+		// Check the spare hand, and make sure its not a shield
+		oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+		// If its a valid weapon and not a shield, return it
+		if (GetBaseItemType(oItem) != BASE_ITEM_INVALID     &&    
+		    GetBaseItemType(oItem) != BASE_ITEM_LARGESHIELD &&
+                    GetBaseItemType(oItem) != BASE_ITEM_SMALLSHIELD &&
+                    GetBaseItemType(oItem) != BASE_ITEM_TOWERSHIELD)) return oItem;
+	}// These ones target only armour
+	else if (PRCGetSpellId() == UTTER_FORTIFY_ARMOUR_SNEAK || PRCGetSpellId() == UTTER_FORTIFY_ARMOUR_CRIT)
+	{
+		return GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+	}
+	else // For the rest of the utterances, any item is a valid target.
+	{
+		// Get the PC's chosen inventory slot
+		int nSlot = GetLocalInt(oTrueSpeaker, "TrueCraftedToolTargetSlot");
+		oItem = GetItemInSlot(nSlot, oTarget);
+		// If the chosen item isn't valid, we go into the choice progession
+		// Yes, its a long chain
+		if (!GetIsObjectValid(oItem))
+		{
+		    oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+		    if (!GetIsObjectValid(oItem))
+		    {
+		        oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+		        if (!GetIsObjectValid(oItem))
+			{
+			    oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget);
+			    if (!GetIsObjectValid(oItem))
+			    {
+			        oItem = GetItemInSlot(INVENTORY_SLOT_HEAD, oTarget);
+			        if (!GetIsObjectValid(oItem))
+			        {
+			            oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTRING, oTarget);
+			            if (!GetIsObjectValid(oItem))
+				    {
+				        oItem = GetItemInSlot(INVENTORY_SLOT_LEFTRING, oTarget);
+				        if (!GetIsObjectValid(oItem))
+			                {
+			                    oItem = GetItemInSlot(INVENTORY_SLOT_NECK, oTarget);
+			                    if (!GetIsObjectValid(oItem))
+			    		    {
+			    		        oItem = GetItemInSlot(INVENTORY_SLOT_CLOAK, oTarget);
+			    		        if (!GetIsObjectValid(oItem))
+						{
+						    oItem = GetItemInSlot(INVENTORY_SLOT_ARMS, oTarget);
+						    if (!GetIsObjectValid(oItem))
+						    {
+							oItem = GetItemInSlot(INVENTORY_SLOT_BOOTS, oTarget);
+							if (!GetIsObjectValid(oItem))
+							{
+							    oItem = GetItemInSlot(INVENTORY_SLOT_BELT, oTarget);
+		                                        }
+		                                    }
+		                               }
+		                            }
+		                        }
+		                    }
+		                }
+		            }
+		        }
+		    }
+		}
+	}
+	return oItem;
 }
 /*
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,

@@ -2,16 +2,19 @@
 //Reverse Utterances are denoted with a _R
 
 // Level 1 Utterances
-const int UTTER_DEFENSIVE_EDGE        = 3526;
-const int UTTER_DEFENSIVE_EDGE_R      = 3527;
-const int UTTER_INERTIAL_SURGE          = -1;
-const int UTTER_INERTIAL_SURGE_R        = -1;
-const int UTTER_KNIGHTS_PUISSANCE       = -1;
-const int UTTER_KNIGHTS_PUISSANCE_R     = -1;
-const int UTTER_UNIVERSAL_APTITUDE      = -1;
-const int UTTER_UNIVERSAL_APTITUDE_R    = -1;
-const int UTTER_WORD_NURTURING_MINOR    = -1;
-const int UTTER_WORD_NURTURING_MINOR_R  = -1;
+const int UTTER_DEFENSIVE_EDGE         = 3526;
+const int UTTER_DEFENSIVE_EDGE_R       = 3527;
+const int UTTER_INERTIAL_SURGE         = -1;
+const int UTTER_INERTIAL_SURGE_R       = -1;
+const int UTTER_KNIGHTS_PUISSANCE      = -1;
+const int UTTER_KNIGHTS_PUISSANCE_R    = -1;
+const int UTTER_UNIVERSAL_APTITUDE     = -1;
+const int UTTER_UNIVERSAL_APTITUDE_R   = -1;
+const int UTTER_WORD_NURTURING_MINOR   = -1;
+const int UTTER_WORD_NURTURING_MINOR_R = -1;
+const int UTTER_FORTIFY_ARMOUR_SNEAK   = -1;
+const int UTTER_FORTIFY_ARMOUR_CRIT    = -1;
+const int UTTER_KEEN_WEAPON            = -1;
 
 // Level 2 Utterances
 const int UTTER_ARCHERS_EYE              = -1;
@@ -30,6 +33,9 @@ const int UTTER_TEMPORAL_TWIST           = -1;
 const int UTTER_TEMPORAL_TWIST_R         = -1;
 const int UTTER_WORD_NURTURING_LESSER    = -1;
 const int UTTER_WORD_NURTURING_LESSER_R  = -1;
+const int UTTER_AGITATE_ITEM             = -1;
+const int UTTER_ANALYZE_ITEM_HOT         = -1;
+const int UTTER_ANALYZE_ITEM_COLD        = -1;
 
 // Level 3 Utterances
 const int UTTER_ACCELERATED_ATTACK         = -1
@@ -47,6 +53,8 @@ const int UTTER_VISION_SHARPENED           = -1;
 const int UTTER_VISION_SHARPENED_R         = -1;
 const int UTTER_WORD_NURTURING_MODERATE    = -1;
 const int UTTER_WORD_NURTURING_MODERATE_R  = -1;
+const int UTTER_REMOVE_ITEM                = -1;
+const int UTTER_SUPPRESS_WEAPON            = -1;
 
 // Level 4 Utterances
 const int UTTER_BREATH_CLEANSING         = -1;
@@ -63,6 +71,8 @@ const int UTTER_SPELL_REBIRTH            = -1;
 const int UTTER_SPELL_REBIRTH_R          = -1;
 const int UTTER_WORD_NURTURING_POTENT    = -1;
 const int UTTER_WORD_NURTURING_POTENT_R  = -1;
+const int UTTER_SUPPRESS_ITEM            = -1;
+const int UTTER_TRANSMUTE_WEAPON         = -1
 
 // Level 5 Utterances
 const int UTTER_ELDRITCH_ATTRACTION            = -1;
@@ -82,6 +92,8 @@ const int UTTER_WARD_PEACE                     = -1;
 const int UTTER_WARD_PEACE_R                   = -1;
 const int UTTER_WORD_NURTURING_CRITICAL        = -1;
 const int UTTER_WORD_NURTURING_CRITICAL_R      = -1;
+const int UTTER_METAMAGIC_CATALYST             = -1;
+const int UTTER_SEIZE_ITEM                     = -1;
 
 // Level 6 Utterances
 const int UTTER_BREATH_RECOVERY             = -1;
@@ -113,3 +125,9 @@ const int BRIMSTONE_FIRE_8D6       = -1;
 const int BRIMSTONE_HEAVEN_LESSER  = -1;
 const int BRIMSTONE_HEAVEN_NORMAL  = -1;
 const int BRIMSTONE_HEAVEN_GREATER = -1;
+
+// Crafted Tool Target Constants
+const int CRAFTED_TOOL_QUICKSLOT1  = -1;
+const int CRAFTED_TOOL_QUICKSLOT2  = -1;
+const int CRAFTED_TOOL_QUICKSLOT3  = -1;
+const int CRAFTED_TOOL_QUICKSLOT4  = -1;

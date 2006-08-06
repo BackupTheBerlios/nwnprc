@@ -84,6 +84,14 @@ int AddPersonalTruenameDC(object oTrueSpeaker, object oTarget);
  */
 int AddIgnoreSpellResistDC(object oTrueSpeaker);
 
+/**
+ * Returns the DC increase from specific utterances
+ *
+ * @param oTrueSpeaker    Caster of the Utterance
+ * @return                The DC boost for using this ability
+ */
+int AddUtteranceSpecificDC(object oTrueSpeaker);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -287,6 +295,13 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker)
 	if (GetLocalInt(oTrueSpeaker, TRUE_IGNORE_SR)) nDC += 5;
 	
 	return nDC;
+}
+
+int AddUtteranceSpecificDC(object oTrueSpeaker)
+{
+	int nDC = 0;
+	// When using this power you add +10 to the DC to make yourself immune to crits
+	if (PRCGetSpellId() == UTTER_FORTIFY_ARMOUR_CRIT) nDC += 10;
 }
 
 // Test main

@@ -498,6 +498,8 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
     utter.nUtterDC += AddPersonalTruenameDC(oTrueSpeaker, oTarget);  
     // DC change for ignoring Spell Resistance
     utter.nUtterDC += AddIgnoreSpellResistDC(oTrueSpeaker);
+    // DC change for specific utterances
+    utter.nUtterDC += AddUtteranceSpecificDC(oTrueSpeaker);
     
     // Check the Law of Sequence. Returns True if the utterance is active
     if (CheckLawOfSequence(oTrueSpeaker, utter.nSpellId))

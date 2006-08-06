@@ -59,7 +59,8 @@ void main()
             //database entry really marks the old entry as "deleted" ( but doesnt actually remove it)
             //and creates a new entry instead.
 
-            if(DEBUG) DoDebug("Storing Bioware2DACache");
+            if(DEBUG) DoDebug                 ("Storing Bioware2DACache");
+            else      WriteTimestampedLogEntry("Storing Bioware2DACache");
             DestroyCampaignDatabase("prc_data");
             object o2daCache = GetObjectByTag("Bioware2DACache");
             StoreCampaignObject("prc_data", "CacheChest", o2daCache);

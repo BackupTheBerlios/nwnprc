@@ -1783,6 +1783,12 @@ void DoCorruptionCost(object oPC, int nAbility, int nCost, int bDrain)
     // Undead redirect all damage & drain to Charisma, sez http://www.wizards.com/dnd/files/BookVileFAQ12102002.zip
     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_UNDEAD)
         nAbility = ABILITY_CHARISMA;
+        
+    //Exalted Raiment
+    if(GetHasSpellEffect(SPELL_EXALTED_RAIMENT, GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)))
+    {
+        nCost -= 1;
+    }
 
     // Is it ability drain?
     if(bDrain)

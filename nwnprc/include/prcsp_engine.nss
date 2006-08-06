@@ -129,8 +129,16 @@ int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
     else {
         // Check immunities and mantles, otherwise ignore the result completely
         nResist = PRCResistSpell(oCaster, oTarget);
-        if (nResist <= SPELL_RESIST_PASS) {
-            nResist = SPELL_RESIST_FAIL;
+        
+        //Resonating Resistance
+        if((nResist <= SPELL_RESIST_PASS) && (GetHasSpellEffect(SPELL_RESONATING_RESISTANCE, oTarget)))
+        {
+		nResist = PrcResistSpell(oCaster, oTarget)
+	}
+	       
+        if (nResist <= SPELL_RESIST_PASS)
+        {
+		nResist = SPELL_RESIST_FAIL;
 
             // Because the version of this function was recently changed to
             // optionally allow the caster level, we must calculate it here.

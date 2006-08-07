@@ -55,36 +55,18 @@ void main()
 	{
 		//Summon blade
 		if(nSpell == SPELL_BONEBLADE_GREATSWORD)
-		{
-			/*if(has CEP)
-			{
-				sSword = "bbcepgrswrd";
-			}*/
-			
-			//else
-			sSword = "bonebladegreatsw";
+		{			
+			sSword = "WSwGs_X_071";
 		}
 		
 		if(nSpell == SPELL_BONEBLADE_LONGSWORD)
 		{
-			/*if(has CEP)
-			{
-				sSword = "bbceplngswrd";
-			}*/
-			
-			//else 
-			sSword = "boneblade";
+			sSword = "WSwLs_X_15";
 		}
 		
 		if(nSpell == SPELL_BONEBLADE_SHORTSWORD)
 		{
-			/*if(has CEP)
-			{
-				sSword = "bbcepshrtswrd";
-			}*/
-			
-			//else
-			sSword = "bonebladeshortsw";
+			sSword = "WSwSs_X_071";
 		}
 				
 		//Create sword	

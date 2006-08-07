@@ -1,6 +1,10 @@
 2DA V2.0
 
     FeatLabel                                              FeatIndex List GrantedOnLevel OnMenu 
+9   WeapProfSim                                    46        3    1              0      
+10  ArmProfLgt                                     3         3    1              0      
+11  ArmProfMed                                     4         3    1              0      
+13  Shield                                         32        3    1              0          
 0   FavouredSoul_WeaponFocus                               2229      3    3              0      
 1   FavouredSoul_WeaponSpec                                2230      3    12             0      
 2   FavouredSoul_ERAcid                                    2237      2    5              0      

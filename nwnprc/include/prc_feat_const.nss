@@ -2026,15 +2026,15 @@ const int FEAT_MOTHER_CYST                    = 3594;
 
 //Tenjac's spell related
 const int FEAT_DETECT_GOOD_AT_WILL            = 3595;
-const int FEAT_RAY_CHARM_PERSON               = 2228;
-const int FEAT_RAY_CHARM_MONSTER              = 2229;
-const int FEAT_RAY_SLEEP                      = 2230;
-const int FEAT_RAY_FLESH_TO_STONE             = 2231;
-const int FEAT_RAY_DISINTEGRATE               = 2232;
-const int FEAT_RAY_FEAR                       = 2233;
-const int FEAT_RAY_SLOW                       = 2234;
-const int FEAT_RAY_INFLICT_MODERATE_WOUNDS    = 2235;
-const int FEAT_RAY_FINGER_OF_DEATH            = 2236;
+const int FEAT_RAY_CHARM_PERSON               = 2220;
+const int FEAT_RAY_CHARM_MONSTER              = 2221;
+const int FEAT_RAY_SLEEP                      = 2222;
+const int FEAT_RAY_FLESH_TO_STONE             = 2223;
+const int FEAT_RAY_DISINTEGRATE               = 2224;
+const int FEAT_RAY_FEAR                       = 2225;
+const int FEAT_RAY_SLOW                       = 2226;
+const int FEAT_RAY_INFLICT_MODERATE_WOUNDS    = 2227;
+const int FEAT_RAY_FINGER_OF_DEATH            = 2228;
 
 //Lasher
 const int FEAT_LASHER_SNEAK1D6                = 4075;

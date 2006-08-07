@@ -720,3 +720,30 @@ const int SPELL_MASS_INFLICT_SERIOUS                = 3215;
 const int SPELL_MASS_INFLICT_CRITICAL               = 3216;
 const int SPELL_GREATER_HARM                        = 3217;
 const int SPELL_MASS_HARM                           = 3218;
+
+// Virtuoso 	 
+ const int SPELL_VIRTUOSO_SUSTAINING_SONG            = 3046; 	 
+ const int SPELL_VIRTUOSO_CALUMNY                    = 3047; 	 
+ const int SPELL_VIRTUOSO_JARRING_SONG               = 3048; 	 
+ const int SPELL_VIRTUOSO_SHARP_NOTE                 = 3049; 	 
+ const int SPELL_VIRTUOSO_MINDBENDING_MELODY         = 3050; 	 
+ const int SPELL_VIRTUOSO_GREATER_CALUMNY            = 3051; 	 
+ const int SPELL_VIRTUOSO_MAGICAL_MELODY             = 3052; 	 
+ const int SPELL_VIRTUOSO_SONG_OF_FURY               = 3053; 	 
+ const int SPELL_VIRTUOSO_REVEALING_MELODY           = 3054; 	 
+  	 
+ // PRC Extra Stunning Feat 	 
+ const int SPELL_PRC_EXTRA_STUNNING                  = 2500; 	 
+  	 
+ // Enlightened Fist 	 
+ const int SPELL_EF_FIST_OF_ENERGY                   = 2501; 	 
+ const int SPELL_EF_FIST_OF_ENERGY_FIRE              = 2502; 	 
+ const int SPELL_EF_FIST_OF_ENERGY_ELECTRICITY       = 2503; 	 
+ const int SPELL_EF_SPELL_SELECT                     = 2504; 	 
+ const int SPELL_EF_SPELL_SELECT_CONVO               = 2505; 	 
+ const int SPELL_EF_SPELL_SELECT_QUICK1              = 2506; 	 
+ const int SPELL_EF_SPELL_SELECT_QUICK2              = 2507; 	 
+ const int SPELL_EF_SPELL_SELECT_QUICK3              = 2508; 	 
+ const int SPELL_EF_SPELL_SELECT_QUICK4              = 2509; 	 
+ const int SPELL_EF_ARCANE_FIST                      = 2510; 	 
+ const int SPELL_EF_ARCANE_REJUVENATION              = 2511;

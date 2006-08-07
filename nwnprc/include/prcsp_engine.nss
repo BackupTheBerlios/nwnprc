@@ -133,7 +133,7 @@ int MyPRCResistSpell(object oCaster, object oTarget, int nEffCasterLvl=0, float 
         //Resonating Resistance
         if((nResist <= SPELL_RESIST_PASS) && (GetHasSpellEffect(SPELL_RESONATING_RESISTANCE, oTarget)))
         {
-		nResist = PrcResistSpell(oCaster, oTarget)
+		nResist = PRCResistSpell(oCaster, oTarget);
 	}
 	       
         if (nResist <= SPELL_RESIST_PASS)

@@ -1403,6 +1403,12 @@ const string PRC_3_5e_FIST_DAMAGE                    = "PRC_3_5e_FIST_DAMAGE";
  */
 const string PRC_BRAWLER_SIZE                        = "PRC_BRAWLER_SIZE";
 
+/**
+ * Use appearance size rather than racial-determined size
+ * This also means it includes bonuses from classes and spells
+ */
+const string PRC_APPEARANCE_SIZE                        = "PRC_APPEARANCE_SIZE";
+
 
 
 
@@ -2657,6 +2663,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELL_SNEAK_DISABLE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_3_5e_FIST_DAMAGE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BRAWLER_SIZE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_APPEARANCE_SIZE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_CRAFT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFT_TIMER_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFT_TIMER_MAX);

@@ -186,7 +186,8 @@ int FindUnarmedDamage(object oCreature)
     // if the creature is shifted, use model size
     // otherwise, we want to stick to what the feats say they "should" be.
     // No making pixies with Dragon Appearance for "huge" fist damage.
-    if( GetIsPolyMorphedOrShifted(oCreature) )
+    if( GetIsPolyMorphedOrShifted(oCreature) 
+        || GetPRCSwitch(PRC_APPEARANCE_SIZE))
     {
          bTinySize   = FALSE;
          bSmallSize  = FALSE;

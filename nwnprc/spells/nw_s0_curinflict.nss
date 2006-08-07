@@ -1,4 +1,4 @@
-/*
+/** @file
     nw_s0_cureinflict
 
     Handles all the cure/inflict spells
@@ -28,49 +28,56 @@
 //  Variables passed may be changed if necessary
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bIsCure)
 {
-    int nSpellID = PRCGetSpellId();
-    int nMetaMagic = PRCGetMetaMagicFeat();
-    int bMass = IsMassCure(nSpellID) || IsMassInflict(nSpellID);
+    int nSpellID    = PRCGetSpellId();
+    int nMetaMagic  = PRCGetMetaMagicFeat();
+    int bMass       = IsMassCure(nSpellID) || IsMassInflict(nSpellID);
     int nHealVFX;
     int nEnergyType = bIsCure ? DAMAGE_TYPE_POSITIVE : DAMAGE_TYPE_NEGATIVE;
-    int nSpellLevel = StringToInt(lookup_spell_cleric_level(PRCGetSpellId()));
-    int nDice = nSpellLevel;
-    int iHeal;
+    int nSpellLevel = StringToInt(lookup_spell_cleric_level(PRCGetSpellId())); // This is probably an error and should be replaced with accounts for the actual class from whose list the spell is being cast from - Ornedan
+    int nDice       = bMass ? nSpellLevel - 4 : nSpellLevel; // The spells use a number of dice equivalent to spell level, mass versions 4 fewer
+    int bHeal;
 
-    if(bMass)
-        nDice -= 4;
     switch(nDice)       //nDice == 0 for cure/inflict minor wounds
     {
-        case 0: nHealVFX = VFX_IMP_HEAD_HEAL; break;
-        case 1: nHealVFX = VFX_IMP_HEALING_S; break;
-        case 2: nHealVFX = VFX_IMP_HEALING_M; break;
-        case 3: nHealVFX = VFX_IMP_HEALING_L; break;
-        case 4: nHealVFX = VFX_IMP_HEALING_G; break;
+        case 0:          nHealVFX = VFX_IMP_HEAD_HEAL; break;
+        case 1:          nHealVFX = VFX_IMP_HEALING_S; break;
+        case 2:          nHealVFX = VFX_IMP_HEALING_M; break;
+        case 3:          nHealVFX = VFX_IMP_HEALING_L; break;
+        case 4: default: nHealVFX = VFX_IMP_HEALING_G; break;
     }
 
-    int nExtraDamage = nSpellLevel * 5;
-    if(nCasterLevel < nExtraDamage) nExtraDamage = nCasterLevel;
-    //Healing is more effective for players on low or normal difficulty
+    // Extra points based on spell level, capped to caster level
+    int nExtraDamage = min(nSpellLevel * 5, nCasterLevel);
+
+    // Healing is more effective for players on low or normal difficulty
     int nDifficultyCondition = (GetIsPC(oTarget) && (GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)) && bIsCure;
 
+    // Mass spell AoE targeting
     location lLoc;
     if(bMass)
     {
-        lLoc = PRCGetSpellTargetLocation();
+        lLoc    = PRCGetSpellTargetLocation();
         oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, TRUE);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(bIsCure ? VFX_FNF_LOS_HOLY_20 : VFX_FNF_LOS_EVIL_20), lLoc);
 
     }
-    float fDelay = 0.0;
-    int nHealed = 0;
-    int nMaxHealed = bMass ? nCasterLevel : 1;
+
+    // Targeting loop
+    float fDelay    = 0.0;
+    int nHealed     = 0;
+    int nMaxHealed  = bMass ? nCasterLevel : 1;
     int iAttackRoll = 1;
-    while (GetIsObjectValid(oTarget))
-    {   //random delay like mass heal so it looks cool :P (can be set to zero if behavior is not desired)
+    while(GetIsObjectValid(oTarget))
+    {
+        // Skip non-creatures. AoE targeting shouldn't get them anyway, but single target spells shouldn't affect non-creatures either
+        if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+            continue;
+
+        //random delay like mass heal so it looks cool :P (can be set to zero if behavior is not desired)
         if(bMass) fDelay = GetRandomDelay();
-        //nHealed++;
+
+        // Roll damage / heal points
         int iBlastFaith = BlastInfidelOrFaithHeal(oCaster, oTarget, nEnergyType, TRUE);
-        //Metamagic and feats
         int nHeal = 0;
         if((nMetaMagic & METAMAGIC_MAXIMIZE) || iBlastFaith || nDifficultyCondition)
         {
@@ -80,47 +87,76 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
         }
         else
             nHeal = d8(nDice) + nExtraDamage;
-        if ((nMetaMagic & METAMAGIC_EMPOWER)) nHeal += (nHeal/2);
-        if (GetHasFeat(FEAT_AUGMENT_HEALING, oCaster) && bIsCure)
+        // More feat effects
+        if((nMetaMagic & METAMAGIC_EMPOWER))
+            nHeal += (nHeal / 2);
+        if(GetHasFeat(FEAT_AUGMENT_HEALING, oCaster) && bIsCure)
             nHeal += (nSpellLevel * 2);
-        if(nDice == 0) nHeal = 1;
-        iHeal = GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
-                ((!bIsCure && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD) ||
-                (bIsCure && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD));
-        if(iHeal && spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster))
-        {   //heals friendly creatures
+        // Some special handling? - Ornedan
+        if(nDice == 0)
+            nHeal = 1;
+
+        // Whether we are supposed to heal or hurt the target
+        bHeal = (!bIsCure && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD) || // Undead handling, non-cures heal them
+                (bIsCure  && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)    // Undead handling, cures hurt them
+                 ;
+
+        // Healing, assume the caster never wants to heal hostiles and any targeting of such was a misclick
+        if(bHeal && !spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, oCaster))
+        {
+            // Apply healing to the target
             effect eHeal = EffectHeal(nHeal);
-            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget));
+            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal),            oTarget));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(nHealVFX), oTarget));
+
+            // Let the AI know
             SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, FALSE));
+
+            // Increment the # of affected targets counter
             nHealed++;
         }
-        else if((GetObjectType(oTarget) != OBJECT_TYPE_CREATURE && !bIsCure) ||
-                (GetObjectType(oTarget) == OBJECT_TYPE_CREATURE && !iHeal))
-        {   //negative spells damage non-creatures
-            if (!GetIsReactionTypeFriendly(oTarget) && oTarget != oCaster)
+        // Harming, assume the caster never wants to hurt non-hostiles and any targeting of such was a misclick
+        else if(spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, oCaster))
+        {
+            // Roll touch attack if non-mass spell
+            iAttackRoll = bMass ? TRUE : PRCDoMeleeTouchAttack(oTarget);
+            if(iAttackRoll > 0)
             {
-                iAttackRoll = PRCDoMeleeTouchAttack(oTarget);;
-                if(iAttackRoll > 0)
+                // Let the AI know about hostile spell use
+                SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID));
+
+                // Roll SR
+                if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
                 {
-                    SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID));
-                    if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+                    // Save for half
+                    if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget,
+                                        PRCGetSaveDC(oTarget, oCaster, nSpellID),
+                                        bIsCure ? SAVING_THROW_TYPE_POSITIVE : SAVING_THROW_TYPE_NEGATIVE
+                                        )
+                       )
                     {
-                        if(PRCGetSaveDC(oTarget, oCaster))
-                        {
-                            nHeal /= 2;
-                            if(GetHasMettle(oTarget, SAVING_THROW_WILL))
-                                nHeal = 0;
-                        }
-                        effect eDam = EffectDamage(nHeal, nEnergyType);
-                        DelayCommand(fDelay + 1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                        DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(bIsCure ? VFX_IMP_SUNSTRIKE : 246), oTarget));
-                        nHealed++;
+                        nHeal /= 2;
+                        // Mettle for total avoidance instead
+                        if(GetHasMettle(oTarget, SAVING_THROW_WILL))
+                            nHeal = 0;
                     }
+
+                    // Apply effects
+                    effect eDam = EffectDamage(nHeal, nEnergyType);
+                    DelayCommand(fDelay + 1.0, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    DelayCommand(fDelay,       SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(bIsCure ? VFX_IMP_SUNSTRIKE : VFX_IMP_HARM), oTarget));
                 }
             }
+
+            // Increment the # of affected targets counter
+            nHealed++;
         }
-        if(nHealed >= nMaxHealed) break;
+
+        // Terminate loop if target limit reached
+        if(nHealed >= nMaxHealed)
+            break;
+
+        // Otherwise get next target
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lLoc, TRUE);
     }
 
@@ -129,13 +165,18 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
 
 void main()
 {
-    object oCaster = OBJECT_SELF;
+    // Get spell data
+    object oCaster   = OBJECT_SELF;
+    object oTarget   = PRCGetSpellTargetObject();
     int nCasterLevel = PRCGetCasterLevel(oCaster);
-    int nSpellID = PRCGetSpellId();
-    int bIsCure = IsMassCure(nSpellID) || IsCure(nSpellID);  //whether it is a cure or inflict spell
+    int nSpellID     = PRCGetSpellId();
+    int bIsCure      = IsMassCure(nSpellID) || IsCure(nSpellID);  //whether it is a cure or inflict spell
+
+    // Run the pre-spell code
     SPSetSchool(GetSpellSchool(nSpellID));
     if (!X2PreSpellCastCode()) return;
-    object oTarget = PRCGetSpellTargetObject();
+
+    // Check for holding charge
     int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
     if(!nEvent) //normal cast
     {   //can't hold the charge with mass cure/inflict spells

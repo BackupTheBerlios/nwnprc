@@ -1292,6 +1292,11 @@ public final class PageGeneration{
 			
 			// Skip feats that can never be gotten
 			if(grantedLevel > 40) continue;
+			if(grantedLevel > maxLevel) {
+				// This is never a fatal error. It's merely bad practice to place the feat outside reachable bounds, but not obviously so (ex, value of 99)
+				err_pr.println("GrantedOnLevel entry in " + featTable.getName() + " on row " + i + " is greater than the class's maximum level, but not obviously unreachable: " + grantedLevel + " vs. " + maxLevel);
+				continue;
+			}
 			
 			// If the feat has a master, replace it with the master in the listing to prevent massive spammage
 			if(classFeat.master != null){

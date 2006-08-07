@@ -70,7 +70,10 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
     while(GetIsObjectValid(oTarget))
     {
         // Skip non-creatures. AoE targeting shouldn't get them anyway, but single target spells shouldn't affect non-creatures either
-        if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE)
+        // Also skip constructs, since they are neither living nor undead. Technically, they would qualify for being healed by mass cures, but we assume that's just bad editing.
+        if(GetObjectType(oTarget) == OBJECT_TYPE_CREATURE ||
+           MyPRCGetRacialType(oTarget) == RACIAL_TYPE_CONSTRUCT
+           )
             continue;
 
         //random delay like mass heal so it looks cool :P (can be set to zero if behavior is not desired)

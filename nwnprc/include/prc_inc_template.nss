@@ -27,7 +27,7 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
 
 #include "prc_inc_function"
 #include "x2_inc_switches"
-#include "prc_template_const"
+#include "prc_template_con"
 #include "inc_persist_loca"
 
 int GetHasTemplate(int nTemplate, object oPC = OBJECT_SELF)

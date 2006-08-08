@@ -27,22 +27,31 @@ public final class Data2daMerge{
 		if(args.length < 3 || args[0].equals("--help") || args[0].equals("-?"))
 			readMe();
 
+		//check arguments for directories to use
 		source = args[0];
 		merge  = args[1];
 		output = args[2];
 
+		//assemble arrays of filenames
 		File[] sourceFiles = new File(source).listFiles();
 		File[] mergeFiles  = new File(merge).listFiles();
 
+		//define some things for speed
+		File sourceFile;
+		File mergeFile;
+		Data_2da sourceData;
+		Data_2da mergeData;
+		Data_2da outputData;
+
 		for(int i = 0; i < sourceFiles.length; i++){
-			File sourceFile = sourceFiles[i];
+			sourceFile = sourceFiles[i];
 			//ignore non-2da files
 			if(sourceFile.getPath().endsWith(".2da")){
 				String sourceFilename = sourceFile.getName().substring(0, sourceFile.getName().length() - 4);
 				//loop over the merge files to find one that matches the source
 				boolean matchFound = false;
 				for(int j = 0; j < mergeFiles.length; j++){
-					File mergeFile = mergeFiles[j];
+					mergeFile = mergeFiles[j];
 					//ignore non-2da files
 					if(mergeFile.getPath().endsWith(".2da")){
 						String mergeFilename = mergeFile.getName().substring(0, mergeFile.getName().length() - 4);
@@ -51,9 +60,9 @@ public final class Data2daMerge{
 							matchFound = true;
 							String sourcePath = sourceFile.getAbsolutePath();
 							String mergePath  = mergeFile.getAbsolutePath();
-							Data_2da sourceData = Data_2da.load2da(sourcePath, true);
-							Data_2da mergeData  = Data_2da.load2da(mergePath,  true);
-							Data_2da outputData = Data_2da.load2da(sourcePath, true);
+							sourceData = Data_2da.load2da(sourcePath, true);
+							mergeData  = Data_2da.load2da(mergePath,  true);
+							outputData = Data_2da.load2da(sourcePath, true);
 							//Data_2da outputData = sourceData;
 							//get the smallest number of rows
 							int rowCount = sourceData.getEntryCount();
@@ -99,7 +108,8 @@ public final class Data2daMerge{
 								}
 							}
 							//finished assembling the output file, write it
-							outputData.save2da(output, false, true);
+							//this overwrites the target file
+							outputData.save2da(output, true, true);
 						}
 					}
 				}

@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 1, 2006
+    Modified: Aug 7, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -25,6 +25,7 @@ int MaxListSize(string sTable);
 #include "prc_alterations"
 #include "inc_newspellbook"
 #include "prc_inc_spells"
+#include "prc_inc_listener"
 
 const int NUM_MAX_PROPERTIES            = 152;
 const int NUM_MAX_SUBTYPES              = 256;
@@ -64,6 +65,8 @@ const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
 
+const string PRC_CRAFT_HB               = "PRC_CRAFT_HB";
+
 struct itemvars
 {
     object item;
@@ -72,7 +75,7 @@ struct itemvars
     int epic;
 };
 
-float GetCraftingTime(int nCost)
+int GetCraftingTime(int nCost)
 {
     int nTemp = nCost / 1000;
     if(nCost % 1000) nTemp++;
@@ -86,7 +89,7 @@ float GetCraftingTime(int nCost)
         case 4: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp
         case 5: fDelay = 24 * HoursToSeconds(nTemp); break;     //1 day/1000gp
     }
-    return fDelay;
+    return FloatToInt(fDelay / 6);
 }
 
 object GetCraftChest()
@@ -394,7 +397,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
             array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
-    if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon") || (sFile == "craft_wondrous")))
+    if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
     {   //no enhancement value, cannot add more itemprops, stop right there
         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
         for(i = 1; i < MaxListSize(sFile); i++)
@@ -1132,6 +1135,10 @@ int MaxListSize(string sTable)
         return 113;
     if(sTable == "craft_armour")
         return 64;
+    if(sTable == "craft_weapon")
+        return 0;   //fix
+    if(sTable == "craft_wondrous")
+        return 0;   //fix
     if(sTable == "classes")
         return 256;
     if(sTable == "disease")

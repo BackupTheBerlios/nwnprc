@@ -205,7 +205,7 @@ public class Data_2da implements Cloneable{
 	public static Data_2da load2da(String filePath, boolean bugCompat) throws IllegalArgumentException, TwoDAReadException{
 		Data_2da toReturn;
 		Matcher matcher = bugCompat ? bugCompatPattern.matcher("") : pattern.matcher("");
-		String name, defaultValue = "";
+		String name;
 
 		// Some paranoia checking for bad parameters
 		if(!filePath.toLowerCase().endsWith("2da"))
@@ -249,25 +249,8 @@ public class Data_2da implements Cloneable{
 		if(!data.contains("2DA V2.0"))
 			throw new TwoDAReadException("2da header missing or invalid: " + name);
 
-		// Get the default - though it's not used by this implementation, it should not be lost by opening and resaving a file
-		if(!reader.hasNextLine())
-			throw new TwoDAReadException("No contents after header in 2da file " + name + "!");
-		data = reader.nextLine();
-		matcher.reset(data);
-		if(matcher.find()){ // Non-blank default line
-			data = matcher.group();
-			if(data.trim().equalsIgnoreCase("DEFAULT:")){
-				if(matcher.find())
-					defaultValue = matcher.group();
-				else
-					throw new TwoDAReadException("Malformed default line in 2da file " + name + "!");
-			}
-			else
-				throw new TwoDAReadException("Malformed default line in 2da file " + name + "!");
-		}
-
 		// Initialise the return object
-		toReturn = new Data_2da(name, defaultValue);
+		toReturn = new Data_2da(name);
 
 		// Start the actual reading
 		try{
@@ -291,15 +274,53 @@ public class Data_2da implements Cloneable{
 	 */
 	private void createData(Scanner reader, Matcher matcher, boolean bugCompat){
 		Scanner rowParser;
-		String data;
+		String data, bugCompat_data;
+		boolean bugCompat_MissingDefaultLine = false;
 		int line = 0;
+		
+		// Get the default - though it's not used by this implementation, it should not be lost by opening and resaving a file
+		if(!reader.hasNextLine())
+			throw new TwoDAReadException("No contents after header in 2da file " + name + "!");
+		bugCompat_data = data = reader.nextLine();
+		matcher.reset(data);
+		if(matcher.find()){ // Non-blank default line
+			data = matcher.group();
+			if(data.trim().equalsIgnoreCase("DEFAULT:")){
+				if(matcher.find())
+					this.defaultValue = matcher.group();
+				else
+					throw new TwoDAReadException("Malformed default line in 2da file " + name + "!");
+			}
+			else
+				if(!bugCompat)
+					throw new TwoDAReadException("Malformed default line in 2da file " + name + "!");
+				else
+					bugCompat_MissingDefaultLine = true;
+		}
 
 		// Find the labels row
-		//String data = getNextNonEmptyRow(reader);
-		if(!reader.hasNextLine())
-			throw new TwoDAReadException("No labels found in 2da file!");
-		data = reader.nextLine();
+		if(bugCompat_MissingDefaultLine) // Handle cases where the labels are on the second line in the file instead of 3rd
+			data = bugCompat_data;
+		else {
+			if(!reader.hasNextLine())
+				throw new TwoDAReadException("No labels found in 2da file!");
+			data = reader.nextLine();
+		}
 
+		// Check for blank lines between the DEFAULT line and labels
+		if(data.trim().equals(""))
+			if(!bugCompat)
+				throw new TwoDAReadException("Labels not present on third line of the file!");
+			else
+				while(true) {
+					if(reader.hasNextLine()) {
+						data = reader.nextLine();
+						if(!data.trim().equals(""))
+							break;
+					} else
+						throw new TwoDAReadException("No data in 2da file!");
+				}
+		
 		// Parse the labels
 		String[] localrealLabels = data.trim().split("\\p{javaWhitespace}+");
 		String[] labels = new String[localrealLabels.length];

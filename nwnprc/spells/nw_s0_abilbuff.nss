@@ -17,7 +17,7 @@ void StripBuff(object oTarget, int nBuffSpellID, int nMassBuffSpellID)
     while (GetIsEffectValid(eEffect))
     {
         int nSpellID = GetEffectSpellId(eEffect);
-        if (nBuffSpellID == nSpellID || nMassBuffSpellID == nBuffSpellID)
+        if (nBuffSpellID == nSpellID || nMassBuffSpellID == nSpellID)
             RemoveEffect(oTarget, eEffect);
         eEffect = GetNextEffect(oTarget);
     }
@@ -96,7 +96,6 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                 nAltSpellID = SPELL_FOXS_CUNNING;
         }
     }
-    float fDelay;
     float fDuration = HoursToSeconds(nCasterLevel);
     if(nMetaMagic & METAMAGIC_EXTEND) fDuration *= 2;
     location lTarget;
@@ -110,18 +109,18 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         if((!bMass) || (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster)))
         {
             SPRaiseSpellCastAt(oTarget, FALSE);
-            if(bMass) fDelay = GetSpellEffectDelay(lTarget, oTarget);
+            //if(bMass) fDelay = GetSpellEffectDelay(lTarget, oTarget);
             int nStatMod = d4() + 1;
             if(nMetaMagic & METAMAGIC_MAXIMIZE) nStatMod = 5;
             if(nMetaMagic & METAMAGIC_EMPOWER) nStatMod += (nStatMod / 2);
             effect eBuff;
             if(bVision)
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(EffectUltravision(), eDur), oTarget, fDuration,TRUE,-1,nCasterLevel));
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(EffectUltravision(), eDur), oTarget, fDuration,TRUE,-1,nCasterLevel);
             else
             {
                 StripBuff(oTarget, nSpellID, nAltSpellID);
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(EffectAbilityIncrease(nAbility, nStatMod), eDur), oTarget, fDuration,TRUE,-1,nCasterLevel));
-                DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectLinkEffects(EffectAbilityIncrease(nAbility, nStatMod), eDur), oTarget, fDuration,TRUE,-1,nCasterLevel);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             }
         }
         if(!bMass) break;

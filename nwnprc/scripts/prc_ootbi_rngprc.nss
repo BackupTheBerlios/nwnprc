@@ -29,7 +29,7 @@ void main()
     
     // This weapon can only be used with a Longbow or Shortbow
     object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    if(GetBaseItemType(oItem) == BASE_ITEM_LONGBOW || GetBaseItemType(oItem) == BASE_ITEM_SHORTBOW)
+    if(!GetBaseItemType(oItem) == BASE_ITEM_LONGBOW && !GetBaseItemType(oItem) == BASE_ITEM_SHORTBOW)
     {
         FloatingTextStringOnCreature("You must have a bow equipped to use Ranged Precision", oPC, FALSE);
         return;

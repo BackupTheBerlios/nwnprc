@@ -1,0 +1,49 @@
+2DA V2.0
+
+       LABEL                 MODEL
+0      None                  ****
+1      Demon                 c_wingsdm
+2      Angel                 c_wingsan
+3      Bat                   c_wingbat
+4      "Dragon, Red"         c_wingdra
+5      Butterfly             c_wingbut
+6      Bird                  c_wingbird
+7      ****                  ****           
+8      ****                  ****           
+9      ****                  ****           
+10     ****                  ****           
+11     ****                  ****           
+12     ****                  ****           
+13     ****                  ****           
+14     ****                  ****           
+15     ****                  ****           
+16     ****                  ****           
+17     ****                  ****           
+18     ****                  ****           
+19     ****                  ****           
+20     ****                  ****           
+21     ****                  ****           
+22     ****                  ****           
+23     ****                  ****           
+24     ****                  ****           
+25     ****                  ****           
+26     ****                  ****           
+27     ****                  ****           
+28     ****                  ****           
+29     ****                  ****           
+30     "Demon, Erinyes"      zep_wingerin   
+31     "Bird, Red"           zep_wingsbird2 
+32     "Bird, Dark"          zep_wingsbird3 
+33     "Bird, Blue"          zep_wingsbird4 
+34     "Dragon, Black"       zep_wingdrablack
+35     "Dragon, Blue"        zep_wingdrablue
+36     "Dragon, Brass"       zep_wingdrabrass
+37     "Dragon, Bronze"      zep_wingdrabronz
+38     "Dragon, Copper"      zep_wingdracoppe
+39     "Dragon, Gold"        zep_wingdragold
+40     "Dragon, Green"       zep_wingdragreen
+41     "Dragon, Silver"      zep_wingdrasilve
+42     "Dragon, White"       zep_wingdrawhite
+43     ****                  ****
+44     ****                  ****
+45     ****                  ****

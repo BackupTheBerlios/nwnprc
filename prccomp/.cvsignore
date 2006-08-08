@@ -1,6 +1,9 @@
-prc_consortium.tlk
-prccep.tlk
-prccep.xml
-cep.tlk
-prccep2.hak
-prccep2dyncloak.hak
+prc.jar
+log.txt
+*.log
+*.hak
+*.tlk
+*.xml
+prccep2
+prccep153
+output

@@ -1,1 +1,0 @@
-if exist cep.tlk tlk2xml.exe cep.tlk cep.tlk.xml

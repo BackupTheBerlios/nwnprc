@@ -46,7 +46,13 @@ void main()
 	object oPC = OBJECT_SELF;
 	location lLoc = GetSpellTargetLocation();
 	int nCasterLvl = PRCGetCasterLevel();
+        int nMetaMagic = PRCGetMetaMagicFeat();
         float fDuration = RoundsToSeconds(nCasterLvl);
+        
+        if(nMetaMagic == METAMAGIC_EXTEND)
+        {
+		fDuration += fDuration;
+	}
         
 	if (!X2PreSpellCastCode()) return;
 	SPSetSchool(SPELL_SCHOOL_EVOCATION);

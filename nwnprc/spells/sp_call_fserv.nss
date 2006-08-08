@@ -35,6 +35,9 @@ Created:   6/14/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
+#include "prc_inc_template"
+
+void SummonLoop(int nCounter, location lLoc, object oPC);
 
 void main()
 {
@@ -56,29 +59,42 @@ void main()
 		nCounter += (nCounter/2);
 	}
 	
-	//Control limit
-	
-	
-	//Get original max henchmen
-	int nMax = GetMaxHenchmen();
-	
-	//Set new max henchmen high
-	SetMaxHenchmen(150);
-	
+	//Must be celestial
+	 if(GetHasTemplate(TEMPLATE_CELESTIAL) || 
+	    GetHasTemplate(TEMPLATE_HALF_CELESTIAL) ||
+	    (MyPRCGetRacialType(oPC) == RACIAL_TYPE_OUTSIDER && GetAlignmentGoodEvil(oPC) == ALIGNMENT_GOOD)
+	    )
+	 
+	 {
+		 //Get original max henchmen
+		 int nMax = GetMaxHenchmen();
+		 
+		 //Set new max henchmen high
+		 SetMaxHenchmen(150);
+		 
+		 SummonLoop(nCounter, lLoc, oPC);
+		 
+		 //Restore original max henchmen		 
+		 SetMaxHenchmen(nMax);
+	 }
+	 
+	 SPSetSchool();
+	 SPGoodShift(oPC);
+}
+
+void SummonLoop(int nCounter, location lLoc, object oPC)
+{
 	while(nCounter > 0)
 	{
 		//Create appropriate Ghoul henchman
-		object oArchon = CreateObject(OBJECT_TYPE_CREATURE, "nw_clantern", lLoc, TRUE); 
+		object oArchon = CreateObject(OBJECT_TYPE_CREATURE, "nw_clantern", lLoc, TRUE, "Archon" + IntToString(nCounter)); 
 		
 		//Make henchman
 		AddHenchman(oPC, oArchon);
 		
 		nCounter--;
+		SummonLoop(nCounter, lLoc, oPC);
 	}
-	
-	//Restore original max henchmen
-	SetMaxHenchmen(nMax);
-	
-	SPSetSchool();
-	SPGoodShift(oPC);
 }
+	
+	

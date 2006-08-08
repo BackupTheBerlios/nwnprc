@@ -44,6 +44,7 @@ void main()
 	int nSpell = GetSpellId();
 	float fDuration = (600.0f * nCasterLvl);
 	string sSword;
+	int nRandom = d3(1);
 	
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
@@ -56,17 +57,17 @@ void main()
 		//Summon blade
 		if(nSpell == SPELL_BONEBLADE_GREATSWORD)
 		{			
-			sSword = "WSwGs_X_071";
+			sSword = "WSwGs07" + IntToString(nRandom);
 		}
 		
 		if(nSpell == SPELL_BONEBLADE_LONGSWORD)
 		{
-			sSword = "WSwLs_X_15";
+			sSword = "WSwLs15" + IntToString(nRandom);
 		}
 		
 		if(nSpell == SPELL_BONEBLADE_SHORTSWORD)
 		{
-			sSword = "WSwSs_X_071";
+			sSword = "WSwSs071" + IntToString(nRandom);
 		}
 				
 		//Create sword	

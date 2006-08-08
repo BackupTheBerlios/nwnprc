@@ -41,6 +41,12 @@ void main()
 	object oPC = OBJECT_SELF;
 	int nCounter = PRCGetCasterLevel(oPC);
 	int nHP = GetCurrentHitPoints(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if (nMetaMagic == METAMAGIC_EXTEND)
+	{
+		nCounter += nCounter;
+	}
 	
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
 	

@@ -648,6 +648,11 @@ const int SPELL_STARMANTLE                          = 2643;
 const int SPELL_SWORD_OF_CONSCIENCE                 = 2644;
 const int SPELL_TOMB_OF_LIGHT                       = 2645;
 const int SPELL_EXALTED_RAIMENT                     = 2646;
+const int SPELL_DIVINE_SACRIFICE_2                  = 2494;
+const int SPELL_DIVINE_SACRIFICE_4                  = 2495;
+const int SPELL_DIVINE_SACRIFICE_6                  = 2496;
+const int SPELL_DIVINE_SACRIFICE_8                  = 2497;
+const int SPELL_DIVINE_SACRIFICE_10                 = 2498;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

@@ -653,6 +653,10 @@ const int SPELL_DIVINE_SACRIFICE_4                  = 2495;
 const int SPELL_DIVINE_SACRIFICE_6                  = 2496;
 const int SPELL_DIVINE_SACRIFICE_8                  = 2497;
 const int SPELL_DIVINE_SACRIFICE_10                 = 2498;
+const int SPELL_EXTRACT_BACCARAN                    = 2555;
+const int SPELL_EXTRACT_VODARE                      = 2556;
+const int SPELL_EXTRACT_SANNISH                     = 2557;
+const int SPELL_EXTRACT_MUSHROOM_POWDER             = 2558;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

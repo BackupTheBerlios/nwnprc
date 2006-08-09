@@ -478,6 +478,12 @@ const int VFX_IMP_SPELLF_FLAME =  821;
 const int VFX_IMP_SPELLF_HEAL  =  822;
 const int VFX_BEAM_SPELLFIRE   =  823;
 
+const int VFX_DUR_STONE3 = 511;
+const int VFX_DUR_STONE4 = 512;
+const int VFX_DUR_STONE5 = 513;
+const int VFX_DUR_AIR1   = 514;
+const int VFX_DUR_AIR2   = 515;
+
 //////////////////////////////////////////////////
 /* Soopaman's VFX from SMP (Granted to us now)  */
 //////////////////////////////////////////////////

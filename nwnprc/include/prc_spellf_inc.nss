@@ -298,17 +298,31 @@ int SpellfireDrainItem(object oPC, object oItem, int bCharged = TRUE, int bSingl
     {   //drain charged item
         if(bCharged)    //because big compound if statements are messy
         {
+            int nBase = GetBaseItemType(oItem);
+            int nExpend = GetPersistantLocalInt(oPC, "SpellfireLevelExpend");
+            int nStored = GetPersistantLocalInt(oPC, "SpellfireLevelStored");
+            int nCap = SpellfireMax(oPC) - nStored;
+            if((nBase == BASE_ITEM_POTIONS) ||
+                (nBase == BASE_ITEM_SCROLL) ||
+                (nBase == BASE_ITEM_BLANK_POTION) ||
+                (nBase == BASE_ITEM_BLANK_SCROLL)
+                )
+            {   //assume they only have the one castspell itemprop
+                int nStack = GetItemStackSize(oItem);
+                nExpend = min(min(nStack, nCap), nExpend); //capped by charges and capacity
+                if(nExpend == nStack)
+                    DestroyObject(oItem);
+                else
+                    SetItemStackSize(oItem, nStack - nExpend);  //modifies stack size as scrolls/potions are used up
+                AddSpellfireLevels(oPC, nExpend);   //adds 1 level/charge
+                return TRUE;
+            }
             int nCharges = GetItemCharges(oItem);
             if(nCharges)   //charged item
             {
-                int nExpend = GetPersistantLocalInt(oPC, "SpellfireLevelExpend");
-                if(nExpend > nCharges) nExpend = nCharges;  //no more charges
-                int nStored = GetPersistantLocalInt(oPC, "SpellfireLevelStored");
-                int nCap = SpellfireMax(oPC) - nStored;
-                if(nExpend > nCap) nExpend = nCap;  //can't absorb any more levels
-                AddSpellfireLevels(oPC, nExpend);   //adds 1 level/charge
+                nExpend = min(min(nCharges, nCap), nExpend); //capped by charges and capacity
                 SetItemCharges(oItem, nCharges - nExpend);  //will destroy item if all charges drained
-
+                AddSpellfireLevels(oPC, nExpend);   //adds 1 level/charge
                 return TRUE;
             }
             itemproperty ip = GetFirstItemProperty(oItem);
@@ -377,7 +391,18 @@ void SpellfireDrain(object oPC, object oTarget, int bCharged = TRUE, int bExempt
     if(nObjectType == OBJECT_TYPE_ITEM)
     {
         oItem = oTarget;
-        if(SpellfireDrainItem(oPC, oItem, bCharged))
+        int nBase = GetBaseItemType(oItem);
+        if(GetPRCSwitch(PRC_SPELLFIRE_DISALLOW_DRAIN_SCROLL_POTION) &&
+            ((nBase == BASE_ITEM_POTIONS) ||
+            (nBase == BASE_ITEM_SCROLL) ||
+            (nBase == BASE_ITEM_BLANK_POTION) ||
+            (nBase == BASE_ITEM_BLANK_SCROLL)
+            )
+            )
+        {
+            sMessage_oPC = "Draining charges from scrolls and potions is not allowed";
+        }
+        else if(SpellfireDrainItem(oPC, oItem, bCharged))
         {
             bFound = 1;
             sMessage_oPC = "You drained " + sName_oTarget;

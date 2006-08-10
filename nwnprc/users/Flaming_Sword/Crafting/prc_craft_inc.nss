@@ -347,7 +347,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
         //Setup
         for(i = 0; i < MaxListSize(sFile); i++)
         {
-            if(!GetPRCSwitch("PRC_CRAFT_PROP_" + sFile + "_" + IntToString(i)))
+            if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
         }
     }

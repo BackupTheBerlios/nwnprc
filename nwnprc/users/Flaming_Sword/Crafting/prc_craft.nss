@@ -794,7 +794,8 @@ void main()
                         //SetLocalInt(oPC, "Item_Name_Change", 1);
                         nStage = GetPrevItemPropStage(nStage, oPC, nPropList);
                         object oListener = SpawnListener("prc_craft_listen", GetLocation(oPC), "**", oPC, 30.0f, TRUE);
-                        DelayCommand(0.1, SetLocalObject(oListener, PRC_CRAFT_ITEM, oItem));
+                        SetLocalObject(oListener, PRC_CRAFT_ITEM, oItem);
+                        SetLocalInt(oListener, PRC_CRAFT_LISTEN, PRC_CRAFT_LISTEN_SETNAME);
                         SendMessageToPC(oPC, "Please state (use chat) the new name of the item within the next 30 seconds.");
                         ClearCurrentStage(oPC);
                     }

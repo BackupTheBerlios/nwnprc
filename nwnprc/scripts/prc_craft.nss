@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 1, 2006
+    Modified: Aug 7, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -40,6 +40,7 @@ const int STAGE_SELECT_COSTTABLEVALUE   = 4;
 const int STAGE_SELECT_PARAM1VALUE      = 5;
 const int STAGE_CONFIRM                 = 6;
 const int STAGE_CONFIRM_MAGIC           = 7;
+const int STAGE_APPEARANCE              = 8;
 const int STAGE_CRAFT                   = 101;
 const int STAGE_CRAFT_SELECT            = 102;
 const int STAGE_CRAFT_MASTERWORK        = 103;
@@ -59,6 +60,7 @@ const int CHOICE_BACK                   = 20003;
 const int CHOICE_CLEAR                  = 20004;
 const int CHOICE_CONFIRM                = 20005;
 const int CHOICE_SETNAME                = 20006;
+const int CHOICE_SETAPPEARANCE          = 20007;
 
 const int CHOICE_CRAFT                  = 20101;
 
@@ -101,6 +103,18 @@ const string PRC_CRAFT_SCRIPT_STATE     = "PRC_CRAFT_SCRIPT_STATE";
 
 const int PRC_CRAFT_STATE_NORMAL        = 1;
 const int PRC_CRAFT_STATE_MAGIC         = 2;
+
+const string PRC_CRAFT_LISTEN           = "PRC_CRAFT_LISTEN";
+
+const int PRC_CRAFT_LISTEN_SETNAME      = 1;
+/*
+const int PRC_CRAFT_LISTEN_SETNAME      = 1;
+const int PRC_CRAFT_LISTEN_SETNAME      = 1;
+const int PRC_CRAFT_LISTEN_SETNAME      = 1;
+const int PRC_CRAFT_LISTEN_SETNAME      = 1;
+const int PRC_CRAFT_LISTEN_SETNAME      = 1;
+const int PRC_CRAFT_LISTEN_SETNAME      = 1;
+*/
 
 const int SORT       = TRUE; // If the sorting takes too much CPU, set to FALSE
 const int DEBUG_LIST = FALSE;
@@ -294,6 +308,35 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
     DelayCommand(0.01, PopulateList(oPC, MaxValue, bSort, sTable, nCasterLevel, oItem, i + 1));
 }
 
+//use heartbeat
+void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine)
+{
+    IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
+    TakeGoldFromCreature(nCost, oPC, TRUE);
+    SetXP(oPC, GetXP(oPC) - nXP);
+    DecrementCraftingSpells(oPC, sFile, nLine);
+}
+
+void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine, int nRounds)
+{
+    if(GetBreakConcentrationCheck(oPC))
+    {
+        FloatingTextStringOnCreature("Crafting: Concentration lost!", oPC);
+        return;
+    }
+    if(nRounds == 0)
+    {
+        FloatingTextStringOnCreature("Crafting Complete!", oPC);
+        ApplyProperties(oPC, oItem, ip, nCost, nXP, sFile, nLine);
+    }
+    else
+    {
+        FloatingTextStringOnCreature("Crafting: " + IntToString(nRounds) + " round(s) remaining", oPC);
+        DelayCommand(6.0, CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, nLine, nRounds - 1));
+    }
+}
+
 void main()
 {
     object oTarget = GetSpellTargetObject();
@@ -399,7 +442,7 @@ void main()
                     }
                     else if(nState == PRC_CRAFT_STATE_MAGIC)
                     {
-                        int nCasterLevel = max(GetLevelByTypeArcane(), GetLevelByTypeDivine());//PRCGetCasterLevel(oPC);
+                        int nCasterLevel = max(GetLevelByTypeArcane(), GetLevelByTypeDivine());
                         int nBaseItem = GetBaseItemType(oItem);
                         sFile = GetCrafting2DA(oItem);
                         SetLocalString(oPC, PRC_CRAFT_FILE, sFile);
@@ -411,6 +454,7 @@ void main()
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ADDITIONAL, strTemp.additionalcost);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC, strTemp.epic);
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
+                        AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
                         if(sFile == "")
                         {
@@ -429,8 +473,6 @@ void main()
                         oNewItem = CopyObject(oItem, GetLocation(oChest), oChest, sTag);
                         SetIdentified(oNewItem, TRUE);  //just in case
                         SetLocalString(oPC, PRC_CRAFT_TAG, GetTag(oNewItem));
-
-                        //AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
 
                         SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
                         SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
@@ -654,6 +696,13 @@ void main()
                     MarkStageSetUp(nStage);
                     break;
                 }
+                case STAGE_APPEARANCE:
+                {
+                    SetHeader("");
+                    AddChoice(ActionString(""), 1, oPC);
+                    MarkStageSetUp(nStage);
+                    break;
+                }
 
                 /*
                 case <CONSTANT>:
@@ -664,6 +713,7 @@ void main()
                     break;
                 }
                 */
+
                 default:
                 {
                     if(DEBUG) DoDebug("Invalid Stage: " + IntToString(nStage));
@@ -741,9 +791,16 @@ void main()
                 {
                     if(nChoice == CHOICE_SETNAME)
                     {
-                        SetLocalInt(oPC, "Item_Name_Change", 1);
+                        //SetLocalInt(oPC, "Item_Name_Change", 1);
                         nStage = GetPrevItemPropStage(nStage, oPC, nPropList);
-                        SendMessageToPC(oPC, "Please state (use chat) the new name of the item.");
+                        object oListener = SpawnListener("prc_craft_listen", GetLocation(oPC), "**", oPC, 30.0f, TRUE);
+                        SetLocalObject(oListener, PRC_CRAFT_ITEM, oItem);
+                        SetLocalInt(oListener, PRC_CRAFT_LISTEN, PRC_CRAFT_LISTEN_SETNAME);
+                        SendMessageToPC(oPC, "Please state (use chat) the new name of the item within the next 30 seconds.");
+                        ClearCurrentStage(oPC);
+                    }
+                    else if(nChoice == CHOICE_SETAPPEARANCE)
+                    {
                     }
                     else
                     {
@@ -1009,11 +1066,15 @@ void main()
                         nCostTableValue += GetArmourCheckPenaltyReduction(oNewItem);
                     }
                     itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
+                    /*
                     IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
-                    TakeGoldFromCreature(GetLocalInt(oPC, PRC_CRAFT_COST), oPC, TRUE);
+                    TakeGoldFromCreature(nCost, oPC, TRUE);
                     SetXP(oPC, GetXP(oPC) - nXP);
                     DecrementCraftingSpells(oPC, sFile, nLine);
+                    */
+                    //DelayCommand(GetCraftingTime(nCost), ApplyProperties(oPC, oItem, ip, nCost, nXP, sFile, nLine));
+                    CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, nLine, GetCraftingTime(nCost));
                     AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }
                 break;

@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 1, 2006
+    Modified: Aug 7, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -25,6 +25,7 @@ int MaxListSize(string sTable);
 #include "prc_alterations"
 #include "inc_newspellbook"
 #include "prc_inc_spells"
+#include "prc_inc_listener"
 
 const int NUM_MAX_PROPERTIES            = 152;
 const int NUM_MAX_SUBTYPES              = 256;
@@ -64,6 +65,8 @@ const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
 
+const string PRC_CRAFT_HB               = "PRC_CRAFT_HB";
+
 struct itemvars
 {
     object item;
@@ -71,6 +74,23 @@ struct itemvars
     int additionalcost;
     int epic;
 };
+
+int GetCraftingTime(int nCost)
+{
+    int nTemp = nCost / 1000;
+    if(nCost % 1000) nTemp++;
+    float fDelay;
+    switch(GetPRCSwitch(PRC_CRAFTING_TIME_SCALE))
+    {
+        case 0: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp, default
+        case 1: fDelay = 0.0; break;                            //off, no delay
+        case 2: fDelay = RoundsToSeconds(nTemp); break;         //1 round/1000gp
+        case 3: fDelay = TurnsToSeconds(nTemp); break;          //1 turn/1000gp
+        case 4: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp
+        case 5: fDelay = 24 * HoursToSeconds(nTemp); break;     //1 day/1000gp
+    }
+    return FloatToInt(fDelay / 6);
+}
 
 object GetCraftChest()
 {
@@ -324,9 +344,12 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
         if(array_exists(oPC, PRC_CRAFT_ITEMPROP_ARRAY))
             array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         array_create(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
-    //Setup
+        //Setup
         for(i = 0; i < MaxListSize(sFile); i++)
-            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+        {
+            if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)))
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+        }
     }
     itemproperty ip = GetFirstItemProperty(oItem);
     if(DEBUG) DoDebug("GetItemVars: " + GetName(oItem) + ", before itemprop loop");
@@ -529,7 +552,7 @@ string GetCrafting2DA(object oItem)
         (nBase == BASE_ITEM_TOWERSHIELD))
         )
     {
-        if(GetItemBaseAC(oItem) == 0) return "craft_wonderous";
+        if(GetItemBaseAC(oItem) == 0) return "craft_wondrous";
         return "craft_armour";
     }
 
@@ -543,7 +566,7 @@ string GetCrafting2DA(object oItem)
         (nBase == BASE_ITEM_BRACER) ||
         (nBase == BASE_ITEM_CLOAK))
         )
-        return "craft_wonderous";
+        return "craft_wondrous";
 
     //restrict to castspell itemprops?
     /*
@@ -958,6 +981,12 @@ int GetPnPItemCost(struct itemvars strTemp)
     nEnhancement = GetEnhancementBaseCost(strTemp.item) * strTemp.enhancement * strTemp.enhancement;
     if(strTemp.epic) nEnhancement *= 10;
     nTemp += nEnhancement + strTemp.additionalcost;
+
+    int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+    if(nScale > 0)
+    {   //you're not getting away with negative values that easily :P
+        nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(nScale) / 100.0);
+    }
     if(nTemp < 1) nTemp = 1;
 
     return nTemp;
@@ -1106,6 +1135,10 @@ int MaxListSize(string sTable)
         return 113;
     if(sTable == "craft_armour")
         return 64;
+    if(sTable == "craft_weapon")
+        return 0;   //fix
+    if(sTable == "craft_wondrous")
+        return 0;   //fix
     if(sTable == "classes")
         return 256;
     if(sTable == "disease")

@@ -41,6 +41,7 @@ void main()
         if(GetObjectType(oKiller) == OBJECT_TYPE_TRIGGER)
             oKiller = GetTrapCreator(oKiller);
         if(oKiller != oDead
+            && !GetLocalInt(oDead, "PRC_PNP_XP_DEATH")
             && GetIsObjectValid(oKiller)
             && !GetIsFriend(oKiller, oDead)
             && (GetIsObjectValid(GetFirstFactionMember(oKiller, TRUE))
@@ -49,6 +50,7 @@ void main()
             GiveXPRewardToParty(oKiller, oDead);
             //bypass bioware XP system
             AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectResurrection(), oDead));
+            SetLocalInt(oDead, "PRC_PNP_XP_DEATH", 1);
             //AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(10000, DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_TWENTY), oDead));
             AssignCommand(oDead, ApplyEffectToObject(DURATION_TYPE_INSTANT, SupernaturalEffect(EffectDeath()), oDead));
         }
@@ -63,7 +65,7 @@ void main()
         LoseAllPowerPoints(oDead, TRUE);
 
     DoDied(OBJECT_SELF, TRUE);
-    
+
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oDead, EVENT_ONPLAYERDEATH);
 }

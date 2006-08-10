@@ -6,24 +6,24 @@
  * these switches and in addition some functions dealing with the
  * implementation of certain switches.
  */
- 
+
  /*
- 
+
  Creating your personal switch settings
  For singleplayer, you can create a 2da file and place it in the overide
  Then via the PRC Options switch you can read that 2da and it will
  use it to set switches for you.
  This will not work in multiplayer.
  An example is below. Copy and paste it into a plain text file saved
- as personal_switch.2da 
- 
- 
+ as personal_switch.2da
+
+
 2DA V2.0
- 
-    SwitchName                              SwitchType SwitchValue                             
-0   FOO                                     float      3.14159                                 
-1   BAR                                     int        12321                                   
-2   BAZ                                     string     "Go For The Eyes Boo, Go For The Eyes!"                          
+
+    SwitchName                              SwitchType SwitchValue
+0   FOO                                     float      3.14159
+1   BAR                                     int        12321
+2   BAZ                                     string     "Go For The Eyes Boo, Go For The Eyes!"
 3   PRC_PNP_TRUESEEING                      int        1
 4   PRC_TIMESTOP_LOCAL                      int        1
 5   PRC_TIMESTOP_NO_HOSTILE                 int        1
@@ -32,42 +32,42 @@
 8   PRC_PNP_TENSERS_TRANSFORMATION          int        1
 9   PRC_PNP_BLACK_BLADE_OF_DISASTER         int        1
 10  PRC_PNP_FIND_TRAPS                      int        1
-11  PRC_PNP_DARKNESS                        int        1     
-12  PRC_PNP_DARKNESS_35ED                   int        1     
-13  PRC_PNP_ANIMATE_DEAD                    int        1     
-14  PRC_35ED_WORD_OF_FAITH                  int        1     
-15  PRC_CREATE_UNDEAD_UNCONTROLLED          int        1     
-16  PRC_CREATE_UNDEAD_PERMANENT             int        1     
-17  PRC_SLEEP_NO_HD_CAP                     int        1     
-18  PRC_USE_NEW_IMBUE_ARROW                 int        1     
-19  PRC_ORC_WARLORD_COHORT                  int        1     
-20  PRC_LICH_ALTER_SELF_DISABLE             int        1     
-21  PRC_TRUE_NECROMANCER_ALTERNATE_VISUAL   int        1     
-22  PRC_THRALLHERD_LEADERSHIP               int        1     
-23  PRC_PNP_UNIMPINGED                      int        1       
-24  PRC_PNP_IMPENETRABILITY                 int        1       
-25  PRC_PNP_DULLBLADES                      int        1     
-26  PRC_PNP_CHAMPIONS_VALOR                 int        1     
-27  PRC_STAFF_CASTER_LEVEL                  int        1   
-28  PRC_PNP_ABILITY_DAMAGE_EFFECTS          int        1   
-29  PRC_PNP_REST_HEALING                    int        1   
-30  PRC_PNP_SOMATIC_COMPOMENTS              int        1   
-31  PRC_PNP_SOMATIC_ITEMS                   int        1   
-32  PRC_MULTISUMMON                         int        1   
-33  PRC_SUMMON_ROUND_PER_LEVEL              int        1   
-34  PRC_PNP_FAMILIAR_FEEDING                int        1   
-35  PRC_PNP_HOLY_AVENGER_IPROP              int        1   
-36  PRC_PNP_SLINGS                          int        1   
-37  PRC_PNP_RACIAL_SPEED                    int        1   
-38  PRC_PNP_ARMOR_SPEED                     int        1   
-39  PRC_REMOVE_PLAYER_SPEED                 int        1   
-40  PRC_BREW_POTION_CASTER_LEVEL            int        1   
-41  PRC_SCRIBE_SCROLL_CASTER_LEVEL          int        1   
-42  PRC_CRAFT_WAND_CASTER_LEVEL             int        1   
-43  PRC_CRAFTING_BASE_ITEMS                 int        1   
-44  PRC_XP_USE_SIMPLE_LA                    int        1   
-45  PRC_XP_USE_SIMPLE_RACIAL_HD             int        1   
- 
+11  PRC_PNP_DARKNESS                        int        1
+12  PRC_PNP_DARKNESS_35ED                   int        1
+13  PRC_PNP_ANIMATE_DEAD                    int        1
+14  PRC_35ED_WORD_OF_FAITH                  int        1
+15  PRC_CREATE_UNDEAD_UNCONTROLLED          int        1
+16  PRC_CREATE_UNDEAD_PERMANENT             int        1
+17  PRC_SLEEP_NO_HD_CAP                     int        1
+18  PRC_USE_NEW_IMBUE_ARROW                 int        1
+19  PRC_ORC_WARLORD_COHORT                  int        1
+20  PRC_LICH_ALTER_SELF_DISABLE             int        1
+21  PRC_TRUE_NECROMANCER_ALTERNATE_VISUAL   int        1
+22  PRC_THRALLHERD_LEADERSHIP               int        1
+23  PRC_PNP_UNIMPINGED                      int        1
+24  PRC_PNP_IMPENETRABILITY                 int        1
+25  PRC_PNP_DULLBLADES                      int        1
+26  PRC_PNP_CHAMPIONS_VALOR                 int        1
+27  PRC_STAFF_CASTER_LEVEL                  int        1
+28  PRC_PNP_ABILITY_DAMAGE_EFFECTS          int        1
+29  PRC_PNP_REST_HEALING                    int        1
+30  PRC_PNP_SOMATIC_COMPOMENTS              int        1
+31  PRC_PNP_SOMATIC_ITEMS                   int        1
+32  PRC_MULTISUMMON                         int        1
+33  PRC_SUMMON_ROUND_PER_LEVEL              int        1
+34  PRC_PNP_FAMILIAR_FEEDING                int        1
+35  PRC_PNP_HOLY_AVENGER_IPROP              int        1
+36  PRC_PNP_SLINGS                          int        1
+37  PRC_PNP_RACIAL_SPEED                    int        1
+38  PRC_PNP_ARMOR_SPEED                     int        1
+39  PRC_REMOVE_PLAYER_SPEED                 int        1
+40  PRC_BREW_POTION_CASTER_LEVEL            int        1
+41  PRC_SCRIBE_SCROLL_CASTER_LEVEL          int        1
+42  PRC_CRAFT_WAND_CASTER_LEVEL             int        1
+43  PRC_CRAFTING_BASE_ITEMS                 int        1
+44  PRC_XP_USE_SIMPLE_LA                    int        1
+45  PRC_XP_USE_SIMPLE_RACIAL_HD             int        1
+
  */
 
  /* This variable MUST be updated with every new version of the PRC!!! */
@@ -403,6 +403,12 @@ const string PRC_THRALLHERD_LEADERSHIP             = "PRC_THRALLHERD_LEADERSHIP"
  * spells/powers
  */
 const string PRC_SPELLFIRE_DISALLOW_CHARGE_SELF     = "PRC_SPELLFIRE_DISALLOW_CHARGE_SELF";
+
+/*
+ * Prevents Spellfire channelers from absorbing from
+ * scrolls/potions
+ */
+const string PRC_SPELLFIRE_DISALLOW_DRAIN_SCROLL_POTION = "PRC_SPELLFIRE_DISALLOW_DRAIN_SCROLL_POTION";
 
 /*
  * Disables the PRCs sorcerer newspelbook extension
@@ -1531,6 +1537,46 @@ const string X2_CI_CRAFTWAND_MAXLEVEL                = "X2_CI_CRAFTWAND_MAXLEVEL
  */
 const string X2_CI_CRAFTWAND_COSTMODIFIER            = "X2_CI_CRAFTWAND_COSTMODIFIER";
 
+/**
+ * Allows the use of arbitrary itemproperties and uses NWN item costs
+ *  ie. not PnP
+ */
+const string PRC_CRAFTING_ARBITRARY                 = "PRC_CRAFTING_ARBITRARY";
+
+/**
+ * Scales the item costs overall for the purposes of crafting
+ * defaults to 100
+ */
+const string PRC_CRAFTING_COST_SCALE                 = "PRC_CRAFTING_COST_SCALE";
+
+/**
+ * Sets crafting time per 1000gp in market price:
+ * 1 - off, no time required
+ * 2 - round
+ * 3 - turn
+ * 4 - hour
+ * 5 - day
+ * defaults to 1 hour/1000gp
+ */
+const string PRC_CRAFTING_TIME_SCALE                 = "PRC_CRAFTING_TIME_SCALE";
+
+/*
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_DRAIN_SCROLL_POTION);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_ARBITRARY);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_COST_SCALE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_TIME_SCALE);
+*/
+
+/**
+ * TO DISABLE SPECIFIC PROPERTIES:
+ *
+ * Set a switch with the name:
+ *
+ * PRC_CRAFT_DISABLE_<name of crafting 2da file>_<line number of property>
+ *
+ * where the 2da files are named craft_*
+ */
+
 /******************************************************************************\
 *                           Teleport System Switches                           *
 \******************************************************************************/
@@ -2606,6 +2652,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_SLINGS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BEBILITH_CLAWS_DESTROY);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_CHARGE_SELF);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_DRAIN_SCROLL_POTION);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SORC_DISALLOW_NEWSPELLBOOK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BARD_DISALLOW_NEWSPELLBOOK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO);
@@ -2677,6 +2724,9 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), X2_CI_SCRIBESCROLL_COSTMODIFIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), X2_CI_CRAFTWAND_MAXLEVEL);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), X2_CI_CRAFTWAND_COSTMODIFIER);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_ARBITRARY);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_COST_SCALE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_TIME_SCALE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TELEPORT_MAX_TARGET_LOCATIONS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_TELEPORTATION);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PW_TIME);

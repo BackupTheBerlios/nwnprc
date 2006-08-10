@@ -18,6 +18,8 @@ const int AOE_PER_DAMNDARK                      = 203;
 const int VFX_MOB_BRILLIANT_EMANATION           = 204;
 const int AOE_PER_BLNDGLORY                     = 183;
 const int VFX_AOE_RAIN_OF_BLACK_TULIPS          = 182;
+const int VFX_AOE_RAIN_OF_ROSES                 = 181;
+
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

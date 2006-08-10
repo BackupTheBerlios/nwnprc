@@ -114,7 +114,7 @@ void main()
         	if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD && GetCanSneakAttack(oTarget, oPC))
         	{
         		// Get the total damage it can do
-        		int nDam = GetSneakAttackDamage(GetTotalSneakAttackDice(oPC));
+        		int nDam = d6(GetTotalSneakAttackDice(oPC));
         		effect eDam = EffectDamage(nDam, DAMAGE_TYPE_POSITIVE);
         		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         	}

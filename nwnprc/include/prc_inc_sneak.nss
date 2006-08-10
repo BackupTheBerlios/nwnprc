@@ -164,6 +164,7 @@ int GetRogueSneak(object oPC)
    // The feat should do nothing, just show that you have the bonus.
    // -----------------------------------------------------------------------------------------
 
+   if (DEBUG) DoDebug("prc_inc_sneak: Rogue Sneak Dice: " + IntToString(iRogueSneak));
    return iRogueSneak;
 }
 
@@ -195,6 +196,7 @@ int GetBlackguardSneak(object oPC)
    if ((iClassLevel >= 5) && (iClassLevel < 8)) iBlackguardSneak += 2;
    if (iClassLevel >= 8) iBlackguardSneak += 3;
 
+   if (DEBUG) DoDebug("prc_inc_sneak: Blackguard Sneak Dice: " + IntToString(iBlackguardSneak));
    return iBlackguardSneak;
 }
 
@@ -214,6 +216,7 @@ int GetAssassinSneak(object oPC)
    iClassLevel = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oPC);
    if (iClassLevel >= 6) iAssassinSneakDice++;
 
+   if (DEBUG) DoDebug("prc_inc_sneak: Assassin Sneak Dice: " + IntToString(iAssassinSneakDice));
    return iAssassinSneakDice;
 }
 
@@ -232,6 +235,7 @@ int GetEpicFeatSneak(object oPC)
       }
    }
 
+   if (DEBUG) DoDebug("prc_inc_sneak: Epic Sneak Dice: " + IntToString(iEpicFeatDice));
    return iEpicFeatDice;
 }
 

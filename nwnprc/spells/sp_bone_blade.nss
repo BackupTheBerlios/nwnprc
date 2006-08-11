@@ -56,18 +56,57 @@ void main()
 	{
 		//Summon blade
 		if(nSpell == SPELL_BONEBLADE_GREATSWORD)
-		{			
-			sSword = "WSwGs07" + IntToString(nRandom);
+		{
+			if(nRandom == 1)
+			{
+				sSword = "wswgs071";
+			}
+			
+			if(nRandom == 2)
+			{
+				sSword = "wswgs072";
+			}
+			
+			else
+			{
+				sSword = "wswgs073";
+			}
 		}
 		
 		if(nSpell == SPELL_BONEBLADE_LONGSWORD)
 		{
-			sSword = "WSwLs15" + IntToString(nRandom);
+			if(nRandom == 1)
+			{
+				sSword = "wswls091";
+			}
+			
+			if(nRandom == 2)
+			{
+				sSword = "wswls092";
+			}
+			
+			else
+			{
+				sSword = "wswls093";
+			}
 		}
 		
 		if(nSpell == SPELL_BONEBLADE_SHORTSWORD)
 		{
-			sSword = "WSwSs071" + IntToString(nRandom);
+			if(nRandom == 1)
+			{
+				sSword = "wswss071";
+			}
+			
+			if(nRandom == 2)
+			{
+				sSword = "wswss072";
+			}
+			
+			else
+			{
+				sSword = "wswss073";
+			}
 		}
 				
 		//Create sword	

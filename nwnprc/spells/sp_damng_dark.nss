@@ -52,20 +52,26 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDuration = (nCasterLvl * 600.0f);
-	location lLoc = GetSpellTargetLocation();
+	location lLoc = GetLocation(oTarget);
 	
 	//Check for Soul Rot
 	if(GetPersistantLocalInt(oPC, "PRC_Has_Soul_Rot"))
 	{
-		//Check Extend metamagic feat.
-		if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+		//Make touch
+		int nTouch = PRCDoMeleeTouchAttack(oTarget);
+		
+		if(nTouch > 0)
 		{
-			fDuration = fDuration *2;    //Duration is +100%
+			//Check Extend metamagic feat.
+			if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+			{
+				fDuration = fDuration *2;    //Duration is +100%
+			}
+			
+			//Create an instance of the AOE Object using the Apply Effect function
+			
+			ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
 		}
-		
-		//Create an instance of the AOE Object using the Apply Effect function
-		
-		ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
 	}
 	
 	SPEvilShift(oPC);

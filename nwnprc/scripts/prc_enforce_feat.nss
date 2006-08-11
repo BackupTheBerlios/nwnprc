@@ -358,7 +358,63 @@ int FavouredSoul(object oPC = OBJECT_SELF)
 
      int nFS = GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oPC);
      int nEnergy;
+     int nFocus;
      int nCheck;
+     
+     if (nFS >= 3)
+     {
+	nFocus += GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,    oPC) + 
+	GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,       oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,             oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE,         oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,           oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_DART,             oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,        oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,       oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,            oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,        oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD,      oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD,          oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE,         oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW,   oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL,      oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_KAMA,             oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_KATANA,           oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI,            oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW,   oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL,      oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER,     oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE,       oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD,       oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW,          oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR,     oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER,           oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR,         oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE,           oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,      oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,         oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,         oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,           oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SLING,            oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,            oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,            oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,     oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC) 	      +
+    	GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC) 	      +
+	GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC) 	      ;
+								      
+     if (nFocus >= 1 && nFS >= 3) { nCheck = TRUE; }
+     else { nCheck = FALSE; }
+
+     if (nCheck != TRUE)
+     {
+
+          FloatingTextStringOnCreature("You must select a Weapon Focus Feat. Please reselect your feats.", oPC, FALSE);
+               return FALSE;
+     }
+
+     }
+     return TRUE;     
 
      if (nFS >= 5)
      {

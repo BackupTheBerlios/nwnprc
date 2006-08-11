@@ -71,34 +71,39 @@ void main()
     //Check Spell Resistance
     if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
     {
-        //loop the thorn giving              max 3 targets
+        //loop the thorn giving              max 3 targets         
         while(GetIsObjectValid(oTarget) && nTargetCount < 3)
         {
-            nDelay = d4(1);
-            fDuration = RoundsToSeconds(nDelay);
-            
-            //Immobilize target
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, fDuration);
-            
-            //Loop torture animation
-            ActionPlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDuration);
-                        
-            //Give thorns if spell if failed save
-            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))    
-            {
-                            DeathlessFrenzyCheck(oTarget);
-                DelayCommand(fDuration, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));             
-            }
-            
-            else
-            {
-                int nCount = nDelay;
-                DamageLoop(oTarget, nCount);
-            }           
-            
-            //Increment targets
-            nTargetCount++;             
-            
+	    
+	    //if target isn't a friend
+	    if(!GetIsFriend(oTarget, oPC))
+	    {
+		    nDelay = d4(1);
+		    fDuration = RoundsToSeconds(nDelay);
+		    
+		    //Immobilize target
+		    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, fDuration);
+		    
+		    //Loop torture animation
+		    ActionPlayAnimation(ANIMATION_LOOPING_SPASM, 1.0, fDuration);
+		    
+		    //Give thorns if spell if failed save
+		    if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_DEATH))    
+		    {
+			    DeathlessFrenzyCheck(oTarget);
+			    DelayCommand(fDuration, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget));             
+		    }
+		    
+		    else
+		    {
+			    int nCount = nDelay;
+			    DamageLoop(oTarget, nCount);
+		    }
+		    
+		    //Increment targets
+		    nTargetCount++;             
+	    }
+	    
             //Get next creature within 15 ft
             oTarget = GetNextObjectInShape(SHAPE_SPHERE, 7.5f, lTarget, FALSE, OBJECT_TYPE_CREATURE);
         }

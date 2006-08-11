@@ -9,6 +9,14 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	effect eTest = GetFirstEffect(oPC);
+	object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+	
+	//if spell has expired, remove event hook
+	if(!GetHasSpellEffect(SPELL_DIVINE_SACRIFICE, oPC))
+	{
+		RemoveEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_dvnsac");
+		return;
+	}	
 	
 	while (GetIsEffectValid(eTest))
 	{

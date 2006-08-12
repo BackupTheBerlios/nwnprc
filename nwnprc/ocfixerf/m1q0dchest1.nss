@@ -25,6 +25,7 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
         }
         else if(GetLevelByClass(CLASS_TYPE_BARD,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
+		GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0)
         {
             sItemTemplate = "NW_IT_MNECK024"; //amulet of will

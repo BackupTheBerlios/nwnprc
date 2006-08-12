@@ -12,6 +12,7 @@ if(DEBUG) DoDebug("m1q0bdendclg01 running");
                       GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_SAMURAI, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_CORRUPTER, GetPCSpeaker()) > 0 ||
+		      GetLevelByClass(CLASS_TYPE_TRUENAMER, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_ARCHER, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_BRAWLER, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_SOULKNIFE, GetPCSpeaker()) > 0 ||

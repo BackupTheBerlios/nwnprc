@@ -19,6 +19,7 @@ if(DEBUG) DoDebug("m0q0_archery_2 running");
                 if(GetLevelByClass(CLASS_TYPE_BARBARIAN,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_BARD,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_FIGHTER,oAttacker) > 0 ||
+                   GetLevelByClass(CLASS_TYPE_TRUENAMER,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_MONK,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_PALADIN,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oAttacker) > 0 ||

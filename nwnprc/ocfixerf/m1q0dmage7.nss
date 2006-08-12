@@ -41,6 +41,7 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
     }
     else if(GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
+	    GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
     {

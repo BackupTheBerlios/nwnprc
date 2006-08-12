@@ -1,9 +1,8 @@
 // Added compatibility for PRC base classes
 #include "prc_class_const"
-
+#include "inc_utility"
 
 void GiveItem(string sTemplate);
-#include "inc_utility"
 
 void main()
 {
@@ -22,6 +21,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         SetLocalInt(oPC,"NW_L_M1Q0Item4",TRUE);
         if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_FIGHTER,oPC) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_PSYWAR,oPC) > 0 ||
@@ -44,6 +44,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
             sItemTemplate1 = "NW_AARCL010"; //Breastplate
         }
         else if(GetLevelByClass(CLASS_TYPE_MONK,oPC) > 0 ||
+		GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_PSION,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WILDER,oPC) > 0)
         {

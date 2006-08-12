@@ -10,7 +10,8 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
     if(GetLocalInt(oPC,"NW_L_M1Q0Item2") == FALSE)
     {
         SetLocalInt(oPC,"NW_L_M1Q0Item2",TRUE);
-        if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0)
+        if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0)
         {
             sItemTemplate = "NW_IT_MRING024"; //boots of fortitude
         }
@@ -32,6 +33,7 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
             sItemTemplate = "NW_IT_MBOOTS010"; //boots of reflex
         }
         else if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
+		GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_FIGHTER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_MARSHAL,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC) > 0 ||

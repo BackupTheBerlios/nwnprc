@@ -11,6 +11,7 @@ if(DEBUG) DoDebug("m0q0_chest_05_7 running");
         if(GetLevelByClass(CLASS_TYPE_BARBARIAN,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_BARD,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_FIGHTER,oAttacker) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_SAMURAI,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_CORRUPTER,oAttacker) > 0 ||

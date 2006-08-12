@@ -1,24 +1,24 @@
 /*
     ----------------
-    Fortify Armour
+    Transmute Weapon
 
-    true_utr_fortify
+    true_utr_tranwep
     ----------------
 
-    5/8/06 by Stratovarius
+    12/8/06 by Stratovarius
 */ /** @file
 
-    Fortify Armour
+    Transmute Weapon
 
-    Level: Crafted Tool 1
+    Level: Crafted Tool 4
     Range: 30 feet
     Target: One Weapon (Or Possessor)
     Duration: 5 Rounds
     Spell Resistance: No
     Metautterances: Extend
 
-    Your words make a weapon shine with silver potency, capable of dealing more punishing blows than normal.
-    The target weapon becomes Keen.
+    Your words fundamentally alter the material of which a weapon is made, transforming it according to your whim.
+    The target weapon ignores all non-epic (x/56 or lower) DR.
 */
 
 #include "true_inc_trufunc"
@@ -58,11 +58,14 @@ void main()
 	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
         utter.bIgnoreSR = TRUE;
 
-        // Keen
-        utter.ipIProp1 = ItemPropertyKeen();
+        // +5/-5 to break DR
+        utter.ipIProp1 = ItemPropertyAttackBonus(5);
         IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        // eLink2 is used for Impact Effects (Damage)
-        utter.eLink2 = EffectVisualEffect(VFX_FNF_MAGIC_WEAPON);
+        // -5 here
+	utter.ipIProp2 = ItemPropertyAttackPenalty(5);
+        IPSafeAddItemProperty(oTarget, utter.ipIProp2, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);        
+        // eLink2 is used for Impact Effects (Vis)
+        utter.eLink2 = EffectVisualEffect(VFX_IMP_EPIC_GEM_SAPPHIRE_SMP);
 
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, GetItemPossessor(oTarget));

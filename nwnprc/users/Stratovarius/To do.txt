@@ -11,7 +11,7 @@ Bugs: Dwarf Domain, Strength Domain
 Truenaming:
 
 Truenamer
-40/71 Utterances
+48/71 Utterances
 4 Prestige Classes
 15+ feats
 
@@ -19,8 +19,9 @@ Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
 
 true_inc_truespeak: ClearLawLocalVars update numbers, add to prc_rest
 Make list of possible utterances.
-Make Truenamer Class: Class feats and TLK left.
-"Say My Name" - PRC Options Conversation + a switch for the TrueNamer, "Accept/Deny 'Say my Name and I am There'"
+Make Truenamer Class: Class feats and TLK left. Class abilities: Scry, Lore
+"Say My Name" - Easy Idea: Teleport to Party Member.
+              - Old Idea: PRC Options Conversation + a switch for the TrueNamer, "Accept/Deny 'Say my Name and I am There'"
 
 Truename PrCs:
 Bereft - 2das/TLK

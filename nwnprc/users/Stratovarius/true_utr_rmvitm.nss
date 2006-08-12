@@ -1,24 +1,24 @@
 /*
     ----------------
-    Fortify Armour
+    Remove Item
 
-    true_utr_fortify
+    true_utr_rmvitm
     ----------------
 
-    5/8/06 by Stratovarius
+    12/8/06 by Stratovarius
 */ /** @file
 
-    Fortify Armour
+    Remove Item
 
-    Level: Crafted Tool 1
+    Level: Crafted Tool 3
     Range: 30 feet
-    Target: One Weapon (Or Possessor)
-    Duration: 5 Rounds
-    Spell Resistance: No
+    Target: One Item (Or Possessor)
+    Duration: 1 Round
+    Spell Resistance: Yes
     Metautterances: Extend
 
-    Your words make a weapon shine with silver potency, capable of dealing more punishing blows than normal.
-    The target weapon becomes Keen.
+    Your words of Truespeech remove an item from your target's possession
+    The targeted item is removed from the target's possession for one round.
 */
 
 #include "true_inc_trufunc"
@@ -51,23 +51,24 @@ void main()
     if(utter.bCanUtter)
     {
         // This is done so Speak Unto the Masses can read it out of the structure
-        utter.fDur       = RoundsToSeconds(5);
+        utter.nPen       = GetTrueSpeakPenetration(oTrueSpeaker);
+        utter.fDur       = RoundsToSeconds(1);
         if(utter.bExtend) utter.fDur *= 2;
-        // This utterance applies only to friends
-	utter.bFriend = TRUE;
-	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
-        utter.bIgnoreSR = TRUE;
 
-        // Keen
-        utter.ipIProp1 = ItemPropertyKeen();
-        IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        // eLink2 is used for Impact Effects (Damage)
-        utter.eLink2 = EffectVisualEffect(VFX_FNF_MAGIC_WEAPON);
+	int nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
+	if (!nSRCheck)
+        {
+        	// Make sure they get the item back
+    		DelayCommand(fDur, CopyItem(oTarget, GetItemPossessor(oTarget), TRUE));
+    		// Then remove it
+    		DestroyObject(oTarget);
+    		utter.eLink2 = EffectVisualEffect(VFX_FNF_RUSTING_GRASP);
+    	}
 
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, GetItemPossessor(oTarget));
         
         // Mark for the Law of Sequence. This only happens if the utterance succeeds, which is why its down here.
-        DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
+        if (!nSRCheck) DoLawOfSequence(oTrueSpeaker, utter.nSpellId, utter.fDur);
     }// end if - Successful utterance
 }

@@ -174,6 +174,8 @@ const string PRC_PNP_DARKNESS_35ED                   = "PRC_PNP_DARKNESS_35ED";
 /**
  * Undead summons are permanent, but can only have 4HD/casterlevel in total
  * Does not enforce the requirement for a corpse
+ * Also applies to ghoul gauntlet which otherwise will create one ghoul
+ * if you dont already have a summon
  */
 const string PRC_PNP_ANIMATE_DEAD                    = "PRC_PNP_ANIMATE_DEAD";
 

@@ -168,4 +168,7 @@ void main()
     
     if(GetAbilityScore(oPC, ABILITY_INTELLIGENCE, TRUE) < 4)
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
+        
+    if(GetHasTemplate(TEMPLATE_FIENDISH))  
+        SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
 }

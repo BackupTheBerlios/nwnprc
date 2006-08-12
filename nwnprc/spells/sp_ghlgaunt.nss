@@ -66,42 +66,70 @@
 
 #include "prc_sp_func"
 
-void SummonGhoul(int nHD, object oTarget, object oPC, location lCorpse)
+void SummonGhoul(int nHD, object oTarget, object oPC, location lCorpse, int nCasterLevel)
 {
     string sGhoul;
+    int nGhoulHD;
     if(nHD > 14)//Ghoul King if 15 or better
+    {
         sGhoul = "X2_S_GHOUL_16";
+        nGhoulHD = 16;
+    }    
     else if(nHD > 11)//Ghoul Ravager if 12 - 14
+    {    
         sGhoul = "S_GHOULRAVAGER";
+        nGhoulHD = 9;
+    }    
     else if(nHD > 8)//Ghoul Lord if levels 9 - 11
+    {
         sGhoul = "S_GHOULLORD";
+        nGhoulHD = 6;
+    }
     else if(nHD > 5)//Ghast if levels 6 - 8
+    {
         sGhoul = "NW_S_GHAST";
+        nGhoulHD = 4;
+    }    
     else
+    {
         sGhoul = "NW_S_GHOUL";
+        nGhoulHD = 2;
+    }    
 
 
+    MultisummonPreSummon();
+    effect eSummon = EffectSummonCreature(sGhoul, VFX_FNF_SUMMON_UNDEAD);
     //Check for controlled undead and limit
-
-    //Get original max henchmen
-    int nMax = GetMaxHenchmen();
-    //Set new max henchmen high
-    SetMaxHenchmen(150);
-    //Create appropriate Ghoul henchman
-    object oGhoul = CreateObject(OBJECT_TYPE_CREATURE, sGhoul, lCorpse, TRUE);
-    //Make henchman
-    AddHenchman(oPC, oGhoul);
-    //Restore original max henchmen
-    SetMaxHenchmen(nMax);
+    if(GetPRCSwitch(PRC_PNP_ANIMATE_DEAD))
+    {
+        int nMaxHD = nCasterLevel*4;
+        //note GG says 2, animate dead is 4
+        //not sure what the "correct" solution is
+        //using 4x here otherwise casting order starts to matter
+        int nTotalHD = GetControlledUndeadTotalHD();
+        if((nTotalHD+nHD)<=nMaxHD)
+        {        
+            //eSummon = ExtraordinaryEffect(eSummon); //still goes away on rest, use supernatural instead
+            eSummon = SupernaturalEffect(eSummon);    
+            ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, PRCGetSpellTargetLocation());
+        }
+        else
+        {
+            FloatingTextStringOnCreature("You cannot create more undead at this time.", OBJECT_SELF);
+        }
+        FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD+nHD)+"HD out of "+IntToString(nMaxHD)+"HD.", OBJECT_SELF);    
+    }
+    else if(!GetIsObjectValid(GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC)))
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), HoursToSeconds(24));
 }
 
-void Gauntlet(object oTarget, object oPC, int nHD)
+void Gauntlet(object oTarget, object oPC, int nHD, int nCasterLevel)
 {
     //deal damage
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(3), DAMAGE_TYPE_MAGICAL), oTarget);
     //if target still has HP, run again on next round.  Avoids use of loop.
     if(GetCurrentHitPoints(oTarget) > 1)
-        DelayCommand(6.0f, Gauntlet(oTarget, oPC, nHD));
+        DelayCommand(6.0f, Gauntlet(oTarget, oPC, nHD, nCasterLevel));
     else
     {
         DeleteLocalInt(oTarget, "HAS_GAUNTLET");
@@ -110,7 +138,7 @@ void Gauntlet(object oTarget, object oPC, int nHD)
         //Apply VFX
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_DUR_SMOKE), lCorpse);
         //Summon a ghoul henchman
-        SummonGhoul(nHD, oTarget, oPC, lCorpse);
+        SummonGhoul(nHD, oTarget, oPC, lCorpse, nCasterLevel);
     }
 }
 
@@ -149,7 +177,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                 {
                     SetLocalInt(oTarget, "HAS_GAUNTLET", 1);
                     ApplyTouchAttackDamage(oCaster, oTarget, iAttackRoll, 0, DAMAGE_TYPE_NEGATIVE);
-                    Gauntlet(oTarget, oCaster, GetHitDice(oTarget));
+                    Gauntlet(oTarget, oCaster, GetHitDice(oTarget), nCasterLevel);
                 }
             }
         }

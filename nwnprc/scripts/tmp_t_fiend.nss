@@ -118,4 +118,7 @@ void main()
         //&& nRace != RACIAL_TYPE_OOZE
         )
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
+        
+    if(GetHasTemplate(TEMPLATE_HALF_FIEND))  
+        SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
 }

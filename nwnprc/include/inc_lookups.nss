@@ -254,7 +254,7 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
             array_set_int(oWP, sTag, array_get_size(oWP, sTag), i);
     }
     if(i<nMax)
-        DelayCommand(1.0, MakeSpellbookLevelLoop(nClass, i, nMax, sVarNameBase, sColumnName, sColumnValue, nLoopSize));
+        DelayCommand(0.0, MakeSpellbookLevelLoop(nClass, i, nMax, sVarNameBase, sColumnName, sColumnValue, nLoopSize));
 
 if(DEBUG) DoDebug("MakeSpellbookLevelLoop("
                  +IntToString(nClass)+", "
@@ -344,7 +344,7 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         }
     }
     if(i<nMax)
-        DelayCommand(1.0, MakeLookupLoop(nClass, i, nMax, sSourceColumn, sDestColumn, sVarNameBase, nLoopSize));
+        DelayCommand(0.0, MakeLookupLoop(nClass, i, nMax, sSourceColumn, sDestColumn, sVarNameBase, nLoopSize));
 
 if(DEBUG) DoDebug("MakeLookupLoop("
                  +IntToString(nClass)+", "
@@ -389,11 +389,11 @@ string GetPsionicFileName(int nClass)
     // Different naming structure
     if (nClass == CLASS_TYPE_TRUENAMER) 
     {
-    	sPsiFile = "cls_true_known";
+        sPsiFile = "cls_true_known";
     }
     else
     {
-    	sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+        sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     }
     
     return sPsiFile;
@@ -405,11 +405,11 @@ string GetPsiBookFileName(int nClass)
     // Different naming structure
     if (nClass == CLASS_TYPE_TRUENAMER) 
     {
-    	sPsiFile = "cls_true_utter";
+        sPsiFile = "cls_true_utter";
     }
     else
     {
-    	sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
+        sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     }
     return sPsiFile;
 }

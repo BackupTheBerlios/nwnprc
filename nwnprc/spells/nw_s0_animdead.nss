@@ -82,20 +82,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     if(GetPRCSwitch(PRC_PNP_ANIMATE_DEAD))
     {
         int i = 1;
-        int nTotalHD;
         int nMaxHD = nCasterLevel*4;
-        object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
-        while(GetIsObjectValid(oSummonTest))
-        {
-            if(GetResRef(oSummonTest)=="nw_s_zombtyrant"//"NW_S_ZOMBTYRANT"
-                || GetResRef(oSummonTest)=="nw_s_skelwarr"//"NW_S_SKELWARR"
-                || GetResRef(oSummonTest)=="nw_s_skelchief"//"NW_S_SKELCHIEF"
-                || GetHasSpellEffect(SPELL_ANIMATE_DEAD, oSummonTest))
-                nTotalHD += GetHitDice(oSummonTest);
-            if(DEBUG)FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), OBJECT_SELF);
-            i++;
-            oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
-        }
+        int nTotalHD = GetControlledUndeadTotalHD();
         if((nTotalHD+nHD)<=nMaxHD)
         {        
             //eSummon = ExtraordinaryEffect(eSummon); //still goes away on rest, use supernatural instead
@@ -104,7 +92,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         }
         else
         {
-            FloatingTextStringOnCreature("You cannot summon more undead at this time.", OBJECT_SELF);
+            FloatingTextStringOnCreature("You cannot create more undead at this time.", OBJECT_SELF);
         }
         FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD+nHD)+"HD out of "+IntToString(nMaxHD)+"HD.", OBJECT_SELF);
     }

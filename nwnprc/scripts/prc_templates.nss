@@ -21,6 +21,7 @@ void RunTemplateStuff(int nTemplate, object oPC = OBJECT_SELF)
 {   
     //run the maintenence script
     string sScript = Get2DACache("templates", "MaintainScript", nTemplate); 
+    DoDebug("Running template maintenence script "+sScript);
     ExecuteScript(sScript, oPC);
 }
 
@@ -48,7 +49,7 @@ void main()
     {
         //call evalPRCFeats again to repeat templates
         SetLocalInt(oPC, "TemplateTest", TRUE);
-        EvalPRCFeats(oPC);
         DelayCommand(1.0, DeleteLocalInt(oPC, "TemplateTest"));
+        EvalPRCFeats(oPC);
     }
 }

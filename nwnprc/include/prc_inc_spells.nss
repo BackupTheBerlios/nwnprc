@@ -186,7 +186,17 @@ int GetHasMettle(object oTarget, int nSavingThrow);
  *the persistant local int "IS_INCORPOREAL" or appearance.
  */
 
+
+// Test for incorporeallity of the target
+// useful for targetting loops when incorporeal creatures
+// wouldnt be affected
 int GetIsIncorporeal(object oTarget);
+
+
+// Gets the total number of HD of controlled undead
+// i.e from Animate Dead, Ghoul Gauntlet or similar
+// Dominated undead from Turn Undead do not count
+int GetControlledUndeadTotalHD(object oPC = OBJECT_SELF);
 
 // -----------------
 // BEGIN SPELLSWORD
@@ -1249,13 +1259,13 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
     // This ability removes evasion from the target
     if (GetLocalInt(oTarget, "TrueConfoundingResistance"))
     {
-    	// return the damage cut in half
-    	if (PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, nSaveType, oSaveVersus))
-    	{
-    		return nDamage / 2;
-    	}
-    	
-    	return nDamage;
+        // return the damage cut in half
+        if (PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, nSaveType, oSaveVersus))
+        {
+            return nDamage / 2;
+        }
+        
+        return nDamage;
     }
 
     // Do save
@@ -1660,7 +1670,7 @@ int PRCGetMetaMagicFeat()
     // Magical Contraction, Truenaming Utterance
     if (GetLocalInt(OBJECT_SELF, "TrueMagicalContraction"))
     {
-    	nFeat |= METAMAGIC_EXTEND;
+        nFeat |= METAMAGIC_EXTEND;
     }
 
     if(GetIsObjectValid(GetSpellCastItem()))
@@ -2016,6 +2026,32 @@ int GetIsEthereal(object oTarget)
 
     //Return value
     return bEthereal;
+}
+
+
+int GetControlledUndeadTotalHD(object oPC = OBJECT_SELF)
+{
+    int nTotalHD;
+    int i = 1;
+    object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    while(GetIsObjectValid(oSummonTest))
+    {
+        if(GetResRef(oSummonTest)=="nw_s_zombtyrant"//"NW_S_ZOMBTYRANT"
+            || GetResRef(oSummonTest)=="nw_s_skelwarr"//"NW_S_SKELWARR"
+            || GetResRef(oSummonTest)=="nw_s_skelchief"//"NW_S_SKELCHIEF"
+            || GetResRef(oSummonTest)=="X2_S_GHOUL_16"//"X2_S_GHOUL_16"
+            || GetResRef(oSummonTest)=="S_GHOULRAVAGER"//"S_GHOULRAVAGER"
+            || GetResRef(oSummonTest)=="S_GHOULLORD"//"S_GHOULLORD"
+            || GetResRef(oSummonTest)=="NW_S_GHAST"//"NW_S_GHAST"
+            || GetResRef(oSummonTest)=="NW_S_GHOUL"//"NW_S_GHOUL"
+            )
+            nTotalHD += GetHitDice(oSummonTest);
+        if(DEBUG)FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), oPC);
+        if(DEBUG)DoDebug("GetHasSpellEffect(SPELL_ANIMATE_DEAD, oSummonTest) = "+IntToString(GetHasSpellEffect(SPELL_ANIMATE_DEAD, oSummonTest)));
+        i++;
+        oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    }
+    return nTotalHD;
 }
 
 // returns if a character should be using the newspellbook when casting

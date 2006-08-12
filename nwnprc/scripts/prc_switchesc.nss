@@ -56,6 +56,7 @@ const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;
 /* Aid functions                                */
 //////////////////////////////////////////////////
 void AddCohortRaces(int nMin, int nMax, object oPC);
+void AddTemplates(int nMin, int nMax, object oPC);
 
 void AddCohortRaces(int nMin, int nMax, object oPC)
 {
@@ -78,6 +79,32 @@ void AddCohortRaces(int nMin, int nMax, object oPC)
                 AddChoice(sName, i, oPC);
         }
     }
+}
+
+void AddTemplates(int nMin, int nMax, object oPC)
+{
+    int i;
+    string sName;
+    for(i=nMin;i<nMin+15;i++)
+    {
+        string sName;
+        int nNameID = StringToInt(Get2DACache("templates", "Name", i));
+        if(nNameID != 0)
+            sName = GetStringByStrRef(nNameID);
+        else
+            sName = Get2DACache("templates", "Label", i);
+        //check type
+        //inherited templates can only be taken with 1 HD
+        if(((StringToInt(Get2DACache("templates", "Type", i)) & 1) 
+                && GetHitDice(oPC) > 1)
+            || !ApplyTemplateToObject(i, oPC, FALSE))
+        {
+            sName = "";
+        }
+        else
+            AddChoice(sName, i);
+    }
+    DelayCommand(0.01, AddTemplates(i, nMax, oPC));
 }
 
 void main()
@@ -130,8 +157,7 @@ void main()
                     AddChoice("Manage cohorts.", 7);
                 if(GetPrimaryNaturalWeaponCount(oPC))
                     AddChoice("Select primary natural weapon.", 8);
-                //reenble this for 3.1ab1    
-                //AddChoice("Gain a template.", 9);
+                AddChoice("Gain a template.", 9);
 
 
                 MarkStageSetUp(nStage, oPC);
@@ -536,27 +562,8 @@ void main()
             {
                 string sHeader = "Select a template to gain:";
                 SetHeader(sHeader);
-                int i;
-                for(i=0;i<150;i++)
-                {
-                    string sName;
-                    int nNameID = StringToInt(Get2DACache("templates", "Name", i));
-                    if(nNameID != 0)
-                        sName = GetStringByStrRef(nNameID);
-                    else
-                        sName = Get2DACache("templates", "Label", i);
-                    //check type
-                    //inherited templates can only be taken with 1 HD
-                    if((StringToInt(Get2DACache("templates", "Type", i)) & 1)
-                        || !ApplyTemplateToObject(i, oPC, FALSE))
-                    {
-                        if(GetHitDice(oPC) > 1)
-                            sName = "";
-                    }
-                    if(sName != "")
-                        AddChoice(sName, i);
-                }
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
+                AddTemplates(0, 170, oPC);
 
                 MarkStageSetUp(nStage, oPC);
             }

@@ -159,8 +159,11 @@ void main()
         //start the ConvoCC conversation
         DelayCommand(10.0, StartDynamicConversation("prc_ccc", oPC, FALSE, FALSE, TRUE));
         //DISABLE FOR DEBUGGING
-        SetCutsceneMode(oPC, TRUE);
-        SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
+        if (!DEBUG)
+        {
+            SetCutsceneMode(oPC, TRUE);
+            SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
+        }
         SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
     }
     else

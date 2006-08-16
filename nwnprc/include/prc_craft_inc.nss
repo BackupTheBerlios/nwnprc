@@ -65,8 +65,6 @@ const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
 
-const string PRC_CRAFT_HB               = "PRC_CRAFT_HB";
-
 struct itemvars
 {
     object item;

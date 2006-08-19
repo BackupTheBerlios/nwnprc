@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 7, 2006
+    Modified: Aug 20, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -321,7 +321,11 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
 //use heartbeat
 void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine)
 {
-    IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    if(nLine == -1)
+        IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    else
+    {
+    }
     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
     TakeGoldFromCreature(nCost, oPC, TRUE);
     SetXP(oPC, GetXP(oPC) - nXP);
@@ -515,6 +519,7 @@ void main()
                     SetCustomToken(DYNCONV_TOKEN_PREV, ActionString("Previous"));
                     break;
                 }
+                /*
                 case STAGE_SELECT_ITEM:
                 {
                     SetHeader("Select an equipped item to forge.");
@@ -549,6 +554,7 @@ void main()
                     MarkStageSetUp(nStage);
                     break;
                 }
+                */
                 case STAGE_SELECT_SUBTYPE:
                 {
                     SetHeader("Select a subtype.");
@@ -587,6 +593,7 @@ void main()
                     if(nTemp2 < 1) nTemp2 = 1;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nTemp2);
+                    /*
                     sTemp = InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "GameStrRef", nType))));
                     if(sSubtype != "")
                         sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sSubtype, "Name", nSubTypeValue))));
@@ -594,7 +601,9 @@ void main()
                         sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sCostTable, "Name", nCostTableValue))));
                     if(sParam1 != "")
                         sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sParam1, "Name", nParam1Value))));
-                    sTemp += "\n\nCost: " + IntToString(nTemp);
+                    */
+                    sTemp = GetItemPropertyString(ip);
+                    sTemp += "\nCost: " + IntToString(nTemp);
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     int nHD = GetHitDice(oPC);
@@ -686,13 +695,7 @@ void main()
                     strTempOld.enhancement = nEnhancement;
                     strTempOld.additionalcost = nAdditional;
                     strTempOld.epic = nEpic;
-                    struct itemvars strTempNew = GetItemVars(oPC, oNewItem, sFile);//strTempOld;//
-                    /*
-                    strTempNew.item = oNewItem;
-                    nEnhancement = StringToInt(Get2DACache(sFile, "Enhancement", nLine));
-                    strTempNew.enhancement += nEnhancement;
-                    strTempNew.additionalcost += StringToInt(Get2DACache(sFile, "AdditionalCost", nLine));
-                    */
+                    struct itemvars strTempNew = GetItemVars(oPC, oNewItem, sFile);
                     if(nEnhancement > 5 || strTempNew.enhancement > 10) strTempNew.epic = TRUE;
                     int nCostOld = GetPnPItemCost(strTempOld);
                     int nCostNew = GetPnPItemCost(strTempNew);
@@ -823,7 +826,6 @@ void main()
                 {
                     if(nChoice == CHOICE_SETNAME)
                     {
-                        //SetLocalInt(oPC, "Item_Name_Change", 1);
                         nStage = GetPrevItemPropStage(nStage, oPC, nPropList);
                         object oListener = SpawnListener("prc_craft_listen", GetLocation(oPC), "**", oPC, 30.0f, TRUE);
                         SetLocalObject(oListener, PRC_CRAFT_ITEM, oItem);
@@ -836,32 +838,22 @@ void main()
                     }
                     else
                     {
-                        int bArb = GetPRCSwitch(PRC_CRAFTING_ARBITRARY);
-                        if(bArb)
+                        if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
                         {
                             nType = nChoice;
-                        }
-                        else
-                        {
-                            SetLocalInt(oPC, PRC_CRAFT_LINE, nChoice);
-                            nType = StringToInt(Get2DACache(sFile, "Type", nChoice));
-                        }
-                        SetLocalInt(oPC, PRC_CRAFT_TYPE, nType);
-                        sSubtype = Get2DACache("itempropdef", "SubTypeResRef", nType);
-                        SetLocalString(oPC, PRC_CRAFT_SUBTYPE, sSubtype);
-                        sCostTable = Get2DACache("itempropdef", "CostTableResRef", nType);
-                        if(sCostTable == "0")   //IPRP_BASE1 is blank
-                            sCostTable = "";
-                        if(sCostTable != "")
-                            sCostTable = Get2DACache("iprp_costtable", "Name", StringToInt(sCostTable));
-                        SetLocalString(oPC, PRC_CRAFT_COSTTABLE, sCostTable);
-                        sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
-                        if(sParam1 != "")
-                            sParam1 = Get2DACache("iprp_paramtable", "TableResRef", StringToInt(sParam1));
-                        SetLocalString(oPC, PRC_CRAFT_PARAM1, sParam1);
-                        if(bArb)
-                        {
-
+                            SetLocalInt(oPC, PRC_CRAFT_TYPE, nType);
+                            sSubtype = Get2DACache("itempropdef", "SubTypeResRef", nType);
+                            SetLocalString(oPC, PRC_CRAFT_SUBTYPE, sSubtype);
+                            sCostTable = Get2DACache("itempropdef", "CostTableResRef", nType);
+                            if(sCostTable == "0")   //IPRP_BASE1 is blank
+                                sCostTable = "";
+                            if(sCostTable != "")
+                                sCostTable = Get2DACache("iprp_costtable", "Name", StringToInt(sCostTable));
+                            SetLocalString(oPC, PRC_CRAFT_COSTTABLE, sCostTable);
+                            sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
+                            if(sParam1 != "")
+                                sParam1 = Get2DACache("iprp_paramtable", "TableResRef", StringToInt(sParam1));
+                            SetLocalString(oPC, PRC_CRAFT_PARAM1, sParam1);
                             nPropList = 0;
                             if(sSubtype != "")
                                 nPropList |= HAS_SUBTYPE;
@@ -875,9 +867,8 @@ void main()
                         }
                         else
                         {
-
-
-
+                            SetLocalInt(oPC, PRC_CRAFT_LINE, nChoice);
+                            //nType = StringToInt(Get2DACache(sFile, "Type", nChoice));
                             nStage = STAGE_CONFIRM_MAGIC;
                         }
                     }
@@ -885,6 +876,7 @@ void main()
                 MarkStageNotSetUp(nStage, oPC);
                 break;
             }
+            /*
             case STAGE_SELECT_ITEM:
             {
                 if(nChoice == CHOICE_BACK)
@@ -954,6 +946,7 @@ void main()
                 }
                 break;
             }
+            */
             case STAGE_SELECT_SUBTYPE:
             {
                 if(nChoice == CHOICE_BACK)
@@ -1014,7 +1007,7 @@ void main()
                     SetLocalInt(oPC, PRC_CRAFT_HB, 1);
                     int nDelay = GetCraftingTime(nCost);
                     if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nDelay /= 2;
-                    CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, nLine, nDelay);
+                    CraftingHB(oPC, oItem, ip, nCost, nXP, sFile, -1, nDelay);
                     AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                 }
                 break;

@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 7, 2006
+    Modified: Aug 20, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -327,6 +327,8 @@ void DisallowType(object oItem, string sFile, itemproperty ip)
     }
 }
 
+
+
 //Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
 struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterLevel = 0, int bEpic = 0, int bSet = 0)
 {
@@ -402,7 +404,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
             array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
-
+    string sTemp;
     //Checking available spells, epic flag, caster level
     for(i = 0; i < MaxListSize(sFile); i++)
     {   //will skip over properties already disallowed
@@ -430,7 +432,30 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
                         )
                     {
                         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
                     }
+                }
+                sTemp = Get2DACache(sFile, "Feat", i);
+                if(sTemp != "" && !GetHasFeat(StringToInt(sTemp)))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
+                }
+                sTemp = Get2DACache(sFile, "AlignGE", i);
+                if((sTemp == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
+                    (sTemp == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
+                    (sTemp == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
+                }
+                sTemp = Get2DACache(sFile, "AlignLC", i);
+                if((sTemp == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
+                    (sTemp == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
+                    (sTemp == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
                 }
             }
         }
@@ -440,6 +465,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
 
 void DecrementCraftingSpells(object oPC, string sFile, int nLine)
 {
+    if(nLine == -1) return;
     int nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", nLine));
     if(nSpellPattern)
     {
@@ -1073,6 +1099,72 @@ string InsertSpaceAfterString(string sString)
     else return "";
 }
 
+string GetItemPropertyString(itemproperty ip)
+{
+    int nType = GetItemPropertyType(ip);
+    int nSubType = GetItemPropertySubType(ip);
+    int nCostTable = GetItemPropertyCostTable(ip);
+    int nCostTableValue = GetItemPropertyCostTableValue(ip);
+    int nParam1 = GetItemPropertyParam1(ip);
+    int nParam1Value = GetItemPropertyParam1Value(ip);
+    string sDesc = InsertSpaceAfterString(
+                GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "GameStrRef", nType)))
+                );
+    string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
+    sSubType = Get2DACache(sSubType, "Name", nSubType);
+    if(sSubType != "")
+        sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sSubType)));
+    string sCostTable = Get2DACache("itempropdef", "CostTableResRef", nType);
+    sCostTable = Get2DACache("iprp_costtable", "Name", StringToInt(sCostTable));
+    sCostTable = Get2DACache(sCostTable, "Name", nCostTableValue);
+    if(sCostTable != "")
+        sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sCostTable)));
+    string sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
+    sParam1 = Get2DACache("iprp_paramtable", "Name", StringToInt(sParam1));
+    sParam1 = Get2DACache(sParam1, "Name", nParam1Value);
+    if(sParam1 != "")
+        sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sParam1)));
+    sDesc += "\n";
+
+    return sDesc;
+}
+
+//Supports up to 3 itemprops at a time
+void AddPropertyToItem(object oItem, string sFile, int nLine)
+{
+    string sType = Get2DACache(sFile, "Type1", nLine);
+    int nType = StringToInt(sType);
+    int nSubTypeValue = StringToInt(Get2DACache(sFile, "SubType1", nLine));
+    int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue1", nLine));
+    int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value1", nLine));
+    itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
+    IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    sType = Get2DACache(sFile, "Type2", nLine);
+    if(sType == "")
+        return;
+    else
+    {
+        nType = StringToInt(sType);
+        nSubTypeValue = StringToInt(Get2DACache(sFile, "SubType2", nLine));
+        nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue2", nLine));
+        nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value2", nLine));
+        ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
+        IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    }
+    sType = Get2DACache(sFile, "Type3", nLine);
+    if(sType == "")
+        return;
+    else
+    {
+        nType = StringToInt(sType);
+        nSubTypeValue = StringToInt(Get2DACache(sFile, "SubType3", nLine));
+        nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue3", nLine));
+        nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value3", nLine));
+        ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
+        IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    }
+}
+
 //Returns a string describing the item
 string ItemStats(object oItem)
 {
@@ -1085,16 +1177,19 @@ string ItemStats(object oItem)
                     "\n\n";
 
     itemproperty ip = GetFirstItemProperty(oItem);
+    /*
     int nType;
     int nSubType;
     int nCostTable;
     int nCostTableValue;
     int nParam1;
     int nParam1Value;
+    */
     while(GetIsItemPropertyValid(ip))
     {
         if(GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT)
         {
+            /*
             int nType = GetItemPropertyType(ip);
             int nSubType = GetItemPropertySubType(ip);
             int nCostTable = GetItemPropertyCostTable(ip);
@@ -1119,6 +1214,8 @@ string ItemStats(object oItem)
             if(sParam13 != "")
                 sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sParam13)));
             sDesc += "\n";
+            */
+            sDesc += GetItemPropertyString(ip);
         }
         ip = GetNextItemProperty(oItem);
     }

@@ -82,10 +82,12 @@ public class Main {
 		else if(toCall.equals("scrmrchgen")){
 			prc.utils.ScrollMerchantGen.main(paramsToPass);
 		}
+		else if(toCall.equals("npcevol")){
+			prc.utils.NPCEvolve.main(paramsToPass);
+		}
 		else if(toCall.equals("2damerge")){
 			prc.utils.Data2daMerge.main(paramsToPass);
 		}
-
 		else{
 			System.out.println("Unknown class: " + toCall);
 			readMe();
@@ -123,6 +125,7 @@ public class Main {
 						   "         prec2dagen     - Creates a 2da file that lists spells/feat.2da rows\n" +
 						   "                          that should be precached\n" +
 						   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
+						   "         npcevol        - Alters packages based on logfile scores\n" +
 						   "         2damerge       - Merges 2 directories of 2da files, and outputs to a third\n" +
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+

@@ -1517,11 +1517,11 @@ const int FEAT_CRAFT_ROD                 = 2927;
 const int FEAT_CRAFT_STAFF               = 2928;
 const int FEAT_FORGE_RING                = 2929;
 const int FEAT_CRAFT_CONSTRUCT           = 2920;
-const int FEAT_CRAFT_ITEM                = 2919;//combined with read recepie, was 2899 
-const int FEAT_CRAFT_EPIC_WONDROUS_ITEM  = 3488; 	 
-const int FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR = 3489; 	 
-const int FEAT_CRAFT_EPIC_ROD            = 3490; 	 
-const int FEAT_CRAFT_EPIC_STAFF          = 3491; 	 
+const int FEAT_CRAFT_ITEM                = 2919;//combined with read recepie, was 2899
+const int FEAT_CRAFT_EPIC_WONDROUS_ITEM  = 3488;
+const int FEAT_CRAFT_EPIC_MAGIC_ARMS_ARMOR = 3489;
+const int FEAT_CRAFT_EPIC_ROD            = 3490;
+const int FEAT_CRAFT_EPIC_STAFF          = 3491;
 const int FEAT_FORGE_EPIC_RING           = 3528;
 
 // Exalted Companion
@@ -2105,16 +2105,16 @@ const int FEAT_CWSM_MASS_STAREDOWN            = 2357;
 const int FEAT_CWSM_IMPROVED_STAREDOWN        = 2358;
 const int FEAT_CWSM_FRIGHTFUL_PRESENCE        = 2359;
 
- // Virtuoso Feats 	 
- const int FEAT_VIRTUOSO_SUSTAINING_SONG       = 4168; 	 
- const int FEAT_VIRTUOSO_CALUMNY               = 4169; 	 
- const int FEAT_VIRTUOSO_JARRING_SONG          = 4170; 	 
- const int FEAT_VIRTUOSO_SHARP_NOTE            = 4171; 	 
- const int FEAT_VIRTUOSO_MINDBENDING_MELODY    = 4172; 	 
- const int FEAT_VIRTUOSO_GREATER_CALUMNY       = 4173; 	 
- const int FEAT_VIRTUOSO_MAGICAL_MELODY        = 4174; 	 
- const int FEAT_VIRTUOSO_SONG_OF_FURY          = 4175; 	 
- const int FEAT_VIRTUOSO_REVEALING_MELODY      = 4176; 	 
+ // Virtuoso Feats
+ const int FEAT_VIRTUOSO_SUSTAINING_SONG       = 4168;
+ const int FEAT_VIRTUOSO_CALUMNY               = 4169;
+ const int FEAT_VIRTUOSO_JARRING_SONG          = 4170;
+ const int FEAT_VIRTUOSO_SHARP_NOTE            = 4171;
+ const int FEAT_VIRTUOSO_MINDBENDING_MELODY    = 4172;
+ const int FEAT_VIRTUOSO_GREATER_CALUMNY       = 4173;
+ const int FEAT_VIRTUOSO_MAGICAL_MELODY        = 4174;
+ const int FEAT_VIRTUOSO_SONG_OF_FURY          = 4175;
+ const int FEAT_VIRTUOSO_REVEALING_MELODY      = 4176;
  const int FEAT_VIRTUOSO_PERFORMANCE           = 4177;
 
 // Status markers
@@ -2125,38 +2125,38 @@ const int FEAT_ETHEREAL                       = 4167;
 // Template Feats
 const int FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL  = 22601;
 const int FEAT_TEMPLATE_CELESTIAL_MARKER      = 22602;
-const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603; 	 
- const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22604; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_SMITE_EVIL   = 22605; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_PROTECTION   = 22606; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_BLESS        = 22607; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_AID          = 22608; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_DETECT       = 22609; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_CURE_SERIOUS = 22610; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_NEUTRALIZE_POISON = 22611; 	 
- //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22612; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_REMOVE_DISEAE= 22613; 	 
- //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22614; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_HOLY_WORD    = 22615; 	 
- //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22616; 	 
- //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22617; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM   = 22618; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX    = 22619; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION = 22620; 	 
- //const int FEAT_TEMPLATE_HALF_CELESTIAL_DAYLIGHT     = 22621; 	 
- const int FEAT_TEMPLATE_HALF_CELESTIAL_MARKER       = 22622; 	 
-  	 
- // PRC Extra Stunning Feat 	 
- const int FEAT_PRC_EXTRA_STUNNING             = 1074; 	 
-  	 
- // Enlightened Fist Feats 	 
- const int FEAT_EF_FIST_OF_ENERGY              = 1075; 	 
- const int FEAT_EF_SPELL_SELECT                = 1076; 	 
- const int FEAT_EF_ARCANE_FIST                 = 1077; 	 
- const int FEAT_EF_ARCANE_REJUVENATION         = 1078; 	 
- const int FEAT_EF_HOLD_RAY                    = 1079; 	 
- const int FEAT_EF_DIAMOND_SOUL                = 1080; 	 
- const int FEAT_EF_UNARMEDDMG                  = 1081; 	 
- const int FEAT_EF_SPEED                       = 1082; 	 
- const int FEAT_EF_EXTRA_STUNNING              = 1083; 	 
- const int FEAT_EF_FIST_OF_ENERGY_BURST        = 1084;
+const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
+ const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22604;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_SMITE_EVIL   = 22605;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_PROTECTION   = 22606;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_BLESS        = 22607;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_AID          = 22608;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_DETECT       = 22609;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_CURE_SERIOUS = 22610;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_NEUTRALIZE_POISON = 22611;
+ //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22612;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_REMOVE_DISEAE= 22613;
+ //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22614;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_HOLY_WORD    = 22615;
+ //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22616;
+ //const int FEAT_TEMPLATE_FIENDISH_MARKER             = 22617;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM   = 22618;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX    = 22619;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION = 22620;
+ //const int FEAT_TEMPLATE_HALF_CELESTIAL_DAYLIGHT     = 22621;
+ const int FEAT_TEMPLATE_HALF_CELESTIAL_MARKER       = 22622;
+
+ // PRC Extra Stunning Feat
+ const int FEAT_PRC_EXTRA_STUNNING             = 4387;
+
+ // Enlightened Fist Feats
+ const int FEAT_EF_FIST_OF_ENERGY              = 4388;
+ const int FEAT_EF_SPELL_SELECT                = 4389;
+ const int FEAT_EF_ARCANE_FIST                 = 4390;
+ const int FEAT_EF_ARCANE_REJUVENATION         = 4391;
+ const int FEAT_EF_HOLD_RAY                    = 4392;
+ const int FEAT_EF_DIAMOND_SOUL                = 4393;
+ const int FEAT_EF_UNARMEDDMG                  = 4394;
+ const int FEAT_EF_SPEED                       = 4395;
+ const int FEAT_EF_EXTRA_STUNNING              = 4396;
+ const int FEAT_EF_FIST_OF_ENERGY_BURST        = 4397;

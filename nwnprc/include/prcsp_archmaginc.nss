@@ -232,7 +232,7 @@ string
 ChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
 {
     // Lookup the spell type
-    string spellType = lookup_spell_type(spell_id);
+    string spellType = Get2DACache("spells", "ImmunityType", spell_id);//lookup_spell_type(spell_id);
 
     // Check if an override is set
     string sType = GetLocalString(oCaster, MASTERY_OF_ELEMENTS_NAME_TAG);

@@ -27,7 +27,7 @@
 #include "psi_inc_onhit"
 #include "inc_rend"
 #include "psi_inc_ac_const"
-#include "inc_utility"
+#include "prc_alterations"
 #include "inc_grapple"
 
 

@@ -13,9 +13,8 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "inc_dynconv"
 #include "prc_alterations"
-
+#include "prc_alterations"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -144,8 +143,8 @@ void main()
         {
             if(nChoice == TRUE)
             {
-		    // We're all done
-		    AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+            // We're all done
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);
 
             }
             else

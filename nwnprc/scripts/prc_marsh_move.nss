@@ -2,7 +2,7 @@
 #include "prc_alterations"
 #include "spinc_common"
 
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 #include "x2_inc_spellhook"
 

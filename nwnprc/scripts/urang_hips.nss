@@ -1,6 +1,6 @@
 #include "prc_alterations"
-#include "NW_I0_SPELLS"
-#include "inc_utility"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {

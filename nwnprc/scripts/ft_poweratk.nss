@@ -22,9 +22,9 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "inc_addragebonus"
-#include "inc_utility"
+#include "prc_alterations"
 
 /*
 const int SINGLE_START = 2171;

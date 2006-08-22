@@ -9,15 +9,15 @@
 //:: Created On: Feb 26, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
-#include "inc_utility"
+#include "prc_alterations"
 
 #include "prc_feat_const"
 #include "prc_class_const"
 #include "prc_spell_const"
 
-#include "x2_inc_itemprop" // for checking if item is a weapon
+#include "prc_alterations" // for checking if item is a weapon
 
 void CheckSupremePowerAttack(object oPC, int iEquip)
 {

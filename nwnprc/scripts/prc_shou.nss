@@ -10,8 +10,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_utility"
-#include "nw_i0_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_inc_unarmed"
 
 

@@ -19,7 +19,7 @@
 //compiler would completely crap itself unless this include was here
 #include "prc_alterations"
 #include "inc_2dacache"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void main()
 {

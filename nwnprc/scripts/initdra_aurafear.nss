@@ -12,7 +12,7 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: May 25, 2001
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 void main()
 {
     int iLvl = GetAbilityModifier(ABILITY_CHARISMA,OBJECT_SELF);

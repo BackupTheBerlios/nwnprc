@@ -13,8 +13,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_spell_const"
-#include "inc_dynconv"
-#include "prc_inc_spells"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "inc_2dacache"
 
 /* Constant defintions                          */

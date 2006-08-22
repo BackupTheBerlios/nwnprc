@@ -20,126 +20,126 @@ int GetDamageTypeOfWeapon(int nInventorySlot, object oCreature = OBJECT_SELF);
 // +12 attribute caps by raging.
 void GiveExtraRageBonuses(int nDuration, int nStrBeforeRaging, int nConBeforeRaging, int strBonus, int conBonus, int nSave, int nDamageBonusType, object oRager = OBJECT_SELF)
 {
-float nDelayed = 0.1;
+    float nDelayed = 0.1;
 
-int nStrSinceRaging = GetAbilityScore(oRager, ABILITY_STRENGTH);
-int nConSinceRaging = GetAbilityScore(oRager, ABILITY_CONSTITUTION);
+    int nStrSinceRaging = GetAbilityScore(oRager, ABILITY_STRENGTH);
+    int nConSinceRaging = GetAbilityScore(oRager, ABILITY_CONSTITUTION);
 
 
-int nStrAdded = nStrSinceRaging -  nStrBeforeRaging;
-// The amount that was added to the str
-int nStrWeWouldAdd = strBonus - nStrAdded;
-// The amount we would have to theorhetically add if we wanted to give them the full bonus.
-effect eDamage;
-effect eToHit;
+    int nStrAdded = nStrSinceRaging -  nStrBeforeRaging;
+    // The amount that was added to the str
+    int nStrWeWouldAdd = strBonus - nStrAdded;
+    // The amount we would have to theorhetically add if we wanted to give them the full bonus.
+    effect eDamage;
+    effect eToHit;
 
-if(nStrAdded < strBonus)
-{
-    //int nDamageBonusType = GetDamageTypeOfWeapon(INVENTORY_SLOT_RIGHTHAND, oRager);
-
-    if((nStrSinceRaging/2) * 2 != nStrSinceRaging)
-    // determine if their current Str right now is odd
+    if(nStrAdded < strBonus)
     {
-        if((nStrWeWouldAdd/2) * 2 != nStrWeWouldAdd)
-        // determine if the amount we would theorhetically have to add is odd.
-        // If so, then we're adding 2 odd numbers together to get an even.  Add one to the bonuses
+        //int nDamageBonusType = GetDamageTypeOfWeapon(INVENTORY_SLOT_RIGHTHAND, oRager);
+
+        if((nStrSinceRaging/2) * 2 != nStrSinceRaging)
+        // determine if their current Str right now is odd
         {
-        //::::: in this event we  add nStrWeWouldAdd/2 + 1
-        //int nAmountToAdd = nStrWeWouldAdd/2 + 1;
+            if((nStrWeWouldAdd/2) * 2 != nStrWeWouldAdd)
+            // determine if the amount we would theorhetically have to add is odd.
+            // If so, then we're adding 2 odd numbers together to get an even.  Add one to the bonuses
+            {
+            //::::: in this event we  add nStrWeWouldAdd/2 + 1
+            //int nAmountToAdd = nStrWeWouldAdd/2 + 1;
 
-        eDamage = EffectDamageIncrease(nStrWeWouldAdd/2 + 1, nDamageBonusType);
-        eToHit = EffectAttackIncrease(nStrWeWouldAdd/2 +1);
-        }
-        else
-        {
-        //::::: in this event we add nStrWeWouldAdd/2
-        eDamage = EffectDamageIncrease(nStrWeWouldAdd/2, nDamageBonusType);
-        eToHit = EffectAttackIncrease(nStrWeWouldAdd/2);
-        }
-     }
-     else
-     {
-     //::::: in this event we add nStrWeWouldAdd/2
-     eDamage = EffectDamageIncrease(nStrWeWouldAdd/2, nDamageBonusType);
-     eToHit = EffectAttackIncrease(nStrWeWouldAdd/2);
-     }
+            eDamage = EffectDamageIncrease(nStrWeWouldAdd/2 + 1, nDamageBonusType);
+            eToHit = EffectAttackIncrease(nStrWeWouldAdd/2 +1);
+            }
+            else
+            {
+            //::::: in this event we add nStrWeWouldAdd/2
+            eDamage = EffectDamageIncrease(nStrWeWouldAdd/2, nDamageBonusType);
+            eToHit = EffectAttackIncrease(nStrWeWouldAdd/2);
+            }
+         }
+         else
+         {
+             //::::: in this event we add nStrWeWouldAdd/2
+             eDamage = EffectDamageIncrease(nStrWeWouldAdd/2, nDamageBonusType);
+             eToHit = EffectAttackIncrease(nStrWeWouldAdd/2);
+         }
 
-effect eLink2 = ExtraordinaryEffect(EffectLinkEffects(eDamage, eToHit));
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oRager, RoundsToSeconds(nDuration) - nDelayed);
-// Applies the damage and toHit effects.  I couldn't help myself, so I made the damage type be fire.
-
-}
-// If nStrAdded >= nStrBonus, then no need to add any special bonuses. :)
-
-int nConAdded = nConSinceRaging -  nConBeforeRaging;
-// The amount that was added to the Con
-int nConWeWouldAdd = conBonus - nConAdded;
-// The amount we would have to theorhetically add if we wanted to give them the full bonus.
-
-
-if(nConAdded < conBonus)
-{
-effect eHitPoints;
-effect eHPRemoved;
-
-int nCharacterLevel =  GetHitDice(oRager);
-
-    if((nConSinceRaging/2) * 2 != nConSinceRaging)
-    // determine if their current Con right now is odd
-    {
-        if((nConWeWouldAdd/2) * 2 != nConWeWouldAdd)
-        // determine if the amount we would theorhetically have to add is odd.
-        // If so, then we're adding 2 odd numbers together to get an even.  Add one to the bonuses
-        {
-        //::::: in this event we  add nConWeWouldAdd/2 + 1
-
-        eHitPoints = EffectTemporaryHitpoints((nConWeWouldAdd/2 +1) * nCharacterLevel);
-        eHPRemoved = EffectDamage(((nConWeWouldAdd/2 +1) * nCharacterLevel), DAMAGE_TYPE_MAGICAL);
-        // We have to remove the temporary HP at the end of the rage via a damage effect, hehe.
-        // The damage type will be magical, something to keep in mind of magical resistances exist
-        // on your module. :)   If that's a problem, change the damage type.
-
+        effect eLink2 = ExtraordinaryEffect(EffectLinkEffects(eDamage, eToHit));
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink2, oRager, RoundsToSeconds(nDuration) - nDelayed);
+        // Applies the damage and toHit effects.  I couldn't help myself, so I made the damage type be fire.
 
         }
-        else
+        // If nStrAdded >= nStrBonus, then no need to add any special bonuses. :)
+
+        int nConAdded = nConSinceRaging -  nConBeforeRaging;
+        // The amount that was added to the Con
+        int nConWeWouldAdd = conBonus - nConAdded;
+        // The amount we would have to theorhetically add if we wanted to give them the full bonus.
+
+
+        if(nConAdded < conBonus)
         {
-        //::::: in this event we add nConWeWouldAdd/2
+        effect eHitPoints;
+        effect eHPRemoved;
 
-        eHitPoints = EffectTemporaryHitpoints((nConWeWouldAdd/2) * nCharacterLevel);
-        eHPRemoved = EffectDamage(((nConWeWouldAdd/2) * nCharacterLevel), DAMAGE_TYPE_MAGICAL);
-        // We have to remove the temporary HP at the end of the rage via a damage effect, hehe.
-        // The damage type will be magical, something to keep in mind of magical resistances exist
-        // on your module. :)   If that's a problem, change the damage type.
+        int nCharacterLevel =  GetHitDice(oRager);
 
+            if((nConSinceRaging/2) * 2 != nConSinceRaging)
+            // determine if their current Con right now is odd
+            {
+                if((nConWeWouldAdd/2) * 2 != nConWeWouldAdd)
+                // determine if the amount we would theorhetically have to add is odd.
+                // If so, then we're adding 2 odd numbers together to get an even.  Add one to the bonuses
+                {
+                //::::: in this event we  add nConWeWouldAdd/2 + 1
 
-        }
-     }
-     else
-     {
-     //::::: in this event we add nConWeWouldAdd/2
-
-     eHitPoints = EffectTemporaryHitpoints((nConWeWouldAdd/2) * nCharacterLevel);
-     eHPRemoved = EffectDamage(((nConWeWouldAdd/2) * nCharacterLevel), DAMAGE_TYPE_MAGICAL);
-     // We have to remove the temporary HP at the end of the rage via a damage effect, hehe.
-     // The damage type will be magical, something to keep in mind of magical resistances exist
-     // on your module. :)   If that's a problem, change the damage type.
-
-     }
-
-eHitPoints = ExtraordinaryEffect(eHitPoints);
-
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHitPoints, oRager, RoundsToSeconds(nDuration)- nDelayed);
+                eHitPoints = EffectTemporaryHitpoints((nConWeWouldAdd/2 +1) * nCharacterLevel);
+                eHPRemoved = EffectDamage(((nConWeWouldAdd/2 +1) * nCharacterLevel), DAMAGE_TYPE_MAGICAL);
+                // We have to remove the temporary HP at the end of the rage via a damage effect, hehe.
+                // The damage type will be magical, something to keep in mind of magical resistances exist
+                // on your module. :)   If that's a problem, change the damage type.
 
 
-//::: Had to ditch applying the damage effect, cause it would apply it even if they rested during their
-//::: rage, and the resting was what ended it.   Pretty Ironic.
-//::: If you reactivate it, make sure to have the temporary HP effect last longer than the delay on the damage effect. 8j
+                }
+                else
+                {
+                //::::: in this event we add nConWeWouldAdd/2
 
-//DelayCommand(RoundsToSeconds(nDuration) - nDelayed, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHPRemoved, oRager));
-// This is really how the temporary hp are going to get removed.   I just didn't want to take any chances,
-// so I gave the temporary hp a temporary duration.
+                eHitPoints = EffectTemporaryHitpoints((nConWeWouldAdd/2) * nCharacterLevel);
+                eHPRemoved = EffectDamage(((nConWeWouldAdd/2) * nCharacterLevel), DAMAGE_TYPE_MAGICAL);
+                // We have to remove the temporary HP at the end of the rage via a damage effect, hehe.
+                // The damage type will be magical, something to keep in mind of magical resistances exist
+                // on your module. :)   If that's a problem, change the damage type.
 
-}
+
+                }
+             }
+             else
+             {
+             //::::: in this event we add nConWeWouldAdd/2
+
+             eHitPoints = EffectTemporaryHitpoints((nConWeWouldAdd/2) * nCharacterLevel);
+             eHPRemoved = EffectDamage(((nConWeWouldAdd/2) * nCharacterLevel), DAMAGE_TYPE_MAGICAL);
+             // We have to remove the temporary HP at the end of the rage via a damage effect, hehe.
+             // The damage type will be magical, something to keep in mind of magical resistances exist
+             // on your module. :)   If that's a problem, change the damage type.
+
+             }
+
+        eHitPoints = ExtraordinaryEffect(eHitPoints);
+
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHitPoints, oRager, RoundsToSeconds(nDuration)- nDelayed);
+
+
+        //::: Had to ditch applying the damage effect, cause it would apply it even if they rested during their
+        //::: rage, and the resting was what ended it.   Pretty Ironic.
+        //::: If you reactivate it, make sure to have the temporary HP effect last longer than the delay on the damage effect. 8j
+
+        //DelayCommand(RoundsToSeconds(nDuration) - nDelayed, ApplyEffectToObject(DURATION_TYPE_INSTANT, eHPRemoved, oRager));
+        // This is really how the temporary hp are going to get removed.   I just didn't want to take any chances,
+        // so I gave the temporary hp a temporary duration.
+
+    }
 
 // If nConAdded >= nConBonus, then no need to add any special bonuses. :)
 

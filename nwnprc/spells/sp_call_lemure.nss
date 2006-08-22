@@ -37,7 +37,9 @@ Created:
 
 
 int GetControlledFiendHD(object oPC);
+const int ERROR_CODE_5_FIX_AGAIN =1;
 
+#include "prc_alterations"
 #include "spinc_common"
 
 void main()

@@ -1,9 +1,10 @@
 
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_racial_const"
 #include "prc_ccc_inc"
 
-#include "inc_utility"
+#include "prc_alterations"
 
 
 void CheckAndBoot(object oPC)

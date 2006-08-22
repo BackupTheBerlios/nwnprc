@@ -11,7 +11,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {

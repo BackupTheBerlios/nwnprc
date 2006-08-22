@@ -421,7 +421,7 @@ struct AttackLoopVars
      effect eSpecialEffect;
      //when the new PRC effect system is in place, this will be a reference to a local effect on the module
      //that exists temporarilly and will be destroyed at the end
-     //string sEffectLocalName,
+     //string sEffectLocalName;
 
      //  the damage modifier and damage type for extra damage from special attacks
      int iDamageModifier, iDamageType;
@@ -4153,7 +4153,9 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                }
 
                // apply any special bonus effects
-               ApplyEffectToObject(iDurationType, sAttackVars.eSpecialEffect, oDefender, sAttackVars.eDuration);
+               effect eSpecialEffect = sAttackVars.eSpecialEffect;
+               //struct PRCeffect eSpecialEffect = GetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName);
+               ApplyEffectToObject(iDurationType, eSpecialEffect, oDefender, sAttackVars.eDuration);
                FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
           }
           // if special applies to all attacks and you miss
@@ -4175,7 +4177,9 @@ void AttackLoopLogic(object oDefender, object oAttacker, int iBonusAttacks, int 
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eBonusDamage, oDefender);
                }
 
-               ApplyEffectToObject(iDurationType, sAttackVars.eSpecialEffect, oDefender, sAttackVars.eDuration);
+               effect eSpecialEffect = sAttackVars.eSpecialEffect;
+               //struct PRCeffect eSpecialEffect = GetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName);
+               ApplyEffectToObject(iDurationType, eSpecialEffect, oDefender, sAttackVars.eDuration);
                FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
                bFirstAttack = FALSE;
           }
@@ -4374,7 +4378,7 @@ void PerformAttackRound(object oDefender, object oAttacker, effect eSpecialEffec
      sAttackVars.eSpecialEffect = eSpecialEffect;
      //post prc-effectness
      //sAttackVars.sEffectLocalName = "CombatStructEffect_"+ObjectToString(oDefender)+"_"+ObjectToString(oAttacker);
-     //SetLocalEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);
+     //SetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);
      //this says e but is really a float
      sAttackVars.eDuration = eDuration;
      sAttackVars.bEffectAllAttacks = bEffectAllAttacks;
@@ -4727,7 +4731,7 @@ void PerformAttack(object oDefender, object oAttacker, effect eSpecialEffect, fl
      sAttackVars.eSpecialEffect = eSpecialEffect;
      //post prc-effectness
      //sAttackVars.sEffectLocalName = "CombatStructEffect_"+ObjectToString(oDefender)+"_"+ObjectToString(oAttacker);
-     //SetLocalEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);
+     //SetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);
      //this says e but is really a float
      sAttackVars.eDuration = eDuration;
      sAttackVars.bEffectAllAttacks = FALSE;

@@ -5,7 +5,7 @@
 //Include required for Imbue Arrow functionality.
 #include "prc_alterations"
 #include "prc_inc_clsfunc"
-#include "inc_utility"
+#include "prc_alterations"
 #include "psi_inc_manifest"
 
 void main()

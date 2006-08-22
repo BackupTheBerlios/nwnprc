@@ -9,7 +9,7 @@
 //:: Created On: March 4, 2006
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void main()
 {

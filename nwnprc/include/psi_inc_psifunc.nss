@@ -460,7 +460,7 @@ int SpellSchoolToDiscipline(int nSpellSchool)
 
 int GetPowerDiscipline(int nSpellID)
 {
-    string sSpellSchool = lookup_spell_school(nSpellID);
+    string sSpellSchool = Get2DACache("spells", "School", nSpellID);//lookup_spell_school(nSpellID);
     int nDiscipline;
 
     if      (sSpellSchool == "A") nDiscipline = DISCIPLINE_NONE;

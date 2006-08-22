@@ -23,7 +23,7 @@
 */
 
 #include "prc_craft_inc"
-#include "inc_dynconv"
+#include "prc_alterations"
 
 
 //////////////////////////////////////////////////

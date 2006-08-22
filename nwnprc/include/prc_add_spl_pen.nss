@@ -61,7 +61,7 @@ int GetHeartWarderPene(int spell_id, object oCaster = OBJECT_SELF) {
     if ( nSchool != SPELL_SCHOOL_ENCHANTMENT) return 0;
 
     // Bonus Requires Verbal Spells
-    string VS = lookup_spell_vs(spell_id);
+    string VS = Get2DACache("spells", "VS", spell_id);//lookup_spell_vs(spell_id);
     if (VS != "v" && VS != "vs")
         return 0;
 
@@ -145,7 +145,7 @@ int RedWizardSP(int spell_id, object oCaster = OBJECT_SELF)
     if (iRedWizard > 0)
     {
         int nSpell = PRCGetSpellId();
-        string sSpellSchool = lookup_spell_school(nSpell);
+        string sSpellSchool = Get2DACache("spells", "School", nSpell);//lookup_spell_school(nSpell);
         int iSpellSchool;
         int iRWSpec;
 
@@ -255,34 +255,34 @@ int ShadowWeavePen(int spell_id, object oCaster = OBJECT_SELF)
 
 int KOTCSpellPenVsDemons(object oCaster)
 {
-	int nSP = 0;
-	int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
-	object oTarget = PRCGetSpellTargetObject();
+    int nSP = 0;
+    int iKOTC = GetLevelByClass(CLASS_TYPE_KNIGHT_CHALICE, oCaster);
+    object oTarget = PRCGetSpellTargetObject();
 
-	if (iKOTC >= 1)
-    	{
-    		if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
-    		{
-    			if (GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
-    			{
-				nSP = 2;
-    			}
-    		}
-    	}
-    	return nSP;
+    if (iKOTC >= 1)
+        {
+            if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
+            {
+                if (GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
+                {
+                nSP = 2;
+                }
+            }
+        }
+        return nSP;
 }
 
 int RunecasterRunePowerSP(object oCaster)
 {
-	int nSP = 0;
-	int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
-	object oItem = GetSpellCastItem();
-	string sResRef = GetResRef(oItem);
-	// If the caster is runechanting or casting from a rune, add bonus
-	// Known Bug: This does not give the proper bonus to anyone aside from the caster
-	// I am uncertain as to how to do that
-	if (nClass >= 2 && GetLocalInt(oCaster, "RuneChant") || sResRef == "prc_rune_1")
-	{
+    int nSP = 0;
+    int nClass = GetLevelByClass(CLASS_TYPE_RUNECASTER, oCaster);
+    object oItem = GetSpellCastItem();
+    string sResRef = GetResRef(oItem);
+    // If the caster is runechanting or casting from a rune, add bonus
+    // Known Bug: This does not give the proper bonus to anyone aside from the caster
+    // I am uncertain as to how to do that
+    if (nClass >= 2 && GetLocalInt(oCaster, "RuneChant") || sResRef == "prc_rune_1")
+    {
             if (nClass >= 30)        nSP = 10;
             else if (nClass >= 27)   nSP = 9;
             else if (nClass >= 24)   nSP = 8;
@@ -299,10 +299,10 @@ int RunecasterRunePowerSP(object oCaster)
 
 int MarshalDeterminedCaster(object oCaster)
 {
-	int nSP = 0;
-	if (GetLocalInt(oCaster,"Marshal_DetCast") > 0) nSP = GetLocalInt(oCaster,"Marshal_DetCast");
-	
-	return nSP;
+    int nSP = 0;
+    if (GetLocalInt(oCaster,"Marshal_DetCast") > 0) nSP = GetLocalInt(oCaster,"Marshal_DetCast");
+    
+    return nSP;
 }
 
 int add_spl_pen(object oCaster = OBJECT_SELF)

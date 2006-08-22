@@ -11,7 +11,7 @@
 //:: Created On:
 //:://////////////////////////////////////////////
 // fear aura for lich
-
+#include "prc_alterations"
 #include "prc_class_const"
 
 void main()

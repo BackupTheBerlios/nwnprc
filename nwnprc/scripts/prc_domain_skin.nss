@@ -2,7 +2,7 @@
 // Applies the cast domain feats to the hide
 
 #include "prc_inc_domain"
-#include "inc_dynconv"
+#include "prc_alterations"
 
 void AddDomainPower(object oPC, object oSkin)
 {

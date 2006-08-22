@@ -35,47 +35,48 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "spinc_common"
 
 void main()
 {
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-			
-	if(!X2PreSpellCastCode()) return;
-	
-	//Declare major variables including Area of Effect Object
-	effect eAOE = EffectAreaOfEffect(AOE_PER_DAMNDARK);
-	object oPC = OBJECT_SELF;
-	object oTarget = PRCGetSpellTargetObject();
-	object oItemTarget = oTarget;
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDuration = (nCasterLvl * 600.0f);
-	location lLoc = GetLocation(oTarget);
-	
-	//Check for Soul Rot
-	if(GetPersistantLocalInt(oPC, "PRC_Has_Soul_Rot"))
-	{
-		//Make touch
-		int nTouch = PRCDoMeleeTouchAttack(oTarget);
-		
-		if(nTouch > 0)
-		{
-			//Check Extend metamagic feat.
-			if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-			{
-				fDuration = fDuration *2;    //Duration is +100%
-			}
-			
-			//Create an instance of the AOE Object using the Apply Effect function
-			
-			ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
-		}
-	}
-	
-	SPEvilShift(oPC);
-	
-	SPSetSchool();
-	
+    
+    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+            
+    if(!X2PreSpellCastCode()) return;
+    
+    //Declare major variables including Area of Effect Object
+    effect eAOE = EffectAreaOfEffect(AOE_PER_DAMNDARK);
+    object oPC = OBJECT_SELF;
+    object oTarget = PRCGetSpellTargetObject();
+    object oItemTarget = oTarget;
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    float fDuration = (nCasterLvl * 600.0f);
+    location lLoc = GetLocation(oTarget);
+    
+    //Check for Soul Rot
+    if(GetPersistantLocalInt(oPC, "PRC_Has_Soul_Rot"))
+    {
+        //Make touch
+        int nTouch = PRCDoMeleeTouchAttack(oTarget);
+        
+        if(nTouch > 0)
+        {
+            //Check Extend metamagic feat.
+            if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+            {
+                fDuration = fDuration *2;    //Duration is +100%
+            }
+            
+            //Create an instance of the AOE Object using the Apply Effect function
+            
+            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
+        }
+    }
+    
+    SPEvilShift(oPC);
+    
+    SPSetSchool();
+    
 }

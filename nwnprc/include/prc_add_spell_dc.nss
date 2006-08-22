@@ -85,7 +85,7 @@ int GetHierophantSLAAdjustment(int spell_id, object oCaster = OBJECT_SELF)
 
     if (GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster) > 0 && GetWasLastSpellHieroSLA(spell_id, oCaster) )
     {
-             retval = StringToInt( lookup_spell_cleric_level(spell_id) );
+             retval = StringToInt( Get2DACache("spells", "Cleric", spell_id));//lookup_spell_cleric_level(spell_id) );
          retval -= GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster);
         }
 
@@ -101,7 +101,7 @@ int GetHeartWarderDC(int spell_id, object oCaster = OBJECT_SELF)
     if (!GetHasFeat(FEAT_VOICE_SIREN, oCaster)) return 0;
 
     // Bonus Requires Verbal Spells
-    string VS = lookup_spell_vs(PRCGetSpellId());
+    string VS = Get2DACache("spells", "VS", PRCGetSpellId());//lookup_spell_vs(PRCGetSpellId());
     if (VS != "v" && VS != "vs")
         return 0;
 
@@ -183,7 +183,7 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
     if (iRedWizard > 0)
     {
         int nSpell = PRCGetSpellId();
-        string sSpellSchool = lookup_spell_school(nSpell);
+        string sSpellSchool = Get2DACache("spells", "School", nSpell);//lookup_spell_school(nSpell);
         int iSpellSchool;
         int iRWSpec;
 
@@ -306,7 +306,7 @@ int TattooFocus(int spell_id, object oCaster = OBJECT_SELF)
 
         int nDC;
         int nSpell = PRCGetSpellId();
-        string sSpellSchool = lookup_spell_school(nSpell);
+        string sSpellSchool = Get2DACache("spells", "School", nSpell);//lookup_spell_school(nSpell);
         int iSpellSchool;
         int iRWSpec;
 
@@ -424,18 +424,18 @@ int RunecasterRunePowerDC(object oCaster)
  //Unheavened spell
 int UnheavenedAdjustment(object oTarget, object oCaster)
 {
-	int nAdjust = 0;
-	
-	if(GetHasSpellEffect(SPELL_UNHEAVENED, oTarget))
-	{
-		if((MyPRCGetRacialType(oCaster) == RACIAL_TYPE_OUTSIDER) && (GetAlignmentGoodEvil(oCaster) == ALIGNMENT_GOOD))
-		{
-			nAdjust = 4;
-		}
-	}
-	return nAdjust;
+    int nAdjust = 0;
+    
+    if(GetHasSpellEffect(SPELL_UNHEAVENED, oTarget))
+    {
+        if((MyPRCGetRacialType(oCaster) == RACIAL_TYPE_OUTSIDER) && (GetAlignmentGoodEvil(oCaster) == ALIGNMENT_GOOD))
+        {
+            nAdjust = 4;
+        }
+    }
+    return nAdjust;
 }
-	
+    
 
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {

@@ -1,6 +1,7 @@
 /*
     Implicable Foe - Heartbeat
 */
+#include "prc_alterations"
 
 int GetIsDisabled(object oCreature);
 

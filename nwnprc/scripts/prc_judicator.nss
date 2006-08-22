@@ -11,7 +11,7 @@
 //:: Modified On: 7-31-2004
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()

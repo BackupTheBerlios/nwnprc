@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_dynconv"
+#include "prc_alterations"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */

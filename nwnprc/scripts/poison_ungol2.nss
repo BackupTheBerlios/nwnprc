@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_inc_function"
+#include "prc_alterations"
 #include "inc_abil_damage"
 
 void main()

@@ -481,7 +481,7 @@ int GetFirstDivineClass (object oCaster = OBJECT_SELF)
 
 int GetSpellSchool(int iSpellId)
 {
-    string sSpellSchool = lookup_spell_school(iSpellId);
+    string sSpellSchool = Get2DACache("spells", "School", iSpellId);//lookup_spell_school(iSpellId);
     int iSpellSchool;
 
     if (sSpellSchool == "A") iSpellSchool = SPELL_SCHOOL_ABJURATION;
@@ -912,7 +912,7 @@ int ShadowWeave (object oCaster, int iSpellID)
 // stolen from prcsp_archmaginc.nss, modified to work in this script.
 string GetChangedElementalType(int spell_id, object oCaster = OBJECT_SELF)
 {
-    string spellType = lookup_spell_type(spell_id);
+    string spellType = Get2DACache("spells", "ImmunityType", spell_id);//lookup_spell_type(spell_id);
 
     string sType = GetLocalString(oCaster, "archmage_mastery_elements_name");
 
@@ -1519,7 +1519,7 @@ object PRCGetSpellTargetObject()
         !bTouch
         )
     {
-        int nSpellLevel = StringToInt(lookup_spell_innate(nSpellID));
+        int nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));//lookup_spell_innate(nSpellID));
         object oTarget = oBWTarget;
         int nLevels = GetLocalInt(oTarget, "PRC_SPELL_TURNING_LEVELS");
         int bCasterTurning = GetLocalInt(oCaster, "PRC_SPELL_TURNING");

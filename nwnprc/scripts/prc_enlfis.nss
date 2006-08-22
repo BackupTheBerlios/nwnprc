@@ -1,5 +1,5 @@
 #include "prc_alterations"
-#include "nw_i0_spells"
+#include "prc_alterations"
 
 void EnlightenedFistSpeed(object oPC, object oSkin, int nLevel)
 {

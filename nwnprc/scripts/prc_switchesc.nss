@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "inc_dynconv"
+#include "prc_alterations"
 #include "prc_alterations"
 #include "inc_epicspells"
 #include "prc_inc_leadersh"

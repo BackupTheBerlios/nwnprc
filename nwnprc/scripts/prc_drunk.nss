@@ -1,4 +1,4 @@
-#include "inc_utility"
+#include "prc_alterations"
 #include "prc_class_const"
 
 void SwayingWaist(object oPC, object oSkin, int iLevel)

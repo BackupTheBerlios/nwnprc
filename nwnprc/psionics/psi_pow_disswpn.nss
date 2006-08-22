@@ -32,6 +32,8 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+const int ERROR_CODE_5_FIX_AGAIN = 1;
+#include "prc_alterations"
 #include "spinc_common"
 #include "psi_inc_onhit"
 #include "psi_inc_psifunc"
@@ -51,7 +53,7 @@ void main()
         {
             FloatingTextStrRefOnCreature(83615, oManifester); // Item must be weapon or creature holding a weapon
             return;
-    	}
+        }
 
         struct manifestation manif =
             EvaluateManifestation(oManifester, OBJECT_INVALID,
@@ -88,8 +90,8 @@ void main()
                               );
             }
 
-    	    // Hook to the item's OnHit
-    	    AddEventScript(oWeapon, EVENT_ITEM_ONHIT, "psi_pow_disswpn", TRUE, FALSE);
+            // Hook to the item's OnHit
+            AddEventScript(oWeapon, EVENT_ITEM_ONHIT, "psi_pow_disswpn", TRUE, FALSE);
 
             /* Add the onhit spell to the weapon */
             IPSafeAddItemProperty(oWeapon, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);

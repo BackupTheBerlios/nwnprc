@@ -105,6 +105,8 @@ int GetBreakConcentrationCheck(object oConcentrator);
  */
 object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TRUE);
 
+const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
+
 //////////////////////////////////////////////////
 /* Include section                              */
 //////////////////////////////////////////////////
@@ -141,6 +143,7 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
 #include "x2_i0_spells"
 //#include "prc_inc_s_det"
 #include "prc_inc_descrptr"
+#include "inc_dynconv"
 
 
 

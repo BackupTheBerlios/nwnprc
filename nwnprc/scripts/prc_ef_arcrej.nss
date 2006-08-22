@@ -1,5 +1,5 @@
 #include "prc_sp_func"
-#include "prc_inc_spells"
+#include "prc_alterations"
 #include "prc_alterations"
 
 void main()

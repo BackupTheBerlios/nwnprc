@@ -3,7 +3,7 @@
 //:: prc_npc_conv
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "inc_utility"
+#include "prc_alterations"
 
 void main()
 {

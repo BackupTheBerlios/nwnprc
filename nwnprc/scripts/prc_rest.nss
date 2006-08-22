@@ -13,7 +13,7 @@
 #include "prc_inc_domain"
 #include "inc_newspellbook"
 #include "prc_power_const"
-#include "inc_utility"
+#include "prc_alterations"
 #include "psi_inc_psifunc"
 #include "prc_sp_func"
 

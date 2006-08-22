@@ -73,7 +73,7 @@ int CheckSpellfire(object oCaster, object oTarget, int bFriendly = FALSE)
     int nSpellLevel = GetLocalInt(oCaster, "PRC_CurrentManifest_PowerLevel");   //replicates GetPowerLevel(oCaster);
     if(!nSpellLevel)    //not a power                       //avoids compiler problems
     {                                                       //with includes
-        string sInnate = lookup_spell_innate(nSpellID);
+        string sInnate = Get2DACache("spells", "Innate", nSpellID);//lookup_spell_innate(nSpellID);
         if(sInnate == "") return 0; //no innate level, unlike cantrips
         nSpellLevel = StringToInt(sInnate);
     }

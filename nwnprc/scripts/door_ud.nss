@@ -15,7 +15,7 @@
 //:: Created On:    08/05/06
 //:://////////////////////////////////////////////
 
-
+#include "prc_alterations"
 void main()
 {
     int nEventID = GetUserDefinedEventNumber();

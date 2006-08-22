@@ -13,7 +13,7 @@
 #include "prc_alterations"
 #include "x2_inc_switches"
 #include "x2_inc_intweapon"
-#include "inc_utility"
+#include "prc_alterations"
 #include "inc_timestop"
 #include "prc_inc_itmrstr"
 

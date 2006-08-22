@@ -22,8 +22,8 @@
 //:://////////////////////////////////////////////
 #include "prc_alterations"
 #include "prc_spell_const"
-#include "nw_i0_spells"
-#include "inc_utility"
+#include "prc_alterations"
+#include "prc_alterations"
 
 
 void main()

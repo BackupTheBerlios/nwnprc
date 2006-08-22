@@ -15,7 +15,7 @@
 
 #include "prc_alterations"
 #include "inc_newspellbook"
-#include "inc_dynconv"
+#include "prc_alterations"
 
 
 //////////////////////////////////////////////////

@@ -3,7 +3,7 @@
     +1 to attack rolls and will saving throws of allies.
 */
 #include "prc_alterations"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "prc_racial_const"
 
 void main()

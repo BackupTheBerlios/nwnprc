@@ -29,6 +29,8 @@
     each instance of damage with a Fortitude save.
 */
 
+const int ERROR_CODE_5_FIX_AGAIN = 1;
+#include "prc_alterations"
 #include "spinc_common"
 #include "psi_inc_onhit"
 #include "psi_inc_psifunc"

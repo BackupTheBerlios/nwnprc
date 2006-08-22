@@ -12,7 +12,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "inc_dynconv"
+#include "prc_alterations"
 #include "prc_alterations"
 
 //////////////////////////////////////////////////
@@ -63,14 +63,14 @@ void main()
             // Function AddChoice to add a response option for the PC. The responses are show in order added
             if(nStage == STAGE_WEAPON_CHOICE)
             {
-            	string sHeader1 = "You may choose one hammer.\n";
-            	sHeader1 += "This will grant you proficiency and weapon focus in that weapon.";
+                string sHeader1 = "You may choose one hammer.\n";
+                sHeader1 += "This will grant you proficiency and weapon focus in that weapon.";
                 // Set the header
                 SetHeader(sHeader1);
                 // Add responses for the PC
-		// Response numbers are baseitems.2da row
-		AddChoice("Warhammer", 5, oPC);
-		AddChoice("Light Hammer", 37, oPC);
+        // Response numbers are baseitems.2da row
+        AddChoice("Warhammer", 5, oPC);
+        AddChoice("Light Hammer", 37, oPC);
 
                 MarkStageSetUp(STAGE_WEAPON_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -124,17 +124,17 @@ void main()
         {
             if(nChoice == TRUE)
             {
-            	object oSkin = GetPCSkin(oPC);
-            	int nWeapon = GetLocalInt(oPC, "MetalDomainWeapon");
-		int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
-		int nWFIprop = FeatToIprop(nWeaponFocus);
-		
-		IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-		IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-		
-		// Store the weapon feat for later reuse
-		// The reason we use the feat and not the iprop constant is so we can check using GetHasFeat whether to reapply
-		SetPersistantLocalInt(oPC, "MetalDomainWeaponPersistent", nWeaponFocus);
+                object oSkin = GetPCSkin(oPC);
+                int nWeapon = GetLocalInt(oPC, "MetalDomainWeapon");
+        int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
+        int nWFIprop = FeatToIprop(nWeaponFocus);
+        
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_WEAPON_PROF_MARTIAL), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+        
+        // Store the weapon feat for later reuse
+        // The reason we use the feat and not the iprop constant is so we can check using GetHasFeat whether to reapply
+        SetPersistantLocalInt(oPC, "MetalDomainWeaponPersistent", nWeaponFocus);
 
                 // And we're all done
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);

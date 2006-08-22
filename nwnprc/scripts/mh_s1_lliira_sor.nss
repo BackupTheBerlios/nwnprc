@@ -10,7 +10,7 @@
 //:: Created On:January , 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "NW_I0_SPELLS"
+#include "prc_alterations"
 
 void main()
 {

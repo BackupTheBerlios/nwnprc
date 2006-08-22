@@ -1,8 +1,8 @@
 
 #include "prc_alterations"
-#include "x0_i0_spells"
-#include "prc_inc_combat"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {

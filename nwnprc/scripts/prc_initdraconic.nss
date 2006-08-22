@@ -1,6 +1,6 @@
 #include "prc_ip_srcost"
 #include "prc_inc_clsfunc"
-#include "inc_utility"
+#include "prc_alterations"
 
 
 void SpellResistancePC(object oPC, object oSkin, int iLevel)

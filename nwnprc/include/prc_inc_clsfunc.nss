@@ -1548,11 +1548,11 @@ if(GetHasFeat(FEAT_LOLTHS_MEAT, oPC))
 
 void FlurryEffects(object oPC)
 {
-effect Effect1 = EffectModifyAttacks(1);
-effect Effect2 = EffectAttackDecrease(2, ATTACK_BONUS_MISC);
+    effect Effect1 = EffectModifyAttacks(1);
+    effect Effect2 = EffectAttackDecrease(2, ATTACK_BONUS_MISC);
 
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, Effect1, oPC, RoundsToSeconds(10));
-ApplyEffectToObject(DURATION_TYPE_TEMPORARY, Effect2, oPC, RoundsToSeconds(10));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, Effect1, oPC, RoundsToSeconds(10));
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, Effect2, oPC, RoundsToSeconds(10));
 
 }
 

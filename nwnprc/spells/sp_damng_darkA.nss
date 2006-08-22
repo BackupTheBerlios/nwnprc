@@ -36,46 +36,49 @@ Created:   6/12/06
 //:://////////////////////////////////////////////
 void DarkLoop(object oTarget);
 
+const int ERROR_CODE_5_FIX_AGAIN = 1;
+
+#include "prc_alterations"
 #include "spinc_common"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	object oTarget = GetEnteringObject();
-	object oPC = GetAreaOfEffectCreator();
-	int nMetaMagic = PRCGetMetaMagicFeat();	
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	effect eDark = EffectDarkness();
-	effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-	effect eLink = EffectLinkEffects(eDark, eDur);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (600.0f * nCasterLvl));
-			
-	DarkLoop(oTarget);
-	
-	SPSetSchool();
+    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+    
+    object oTarget = GetEnteringObject();
+    object oPC = GetAreaOfEffectCreator();
+    int nMetaMagic = PRCGetMetaMagicFeat(); 
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    effect eDark = EffectDarkness();
+    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    effect eLink = EffectLinkEffects(eDark, eDur);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (600.0f * nCasterLvl));
+            
+    DarkLoop(oTarget);
+    
+    SPSetSchool();
 }
-		
+        
 void DarkLoop(object oTarget)
-{	
-	if(GetIsObjectValid(oTarget))
-	{		
-		if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_GOOD)
-		{
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, d6(2)), oTarget);
-		}
-		
-		else if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_NEUTRAL)
-		{
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, d6(2)), oTarget);
-		}
-		
-		else
-		{
-			ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oTarget, 1.0f);
-		}
-			
-	}
-	DelayCommand(6.0f, DarkLoop(oTarget));
-	
+{   
+    if(GetIsObjectValid(oTarget))
+    {       
+        if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_GOOD)
+        {
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, d6(2)), oTarget);
+        }
+        
+        else if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_NEUTRAL)
+        {
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, d6(2)), oTarget);
+        }
+        
+        else
+        {
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oTarget, 1.0f);
+        }
+            
+    }
+    DelayCommand(6.0f, DarkLoop(oTarget));
+    
 }

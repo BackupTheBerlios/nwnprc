@@ -16,7 +16,7 @@
 
 #include "prc_alterations"
 #include "prc_class_const"
-#include "inc_dynconv"
+#include "prc_alterations"
 #include "inc_newspellbook"
 
 

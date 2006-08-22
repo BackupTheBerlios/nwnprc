@@ -1,6 +1,7 @@
 /*
     Blood of the Warlord - on enter
 */
+#include "prc_alterations"
 void main()
 {
     object oCreator = GetAreaOfEffectCreator(OBJECT_SELF);

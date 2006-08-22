@@ -10,7 +10,7 @@
 //:: Modified by Lockindal Linantal: glove property.
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "prc_alterations"
 #include "prc_alterations"
 #include "prc_feat_const"
 

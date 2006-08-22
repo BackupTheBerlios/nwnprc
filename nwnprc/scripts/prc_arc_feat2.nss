@@ -3,6 +3,7 @@
 //:: Created On: September 2, 2004
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "nw_o0_itemmaker"
 void RemoveStrikeProps()
 {
@@ -12,8 +13,8 @@ void RemoveStrikeProps()
     {
         //check for channeled spell as well
         if(GetItemPropertyType(ipTmp)== ITEM_PROPERTY_ONHITCASTSPELL
-        && GetItemPropertyDurationType(ipTmp) == DURATION_TYPE_TEMPORARY
-        && GetLocalInt(oItem,"spell") != 1)
+            && GetItemPropertyDurationType(ipTmp) == DURATION_TYPE_TEMPORARY
+            && GetLocalInt(oItem,"spell") != 1)
         {
             RemoveItemProperty(oItem,ipTmp);
 
@@ -24,19 +25,18 @@ void RemoveStrikeProps()
 
 void main()
 {
-object oPC = OBJECT_SELF;
-int i;
-for(i = 1; i <=10; i++)
-{
-
-int ntemp = GetLocalArrayInt(oPC,"arcstrike",i);
-effect eAttack = EffectAttackIncrease(ntemp);
-DelayCommand(RoundsToSeconds(i),ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eAttack,oPC,6.0));
-DelayCommand(RoundsToSeconds(i),SetLocalInt(oPC,"curentspell",ntemp));
-if(ntemp<1)
-{
-DelayCommand(RoundsToSeconds(i),DeleteLocalInt(oPC,"doarcstrike"));
-DelayCommand(RoundsToSeconds(i),RemoveStrikeProps());
-}
-}
+    object oPC = OBJECT_SELF;
+    int i;
+    for(i = 1; i <=10; i++)
+    {
+        int ntemp = GetLocalArrayInt(oPC,"arcstrike",i);
+        effect eAttack = EffectAttackIncrease(ntemp);
+        DelayCommand(RoundsToSeconds(i), ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eAttack,oPC,6.0));
+        DelayCommand(RoundsToSeconds(i), SetLocalInt(oPC,"curentspell",ntemp));
+        if(ntemp<1)
+        {
+            DelayCommand(RoundsToSeconds(i), DeleteLocalInt(oPC,"doarcstrike"));
+            DelayCommand(RoundsToSeconds(i), RemoveStrikeProps());
+        }
+    }
 }

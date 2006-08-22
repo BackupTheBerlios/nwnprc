@@ -1,7 +1,7 @@
 #include "prc_alterations"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "prc_inc_stunfist"
-#include "prc_inc_combat"
+#include "prc_alterations"
 #include "prc_inc_unarmed"
 
 void AddHooks(object oItem)

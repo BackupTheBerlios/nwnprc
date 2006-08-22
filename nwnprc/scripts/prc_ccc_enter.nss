@@ -1,8 +1,9 @@
 
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_racial_const"
 #include "inc_encrypt"
-#include "inc_utility"
+#include "prc_alterations"
 #include "inc_letoscript"
 #include "prc_ccc_inc"
 #include "x2_inc_switches"

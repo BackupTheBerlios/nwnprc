@@ -1,6 +1,6 @@
 #include "prc_alterations"
-#include "x0_i0_spells"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_spell_const"
 

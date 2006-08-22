@@ -2,7 +2,7 @@
 #include "inc_time"
 #include "prc_inc_domain"
 #include "prc_inc_clsfunc"
-#include "inc_utility"
+#include "prc_alterations"
 #include "inc_leto_prc"
 #include "x2_inc_switches"
 #include "prc_inc_teleport"

@@ -12,11 +12,11 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_item_props"
+#include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
-#include "prc_inc_function"
-#include "x2_inc_itemprop"
+#include "prc_alterations"
+#include "prc_alterations"
 
 //Baelnorn Property bonus function
 void BaelnProp (object oSkin, int nBonus)

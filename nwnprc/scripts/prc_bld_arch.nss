@@ -10,7 +10,8 @@
 //:: Created On: Sept 2, 2004
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "prc_alterations"
+#include "prc_alterations"
 #include "prc_alterations"
 #include "prc_feat_const"
 #include "prc_class_const"
@@ -40,34 +41,34 @@ void main()
     if (iEquip ==1)  oItem = GetItemLastUnequipped();
     //else             oItem = GetItemLastEquipped();
 
-	// Apply proper modifications to item
-	int iItemType = GetBaseItemType(oItem);
-	switch (iItemType)
-	{
-		 case BASE_ITEM_LONGBOW:
-		 //case BASE_ITEM_SHORTBOW:
-			  SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
-			  SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
-			  break;
+    // Apply proper modifications to item
+    int iItemType = GetBaseItemType(oItem);
+    switch (iItemType)
+    {
+         case BASE_ITEM_LONGBOW:
+         //case BASE_ITEM_SHORTBOW:
+              SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
+              SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
+              break;
 
-		 case BASE_ITEM_ARMOR:
-			  if (iEquip ==1)  RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", -1, DURATION_TYPE_TEMPORARY);
-			  else             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-			  break;
-	}
+         case BASE_ITEM_ARMOR:
+              if (iEquip ==1)  RemoveSpecificProperty(oItem, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", -1, DURATION_TYPE_TEMPORARY);
+              else             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+              break;
+    }
 
-	//must rest iBloodBowBonus for this bit, even if its an unequip
-	oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-	iBloodBowBonus = nBldarch / 3;
-	if (GetBaseItemType(oItem) == BASE_ITEM_LONGBOW)
-	{
-	    SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
-	    SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
-	}
+    //must rest iBloodBowBonus for this bit, even if its an unequip
+    oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+    iBloodBowBonus = nBldarch / 3;
+    if (GetBaseItemType(oItem) == BASE_ITEM_LONGBOW)
+    {
+        SetCompositeBonusT(oItem, "BloodBowAttackBonus", iBloodBowBonus, ITEM_PROPERTY_ATTACK_BONUS);
+        SetCompositeBonusT(oItem, "BloodBowMightyBonus", iBloodBowBonus, ITEM_PROPERTY_MIGHTY);
+    }
 
-	oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-	if (GetIsObjectValid(oItem))
-	{
-	    IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-	}
+    oItem = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+    if (GetIsObjectValid(oItem))
+    {
+        IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 9999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    }
 }

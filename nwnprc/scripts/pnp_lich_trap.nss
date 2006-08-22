@@ -66,7 +66,7 @@ void main()
     eVis = EffectVisualEffect(VFX_COM_CHUNK_YELLOW_MEDIUM);
     ApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget);
     // Give the PKill vis time to run
-    DelayCommand(0.5,ApplyEffectToObject(DURATION_TYPE_INSTANT,eDeath,oTarget));
+    DelayCommand(0.5, ApplyEffectToObject(DURATION_TYPE_INSTANT,eDeath,oTarget));
 
     return;
 }

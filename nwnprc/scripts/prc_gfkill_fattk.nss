@@ -22,10 +22,10 @@
 #include "prc_alterations"
 /*
 //#include "prc_inc_sneak"
-//#include "prc_inc_combat"
-//#include "prc_inc_spells"
+//#include "prc_alterations"
+//#include "prc_alterations"
 //#include "spinc_common"
-//#include "X0_I0_SPELLS"
+//#include "prc_alterations"
 //#include "x2_inc_spellhook"
 */
 

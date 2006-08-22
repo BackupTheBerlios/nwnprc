@@ -3,7 +3,7 @@
 //:: prc_onaquire
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "inc_utility"
+#include "prc_alterations"
 #include "psi_inc_manifest"
 
 void main()

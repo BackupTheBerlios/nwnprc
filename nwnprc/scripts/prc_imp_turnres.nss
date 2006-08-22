@@ -11,7 +11,7 @@
 //:: Created On:  12/17/04
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "prc_alterations"
 void main()
 {
 object oPC = (OBJECT_SELF);

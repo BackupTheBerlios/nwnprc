@@ -444,8 +444,6 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
 //////////////////////////////////////////////////
 
 // The following files have no dependecies, or self-contained dependencies that do not require looping via this file
-#include "inc_draw"       // includes inc_draw_text and inc_draw_tools
-#include "inc_draw_prc"
 #include "inc_debug"
 #include "inc_target_list"
 #include "inc_logmessage"
@@ -453,9 +451,10 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
 #include "inc_time"
 #include "inc_rand_equip"
 #include "inc_class_by_pos"
-#include "prc_inc_actions"
 
 // The following includes have dependencies on files linked via this file
+#include "inc_draw"       // includes inc_draw_text and inc_draw_tools
+#include "inc_draw_prc"
 #include "inc_pers_array"   // includes inc_array, inc_persist_loca, inc_item_props, inc_prc_npc and inc_2dacache
 #include "inc_eventhook"    // Should be after inc_pers_array, which it is dependent on
 #include "inc_heap"         // Should be after inc_pers_array, as it needs inc_array
@@ -464,6 +463,7 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
 #include "inc_metalocation" // Depends on inc_persist_loca
 #include "inc_array_sort"   // Depends on inc_array and inc_debug
 #include "inc_uniqueid"     // Depends on inc_array
+#include "prc_inc_actions"
 
 
 /**********************\

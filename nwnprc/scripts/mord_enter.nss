@@ -1,3 +1,4 @@
+#include "prc_alterations"
 #include "prc_inc_teleport"
 
 int ValidateActivator(object oActivator);

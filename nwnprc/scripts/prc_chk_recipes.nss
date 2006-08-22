@@ -1,11 +1,13 @@
-#include "inc_utility"
+
+#include "prc_alterations"
+#include "prc_alterations"
 
 int StartingConditional()
 {
-int iCondition = GetPRCSwitch(PRC_SPELLSLAB_NORECIPES);
+    int iCondition = GetPRCSwitch(PRC_SPELLSLAB_NORECIPES);
 
-if (iCondition > 0) return FALSE;
-
-return TRUE;
+    if (iCondition > 0) 
+        return FALSE;
+    return TRUE;
 }
 

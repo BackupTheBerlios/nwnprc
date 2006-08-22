@@ -13,7 +13,7 @@
 
 #include "prc_alterations"
 #include "prc_inc_domain"
-#include "inc_utility"
+#include "prc_alterations"
 
 void PrcFeats(object oPC)
 {

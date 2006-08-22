@@ -95,13 +95,18 @@ public final class NPCEvolve{
 		for(classID = 0; classID < countClasses; classID++){
 			int packageMother = 0;
 			int packageFather = 0;
+			int scoreMother = 0;
+			int scoreFather = 0;
 			for(packageID = 0; packageID < countPackages; packageID++){
 				score = data[classID][packageID];
-				if(score > packageMother){
+				if(score > scoreMother){
+					scoreFather = scoreMother;
+					scoreMother = score;
 					packageFather = packageMother;
 					packageMother = packageID;
 				}
-				else if(score > packageFather){
+				else if(score > scoreFather){
+					scoreFather = score;
 					packageFather = packageID;
 				}
 			}
@@ -112,12 +117,12 @@ public final class NPCEvolve{
 			filename = "evopset_"+classID+"_";
 			//if(packageMother<10)
 			//	filename += "0";
-			filename += packageMother;
+			filename += ""+packageMother;
 			Data_2da motherpackset2da = Data_2da.load2da(packageFilePath+File.separator+filename+".2da");
 			filename = "evopset_"+classID+"_";
 			//if(packageFather<10)
 			//	filename += "0";
-			filename += packageFather;
+			filename += ""+packageFather;
 			Data_2da fatherpackset2da = Data_2da.load2da(packageFilePath+File.separator+filename+".2da");
 			//create the output 2das
 			for(int i = 0; i < countPackages; i++){
@@ -130,6 +135,13 @@ public final class NPCEvolve{
 				int parentToUse = 1;
 				for(int row = 0; row < 40 ; row++){
 					offspringpackset2da.appendRow();
+					//1 in 10 chance to flip between parents
+					if(rng.nextInt(10)==0){
+						if(parentToUse == 1)
+							parentToUse = 2;
+						else if(parentToUse == 2)
+							parentToUse = 1;
+					}
 					if(parentToUse == 1){
 						//copy from mother
 						String value = motherpackset2da.getEntry("PackOffset", row);
@@ -146,13 +158,6 @@ public final class NPCEvolve{
 							value = ""+(rng.nextInt(10)+1);
 						}
 						offspringpackset2da.setEntry("PackOffset", row, value);
-					}
-					//1 in 10 chance to flip
-					if(rng.nextInt(10)==0){
-						if(parentToUse == 1)
-							parentToUse = 2;
-						else if(parentToUse == 2)
-							parentToUse = 1;
 					}
 				}
 				//now write it to the disk

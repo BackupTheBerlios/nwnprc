@@ -568,6 +568,19 @@ object CraftedToolTarget(object oTrueSpeaker, object oTarget)
 	else if (PRCGetSpellId() == UTTER_FORTIFY_ARMOUR_SNEAK || PRCGetSpellId() == UTTER_FORTIFY_ARMOUR_CRIT)
 	{
 		return GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+	}// This one targets scrolls and potions
+	else if (PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_EMP || PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_EXT || 
+	         PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_MAX)
+	{
+		oItem = GetFirstItemInInventory(oTarget);
+		while(GetIsObjectValid(oItem))
+		{
+		        if (GetBaseItemType(oItem) == BASE_ITEM_SCROLL || GetBaseItemType(oItem) == BASE_ITEM_POTIONS)
+		        {
+		        	return oItem;
+		        }
+	        	oItem = GetNextItemInInventory(oTarget);
+     		}
 	}
 	else // For the rest of the utterances, any item is a valid target.
 	{

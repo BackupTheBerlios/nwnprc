@@ -300,8 +300,10 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker)
 int AddUtteranceSpecificDC(object oTrueSpeaker)
 {
 	int nDC = 0;
-	// When using this power you add +10 to the DC to make yourself immune to crits
+	// When using this utterance you add +10 to the DC to make yourself immune to crits
 	if (PRCGetSpellId() == UTTER_FORTIFY_ARMOUR_CRIT) nDC += 10;
+	// When using this utterance you add +10 to the DC to maximize a potion or scroll
+	if (PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_MAX) nDC += 10;
 }
 
 // Test main

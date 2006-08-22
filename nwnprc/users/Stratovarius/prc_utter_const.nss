@@ -92,7 +92,9 @@ const int UTTER_WARD_PEACE                     = -1;
 const int UTTER_WARD_PEACE_R                   = -1;
 const int UTTER_WORD_NURTURING_CRITICAL        = -1;
 const int UTTER_WORD_NURTURING_CRITICAL_R      = -1;
-const int UTTER_METAMAGIC_CATALYST             = -1;
+const int UTTER_METAMAGIC_CATALYST_EMP         = -1;
+const int UTTER_METAMAGIC_CATALYST_EXT         = -1;
+const int UTTER_METAMAGIC_CATALYST_MAX         = -1;
 const int UTTER_SEIZE_ITEM                     = -1;
 
 // Level 6 Utterances

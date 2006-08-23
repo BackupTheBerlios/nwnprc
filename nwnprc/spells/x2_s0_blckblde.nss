@@ -40,7 +40,7 @@ void DoPnPAttack(object oSummon)
                 nDamage *=2; //critical doubles damage
             //its magical damage because the description is unclear
             AssignCommand(oSummon, ApplyEffectToObject(
-                DURATION_TYPE_INSTANT, EffectDamage(nDamage, 
+                DURATION_TYPE_INSTANT, EffectDamage(nDamage,
                     DAMAGE_TYPE_MAGICAL, DAMAGE_POWER_PLUS_FIVE), oTarget));
         }
         if(nAttackResult == 2)
@@ -48,16 +48,16 @@ void DoPnPAttack(object oSummon)
             //critical hit
             //cast disintegrate
             int nLevel = GetLocalInt(oSummon, "BBoD_Level");
-            
+
             SetLocalInt(oSummon, PRC_CASTERLEVEL_OVERRIDE, nLevel);
             // Make sure this variable gets deleted as quickly as possible in case it's added in error.
             AssignCommand(oSummon, DelayCommand(1.0, DeleteLocalInt(oSummon, PRC_CASTERLEVEL_OVERRIDE)));
-            
+
             // Make SR check
            if (!SPResistSpell(OBJECT_SELF, oTarget))
            {
-                // Generate the RTA beam.     
-                AssignCommand(oSummon, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, 
+                // Generate the RTA beam.
+                AssignCommand(oSummon, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
                 EffectBeam(VFX_BEAM_DISINTEGRATE, OBJECT_SELF, BODY_NODE_HAND), oTarget, 1.0,FALSE));
 
                 // Fort save or die time, but we implement death by doing massive damage
@@ -68,7 +68,7 @@ void DoPnPAttack(object oSummon)
                 int nDamage = 9999;
                 if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
                 {
-                     nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == nAttackResult ? 5 : 10, 6); 
+                     nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == nAttackResult ? 5 : 10, 6);
                 }
                 else
                 {
@@ -82,13 +82,13 @@ void DoPnPAttack(object oSummon)
 
                 // Apply damage effect and VFX impact, and if the target is dead then apply
                 // the fancy rune circle too.
-                if (nDamage >= GetCurrentHitPoints (oTarget)) 
+                if (nDamage >= GetCurrentHitPoints (oTarget))
                      DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2), oTarget));
                 //DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, SPEffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget));
                 DelayCommand(0.25, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_MAGBLUE), oTarget));
                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, nAttackResult, nDamage, DAMAGE_TYPE_MAGICAL);
-           }            
-            
+           }
+
         }
     }
     if(GetIsObjectValid(oSummon))
@@ -139,7 +139,7 @@ void spellsCreateItemForSummoned()
     object oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
     while(GetIsObjectValid(oSummon))
     {
-        GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
+        oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, OBJECT_SELF, i);
         i++;
     }
     // Make the blade require concentration
@@ -153,7 +153,7 @@ void spellsCreateItemForSummoned()
         IPSetWeaponEnhancementBonus(oWeapon, nStat);
     }
     SetDroppableFlag(oWeapon, FALSE);
-    
+
     if(GetPRCSwitch(PRC_PNP_BLACK_BLADE_OF_DISASTER))
     {
         itemproperty ipTest = GetFirstItemProperty(oWeapon);
@@ -207,7 +207,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //Apply the VFX impact and summon effect
     MultisummonPreSummon();
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
-    
+
     float fDuration = RoundsToSeconds(nDuration);
     if(GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL))
         fDuration = RoundsToSeconds(nDuration*GetPRCSwitch(PRC_SUMMON_ROUND_PER_LEVEL));

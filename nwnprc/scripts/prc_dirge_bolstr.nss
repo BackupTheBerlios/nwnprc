@@ -38,7 +38,7 @@ void main()
         {
             if (GetIsFriend(oTarget) && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
             {
-            	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
+                ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
             }
         }
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));

@@ -81,7 +81,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     MultisummonPreSummon();
     if(GetPRCSwitch(PRC_PNP_ANIMATE_DEAD))
     {
-        int i = 1;
         int nMaxHD = nCasterLevel*4;
         int nTotalHD = GetControlledUndeadTotalHD();
         if((nTotalHD+nHD)<=nMaxHD)
@@ -91,9 +90,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, PRCGetSpellTargetLocation());
         }
         else
-        {
             FloatingTextStringOnCreature("You cannot create more undead at this time.", OBJECT_SELF);
-        }
         FloatingTextStringOnCreature("Currently have "+IntToString(nTotalHD+nHD)+"HD out of "+IntToString(nMaxHD)+"HD.", OBJECT_SELF);
     }
     else

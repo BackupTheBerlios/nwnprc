@@ -104,9 +104,15 @@ void DoAnimationBit(location lTarget, object oCaster)
             {
                 if(GetPRCSwitch(PRC_MULTISUMMON))
                 {
-                    MultisummonPreSummon(oCaster);
-                    AssignCommand(oCaster, ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, 
-                        EffectSummonCreature(sWight, VFX_FNF_SUMMON_UNDEAD), GetLocation(oTarget)));
+                    //only create a new one if less than maximum count                    
+                    int nMaxHDControlled = nCasterLvl * 4;
+                    int nTotalControlled = GetControlledUndeadTotalHD(oPC);
+                    if(nTotalControlled < nMaxHDControlled)
+                    {
+                        MultisummonPreSummon(oCaster);
+                        AssignCommand(oCaster, ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, 
+                            EffectSummonCreature(sWight, VFX_FNF_SUMMON_UNDEAD), GetLocation(oTarget)));
+                    }    
                 }
                 else
                 {

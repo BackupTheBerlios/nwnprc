@@ -8,7 +8,7 @@
 //:: Created By: Aaon Graywolf
 //:: Created On: Mar 17, 2004
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 void main()
 {
     //Declare major variables

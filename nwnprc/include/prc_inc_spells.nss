@@ -198,6 +198,16 @@ int GetIsIncorporeal(object oTarget);
 // Dominated undead from Turn Undead do not count
 int GetControlledUndeadTotalHD(object oPC = OBJECT_SELF);
 
+// Gets the total number of HD of controlled evil outsiders
+// i.e from call dretch, call lemure, or similar
+// Dominated outsiders from Turn Undead etc do not count
+int GetControlledFiendTotalHD(object oPC = OBJECT_SELF);
+
+// Gets the total number of HD of controlled good outsiders
+// i.e from call favoured servants
+// Dominated outsiders from Turn Undead etc do not count
+int GetControlledCelestialTotalHD(object oPC = OBJECT_SELF);
+
 // -----------------
 // BEGIN SPELLSWORD
 // -----------------
@@ -2036,18 +2046,44 @@ int GetControlledUndeadTotalHD(object oPC = OBJECT_SELF)
     object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     while(GetIsObjectValid(oSummonTest))
     {
-        if(GetResRef(oSummonTest)=="nw_s_zombtyrant"//"NW_S_ZOMBTYRANT"
-            || GetResRef(oSummonTest)=="nw_s_skelwarr"//"NW_S_SKELWARR"
-            || GetResRef(oSummonTest)=="nw_s_skelchief"//"NW_S_SKELCHIEF"
-            || GetResRef(oSummonTest)=="X2_S_GHOUL_16"//"X2_S_GHOUL_16"
-            || GetResRef(oSummonTest)=="S_GHOULRAVAGER"//"S_GHOULRAVAGER"
-            || GetResRef(oSummonTest)=="S_GHOULLORD"//"S_GHOULLORD"
-            || GetResRef(oSummonTest)=="NW_S_GHAST"//"NW_S_GHAST"
-            || GetResRef(oSummonTest)=="NW_S_GHOUL"//"NW_S_GHOUL"
-            )
+        if(MyPRCGetRacialType(oSummonTest) == RACIAL_TYPE_UNDEAD)
             nTotalHD += GetHitDice(oSummonTest);
         if(DEBUG)FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), oPC);
-        if(DEBUG)DoDebug("GetHasSpellEffect(SPELL_ANIMATE_DEAD, oSummonTest) = "+IntToString(GetHasSpellEffect(SPELL_ANIMATE_DEAD, oSummonTest)));
+        i++;
+        oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    }
+    return nTotalHD;
+}
+
+
+int GetControlledFiendTotalHD(object oPC = OBJECT_SELF)
+{
+    int nTotalHD;
+    int i = 1;
+    object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    while(GetIsObjectValid(oSummonTest))
+    {
+        if(MyPRCGetRacialType(oSummonTest) == RACIAL_TYPE_OUTSIDER
+             && GetAlignmentGoodEvil(oSummonTest) == ALIGNMENT_EVIL)
+            nTotalHD += GetHitDice(oSummonTest);
+        if(DEBUG)FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), oPC);
+        i++;
+        oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    }
+    return nTotalHD;
+}
+
+int GetControlledCelestialTotalHD(object oPC = OBJECT_SELF)
+{
+    int nTotalHD;
+    int i = 1;
+    object oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+    while(GetIsObjectValid(oSummonTest))
+    {
+        if(MyPRCGetRacialType(oSummonTest) == RACIAL_TYPE_OUTSIDER
+             && GetAlignmentGoodEvil(oSummonTest) == ALIGNMENT_GOOD)
+            nTotalHD += GetHitDice(oSummonTest);
+        if(DEBUG)FloatingTextStringOnCreature(GetName(oSummonTest)+" is summon number "+IntToString(i), oPC);
         i++;
         oSummonTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     }

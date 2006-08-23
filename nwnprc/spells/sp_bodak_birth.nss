@@ -66,14 +66,15 @@ void main()
     {
         //"Willing" check
         if(GetHasEffect(EFFECT_TYPE_DAZED, oTarget) 
-        || GetHasEffect(EFFECT_TYPE_DOMINATED, oTarget) 
-        || GetHasEffect(EFFECT_TYPE_PARALYZE, oTarget)
-        || GetHasEffect(EFFECT_TYPE_STUNNED, oTarget)
-        || GetHasEffect(EFFECT_TYPE_CHARMED, oTarget))
+            || GetHasEffect(EFFECT_TYPE_DOMINATED, oTarget) 
+            || GetHasEffect(EFFECT_TYPE_PARALYZE, oTarget)
+            || GetHasEffect(EFFECT_TYPE_STUNNED, oTarget)
+            || GetHasEffect(EFFECT_TYPE_CHARMED, oTarget)
+            || GetIsFriend(oTarget, oPC))
         
         {
             //Kill target
-                            DeathlessFrenzyCheck(oTarget);
+            DeathlessFrenzyCheck(oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
             
             //Create Bodak
@@ -82,17 +83,8 @@ void main()
             //Will save to avoid control
             if (!PRCMySavingThrow(SAVING_THROW_WILL, oBodak, (PRCGetSaveDC(oBodak,oPC)), SAVING_THROW_TYPE_MIND_SPELLS, oPC, 1.0))
             {
-                //Get original max henchmen
-                int nMax = GetMaxHenchmen();
-                
-                //Set new max henchmen high
-                SetMaxHenchmen(150);
-                
-                //Make henchman
-                AddHenchman(oPC, oBodak);
-                
-                //Restore original max henchmen
-                SetMaxHenchmen(nMax);
+                effect eDom = SupernaturalEffect(EffectCutsceneDominated());
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDom, oBodak);
             }
         }
                 

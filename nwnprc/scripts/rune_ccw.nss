@@ -3,7 +3,7 @@
 // cures 4d8 points of damage plus 1 point per
 // caster level (up to +20).
 */
-
+#include "prc_alterations"
 #include "prc_class_const"
 
 void main()

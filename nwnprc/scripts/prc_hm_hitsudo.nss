@@ -7,6 +7,7 @@
 * by Jeremiah Teague
 ******************************************************/
 //#include "prc_hnshnmystc"
+#include "prc_alterations"
 #include "prc_class_const"
 #include "prc_feat_const"
 

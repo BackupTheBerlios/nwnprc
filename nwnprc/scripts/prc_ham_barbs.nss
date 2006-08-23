@@ -15,6 +15,7 @@
 //:: Created On: Oct 16, 2001
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "nw_i0_generic"
 
 void main()

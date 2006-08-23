@@ -206,7 +206,6 @@ void main()
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oAnimate, 4.0);
         DelayCommand(0.0, AssignCommand(oAnimate, ActionPlayAnimation(ANIMATION_LOOPING_DEAD_BACK, 1.0, 2.0)));
         DelayCommand(3.5, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eDom, oAnimate));
-//            AddHenchman(OBJECT_SELF, oAnimate);
     }
     else
     {

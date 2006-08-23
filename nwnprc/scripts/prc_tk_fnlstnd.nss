@@ -9,7 +9,7 @@
 //:: Created By: Stratovarius
 //:: Created On: Aug 6, 2004
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_class_const"
 
 void main()

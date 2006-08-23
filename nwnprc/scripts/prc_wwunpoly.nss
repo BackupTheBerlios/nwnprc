@@ -10,7 +10,7 @@
 //:: Created By: Russell S. Ahlstrom
 //:: Created On: May 14, 2004
 //:://////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_feat_const"
 
 void main()

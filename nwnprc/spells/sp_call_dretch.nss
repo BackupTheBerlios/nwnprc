@@ -34,9 +34,6 @@ Created:   5/7/2006
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-int GetControlledFiendHD(object oPC);
-const int ERROR_CODE_5_FIX_AGAIN =1;
-
 #include "prc_alterations"
 #include "spinc_common"
 
@@ -44,71 +41,42 @@ void main()
 {
     object oPC = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel(oPC);
-    int nMaxHDControlled = nCasterLvl * 2;
-    int nTotalControlled = GetControlledFiendHD(oPC);
-    int nDretches = d4(2);
-    int nCounter = nDretches;
-    object oDretch;
     location lLoc = GetSpellTargetLocation();
-
+    string sResRef = "nw_dretch";
     if(!X2PreSpellCastCode()) return;
 
     SPSetSchool(SPELL_SCHOOL_CONJURATION);
 
-    //determine how many to take control of
-    int nDretchesToControl = (nMaxHDControlled - nTotalControlled);
 
-    //Summon loop
-    while(nCounter > 0)
+    MultisummonPreSummon();
+    if(GetPRCSwitch(PRC_MULTISUMMON))
     {
-        oDretch = CreateObject(OBJECT_TYPE_CREATURE, "nw_dretch", lLoc, FALSE);
+        effect eSummon = EffectSummonCreature(sResRef);
+        //eSummon = ExtraordinaryEffect(eSummon); //still goes away on rest, use supernatural instead
+        eSummon = SupernaturalEffect(eSummon);    
+        //determine how many to take control of
+        int nTotalCount = d4(2);
+        int i;
+        int nMaxHDControlled = nCasterLvl * 2;
+        int nTotalControlled = GetControlledFiendTotalHD(oPC);
+        //Summon loop
+        while(nTotalControlled < nMaxHDControlled
+            && i < nTotalCount)
         {
-            if(nDretchesToControl > 0)
-            {
-                //Get original max henchmen
-                int nMax = GetMaxHenchmen();
-
-                //Set new max henchmen high
-                SetMaxHenchmen(150);
-
-                //Make henchman
-                AddHenchman(oPC, oDretch);
-
-                //Restore original max henchmen
-                SetMaxHenchmen(nMax);
-
-                //decrement nDretches to Control
-                nDretchesToControl--;
-            }
-            nCounter--;
+            ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(24*12*30));
+            i++;    
+            nTotalControlled = GetControlledFiendTotalHD(oPC);
         }
+        FloatingTextStringOnCreature("Currently have "+IntToString(nTotalControlled)+"HD out of "+IntToString(nMaxHDControlled)+"HD.", OBJECT_SELF);
+    }
+    else
+    {
+        //non-multisummon
+        //this has a swarm type effect since dretches are useless individually        
+        effect eSummon = EffectSwarm(TRUE, sResRef);
+        ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, HoursToSeconds(24));
     }
     SPEvilShift(oPC);
     SPSetSchool();
-}
-
-int GetControlledFiendHD(object oPC)
-{
-    int nHDControlled;
-    int nAssociate = 1;
-    int nType;
-    object oAssociate = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, nAssociate);
-
-    while(GetIsObjectValid(oAssociate))
-    {
-        nType = MyPRCGetRacialType(oAssociate);
-
-        //if a fiend, count HD
-        if((nType == RACIAL_TYPE_OUTSIDER) && GetAlignmentGoodEvil(oAssociate) == ALIGNMENT_EVIL)
-        {
-            nHDControlled += GetHitDice(oAssociate);
-        }
-
-        //increment nAssociate
-        nAssociate++;
-
-        oAssociate = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, oPC, nAssociate);
-    }
-    return nHDControlled;
 }
 

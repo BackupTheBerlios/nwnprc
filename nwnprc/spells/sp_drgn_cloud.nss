@@ -38,53 +38,45 @@ Created:   6/11/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-void SummonDragonCloud(location lLoc, int nCasterLevel, object oPC);
-
+#include "prc_alterations"
 #include "spinc_common"
+
+
+void SummonDragonCloud(location lLoc, float fDur)
+{
+    MultisummonPreSummon();
+    effect sSummon = EffectSummonCreature("prc_drag_cld");
+    ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, sSummon, lLoc);
+}
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	object oPC = OBJECT_SELF;
-	int nCasterLevel = PRCGetCasterLevel(oPC);
-	object oArea = GetArea(oPC);
-	location lLoc = GetSpellTargetLocation();
-	int nAbove = GetIsAreaAboveGround(oArea);
-			
-	if(nAbove == AREA_ABOVEGROUND)
-	{
-		DelayCommand(60.0f, SummonDragonCloud(lLoc, nCasterLevel, oPC));
-			
-		effect eVis = EffectVisualEffect(VFX_FNF_SUMMONDRAGON);
-		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
-		
-	}
-	
-	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, d3(), 0);
-	SPSetSchool();
+    if(!X2PreSpellCastCode()) return;
+    
+    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    
+    object oPC = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oPC);
+    object oArea = GetArea(oPC);
+    location lLoc = GetSpellTargetLocation();
+    int nAbove = GetIsAreaAboveGround(oArea);
+    int nInside = GetIsAreaInterior(oArea);
+    int nNatural = GetIsAreaNatural(oArea);
+    float fDur = RoundsToSeconds(nCasterLevel);
+            
+    if(nAbove == AREA_ABOVEGROUND
+        && nInside == FALSE
+        //&& nNatural == TRUE //might be in a town, able to see clouds but its not natural
+        )
+    {
+        effect eVis = EffectVisualEffect(VFX_FNF_SUMMONDRAGON);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
+        DelayCommand(60.0f, SummonDragonCloud(lLoc, fDur));
+        //only pay the cost if cast sucessfully
+        DoCorruptionCost(oPC, ABILITY_CONSTITUTION, d3(), 0);
+    }
+    
+    SPSetSchool();
 }
-
-void SummonDragonCloud(location lLoc, int nCasterLevel, object oPC)
-{
-	float fDur = 60.0f + (nCasterLevel * 60.0f);
-	
-	//Get original max henchmen
-	int nMax = GetMaxHenchmen();
-	
-	//Set new max henchmen high
-	SetMaxHenchmen(150);
-	
-	object oDragon = CreateObject(OBJECT_TYPE_CREATURE, "prc_drag_cld", lLoc, TRUE);
-	DestroyObject(oDragon, fDur);
-	
-	//Make henchman
-	AddHenchman(oPC, oDragon);
-	
-	//Restore original max henchmen
-	SetMaxHenchmen(nMax);
-}
-	
-	
+    
+    

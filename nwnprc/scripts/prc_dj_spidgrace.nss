@@ -10,6 +10,7 @@ Spider's Grace feat
 //:: Created By: PsychicToaster
 //:: Created On: 7-31-04
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 void main()
 {
 //Debug

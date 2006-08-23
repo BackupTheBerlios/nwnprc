@@ -53,7 +53,8 @@
 49  FEAT_SPELLFIRE_WIELDER                           4368      0    -1             1      
 50  FEAT_SPELLFIRE_INCREASE                          4369      0    99             1      
 51  FEAT_SPELLFIRE_DECREASE                          4370      0    99             1      
-52  FEAT_SPELLFIRE_QUICKSELECT                       4371      0    99             1      
+52  FEAT_SPELLFIRE_QUICKSELECT                       4371      0    99             1        
+44  FEAT_DISCIPLE_OF_THE_SUN                         3127      0    -1             1    
 53  ****                                             ****      **** ****           ****   
 54  **PsionicFeats**                                 ****      **** ****           ****   
 55  Psionic_Focus                                    4818      0    99             1      
@@ -190,6 +191,5 @@
 186 FEAT_TEMPLATE_HALF_CELESTIAL_HOLY_WORD           22615     0    99             1      
 187 FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM          22618     0    99             1      
 188 FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX           22619     0    99             1      
-189 FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION        22620     0    99             1       
-190 FEAT_TEMPLATE_HALF_CELESTIAL_                    22621     0    99             1     
+189 FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION        22620     0    99             1     
 191 ###cls_feat_allBaseClasses_END###                ****      **** ****           ****   

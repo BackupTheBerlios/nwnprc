@@ -6,7 +6,7 @@
     You create an aura that boosts the undead
     around you.
 */
-
+#include "prc_alterations"
 #include "prc_spell_const"
 
 void main()

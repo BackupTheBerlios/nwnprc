@@ -19,3 +19,4 @@ potions excepted, always 1 day (depending on switch)
 
 add truespeaking bonuses to wonderous item 2da
 
+add psionics to crafting

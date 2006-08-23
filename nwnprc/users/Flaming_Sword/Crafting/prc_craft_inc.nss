@@ -5,10 +5,18 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 20, 2006
+    Modified: Aug 22, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
+
+    Some hardcoded functions for itemprops to avoid looping through
+        the 2das multiple times:
+
+        Get2DALineFromItemprop()
+        DisallowType()
+        PrereqSpecialHandling()
+        PropSpecialHandling()
 
 */
 
@@ -27,7 +35,7 @@ int MaxListSize(string sTable);
 #include "prc_inc_spells"
 #include "prc_inc_listener"
 
-const int NUM_MAX_PROPERTIES            = 152;
+const int NUM_MAX_PROPERTIES            = 200;
 const int NUM_MAX_SUBTYPES              = 256;
 //const int NUM_MAX_FEAT_SUBTYPES         = 16384;    //because iprp_feats is frickin' huge
 const int NUM_MAX_FEAT_SUBTYPES         = 397;      //because the above screwed the game
@@ -64,6 +72,9 @@ const int PRC_CRAFT_ITEM_TYPE_WEAPON    = 1;
 const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
+
+const string PRC_CRAFT_SPECIAL_BANE     = "PRC_CRAFT_SPECIAL_BANE";
+const string PRC_CRAFT_SPECIAL_BANE_RACE = "PRC_CRAFT_SPECIAL_BANE_RACE";
 
 struct itemvars
 {
@@ -155,7 +166,13 @@ int GetArmourCheckPenaltyReduction(object oItem)
     return nBonus;
 }
 
-//Returns -1 if itemprop is not in the list, -2 if similar and should disallow type
+int SkillHasACPenalty(int nSkill)
+{
+    return StringToInt(Get2DACache("skills", "ArmorCheckPenalty", nSkill));
+}
+
+//Returns -1 if itemprop is not in the list, -2 if similar and should disallow type,
+//  hardcoded to avoid looping through 2das
 int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
 {   //it's either hardcoding or large numbers of 2da reads
     int nType = GetItemPropertyType(ip);
@@ -195,6 +212,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case IP_CONST_DAMAGESOAK_5_HP: return 38; break;
                         case IP_CONST_DAMAGESOAK_10_HP: return 39; break;
                         case IP_CONST_DAMAGESOAK_15_HP: return 40; break;
+                        default: return -2; break;
                     }
                 }
                 else if(nSubType == IP_CONST_DAMAGEREDUCTION_6)
@@ -203,6 +221,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                     {
                         case IP_CONST_DAMAGESOAK_5_HP: return 41; break;
                         case IP_CONST_DAMAGESOAK_10_HP: return 42; break;
+                        default: return -2; break;
                     }
                 }
                 else return -2;
@@ -227,6 +246,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case IP_CONST_DAMAGERESIST_20: return nBaseValue + 1; break;
                         case IP_CONST_DAMAGERESIST_30: return nBaseValue + 2; break;
                         case IP_CONST_DAMAGERESIST_50: return nBaseValue + 3; break;
+                        default: return -2; break;
                     }
                 }
                 else return -2;
@@ -250,8 +270,8 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case 5: return 49; break;
                         case 10: return 50; break;
                         case 15: return 51; break;
+                        default: return -2; break;
                     }
-
                 }
                 else if(nSubType == SKILL_MOVE_SILENTLY)
                 {
@@ -261,6 +281,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case 5: return 52; break;
                         case 10: return 53; break;
                         case 15: return 54; break;
+                        default: return -2; break;
                     }
                 }
                 else
@@ -271,14 +292,125 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
     }
     else if(sFile == "craft_weapon")
     {
+        switch(nType)
+        {
+            case ITEM_PROPERTY_ENHANCEMENT_BONUS:
+            {
+                return (nCostTableValue - 1);
+                break;
+            }
+            case ITEM_PROPERTY_DAMAGE_BONUS:
+            {
+                if(nSubType == IP_CONST_DAMAGETYPE_ACID)
+                {
+                    if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 20;
+                    else return -2;
+                }
+                else if(nSubType == IP_CONST_DAMAGETYPE_FIRE)
+                {
+                    if(nCostTableValue == IP_CONST_DAMAGEBONUS_1d6) return 29;
+                    else if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 30;
+                    else return -2;
+                }
+                else if(nSubType == IP_CONST_DAMAGETYPE_COLD)
+                {
+                    if(nCostTableValue == IP_CONST_DAMAGEBONUS_1d6) return 31;
+                    else if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 32;
+                    else return -2;
+                }
+                else if(nSubType == IP_CONST_DAMAGETYPE_ELECTRICAL)
+                {
+                    if(nCostTableValue == IP_CONST_DAMAGEBONUS_1d6) return 36;
+                    else if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 37;
+                    else return -2;
+                }
+                else if(nSubType == IP_CONST_DAMAGETYPE_SONIC)
+                {
+                    if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 38;
+                    else return -2;
+                }
+                else return -2;
+                break;
+            }
+            case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
+            {
+                switch(nSubType)
+                {
+                    case IP_CONST_ALIGNMENTGROUP_LAWFUL:
+                    {
+                        if(nCostTableValue == IP_CONST_DAMAGEBONUS_2d6) return 21;
+                        else if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 22;
+                        else return -2;
+                        break;
+                    }
+                    case IP_CONST_ALIGNMENTGROUP_CHAOTIC:
+                    {
+                        if(nCostTableValue == IP_CONST_DAMAGEBONUS_2d6) return 23;
+                        else if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 24;
+                        else return -2;
+                        break;
+                    }
+                    case IP_CONST_ALIGNMENTGROUP_EVIL:
+                    {
+                        if(nCostTableValue == IP_CONST_DAMAGEBONUS_2d6) return 33;
+                        else if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 34;
+                        else return -2;
+                        break;
+                    }
+                    case IP_CONST_ALIGNMENTGROUP_GOOD:
+                    {
+                        if(nCostTableValue == IP_CONST_DAMAGEBONUS_2d6) return 39;
+                        else if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 40;
+                        else return -2;
+                        break;
+                    }
+                    default: return -2; break;
+                }
+                break;
+            }
+            case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
+            {
+                switch(nCostTableValue)
+                {
+                    case IP_CONST_DAMAGEBONUS_2d6: return 25; break;
+                    case IP_CONST_DAMAGEBONUS_4d6: return 26; break;
+                    default: return -2; break;
+                }
+                break;
+            }
+            case ITEM_PROPERTY_KEEN: return 35; break;
+            case ITEM_PROPERTY_ON_HIT_PROPERTIES:
+            {
+                switch(nSubType)
+                {
+                    case IP_CONST_ONHIT_SLAYRACE:
+                    {
+                        if(nParam1Value == IP_CONST_RACIALTYPE_UNDEAD)
+                        {
+                            if(nCostTableValue == IP_CONST_ONHIT_SAVEDC_14) return 27;
+                            else if(nCostTableValue == 21) return 28;
+                            else return -2;
+                        }
+                        break;
+                    }
+                    case IP_CONST_ONHIT_VORPAL: return 41; break;
+                    case IP_CONST_ONHIT_WOUNDING: return 42; break;
+                }
+                break;
+            }
+        }
     }
     return -1;
 }
 
+//Hardcoded properties to disallow, avoids many loops through 2das
 void DisallowType(object oItem, string sFile, itemproperty ip)
 {
     int i;
     int nType = GetItemPropertyType(ip);
+    int nSubType = GetItemPropertySubType(ip);
+    int nCostTableValue = GetItemPropertyCostTableValue(ip);
+    int nParam1Value = GetItemPropertyParam1Value(ip);
     if(sFile == "craft_armour")
     {
         switch(nType)
@@ -298,6 +430,7 @@ void DisallowType(object oItem, string sFile, itemproperty ip)
             {
                 for(i = 38; i <= 42; i++)
                     array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                break;
             }
             case ITEM_PROPERTY_DAMAGE_RESISTANCE:
             {
@@ -309,25 +442,116 @@ void DisallowType(object oItem, string sFile, itemproperty ip)
                     array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
                 for(i = 51; i <= 54; i++)
                     array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                break;
             }
             case ITEM_PROPERTY_SPELL_RESISTANCE:
             {
                 for(i = 55; i <= 62; i++)
                     array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                break;
             }
             case ITEM_PROPERTY_SKILL_BONUS:
             {
                 for(i = 45; i <= 50; i++)
                     array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                break;
             }
         }
     }
     else if(sFile == "craft_weapon")
     {
+        switch(nType)
+        {
+            /*
+            case ITEM_PROPERTY_ENHANCEMENT_BONUS:
+            {
+            }
+            */
+            case ITEM_PROPERTY_DAMAGE_BONUS:
+            {
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 20, 0);
+                for(i = 29; i <= 32; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                for(i = 36; i <= 38; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                break;
+            }
+            case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
+            {
+                for(i = 21; i <= 24; i++)
+                    array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 33, 0);
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 34, 0);
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 39, 0);
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 40, 0);
+                break;
+            }
+            case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
+            {
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 25, 0);
+                array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 26, 0);
+                break;
+            }
+            //case ITEM_PROPERTY_KEEN: array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 35, 0); break;
+            case ITEM_PROPERTY_ON_HIT_PROPERTIES:
+            {
+                switch(nSubType)
+                {
+                    case IP_CONST_ONHIT_SLAYRACE:
+                    {
+                        if(nParam1Value == IP_CONST_RACIALTYPE_UNDEAD)
+                        {
+                            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 27, 0);
+                            array_set_int(oItem, PRC_CRAFT_ITEMPROP_ARRAY, 28, 0);
+                        }
+                        break;
+                    }
+                    /*
+                    case IP_CONST_ONHIT_VORPAL: return 41; break;
+                    case IP_CONST_ONHIT_WOUNDING: return 42; break;
+                    */
+                }
+                break;
+            }
+        }
     }
 }
 
-
+//hardcoding of some prereqs
+int PrereqSpecialHandling(string sFile, object oItem, int nLine)
+{
+    int nTemp;
+    if(StringToInt(Get2DACache(sFile, "Special", nLine)))
+    {
+        if(sFile == "craft_armour")
+        {   //nothing here yet
+        }
+        else if(sFile == "craft_weapon")
+        {
+            nTemp = StringToInt(Get2DACache("baseitems", "WeaponType", GetBaseItemType(oItem)));
+            switch(nLine)
+            {
+                case 27:
+                case 28:
+                {
+                    return ((nTemp == 2) || (nTemp == 5));
+                    break;
+                }
+                case 35:
+                {
+                    return nTemp != 2;
+                    break;
+                }
+                case 41:
+                {
+                    return ((nTemp == 3) || (nTemp == 4));
+                    break;
+                }
+            }
+        }
+    }
+    return TRUE;
+}
 
 //Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
 struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterLevel = 0, int bEpic = 0, int bSet = 0)
@@ -347,7 +571,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
         //Setup
         for(i = 0; i < MaxListSize(sFile); i++)
         {
-            if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)))
+            if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)) && PrereqSpecialHandling(sFile, oItem, i))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
         }
     }
@@ -382,7 +606,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
         }
         else if(bSet && k == -2)
         {
-            DisallowType(oItem, sFile, ip);
+            DisallowType(oPC, sFile, ip);
         }
         ip = GetNextItemProperty(oItem);
     }
@@ -496,16 +720,87 @@ int GetWeaponType(int nBaseItem)
     return 0;
 }
 
-void ApplyItemProp(object oItem, string sFile, int nIndex)
+//Hardcoding of some adjustments
+itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nIndex)
 {
+    itemproperty ip;
+    int nTemp;
+    string sTemp = Get2DACache(sFile, "Type" + IntToString(nIndex), nLine);
+    if(sTemp == "") return ip;
+    int nType = StringToInt(sTemp);
+    int nSubType = StringToInt(Get2DACache(sFile, "SubType" + IntToString(nIndex), nLine));
+    int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue" + IntToString(nIndex), nLine));
+    int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value" + IntToString(nIndex), nLine));
+
+    if(StringToInt(Get2DACache(sFile, "Special", nLine)))
+    {
+        if(sFile == "craft_armour")
+        {
+            if(nType == ITEM_PROPERTY_SKILL_BONUS && SkillHasACPenalty(nSubType))
+                nCostTableValue += GetArmourCheckPenaltyReduction(oItem);
+        }
+        else if(sFile == "craft_weapon")
+        {
+            switch(nLine)
+            {
+                case 25:
+                case 26:
+                {
+                    nTemp = GetLocalInt(GetItemPossessor(oItem), PRC_CRAFT_SPECIAL_BANE_RACE);
+                    if(nIndex == 3)
+                        nParam1Value = nTemp;
+                    else
+                        nSubType = nTemp;
+                    if(nIndex == 2)
+                        nCostTableValue += IPGetWeaponEnhancementBonus(oItem);
+                    break;
+                }
+            }
+        }
+    }
+
+    return ConstructIP(nType, nSubType, nCostTableValue, nParam1Value);
+}
+
+void ApplyItemProps(object oItem, string sFile, int nLine)
+{
+    int i;
+    itemproperty ip;
+    for(i == 1; i <= 3; i++)
+    {
+        ip = PropSpecialHandling(oItem, sFile, nLine, i);
+        if(GetIsItemPropertyValid(ip))
+            IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    }
+    /*
+    int nType = StringToInt(Get2DACache(sFile, "Type1", nLine));
+    int nSubType = StringToInt(Get2DACache(sFile, "SubType1", nLine));
+    int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue1", nLine));
+    int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value1", nLine));
+    string sTemp;
+    IPSafeAddItemProperty(oItem, ConstructIP(nType, nSubType, nCostTableValue, nParam1Value), 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    sTemp = Get2DACache(sFile, "Type2", nLine);
+    if(sTemp == "") return;
     IPSafeAddItemProperty(oItem,
                         ConstructIP(
-                                    StringToInt(Get2DACache(sFile, "Type", nIndex)),
-                                    StringToInt(Get2DACache(sFile, "SubType", nIndex)),
-                                    StringToInt(Get2DACache(sFile, "CostTableValue", nIndex)),
-                                    StringToInt(Get2DACache(sFile, "Param1Value", nIndex))
+                                    StringToInt(sTemp),
+                                    StringToInt(Get2DACache(sFile, "SubType2", nLine)),
+                                    StringToInt(Get2DACache(sFile, "CostTableValue2", nLine)),
+                                    StringToInt(Get2DACache(sFile, "Param1Value2", nLine))
                                     ),
                                 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    sTemp = Get2DACache(sFile, "Type3", nLine);
+
+    if(sTemp == "") return;
+    IPSafeAddItemProperty(oItem,
+                        ConstructIP(
+                                    StringToInt(sTemp),
+                                    StringToInt(Get2DACache(sFile, "SubType3", nLine)),
+                                    StringToInt(Get2DACache(sFile, "CostTableValue3", nLine)),
+                                    StringToInt(Get2DACache(sFile, "Param1Value3", nLine))
+                                    ),
+                                0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+    */
 }
 
 //Partly ripped off the lexicon :P
@@ -580,7 +875,12 @@ string GetCrafting2DA(object oItem)
         return "craft_armour";
     }
 
-    if(GetWeaponType(nBase)) return "craft_weapon";
+    if(GetWeaponType(nBase) ||
+        (nBase == BASE_ITEM_ARROW) ||
+        (nBase == BASE_ITEM_BOLT) ||
+        (nBase == BASE_ITEM_BULLET)
+        )
+        return "craft_weapon";
     if(nBase == BASE_ITEM_RING) return "craft_ring";
     if(((nBase == BASE_ITEM_HELMET) ||
         (nBase == BASE_ITEM_AMULET) ||
@@ -731,11 +1031,6 @@ int GetCraftingDC(object oItem)
     else if(nType == PRC_CRAFT_EXOTIC_WEAPON)
         nDC = 18;
     return nDC;
-}
-
-int SkillHasACPenalty(int nSkill)
-{
-    return StringToInt(Get2DACache("skills", "ArmorCheckPenalty", nSkill));
 }
 
 //Applies Masterwork properties to oItem
@@ -1129,6 +1424,7 @@ string GetItemPropertyString(itemproperty ip)
     return sDesc;
 }
 
+/*
 //Supports up to 3 itemprops at a time
 void AddPropertyToItem(object oItem, string sFile, int nLine)
 {
@@ -1164,6 +1460,7 @@ void AddPropertyToItem(object oItem, string sFile, int nLine)
         IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
     }
 }
+*/
 
 //Returns a string describing the item
 string ItemStats(object oItem)
@@ -1490,7 +1787,7 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
         }
         case ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP:
         {
-            ip = ItemPropertyDamageBonusVsAlign(nSubTypeValue, nCostTableValue, nParam1Value);
+            ip = ItemPropertyDamageBonusVsAlign(nSubTypeValue, nParam1Value, nCostTableValue);
             break;
         }
         case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:

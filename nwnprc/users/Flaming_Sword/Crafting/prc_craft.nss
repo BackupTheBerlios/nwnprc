@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 20, 2006
+    Modified: Aug 22, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -45,6 +45,7 @@ const int STAGE_SELECT_SUBTYPE          = 1;
 const int STAGE_SELECT_COSTTABLEVALUE   = 2;
 const int STAGE_SELECT_PARAM1VALUE      = 3;
 const int STAGE_CONFIRM                 = 4;
+const int STAGE_BANE                    = 5;
 
 const int STAGE_CONFIRM_MAGIC           = 7;
 const int STAGE_APPEARANCE              = 8;
@@ -267,18 +268,31 @@ int GetPrevItemPropStage(int nStage, object oPC, int nPropList)
     return nStage;
 }
 
-int SkipLine(int i)
+//hardcoded to save time/prevent tmi
+int SkipLineSpells(int i)
 {
     switch(i)
     {
-        case 328: i = 345;
-        case 359: i++;
-        case 400: i = 450;
-        case 487: i = 511;
-        case 513: i++;
-        case 521: i = 538;
-        case 540: i = 900;
-        case 928: i = 1000;
+        case 328: i = 345; break;
+        case 359: i++; break;
+        case 400: i = 450; break;
+        case 487: i = 511; break;
+        case 513: i++; break;
+        case 521: i = 538; break;
+        case 540: i = 900; break;
+        case 928: i = 1000; break;
+    }
+    return i;
+}
+
+//hardcoded to save time/prevent tmi
+int SkipLineItemprops(int i)
+{
+    switch(i)
+    {
+        case 94: i = 100; break;
+        case 102: i = 150; break;
+        case 151: i = 200; break;
     }
     return i;
 }
@@ -294,9 +308,12 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
         int bValid = TRUE;
         string sTemp = "";
         if(sTable == "iprp_spells")
-            i = SkipLine(i);
+            i = SkipLineSpells(i);
         else if(sTable == "itempropdef")
+        {
+            i = SkipLineItemprops(i);
             bValid = ValidProperty(oItem, i);
+        }
         else if(GetStringLeft(sTable, 6) == "craft_")
             bValid = array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i);
         sTemp = Get2DACache(sTable, "Name", i);
@@ -321,10 +338,21 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
 //use heartbeat
 void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine)
 {
+    if(GetGold(oPC) < nCost)
+    {
+        FloatingTextStringOnCreature("Crafting: Insufficient gold!", oPC);
+        return;
+    }
+    if(GetItemPossessor(oItem) != oPC)
+    {
+        FloatingTextStringOnCreature("Crafting: You do not have the item!", oPC);
+        return;
+    }
     if(nLine == -1)
         IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
     else
     {
+        ApplyItemProps(oItem, sFile, nLine);
     }
     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
     TakeGoldFromCreature(nCost, oPC, TRUE);
@@ -380,7 +408,13 @@ void main()
         }
         else if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
         {   //cast on item, crafting targeted item
-            if(!GetHasFeat(GetCraftingFeat(oTarget), oPC))
+            int nFeat = GetCraftingFeat(oTarget);
+            if(nFeat == -1)
+            {
+                SendMessageToPC(oPC, "You cannot craft this item.");
+                return;
+            }
+            if(!GetHasFeat(nFeat, oPC))
             {
                 SendMessageToPC(oPC, "You do not have the required feat to craft this item.");
                 return;
@@ -615,6 +649,16 @@ void main()
                     MarkStageSetUp(nStage);
                     break;
                 }
+                case STAGE_BANE:
+                {
+                    SetHeader("Select a racial type.");
+                    AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
+                    AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
+                    SetLocalInt(oPC, "DynConv_Waiting", TRUE);
+                    PopulateList(oPC, MaxListSize("racialtypes"), TRUE, "racialtypes");
+                    MarkStageSetUp(nStage);
+                    break;
+                }
                 case STAGE_CRAFT_AC:
                 {
                     SetHeader("Select a base AC value.");
@@ -688,8 +732,11 @@ void main()
                     {   //taking armour check penalty reductions into account
                         nCostTableValue += GetArmourCheckPenaltyReduction(oNewItem);
                     }
+                    /*
                     itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
                     IPSafeAddItemProperty(oNewItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+                    */
+                    ApplyItemProps(oItem, sFile, nLine);
                     struct itemvars strTempOld;
                     strTempOld.item = oItem;
                     strTempOld.enhancement = nEnhancement;
@@ -787,6 +834,8 @@ void main()
         DeleteLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC);
         DeleteLocalInt(oPC, PRC_CRAFT_LINE);
         DeleteLocalString(oPC, PRC_CRAFT_FILE);
+        DeleteLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE);
+        DeleteLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE_RACE);
         array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         /*
         while(GetIsObjectValid(oNewItem))   //clearing inventory
@@ -870,6 +919,10 @@ void main()
                             SetLocalInt(oPC, PRC_CRAFT_LINE, nChoice);
                             //nType = StringToInt(Get2DACache(sFile, "Type", nChoice));
                             nStage = STAGE_CONFIRM_MAGIC;
+                            if(sFile == "craft_weapon" && (nChoice == 25 || nChoice == 26))
+                            {
+                                nStage = STAGE_BANE;
+                            }
                         }
                     }
                 }
@@ -1012,6 +1065,18 @@ void main()
                 }
                 break;
             }
+            case STAGE_BANE:
+            {
+                if(nChoice == CHOICE_BACK)
+                    nStage = STAGE_START;
+                else
+                {
+                    nStage = STAGE_CRAFT_CONFIRM;
+                    SetLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE_RACE, nChoice);
+                }
+                MarkStageNotSetUp(nStage, oPC);
+                break;
+            }
             case STAGE_CRAFT_AC:
             {
                 if(nChoice == CHOICE_BACK)
@@ -1089,6 +1154,8 @@ void main()
                 if(nChoice == CHOICE_BACK)
                 {
                     nStage = STAGE_START;
+                    if(GetLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE))
+                        nStage = STAGE_BANE;
                     MarkStageNotSetUp(nStage, oPC);
                 }
                 else if(nChoice == CHOICE_CONFIRM)

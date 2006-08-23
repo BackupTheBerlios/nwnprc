@@ -243,8 +243,9 @@ Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic 
   <entry id="51650" lang="en" sex="m">Unholy Power</entry>
   <entry id="51651" lang="en" sex="m">This weapon is evil-aligned and this bypasses the corresponding damage reduction. When a weapon of unholy power strikes a good target, this power erupts forth and deals +3d6 points of bonus unholy (evil) damage to the target, and the target gains one negative level (Fortitude DC 23 to remove 24 hours later). On a successful critical hit it instead deals +6d6 points of unholy (evil) damage and bestows two negative levels (or +9d6 and three negative levels if the critical multiplier is x3, or +12d6 and four negative levels if the critical multiplier is x4). The weapon bestows three negative levels on any good creature attempting to wield it. These negative levels remain as long as the weapon is in hand and disappear when the weapon is no longer wielded. These negative levels never result in actual level loss, but they cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings with this special ability bestow the unholy power upon their ammunition. This special ability does not stack with the nonepic unholy special ability. 
 Caster Level: 23rd; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, unholy word; Market Price: +8 bonus.</entry>
-  <entry id="51652" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51653" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51652" lang="en" sex="m">Wounding</entry>
+  <entry id="51653" lang="en" sex="m">A weapon of wounding deals damage to a creature such that a wound it inflicts bleeds for 1 point of damage per round thereafter in addition to the normal damage the weapon deals. Multiple wounds from the weapon result in cumulative bleeding. The bleeding can only be stopped by a successful Heal check (DC 15) or the application of any cure spell or other healing spell.
+Caster Level: 10th; Prerequisites: Craft Magic Arms and Armor, sword; Market Price: +2 bonus.</entry>
   <entry id="51654" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51655" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51656" lang="en" sex="m">Sonic Warding</entry>

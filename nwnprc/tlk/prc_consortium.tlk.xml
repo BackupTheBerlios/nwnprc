@@ -230,7 +230,7 @@ A disgraced or masterless Samurai cut loose from this all-pervading value system
 ABILITIES:
 
 Ancestral Daisho
-All Samurai carry two masterwork weapons - a katana and a wakizashi.  These weapons have been handed down over generations from the Samurai's ancestors, and protecting them is an important point of honor for the Samurai. As a Samurai acquires wealth, he can awaken the supernatural abilities latent in the weapons by sacrificing gold or items to enhance them.
+All Samurai carry two masterwork weapons - a katana and a wakizashi.  These weapons have been handed down over generations from the Samurai's ancestors, and protecting them is an important point of honor for the Samurai. As a Samurai acquires wealth, he can awaken the supernatural abilities latent in the weapons by sacrificing items to enhance them.
 
 </entry>
   <entry id="12325" lang="en" sex="m">Warpriest</entry>
@@ -280,11 +280,26 @@ Epic Samurai Bonus Feats List:
 Armor Skin, Damage Reduction, Devastating Critical, Epic Toughness, Epic Weapon Focus, Epic Prowess, Epic Weapon Specialization, Improved Stunning Fist, Improved Whirlwind Attack, Overwhelming Critical, Superior Initiative, Epic Ancestral Daisho</entry>
   <entry id="12331" lang="en" sex="m">Ancestral Daisho</entry>
   <entry id="12332" lang="en" sex="m">Type of Feat: Class
-Prerequisite: Level 1 Samurai
+Prerequisite: Level 4 Samurai
 
-Specifics: All Samurai carry two masterwork weapons - a katana and a wakizashi.  These weapons have been handed down over generations from the Samurai's ancestors, and protecting them is an important point of honor for the Samurai. As a Samurai acquires wealth, he can awaken the supernatural abilities latent in the weapons by sacrificing gold or items to enhance them.
+Specifics: All Samurai carry two masterwork weapons - a katana and a wakizashi.  These weapons have been handed down over generations from the Samurai's ancestors, and protecting them is an important point of honor for the Samurai. As a Samurai acquires wealth, he can awaken the supernatural abilities latent in the weapons by sacrificing items to enhance them.
 
-Use: Selected.</entry>
+Use: Selected.
+
+Table of value by level
+
+4th 2,000
+7th 8,000
+9th 18,000
+11th 32,000
+13th 50,000
+14th 72,000
+15th 98,000
+16th 126,000
+17th 162,000
+18th 200,000
+To further improve your Ancestral Daisho ability, you must take the Epic Ancestral Daisho feats.
+</entry>
   <entry id="12333" lang="en" sex="m">Listen to me, comrades! The evil we face this day is great, but the strength of my patron is with us! Our faith will guide us to victory in battle!</entry>
   <entry id="12334" lang="en" sex="m">Hear me! Today we partake in glorious battle. With the power of my patron at our sides, we will crush our adversaries! To battle!</entry>
   <entry id="12335" lang="en" sex="m">Friends! The time for battle has come, and I have called on the strength of my patron to aid us. We will be victorious this day!</entry>
@@ -532,7 +547,7 @@ Specifics: This increases the maximum total value of the samurai's ancestral wea
 Use: Automatic</entry>
   <entry id="12406" lang="en" sex="m">Epic Ancestral Daisho X</entry>
   <entry id="12407" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho VII
+Prerequisite: Epic Ancestral Daisho IX
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 8,000,000 gp.
 Use: Automatic</entry>
   <entry id="16390" lang="en" sex="m">

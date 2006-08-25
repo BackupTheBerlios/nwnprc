@@ -18449,6 +18449,9 @@ If you and a spellcasting attacker are both warded by spell turning effects in o
   <entry id="51603" lang="en" sex="m">Spell Turning (13)</entry>
   <entry id="51604" lang="en" sex="m">Forge Epic Ring</entry>
   <entry id="51605" lang="en" sex="m">Type of Feat: General
+Prerequisite: Forge Ring, Lore 35 ranks, Spellcraft 35 ranks
+Specifics: The character can forge magic rings that exceed the normal limits for such items.
+Use: Automatic.</entry>
   <entry id="51606" lang="en" sex="m">Craft Item</entry>
   <entry id="51607" lang="en" sex="m">Target yourself to create a new item, or target an existing item to upgrade it.</entry>
   <entry id="51608" lang="en" sex="m">Anarchic</entry>
@@ -18520,9 +18523,6 @@ Caster Level: 23rd; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic 
   <entry id="51652" lang="en" sex="m">Wounding</entry>
   <entry id="51653" lang="en" sex="m">A weapon of wounding deals damage to a creature such that a wound it inflicts bleeds for 1 point of damage per round thereafter in addition to the normal damage the weapon deals. Multiple wounds from the weapon result in cumulative bleeding. The bleeding can only be stopped by a successful Heal check (DC 15) or the application of any cure spell or other healing spell.
 Caster Level: 10th; Prerequisites: Craft Magic Arms and Armor, sword; Market Price: +2 bonus.</entry>
-Prerequisite: Forge Ring, Lore 35 ranks, Spellcraft 35 ranks
-Specifics: The character can forge magic rings that exceed the normal limits for such items.
-Use: Automatic.</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4

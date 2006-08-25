@@ -218,9 +218,9 @@ void EvalPRCFeats(object oPC)
         IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(229), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
 
     // Size changes
-    int nBiowareSize = GetCreatureSize(oPC);
+    int nLastSize = GetLocalInt(oPC, "PRCLastSize") + CREATURE_SIZE_FINE - 1;
     int nPRCSize = PRCGetCreatureSize(oPC);
-    if(nBiowareSize != nPRCSize)
+    if(nPRCSize != nLastSize)
         ExecuteScript("prc_size", oPC);
 
     // Speed changes

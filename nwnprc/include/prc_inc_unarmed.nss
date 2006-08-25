@@ -68,6 +68,14 @@ void UnarmedFists(object oCreature);
  */
 int GetIsPRCCreatureWeapon(object oTest);
 
+/**
+ * Determines the average damage of a IP_CONST_MONSTERDAMAGE_*** constant.
+ * Used to compare different unarmed damages.
+ *
+ * @param  iDamage IP_CONST_MONSTERDAMAGE_*** constant
+ * @return         average damage of that constant
+ */
+float DamageAvg(int iDamage);
 
 #include "prc_alterations"
 #include "pnp_shft_poly"
@@ -162,26 +170,16 @@ int FindUnarmedDamage(object oCreature)
     int iDamage = 0;
     int iMonk = GetLevelByClass(CLASS_TYPE_MONK, oCreature);
     int iShou = GetLevelByClass(CLASS_TYPE_SHOU, oCreature);
-    int iIoDM = GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oCreature);
     int iBrawler = GetLevelByClass(CLASS_TYPE_BRAWLER, oCreature);
     int iSacredFist = GetLevelByClass(CLASS_TYPE_SACREDFIST, oCreature);
     int iEnlightenedFist = GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oCreature);
     int iHenshin = GetLevelByClass(CLASS_TYPE_HENSHIN_MYSTIC, oCreature);
     int iZuoken = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oCreature);
-    int iMonkDamage = 0;
-    int iShouDamage = 0;
-    int iBrawlerDamage = 0;
-    int iRacialDamage = 0;
-    int iDamageToUse = 0;
+    int iMonkDamage = 1;
+    int iShouDamage = 1;
+    int iBrawlerDamage = 1;
     int iDieIncrease = 0;
-    int bUseMonkAlt = FALSE;
-
-    // Determine creature size by feats.
-    int bTinySize   = GetHasFeat(FEAT_TINY, oCreature);
-    int bSmallSize  = GetHasFeat(FEAT_SMALL, oCreature);
-    int bLargeSize  = GetHasFeat(FEAT_LARGE, oCreature);
-    int bHugeSize   = GetHasFeat(FEAT_HUGE, oCreature);
-    int bMediumSize = !bTinySize && !bSmallSize && !bLargeSize && !bHugeSize;
+    int iSize;
 
     // if the creature is shifted, use model size
     // otherwise, we want to stick to what the feats say they "should" be.
@@ -189,85 +187,55 @@ int FindUnarmedDamage(object oCreature)
     if( GetIsPolyMorphedOrShifted(oCreature) 
         || GetPRCSwitch(PRC_APPEARANCE_SIZE))
     {
-         bTinySize   = FALSE;
-         bSmallSize  = FALSE;
-         bMediumSize = FALSE;
-         bLargeSize  = FALSE;
-         bHugeSize   = FALSE;
-
-         switch (PRCGetCreatureSize(oCreature))
-         {
-              case CREATURE_SIZE_TINY:   bTinySize   = TRUE; break;
-              case CREATURE_SIZE_SMALL:  bSmallSize  = TRUE; break;
-              case CREATURE_SIZE_MEDIUM: bMediumSize = TRUE; break;
-              case CREATURE_SIZE_LARGE:  bLargeSize  = TRUE; break;
-              case CREATURE_SIZE_HUGE:   bHugeSize   = TRUE; break;
-         }
+         iSize = PRCGetCreatureSize(oCreature) - CREATURE_SIZE_MEDIUM + 5; // medium is size 5 for us
+    }
+    else
+    {
+        // Determine creature size by feats.
+        iSize = 5;  // medium is size 5 for us
+        if (GetHasFeat(FEAT_TINY,  oCreature)) iSize = 3; 
+        if (GetHasFeat(FEAT_SMALL, oCreature)) iSize = 4; 
+        if (GetHasFeat(FEAT_LARGE, oCreature)) iSize = 6; 
+        if (GetHasFeat(FEAT_HUGE,  oCreature)) iSize = 7;
+        // include size changes
+        iSize += PRCGetCreatureSize(oCreature) - PRCGetCreatureSize(oCreature, PRC_SIZEMASK_NONE);
+        // cap if needed
+        if (iSize < 1) iSize = 1;
+        if (iSize > 9) iSize = 9;
     }
 
     // Sacred Fist cannot add their levels if they've broken their code.
     if (GetHasFeat(FEAT_SF_CODE,oCreature)) iSacredFist = 0;
 
-    // Sacred Fist adds their levels to the monk class otherwise.
-    // Note: If a Sacred Fist has 0 levels of monk, it is considered to be a monk
-    // of equal level when considering damage (and unarmed attack schedule, which
-    // is not implemented.)
-    if (iSacredFist) iMonk += iSacredFist;
-
-    // Henshin Mystic stacks with monk levels (or uses monk progression.)
-    if (iHenshin) iMonk += iHenshin;
-
-    // Enlightened Fist stacks with monk levels (or uses monk progression.)
-    if (iEnlightenedFist) iMonk += iEnlightenedFist;
-
-    // Shou Disciple stacks with monk levels (or uses monk progression.)
-    if (iShou) iMonk += iShou;
-
-    // Fist of Zuoken stacks with monk levels (or uses monk progression.)
-    if (iZuoken) iMonk += iZuoken;
+    // several classes add their levels to the monk class,
+    // or use monk progression if the character has no monk levels
+    iMonk += iSacredFist + iHenshin + iEnlightenedFist + iShou + iZuoken;
 
     // In 3.0e, Monk progression stops after level 16:
     if (iMonk > 16 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonk = 16;
     // in 3.5e, monk progression stops at 20.
     else if(iMonk > 20) iMonk = 20;
 
-    // Calculating size modifier for damage dice, defaults to 2 as a standard.
-    int iSizeModifier = 2;
-    if      (bTinySize)   iSizeModifier = 0; // Tiny monks  - 1d3,  1d4,  1d6,  1d8,  1d10
-    else if (bSmallSize)  iSizeModifier = 1; // Small monks - 1d4,  1d6,  1d8,  1d10, 2d6
-    else if (bMediumSize) iSizeModifier = 2; // Medium monk - 1d6,  1d8,  1d10, 1d12, 1d20
-    else if (bLargeSize)  iSizeModifier = 3; // Large monks - 1d8,  1d10, 1d12, 2d8,  2d10
-    else if (bHugeSize)   iSizeModifier = 4; // Huge monks  - 1d10, 1d12, 2d8,  2d10, 2d12
+    // monks damage progesses every four levels, starts at 1d6
+    if (iMonk > 0)
+        iMonkDamage = iMonk / 4 + 3;
 
-    // calculates monk damage with proper size modifer
-    iMonkDamage = iMonk / 4 + iSizeModifier;
-
-    // For medium monks in 3.0e skip 2d6 and go to 1d20
-    if(bMediumSize && iMonkDamage == 6 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonkDamage = 7;
+    // For medium monks in 3.0e skip 2d8 and go to 1d20
+    if(iSize == 5 && iMonkDamage == 7 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) ) iMonkDamage = 8;
 
     // Shou Disciple either adds its level to existing class or does its own damage, depending
     // on which is better. Here we will determine how much damage the Shou Disciple does
     // without stacking.
-    if (iShou > 0) iShouDamage = iShou + 1; // Lv. 1: 1d6, Lv. 2: 1d8, Lv. 3: 1d10
+    if (iShou > 0) iShouDamage = iShou + 2; // Lv. 1: 1d6, Lv. 2: 1d8, Lv. 3: 1d10
     if (iShou > 3) iShouDamage--;           // Lv. 4: 1d10, Lv. 5: 2d6
 
-    // Modify the Shou Disciples damage based on size.
-    iShouDamage += iSizeModifier;
-
-    // Brawler has a very simple damage progression (regardless of size):
-    if (iBrawler) iBrawlerDamage = iBrawler / 6 + 2;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10, 3d8
-
-    // Optional code for "sized" bralwers
-    if(GetPRCSwitch(PRC_BRAWLER_SIZE) && iBrawler > 0)
-        iBrawlerDamage = iBrawler / 6 + iSizeModifier;
-
-    // For Initiate of Draconic Mysteries
-    if      (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
-    else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
+    // Brawler follows monk progression except for the last one (3d8)
+    if (iBrawler >   0) iBrawlerDamage = iBrawler / 6 + 3;   // 1d6, 1d8, 1d10, 2d6, 2d8, 2d10
+    if (iBrawler >= 36) iBrawlerDamage += 2;		       // 3d8
 
     // Monks and monk-like classes deal no additional damage when wearing any armor, at
     // least in NWN.  This is to reflect that.  No shields too.
-    if (iMonkDamage > 0 || iShouDamage > 0)
+    if (iMonkDamage > 1 || iShouDamage > 1)
     {
         object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oCreature);
         object oShield = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oCreature);
@@ -277,123 +245,38 @@ int FindUnarmedDamage(object oCreature)
 
         if (GetBaseAC(oArmor) > 0 || bShieldEq)
         {
-            iMonkDamage = 0;
-            iShouDamage = 0;
+            iMonkDamage = 1;
+            iShouDamage = 1;
         }
     }
 
+    // For Initiate of Draconic Mysteries
+    if      (GetHasFeat(FEAT_INCREASE_DAMAGE2, oCreature)) iDieIncrease = 2;
+    else if (GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature)) iDieIncrease = 1;
+
+    iMonkDamage    += iDieIncrease;
+    iShouDamage    += iDieIncrease;
+    iBrawlerDamage += iDieIncrease;
+
+    // now, read the damage from the table in unarmed_dmg.2da
+    iMonkDamage    = StringToInt(Get2DACache("unarmed_dmg","size" + IntToString(iSize), iMonkDamage));
+    iShouDamage    = StringToInt(Get2DACache("unarmed_dmg","size" + IntToString(iSize), iShouDamage));
+    if (!GetPRCSwitch(PRC_BRAWLER_SIZE) && iBrawler > 0)
+        iBrawlerDamage = StringToInt(Get2DACache("unarmed_dmg","size5", iBrawlerDamage));
+    else
+        iBrawlerDamage = StringToInt(Get2DACache("unarmed_dmg","size" + IntToString(iSize), iBrawlerDamage));
+
+    // Medium+ monks have some special values on the table in 3.0:
+    if (iSize >= 5 && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE))
+    {
+        if (iMonkDamage == IP_CONST_MONSTERDAMAGE_2d6)  iMonkDamage = IP_CONST_MONSTERDAMAGE_1d12;
+        if (iMonkDamage == IP_CONST_MONSTERDAMAGE_2d10) iMonkDamage = IP_CONST_MONSTERDAMAGE_1d20;
+    }
+
+    iDamage = iMonkDamage;
     // Future unarmed classes:  if you do your own damage, add in "comparisons" below here.
-    iDamageToUse = (iMonkDamage    > iDamageToUse) ? iMonkDamage    : iDamageToUse;
-    iDamageToUse = (iBrawlerDamage > iDamageToUse) ? iBrawlerDamage : iDamageToUse;
-    iDamageToUse = (iShouDamage    > iDamageToUse) ? iShouDamage    : iDamageToUse;
-
-    //Decided if to use the creature weapon or unarmed weapon is done via PRC Options
-    //defaults to using creature weapon if present, or unarmed otherwise
-    if (!GetHasFeat(FEAT_INCREASE_DAMAGE1, oCreature) 
-        && iRacialDamage > iDamageToUse)
-    {
-        iDamageToUse = iRacialDamage;
-    }
-
-    // Small characters get a penalty to damage if they've somehow ended up with no damage bonus
-    // (monk wearing armor or no monk levels but IoDM levels, stuff like that.)
-    // Added in tiny, large, and hugh size modifiers.
-    if      (iDamageToUse == 0 && bSmallSize) iDamageToUse = -1;
-    else if (iDamageToUse == 0 && bTinySize)  iDamageToUse = -1;
-    else if (iDamageToUse == 0 && bLargeSize) iDamageToUse = +1;
-    else if (iDamageToUse == 0 && bHugeSize)  iDamageToUse = +2;
-
-    // Medium+ monks have some special values on the table:
-    if (iDamageToUse == iMonkDamage && !bSmallSize) bUseMonkAlt = TRUE;
-
-    // This is where the correct damage dice is calculated
-    if (iDamageToUse > 10) iDamageToUse = 10;
-
-    switch (iDamageToUse)
-    {
-        case -1:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d4;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d3;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d2;
-            break;
-        case 0:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d6;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d4;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d3;
-            break;
-        case 1:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d8;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d6;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d4;
-            break;
-        case 2:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d10;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d8;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d6;
-            break;
-        case 3:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_1d12;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d10;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d8;
-            break;
-        case 4:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_2d8;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_1d12;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_1d10;
-            break;
-        case 5:
-            if (bUseMonkAlt && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE) )
-            {
-                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_1d20;
-                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d8;
-                else                        iDamage = IP_CONST_MONSTERDAMAGE_1d12;
-            }
-            else
-            {
-                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_2d10;
-                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d8;
-                else                        iDamage = IP_CONST_MONSTERDAMAGE_2d6;
-            }
-            break;
-        case 6:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_2d12;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_2d10;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_2d8;
-            break;
-        case 7:
-            if (bUseMonkAlt && !GetPRCSwitch(PRC_3_5e_FIST_DAMAGE))
-            {
-                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_3d10;
-                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d12;
-                else                        iDamage = IP_CONST_MONSTERDAMAGE_1d20;
-            }
-            else
-            {
-                if      (iDieIncrease == 2) iDamage = IP_CONST_MONSTERDAMAGE_3d10;
-                else if (iDieIncrease == 1) iDamage = IP_CONST_MONSTERDAMAGE_2d12;
-                else                        iDamage = IP_CONST_MONSTERDAMAGE_2d10;
-            }
-            break;
-        case 8:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_3d12;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_3d10;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_3d8;
-            break;
-        case 9:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_4d10;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_3d12;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_3d10;
-            break;
-        case 10:
-            if      (iDieIncrease == 2)     iDamage = IP_CONST_MONSTERDAMAGE_4d12;
-            else if (iDieIncrease == 1)     iDamage = IP_CONST_MONSTERDAMAGE_4d10;
-            else                            iDamage = IP_CONST_MONSTERDAMAGE_3d12;
-            break;
-
-        default:
-            WriteTimestampedLogEntry("Unknown value encountered in FindUnarmedDamage: " + IntToString(iDamageToUse));
-            break;
-    }
+    iDamage = (DamageAvg(iBrawlerDamage) > DamageAvg(iDamage)) ? iBrawlerDamage : iDamage;
+    iDamage = (DamageAvg(iShouDamage   ) > DamageAvg(iDamage)) ? iShouDamage    : iDamage;
 
     return iDamage;
 }
@@ -620,4 +503,12 @@ void UnarmedFists(object oCreature)
         DelayCommand(3.004f, SendMessageToPC(oCreature, "combat. Disregard any attack effects that seem extra: they are part of the workaround."));
         DelayCommand(600.0f, DeleteLocalInt(oCreature, "UnarmedSubSystemMessage"));
     }
+}
+
+float DamageAvg(int iDamage)
+{
+    int iDie = StringToInt(Get2DACache("iprp_monstcost", "Die", iDamage));
+    int iNum  = StringToInt(Get2DACache("iprp_monstcost", "NumDice", iDamage));
+
+    return IntToFloat(iNum * (iDie+1)) / 2;
 }

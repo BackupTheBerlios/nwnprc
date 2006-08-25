@@ -1,6 +1,6 @@
 
 #include "prc_alterations"
-#include "prc_alterations"
+#include "nw_i0_spells"
 
 void main()
 {
@@ -54,9 +54,13 @@ void main()
         iHand = ATTACK_BONUS_ONHAND;
     }
 
-    effect eAttackInc = EffectAttackIncrease(iAB);
-    effect eAttackDec = EffectAttackDecrease(iAP, iHand);
-    effect eAttack = EffectLinkEffects(eAttackInc, eAttackDec);
+    effect eAttack;
+    if (iAB > 0)
+        eAttack = EffectAttackIncrease(iAB);
+    else if (iAB < 0)
+        eAttack = EffectAttackDecrease(-1*iAB);
+
+    eAttack = EffectLinkEffects(eAttack, EffectAttackDecrease(iAP, iHand));
 
     eAttack = ExtraordinaryEffect(eAttack);
 

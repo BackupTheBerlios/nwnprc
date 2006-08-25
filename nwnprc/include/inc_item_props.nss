@@ -401,7 +401,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonus(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -411,7 +412,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsAlign(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsAlign(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -421,7 +423,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsDmgType(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsDmgType(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -431,7 +434,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsRace(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsRace(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_AC_BONUS_VS_SPECIFIC_ALIGNMENT:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -441,7 +445,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsSAlign(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyACBonusVsSAlign(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ATTACK_BONUS:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -451,7 +456,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonus(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -461,7 +467,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonusVsAlign(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonusVsAlign(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -471,7 +478,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonusVsRace(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonusVsRace(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -481,17 +489,19 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonusVsSAlign(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackBonusVsSAlign(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_DECREASED_ABILITY_SCORE:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
-            if ((iCurVal + iChange)  > 20)
+            if ((iCurVal + iChange)  > 10)
             {
-                iVal -= iCurVal + iChange - 20;
+                iVal -= iCurVal + iChange - 10;
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDecreaseAbility(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDecreaseAbility(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_DECREASED_AC:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -501,7 +511,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 5;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDecreaseAC(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDecreaseAC(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -511,7 +522,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 5;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackPenalty(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyAttackPenalty(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -521,7 +533,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 5;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementPenalty(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementPenalty(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_DECREASED_SAVING_THROWS:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -531,7 +544,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyReducedSavingThrowVsX(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyReducedSavingThrowVsX(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -541,7 +555,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyReducedSavingThrow(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyReducedSavingThrow(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_DECREASED_SKILL_MODIFIER:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -551,7 +566,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 10;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDecreaseSkill(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDecreaseSkill(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ENHANCEMENT_BONUS:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -561,7 +577,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonus(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_ALIGNMENT_GROUP:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -571,7 +588,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonusVsAlign(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonusVsAlign(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -581,7 +599,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonusVsRace(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonusVsRace(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_SPECIFIC_ALIGNEMENT:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -591,7 +610,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonusVsSAlign(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyEnhancementBonusVsSAlign(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_MIGHTY:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -601,7 +621,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyMaxRangeStrengthMod(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyMaxRangeStrengthMod(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_REGENERATION:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -611,7 +632,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyRegeneration(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyRegeneration(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_REGENERATION_VAMPIRIC:
             iCurVal = TotalAndRemoveProperty(oItem, iType);
@@ -621,7 +643,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyVampiricRegeneration(iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyVampiricRegeneration(iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_SAVING_THROW_BONUS:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -631,7 +654,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusSavingThrowVsX(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusSavingThrowVsX(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -641,7 +665,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 20;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusSavingThrow(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusSavingThrow(iSubType, iCurVal + iChange), oItem);
             break;
         case ITEM_PROPERTY_SKILL_BONUS:
             iCurVal = TotalAndRemoveProperty(oItem, iType, iSubType);
@@ -651,7 +676,8 @@ void SetCompositeBonus(object oItem, string sBonus, int iVal, int iType, int iSu
                 iCurVal = 50;
                 iChange = 0;
             }
-            AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertySkillBonus(iSubType, iCurVal + iChange), oItem);
+            if(iCurVal+iChange > 0)
+                AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertySkillBonus(iSubType, iCurVal + iChange), oItem);
             break;
     }
     SetLocalInt(oItem, sBonus, iVal);

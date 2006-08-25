@@ -367,13 +367,13 @@ string GetAffixForSize(int nSize)
     return sResRef;        
 }
 
-void EquipNautralWeaponCheck(object oPC, object oItem)
+void EquipNaturalWeaponCheck(object oPC, object oItem)
 {
     if(GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC) != oItem)
         MyDestroyObject(oItem);
     else 
         DelayCommand(10.0, 
-            EquipNautralWeaponCheck(oPC, oItem));
+            EquipNaturalWeaponCheck(oPC, oItem));
 }
 
 object EquipNaturalWeapon(object oPC, string sResRef)
@@ -383,7 +383,7 @@ object EquipNaturalWeapon(object oPC, string sResRef)
     ForceEquip(oPC, oObject, INVENTORY_SLOT_CWEAPON_L);
     AssignCommand(oPC, 
         DelayCommand(10.0, 
-            EquipNautralWeaponCheck(oPC, oObject)));
+            EquipNaturalWeaponCheck(oPC, oObject)));
     return oObject;
 }
 
@@ -396,19 +396,9 @@ void UpdateNaturalWeaponSizes(object oPC)
     SetLocalInt(oPC, "NaturalWeaponCreatureSize", nSize);
     string sCurrent = "_"+GetAffixForSize(nSize);
     //secondary
-    int i;
-    for(i=0; i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF); i++)
-    {
-        string sTest = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
-        string sTestSize = GetStringRight(sTest, 2);
-        if(sTestSize != sCurrent
-            && GetStringLeft(sTestSize, 1) == "_")
-        {
-            array_set_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i, 
-                GetStringLeft(sTest, GetStringLength(sTest)-2)+sCurrent);
-        }
-    }    
+    UpdateSecondaryWeaponSizes(oPC);
     //primary
+    int i;
     for(i=0; i<array_get_size(oPC, ARRAY_NAT_PRI_WEAP_RESREF); i++)
     {
         string sTest = array_get_string(oPC, ARRAY_NAT_PRI_WEAP_RESREF, i);
@@ -434,6 +424,28 @@ void UpdateNaturalWeaponSizes(object oPC)
             EquipNaturalWeapon(oPC, sNewResRef);            
         }
     }
+}
+
+void UpdateSecondaryWeaponSizes(object oPC)
+{
+    int nSize = PRCGetCreatureSize(oPC);
+    int nLastSize = GetLocalInt(oPC, "NaturalWeaponCreatureSize");
+    if(nSize == nLastSize)
+        return; 
+    SetLocalInt(oPC, "NaturalWeaponCreatureSize", nSize);
+    string sCurrent = "_"+GetAffixForSize(nSize);
+    int i;
+    for(i=0; i<array_get_size(oPC, ARRAY_NAT_SEC_WEAP_RESREF); i++)
+    {
+        string sTest = array_get_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i);
+        string sTestSize = GetStringRight(sTest, 2);
+        if(sTestSize != sCurrent
+            && GetStringLeft(sTestSize, 1) == "_")
+        {
+            array_set_string(oPC, ARRAY_NAT_SEC_WEAP_RESREF, i, 
+                GetStringLeft(sTest, GetStringLength(sTest)-2)+sCurrent);
+        }
+    }    
 }
 
 void AddNaturalSecondaryWeapon(object oPC, string sResRef, int nCount = 1)

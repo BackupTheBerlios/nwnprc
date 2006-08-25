@@ -13,12 +13,18 @@ void main()
         nBiowareSize = CREATURE_SIZE_GARGANTUAN;
     else if(nBiowareSize == 23)
         nBiowareSize = CREATURE_SIZE_COLOSSAL;
-    int nPRCSize = PRCGetCreatureSize(oPC);              //things that dont change ability scores
-    int nPRCSizeAbility = PRCGetCreatureSize(oPC, TRUE); //things that change ability scores
-    //no size difference, abort
-    if(nBiowareSize == nPRCSize
-        && nBiowareSize == nPRCSizeAbility)
+    int nPRCSizeAll     = PRCGetCreatureSize(oPC, PRC_SIZEMASK_ALL);                           //includes 'simple' size changes
+    int nPRCSizeAbility = PRCGetCreatureSize(oPC, PRC_SIZEMASK_NORMAL);                        //includes only things that change ability scores
+    int nPRCSize        = PRCGetCreatureSize(oPC, PRC_SIZEMASK_NORMAL | PRC_SIZEMASK_NOABIL);  //also includes things that dont change ability scores
+
+    int nLastSize = GetLocalInt(oPC, "PRCLastSize") + CREATURE_SIZE_FINE - 1;
+
+    //if size hasnt changed,  abort
+    if (nLastSize == nPRCSizeAll)
         return;
+
+    SetLocalInt(oPC, "PRCLastSize", nPRCSizeAll - CREATURE_SIZE_FINE + 1);
+
     //change counters
     int nStr;
     int nDex;
@@ -30,30 +36,32 @@ void main()
     //increase
     if(nPRCSize > nBiowareSize)
     {
-        //smallest bioware size is tiny
         //these track if that change should be applied or not
-        int nTinyToSmall;
-        int nSmallToMedium;
-        int nMediumToLarge;
-        int nLargeToHuge;
-        int nHugeToGargantuan;
-        int nGargantuanToColossal;
-        
-        if(nPRCSize >= CREATURE_SIZE_SMALL          && nBiowareSize <= CREATURE_SIZE_TINY)
-            nTinyToSmall = TRUE;    
-        if(nPRCSize >= CREATURE_SIZE_MEDIUM         && nBiowareSize <= CREATURE_SIZE_SMALL)
-            nSmallToMedium = TRUE;  
-        if(nPRCSize >= CREATURE_SIZE_LARGE          && nBiowareSize <= CREATURE_SIZE_MEDIUM)
-            nMediumToLarge = TRUE;   
-        if(nPRCSize >= CREATURE_SIZE_HUGE           && nBiowareSize <= CREATURE_SIZE_LARGE)
-            nLargeToHuge = TRUE;   
-        if(nPRCSize >= CREATURE_SIZE_GARGANTUAN     && nBiowareSize <= CREATURE_SIZE_HUGE)
-            nHugeToGargantuan = TRUE;   
-        if(nPRCSize >= CREATURE_SIZE_COLOSSAL       && nBiowareSize <= CREATURE_SIZE_COLOSSAL)
-            nGargantuanToColossal = TRUE; 
+        int nFineToDiminutive     = (nPRCSize >= CREATURE_SIZE_DIMINUTIVE && nBiowareSize <= CREATURE_SIZE_FINE);
+        int nDiminutiveToTiny     = (nPRCSize >= CREATURE_SIZE_TINY       && nBiowareSize <= CREATURE_SIZE_DIMINUTIVE);
+        int nTinyToSmall          = (nPRCSize >= CREATURE_SIZE_SMALL      && nBiowareSize <= CREATURE_SIZE_TINY);
+        int nSmallToMedium        = (nPRCSize >= CREATURE_SIZE_MEDIUM     && nBiowareSize <= CREATURE_SIZE_SMALL);
+        int nMediumToLarge        = (nPRCSize >= CREATURE_SIZE_LARGE      && nBiowareSize <= CREATURE_SIZE_MEDIUM);
+        int nLargeToHuge          = (nPRCSize >= CREATURE_SIZE_HUGE       && nBiowareSize <= CREATURE_SIZE_LARGE);
+        int nHugeToGargantuan     = (nPRCSize >= CREATURE_SIZE_GARGANTUAN && nBiowareSize <= CREATURE_SIZE_HUGE);
+        int nGargantuanToColossal = (nPRCSize >= CREATURE_SIZE_COLOSSAL   && nBiowareSize <= CREATURE_SIZE_GARGANTUAN);
         
         //add in the bonuses
         //each size category is cumulative
+        if(nFineToDiminutive)
+        {
+            nACNatural  +=  0;
+            nACDodge    += -4;
+            nAB         += -4;
+            nHide       += -4;
+        }
+        if(nDiminutiveToTiny)
+        {
+            nACNatural  +=  0;
+            nACDodge    += -2;
+            nAB         += -4;
+            nHide       += -4;
+        }
         if(nTinyToSmall)
         {
             nACNatural  +=  0;
@@ -100,28 +108,16 @@ void main()
     //decrease
     else if(nPRCSize < nBiowareSize)
     {
-        //largest bioware size is huge
         //these track if that change should be applied or not
-        int nDiminuativeToFine;
-        int nTinyToDiminuative;
-        int nSmallToTiny;
-        int nMediumToSmall;
-        int nLargeToMedium;
-        int nHugeToLarge;
-        
-        if(nPRCSize <= CREATURE_SIZE_FINE           && nBiowareSize >= CREATURE_SIZE_DIMINUTIVE)
-            nDiminuativeToFine = TRUE;    
-        if(nPRCSize >= CREATURE_SIZE_DIMINUTIVE    && nBiowareSize <= CREATURE_SIZE_TINY)
-            nTinyToDiminuative = TRUE;  
-        if(nPRCSize >= CREATURE_SIZE_TINY           && nBiowareSize <= CREATURE_SIZE_SMALL)
-            nSmallToTiny = TRUE;   
-        if(nPRCSize >= CREATURE_SIZE_SMALL          && nBiowareSize <= CREATURE_SIZE_MEDIUM)
-            nMediumToSmall = TRUE;   
-        if(nPRCSize >= CREATURE_SIZE_MEDIUM         && nBiowareSize <= CREATURE_SIZE_LARGE)
-            nLargeToMedium = TRUE;   
-        if(nPRCSize >= CREATURE_SIZE_LARGE          && nBiowareSize <= CREATURE_SIZE_HUGE)
-            nHugeToLarge = TRUE; 
-        
+        int nDiminuativeToFine    = (nPRCSize <= CREATURE_SIZE_FINE       && nBiowareSize >= CREATURE_SIZE_DIMINUTIVE);
+        int nTinyToDiminuative    = (nPRCSize <= CREATURE_SIZE_DIMINUTIVE && nBiowareSize >= CREATURE_SIZE_TINY);
+        int nSmallToTiny          = (nPRCSize <= CREATURE_SIZE_TINY       && nBiowareSize >= CREATURE_SIZE_SMALL);
+        int nMediumToSmall        = (nPRCSize <= CREATURE_SIZE_SMALL      && nBiowareSize >= CREATURE_SIZE_MEDIUM);
+        int nLargeToMedium        = (nPRCSize <= CREATURE_SIZE_MEDIUM     && nBiowareSize >= CREATURE_SIZE_LARGE);
+        int nHugeToLarge          = (nPRCSize <= CREATURE_SIZE_LARGE      && nBiowareSize >= CREATURE_SIZE_HUGE);
+        int nGargantuanToHuge     = (nPRCSize <= CREATURE_SIZE_HUGE       && nBiowareSize >= CREATURE_SIZE_GARGANTUAN);
+        int nColossalToGargantuan = (nPRCSize <= CREATURE_SIZE_GARGANTUAN && nBiowareSize >= CREATURE_SIZE_COLOSSAL);
+      
         //add in the bonuses
         //each size category is cumulative
         if(nDiminuativeToFine)
@@ -165,35 +161,61 @@ void main()
             nACDodge    +=  1;
             nAB         +=  1;
             nHide       +=  4;
-        }    
+        }
+        if(nGargantuanToHuge)
+        {
+            nACNatural  += -4;
+            nACDodge    +=  2;
+            nAB         +=  2;
+            nHide       +=  4;
+        }
+        if(nColossalToGargantuan)
+        {
+            nACNatural  += -5;
+            nACDodge    +=  4;
+            nAB         +=  4;
+            nHide       +=  4;
+        }
     }   
     //increase
     if(nPRCSizeAbility > nBiowareSize)
     {
-        //smallest bioware size is tiny
         //these track if that change should be applied or not
-        int nTinyToSmall;
-        int nSmallToMedium;
-        int nMediumToLarge;
-        int nLargeToHuge;
-        int nHugeToGargantuan;
-        int nGargantuanToColossal;
-        
-        if(nPRCSizeAbility >= CREATURE_SIZE_SMALL          && nBiowareSize <= CREATURE_SIZE_TINY)
-            nTinyToSmall = TRUE;    
-        if(nPRCSizeAbility >= CREATURE_SIZE_MEDIUM         && nBiowareSize <= CREATURE_SIZE_SMALL)
-            nSmallToMedium = TRUE;  
-        if(nPRCSizeAbility >= CREATURE_SIZE_LARGE          && nBiowareSize <= CREATURE_SIZE_MEDIUM)
-            nMediumToLarge = TRUE;   
-        if(nPRCSizeAbility >= CREATURE_SIZE_HUGE           && nBiowareSize <= CREATURE_SIZE_LARGE)
-            nLargeToHuge = TRUE;   
-        if(nPRCSizeAbility >= CREATURE_SIZE_GARGANTUAN     && nBiowareSize <= CREATURE_SIZE_HUGE)
-            nHugeToGargantuan = TRUE;   
-        if(nPRCSizeAbility >= CREATURE_SIZE_COLOSSAL       && nBiowareSize <= CREATURE_SIZE_COLOSSAL)
-            nGargantuanToColossal = TRUE; 
-        
+        int nFineToDiminutive     = (nPRCSizeAbility >= CREATURE_SIZE_DIMINUTIVE && nBiowareSize <= CREATURE_SIZE_FINE);
+        int nDiminutiveToTiny     = (nPRCSizeAbility >= CREATURE_SIZE_TINY       && nBiowareSize <= CREATURE_SIZE_DIMINUTIVE);
+        int nTinyToSmall          = (nPRCSizeAbility >= CREATURE_SIZE_SMALL      && nBiowareSize <= CREATURE_SIZE_TINY);
+        int nSmallToMedium        = (nPRCSizeAbility >= CREATURE_SIZE_MEDIUM     && nBiowareSize <= CREATURE_SIZE_SMALL);
+        int nMediumToLarge        = (nPRCSizeAbility >= CREATURE_SIZE_LARGE      && nBiowareSize <= CREATURE_SIZE_MEDIUM);
+        int nLargeToHuge          = (nPRCSizeAbility >= CREATURE_SIZE_HUGE       && nBiowareSize <= CREATURE_SIZE_LARGE);
+        int nHugeToGargantuan     = (nPRCSizeAbility >= CREATURE_SIZE_GARGANTUAN && nBiowareSize <= CREATURE_SIZE_HUGE);
+        int nGargantuanToColossal = (nPRCSizeAbility >= CREATURE_SIZE_COLOSSAL   && nBiowareSize <= CREATURE_SIZE_GARGANTUAN);
+
         //add in the bonuses
         //each size category is cumulative
+        if(nFineToDiminutive)
+        {
+            nStr        +=  0;
+            nDex        += -2;
+            nCon        +=  0;
+        }
+        if(nDiminutiveToTiny)
+        {
+            nStr        +=  2;
+            nDex        += -2;
+            nCon        +=  0;
+        }
+        if(nTinyToSmall)
+        {
+            nStr        +=  4;
+            nDex        += -2;
+            nCon        +=  0;
+        }
+        if(nSmallToMedium)
+        {
+            nStr        +=  2;
+            nDex        += -2;
+            nCon        +=  2;
+        }
         if(nTinyToSmall)
         {
             nStr        +=  4;
@@ -234,27 +256,15 @@ void main()
     //decrease
     else if(nPRCSizeAbility < nBiowareSize)
     {
-        //largest bioware size is huge
         //these track if that change should be applied or not
-        int nDiminuativeToFine;
-        int nTinyToDiminuative;
-        int nSmallToTiny;
-        int nMediumToSmall;
-        int nLargeToMedium;
-        int nHugeToLarge;
-        
-        if(nPRCSizeAbility <= CREATURE_SIZE_FINE           && nBiowareSize >= CREATURE_SIZE_DIMINUTIVE)
-            nDiminuativeToFine = TRUE;    
-        if(nPRCSizeAbility >= CREATURE_SIZE_DIMINUTIVE    && nBiowareSize <= CREATURE_SIZE_TINY)
-            nTinyToDiminuative = TRUE;  
-        if(nPRCSizeAbility >= CREATURE_SIZE_TINY           && nBiowareSize <= CREATURE_SIZE_SMALL)
-            nSmallToTiny = TRUE;   
-        if(nPRCSizeAbility >= CREATURE_SIZE_SMALL          && nBiowareSize <= CREATURE_SIZE_MEDIUM)
-            nMediumToSmall = TRUE;   
-        if(nPRCSizeAbility >= CREATURE_SIZE_MEDIUM         && nBiowareSize <= CREATURE_SIZE_LARGE)
-            nLargeToMedium = TRUE;   
-        if(nPRCSizeAbility >= CREATURE_SIZE_LARGE          && nBiowareSize <= CREATURE_SIZE_HUGE)
-            nHugeToLarge = TRUE; 
+        int nDiminuativeToFine    = (nPRCSizeAbility <= CREATURE_SIZE_FINE       && nBiowareSize >= CREATURE_SIZE_DIMINUTIVE);
+        int nTinyToDiminuative    = (nPRCSizeAbility <= CREATURE_SIZE_DIMINUTIVE && nBiowareSize >= CREATURE_SIZE_TINY);
+        int nSmallToTiny          = (nPRCSizeAbility <= CREATURE_SIZE_TINY       && nBiowareSize >= CREATURE_SIZE_SMALL);
+        int nMediumToSmall        = (nPRCSizeAbility <= CREATURE_SIZE_SMALL      && nBiowareSize >= CREATURE_SIZE_MEDIUM);
+        int nLargeToMedium        = (nPRCSizeAbility <= CREATURE_SIZE_MEDIUM     && nBiowareSize >= CREATURE_SIZE_LARGE);
+        int nHugeToLarge          = (nPRCSizeAbility <= CREATURE_SIZE_LARGE      && nBiowareSize >= CREATURE_SIZE_HUGE);
+        int nGargantuanToHuge     = (nPRCSizeAbility <= CREATURE_SIZE_HUGE       && nBiowareSize >= CREATURE_SIZE_GARGANTUAN);
+        int nColossalToGargantuan = (nPRCSizeAbility <= CREATURE_SIZE_GARGANTUAN && nBiowareSize >= CREATURE_SIZE_COLOSSAL);
         
         //add in the bonuses
         //each size category is cumulative
@@ -294,71 +304,60 @@ void main()
             nDex        +=  2;
             nCon        += -4;
         }    
+        if(nGargantuanToHuge)
+        {
+            nStr        += -8;
+            nDex        +=  0;
+            nCon        += -4;
+        }
+        if(nColossalToGargantuan)
+        {
+            nStr        += -8;
+            nDex        +=  0;
+            nCon        += -4;
+        }   
     }       
-        
-    //see if they are increase or decrease types;
-    int nStrType;
-    int nDexType;
-    int nConType;
-    int nACNaturalType;
-    int nACDodgeType;
-    int nHideType;
+
+    //do 'simple' size change effects, like the expand/compress psionic powers
+    int nSimpleChange = nPRCSizeAll - nPRCSize;
+    nStr     += 2 * nSimpleChange;
+    nDex     -= 2 * nSimpleChange;
+    nACDodge -=     nSimpleChange;
+    nHide    -= 4 * nSimpleChange;
+//    nAB      -=     nSimpleChange; // this will be done in the power/spell itself, so it will be instant
     
+    //see if they are increases or decreases
+    int nStrInc   = (nStr > 0) ?    nStr : 0;
+    int nStrDec   = (nStr < 0) ? -1*nStr : 0;
+    int nDexInc   = (nDex > 0) ?    nDex : 0;
+    int nDexDec   = (nDex < 0) ? -1*nDex : 0;
+    int nConInc   = (nCon > 0) ?    nCon : 0;
+    int nConDec   = (nCon < 0) ? -1*nCon : 0;
+
+    int nACNaturalInc = (nACNatural > 0) ?    nACNatural : 0;
+    int nACNaturalDec = (nACNatural < 0) ? -1*nACNatural : 0;
+    int nACDodgeInc   = (nACDodge   > 0) ?    nACDodge   : 0;
+    int nACDodgeDec   = (nACDodge   < 0) ? -1*nACDodge   : 0;
+    int nHideInc      = (nHide      > 0) ?    nHide      : 0;
+    int nHideDec      = (nHide      < 0) ? -1*nHide      : 0;
     
-    if(nStr>=0)
-        nStrType = ITEM_PROPERTY_ABILITY_BONUS;
-    else        
-    {
-        nStrType = ITEM_PROPERTY_DECREASED_ABILITY_SCORE;
-        nStr *= -1;//make it positive
-    }        
-    if(nDex>=0)
-        nDexType = ITEM_PROPERTY_ABILITY_BONUS;
-    else   
-    {
-        nDexType = ITEM_PROPERTY_DECREASED_ABILITY_SCORE;
-        nDex *= -1;//make it positive
-    }    
-    if(nCon>=0)
-        nConType = ITEM_PROPERTY_ABILITY_BONUS;
-    else
-    {
-        nConType = ITEM_PROPERTY_DECREASED_ABILITY_SCORE; 
-        nCon *= -1;//make it positive 
-    }    
-    if(nACNatural>=0)
-        nACNaturalType = ITEM_PROPERTY_AC_BONUS;
-    else
-    {
-        nACNaturalType = ITEM_PROPERTY_DECREASED_AC;  
-        nACNatural *= -1;//make it positive
-    }    
-    if(nACDodge>=0)
-        nACDodgeType = ITEM_PROPERTY_AC_BONUS;
-    else
-    {
-        nACDodgeType = ITEM_PROPERTY_DECREASED_AC; 
-        nACDodge *= -1;//make it positive 
-    }    
-    if(nHide>=0)
-        nHideType = ITEM_PROPERTY_SKILL_BONUS;
-    else
-    {
-        nHideType = ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER; 
-        nHide *= -1;//make it positive 
-    }    
-    
-    //now apply the bonuses
+    //now apply the bonuses/penalties
     object oSkin = GetPCSkin(oPC);
-    object oLH = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC);
-    object oRH = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-    SetCompositeBonus(oSkin, "SizeChangesStr", nStr, nStrType, ABILITY_STRENGTH);
-    SetCompositeBonus(oSkin, "SizeChangesDex", nDex, nDexType, ABILITY_DEXTERITY);
-    SetCompositeBonus(oSkin, "SizeChangesCon", nCon, nConType, ABILITY_CONSTITUTION);
-    SetCompositeBonus(oSkin, "SizeChangesHide", nHide, nHideType, SKILL_HIDE);
     SetCompositeAttackBonus(oPC, "SizeChangesAB", nAB);
-    //AC has a subtype if its a penalty, but not if its a bonus
-    //yeah, that makes a lot of sense bioware(!)
-    SetCompositeBonus(oSkin, "SizeChangesACN", nACNatural, nACNaturalType, IP_CONST_ACMODIFIERTYPE_NATURAL);
-    SetCompositeBonus(oSkin, "SizeChangesACD", nACDodge, nACDodge, IP_CONST_ACMODIFIERTYPE_DODGE);  
+
+    SetCompositeBonus(oSkin, "SizeChangesStrInc", nStrInc, ITEM_PROPERTY_ABILITY_BONUS          , IP_CONST_ABILITY_STR);
+    SetCompositeBonus(oSkin, "SizeChangesStrDec", nStrDec, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_STR);
+    SetCompositeBonus(oSkin, "SizeChangesDexInc", nDexInc, ITEM_PROPERTY_ABILITY_BONUS          , IP_CONST_ABILITY_DEX);
+    SetCompositeBonus(oSkin, "SizeChangesDexDec", nDexDec, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_DEX);
+    SetCompositeBonus(oSkin, "SizeChangesConInc", nConInc, ITEM_PROPERTY_ABILITY_BONUS          , IP_CONST_ABILITY_CON);
+    SetCompositeBonus(oSkin, "SizeChangesConDec", nConDec, ITEM_PROPERTY_DECREASED_ABILITY_SCORE, IP_CONST_ABILITY_CON);
+
+    SetCompositeBonus(oSkin, "SizeChangesHideInc", nHideInc, ITEM_PROPERTY_SKILL_BONUS             , SKILL_HIDE);
+    SetCompositeBonus(oSkin, "SizeChangesHideDec", nHideDec, ITEM_PROPERTY_DECREASED_SKILL_MODIFIER, SKILL_HIDE);
+
+    SetCompositeBonus(oSkin, "SizeChangesACNInc", nACNaturalInc, ITEM_PROPERTY_AC_BONUS    , IP_CONST_ACMODIFIERTYPE_NATURAL);
+    SetCompositeBonus(oSkin, "SizeChangesACNDec", nACNaturalDec, ITEM_PROPERTY_DECREASED_AC, IP_CONST_ACMODIFIERTYPE_NATURAL);
+
+    SetCompositeBonus(oSkin, "SizeChangesACDInc", nACDodgeInc, ITEM_PROPERTY_AC_BONUS    , IP_CONST_ACMODIFIERTYPE_DODGE);
+    SetCompositeBonus(oSkin, "SizeChangesACDDec", nACDodgeDec, ITEM_PROPERTY_DECREASED_AC, IP_CONST_ACMODIFIERTYPE_DODGE);
 }

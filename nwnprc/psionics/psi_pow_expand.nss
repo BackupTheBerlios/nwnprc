@@ -82,10 +82,7 @@ void main()
     if(manif.bCanManifest)
     {
         int nCategories = 1 + manif.nTimesAugOptUsed_1;
-        effect eLink    =                          EffectACDecrease(nCategories);
-               eLink    = EffectLinkEffects(eLink, EffectAbilityDecrease(ABILITY_DEXTERITY, nCategories * 2));
-               eLink    = EffectLinkEffects(eLink, EffectAbilityIncrease(ABILITY_STRENGTH,  nCategories * 2));
-               eLink    = EffectLinkEffects(eLink, EffectAttackDecrease(nCategories));
+        effect eLink    =                          EffectAttackDecrease(nCategories);
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SANCTUARY));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         float fDuration = (manif.nTimesAugOptUsed_2 == 1 ? 600.0f : 6.0f) * manif.nManifesterLevel;
@@ -105,7 +102,10 @@ void main()
         // Set local int for PRCGetCreatureSize()
         SetLocalInt(oTarget, "PRC_Power_Expansion_SizeIncrease", nCategories);
 
-        // Start power end monitor HB
+        // Size has changed, evaluate PrC feats again
+        EvalPRCFeats(oTarget);
+
+        // Start power end monitor
         DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, manif.nSpellID, FloatToInt(fDuration) / 6));
     }// end if - Successfull manifestation
 }
@@ -121,6 +121,9 @@ void DispelMonitor(object oManifester, object oTarget, int nSpellID, int nBeatsR
 
         // Clear the marker
         DeleteLocalInt(oTarget, "PRC_Power_Expansion_SizeIncrease");
+
+        // Size has changed, evaluate PrC feats again
+        EvalPRCFeats(oTarget);
     }
     else
        DelayCommand(6.0f, DispelMonitor(oManifester, oTarget, nSpellID, nBeatsRemaining));

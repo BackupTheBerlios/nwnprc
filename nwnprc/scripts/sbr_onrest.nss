@@ -15,6 +15,7 @@ to all DMs.
 //:: Credit to: Timo "Lord Gsox" Bischoff (NWN Nick: Kihon)
 //::            and the HCR team for the subroutines and effects
 //::            If not copied, at least I used their ideas. :)
+#include "prc_alterations"
 #include "sbr_include"
 
 void ApplySleepEffects(object oPC)

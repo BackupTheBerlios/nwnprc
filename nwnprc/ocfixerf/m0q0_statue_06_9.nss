@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
 #include "prc_class_const"
-#include "inc_utility"
+#include "prc_alterations"
 
 //* Check to see if a spell was cast at the statue, which will destroy it and
 void main()

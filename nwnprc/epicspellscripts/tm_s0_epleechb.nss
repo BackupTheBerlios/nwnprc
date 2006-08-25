@@ -9,11 +9,9 @@
 /////////////////////////////////////////////////
 // Last Updated: 03/15/2004, Nron Ksr
 /////////////////////////////////////////////////
-//#include "prc_alterations"
 #include "prc_alterations"
+#include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "prc_alterations"
-#include "x2_inc_spellhook"$
 
 void main()
 {
@@ -85,10 +83,10 @@ void main()
                     {
                         nDamage /= 2;
                         
-                    	if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
-                    	{
-                		nDamage = 0;
-                    	}                         
+                        if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
+                        {
+                        nDamage = 0;
+                        }                         
                     }
                     //Fire cast spell at event for the specified target
                     SignalEvent( oTarget,

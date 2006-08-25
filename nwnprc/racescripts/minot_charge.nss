@@ -14,8 +14,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_inc_combat"
-#include "nw_i0_spells"
 #include "prc_inc_util"
 #include "prc_inc_skills"
 

@@ -23,45 +23,7 @@
 // If anyone can think of a way to fix it please go ahead...
 // I managed to fix all the other scripts though =)
 
-#include "prc_alterations"
-#include "prc_class_const"
-#include "inc_epicspells"
-#include "x2_inc_spellhook"
-
-//#include "inc_epicspells"
-     //#include "prc_getcast_lvl"
-        //#include "prc_alterations"***
-      
-//#include "prc_alterations"
-   //#include "x2_inc_switches"
-   //#include "prc_alterations"
-   //#include "x0_i0_match"
-
-   //#include "x0_i0_henchman"
-      //#include "x0_i0_common"
-         //#include "x0_i0_partywide"
-            //#include "x0_i0_campaign"
-         //#include "x0_i0_transport"
-      //#include "nw_i0_plot"
-      //#include "nw_i0_generic" *
-         //#include "x0_i0_behavior"
-         //#include "x0_i0_anims"
-            //#include "x0_i0_position"
-            //#include "x0_i0_modes"
-            //#include "x0_i0_voice"
-            //#include "x0_i0_walkway"
-               //#include "x0_o0_spawncond"
-                  //#include "x0_i0_combat"
-                     //#include "x0_i0_talent"
-                        //#include "x0_inc_generic"
-                           //#include "x0_i0_debug"
-                           //#include "x0_i0_equip"
-                              //#include "x0_i0_assoc"
-                              //#include "x0_i0_enemy"
-                                 //#include "x0_i0_match"
-      //#include "prc_alterations"
-         //#include "prc_alterations"
-            //#include "prc_alterations"***
+#include "prc_alterations"***
                //#include "x2_inc_switches"
                //#include "prc_feat_const"
                //#include "prc_class_const"
@@ -76,6 +38,7 @@
             //#include "prc_feat_const"
             //#include "lookup_2da_spell"
             //#include "prcsp_spell_adjs"
+#include "inc_epicspells"
 
 void main()
 {

@@ -9,11 +9,7 @@
  */
 
 #include "prc_alterations"
-#include "prc_class_const"
-#include "prc_feat_const"
 #include "nw_o2_coninclude"
-#include "x2_i0_spells"
-#include "inc_utility"
 
 void CleanCopy(object oImage)
 {     

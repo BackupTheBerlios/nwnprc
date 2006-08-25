@@ -14,6 +14,7 @@
 //:: Created On: 02.07.2005
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "prc_inc_teleport"
 
 

@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
 #include "prc_class_const"
-#include "inc_utility"
+#include "prc_alterations"
 
 //* If I've been healed, Trial has been completed
 void main()

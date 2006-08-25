@@ -13,11 +13,8 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "psi_inc_soulkn"
-//#include "inc_utility"
-//#include "prc_feat_const"
-//#include "prc_ipfeat_const"
 #include "prc_alterations"
+#include "psi_inc_soulkn"
 
 const int LOCAL_DEBUG = DEBUG;
 

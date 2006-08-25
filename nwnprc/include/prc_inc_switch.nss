@@ -16,6 +16,9 @@
  This will not work in multiplayer.
  An example is below. Copy and paste it into a plain text file saved
  as personal_switch.2da
+ 
+ If there is a file named personal_switchl.2da then it will be loaded 
+ at module load and the switches set accordingly. 
 
 
 2DA V2.0
@@ -518,24 +521,38 @@ const string PRC_EPIC_CONVO_LEARNING_DISABLE         = "PRC_EPIC_CONVO_LEARNING_
 *                                General switches                              *
 \******************************************************************************/
 
+
+/** DO NOT SET THIS SWITCH
+ * If the PRC  is in use, this will be set automatically
+ * It is only here to be used by other scripts
+ * Bit surplus to requirements, since this very script is part of the PRC,
+ * but fo completeness sake
+ */
+const string MARKER_PRC                              = "Marker_PRC";
+
 /** DO NOT SET THIS SWITCH
  * The companion sets it automatically.
  * It is only here to be used by other scripts.
  */
-const string PRC_COMPANION_IN_USE                    = "PRC_COMPANION_IN_USE";
+const string MARKER_PRC_COMPANION                    = "Marker_PRCCompanion";
 
 /** DO NOT SET THIS SWITCH
- * The companion sets it automatically.
+ * If CEP 1.53 and the PRC companion/merge is in use, this will be set automatically
  * It is only here to be used by other scripts
  */
-const string PRC_CEP_COMPANION_IN_USE                = "PRC_CEP_COMPANION_IN_USE";
-
+const string MARKER_CEP1                             = "Marker_CEP1";
 
 /** DO NOT SET THIS SWITCH
- * If CEP2 is in use, this will be set automatically
+ * If CEP 2 and the PRC companion/merge is in use, this will be set automatically
  * It is only here to be used by other scripts
  */
-const string CEP_IN_USE                              = "CEP_IN_USE";
+const string MARKER_CEP2                             = "Marker_CEP2";
+
+/** DO NOT SET THIS SWITCH
+ * If Biowares 1.68 cloaks and the PRC companion/merge is in use, this will be set automatically
+ * It is only here to be used by other scripts
+ */
+const string MARKER_CLOAK168                         = "Marker_168cloaks";
 
 /**
  * Spells cast from magic staffs use the wielder's casterlevel rather than the
@@ -2546,6 +2563,7 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_ITEM_TO_IREQ,    700);
     SetPRCSwitch(FILE_END_BASEITEMS,       115);
     //Companion alone
+    /*
     if(GetPRCSwitch(PRC_COMPANION_IN_USE))
     {
         SetPRCSwitch(FILE_END_APPEARANCE,   2100);
@@ -2558,7 +2576,7 @@ void SetDefaultFileEnds()
         SetPRCSwitch(FILE_END_APPEARANCE,   2100);
         SetPRCSwitch(FILE_END_SOUNDSET,     1000);
         SetPRCSwitch(FILE_END_PORTRAITS,    3550);
-    }
+    }*/
 }
 
 void CreateSwitchNameArray()

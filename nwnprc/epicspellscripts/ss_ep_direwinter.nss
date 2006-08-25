@@ -9,10 +9,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "x2_inc_toollib"
-//#include "prc_alterations"
 
 void DoWinterCheck(object oArea, float fDuration);
 

@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
 #include "prc_class_const"
-#include "inc_utility"
+#include "prc_alterations"
 
 //::///////////////////////////////////////////////
 //:: FileName M0q01herbfight

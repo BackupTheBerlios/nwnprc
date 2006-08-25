@@ -13,9 +13,7 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_alterations"
-
 #include "x2_inc_spellhook"
-#include "inc_utility"
 
 void main()
 {

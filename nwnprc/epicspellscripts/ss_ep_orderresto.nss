@@ -8,11 +8,8 @@
 //:: Created By: Boneshank
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
-//#include "prc_alterations"
 #include "prc_alterations"
-#include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "prc_alterations"
 
 void main()
 {

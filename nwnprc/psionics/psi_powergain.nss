@@ -15,9 +15,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_class_const"
-#include "psi_inc_psifunc"
-#include "inc_dynconv"
 
 
 int CheckMissingPowers(object oPC, int nClass)

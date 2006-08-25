@@ -12,9 +12,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_npc"
-#include "inc_dynconv"
-#include "inc_utility"
 #include "inc_dispel"
 
 const int PACKAGE_ELEMENTAL_STR = PACKAGE_ELEMENTAL ;

@@ -2,8 +2,6 @@
 // Stub function for possible later use.
 //
 #include "prc_alterations"
-#include "x2_inc_switches"
-#include "prc_alterations"
 #include "prc_inc_leadersh"
 
 void CheckDB()
@@ -49,7 +47,35 @@ void main()
     SetModuleSwitch(MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS, TRUE); /// @todo This is somewhat intrusive, make it unnecessary and remove
 
     // Run a script to determine if the PRC Companion is present
-    ExecuteScript("prc_companion", OBJECT_SELF);
+    ExecuteScript("hakmarker", OBJECT_SELF);
+    
+    //load any default switch 2da
+    if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
+    {
+        object oModule = GetModule();
+        int i = 0;
+        string sSwitchName, sSwitchType, sSwitchValue;
+        // Use Get2DAString() instead of Get2DACache() to avoid caching.
+        // People might want to set different switch values when playing in different modules.
+        // Or just change the switch values midplay.
+        while((sSwitchName = Get2DAString("personal_switch", "SwitchName", i)) != "")
+        {
+            // Read rest of the line
+            sSwitchType  = Get2DAString("personal_switch", "SwitchType",  i);
+            sSwitchValue = Get2DAString("personal_switch", "SwitchValue", i);
+
+            // Determine switch type and set the var
+            if(sSwitchType == "float")
+                SetLocalFloat(oModule, sSwitchName, StringToFloat(sSwitchValue));
+            else if(sSwitchType == "int")
+                SetPRCSwitch(sSwitchName, StringToInt(sSwitchValue));
+            else if(sSwitchType == "string")
+                SetLocalString(oModule, sSwitchName, sSwitchValue);
+
+            // Increment loop counter
+            i += 1;
+        }
+    }
 
     //delay this to avoid TMIs
     DelayCommand(0.01, CreateSwitchNameArray());

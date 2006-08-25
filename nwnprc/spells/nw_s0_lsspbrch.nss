@@ -11,7 +11,6 @@
 //:: Created On: Jan 10, 2002
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "NW_I0_SPELLS"
 #include "spinc_common"
 #include "x2_inc_spellhook"
 

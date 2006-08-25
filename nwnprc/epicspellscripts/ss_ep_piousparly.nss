@@ -11,10 +11,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "inc_epicspells"
-#include "inc_dispel"
-//#include "prc_alterations"
 #include "x2_inc_spellhook"
+#include "inc_epicspells"
 
 void main()
 {

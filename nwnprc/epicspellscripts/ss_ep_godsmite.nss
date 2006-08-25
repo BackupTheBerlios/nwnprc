@@ -2,11 +2,9 @@
 //:: Epic Spell: Godsmite
 //:: Author: Boneshank (Don Armstrong)
 
-//#include "prc_alterations"
 #include "prc_alterations"
-#include "inc_epicspells"
-//#include "prc_alterations"
 #include "x2_inc_spellhook"
+#include "inc_epicspells"
 
 void main()
 {

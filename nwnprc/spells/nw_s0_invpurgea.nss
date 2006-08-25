@@ -14,7 +14,6 @@
 //::March 31: Made it so it will actually remove
 //  the effects of Improved Invisibility
 #include "prc_alterations"
-#include "x0_i0_spells"
 #include "spinc_common"
 #include "x2_inc_spellhook"
 

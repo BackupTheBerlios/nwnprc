@@ -12,7 +12,7 @@
 #include "prc_class_const"
 #include "x2_inc_spellhook"
 #include "prc_feat_const"
-#include "inc_utility"
+#include "prc_alterations"
 void main()
 {
     //Declare major variables
@@ -20,13 +20,13 @@ void main()
     int nDuration = GetCasterLevel(OBJECT_SELF);
     object oPC = OBJECT_SELF;
     effect eSummon = EffectSummonCreature("NW_DMVROCK");
-    if(GetPRCSwitch(PRC_COMPANION_IN_USE))
+    if(GetPRCSwitch(MARKER_PRC_COMPANION))
         eSummon = EffectSummonCreature("prc_hamatula");
 
     if (GetHasFeat(FEAT_IMP_SUMMON_HAMATULA, oPC))
     {
         eSummon = EffectSummonCreature("NW_DEMON");
-        if(GetPRCSwitch(PRC_COMPANION_IN_USE))
+        if(GetPRCSwitch(MARKER_PRC_COMPANION))
             eSummon = EffectSwarm(FALSE, "prc_hamatula", "prc_hamatula");
     }
 

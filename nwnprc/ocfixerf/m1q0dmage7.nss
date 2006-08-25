@@ -4,7 +4,7 @@
 
 // This script creates a treasure item based on the class of the
 //PC who killed this creature
-#include "inc_utility"
+#include "prc_alterations"
 
 void main()
 {

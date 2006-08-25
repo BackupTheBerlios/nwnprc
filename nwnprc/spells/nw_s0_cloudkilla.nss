@@ -19,7 +19,7 @@
 //:: modified by Ornedan Dec 22, 2004 to PnP rules
 #include "spinc_common"
 
-#include "X0_I0_SPELLS"
+#include "prc_alterations"
 #include "x2_inc_spellhook"
 
 void main()

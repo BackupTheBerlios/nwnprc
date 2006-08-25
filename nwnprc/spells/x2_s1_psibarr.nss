@@ -23,9 +23,6 @@
 
 // Modified 2004/01/30 (Brian Greinke)
 // PnP shifter uses "real" mindflayer calcs now
-//#include "x2_inc_itemprop"
-//#include "prc_inc_spells"
-
 #include "prc_alterations"
 
 void main()

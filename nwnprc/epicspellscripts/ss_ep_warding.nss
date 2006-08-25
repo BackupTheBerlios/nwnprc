@@ -18,8 +18,6 @@
 
 #include "prc_alterations"
 #include "inc_epicspells"
-#include "x2_inc_spellhook"
-//#include "prc_alterations"
 
 void main()
 {

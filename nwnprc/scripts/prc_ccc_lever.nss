@@ -1,9 +1,7 @@
 
 #include "prc_alterations"
-#include "inc_letoscript"
-#include "prc_ccc_inc"
 #include "inc_encrypt"
-#include "prc_alterations"
+#include "prc_ccc_inc"
 
 void main()
 {

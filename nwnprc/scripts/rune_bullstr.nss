@@ -9,10 +9,7 @@
 
 
 //:: modified by mr_bumpkin Dec 4, 2003
-//#include "prc_alterations"
-
-//#include "x2_inc_spellhook"
-//#include "prc_alterations"
+#include "prc_alterations"
 #include "spinc_common"
 #include "spinc_massbuff"
 

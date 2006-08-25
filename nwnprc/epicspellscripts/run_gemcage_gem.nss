@@ -8,7 +8,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "x2_i0_spells"
 void main()
 {
     object oItem = GetItemActivated();

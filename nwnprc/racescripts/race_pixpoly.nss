@@ -10,7 +10,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "x2_inc_itemprop"
 #include "spinc_common"
 #include "x2_inc_spellhook"
 #include "pnp_shft_poly"

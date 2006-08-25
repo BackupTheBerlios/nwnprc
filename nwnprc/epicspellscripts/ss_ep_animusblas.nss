@@ -8,11 +8,9 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "prc_alterations"
 
-void DoAnimationBit(location lTarget, object oCaster);
+void DoAnimationBit(location lTarget, object oCaster, int nCasterLvl);
 
 void main()
 {
@@ -26,6 +24,7 @@ void main()
     }
     if (GetCanCastSpell(OBJECT_SELF, SPELL_EPIC_ANBLAST))
     {
+        int nCasterLvl = PRCGetCasterLevel();
         float fDelay;
         int nDam;
         effect eExplode = EffectVisualEffect(VFX_IMP_PULSE_COLD);
@@ -75,18 +74,18 @@ void main()
            oTarget = GetNextObjectInShape(SHAPE_SPHERE,
                 RADIUS_SIZE_HUGE, lTarget);
         }
-        DelayCommand(3.0, DoAnimationBit(lTarget, OBJECT_SELF));
+        DelayCommand(3.0, DoAnimationBit(lTarget, OBJECT_SELF, nCasterLvl));
     }
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }
 
-void DoSpawnBit(object oCaster, object oTarget, string sSkel)
+void DoSpawnBit(object oCaster, object oTarget, string sSkel, int nCasterLvl)
 {
     if(GetPRCSwitch(PRC_MULTISUMMON))
     {
         //only create a new one if less than maximum count                    
         int nMaxHDControlled = nCasterLvl * 4;
-        int nTotalControlled = GetControlledUndeadTotalHD(oPC);
+        int nTotalControlled = GetControlledUndeadTotalHD(oCaster);
         if(nTotalControlled < nMaxHDControlled)
         {
             MultisummonPreSummon(oCaster);
@@ -106,7 +105,7 @@ void DoSpawnBit(object oCaster, object oTarget, string sSkel)
     }
 }    
 
-void DoAnimationBit(location lTarget, object oCaster)
+void DoAnimationBit(location lTarget, object oCaster, int nCasterLvl)
 {
     int nX = 0;
     int nM = GetMaxHenchmen();
@@ -123,7 +122,7 @@ void DoAnimationBit(location lTarget, object oCaster)
                 GetLocalInt(oTarget, "nAnBlasCheckMe") == TRUE)
             {
                 float fDelay = IntToFloat(Random(60))/10.0;
-                DelayCommand(fDelay, DoSpawnBit(oCaster, oTarget, sSkel));
+                DelayCommand(fDelay, DoSpawnBit(oCaster, oTarget, sSkel, nCasterLvl));
                 nX++;
             }
         }

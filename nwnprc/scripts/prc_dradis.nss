@@ -94,7 +94,7 @@ void DoWing(object oPC, int nWingType)
     //wing invalid, use current
     if(nWingType == -1) return;
     //no CEP2, no extra wing models
-    if(!GetPRCSwitch(CEP_IN_USE)) return;
+    if(!GetPRCSwitch(MARKER_CEP2)) return;
     SetCreatureTailType(nWingType, oPC);
     //override any stored default appearance
     SetPersistantLocalInt(oPC,    "AppearanceStoredWing", nWingType);    
@@ -105,7 +105,7 @@ void DoTail(object oPC, int nTailType)
     //tail invalid, use current
     if(nTailType == -1) return;
     //no CEP2, no extra tail models
-    if(!GetPRCSwitch(CEP_IN_USE)) return;
+    if(!GetPRCSwitch(MARKER_CEP2)) return;
     SetCreatureTailType(nTailType, oPC);
     //override any stored default appearance
     SetPersistantLocalInt(oPC,    "AppearanceStoredTail", nTailType);

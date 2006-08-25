@@ -11,6 +11,7 @@
 //:: Created By: Brad Prince
 //:: Created On: Jan 14, 2003
 //:://////////////////////////////////////////////
+#include "prc_alterations"
 #include "x2_inc_cutscenep"
 
 void StartCutscene(object oPC, int iCut);

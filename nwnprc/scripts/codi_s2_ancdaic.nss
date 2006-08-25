@@ -13,7 +13,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -241,6 +240,7 @@ void main()
                     DoDebug("Copy not valid");
                 SetIdentified(oCopy, TRUE);
                 SetPlotFlag(oCopy, FALSE);
+                SetStolenFlag(oCopy, FALSE);
                 int nOldValue = GetGoldPieceValue(oCopy);
                 IPSafeAddItemProperty(oCopy, ipToAdd);
                 int nNewValue = GetGoldPieceValue(oCopy);
@@ -626,6 +626,7 @@ void main()
                 int nOldPlot = GetPlotFlag(oItem);
                 int nOldValue = GetGoldPieceValue(oItem);
                 SetPlotFlag(oItem, nOldPlot);
+                SetStolenFlag(oItem, nOldPlot);
                 int nSacrificed = GetPersistantLocalInt(oPC, "CODI_SAMURAI");
                 //add the itemproperty
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
@@ -685,6 +686,7 @@ void main()
                 int nNewPlot = GetPlotFlag(oItem);
                 int nNewValue = GetGoldPieceValue(oItem);
                 SetPlotFlag(oItem, nNewPlot);
+                SetStolenFlag(oItem, nNewPlot);
                 int nIPCost = nNewValue-nOldValue;
                 SetPersistantLocalInt(oPC, "CODI_SAMURAI", nSacrificed-nIPCost);
                 //go back to start

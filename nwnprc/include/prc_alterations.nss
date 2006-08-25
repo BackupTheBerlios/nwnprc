@@ -150,7 +150,7 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 //#include "prc_inc_s_det"
 #include "prc_inc_descrptr"
 #include "inc_dynconv"
-
+#include "x2_inc_spellhook"
 
 
 //////////////////////////////////////////////////

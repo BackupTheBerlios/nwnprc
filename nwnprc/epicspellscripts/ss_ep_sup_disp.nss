@@ -3,10 +3,7 @@
 //:: Author: Boneshank (Don Armstrong)
 
 #include "prc_alterations"
-#include "x2_inc_spellhook"
 #include "inc_epicspells"
-//#include "inc_dispel"
-//#include "prc_alterations"
 
 void main()
 {

@@ -1,11 +1,8 @@
 
 #include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_racial_const"
-#include "inc_encrypt"
-#include "prc_alterations"
-#include "inc_letoscript"
 #include "prc_ccc_inc"
+#include "inc_letoscript"
+#include "inc_encrypt"
 #include "x2_inc_switches"
 
 void CheckAndBoot(object oPC)

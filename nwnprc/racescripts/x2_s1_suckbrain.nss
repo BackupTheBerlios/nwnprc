@@ -48,8 +48,6 @@ void DoSuckBrain(object oTarget,int nDamage)
     ApplyEffectToObject(DURATION_TYPE_PERMANENT,eDrain,oTarget);
 }
 #include "prc_alterations"
-
-#include "x2_i0_spells"
 void main()
 {
 

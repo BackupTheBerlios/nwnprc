@@ -7,15 +7,10 @@
 */
 
 #include "prc_alterations"
-#include "nw_i0_plot"
-#include "prc_ipfeat_const"
-#include "inc_epicspells"
-#include "prc_inc_domain"
-#include "inc_newspellbook"
-#include "prc_power_const"
-#include "prc_alterations"
 #include "psi_inc_psifunc"
 #include "prc_sp_func"
+#include "prc_inc_domain"
+#include "inc_epicspells"
 
 void PrcFeats(object oPC)
 {

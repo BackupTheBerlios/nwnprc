@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
 #include "prc_class_const"
-#include "inc_utility"
+#include "prc_alterations"
 
 //This will create a tresure item based on the class of the PC
 //that killed this creature

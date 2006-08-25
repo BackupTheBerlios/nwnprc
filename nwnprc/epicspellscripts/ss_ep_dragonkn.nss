@@ -16,10 +16,7 @@
     Altered by Boneshank, for purposes of the Epic Spellcasting project.
 */
 #include "prc_alterations"
-//#include "x2_inc_toollib"
 #include "inc_epicspells"
-#include "x2_inc_spellhook"
-#include "inc_utility"
 void main()
 {
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

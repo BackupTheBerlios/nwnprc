@@ -11,10 +11,13 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_alterations"
-
-void CreateBalor();
 #include "x2_inc_spellhook"
-#include "inc_utility"
+
+
+void CreateBalor()
+{
+     CreateObject(OBJECT_TYPE_CREATURE, "NW_S_BALOR_EVIL", PRCGetSpellTargetLocation());
+}
 
 void main()
 {
@@ -75,10 +78,5 @@ if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
 }
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
-}
-
-void CreateBalor()
-{
-     CreateObject(OBJECT_TYPE_CREATURE, "NW_S_BALOR_EVIL", PRCGetSpellTargetLocation());
 }
 

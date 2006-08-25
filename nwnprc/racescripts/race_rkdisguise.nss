@@ -12,8 +12,8 @@
 //:://////////////////////////////////////////////
 // disguise for rak
 
+#include "prc_alterations"
 #include "pnp_shft_poly"
-#include "pnp_shft_main"
 
 void main()
 {

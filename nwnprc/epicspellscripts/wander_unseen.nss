@@ -11,11 +11,12 @@
 //:://////////////////////////////////////////////
 #include "prc_alterations"
 #include "inc_dispel"
+#include "inc_epicspells"
 
 void main()
 {
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-	SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
 
     object oPC = OBJECT_SELF;
     effect eX, eRem;
@@ -44,5 +45,5 @@ void main()
         effect eInv = SupernaturalEffect(EffectInvisibility(INVISIBILITY_TYPE_NORMAL));
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eInv, oPC);
     }
-	DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 }

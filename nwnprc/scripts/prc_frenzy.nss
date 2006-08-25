@@ -15,12 +15,6 @@
 //:://////////////////////////////////////////////
 #include "prc_alterations"
 #include "inc_addragebonus"
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
-//#include "prc_inc_clsfunc"
-#include "prc_alterations"
-
 
 void TurnBasedDamage(object oTarget, object oCaster);
 void AttackNearestForDuration();

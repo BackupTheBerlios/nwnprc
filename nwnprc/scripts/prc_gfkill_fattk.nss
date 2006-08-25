@@ -20,14 +20,6 @@
 //level.
 
 #include "prc_alterations"
-/*
-//#include "prc_inc_sneak"
-//#include "prc_alterations"
-//#include "prc_alterations"
-//#include "spinc_common"
-//#include "prc_alterations"
-//#include "x2_inc_spellhook"
-*/
 
 void DoFrightfulAttack(object oPC, object oTarget);
 
@@ -51,7 +43,7 @@ void DelayFrightfulAttackCheck(object oPC, object oTarget) {
             }
          }
       }
-   }	
+   }    
 }
 
 void DoFrightfulAttack(object oPC, object oTarget) {
@@ -117,7 +109,7 @@ void DoFrightfulAttack(object oPC, object oTarget) {
                } 
                else if (GetHasMettle(oTarget, SAVING_THROW_WILL)) // Ignores partial effects
                {
-               	  eEffect = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
+                  eEffect = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
                }
                else
                {
@@ -140,7 +132,7 @@ void DoFrightfulAttack(object oPC, object oTarget) {
       } else {
          PerformAttack(oTarget, oPC, eEffect);
          //Replace all of these with FloatingTextStrRefOnCreature() later.
-	 //16832365
+     //16832365
          //FloatingTextStringOnCreature("Failed Frightful Attack: Target must not be immune to sneak attacks, mind affecting effects, or fear.", oPC, FALSE);
          FloatingTextStrRefOnCreature(16832365, oPC, FALSE);
       }

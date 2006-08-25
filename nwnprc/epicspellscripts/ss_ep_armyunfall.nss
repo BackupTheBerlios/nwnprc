@@ -7,10 +7,7 @@
 //:: Last Updated On:
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "nw_i0_spells"
 #include "inc_epicspells"
-#include "x2_inc_spellhook"
-#include "inc_utility"
 
 void main()
 {

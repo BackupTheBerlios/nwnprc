@@ -11,12 +11,9 @@
 // Last Updated: 03/16/2004, Nron Ksr
 /////////////////////////////////////////////////
 
-//#include "prc_alterations"
-// Boneshank - Added below include files for needed functions.
 #include "prc_alterations"
-#include "inc_epicspells"
-//#include "prc_alterations"
 #include "x2_inc_spellhook"
+#include "inc_epicspells"
 
 void main()
 {

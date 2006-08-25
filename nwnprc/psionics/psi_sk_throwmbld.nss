@@ -17,10 +17,8 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "psi_inc_soulkn"
-//#include "prc_inc_combat"
-#include "prcsp_reputation"
 #include "prc_alterations"
+#include "psi_inc_soulkn"
 
 void Cleanup(object oPC)
 {

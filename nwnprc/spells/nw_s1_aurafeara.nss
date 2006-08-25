@@ -13,7 +13,6 @@
 //:: Created On: May 25, 2001
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "NW_I0_SPELLS"
 
 void main()
 {

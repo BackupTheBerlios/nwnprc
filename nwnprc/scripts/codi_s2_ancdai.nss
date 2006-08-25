@@ -12,7 +12,6 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {
@@ -50,7 +49,10 @@ void main()
         if(GetItemPossessor(oKatana2) != OBJECT_SELF)
             DestroyObject(oKatana2);
         else    
+        {
             SetItemCursedFlag(oKatana2, TRUE);
+            SetStolenFlag(oKatana2, TRUE);
+        }    
         SetName(oKatana2, GetName(OBJECT_SELF)+"'s "+GetName(oKatana2));
     }
     //wakizashi (short sword)
@@ -63,7 +65,10 @@ void main()
         if(GetItemPossessor(oWakizashi2) != OBJECT_SELF)
             DestroyObject(oWakizashi2);
         else    
+        {
             SetItemCursedFlag(oWakizashi2, TRUE);
+            SetStolenFlag(oWakizashi2, TRUE);
+        }    
         SetName(oWakizashi2, GetName(OBJECT_SELF)+"'s Wakizashi");
     }
 }

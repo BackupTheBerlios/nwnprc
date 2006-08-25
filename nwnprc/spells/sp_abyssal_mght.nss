@@ -27,69 +27,68 @@ Created:   1/27/06
 
 #include "prc_alterations"
 #include "spinc_common"
-#include "prc_inc_spells"
 
 void main()
 {
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	// Run the spellhook. 
-	if (!X2PreSpellCastCode()) return;
-	
-	//define vars
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nAlignEvil = GetAlignmentGoodEvil(oPC);
-	int nAlignChaotic = GetAlignmentLawChaos(oPC);
-	int nType = MyPRCGetRacialType(oTarget);
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ABYSSAL_MIGHT, oPC);
-	
-	if(nType == RACIAL_TYPE_OUTSIDER && nAlignEvil == ALIGNMENT_EVIL && nAlignChaotic == ALIGNMENT_CHAOTIC)
-	{
-		int nBonus = 2;
-		
-		//Check for Empower
-		if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
-		{
-			nBonus = 3;			
-		}
-				
-		//Str, Dex, Con increases
-		effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nBonus);
-		effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nBonus);
-		effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, nBonus);
-		
-		//SR increase by 2... yippee
-		effect eResist = EffectSpellResistanceIncrease(nBonus);
-		
-		//Some sort of VFX
-		effect eVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-		
-		//Link 'em up
-		effect eLink = EffectLinkEffects(eStr, eDex);
-		eLink = EffectLinkEffects(eLink, eCon);
-		eLink = EffectLinkEffects(eLink, eResist);
-		eLink = EffectLinkEffects(eLink, eVis);
-		
-		//Duration 10 min/level
-		float fDuration = IntToFloat(nCasterLvl * 600);
-		
-		//Check for Extend
-		if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-		{
-			fDuration = (fDuration * 2);
-		}
-		
-		//Apply
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDuration);
-	}
-	
-	SPEvilShift(oPC);
-	
-	SPSetSchool();
+    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    
+    // Run the spellhook. 
+    if (!X2PreSpellCastCode()) return;
+    
+    //define vars
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nAlignEvil = GetAlignmentGoodEvil(oPC);
+    int nAlignChaotic = GetAlignmentLawChaos(oPC);
+    int nType = MyPRCGetRacialType(oTarget);
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    
+    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_ABYSSAL_MIGHT, oPC);
+    
+    if(nType == RACIAL_TYPE_OUTSIDER && nAlignEvil == ALIGNMENT_EVIL && nAlignChaotic == ALIGNMENT_CHAOTIC)
+    {
+        int nBonus = 2;
+        
+        //Check for Empower
+        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+        {
+            nBonus = 3;         
+        }
+                
+        //Str, Dex, Con increases
+        effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, nBonus);
+        effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nBonus);
+        effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, nBonus);
+        
+        //SR increase by 2... yippee
+        effect eResist = EffectSpellResistanceIncrease(nBonus);
+        
+        //Some sort of VFX
+        effect eVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+        
+        //Link 'em up
+        effect eLink = EffectLinkEffects(eStr, eDex);
+        eLink = EffectLinkEffects(eLink, eCon);
+        eLink = EffectLinkEffects(eLink, eResist);
+        eLink = EffectLinkEffects(eLink, eVis);
+        
+        //Duration 10 min/level
+        float fDuration = IntToFloat(nCasterLvl * 600);
+        
+        //Check for Extend
+        if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+        {
+            fDuration = (fDuration * 2);
+        }
+        
+        //Apply
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDuration);
+    }
+    
+    SPEvilShift(oPC);
+    
+    SPSetSchool();
 }
-	
-	
+    
+    

@@ -7,9 +7,7 @@
 //:: Last Updated On: March 12, 2004
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "x2_inc_spellhook"
 #include "inc_epicspells"
-#include "inc_utility"
 void main()
 {
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

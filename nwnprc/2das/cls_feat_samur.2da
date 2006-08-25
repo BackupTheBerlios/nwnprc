@@ -335,7 +335,7 @@
 331 FEAT_EPIC_SUPERIOR_INITIATIVE                  753       1    -1             0      
 332 FEAT_IMPROVED_DWARVEN_WARAXE                   954       1    -1             0      
 333 FEAT_EPIC_BLINDING_SPEED                       491       0    -1             1      
-334 AncestralDaisho                                3417      3    1              1      
+334 AncestralDaisho                                3417      3    4              1      
 335 OverWCrit_Mindblade                            3615      1    -1             0      
 336 DevCrit_Mindblade                              3616      1    -1             0      
 337 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      

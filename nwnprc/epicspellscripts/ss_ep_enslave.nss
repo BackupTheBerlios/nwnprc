@@ -4,9 +4,6 @@
 
 #include "prc_alterations"
 #include "inc_epicspells"
-#include "x2_inc_spellhook"
-
-//#include "prc_alterations"
 
 void RemoveDomination(object oCreature, object oSlaver = OBJECT_SELF)
 {

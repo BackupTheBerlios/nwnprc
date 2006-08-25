@@ -40,8 +40,10 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 #include "spinc_telecircle"
 
+const int ERROR_CODE_5_Fix = 1;
 
 const int SPELLID_VISIBLE = 2878;
 const int SPELLID_HIDDEN  = 2879;

@@ -27,10 +27,6 @@
 
 #include "prc_alterations"
 #include "inc_poison"
-#include "spinc_common"
-
-#include "prc_alterations"
-
 
 void main(){
     object oPC = OBJECT_SELF;

@@ -37,9 +37,7 @@ not its exact location.
 //:://////////////////////////////////////////////
  
 #include "prc_alterations"
-#include "spinc_necro_cyst"
 #include "spinc_common"
-#include "prc_inc_spells"
  
 void RoundThree(object oPC, location lTarget);
 void RoundTwo(object oPC, location lTarget);

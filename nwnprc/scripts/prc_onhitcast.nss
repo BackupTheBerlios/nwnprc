@@ -24,11 +24,10 @@
 //:: Created By: Various people
 //:://////////////////////////////////////////////
 #include "prc_alterations"
+#include "inc_grapple"
 #include "psi_inc_onhit"
 #include "inc_rend"
 #include "psi_inc_ac_const"
-#include "prc_alterations"
-#include "inc_grapple"
 
 
 void SetRancorVar(object oPC);

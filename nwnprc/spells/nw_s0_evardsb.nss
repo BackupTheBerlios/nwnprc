@@ -27,7 +27,6 @@ through the area at only half normal speed.
 //:: GZ: Removed SR, its not there by the book
 //:: Primogenitor: Implemented 3.5ed rules
 #include "prc_alterations"
-#include "X0_I0_SPELLS"
 #include "x2_inc_spellhook"
 void main()
 {

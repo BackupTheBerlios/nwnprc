@@ -3,9 +3,8 @@
 //:: prc_npc_hb
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "inc_epicspellai"
-#include "prc_alterations"
 #include "prc_inc_death"
+#include "inc_epicspellai"
 
 void main()
 {

@@ -14,8 +14,6 @@
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "prc_alterations"
-#include "NW_I0_SPELLS"
-#include "inc_utility"
 
 void main()
 {
@@ -41,7 +39,7 @@ void main()
         nDuration = nDuration *2;   //Duration is +100%
     }
     eSummon = EffectSummonCreature("NW_S_VROCK", VFX_FNF_SUMMON_GATE, 3.0);
-    if(GetPRCSwitch(PRC_COMPANION_IN_USE))
+    if(GetPRCSwitch(MARKER_PRC_COMPANION))
         eSummon = EffectSummonCreature("prc_gelugon", VFX_FNF_SUMMON_GATE, 3.0);
     //Apply the VFX impact and summon effect
     MultisummonPreSummon(OBJECT_SELF);

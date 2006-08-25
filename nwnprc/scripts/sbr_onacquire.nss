@@ -5,7 +5,7 @@
 // http://nwvault.ign.com/Files/scripts/data/1055903555000.shtml
 
 // This script should be executed by your module OnAcquireItem event.
-
+#include "prc_alterations"
 #include "sbr_include"
 
 void main()

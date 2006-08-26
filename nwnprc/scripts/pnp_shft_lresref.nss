@@ -6,7 +6,7 @@
 //:: Created On: 2/22/2004 2:59:44 PM
 //:://////////////////////////////////////////////
 
-#include "pnp_shft_main"
+#include "prc_alterations"
 
 // We will be setting the custom tokens so the dlg will display
 // 10 forms at a time.

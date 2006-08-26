@@ -5,7 +5,7 @@
 //:: Created By: Script Wizard
 //:: Created On: 31/08/2004 6:31:18 PM
 //:://////////////////////////////////////////////
-#include "pnp_shft_main"
+#include "prc_alterations"
 
 void main()
 {

@@ -9,8 +9,7 @@
 //:: Created On: Mar 3, 2004
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
-#include "prc_feat_const"
+#include "prc_alterations"
 
 // * Applies the Endurance (Vigilant prereq.) saving throw bonus as CompositeBonuses on the object's skin.
 void EnduranceBonus(object oPC, object oSkin, int iLevel, int iType)

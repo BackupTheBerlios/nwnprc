@@ -3,7 +3,7 @@
 //:: prc_plc_physatt
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "prc_alterations"
 void main()
 {
     ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_PLACEABLE_ONATTACKED);

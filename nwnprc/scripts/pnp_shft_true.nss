@@ -1,5 +1,5 @@
 //true form shifter class feat script
-#include "pnp_shft_main"
+#include "prc_alterations"
 
 void main()
 {

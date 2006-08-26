@@ -1,6 +1,6 @@
 //this script is like pnp_shifter_listfm but it uses the name of the form not the resref for display
 
-#include "pnp_shft_main"
+#include "prc_alterations"
 
 // We will be setting the custom tokens so the dlg will display
 // 10 forms at a time.

@@ -11,7 +11,6 @@
 #include "inc_epicspells"
 #include "x2_inc_spellhook"
 #include "prc_getbest_inc"
-#include "inc_epicspells"
 
 void main()
 {

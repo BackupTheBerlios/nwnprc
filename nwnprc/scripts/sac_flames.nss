@@ -1,5 +1,4 @@
-#include "inc_utility"
-#include "prc_class_const"
+#include "prc_alterations"
 
 int GetIPDmg(int iDmg)
 {

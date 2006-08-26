@@ -1,7 +1,7 @@
 // this script runs when the player selects the form 8 from the list to shift into
 
-#include "nw_i0_generic"
-#include "pnp_shft_main"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {

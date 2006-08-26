@@ -1,7 +1,7 @@
 //for the form selected from the list and confermed, delete from known forms array
 
-#include "nw_i0_generic"
-#include "pnp_shft_main"
+#include "prc_alterations"
+#include "prc_alterations"
 
 void main()
 {

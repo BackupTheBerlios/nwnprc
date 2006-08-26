@@ -3,7 +3,7 @@
 //:: prc_door_lock
 //:://////////////////////////////////////////////
 
-#include "inc_utility"
+#include "prc_alterations"
 void main()
 {
     ExecuteAllScriptsHookedToEvent(OBJECT_SELF, EVENT_DOOR_ONLOCK);

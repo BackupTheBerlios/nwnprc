@@ -1,7 +1,5 @@
 
-#include "prc_class_const"
-#include "inc_utility"
-#include "prc_feat_const"
+#include "prc_alterations"
 
 // Bonus on certain CHA based skills
 void Dark_Charisma(object oPC ,object oSkin, int nLevel)

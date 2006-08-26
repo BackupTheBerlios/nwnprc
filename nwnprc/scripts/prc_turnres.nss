@@ -11,9 +11,8 @@
 //:: Created On:   12/17/04
 //:://////////////////////////////////////////////
 
+#include "prc_alterations"
 
-#include "inc_utility"
-#include "prc_class_const"
 void main()
 {
     //Define variables

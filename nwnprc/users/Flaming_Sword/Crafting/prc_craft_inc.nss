@@ -638,7 +638,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else if(nCasterLevel < StringToInt(Get2DACache(sFile, "CasterLevel", i)))
+            else if(nCasterLevel < StringToInt(Get2DACache(sFile, "Level", i)))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else
             {   //attempting to minimise 2da reads for spell prerequisite checking
@@ -772,35 +772,6 @@ void ApplyItemProps(object oItem, string sFile, int nLine)
         if(GetIsItemPropertyValid(ip))
             IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
     }
-    /*
-    int nType = StringToInt(Get2DACache(sFile, "Type1", nLine));
-    int nSubType = StringToInt(Get2DACache(sFile, "SubType1", nLine));
-    int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue1", nLine));
-    int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value1", nLine));
-    string sTemp;
-    IPSafeAddItemProperty(oItem, ConstructIP(nType, nSubType, nCostTableValue, nParam1Value), 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-    sTemp = Get2DACache(sFile, "Type2", nLine);
-    if(sTemp == "") return;
-    IPSafeAddItemProperty(oItem,
-                        ConstructIP(
-                                    StringToInt(sTemp),
-                                    StringToInt(Get2DACache(sFile, "SubType2", nLine)),
-                                    StringToInt(Get2DACache(sFile, "CostTableValue2", nLine)),
-                                    StringToInt(Get2DACache(sFile, "Param1Value2", nLine))
-                                    ),
-                                0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-    sTemp = Get2DACache(sFile, "Type3", nLine);
-
-    if(sTemp == "") return;
-    IPSafeAddItemProperty(oItem,
-                        ConstructIP(
-                                    StringToInt(sTemp),
-                                    StringToInt(Get2DACache(sFile, "SubType3", nLine)),
-                                    StringToInt(Get2DACache(sFile, "CostTableValue3", nLine)),
-                                    StringToInt(Get2DACache(sFile, "Param1Value3", nLine))
-                                    ),
-                                0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-    */
 }
 
 //Partly ripped off the lexicon :P
@@ -1228,7 +1199,7 @@ int GetPnPItemCost(struct itemvars strTemp)
     SetIdentified(strTemp.item, FALSE);
     nTemp = GetGoldPieceValue(strTemp.item) / StringToInt(Get2DACache("baseitems", "ItemMultiplier", nType));
     SetIdentified(strTemp.item, TRUE);
-    int nFlag = StringToInt(Get2DACache("craft_gen_item", "Type", nType));
+    int nFlag = StringToInt(Get2DACache("prc_craft_gen_it", "Type", nType));
     int nAdd = 0;
     nMaterial = StringToInt(GetStringLeft(GetTag(strTemp.item), 3));
     if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)
@@ -1424,94 +1395,19 @@ string GetItemPropertyString(itemproperty ip)
     return sDesc;
 }
 
-/*
-//Supports up to 3 itemprops at a time
-void AddPropertyToItem(object oItem, string sFile, int nLine)
-{
-    string sType = Get2DACache(sFile, "Type1", nLine);
-    int nType = StringToInt(sType);
-    int nSubTypeValue = StringToInt(Get2DACache(sFile, "SubType1", nLine));
-    int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue1", nLine));
-    int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value1", nLine));
-    itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
-    IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-    sType = Get2DACache(sFile, "Type2", nLine);
-    if(sType == "")
-        return;
-    else
-    {
-        nType = StringToInt(sType);
-        nSubTypeValue = StringToInt(Get2DACache(sFile, "SubType2", nLine));
-        nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue2", nLine));
-        nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value2", nLine));
-        ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
-        IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-    }
-    sType = Get2DACache(sFile, "Type3", nLine);
-    if(sType == "")
-        return;
-    else
-    {
-        nType = StringToInt(sType);
-        nSubTypeValue = StringToInt(Get2DACache(sFile, "SubType3", nLine));
-        nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue3", nLine));
-        nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value3", nLine));
-        ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
-        IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-    }
-}
-*/
-
 //Returns a string describing the item
 string ItemStats(object oItem)
 {
     string sDesc = GetName(oItem) +
                     "\n\n" +
                     GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", GetBaseItemType(oItem)))) +
-                    /*"\n\n" +
-                    "Price: " +
-                    IntToString(GetGoldPieceValue(oItem)) +*/
                     "\n\n";
 
     itemproperty ip = GetFirstItemProperty(oItem);
-    /*
-    int nType;
-    int nSubType;
-    int nCostTable;
-    int nCostTableValue;
-    int nParam1;
-    int nParam1Value;
-    */
     while(GetIsItemPropertyValid(ip))
     {
         if(GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT)
         {
-            /*
-            int nType = GetItemPropertyType(ip);
-            int nSubType = GetItemPropertySubType(ip);
-            int nCostTable = GetItemPropertyCostTable(ip);
-            int nCostTableValue = GetItemPropertyCostTableValue(ip);
-            int nParam1 = GetItemPropertyParam1(ip);
-            int nParam1Value = GetItemPropertyParam1Value(ip);
-            sDesc += InsertSpaceAfterString(
-                        GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "GameStrRef", nType)))
-                        );
-            string sSubType = Get2DACache("itempropdef", "SubTypeResRef", nType);
-            string sSubType2 = Get2DACache(sSubType, "Name", nSubType);
-            if(sSubType2 != "")
-                sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sSubType2)));
-            string sCostTable = Get2DACache("itempropdef", "CostTableResRef", nType);
-            string sCostTable2 = Get2DACache("iprp_costtable", "Name", StringToInt(sCostTable));
-            string sCostTable3 = Get2DACache(sCostTable2, "Name", nCostTableValue);
-            if(sCostTable3 != "")
-                sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sCostTable3)));
-            string sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
-            string sParam12 = Get2DACache("iprp_paramtable", "Name", StringToInt(sParam1));
-            string sParam13 = Get2DACache(sParam12, "Name", nParam1Value);
-            if(sParam13 != "")
-                sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sParam13)));
-            sDesc += "\n";
-            */
             sDesc += GetItemPropertyString(ip);
         }
         ip = GetNextItemProperty(oItem);
@@ -1528,9 +1424,11 @@ int MaxListSize(string sTable)
     if(sTable == "craft_armour")
         return 64;
     if(sTable == "craft_weapon")
-        return 0;   //fix
+        return 43;   //fix
     if(sTable == "craft_wondrous")
         return 0;   //fix
+    if(sTable == "craft_ring")
+        return 0;
     if(sTable == "classes")
         return 256;
     if(sTable == "disease")
@@ -1792,7 +1690,7 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
         }
         case ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP:
         {
-            ip = ItemPropertyDamageBonusVsRace(nSubTypeValue, nCostTableValue, nParam1Value);
+            ip = ItemPropertyDamageBonusVsRace(nSubTypeValue, nParam1Value, nCostTableValue);
             break;
         }
         case ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT:

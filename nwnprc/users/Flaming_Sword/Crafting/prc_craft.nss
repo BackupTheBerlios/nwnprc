@@ -553,42 +553,6 @@ void main()
                     SetCustomToken(DYNCONV_TOKEN_PREV, ActionString("Previous"));
                     break;
                 }
-                /*
-                case STAGE_SELECT_ITEM:
-                {
-                    SetHeader("Select an equipped item to forge.");
-                    AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
-                    AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    for(i = 0; i < 14; i++) //no creature items
-                    {
-                        sTemp = GetName(GetItemInSlot(i, oPC));
-                        if(sTemp != "")
-                            AddChoice(ActionString(sTemp), i, oPC);
-                    }
-                    MarkStageSetUp(nStage, oPC);
-                    break;
-                }
-                case STAGE_SELECT_TYPE:
-                {
-                    SetHeader(ItemStats(oItem) + "\nSelect an item property.");
-                    AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    AddChoice(ActionString("Remove all item properties") +
-                            " [<cþ>WARNING</c>]",
-                        CHOICE_CLEAR, oPC);
-                    AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
-                    SetLocalInt(oPC, "DynConv_Waiting", TRUE);
-                    SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
-                    SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
-                    SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, -1);
-                    SetLocalString(oPC, PRC_CRAFT_COSTTABLE, "");
-                    SetLocalInt(oPC, PRC_CRAFT_COSTTABLEVALUE, -1);
-                    SetLocalString(oPC, PRC_CRAFT_PARAM1, "");
-                    SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, -1);
-                    PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, "itempropdef");
-                    MarkStageSetUp(nStage);
-                    break;
-                }
-                */
                 case STAGE_SELECT_SUBTYPE:
                 {
                     SetHeader("Select a subtype.");
@@ -627,15 +591,6 @@ void main()
                     if(nTemp2 < 1) nTemp2 = 1;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nTemp2);
-                    /*
-                    sTemp = InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "GameStrRef", nType))));
-                    if(sSubtype != "")
-                        sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sSubtype, "Name", nSubTypeValue))));
-                    if(sCostTable != "")
-                        sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sCostTable, "Name", nCostTableValue))));
-                    if(sParam1 != "")
-                        sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sParam1, "Name", nParam1Value))));
-                    */
                     sTemp = GetItemPropertyString(ip);
                     sTemp += "\nCost: " + IntToString(nTemp);
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
@@ -728,15 +683,7 @@ void main()
                 {
                     //string sFile = GetCrafting2DA(oItem);
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
-                    if(nType == ITEM_PROPERTY_SKILL_BONUS && SkillHasACPenalty(nSubTypeValue))
-                    {   //taking armour check penalty reductions into account
-                        nCostTableValue += GetArmourCheckPenaltyReduction(oNewItem);
-                    }
-                    /*
-                    itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
-                    IPSafeAddItemProperty(oNewItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
-                    */
-                    ApplyItemProps(oItem, sFile, nLine);
+                    ApplyItemProps(oNewItem, sFile, nLine);
                     struct itemvars strTempOld;
                     strTempOld.item = oItem;
                     strTempOld.enhancement = nEnhancement;
@@ -753,10 +700,13 @@ void main()
                     int nXPDiff = nXPNew - nXPOld;
                     if(nXPDiff < 0) nXPDiff = 0;
                     SetLocalInt(oPC, PRC_CRAFT_XP, nXPDiff);
+                    //FIX THIS
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine)));
                     sTemp += "\n\n";
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Description", nLine)));
                     sTemp += "\n\n";
+                    sTemp += ItemStats(oNewItem);
+                    /*
                     sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "GameStrRef", nType))));
                     if(sSubtype != "")
                         sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sSubtype, "Name", nSubTypeValue))));
@@ -764,6 +714,7 @@ void main()
                         sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sCostTable, "Name", nCostTableValue))));
                     if(sParam1 != "")
                         sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sParam1, "Name", nParam1Value))));
+                    */
                     sTemp += "\n\nCost: " + IntToString(nCostDiff) + "gp " + IntToString(nXPDiff) + "XP";
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
@@ -773,7 +724,7 @@ void main()
                     int nCurrentXP = GetXP(oPC);
 
                     if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff)
-                        AddChoice(ActionString("Confirm"), STAGE_CONFIRM_MAGIC, oPC);
+                        AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);
                     break;
@@ -880,7 +831,8 @@ void main()
                         SetLocalObject(oListener, PRC_CRAFT_ITEM, oItem);
                         SetLocalInt(oListener, PRC_CRAFT_LISTEN, PRC_CRAFT_LISTEN_SETNAME);
                         SendMessageToPC(oPC, "Please state (use chat) the new name of the item within the next 30 seconds.");
-                        ClearCurrentStage(oPC);
+                        //ClearCurrentStage(oPC);
+                        AllowExit(DYNCONV_EXIT_FORCE_EXIT);
                     }
                     else if(nChoice == CHOICE_SETAPPEARANCE)
                     {
@@ -929,77 +881,6 @@ void main()
                 MarkStageNotSetUp(nStage, oPC);
                 break;
             }
-            /*
-            case STAGE_SELECT_ITEM:
-            {
-                if(nChoice == CHOICE_BACK)
-                    nStage = 0;//GetPrevItemPropStage(nStage, oPC, nPropList);
-                else
-                {
-                    oItem = GetItemInSlot(nChoice, oPC);
-                    SetLocalObject(oPC, PRC_CRAFT_ITEM, oItem);
-                    while(GetIsObjectValid(oNewItem))   //clearing inventory
-                    {
-                        DestroyObject(oNewItem);
-                        oNewItem = GetNextItemInInventory(OBJECT_SELF);
-                    }
-                    oNewItem = CopyItem(oItem, OBJECT_SELF, FALSE); //temp item for cost
-                    nStage = GetNextItemPropStage(nStage, oPC, nPropList);
-                }
-                break;
-            }
-            case STAGE_SELECT_TYPE:
-            {
-                if(nChoice == CHOICE_BACK)
-                    nStage = GetPrevItemPropStage(nStage, oPC, nPropList);
-                else if(nChoice == CHOICE_CLEAR) //strips item properties
-                {
-                    itemproperty ip = GetFirstItemProperty(oItem);
-                    while(GetIsItemPropertyValid(ip))
-                    {
-                        RemoveItemProperty(oItem, ip);
-                        ip = GetNextItemProperty(oItem);
-                    }
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
-                    SetHeader(ItemStats(oItem) + "\nSelect an item property.");
-                }
-                else if(nChoice == CHOICE_SETNAME)
-                {
-                    SetLocalInt(oPC, "Item_Name_Change", 1);
-                    nStage = GetPrevItemPropStage(nStage, oPC, nPropList);
-                    SendMessageToPC(oPC, "Please state (use chat) the new name of the item.");
-                }
-                else
-                {
-                    nType = nChoice;
-                    SetLocalInt(oPC, PRC_CRAFT_TYPE, nType);
-                    sSubtype = Get2DACache("itempropdef", "SubTypeResRef", nType);
-                    SetLocalString(oPC, PRC_CRAFT_SUBTYPE, sSubtype);
-                    sCostTable = Get2DACache("itempropdef", "CostTableResRef", nType);
-                    if(sCostTable == "0")   //IPRP_BASE1 is blank
-                        sCostTable = "";
-                    if(sCostTable != "")
-                        sCostTable = Get2DACache("iprp_costtable", "Name", StringToInt(sCostTable));
-                    SetLocalString(oPC, PRC_CRAFT_COSTTABLE, sCostTable);
-                    sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
-                    if(sParam1 != "")
-                        sParam1 = Get2DACache("iprp_paramtable", "TableResRef", StringToInt(sParam1));
-                    SetLocalString(oPC, PRC_CRAFT_PARAM1, sParam1);
-
-                    nPropList = 0;
-                    if(sSubtype != "")
-                        nPropList |= HAS_SUBTYPE;
-                    if(sCostTable != "")
-                        nPropList |= HAS_COSTTABLE;
-                    if(sParam1 != "")
-                        nPropList |= HAS_PARAM1;
-                    SetLocalInt(oPC, PRC_CRAFT_PROPLIST, nPropList);
-
-                    nStage = GetNextItemPropStage(nStage, oPC, nPropList);
-                }
-                break;
-            }
-            */
             case STAGE_SELECT_SUBTYPE:
             {
                 if(nChoice == CHOICE_BACK)
@@ -1071,7 +952,7 @@ void main()
                     nStage = STAGE_START;
                 else
                 {
-                    nStage = STAGE_CRAFT_CONFIRM;
+                    nStage = STAGE_CONFIRM_MAGIC;
                     SetLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE_RACE, nChoice);
                 }
                 MarkStageNotSetUp(nStage, oPC);
@@ -1160,11 +1041,7 @@ void main()
                 }
                 else if(nChoice == CHOICE_CONFIRM)
                 {
-                    if(nType == ITEM_PROPERTY_SKILL_BONUS && SkillHasACPenalty(nSubTypeValue))
-                    {   //taking armour check penalty reductions into account
-                        nCostTableValue += GetArmourCheckPenaltyReduction(oNewItem);
-                    }
-                    itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
+                    itemproperty ip;// = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
                     SetLocalInt(oPC, PRC_CRAFT_HB, 1);
                     int nDelay = GetCraftingTime(nCost);
                     if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nDelay /= 2;

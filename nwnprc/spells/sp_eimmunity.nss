@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 1, 2006
-    Modified: Jul 1, 2006
+    Modified: Aug 26, 2006
 */
 
 #include "prc_sp_func"
@@ -26,30 +26,35 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         {
             nDamageType = DAMAGE_TYPE_ACID;
             nVfx = VFX_IMP_ACID_L;
+            break;
         }
         case (3115):
         {
             nDamageType = DAMAGE_TYPE_COLD;
             nVfx = VFX_IMP_FROST_L;
+            break;
         }
         case (3116):
         {
             nDamageType = DAMAGE_TYPE_ELECTRICAL;
             nVfx = VFX_IMP_LIGHTNING_M;
+            break;
         }
         case (3117):
         {
             nDamageType = DAMAGE_TYPE_FIRE;
             nVfx = VFX_IMP_FLAME_M;
+            break;
         }
         case (3118):
         {
             nDamageType = DAMAGE_TYPE_SONIC;
             nVfx = VFX_IMP_SONIC;
+            break;
         }
     }
     float fDuration = SPGetMetaMagicDuration(HoursToSeconds(24));
-    effect eList = EffectDamageResistance(nDamageType, 9999, 0);
+    effect eList = EffectDamageResistance(nDamageType, 9999);
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_PROTECTION_ELEMENTS));
     eList = EffectLinkEffects(eList, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
     SPRaiseSpellCastAt(oTarget, FALSE, SPELL_ENERGY_IMMUNITY);

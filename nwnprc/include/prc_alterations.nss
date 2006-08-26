@@ -56,17 +56,24 @@ void ActionCastSpell(int iSpell, int iCasterLev = 0, int iBaseDC = 0, int iTotal
 void DeathlessFrenzyCheck(object oTarget);
 
 const int PRC_SIZEMASK_NONE = 0;           // no changes taken into account, same as bio size with fixes for CEP
+/*  //commented out and replaced because it made my compiler choke - Flaming_Sword
 const int PRC_SIZEMASK_NORMAL = 1 << 0;    // normal size changes
 const int PRC_SIZEMASK_NOABIL = 1 << 1;    // size changes that dont change ability scores
 const int PRC_SIZEMASK_SIMPLE = 1 << 2;    // 'simple' size changes that have simplified effects (expansion/compression)
 const int PRC_SIZEMASK_ALL = PRC_SIZEMASK_NORMAL | PRC_SIZEMASK_NOABIL | PRC_SIZEMASK_SIMPLE;
+*/
+const int PRC_SIZEMASK_NORMAL = 1;         // normal size changes
+const int PRC_SIZEMASK_NOABIL = 2;         // size changes that dont change ability scores
+const int PRC_SIZEMASK_SIMPLE = 4;         // 'simple' size changes that have simplified effects (expansion/compression)
+
+const int PRC_SIZEMASK_ALL = 7;
 
 /**
  * A PRC wrapper for GetCreatureSize that takes size adjustment
  * feats into account.
  *
  * @param oObject Creature whose size to get
- * @param nSizeMask Combination of PRC_SIZEMASK_* constants indicating which types of size changes to return 
+ * @param nSizeMask Combination of PRC_SIZEMASK_* constants indicating which types of size changes to return
  * @return        CREATURE_SIZE_* constant
  */
 int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nSizeMask = PRC_SIZEMASK_ALL);
@@ -327,7 +334,7 @@ int PRCGetCreatureSize(object oObject = OBJECT_SELF, int nSizeMask = PRC_SIZEMAS
         nSize = CREATURE_SIZE_GARGANTUAN;
     else if(nSize == 23)
         nSize = CREATURE_SIZE_COLOSSAL;
-    
+
     if(nSizeMask & PRC_SIZEMASK_NORMAL)
     {
         if(GetHasFeat(FEAT_SIZE_DECREASE_6, oObject))

@@ -17,9 +17,4 @@
 13 Feyri            RACE    201            ****      
 14 Base_Attack      BAB     6              ****      
 15 ScriptVar        VAR     X1_AllowArcher 0         
-16 Wizard           CLASSOR 10             ****      
-17 Sorcerer         CLASSOR 9              ****      
-18 Assassin         CLASSOR 30             ****      
-19 Harper           CLASSOR 28             ****      
-20 Bard             CLASSOR 1              ****      
-21 Shadowlord       CLASSOR 120            ****      
+16 ScriptVar        VAR     PRC_ArcSpell1  0         

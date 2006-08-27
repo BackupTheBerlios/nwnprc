@@ -158,6 +158,7 @@ int PsionicFeats(object oPC)
     if(GetHasFeat(FEAT_WOUNDING_ATTACK))              { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826510); }
     if(GetHasFeat(FEAT_DEEP_IMPACT))                  { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826514); }
     if(GetHasFeat(FEAT_FELL_SHOT))                    { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826516); }
+    if(GetHasFeat(FEAT_INVEST_ARMOUR))                { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16822550); }
     // Only check for the first Expanded Knowledge feat
     if(GetHasFeat(FEAT_EXPANDED_KNOWLEDGE_1))         { bRelevel = TRUE; sFeats += (bFirst-- > 0 ? "":" ,") + GetStringByStrRef(16826520); }
 

@@ -1841,6 +1841,7 @@ const int FEAT_EXPANDED_KNOWLEDGE_7                 = 4873;
 const int FEAT_EXPANDED_KNOWLEDGE_8                 = 4874;
 const int FEAT_EXPANDED_KNOWLEDGE_9                 = 4875;
 const int FEAT_EXPANDED_KNOWLEDGE_10                = 4876;
+const int FEAT_INVEST_ARMOUR                        = 3643;
 
 // Epic psionic feats
 const int FEAT_EPIC_PSIONIC_FOCUS_1                 = 4857;

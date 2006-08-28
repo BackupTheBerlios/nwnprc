@@ -77,6 +77,10 @@ void main()
 	//Add event script
 	AddEventScript(oTarget, EVENT_ONHIT, "prc_evnt_strmtl", TRUE, FALSE);
 	
+	//impervious to non-magical weapons for the duration
+	effect eReduce = EffectDamageReduction(0, DAMAGE_POWER_PLUS_ONE, 0);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eReduce, oTarget, fDur);
+	
 	SPSetSchool();
 }
 	

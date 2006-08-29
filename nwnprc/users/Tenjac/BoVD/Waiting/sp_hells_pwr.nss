@@ -46,7 +46,7 @@ void main()
 	   nAlignEvil == ALIGNMENT_EVIL &&
 	   nAlignLaw == ALIGNMENT_LAWFUL)
 	{
-		effect eArmor = EffectACIncrease(nACBonus, AC_DEFLECTION_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+		effect eArmor = EffectACIncrease(2, AC_DEFLECTION_BONUS, AC_VS_DAMAGE_TYPE_ALL);
 		
 		//upgrade DR for duration
 		if(GetHasEffect(EFFECT_TYPE_DAMAGE_REDUCTION, oPC))

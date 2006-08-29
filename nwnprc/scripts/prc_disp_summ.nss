@@ -8,8 +8,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "x2_inc_spellhook"
-#include "prc_alterations"
 #include "prc_class_const"
 #include "inc_epicspells"
 

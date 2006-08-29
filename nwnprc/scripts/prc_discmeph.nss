@@ -11,7 +11,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_feat_const"
 
 // * Applies the Disciple of Mephistopheles's resistances on the object's skin.

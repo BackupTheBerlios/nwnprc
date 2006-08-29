@@ -1,4 +1,6 @@
 #include "prc_alterations"
+#include "prc_feat_const"
+#include "prc_ipfeat_const"
 
 ////    Resistance Electricity   ////
 

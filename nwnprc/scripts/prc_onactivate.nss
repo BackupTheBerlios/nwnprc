@@ -3,7 +3,6 @@
 //:: prc_onactivate
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {

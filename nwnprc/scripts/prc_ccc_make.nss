@@ -1,6 +1,5 @@
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "inc_letocommands"
 #include "prc_racial_const"
 #include "prc_ccc_inc"

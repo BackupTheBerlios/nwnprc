@@ -10,7 +10,8 @@
 //:: Created On: 5 april 2004
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "prc_inc_racial"
+#include "prc_class_const"
 
 void main()
 {

@@ -3,7 +3,6 @@
 //:: prc_npc_disturb
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {

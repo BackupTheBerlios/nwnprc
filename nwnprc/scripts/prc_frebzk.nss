@@ -8,15 +8,6 @@
 //:: Created By: Oni5115
 //:: Created On: Feb 26, 2004
 //:://////////////////////////////////////////////
-#include "prc_alterations"
-#include "prc_alterations"
-
-#include "prc_alterations"
-
-#include "prc_feat_const"
-#include "prc_class_const"
-#include "prc_spell_const"
-
 #include "prc_alterations" // for checking if item is a weapon
 
 void CheckSupremePowerAttack(object oPC, int iEquip)

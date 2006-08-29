@@ -1,5 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
 int StartingConditional()
 {
     object oPC = GetPCSpeaker();

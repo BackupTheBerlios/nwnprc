@@ -13,7 +13,6 @@
 
 int ApplyPrismaticEffect(int nEffect, object oTarget);
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {

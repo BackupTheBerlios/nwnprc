@@ -3,7 +3,6 @@
 //:: prc_npc_physatt
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {

@@ -16,7 +16,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "psi_inc_psifunc"
 
 void PrcFeats(object oPC)

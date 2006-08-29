@@ -1,5 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
 
 void EnlightenedFistSpeed(object oPC, object oSkin, int nLevel)
 {

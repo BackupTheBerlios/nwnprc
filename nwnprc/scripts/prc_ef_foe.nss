@@ -1,7 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
-#include "prc_inc_stunfist"
-#include "prc_alterations"
 #include "prc_inc_unarmed"
 
 void AddHooks(object oItem)

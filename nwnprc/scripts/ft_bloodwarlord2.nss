@@ -1,6 +1,5 @@
 // Blood of the Warlord - On Exit
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_spell_const"
 
 void main()

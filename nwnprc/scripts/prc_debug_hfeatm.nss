@@ -13,7 +13,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_alterations"
 
 int nErrorFound = FALSE;
 

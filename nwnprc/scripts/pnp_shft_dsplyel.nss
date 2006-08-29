@@ -5,7 +5,6 @@
 //:: Created By: Script Wizard
 //:: Created On: 30/08/2004 11:08:45 PM
 //:://////////////////////////////////////////////
-
 #include "prc_alterations"
 
 int StartingConditional()

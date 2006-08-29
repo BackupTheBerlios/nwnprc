@@ -1,10 +1,4 @@
 #include "prc_alterations"
-#include "prc_alterations"
-#include "prc_feat_const"
-#include "prc_ipfeat_const"
-#include "prc_class_const"
-#include "prc_inc_unarmed"
-#include "prc_alterations"
 #include "prc_inc_clsfunc"
 
 void RemoveExtraAttacks(object oCreature)

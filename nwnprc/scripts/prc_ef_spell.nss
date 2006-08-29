@@ -14,7 +14,6 @@
 
 #include "prc_spell_const"
 #include "prc_alterations"
-#include "prc_alterations"
 #include "inc_2dacache"
 
 /* Constant defintions                          */

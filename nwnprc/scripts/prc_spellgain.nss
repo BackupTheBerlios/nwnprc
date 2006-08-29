@@ -15,8 +15,6 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_class_const"
-#include "prc_alterations"
 #include "inc_newspellbook"
 
 

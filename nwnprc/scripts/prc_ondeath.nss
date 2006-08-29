@@ -6,7 +6,6 @@
     This is also triggered by the NPC OnDeath event.
 */
 #include "prc_alterations"
-#include "prc_alterations"
 #include "prc_inc_clsfunc"
 #include "psi_inc_psifunc"
 #include "prc_inc_death"

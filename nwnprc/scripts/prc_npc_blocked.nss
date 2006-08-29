@@ -3,7 +3,6 @@
 //:: prc_npc_blocked
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_alterations"
 
 void main()
 {

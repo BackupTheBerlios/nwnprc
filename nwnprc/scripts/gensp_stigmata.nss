@@ -21,9 +21,6 @@
 //:: Modified On: 25.04.2005
 //:://////////////////////////////////////////////
 #include "prc_alterations"
-#include "prc_spell_const"
-#include "prc_alterations"
-#include "prc_alterations"
 
 
 void main()

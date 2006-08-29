@@ -19,7 +19,6 @@ bugfix by Kovi 2002.07.30
 */
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "spinc_common"
 #include "prc_class_const"
 #include "prc_inc_clsfunc"

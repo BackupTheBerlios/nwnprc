@@ -1,8 +1,6 @@
 //Cohort HB script
 
 #include "prc_alterations"
-#include "inc_ecl"
-#include "prc_alterations"
 #include "prc_inc_leadersh"
 
 void main()

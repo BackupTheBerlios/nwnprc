@@ -13,7 +13,6 @@
 // Death Attack for the assassin
 
 #include "prc_alterations"
-#include "prc_alterations"
 #include "NW_I0_GENERIC"
 
 void main()

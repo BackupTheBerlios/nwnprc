@@ -1,5 +1,3 @@
-#include "prc_alterations"//script for deciding if the entry in the forms list should be shown
-
 #include "prc_alterations"
 
 int StartingConditional()

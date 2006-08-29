@@ -499,6 +499,11 @@ const int SPELL_GHOUL_GAUNTLET                      = 2862;
 const int SPELL_ENERGY_EBB                          = 2863;
 const int SPELL_NIGHTS_CARESS                       = 2864;
 
+const int SPELL_ENERGIZE_POTION_ACID                = 2489;
+const int SPELL_ENERGIZE_POTION_COLD                = 2490;
+const int SPELL_ENERGIZE_POTION_ELECTRICITY         = 2491;
+const int SPELL_ENERGIZE_POTION_FIRE                = 2492;
+const int SPELL_ENERGIZE_POTION_SONIC               = 2493;
 const int SPELL_DIVINE_SACRIFICE_2                  = 2494;
 const int SPELL_DIVINE_SACRIFICE_4                  = 2495;
 const int SPELL_DIVINE_SACRIFICE_6                  = 2496;

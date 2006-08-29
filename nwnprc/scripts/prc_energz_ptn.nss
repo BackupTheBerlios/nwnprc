@@ -50,7 +50,7 @@ void main()
 	
 	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 3.05f, lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
 	
-	while GetIsObjectValid(oTarget)
+	while(GetIsObjectValid(oTarget))
 	{
 		if(!MyPRCResistSpell(oPotion, oTarget, nCasterLvl + SPGetPenetr()))
 		{

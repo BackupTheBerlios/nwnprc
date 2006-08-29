@@ -28,27 +28,32 @@ void main()
 	object oSpellOrigin = OBJECT_SELF;
 	object oSpellTarget = PRCGetSpellTargetObject();
 	object oItem        = GetSpellCastItem();
-		
+	object oWeaponR     = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget);
+	object oWeaponL     = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget);
+	object oTarget;
+	
 	// Scripted combat system
 	if(!GetIsObjectValid(oItem))
 	{
 		oItem = GetLocalObject(oSpellOrigin, "PRC_CombatSystem_OnHitCastSpell_Item");
 	}
-	
-	object oToBeDestroyed = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oSpellTarget);
-	
-	//if not present or magical, look for offhand weapon
-	if(!GetIsObjectValid(oToBeDestroyed) || GetIsMagical(oToBeDestroyed))
-	{
-		oToBeDestroyed = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oSpellTarget);
 		
-		if(!GetIsObjectValid(oToBeDestroyed) || GetIsMagical(oToBeDestroyed))
-		{
-			return;
-		}
-	}	
-	//Kill it
-	DestroyObject(oToBeDestroyed);
+	//If non-magical weapon in right hand
+	if(GetIsObjectValid(oWeaponR) && !GetIsMagical(oWeaponR))
+	{
+		DestroyObject(oWeaponR);
+		return;
+	}
+	
+	//if non-magical weapon in left hand
+	else if(GetIsObjectValid(oWeaponL) && !GetIsMagical(oWeaponL))
+	{
+		DestroyObject(oWeaponL);
+		return;
+	}
+		
+	//else we have a magical weapon
+		
 }
 
 	

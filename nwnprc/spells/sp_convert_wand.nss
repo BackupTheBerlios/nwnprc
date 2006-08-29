@@ -70,6 +70,9 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTargetWand = GetSpellTargetObject();
+	int nLevel;
+	int nSpellID;
+	itemproperty ipSpell;
 	
 	//Check to be sure the target is a wand.  If a creature, get first wand.
 	if(GetObjectType(oTargetWand) == OBJECT_TYPE_CREATURE)
@@ -109,7 +112,7 @@ void main()
 			int nRow = GetItemPropertySubType(ipTest);
 			
 			//Get spellID
-			int nSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nRow));
+			nSpellID = StringToInt(Get2DACache("iprp_spells", "SpellIndex", nRow));
 			
 			//Get spell level
 			nLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
@@ -129,12 +132,12 @@ void main()
 	}
 	
 	//if it is already a healing wand, abort
-	if(nSpell == SPELL_CURE_MINOR_WOUNDS ||
-	   nSpell == SPELL_CURE_LIGHT_WOUNDS ||
-	   nSpell == SPELL_CURE_MODERATE_WOUNDS ||
-	   nSpell == SPELL_CURE_SERIOUS_WOUNDS ||
-	   nSpell == SPELL_CURE_CRITICAL_WOUNDS ||
-	   nSpell == SPELL_HEAL)
+	if(nSpellID == SPELL_CURE_MINOR_WOUNDS ||
+	   nSpellID == SPELL_CURE_LIGHT_WOUNDS ||
+	   nSpellID == SPELL_CURE_MODERATE_WOUNDS ||
+	   nSpellID == SPELL_CURE_SERIOUS_WOUNDS ||
+	   nSpellID == SPELL_CURE_CRITICAL_WOUNDS ||
+	   nSpellID == SPELL_HEAL)
 	{
 		FloatingTextStringOnCreature("The target wand is already a healing wand.", oPC, FALSE);
 		return;

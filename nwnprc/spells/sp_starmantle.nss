@@ -67,11 +67,11 @@ void main()
 	}
 	
 	//VFX
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_SANCTUARYoh), oTarget, fDur);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_SANCTUARY), oTarget, fDur);
 	
 	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
 	
-	itemproperty ipOnHit = ItemPropertyItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+	itemproperty ipOnHit = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
 	IPSafeAddItemProperty(oArmor, ipOnHit, fDur);
 	
 	//Add event script

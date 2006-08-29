@@ -60,7 +60,7 @@ void main()
 	int nFingers = 1;
 	int nDam;
 	effect eVis = EffectVisualEffect(VFX_IMP_MAGBLUE);
-	effect eMissle = EffectViualEffect(VFX_IMP_MIRV);
+	effect eMissile = EffectVisualEffect(VFX_IMP_MIRV);
 	effect eDam = EffectAbilityDecrease(ABILITY_DEXTERITY, nDam);
 	float fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
 	float fDelay = fDist/(3.0 * log(fDist) + 2.0);
@@ -70,7 +70,7 @@ void main()
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
 	
-	SPSetSchool(SPELL_SHOOL_TRANSMUTATION);
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	
 	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_LAHMS_FINGER_DARTS, oPC);
 	
@@ -79,6 +79,7 @@ void main()
 	{
 		SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", 6);
 		SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", 6);
+	}
 	
 	//Spell Resistance, no save
 	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
@@ -99,7 +100,7 @@ void main()
 			SetPersistantLocalInt(oPC, "FINGERS_LEFT_HAND", nLFingers);
 		}
 		
-		else if(nRFiinger > nFingers) 
+		else if(nRFingers > nFingers) 
 		{
 			nRFingers -= nFingers;
 			SetPersistantLocalInt(oPC, "FINGERS_RIGHT_HAND", nRFingers);

@@ -43,7 +43,6 @@ Level
   <entry id="12300" lang="en" sex="m">Disintegrate Ray</entry>
   <entry id="12301" lang="en" sex="m">Finger of Death Ray</entry>
   <entry id="12302" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 1 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -53,7 +52,6 @@ This spell only functions on humanoid targets.
 
 Use: Selected.</entry>
   <entry id="12303" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 2 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -62,7 +60,6 @@ If the save fails, the ray causes the target to fall asleep for a number of roun
 
 Use: Selected.</entry>
   <entry id="12304" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 3 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -71,7 +68,6 @@ If the save fails, the target takes 2d8+10 damage. If the save succeeds, the tar
 
 Use: Selected.</entry>
   <entry id="12305" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 4 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -80,7 +76,6 @@ If the save fails, the target is slowed for a number of rounds equal to the Adep
 
 Use: Selected.</entry>
   <entry id="12306" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 5 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -89,7 +84,6 @@ If the save fails, the target is afflicted with fear and will flee from the Adep
 
 Use: Selected.</entry>
   <entry id="12307" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 6 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -98,7 +92,6 @@ If the save fails, the ray causes the target to be friendly towards the Adept fo
 
 Use: Selected.</entry>
   <entry id="12308" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 7 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -108,7 +101,6 @@ If the second save fails, the target is knocked back. In addition to this, the t
 
 Use: Selected.</entry>
   <entry id="12309" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 8 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -117,7 +109,6 @@ If the save fails, the target is instantly petrified.
 
 Use: Selected.</entry>
   <entry id="12310" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 9 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -127,7 +118,6 @@ If the save succeeds, the target takes 5d6 damage instead.
 
 Use: Selected.</entry>
   <entry id="12311" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 10 Ocular Adept.
 
 Specifics: The Adept projects a ray that makes a ranged touch attack. 
@@ -308,7 +298,6 @@ To further improve your Ancestral Daisho ability, you must take the Epic Ancestr
   <entry id="12338" lang="en" sex="m">Friends! The time for battle has come, and I have called on the strength of the gods to aid us. We will be victorious this day!</entry>
   <entry id="12339" lang="en" sex="m">Rally</entry>
   <entry id="12340" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 1 Warpriest.
 
 Specifics: A Warpriest who is not currently suffering from a fear effect can use this ability as a standard action. Allies within 60 feet who are suffering from any fear effect are allowed an immediate Will saving throw at the DC of the fear effect, with a +1 morale bonus per Warpriest level.
@@ -317,7 +306,6 @@ Use: Selected.
 </entry>
   <entry id="12341" lang="en" sex="m">Inflame</entry>
   <entry id="12342" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 2 Warpriest.
 
 Specifics: By giving a stirring speech, the Warpriest provides listeners with a morale bonus on saving throws against mind influencing effects. The bonus begins at +2 for a 2nd level Warpriest and increases by +2 each even numbered level thereafter. This effect lasts for 5 minutes, plus 1 minute per level of the Warpriest. The Warpriest also gains the bonus.
@@ -325,7 +313,6 @@ Specifics: By giving a stirring speech, the Warpriest provides listeners with a 
 Use: Selected.</entry>
   <entry id="12343" lang="en" sex="m">Implacable Foe</entry>
   <entry id="12344" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 10 Warpriest.
 
 Specifics: At 10th level, the Warpriest can channel so much positive energy to allies within a 100-foot radius that they will continue to fight even though suffering mortal wounds. Using this ability is a move-equivalent action and requires concentration. While in use, allies within the radius who take enough damage to become disabled or dying ignore the effects of that damage and continue fighting. Death occurs instantly at -20 hit points. When use of the ability ends, either because the Warpriest stops concentrating, fails a Concentration check, or becomes disabled (or worse), then the full effects of all damage take immediate effect.
@@ -378,21 +365,18 @@ Level
 9: Feat - Slippery Mind.
 10: Improved Invisibility - 1/day (spell-like ability).</entry>
   <entry id="12356" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 7 Ninja Spy.
 
 Specifics: Using masterful skills of disguise, a Ninja Spy can mask their identity, even altering their appearance to resemble a member of a different race.  Use of this skill allows the Ninja Spy to take on the appearance of an Elf, Dwarf, Half-orc, Half-elf or Human.  The change is purely cosmetic and no racial feats or bonuses from the race imitated are bestowed through use of this skill.
 
 Use: Selected.</entry>
   <entry id="12357" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 7 Ninja Spy.
 
 Specifics: Using masterful skills of disguise, a Ninja Spy can mask their identity, even altering their overall stature to resemble a member of a smaller race.  Use of this skill allows the Ninja Spy to take on the appearance of a Gnome or Halfling.  The change is purely cosmetic and no racial feats or bonuses from the race imitated are bestowed through use of this skill.
 
 Use: Selected.</entry>
   <entry id="12358" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 7 Ninja Spy.
 
 Specifics: By using this skill the Ninja Spy can discard their disguise, returning instantly to their normal appearance.
@@ -449,35 +433,30 @@ Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spell, Energy R
   <entry id="12376" lang="en" sex="m">Battle Rage (8/day)</entry>
   <entry id="12377" lang="en" sex="m">Battle Rage (9/day)</entry>
   <entry id="12378" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 3 Warpriest.
 
 Specifics: All friendly creatures within the area of effect are healed for 1d8 Hit Points, +1 point per level of the Warpriest up to a maximum of +20. Healing spells have a reverse effect when used on undead, harming instead of healing them.
 
 Use: Selected.</entry>
   <entry id="12379" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 6 Warpriest.
 
 Specifics: Once per day the Warpriest can project an aura of fear to a radius of 20 feet.  The effect lasts for 1 round per Warpriest level. Foes within the area of effect must make a Will save (DC 10 + Warpriest level + Cha bonus) or be affected as if by a fear spell.
 
 Use: Selected.</entry>
   <entry id="12380" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 7 Warpriest.
 
 Specifics: All allies within the area of effect gain 1 extra action per round and have their movement speed increased by 50%.
 
 Use: Selected.</entry>
   <entry id="12381" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 9 Warpriest.
 
 Specifics: All allies within the area of effect are restored to full Hit Points. Healing spells have a reverse effect on undead, harming instead of healing them (undead are reduced to 1d4 Hit Points with this spell).
 
 Use: Selected.</entry>
   <entry id="12382" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 9 Warpriest.
 
 Specifics: Twice per day, the Warpriest can project an aura of fear to a radius of 20 feet.  The effect lasts for 1 round per Warpriest level. Foes within the area of effect must make a Will save (DC 10 + Warpriest level + Cha bonus) or be affected as if by a fear spell.
@@ -486,14 +465,12 @@ Use: Selected.</entry>
   <entry id="12383" lang="en" sex="m">Fear Aura</entry>
   <entry id="12384" lang="en" sex="m">Battle Rage (10/day)</entry>
   <entry id="12385" lang="en" sex="m">Type of Feat: Class.
-  
 Prerequisite: Level 8 Battlerager.
 
 Specifics: The Epic Battlerager receives a +1 attack bonus and a +1 bonus to damage while wielding a melee weapon.
 
 Use: Automatic.</entry>
   <entry id="12386" lang="en" sex="m">Type of Feat: General.
-  
 Prerequisite: Strength 21+, Constitution 21+, Greater Rage. 
 (NOTE: This feat does not actually require greater rage for purposes of selecting, only normal rage. HOWEVER, THIS FEAT WILL DO NOTHING if you do not have 15+ added barbarian/battlerager/&lt;barbarian PrC&gt; together).
 
@@ -501,55 +478,74 @@ Specifics: When the Epic Battlerager enters a rage, they gain a +8 bonus to Stre
 
 Use: Automatic.</entry>
   <entry id="12388" lang="en" sex="m">Epic Ancestral Daisho I</entry>
-  <entry id="12389" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: 21 Samurai Levels, 19 Wisdom
+  <entry id="12389" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: 21 Samurai Levels, 19 Wisdom.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 2,420,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12390" lang="en" sex="m">Epic Ancestral Daisho II</entry>
-  <entry id="12391" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho I
+  <entry id="12391" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho I.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 2,880,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12392" lang="en" sex="m">Epic Ancestral Daisho III</entry>
-  <entry id="12393" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho II
+  <entry id="12393" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho II.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 3,380,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12394" lang="en" sex="m">Epic Ancestral Daisho IV</entry>
-  <entry id="12395" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho III
+  <entry id="12395" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho III.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 3,920,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12396" lang="en" sex="m">Epic Ancestral Daisho V</entry>
-  <entry id="12397" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho IV
+  <entry id="12397" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho IV.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 4,500,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12398" lang="en" sex="m">Epic Ancestral Daisho VI</entry>
-  <entry id="12399" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho V
+  <entry id="12399" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho V.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 5,120,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12400" lang="en" sex="m">Epic Ancestral Daisho VII</entry>
-  <entry id="12401" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho VI
+  <entry id="12401" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho VI.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 5,780,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12402" lang="en" sex="m">Epic Ancestral Daisho VIII</entry>
-  <entry id="12403" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho VII
+  <entry id="12403" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho VII.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 6,480,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12404" lang="en" sex="m">Epic Ancestral Daisho IX</entry>
-  <entry id="12405" lang="en" sex="m">Type of Feat: Epic
-Prerequisite: Epic Ancestral Daisho VIII
+  <entry id="12405" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Ancestral Daisho VIII.
+
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 7,220,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="12406" lang="en" sex="m">Epic Ancestral Daisho X</entry>
   <entry id="12407" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Epic Ancestral Daisho IX
 Specifics: This increases the maximum total value of the samurai's ancestral weapons to 8,000,000 gp.
-Use: Automatic</entry>
+
+Use: Automatic.</entry>
   <entry id="16390" lang="en" sex="m">
 </entry>
   <entry id="16396" lang="en" sex="m">
@@ -562,9 +558,11 @@ Description: This spell causes the subject's outline to appear blurred. This dis
   <entry id="16478" lang="en" sex="m">Faerie Fire</entry>
   <entry id="16479" lang="en" sex="m">Level: Innate
 Description: This spell causes a pale glow to surround and outline the subjects. Outlined subjects shed light as candles. Outlined creatures loose the benefit from the concealment normally caused by darkness, blur, displacement, invisibility, or similar effects. The light is too dim to have any special effect on undead or dark-dwelling creatures. The faerie fire can be blue, red, or violet, at random. The faerie fire does not cause any harm to the objects or creatures thus outlined.</entry>
-  <entry id="16480" lang="en" sex="m">Type of Feat: General
-Prerequisite: 21st level or Battlerager Level 5
+  <entry id="16480" lang="en" sex="m">Type of Feat: General.
+Prerequisite: 21st level or Battlerager Level 5.
+
 Specifics: The character gains a natural +2 bonus to armor class.
+
 Use: Automatic.</entry>
   <entry id="20400" lang="en" sex="m">++++++++++ ACP Styles ++++++++++</entry>
   <entry id="20401" lang="en" sex="m">Kensai</entry>
@@ -572,94 +570,107 @@ Use: Automatic.</entry>
   <entry id="20403" lang="en" sex="m">Heavy</entry>
   <entry id="20404" lang="en" sex="m">Fencing</entry>
   <entry id="20405" lang="en" sex="m">Varied Fighting Styles</entry>
-  <entry id="20406" lang="en" sex="m">Type of Feat: Special
+  <entry id="20406" lang="en" sex="m">Type of Feat: Special.
 Prerequisite: Level 1.
+
 Specifics: You have learned to fight with your weapons in different ways. A character with this feat can, assuming he does not have an unusual phenotype, change his fighting style every so often (90 seconds).
 Use: Selected.</entry>
-  <entry id="20407" lang="en" sex="m">Fighting Style: Kensai</entry>
-  <entry id="20408" lang="en" sex="m">You know how to wield your weapons like a Kensai.</entry>
-  <entry id="20409" lang="en" sex="m">Fighting Style: Assassin</entry>
-  <entry id="20410" lang="en" sex="m">You know how to stab your opponents carefully, like an assassin.</entry>
-  <entry id="20411" lang="en" sex="m">Fighting Style: Heavy</entry>
-  <entry id="20412" lang="en" sex="m">You know how to hit hard with big weaponry.</entry>
-  <entry id="20413" lang="en" sex="m">Fighting Style: Fencing</entry>
-  <entry id="20414" lang="en" sex="m">You know how to goad your opponents on with your fencing style.</entry>
-  <entry id="20415" lang="en" sex="m">Fighting Style: Normal (Reset)</entry>
-  <entry id="20416" lang="en" sex="m">This is the general way most people learn to fight.</entry>
-  <entry id="20417" lang="en" sex="m">&lt;CUSTOM0&gt; changes his stance.</entry>
+  <entry id="20407" lang="en" sex="m">Fighting Style: Kensai.</entry>
+  <entry id="20408" lang="en" sex="m">You prepare to skillfully wield your blades like a Kensai.</entry>
+  <entry id="20409" lang="en" sex="m">Fighting Style: Assassin.</entry>
+  <entry id="20410" lang="en" sex="m">You prepare to stab your opponents in critical spots like an assassin.</entry>
+  <entry id="20411" lang="en" sex="m">Fighting Style: Heavy.</entry>
+  <entry id="20412" lang="en" sex="m">You heft your weapons and prepare for some power hitting.</entry>
+  <entry id="20413" lang="en" sex="m">Fighting Style: Fencing.</entry>
+  <entry id="20414" lang="en" sex="m">You prepare to goad your opponents into a mistake with your fencing style.</entry>
+  <entry id="20415" lang="en" sex="m">Fighting Style: Normal (Reset).</entry>
+  <entry id="20416" lang="en" sex="m">You prepare to fight normally once more.</entry>
+  <entry id="20417" lang="en" sex="m">&lt;CUSTOM0&gt; changes stance.</entry>
   <entry id="45000" lang="en" sex="m">+++++++++++++ PRC Pack Feats 45,000 - 54,999 ++++++++++++++</entry>
-  <entry id="45001" lang="en" sex="m">Type of Feat: Metamagic
+  <entry id="45001" lang="en" sex="m">Type of Feat: Metamagic.
 Prerequisite: Ability to cast 2nd-level spells.
-Specifics: Creatures you summon with any summoning spells are slightly enhanced. They gain one hit die and a +1 competence bonus on attack and damage rolls.
+
+Specifics: Any creatures called forth with summoning spells are slightly enhanced, gaining one extra hit die and a +1 bonus on attack and damage rolls.
+
 Use: Automatic.</entry>
   <entry id="45002" lang="en" sex="m">Augment Summoning</entry>
   <entry id="45003" lang="en" sex="m">Mage Killer</entry>
   <entry id="45004" lang="en" sex="m">Mage Killers</entry>
   <entry id="45005" lang="en" sex="m">mage killer</entry>
   <entry id="45006" lang="en" sex="m">(PRESTIGE CLASS)
-Mage Killers are a rare breed. They master magic designed for combat against other spellcasters. They learn not only combat skills as might be taught a warrior, but also spells that target the weaknesses of their foes. Some use traps, others use weapons, but all hone their magical skills to a fine point, for it is those skills that distinguish them from the usual run of hunters and killers. They develop friendships with the sorts of people who can lead them to their foes, but they place the dirty business of overcoming those foes on their own shoulders.
+Mage Killers are a rare breed, specialising in magic designed to combat other spellcasters. The Mage Killer not only trains like a warrior, but also masters spells to exploit the weaknesses of their arcane foes. Some use traps, others prefer weapons, but all hone their magical skills to a fine point - for it is these magical abilities that distinguish Mage Killers from the majority of mundane hunters and killers. 
+
+A Mage Killer will fraternise with all sorts of people to help them locate and gain access to their enemies, but the dirty business of overcoming those foes and putting an end to their miserable lives is kept firmly on the Mage Killer's own shoulders.
 
 - Hit Die: d4.
-- Proficiencies: A mage killer does not gain any additional weapon or armor proficiencies.
+- Proficiencies: A Mage Killer does not gain any additional weapon or armor proficiencies.
 - Skill Points: 2 + Int Modifier.
 
 REQUIREMENTS:
 
-Arcane Spellcasting: Able to cast 4th-level spells.
-Feats: Great Fortitude, Lightning Reflexes, Combat Casting, and Weapon Proficiency: Martial.
-Skills: Spellcraft 10 ranks.
+Spells: Able to cast 4th-level arcane spells.
+Feats: Great Fortitude, Lightning Reflexes, Combat Casting, Weapon Proficiency: Martial.
+Skills: Spellcraft (10 ranks).
 
 ABILITIES:
 
 Level
-1: Improved Saves
-2: Augment Summoning - Creatures you summon with any summoning spells are slightly enhanced. They gain one hit die and a +1 competence bonus on attack and damage rolls.
-3: Improved Saves - Mage Killer can select either +1 Reflex or Fortitude bonus.
-4: Spell Focus: Evocation - +2 bonus on all DC checks on all spells of a particular school.
-5: Improved Saves
-6: Spell Focus: Necromancy
-7: Improved Saves
-8: Spell Focus: Conjuration
-9: Improved Saves
-10: Spell Focus: Transmutation
+1: Improved Saves - The Mage Killer can choose to gain a +1 bonus to either Reflex or Fortitude saves.
+2: Augment Summoning - Any creatures called forth with summoning spells are slightly enhanced, gaining one extra hit die and a +1 bonus on attack and damage rolls.
+3: Improved Saves.
+4: Feat - Spell Focus: Evocation - Provides a +2 bonus to the DC for all spells in the Evocation school.
+5: Improved Saves.
+6: Feat - Spell Focus: Necromancy.
+7: Improved Saves.
+8: Feat - Spell Focus: Conjuration.
+9: Improved Saves.
+10: Feat - Spell Focus: Transmutation.
 
 BONUS SPELLS
 
-Upon gaining a level in mage killer, the character gains new spells per day as if he had also gained a level in his highest caster class (bard, sorcerer, or wizard). He does not learn any new spells through his abilities.</entry>
+Upon gaining a level in Mage Killer, the character gains new spells per day as if they had also gained a level in their highest Arcane spellcasting class. No new spells are learned through this ability, however.</entry>
   <entry id="45007" lang="en" sex="m">Harper Mage</entry>
   <entry id="45008" lang="en" sex="m">Harper Mages</entry>
   <entry id="45009" lang="en" sex="m">harper mage</entry>
   <entry id="45010" lang="en" sex="m">(PRESTIGE CLASS)
-Wizards and sorcerers have been part of the Harpers since the organization's inception. Many of its senior members today are powerful mages. Among the organizations principal allies are several influential wizards and sorcerers who have made some of their accumulated knowledge available to the Harpers. Mystra, the deity of magic, is one of the patron deities of the Harpers; her predecessor was one of the deities who met at the Dancing Place centuries ago to inspire the founding of the organization. With such a rich magical tradition, it is inevitable that the Harpers would develop some of their own magical lore and techniques to pass on to their agents.
+Wizards and sorcerers have been an integral part of the Harpers since the organization's inception. Indeed, many of its senior members today are powerful mages. 
 
-- Hit Die: d4
+Among the organization's principal allies are several influential wizards and sorcerers who have made some of their accumulated knowledge available to the Harpers. 
+
+Mystra, the deity of magic, is one of the patron deities of the Harpers; her predecessor being one of the deities who met at the Dancing Place centuries ago to inspire the founding of the Harpers organization. With such a rich magical tradition, it was inevitable that the Harpers would develop some of their own magical lore and techniques to pass on to their agents.
+
+- Hit Die: d4.
 - Proficiencies: A Harper Mage is proficient with simple weapons.
-- Skill Points: 4 + Int Modifier
+- Skill Points: 4 + Int Modifier.
 
 REQUIREMENTS:
 
-Feats: Alertness, Extend Spell
+Feats: Alertness, Extend Spell.
 Alignment: Any non-evil.
-Skills: Concentration 4 ranks, Spellcraft 8 ranks, Lore 8 ranks, Persuade 2 ranks.
-Spells: Able to cast level 3 arcane spells.
+Skills: Concentration (4 ranks), Spellcraft (8 ranks), Lore (8 ranks), Persuade (2 ranks).
+Spells: Able to cast 3rd level arcane spells.
 
 ABILITIES:
 
 Level
-1: Skill Focus: Lore - +3 bonus to all Lore skill checks.
-2: Skill Focus: Spellcraft
-3: Still Spell - Character can cast certain spells without gestures, negating penalties incurred by wearing armor. Stilled spells occupy a spell slot one level higher than normal.
-4: Silent Spell - Harper Mage can cast certain spells without the verbal component, negating the effects of Silence. Silenced spells occupy a spell slot one level higher than normal.
-5: Hardiness vs. Spells
+1: Feat - Skill Focus: Lore - Provides a +3 bonus to all Lore skill checks.
+2: Feat - Skill Focus: Spellcraft - Provides a +3 bonus to all Spellcraft skill checks.
+3: Feat - Still Spell.
+4: Feat - Silent Spell.
+5: Hardiness vs. Spells - The Harper Mage gains a +2 bonus to saving throws vs spells.
 
 BONUS SPELLS
 
-Upon gaining a level in Harper Mage, the character gains new spells per day as if he had also gained a level in his highest caster class (bard, sorcerer, or wizard). He does not learn any new spells through his abilities.</entry>
+Upon gaining a level in Harper Mage, the character gains new spells per day as if they had also gained a level in their highest Arcane spellcasting class. No new spells are learned through this ability, however.</entry>
   <entry id="45011" lang="en" sex="m">Spellsword</entry>
   <entry id="45012" lang="en" sex="m">Spellswords</entry>
   <entry id="45013" lang="en" sex="m">spellsword</entry>
   <entry id="45014" lang="en" sex="m">(PRESTIGE CLASS)
-The dream of melding magic and weapon play is fulfilled in the person of the Spellsword. A student of both arcane rituals and martial techniques, the Spellsword gradually learns to cast spells in armor with less chance of failure. Moreover, she can cast spells through her weapon, as well as store spells there for later use. Feared by mages for her ability to cast in armor and by the common people for her ability to use spells, the Spellsword often walks the world alone.
+The power to meld swordplay and sorcery is given embodiment in the person of the Spellsword. 
+
+A student of both arcane rituals and martial techniques, the Spellsword gradually learns to circumvent the negative effects of armour on magical rites, and can cast spells while wearing armor with less chance of failure than a traditional mage. Moreover, the Spellsword can cast spells through a weapon or store spells there for later use. 
+
+Feared by other mages for their ability to cast spells while in armor and treated with suspicion by the common people for their ability to wield magic, the Spellsword often walks the world alone.
 
 - Hit Die: d8.
 - Proficiencies: A Spellsword does not gain any additional weapon or armor proficiencies.
@@ -667,50 +678,51 @@ The dream of melding magic and weapon play is fulfilled in the person of the Spe
 
 REQUIREMENTS:
 
-Arcane Spellcasting: Level 2 or higher.
-Feats: Weapon Proficiency Simple, Weapon Proficiency Martial, Armor Proficiency Light, Armor Proficiency Medium, Armor Proficiency Heavy.
-Skills: Lore 6 or more ranks.
-Base attack bonus: 4 or higher.
+Spells: Able to cast 2nd level spells.
+Feats: Weapon Proficiency: Simple, Weapon Proficiency: Martial, Armor Proficiency: Light, Armor Proficiency: Medium, Armor Proficiency: Heavy.
+Skills: Lore (6 ranks).
+Base attack bonus: +4.
 
 ABILITIES:
 
 Level
-1: Ignore Spell Failure 10%
-2: Bonus Feat
-3: Ignore Spell Failure 15%
-4: Channel Spell I
-5: Ignore Spell Failure 20%
-6: Channel Spell II
-7: Ignore Spell Failure 30%
-8: Channel Spell III
-9: Ignore Spell Failure 40%
-10: Multiple Channel Spell I
+1: Ignore Arcane Spell Failure (10%).
+2: Bonus Feat.
+3: Ignore Arcane Spell Failure (15%).
+4: Channel Spell (3/day) - The Spellsword can store a single spell in a weapon to be unleashed the next time the weapon strikes an opponent.
+5: Ignore Arcane Spell Failure (20%).
+6: Channel Spell (4/day).
+7: Ignore Arcane Spell Failure (30%).
+8: Channel Spell (5/day).
+9: Ignore Arcane Spell Failure (40%).
+10: Multiple Channel Spell I - The Spellsword can store two spells in a weapon to be unleashed the next time the weapon strikes an opponent.
 
 BONUS SPELLS
 
-Every other level in Spellsword, the character gains new spells per day as if he had also gained a level in his highest caster class (bard, sorcerer, or wizard). He does not learn any new spells through his abilities.</entry>
+Every other level in Spellsword, the character gains new spells per day as if they had also gained a level in their highest Arcane spellcasting class. No new spells are learned through this ability, however.</entry>
   <entry id="45015" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Level 1 or higher in the Spellsword prestige class.
+
 Specifics: Reduces arcane spell failure.
 
 Level
-1: 10% Ignore Spell Failure
-2: 15% Ignore Spell Failure
-3: 20% Ignore Spell Failure
-4: 30% Ignore Spell Failure
-5: 40% Ignore Spell Failure
+1: 10% Ignore Arcane Spell Failure
+2: 15% Ignore Arcane Spell Failure
+3: 20% Ignore Arcane Spell Failure
+4: 30% Ignore Arcane Spell Failure
+5: 40% Ignore Arcane Spell Failure
 
 Epic Levels:
-6: 45% Ignore Spell Failure
-7: 50% Ignore Spell Failure
-8: 55% Ignore Spell Failure
-9: 60% Ignore Spell Failure
-10: 65% Ignore Spell Failure
-11: 70% Ignore Spell Failure
-12: 75% Ignore Spell Failure
-13: 80% Ignore Spell Failure
-14: 85% Ignore Spell Failure
-15: 90% Ignore Spell Failure</entry>
+6: 45% Ignore Arcane Spell Failure
+7: 50% Ignore Arcane Spell Failure
+8: 55% Ignore Arcane Spell Failure
+9: 60% Ignore Arcane Spell Failure
+10: 65% Ignore Arcane Spell Failure
+11: 70% Ignore Arcane Spell Failure
+12: 75% Ignore Arcane Spell Failure
+13: 80% Ignore Arcane Spell Failure
+14: 85% Ignore Arcane Spell Failure
+15: 90% Ignore Arcane Spell Failure</entry>
   <entry id="45016" lang="en" sex="m">Ignore Spell Failure 1</entry>
   <entry id="45017" lang="en" sex="m">Ignore Spell Failure 2</entry>
   <entry id="45018" lang="en" sex="m">Ignore Spell Failure 3</entry>
@@ -720,7 +732,9 @@ Epic Levels:
   <entry id="45022" lang="en" sex="m">Acolytes of the Skin</entry>
   <entry id="45023" lang="en" sex="m">acolyte of the skin</entry>
   <entry id="45024" lang="en" sex="m">(PRESTIGE CLASS)
-The temptation of power drives some people to extreme lengths, regardless of the consequences. Replacing your own skin with that of a living demon is a goal that most couldn't even conceive of, let alone consider. But this ghastly fate is Lctly what some spellcasters seek in their desperate quest.
+The thirst for power drives some people to extreme lengths, regardless of the consequences. Though it is hard to believe that any living being would willingly bond the skin of a living demon to their own, that is exactly what the Acolyte of the Skin is willing to attempt in their pursuit for power.
+
+Through this diabolic act of symbiosis, the Acolyte hopes to gain infernal power, heedless of the possible consequences to their own soul and psyche. For who knows what may happen as the bond between Acolyte and skin grows stronger and the full power of infernal darkness is unleashed.
 
 - Hit Die: d4.
 - Proficiencies: An Acolyte of the Skin does not gain any additional weapon or armor proficiencies.
@@ -728,80 +742,98 @@ The temptation of power drives some people to extreme lengths, regardless of the
 
 REQUIREMENTS:
 
-Arcane Spellcasting: Able to cast 3rd-level spells.
-Skills: Lore 8 ranks.
-Alignment: Non-good.
+Arcane Spellcasting: Able to cast 3rd-level arcane spells.
+Skills: Lore (8 ranks).
+Alignment: Any non-good.
 
 ABILITIES:
 
 Level
 1: Wear Fiend - Grants +1 Natural Armor, +2 Dexterity and Dark Vision.
-2: Flame Resistant - Gains 20 fire resistance.
-3: Fiendish Glare - Glare can decrease a foe's abilities and even stun weak opponents.
-4: Fiendish Knowledge - Bonus feat of your choice.
+2: Flame Resistant - The Acolyte gains 20 Fire resistance.
+3: Fiendish Glare - The Acolyte's glare can decrease a foe's abilities and even stun weak opponents.
+4: Fiendish Knowledge - The Acolyte gains a free bonus feat.
 5: Skin Adaptation - Grants +2 Natural Armor, +2 Constitution.
-6: Cold Resistant - Gains 20 cold resistance.
-7: Glare of the Pit - Once per day, glare can torch an opponent, dealing 16d6 damage.
-8: Fiendish Knowledge - Bonus feat of your choice.
-9: Summon Fiend - Can summon a Vrock once per day.
-10: Symbiosis Grants 20/+1 Damage reduction. For each 5 Epic levels, it gains +1.
+6: Cold Resistant - The Acolyte gains 20 cold resistance.
+7: Glare of the Pit - Once per day, the Acolyte's glare can immolate an opponent, dealing 16d6 damage.
+8: Fiendish Knowledge - The Acolyte gains a free bonus feat.
+9: Summon Fiend - The Acolyte can summon a Vrock once per day.
+10: Symbiosis - Grants (20/+1) damage reduction. This increases by +1 every 5 Epic levels.
 
 BONUS SPELLS
 
-Every other level in Acolyte of the Skin, the character gains new spells per day as if he had also gained a level in his highest caster class (bard, sorcerer, or wizard). He does not learn any new spells through his abilities.</entry>
+Every other level in Acolyte of the Skin, the character gains new spells per day as if they had also gained a level in their highest arcane caster class. No new spells are learned through this ability, however.</entry>
   <entry id="45025" lang="en" sex="m">Wear Fiend</entry>
   <entry id="45026" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Acolyte of the Skin level 1.
 Specifics: Grants +1 Natural Armor, +2 Dexterity, and Darkvision.
 Use: Automatic.</entry>
   <entry id="45027" lang="en" sex="m">Flame Resistant</entry>
-  <entry id="45028" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 2.
-Specifics: Grants 20 Fire resistance.
+  <entry id="45028" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 2 Acolyte of the Skin.
+
+Specifics: The Acolyte is granted 20 Fire resistance.
+
 Use: Automatic.</entry>
   <entry id="45029" lang="en" sex="m">Fiendish Glare</entry>
-  <entry id="45030" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 3.
-Specifics: Will save DC 20 or suffer -2 Attack, -2 Damage, and -2 Saving Throws for 10 minutes. Also, a creature with 50 or less hit points is stunned for 3d4 rounds, a creature with 51-100 hit points is stunned for 2d4 rounds, and a creature with 101-151 hit points is stunned for 1d4 rounds.
+  <entry id="45030" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 3 Acolyte of the Skin.
+
+Specifics: The target must make a Will save vs. DC 20 or suffer -2 to Attack, -2 to Damage, and -2 to Saving Throws for 10 minutes. Also, a creature with 50 or less hit points is stunned for 3d4 rounds, a creature with 51-100 hit points is stunned for 2d4 rounds, and a creature with 101-151 hit points is stunned for 1d4 rounds.
+
 Use: Selected.</entry>
   <entry id="45031" lang="en" sex="m">Skin Adaptation</entry>
-  <entry id="45032" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 5.
-Specifics: Grants +2 Natural Armor and +2 Constitution.
+  <entry id="45032" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 5 Acolyte of the Skin.
+
+Specifics: The Acolyte gains +2 Natural Armor and +2 to Constitution.
+
 Use: Automatic.</entry>
   <entry id="45033" lang="en" sex="m">Cold Resistant</entry>
-  <entry id="45034" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 6.
-Specifics: Grants 20 cold resistance.
+  <entry id="45034" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 6 Acolyte of the Skin.
+
+Specifics: The Acolyte is granted 20 Cold resistance.
+
 Use: Automatic.</entry>
   <entry id="45035" lang="en" sex="m">Glare of the Pit</entry>
-  <entry id="45036" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 7.
-Specifics: Deals 16d6 Fire damage to a single target. Usable once per day.
+  <entry id="45036" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 7 Acolyte of the Skin.
+
+Specifics: The Acolyte's glare deals 16d6 Fire damage to a single target. Usable once per day.
+
 Use: Selected.</entry>
   <entry id="45037" lang="en" sex="m">Summon Fiend</entry>
-  <entry id="45038" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 9.
-Specifics: Summons a Vrock. Usable once per day.
+  <entry id="45038" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 9 Acolyte of the Skin.
+
+Specifics: The Acolyte summons forth a Vrock as a servant. Usable once per day.
+
 Use: Selected.</entry>
   <entry id="45039" lang="en" sex="m">Symbiosis</entry>
-  <entry id="45040" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 10.
-Specifics: Grants 20/+1 damage reduction at level 10 and +1 for every five levels after.
+  <entry id="45040" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 10 Acolyte of the Skin.
+Specifics: Grants (20/+1) damage reduction at level 10 and +1 for every five levels thereafter.
+
 Level:
 10: 20/+1
 15: 20/+2
 20: 20/+3
 25: 20/+4
 30: 20/+5
+
 Use: Automatic.</entry>
-  <entry id="45041" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 1 or higher in the Mage Killer prestige class.
-Specifics: Adds +1 Reflex save each time it is taken.
+  <entry id="45041" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 1 Mage Killer.
+
+Specifics: This feat grants +1 to Reflex saves each time it is taken.
+
 Use: Automatic.</entry>
-  <entry id="45042" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Level 1 or higher in the Mage Killer prestige class.
-Specifics: Adds +1 Fortitude save each time it is taken.
+  <entry id="45042" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 1 Mage Killer.
+
+Specifics: This feat grants +1 to Fortitude saves each time it is taken.
+
 Use: Automatic.</entry>
   <entry id="45043" lang="en" sex="m">Improve Saves: Reflex 1</entry>
   <entry id="45044" lang="en" sex="m">Improve Saves: Reflex 2</entry>
@@ -814,31 +846,41 @@ Use: Automatic.</entry>
   <entry id="45051" lang="en" sex="m">Improve Saves: Fortitude 4</entry>
   <entry id="45052" lang="en" sex="m">Improve Saves: Fortitude 5</entry>
   <entry id="45053" lang="en" sex="m">Physical Power 1</entry>
-  <entry id="45054" lang="en" sex="m">Type of Feat: Epic Class Specific
-Prerequisite: Epic Acolyte of the Skin
-Specifics: Adds +2 Constitution at levels 11, 21, and 30
+  <entry id="45054" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Acolyte of the Skin.
+
+Specifics: Grants +2 to Constitution at levels 11, 21, and 30.
+
 Use: Automatic.</entry>
   <entry id="45055" lang="en" sex="m">Physical Power 2</entry>
   <entry id="45056" lang="en" sex="m">Physical Power 3</entry>
   <entry id="45057" lang="en" sex="m">Acid Resistant</entry>
-  <entry id="45058" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 14.
-Specifics: Grants 20 acid resistance.
+  <entry id="45058" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 14 Acolyte of the Skin.
+
+Specifics: The Acolyte is granted 20 Acid resistance.
+
 Use: Automatic.</entry>
   <entry id="45059" lang="en" sex="m">Electricity Resistant</entry>
-  <entry id="45060" lang="en" sex="m">Type of Feat: Class Specific
-Prerequisite: Acolyte of the Skin level 18.
-Specifics: Grants 20 electricity resistance.
+  <entry id="45060" lang="en" sex="m">Type of Feat: Class.
+Prerequisite: Level 18 Acolyte of the Skin.
+
+Specifics: The Acolyte is granted 20 Electrical resistance.
+
 Use: Automatic.</entry>
   <entry id="45061" lang="en" sex="m">Mental Power 1</entry>
-  <entry id="45062" lang="en" sex="m">Type of Feat: Epic Class Specific
-Prerequisite: Epic Acolyte of the Skin
-Specifics: Adds +2 Intelligence at levels 16 and 26.
+  <entry id="45062" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Acolyte of the Skin.
+
+Specifics: Grants +2 to Intelligence at levels 16 and 26.
+
 Use: Automatic.</entry>
   <entry id="45063" lang="en" sex="m">Mental Power 2</entry>
-  <entry id="45064" lang="en" sex="m">Type of Feat: Epic Class Specific
-Prerequisite: Epic Acolyte of the Skin
-Specifics: Adds +2 Intelligence at levels 16 and 26.
+  <entry id="45064" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Epic Acolyte of the Skin.
+
+Specifics: Grants +2 to Intelligence at levels 16 and 26.
+
 Use: Automatic.</entry>
   <entry id="45065" lang="en" sex="m">Ignore Spell Failure 6</entry>
   <entry id="45066" lang="en" sex="m">Ignore Spell Failure 7</entry>
@@ -858,55 +900,61 @@ Use: Automatic.</entry>
   <entry id="45080" lang="en" sex="m">Glare of the Pit</entry>
   <entry id="45081" lang="en" sex="m">Summon Fiend</entry>
   <entry id="45082" lang="en" sex="m">Momento Mori</entry>
-  <entry id="45083" lang="en" sex="m">Type of Feat: Epic Spell
-Prerequisite: 21st level, the ability to cast 9th level spells and 25 ranks in Spellcraft.
-Specifics: Kills target creature
-Use: Cast.</entry>
+  <entry id="45083" lang="en" sex="m">Type of Feat: Epic.
+Prerequisites: Level 21, ability to cast 9th level spells, Spellcraft (25 ranks).
+
+Specifics: The target creature is killed instantly.
+
+Use: Selected.</entry>
   <entry id="45084" lang="en" sex="m">Epic Spell: Momento Mori</entry>
-  <entry id="45085" lang="en" sex="m">Type of Feat: Epic Spell
-Prerequisite: 21st level, the ability to cast 9th level spells and 25 ranks in Spellcraft.
-Specifics: Kills target creature
-Use: Cast.</entry>
+  <entry id="45085" lang="en" sex="m">Type of Feat: Epic.
+Prerequisite: Level 21, ability to cast 9th level spells, Spellcraft (25 ranks).
+
+Specifics: The target creature is killed instantly.
+
+Use: Selected.</entry>
   <entry id="45086" lang="en" sex="m">Champion of Bane</entry>
   <entry id="45087" lang="en" sex="m">Champions of Bane</entry>
   <entry id="45088" lang="en" sex="m">champion of bane</entry>
   <entry id="45089" lang="en" sex="m">(PRESTIGE CLASS)
-Champions of Bane are tyrannical warriors who dedicate themselves to Bane's cause, slowly but inevitably bringing more land and power to Bane, and unswerving loyalty to his cause of domination. Bane has the portfolios of Fear, Strife, Tyranny, and Hatred.
+Champions of Bane are tyrannical warriors who dedicate themselves to Bane's cause.  Their lives are dedicated to bringing more land, more lives and more power to Bane.  The Champions of Bane are unswerving in their loyalty to his cause of total domination. 
+
+Bane promotes Fear, Strife, Tyranny, and Hatred and his Champions are particularly attuned to these domains.
 
 - Hit Die: d10.
-- Proficiencies: All simple and martial weapons, light and medium armor, and shields.
+- Proficiencies: All simple and martial weapons, light and medium armor and shields.
 - Skill Points: 2 + Int Modifier.
 
 REQUIREMENTS:
 
-Base Attack Bonus: +7
-Feats: Weapon Focus: Morningstar
-Alignment: Lawful Evil
+Base Attack Bonus: +7.
+Feats: Weapon Focus: Morningstar.
+Alignment: Lawful Evil.
 
 ABILITIES:
 
 Level
-1: Lay on Hands - Can heal damage equal to class level multiplied by their Charisma modifier, deals damage to undead creatures
-2: Sacred Defense - +1 to all saving throws.
-3: Smite Good - Once per day may add Charisma bonus to attack roll and do +1 point of damage per level of Champion and Blackguard.
-4: Sacred Defense - +2 to all saving throws.
-5: Divine Wrath - Once per day +3 to attack, damage and saving throws, and Damage Reduction +1/5 for a number of rounds equal to Charisma bonus.
-6: Sacred Defense - +3 to all saving throws.
-8: Sacred Defense - +4 to all saving throws.
-10: Sacred Defense - +5 to all saving throws.
+1: Lay on Hands - The Champion of Bane can heal damage equal to (Class level x Charisma modifier).
+2: Sacred Defense - Grants +1 to all saving throws.
+3: Smite Good - Once per day, the Champion of Bane may add their Charisma bonus to attack rolls and do +1 damage per level of Champion of Bane or Blackguard.
+4: Sacred Defense - Grants +2 to all saving throws.
+5: Divine Wrath - Once per day, the Champion of Bane gains +3 to attack, damage and saving throws and Damage Reduction of (+1/5) for a number of rounds equal to their Charisma bonus.
+6: Sacred Defense - Grants +3 to all saving throws.
+8: Sacred Defense - Grants +4 to all saving throws.
+10: Sacred Defense - Grants +5 to all saving throws.
 
-Champions of Bane receive a bonus feat every second level.</entry>
+Champions of Bane receive a bonus feat every 2 levels.</entry>
   <entry id="45090" lang="en" sex="m">Epic Champion of Bane</entry>
-  <entry id="45091" lang="en" sex="m">Bane guides the Epic Champion of Bane on her life journey. She has ascended through the ranks of Bane's faithful to become a symbol of Bane's dominative power.
+  <entry id="45091" lang="en" sex="m">With Bane guiding your every step, you have ascended through the ranks of Bane's faithful to become a symbol of his domination and power.
 
-Hit Die: d10
-Skill Points at Each Additional Level: 2+ Int Modifier
-Bonus Feats: The epic Champion of Bane gains a bonus feat every four levels.
+Hit Die: d10.
+Skill Points: 2 + Int Modifier.
+Bonus Feats: The Epic Champion of Bane gains a bonus feat every four levels.
 Special:
- Sacred Defense: Saving throws continue to improve by +1 for every 2 levels.
- Divine Wrath: Every five levels the attack, damage and saving throw bonuses increases by a further +2.
+Sacred Defense: Saving throws continue to improve by +1 every 2 levels.
+Divine Wrath: Every five levels the attack, damage and saving throw bonuses from Divine Wrath increase by a further +2.
 
-Epic Champion of Bane Bonus Feats List:
+Epic Champion of Bane Bonus Feats:
 Automatic Quicken Spell, Automatic Silence Spell, Automatic Still Spell, Armor Skin, Epic Damage Reduction, Epic Prowess, Devastating Critical, Epic Toughness, Epic Weapon Focus, Great Wisdom, Greater Smiting, Improved Combat Casting, Improved Stunning Fist, Improved Whirlwind Attack, Overwhelming Critical, Planar Turning, Epic Spell Focus, Epic Spell Penetration, Superior Initiative.</entry>
   <entry id="45092" lang="en" sex="m">Eldritch Knight</entry>
   <entry id="45093" lang="en" sex="m">Eldritch Knights</entry>

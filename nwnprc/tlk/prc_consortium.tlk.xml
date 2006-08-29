@@ -19078,6 +19078,11 @@ Use: Automatic.</entry>
 Prerequisite: Enlightened Fist level 6
 Specifics: Your fist of energy ability also adds an extra 1d10 damage when a critical hit is scored.
 Use: Automatic.</entry>
+  <entry id="52240" lang="en" sex="m">Acid</entry>
+  <entry id="52241" lang="en" sex="m">Cold</entry>
+  <entry id="52242" lang="en" sex="m">Electricity</entry>
+  <entry id="52243" lang="en" sex="m">Fire</entry>
+  <entry id="52244" lang="en" sex="m">Sonic</entry>
   <entry id="52245" lang="en" sex="m">Divine Sacrifice: 1d6</entry>
   <entry id="52246" lang="en" sex="m">Divine Sacrifice: 2d6</entry>
   <entry id="52247" lang="en" sex="m">Divine Sacrifice: 3d6</entry>

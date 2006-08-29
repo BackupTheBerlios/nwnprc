@@ -6,10 +6,4 @@
 
 4 Hellfire
 
-5 Lesser Planar binding
-
-6 Planar Binding
-
 7 Hellfire Storm
-
-9 Gate

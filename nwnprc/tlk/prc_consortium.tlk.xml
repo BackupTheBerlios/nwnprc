@@ -10086,12 +10086,12 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   A spellfire wielder can heal a target by touch, restoring 2 hitpoints per spellfire energy level expended for this purpose. This is not considered positive energy, so it does not injure undead.
   Use: Selected.</entry>
   <entry id="47436" lang="en" sex="m">Spellfire</entry>
-  <entry id="47437" lang="en" sex="m">Increase Spellfire Levels Expended</entry>
-  <entry id="47438" lang="en" sex="m">Decrease Spellfire Levels Expended</entry>
+  <entry id="47437" lang="en" sex="m">Spellfire: Increase Levels Expended</entry>
+  <entry id="47438" lang="en" sex="m">Spellfire: Decrease Levels Expended</entry>
   <entry id="47439" lang="en" sex="m">Check Spellfire Level</entry>
   <entry id="47440" lang="en" sex="m">-20</entry>
   <entry id="47441" lang="en" sex="m">Check Spellfire Levels Expended</entry>
-  <entry id="47442" lang="en" sex="m">Spellfire Quickselect</entry>
+  <entry id="47442" lang="en" sex="m">Spellfire: Quickselect</entry>
   <entry id="47443" lang="en" sex="m">Change Quickselect</entry>
   <entry id="47444" lang="en" sex="m">Quickselect 1</entry>
   <entry id="47445" lang="en" sex="m">Quickselect 2</entry>
@@ -10199,7 +10199,7 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   <entry id="47476" lang="en" sex="m">Absorb Friendly Spells</entry>
   <entry id="47477" lang="en" sex="m">Once per day, you may use the Lucky mindblade enhancement to gain +1 bonus to attack and damage rolls and saves for a duration of 1 round per soulknife level.</entry>
   <entry id="47478" lang="en" sex="m">You have already used up the Lucky ability for today.</entry>
-  <entry id="47479" lang="en" sex="m">Touch Attack</entry>
+  <entry id="47479" lang="en" sex="m">Holding the Charge: Touch Attack</entry>
   <entry id="47480" lang="en" sex="m">Type of Feat: Special
 Prerequisite: Spellcaster.
 Specifics: This feat implements the touch attacks of various spells when holding the charge.
@@ -10214,7 +10214,7 @@ Use: Selected.</entry>
 Prerequisite: Spellcaster.
 Specifics: This feat selects a target required in some spells.
 Use: Selected.</entry>
-  <entry id="47485" lang="en" sex="m">Toggle Holding the Charge</entry>
+  <entry id="47485" lang="en" sex="m">Holding the Charge: Toggle</entry>
   <entry id="47486" lang="en" sex="m">Type of Feat: Special
 Prerequisite: Spellcaster.
 Specifics: To use a spell that allows held charges, use this feat to turn on holding the charge, then cast the spell on yourself. The touch attack and ranged attack feats can then be used to discharge your spells on targets. This feat can be used again to disable holding the charge.

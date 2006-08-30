@@ -43,8 +43,6 @@ Created:   3/25/06
 
 void AbilityScrewed (object oTarget);
 
-const int ERROR_CODE_5_FIX_AGAIN = 1;
-
 #include "prc_alterations"
 #include "spinc_common"
 

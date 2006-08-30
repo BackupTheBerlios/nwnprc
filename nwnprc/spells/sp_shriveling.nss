@@ -27,8 +27,6 @@ Created:   05/04/06
 
 int GetHasSoulRot(object oPC);
 
-const int ERROR_CODE_5_FIX_AGAIN = 1;
-
 #include "prc_alterations"
 #include "spinc_common"
 

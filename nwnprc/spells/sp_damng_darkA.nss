@@ -36,7 +36,6 @@ Created:   6/12/06
 //:://////////////////////////////////////////////
 void DarkLoop(object oTarget);
 
-const int ERROR_CODE_5_FIX_AGAIN = 1;
 
 #include "prc_alterations"
 #include "spinc_common"

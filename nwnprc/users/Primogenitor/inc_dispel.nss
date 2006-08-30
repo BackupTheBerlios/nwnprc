@@ -72,7 +72,7 @@ void PRCApplyEffectAtLocation(int nDurationType, struct PRCeffect eEffect, locat
 #include "prc_feat_const"
 #include "lookup_2da_spell"
 #include "prcsp_spell_adjs"
-#include "nw_i0_spells"
+#include "prc_alterations"
 #include "prc_inc_effect"
 
 const string X2_EFFECT = "X2_Effects_";

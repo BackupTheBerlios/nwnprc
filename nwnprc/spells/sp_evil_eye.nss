@@ -27,65 +27,65 @@ Created:   5/14/06
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-void DawnCheck(object oTarget, object oPC, int nRemove);
-
+#include "prc_alterations"
 #include "spinc_common"
 
-void main()
-{
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
-	// Run the spellhook. 
-	if (!X2PreSpellCastCode()) return;
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	float fDuration = RoundsToSeconds(nCasterLvl);
-	int nPenalty = 4;
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
-	
-	//Check Spell Resistance
-	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-	{
-		//Will save
-		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-		{
-			effect eLink = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
-			eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, nPenalty, SAVING_THROW_TYPE_ALL));
-			eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, nPenalty));
-			
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24));
-						
-			//Handle removal via damage						
-			SetLocalString(oTarget, "EvilEyeCaster", GetName(oPC));
-			
-			//Handle removal via sunrise
-			{
-				DawnCheck(oTarget, oPC, 0);
-			}						
-		}
-	}
-	
-	SPEvilShift(oPC);
-	SPSetSchool();
-}
 
 void DawnCheck(object oTarget, object oPC, int nRemove)
 {
-	if(!GetIsDawn())
-	{
-		nRemove = 1;
-	}
-	
-	if((nRemove == 1) && (GetIsDawn()))
-	{
-		RemoveSpellEffects(SPELL_EVIL_EYE, oPC, oTarget);
-		return;
-	}
-	
-	DelayCommand(HoursToSeconds(1), DawnCheck(oTarget, oPC, nRemove));
+    if(!GetIsDawn())
+    {
+        nRemove = 1;
+    }
+    
+    if((nRemove == 1) && (GetIsDawn()))
+    {
+        RemoveSpellEffects(SPELL_EVIL_EYE, oPC, oTarget);
+        return;
+    }
+    
+    DelayCommand(HoursToSeconds(1), DawnCheck(oTarget, oPC, nRemove));
 }
-	
-		
+
+void main()
+{
+    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    
+    // Run the spellhook. 
+    if (!X2PreSpellCastCode()) return;
+    
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    float fDuration = RoundsToSeconds(nCasterLvl);
+    int nPenalty = 4;
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    
+    //Check Spell Resistance
+    if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    {
+        //Will save
+        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+        {
+            effect eLink = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
+            eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, nPenalty, SAVING_THROW_TYPE_ALL));
+            eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, nPenalty));
+            
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(24));
+                        
+            //Handle removal via damage                     
+            SetLocalString(oTarget, "EvilEyeCaster", GetName(oPC));
+            
+            //Handle removal via sunrise
+            {
+                DawnCheck(oTarget, oPC, 0);
+            }                       
+        }
+    }
+    
+    SPEvilShift(oPC);
+    SPSetSchool();
+}
+    
+        

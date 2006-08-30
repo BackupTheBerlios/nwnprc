@@ -17,24 +17,6 @@ backup
 1
 C:\NeverwinterNights\prc\prc\
 1
-	 file_start 	
-includes
-C:\NeverwinterNights\prc\prc\scripts (*.nss)
-1
-*.nss
-
-0
-C:\NeverwinterNights\prc\prc\scripts
-1
-0
-C:\NeverwinterNights\prc\prc\scripts
-1
-0
-backup
-0
-1
-C:\NeverwinterNights\prc\prc\scripts
-1
 
 	 begin_group_backup 	
 	 group_start 	
@@ -75,6 +57,16 @@ GetIsEffectValid
 PRCGetIsEffectValid
 SPApplyEffectToObject
 PRCApplyEffectToObject
+{}tApplyEffectToObject
+{}tPRCApplyEffectToObject
+{}eApplyEffectToObject
+{}ePRCApplyEffectToObject
+{ApplyEffectToObject
+{PRCApplyEffectToObject
+,ApplyEffectToObject
+PRCApplyEffectToObject
+ ApplyEffectToObject
+PRCApplyEffectToObject
 [^a-zA-Z]ApplyEffectToObject
 PRCApplyEffectToObject
 ApplyEffectAtLocation
@@ -89,6 +81,14 @@ GetEffectSubType
 PRCGetEffectSubType
 GetEffectType
 PRCGetEffectType
+{}e     sAttackVars.eSpecialEffect = eSpecialEffect;{}e     //post prc-effectness{}e     //sAttackVars.sEffectLocalName = "CombatStructEffect_"+ObjectToString(oDefender)+"_"+ObjectToString(oAttacker);{}e     //SetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);{}e     //this says e but is really a float
+{}e     //sAttackVars.eSpecialEffect = eSpecialEffect;{}e     //post prc-effectness{}e     sAttackVars.sEffectLocalName = "CombatStructEffect_"+ObjectToString(oDefender)+"_"+ObjectToString(oAttacker);{}e     SetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName, eSpecialEffect);{}e     //this says e but is really a float
+//#include "prc_inc_struct PRCeffect"
+#include "prc_inc_effect"
+{}e     // special struct PRCeffect applied on first attack, or all attacks{}e     struct PRCeffect eSpecialEffect;{}e     //when the new PRC struct PRCeffect system is in place, this will be a reference to a local struct PRCeffect on the module{}e     //that exists temporarilly and will be destroyed at the end{}e     //string sEffectLocalName;
+{}e     // special struct PRCeffect applied on first attack, or all attacks{}e     //struct PRCeffect eSpecialEffect;{}e     //when the new PRC struct PRCeffect system is in place, this will be a reference to a local struct PRCeffect on the module{}e     //that exists temporarilly and will be destroyed at the end{}e     string sEffectLocalName;
+{}e               struct PRCeffect eSpecialEffect = sAttackVars.eSpecialEffect;{}e               //struct PRCeffect eSpecialEffect = GetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName);{}e              PRCApplyEffectToObject(iDurationType, eSpecialEffect, oDefender, sAttackVars.eDuration);{}e               FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
+{}e               //struct PRCeffect eSpecialEffect = sAttackVars.eSpecialEffect;{}e               struct PRCeffect eSpecialEffect = GetLocalPRCEffect(GetModule(), sAttackVars.sEffectLocalName);{}e               PRCApplyEffectToObject(iDurationType, eSpecialEffect, oDefender, sAttackVars.eDuration);{}e               FloatingTextStringOnCreature(sAttackVars.sMessageSuccess, oAttacker, FALSE);
 
 
 	 group_start 	
@@ -123,6 +123,8 @@ includes
 #include "prc_alterations"
 #include "inc_utility"
 #include "prc_alterations"
+{}p#include "prc_alterations"[^{]*#include "prc_alterations"
+#include "prc_alterations"\1
 
 
 	 group_start 	

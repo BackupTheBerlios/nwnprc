@@ -29,46 +29,10 @@ Created:
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-void Deathloop(object oTarget, int nHP, int nCounter);
 
+#include "prc_alterations"
 #include "spinc_common"
 
-void main()
-{
-    object oPC = OBJECT_SELF;
-    object oTarget = GetSpellTargetObject();
-    int nHP = GetCurrentHitPoints(oTarget);
-    int nDC = SPGetSpellSaveDC(oTarget, oPC);
-    int nCounter = 2;
-    int nCasterLvl = PRCGetCasterLevel(oPC);
-        
-    //Spellhook
-    if(!X2PreSpellCastCode()) return;
-    
-    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-    
-    //must be under effect of baccaran
-    if(GetHasSpellEffect(SPELL_BACCARAN, oPC))
-    {
-        //Fort save
-        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
-        {
-            //Spell Resistance
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
-            {
-                //They should be unable to act via PnP
-                effect ePar = EffectCutsceneParalyze();
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, 19.0f);
-                
-                //Sucker...
-                Deathloop(oTarget, nHP, nCounter);
-            }
-        }
-    }
-    
-    SPEvilShift(oPC);
-    SPSetSchool();
-}
     
 void Deathloop(object oTarget, int nHP, int nCounter)
 {
@@ -111,5 +75,42 @@ void Deathloop(object oTarget, int nHP, int nCounter)
                 
         DelayCommand(6.0f, Deathloop(oTarget, nHP, nCounter));
     }
+}
+
+void main()
+{
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nHP = GetCurrentHitPoints(oTarget);
+    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nCounter = 2;
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+        
+    //Spellhook
+    if(!X2PreSpellCastCode()) return;
+    
+    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    
+    //must be under effect of baccaran
+    if(GetHasSpellEffect(SPELL_BACCARAN, oPC))
+    {
+        //Fort save
+        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+        {
+            //Spell Resistance
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+            {
+                //They should be unable to act via PnP
+                effect ePar = EffectCutsceneParalyze();
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, 19.0f);
+                
+                //Sucker...
+                Deathloop(oTarget, nHP, nCounter);
+            }
+        }
+    }
+    
+    SPEvilShift(oPC);
+    SPSetSchool();
 }
     

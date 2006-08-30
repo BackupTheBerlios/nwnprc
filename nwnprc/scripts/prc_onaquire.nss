@@ -28,6 +28,48 @@ void main()
     // racial restrictions are only ever expanded when a PC is involved
     if(GetIsPC(oCreature) || GetIsPC(GetMaster(oCreature)))
         ExecuteScript("race_ev_aquire", OBJECT_SELF);
+        
+    //fix for all-beige 1.67 -> 1.68 cloaks
+    //gives them a random color
+    if(GetBaseItemType(oItem) == BASE_ITEM_CLOAK
+//        && GetItemAppearance(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0) == 1
+        && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1) == 0
+        && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2) == 0
+        && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1) == 0
+        && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2) == 0
+        && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1) == 0
+        && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL2) == 0
+        && !GetLocalInt(oItem, "CloakDone")
+        )
+    {
+        //pre-1.68 boring bland cloak, colorise it :)
+        //move it to temporary storage first
+        object oChest = GetObjectByTag("HEARTOFCHAOS");
+        DestroyObject(oItem);
+        oItem = CopyItem(oItem, oChest, TRUE);
+        //set appearance
+        //doesnt work yet should do for 1.69
+//        DestroyObject(oItem);
+//        oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0, Random(14)+1, TRUE);
+        //set colors
+        DestroyObject(oItem);
+        oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1, Random(176), TRUE);
+        DestroyObject(oItem);
+        oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2, Random(176), TRUE);
+        DestroyObject(oItem);
+        oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1, Random(176), TRUE);
+        DestroyObject(oItem);
+        oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2, Random(176), TRUE);
+        DestroyObject(oItem);
+        oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1, Random(176), TRUE);
+        DestroyObject(oItem);
+        oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL2, Random(176), TRUE);
+        //move it back
+        DestroyObject(oItem);
+        oItem = CopyItem(oItem, oCreature, TRUE);
+        //mark it as set just to be sure
+        SetLocalInt(oItem, "CloakDone", TRUE);
+    }    
 
     // Execute scripts hooked to this event for the creature and item triggering it
     ExecuteAllScriptsHookedToEvent(oCreature, EVENT_ONACQUIREITEM);

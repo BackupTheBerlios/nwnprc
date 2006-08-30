@@ -2,7 +2,8 @@
 
 void main()
 {
-    if (GetMaster()== OBJECT_INVALID) DestroyObject(OBJECT_SELF);
+    //Any ideas why this is here? It messes up the Create Undead Uncontrolled switch
+    //if (GetMaster()== OBJECT_INVALID) DestroyObject(OBJECT_SELF);
     ExecuteScript("nw_ch_ac1", OBJECT_SELF);
     //NPC substiture for OnEquip
     DoEquipTest();

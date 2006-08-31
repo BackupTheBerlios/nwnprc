@@ -80,7 +80,10 @@ void main()
                 if(GetItemPossessor(oTest) != oPC)
                     DestroyObject(oTest); //not enough room in inventory
                 else
+                {
                     SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
+                    SetDroppableFlag(oTest, FALSE); // nondroppable so it doesnt show on NPCs
+                }    
             }
             if(bHasScrollFeat && !bHasScroll)
             {
@@ -88,7 +91,10 @@ void main()
                 if(GetItemPossessor(oTest) != oPC)
                     DestroyObject(oTest); //not enough room in inventory
                 else
+                {
                     SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
+                    SetDroppableFlag(oTest, FALSE); // nondroppable so it doesnt show on NPCs
+                }    
             }
             if(bHasWandFeat && !bHasWand)
             {
@@ -96,7 +102,10 @@ void main()
                 if(GetItemPossessor(oTest) != oPC)
                     DestroyObject(oTest); //not enough room in inventory
                 else
+                {
                     SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
+                    SetDroppableFlag(oTest, FALSE); // nondroppable so it doesnt show on NPCs
+                }    
             }
         }
     }

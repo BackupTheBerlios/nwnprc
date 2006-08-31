@@ -546,7 +546,9 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
 
         report.stacksize = StringToInt(sReqParam2);
         if (report.stacksize < 1)
-            report.stacksize = GetItemStackSize(oTempObject);
+            //report.stacksize = GetItemStackSize(oTempObject); 
+            //changed to get max stack size, avoiding crafting arrows etc 1 at a time
+            report.stacksize = StringToInt(Get2DACache("baseitems", "Stacking", GetBaseItemType(oTempObject)));
 
         report.marketprice = GetGoldPieceValue(oTempObject) * report.stacksize;
         report.GPcost += report.marketprice / 2;

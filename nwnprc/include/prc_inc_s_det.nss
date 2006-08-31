@@ -109,11 +109,28 @@ void DetectAlignmentRound(int nRound, location lLoc, int nGoodEvil, int nLawChao
     int nAuraCount;
     while(GetIsObjectValid(oTest))
     {
+        int nUndetectable = FALSE; //you cannot be detected if this is true
+        if(GetHasSpellEffect(SPELL_UNDETECTABLE_ALINGMENT, oTest))
+        {
+            object oCaster = OBJECT_INVALID;
+            effect eTest = GetFirstEffect(oTest);
+            while(GetIsEffectValid(eTest)
+                && oCaster == OBJECT_INVALID)
+            {
+                if(GetEffectSpellId(eTest) == SPELL_UNDETECTABLE_ALINGMENT)
+                    oCaster = GetEffectCreator(eTest);
+                eTest = GetFirstEffect(oTest);
+            }
+            int nDC = PRCGetSaveDC(OBJECT_SELF, oCaster, SPELL_UNDETECTABLE_ALINGMENT);
+            //if you dont beat the saving throw of the spell, you cant detect them
+            if(!PRCMySavingThrow(SAVING_THROW_WILL, OBJECT_SELF, nDC, SAVING_THROW_TYPE_NONE, oCaster))
+                nUndetectable = TRUE;
+        }
 DoDebug("DetectAlignmentRound() : Round = "+IntToString(nRound)+"from "+GetName(OBJECT_SELF)+" of "+GetName(oTest));    
         if((GetAlignmentGoodEvil(oTest)==nGoodEvil || nGoodEvil == -1)
             && (GetAlignmentLawChaos(oTest)==nLawChaos || nLawChaos == -1)
             && oTest != OBJECT_SELF
-            && !GetHasSpellEffect(SPELL_UNDETECTABLE_ALINGMENT, oTest))
+            && !nUndetectable)
         {
             if(nRound == 1)
             {

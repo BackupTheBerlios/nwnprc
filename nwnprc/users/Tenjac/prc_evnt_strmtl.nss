@@ -82,6 +82,11 @@ void main()
 	[11:01] <Primogenitor> But there is nothing worse than assuming someting workes one way, then finding out it works a completely different way
 	[11:10] <Tenjac> oh yeah... not good :P
         [11:11] <Tenjac> hopefully that will do it
+        
+        Georg Zoeller: It depends on whether OnDamage or OnHit fires first. If OnDamage fires first, you could set the damage in a variable and retrieve
+        it from OnHit.  
+        
+        If OnHit fires first, you might have a problem, not sure if there is a good solution to this.
 */
 }
 

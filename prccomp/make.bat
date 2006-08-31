@@ -8,6 +8,10 @@ ECHO Assembling PRC Companion hak
 erf -c prccomp.hak companion\2da\*.*
 erf -u prccomp.hak companion\data\*.*
 
+ECHO copying the prc companion 2das somewhere to be merged
+mkdir prccc
+copy companion\2da\*.2da prccc\*.2da
+
 ECHO Merging tlk xml files
 tlktools tlkmerge.xml
 
@@ -109,4 +113,6 @@ SET OUTPUT=output
 SET NAME=prcc1l
 start /B /wAIT makeb.bat
 
+
+start /B copyhak.bat
 pause

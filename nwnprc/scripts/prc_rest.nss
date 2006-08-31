@@ -219,6 +219,10 @@ void main()
     object oPC = GetLastBeingRested();
 
     if(DEBUG) DoDebug("prc_rest: Running for " + DebugObject2Str(oPC));
+    
+    // return here for DMs as they don't need all this stuff
+    if(GetIsDM(oPC))
+        return;
 
     //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))

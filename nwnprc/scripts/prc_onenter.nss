@@ -36,6 +36,10 @@ void main()
         return;
     }
 
+    // return here for DMs as they don't need all this stuff
+    if(GetIsDM(oPC))
+        return;
+    
     //do this first so other things dont interfere with it
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
         LetoPCEnter(oPC);

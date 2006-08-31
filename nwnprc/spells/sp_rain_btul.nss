@@ -44,7 +44,7 @@ void main()
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	effect eAOE = EffectAreaOfEffect(VFX_AOE_RAIN_OF_BLACK_TULIPS);
-	location lLoc = GetSpellTargetLocation(oPC);
+	location lLoc = GetSpellTargetLocation();
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nDam;

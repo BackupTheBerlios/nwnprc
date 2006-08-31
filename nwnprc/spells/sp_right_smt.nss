@@ -45,7 +45,8 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
-	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 6.10, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
+	location lLoc = GetSpellTargetLocation();
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 6.10, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDam;
 	int nAlign;
@@ -113,7 +114,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 			}	
 		}
-		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 6.10, GetLocation(oPC), FALSE, OBJECT_TYPE_CREATURE);
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 6.10, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	SPGoodShift(oPC);
 	SPSetSchool();

@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 22, 2006
+    Modified: Aug 30, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -299,7 +299,7 @@ int SkipLineItemprops(int i)
 
 //Adds names to a list based on sTable (2da), delayed recursion
 //  to avoid TMI
-void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCasterLevel = 0, object oItem = OBJECT_INVALID, int i = 0)
+void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oItem = OBJECT_INVALID, int i = 0)
 {
     if(GetLocalInt(oPC, "DynConv_Waiting") == FALSE)
         return;
@@ -332,12 +332,29 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, int nCaste
         FloatingTextStringOnCreature("*Done*", oPC, FALSE);
         return;
     }
-    DelayCommand(0.01, PopulateList(oPC, MaxValue, bSort, sTable, nCasterLevel, oItem, i + 1));
+    DelayCommand(0.01, PopulateList(oPC, MaxValue, bSort, sTable, oItem, i + 1));
 }
 
 //use heartbeat
 void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine)
 {
+    string sPropertyType = Get2DACache(sFile, "PropertyType", nLine);
+    if(sPropertyType == "M")
+    {   //checking required spells
+        if(!DecrementCraftingSpells(oPC, sFile, nLine))
+        {
+            FloatingTextStringOnCreature("Crafting: Required spells not available!", oPC);
+            return;
+        }
+    }
+    else if(sPropertyType == "P")
+    {
+        if(!DecrementCraftingPowerPoints(oPC, sFile, nLine))
+        {
+            FloatingTextStringOnCreature("Crafting: Insufficient power points!", oPC);
+            return;
+        }
+    }
     if(GetGold(oPC) < nCost)
     {
         FloatingTextStringOnCreature("Crafting: Insufficient gold!", oPC);
@@ -357,7 +374,6 @@ void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int n
     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
     TakeGoldFromCreature(nCost, oPC, TRUE);
     SetXP(oPC, GetXP(oPC) - nXP);
-    DecrementCraftingSpells(oPC, sFile, nLine);
 }
 
 void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine, int nRounds)
@@ -504,27 +520,27 @@ void main()
                         int nFeat = GetCraftingFeat(oItem);
                         int bEpic = GetHasFeat(GetEpicCraftingFeat(nFeat), oPC);
                         SetHeader(ItemStats(oItem) + "\nPlease make a selection.");
-                        struct itemvars strTemp = GetItemVars(oPC, oItem, sFile, nCasterLevel, bEpic, 1);
+                        struct itemvars strTemp = GetItemVars(oPC, oItem, sFile, bEpic, 1);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ENHANCE, strTemp.enhancement);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ADDITIONAL, strTemp.additionalcost);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC, strTemp.epic);
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
-                        AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
+                        //AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
                         if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
                         {
                             sFile = "itempropdef";
                             SetLocalString(oPC, PRC_CRAFT_FILE, sFile);
-                            PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, sFile, nCasterLevel, oItem);
+                            PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, sFile, oItem);
                         }
                         else if(sFile == "")
                         {
                             sFile = "iprp_spells";
-                            PopulateList(oPC, MaxListSize(sFile), TRUE, sFile, nCasterLevel);
+                            PopulateList(oPC, MaxListSize(sFile), TRUE, sFile);
                         }
                         else
                         {
-                            PopulateList(oPC, MaxListSize(sFile), FALSE, sFile, nCasterLevel);
+                            PopulateList(oPC, MaxListSize(sFile), FALSE, sFile);
                         }
                         string sMaterial = GetStringLeft(GetTag(oTarget), 3);
                         object oChest = GetCraftChest();
@@ -585,6 +601,7 @@ void main()
                     itemproperty ip = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
                     IPSafeAddItemProperty(oNewItem, ip, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
                     nTemp = GetGoldPieceValue(oNewItem) - GetGoldPieceValue(oItem);
+                    int nTime = GetCraftingTime(nTemp);
                     int nTemp2 = nTemp / 25;
                     nTemp /= 2;
                     if(nTemp < 1) nTemp = 1;
@@ -592,13 +609,14 @@ void main()
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nTemp2);
                     sTemp = GetItemPropertyString(ip);
-                    sTemp += "\nCost: " + IntToString(nTemp);
+                    sTemp += "\nCost: " + IntToString(nTemp) + "gp " + IntToString(nTemp2) + "XP";
+                    if(nTime > 0)
+                        sTemp += "\nTime: " + IntToString(nTime) + " rounds";
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     int nHD = GetHitDice(oPC);
                     int nMinXP = nHD * (nHD - 1) * 500;
                     int nCurrentXP = GetXP(oPC);
-
                     if(GetGold(oPC) >= nTemp && (nCurrentXP - nMinXP) >= nTemp2)
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     MarkStageSetUp(nStage);
@@ -659,6 +677,12 @@ void main()
                             AddChoice(ActionString("Cold Iron"), PRC_CRAFT_FLAG_COLD_IRON, oPC);
                         if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
                             AddChoice(ActionString("Alchemical Silver"), PRC_CRAFT_FLAG_ALCHEMICAL_SILVER, oPC);*/
+                        /* NOT IMPLEMENTED YET
+                        if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
+                            AddChoice(ActionString("Mundane Crystal"), PRC_CRAFT_FLAG_MUNDANE_CRYSTAL, oPC);
+                        if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))
+                            AddChoice(ActionString("Deep Crystal"), PRC_CRAFT_FLAG_DEEP_CRYSTAL, oPC);
+                        */
                     }
                     MarkStageSetUp(nStage);
                     break;
@@ -698,24 +722,17 @@ void main()
                     int nXPOld = GetPnPItemXPCost(strTempOld, nCostOld);
                     int nXPNew = GetPnPItemXPCost(strTempNew, nCostNew);
                     int nXPDiff = nXPNew - nXPOld;
+                    int nTime = GetCraftingTime(nCostDiff);
                     if(nXPDiff < 0) nXPDiff = 0;
                     SetLocalInt(oPC, PRC_CRAFT_XP, nXPDiff);
-                    //FIX THIS
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine)));
                     sTemp += "\n\n";
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Description", nLine)));
                     sTemp += "\n\n";
                     sTemp += ItemStats(oNewItem);
-                    /*
-                    sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache("itempropdef", "GameStrRef", nType))));
-                    if(sSubtype != "")
-                        sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sSubtype, "Name", nSubTypeValue))));
-                    if(sCostTable != "")
-                        sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sCostTable, "Name", nCostTableValue))));
-                    if(sParam1 != "")
-                        sTemp += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache(sParam1, "Name", nParam1Value))));
-                    */
-                    sTemp += "\n\nCost: " + IntToString(nCostDiff) + "gp " + IntToString(nXPDiff) + "XP";
+                    sTemp += "\nCost: " + IntToString(nCostDiff) + "gp " + IntToString(nXPDiff) + "XP";
+                    if(nTime > 0)
+                        sTemp += "\nTime: " + IntToString(nTime) + " rounds";
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
 
@@ -1012,7 +1029,6 @@ void main()
                 {
                     nStage = STAGE_CRAFT_MASTERWORK;
                     DestroyObject(oNewItem, 0.1);
-
                     MarkStageNotSetUp(nStage, oPC);
                 }
                 else if(nChoice == CHOICE_CONFIRM)
@@ -1041,7 +1057,7 @@ void main()
                 }
                 else if(nChoice == CHOICE_CONFIRM)
                 {
-                    itemproperty ip;// = ConstructIP(nType, nSubTypeValue, nCostTableValue, nParam1Value);
+                    itemproperty ip;
                     SetLocalInt(oPC, PRC_CRAFT_HB, 1);
                     int nDelay = GetCraftingTime(nCost);
                     if(GetLevelByClass(CLASS_TYPE_MAESTER, oPC)) nDelay /= 2;

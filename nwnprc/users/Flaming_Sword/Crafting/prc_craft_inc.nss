@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 22, 2006
+    Modified: Aug 30, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -66,7 +66,8 @@ const int PRC_CRAFT_FLAG_DRAGONHIDE         = 8;
 const int PRC_CRAFT_FLAG_MITHRAL            = 16;
 const int PRC_CRAFT_FLAG_COLD_IRON          = 32;   //not implemented
 const int PRC_CRAFT_FLAG_ALCHEMICAL_SILVER  = 64;   //not implemented
-const int PRC_CRAFT_FLAG_MAGICAL            = 128;
+const int PRC_CRAFT_FLAG_MUNDANE_CRYSTAL    = 128;
+const int PRC_CRAFT_FLAG_DEEP_CRYSTAL       = 256;
 
 const int PRC_CRAFT_ITEM_TYPE_WEAPON    = 1;
 const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
@@ -113,7 +114,7 @@ object GetTempCraftChest()
 
 int GetCraftingSkill(object oItem)
 {
-    int nType = StringToInt(Get2DACache("craft_gen_item", "Type", GetBaseItemType(oItem)));
+    int nType = StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem)));
     if((nType == PRC_CRAFT_ITEM_TYPE_WEAPON) || (nType == PRC_CRAFT_ITEM_TYPE_AMMO))
         return SKILL_CRAFT_WEAPON;
     return SKILL_CRAFT_ARMOR;
@@ -260,8 +261,6 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
             }
             case ITEM_PROPERTY_SKILL_BONUS:
             {
-                int nBaseValue = -1;
-
                 if(nSubType == SKILL_HIDE)
                 {
                     nCostTableValue -= GetArmourCheckPenaltyReduction(oItem);
@@ -270,7 +269,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case 5: return 49; break;
                         case 10: return 50; break;
                         case 15: return 51; break;
-                        default: return -2; break;
+                        default: return -1; break;
                     }
                 }
                 else if(nSubType == SKILL_MOVE_SILENTLY)
@@ -281,7 +280,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                         case 5: return 52; break;
                         case 10: return 53; break;
                         case 15: return 54; break;
-                        default: return -2; break;
+                        default: return -1; break;
                     }
                 }
                 else
@@ -297,6 +296,12 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
             case ITEM_PROPERTY_ENHANCEMENT_BONUS:
             {
                 return (nCostTableValue - 1);
+                break;
+            }
+            case ITEM_PROPERTY_ATTACK_BONUS:
+            {
+                if(IPGetIsRangedWeapon(oItem))
+                    return (nCostTableValue - 1);
                 break;
             }
             case ITEM_PROPERTY_DAMAGE_BONUS:
@@ -554,7 +559,7 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
 }
 
 //Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
-struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterLevel = 0, int bEpic = 0, int bSet = 0)
+struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 0, int bSet = 0)
 {
     struct itemvars strTemp;
     int i;
@@ -562,6 +567,10 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
     int nEnhancement;
     int nSpellPattern;
     int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
+    int nCasterLevel = max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC));
+    int nManifesterLevel = GetManifesterLevel(oPC);
+    int nLevel;
+    string sPropertyType;
     strTemp.item = oItem;
     if(bSet)
     {
@@ -581,7 +590,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
     count = 0;
     while(GetIsItemPropertyValid(ip))
     {   //assumes no duplicated enhancement itemprops
-        k = Get2DALineFromItemprop(sFile, ip, oItem);
+        k = Get2DALineFromItemprop(sFile, ip, oItem);   //is causing TMI with armour with skill props
         count++;
         if(DEBUG) DoDebug("GetItemVars: itemprop number " + IntToString(count) +
                             " " + IntToString(GetItemPropertyType(ip)) +
@@ -589,6 +598,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
                             " " + IntToString(GetItemPropertyCostTableValue(ip)) +
                             " " + IntToString(GetItemPropertyParam1Value(ip))
                             );
+
         if(k >= 0)
         {
             if(k < 20) bEnhanced = TRUE;
@@ -608,6 +618,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
         {
             DisallowType(oPC, sFile, ip);
         }
+
         ip = GetNextItemProperty(oItem);
     }
     if(strTemp.enhancement > 10) strTemp.epic = TRUE;
@@ -634,25 +645,48 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
     {   //will skip over properties already disallowed
         if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
         {
+            sPropertyType = Get2DACache(sFile, "PropertyType", i);
+            if(sPropertyType == "M")
+                nLevel = nCasterLevel;
+            else if(sPropertyType == "P")
+                nLevel = nManifesterLevel;
+            else
+                nLevel = max(nCasterLevel, nManifesterLevel);
             if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else if(nCasterLevel < StringToInt(Get2DACache(sFile, "Level", i)))
+            else if(nLevel < StringToInt(Get2DACache(sFile, "Level", i)))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else
             {   //attempting to minimise 2da reads for spell prerequisite checking
                 nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", i));
+                //INSERT ALTERNATIVE FOR CHECKING POWERS HERE
                 if(nSpellPattern)
                 {
                     if(
+                        (sPropertyType == "M") &&
                         !(
-                        (nSpellPattern & 1) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell1", i))) : 1 &&
-                        (nSpellPattern & 2) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell2", i))) : 1 &&
-                        (nSpellPattern & 4) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell3", i))) : 1 &&
-                        ((nSpellPattern & 8) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR1", i))) : 1 ||
-                        (nSpellPattern & 16) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR2", i))) : 1)
+                            (nSpellPattern & 1) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell1", i))) : 1 &&
+                            (nSpellPattern & 2) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell2", i))) : 1 &&
+                            (nSpellPattern & 4) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell3", i))) : 1 &&
+                            ((nSpellPattern & 8) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR1", i))) : 1 ||
+                            (nSpellPattern & 16) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR2", i))) : 1)
+                            )
                         )
+                    {
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
+                    if(
+                        (sPropertyType == "P") &&
+                        !(
+                            (nSpellPattern & 1) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell1", i)), oPC) : 1 &&
+                            (nSpellPattern & 2) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell2", i)), oPC) : 1 &&
+                            (nSpellPattern & 4) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell3", i)), oPC) : 1 &&
+                            ((nSpellPattern & 8) ? GetHasPower(StringToInt(Get2DACache(sFile, "SpellOR1", i)), oPC) : 1 ||
+                            (nSpellPattern & 16) ? GetHasPower(StringToInt(Get2DACache(sFile, "SpellOR2", i)), oPC) : 1)
+                            )
                         )
                     {
                         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
@@ -687,22 +721,133 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int nCasterL
     return strTemp;
 }
 
-void DecrementCraftingSpells(object oPC, string sFile, int nLine)
+//Checks and decrements spells based on property to add
+int DecrementCraftingSpells(object oPC, string sFile, int nLine)
 {
-    if(nLine == -1) return;
+    if(nLine == -1) return FALSE;
     int nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", nLine));
+    int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
+    int bOR = FALSE;
     if(nSpellPattern)
     {
-        if(nSpellPattern & 1) PRCDecrementRemainingSpellUses(oPC, StringToInt(Get2DACache(sFile, "Spell1", nLine)));
-        if(nSpellPattern & 2) PRCDecrementRemainingSpellUses(oPC, StringToInt(Get2DACache(sFile, "Spell2", nLine)));
-        if(nSpellPattern & 4) PRCDecrementRemainingSpellUses(oPC, StringToInt(Get2DACache(sFile, "Spell3", nLine)));
-        int nSpellOR1 = StringToInt(Get2DACache(sFile, "SpellOR1", nLine));
-        int nSpellOR2 = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
-        if((nSpellPattern & 8) && PRCGetHasSpell(nSpellOR1))
-            PRCDecrementRemainingSpellUses(oPC, nSpellOR1);
-        else if((nSpellPattern & 16) && PRCGetHasSpell(nSpellOR2))
+        if(nSpellPattern & 1)
+        {
+            nSpell1 = StringToInt(Get2DACache(sFile, "Spell1", nLine));
+            if(!PRCGetHasSpell(nSpell1))
+                return FALSE;
+        }
+        if(nSpellPattern & 2)
+        {
+            nSpell2 = StringToInt(Get2DACache(sFile, "Spell2", nLine));
+            if(!PRCGetHasSpell(nSpell2))
+                return FALSE;
+        }
+        if(nSpellPattern & 4)
+        {
+            nSpell3 = StringToInt(Get2DACache(sFile, "Spell3", nLine));
+            if(!PRCGetHasSpell(nSpell3))
+                return FALSE;
+        }
+        if(nSpellPattern & 8)
+        {
+            nSpellOR1 = StringToInt(Get2DACache(sFile, "SpellOR1", nLine));
+            if(!PRCGetHasSpell(nSpellOR1))
+                if(nSpellPattern & 16)
+                {
+                    bOR = TRUE;
+                    nSpellOR2 = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
+                    if(!PRCGetHasSpell(nSpellOR2))
+                        return FALSE;
+                }
+                else
+                    return FALSE;
+        }
+        else if(nSpellPattern & 16)
+        {
+            nSpellOR2 = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
+            if(!PRCGetHasSpell(nSpellOR2))
+                return FALSE;
+        }
+        if(nSpellPattern & 1)
+            PRCDecrementRemainingSpellUses(oPC, nSpell1);
+        if(nSpellPattern & 2)
+            PRCDecrementRemainingSpellUses(oPC, nSpell2);
+        if(nSpellPattern & 4)
+            PRCDecrementRemainingSpellUses(oPC, nSpell3);
+        if(nSpellPattern & 8)
+            PRCDecrementRemainingSpellUses(oPC, (bOR) ? nSpellOR2 : nSpellOR1);
+        else if(nSpellPattern & 16)
             PRCDecrementRemainingSpellUses(oPC, nSpellOR2);
     }
+    //PRCDecrementRemainingSpellUses(oPC, nSpell);
+    return TRUE;
+}
+
+//Checks and decrements power points based on property to add
+int DecrementCraftingPowerPoints(object oPC, string sFile, int nLine)
+{
+    if(nLine == -1) return FALSE;
+    int nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", nLine));
+    int nPower;
+    int bOR = TRUE;
+    int nLoss = 0;
+    if(nSpellPattern)
+    {
+        if(nSpellPattern & 1)
+        {
+            nPower = StringToInt(Get2DACache(sFile, "Spell1", nLine));
+            if(GetHasPower(nPower, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            else
+                return FALSE;
+        }
+        if(nSpellPattern & 2)
+        {
+            nPower = StringToInt(Get2DACache(sFile, "Spell2", nLine));
+            if(GetHasPower(nPower, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            else
+                return FALSE;
+        }
+        if(nSpellPattern & 4)
+        {
+            nPower = StringToInt(Get2DACache(sFile, "Spell3", nLine));
+            if(GetHasPower(nPower, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            else
+                return FALSE;
+        }
+        if(nSpellPattern & 8)
+        {
+            nPower = StringToInt(Get2DACache(sFile, "SpellOR1", nLine));
+            if(GetHasPower(nPower, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            else if(nSpellPattern & 16)
+            {
+                nPower = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
+                if(GetHasPower(nPower, oPC))
+                    nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+                else
+                    return FALSE;
+            }
+            else
+                return FALSE;
+        }
+        else if(nSpellPattern & 16)
+        {
+            nPower = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
+            if(GetHasPower(nPower, oPC))
+                nLoss += (StringToInt(lookup_spell_innate(nPower)) * 2 - 1);
+            else
+                return FALSE;
+        }
+    }
+    if(GetCurrentPowerPoints(oPC) < nLoss)
+        return FALSE;
+
+    LosePowerPoints(oPC, nLoss, TRUE);
+
+    return TRUE;
 }
 
 //Returns an int depending on the weapon type
@@ -756,6 +901,8 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
                     break;
                 }
             }
+            if(nLine < 20 && IPGetIsRangedWeapon(oItem))
+                nType = ITEM_PROPERTY_ATTACK_BONUS;
         }
     }
 
@@ -820,7 +967,7 @@ int GetItemArmourCheckPenalty(object oItem)
         nPenalty = 10;
     else if(nBase == BASE_ITEM_ARMOR)
     {
-        switch(GetBaseAC(oItem))
+        switch(GetItemBaseAC(oItem))
         {
             case 3: nPenalty = 1; break;
             case 4: nPenalty = 2; break;
@@ -971,7 +1118,7 @@ int GetCraftingDC(object oItem)
         (nBase == BASE_ITEM_TOWERSHIELD))
         )
     {
-        nDC = 10 + GetBaseAC(oItem);
+        nDC = 10 + GetItemBaseAC(oItem);
     }
     else if(((nBase == BASE_ITEM_HEAVYCROSSBOW) ||
         (nBase == BASE_ITEM_LIGHTCROSSBOW))
@@ -1038,7 +1185,7 @@ void MakeMasterwork(object oItem)
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_ATTACK_BONUS, 0, 1);
         IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
     }
-    else if(StringToInt(Get2DACache("craft_gen_item", "Type", nBase)) == PRC_CRAFT_ITEM_TYPE_AMMO)
+    else if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", nBase)) == PRC_CRAFT_ITEM_TYPE_AMMO)
     {
         int nDamageType = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_DAMAGE_BONUS, nDamageType, IP_CONST_DAMAGEBONUS_1);
@@ -1054,7 +1201,7 @@ void MakeAdamantine(object oItem)
     if(GetBaseItemType(oItem) == BASE_ITEM_ARMOR)
     {
         int nBonus = 0;
-        switch(GetBaseAC(oItem))
+        switch(GetItemBaseAC(oItem))
         {
             case 1:
             case 2:
@@ -1158,6 +1305,16 @@ void MakeSilver(object oItem)
     //Does nothing so far
 }
 
+void MakeMundaneCrystal(object oItem)
+{
+    //Does nothing so far
+}
+
+void MakeDeepCrystal(object oItem)
+{
+    //Does nothing so far
+}
+
 //Creates an item on oOwner, from the baseitemtype and base AC (for armour)
 object CreateStandardItem(object oOwner, int nBaseItemType, int nBaseAC = -1)
 {
@@ -1201,7 +1358,10 @@ int GetPnPItemCost(struct itemvars strTemp)
     SetIdentified(strTemp.item, TRUE);
     int nFlag = StringToInt(Get2DACache("prc_craft_gen_it", "Type", nType));
     int nAdd = 0;
-    nMaterial = StringToInt(GetStringLeft(GetTag(strTemp.item), 3));
+    string sMaterial = GetStringLeft(GetTag(strTemp.item), 3);
+    nMaterial = StringToInt(sMaterial);
+    if(GetMaterialString(nMaterial) != sMaterial)
+        nMaterial = 0;
     if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)
     {
         switch(nFlag)

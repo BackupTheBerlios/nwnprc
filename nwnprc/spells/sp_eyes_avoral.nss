@@ -34,8 +34,14 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = HoursToSeconds(nCasterLvl/10);
-		
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectSkillIncrease(SKILL_SPOT, 8), oTarget, fDur);
 	
 	SPSetSchool();

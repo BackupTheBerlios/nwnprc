@@ -304,6 +304,10 @@ int AddUtteranceSpecificDC(object oTrueSpeaker)
 	if (PRCGetSpellId() == UTTER_FORTIFY_ARMOUR_CRIT) nDC += 10;
 	// When using this utterance you add +10 to the DC to maximize a potion or scroll
 	if (PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_MAX) nDC += 10;
+	// When using this utterance you add +10 to the DC to create a solid fog spell
+	if (PRCGetSpellId() == UTTER_FOG_VOID_SOLID) nDC += 10;
+	
+	return nDC;
 }
 
 // Test main

@@ -15,6 +15,10 @@ const int UTTER_WORD_NURTURING_MINOR_R = -1;
 const int UTTER_FORTIFY_ARMOUR_SNEAK   = -1;
 const int UTTER_FORTIFY_ARMOUR_CRIT    = -1;
 const int UTTER_KEEN_WEAPON            = -1;
+const int UTTER_FOG_VOID_CLOUD         = -1;
+const int UTTER_FOG_VOID_SOLID         = -1;
+const int UTTER_SHIELD_LANDSCAPE       = -1;
+const int UTTER_SHOCKWAVE              = -1;
 
 // Level 2 Utterances
 const int UTTER_ARCHERS_EYE              = -1;
@@ -133,3 +137,8 @@ const int CRAFTED_TOOL_QUICKSLOT1  = -1;
 const int CRAFTED_TOOL_QUICKSLOT2  = -1;
 const int CRAFTED_TOOL_QUICKSLOT3  = -1;
 const int CRAFTED_TOOL_QUICKSLOT4  = -1;
+
+// AoE Constants for Perfected Map
+const int AOE_PER_FOG_VOID_CLOUD   = 142;
+const int AOE_PER_FOG_VOID_SOLID   = 143;
+const int AOE_PER_SHIELD_LANDSCAPE = 144;

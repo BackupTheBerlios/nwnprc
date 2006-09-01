@@ -11,7 +11,7 @@ Bugs: Dwarf Domain, Strength Domain
 Truenaming:
 
 Truenamer
-50/63 Utterances
+53/63 Utterances
 4 Prestige Classes
 15+ feats
 

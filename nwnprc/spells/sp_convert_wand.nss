@@ -99,6 +99,13 @@ void main()
 		
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = (60.0f * nCasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat()'
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
 	int nDC;
 	
 	//Get spell level

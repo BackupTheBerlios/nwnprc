@@ -40,7 +40,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_EVOCATION);
 	
 	object oPC = OBJECT_SELF;
-	location lLoc = GetLocation(oPC);
+	location lLoc = GetSpellTargetLocation();
 	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 6.10f, lLoc, TRUE, OBJECT_TYPE_CREATURE);
 	float fDur;
 	int nMetaMagic = PRCGetMetaMagicFeat();

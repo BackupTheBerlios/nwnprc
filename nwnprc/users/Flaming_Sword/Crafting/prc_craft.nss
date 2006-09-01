@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 30, 2006
+    Modified: Sept 2, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -341,7 +341,7 @@ void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int n
     string sPropertyType = Get2DACache(sFile, "PropertyType", nLine);
     if(sPropertyType == "M")
     {   //checking required spells
-        if(!DecrementCraftingSpells(oPC, sFile, nLine))
+        if(!CheckCraftingSpells(oPC, sFile, nLine, TRUE))
         {
             FloatingTextStringOnCreature("Crafting: Required spells not available!", oPC);
             return;
@@ -349,7 +349,7 @@ void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int n
     }
     else if(sPropertyType == "P")
     {
-        if(!DecrementCraftingPowerPoints(oPC, sFile, nLine))
+        if(!CheckCraftingPowerPoints(oPC, sFile, nLine, TRUE))
         {
             FloatingTextStringOnCreature("Crafting: Insufficient power points!", oPC);
             return;

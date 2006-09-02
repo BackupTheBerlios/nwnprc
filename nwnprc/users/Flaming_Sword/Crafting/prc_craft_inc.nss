@@ -99,6 +99,9 @@ int GetCraftingTime(int nCost)
         case 4: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp
         case 5: fDelay = 24 * HoursToSeconds(nTemp); break;     //1 day/1000gp
     }
+    int nMultiplyer = GetPRCSwitch(PRC_CRAFT_TIMER_MULTIPLIER);
+    if(nMultiplyer)
+        fDelay *= (IntToFloat(nMultiplyer) / 100.0);
     return FloatToInt(fDelay / 6);
 }
 
@@ -529,7 +532,8 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
         else if(sFile == "craft_weapon")
         {
             int nDamageType = StringToInt(Get2DACache("baseitems", "WeaponType", nBase));
-            int bRanged = !!StringToInt(Get2DACache("baseitems", "RangedWeapon", nBase));
+            int bRangedType = StringToInt(Get2DACache("baseitems", "RangedWeapon", nBase));
+            int bRanged = bRangedType && (bRangedType != nBase);
             switch(nLine)
             {
                 case 27:
@@ -709,6 +713,17 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
         {
             if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)) && PrereqSpecialHandling(sFile, oItem, i))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+        }
+        int nBase = GetBaseItemType(oItem);
+        int bRangedType = StringToInt(Get2DACache("baseitems", "RangedWeapon", nBase));
+        if(bRangedType && (bRangedType != nBase))
+        {   //disallowed because ranged weapons can't have onhit
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 22, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 24, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 26, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 34, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 40, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 42, 0);
         }
     }
     itemproperty ip = GetFirstItemProperty(oItem);
@@ -2009,8 +2024,10 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
         }
         case ITEM_PROPERTY_ON_HIT_PROPERTIES:
         {
-            //if(nParam1Value == -1) nParam1Value = 0;
-            ip = ItemPropertyOnHitProps(nSubTypeValue, nCostTableValue, nParam1Value);
+            if(nParam1Value == -1)
+                ip = ItemPropertyOnHitProps(nSubTypeValue, nCostTableValue);
+            else
+                ip = ItemPropertyOnHitProps(nSubTypeValue, nCostTableValue, nParam1Value);
             break;
         }
         case ITEM_PROPERTY_DECREASED_SAVING_THROWS:

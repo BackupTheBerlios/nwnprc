@@ -1,14 +1,14 @@
 /*
    ----------------
-   Fog from the Void
+   Shockwave
 
-   true_utr_fogvoid
+   true_utr_shckwv
    ----------------
 
     1/9/06 by Stratovarius
 */ /** @file
 
-    Fog from the Void
+    Shockwave
 
     Level: Perfected Map 1
     Range: 100 feet

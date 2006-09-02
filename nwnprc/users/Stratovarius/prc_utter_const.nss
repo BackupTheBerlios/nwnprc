@@ -85,7 +85,10 @@ const int UTTER_SPELL_REBIRTH_R          = -1;
 const int UTTER_WORD_NURTURING_POTENT    = -1;
 const int UTTER_WORD_NURTURING_POTENT_R  = -1;
 const int UTTER_SUPPRESS_ITEM            = -1;
-const int UTTER_TRANSMUTE_WEAPON         = -1
+const int UTTER_TRANSMUTE_WEAPON         = -1;
+const int UTTER_ANGER_SLEEPING_EARTH     = -1;
+const int UTTER_CONJUNCTIVE_GATE         = -1;
+const int UTTER_DENY_PASSAGE             = -1;
 
 // Level 5 Utterances
 const int UTTER_ELDRITCH_ATTRACTION            = -1;

@@ -4930,6 +4930,93 @@ Use: Selected.</entry>
   <entry id="46243" lang="en" sex="m">Power Attack Quickselect 2</entry>
   <entry id="46244" lang="en" sex="m">Power Attack Quickselect 3</entry>
   <entry id="46245" lang="en" sex="m">Select the quickselection to store the current power attack level in.</entry>
+  <entry id="46246" lang="en" sex="m">Hexblade</entry>
+  <entry id="46247" lang="en" sex="m">Hexblades</entry>
+  <entry id="46248" lang="en" sex="m">hexblade</entry>
+  <entry id="46249" lang="en" sex="m">(BASE CLASS) 
+Combining the dynamic powers of martial prowess and arcane might, the hexblade presents a deadly challenge to opponents unused to such a foe.
+
+- Aligment Restrictions: non-good only
+- Hit Die: d10 
+- Proficiencies: A Hexblade gains proficiency with Simple and Martial Weapons and Light Armour. 
+- Skill Points: 2 + Int Modifier 
+
+ABILITIES: 
+
+Level 
+ 1: Hexblade's Curse 1/day
+ 2: Arcane Resistance
+ 3: Mettle 
+ 4: -
+ 5: Bonus Feat, Hexblade's Curse 2/day
+ 6: -
+ 7: Greater Hexblade's Curse
+ 8: -
+ 9: Hexblade's Curse 3/day
+10: Bonus Feat
+11: -
+12: Aura of Unluck 1/day 
+13: Hexblade's Curse 4/day
+14: -
+15: Bonus Feat 
+16: Aura of Unluck 2/day
+17: Hexblade's Curse 5/day 
+18: -
+19: Dire Hexblade's Curse
+20: Bonus Feat, Aura of Unluck 3/day 
+
+SPELLCASTING 
+
+To cast a spell, the Hexblade must have a Charisma score of 10 + the spell level. The DC of a Hexblade's spell is 10 + Spell Level + Charisma Modifier. A Hexblade's caster level is half his class level. He casts spells as a Sorcerer does. He does not suffer arcane spell failure chance when casting in light armor, failure chance from medium and heavy armor, as well as shields, applies normally.
+
+Spells per day: 
+Level: 1 2 3 4  
+
+    1: - - - - 
+    2: - - - - 
+    3: - - - - 
+    4: 0 - - - 
+    5: 0 - - - 
+    6: 1 - - - 
+    7: 1 - - - 
+    8: 1 0 - - 
+    9: 1 0 - - 
+   10: 1 1 - - 
+   11: 1 1 0 - 
+   12: 1 1 1 - 
+   13: 1 1 1 - 
+   14: 2 1 1 0 
+   15: 2 1 1 1 
+   16: 2 2 1 1 
+   17: 2 2 2 1 
+   18: 3 2 2 1 
+   19: 3 3 3 2 
+   20: 3 3 3 3 
+
+Spells Known 
+Level: 1 2 3 4  
+
+    1: - - - - 
+    2: - - - - 
+    3: - - - - 
+    4:(2)- - - 
+    5: 2 - - - 
+    6: 3 - - - 
+    7: 3 - - - 
+    8: 4(2)- - 
+    9: 4 2 - - 
+   10: 4 3 - - 
+   11: 4 3(2)- 
+   12: 4 4 3 - 
+   13: 4 4 3 - 
+   14: 4 4 4(2) 
+   15: 4 4 4 3
+   16: 4 4 4 3 
+   17: 5 4 4 4 
+   18: 5 5 4 4 
+   19: 5 5 5 4 
+   20: 5 5 5 5
+</entry>
   <entry id="46250" lang="en" sex="m">Hymn of the Bull</entry>
   <entry id="46251" lang="en" sex="m">Hymn of the Cat</entry>
   <entry id="46252" lang="en" sex="m">Hymn of the Bear</entry>
@@ -13693,6 +13780,63 @@ Use: Selected.</entry>
   <entry id="48563" lang="en" sex="m">9d12</entry>
   <entry id="48564" lang="en" sex="m">10d12 Damage</entry>
   <entry id="48565" lang="en" sex="m">10d12</entry>
+  <entry id="48566" lang="en" sex="m">Hexblade's Curse</entry>
+  <entry id="48567" lang="en" sex="m">type of feat: Class
+
+Once per day, as a free action, a hexblade can unleash a curse upon a foe. The target must be visible to the Hexblade and within 60 feet. The target of a Hexblade's curse takes a -2 penalty on attacks, saves, ability checks, skill checks and weapon damage rolls for one hour thereafter. A successful Will save (DC 10 + 1/2 Hexblade's class level + Hexblade's CHA mod)negates the effect. At every 4th level beyond 1st, a Hexblade gains the ability to use his curse one additional time per day.
+
+Greater Hexblade's Curse
+
+When a Hexblade attains 7th level, the penalties incurred by a target of his curse become -4 instead of -2.
+
+Dire Hexblade's Curse
+
+When a Hexblade attains 19th level, the penalties incurred by a target of his curse become -6 instead of -4.
+
+Epic Hexblade's Curse
+
+When a Hexblade attains 37th level, the penalties incurred by a target of his curse become -8 instead of -6.</entry>
+  <entry id="48568" lang="en" sex="m">Mettle</entry>
+  <entry id="48569" lang="en" sex="m">type of feat: Class
+
+At 3rd level and higher, a Hexblade can resist magical and unusual attacks with great willpower or fortitude. If he makes a successful Will or Fortitude save against an attack that would normally have a lesser effect on a successful save, he instead completely negates the effect</entry>
+  <entry id="48570" lang="en" sex="m">Aura of Unluck</entry>
+  <entry id="48571" lang="en" sex="m">type of feat: Class
+
+Once per day, a Hexblade of 12th level or higher can create a baleful aura of misfortune. Any melee or ranged attack made against the Hexblade while this Aura of Unluck is active has a 20 % miss chance. Activating this aura is a free action, and the aura lasts for a number of rounds equal to 3 + the Hexblade's Charisma bonus (if any). At 16th level and every 4 levels onward, a Hexblade can use his Aura of Unluck one additional time per day</entry>
+  <entry id="48572" lang="en" sex="m">Arcane Resistance</entry>
+  <entry id="48573" lang="en" sex="m">type of feat: Class
+
+At 2nd level a Hexblade gains a bonus equal to his Charisma bonus (minimum +1) on saving throws against spells and spell-like effects.</entry>
+  <entry id="48574" lang="en" sex="m">Epic Hexblade</entry>
+  <entry id="48575" lang="en" sex="m">The Epic Hexblade is a true bane for his enemies. The daily uses of his abilities continue to increase, while his curse becomes even more potent and difficult to resist as he progresses.
+
+ABILITIES: 
+
+Level 
+21: Hexblade's Curse 6/day
+22: -
+23: - 
+24: Bonus Feat, Aura of Unluck 4/day
+25: Hexblade's Curse 7/day
+26: -
+27: -
+28: Bonus Feat, Aura of Unluck 5/day
+29: Hexblade's Curse 8/day
+30: -
+31: -
+32: Bonus Feat, Aura of Unluck 6/day 
+33: Hexblade's Curse 9/day
+34: -
+35: -
+36: Bonus Feat, Aura of Unluck 7/day
+37: Epic Hexblade's Curse, Hexblade's Curse 10/day 
+38: -
+39: -
+40: Bonus Feat, Aura of Unluck 8/day </entry>
+  <entry id="48576" lang="en" sex="m">Greater Hexblade's Curse</entry>
+  <entry id="48577" lang="en" sex="m">Dire Hexblade's Curse</entry>
+  <entry id="48578" lang="en" sex="m">Epic Hexblade's Curse</entry>
   <entry id="48612" lang="en" sex="m">Man at Arms</entry>
   <entry id="48613" lang="en" sex="m">Men at Arms</entry>
   <entry id="48614" lang="en" sex="m">man at arms</entry>

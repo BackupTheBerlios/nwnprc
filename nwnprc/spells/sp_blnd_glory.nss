@@ -38,33 +38,33 @@ Created:   6/13/06
 
 void main()
 {
-	if (!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	object oPC = OBJECT_SELF;
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	effect eAOE = EffectAreaOfEffect(AOE_PER_BLNDGLORY);
-	float fDuration = HoursToSeconds(nCasterLvl);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	
-	effect eVis = EffectVisualEffect(VFX_FNF_SUNBEAM);
-	effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR);
-	
-		
-	//Check Extend metamagic feat.
-	if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-	{
-		fDuration = fDuration *2;    //Duration is +100%
-	}
-	
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
-	SPApplyEffectTOObject(DURATION_TYPE_TEMPORARY, eDur, oPC, fDuration);
-	
-	//Create an instance of the AOE Object using the Apply Effect function
-	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration);
-	
-	SPGoodShift(oPC);
-	SPSetSchool();
+    if (!X2PreSpellCastCode()) return;
+    
+    SPSetSchool(SPELL_SCHOOL_CONJURATION);
+    
+    object oPC = OBJECT_SELF;
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    effect eAOE = EffectAreaOfEffect(AOE_PER_BLNDGLORY);
+    float fDuration = HoursToSeconds(nCasterLvl);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    
+    effect eVis = EffectVisualEffect(VFX_FNF_SUNBEAM);
+    effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR);
+    
+        
+    //Check Extend metamagic feat.
+    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    {
+        fDuration = fDuration *2;    //Duration is +100%
+    }
+    
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oPC, fDuration);
+    
+    //Create an instance of the AOE Object using the Apply Effect function
+    
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration);
+    
+    SPGoodShift(oPC);
+    SPSetSchool();
 }

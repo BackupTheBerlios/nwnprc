@@ -40,6 +40,12 @@ const int UTTER_WORD_NURTURING_LESSER_R  = -1;
 const int UTTER_AGITATE_ITEM             = -1;
 const int UTTER_ANALYZE_ITEM_HOT         = -1;
 const int UTTER_ANALYZE_ITEM_COLD        = -1;
+const int UTTER_ENERGY_VORTEX_ACID       = -1;
+const int UTTER_ENERGY_VORTEX_COLD       = -1;
+const int UTTER_ENERGY_VORTEX_ELEC       = -1;
+const int UTTER_ENERGY_VORTEX_FIRE       = -1;
+const int UTTER_SPEAK_ROCK_MUD           = -1;
+const int UTTER_TRANSFORM_LANDSCAPE      = -1;
 
 // Level 3 Utterances
 const int UTTER_ACCELERATED_ATTACK         = -1
@@ -59,6 +65,9 @@ const int UTTER_WORD_NURTURING_MODERATE    = -1;
 const int UTTER_WORD_NURTURING_MODERATE_R  = -1;
 const int UTTER_REMOVE_ITEM                = -1;
 const int UTTER_SUPPRESS_WEAPON            = -1;
+const int UTTER_LORE_WORLD                 = -1;
+const int UTTER_MASTER_FOUR_WINDS          = -1;
+const int UTTER_THWART_TRAVELER            = -1;
 
 // Level 4 Utterances
 const int UTTER_BREATH_CLEANSING         = -1;
@@ -139,6 +148,9 @@ const int CRAFTED_TOOL_QUICKSLOT3  = -1;
 const int CRAFTED_TOOL_QUICKSLOT4  = -1;
 
 // AoE Constants for Perfected Map
-const int AOE_PER_FOG_VOID_CLOUD   = 142;
-const int AOE_PER_FOG_VOID_SOLID   = 143;
-const int AOE_PER_SHIELD_LANDSCAPE = 144;
+const int AOE_PER_FOG_VOID_CLOUD      = 142;
+const int AOE_PER_FOG_VOID_SOLID      = 143;
+const int AOE_PER_SHIELD_LANDSCAPE    = 144;
+const int AOE_PER_ENERGY_VORTEX       = 145;
+const int AOE_PER_SPEAK_ROCK_MUD      = 146;
+const int AOE_PER_TRANSFORM_LANDSCAPE = 147;

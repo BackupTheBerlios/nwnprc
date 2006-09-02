@@ -49,5 +49,6 @@ void main()
     //Fire cast spell at event for the target
     SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), UTTER_FOG_VOID_SOLID));
 
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+    // Maximum time possible. If its less, its simply cleaned up when the utterance ends.
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(20));
 }

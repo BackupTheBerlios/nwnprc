@@ -46,7 +46,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         {
             //Roll Damage
             //Enter Metamagic conditions
-            nDamage = d6(4);
+            nDamage = d6(2);
             if ((nMetaMagic & METAMAGIC_MAXIMIZE))
             {
                 nDamage = 12;//Damage is at max

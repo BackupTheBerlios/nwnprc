@@ -29,7 +29,7 @@
 
 void main()
 {
- ActionDoCommand(SetAllAoEInts(UTTER_FOG_VOID_CLOUD,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(UTTER_FOG_VOID_CLOUD,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
     object oTarget = GetEnteringObject();
@@ -41,5 +41,6 @@ void main()
     //Fire cast spell at event for the target
     SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), UTTER_FOG_VOID_CLOUD));
 
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eLink, oTarget);
+    // Maximum time possible. If its less, its simply cleaned up when the utterance ends.
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(20));
 }

@@ -39,7 +39,8 @@ void main()
 
     	//Fire cast spell at event for the target
     	SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), UTTER_SHIELD_LANDSCAPE));
-
-    	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eConceal, oTarget);
+    	
+	// Maximum time possible. If its less, its simply cleaned up when the utterance ends.
+    	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eConceal, oTarget, RoundsToSeconds(20));
     }
 }

@@ -25,11 +25,11 @@ void main()
     object oCreator = GetAreaOfEffectCreator();
 
     //Declare major effects
-    effect eConseal = EffectConcealment(20, MISS_CHANCE_TYPE_VS_MELEE);
-    effect eConseal2 = EffectConcealment(50, MISS_CHANCE_TYPE_VS_RANGED);
+    effect eConceal = EffectConcealment(20, MISS_CHANCE_TYPE_VS_MELEE);
+    effect eConceal2 = EffectConcealment(50, MISS_CHANCE_TYPE_VS_RANGED);
 
     // Link
-    effect eLink = EffectLinkEffects(eConseal, eConseal2);
+    effect eLink = EffectLinkEffects(eConceal, eConceal2);
 
     // Fire cast spell at event for the target
     PHS_SignalSpellCastAt(oTarget, PHS_SPELL_FOG_CLOUD);

@@ -150,7 +150,7 @@ void main()
 
                 // get the item template from the IReqTable
                 if (iReport.result != "") {
-                    int nDelay = GetCraftingTime(iReport.marketprice);
+                    int nDelay = GetCraftingTime(iReport.marketprice) * 6;
                     // Maester class cuts crafting time in half.
                     if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF)) nDelay /= 2;
                     SendMessageToPC(OBJECT_SELF, "Item will be finished in " + IntToString(nDelay) + " seconds");

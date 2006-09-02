@@ -16,6 +16,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_inc_craft"
+#include "prc_craft_inc"
 
 void CreateRecipeAndTakeGold(string sRecipeTag)
 {
@@ -26,7 +27,7 @@ void CreateRecipeAndTakeGold(string sRecipeTag)
 
 void SafeGetRecipeTagFromItem(string sResRef, int nRow = 0)
 {
-    if (GetPRCSwitch(PRC_USE_DATABASE)) 
+    if (GetPRCSwitch(PRC_USE_DATABASE))
     {
         //NWNX2/SQL
         string q = PRC_SQLGetTick();
@@ -37,16 +38,16 @@ void SafeGetRecipeTagFromItem(string sResRef, int nRow = 0)
         else
             CreateRecipeAndTakeGold(PRC_SQLGetData(1));
     }
-    else 
+    else
     {
         //Plain slow 2DA
         if(nRow > GetPRCSwitch(FILE_END_ITEM_TO_IREQ))
             return;
-        int row;            
-        for (row = nRow; row <= nRow+100; row++) 
+        int row;
+        for (row = nRow; row <= nRow+100; row++)
         {
             string sResRefRead = Get2DACache("item_to_ireq", "L_RESREF"  , row);
-            if (sResRefRead ==  sResRef) 
+            if (sResRefRead ==  sResRef)
             {
                 CreateRecipeAndTakeGold(Get2DACache("item_to_ireq", "RECIPE_TAG"  , row));
                 return;
@@ -70,15 +71,15 @@ void FinishItem(string sResRef, int nStackSize, int nResultType, string sResultA
     else if (nResultType == RESULT_TYPE_SCRIPT)
     {
         PRCCraft_SetArguments(sResultArgs);
-        PRCCraft_SetConsume(TRUE);  
+        PRCCraft_SetConsume(TRUE);
         ExecuteScript(sResRef, OBJECT_SELF);
     }
-    else 
+    else
     {
         //get a location in front of the caster
         vector vPC = GetPosition(OBJECT_SELF);
         float fAngle = GetFacing(OBJECT_SELF);
-    
+
         const float fDistance = 2.0;
 
         vector vSpawn;
@@ -94,7 +95,7 @@ void FinishItem(string sResRef, int nStackSize, int nResultType, string sResultA
         if (fAngle >= 360.0)
             fAngle -= 360.0;
 
-        location lSpawn = Location(GetArea(OBJECT_SELF), vSpawn, fAngle);   
+        location lSpawn = Location(GetArea(OBJECT_SELF), vSpawn, fAngle);
 
         oResult = CreateObject(nResultType == RESULT_TYPE_PLACEABLE ? OBJECT_TYPE_PLACEABLE : OBJECT_TYPE_CREATURE, sResRef, lSpawn);
     }
@@ -118,7 +119,7 @@ void main()
         FloatingTextStrRefOnCreature(16832014, OBJECT_SELF); // * Item creation feats are not enabled in this area *
         return;
     }
-    
+
     object oItem = PRCGetSpellTargetObject();
     //been read recently, craft it
     if(GetLocalInt(oItem, "BeenRead"))
@@ -126,7 +127,7 @@ void main()
         object oTarget = PRCGetSpellTargetObject();
         int nTargetType = GetObjectType(oTarget);
         struct ireqreport iReport;
-        
+
         // Current valid targets are: items, placeables, doors, and creatures.
         // If would-be wondrous item creator is trying to use Craft Wondrous Item on some invalid target..
         if (!(
@@ -146,38 +147,41 @@ void main()
             if (iReport.result != "") {
                 //valid recipe and all requisites are met;
                 iReport = CheckIReqs(oTarget, FALSE, TRUE);
-    
+
                 // get the item template from the IReqTable
                 if (iReport.result != "") {
-                    FinishItem(iReport.result, iReport.stacksize, iReport.result_type, iReport.result_args);
-    
+                    int nDelay = GetCraftingTime(iReport.marketprice);
+                    // Maester class cuts crafting time in half.
+                    if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF)) nDelay /= 2;
+                    SendMessageToPC(OBJECT_SELF, "Item will be finished in " + IntToString(nDelay) + " seconds");
+                    DelayCommand(IntToFloat(nDelay), FinishItem(iReport.result, iReport.stacksize, iReport.result_type, iReport.result_args));
+
                     //disable crafting for some time (default: disabled)
                     object oModule = GetModule();
+                    /*
                     int nDelay = FloatToInt((IntToFloat(GetPRCSwitch(PRC_CRAFT_TIMER_MULTIPLIER))/100) * IntToFloat(iReport.marketprice));
                     nDelay = min(nDelay, GetPRCSwitch(PRC_CRAFT_TIMER_MIN));
                     nDelay = max(nDelay, GetPRCSwitch(PRC_CRAFT_TIMER_MAX));
-                    
-                    // Maester class cuts crafting time in half.
-                    if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF)) nDelay /= 2;
-    
+                    */
+
                     SetCraftTimer(nDelay);
-                    
+
                     //alternatively, use the inc_time based system
                     //1 day per 1000GP base cost, min 1
                     int nDays = iReport.marketprice/1000;
                     // Maester class cuts crafting time in half.
                     if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF)) nDays /= 2;
                     if(!nDays) nDays = 1;
-                    AdvanceTimeForPlayer(OBJECT_SELF, HoursToSeconds(nDays*24));
+                    //AdvanceTimeForPlayer(OBJECT_SELF, HoursToSeconds(nDays*24));
                 }
             } else if (iReport.validrecipe == FALSE) {
                 //not a valid recipe
                 SendMessageToPCByStrRef(OBJECT_SELF, STRREF_INVALIDRECIPE);
             }
-        }    
+        }
     }
     else //not been read, read it
-    {   
+    {
         //If targeting a valid recipe, display its content
         struct ireqreport iReport = CheckIReqs(oItem, TRUE, FALSE);
 

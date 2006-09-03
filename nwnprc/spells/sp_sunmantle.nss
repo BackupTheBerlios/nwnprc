@@ -50,6 +50,12 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = RoundsToSeconds(nCasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
 	
 	//Darkness dispelling
 	

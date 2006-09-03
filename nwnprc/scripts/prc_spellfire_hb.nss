@@ -49,7 +49,7 @@ void main()
         {
             sMessage = "Spellfire levels stored exceeds maximum, discharging excess at " + GetName(oTarget) + "!";
         }
-        ClearAllActions();
+        ClearAllActions(TRUE);
         //ActionCastFakeSpellAtObject(SPELL_SPELLFIRE_ATTACK, oTarget);
         SetPersistantLocalInt(oPC, "SpellfireLevelStored", nMax);
         //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_SPELLFIRE, oCaster, BODY_NODE_HAND, !nRoll), oTarget, 1.2);

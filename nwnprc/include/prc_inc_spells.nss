@@ -419,6 +419,7 @@ int GetIsArcaneClass(int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_ASSASSIN ||
             nClass==CLASS_TYPE_SUEL_ARCHANAMACH ||
             nClass==CLASS_TYPE_SHADOWLORD ||
+            nClass==CLASS_TYPE_HEXBLADE ||
             (nClass==CLASS_TYPE_OUTSIDER
                 && GetRacialType(oCaster)==RACIAL_TYPE_RAKSHASA
                 && !GetLevelByClass(CLASS_TYPE_SORCERER))
@@ -1310,6 +1311,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iAss = GetLevelByClass(CLASS_TYPE_ASSASSIN, oCaster);
     int iFav = GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oCaster);
     int iSue = GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oCaster);
+    int iHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oCaster);
     int iSha = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
     int iBlk = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oCaster);
     int iVob = GetLevelByClass(CLASS_TYPE_VASSAL, oCaster);
@@ -1407,6 +1409,13 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iSue;
              return iTemp;
              break;
+	case CLASS_TYPE_HEXBLADE:
+             if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_HEXBLADE)
+                 iTemp = iArc;
+             else
+                 iTemp = iHex;
+             return iTemp;
+             break;             
         case CLASS_TYPE_FAVOURED_SOUL:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_FAVOURED_SOUL)
                  iTemp = iDiv;

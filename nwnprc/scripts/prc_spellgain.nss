@@ -71,6 +71,8 @@ void main()
     if(CheckMissingSpells(oPC, CLASS_TYPE_SUEL_ARCHANAMACH, 1, 5))
         return;  
     if(CheckMissingSpells(oPC, CLASS_TYPE_FAVOURED_SOUL, 0, 9))
-        return;        
+        return;
+    if(CheckMissingSpells(oPC, CLASS_TYPE_HEXBLADE, 1, 4))
+        return;         
     //add new classes here   
 }

@@ -41,6 +41,11 @@ void main()
 	itemproperty iBonus = ItemPropertyAttackBonusVsAlign(IP_CONST_ALIGNMENTGROUP_EVIL, 3);
 	float fDur = RoundsToSeconds(d4(1));
 	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
 	IPSafeAddItemProperty(oSkin, iBonus, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
 	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 0);

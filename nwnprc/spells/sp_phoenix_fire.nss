@@ -58,6 +58,7 @@ void main()
     object oPC = OBJECT_SELF;
     location lLoc = GetLocation(oPC);   
     int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
     int nDam;
     
         
@@ -90,6 +91,11 @@ void main()
                 //Damage = 2d6/level
                 nDam = d6(min(40, (2 * nCasterLvl)));
                 
+                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                {			
+			nDam = 6 * (min(40, (2 * nCasterLvl)));
+		}
+					
                 //Reflex save for 1/2 damage
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
                 {
@@ -102,12 +108,22 @@ void main()
                 //Half damage for neutrality, Damage = 1d6
                 nDam = d6(min(20,nCasterLvl));
                 
+                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+		{			
+			nDam = 6 * (min(20,nCasterLvl));
+		}
+                
                 //Reflex for further 1/2
                 if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
                 {
                     nDam = nDam/2;
                 }               
             }
+            
+            if(nMetaMagic == METAMAGIC_EMPOWER)
+            {
+		    nDam += (nDam/2);
+	    }
             
             //Half divine, half fire
             int nDiv = nDam/2;

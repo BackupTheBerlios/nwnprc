@@ -326,12 +326,26 @@ int SpellfireDrainItem(object oPC, object oItem, int bCharged = TRUE, int bSingl
                 return TRUE;
             }
             itemproperty ip = GetFirstItemProperty(oItem);
+            int nSubType;
             while(GetIsItemPropertyValid(ip))  //single use item
             {
                 if(GetItemPropertyType(ip) == ITEM_PROPERTY_CAST_SPELL &&
                     GetItemPropertyDurationType(ip) == DURATION_TYPE_PERMANENT &&
                     GetItemPropertyCostTableValue(ip) == IP_CONST_CASTSPELL_NUMUSES_SINGLE_USE)
                     {
+                        nSubType = GetItemPropertySubType(ip);
+                        //hardcoded filter
+                        if(
+                            (nSubType >= 329 && nSubType <= 344) ||
+                            (nSubType == 359) ||
+                            (nSubType >= 400 && nSubType <= 409) ||
+                            (nSubType >= 411 && nSubType <= 446) ||
+                            (nSubType >= 490 && nSubType <= 500) ||
+                            (nSubType == 513) ||
+                            (nSubType >= 521 && nSubType <= 537) ||
+                            (nSubType >= 750 && nSubType <= 851) ||
+                            (nSubType >= 1201)
+                        )
                         RemoveItemProperty(oItem, ip);  //just removes the cast spell property
                         AddSpellfireLevels(oPC, 1);     //adds 1 level
                         return TRUE;

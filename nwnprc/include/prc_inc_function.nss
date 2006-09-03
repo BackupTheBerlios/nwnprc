@@ -164,6 +164,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_SHADOWBLADE, oPC) > 1)         ExecuteScript("prc_sb_shdstlth", oPC);
     if(GetLevelByClass(CLASS_TYPE_CW_SAMURAI, oPC) > 0)          ExecuteScript("prc_cwsamurai", oPC);
     if(GetLevelByClass(CLASS_TYPE_SKULLCLAN_HUNTER, oPC) > 0)    ExecuteScript("prc_skullclan", oPC);
+    if(GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) > 0)            ExecuteScript("prc_hexblade", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -433,6 +434,9 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SkullClanParalysis");
     DeleteLocalInt(oSkin, "SkullClanAbilityDrain");
     DeleteLocalInt(oSkin, "SkullClanLevelDrain");
+    
+    // Hexblade
+    DeleteLocalInt(oSkin, "HexbladeArmourCasting");
 
     // future PRCs Go below here
 }

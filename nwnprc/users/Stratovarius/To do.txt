@@ -11,7 +11,7 @@ Bugs: Dwarf Domain, Strength Domain
 Truenaming:
 
 Truenamer
-53/63 Utterances
+61/63 Utterances
 4 Prestige Classes
 15+ feats
 
@@ -32,6 +32,9 @@ Fiendbinder - Unstarted
 Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
             Add utterances to the function that returns the SpellId to store everything by
             Add Seize Item to the 2da that lets it target items on the ground.
+
+Base Classes:
+Hexblade - Mettle (edit spells as well), Arcane Resistance, Spellbook.
 
 Psionic PrCs:
 Shadowmind - All to do, (Mass) Cloud Mind powers

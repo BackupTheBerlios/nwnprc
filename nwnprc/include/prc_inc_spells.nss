@@ -1935,12 +1935,14 @@ int GetHasMettle(object oTarget, int nSavingThrow)
     {
         // Iron Mind's ability only functions in Heavy Armour
         if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 5 && GetBaseAC(oArmour) >= 6) nMettle = TRUE;
+        else if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget) >= 3) nMettle = TRUE;
         // Fill out the line below to add another class with Will mettle
         // else if (GetLevelByClass(CLASS_TYPE_X, oTarget) >= X) nMettle = TRUE;
     }
     if (nSavingThrow = SAVING_THROW_FORT)
     {
         // Add Classes with Fort mettle here
+        if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget) >= 3) nMettle = TRUE;
     }
 
     return nMettle;

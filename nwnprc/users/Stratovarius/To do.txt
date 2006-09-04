@@ -11,21 +11,21 @@ Bugs: Dwarf Domain, Strength Domain
 Truenaming:
 
 Truenamer
-61/63 Utterances
+62/63 Utterances
 4 Prestige Classes
-15+ feats
+Focused Lexicon and Utterance Focus feats. 2da all feats/recitations.
 
 Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
 
 true_inc_truespeak: ClearLawLocalVars update numbers, add to prc_rest
 Make list of possible utterances.
-Make Truenamer Class: Class feats and TLK left. Class abilities: Scry, Lore
+Make Truenamer Class: Class feats and TLK left. Class abilities: Scry, Say My Name
 "Say My Name" - Easy Idea: Teleport to Party Member.
               - Old Idea: PRC Options Conversation + a switch for the TrueNamer, "Accept/Deny 'Say my Name and I am There'"
 
 Truename PrCs:
 Bereft - 2das/TLK
-Brimstone Speaker - 2das/TLK, add as a spellcaster. Heavenly Entreaty. Add Utterances/feats to Word Archon summon. Do Astral Deva
+Brimstone Speaker - 2das/TLK, add as a spellcaster. Heavenly Entreaty script. Add Utterances/feats to Word Archon summon.
 Acolyte of the Ego - Unstarted
 Fiendbinder - Unstarted
 

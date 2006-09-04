@@ -165,6 +165,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_CW_SAMURAI, oPC) > 0)          ExecuteScript("prc_cwsamurai", oPC);
     if(GetLevelByClass(CLASS_TYPE_SKULLCLAN_HUNTER, oPC) > 0)    ExecuteScript("prc_skullclan", oPC);
     if(GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) > 0)            ExecuteScript("prc_hexblade", oPC);
+    if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC) > 0)           ExecuteScript("true_truenamer", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.

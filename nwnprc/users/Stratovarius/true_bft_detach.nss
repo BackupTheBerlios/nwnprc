@@ -56,8 +56,8 @@ void main()
         {
        		// eLink is used for Duration Effects (Penalty to AB etc)
        		utter.eLink = EffectLinkEffects(EffectAttackDecrease(2), EffectSavingThrowDecrease(SAVING_THROW_ALL, 2));
-       		utter.Elink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
-       		utter.Elink = EffectLinkEffects(utter.eLink, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
+       		utter.eLink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, 2));
+       		utter.eLink = EffectLinkEffects(utter.eLink, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
         }
         // If either of these ApplyEffect isn't needed, delete it.
         // Duration Effects

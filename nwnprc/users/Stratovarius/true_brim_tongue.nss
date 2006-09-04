@@ -11,34 +11,17 @@
 
 Type of Feat: Class
 Prerequisite: Brimstone Speaker 1
-Specifics: The Brimstone Speaker can speak a truename that translates as "tongue of fire". This ability allows them to create a line of fire 20 feet long. Those hit by the fire have a DC vs 10 + Class levels + Con modifier. There are three versions of the Tongue of Fire: 3d6 with a Truespeak DC of 25, 5d6 with a DC of 30, and 8d6 with a DC of 35. This ability is affected by the Law of Resistence.
+Specifics: The Brimstone Speaker can speak a truename that translates as "tongue of fire". This ability allows them to create a line of fire 20 feet long. Those hit by the fire have a DC vs 10 + Class levels + Con modifier. There are three versions of the Tongue of Fire: 3d6 with a Truespeak DC of 25, 5d6 with a DC of 30, and 8d6 with a DC of 35. This ability is affected by the Law of Resistance.
 Use: Selected.
 */
 
 #include "true_inc_trufunc"
-#include "true_utterhook"
 #include "prc_alterations"
 
 float GetVFXLength(location lTrueSpeaker, float fLength, float fAngle);
 
 void main()
 {
-/*
-  Spellcast Hook Code
-  Added 2006-7-19 by Stratovarius
-  If you want to make changes to all utterances
-  check true_utterhook to find out more
-
-*/
-
-    if (!TruePreUtterCastCode())
-    {
-    // If code within the PreUtterCastHook (i.e. UMD) reports FALSE, do not run this spell
-        return;
-    }
-
-// End of Spell Cast Hook
-
     object oTrueSpeaker = OBJECT_SELF;
     object oTarget      = PRCGetSpellTargetObject();
     int nSpellId = PRCGetSpellId();

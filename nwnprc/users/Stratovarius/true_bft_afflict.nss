@@ -60,19 +60,19 @@ void main()
        		// eLink is used for Duration Effects (Penalty to AB etc)
        		if (PRCGetSpellId() == SYLLABLE_AFFLICATION_SIGHT)
        		{
-       			utter.Elink = EffectLinkEffects(EffectBlindness(), EffectVisualEffect(VFX_DUR_BLIND));
+       			utter.eLink = EffectLinkEffects(EffectBlindness(), EffectVisualEffect(VFX_DUR_BLIND));
        		}
        		else if (PRCGetSpellId() == SYLLABLE_AFFLICATION_SOUND)
        		{
-       			utter.Elink = EffectLinkEffects(EffectDeaf(), EffectVisualEffect(VFX_DUR_BLIND));
+       			utter.eLink = EffectLinkEffects(EffectDeaf(), EffectVisualEffect(VFX_DUR_BLIND));
        		}
        		else if (PRCGetSpellId() == SYLLABLE_AFFLICATION_TOUCH)
        		{
        			utter.eLink = EffectLinkEffects(EffectSkillDecrease(SKILL_DISABLE_TRAP, 2), EffectSkillDecrease(SKILL_JUMP, 2));
-			utter.Elink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_OPEN_LOCK, 2));
-			utter.Elink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_TUMBLE, 2));
-			utter.Elink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_SEARCH, 2));
-       			utter.Elink = EffectLinkEffects(utter.eLink, EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MAJOR));
+			utter.eLink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_OPEN_LOCK, 2));
+			utter.eLink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_TUMBLE, 2));
+			utter.eLink = EffectLinkEffects(utter.eLink, EffectSkillDecrease(SKILL_SEARCH, 2));
+       			utter.eLink = EffectLinkEffects(utter.eLink, EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MAJOR));
        		}       		
         }
         // Duration Effects

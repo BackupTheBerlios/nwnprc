@@ -92,6 +92,15 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker);
  */
 int AddUtteranceSpecificDC(object oTrueSpeaker);
 
+/**
+ * Returns the DC used for the Recitation feats
+ * This is a simplified version of the GetBaseUtteranceDC function
+ *
+ * @param oTrueSpeaker    Caster/Target of the Recitation
+ * @return                The DC to speak
+ */
+int GetRecitationDC(object oTrueSpeaker);
+
 //////////////////////////////////////////////////
 /*                  Includes                    */
 //////////////////////////////////////////////////
@@ -306,6 +315,15 @@ int AddUtteranceSpecificDC(object oTrueSpeaker)
 	if (PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_MAX) nDC += 10;
 	// When using this utterance you add +10 to the DC to create a solid fog spell
 	if (PRCGetSpellId() == UTTER_FOG_VOID_SOLID) nDC += 10;
+	
+	return nDC;
+}
+
+int GetRecitationDC(object oTrueSpeaker)
+{
+	int nCR = GetHitDice(oTarget);
+	// Formula for the DC. The -2 is from speak your own Truename. See AddPersonalTruenameDC
+	int nDC = 15 + (2 * nCR) - 2;
 	
 	return nDC;
 }

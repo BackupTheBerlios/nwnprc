@@ -157,3 +157,4 @@ const int AOE_PER_SHIELD_LANDSCAPE    = 144;
 const int AOE_PER_ENERGY_VORTEX       = 145;
 const int AOE_PER_SPEAK_ROCK_MUD      = 146;
 const int AOE_PER_TRANSFORM_LANDSCAPE = 147;
+const int AOE_PER_DENY_PASSAGE        = 148;

@@ -2,6 +2,7 @@
 //feelings and observations are grey    200,200,200
 //smells are in green                   100,200,100
 
+#include "prc_alterations"
 #include "inc_utility"
 
 const float SOUND_TEST_DELAY = 60.0;

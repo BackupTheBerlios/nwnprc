@@ -36,7 +36,7 @@
                 <element name="Tag" type="10" value="X2_GELCUBE" />
                 <element name="Conversation" type="11" value="" />
                 <element name="IsPC" type="0" value="0" />
-                <element name="FactionID" type="2" value="1" />
+                <element name="FactionID" type="2" value="2" />
                 <element name="Disarmable" type="0" value="0" />
                 <element name="Subrace" type="10" value="" />
                 <element name="Deity" type="10" value="" />
@@ -950,31 +950,31 @@
 "xp XX", "exp XX", "experience XX" - Add/remove Experience 
 "ge XX", "good/evil XX" - Set Good/Evil Alignment Value 
 "lc XX", "law/chaos XX" - Set Lawful/Chaotic Alignment Value 
-	Where "XX" is a number 
+        Where "XX" is a number 
 "reset levels", "reset me" - Reset All Levels (USE CAUTION) 
 "recharge", "recharge me" - Recharge All Items 
 
 (not implemented at the moment)
 "shop X" - Open Shop 
-	Where X is: 
-	"ac" - Armor - Clothing 
-	"ah" - Armor - Heavy 
-	"al" - Armor - Light 
-	"am" - Armor - Medium 
-	"cam" - Campaign Items 
-	"clothing" - Clothing (Belts, Boots, etc.) 
-	"craft" - Crafting Items 
-	"helmsh" - Helmets and Shields 
-	"magic" - Scrolls and Mage Specific Equipment 
-	"misc" - Miscellaneous and Plot Items 
-	"potion" - Potions and Healing Kits 
-	"ringam" - Rings, Amulets and Gems 
-	"rogue" - Trap Kits and Thieves Tools 
-	"tavern" - Alcoholic Beverages 
-	"wl" - Weapons - Large Melee 
-	"wm" - Weapons - Medium Melee 
-	"wr" - Weapons - Ranged 
-	"ws" - Weapons - Small Melee]]></value>
+        Where X is: 
+        "ac" - Armor - Clothing 
+        "ah" - Armor - Heavy 
+        "al" - Armor - Light 
+        "am" - Armor - Medium 
+        "cam" - Campaign Items 
+        "clothing" - Clothing (Belts, Boots, etc.) 
+        "craft" - Crafting Items 
+        "helmsh" - Helmets and Shields 
+        "magic" - Scrolls and Mage Specific Equipment 
+        "misc" - Miscellaneous and Plot Items 
+        "potion" - Potions and Healing Kits 
+        "ringam" - Rings, Amulets and Gems 
+        "rogue" - Trap Kits and Thieves Tools 
+        "tavern" - Alcoholic Beverages 
+        "wl" - Weapons - Large Melee 
+        "wm" - Weapons - Medium Melee 
+        "wr" - Weapons - Ranged 
+        "ws" - Weapons - Small Melee]]></value>
                     </localString>
                 </element>
                 <element name="TemplateResRef" type="11" value="plc_signpost2" />

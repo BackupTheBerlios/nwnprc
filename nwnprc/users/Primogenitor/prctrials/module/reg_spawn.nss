@@ -71,7 +71,7 @@ void DoRanged()
                 INVENTORY_SLOT_BULLETS));
 }
 
-void ForceSetCreatureBodyPart(int nPart, int nModelNumber, object oCreature=OBJECT_SELF)
+void ForceSetCreatureBodyPart(int nPart, int nModelNumber, object oCreature=OBJECT_SELF, int nIndex = 0)
 {
     //sanity check not being changed already
     if(GetLocalInt(oCreature, "ForceSetCreatureBodyPart"+IntToString(nPart)) != nModelNumber+1
@@ -83,11 +83,10 @@ void ForceSetCreatureBodyPart(int nPart, int nModelNumber, object oCreature=OBJE
     SetCreatureBodyPart(nPart, nModelNumber, oCreature);
     //test if it really was changed
     //not sure if this will work or not
-    DoDebug(GetName(oCreature)+" set bodypart "+IntToString(nModelNumber)+" to "+IntToString(GetCreatureBodyPart(nPart, oCreature)));
-    if(GetCreatureBodyPart(nPart, oCreature) != nModelNumber)
+    if(nIndex < 10)
     {
-        DelayCommand(0.01, 
-            ForceSetCreatureBodyPart(nPart, nModelNumber, oCreature));
+        DelayCommand(1.00, 
+            ForceSetCreatureBodyPart(nPart, nModelNumber, oCreature, nIndex+1));
         return;    
     }
     //clean up marker

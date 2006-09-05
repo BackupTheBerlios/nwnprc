@@ -243,25 +243,27 @@ DoDebug("GetRandomEncounterForEL() complete eEn.fCR1 = "+FloatToString(eEn.fCR1)
 
 struct encounter CheckEncounter(struct encounter eEn)
 {
-    if(eEn.fCR1 < 0.0 || eEn.nCount1 < -1) 
-    {  eEn.fCR1 = 0.0;   eEn.nCount1 = 0;    }  
-    if(eEn.fCR2 < 0.0 || eEn.nCount2 < -1) 
+    if(eEn.fCR1 < 0.0)
+    {  eEn.fCR1 = 0.0;}
+    if(eEn.nCount1 < 1) 
+    { eEn.nCount1 = 1; } 
+    if(eEn.fCR2 < 0.0 || eEn.nCount2 < 0) 
     {  eEn.fCR2 = 0.0;   eEn.nCount2 = 0;    } 
-    if(eEn.fCR3 < 0.0 || eEn.nCount3 < -1) 
+    if(eEn.fCR3 < 0.0 || eEn.nCount3 < 0) 
     {  eEn.fCR3 = 0.0;   eEn.nCount3 = 0;    } 
-    if(eEn.fCR4 < 0.0 || eEn.nCount4 < -1) 
+    if(eEn.fCR4 < 0.0 || eEn.nCount4 < 0) 
     {  eEn.fCR4 = 0.0;   eEn.nCount4 = 0;    } 
-    if(eEn.fCR5 < 0.0 || eEn.nCount5 < -1) 
+    if(eEn.fCR5 < 0.0 || eEn.nCount5 < 0) 
     {  eEn.fCR5 = 0.0;   eEn.nCount5 = 0;    }  
-    if(eEn.fCR6 < 0.0 || eEn.nCount6 < -1) 
+    if(eEn.fCR6 < 0.0 || eEn.nCount6 < 0) 
     {  eEn.fCR6 = 0.0;   eEn.nCount6 = 0;    }  
-    if(eEn.fCR7 < 0.0 || eEn.nCount7 < -1) 
+    if(eEn.fCR7 < 0.0 || eEn.nCount7 < 0) 
     {  eEn.fCR7 = 0.0;   eEn.nCount7 = 0;    } 
-    if(eEn.fCR8 < 0.0 || eEn.nCount8 < -1) 
+    if(eEn.fCR8 < 0.0 || eEn.nCount8 < 0) 
     {  eEn.fCR8 = 0.0;   eEn.nCount8 = 0;    } 
-    if(eEn.fCR9 < 0.0 || eEn.nCount9 < -1) 
+    if(eEn.fCR9 < 0.0 || eEn.nCount9 < 0) 
     {  eEn.fCR9 = 0.0;   eEn.nCount9 = 0;    } 
-    if(eEn.fCR10< 0.0 || eEn.nCount10< -1) 
+    if(eEn.fCR10< 0.0 || eEn.nCount10< 0) 
     {  eEn.fCR10= 0.0;   eEn.nCount10= 0;    } 
     return eEn;
 }

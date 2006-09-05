@@ -122,22 +122,33 @@ object RandomizeItem(object oItem, int nLevel, int nRandomizeAppearance = TRUE, 
 
 object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
 {
+    //check itws not an invalid type
+    if(nBaseItemType == BASE_ITEM_INVALID)
+        return OBJECT_INVALID;
+        
     string sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(nAC);
     object oChest = GetObjectByTag(sTag);
     //chest is valid
     if(GetIsObjectValid(oChest))
     {
-//DoDebug("GetRandomizedItemByType() found existing chest");    
+DoDebug("GetRandomizedItemByType() found existing chest "+sTag);    
         object oTest = GetFirstItemInInventory(oChest);
-        while(GetIsObjectValid(oTest)
-            && !RIG_CheckLimitations(oTest) 
-            && GetLocalInt(oTest, "RigLevel") == nLevel)
+        while(GetIsObjectValid(oTest))
         {
 //DoDebug("rig_inc line 132");
+            DoDebug("GetRandomizedItemByType() looking at "+GetName(oTest)+" "+IntToString(GetLocalInt(oTest, "RigLevel")));
+            if(GetLocalInt(oTest, "RigLevel") != nLevel
+                //&& RIG_CheckLimitations(oTest)
+                )    
+                break;//end while loop
             oTest = GetNextItemInInventory(oChest);
         }
         if(!GetIsObjectValid(oTest))
-            return CreateRandomizeItemByType(nBaseItemType, nLevel, nAC);
+        {
+            object oReturn = CreateRandomizeItemByType(nBaseItemType, nLevel, nAC);
+            DoDebug("GetRandomizedItemByType() made new item "+GetName(oReturn));
+            return oReturn;
+        }    
         object oReturn = CopyItem(oTest, OBJECT_SELF, TRUE);
         DestroyObject(oTest);
         SetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel), 
@@ -149,7 +160,7 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
     {
         //try to get it from database first
         
-//DoDebug("GetRandomizedItemByType() made a new chest");    
+DoDebug("GetRandomizedItemByType() made a new chest "+sTag);    
         location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
         oChest = RetrieveCampaignObject(RIG_DB, sTag, lLimbo);
         if(!GetIsObjectValid(oChest))
@@ -183,18 +194,18 @@ object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int
 {
     if(nBaseItemType == BASE_ITEM_INVALID)
     {
-//DoDebug("CreateRandomizeItemByType() invalid base item type");
+DoDebug("CreateRandomizeItemByType() invalid base item type");
         return OBJECT_INVALID;
     }
 
+    SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
     object oItem;
     //do the itemproperties
     if(nRandomizeAffixs)
         oItem = RIG_Core(oItem, nLevel, nBaseItemType, nAC);
-
     if(!GetIsObjectValid(oItem))
     {
-//DoDebug("CreateRandomizeItemByType() invalid after Rig_Core");
+DoDebug("CreateRandomizeItemByType() invalid after Rig_Core");
         return OBJECT_INVALID;
     }
 
@@ -203,13 +214,18 @@ object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int
         oItem = RandomizeItemAppearance(oItem, nAC);
     if(!GetIsObjectValid(oItem))
     {
-//DoDebug("CreateRandomizeItemByType() invalid after RandomizeItemAppearance");
+DoDebug("CreateRandomizeItemByType() invalid after RandomizeItemAppearance");
         return OBJECT_INVALID;
     }
 
     //move it back from temporary storage
     DestroyObject(oItem);
     oItem = CopyItem(oItem, OBJECT_SELF, TRUE);
+    if(!GetIsObjectValid(oItem))
+    {
+DoDebug("CreateRandomizeItemByType() invalid after copy back");
+        return OBJECT_INVALID;
+    }
 
     if(nRandomizeOther)
     {
@@ -233,7 +249,6 @@ object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int
     }
     
     SetLocalInt(oItem, "RigLevel", nLevel);
-
 //    DoDebug(GetName(oItem)+" has finished being randomized");
     return oItem;
 }
@@ -276,7 +291,6 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
         return OBJECT_INVALID;
     }
 //DoDebug("RIG_Core() name = "+GetName(oTemp));
-    SetLocalInt(GetModule(), "RIG_LEVEL", nLevel);
     while (!GetIsObjectValid(oReturn))
     {
 //DoDebug("rig_inc line 215");

@@ -5,11 +5,24 @@ void main()
 {
     int nValue = GetLocalInt(OBJECT_SELF, RANDOM_2DA_SEED);
     int nOriginalValue = nValue;
-    int nLevel = GetLocalInt(GetModule(), "RIG_LEVEL");
+    int nLevel = GetLocalInt(OBJECT_SELF, "Random_Default_Level");
     if(nValue >= 1000 && nValue < 1100)
+    {
         //narrowband 2-sided at level;
         //   0  25  50  75 100  75  50  25   0
+        DoDebug("nValue = "+IntToString(nValue));
+        int nTemp = nValue-1000;
+        DoDebug("nTemp = "+IntToString(nTemp));
+        nTemp = nLevel-nTemp;
+        DoDebug("nTemp = "+IntToString(nTemp));
+        nTemp = abs(nTemp);
+        DoDebug("nTemp = "+IntToString(nTemp));
+        nTemp = 25*nTemp;
+        DoDebug("nTemp = "+IntToString(nTemp));
+        nValue = 100-nTemp;
+        DoDebug("nValue = "+IntToString(nValue));
         nValue = 100-(25*abs(nLevel-(nValue-1000)));
+    }    
     else if(nValue >= 1100 && nValue < 1200)
         //broadband 2-sided at level;
         //   0  10  20  30  40  50  60  70   80  90 100  90  80  70  60  50  40  30  20  10  0
@@ -98,9 +111,11 @@ void main()
     //sanity check
     if(nValue < 0)
         nValue = 0;
+    if(nValue > 100)
+        nValue = 100;
         
         
-    //DoDebug("Firing random_default with value of "+IntToString(nOriginalValue)+" at level "+IntToString(nLevel)+" returning "+IntToString(nValue));
+    //DoDebug("Firing random_default on "+GetName(OBJECT_SELF)+" with value of "+IntToString(nOriginalValue)+" at level "+IntToString(nLevel)+" returning "+IntToString(nValue));
 
     
     //store this value for pass-back

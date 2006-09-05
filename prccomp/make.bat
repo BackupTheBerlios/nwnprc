@@ -26,9 +26,8 @@ REM NAME is the name of the files to make
 
 REM prc  = PRC
 REM prcc = PRC including Companion
-REM c2   = CEP2
-REM c1   = CEP153
-REM l    = dynamic cloaks 1.68
+REM c2   = CEP2 (2.0b2)
+REM c1   = CEP1 (1.68)
 
 REM Merge PRC & Companion
 REM put this in its own dir for later
@@ -47,33 +46,12 @@ SET OUTPUT=prcccep2
 SET NAME=prccc2
 start /B /wAIT makeb.bat
  
-REM Merge CEP 153 & PRC Companion
+REM Merge CEP 1 & PRC Companion
 REM put this in its own dir for later
-SET SOURCE=cep153
+SET SOURCE=cep1
 SET MERGE=prcc
-SET OUTPUT=prcccep153
+SET OUTPUT=prcccep1
 SET NAME=prccc1
-start /B /wAIT makeb.bat
-
-REM merge in dynamic cloaks with PRC Companion
-SET SOURCE=prcc
-SET MERGE=dyncloak
-SET OUTPUT=output
-SET NAME=prccl
-start /B /wAIT makeb.bat
-
-REM merge in dynamic cloaks with PRCCompanion&CEP2
-SET SOURCE=prcccep2
-SET MERGE=dyncloak
-SET OUTPUT=output
-SET NAME=prccc2l
-start /B /wAIT makeb.bat
-
-REM merge in dynamic cloaks with PRCCompanion&CEP153
-SET SOURCE=prcccep153
-SET MERGE=dyncloak
-SET OUTPUT=output
-SET NAME=prccc1l
 start /B /wAIT makeb.bat
 
 REM Merge CEP 2 & PRC
@@ -84,33 +62,12 @@ SET OUTPUT=prccep2
 SET NAME=prcc2
 start /B /wAIT makeb.bat
 
-REM Merge CEP 153 & PRC
+REM Merge CEP 1 & PRC
 REM put this in its own dir for later
-SET SOURCE=cep153
+SET SOURCE=cep1
 SET MERGE=prc
-SET OUTPUT=prccep153
+SET OUTPUT=prccep1
 SET NAME=prcc1
-start /B /wAIT makeb.bat
-
-REM merge in dynamic cloaks with PRC
-SET SOURCE=prc
-SET MERGE=dyncloak
-SET OUTPUT=output
-SET NAME=prcl
-start /B /wAIT makeb.bat
-
-REM merge in dynamic cloaks with PRC&CEP2
-SET SOURCE=prccep2
-SET MERGE=dyncloak
-SET OUTPUT=output
-SET NAME=prcc2l
-start /B /wAIT makeb.bat
-
-REM merge in dynamic cloaks with PRC&CEP153
-SET SOURCE=prccep153
-SET MERGE=dyncloak
-SET OUTPUT=output
-SET NAME=prcc1l
 start /B /wAIT makeb.bat
 
 

@@ -15038,7 +15038,7 @@ Shaken: A shaken character takes a -2 penalty on attack rolls, saving throws, sk
   <entry id="48972" lang="en" sex="m">Runescarred Berserkers</entry>
   <entry id="48973" lang="en" sex="m">runescarred berserker</entry>
   <entry id="48974" lang="en" sex="m">(PRESTIGE CLASS)
-Deadly barbarians who bear magical runes carved into their flesh, runescarred berserkers are among the most feared of Rashemen's defenders. They are loyal body guards to the hathrans of the land and stand ready to unleash a storm of martial fury at a single word from any Witch.
+Deadly barbarians who bear magical runes carved into their flesh, Runescarred Berserkers are among the most feared of Rashemen's defenders. They are loyal body guards to the hathrans of the land and stand ready to unleash a storm of martial fury at a single word from any Witch.
 
 - Hit Die: d10
 - Proficiencies: No weapon or armor proficiencies gained.
@@ -15051,11 +15051,9 @@ Skills: Craft Weapon 5 ranks, Intimidate 5 ranks, Concentration 2 ranks, Lore 2 
 Feats: Iron Will, Toughness, Knockdown
 Special: Rage class feature
 
-CLASS SKILLS: Handle Animal, Intimidate, Jump, Listen
+CLASS SKILLS: Intimidate, Jump, Listen
 
 CLASS FEATURES:
-
-
 
 1: Scribe Runescar
 2: Runescarred Rage
@@ -15070,34 +15068,42 @@ CLASS FEATURES:
 
 
 A Wisdom Score of 10 + the Spell Level is needed to Scribe a Rune Scar.
+A Runescar costs 5 x spell level x caster level GP and 1/25th of that in XP to scribe.
+Scribing a runescar is painful dealing 1d6 points of damage per spell level.
+You can choose to scribe at less than your caster level if desired.
+Runescars can only affect the Runescarred Beserker when activated
+A Runescarred Berserker can only have 7 scars scribed at a time.
+
 Spells Known
 
-1: 1 Level 1
-2: 2 Level 1
-3: 2 Level 1, 1 Level 2
-4: 3 Level 1, 2 Level 2
-5: 3 Level 1, 2 Level 2, 1 Level 3
-6: 3 Level 1, 3 Level 2, 2 Level 3
-7: 4 Level 1, 3 Level 2, 2 Level 3, 1 Level 4
-8: 4 Level 1, 3 Level 2, 2 Level 3, 2 Level 4
-9: 4 Level 1, 4 Level 2, 3 Level 3, 2 Level 4, 1 Level 5
-10: 4 Level 1, 4 Level 2, 3 Level 3, 3 Level 4, 2 Level 5
+1: 1 x Level 1
+2: 2 x Level 1
+3: 2 x Level 1, 1 x Level 2
+4: 3 x Level 1, 2 x Level 2
+5: 3 x Level 1, 2 x Level 2, 1 x Level 3
+6: 3 x Level 1, 3 x Level 2, 2 x Level 3
+7: 4 x Level 1, 3 x Level 2, 2 x Level 3, 1 x Level 4
+8: 4 x Level 1, 3 x Level 2, 2 x Level 3, 2 x Level 4
+9: 4 x Level 1, 4 x Level 2, 3 x Level 3, 2 x Level 4, 1 x Level 5
+10: 4 x Level 1, 4 x Level 2, 3 x Level 3, 3 x Level 4, 2 x Level 5
 
 Runescarred Spell List
 
-1st Level: Cure Moderate Wounds, Divine Favor, True Strike, See Invisibility
-2nd Level: Keen Edge, Bulls Strength, Endurance, Cure Serious Wounds, Invisibility
-3rd Level: Divine Power, Haste, Death Ward, Greater Magic Weapon, Cure Critical Wounds
+1st Level: Cure Moderate Wounds, Divine Favor, True Strike, See Invisibility, Resist Elements, Protection from Chaos, Protection from Evil, Protection from Good, Protection from Law
+2nd Level: Keen Edge, Bulls Strength, Endurance, Cure Serious Wounds, Invisibility, Darkvision, Protection from Elements
+3rd Level: Divine Power, Haste, Death Ward, Greater Magic Weapon, Cure Critical Wounds, Freedom of Movement
 4th Level: Improved Invisibility, Neutralize Poison, Restoration, Righteous Might, Stoneskin
 5th Level: Heal, Spell Resistance</entry>
   <entry id="48975" lang="en" sex="m">Scribe Runescar</entry>
-  <entry id="48976" lang="en" sex="m">At 1st level, a runescarred berserker learns how to carve a runescar into her own skin. A runescar is a means of storing a spell, much like a scroll.
+  <entry id="48976" lang="en" sex="m">At 1st level, a Runescarred Berserker learns how to carve a Runescar into her own skin. A Runescar is a means of storing a spell, much like a scroll.
 
-Scribing a runescar uses materials equal to 5gp x spell level x caster level, and XP equal to 1/25th the GP spent.
+Scribing a Runescar uses materials equal to 5gp x spell level x caster level, and XP equal to 1/25th the GP spent.
 
-As well scribing a runescar is painful dealing 1d6 points of damage per spell level.
+In addition, scribing a Runescar is painful dealing 1d6 points of damage per spell level.
 
-A runescarred berserker can bear no more then seven runescars at any one time: two on the chest, two on the upper arms, two on the backs of the hands, and one on the face.</entry>
+A Runescarred Beserker can bear no more then seven runescars at any one time: two on the chest, two on the upper arms, two on the backs of the hands, and one on the face.
+
+Runescars can only affect the Runescarred Beserker when activated</entry>
   <entry id="48977" lang="en" sex="m">Runescarred Rage</entry>
   <entry id="48978" lang="en" sex="m">As barbarian rage.</entry>
   <entry id="48979" lang="en" sex="m">Ritual Scarring</entry>

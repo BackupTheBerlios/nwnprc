@@ -67,7 +67,8 @@ int ooze_touch_damage(effect eDamage)
     }
     return FALSE;
 }
-int ooze_touch_effect(effect eDamage, int time)
+
+int OozeTouchEffect(effect eDamage, int time)
 {
     object oTarget = PRCGetSpellTargetObject();
 
@@ -151,7 +152,7 @@ void main()
                 effect eMind = EffectVisualEffect(VFX_DUR_PARALYZED);
                 effect paralyze = EffectLinkEffects(damage, eMind);
 
-                ooze_touch_effect(paralyze, 1 + (level / 2));
+                OozeTouchEffect(paralyze, 1 + (level / 2));
             }
             break;
         }

@@ -1,5 +1,5 @@
-#include "prc_class_const"
 #include "prc_alterations"
+#include "prc_class_const"
 
 void main()
 {
@@ -41,7 +41,7 @@ void main()
 
           effect eLink = EffectLinkEffects(eDeath, eVis);
 
-           DelayCommand(0.0f,ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget));
+           DelayCommand(0.0f, ApplyEffectToObject(DURATION_TYPE_INSTANT,eLink,oTarget));
           ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_STUN), oTarget);
       }
        //Select the next target within the spell shape.

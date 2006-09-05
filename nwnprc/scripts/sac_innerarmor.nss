@@ -1,3 +1,4 @@
+#include "prc_alterations"
 void main()
 {
         int nCasterLevel = GetAbilityModifier(ABILITY_WISDOM)<1 ? 1 : GetAbilityModifier(ABILITY_WISDOM);
@@ -8,9 +9,9 @@ void main()
         eAC = EffectLinkEffects(eAC,EffectSavingThrowIncrease(SAVING_THROW_ALL,4));
         eAC = EffectLinkEffects(eAC,EffectSpellResistanceIncrease(25));
 
-	effect eVFX = EffectVisualEffect(VFX_IMP_AC_BONUS);
+    effect eVFX = EffectVisualEffect(VFX_IMP_AC_BONUS);
 
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eAC), OBJECT_SELF, RoundsToSeconds(nCasterLevel));
-	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, OBJECT_SELF);
+    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, SupernaturalEffect(eAC), OBJECT_SELF, RoundsToSeconds(nCasterLevel));
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVFX, OBJECT_SELF);
 
 }

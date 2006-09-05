@@ -136,7 +136,13 @@ public final class SpellbookMaker{
 					
 					//get the class name
 					String className = getCheckedTlkEntry(classes2da.getBiowareEntryAsInt("Name", classRow)) + " ";
-					String classLabel = classes2da.getEntry("Label", classRow)+"_";
+					
+					// Construct the class portion of labels to be generated
+					String classLabel = classes2da.getEntry("Label", classRow);
+					// Nothing longer than Suel_Archanamach (16 chars) allowed in order to avoid extending the length of all spells.2da rows again
+					if(classLabel.length() > 16)
+						classLabel = classLabel.substring(0, 17);
+					classLabel += "_";
 					
 					//get the maximum spell level
 					int maxLevel = 0;

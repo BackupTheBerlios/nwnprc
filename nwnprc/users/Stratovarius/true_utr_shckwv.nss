@@ -54,8 +54,7 @@ void main()
         if(utter.bExtend) utter.fDur *= 2;
         utter.nSaveType  = SAVING_THROW_TYPE_NONE;
 	utter.nSaveThrow = SAVING_THROW_FORT;
-	utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker); 
-        int nDamage;
+	int nDamage;
         effect eExplode = EffectVisualEffect(VFX_PRC_FNF_EARTHQUAKE);
         effect eVis = EffectVisualEffect(VFX_IMP_LEAF);
         effect eDam;
@@ -78,6 +77,8 @@ void main()
     	            //Roll damage for each target
     	            nDamage = d4();
     	            eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING);
+    	            // This is calculated down here because the target's race matters
+    	            utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker); 
     	            if(!PRCMySavingThrow(utter.nSaveThrow, oTarget, utter.nSaveDC, utter.nSaveType, oTrueSpeaker))
     	            {
     	                // Apply effects to the currently selected target.

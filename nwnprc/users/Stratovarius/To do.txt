@@ -13,19 +13,19 @@ Truenaming:
 Truenamer
 62/63 Utterances
 4 Prestige Classes
-Focused Lexicon and Utterance Focus feats. 2da all feats/recitations.
+2da all feats/recitations.
 
 Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
 
 true_inc_truespeak: ClearLawLocalVars update numbers, add to prc_rest
 Make list of possible utterances.
-Make Truenamer Class: Class feats and TLK left. Class abilities: Scry, Say My Name
-"Say My Name" - Easy Idea: Teleport to Party Member.
+Make Truenamer Class: Class feats and TLK left. Class abilities: Scry (Need Tenjac to complete it).
+"Say My Name" - Easy Idea: Teleport to Party Member. <- I used this one
               - Old Idea: PRC Options Conversation + a switch for the TrueNamer, "Accept/Deny 'Say my Name and I am There'"
 
 Truename PrCs:
 Bereft - 2das/TLK
-Brimstone Speaker - 2das/TLK, add as a spellcaster. Heavenly Entreaty script. Add Utterances/feats to Word Archon summon.
+Brimstone Speaker - 2das/TLK, add as a spellcaster. Add Utterances/feats to Word Archon summon.
 Acolyte of the Ego - Unstarted
 Fiendbinder - Unstarted
 
@@ -34,7 +34,7 @@ Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
             Add Seize Item to the 2da that lets it target items on the ground.
 
 Base Classes:
-Hexblade - Mettle (edit spells as well), Arcane Resistance, Spellbook.
+Hexblade - Mettle (edit spells as well), Arcane Resistance, Spellbook (talk to Primo).
 
 Psionic PrCs:
 Shadowmind - All to do, (Mass) Cloud Mind powers

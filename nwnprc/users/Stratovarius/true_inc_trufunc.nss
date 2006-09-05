@@ -336,19 +336,58 @@ int GetTruenameAbilityOfClass(int nClass){
 
 int GetTrueSpeakerDC(object oTrueSpeaker = OBJECT_SELF)
 {
+    // Things we need for DC Checks
+    int nSpellId = PRCGetSpellId();
+    object oTarget = PRCGetSpellTargetObject();
+    int nRace = MyPRCGetRacialType(oTarget);
     // DC is 10 + 1/2 Truenamer level + Ability (Charisma)
     int nClass = GetUtteringClass(oTrueSpeaker);
     int nDC = 10;
     nDC += GetLevelByClass(nClass, oTrueSpeaker)/2;
     nDC += GetAbilityModifier(GetTruenameAbilityOfClass(nClass), oTrueSpeaker);
 
-    // This is where the feats will go once they're added
-/*
-    if (GetLocalInt(oTrueSpeaker, "PsionicEndowmentActive") == TRUE && UsePsionicFocus(oTrueSpeaker))
-    {
-            nDC += GetHasFeat(FEAT_GREATER_PSIONIC_ENDOWMENT, oTrueSpeaker) ? 4 : 2;
-    }
-*/
+    // Focused Lexicon. Bonus vs chosen racial type
+         if (GetHasFeat(FEAT_FOCUSED_LEXICON_ABERRATION,   oTrueSpeaker) && nRace == RACIAL_TYPE_ABERRATION) nDC += 1;    
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ANIMAL,       oTrueSpeaker) && nRace == RACIAL_TYPE_ANIMAL) nDC += 1;      
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_BEAST,        oTrueSpeaker) && nRace == RACIAL_TYPE_BEAST) nDC += 1;       
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_CONSTRUCT,    oTrueSpeaker) && nRace == RACIAL_TYPE_CONSTRUCT) nDC += 1;   
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_DRAGON,       oTrueSpeaker) && nRace == RACIAL_TYPE_DRAGON) nDC += 1;     
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_DWARF,        oTrueSpeaker) && nRace == RACIAL_TYPE_DWARF) nDC += 1;       
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ELEMENTAL,    oTrueSpeaker) && nRace == RACIAL_TYPE_ELEMENTAL) nDC += 1;
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ELF,          oTrueSpeaker) && nRace == RACIAL_TYPE_ELF) nDC += 1;         
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_FEY,          oTrueSpeaker) && nRace == RACIAL_TYPE_FEY) nDC += 1;         
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_GIANT,        oTrueSpeaker) && nRace == RACIAL_TYPE_GIANT) nDC += 1;       
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_GNOME,        oTrueSpeaker) && nRace == RACIAL_TYPE_GNOME) nDC += 1;       
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HALFELF,      oTrueSpeaker) && nRace == RACIAL_TYPE_HALFELF) nDC += 1;     
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HALFLING,     oTrueSpeaker) && nRace == RACIAL_TYPE_HALFLING) nDC += 1;    
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HALFORC,      oTrueSpeaker) && nRace == RACIAL_TYPE_HALFORC) nDC += 1;     
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HUMAN,        oTrueSpeaker) && nRace == RACIAL_TYPE_HUMAN) nDC += 1;       
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_GOBLINOID,    oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_GOBLINOID) nDC += 1;   
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_MONSTROUS,    oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_MONSTROUS) nDC += 1;   
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ORC,          oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_ORC) nDC += 1;         
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_REPTILIAN,    oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_REPTILIAN) nDC += 1;   
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_MAGICALBEAST, oTrueSpeaker) && nRace == RACIAL_TYPE_MAGICAL_BEAST) nDC += 1;
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_OOZE,         oTrueSpeaker) && nRace == RACIAL_TYPE_OOZE) nDC += 1;        
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_OUTSIDER,     oTrueSpeaker) && nRace == RACIAL_TYPE_OUTSIDER) nDC += 1;    
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_SHAPECHANGER, oTrueSpeaker) && nRace == RACIAL_TYPE_SHAPECHANGER) nDC += 1;
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_UNDEAD,       oTrueSpeaker) && nRace == RACIAL_TYPE_UNDEAD) nDC += 1;      
+    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_VERMIN,       oTrueSpeaker) && nRace == RACIAL_TYPE_VERMIN) nDC += 1;      
+    
+    // Utterance Focus. DC Bonus for a chosen utterance
+         if (GetHasFeat(FEAT_UTTERANCE_FOCUS_BREATH_CLEANSING,      oTrueSpeaker) && nSpellId == UTTER_BREATH_CLEANSING_R) nDC += 1;    
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_BREATH_RECOVERY,       oTrueSpeaker) && nSpellId == UTTER_BREATH_RECOVERY_R) nDC += 1;      
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_ELDRITCH_ATTRACTION,   oTrueSpeaker) && nSpellId == UTTER_ELDRITCH_ATTRACTION) nDC += 1;       
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_ELDRITCH_ATTRACTION,   oTrueSpeaker) && nSpellId == UTTER_ELDRITCH_ATTRACTION_R) nDC += 1;       
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_MORALE_BOOST,          oTrueSpeaker) && nSpellId == UTTER_MORALE_BOOST_R) nDC += 1;   
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_PRETERNATURAL_CLARITY, oTrueSpeaker) && nSpellId == UTTER_PRETERNATURAL_CLARITY_R) nDC += 1;     
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SENSORY_FOCUS,         oTrueSpeaker) && nSpellId == UTTER_SENSORY_FOCUS_R) nDC += 1;       
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SILENT_CASTER,         oTrueSpeaker) && nSpellId == UTTER_SILENT_CASTER_R) nDC += 1;
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SINGULAR_MIND,         oTrueSpeaker) && nSpellId == UTTER_SINGULAR_MIND_R) nDC += 1;         
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_TEMPORAL_SPIRAL,       oTrueSpeaker) && nSpellId == UTTER_TEMPORAL_SPIRAL_R) nDC += 1;         
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_TEMPORAL_TWIST,        oTrueSpeaker) && nSpellId == UTTER_TEMPORAL_TWIST_R) nDC += 1;       
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_WARD_PEACE,            oTrueSpeaker) && nSpellId == UTTER_WARD_PEACE_R) nDC += 1;           
+    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SHOCKWAVE,             oTrueSpeaker) && nSpellId == UTTER_SHOCKWAVE) nDC += 1;           
+
     return nDC;
 }
 

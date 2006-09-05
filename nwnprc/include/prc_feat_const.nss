@@ -2161,3 +2161,64 @@ const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
  const int FEAT_EF_SPEED                       = 4395;
  const int FEAT_EF_EXTRA_STUNNING              = 4396;
  const int FEAT_EF_FIST_OF_ENERGY_BURST        = 4397;
+ 
+/*//////////////////////////////////////////////////
+//////////////// TRUENAMING ////////////////////////
+//////////////////////////////////////////////////*/
+
+// Metautterance feats
+const int FEAT_EMPOWER_UTTERANCE                        = -1;
+const int FEAT_EXTEND_UTTERANCE                         = -1;
+const int FEAT_QUICKEN_UTTERANCE                        = -1;
+
+// Recitation feats
+const int FEAT_RECITATION_FORTIFIED                     = -1;
+const int FEAT_RECITATION_MEDITATIVE                    = -1;
+const int FEAT_RECITATION_MINDFUL                       = -1;
+const int FEAT_RECITATION_SANGUINE                      = -1;
+const int FEAT_RECITATION_VITAL                         = -1;
+
+// Utterance Focus
+const int FEAT_UTTERANCE_FOCUS_BREATH_CLEANSING         = -1;
+const int FEAT_UTTERANCE_FOCUS_BREATH_RECOVERY          = -1;
+const int FEAT_UTTERANCE_FOCUS_ELDRITCH_ATTRACTION      = -1;
+const int FEAT_UTTERANCE_FOCUS_MORALE_BOOST             = -1;
+const int FEAT_UTTERANCE_FOCUS_PRETERNATURAL_CLARITY    = -1;
+const int FEAT_UTTERANCE_FOCUS_SENSORY_FOCUS            = -1;
+const int FEAT_UTTERANCE_FOCUS_SILENT_CASTER            = -1;
+const int FEAT_UTTERANCE_FOCUS_SINGULAR_MIND            = -1;
+const int FEAT_UTTERANCE_FOCUS_TEMPORAL_SPIRAL          = -1;
+const int FEAT_UTTERANCE_FOCUS_TEMPORAL_TWIST           = -1;
+const int FEAT_UTTERANCE_FOCUS_WARD_PEACE               = -1;
+const int FEAT_UTTERANCE_FOCUS_SHOCKWAVE                = -1;
+
+// Focused Lexicon
+const int FEAT_FOCUSED_LEXICON_ABBERATION               = -1;
+const int FEAT_FOCUSED_LEXICON_ANIMAL                   = -1;
+const int FEAT_FOCUSED_LEXICON_BEAST                    = -1;
+const int FEAT_FOCUSED_LEXICON_CONSTRUCT                = -1;
+const int FEAT_FOCUSED_LEXICON_DRAGON                   = -1;
+const int FEAT_FOCUSED_LEXICON_DWARF                    = -1;
+const int FEAT_FOCUSED_LEXICON_ELEMENTAL                = -1;
+const int FEAT_FOCUSED_LEXICON_ELF                      = -1;
+const int FEAT_FOCUSED_LEXICON_FEY                      = -1;
+const int FEAT_FOCUSED_LEXICON_GIANT                    = -1;
+const int FEAT_FOCUSED_LEXICON_GNOME                    = -1;
+const int FEAT_FOCUSED_LEXICON_HALFELF                  = -1;
+const int FEAT_FOCUSED_LEXICON_HALFLING                 = -1;
+const int FEAT_FOCUSED_LEXICON_HALFORC                  = -1;
+const int FEAT_FOCUSED_LEXICON_HUMAN                    = -1;
+const int FEAT_FOCUSED_LEXICON_GOBLINOID                = -1;
+const int FEAT_FOCUSED_LEXICON_MONSTROUS                = -1;
+const int FEAT_FOCUSED_LEXICON_ORC                      = -1;
+const int FEAT_FOCUSED_LEXICON_REPTILIAN                = -1;
+const int FEAT_FOCUSED_LEXICON_MAGICALBEAST             = -1;
+const int FEAT_FOCUSED_LEXICON_OOZE                     = -1;
+const int FEAT_FOCUSED_LEXICON_OUTSIDER                 = -1;
+const int FEAT_FOCUSED_LEXICON_SHAPECHANGER             = -1;
+const int FEAT_FOCUSED_LEXICON_UNDEAD                   = -1;
+const int FEAT_FOCUSED_LEXICON_VERMIN                   = -1;
+
+/*//////////////////////////////////////////////////
+//////////////// END TRUENAMING/////////////////////
+//////////////////////////////////////////////////*/

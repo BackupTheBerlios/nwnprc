@@ -24,6 +24,8 @@
 //the PCs stuff (which may turn up later on)..So store all the stuff in a box in the
 //Random Treasure area.. Spawn in the assassin when the area is first entered..
 
+#include "prc_alterations"
+
 //::///////////////////////////////////////////////
 //:: ExcludeItem
 //:: Copyright (c) 2003 Bioware Corp.
@@ -37,6 +39,7 @@
 //:: Created By: Brent
 //:: Created On: June 2003
 //:://////////////////////////////////////////////
+
 
 int ExcludeItem(object oGear)
 {
@@ -87,7 +90,7 @@ void main()
     // * LOGIC: If in the start "second floor room"
     // * and still I am not level 15, then try starting the conversation again
     string sArea = GetTag(GetArea(oPC));
-    int nHitDie = GetHitDice(oPC);
+    int nHitDie = GetECL(oPC);
 //    SendMessageToPC(oPC, sArea);
 //    SendMessageToPC(oPC, IntToString(nHitDie));
     if (sArea == "q2a_yprooms" && nHitDie <12)
@@ -115,7 +118,7 @@ void main()
     For low level characters this conversation will not play the first time
 
     */
-    if (GetHitDice(oPC) < 12)
+    if (GetECL(oPC) < 12)
     {
         return; // * This will be ran when they return from the other cutscene
     }

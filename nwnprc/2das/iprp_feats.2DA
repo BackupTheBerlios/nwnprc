@@ -5001,7 +5001,7 @@
 4997  ****     ReservedForISCAndESS                                      **** ****      
 4998  ****     ReservedForISCAndESS                                      **** ****      
 4999  ****     ReservedForISCAndESS                                      **** ****      
-5000  ****     ReservedForISCAndESS                                      **** ****      
+5000  ****     ####START_OF_NEW_SPELLBOOK_RESERVE                        **** ****
 5001  ****     ReservedForISCAndESS                                      **** ****      
 5002  ****     ReservedForISCAndESS                                      **** ****      
 5003  ****     ReservedForISCAndESS                                      **** ****      
@@ -8401,7 +8401,7 @@
 8397  ****     ReservedForISCAndESS                                      **** ****      
 8398  ****     ReservedForISCAndESS                                      **** ****      
 8399  ****     ReservedForISCAndESS                                      **** ****      
-8400  ****     ####START_OF_NEW_SPELLBOOK_RESERVE                        **** ****      
+8400  ****     ****                                                      **** ****
 8401  16830534 Bard_Cure_Minor_Wounds                                    0.0  17001     
 8402  16830535 Bard_Quickened_Cure_Minor_Wounds                          0.0  17002     
 8403  16830536 Bard_Silent_Cure_Minor_Wounds                             0.0  17003     

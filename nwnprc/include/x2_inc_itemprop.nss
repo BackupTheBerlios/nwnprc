@@ -560,7 +560,9 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1=0, int nParam2=0, in
         // this constructor is bugged (@ v1.65) and will reduce nParam1 by 1
         // we can compensate for this until it is fixed by adding 1 here
         // however someone (you) will have to remember to remove it later!
-        ipRet = ItemPropertyImmunityToSpellLevel(nParam1 + 1);
+        //Primogenitor
+        //Fixed as of 1.67
+        ipRet = ItemPropertyImmunityToSpellLevel(nParam1);
    }
    else if (nPropID == ITEM_PROPERTY_IMPROVED_EVASION)
    {

@@ -8,9 +8,9 @@
 	Created: Sept 5, 2006
 	Modified: Sept 6, 2006
 
-	Seems to work in cygwin, bugs with char arrays somewhere
-	USE: Put in directory with all the 2das, run, then delete
-		the line corresponding to the executable
+	USE: Put in directory with all the 2das, run with indirection
+	Will work if compiled in cygwin (or presumably linux)
+	Windows version (from cygwin) requires cygwin1.dll
 */
 
 #include <stdio.h>
@@ -25,11 +25,13 @@ int main(int argc, char *argv[])
 	if(argc < 1) return;
 
 	char *sFile;
-	char *sTemp;
+	char *sTemp = (char *) malloc(65536 * sizeof(char));
+	char sName[20];
+	char sComp[3];
 	printf("int PRCGetFileEnd(string sTable)\n{\n");
 	FILE *fp;
 	DIR *dp;
-	int nCount;
+	int nCount, i;
 	struct dirent *ep;
 
 	dp = opendir ("./");
@@ -40,18 +42,28 @@ int main(int argc, char *argv[])
 			sFile = ep->d_name;
 			fp = fopen(sFile, "r");
 			nCount = 0;
+			fgets(sTemp, 65536, fp);
+			for(i = 0; i < 3; i++)
+				sComp[i] = sTemp[i];
+			if(strcmp(sComp, "2DA"))
+			{
+				fclose(fp);
+				continue;
+			}
+			nCount++;
+			for(i = 0; i < 20; i++)
+				sName[i] = sFile[i];
 			while(fgets(sTemp, 65536, fp))
 			{
 				nCount++;
 			}
-			if(nCount - 4 < 1)
-				continue;
-			printf("    if(sTable == %c%s%c) return %d;\n", 34, strtok(sFile, "."), 34, nCount - 4);
+			printf("    if(sTable == %c%s%c) return %d;\n", 34, strtok(sName, "."), 34, nCount - 4);
 			fclose(fp);
 		}
 		(void) closedir (dp);
 	}
 
 	printf("\n    if(DEBUG) DoDebug(%cPRCGetFileEnd: Unrecognised 2da file: %c + sTable);\n    return 0;\n}", 34, 34);
+	free(sTemp);
 	return 0;
 }

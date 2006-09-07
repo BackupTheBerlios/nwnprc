@@ -61,7 +61,25 @@ void main()
                         {
                             //this command will make shore that polymorph plays nice with the shifter
                             ShifterCheck(oTarget);
-
+                            //companion has multi-sized penguins :)
+                            if(GetPRCSwitch(MARKER_PRC_COMPANION))
+                            {
+                                int nRandom = d100();
+                                if(nRandom < 25)
+                                    ePolymorph = EffectPolymorph(POLYMORPH_TYPE_PENGUIN, TRUE);
+                                else if(nRandom < 40)
+                                    ePolymorph = EffectPolymorph(PRC_COMP_POLYMORPH_TYPE_PENGUIN_150, TRUE);
+                                else if(nRandom < 55)
+                                    ePolymorph = EffectPolymorph(PRC_COMP_POLYMORPH_TYPE_PENGUIN_200, TRUE);
+                                else if(nRandom < 70)
+                                    ePolymorph = EffectPolymorph(PRC_COMP_POLYMORPH_TYPE_PENGUIN_300, TRUE);
+                                else if(nRandom < 85)
+                                    ePolymorph = EffectPolymorph(PRC_COMP_POLYMORPH_TYPE_PENGUIN_400, TRUE);
+                                else
+                                    ePolymorph = EffectPolymorph(PRC_COMP_POLYMORPH_TYPE_PENGUIN_500, TRUE);    
+                                eLink = EffectLinkEffects(eDuration, ePolymorph);
+                            }
+                            
                             // Apply effects to the currently selected target.
                             DelayCommand(fDelay, SPApplyEffectToObject
                                 (DURATION_TYPE_TEMPORARY, eLink, oTarget,

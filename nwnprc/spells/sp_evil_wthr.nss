@@ -42,9 +42,7 @@ void main()
 	if (!X2PreSpellCastCode()) return;
 	
 	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
 	object oArea = GetArea(oPC);
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nSpell = GetSpellId();
 	int nWeather = GetWeather(oArea);

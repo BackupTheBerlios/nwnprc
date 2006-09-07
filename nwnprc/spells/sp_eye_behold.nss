@@ -85,7 +85,8 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oSkin = GetPCSkin(oPC);
 	int nRandom = d10(1);
-	
+	int nMetaMagic = PRCGetMetaMagicFeat();
+		
 	while(nRandom == 10)
 	{
 		nRandom = d10(1);
@@ -94,6 +95,11 @@ void main()
 	int nCasterLevel = PRCGetCasterLevel(oPC);
 	float fDur = RoundsToSeconds(nCasterLevel);
 	itemproperty iEye;
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
 	
 	switch(nRandom)
 	{

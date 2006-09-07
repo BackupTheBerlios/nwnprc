@@ -201,6 +201,14 @@ void DoEnergyNegation(object oTrueSpeaker, object oTarget, struct utterance utte
 object CraftedToolTarget(object oTrueSpeaker, object oTarget);
 
 /**
+ * Enforces the cross class cap on the Truespeech skill
+ *
+ * @param oTrueSpeaker  The PC whose feats to check.
+ * @return              TRUE if needed to relevel, FALSE otherwise.
+ */
+int CheckTrueSpeechSkill(object oTrueSpeaker);
+
+/**
  * Applies modifications to a utterance's damage that depend on some property
  * of the target.
  * Currently accounts for:
@@ -675,6 +683,31 @@ object CraftedToolTarget(object oTrueSpeaker, object oTarget)
 	}
 	return oItem;
 }
+
+int CheckTrueSpeechSkill(object oTrueSpeaker)
+{
+	// The max for a class skill is 3 + 1 per level. We just divide this in half for Cross Class
+	int nMax = GetHitDice(oTrueSpeaker) + 3;
+	nMax /= 2;
+	// We want base ranks only
+	int nRanks = GetSkillRank(SKILL_TRUESPEAK, oTrueSpeaker, TRUE);
+
+	// The Truenamer class has Truespeech as a class skill, so no relevel 
+	if (GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker) > 0) return FALSE;
+	// If they have the feat, no relevel
+	else if(GetHasFeat(FEAT_TRUENAME_TRAINING, oTrueSpeaker)) return FALSE;
+	// Now we check the values. If they have too many ranks, relevel.
+	else if (nRanks > nMax)
+	{
+		// Relevel
+    		FloatingTextStringOnCreature("You cannot have more than " + IntToString(nMax) + " in TrueSpeech.", oTrueSpeaker, FALSE);
+    		return TRUE;	
+	}
+	
+    	// No relevel normally
+    	return FALSE;
+}
+
 /*
 int GetTargetSpecificChangesToDamage(object oTarget, object oTrueSpeaker, int nDamage,
                                      int bIsHitPointDamage = TRUE, int bIsEnergyDamage = FALSE)

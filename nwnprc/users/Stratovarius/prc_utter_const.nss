@@ -37,7 +37,6 @@ const int UTTER_TEMPORAL_TWIST           = -1;
 const int UTTER_TEMPORAL_TWIST_R         = -1;
 const int UTTER_WORD_NURTURING_LESSER    = -1;
 const int UTTER_WORD_NURTURING_LESSER_R  = -1;
-const int UTTER_AGITATE_ITEM             = -1;
 const int UTTER_ANALYZE_ITEM_HOT         = -1;
 const int UTTER_ANALYZE_ITEM_COLD        = -1;
 const int UTTER_ENERGY_VORTEX_ACID       = -1;

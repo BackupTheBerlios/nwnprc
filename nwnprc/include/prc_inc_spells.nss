@@ -319,6 +319,8 @@ int GetArcanePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_CEREBREMANCER,   oCaster)
            +  GetLevelByClass(CLASS_TYPE_MAESTER,         oCaster)
            +  GetLevelByClass(CLASS_TYPE_ENLIGHTENEDFIST, oCaster)
+           +  GetLevelByClass(CLASS_TYPE_VIRTUOSO,        oCaster)
+           +  GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_ACOLYTE,            oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BLADESINGER,        oCaster) + 1) / 2
@@ -327,6 +329,7 @@ int GetArcanePRCLevels (object oCaster)
            +  (GetLevelByClass(CLASS_TYPE_HATHRAN,            oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_SPELLSWORD,         oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_THRALL_OF_GRAZZT_A, oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oCaster) + 1) / 2
 
            +  (GetLevelByClass(CLASS_TYPE_JUDICATOR, oCaster) + 1) / 3;
 
@@ -1413,7 +1416,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_HEXBLADE)
                  iTemp = iArc;
              else
-                 iTemp = iHex;
+                 iTemp = iHex / 2;
              return iTemp;
              break;             
         case CLASS_TYPE_FAVOURED_SOUL:

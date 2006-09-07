@@ -20,6 +20,29 @@ void main()
 
 //if(DEBUG) DoDebug("Running OnAcquireItem, creature = '" + GetName(oCreature) + "' is PC: " + BooleanToString(GetIsPC(oCreature)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
+    if(GetPRCSwitch(PRC_AUTO_IDENTIFY_ON_ACQUIRE))
+    {
+        if(!GetIdentified(oItem))
+        {
+            int nLore = GetSkillRank(SKILL_LORE, oCreature);
+            int nGP;
+            string sMax = Get2DACache("SkillVsItemCost", "DeviceCostMax", nLore);
+            int nMax = StringToInt(sMax);
+            if (sMax == "") 
+                nMax = 120000000;
+            // Check for the value of the item first.
+            SetIdentified(oItem, TRUE);
+            nGP = GetGoldPieceValue(oItem);
+            SetIdentified(oItem, FALSE);
+            // If oPC has enough Lore skill to ID the item, then do so.
+            if(nMax >= nGP)
+            {
+                SetIdentified(oItem, TRUE);
+                SendMessageToPC(oCreature, GetStringByStrRef(16826224) + " " + GetName(oItem) + " " + GetStringByStrRef(16826225));
+            }
+        }   
+    }
+
     //rest kits
     if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
         ExecuteScript("sbr_onaquire", OBJECT_SELF);

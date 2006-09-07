@@ -20,6 +20,15 @@ void main()
 
 //if(DEBUG) DoDebug("Running OnUnaquireItem, creature = '" + GetName(oPC) + "' is PC: " + BooleanToString(GetIsPC(oPC)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
+    if(GetPRCSwitch(PRC_AUTO_UNIDENTIFY_ON_UNACQUIRE))
+    {
+        object oNewOwner = GetItemPossessor(oItem);
+        if(GetObjectType(oNewOwner) != OBJECT_TYPE_STORE
+            && (GetIsFriend(oPC, oNewOwner)
+                || GetIsNeutral(oPC, oNewOwner)))
+            SetIdentified(oItem, FALSE);
+    }
+
     // Remove all temporary item properties when dropped/given away/stolen/sold.
     if(GetIsObjectValid(oItem))//needed for last of stack etc items
         DeletePRCLocalIntsT(oPC,oItem);

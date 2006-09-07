@@ -43,55 +43,6 @@ void RestCancelled(object oPC)
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_CANCELLED);
 }
 
-void RestStarted(object oPC)
-{
-    if(DEBUG) DoDebug("prc_rest: Rest started for " + DebugObject2Str(oPC));
-
-    if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
-        SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
-        SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
-    }
-    /* Left here in case the multisummon trick is ever broken. In that case, use this to make Astral Constructs get unsummoned properly
-    if(GetHasFeat(whatever feat determines if the PC can manifest Astral Construct here)){
-        int i = 1;
-        object oCheck = GetHenchman(oPC, i);
-        while(oCheck != OBJECT_INVALID){
-            if(GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
-                DoDespawn(oCheck);
-            i++;
-            oCheck = GetHenchman(oPC, i);
-        }
-    }
-    */
-    if(GetPRCSwitch(PRC_PNP_REST_HEALING))
-    {
-        SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
-    }
-    //clean up bonded summon
-    if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
-    {
-        object oEle = GetLocalObject(oPC, "BONDED");
-        effect eSummon = EffectVisualEffect(VFX_IMP_UNSUMMON);
-        ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetLocation(oEle));
-        AssignCommand(oEle, SetIsDestroyable(TRUE));
-        DestroyObject(oEle);
-    }
-    // Remove Psionic Focus
-    if(GetIsPsionicallyFocused(oPC))
-    {
-        LosePsionicFocus(oPC);
-    }
-    DeleteLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
-    DeleteLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
-    DeleteLocalObject(oPC, PRC_SPELL_CONC_TARGET);
-    if(GetLocalInt(oPC, PRC_SPELL_HOLD)) FloatingTextStringOnCreature("*Normal Casting*", oPC);
-    DeleteLocalInt(oPC, PRC_SPELL_HOLD);
-    DeleteLocalInt(oPC, PRC_SPELL_METAMAGIC);
-    DeleteLocalManifestation(oPC, PRC_POWER_HOLD_MANIFESTATION);
-    // Execute scripts hooked to this event for the player triggering it
-    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
-}
-
 void RestFinished(object oPC)
 {
     if(DEBUG) DoDebug("prc_rest: Rest finished for for " + DebugObject2Str(oPC));
@@ -138,7 +89,10 @@ void RestFinished(object oPC)
     if(GetPRCSwitch(PRC_PNP_REST_HEALING))
     {
         int nHP = GetLocalInt(oPC, "PnP_Rest_InitialHP");
-        nHP += GetHitDice(oPC);
+        //only heal HP if not undead and not a construct
+        if(MyPRCGetRacialType(oPC) != RACIAL_TYPE_UNDEAD
+            && MyPRCGetRacialType(oPC) != RACIAL_TYPE_CONSTRUCT)
+            nHP += GetHitDice(oPC);
         int nCurrentHP = GetCurrentHitPoints(oPC);
         int nDamage = nCurrentHP-nHP;
         //check its a positive number
@@ -212,6 +166,53 @@ void RestFinished(object oPC)
 
     // Execute scripts hooked to this event for the player triggering it
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_FINISHED);
+}
+
+void RestStarted(object oPC)
+{
+    if(DEBUG) DoDebug("prc_rest: Rest started for " + DebugObject2Str(oPC));
+
+    if (GetLevelByClass(CLASS_TYPE_DRUNKEN_MASTER, oPC)){
+        SetLocalInt(oPC, "DRUNKEN_MASTER_IS_IN_DRUNKEN_RAGE", 0);
+        SetLocalInt(oPC, "DRUNKEN_MASTER_IS_DRUNK_LIKE_A_DEMON", 0);
+    }
+    /* Left here in case the multisummon trick is ever broken. In that case, use this to make Astral Constructs get unsummoned properly
+    if(GetHasFeat(whatever feat determines if the PC can manifest Astral Construct here)){
+        int i = 1;
+        object oCheck = GetHenchman(oPC, i);
+        while(oCheck != OBJECT_INVALID){
+            if(GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
+                DoDespawn(oCheck);
+            i++;
+            oCheck = GetHenchman(oPC, i);
+        }
+    }
+    */
+    
+    SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
+    //clean up bonded summon
+    if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
+    {
+        object oEle = GetLocalObject(oPC, "BONDED");
+        effect eSummon = EffectVisualEffect(VFX_IMP_UNSUMMON);
+        ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eSummon, GetLocation(oEle));
+        AssignCommand(oEle, SetIsDestroyable(TRUE));
+        DestroyObject(oEle);
+    }
+    // Remove Psionic Focus
+    if(GetIsPsionicallyFocused(oPC))
+    {
+        LosePsionicFocus(oPC);
+    }
+    DeleteLocalInt(oPC, PRC_SPELL_CHARGE_COUNT);
+    DeleteLocalInt(oPC, PRC_SPELL_CHARGE_SPELLID);
+    DeleteLocalObject(oPC, PRC_SPELL_CONC_TARGET);
+    if(GetLocalInt(oPC, PRC_SPELL_HOLD)) FloatingTextStringOnCreature("*Normal Casting*", oPC);
+    DeleteLocalInt(oPC, PRC_SPELL_HOLD);
+    DeleteLocalInt(oPC, PRC_SPELL_METAMAGIC);
+    DeleteLocalManifestation(oPC, PRC_POWER_HOLD_MANIFESTATION);
+    // Execute scripts hooked to this event for the player triggering it
+    ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONPLAYERREST_STARTED);
 }
 
 void main()

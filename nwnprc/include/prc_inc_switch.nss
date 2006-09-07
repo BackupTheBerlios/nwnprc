@@ -75,7 +75,7 @@
 
  /* This variable MUST be updated with every new version of the PRC!!! */
 
- const string PRC_VERSION                           = "PRC 3.1a Alpha";
+ const string PRC_VERSION                           = "PRC 3.0f";
 
 
 /******************************************************************************\
@@ -297,6 +297,18 @@ const string PRC_SPELLID_OVERRIDE                     = "PRC_SPELLID_OVERRIDE";
  * simply unequipped.
  */
  const string PRC_BEBILITH_CLAWS_DESTROY              = "PRC_BEBILITH_CLAWS_DESTROY";
+
+/*
+ * When on, unidentified items will automatically by identified when aquired
+ * respecting normal lore skill rules.
+ */
+ const string PRC_AUTO_IDENTIFY_ON_ACQUIRE              = "PRC_AUTO_IDENTIFY_ON_ACQUIRE";
+
+/*
+ * When on, identified items will automatically by unidentified when aquired
+ * provided the new owner is not a friend/neutral and not to/from a store
+ */
+ const string PRC_AUTO_UNIDENTIFY_ON_UNACQUIRE              = "PRC_AUTO_UNIDENTIFY_ON_UNACQUIRE";
 
 /******************************************************************************\
 *                                  Class switches                              *
@@ -537,7 +549,7 @@ const string MARKER_PRC                              = "Marker_PRC";
 const string MARKER_PRC_COMPANION                    = "Marker_PRCCompanion";
 
 /** DO NOT SET THIS SWITCH
- * If CEP 1.53 and the PRC companion/merge is in use, this will be set automatically
+ * If CEP 1.68 and the PRC companion/merge is in use, this will be set automatically
  * It is only here to be used by other scripts
  */
 const string MARKER_CEP1                             = "Marker_CEP1";
@@ -547,12 +559,6 @@ const string MARKER_CEP1                             = "Marker_CEP1";
  * It is only here to be used by other scripts
  */
 const string MARKER_CEP2                             = "Marker_CEP2";
-
-/** DO NOT SET THIS SWITCH
- * If Biowares 1.68 cloaks and the PRC companion/merge is in use, this will be set automatically
- * It is only here to be used by other scripts
- */
-const string MARKER_CLOAK168                         = "Marker_168cloaks";
 
 /**
  * Spells cast from magic staffs use the wielder's casterlevel rather than the
@@ -2671,6 +2677,8 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_REGISTER_COHORTS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_SLINGS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BEBILITH_CLAWS_DESTROY);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_AUTO_IDENTIFY_ON_ACQUIRE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_AUTO_UNIDENTIFY_ON_UNACQUIRE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_CHARGE_SELF);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_DRAIN_SCROLL_POTION);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SORC_DISALLOW_NEWSPELLBOOK);

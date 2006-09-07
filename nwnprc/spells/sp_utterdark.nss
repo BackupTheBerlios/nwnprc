@@ -45,7 +45,7 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDuration = (nCasterLvl * 600.0f);
-	location lLoc = GetSpellTargetLocation();
+	location lLoc = GetLocation(oPC);
 	
 	
 	//Check Extend metamagic feat.

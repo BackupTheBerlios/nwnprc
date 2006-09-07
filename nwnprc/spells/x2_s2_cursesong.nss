@@ -410,7 +410,7 @@ void main()
                         if (!GetIsDead(oTarget))
                         {
                             ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration));
-                            DelayCommand(GetRandomDelay(0.1,0.5),ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+                            DelayCommand(GetRandomDelay(0.1,0.5), ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
                             //StoreSongRecipient(oTarget, OBJECT_SELF, GetSpellId(), nDuration);
                         }
                 }

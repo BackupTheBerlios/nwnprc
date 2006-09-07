@@ -3,14 +3,14 @@
 //:: psi_spd_thought
 //:://////////////////////////////////////////////
 /*
-	Adds +25% move speed.
+    Adds +25% move speed.
 */
 //:://////////////////////////////////////////////
 //:: Created By: Ornedan
 //:: Created On: 28.02.2005
 //:://////////////////////////////////////////////
 
-
+#include "prc_alterations"
 void main(){
     object oTarget = GetSpellTargetObject();
     

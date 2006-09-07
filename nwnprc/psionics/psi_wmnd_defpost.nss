@@ -3,7 +3,7 @@
 //-----------------------------------------------
 // Created By: Stratovarius
 /////////////////////////////////////////////////
-
+#include "prc_alterations"
 #include "prc_class_const"
 
 void main()

@@ -1,3 +1,4 @@
+#include "prc_alterations"
 void main()
 {
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_GATE);

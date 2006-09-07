@@ -1,3 +1,4 @@
+#include "prc_alterations"
 void main()
 {
     object oTarget = GetLastSpeaker();

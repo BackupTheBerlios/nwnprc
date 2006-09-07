@@ -92,7 +92,7 @@ void main()
         {
             effect eDeath = EffectDamage(GetCurrentHitPoints(oTarget)+1);
             ApplyEffectToObject(DURATION_TYPE_INSTANT,eBlood,oTarget);
-            DelayCommand(1.5f,ApplyEffectToObject(DURATION_TYPE_INSTANT,eDeath,oTarget));
+            DelayCommand(1.5f, ApplyEffectToObject(DURATION_TYPE_INSTANT,eDeath,oTarget));
         }
             else
         {

@@ -151,6 +151,12 @@
                 <element name="Mod_Hak" type="10" value="prcc" />
             </struct>
             <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prccomp" />
+            </struct>
+            <struct id="8" >
+                <element name="Mod_Hak" type="10" value="prcc" />
+            </struct>
+            <struct id="8" >
                 <element name="Mod_Hak" type="10" value="prc_2das" />
             </struct>
             <struct id="8" >

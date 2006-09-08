@@ -10,7 +10,7 @@ void main()
     if(GetPRCSwitch(MARKER_PRC_COMPANION))
     {
         int nOldAppearance = GetAppearanceType(OBJECT_SELF);
-        int nNewAppearance;
+        int nNewAppearance = nOldAppearance;
         int nRandom = d100();
         switch(nOldAppearance)
         {
@@ -280,7 +280,8 @@ void main()
         
         }
         if(nOldAppearance != nNewAppearance)
-            SetCreatureAppearanceType(OBJECT_SELF, nNewAppearance);
+            DelayCommand(0.1,
+                SetCreatureAppearanceType(OBJECT_SELF, nNewAppearance));
     }
     
 }

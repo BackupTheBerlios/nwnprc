@@ -1,0 +1,79 @@
+2DA V2.0
+
+          LABEL                                               MODEL               
+0         None                                                ****                
+1         Lizard                                              c_tailliz           
+2         Bone                                                c_tailbone          
+3         Devil                                               c_taildevil         
+4         ****                                                ****                
+5         ****                                                ****                
+6         ****                                                ****                
+7         ****                                                ****                
+8         ****                                                ****                
+9         ****                                                ****                
+10        ****                                                ****                
+11        ****                                                ****                
+12        ****                                                ****                
+13        ****                                                ****                
+14        ****                                                ****                
+15        ****                                                ****                
+16        ****                                                ****                
+17        ****                                                ****                
+18        ****                                                ****                
+19        ****                                                ****                
+20        ****                                                ****                
+21        ****                                                ****                
+22        ****                                                ****                
+23        ****                                                ****                
+24        ****                                                ****                
+25        ****                                                ****                
+26        ****                                                ****                
+27        ****                                                ****                
+28        ****                                                ****                
+29        ****                                                ****                
+30        Cat                                                 zep_tailcat         
+31        ****                                                ****                
+32        ****                                                ****                
+33        ****                                                ****                
+34        ****                                                ****                
+35        ****                                                ****                
+36        ****                                                ****                
+37        "Mage Tail"                                         c_magetail          
+38        "Mage Tail 2"                                       c_tailomge          
+39        "War Tail"                                          c_tailowar          
+40        "Lizard, Red"                                       c_taillizr          
+41        ****                                                ****                
+42        ****                                                ****                
+43        ****                                                ****                
+44        ****                                                ****                
+45        ****                                                ****                
+46        ****                                                ****                
+47        "Lizard, Black"                                     c_taillizbk         
+48        "Lizard, Blue"                                      c_taillizbl         
+49        "Lizard, White"                                     c_taillizwh         
+50        "Lizard, Prizm"                                     c_taillizprz        
+51        "Lizard, Shadow"                                    c_taillizsh         
+52        "Lizard, Brass"                                     c_taillizbs         
+53        "Lizard, Bronze"                                    c_taillizbz         
+54        "Lizard, Copper"                                    c_taillizcp         
+55        "Lizard, Gold"                                      c_taillizgd         
+56        "Lizard, Silver"                                    c_taillizsl         
+57        Gargoyle                                            c_tailgarg          
+58        Minotaur                                            c_tailmino          
+59        ****                                                ****                
+60        ****                                                ****                
+61        WereCat                                             c_tailwerecat       
+62        Bulette                                             c_tailbulette       
+63        Raven                                               c_tailraven         
+64        Falcon                                              c_tailfalcon        
+65        Manticore                                           c_tailmanticore     
+66        ****                                                ****                
+67        ****                                                ****                
+68        ****                                                ****                
+69        ****                                                ****                
+70        ****                                                ****                
+71        ****                                                ****                
+72        ****                                                ****                
+73        ****                                                ****                
+74        ****                                                ****                
+75        ****                                                ****                

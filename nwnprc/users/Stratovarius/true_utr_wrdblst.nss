@@ -21,7 +21,7 @@
     Normal:  Suffusing your ally with the glow of positive energy, you eliminate the drain he experiences.
              Remove all ability drain from the target.
     Reverse: Your words cause the body of a foe to weaken and grow more frail.
-             Your foe takes a 1d6 penalty to Dex, Con, or Str. 
+             Your foe takes a 1d6 penalty to Dex, Con, or Str. Choose the Ability to drain with Word of Bolstering, Choice.
 */
 
 #include "true_inc_trufunc"

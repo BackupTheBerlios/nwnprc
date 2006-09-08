@@ -8,17 +8,17 @@
     5/8/06 by Stratovarius
 */ /** @file
 
-    Analyze Item
+    Agitate Item
 
     Level: Crafted Tool 2
-    Range: Touch
+    Range: 30 feet.
     Target: One Object (Or Possesor)
     Duration: 6 Rounds
     Spell Resistance: Yes
     Metautterances: Extend
 
-    By studying an item, you can determine a great deal about it, including its magical properties, if any.
-    You identify the target object.
+    You increase or decrease the temperature of the object, harming creatures in physical contact with it.
+    You affect the target with either the Heat Metal or Chill Metal spell.
 */
 
 #include "true_inc_trufunc"

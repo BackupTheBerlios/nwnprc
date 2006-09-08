@@ -20,8 +20,8 @@
 
     Normal:  With a word, you liberate your target from all foreign influence, freeing her mind. Any enchantments or curses are converted to runic truespeech and fade harmlessly away.
              This utterance removes any negative mind affecting effect.
-    Reverse: Your words of power roll over you target's body, which stiffens into rigidity.
-             Your target is paralyzed.
+    Reverse: Your words crawl into the mind of your enemy, allowing you to control your foe's body as if it were your puppet.
+             Your target is dominated.
 */
 
 #include "true_inc_trufunc"

@@ -2,13 +2,13 @@
     ----------------
     Suppress Item
 
-    true_utr_supweap
+    true_utr_supitem
     ----------------
 
     12/8/06 by Stratovarius
 */ /** @file
 
-    Suppress Weapon
+    Suppress Item
 
     Level: Crafted Tool 4
     Range: 60 feet

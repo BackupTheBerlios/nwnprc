@@ -18,7 +18,7 @@
     Metautterances: Extend
 
     Your words fundamentally alter the material of which a weapon is made, transforming it according to your whim.
-    The target weapon ignores all non-epic (x/56 or lower) DR.
+    The target weapon ignores all non-epic (x/+5 or lower) DR.
 */
 
 #include "true_inc_trufunc"

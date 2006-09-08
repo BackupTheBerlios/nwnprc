@@ -1,14 +1,14 @@
 /*
     ----------------
-    Fortify Armour
+    Keen Weapon
 
-    true_utr_fortify
+    true_utr_keen
     ----------------
 
     5/8/06 by Stratovarius
 */ /** @file
 
-    Fortify Armour
+    Keen Weapon
 
     Level: Crafted Tool 1
     Range: 30 feet

@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 2, 2006
+    Modified: Sept 5, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -305,7 +305,7 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
 {
     if(GetLocalInt(oPC, "DynConv_Waiting") == FALSE)
         return;
-    if(i < MaxValue)
+    if(i <= MaxValue)
     {
         int bValid = TRUE;
         string sTemp = "";
@@ -523,7 +523,7 @@ void main()
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
                         SetLocalInt(oPC, PRC_CRAFT_AC, -1);
                         SetLocalInt(oPC, PRC_CRAFT_MIGHTY, -1);
-                        PopulateList(oPC, MaxListSize("prc_craft_gen_it"), TRUE, "prc_craft_gen_it");
+                        PopulateList(oPC, PRCGetFileEnd("prc_craft_gen_it"), TRUE, "prc_craft_gen_it");
                     }
                     else if(nState == PRC_CRAFT_STATE_MAGIC)
                     {
@@ -551,11 +551,11 @@ void main()
                         else if(sFile == "")
                         {
                             sFile = "iprp_spells";
-                            PopulateList(oPC, MaxListSize(sFile), TRUE, sFile);
+                            PopulateList(oPC, PRCGetFileEnd(sFile), TRUE, sFile);
                         }
                         else
                         {
-                            PopulateList(oPC, MaxListSize(sFile), FALSE, sFile);
+                            PopulateList(oPC, PRCGetFileEnd(sFile), FALSE, sFile);
                         }
                         string sMaterial = GetStringLeft(GetTag(oTarget), 3);
                         object oChest = GetCraftChest();
@@ -589,7 +589,7 @@ void main()
                     SetHeader("Select a subtype.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     SetLocalInt(oPC, "DynConv_Waiting", TRUE);
-                    PopulateList(oPC, MaxListSize(sSubtype), TRUE, sSubtype);
+                    PopulateList(oPC, PRCGetFileEnd(sSubtype), TRUE, sSubtype);
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -598,7 +598,7 @@ void main()
                     SetHeader("Select a costtable value.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     SetLocalInt(oPC, "DynConv_Waiting", TRUE);
-                    PopulateList(oPC, MaxListSize(sCostTable), FALSE, sCostTable);
+                    PopulateList(oPC, PRCGetFileEnd(sCostTable), FALSE, sCostTable);
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -607,7 +607,7 @@ void main()
                     SetHeader("Select a param1 value.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     SetLocalInt(oPC, "DynConv_Waiting", TRUE);
-                    PopulateList(oPC, MaxListSize(sParam1), FALSE, sParam1);
+                    PopulateList(oPC, PRCGetFileEnd(sParam1), FALSE, sParam1);
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -643,7 +643,7 @@ void main()
                     AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     SetLocalInt(oPC, "DynConv_Waiting", TRUE);
-                    PopulateList(oPC, MaxListSize("racialtypes"), TRUE, "racialtypes");
+                    PopulateList(oPC, PRCGetFileEnd("racialtypes"), TRUE, "racialtypes");
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -721,7 +721,7 @@ void main()
                 case STAGE_CONFIRM_MAGIC:
                 {
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
-                    ApplyItemProps(oNewItem, sFile, nLine);
+                    //ApplyItemProps(oNewItem, sFile, nLine);
                     struct itemvars strTempOld;
                     strTempOld.item = oItem;
                     strTempOld.enhancement = nEnhancement;
@@ -947,6 +947,8 @@ void main()
                             {
                                 nStage = STAGE_BANE;
                             }
+                            else
+                                ApplyItemProps(oNewItem, sFile, nLine);
                         }
                     }
                 }
@@ -1028,6 +1030,7 @@ void main()
                 {
                     nStage = STAGE_CONFIRM_MAGIC;
                     SetLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE_RACE, nChoice);
+                    ApplyItemProps(oNewItem, sFile, nLine);
                 }
                 MarkStageNotSetUp(nStage, oPC);
                 break;
@@ -1069,7 +1072,7 @@ void main()
                 }
                 else
                 {
-                    if((nChoice > PRC_CRAFT_FLAG_MASTERWORK) && (nChoice < PRC_CRAFT_FLAG_COLD_IRON))
+                    if((nChoice > PRC_CRAFT_FLAG_MASTERWORK) && (nChoice <= PRC_CRAFT_FLAG_DEEP_CRYSTAL))
                         nChoice |= PRC_CRAFT_FLAG_MASTERWORK;
                     SetLocalInt(oPC, PRC_CRAFT_MATERIAL, nChoice);
                     oNewItem = MakeMyItem(oPC, nBase, nAC, nChoice, nMighty);

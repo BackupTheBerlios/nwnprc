@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 2, 2006
+    Modified: Sept 5, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -27,13 +27,11 @@ int GetItemBaseAC(object oItem);
 
 int GetItemArmourCheckPenalty(object oItem);
 
-//Extra function for speed, minimises 2da reads
-int MaxListSize(string sTable);
-
 #include "prc_alterations"
 #include "inc_newspellbook"
 #include "prc_inc_spells"
 #include "prc_inc_listener"
+#include "prc_inc_fileend"
 
 const int NUM_MAX_PROPERTIES            = 200;
 const int NUM_MAX_SUBTYPES              = 256;
@@ -183,6 +181,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
     int nSubType = GetItemPropertySubType(ip);
     int nCostTableValue = GetItemPropertyCostTableValue(ip);
     int nParam1Value = GetItemPropertyParam1Value(ip);
+    int nBase = GetBaseItemType(oItem);
     if(sFile == "craft_armour")
     {
         switch(nType)
@@ -303,6 +302,9 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
             }
             case ITEM_PROPERTY_DAMAGE_BONUS:
             {
+                int bAmmo = StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem))) == PRC_CRAFT_ITEM_TYPE_AMMO;
+                if(nSubType == (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING)
+                    return (nCostTableValue - 1);
                 if(nSubType == IP_CONST_DAMAGETYPE_ACID)
                 {
                     if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 20;
@@ -533,7 +535,7 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
         {
             int nDamageType = StringToInt(Get2DACache("baseitems", "WeaponType", nBase));
             int bRangedType = StringToInt(Get2DACache("baseitems", "RangedWeapon", nBase));
-            int bRanged = bRangedType && (bRangedType != nBase);
+            int bRanged = bRangedType;// && (bRangedType != nBase);
             switch(nLine)
             {
                 case 27:
@@ -709,7 +711,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
             array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         array_create(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         //Setup
-        for(i = 0; i < MaxListSize(sFile); i++)
+        for(i = 0; i <= PRCGetFileEnd(sFile); i++)
         {
             if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)) && PrereqSpecialHandling(sFile, oItem, i))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
@@ -784,20 +786,20 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
 
     if(!bEpic && strTemp.epic)
     {   //attempting to craft epic item without epic crafting feat, fails
-        for(i = 0; i < MaxListSize(sFile); i++)
+        for(i = 0; i <= PRCGetFileEnd(sFile); i++)
             array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
     if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
     {   //no enhancement value, cannot add more itemprops, stop right there
         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
-        for(i = 1; i < MaxListSize(sFile); i++)
+        for(i = 1; i <= PRCGetFileEnd(sFile); i++)
             array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
     string sTemp;
     //Checking available spells, epic flag, caster level
-    for(i = 0; i < MaxListSize(sFile); i++)
+    for(i = 0; i <= PRCGetFileEnd(sFile); i++)
     {   //will skip over properties already disallowed
         if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
         {
@@ -815,23 +817,11 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
             else if(nLevel < StringToInt(Get2DACache(sFile, "Level", i)))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else
-            {   //attempting to minimise 2da reads for spell prerequisite checking
-                nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", i));
-                //INSERT ALTERNATIVE FOR CHECKING POWERS HERE
+            {
                 if(nSpellPattern)
                 {
                     if(
                         (sPropertyType == "M") &&
-                        /*
-                        !(
-                            (nSpellPattern & 1) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell1", i))) : 1 &&
-                            (nSpellPattern & 2) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell2", i))) : 1 &&
-                            (nSpellPattern & 4) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell3", i))) : 1 &&
-                            ((nSpellPattern & 8) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR1", i))) : 1 ||
-                            (nSpellPattern & 16) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR2", i))) : 1)
-                            )
-                        )
-                        */
                         !CheckCraftingSpells(oPC, sFile, i)
                         )
                     {
@@ -840,16 +830,6 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
                     }
                     if(
                         (sPropertyType == "P") &&
-                        /*
-                        !(
-                            (nSpellPattern & 1) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell1", i)), oPC) : 1 &&
-                            (nSpellPattern & 2) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell2", i)), oPC) : 1 &&
-                            (nSpellPattern & 4) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell3", i)), oPC) : 1 &&
-                            ((nSpellPattern & 8) ? GetHasPower(StringToInt(Get2DACache(sFile, "SpellOR1", i)), oPC) : 1 ||
-                            (nSpellPattern & 16) ? GetHasPower(StringToInt(Get2DACache(sFile, "SpellOR2", i)), oPC) : 1)
-                            )
-                        )
-                        */
                         !CheckCraftingPowerPoints(oPC, sFile, i)
                         )
                     {
@@ -911,12 +891,7 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
     int nSubType = StringToInt(Get2DACache(sFile, "SubType" + IntToString(nIndex), nLine));
     int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue" + IntToString(nIndex), nLine));
     int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value" + IntToString(nIndex), nLine));
-    /*
-    if((sFile == "craft_weapon") && IPGetIsRangedWeapon(oItem))
-    {
-        if(nType == ITEM_PROPERTY_ENHANCEMENT_BONUS)
-            nType = ITEM_PROPERTY_ATTACK_BONUS;
-    }*/
+    int nBase = GetBaseItemType(oItem);
     if(StringToInt(Get2DACache(sFile, "Special", nLine)))
     {
         if(sFile == "craft_armour")
@@ -941,8 +916,12 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
                     break;
                 }
             }
-            if(nLine < 20 && IPGetIsRangedWeapon(oItem))
-                nType = ITEM_PROPERTY_ATTACK_BONUS;
+            if(nType == ITEM_PROPERTY_ENHANCEMENT_BONUS &&
+                StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem))) == PRC_CRAFT_ITEM_TYPE_AMMO)
+            {
+                nType = ITEM_PROPERTY_DAMAGE_BONUS;
+                nSubType = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;
+            }
         }
     }
 
@@ -1476,6 +1455,14 @@ int GetPnPItemCost(struct itemvars strTemp)
     {
         //not implemented
     }
+    if(nMaterial & PRC_CRAFT_FLAG_MUNDANE_CRYSTAL)
+    {
+        //not implemented
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
+    {
+        //not implemented
+    }
     nTemp += nAdd;
     nEnhancement = GetEnhancementBaseCost(strTemp.item) * strTemp.enhancement * strTemp.enhancement;
     if(strTemp.epic) nEnhancement *= 10;
@@ -1486,6 +1473,8 @@ int GetPnPItemCost(struct itemvars strTemp)
     {   //you're not getting away with negative values that easily :P
         nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(nScale) / 100.0);
     }
+    if(StringToInt(Get2DACache("baseitems", "Stacking", nType)) > 1)
+        nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(GetItemStackSize(strTemp.item))/ 50.0);
     if(nTemp < 1) nTemp = 1;
 
     return nTemp;
@@ -1550,6 +1539,16 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
         sPrefix = "Silver ";
         MakeSilver(oNew);
     }
+    if(nMaterial & PRC_CRAFT_FLAG_MUNDANE_CRYSTAL)
+    {
+        sPrefix = "Crystal ";
+        MakeMundaneCrystal(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
+    {
+        sPrefix = "Deep Crystal ";
+        MakeDeepCrystal(oNew);
+    }
     if(nMighty > 0) sPrefix += "Composite ";
 
     SetName(oNew, sPrefix + GetName(oNew));
@@ -1577,6 +1576,7 @@ string InsertSpaceAfterString(string sString)
 string GetItemPropertyString(itemproperty ip)
 {
     int nType = GetItemPropertyType(ip);
+    if(nType == -1) return "";
     int nSubType = GetItemPropertySubType(ip);
     int nCostTable = GetItemPropertyCostTable(ip);
     int nCostTableValue = GetItemPropertyCostTableValue(ip);
@@ -1622,155 +1622,6 @@ string ItemStats(object oItem)
         ip = GetNextItemProperty(oItem);
     }
     return sDesc;
-}
-
-int MaxListSize(string sTable)
-{
-    sTable = GetStringLowerCase(sTable); //sanity check
-
-    if(sTable == "prc_craft_gen_it")  //no support for cep weapons just yet
-        return 113;
-    if(sTable == "craft_armour")
-        return 64;
-    if(sTable == "craft_weapon")
-        return 43;   //fix
-    if(sTable == "craft_wondrous")
-        return 0;   //fix
-    if(sTable == "craft_ring")
-        return 0;
-    if(sTable == "classes")
-        return 256;
-    if(sTable == "disease")
-        return 53;
-    if(sTable == "iprp_abilities")
-        return 6;
-    if(sTable == "iprp_aligngrp")
-        return 6;
-    if(sTable == "iprp_alignment")
-        return 9;
-    if(sTable == "iprp_ammocost")
-        return 16;
-    if(sTable == "iprp_ammotype")
-        return 3;
-    if(sTable == "iprp_amount")
-        return 5;
-    if(sTable == "iprp_aoe")
-        return 6;
-    if(sTable == "iprp_arcspell")
-        return 20;
-    if(sTable == "iprp_bladecost")
-        return 6;
-    if(sTable == "iprp_bonuscost")
-        return 13;
-    if(sTable == "iprp_casterlvl")
-        return 61;
-    if(sTable == "iprp_chargecost")
-        return 14;
-    if(sTable == "iprp_color")
-        return 7;
-    if(sTable == "iprp_combatdam")
-        return 3;
-    if(sTable == "iprp_damagecost")
-        return 81;
-    if(sTable == "iprp_damagetype")
-        return 14;
-    if(sTable == "iprp_damvulcost")
-        return 8;
-    if(sTable == "iprp_decvalue1")
-        return 10;
-    if(sTable == "iprp_decvalue2")
-        return 10;
-    if(sTable == "iprp_feats")
-        return NUM_MAX_FEAT_SUBTYPES;
-    if(sTable == "iprp_immuncost")
-        return 8;
-    if(sTable == "iprp_immunity")
-        return 10;
-    if(sTable == "iprp_incvalue1")
-        return 10;
-    if(sTable == "iprp_incvalue2")
-        return 10;
-    if(sTable == "iprp_kitcost")
-        return 51;
-    if(sTable == "iprp_lightcost")
-        return 5;
-    if(sTable == "iprp_meleecost")
-        return 21;
-    if(sTable == "iprp_monstcost")
-        return 58;
-    if(sTable == "iprp_monsterhit")
-        return 10;
-    if(sTable == "iprp_metamagic")
-        return 7;
-    if(sTable == "iprp_monstcost")
-        return 59;
-    if(sTable == "iprp_neg10cost")
-        return 11;
-    if(sTable == "iprp_neg5cost")
-        return 11;
-    if(sTable == "iprp_onhit")
-        return 26;
-    if(sTable == "iprp_onhitcost")
-        return 71;
-    if(sTable == "iprp_onhitdur")
-        return 28;
-    if(sTable == "iprp_onhitspell")
-        return 210;
-    if(sTable == "iprp_poison")
-        return 6;
-    if(sTable == "iprp_protection")
-        return 20;
-    if(sTable == "iprp_redcost")
-        return 6;
-    if(sTable == "iprp_resistcost")
-        return 25;
-    if(sTable == "iprp_saveelement")
-        return 22;
-    if(sTable == "iprp_savingthrow")
-        return 4;
-    if(sTable == "iprp_skillcost")
-        return 51;
-    if(sTable == "iprp_soakcost")
-        return 51;
-    if(sTable == "iprp_speed_dec")
-        return 10;
-    if(sTable == "iprp_speed_enh")
-        return 10;
-    if(sTable == "iprp_spellcost")
-        return 244;
-    if(sTable == "iprp_spells")
-        return NUM_MAX_SPELL_SUBTYPES;
-    if(sTable == "iprp_spellcstr")
-        return 40;
-    if(sTable == "iprp_spelllvcost")
-        return 10;
-    if(sTable == "iprp_spelllvlimm")
-        return 10;
-    if(sTable == "iprp_spellshl")
-        return 8;
-    if(sTable == "iprp_srcost")
-        return 62;
-    if(sTable == "iprp_trapcost")
-        return 12;
-    if(sTable == "iprp_traps")
-        return 5;
-    if(sTable == "iprp_visualfx")
-        return 7;
-    if(sTable == "iprp_walk")
-        return 2;
-    if(sTable == "iprp_weightcost")
-        return 7;
-    if(sTable == "iprp_weightinc")
-        return 6;
-    if(sTable == "poison")
-        return 147;
-    if(sTable == "racialtypes")
-        return 256;
-    if(sTable == "skills")
-        return 29;
-
-    if(DEBUG) DoDebug("MaxListSize: Unrecognised 2da file: " + sTable);
-    return 0;
 }
 
 //Returns TRUE if nBaseItem can have nItemProp

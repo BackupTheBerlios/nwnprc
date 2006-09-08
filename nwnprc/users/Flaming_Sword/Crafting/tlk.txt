@@ -246,6 +246,7 @@ Caster Level: 23rd; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic 
   <entry id="51652" lang="en" sex="m">Wounding</entry>
   <entry id="51653" lang="en" sex="m">A weapon of wounding deals damage to a creature such that a wound it inflicts bleeds for 1 point of damage per round thereafter in addition to the normal damage the weapon deals. Multiple wounds from the weapon result in cumulative bleeding. The bleeding can only be stopped by a successful Heal check (DC 15) or the application of any cure spell or other healing spell.
 Caster Level: 10th; Prerequisites: Craft Magic Arms and Armor, sword; Market Price: +2 bonus.</entry>
+
   <entry id="51654" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51655" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51656" lang="en" sex="m">Sonic Warding</entry>
@@ -255,6 +256,7 @@ Caster Level: 10th; Prerequisites: Craft Magic Arms and Armor, sword; Market Pri
   <entry id="51660" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51661" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51662" lang="en" sex="m">Sonic Warding</entry>
+  
   <entry id="51663" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51664" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51665" lang="en" sex="m">Sonic Warding</entry>
@@ -273,6 +275,1034 @@ Caster Level: 10th; Prerequisites: Craft Magic Arms and Armor, sword; Market Pri
   <entry id="51678" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51679" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51680" lang="en" sex="m">Sonic Warding</entry>
+
+
+  <entry id="51530" lang="en" sex=m">Description: 
+
+Enhancement Bonus: +X 
+
+Prerequisites: 
+
+Level: 3X Enhancement bonus
+
+Cost: 
+
++X Enhancement
+</entry>
+
+
+
+  <entry id="51532" lang="en" sex=m">Description: 
+
+Damage Resistance: Acid Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51534" lang="en" sex=m">Description: 
+
+Damage Resistance: Acid Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+
+
+  <entry id="51536" lang="en" sex=m">Description: 
+
+Damage Resistance: Acid Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51586" lang="en" sex=m">Description: 
+
+Damage Resistance: Acid Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51538" lang="en" sex=m">Description: 
+
+Bonus Feat: Deflect Arrows 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Shield
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51540" lang="en" sex=m">Description: 
+
+Damage Resistance: Cold Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51530" lang="en" sex=m">Description: 
+
+Enhancement Bonus: +5 
+
+Prerequisites: 
+
+Level: 15
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51530" lang="en" sex=m">Description: 
+
+Enhancement Bonus: +6 
+
+Prerequisites: 
+
+Level: 18
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51542" lang="en" sex=m">Description: 
+
+Damage Resistance: Cold Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51544" lang="en" sex=m">Description: 
+
+Damage Resistance: Cold Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51530" lang="en" sex=m">Description: 
+
+Enhancement Bonus: +7 
+
+Prerequisites: 
+
+Level: 21
+
+Cost: 
+
++7 Enhancement
+</entry>
+
+  <entry id="51530" lang="en" sex=m">Description: 
+
+Enhancement Bonus: +8 
+
+Prerequisites: 
+
+Level: 24
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51588" lang="en" sex=m">Description: 
+
+Damage Resistance: Cold Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51546" lang="en" sex=m">Description: 
+
+Damage Resistance: Electrical Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51548" lang="en" sex=m">Description: 
+
+Damage Resistance: Electrical Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51550" lang="en" sex=m">Description: 
+
+Damage Resistance: Electrical Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51598" lang="en" sex=m">Description: 
+
+Damage Resistance: Electrical Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51552" lang="en" sex=m">Description: 
+
+Use: Greater Sanctuary (18) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Greater Sanctuary
+
+Cost: 
+
++49000gp
+</entry>
+
+
+  <entry id="51554" lang="en" sex=m">Description: 
+
+Damage Resistance: Fire Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51556" lang="en" sex=m">Description: 
+
+Damage Resistance: Fire Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+
+  <entry id="51558" lang="en" sex=m">Description: 
+
+Damage Resistance: Fire Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51590" lang="en" sex=m">Description: 
+
+Damage Resistance: Fire Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+
+  <entry id="51560" lang="en" sex=m">Description: 
+
+Damage Reduction: +1 Soak 5 Damage 
+
+Prerequisites: 
+
+Caster Level: 18
+Spell(s): Stoneskin
+
+Cost: 
+
++3 Enhancement
+</entry>
+
+  <entry id="51592" lang="en" sex=m">Description: 
+
+Damage Reduction: +1 Soak 10 Damage 
+
+Prerequisites: 
+
+Caster Level: 19
+Spell(s): Stoneskin
+
+Cost: 
+
++4 Enhancement
+</entry>
+
+
+  <entry id="51592" lang="en" sex=m">Description: 
+
+Damage Reduction: +1 Soak 15 Damage 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Stoneskin
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51592" lang="en" sex=m">Description: 
+
+Damage Reduction: +6 Soak 5 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Stoneskin
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51631" lang="en" sex=m">Description: 
+
+Damage Bonus: Acid 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Acid Fog
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51609" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Lawful 2d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Chaotic 
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51592" lang="en" sex=m">Description: 
+
+Damage Reduction: +6 Soak 10 Damage 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Stoneskin
+
+Cost: 
+
++7 Enhancement
+</entry>
+
+  <entry id="51562" lang="en" sex=m">Description: 
+
+Use: Spell Turning (13) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Spell Turning
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51633" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Lawful 3d6 Damage 
+On Hit: Level Drain DC=57 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Chaotic 
+Spell(s): Word of Chaos
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51611" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Chaotic 2d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Lawful 
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51594" lang="en" sex=m">Description: 
+
+Use: Spell Turning (13) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 25
+Spell(s): Spell Turning
+
+Cost: 
+
++10 Enhancement
+</entry>
+
+  <entry id="51564" lang="en" sex=m">Description: 
+
+Skill Bonus: Hide +5 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Invisibility
+
+Cost: 
+
++3750gp
+</entry>
+
+  <entry id="51635" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Chaotic 3d6 Damage 
+On Hit: Level Drain DC=57 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Lawful 
+Spell(s): Dictum
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51613" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Dwarf 2d6 Damage 
+Enhancement Bonus vs.: Dwarf +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Summon Creature I
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51566" lang="en" sex=m">Description: 
+
+Skill Bonus: Hide +10 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Invisibility
+
+Cost: 
+
++15000gp
+</entry>
+
+  <entry id="51568" lang="en" sex=m">Description: 
+
+Skill Bonus: Hide +15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Invisibility
+
+Cost: 
+
++33750gp
+</entry>
+
+  <entry id="51637" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Dwarf 4d6 Damage 
+Enhancement Bonus vs.: Dwarf +4 
+On Hit: Slay Racial Group DC=27 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Summon Creature IX
+
+Cost: 
+
++7 Enhancement
+</entry>
+
+  <entry id="51615" lang="en" sex=m">Description: 
+
+On Hit: Slay Racial Group DC=14 
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Heal
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51570" lang="en" sex=m">Description: 
+
+Skill Bonus: Move Silently +5 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Silence
+
+Cost: 
+
++3750gp
+</entry>
+
+  <entry id="51572" lang="en" sex=m">Description: 
+
+Skill Bonus: Move Silently +10 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Silence
+
+Cost: 
+
++15000gp
+</entry>
+
+  <entry id="51647" lang="en" sex=m">Description: 
+
+On Hit: Slay Racial Group DC=21 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Resurrection
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51617" lang="en" sex=m">Description: 
+
+Damage Bonus: Fire 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Flame Weapon, Fireball or Flame Strike
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51574" lang="en" sex=m">Description: 
+
+Skill Bonus: Move Silently +15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Silence
+
+Cost: 
+
++33750gp
+</entry>
+
+  <entry id="51576" lang="en" sex=m">Description: 
+
+Damage Resistance: Sonic Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51639" lang="en" sex=m">Description: 
+
+Damage Bonus: Fire 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Fireball
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51619" lang="en" sex=m">Description: 
+
+Damage Bonus: Cold 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): , Ice Storm
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51578" lang="en" sex=m">Description: 
+
+Damage Resistance: Sonic Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51580" lang="en" sex=m">Description: 
+
+Damage Resistance: Sonic Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51643" lang="en" sex=m">Description: 
+
+Damage Bonus: Cold 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Cone of Cold
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51621" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Evil 2d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Good
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51600" lang="en" sex=m">Description: 
+
+Damage Resistance: Sonic Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51582" lang="en" sex=m">Description: 
+
+Spell Resistance: 13 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51641" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Evil 3d6 Damage 
+On Hit: Level Drain DC=57 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Good
+Spell(s): Holy Word
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51623" lang="en" sex=m">Description: 
+
+Keen 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Keen Edge
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51582" lang="en" sex=m">Description: 
+
+Spell Resistance: 15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++3 Enhancement
+</entry>
+
+  <entry id="51582" lang="en" sex=m">Description: 
+
+Spell Resistance: 17 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++4 Enhancement
+</entry>
+
+  <entry id="51625" lang="en" sex=m">Description: 
+
+Damage Bonus: Electrical 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): , Call Lightning or Lightning Bolt
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51645" lang="en" sex=m">Description: 
+
+Damage Bonus: Electrical 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Lightning Bolt
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51582" lang="en" sex=m">Description: 
+
+Spell Resistance: 19 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51596" lang="en" sex=m">Description: 
+
+Spell Resistance: 21 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Spell Resistance
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51649" lang="en" sex=m">Description: 
+
+Damage Bonus: Sonic 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 0
+Spell(s): Acid Fog
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51627" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Good 2d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Evil
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51596" lang="en" sex=m">Description: 
+
+Spell Resistance: 23 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Spell Resistance
+
+Cost: 
+
++7 Enhancement
+</entry>
+
+  <entry id="51596" lang="en" sex=m">Description: 
+
+Spell Resistance: 25 
+
+Prerequisites: 
+
+Caster Level: 23
+Spell(s): Spell Resistance
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51651" lang="en" sex=m">Description: 
+
+Damage Bonus vs.: Good 3d6 Damage 
+On Hit: Level Drain DC=57 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Evil
+Spell(s): Blasphemy
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51629" lang="en" sex=m">Description: 
+
+On Hit: Vorpal DC=57 
+
+Prerequisites: 
+
+Caster Level: 18
+Spell(s): Circle of Death, Keen Edge
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51596" lang="en" sex=m">Description: 
+
+Spell Resistance: 27 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Spell Resistance
+
+Cost: 
+
++9 Enhancement
+</entry>
+
+  <entry id="51584" lang="en" sex=m">Description: 
+
+Use: Control Undead (13) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Control Undead
+
+Cost: 
+
++49000gp
+</entry>
+
+  <entry id="51653" lang="en" sex=m">Description: 
+
+On Hit: Wounding DC=57 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): , Mordenkainen's Sword or Black Blade of Disaster
+
+Cost: 
+
++2 Enhancement
+</entry>
+
 
 
       LABEL                                                     FEAT     DESCRIPTION ICON             MINATTACKBONUS MINSTR MINDEX MININT MINWIS MINCON MINCHA MINSPELLLVL PREREQFEAT1 PREREQFEAT2 GAINMULTIPLE EFFECTSSTACK ALLCLASSESCANUSE CATEGORY MAXCR SPELLID SUCCESSOR CRValue USESPERDAY MASTERFEAT TARGETSELF OrReqFeat0 OrReqFeat1 OrReqFeat2 OrReqFeat3 OrReqFeat4 REQSKILL ReqSkillMinRanks REQSKILL2 ReqSkillMinRanks2 Constant                                       TOOLSCATEGORIES HostileFeat MinLevel MinLevelClass MaxLevel MinFortSave PreReqEpic ReqAction 

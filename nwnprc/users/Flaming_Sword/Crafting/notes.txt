@@ -73,3 +73,21 @@ add psionics to crafting
 [00:08] Stratovarius: skipping most of the XPH ones of course
 [00:08] Flaming_Sword: i think i've already taken the epic ones in the srd into account
 [00:08] Stratovarius: I think you did
+
+Changes since 3.1a3 (that i can remember, anyway)
+
+Disabled change appearance option since it doesn't do anything except screw the game
+Fixed TMI with armour with skill bonuses
+Fixed skill check reading a non-existent 2da
+Added ranged weapon support (including ammo and thrown weapons, largely untested)
+Modified 2das to allow actual enhancement and damage bonuses on ranged weapons that are conferred upon their ammo (see above)
+Filtered some properties for ranged weapons because onhit properties don't work on them :(
+Fixed display bug for bane weapons (untested)
+Fixed spell/power prerequisite checking
+Fixed some 2da errors
+Added time cost notification
+Added support for an extra time scale switch (PRC_CRAFT_TIMER_MULTIPLIER)
+Fixed application of onhit properties
+Added support for eventual inclusion of psionic properties (power checking, special materials)
+Added option to clone an item (untested)
+Cleaned up code a bit

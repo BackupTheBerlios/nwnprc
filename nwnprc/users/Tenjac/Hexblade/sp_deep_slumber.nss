@@ -122,7 +122,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
         if(oLowest != OBJECT_INVALID)
         {
             //Fire cast spell at event for the specified target
-            SignalEvent(oLowest, EventSpellCastAt(OBJECT_SELF, SPELL_SLEEP));
+            SignalEvent(oLowest, EventSpellCastAt(OBJECT_SELF, SPELL_DEEP_SLUMBER));
             //Make SR check
             if (!MyPRCResistSpell(OBJECT_SELF, oLowest,nPenetr))
             {

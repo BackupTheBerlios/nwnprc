@@ -1,2 +1,9 @@
 Infinite Dungeons public resources 		: Bioware	: http://nwn.bioware.com/premium/module_infinitedungeons.html
 Lisa's Third Stab at Fancy Schmancy Cloaks 	: Lisa		: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=7330&id=6893
+Glabrezu					: CODI		: http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=495
+Maug (excluding maug items)			: CODI		: http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=497
+Monodrone					: CODI		: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=5094
+Osyluth						: CODI		: http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=499
+Ogre						: DLA		: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=5849
+Treant (excluding placeable treant)		: DLA		: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=770
+Kingmaker soundsets				: Bioware	: http://nwn.bioware.com/premium/module_kingmaker.html

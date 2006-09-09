@@ -721,7 +721,7 @@ void main()
                 case STAGE_CONFIRM_MAGIC:
                 {
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
-                    //ApplyItemProps(oNewItem, sFile, nLine);
+                    ApplyItemProps(oNewItem, sFile, nLine);
                     struct itemvars strTempOld;
                     strTempOld.item = oItem;
                     strTempOld.enhancement = nEnhancement;

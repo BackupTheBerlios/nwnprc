@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Aug 30, 2006
+    Modified: Sept 5, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -27,13 +27,11 @@ int GetItemBaseAC(object oItem);
 
 int GetItemArmourCheckPenalty(object oItem);
 
-//Extra function for speed, minimises 2da reads
-int MaxListSize(string sTable);
-
 #include "prc_alterations"
 #include "inc_newspellbook"
 #include "prc_inc_spells"
 #include "prc_inc_listener"
+#include "prc_inc_fileend"
 
 const int NUM_MAX_PROPERTIES            = 200;
 const int NUM_MAX_SUBTYPES              = 256;
@@ -99,6 +97,9 @@ int GetCraftingTime(int nCost)
         case 4: fDelay = HoursToSeconds(nTemp); break;          //1 hour/1000gp
         case 5: fDelay = 24 * HoursToSeconds(nTemp); break;     //1 day/1000gp
     }
+    int nMultiplyer = GetPRCSwitch(PRC_CRAFT_TIMER_MULTIPLIER);
+    if(nMultiplyer)
+        fDelay *= (IntToFloat(nMultiplyer) / 100.0);
     return FloatToInt(fDelay / 6);
 }
 
@@ -180,6 +181,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
     int nSubType = GetItemPropertySubType(ip);
     int nCostTableValue = GetItemPropertyCostTableValue(ip);
     int nParam1Value = GetItemPropertyParam1Value(ip);
+    int nBase = GetBaseItemType(oItem);
     if(sFile == "craft_armour")
     {
         switch(nType)
@@ -298,14 +300,11 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
                 return (nCostTableValue - 1);
                 break;
             }
-            case ITEM_PROPERTY_ATTACK_BONUS:
-            {
-                if(IPGetIsRangedWeapon(oItem))
-                    return (nCostTableValue - 1);
-                break;
-            }
             case ITEM_PROPERTY_DAMAGE_BONUS:
             {
+                int bAmmo = StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem))) == PRC_CRAFT_ITEM_TYPE_AMMO;
+                if(nSubType == (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING)
+                    return (nCostTableValue - 1);
                 if(nSubType == IP_CONST_DAMAGETYPE_ACID)
                 {
                     if(nCostTableValue == IP_CONST_DAMAGEBONUS_3d6) return 20;
@@ -526,6 +525,7 @@ void DisallowType(object oItem, string sFile, itemproperty ip)
 int PrereqSpecialHandling(string sFile, object oItem, int nLine)
 {
     int nTemp;
+    int nBase = GetBaseItemType(oItem);
     if(StringToInt(Get2DACache(sFile, "Special", nLine)))
     {
         if(sFile == "craft_armour")
@@ -533,23 +533,25 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
         }
         else if(sFile == "craft_weapon")
         {
-            nTemp = StringToInt(Get2DACache("baseitems", "WeaponType", GetBaseItemType(oItem)));
+            int nDamageType = StringToInt(Get2DACache("baseitems", "WeaponType", nBase));
+            int bRangedType = StringToInt(Get2DACache("baseitems", "RangedWeapon", nBase));
+            int bRanged = bRangedType;// && (bRangedType != nBase);
             switch(nLine)
             {
                 case 27:
                 case 28:
                 {
-                    return ((nTemp == 2) || (nTemp == 5));
+                    return (!bRanged && ((nDamageType == 2) || (nDamageType == 5)));
                     break;
                 }
                 case 35:
                 {
-                    return nTemp != 2;
+                    return (!bRanged && (nDamageType != 2));
                     break;
                 }
                 case 41:
                 {
-                    return ((nTemp == 3) || (nTemp == 4));
+                    return (!bRanged && ((nDamageType == 3) || (nDamageType == 4)));
                     break;
                 }
             }
@@ -558,171 +560,8 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
     return TRUE;
 }
 
-//Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
-struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 0, int bSet = 0)
-{
-    struct itemvars strTemp;
-    int i;
-    int j, k, bEnhanced, count;
-    int nEnhancement;
-    int nSpellPattern;
-    int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
-    int nCasterLevel = max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC));
-    int nManifesterLevel = GetManifesterLevel(oPC);
-    int nLevel;
-    string sPropertyType;
-    strTemp.item = oItem;
-    if(bSet)
-    {
-        if(array_exists(oPC, PRC_CRAFT_ITEMPROP_ARRAY))
-            array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
-        array_create(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
-        //Setup
-        for(i = 0; i < MaxListSize(sFile); i++)
-        {
-            if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)) && PrereqSpecialHandling(sFile, oItem, i))
-                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
-        }
-    }
-    itemproperty ip = GetFirstItemProperty(oItem);
-    if(DEBUG) DoDebug("GetItemVars: " + GetName(oItem) + ", before itemprop loop");
-    //Checking itemprops
-    count = 0;
-    while(GetIsItemPropertyValid(ip))
-    {   //assumes no duplicated enhancement itemprops
-        k = Get2DALineFromItemprop(sFile, ip, oItem);   //is causing TMI with armour with skill props
-        count++;
-        if(DEBUG) DoDebug("GetItemVars: itemprop number " + IntToString(count) +
-                            " " + IntToString(GetItemPropertyType(ip)) +
-                            " " + IntToString(GetItemPropertySubType(ip)) +
-                            " " + IntToString(GetItemPropertyCostTableValue(ip)) +
-                            " " + IntToString(GetItemPropertyParam1Value(ip))
-                            );
-
-        if(k >= 0)
-        {
-            if(k < 20) bEnhanced = TRUE;
-            if(bSet)
-            {
-                for(j = StringToInt(Get2DACache(sFile, "ReplaceLast", k)); j >= 0; j--)
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
-                }
-            }
-            nEnhancement = StringToInt(Get2DACache(sFile, "Enhancement", k));
-            strTemp.enhancement += nEnhancement;
-            if(nEnhancement > 5) strTemp.epic = TRUE;
-            strTemp.additionalcost += StringToInt(Get2DACache(sFile, "AdditionalCost", k));
-        }
-        else if(bSet && k == -2)
-        {
-            DisallowType(oPC, sFile, ip);
-        }
-
-        ip = GetNextItemProperty(oItem);
-    }
-    if(strTemp.enhancement > 10) strTemp.epic = TRUE;
-    if(DEBUG) DoDebug("GetItemVars: " + GetName(oItem) + ", after itemprop loop");
-
-    if(!bSet) return strTemp;   //don't bother with array
-
-    if(!bEpic && strTemp.epic)
-    {   //attempting to craft epic item without epic crafting feat, fails
-        for(i = 0; i < MaxListSize(sFile); i++)
-            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-        return strTemp;
-    }
-    if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
-    {   //no enhancement value, cannot add more itemprops, stop right there
-        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
-        for(i = 1; i < MaxListSize(sFile); i++)
-            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-        return strTemp;
-    }
-    string sTemp;
-    //Checking available spells, epic flag, caster level
-    for(i = 0; i < MaxListSize(sFile); i++)
-    {   //will skip over properties already disallowed
-        if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
-        {
-            sPropertyType = Get2DACache(sFile, "PropertyType", i);
-            if(sPropertyType == "M")
-                nLevel = nCasterLevel;
-            else if(sPropertyType == "P")
-                nLevel = nManifesterLevel;
-            else
-                nLevel = max(nCasterLevel, nManifesterLevel);
-            if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
-                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
-                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else if(nLevel < StringToInt(Get2DACache(sFile, "Level", i)))
-                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else
-            {   //attempting to minimise 2da reads for spell prerequisite checking
-                nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", i));
-                //INSERT ALTERNATIVE FOR CHECKING POWERS HERE
-                if(nSpellPattern)
-                {
-                    if(
-                        (sPropertyType == "M") &&
-                        !(
-                            (nSpellPattern & 1) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell1", i))) : 1 &&
-                            (nSpellPattern & 2) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell2", i))) : 1 &&
-                            (nSpellPattern & 4) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "Spell3", i))) : 1 &&
-                            ((nSpellPattern & 8) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR1", i))) : 1 ||
-                            (nSpellPattern & 16) ? PRCGetHasSpell(StringToInt(Get2DACache(sFile, "SpellOR2", i))) : 1)
-                            )
-                        )
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-                    if(
-                        (sPropertyType == "P") &&
-                        !(
-                            (nSpellPattern & 1) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell1", i)), oPC) : 1 &&
-                            (nSpellPattern & 2) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell2", i)), oPC) : 1 &&
-                            (nSpellPattern & 4) ? GetHasPower(StringToInt(Get2DACache(sFile, "Spell3", i)), oPC) : 1 &&
-                            ((nSpellPattern & 8) ? GetHasPower(StringToInt(Get2DACache(sFile, "SpellOR1", i)), oPC) : 1 ||
-                            (nSpellPattern & 16) ? GetHasPower(StringToInt(Get2DACache(sFile, "SpellOR2", i)), oPC) : 1)
-                            )
-                        )
-                    {
-                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                        continue;
-                    }
-                }
-                sTemp = Get2DACache(sFile, "Feat", i);
-                if(sTemp != "" && !GetHasFeat(StringToInt(sTemp)))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
-                }
-                sTemp = Get2DACache(sFile, "AlignGE", i);
-                if((sTemp == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
-                    (sTemp == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
-                    (sTemp == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
-                }
-                sTemp = Get2DACache(sFile, "AlignLC", i);
-                if((sTemp == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
-                    (sTemp == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
-                    (sTemp == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
-                }
-            }
-        }
-    }
-    return strTemp;
-}
-
 //Checks and decrements spells based on property to add
-int DecrementCraftingSpells(object oPC, string sFile, int nLine)
+int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FALSE)
 {
     if(nLine == -1) return FALSE;
     int nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", nLine));
@@ -768,23 +607,25 @@ int DecrementCraftingSpells(object oPC, string sFile, int nLine)
             if(!PRCGetHasSpell(nSpellOR2))
                 return FALSE;
         }
-        if(nSpellPattern & 1)
-            PRCDecrementRemainingSpellUses(oPC, nSpell1);
-        if(nSpellPattern & 2)
-            PRCDecrementRemainingSpellUses(oPC, nSpell2);
-        if(nSpellPattern & 4)
-            PRCDecrementRemainingSpellUses(oPC, nSpell3);
-        if(nSpellPattern & 8)
-            PRCDecrementRemainingSpellUses(oPC, (bOR) ? nSpellOR2 : nSpellOR1);
-        else if(nSpellPattern & 16)
-            PRCDecrementRemainingSpellUses(oPC, nSpellOR2);
+        if(bDecrement)
+        {
+            if(nSpellPattern & 1)
+                PRCDecrementRemainingSpellUses(oPC, nSpell1);
+            if(nSpellPattern & 2)
+                PRCDecrementRemainingSpellUses(oPC, nSpell2);
+            if(nSpellPattern & 4)
+                PRCDecrementRemainingSpellUses(oPC, nSpell3);
+            if(nSpellPattern & 8)
+                PRCDecrementRemainingSpellUses(oPC, (bOR) ? nSpellOR2 : nSpellOR1);
+            else if(nSpellPattern & 16)
+                PRCDecrementRemainingSpellUses(oPC, nSpellOR2);
+        }
     }
-    //PRCDecrementRemainingSpellUses(oPC, nSpell);
     return TRUE;
 }
 
 //Checks and decrements power points based on property to add
-int DecrementCraftingPowerPoints(object oPC, string sFile, int nLine)
+int CheckCraftingPowerPoints(object oPC, string sFile, int nLine, int bDecrement = FALSE)
 {
     if(nLine == -1) return FALSE;
     int nSpellPattern = StringToInt(Get2DACache(sFile, "SpellPattern", nLine));
@@ -845,9 +686,191 @@ int DecrementCraftingPowerPoints(object oPC, string sFile, int nLine)
     if(GetCurrentPowerPoints(oPC) < nLoss)
         return FALSE;
 
-    LosePowerPoints(oPC, nLoss, TRUE);
+    if(bDecrement) LosePowerPoints(oPC, nLoss, TRUE);
 
     return TRUE;
+}
+
+//Returns a struct containing enhancement and additional cost values, don't bother with array when bSet == 0
+struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 0, int bSet = 0)
+{
+    struct itemvars strTemp;
+    int i;
+    int j, k, bEnhanced, count;
+    int nEnhancement;
+    int nSpellPattern;
+    int nSpell1, nSpell2, nSpell3, nSpellOR1, nSpellOR2;
+    int nCasterLevel = max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC));
+    int nManifesterLevel = GetManifesterLevel(oPC);
+    int nLevel;
+    int nFileEnd = PRCGetFileEnd(sFile);
+    int nRace = MyPRCGetRacialType(oPC);
+    string sPropertyType;
+    strTemp.item = oItem;
+    if(bSet)
+    {
+        if(array_exists(oPC, PRC_CRAFT_ITEMPROP_ARRAY))
+            array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
+        array_create(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
+        //Setup
+        for(i = 0; i <= nFileEnd; i++)
+        {
+            if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)) && PrereqSpecialHandling(sFile, oItem, i))
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
+        }
+        int nBase = GetBaseItemType(oItem);
+        int bRangedType = StringToInt(Get2DACache("baseitems", "RangedWeapon", nBase));
+        if(bRangedType && (bRangedType != nBase))
+        {   //disallowed because ranged weapons can't have onhit
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 22, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 24, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 26, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 34, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 40, 0);
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 42, 0);
+        }
+    }
+    itemproperty ip = GetFirstItemProperty(oItem);
+    if(DEBUG) DoDebug("GetItemVars: " + GetName(oItem) + ", before itemprop loop");
+    //Checking itemprops
+    count = 0;
+    while(GetIsItemPropertyValid(ip))
+    {   //assumes no duplicated enhancement itemprops
+        k = Get2DALineFromItemprop(sFile, ip, oItem);   //is causing TMI with armour with skill props
+        count++;
+        if(DEBUG) DoDebug("GetItemVars: itemprop number " + IntToString(count) +
+                            " " + IntToString(GetItemPropertyType(ip)) +
+                            " " + IntToString(GetItemPropertySubType(ip)) +
+                            " " + IntToString(GetItemPropertyCostTableValue(ip)) +
+                            " " + IntToString(GetItemPropertyParam1Value(ip))
+                            );
+
+        if(k >= 0)
+        {
+            if(k < 20) bEnhanced = TRUE;
+            if(bSet)
+            {
+                for(j = StringToInt(Get2DACache(sFile, "ReplaceLast", k)); j >= 0; j--)
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, k - j, 0);
+                }
+            }
+            nEnhancement = StringToInt(Get2DACache(sFile, "Enhancement", k));
+            strTemp.enhancement += nEnhancement;
+            if(nEnhancement > 5) strTemp.epic = TRUE;
+            strTemp.additionalcost += StringToInt(Get2DACache(sFile, "AdditionalCost", k));
+
+            if(DEBUG)
+            {
+                sPropertyType = GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", k)));
+                if(sPropertyType != "")
+                    DoDebug("GetItemVars: " + sPropertyType);
+            }
+        }
+        else if(bSet && k == -2)
+        {
+            DisallowType(oPC, sFile, ip);
+        }
+
+        ip = GetNextItemProperty(oItem);
+    }
+    if(strTemp.enhancement > 10) strTemp.epic = TRUE;
+    if(DEBUG) DoDebug("GetItemVars: " + GetName(oItem) + ", after itemprop loop");
+
+    if(DEBUG)
+    {
+        DoDebug("GetItemVars: " + GetName(oItem) +
+                ", Enhancement: " + IntToString(strTemp.enhancement) +
+                ", AdditionalCost: " + IntToString(strTemp.additionalcost));
+    }
+
+    if(!bSet) return strTemp;   //don't bother with array
+
+    if(!bEpic && strTemp.epic)
+    {   //attempting to craft epic item without epic crafting feat, fails
+        for(i = 0; i <= nFileEnd; i++)
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+        return strTemp;
+    }
+    if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
+    {   //no enhancement value, cannot add more itemprops, stop right there
+        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
+        for(i = 1; i <= nFileEnd; i++)
+            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+        return strTemp;
+    }
+    string sTemp;
+    //Checking available spells, epic flag, caster level
+    for(i = 0; i <= nFileEnd; i++)
+    {   //will skip over properties already disallowed
+        if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
+        {
+            sPropertyType = Get2DACache(sFile, "PropertyType", i);
+            if(sPropertyType == "M")
+                nLevel = nCasterLevel;
+            else if(sPropertyType == "P")
+                nLevel = nManifesterLevel;
+            else
+                nLevel = max(nCasterLevel, nManifesterLevel);
+            if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            else if(nLevel < StringToInt(Get2DACache(sFile, "Level", i)))
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            else
+            {
+                if(StringToInt(Get2DACache(sFile, "SpellPattern", i)))
+                {
+                    if(
+                        (sPropertyType == "M") &&
+                        !CheckCraftingSpells(oPC, sFile, i)
+                        )
+                    {
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
+                    if(
+                        (sPropertyType == "P") &&
+                        !CheckCraftingPowerPoints(oPC, sFile, i)
+                        )
+                    {
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
+                }
+                sTemp = Get2DACache(sFile, "Race", i);
+                if(sTemp != "" && nRace != StringToInt(sTemp))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
+                }
+                sTemp = Get2DACache(sFile, "Feat", i);
+                if(sTemp != "" && !GetHasFeat(StringToInt(sTemp)))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
+                }
+                sTemp = Get2DACache(sFile, "AlignGE", i);
+                if((sTemp == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
+                    (sTemp == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
+                    (sTemp == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
+                }
+                sTemp = Get2DACache(sFile, "AlignLC", i);
+                if((sTemp == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
+                    (sTemp == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
+                    (sTemp == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
+                }
+            }
+        }
+    }
+    return strTemp;
 }
 
 //Returns an int depending on the weapon type
@@ -876,7 +899,7 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
     int nSubType = StringToInt(Get2DACache(sFile, "SubType" + IntToString(nIndex), nLine));
     int nCostTableValue = StringToInt(Get2DACache(sFile, "CostTableValue" + IntToString(nIndex), nLine));
     int nParam1Value = StringToInt(Get2DACache(sFile, "Param1Value" + IntToString(nIndex), nLine));
-
+    int nBase = GetBaseItemType(oItem);
     if(StringToInt(Get2DACache(sFile, "Special", nLine)))
     {
         if(sFile == "craft_armour")
@@ -901,8 +924,12 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
                     break;
                 }
             }
-            if(nLine < 20 && IPGetIsRangedWeapon(oItem))
-                nType = ITEM_PROPERTY_ATTACK_BONUS;
+            if(nType == ITEM_PROPERTY_ENHANCEMENT_BONUS &&
+                StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem))) == PRC_CRAFT_ITEM_TYPE_AMMO)
+            {
+                nType = ITEM_PROPERTY_DAMAGE_BONUS;
+                nSubType = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;
+            }
         }
     }
 
@@ -1026,7 +1053,11 @@ int GetCraftingFeat(object oItem)
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
         (nBase == BASE_ITEM_TOWERSHIELD)) ||
-        (GetWeaponType(nBase))
+        (GetWeaponType(nBase) ||
+        (nBase == BASE_ITEM_ARROW) ||
+        (nBase == BASE_ITEM_BOLT) ||
+        (nBase == BASE_ITEM_BULLET)
+        )
         )
     {
         if(GetItemBaseAC(oItem) == 0) return FEAT_CRAFT_WONDROUS;
@@ -1187,8 +1218,11 @@ void MakeMasterwork(object oItem)
     }
     else if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", nBase)) == PRC_CRAFT_ITEM_TYPE_AMMO)
     {
+        /*
         int nDamageType = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_DAMAGE_BONUS, nDamageType, IP_CONST_DAMAGEBONUS_1);
+        */
+        itemproperty ip1 = ConstructIP(ITEM_PROPERTY_ATTACK_BONUS, 0, 1);
         IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
     }
     else
@@ -1354,7 +1388,9 @@ int GetPnPItemCost(struct itemvars strTemp)
     int nTemp, nMaterial, nEnhancement;
     int nType = GetBaseItemType(strTemp.item);
     SetIdentified(strTemp.item, FALSE);
-    nTemp = GetGoldPieceValue(strTemp.item) / StringToInt(Get2DACache("baseitems", "ItemMultiplier", nType));
+    int nMultiplyer = StringToInt(Get2DACache("baseitems", "ItemMultiplier", nType));
+    if(nMultiplyer < 1) nMultiplyer = 1;
+    nTemp = GetGoldPieceValue(strTemp.item) / nMultiplyer;
     SetIdentified(strTemp.item, TRUE);
     int nFlag = StringToInt(Get2DACache("prc_craft_gen_it", "Type", nType));
     int nAdd = 0;
@@ -1427,6 +1463,14 @@ int GetPnPItemCost(struct itemvars strTemp)
     {
         //not implemented
     }
+    if(nMaterial & PRC_CRAFT_FLAG_MUNDANE_CRYSTAL)
+    {
+        //not implemented
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
+    {
+        //not implemented
+    }
     nTemp += nAdd;
     nEnhancement = GetEnhancementBaseCost(strTemp.item) * strTemp.enhancement * strTemp.enhancement;
     if(strTemp.epic) nEnhancement *= 10;
@@ -1437,6 +1481,8 @@ int GetPnPItemCost(struct itemvars strTemp)
     {   //you're not getting away with negative values that easily :P
         nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(nScale) / 100.0);
     }
+    if(StringToInt(Get2DACache("baseitems", "Stacking", nType)) > 1)
+        nTemp = FloatToInt(IntToFloat(nTemp) * IntToFloat(GetItemStackSize(strTemp.item))/ 50.0);
     if(nTemp < 1) nTemp = 1;
 
     return nTemp;
@@ -1501,6 +1547,16 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
         sPrefix = "Silver ";
         MakeSilver(oNew);
     }
+    if(nMaterial & PRC_CRAFT_FLAG_MUNDANE_CRYSTAL)
+    {
+        sPrefix = "Crystal ";
+        MakeMundaneCrystal(oNew);
+    }
+    if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
+    {
+        sPrefix = "Deep Crystal ";
+        MakeDeepCrystal(oNew);
+    }
     if(nMighty > 0) sPrefix += "Composite ";
 
     SetName(oNew, sPrefix + GetName(oNew));
@@ -1528,6 +1584,7 @@ string InsertSpaceAfterString(string sString)
 string GetItemPropertyString(itemproperty ip)
 {
     int nType = GetItemPropertyType(ip);
+    if(nType == -1) return "";
     int nSubType = GetItemPropertySubType(ip);
     int nCostTable = GetItemPropertyCostTable(ip);
     int nCostTableValue = GetItemPropertyCostTableValue(ip);
@@ -1545,11 +1602,23 @@ string GetItemPropertyString(itemproperty ip)
     sCostTable = Get2DACache(sCostTable, "Name", nCostTableValue);
     if(sCostTable != "")
         sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sCostTable)));
-    string sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
-    sParam1 = Get2DACache("iprp_paramtable", "Name", StringToInt(sParam1));
-    sParam1 = Get2DACache(sParam1, "Name", nParam1Value);
+    string sParam1;
+    if(nType == ITEM_PROPERTY_ON_HIT_PROPERTIES)    //Param1 depends on subtype
+    {
+        sParam1 = Get2DACache(Get2DACache("itempropdef", "SubTypeResRef", nType), "Param1ResRef", nSubType);
+    }
+    else
+    {
+        sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
+    }
     if(sParam1 != "")
-        sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sParam1)));
+    {
+        sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache("iprp_paramtable", "Name", StringToInt(sParam1)))));
+        sParam1 = Get2DACache("iprp_paramtable", "TableResRef", StringToInt(sParam1));
+        sParam1 = Get2DACache(sParam1, "Name", nParam1Value);
+        if(sParam1 != "")
+            sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sParam1)));
+    }
     sDesc += "\n";
 
     return sDesc;
@@ -1573,155 +1642,6 @@ string ItemStats(object oItem)
         ip = GetNextItemProperty(oItem);
     }
     return sDesc;
-}
-
-int MaxListSize(string sTable)
-{
-    sTable = GetStringLowerCase(sTable); //sanity check
-
-    if(sTable == "prc_craft_gen_it")  //no support for cep weapons just yet
-        return 113;
-    if(sTable == "craft_armour")
-        return 64;
-    if(sTable == "craft_weapon")
-        return 43;   //fix
-    if(sTable == "craft_wondrous")
-        return 0;   //fix
-    if(sTable == "craft_ring")
-        return 0;
-    if(sTable == "classes")
-        return 256;
-    if(sTable == "disease")
-        return 53;
-    if(sTable == "iprp_abilities")
-        return 6;
-    if(sTable == "iprp_aligngrp")
-        return 6;
-    if(sTable == "iprp_alignment")
-        return 9;
-    if(sTable == "iprp_ammocost")
-        return 16;
-    if(sTable == "iprp_ammotype")
-        return 3;
-    if(sTable == "iprp_amount")
-        return 5;
-    if(sTable == "iprp_aoe")
-        return 6;
-    if(sTable == "iprp_arcspell")
-        return 20;
-    if(sTable == "iprp_bladecost")
-        return 6;
-    if(sTable == "iprp_bonuscost")
-        return 13;
-    if(sTable == "iprp_casterlvl")
-        return 61;
-    if(sTable == "iprp_chargecost")
-        return 14;
-    if(sTable == "iprp_color")
-        return 7;
-    if(sTable == "iprp_combatdam")
-        return 3;
-    if(sTable == "iprp_damagecost")
-        return 81;
-    if(sTable == "iprp_damagetype")
-        return 14;
-    if(sTable == "iprp_damvulcost")
-        return 8;
-    if(sTable == "iprp_decvalue1")
-        return 10;
-    if(sTable == "iprp_decvalue2")
-        return 10;
-    if(sTable == "iprp_feats")
-        return NUM_MAX_FEAT_SUBTYPES;
-    if(sTable == "iprp_immuncost")
-        return 8;
-    if(sTable == "iprp_immunity")
-        return 10;
-    if(sTable == "iprp_incvalue1")
-        return 10;
-    if(sTable == "iprp_incvalue2")
-        return 10;
-    if(sTable == "iprp_kitcost")
-        return 51;
-    if(sTable == "iprp_lightcost")
-        return 5;
-    if(sTable == "iprp_meleecost")
-        return 21;
-    if(sTable == "iprp_monstcost")
-        return 58;
-    if(sTable == "iprp_monsterhit")
-        return 10;
-    if(sTable == "iprp_metamagic")
-        return 7;
-    if(sTable == "iprp_monstcost")
-        return 59;
-    if(sTable == "iprp_neg10cost")
-        return 11;
-    if(sTable == "iprp_neg5cost")
-        return 11;
-    if(sTable == "iprp_onhit")
-        return 26;
-    if(sTable == "iprp_onhitcost")
-        return 71;
-    if(sTable == "iprp_onhitdur")
-        return 28;
-    if(sTable == "iprp_onhitspell")
-        return 210;
-    if(sTable == "iprp_poison")
-        return 6;
-    if(sTable == "iprp_protection")
-        return 20;
-    if(sTable == "iprp_redcost")
-        return 6;
-    if(sTable == "iprp_resistcost")
-        return 25;
-    if(sTable == "iprp_saveelement")
-        return 22;
-    if(sTable == "iprp_savingthrow")
-        return 4;
-    if(sTable == "iprp_skillcost")
-        return 51;
-    if(sTable == "iprp_soakcost")
-        return 51;
-    if(sTable == "iprp_speed_dec")
-        return 10;
-    if(sTable == "iprp_speed_enh")
-        return 10;
-    if(sTable == "iprp_spellcost")
-        return 244;
-    if(sTable == "iprp_spells")
-        return NUM_MAX_SPELL_SUBTYPES;
-    if(sTable == "iprp_spellcstr")
-        return 40;
-    if(sTable == "iprp_spelllvcost")
-        return 10;
-    if(sTable == "iprp_spelllvlimm")
-        return 10;
-    if(sTable == "iprp_spellshl")
-        return 8;
-    if(sTable == "iprp_srcost")
-        return 62;
-    if(sTable == "iprp_trapcost")
-        return 12;
-    if(sTable == "iprp_traps")
-        return 5;
-    if(sTable == "iprp_visualfx")
-        return 7;
-    if(sTable == "iprp_walk")
-        return 2;
-    if(sTable == "iprp_weightcost")
-        return 7;
-    if(sTable == "iprp_weightinc")
-        return 6;
-    if(sTable == "poison")
-        return 147;
-    if(sTable == "racialtypes")
-        return 256;
-    if(sTable == "skills")
-        return 29;
-
-    if(DEBUG) DoDebug("MaxListSize: Unrecognised 2da file: " + sTable);
-    return 0;
 }
 
 //Returns TRUE if nBaseItem can have nItemProp
@@ -1975,8 +1895,10 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
         }
         case ITEM_PROPERTY_ON_HIT_PROPERTIES:
         {
-            //if(nParam1Value == -1) nParam1Value = 0;
-            ip = ItemPropertyOnHitProps(nSubTypeValue, nCostTableValue, nParam1Value);
+            if(nParam1Value == -1)
+                ip = ItemPropertyOnHitProps(nSubTypeValue, nCostTableValue);
+            else
+                ip = ItemPropertyOnHitProps(nSubTypeValue, nCostTableValue, nParam1Value);
             break;
         }
         case ITEM_PROPERTY_DECREASED_SAVING_THROWS:

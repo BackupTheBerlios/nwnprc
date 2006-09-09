@@ -19357,115 +19357,41 @@ Use: Automatic.</entry>
   <entry id="51527" lang="en" sex="m">Enhancement +18</entry>
   <entry id="51528" lang="en" sex="m">Enhancement +19</entry>
   <entry id="51529" lang="en" sex="m">Enhancement +20</entry>
-  <entry id="51530" lang="en" sex="m">Increases the enhancement bonus of the item.</entry>
   <entry id="51531" lang="en" sex="m">Acid Resistance</entry>
-  <entry id="51532" lang="en" sex="m">A suit of armor or a shield with this property normally has a dull gray appearance. The armor absorbs the first 10 points of acid damage per attack that the wearer would normally take (similar to the resist energy spell).
-Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.
-</entry>
   <entry id="51533" lang="en" sex="m">Acid Resistance, Improved</entry>
-  <entry id="51534" lang="en" sex="m">As acid resistance, except it absorbs the first 20 points of acid damage per attack.
-Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.
-</entry>
   <entry id="51535" lang="en" sex="m">Acid Resistance, Greater</entry>
-  <entry id="51536" lang="en" sex="m">As acid resistance, except it absorbs the first 30 points of acid damage per attack.
-Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.
-</entry>
   <entry id="51537" lang="en" sex="m">Arrow Deflection</entry>
-  <entry id="51538" lang="en" sex="m">This shield protects the wielder as if he had the Deflect Arrows feat. Once per round when he would normally be struck by a ranged weapon, he can make a DC 20 Reflex save. If the ranged weapon has an enhancement bonus, the DC increases by that amount. If he succeeds, the shield deflects the weapon. He must be aware of the attack and not flat-footed. Attempting to deflect a ranged weapon doesn?t count as an action. Exceptional ranged weapons, such as boulders hurled by giants or acid arrows, can?t be deflected.
-Faint abjuration; CL 5th; Craft Magic Arms and Armor, shield; Price +2 bonus.</entry>
   <entry id="51539" lang="en" sex="m">Cold Resistance</entry>
-  <entry id="51540" lang="en" sex="m">A suit of armor or a shield with this property normally has a bluish, icy hue or is adorned with furs and shaggy pelts. The armor absorbs the first 10 points of cold damage per attack that the wearer would normally take (similar to the resist energy spell).
-Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
   <entry id="51541" lang="en" sex="m">Cold Resistance, Improved</entry>
-  <entry id="51542" lang="en" sex="m">As cold resistance, except it absorbs the first 20 points of cold damage per attack.
-Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
   <entry id="51543" lang="en" sex="m">Cold Resistance, Greater</entry>
-  <entry id="51544" lang="en" sex="m">As cold resistance, except it absorbs the first 30 points of cold damage per attack.
-Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
   <entry id="51545" lang="en" sex="m">Electricity Resistance</entry>
-  <entry id="51546" lang="en" sex="m">A suit of armor or a shield with this property normally has a bluish hue and often bears a storm or lightning motif. The armor absorbs the first 10 points of electricity damage per attack that the wearer would normally take (similar to the resist energy spell).
-Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
   <entry id="51547" lang="en" sex="m">Electricity Resistance, Improved</entry>
-  <entry id="51548" lang="en" sex="m">As electricity resistance, except it absorbs the first 20 points of electricity damage per attack.
-Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
   <entry id="51549" lang="en" sex="m">Electricity Resistance, Greater</entry>
-  <entry id="51550" lang="en" sex="m">As electricity resistance, except it absorbs the first 30 points of electricity damage per attack.
-Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
   <entry id="51551" lang="en" sex="m">Etherealness</entry>
-  <entry id="51552" lang="en" sex="m">On command, this ability allows the wearer of the armor to become ethereal (as the ethereal jaunt spell) once per day. The character can remain ethereal for as long as desired, but once he returns to normal, he cannot become ethereal again that day.
-Strong transmutation; CL 13th; Craft Magic Arms and Armor, ethereal jaunt; Price +49,000 gp.</entry>
   <entry id="51553" lang="en" sex="m">Fire Resistance</entry>
-  <entry id="51554" lang="en" sex="m">A suit of armor with this ability normally has a reddish hue and often is decorated with a draconic motif. The armor absorbs the first 10 points of fire damage per attack that the wearer would normally take (similar to the resist energy spell).
-Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
   <entry id="51555" lang="en" sex="m">Fire Resistance, Improved</entry>
-  <entry id="51556" lang="en" sex="m">As fire resistance, except it absorbs the first 20 points of fire damage per attack.
-Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
   <entry id="51557" lang="en" sex="m">Fire Resistance, Greater</entry>
-  <entry id="51558" lang="en" sex="m">As fire resistance, except it absorbs the first 30 points of fire damage per attack.
-Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
   <entry id="51559" lang="en" sex="m">Invulnerability</entry>
-  <entry id="51560" lang="en" sex="m">This suit of armor grants the wearer damage reduction of 5/magic.
-Strong abjuration and perhaps evocation (if miracle is used); CL 18th; Craft Magic Arms and Armor, stoneskin, wish or miracle; Price +3 bonus.</entry>
   <entry id="51561" lang="en" sex="m">Reflecting</entry>
-  <entry id="51562" lang="en" sex="m">This shield seems like a mirror. Its surface is completely reflective. Once per day, it can be called on to reflect a spell back at its caster exactly like the spell turning spell.
-Strong abjuration; CL 14th; Craft Magic Arms and Armor, spell turning; Price +5 bonus.</entry>
   <entry id="51563" lang="en" sex="m">Shadow</entry>
-  <entry id="51564" lang="en" sex="m">This armor is jet black and blurs the wearer whenever she tries to hide, granting a +5 competence bonus on Hide checks. (The armor?s armor check penalty still applies normally.)
-Faint illusion; CL 5th; Craft Magic Arms and Armor, invisibility; Price +3,750 gp.</entry>
   <entry id="51565" lang="en" sex="m">Shadow, Improved</entry>
-  <entry id="51566" lang="en" sex="m">As shadow, except it grants a +10 competence bonus on Hide checks.
-Moderate illusion; CL 10th; Craft Magic Arms and Armor, invisibility; Price +15,000 gp.</entry>
   <entry id="51567" lang="en" sex="m">Shadow, Greater</entry>
-  <entry id="51568" lang="en" sex="m">As shadow, except it grants a +15 competence bonus on Hide checks.
-Moderate illusion; CL 15th; Craft Magic Arms and Armor, invisibility; Price +33,750 gp.</entry>
   <entry id="51569" lang="en" sex="m">Silent Moves</entry>
-  <entry id="51570" lang="en" sex="m">This armor is well oiled and magically constructed so that it not only makes little sound, but it dampens sound around it. It provides a +5 competence bonus on its wearer?s Move Silently checks. (The armor?s armor check penalty still applies normally.)
-Faint illusion; CL 5th; Craft Magic Arms and Armor, silence; Price +3,750 gp.</entry>
   <entry id="51571" lang="en" sex="m">Silent Moves, Improved</entry>
-  <entry id="51572" lang="en" sex="m">As silent moves, except it grants a +10 competence bonus on Move Silently checks.
-Moderate illusion; CL 10th; Craft Magic Arms and Armor, silence; Price +15,000 gp.</entry>
   <entry id="51573" lang="en" sex="m">Silent Moves, Greater</entry>
-  <entry id="51574" lang="en" sex="m">As silent moves, except it grants a +15 competence bonus on Move Silently checks.
-Moderate illusion; CL 15th; Craft Magic Arms and Armor, silence; Price +33,750 gp.</entry>
   <entry id="51575" lang="en" sex="m">Sonic Resistance</entry>
-  <entry id="51576" lang="en" sex="m">A suit of armor or a shield with this property normally has a glistening appearance. The armor absorbs the first 10 points of sonic damage per attack that the wearer would normally take (similar to the resist energy spell).
-Faint abjuration; CL 3rd; Craft Magic Arms and Armor, resist energy; Price +18,000 gp.</entry>
   <entry id="51577" lang="en" sex="m">Sonic Resistance, Improved</entry>
-  <entry id="51578" lang="en" sex="m">As sonic resistance, except it absorbs the first 20 points of sonic damage per attack.
-Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +42,000 gp.</entry>
   <entry id="51579" lang="en" sex="m">Sonic Resistance, Greater</entry>
-  <entry id="51580" lang="en" sex="m">As sonic resistance, except it absorbs the first 30 points of sonic damage per attack.
-Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
   <entry id="51581" lang="en" sex="m">Spell Resistance</entry>
-  <entry id="51582" lang="en" sex="m">This property grants the armor?s wearer spell resistance while the armor is worn. The spell resistance can be 13, 15, 17, or 19, depending on the armor.
-Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price +2 bonus (SR 13), +3 bonus (SR 15), +4 bonus (SR 17), or +5 bonus (SR 19).</entry>
   <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
-  <entry id="51584" lang="en" sex="m">The wearer of a suit of armor or a shield with this property may control up to 26 HD of undead per day, as the control undead spell. At dawn each day, the wearer loses control of any undead still under his sway. Armor or a shield with this ability appears to be made of bone; this feature is entirely decorative and has no other effect on the armor.
-Strong necromancy; CL 13th; Craft Magic Arms and Armor, control undead; Price +49,000 gp.</entry>
   <entry id="51585" lang="en" sex="m">Acid Warding</entry>
-  <entry id="51586" lang="en" sex="m">The armor absorbs the first 50 points of acid damage per round that the wearer would normally take (similar to the resist energy spell).
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51587" lang="en" sex="m">Cold Warding</entry>
-  <entry id="51588" lang="en" sex="m">The armor absorbs the first 50 points of cold damage per round that the wearer would normally take (similar to the resist energy spell).
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51589" lang="en" sex="m">Fire Warding</entry>
-  <entry id="51590" lang="en" sex="m">The armor absorbs the first 50 points of fire damage per round that the wearer would normally take (similar to the resist energy spell).
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51591" lang="en" sex="m">Great Invulnerability</entry>
-  <entry id="51592" lang="en" sex="m">This suit of armor or shield grants the wearer damage reduction. The damage reduction can be 10/magic, 15/magic, 5/epic, or 10/epic, depending on the armor.
-Caster Level: 19th (10/magic), 20th (15/magic), 21st (5/epic), 22nd (10/epic); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, stoneskin, wish, or miracle; Market Price:+4 bonus (10/magic),+5 bonus (15/magic),+6 bonus (5/epic),+7 bonus (10/epic).</entry>
   <entry id="51593" lang="en" sex="m">Great Reflection</entry>
-  <entry id="51594" lang="en" sex="m">Any time its bearer of this shield is targeted with a spell, it automatically reflects the spell back at the caster (as the spell turning spell). The wearer can lower or raise this effect as a free action (thus allowing beneficial spells in as desired).
-Caster Level: 25th; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell turning; Market Price: +10 bonus.</entry>
   <entry id="51595" lang="en" sex="m">Great Spell Resistance</entry>
-  <entry id="51596" lang="en" sex="m">This suit of armor or shield grants the wearer spell resistance. The spell resistance can be 21, 23, 25, or 27, depending on the armor.
-Caster Level: 21st (SR 21), 22nd (SR 23), 23rd (SR 25), 24th (SR 27); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell resistance; Market Price: +6 bonus (SR 21), +7 bonus (SR 23), +8 bonus (SR 25), +9 bonus (SR 27).</entry>
   <entry id="51597" lang="en" sex="m">Lightning Warding</entry>
-  <entry id="51598" lang="en" sex="m">The armor absorbs the first 50 points of lightning damage per round that the wearer would normally take (similar to the resist energy spell).
-Caster Level: 21st; Prereq-uisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51599" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51600" lang="en" sex="m">The armor absorbs the first 50 points of sonic damage per round that the wearer would normally take (similar to the resist energy spell).
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
   <entry id="51601" lang="en" sex="m">Spell Turning</entry>
   <entry id="51602" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 7
 Innate Level: 7
@@ -19492,74 +19418,1030 @@ Use: Automatic.</entry>
   <entry id="51606" lang="en" sex="m">Craft Item</entry>
   <entry id="51607" lang="en" sex="m">Target yourself to create a new item, or target an existing item to upgrade it.</entry>
   <entry id="51608" lang="en" sex="m">Anarchic</entry>
-  <entry id="51609" lang="en" sex="m">An anarchic weapon is chaotically aligned and infused with the power of chaos. It makes the weapon chaos-aligned and thus bypasses the corresponding damage reduction. It deals an extra 2d6 points of damage against all of lawful alignment. It bestows one negative level on any lawful creature attempting to wield it. The negative level remains as long as the weapon is in hand and disappears when the weapon is no longer wielded. This negative level never results in actual level loss, but it cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings so crafted bestow the chaotic power upon their ammunition.
-Moderate evocation [chaotic]; CL 7th; Craft Magic Arms and Armor, chaos hammer, creator must be chaotic; Price +2 bonus.</entry>
   <entry id="51610" lang="en" sex="m">Axiomatic</entry>
-  <entry id="51611" lang="en" sex="m">An axiomatic weapon is lawfully aligned and infused with the power of law. It makes the weapon law-aligned and thus bypasses the corresponding damage reduction. It deals an extra 2d6 points of damage against all of chaotic alignment. It bestows one negative level on any chaotic creature attempting to wield it. The negative level remains as long as the weapon is in hand and disappears when the weapon is no longer wielded. This negative level never results in actual level loss, but it cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings so crafted bestow the lawful power upon their ammunition.
-Moderate evocation [lawful]; CL 7th; Craft Magic Arms and Armor, order?s wrath, creator must be lawful; Price +2 bonus.</entry>
   <entry id="51612" lang="en" sex="m">Bane</entry>
-  <entry id="51613" lang="en" sex="m">A bane weapon excels at attacking one type or subtype of creature. Against its designated foe, its effective enhancement bonus is +2 better than its normal enhancement bonus. It deals an extra 2d6 points of damage against the foe.
-Moderate conjuration; CL 8th; Craft Magic Arms and Armor, summon monster I; Price +1 bonus.</entry>
   <entry id="51614" lang="en" sex="m">Disruption</entry>
-  <entry id="51615" lang="en" sex="m">A weapon of disruption is the bane of all undead. Any undead creature struck in combat must succeed on a DC 14 Will save or be destroyed. A weapon of disruption must be a bludgeoning weapon. (If you roll this property randomly for a piercing or slashing weapon, reroll.)
-Strong conjuration; CL 14th; Craft Magic Arms and Armor, heal; Price +2 bonus.</entry>
   <entry id="51616" lang="en" sex="m">Flaming</entry>
-  <entry id="51617" lang="en" sex="m">Upon command, a flaming weapon is sheathed in fire. The fire does not harm the wielder. The effect remains until another command is given. A flaming weapon deals an extra 1d6 points of fire damage on a successful hit. Bows, crossbows, and slings so crafted bestow the fire energy upon their ammunition.
-Moderate evocation; CL 10th; Craft Magic Arms and Armor and flame blade, flame strike, or fireball; Price +1 bonus.</entry>
   <entry id="51618" lang="en" sex="m">Frost</entry>
-  <entry id="51619" lang="en" sex="m">Upon command, a frost weapon is sheathed in icy cold. The cold does not harm the wielder. The effect remains until another command is given. A frost weapon deals an extra 1d6 points of cold damage on a successful hit. Bows, crossbows, and slings so crafted bestow the cold energy upon their ammunition.
-Moderate evocation; CL 8th; Craft Magic Arms and Armor, chill metal or ice storm; Price +1 bonus.</entry>
   <entry id="51620" lang="en" sex="m">Holy</entry>
-  <entry id="51621" lang="en" sex="m">A holy weapon is imbued with holy power. This power makes the weapon good-aligned and thus bypasses the corresponding damage reduction. It deals an extra 2d6 points of damage against all of evil alignment. It bestows one negative level on any evil creature attempting to wield it. The negative level remains as long as the weapon is in hand and disappears when the weapon is no longer wielded. This negative level never results in actual level loss, but it cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings so crafted bestow the holy power upon their ammunition.
-Moderate evocation [good]; CL 7th; Craft Magic Arms and Armor, holy smite, creator must be good; Price +2 bonus.</entry>
   <entry id="51622" lang="en" sex="m">Keen</entry>
-  <entry id="51623" lang="en" sex="m">This ability doubles the threat range of a weapon. Only piercing or slashing weapons can be keen. (If you roll this property randomly for an inappropriate weapon, reroll.) This benefit doesn?t stack with any other effect that expands the threat range of a weapon (such as the keen edge spell or the Improved Critical feat).
-Moderate transmutation; CL 10th; Craft Magic Arms and Armor, keen edge; Price +1 bonus.</entry>
   <entry id="51624" lang="en" sex="m">Shock</entry>
-  <entry id="51625" lang="en" sex="m">Upon command, a shock weapon is sheathed in crackling electricity. The electricity does not harm the wielder. The effect remains until another command is given. A shock weapon deals an extra 1d6 points of electricity damage on a successful hit. Bows, crossbows, and slings so crafted bestow the electricity energy upon their ammunition.
-Moderate evocation; CL 8th; Craft Magic Arms and Armor, call lightning or lightning bolt; Price +1 bonus.</entry>
   <entry id="51626" lang="en" sex="m">Unholy</entry>
-  <entry id="51627" lang="en" sex="m">An unholy weapon is imbued with unholy power. This power makes the weapon evil-aligned and thus bypasses the corresponding damage reduction. It deals an extra 2d6 points of damage against all of good alignment. It bestows one negative level on any good creature attempting to wield it. The negative level remains as long as the weapon is in hand and disappears when the weapon is no longer wielded. This negative level never results in actual level loss, but it cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings so crafted bestow the unholy power upon their ammunition.
-Moderate evocation [evil]; CL 7th; Craft Magic Arms and Armor, unholy blight, creator must be evil; Price +2 bonus.</entry>
   <entry id="51628" lang="en" sex="m">Vorpal</entry>
-  <entry id="51629" lang="en" sex="m">This potent and feared ability allows the weapon to sever the heads of those it strikes. Upon a roll of natural 20 (followed by a successful roll to confirm the critical hit), the weapon severs the opponent?s head (if it has one) from its body. Some creatures, such as many aberrations and all oozes, have no heads. Others, such as golems and undead creatures other than vampires, are not affected by the loss of their heads. Most other creatures, however, die when their heads are cut off. A vorpal weapon must be a slashing weapon. (If you roll this property randomly for an inappropriate weapon, reroll.)
-Strong necromancy and transmutation; CL 18th; Craft Magic Arms and Armor, circle of death, keen edge; Price +5 bonus.</entry>
   <entry id="51630" lang="en" sex="m">Acidic Blast</entry>
-  <entry id="51631" lang="en" sex="m">On command, an acidic blast weapon drips acid (though this deals no damage to the wielder). On any hit, this acid splashes the creature struck, dealing +3d6 points of bonus acid damage. On a successful critical hit it instead deals +6d6 points of acid damage (or +9d6 if the critical multiplier is x3, or +12d6 if the critical multiplier is x4). Bows, crossbows, and slings with this special ability bestow the bonus acid damage upon their ammunition. 
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, acid fog; Market Price: +6 bonus.</entry>
   <entry id="51632" lang="en" sex="m">Anarchic Power</entry>
-  <entry id="51633" lang="en" sex="m">This weapon is chaos-aligned and thus bypasses the corresponding damage reduction. When a weapon of anarchic power strikes a lawful target, this power deals +3d6 points of bonus chaotic damage to the target, and the target gains one negative level (Fortitude DC 23 to remove 24 hours later). On a successful critical hit it instead deals +6d6 points of chaotic damage and bestows two negative levels (or +9d6 and three negative levels if the critical multiplier is x3, or +12d6 and four negative levels if the critical multiplier is x4). The weapon bestows three negative levels on any lawful creature attempting to wield it. These negative levels remain as long as the weapon is in hand and disappear when the weapon is no longer wielded. These negative levels never result in actual level loss, but they cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings with this special ability bestow the anarchic power upon their ammunition. This special ability does not stack with the nonepic anarchic special ability. 
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, word of chaos; Market Price: +8 bonus.</entry>
   <entry id="51634" lang="en" sex="m">Axiomatic Power</entry>
-  <entry id="51635" lang="en" sex="m">This weapon is lawful-aligned and thus bypasses the corresponding damager reduction. When a weapon of axiomatic power strikes a chaotic target, this power erupts forth and deals +3d6 points of bonus lawful damage to the target, and the target gains one negative level (Fortitude DC 23 to remove 24 hours later). On a successful critical hit it instead deals +6d6 points of lawful damage and bestows two negative levels (or +9d6 and three negative levels if the critical multiplier is x3, or +12d6 and four negative levels if the critical multiplier is x4). The weapon bestows three negative levels on any chaotic creature attempting to wield it. These negative levels remain as long as the weapon is in hand and disappear when the weapon is no longer wielded. These negative levels never result in actual level loss, but they cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings with this special ability bestow the lawful power upon their ammunition. This special ability does not stack with the nonepic axiomatic special ability. 
-Caster Level: 23rd; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, dictum; Market Price: +8 bonus.</entry>
   <entry id="51636" lang="en" sex="m">Dread</entry>
-  <entry id="51637" lang="en" sex="m">A dread weapon excels at attacking one type of creature. Against its designated foe, its effective enhancement bonus is +4 better than its normal enhancement bonus. Further, it deals +4d6 points of bonus damage against the foe, and if it scores a successful critical hit against the foe, that creature must make a Fortitude save (DC 27) or be destroyed instantly and turned to dust. (This even affects creatures immune to critical hits or death magic.) To randomly determine a dread weapon?s designated foe, roll on the following table. 
-Caster Level: 22nd; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, summon monster IX; Market Price: +7 bonus.</entry>
   <entry id="51638" lang="en" sex="m">Fiery Blast</entry>
-  <entry id="51639" lang="en" sex="m">On command, a fiery blast weapon is sheathed in fire (though this deals no damage to the wielder). On any hit, this fire engulfs the creature struck, dealing +3d6 points of bonus fire damage. On a successful critical hit it instead deals +6d6 points of fire damage (or +9d6 if the critical multiplier is x3, or +12d6 if the critical multiplier is x4). Bows, crossbows, and slings with this special ability bestow the bonus fire damage upon their ammunition. 
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, fireball; Market Price: +6 bonus.</entry>
   <entry id="51640" lang="en" sex="m">Holy Power</entry>
-  <entry id="51641" lang="en" sex="m">This weapon is good-aligned and thus bypasses the corresponding damager reduction. When a weapon of holy power strikes an evil target, this power erupts forth and deals +3d6 points of bonus holy (good) damage to the target, and the target gains one negative level (Fortitude DC 23 to remove 24 hours later). On a successful critical hit it instead deals +6d6 points of holy (good) damage and bestows two negative levels (or +9d6 and three negative levels if the critical multiplier is x3, or +12d6 and four negative levels if the critical multiplier is x4). The weapon bestows three negative levels on any evil creature attempting to wield it. These negative levels remain as long as the weapon is in hand and disappear when the weapon is no longer wielded. These negative levels never result in actual level loss, but they cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings with this special ability bestow the holy power upon their ammunition. This special ability does not stack with the nonepic holy special ability. 
-Caster Level: 23rd; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, holy word; Market Price: +8 bonus.</entry>
   <entry id="51642" lang="en" sex="m">Icy Blast</entry>
-  <entry id="51643" lang="en" sex="m">On command, an icy blast weapon is sheathed in icy cold (though this deals no damage to the wielder). On any hit, this cold washes over the creature struck, dealing	+3d6 points of bonus cold damage. On a successful critical hit it instead deals +6d6 points of cold damage (or +9d6 if the critical multiplier is x3, or +12d6 if the critical multiplier is x4). Bows, crossbows, and slings with this special ability bestow the bonus cold damage upon their ammunition. 
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, cone of cold; Market Price: +6 bonus.</entry>
   <entry id="51644" lang="en" sex="m">Lightning Blast</entry>
-  <entry id="51645" lang="en" sex="m">On command, a lightning blast weapon crackles with electrical energy (though this deals no damage to the wielder). On any hit, lightning coruscates around the creature struck, dealing	 +3d6 points of bonus electricity damage. On a successful critical hit it instead deals +6d6 points of electricity damage (or +9d6 if the critical multiplier is x3, or +12d6 if the critical multiplier is x4). Bows, crossbows, and slings with this special ability bestow the bonus electricity damage upon their ammunition. 
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, lightning bolt; Market Price: +6 bonus.</entry>
   <entry id="51646" lang="en" sex="m">Mighty Disruption</entry>
-  <entry id="51647" lang="en" sex="m">Any undead creature struck in combat must succeed at a Fortitude save (DC 21) or be destroyed. A weapon of mighty disruption must be a bludgeoning weapon. (If this property is rolled for a piercing or slashing weapon, reroll.) 
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, true resurrection; Market Price: +6 bonus.</entry>
   <entry id="51648" lang="en" sex="m">Sonic Blast</entry>
-  <entry id="51649" lang="en" sex="m">On command, a sonic blast weapon emits a low thrumming hum (though this deals no damage to the wielder). On any hit, this becomes a thunderous roar that deals +3d6 points of bonus sonic damage to the creature struck. On a successful critical hit it instead deals +6d6 points of sonic damage (or +9d6 if the critical multiplier is x3, or +12d6 if the critical multiplier is x4). Bows, crossbows, and slings with this special ability bestow the bonus sonic damage upon their ammunition. 
-Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, shout; Market Price: +6 bonus.</entry>
   <entry id="51650" lang="en" sex="m">Unholy Power</entry>
-  <entry id="51651" lang="en" sex="m">This weapon is evil-aligned and this bypasses the corresponding damage reduction. When a weapon of unholy power strikes a good target, this power erupts forth and deals +3d6 points of bonus unholy (evil) damage to the target, and the target gains one negative level (Fortitude DC 23 to remove 24 hours later). On a successful critical hit it instead deals +6d6 points of unholy (evil) damage and bestows two negative levels (or +9d6 and three negative levels if the critical multiplier is x3, or +12d6 and four negative levels if the critical multiplier is x4). The weapon bestows three negative levels on any good creature attempting to wield it. These negative levels remain as long as the weapon is in hand and disappear when the weapon is no longer wielded. These negative levels never result in actual level loss, but they cannot be overcome in any way (including restoration spells) while the weapon is wielded. Bows, crossbows, and slings with this special ability bestow the unholy power upon their ammunition. This special ability does not stack with the nonepic unholy special ability. 
-Caster Level: 23rd; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, unholy word; Market Price: +8 bonus.</entry>
   <entry id="51652" lang="en" sex="m">Wounding</entry>
-  <entry id="51653" lang="en" sex="m">A weapon of wounding deals damage to a creature such that a wound it inflicts bleeds for 1 point of damage per round thereafter in addition to the normal damage the weapon deals. Multiple wounds from the weapon result in cumulative bleeding. The bleeding can only be stopped by a successful Heal check (DC 15) or the application of any cure spell or other healing spell.
-Caster Level: 10th; Prerequisites: Craft Magic Arms and Armor, sword; Market Price: +2 bonus.</entry>
+  <entry id="51663" lang="en" sex="m">DC=58</entry>
+  <entry id="51664" lang="en" sex="m">DC=59</entry>
+  <entry id="51665" lang="en" sex="m">DC=60</entry>
+  <entry id="51666" lang="en" sex="m">DC=61</entry>
+  <entry id="51667" lang="en" sex="m">DC=62</entry>
+  <entry id="51668" lang="en" sex="m">DC=63</entry>
+  <entry id="51669" lang="en" sex="m">DC=64</entry>
+  <entry id="51670" lang="en" sex="m">DC=65</entry>
+  <entry id="51671" lang="en" sex="m">DC=66</entry>
+  <entry id="51672" lang="en" sex="m">DC=67</entry>
+  <entry id="51673" lang="en" sex="m">DC=68</entry>
+  <entry id="51674" lang="en" sex="m">DC=69</entry>
+  <entry id="51675" lang="en" sex="m">DC=70</entry>
+  <entry id="51530" lang="en" sex="m">Description: 
+
+Enhancement Bonus: +X 
+
+Prerequisites: 
+
+Level: 3X Enhancement bonus
+
+Cost: 
+
++X Enhancement
+</entry>
+  <entry id="51532" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51534" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51536" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51586" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51538" lang="en" sex="m">Description: 
+
+Bonus Feat: Deflect Arrows 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Shield
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51540" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51542" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51544" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51588" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51546" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51548" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51550" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51598" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51552" lang="en" sex="m">Description: 
+
+Use: Greater Sanctuary (18) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Greater Sanctuary
+
+Cost: 
+
++49000gp
+</entry>
+
+  <entry id="51554" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51556" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51558" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51590" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51560" lang="en" sex="m">Description: 
+
+Damage Reduction: +1 Soak 5 Damage 
+
+Prerequisites: 
+
+Caster Level: 18
+Spell(s): Stoneskin
+
+Cost: 
+
++3 Enhancement
+</entry>
+
+  <entry id="51592" lang="en" sex="m">Description: 
+
+Damage Reduction: +1 Soak 10 Damage 
+
+Prerequisites: 
+
+Caster Level: 19
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++4 Enhancement
+</entry>
+
+  <entry id="51654" lang="en" sex="m">Description: 
+
+Damage Reduction: +1 Soak 15 Damage 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51655" lang="en" sex="m">Description: 
+
+Damage Reduction: +6 Soak 5 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51656" lang="en" sex="m">Description: 
+
+Damage Reduction: +6 Soak 10 Damage 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++7 Enhancement
+</entry>
+
+  <entry id="51562" lang="en" sex="m">Description: 
+
+Use: Spell Turning (13) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Spell Turning
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51594" lang="en" sex="m">Description: 
+
+Use: Spell Turning (13) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 25
+Spell(s): Spell Turning
+Epic
+
+Cost: 
+
++10 Enhancement
+</entry>
+
+  <entry id="51564" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +5 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Invisibility
+
+Cost: 
+
++3750gp
+</entry>
+
+  <entry id="51566" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +10 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Invisibility
+
+Cost: 
+
++15000gp
+</entry>
+
+  <entry id="51568" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Invisibility
+
+Cost: 
+
++33750gp
+</entry>
+
+  <entry id="51570" lang="en" sex="m">Description: 
+
+Skill Bonus: Move Silently +5 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Silence
+
+Cost: 
+
++3750gp
+</entry>
+
+  <entry id="51572" lang="en" sex="m">Description: 
+
+Skill Bonus: Move Silently +10 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Silence
+
+Cost: 
+
++15000gp
+</entry>
+
+  <entry id="51574" lang="en" sex="m">Description: 
+
+Skill Bonus: Move Silently +15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Silence
+
+Cost: 
+
++33750gp
+</entry>
+
+  <entry id="51576" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51578" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
+
+  <entry id="51580" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
+
+  <entry id="51600" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51582" lang="en" sex="m">Description: 
+
+Spell Resistance: 13 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51657" lang="en" sex="m">Description: 
+
+Spell Resistance: 15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++3 Enhancement
+</entry>
+
+  <entry id="51658" lang="en" sex="m">Description: 
+
+Spell Resistance: 17 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++4 Enhancement
+</entry>
+
+  <entry id="51659" lang="en" sex="m">Description: 
+
+Spell Resistance: 19 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51596" lang="en" sex="m">Description: 
+
+Spell Resistance: 21 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51660" lang="en" sex="m">Description: 
+
+Spell Resistance: 23 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++7 Enhancement
+</entry>
+
+  <entry id="51661" lang="en" sex="m">Description: 
+
+Spell Resistance: 25 
+
+Prerequisites: 
+
+Caster Level: 23
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51662" lang="en" sex="m">Description: 
+
+Spell Resistance: 27 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++9 Enhancement
+</entry>
+
+  <entry id="51584" lang="en" sex="m">Description: 
+
+Use: Control Undead (13) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Control Undead
+
+Cost: 
+
++49000gp
+</entry>
+
+  <entry id="51631" lang="en" sex="m">Description: 
+
+Damage Bonus: Acid 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Acid Fog
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51609" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Lawful 2d6 Damage Type Divine 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Chaotic 
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51633" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Lawful 3d6 Damage Type Divine 
+On Hit: Level Drain DC=69 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Chaotic 
+Spell(s): Word of Chaos
+Epic
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51611" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Chaotic 2d6 Damage Type Divine 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Lawful 
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51635" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Chaotic 3d6 Damage Type Divine 
+On Hit: Level Drain DC=69 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Lawful 
+Spell(s): Dictum
+Epic
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51613" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: [Race] 2d6 Damage  
+Enhancement Bonus vs.: [Race] +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Summon Creature I
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51637" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: [Race] 4d6 Damage  
+Enhancement Bonus vs.: [Race] +4 
+On Hit: Slay Racial Group DC=27 Monster Type [Race] 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Summon Creature IX
+Epic
+
+Cost: 
+
++7 Enhancement
+</entry>
+
+  <entry id="51615" lang="en" sex="m">Description: 
+
+On Hit: Slay Racial Group DC=14 Monster Type Undead 
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Heal
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51647" lang="en" sex="m">Description: 
+
+On Hit: Slay Racial Group DC=21 Monster Type Undead 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Resurrection
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51617" lang="en" sex="m">Description: 
+
+Damage Bonus: Fire 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Flame Weapon, Fireball or Flame Strike
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51639" lang="en" sex="m">Description: 
+
+Damage Bonus: Fire 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Fireball
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51619" lang="en" sex="m">Description: 
+
+Damage Bonus: Cold 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Ice Storm
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51643" lang="en" sex="m">Description: 
+
+Damage Bonus: Cold 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Cone of Cold
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51621" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Evil 2d6 Damage Type Divine 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Good
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51641" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Evil 3d6 Damage Type Divine 
+On Hit: Level Drain DC=69 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Good
+Spell(s): Holy Word
+Epic
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51623" lang="en" sex="m">Description: 
+
+Keen 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Keen Edge
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51625" lang="en" sex="m">Description: 
+
+Damage Bonus: Electrical 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Call Lightning or Lightning Bolt
+
+Cost: 
+
++1 Enhancement
+</entry>
+
+  <entry id="51645" lang="en" sex="m">Description: 
+
+Damage Bonus: Electrical 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Lightning Bolt
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51649" lang="en" sex="m">Description: 
+
+Damage Bonus: Sonic 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 0
+Spell(s): Acid Fog
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+
+  <entry id="51627" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Good 2d6 Damage Type Divine 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Evil
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+
+  <entry id="51651" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Good 3d6 Damage Type Divine 
+On Hit: Level Drain DC=69 
+
+Prerequisites: 
+
+Caster Level: 21
+Alignment: Evil
+Spell(s): Blasphemy
+Epic
+
+Cost: 
+
++8 Enhancement
+</entry>
+
+  <entry id="51629" lang="en" sex="m">Description: 
+
+On Hit: Vorpal DC=70 
+
+Prerequisites: 
+
+Caster Level: 18
+Spell(s): Circle of Death, Keen Edge
+
+Cost: 
+
++5 Enhancement
+</entry>
+
+  <entry id="51653" lang="en" sex="m">Description: 
+
+On Hit: Wounding DC=70 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Mordenkainen's Sword or Black Blade of Disaster
+
+Cost: 
+
++2 Enhancement
+</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4

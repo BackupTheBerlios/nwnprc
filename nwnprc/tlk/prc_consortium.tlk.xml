@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE tlk SYSTEM "tlk2xml.dtd">
 <tlk>
+  <entry id="9" lang="en" sex="m">Maggris</entry>
+  <entry id="10" lang="en" sex="m">Wereboar</entry>
   <entry id="12288" lang="en" sex="m">Ocular Adept</entry>
   <entry id="12289" lang="en" sex="m">Ocular Adepts</entry>
   <entry id="12290" lang="en" sex="m">ocular adepts</entry>
@@ -586,6 +588,8 @@ Use: Selected.</entry>
   <entry id="20415" lang="en" sex="m">Fighting Style: Normal (Reset).</entry>
   <entry id="20416" lang="en" sex="m">You prepare to fight normally once more.</entry>
   <entry id="20417" lang="en" sex="m">&lt;CUSTOM0&gt; changes stance.</entry>
+  <entry id="31067" lang="en" sex="m">Treant£</entry>
+  <entry id="31321" lang="en" sex="m">Monodrone£</entry>
   <entry id="45000" lang="en" sex="m">+++++++++++++ PRC Pack Feats 45,000 - 54,999 ++++++++++++++</entry>
   <entry id="45001" lang="en" sex="m">Type of Feat: Metamagic.
 Prerequisite: Ability to cast 2nd-level spells.
@@ -25905,19 +25909,19 @@ You can sense the presence of evil. The amount of information revealed depends o
 
 Aura Strength: An auras evil power and strength depend on the type of evil creature or object that youre detecting and its HD, caster level, or (in the case of a cleric) class level.
 
-Creature/Object 	Evil Power
-Evil creature 		HD / 5
-Undead creature 	HD / 2
-Evil elemental		HD / 2
-Evil outsider 		HD
-Cleric of an evil deity 	Caster Level
+Creature/Object         Evil Power
+Evil creature           HD / 5
+Undead creature         HD / 2
+Evil elemental          HD / 2
+Evil outsider           HD
+Cleric of an evil deity         Caster Level
 
-Evil Power		Aura Strength
-Lingering 		Dim
-1 or less 		Faint
-2 - 4 		Moderate
-5 - 10 		Strong
-11+ 		Overwhelming
+Evil Power              Aura Strength
+Lingering               Dim
+1 or less               Faint
+2 - 4           Moderate
+5 - 10          Strong
+11+             Overwhelming
 If an aura falls into more than one strength category, the spell indicates the stronger of the two.
 
 Remember that animals, traps, poisons, and other potential perils are not evil; this spell does not detect them.
@@ -25943,18 +25947,18 @@ You can sense the presence of good. The amount of information revealed depends o
 
 Aura Strength: An auras good power and strength depend on the type of good creature or object that youre detecting and its HD, caster level, or (in the case of a cleric) caster level.
 
-Creature/Object 	Evil Power
-Good creature 		HD / 5
-Good elemental	HD / 2
-Good outsider 		HD
-Cleric of an good deity 	Caster Level
+Creature/Object         Evil Power
+Good creature           HD / 5
+Good elemental  HD / 2
+Good outsider           HD
+Cleric of an good deity         Caster Level
 
-Good Power		Aura Strength
-Lingering 		Dim
-1 or less 		Faint
-2 - 4 		Moderate
-5 - 10 		Strong
-11+ 		Overwhelming
+Good Power              Aura Strength
+Lingering               Dim
+1 or less               Faint
+2 - 4           Moderate
+5 - 10          Strong
+11+             Overwhelming
 If an aura falls into more than one strength category, the spell indicates the stronger of the two.
 
 Note: Each round, you can turn to detect things in a new area but if you move more than 2 meters the spell ends. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</entry>
@@ -25978,18 +25982,18 @@ You can sense the presence of law. The amount of information revealed depends on
 
 Aura Strength: An auras lawful power and strength depend on the type of lawful creature or object that youre detecting and its HD, caster level, or (in the case of a cleric) class level.
 
-Creature/Object 	Law Power
-Lawful creature 		HD / 5
-Lawful elemental 	HD / 2
-Lawful outsider 		HD
-Cleric of an lawful deity 	Caster Level
+Creature/Object         Law Power
+Lawful creature                 HD / 5
+Lawful elemental        HD / 2
+Lawful outsider                 HD
+Cleric of an lawful deity       Caster Level
 
-Law Power		Aura Strength
-Lingering 		Dim
-1 or less 		Faint
-2 - 4 		Moderate
-5 - 10 		Strong
-11+ 		Overwhelming
+Law Power               Aura Strength
+Lingering               Dim
+1 or less               Faint
+2 - 4           Moderate
+5 - 10          Strong
+11+             Overwhelming
 If an aura falls into more than one strength category, the spell indicates the stronger of the two.
 
 Note: Each round, you can turn to detect things in a new area but if you move more than 2 meters the spell ends.</entry>
@@ -26013,18 +26017,18 @@ You can sense the presence of chaos. The amount of information revealed depends 
 
 Aura Strength: An auras chaotic power and strength depend on the type of chaotic creature or object that youre detecting and its HD, caster level, or (in the case of a cleric) class level.
 
-Creature/Object 	Chaotic Power
-Chaotic creature 	HD / 5
-Chaotic elemental	HD / 2
-Chaotic outsider 	HD
-Cleric of an chaotic deity 	Caster Level
+Creature/Object         Chaotic Power
+Chaotic creature        HD / 5
+Chaotic elemental       HD / 2
+Chaotic outsider        HD
+Cleric of an chaotic deity      Caster Level
 
-Chaotic Power		Aura Strength
-Lingering 		Dim
-1 or less 		Faint
-2 - 4 		Moderate
-5 - 10 		Strong
-11+ 		Overwhelming
+Chaotic Power           Aura Strength
+Lingering               Dim
+1 or less               Faint
+2 - 4           Moderate
+5 - 10          Strong
+11+             Overwhelming
 If an aura falls into more than one strength category, the spell indicates the stronger of the two.
 
 Note: Each round, you can turn to detect things in a new area but if you move more than 2 meters the spell ends.</entry>

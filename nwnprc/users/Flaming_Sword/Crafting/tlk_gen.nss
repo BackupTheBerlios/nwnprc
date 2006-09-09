@@ -28,7 +28,7 @@ void DumpCrafting2DAHB(string sFile, int nEnd, int i = 0)
     sDesc += "  <entry id=" + sDoubleQuote;
     sDesc += IntToString(StringToInt(Get2DACache(sFile, "Description", i)) - 16777216);
     sDesc += sDoubleQuote + " lang=" + sDoubleQuote + "en" + sDoubleQuote + " sex=";
-    sDesc += "m" + sDoubleQuote + ">";
+    sDesc += sDoubleQuote + "m" + sDoubleQuote + ">";
     sDesc += "Description: \n\n";
     for(j = 1; j <= 3; j++)
     {
@@ -106,10 +106,12 @@ void DumpCrafting2DAHB(string sFile, int nEnd, int i = 0)
     PrintString(sDesc);
     if(i < nEnd)
         DelayCommand(0.01, DumpCrafting2DAHB(sFile, nEnd, i + 1));
+    else
+        if(DEBUG) DoDebug("DumpCrafting2DAHB: Finished " + sFile);
 }
 
 void main()
 {
     DumpCrafting2DAHB("craft_armour", PRCGetFileEnd("craft_armour"), 20);
-    DelayCommand(3.0, DumpCrafting2DAHB("craft_weapon", PRCGetFileEnd("craft_weapon"), 20));
+    DelayCommand(6.0, DumpCrafting2DAHB("craft_weapon", PRCGetFileEnd("craft_weapon"), 20));
 }

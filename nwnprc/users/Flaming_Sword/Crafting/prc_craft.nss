@@ -742,8 +742,8 @@ void main()
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine)));
                     sTemp += "\n\n";
                     sTemp += GetStringByStrRef(StringToInt(Get2DACache(sFile, "Description", nLine)));
-                    sTemp += "\n\n";
-                    sTemp += ItemStats(oNewItem);
+                    //sTemp += "\n\n";
+                    //sTemp += ItemStats(oNewItem);
                     sTemp += "\nCost: " + IntToString(nCostDiff) + "gp " + IntToString(nXPDiff) + "XP";
                     if(nTime > 0)
                         sTemp += "\nTime: " + IntToString(nTime) + " rounds";

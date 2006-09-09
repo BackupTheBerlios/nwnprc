@@ -703,6 +703,8 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
     int nCasterLevel = max(GetLevelByTypeArcane(oPC), GetLevelByTypeDivine(oPC));
     int nManifesterLevel = GetManifesterLevel(oPC);
     int nLevel;
+    int nFileEnd = PRCGetFileEnd(sFile);
+    int nRace = MyPRCGetRacialType(oPC);
     string sPropertyType;
     strTemp.item = oItem;
     if(bSet)
@@ -711,7 +713,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
             array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         array_create(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         //Setup
-        for(i = 0; i <= PRCGetFileEnd(sFile); i++)
+        for(i = 0; i <= nFileEnd; i++)
         {
             if(!GetPRCSwitch("PRC_CRAFT_DISABLE_" + sFile + "_" + IntToString(i)) && PrereqSpecialHandling(sFile, oItem, i))
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 1);
@@ -786,20 +788,20 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
 
     if(!bEpic && strTemp.epic)
     {   //attempting to craft epic item without epic crafting feat, fails
-        for(i = 0; i <= PRCGetFileEnd(sFile); i++)
+        for(i = 0; i <= nFileEnd; i++)
             array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
     if(!bEnhanced && ((sFile == "craft_armour") || (sFile == "craft_weapon")))
     {   //no enhancement value, cannot add more itemprops, stop right there
         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, 0, 1);
-        for(i = 1; i <= PRCGetFileEnd(sFile); i++)
+        for(i = 1; i <= nFileEnd; i++)
             array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
         return strTemp;
     }
     string sTemp;
     //Checking available spells, epic flag, caster level
-    for(i = 0; i <= PRCGetFileEnd(sFile); i++)
+    for(i = 0; i <= nFileEnd; i++)
     {   //will skip over properties already disallowed
         if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
         {
@@ -818,7 +820,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
                 array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
             else
             {
-                if(nSpellPattern)
+                if(StringToInt(Get2DACache(sFile, "SpellPattern", i)))
                 {
                     if(
                         (sPropertyType == "M") &&
@@ -836,6 +838,12 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
                         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
                         continue;
                     }
+                }
+                sTemp = Get2DACache(sFile, "Race", i);
+                if(sTemp != "" && nRace != StringToInt(sTemp))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
                 }
                 sTemp = Get2DACache(sFile, "Feat", i);
                 if(sTemp != "" && !GetHasFeat(StringToInt(sTemp)))
@@ -1594,11 +1602,23 @@ string GetItemPropertyString(itemproperty ip)
     sCostTable = Get2DACache(sCostTable, "Name", nCostTableValue);
     if(sCostTable != "")
         sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sCostTable)));
-    string sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
-    sParam1 = Get2DACache("iprp_paramtable", "Name", StringToInt(sParam1));
-    sParam1 = Get2DACache(sParam1, "Name", nParam1Value);
+    string sParam1;
+    if(nType == ITEM_PROPERTY_ON_HIT_PROPERTIES)    //Param1 depends on subtype
+    {
+        sParam1 = Get2DACache(Get2DACache("itempropdef", "SubTypeResRef", nType), "Param1ResRef", nSubType);
+    }
+    else
+    {
+        sParam1 = Get2DACache("itempropdef", "Param1ResRef", nType);
+    }
     if(sParam1 != "")
-        sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sParam1)));
+    {
+        sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(Get2DACache("iprp_paramtable", "Name", StringToInt(sParam1)))));
+        sParam1 = Get2DACache("iprp_paramtable", "TableResRef", StringToInt(sParam1));
+        sParam1 = Get2DACache(sParam1, "Name", nParam1Value);
+        if(sParam1 != "")
+            sDesc += InsertSpaceAfterString(GetStringByStrRef(StringToInt(sParam1)));
+    }
     sDesc += "\n";
 
     return sDesc;

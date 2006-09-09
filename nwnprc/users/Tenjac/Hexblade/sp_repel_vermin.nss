@@ -34,5 +34,22 @@ pain, which deters most vermin.
 
 void main()
 {
-	object oPC = OBJECT_SELF;
+	if(!X2PreSpellCastCode()) return;
 	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	effect eAoE = EffectAreaOfEffect(AOE_PER_REPEL_VERMIN);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = (600.0f * nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
+	
+	SPSetSchool();
+}

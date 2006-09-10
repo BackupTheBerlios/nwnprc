@@ -4,21 +4,21 @@
 // Level 1 Utterances
 const int UTTER_DEFENSIVE_EDGE         = 3526;
 const int UTTER_DEFENSIVE_EDGE_R       = 3527;
-const int UTTER_INERTIAL_SURGE         = -1;
-const int UTTER_INERTIAL_SURGE_R       = -1;
-const int UTTER_KNIGHTS_PUISSANCE      = -1;
-const int UTTER_KNIGHTS_PUISSANCE_R    = -1;
-const int UTTER_UNIVERSAL_APTITUDE     = -1;
-const int UTTER_UNIVERSAL_APTITUDE_R   = -1;
-const int UTTER_WORD_NURTURING_MINOR   = -1;
-const int UTTER_WORD_NURTURING_MINOR_R = -1;
-const int UTTER_FORTIFY_ARMOUR_SNEAK   = -1;
-const int UTTER_FORTIFY_ARMOUR_CRIT    = -1;
-const int UTTER_KEEN_WEAPON            = -1;
-const int UTTER_FOG_VOID_CLOUD         = -1;
-const int UTTER_FOG_VOID_SOLID         = -1;
-const int UTTER_SHIELD_LANDSCAPE       = -1;
-const int UTTER_SHOCKWAVE              = -1;
+const int UTTER_INERTIAL_SURGE         = 3528;
+const int UTTER_INERTIAL_SURGE_R       = 3529;
+const int UTTER_KNIGHTS_PUISSANCE      = 3530;
+const int UTTER_KNIGHTS_PUISSANCE_R    = 3531;
+const int UTTER_UNIVERSAL_APTITUDE     = 3532;
+const int UTTER_UNIVERSAL_APTITUDE_R   = 3533;
+const int UTTER_WORD_NURTURING_MINOR   = 3534;
+const int UTTER_WORD_NURTURING_MINOR_R = 3535;
+const int UTTER_FORTIFY_ARMOUR_SNEAK   = 3536;
+const int UTTER_FORTIFY_ARMOUR_CRIT    = 3537;
+const int UTTER_KEEN_WEAPON            = 3538;
+const int UTTER_FOG_VOID_CLOUD         = 3539;
+const int UTTER_FOG_VOID_SOLID         = 3540;
+const int UTTER_SHIELD_LANDSCAPE       = 3541;
+const int UTTER_SHOCKWAVE              = 3542;
 
 // Level 2 Utterances
 const int UTTER_ARCHERS_EYE              = -1;

@@ -4955,7 +4955,7 @@ Level
  1: Hexblade's Curse 1/day
  2: Arcane Resistance
  3: Mettle 
- 4: -
+ 4: Dark Companion
  5: Bonus Feat, Hexblade's Curse 2/day
  6: -
  7: Greater Hexblade's Curse
@@ -13817,12 +13817,12 @@ Once per day, a Hexblade of 12th level or higher can create a baleful aura of mi
 
 At 2nd level a Hexblade gains a bonus equal to his Charisma bonus (minimum +1) on saving throws against spells and spell-like effects.</entry>
   <entry id="48574" lang="en" sex="m">Epic Hexblade</entry>
-  <entry id="48575" lang="en" sex="m">The Epic Hexblade is a true bane for his enemies. The daily uses of his abilities continue to increase, while his curse becomes even more potent and difficult to resist as he progresses.
+  <entry id="48575" lang="en" sex="m">The Epic Hexblade is a true bane for his enemies. The daily uses of his abilities continue to increase, while his curse and Dark Companion become even more potent as he progresses.
 
 ABILITIES: 
 
 Level 
-21: Hexblade's Curse 6/day
+21: Epic Dark Companion, Hexblade's Curse 6/day
 22: -
 23: - 
 24: Bonus Feat, Aura of Unluck 4/day
@@ -13845,6 +13845,177 @@ Level
   <entry id="48576" lang="en" sex="m">Greater Hexblade's Curse</entry>
   <entry id="48577" lang="en" sex="m">Dire Hexblade's Curse</entry>
   <entry id="48578" lang="en" sex="m">Epic Hexblade's Curse</entry>
+  <entry id="48579" lang="en" sex="m">Dark Companion</entry>
+  <entry id="48580" lang="en" sex="m">Epic Dark Companion</entry>
+  <entry id="48581" lang="en" sex="m">You create an illusionary companion resembling a panther, spun from the darkness of the night. Any enemy adjacent to your Dark Companion takes a -2 penalty on it's saves and to it's AC. Your Dark Companion has no real substance and thus can't attack or otherwise affect creatures or objects. It is immune to any damage or other effects that might harm creatures, though it can be dispelled or suppressed just like a spell effect. Your Dark Companion is treated as a spell whose level is equal to 1/4 your Hexblade level.
+
+For the Epic Hexblade the effects of the Dark Companion increase to -4 instead of -2.</entry>
+  <entry id="48582" lang="en" sex="m">Augment Familiar</entry>
+  <entry id="48583" lang="en" sex="m">School: Transmutation
+Caster Level: Sorcerer/Wizard 2, Hexblade 1
+Components: V, S
+Range: Close
+Target: Your familiar
+Duration: Concentration + 1 round/level
+Saving Throw: Fortitude negates (harmless)
+Spell Resistance: Yes (harmless)
+
+This spell grants your familiar a +4 enhancement bonus to Strength, Dexterity and Constitution, damage reduction 5/+1, and a +2 resistance bonus on saving throws.
+
+(note that a Hexblade can't get a familiar due to NWN hardcoding, and it's unlikely that this changes)
+</entry>
+  <entry id="48584" lang="en" sex="m">Phantom Threat</entry>
+  <entry id="48585" lang="en" sex="m">School: Illusion (Phantasm) [Mind-Affecting]
+Caster Level: Bard 1, Hexblade 1
+Components: V, S
+Range: Close
+Target: One creature
+Duration: 1 round/level
+Saving Throw: Will negates
+Spell Resistance: Yes
+
+You create the sensation in the subject's mind that it is threatened by more foes than it actually faces. A creature affected by this spell is considered flanked, even if not threatened by other creatures. A creature that can't be flanked is immune to this spell.
+
+(due to the way NWN is set up, you can't sneak attack a target affected by this spell, as you could in PnP)</entry>
+  <entry id="48586" lang="en" sex="m">Alter Self</entry>
+  <entry id="48587" lang="en" sex="m">School: Transmutation
+Caster Level: Bard/Sorcerer/Wizard/Hexblade 2
+Components: V, S
+Range: Personal
+Target: You
+Duration: 10 min/level
+
+You assume the form of a creature of the same type as your normal form. The new form must be within one size category of your normal size</entry>
+  <entry id="48588" lang="en" sex="m">Enthrall</entry>
+  <entry id="48589" lang="en" sex="m">School: Enchantment (Charm) [Mind-Affecting, Sonic]
+Caster Level: Bard/Cleric/Hexblade 2
+Components: V, S
+Range: Medium
+Target: Any number of Creatures
+Duration: 1 hour
+Saving Throw: Will negates
+Spell Resistance: Yes
+
+If you have the attention of a group of creatures, you can use this spell to hold them spellbound. Tose affected give you their undivided attention, ignoring their surroundings. They are considered friendly while under the effect of the spell. Any potentially affected creature of a race or alignment unfriendly to you gets a +4 bonus on the saving throw. A creature with 4 or more HD or with a Wisdom score of 16 or higher remains aware of it's surroundings and has an attitude of indifferent.</entry>
+  <entry id="48590" lang="en" sex="m">False Life</entry>
+  <entry id="48591" lang="en" sex="m">School: Necromancy
+Caster Level: Sorcerer/Wizard/Hexblade 2
+Components: V, S, M
+Range: Personal
+Target: You
+Duration: 1 hour/level or until discharged
+
+You harness the power of unlife to grant yourself alimited ability to avoid death. While this spell is in effect, you gain temporary hit points equal to 1D10 +1 per caster level (maximum +10).</entry>
+  <entry id="48592" lang="en" sex="m">Protection from Arrows</entry>
+  <entry id="48593" lang="en" sex="m">School: Abjuration
+Caster Level: Sorcerer/Wizard/Hexblade 2
+Components: V, S, F
+Range: Touch
+Target: Creature touched
+Duration: 1 min/level
+Saving Throw: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+The warded creature gains resistance to ranged weapons. The subject gains damage reduction 10/+1 against ranged weapons. Once the spell has prevented a total of 10 points of damage per caster level (maximum 100 points), it is discharged.</entry>
+  <entry id="48594" lang="en" sex="m">Touch of Idiocy</entry>
+  <entry id="48595" lang="en" sex="m">School: Enchantment (Compulsion) [Mind-Affecting]
+Caster Level: Sorcerer/Wizard/Hexblade 2
+Components: V, S
+Range: Touch
+Target: Living creature touched
+Duration: 10 min/level
+Saving Throw: No
+Spell Resistance: Yes
+
+With a touch, you reduce the target's mental faculties. Your successful meelee touch attack applies a 1D6 penalty to the target's Intelligence, Wisdom and Charisma scores. This penalty can't reduce any of these scores below 1.</entry>
+  <entry id="48596" lang="en" sex="m">Deep Slumber</entry>
+  <entry id="48597" lang="en" sex="m">School: Enchantment (Compulsion) [Mind-Affecting]
+Caster Level: Sorcerer/Wizard/Hexblade 3
+Components: V, S, M
+Range: Medium
+Target: One or more living creatures within a 10-ft.-radius burst
+Duration: 1 min/level
+Saving Throw: Will negates
+Spell Resistance: Yes
+
+This spell causes a magical slumber to come upon 10 HD of creatures, Creatures with the fewest HD are affected first. Among creatures with equal HD, those who are closets to the spells point of origin are affected first. HD that are not sufficient to affect a creature are wasted.</entry>
+  <entry id="48598" lang="en" sex="m">Hound of Doom</entry>
+  <entry id="48599" lang="en" sex="m">School: Illusion (Shadow)
+Caster Level: Hexblade 3
+Components: V, S
+Range: Close
+Effect: Shadowy Hound
+Duration: 1 min/level or until destroyed
+Saving Throw: No
+Spell Resistance: No
+
+You shape the essence of the Plane of Shadow to create a powerful doglike companion that serves you loyally for the duration of the spell. The Hound of Doom has the statistics of a Dire Wolf with the following adjustments: It gains a deflection bonus to AC equal to your Charisma bonus, it's hitpoints when created are equal to your full normal hitpoints, and it uses your base attack bonus instead of it's own (adding it's +7 bonus from Strength and -1 penalty from size as normal).</entry>
+  <entry id="48600" lang="en" sex="m">Repel Vermin</entry>
+  <entry id="48601" lang="en" sex="m">School: Abjuration
+Caster Level: Bard/Cleric/Druid 4, Ranger/Hexblade 3
+Components: V, S, DF
+Range: 10 ft.
+Area: 10-ft.-radius emanation centered on you
+Duration: 10 min/level
+Saving Throw: None or Will negates
+Spell Resistance: Yes
+
+An invisible barrier holds back vermin. A vermin with HD of less than one-third your level can't penetrate the barrier. A vermin with HD of one-third yor level or more can penetrate the barrier if it succeeds a Will save. Even so, crossing the barrier deals the vermin 2D6 points of damage.</entry>
+  <entry id="48602" lang="en" sex="m">Baleful Polymorph</entry>
+  <entry id="48603" lang="en" sex="m">School: Transmutation
+Caster Level: Druid/Sorcerer/Wizard 5, Hexblade 4
+Components: V, S
+Range: Close
+Target: One creature
+Duration: Permanent
+Saving Throw: Fortitude negates, Will partial
+Spell Resistance: Yes
+
+As Polymorph, except that you change the subject into a Small or smaller animal of no more than 1 HD (such as a dog, lizard or toad). If the new form would prove fatal to the creature, the target gets a +4 bonus on the save. If the spell succeeds, the subject must also make a Will save. If this second save fails, the creature loses it's extraordinary, supernatural and spell-like abilities, loses it's ability to cast spells, and gains the alignment, special abilities and Intelligence, Wisdom and Charisma scores of it's new form in place of its own. It still retains it's class and level (or HD), as well as all benefits deriving therefrom. Incorporeal or gaseous creatures are immune to being polymorphed, and a creature with the Shapechanger subtype can revert to it's normal form.</entry>
+  <entry id="48604" lang="en" sex="m">Break Enchantment</entry>
+  <entry id="48605" lang="en" sex="m">School: Abjuration
+Caster Level: Bard/Paladin/Hexblade 4, Cleric/Sorcerer/Wizard 5
+Components: V, S
+Range: Close
+Target: Up to one creature per level, all within 30 ft. of each other
+Duration: Instantaneous
+Saving Throw: Special
+Spell Resistance: No
+
+This spell frees victims from enchantment, transmutations and curses. It can reverse even an instantaneous effect, such as Flesh to Stone. For each such effect, you make a caster level check (1D20 + caster level, maximum +15) against a DC of 11 + caster level of the effect. Success means that the creature is free of the spell, curse, or effect. For a cursed item, the DC is 25. If the spell is one that cannot be dispelled by Dispel Magic, Break Enchantment  works only if that spell is 5th level or lower. If the effect comes from a permanent magic item, such as a cursed sword, Break Enchantment does not remove the curse from that item, but it does free the victim from the item's effect.</entry>
+  <entry id="48606" lang="en" sex="m">Cursed Blade</entry>
+  <entry id="48607" lang="en" sex="m">School: Necromancy
+Caster Level: Assassin/Hexblade 4
+Components: V
+Range: Touch
+Target: One melee weapon
+Duration: 1 min/level
+Saving Throw: No
+Spell Resistance: No
+
+A weapon affected by this spell deals wounds that can't be healed in the usual fashion. Any damage dealt by the weapon (not including damage from special weapon properties such as flaming, holy, wounding, and so on) cannot be cured by any means until the damaged individual has received a Remove Curse spell (or some other effect that neutralizes a curse). If a creature is slain by a weapon that is under the effect of this spell, it can't be raised from the dead unless a Remove Curse spell (or similar effect) is cast on the body or a True Resurrection spell is used.</entry>
+  <entry id="48608" lang="en" sex="m">Solid Fog</entry>
+  <entry id="48609" lang="en" sex="m">School: Conjuration
+Caster Level: Sorcerer/Wizard/Hexblade 4
+Components: V, S, M
+Range: Medium (100 ft. + 10 ft./level)
+Effect: Fog spreads in 20-ft. radius, 20 ft. high
+Duration: 10 min/level
+Saving Throw: No
+Spell Resistance: No
+
+A bank of fog billows out from the point you designate. The fog obscures all sight, including Darkvision, beyong 5 feet. A creature withing 5 feet has concealment (20 % miss chance). Creatures farther away have Total Concealment (50 % miss chance, and the attacker cant use sight to locate the target). Any creature attempting to move through the fog progresses at a speed of 5 feet, regardless of it's normal speed, and it takes a -2 penalty on all melee attack rolls. The vapors prevent effective ranged attacks (except for magic rays and the like).</entry>
+  <entry id="48610" lang="en" sex="m">Detect Scrying</entry>
+  <entry id="48611" lang="en" sex="m">School: Divination
+Caster Level: Bard/Sorcerer/Wizard/Hexblade 4
+Components: V, S, M
+Range: 40 ft.
+Area: 40-ft.-radius emanation centered on you
+Duration: 24 hours
+Saving Throw: No
+Spell Resistance: No
+
+You immediately become aware of any attempt to observe you by means of a divination (scrying) spell or effect. The spell's area radiates from you and moves as you move. You know the location of every magical sensor within the spell's area. If the scrying attempt originates within the area, you also know its location; otherwise you and the scrier immediately make opposed caster level checks (1D20 + caster level). If you at least match the scrier's result, you get a visual image of the scrier and an accurate sense of his or her direction and distance from you.</entry>
   <entry id="48612" lang="en" sex="m">Man at Arms</entry>
   <entry id="48613" lang="en" sex="m">Men at Arms</entry>
   <entry id="48614" lang="en" sex="m">man at arms</entry>

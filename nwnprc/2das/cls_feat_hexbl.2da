@@ -5,6 +5,8 @@
 1   Hexblade_Arcane_Resistance                     3667      3    2              0      
 2   Hexblade_Mettle                                3665      3    3              0      
 3   Spellbook                                      1999      3    4              1      
+4   Hexblade_Light_Armor_Casting                   3689      3    4              0      
+5   Hexblade_Companion                             3687      3    4              1      
 4   Hexblade_Curse_2                               3669      3    5              1      
 5   Greater_Hexblade_Curse_2                       3670      3    7              1      
 6   Greater_Hexblade_Curse_3                       3671      3    9              1      
@@ -15,6 +17,7 @@
 11  Dire_Hexblade_Curse_5                          3674      3    19             1      
 12  Hexblade_Aura_Unluck_3                         3681      3    20             1      
 13  Dire_Hexblade_Curse_6                          3675      3    21             1      
+16  Hexblade_Companion_Epic                        3688      3    21             1      
 14  Hexblade_Aura_Unluck_4                         3682      3    24             1      
 15  Dire_Hexblade_Curse_7                          3676      3    25             1      
 16  Hexblade_Aura_Unluck_5                         3683      3    28             1      

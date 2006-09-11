@@ -1,242 +1,259 @@
 2DA V2.0
 
-          LABEL                                               MODEL                
-0         None                                                ****                 
-1         Demon                                               c_wingsdm            
-2         Angel                                               c_wingsan            
-3         Bat                                                 c_wingbat            
-4         "Dragon, Red"                                       c_wingdra            
-5         Butterfly                                           c_wingbut            
-6         Bird                                                c_wingbird           
-7         ****                                                ****                 
-8         ****                                                ****                 
-9         ****                                                ****                 
-10        ****                                                ****                 
-11        ****                                                ****                 
-12        ****                                                ****                 
-13        ****                                                ****                 
-14        ****                                                ****                 
-15        ****                                                ****                 
-16        ****                                                ****                 
-17        ****                                                ****                 
-18        ****                                                ****                 
-19        ****                                                ****                 
-20        ****                                                ****                 
-21        ****                                                ****                 
-22        ****                                                ****                 
-23        ****                                                ****                 
-24        ****                                                ****                 
-25        ****                                                ****                 
-26        ****                                                ****                 
-27        ****                                                ****                 
-28        ****                                                ****                 
-29        ****                                                ****                 
-30        "Demon, Erinyes"                                    zep_wingerin         
-31        "Bird, Red"                                         zep_wingsbird2       
-32        "Bird, Dark"                                        zep_wingsbird3       
-33        "Bird, Blue"                                        zep_wingsbird4       
-34        "Dragon, Black"                                     zep_wingdrablack     
-35        "Dragon, Blue"                                      zep_wingdrablue      
-36        "Dragon, Brass"                                     zep_wingdrabrass     
-37        "Dragon, Bronze"                                    zep_wingdrabronz     
-38        "Dragon, Copper"                                    zep_wingdracoppe     
-39        "Dragon, Gold"                                      zep_wingdragold      
-40        "Dragon, Green"                                     zep_wingdragreen     
-41        "Dragon, Silver"                                    zep_wingdrasilve     
-42        "Dragon, White"                                     zep_wingdrawhite     
-43        ****                                                ****                 
-44        "Bird, Kenku"                                       c_wingkenkub         
-45        "Angel, Armored"                                    c_wingsarman         
-46        "Fallen Angel"                                      c_wingsfallen        
-47        Raven                                               c_wingsraven         
-48        "Balor, Flame"                                      c_wingsbalr          
-49        "Mephisto Wings"                                    c_wingsmeph          
-50        "Dragon, Shadow"                                    c_wingdrashadow      
-51        "Dragon, Dracolich"                                 c_wingdralich        
-52        "Dragon, Prismatic"                                 c_wingdraprism       
-16        "Flying, Demon female"                              w1_wingsdm           
-17        "Flying, Demon male"                                w2_wingsdm           
-18        "Flying, Angel"                                     tk_wingsan           
-56        ****                                                ****                 
-57        ****                                                ****                 
-58        ****                                                ****                 
-59        ****                                                ****                 
-60        ****                                                ****                 
-61        ****                                                ****                 
-62        ****                                                ****                 
-63        ****                                                ****                 
-64        ****                                                ****                 
-65        ****                                                ****                 
-66        ****                                                ****                 
-67        ****                                                ****                 
-68        ****                                                ****                 
-69        ****                                                ****                 
-70        ****                                                ****                 
-71        ****                                                ****                 
-72        ****                                                ****                 
-73        ****                                                ****                 
-74        ****                                                ****                 
-75        ****                                                ****                 
-76        "Dust"                                              rockexpld            
-77        "Dust 2"                                            rockexpld01          
-78        ****                                                ****                 
-79        "Smoke"                                             vdr_smoke            
-80        "Smoke, Overhead (laggy)"                           vim_mentcloud        
-81        "Smoke, Ghost"                                      vdr_ghostsmoke       
-82        "Smoke, Ghost 2"                                    vdr_ghostsmoke2      
-83        ****                                                ****                 
-84        "Butterfly Cone (laggy)"                            var_conebfly         
-85        "Gem Cone (laggy)"                                  var_conegems         
-86        "Mage Sparkles"                                     vdr_magearmor2       
-87        "Multi Sparkles (deck)"                             vff_deck             
-88        "Big Red Hand"                                      vff_rayhand          
-89        "Blue Flag"                                         vfx_flagblue         
-90        "Purple Flag"                                       vfx_flagpurp         
-91        "Red Flag"                                          vfx_flagred          
-92        "Yellow Flag"                                       vfx_flagyelo         
-93        "Combust (flames, laggy)"                           vim_ballfire         
-94        "Acid Sparkles"                                     vim_shwngacid01      
-95        "Cold Sparkles"                                     vim_shwngcold01      
-96        "Electric Sparkles"                                 vim_shwngelec01      
-97        "Evil Sparkles"                                     vim_shwngevil01      
-98        "Fire Sparkles"                                     vim_shwngfire01      
-99        "Heal Sparkles"                                     vim_shwngheal01      
-100       "Holy Sparkles"                                     vim_shwngholy01      
-101       "Mind Sparkles"                                     vim_shwngmind01      
-102       "Nature Sparkles"                                   vim_shwngnatr01      
-103       "Odd Sparkles"                                      vim_shwngodd01       
-104       "Sonic Sparkles"                                    vim_shwngsonc01      
-105       ****                                                ****                 
-106       ****                                                ****                 
-107       "Whip fire"                                         wwhip_fxfire         
-108       "Ice Shards"                                        vpr_shardice         
-109       "Acid Spiral Trace"                                 vco_lgspracid01      
-110       "Cold Spiral Trace"                                 vco_lgsprcold01      
-111       "Electric Spiral Trace"                             vco_lgsprelec01      
-112       "Evil Spiral Trace"                                 vco_lgsprevil01      
-113       "Fire Spiral Trace"                                 vco_lgsprfire01      
-114       "Heal Spiral Trace"                                 vco_lgsprheal01      
-115       "Holy Spiral Trace"                                 vco_lgsprholy01      
-116       "Mind Spiral Trace"                                 vco_lgsprmind01      
-117       "Nature Spiral Trace"                               vco_lgsprnatr01      
-118       "Odd Spiral Trace"                                  vco_lgsprodd01       
-119       "Sonic Spiral Trace"                                vco_lgsprsonc01      
-120       "Fear Skull"                                        fx_skull             
-121       "Fear Skull 2"                                      fx_Skull01           
-122       "Red Atom"                                          vco_atomred          
-123       ****                                                ****                 
-124       "Bat Pet"                                           c_a_bat              
-125       ****                                                ****                 
-126       ****                                                ****                 
-127       ****                                                ****                 
-128       "Lavaspurt"                                         fx_lavaspurt         
-129       "Fire Sparkles"                                     fx_ref_fire          
-130       "Ribbon Trace"                                      fx_ribbon            
-131       ****                                                ****                 
-132       ****                                                ****                 
-133       ****                                                ****                 
-134       ****                                                ****                 
-135       ****                                                ****                 
-136       "Fire (Azer style)"                                 vcm_hitfire          
-137       "Blue Fog"                                          vco_ato2blue         
-138       "Green Fog"                                         vco_ato2gren         
-139       "Purple Fog"                                        vco_ato2purp         
-140       "Red Fog"                                           vco_ato2red          
-141       "Yellow Fog"                                        vco_ato2yelo         
-142       "Butterflys"                                        plc_t02              
-143       "Ring Cone (laggy)"                                 vco_gazemind         
-144       "blue Trace strobe"                                 vco_grndblue         
-145       "skull Trace"                                       vco_grndskul         
-146       "Ravelights Acid (fireball summon)"                 vco_mebalacid01      
-147       "Ravelights Cold (fireball summon)"                 vco_mebalcold01      
-148       "Ravelights Elec (fireball summon)"                 vco_mebalelec01      
-149       "Ravelights Evil (fireball summon)"                 vco_mebalevil01      
-150       "Ravelights Fire (fireball summon)"                 vco_mebalfire01      
-151       "Ravelights Heal (fireball summon)"                 vco_mebalheal01      
-152       "Ravelights Holy (fireball summon)"                 vco_mebalholy01      
-153       "Ravelights Mind (fireball summon)"                 vco_mebalmind01      
-154       "Ravelights Natr (fireball summon)"                 vco_mebalnatr01      
-155       "Ravelights Odd  (fireball summon)"                 vco_mebalodd01       
-156       "Ravelights Sonc (fireball summon)"                 vco_mebalsonc01      
-157       "Acid Fog Spiral"                                   vco_megrdacid01      
-158       "Cold Fog Spiral"                                   vco_megrdcold01      
-159       "Elec Fog Spiral"                                   vco_megrdelec01      
-160       "Evil Fog Spiral"                                   vco_megrdevil01      
-161       "Fire Fog Spiral"                                   vco_megrdfire01      
-162       "Heal Fog Spiral"                                   vco_megrdheal01      
-163       "Holy Fog Spiral"                                   vco_megrdholy01      
-164       "Mind Fog Spiral"                                   vco_megrdmind01      
-165       "Natr Fog Spiral"                                   vco_megrdnatr01      
-166       "Odd  Fog Spiral"                                   vco_megrdodd01       
-167       "Sonc Fog Spiral"                                   vco_megrdsonc01      
-168       "Acid Summon Trace"                                 vco_mehanacid01      
-169       "Cold Summon Trace"                                 vco_mehancold01      
-170       "Elec Summon Trace"                                 vco_mehanelec01      
-171       "Evil Summon Trace"                                 vco_mehanevil01      
-172       "Fire Summon Trace"                                 vco_mehanfire01      
-173       "Heal Summon Trace"                                 vco_mehanheal01      
-174       "Holy Summon Trace"                                 vco_mehanholy01      
-175       "Mind Summon Trace"                                 vco_mehanmind01      
-176       "Natr Summon Trace"                                 vco_mehannatr01      
-177       "Odd Summon Trace"                                  vco_mehanodd01       
-178       "Sonc Summon Trace"                                 vco_mehansonc01      
-179       ****                                                ****                 
-180       "Flys"                                              vps_bugs             
-181       "Acid Summon Trace Rays"                            vco_mehedacid01      
-182       "Cold Summon Trace Rays"                            vco_mehedcold01      
-183       "Elec Summon Trace Rays"                            vco_mehedelec01      
-184       "Evil Summon Trace Rays"                            vco_mehedevil01      
-185       "Fire Summon Trace Rays"                            vco_mehedfire01      
-186       "Heal Summon Trace Rays"                            vco_mehedheal01      
-187       "Holy Summon Trace Rays"                            vco_mehedholy01      
-188       "Mind Summon Trace Rays"                            vco_mehedmind01      
-189       "Natr Summon Trace Rays"                            vco_mehednatr01      
-190       "Odd Summon Trace Rays"                             vco_mehedodd01       
-191       "Sonc Summon Trace Rays"                            vco_mehedsonc01      
-192       "Small Electric Tracers"                            vco_smhanelec01      
-193       "Death Shield (Great Tracing)"                      vim_protdeath        
-194       "Destruction (blood and chunks fly everywhere)"     vim_destruct         
-195       "Blue Flames"                                       vdr_eleshield02      
-196       "Destruction (tracing purple rays)"                 vim_destruct_l       
-197       "Gas Jet Acid"                                      vff_gasacid          
-198       "Gas Jet Evil"                                      vff_gasevil          
-199       "Gas Jet Fire"                                      vff_gasfire          
-200       "Gas Jet Grease"                                    vff_gasgrease        
-201       "Gas Jet Mind"                                      vff_gasmind          
-202       "Gas Jet Nature"                                    vff_gasnatr          
-203       "Gas Jet Smoke"                                     vff_gassmoke         
-204       "Colorful Tracer"                                   vim_bonabil          
-205       None                                                ****                 
-206       "Rays Tracing"                                      vim_bonholy          
-207       "Summoning Circle (Tracing, hard to see)"           px2_g01              
-208       "Big Bright Green Fog"                              vdr_bigby_int        
-209       "White Tracer Squares"                              vim_bonac            
-210       ****                                                ****                 
-211       ****                                                ****                 
-212       "Black Fog"                                         vps_tentacle         
-213       "Negative Rays (Tracing, laggy)"                    vim_negabil          
-214       "Big Cloud"                                         vff_summon1          
-215       "Sparkles w/ 4 Tracers"                             vff_summon2          
-216       "Body Encasing Sparkles"                            vff_summund          
-217       "Wilting (laggy)"                                   vff_wilting          
-218       "Hyper Fireball"                                    vpr_fireball         
-219       "Cold Fountain"                                     vim_pulscold         
-220       "Fire Fountain"                                     vim_pulsfire         
-221       "Holy Fountain"                                     vim_pulsholy         
-222       "Wierd Ray Tracers"                                 vim_pulsneg          
-223       "Solid Flame Beams (Flame Lash)"                    vim_lashfire         
-224       "Doom (Stormcloud)"                                 vim_magdoom          
-225       "Four Green Tracer Balls (Aura style)"              vpm_circfear         
-226       "Four Black Tracer Balls (Aura style)"              vpm_circcont         
-227       "Four Red/White Tracer Balls (Aura style)"          vpm_circdrain        
-228       "Four Orange Tracer Balls (Aura style)"             vpm_circfire         
-229       "Four Blue Tracer Balls (Aura style)"               vpm_circfrost        
-230       "Four Blue/Green Tracer Balls (Aura style)"         vpm_circpois         
-231       "Four Yellow Tracer Balls (Aura style)"             vpm_circprot         
-232       "Four Purple Tracer Balls (Aura style)"             vpm_circradi         
-233       "Four White Tracer Balls (Aura style)"              vpm_circsilc         
-234       "Four Green Tracer Balls (Aura style)"              vpm_circvisag        
-235       "Four Green Tracer Balls (Dragon Aura style)"       vpm_dragfear         
-236       "Ray Cold"                                          vim_raycold          
-                                                                                   
-                                                                                   
+          LABEL                         MODEL               ENVMAP      
+0         None                          ****                ****        
+1         Demon                         c_wingsdm           default     
+2         Angel                         c_wingsan           ****        
+3         Bat                           c_wingbat           default     
+4         "Dragon: Red"                 c_wingdra           default     
+5         Butterfly                     c_wingbut           default     
+6         Bird                          c_wingbird          default     
+7         "Angel: Fallen"               c_wingsfallen       ****        
+8         "Bird: Raven"                 c_wingsraven        ****        
+9         "Balor: Flame"                c_wingsbalr         ****        
+10        Gargoyle                      c_wingsgarg         ****        
+11        "Butterfly: Yellow"           c_yelbutter         ****        
+12        "Butterfly: Orange"           c_orabutter         ****        
+13        "Butterfly: Black"            c_blabutter         ****        
+14        "Butterfly: Blue"             c_blubutter         ****        
+15        "Butterfly: Red"              c_redbutter         ****        
+16        "Dragon: Shadow"              c_wingdrashadow     ****        
+17        "Dragon: Dracolich"           c_wingdralich       ****        
+18        "Dragon: Prismatic"           c_wingdraprism      ****        
+19        "Dragon: Big"                 c_winged            ****        
+20        "Demon: Mephisto"             c_wingsmeph         ****        
+21        "Gargoyle (dragon)"           c_wingsgarg         ****        
+22        "Demon: SkinColours"          c_w_dm_plt          ****        
+23        "Angel: SkinColours"          c_w_an_plt          ****        
+24        "Bat: SkinColours"            c_w_bat_plt         ****        
+25        "Butterfly: SkinColours"      c_w_but_plt         ****        
+26        "Bird: SkinColours"           c_w_bird_plt        ****        
+27        "Dragon: SkinColours"         c_w_dra_plt         ****        
+28        "Bird: Kenku"                 c_wingkenkub        ****        
+29        "Angel: Armored"              c_wingsarman        ****        
+30        "Demon: Erinyes"              zep_wingerin        ****        
+31        "Bird: Red"                   zep_wingsbird2      ****        
+32        "Bird: Dark"                  zep_wingsbird3      ****        
+33        "Bird: Blue"                  zep_wingsbird4      ****        
+34        "Dragon: Black"               c_wingdrablack      ****        
+35        "Dragon: Blue"                c_wingdrablue       ****        
+36        "Dragon: Brass"               c_wingdrabrass      default     
+37        "Dragon: Bronze"              c_wingdrabronze     default     
+38        "Dragon: Copper"              c_wingdracopper     default     
+39        "Dragon: Gold"                c_wingdragold       default     
+40        "Dragon: Green"               c_wingdragreen      ****        
+41        "Dragon: Silver"              c_wingdrasilver     default     
+42        "Dragon: White"               c_wingdrawhite      ****        
+43        "Half-Dragon: Gold"           c_winggldhdrg       ****        
+44        "Half-Dragon: Silver"         c_wingslvhdrg       ****        
+45        "Flying: Demon,Male"          w2_wingsdm          ****        
+46        "Flying: Demon,Female"        w1_wingsdm          ****        
+47        "Flying: Angel"               tk_wingsan          ****        
+48        "Butterfly: GreenGold"        c_wingbut2          ****        
+49        "Butterfly: Forest"           c_wingbut3          ****        
+50        "Butterfly: BurntSienna"      c_wingbut4          ****        
+51        "Butterfly: BrightBlue"       c_wingbut5          ****        
+52        "Butterfly: DarkForest"       c_wingbut6          ****        
+53        "Butterfly: Violet"           c_wingbut7          ****        
+54        "Butterfly: VioletGold"       c_wingbut8          ****        
+55        "Butterfly: IceGreen"         c_wingbut9          ****        
+56        "Butterfly: Mauve"            c_wingbut10         ****        
+57        "Demon: Red"                  c_winredsha         ****        
+58        "Demon: Blue"                 c_winblusha         ****        
+59        ****                          Reserved_CEP        ****        
+60        ****                          Reserved_CEP        ****        
+61        ****                          Reserved_CEP        ****        
+62        ****                          Reserved_CEP        ****        
+63        ****                          Reserved_CEP        ****        
+64        ****                          Reserved_CEP        ****        
+65        ****                          Reserved_CEP        ****        
+66        ****                          Reserved_CEP        ****        
+67        ****                          Reserved_CEP        ****        
+68        ****                          Reserved_CEP        ****        
+69        ****                          Reserved_CEP        ****        
+70        ****                          Reserved_CEP        ****        
+71        ****                          Reserved_CEP        ****        
+72        ****                          Reserved_CEP        ****        
+73        ****                          Reserved_CEP        ****        
+74        ****                          Reserved_CEP        ****        
+75        ****                          Reserved_CEP        ****        
+76        ****                          Reserved_CEP        ****        
+77        ****                          Reserved_CEP        ****        
+78        ****                          Reserved_CEP        ****        
+79        ****                          Reserved_CEP        ****        
+80        ****                          USER                ****        
+81        ****                          USER                ****        
+82        ****                          USER                ****        
+83        ****                          USER                ****        
+84        ****                          USER                ****        
+85        ****                          USER                ****        
+86        ****                          USER                ****        
+87        ****                          USER                ****        
+88        ****                          USER                ****        
+89        ****                          USER                ****        
+90        ****                          Reserved_CEP        ****        
+91        ****                          Reserved_CEP        ****        
+92        ****                          Reserved_CEP        ****        
+93        ****                          Reserved_CEP        ****        
+94        ****                          Reserved_CEP        ****        
+95        ****                          Reserved_CEP        ****        
+96        ****                          Reserved_CEP        ****        
+97        ****                          Reserved_CEP        ****        
+98        ****                          Reserved_CEP        ****        
+99        ****                          Reserved_CEP        ****        
+100       "Caltrops"                    vdr_caltrops        ****        
+101       ****                          Reserved_CEP        ****        
+102       ****                          Reserved_CEP        ****        
+103       ****                          Reserved_CEP        ****        
+104       ****                          Reserved_CEP        ****        
+105       ****                          Reserved_CEP        ****        
+106       ****                          Reserved_CEP        ****        
+107       ****                          Reserved_CEP        ****        
+108       "Mecha (Black Ball)"          px2_f06             ****        
+109       "Combust (flames, laggy)"     vim_ballfire        ****        
+110       "Dust"                        rockexpld           ****        
+111       "Dust 2"                      rockexpld01         ****        
+112       "Smoke"                       vdr_smoke           ****        
+113       "Smoke: Overhead(laggy)"      vim_mentcloud       ****        
+114       "Smoke: Ghost"                vdr_ghostsmoke      ****        
+115       "Smoke: Ghost"                vdr_ghostsmoke      ****        
+116       "ButterflyCone(laggy)"        var_conebfly        ****        
+117       "GemCone(laggy)"              var_conegems        ****        
+118       "Sparkles: Mage"              vdr_magearmor       ****        
+119       "Sparkles: Multi"             vff_deck            ****        
+120       "Big Red Hand"                vff_rayhand         ****        
+121       "Flag: Blue"                  vfx_flagblue        ****        
+122       "Flag: Purple"                vfx_flagpurp        ****        
+123       "Flag: Red"                   vfx_flagred         ****        
+124       "Flag: Yellow"                vfx_flagyelo        ****        
+125       "Sparks: Acid"                vim_shwngacid01     ****        
+126       "Sparks: Cold"                vim_shwngcold01     ****        
+127       "Sparks: Electric"            vim_shwngelec01     ****        
+128       "Sparks: Evil"                vim_shwngevil01     ****        
+129       "Sparks: Fire"                vim_shwngfire01     ****        
+130       "Sparks: Heal"                vim_shwngheal01     ****        
+131       "Sparks: Holy"                vim_shwngholy01     ****        
+132       "Sparks: Mind"                vim_shwngmind01     ****        
+133       "Sparks: Nature"              vim_shwngnatr01     ****        
+134       "Sparks: Odd"                 vim_shwngodd01      ****        
+135       "Sparks: Sonic"               vim_shwngsonc01     ****        
+136       "Whipfire"                    wwhip_fxfire        ****        
+137       "IceShards"                   vpr_shardice        ****        
+138       "Trace 1: Acid"               vco_lgspracid01     ****        
+139       "Trace 1: Cold"               vco_lgsprcold01     ****        
+140       "Trace 1: Electric"           vco_lgsprelec01     ****        
+141       "Trace 1: Evil"               vco_lgsprevil01     ****        
+142       "Trace 1: Fire"               vco_lgsprfire01     ****        
+143       "Trace 1: Heal"               vco_lgsprheal01     ****        
+144       "Trace 1: Holy"               vco_lgsprholy01     ****        
+145       "Trace 1: Mind"               vco_lgsprmind01     ****        
+146       "Trace 1: Nature"             vco_lgsprnatr01     ****        
+147       "Trace 1: Odd"                vco_lgsprodd01      ****        
+148       "Trace 1: Sonic"              vco_lgsprsonc01     ****        
+149       "FearSkull"                   fx_skull            ****        
+150       "FearSkull 2"                 fx_Skull01          ****        
+151       "Red Atom"                    vco_atomred         ****        
+152       "Animal: Bat"                 c_a_bat             ****        
+153       "Animal: Penguin"             c_a_penguin         ****        
+154       "LavaSpurt"                   fx_lavaspurt        ****        
+155       "Spark: Fire"                 fx_ref_fire         ****        
+156       "Trace: Ribbon"               fx_ribbon           ****        
+157       "Backpack"                    plc_b09             ****        
+158       "Fire(Azer)"                  vcm_hitfire         ****        
+159       "Fog: Blue"                   vco_atoblue         ****        
+160       "Fog: Green"                  vco_atogren         ****        
+161       "Fog: Purple"                 vco_atopurp         ****        
+162       "Fog: Red"                    vco_atored          ****        
+163       "Fog: Yellow"                 vco_atoyelo         ****        
+164       "Butterflies"                 plc_t02             ****        
+165       "RingCone(laggy)"             vco_gazemind        ****        
+166       "Trace: Blue"                 vco_grndblue        ****        
+167       "Trace: Skull"                vco_grndskul        ****        
+168       "Lights: Acid"                vco_mebalacid01     ****        
+169       "Lights: Cold"                vco_mebalcold01     ****        
+170       "Lights: Electric"            vco_mebalelec01     ****        
+171       "Lights: Evil"                vco_mebalevil01     ****        
+172       "Lights: Fire"                vco_mebalfire01     ****        
+173       "Lights: Heal"                vco_mebalheal01     ****        
+174       "Lights: Holy"                vco_mebalholy01     ****        
+175       "Lights: Mind"                vco_mebalmind01     ****        
+176       "Lights: Nature"              vco_mebalnatr01     ****        
+177       "Lights: Odd"                 vco_mebalodd01      ****        
+178       "Lights: Sonic"               vco_mebalsonc01     ****        
+179       "Fog: Acid"                   vco_megrdacid01     ****        
+180       "Fog: Cold"                   vco_megrdcold01     ****        
+181       "Fog: Electric"               vco_megrdelec01     ****        
+182       "Fog: Evil"                   vco_megrdevil01     ****        
+183       "Fog: Fire"                   vco_megrdfire01     ****        
+184       "Fog: Heal"                   vco_megrdheal01     ****        
+185       "Fog: Holy"                   vco_megrdholy01     ****        
+186       "Fog: Mind"                   vco_megrdmind01     ****        
+187       "Fog: Nature"                 vco_megrdnatr01     ****        
+188       "Fog: Odd"                    vco_megrdodd01      ****        
+189       "Fog: Sonic"                  vco_megrdsonc01     ****        
+190       "Trace 2: Acid"               vco_mehanacid01     ****        
+191       "Trace 2: Cold"               vco_mehancold01     ****        
+192       "Trace 2: Electric"           vco_mehanelec01     ****        
+193       "Trace 2: Evil"               vco_mehanevil01     ****        
+194       "Trace 2: Fire"               vco_mehanfire01     ****        
+195       "Trace 2: Heal"               vco_mehanheal01     ****        
+196       "Trace 2: Holy"               vco_mehanholy01     ****        
+197       "Trace 2: Mind"               vco_mehanmind01     ****        
+198       "Trace 2: Nature"             vco_mehannatr01     ****        
+199       "Trace 2: Odd"                vco_mehanodd01      ****        
+200       "Trace 2: Sonic"              vco_mehansonc01     ****        
+201       "Flies"                       vps_bugs            ****        
+202       "Trace 3: Acid"               vco_mehedacid01     ****        
+203       "Trace 3: Cold"               vco_mehedcold01     ****        
+204       "Trace 3: Electric"           vco_mehedelec01     ****        
+205       None                          ****                ****        
+206       "Trace 3: Evil"               vco_mehedevil01     ****        
+207       "Trace 3: Fire"               vco_mehedfire01     ****        
+208       "Trace 3: Heal"               vco_mehedheal01     ****        
+209       "Trace 3: Holy"               vco_mehedholy01     ****        
+210       "Trace 3: Mind"               vco_mehedmind01     ****        
+211       "Trace 3: Nature"             vco_mehednatr01     ****        
+212       "Trace 3: Odd"                vco_mehedodd01      ****        
+213       "Trace 3: Sonic"              vco_mehedsonc01     ****        
+214       "Trace 3: Electric"           vco_smhanelec01     ****        
+215       "Death Shield"                vim_protdeath       ****        
+216       "Destruction (blood)"         vim_destruct        ****        
+217       "Blue Flames"                 vdr_eleshield02     ****        
+218       "Destruction (rays)"          vim_destruct_l      ****        
+219       "Gas Jet: Acid"               vff_gasacid         ****        
+220       "Gas Jet: Evil"               vff_gasevil         ****        
+221       "Gas Jet: Fire"               vff_gasfire         ****        
+222       "Gas Jet: Grease"             vff_gasgrease       ****        
+223       "Gas Jet: Mind"               vff_gasmind         ****        
+224       "Gas Jet: Nature"             vff_gasnatr         ****        
+225       "Gas Jet: Smoke"              vff_gassmoke        ****        
+226       "Trace: Colorful"             vim_bonabil         ****        
+227       "Trace: Rays"                 vim_bonholy         ****        
+228       "Summoning Circle"            px_g01              ****        
+229       "Fog: Big Green"              vdr_bigby_int       ****        
+230       "Trace: White"                vim_bonac           ****        
+231       "Fog: Black"                  vps_tentacle        ****        
+232       "Negative Rays(laggy)"        vim_negabil         ****        
+233       "Big Cloud"                   vff_summon          ****        
+234       "Sparkles/Tracers"            vff_summon          ****        
+235       "Sparks: Body Encasing"       vff_summund         ****        
+236       "Wilting(laggy)"              vff_wilting         ****        
+237       "Hyper Fireball"              vpr_fireball        ****        
+238       "Fountain: Cold"              vim_pulscold        ****        
+239       "Fountain: Fire"              vim_pulsfire        ****        
+240       "Fountain: Holy"              vim_pulsholy        ****        
+241       "Trace: Wierd"                vim_pulsneg         ****        
+242       "Beam: Flame Lash"            vim_lashfire        ****        
+243       "Doom(Stormcloud)"            vim_magdoom         ****        
+244       "Aura: Green"                 vpm_circfear        ****        
+245       "Aura: Black"                 vpm_circcont        ****        
+246       "Aura: Red/White"             vpm_circdrain       ****        
+247       "Aura: Orange"                vpm_circfire        ****        
+248       "Aura: Blue"                  vpm_circfrost       ****        
+249       "Aura: Blue/Green"            vpm_circpois        ****        
+250       "Aura: Yellow"                vpm_circprot        ****        
+251       "Aura: Purple"                vpm_circradi        ****        
+252       "Aura: White"                 vpm_circsilc        ****        
+253       "Aura: Green"                 vpm_circvisag       ****        
+254       "Aura: Green,LG"              vpm_dragfear        ****        
+255       "RayCold"                     vim_raycold         ****        

@@ -73,3 +73,4 @@ start /B /wAIT makeb.bat
 
 start /B copyhak.bat
 pause
+exit

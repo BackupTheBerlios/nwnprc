@@ -579,10 +579,14 @@ public class Data_2da implements Cloneable{
 	 * @param label the label of the column to get
 	 * @param row   the number of the row to get, as string
 	 * @param entry the new contents of the entry. If this is null or empty, it is replaced with ****
+	 *              or with the default value if that is set
 	 */
 	public void setEntry(String label, int row, String entry){
 		if(entry == null || entry.equals(""))
-			entry = "****";
+			if(defaultValue.equals(""))
+				entry = "****";
+			else
+				entry = defaultValue;
 		mainData.get(label.toLowerCase()).set(row, entry);
 	}
 
@@ -619,13 +623,17 @@ public class Data_2da implements Cloneable{
 	}
 
 	/**
-	 * Appends a new, empty row to the end of the 2da file, with entries defaulting to ****
+	 * Appends a new, empty row to the end of the 2da file, with entries defaulting to the
+	 * default value or if that is not set, ****
 	 */
 	public void appendRow(){
 		String[] labels = this.getLabels();
 
 		for(String label : labels){
-			mainData.get(label).add("****");
+			if(defaultValue.equals(""))
+				mainData.get(label).add("****");
+			else
+				mainData.get(label).add(defaultValue);
 		}
 	}
 	
@@ -707,7 +715,7 @@ public class Data_2da implements Cloneable{
 	/**
 	 * Adds a new, empty row to the given index in the 2da file. The row currently at the index and all
 	 * subsequent rows have their index increased by one.
-	 * The entries default to ****.
+	 * The entries default to default value or if that is not set, ****.
 	 *
 	 * @param index the index where the new row will be located
 	 */
@@ -715,7 +723,10 @@ public class Data_2da implements Cloneable{
 		String[] labels = this.getLabels();
 
 		for(String label : labels){
-			mainData.get(label).add(index, "****");
+			if(defaultValue.equals(""))
+				mainData.get(label).add("****");
+			else
+				mainData.get(label).add(defaultValue);
 		}
 	}
 
@@ -753,8 +764,14 @@ public class Data_2da implements Cloneable{
 		mainData.put(label.toLowerCase(), column);
 		realLabels.add(label);
 
-		for(int i = 0; i < this.getEntryCount(); i++){
-			column.add("****");
+		if(defaultValue.equals("")) {
+			for(int i = 0; i < this.getEntryCount(); i++){
+				column.add("****");
+			}
+		} else {
+			for(int i = 0; i < this.getEntryCount(); i++){
+				column.add(defaultValue);
+			}
 		}
 	}
 

@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 5, 2006
+    Modified: Sept 10, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -540,7 +540,7 @@ void main()
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC, strTemp.epic);
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
                         //AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
-                        AddChoice(ActionString("Clone Item"), CHOICE_SETNAME, oPC);
+                        AddChoice(ActionString("Clone Item"), CHOICE_CLONE, oPC);
                         SetLocalInt(oPC, "DynConv_Waiting", TRUE);
                         if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
                         {
@@ -770,9 +770,18 @@ void main()
                 case STAGE_CLONE:
                 {
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
-                    if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
+                    string sMaterial = GetStringLeft(GetTag(oTarget), 3);
+                    if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY) || (GetMaterialString(StringToInt(sMaterial)) != sMaterial))
                     {
-                        nCost = GetGoldPieceValue(oItem);
+                        itemproperty ip = GetFirstItemProperty(oNewItem);
+                        while(GetIsItemPropertyValid(ip))
+                        {   //removing cost reducing itemprops
+                            nType = GetItemPropertyType(ip);
+                            if(nType >= 120 && nType <= 127)
+                                RemoveItemProperty(oNewItem, ip);
+                            ip = GetNextItemProperty(oNewItem);
+                        }
+                        nCost = GetGoldPieceValue(oNewItem);
                         nXP = nCost / 25;
                         if(nXP < 1) nXP = 1;
                     }
@@ -941,14 +950,11 @@ void main()
                         else
                         {
                             SetLocalInt(oPC, PRC_CRAFT_LINE, nChoice);
-                            //nType = StringToInt(Get2DACache(sFile, "Type", nChoice));
                             nStage = STAGE_CONFIRM_MAGIC;
                             if(sFile == "craft_weapon" && (nChoice == 25 || nChoice == 26))
                             {
                                 nStage = STAGE_BANE;
                             }
-                            else
-                                ApplyItemProps(oNewItem, sFile, nLine);
                         }
                     }
                 }
@@ -1030,7 +1036,6 @@ void main()
                 {
                     nStage = STAGE_CONFIRM_MAGIC;
                     SetLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE_RACE, nChoice);
-                    ApplyItemProps(oNewItem, sFile, nLine);
                 }
                 MarkStageNotSetUp(nStage, oPC);
                 break;
@@ -1069,6 +1074,7 @@ void main()
                         nStage = STAGE_CRAFT_MIGHTY;
                     else
                         nStage = STAGE_START;
+                    MarkStageNotSetUp(nStage, oPC);
                 }
                 else
                 {
@@ -1129,7 +1135,10 @@ void main()
             case STAGE_CLONE:
             {
                 if(nChoice == CHOICE_BACK)
+                {
                     nStage = STAGE_START;
+                    MarkStageNotSetUp(nStage, oPC);
+                }
                 else if(nChoice == CHOICE_CONFIRM)
                 {
                     itemproperty ip;

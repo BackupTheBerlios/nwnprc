@@ -270,11 +270,41 @@ Caster Level: 10th; Prerequisites: Craft Magic Arms and Armor, sword; Market Pri
   <entry id="51673" lang="en" sex="m">DC=68</entry>
   <entry id="51674" lang="en" sex="m">DC=69</entry>
   <entry id="51675" lang="en" sex="m">DC=70</entry>
-  <entry id="51676" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51677" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51678" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51679" lang="en" sex="m">Sonic Warding</entry>
-  <entry id="51680" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51676" lang="en" sex="m">Shout</entry>
+  <entry id="51677" lang="en" sex="m">Evocation [Sonic]
+Level: Brd 4, Sor/Wiz 4
+Components: V
+Casting Time: 1 standard action
+Range: 30 ft.
+Area: Cone-shaped burst
+Duration: Instantaneous
+Saving Throw: Fortitude partial
+Spell Resistance: Yes
+
+You emit an ear-splitting yell that deafens and damages creatures in its path. Any creature within the area is deafened for 2d6 rounds and takes 5d6 points of sonic damage. A successful save negates the deafness and reduces the damage by half.
+A shout spell cannot penetrate a silence spell.</entry>
+  <entry id="51678" lang="en" sex="m">Greater Shout</entry>
+  <entry id="51679" lang="en" sex="m">Evocation [Sonic]
+Level: Brd 6, Sor/Wiz 8
+Components: V, S, F
+Range: 60 ft.
+Area: Cone-shaped burst
+Duration: Instantaneous
+Saving Throw: Fortitude partial
+Spell Resistance: Yes
+
+This spell functions like shout, except that the cone deals 10d6 points of sonic damage It also causes creatures to be stunned for 1 round and deafened for 4d6 rounds. A creature in the area of the cone can negate the stunning and halve both the damage and the duration of the deafness with a successful Fortitude save.</entry>
+  <entry id="51680" lang="en" sex="m">Mass Inflict Light Wounds (9)</entry>
+  <entry id="51681" lang="en" sex="m">Mass Inflict Moderate Wounds (11)</entry>
+  <entry id="51682" lang="en" sex="m">Mass Inflict Serious Wounds (13)</entry>
+  <entry id="51683" lang="en" sex="m">Mass Inflict Critical Wounds (15)</entry>
+  <entry id="51684" lang="en" sex="m">Greater Harm (9)</entry>
+  <entry id="51685" lang="en" sex="m">Shout (7)</entry>
+  <entry id="51686" lang="en" sex="m">Greater Shout (15)</entry>
+  <entry id="51687" lang="en" sex="m">Test</entry>
+  <entry id="51688" lang="en" sex="m">Test</entry>
+  <entry id="51689" lang="en" sex="m">Test</entry>
+  <entry id="51690" lang="en" sex="m">Test</entry>
 
 
   <entry id="51530" lang="en" sex="m">Description: 

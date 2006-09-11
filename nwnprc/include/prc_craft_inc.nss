@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 5, 2006
+    Modified: Sept 10, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -303,7 +303,7 @@ int Get2DALineFromItemprop(string sFile, itemproperty ip, object oItem)
             case ITEM_PROPERTY_DAMAGE_BONUS:
             {
                 int bAmmo = StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem))) == PRC_CRAFT_ITEM_TYPE_AMMO;
-                if(nSubType == (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING)
+                if(bAmmo && nSubType == ((nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING))
                     return (nCostTableValue - 1);
                 if(nSubType == IP_CONST_DAMAGETYPE_ACID)
                 {
@@ -915,17 +915,28 @@ itemproperty PropSpecialHandling(object oItem, string sFile, int nLine, int nInd
                 case 26:
                 {
                     nTemp = GetLocalInt(GetItemPossessor(oItem), PRC_CRAFT_SPECIAL_BANE_RACE);
-                    if(nIndex == 3)
-                        nParam1Value = nTemp;
-                    else
+                    if(nIndex == 1)
+                    {
                         nSubType = nTemp;
-                    if(nIndex == 2)
+                        nTemp = StringToInt(Get2DACache("baseitems", "WeaponType", nBase));
+                        switch(nTemp)
+                        {
+                            case 1: nParam1Value = IP_CONST_DAMAGETYPE_PIERCING; break;
+                            case 2:
+                            case 5: nParam1Value = IP_CONST_DAMAGETYPE_BLUDGEONING; break;
+                            case 3:
+                            case 4: nParam1Value = IP_CONST_DAMAGETYPE_SLASHING; break;
+                        }
+                    }
+                    else if(nIndex == 2)
                         nCostTableValue += IPGetWeaponEnhancementBonus(oItem);
+                    else if(nIndex == 3)
+                        nParam1Value = nTemp;
                     break;
                 }
             }
             if(nType == ITEM_PROPERTY_ENHANCEMENT_BONUS &&
-                StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem))) == PRC_CRAFT_ITEM_TYPE_AMMO)
+                StringToInt(Get2DACache("prc_craft_gen_it", "Type", nBase)) == PRC_CRAFT_ITEM_TYPE_AMMO)
             {
                 nType = ITEM_PROPERTY_DAMAGE_BONUS;
                 nSubType = (nBase == BASE_ITEM_BULLET) ? DAMAGE_TYPE_BLUDGEONING : DAMAGE_TYPE_PIERCING;

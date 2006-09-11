@@ -177,6 +177,10 @@ int IsDamaged()
         {
             if(LOCAL_DEBUG) DoDebug("default: Damage has changed:\n" + sNewDamage);
             SetLocalString(oCreature, "PRC_Event_OnDamaged_Data", sNewDamage);
+
+            // Update damage counter
+            SetLocalInt(oCreature, "PRC_LastDamageTaken", GetTotalDamageDealt());
+
             return TRUE;
         }
     }

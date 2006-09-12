@@ -77,14 +77,17 @@ void main()
         
         else
         {
-            //5d6 damage, -4 to attack, save, skills, attribute checks
-            int nDam = d6(5);
-            effect eLink = EffectAttackDecrease(4, ATTACK_BONUS_MISC);
-                   eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, 4, SAVING_THROW_TYPE_ALL));
-                   eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, 4));
-            
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (6.0f * nCasterLvl));
+		if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
+		{
+			//5d6 damage, -4 to attack, save, skills, attribute checks
+			int nDam = d6(5);
+			effect eLink = EffectAttackDecrease(4, ATTACK_BONUS_MISC);
+			eLink = EffectLinkEffects(eLink, EffectSavingThrowDecrease(SAVING_THROW_ALL, 4, SAVING_THROW_TYPE_ALL));
+			eLink = EffectLinkEffects(eLink, EffectSkillDecrease(SKILL_ALL_SKILLS, 4));
+			
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (6.0f * nCasterLvl));
+		}
         }
     }
     

@@ -92,6 +92,11 @@ void main()
 			if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 			{
 				nDam = (nDam/2);
+				
+				if(GetHasMettle(oTarget, SAVING_THROW_FORT))
+				{
+					nDam = 0;
+				}
 			}
 			
 			if(nAlign == ALIGNMENT_EVIL)

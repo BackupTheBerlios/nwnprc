@@ -57,7 +57,10 @@ void main()
 			}
 			else
 			{
-				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+				if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
+				{
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration);
+				}
 			}
 			
 			//Damage

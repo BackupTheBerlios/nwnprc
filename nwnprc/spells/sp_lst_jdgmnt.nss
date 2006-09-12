@@ -95,8 +95,11 @@ void main()
 								}
 								else
 								{
-									//made save, apply ability damage
-									ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d6(3), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+									if(!GetHasMettle(oTarget, SAVING_THROW_WILL))
+									{
+										//made save, apply ability damage
+										ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d6(3), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
+									}
 								}
 							}
 						}

@@ -74,29 +74,33 @@ void main()
 	//Resolve spell
 	if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 	{
-		
-		int nDam = d6(nLevel);
-		
-		//Metmagic: Maximize
-		if (nMetaMagic == METAMAGIC_MAXIMIZE)
+		if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
 		{
-			nDam = 6 * (nLevel);
+			
+			int nDam = d6(nLevel);
+			
+			//Metmagic: Maximize
+			if (nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 6 * (nLevel);
+			}
+			
+			//Metmagic: Empower
+			if (nMetaMagic == METAMAGIC_EMPOWER)
+			{
+				nDam += (nDam/2);
+			}
+			
+			int nVile = nDam/2;
+			int nNorm = (nDam - nVile);
+			//Vile damage is currently being applied as Positive damage
+			effect eVileDam = EffectDamage(nVile, DAMAGE_TYPE_POSITIVE);
+			effect eNormDam = EffectDamage(nNorm, DAMAGE_TYPE_MAGICAL);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVileDam, oTarget); 
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNormDam, oTarget);
 		}
-		
-		//Metmagic: Empower
-		if (nMetaMagic == METAMAGIC_EMPOWER)
-		{
-			nDam += (nDam/2);
-		}
-		
-		int nVile = nDam/2;
-		int nNorm = (nDam - nVile);
-		//Vile damage is currently being applied as Positive damage
-		effect eVileDam = EffectDamage(nVile, DAMAGE_TYPE_POSITIVE);
-		effect eNormDam = EffectDamage(nNorm, DAMAGE_TYPE_MAGICAL);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVileDam, oTarget); 
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eNormDam, oTarget);
 	}
+	
 	else
 	{
 		DeathlessFrenzyCheck(oTarget);

@@ -96,8 +96,11 @@ void main()
 		    
 		    else
 		    {
-			    int nCount = nDelay;
-			    DamageLoop(oTarget, nCount);
+			    if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
+			    {
+				    int nCount = nDelay;
+				    DamageLoop(oTarget, nCount);
+			    }
 		    }
 		    
 		    //Increment targets

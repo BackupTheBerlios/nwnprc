@@ -142,45 +142,53 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string
     iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
     if (iAttackRoll > 0)
     {
-	    if(sCaster != sTest)
+	    if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
 	    {
-		    //Damage
-		    int nDam = d6(6);
-		    
-		    if(nMetaMagic == METAMAGIC_MAXIMIZE)
+		    if(sCaster != sTest)
 		    {
-			    nDam = 36;
-		    }
-		    
-		    if(nMetaMagic == METAMAGIC_EMPOWER)
-		    {
-			    nDam += (nDam/2);
-		    }
-		    
-		    //half damage for save
-		    if(MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
-		    {
-			    nDam = (nDam/2);
-		    }
-		    
-		    //if failed
-		    else
-		    {
-			    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
+			    //Damage
+			    int nDam = d6(6);
 			    
-			    //Bleeding
-			    WoundLoop(oTarget, 0);		
+			    if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			    {
+				    nDam = 36;
+			    }
+			    
+			    if(nMetaMagic == METAMAGIC_EMPOWER)
+			    {
+				    nDam += (nDam/2);
+			    }
+		   
+			    //half damage for save
+			    if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+			    {
+				    nDam = (nDam/2);
+				    
+				    if(GetHasMettle(oTarget, SAVING_THROW_FORT))
+				    {
+					    nDam = 0;
+				    }
+			    }
+			    
+			    //if failed
+			    else
+			    {
+				    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
+				    
+				    //Bleeding
+				    WoundLoop(oTarget, 0);		
+			    }
 		    }
-		    
 		    //Apply Damage
 		    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);	
 		    
 		    //Apply String
-		    SetLocalString(oTarget, "PRCRuptureTargetID", sCaster);		    
-		    
+		    SetLocalString(oTarget, "PRCRuptureTargetID", sCaster);
 	    }
-	    DoCorruptionCost(oCaster, ABILITY_STRENGTH, 1, 0);
     }
+    
+    DoCorruptionCost(oCaster, ABILITY_STRENGTH, 1, 0);
+    
     return iAttackRoll;    //return TRUE if spell charges should be decremented
  
 	    

@@ -76,6 +76,11 @@ void main()
 		if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 		{
 			nDam = nDam/2;
+			
+			if(GetHasMettle(oTarget, SAVING_THROW_FORT))
+			{
+				nDam = 0;
+			}
 		}
 		
 		else

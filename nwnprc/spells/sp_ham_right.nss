@@ -80,9 +80,14 @@ void main()
 		}
 		
 		//Save for 1/2
-		if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
+		if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_GOOD))
 		{
 			nDam = (nDam/2);
+			
+			if(GetHasMettle(oTarget, SAVING_THROW_FORT))
+			{
+				nDam = 0;
+			}
 		}
 		
 		//Play VFX

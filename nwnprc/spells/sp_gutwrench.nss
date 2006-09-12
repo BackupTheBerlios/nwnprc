@@ -83,26 +83,29 @@ void main()
                  //Otherwise, take 10d6 damage, be thankful, and RUN.
                  else
                  {
-                     int nDam = d6(10);
-                     
-                     //evaluate metamagic
-                     if(nMetaMagic == METAMAGIC_MAXIMIZE)
-                     {
-                         nDam = (8 * nCasterLvl);
-                     }
-                     
-                     if(nMetaMagic == METAMAGIC_EMPOWER)
-                     {
-                         nDam += (nDam/2);
-                     }
-                     
-                     //define damage
-                     effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
-                     
-                     
-                     //Apply damage
-                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
-                 }
+			 if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
+			 {
+				 int nDam = d6(10);
+				 
+				 //evaluate metamagic
+				 if(nMetaMagic == METAMAGIC_MAXIMIZE)
+				 {
+					 nDam = (8 * nCasterLvl);
+				 }
+				 
+				 if(nMetaMagic == METAMAGIC_EMPOWER)
+				 {
+					 nDam += (nDam/2);
+				 }
+				 
+				 //define damage
+				 effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
+				 
+				 
+				 //Apply damage
+				 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+			 }
+		 }
              }
          }
      }

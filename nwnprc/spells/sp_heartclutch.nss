@@ -86,12 +86,15 @@ void ClutchLoop(object oTarget, int nDelay, object oPC)
         //Save
         if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
         {
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3)), oTarget);
+		if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
+		{
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3)), oTarget);
+		}
             
         }
         else
         {
-                            DeathlessFrenzyCheck(oTarget);
+            DeathlessFrenzyCheck(oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
         }
     }

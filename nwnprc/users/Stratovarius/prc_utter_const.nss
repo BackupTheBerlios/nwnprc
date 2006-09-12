@@ -21,14 +21,14 @@ const int UTTER_SHIELD_LANDSCAPE       = 3541;
 const int UTTER_SHOCKWAVE              = 3542;
 
 // Level 2 Utterances
-const int UTTER_ARCHERS_EYE              = -1;
-const int UTTER_ARCHERS_EYE_R            = -1;
-const int UTTER_HIDDEN_TRUTH             = -1;
-const int UTTER_HIDDEN_TRUTH_R           = -1;
-const int UTTER_PERCEIVE_UNSEEN          = -1;
-const int UTTER_PERCEIVE_UNSEEN_R        = -1;
-const int UTTER_SILENT_CASTER            = -1;
-const int UTTER_SILENT_CASTER_R          = -1;
+const int UTTER_ARCHERS_EYE              = 3543;
+const int UTTER_ARCHERS_EYE_R            = 3544;
+const int UTTER_HIDDEN_TRUTH             = 3545;
+const int UTTER_HIDDEN_TRUTH_R           = 3546;
+const int UTTER_PERCEIVE_UNSEEN          = 3547;
+const int UTTER_PERCEIVE_UNSEEN_R        = 3548;
+const int UTTER_SILENT_CASTER            = 3549;
+const int UTTER_SILENT_CASTER_R          = 3550;
 const int UTTER_SPEED_ZEPHYR             = -1;
 const int UTTER_SPEED_ZEPHYR_R           = -1;
 const int UTTER_STRIKE_MIGHT             = -1;

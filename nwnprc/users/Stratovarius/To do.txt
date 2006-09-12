@@ -26,9 +26,14 @@ Make Truenamer Class: Class feats and TLK left. Class abilities: Scry (Need Tenj
 
 Truename PrCs:
 Bereft - 2das/TLK
-Brimstone Speaker - 2das/TLK, add as a spellcaster. Add Utterances/feats to Word Archon summon.
+Brimstone Speaker - 2das/TLK, add as a spellcaster. Add Utterances/feats to Word Archon summon. AI to use them?
 Acolyte of the Ego - Unstarted
 Fiendbinder - Unstarted
+
+Feats: Feat.2da
+       TLK
+       Add Recitations to cls_feat_true.2da
+       Add restriction code to prc_enforce_psi
 
 Utterances: Need to update spellIds in feat.2da
 	    Incarnation of Angels skipped, needs Primo to work on templates.
@@ -36,6 +41,14 @@ Utterances: Need to update spellIds in feat.2da
 
 Base Classes:
 Hexblade - Mettle (edit spells as well), Arcane Resistance.
+Sohei - Add names to the iprp_resistcost.2da
+        Add Ints from prc_sohei to prc_inc_function
+        Add to the Mettle list
+        Defensive Strike feat
+        Spellbook
+        Classes, feat, spells.2da
+        TLK
+Duskblade - All to do
 
 Psionic PrCs:
 Shadowmind - All to do, (Mass) Cloud Mind powers

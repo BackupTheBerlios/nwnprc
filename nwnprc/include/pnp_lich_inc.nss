@@ -355,7 +355,7 @@ void LevelUpHide(object oPC, object oHide, int nLevel)
         iprop = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_SONIC,IP_CONST_DAMAGERESIST_5);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
         // Spell level immune to 1 and lower
-        iprop = ItemPropertyImmunityToSpellLevel(2);
+        iprop = ItemPropertyImmunityToSpellLevel(1);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
     }
     if (nLevel == 6)
@@ -382,7 +382,7 @@ void LevelUpHide(object oPC, object oHide, int nLevel)
         iprop = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_SONIC,IP_CONST_DAMAGERESIST_10);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
         // Spell level immune to 3 and lower
-        iprop = ItemPropertyImmunityToSpellLevel(4);
+        iprop = ItemPropertyImmunityToSpellLevel(3);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
     }
     if (nLevel == 7)
@@ -409,7 +409,7 @@ void LevelUpHide(object oPC, object oHide, int nLevel)
         iprop = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_SONIC,IP_CONST_DAMAGERESIST_10);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
         // Spell level immune to 5 and lower
-        iprop = ItemPropertyImmunityToSpellLevel(6);
+        iprop = ItemPropertyImmunityToSpellLevel(5);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
     }
     if (nLevel == 8)
@@ -437,7 +437,7 @@ void LevelUpHide(object oPC, object oHide, int nLevel)
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
 
         // Spell level immune to 7 and lower
-        iprop = ItemPropertyImmunityToSpellLevel(8);
+        iprop = ItemPropertyImmunityToSpellLevel(7);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
     }
     if (nLevel == 9)
@@ -465,7 +465,7 @@ void LevelUpHide(object oPC, object oHide, int nLevel)
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
 
         // Spell level immune to 8 and lower
-        iprop = ItemPropertyImmunityToSpellLevel(9);
+        iprop = ItemPropertyImmunityToSpellLevel(8);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
     }
     if (nLevel == 10)
@@ -492,7 +492,7 @@ void LevelUpHide(object oPC, object oHide, int nLevel)
         iprop = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_SONIC,IP_CONST_DAMAGERESIST_20);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
         // Spell level immune to 9 and lower
-        iprop = ItemPropertyImmunityToSpellLevel(10);
+        iprop = ItemPropertyImmunityToSpellLevel(9);
         AddItemProperty(DURATION_TYPE_PERMANENT,iprop,oHide);
     }
 }

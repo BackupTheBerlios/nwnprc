@@ -64,7 +64,11 @@ void main()
 				//if saved, just -1 to attacks
 				else
 				{
-					SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAttackDecrease(1), oTarget);
+					if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
+					{
+						SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectAttackDecrease(1), oTarget);
+					}
+					
 				}
 			}
 		}

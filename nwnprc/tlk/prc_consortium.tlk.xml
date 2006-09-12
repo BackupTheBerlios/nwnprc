@@ -19557,14 +19557,14 @@ Use: Automatic.</entry>
   <entry id="51575" lang="en" sex="m">Sonic Resistance</entry>
   <entry id="51577" lang="en" sex="m">Sonic Resistance, Improved</entry>
   <entry id="51579" lang="en" sex="m">Sonic Resistance, Greater</entry>
-  <entry id="51581" lang="en" sex="m">Spell Resistance</entry>
+  <entry id="51581" lang="en" sex="m">Spell Resistance 13</entry>
   <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
   <entry id="51585" lang="en" sex="m">Acid Warding</entry>
   <entry id="51587" lang="en" sex="m">Cold Warding</entry>
   <entry id="51589" lang="en" sex="m">Fire Warding</entry>
-  <entry id="51591" lang="en" sex="m">Great Invulnerability</entry>
+  <entry id="51591" lang="en" sex="m">Great Invulnerability 10 / +1</entry>
   <entry id="51593" lang="en" sex="m">Great Reflection</entry>
-  <entry id="51595" lang="en" sex="m">Great Spell Resistance</entry>
+  <entry id="51595" lang="en" sex="m">Great Spell Resistance 21</entry>
   <entry id="51597" lang="en" sex="m">Lightning Warding</entry>
   <entry id="51599" lang="en" sex="m">Sonic Warding</entry>
   <entry id="51601" lang="en" sex="m">Spell Turning</entry>
@@ -20648,6 +20648,15 @@ This spell functions like shout, except that the cone deals 10d6 points of sonic
   <entry id="51684" lang="en" sex="m">Greater Harm (9)</entry>
   <entry id="51685" lang="en" sex="m">Shout (7)</entry>
   <entry id="51686" lang="en" sex="m">Greater Shout (15)</entry>
+  <entry id="51687" lang="en" sex="m">Great Invulnerability 15 / +1</entry>
+  <entry id="51688" lang="en" sex="m">Great Invulnerability 5 / +6</entry>
+  <entry id="51689" lang="en" sex="m">Great Invulnerability 10 / +6</entry>
+  <entry id="51690" lang="en" sex="m">Spell Resistance 15</entry>
+  <entry id="51691" lang="en" sex="m">Spell Resistance 17</entry>
+  <entry id="51692" lang="en" sex="m">Spell Resistance 19</entry>
+  <entry id="51693" lang="en" sex="m">Great Spell Resistance 23</entry>
+  <entry id="51694" lang="en" sex="m">Great Spell Resistance 25</entry>
+  <entry id="51695" lang="en" sex="m">Great Spell Resistance 27</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4

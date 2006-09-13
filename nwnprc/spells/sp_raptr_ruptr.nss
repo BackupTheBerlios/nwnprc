@@ -178,9 +178,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string
                     //Bleeding
                     WoundLoop(oTarget, 0);      
                 }
-            }
-            //Apply Damage
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget); 
+                //Apply Damage
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+            } 
             
             //Apply String
             SetLocalString(oTarget, "PRCRuptureTargetID", sCaster);

@@ -17,6 +17,11 @@
 
 void main()
 {
+    if(GetPRCSwitch(PRC_LICH_ALTER_SELF_DISABLE))
+    {
+        FloatingTextStringOnCreature("Lich Alter Self has been disabled in this module.", OBJECT_SELF);  
+        return;
+    }
     StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
     int nPCForm = GetTrueForm(OBJECT_SELF);
@@ -37,7 +42,7 @@ void main()
         {
             effect eFx = EffectVisualEffect(VFX_COM_CHUNK_RED_LARGE);
             ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eFx,OBJECT_SELF);
-            SetCreatureAppearanceType(OBJECT_SELF,430); // DemiLich
+            SetCreatureAppearanceType(OBJECT_SELF,APPEARANCE_TYPE_DEMI_LICH); // DemiLich
             SetPortraitResRef(OBJECT_SELF, "demilich");
             SetPortraitId(OBJECT_SELF, 724);
         }

@@ -4026,7 +4026,7 @@ Feat: Craft Wondrous Item.
 Must not have any levels in Baelnorn.
 
 To gain lich powers:
-Creation of first stage of phylactery. (First level up in the Lich class, then create your phylactery to gain your Lich powers. Each level, this phylactery must be upgraded. Costs 40,000 gold and 1,600 XP.)
+Creation of first stage of phylactery. (First level up in the Lich class, then create your phylactery useing the Craft Lich Items feat to gain your Lich powers. Each level, this phylactery must be upgraded. Costs 40,000 gold and 1,600 XP.)
 
 ABILITIES:
 
@@ -4052,7 +4052,7 @@ Level
 
 In order to become a Demilich you must be a level 21 caster.
 Each level, you must create one soul gem in order to gain the powers for that level. You must also upgrade your phylactery. To gain the final level, you must have 8 soul gems.
-Soul gems cost 120,000 gold and 4,800 exp each gem. (Use the Craft Wondrous item feat to create them)
+Soul gems cost 120,000 gold and 4,800 exp each gem. (Use the Craft Lich Items feat to create them)
 
 Level
 5: Lich Properties +10 - Bonuses increase.
@@ -4157,38 +4157,32 @@ Specifics: You know how to shapechange. You feel you are able to explore this mo
   <entry id="45939" lang="en" sex="m">Type of Feat: General
 Prerequisite: Craft Magic Arms and Armor, Craft Wondrous Item
 Specifics: Allows the user to craft constructs.
-Usage: Click feat and target a recipe that creates a construct.
-You must not perform any strenuous activity while crafting or it ruins the magic item.</entry>
+Usage: Automatic. Use the Examine Recipe and Craft Item once to examine a recipie and a second time within 6 seconds to craft the item.</entry>
   <entry id="45940" lang="en" sex="m">Craft Wondrous Item</entry>
   <entry id="45941" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spellcaster level 3+
 Specifics: Allows the user to craft wondrous magical items.
-Usage: Click feat and target a recipe that creates a wondrous magic item.
-You must not perform any strenuous activity while crafting or it ruins the magic item.</entry>
+Usage: Automatic. Use the Examine Recipe and Craft Item once to examine a recipie and a second time within 6 seconds to craft the item.</entry>
   <entry id="45942" lang="en" sex="m">Craft Magic Arms and Armor</entry>
   <entry id="45943" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spelcaster level 5+
 Specifics: Allows the user to craft magical weapons and armor.
-Usage: Click feat and target a recipe that creates a magic weapon or armor item
-You must not perform any strenuous activity while crafting or it ruins the magic item.</entry>
+Usage: Automatic. Use the Examine Recipe and Craft Item once to examine a recipie and a second time within 6 seconds to craft the item.</entry>
   <entry id="45944" lang="en" sex="m">Craft Rod</entry>
   <entry id="45945" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spellcaster level 9+
 Specifics: Allows the user to craft magical rods.
-Usage: Click feat and target a recipe that creates a magic rod.
-You must not perform any strenuous activity while crafting or it ruins the magic item.</entry>
+Usage: Automatic. Use the Examine Recipe and Craft Item once to examine a recipie and a second time within 6 seconds to craft the item.</entry>
   <entry id="45946" lang="en" sex="m">Craft Staff</entry>
   <entry id="45947" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spellcaster level 12+
 Specifics: Allows the user to craft magical staves.
-Usage: Click feat and target a recipe that creates a magic staff.
-You must not perform any strenuous activity while crafting or it ruins the magic item.</entry>
+Usage: Automatic. Use the Examine Recipe and Craft Item once to examine a recipie and a second time within 6 seconds to craft the item.</entry>
   <entry id="45948" lang="en" sex="m">Forge Ring</entry>
   <entry id="45949" lang="en" sex="m">Type of Feat: General
 Prerequisite: Spellcaster level 12+
 Specifics: Allows the user to forge magical rings.
-Usage: Click feat and target a recipe that creates a magic ring.
-You must not perform any strenuous activity while crafting or it ruins the magic item.</entry>
+Usage: Automatic. Use the Examine Recipe and Craft Item once to examine a recipie and a second time within 6 seconds to craft the item.</entry>
   <entry id="45950" lang="en" sex="m">Read Magic</entry>
   <entry id="45951" lang="en" sex="m">Caster Level(s): Cantrip
 Innate Level: 0

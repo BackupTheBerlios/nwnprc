@@ -42,7 +42,7 @@ touched.
 //  Created:  5/31/2006
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-	
+    
 /*  
     <EXTRA NOTES>
 
@@ -142,71 +142,71 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string
     iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
     if (iAttackRoll > 0)
     {
-	    if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
-	    {
-		    if(sCaster != sTest)
-		    {
-			    //Damage
-			    int nDam = d6(6);
-			    
-			    if(nMetaMagic == METAMAGIC_MAXIMIZE)
-			    {
-				    nDam = 36;
-			    }
-			    
-			    if(nMetaMagic == METAMAGIC_EMPOWER)
-			    {
-				    nDam += (nDam/2);
-			    }
-		   
-			    //half damage for save
-			    if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-			    {
-				    nDam = (nDam/2);
-				    
-				    if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-				    {
-					    nDam = 0;
-				    }
-			    }
-			    
-			    //if failed
-			    else
-			    {
-				    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
-				    
-				    //Bleeding
-				    WoundLoop(oTarget, 0);		
-			    }
-		    }
-		    //Apply Damage
-		    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);	
-		    
-		    //Apply String
-		    SetLocalString(oTarget, "PRCRuptureTargetID", sCaster);
-	    }
+        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+        {
+            if(sCaster != sTest)
+            {
+                //Damage
+                int nDam = d6(6);
+                
+                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                {
+                    nDam = 36;
+                }
+                
+                if(nMetaMagic == METAMAGIC_EMPOWER)
+                {
+                    nDam += (nDam/2);
+                }
+           
+                //half damage for save
+                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                {
+                    nDam = (nDam/2);
+                    
+                    if(GetHasMettle(oTarget, SAVING_THROW_FORT))
+                    {
+                        nDam = 0;
+                    }
+                }
+                
+                //if failed
+                else
+                {
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
+                    
+                    //Bleeding
+                    WoundLoop(oTarget, 0);      
+                }
+            }
+            //Apply Damage
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget); 
+            
+            //Apply String
+            SetLocalString(oTarget, "PRCRuptureTargetID", sCaster);
+        }
     }
     
     DoCorruptionCost(oCaster, ABILITY_STRENGTH, 1, 0);
     
     return iAttackRoll;    //return TRUE if spell charges should be decremented
  
-	    
+        
 }
 
 void WoundLoop(object oTarget, int nPrevious)
 {
-	if(nPrevious == 6)
-	{
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
-	}
-	
-	int nDamage = d6();
-		
-	//Deal damage
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oTarget);
-	
-	int nPrevious = nDamage ;
-	
-	DelayCommand(6.0f, WoundLoop(oTarget, nPrevious));
+    if(nPrevious == 6)
+    {
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
+    }
+    
+    int nDamage = d6();
+        
+    //Deal damage
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oTarget);
+    
+    int nPrevious = nDamage ;
+    
+    DelayCommand(6.0f, WoundLoop(oTarget, nPrevious));
 }

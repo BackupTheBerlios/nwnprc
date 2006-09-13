@@ -421,6 +421,7 @@ void main()
         SendMessageToPC(oPC, "Error Recovery: Please try again");
         SetLocalInt(oPC, DYNCONV_VARIABLE, 0);
         DeleteLocalInt(oPC, "PRC_CRAFT_TERMINATED");
+        DeleteLocalInt(oPC, "DynConv_Waiting");
         AllowExit(DYNCONV_EXIT_FORCE_EXIT);
         return;
     }
@@ -450,7 +451,7 @@ void main()
                 return;
             }
             string sMaterial = GetStringLeft(GetTag(oTarget), 3);
-            if(GetPlotFlag(oTarget) || (GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial == "000") || !GetIsMagicItem(oTarget))
+            if(GetPlotFlag(oTarget) || (!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oTarget)))
             {   //REPLACE LATER
                 SendMessageToPC(oPC, "This is not a craftable magic item.");
                 return;
@@ -673,7 +674,7 @@ void main()
                     AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     AddChoice(ActionString("Normal"), PRC_CRAFT_FLAG_NONE, oPC);
-                    if(!((nBase == BASE_ITEM_ARMOR) && (!GetItemBaseAC(oNewItem))))
+                    if(!((nBase == BASE_ITEM_ARMOR) && (!nAC)))
                     {
                         AddChoice(ActionString("Masterwork"), PRC_CRAFT_FLAG_MASTERWORK, oPC);
                         //if(CheckCraftingMaterial(nBase, PRC_CRAFT_MATERIAL_METAL))

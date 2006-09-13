@@ -118,7 +118,7 @@ Moderate abjuration; CL 7th; Craft Magic Arms and Armor, resist energy; Price +4
   <entry id="51579" lang="en" sex="m">Sonic Resistance, Greater</entry>
   <entry id="51580" lang="en" sex="m">As sonic resistance, except it absorbs the first 30 points of sonic damage per attack.
 Moderate abjuration; CL 11th; Craft Magic Arms and Armor, resist energy; Price +66,000 gp.</entry>
-  <entry id="51581" lang="en" sex="m">Spell Resistance</entry>
+  <entry id="51581" lang="en" sex="m">Spell Resistance 13</entry>
   <entry id="51582" lang="en" sex="m">This property grants the armor’s wearer spell resistance while the armor is worn. The spell resistance can be 13, 15, 17, or 19, depending on the armor.
 Strong abjuration; CL 15th; Craft Magic Arms and Armor, spell resistance; Price +2 bonus (SR 13), +3 bonus (SR 15), +4 bonus (SR 17), or +5 bonus (SR 19).</entry>
   <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
@@ -133,13 +133,13 @@ Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic 
   <entry id="51589" lang="en" sex="m">Fire Warding</entry>
   <entry id="51590" lang="en" sex="m">The armor absorbs the first 50 points of fire damage per round that the wearer would normally take (similar to the resist energy spell). 
 Caster Level: 21st; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, protection from energy; Market Price: +6 bonus.</entry>
-  <entry id="51591" lang="en" sex="m">Great Invulnerability</entry>
+  <entry id="51591" lang="en" sex="m">Great Invulnerability 10 / +1</entry>
   <entry id="51592" lang="en" sex="m">This suit of armor or shield grants the wearer damage reduction. The damage reduction can be 10/magic, 15/magic, 5/epic, or 10/epic, depending on the armor. 
 Caster Level: 19th (10/magic), 20th (15/magic), 21st (5/epic), 22nd (10/epic); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, stoneskin, wish, or miracle; Market Price:+4 bonus (10/magic),+5 bonus (15/magic),+6 bonus (5/epic),+7 bonus (10/epic).</entry>
   <entry id="51593" lang="en" sex="m">Great Reflection</entry>
   <entry id="51594" lang="en" sex="m">Any time its bearer of this shield is targeted with a spell, it automatically reflects the spell back at the caster (as the spell turning spell). The wearer can lower or raise this effect as a free action (thus allowing beneficial spells in as desired). 
 Caster Level: 25th; Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell turning; Market Price: +10 bonus.</entry>
-  <entry id="51595" lang="en" sex="m">Great Spell Resistance</entry>
+  <entry id="51595" lang="en" sex="m">Great Spell Resistance 21</entry>
   <entry id="51596" lang="en" sex="m">This suit of armor or shield grants the wearer spell resistance. The spell resistance can be 21, 23, 25, or 27, depending on the armor. 
 Caster Level: 21st (SR 21), 22nd (SR 23), 23rd (SR 25), 24th (SR 27); Prerequisites: Craft Magic Arms and Armor, Craft Epic Magic Arms and Armor, spell resistance; Market Price: +6 bonus (SR 21), +7 bonus (SR 23), +8 bonus (SR 25), +9 bonus (SR 27).</entry>
   <entry id="51597" lang="en" sex="m">Lightning Warding</entry>
@@ -301,10 +301,30 @@ This spell functions like shout, except that the cone deals 10d6 points of sonic
   <entry id="51684" lang="en" sex="m">Greater Harm (9)</entry>
   <entry id="51685" lang="en" sex="m">Shout (7)</entry>
   <entry id="51686" lang="en" sex="m">Greater Shout (15)</entry>
-  <entry id="51687" lang="en" sex="m">Test</entry>
-  <entry id="51688" lang="en" sex="m">Test</entry>
-  <entry id="51689" lang="en" sex="m">Test</entry>
-  <entry id="51690" lang="en" sex="m">Test</entry>
+  <entry id="51687" lang="en" sex="m">Great Invulnerability 15 / +1</entry>
+  <entry id="51688" lang="en" sex="m">Great Invulnerability 5 / +6</entry>
+  <entry id="51689" lang="en" sex="m">Great Invulnerability 10 / +6</entry>
+  <entry id="51690" lang="en" sex="m">Spell Resistance 15</entry>
+  <entry id="51691" lang="en" sex="m">Spell Resistance 17</entry>
+  <entry id="51692" lang="en" sex="m">Spell Resistance 19</entry>
+  <entry id="51693" lang="en" sex="m">Great Spell Resistance 23</entry>
+  <entry id="51694" lang="en" sex="m">Great Spell Resistance 25</entry>
+  <entry id="51695" lang="en" sex="m">Great Spell Resistance 27</entry>
+  <entry id="51696" lang="en" sex="m">Test</entry>
+  <entry id="51697" lang="en" sex="m">Test</entry>
+  <entry id="51698" lang="en" sex="m">Test</entry>
+  <entry id="51699" lang="en" sex="m">Test</entry>
+  <entry id="51700" lang="en" sex="m">Test</entry>
+  <entry id="51701" lang="en" sex="m">Test</entry>
+  <entry id="51702" lang="en" sex="m">Test</entry>
+  <entry id="51703" lang="en" sex="m">Test</entry>
+  <entry id="51704" lang="en" sex="m">Test</entry>
+  <entry id="51705" lang="en" sex="m">Test</entry>
+  <entry id="51706" lang="en" sex="m">Test</entry>
+  <entry id="51707" lang="en" sex="m">Test</entry>
+  <entry id="51708" lang="en" sex="m">Test</entry>
+  <entry id="51709" lang="en" sex="m">Test</entry>
+  <entry id="51710" lang="en" sex="m">Test</entry>
 
 
   <entry id="51530" lang="en" sex="m">Description: 

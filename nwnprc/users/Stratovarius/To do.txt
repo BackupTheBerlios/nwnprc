@@ -41,13 +41,7 @@ Utterances: Need to update spellIds in feat.2da
 
 Base Classes:
 Hexblade - Mettle (edit spells as well), Arcane Resistance.
-Sohei - Add names to the iprp_resistcost.2da
-        Add Ints from prc_sohei to prc_inc_function
-        Add to the Mettle list
-        Defensive Strike feat
-        Spellbook
-        Classes, feat, spells.2da
-        TLK
+Sohei - Mettle (coding)
 Duskblade - All to do
 
 Psionic PrCs:
@@ -55,7 +49,7 @@ Shadowmind - All to do, (Mass) Cloud Mind powers
 
 Normal PrCs:
 Slayer of Domiel - cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
-Disciple of Asmodeus - cls_feat.2da, (Greater) Command class abilities
+Disciple of Asmodeus - (Greater) Command class abilities
 
 -----------------------------------------------------
 Secondary

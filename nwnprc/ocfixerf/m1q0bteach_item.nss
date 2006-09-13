@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 void main()
 {
@@ -24,6 +24,8 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
                 GetLevelByClass(CLASS_TYPE_MONK,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
@@ -36,6 +38,7 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
 		GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_FIGHTER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_MARSHAL,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_DUSKBLADE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_PSYWAR,oPC) > 0 ||

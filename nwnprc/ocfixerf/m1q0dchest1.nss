@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 void main()
 {
@@ -15,15 +15,17 @@ if(DEBUG) DoDebug("m1q0dchest1 running");
     {
         SetLocalInt(oPC,"NW_L_M1Q0Item3",TRUE);
         if(GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0 ||
-           GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_DUSKBLADE,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
-           GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
         {
             sItemTemplate = "NW_AARCL010"; // breastplate
         }
         else if(GetLevelByClass(CLASS_TYPE_BARD,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_SAMURAI,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0)

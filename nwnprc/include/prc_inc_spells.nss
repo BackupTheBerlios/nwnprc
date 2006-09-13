@@ -443,6 +443,7 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_ANTI_PALADIN ||
             nClass==CLASS_TYPE_VIGILANT ||
             nClass==CLASS_TYPE_FAVOURED_SOUL ||
+            nClass==CLASS_TYPE_SOHEI ||
             nClass==CLASS_TYPE_OCULAR);
 }
 
@@ -1315,6 +1316,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iFav = GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oCaster);
     int iSue = GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oCaster);
     int iHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oCaster);
+    int iSoh = GetLevelByClass(CLASS_TYPE_SOHEI, oCaster);
     int iSha = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
     int iBlk = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oCaster);
     int iVob = GetLevelByClass(CLASS_TYPE_VASSAL, oCaster);
@@ -1426,6 +1428,13 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iFav;
              return iTemp;
              break;
+        case CLASS_TYPE_SOHEI:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_SOHEI)
+                 iTemp = iDiv;
+             else
+                 iTemp = iSoh / 2;
+             return iTemp;
+             break;             
         case CLASS_TYPE_BLACKGUARD:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_BLACKGUARD)
                  iTemp = iDiv;
@@ -1948,6 +1957,7 @@ int GetHasMettle(object oTarget, int nSavingThrow)
         // Iron Mind's ability only functions in Heavy Armour
         if (GetLevelByClass(CLASS_TYPE_IRONMIND, oTarget) >= 5 && GetBaseAC(oArmour) >= 6) nMettle = TRUE;
         else if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget) >= 3) nMettle = TRUE;
+        else if (GetLevelByClass(CLASS_TYPE_SOHEI, oTarget) >= 9) nMettle = TRUE;
         // Fill out the line below to add another class with Will mettle
         // else if (GetLevelByClass(CLASS_TYPE_X, oTarget) >= X) nMettle = TRUE;
     }
@@ -1955,6 +1965,7 @@ int GetHasMettle(object oTarget, int nSavingThrow)
     {
         // Add Classes with Fort mettle here
         if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget) >= 3) nMettle = TRUE;
+        else if (GetLevelByClass(CLASS_TYPE_SOHEI, oTarget) >= 9) nMettle = TRUE;
     }
 
     return nMettle;

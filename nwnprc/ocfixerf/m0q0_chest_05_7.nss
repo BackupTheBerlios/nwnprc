@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 void main()
 {
@@ -12,7 +12,10 @@ if(DEBUG) DoDebug("m0q0_chest_05_7 running");
            GetLevelByClass(CLASS_TYPE_BARD,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_FIGHTER,oAttacker) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oAttacker) > 0 ||
+           GetLevelByClass(CLASS_TYPE_HEXBLADE,oAttacker) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_DUSKBLADE,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oAttacker) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SOHEI,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_SAMURAI,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_CORRUPTER,oAttacker) > 0 ||
            GetLevelByClass(CLASS_TYPE_ARCHER,oAttacker) > 0 ||

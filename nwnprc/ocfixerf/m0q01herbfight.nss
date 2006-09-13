@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 //::///////////////////////////////////////////////
 //:: FileName M0q01herbfight
@@ -20,6 +20,9 @@ if(DEBUG) DoDebug("M0q01herbfight running");
        (GetLevelByClass(CLASS_TYPE_BRAWLER, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_SOULKNIFE, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_TRUENAMER, GetPCSpeaker()) == 0) &&
+       (GetLevelByClass(CLASS_TYPE_HEXBLADE, GetPCSpeaker()) == 0) &&
+       (GetLevelByClass(CLASS_TYPE_SOHEI, GetPCSpeaker()) == 0) &&
+       (GetLevelByClass(CLASS_TYPE_DUSKBLADE, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_CORRUPTER, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_MARSHAL, GetPCSpeaker()) == 0) &&

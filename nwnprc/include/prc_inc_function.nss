@@ -439,6 +439,9 @@ void DeletePRCLocalInts(object oSkin)
     
     // Hexblade
     DeleteLocalInt(oSkin, "HexbladeArmourCasting");
+    
+    // Sohei
+    DeleteLocalInt(oSkin, "SoheiDamageResist");    
 
     // future PRCs Go below here
 }

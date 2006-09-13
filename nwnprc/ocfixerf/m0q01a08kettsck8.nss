@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 int StartingConditional()
 {
@@ -11,4 +11,6 @@ if(DEBUG) DoDebug("m0q01a08kettsck8 running");
                      GetLocalInt(GetModule(),"NW_G_M0Q01_ROGUE_TEST") < 2;
     return bCondition;
 }
+
+
 

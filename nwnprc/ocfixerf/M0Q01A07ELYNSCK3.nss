@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 int StartingConditional()
 {
@@ -11,4 +11,6 @@ int StartingConditional()
                       GetLevelByClass(CLASS_TYPE_DRUID, GetPCSpeaker())> 0);
     return bCondition;
 }
+
+
 

@@ -39,7 +39,7 @@ void main()
     int nSoh = GetLevelByClass(CLASS_TYPE_SOHEI, oPC);
     object oWeap = GetItemLastEquipped();
     object oUnequip = GetItemLastUnequipped();
-    int iEquip = GetLocalInt(oPC, "ONEQUIP");
+    int nEvent = GetRunningEvent();
     
 
     if(nSoh >= 3) SoheiDamageResist(oPC, oSkin, nSoh);
@@ -48,8 +48,29 @@ void main()
     	// Gains immunity to stunning
     	// Can't be done as an iprop, so we effect bomb
     	effect eStun = EffectImmunity(IMMUNITY_TYPE_STUN);
+    	effect eSleep = EffectImmunity(IMMUNITY_TYPE_SLEEP);
     	// No Dispelling, and no going away on rest
+    	eStun = EffectLinkEffects(eStun, eSleep);
     	eStun = SupernaturalEffect(eStun);
     	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eStun, oPC);
     }
+    
+    //Defensive Strike
+    if(nEvent == FALSE && nSoh >= 7)
+    {
+        oPC = OBJECT_SELF;
+        if(DEBUG) DoDebug("prc_sohei: Adding eventhooks");
+
+        AddEventScript(oPC, EVENT_ONHEARTBEAT,   "prc_sohei", TRUE, FALSE);
+    }
+    // We're being called from the OnHeartbeat eventhook, so check or skip
+    else if(nEvent == EVENT_ONHEARTBEAT)
+    {
+        // Only applies when using expertise
+        if(GetModeActive(ACTION_MODE_EXPERTISE))
+        {
+       		effect eAtk = EffectAttackIncrease(2);
+       		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, 6.0);
+        }
+    }// end if - Running OnHeart event       
 }

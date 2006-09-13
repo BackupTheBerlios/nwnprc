@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 void GiveItem(string sTemplate);
 
@@ -23,6 +23,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
            GetLevelByClass(CLASS_TYPE_FIGHTER,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_CORRUPTER,oPC) > 0 ||
+           GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_PSYWAR,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_BRAWLER,oPC) > 0 ||
@@ -33,6 +34,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         }
         else if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SOULKNIFE,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0)
         {
             sItemTemplate1 = "NW_IT_MBELT010"; //Brawler's belt

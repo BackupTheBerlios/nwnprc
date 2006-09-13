@@ -1,6 +1,6 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
 #include "prc_alterations"
+#include "inc_utility"
 
 void main()
 {
@@ -39,6 +39,9 @@ if(DEBUG) DoDebug("m1q0bdendy_5 running");
                GetLevelByClass(CLASS_TYPE_CORRUPTER,oAttacker) > 0 ||
                GetLevelByClass(CLASS_TYPE_ARCHER,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_TRUENAMER,oAttacker) > 0 ||
+	       GetLevelByClass(CLASS_TYPE_SOHEI,oAttacker) > 0 ||
+	       GetLevelByClass(CLASS_TYPE_DUSKBLADE,oAttacker) > 0 ||
+	       GetLevelByClass(CLASS_TYPE_HEXBLADE,oAttacker) > 0 ||
                GetLevelByClass(CLASS_TYPE_BRAWLER,oAttacker) > 0 ||
                GetLevelByClass(CLASS_TYPE_SOULKNIFE,oAttacker) > 0 ||
                GetLevelByClass(CLASS_TYPE_PSYWAR,oAttacker) > 0 ||

@@ -1,10 +1,10 @@
 // Added compatibility for PRC base classes
-#include "prc_class_const"
+#include "prc_alterations"
 
 
 // This script creates a treasure item based on the class of the
 //PC who killed this creature
-#include "prc_alterations"
+#include "inc_utility"
 
 void main()
 {
@@ -23,7 +23,8 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
     {
         sItemTemplate = "nw_wmgwn012"; //Wand of Sleep
     }
-    else if(GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0)
+    else if(GetLevelByClass(CLASS_TYPE_DUSKBLADE,oPC) > 0 ||
+            GetLevelByClass(CLASS_TYPE_BARBARIAN,oPC) > 0)
     {
         sItemTemplate = "NW_ASHMSW011"; //Shield of the Watch
     }
@@ -50,6 +51,7 @@ if(DEBUG) DoDebug("m1q0dmage7 running");
     else if(GetLevelByClass(CLASS_TYPE_NINJA,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_SOULKNIFE,oPC) > 0 ||
+            GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
             GetLevelByClass(CLASS_TYPE_ROGUE,oPC) > 0)
     {

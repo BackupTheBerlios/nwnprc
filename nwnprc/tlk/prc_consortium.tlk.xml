@@ -19651,7 +19651,7 @@ Use: Automatic.</entry>
   <entry id="51553" lang="en" sex="m">Fire Resistance</entry>
   <entry id="51555" lang="en" sex="m">Fire Resistance, Improved</entry>
   <entry id="51557" lang="en" sex="m">Fire Resistance, Greater</entry>
-  <entry id="51559" lang="en" sex="m">Invulnerability</entry>
+  <entry id="51559" lang="en" sex="m">Invulnerability 5 / +1</entry>
   <entry id="51561" lang="en" sex="m">Reflecting</entry>
   <entry id="51563" lang="en" sex="m">Shadow</entry>
   <entry id="51565" lang="en" sex="m">Shadow, Improved</entry>
@@ -20762,6 +20762,73 @@ This spell functions like shout, except that the cone deals 10d6 points of sonic
   <entry id="51693" lang="en" sex="m">Great Spell Resistance 23</entry>
   <entry id="51694" lang="en" sex="m">Great Spell Resistance 25</entry>
   <entry id="51695" lang="en" sex="m">Great Spell Resistance 27</entry>
+  <entry id="51696" lang="en" sex="m">Amulet of Health +2</entry>
+  <entry id="51697" lang="en" sex="m">Amulet of Health +4</entry>
+  <entry id="51698" lang="en" sex="m">Amulet of Health +6</entry>
+  <entry id="51699" lang="en" sex="m">Amulet of Epic Natural Armor +6</entry>
+  <entry id="51700" lang="en" sex="m">Amulet of Epic Natural Armor +7</entry>
+  <entry id="51701" lang="en" sex="m">Amulet of Epic Natural Armor +8</entry>
+  <entry id="51702" lang="en" sex="m">Amulet of Epic Natural Armor +9</entry>
+  <entry id="51703" lang="en" sex="m">Amulet of Epic Natural Armor +10</entry>
+  <entry id="51704" lang="en" sex="m">Belt of Giant Strength +4</entry>
+  <entry id="51705" lang="en" sex="m">Belt of Giant Strength +6</entry>
+  <entry id="51706" lang="en" sex="m">Belt of Epic Strength +8</entry>
+  <entry id="51707" lang="en" sex="m">Belt of Epic Strength +10</entry>
+  <entry id="51708" lang="en" sex="m">Belt of Epic Strength +12</entry>
+  <entry id="51709" lang="en" sex="m">Boots of Swiftness</entry>
+  <entry id="51710" lang="en" sex="m">Boots of Teleportation</entry>
+  <entry id="51711" lang="en" sex="m">Bracers of Epic Armor +11</entry>
+  <entry id="51712" lang="en" sex="m">Bracers of Epic Armor +12</entry>
+  <entry id="51713" lang="en" sex="m">Bracers of Epic Armor +13</entry>
+  <entry id="51714" lang="en" sex="m">Bracers of Epic Armor +14</entry>
+  <entry id="51715" lang="en" sex="m">Bracers of Epic Armor +15</entry>
+  <entry id="51716" lang="en" sex="m">Bracers of Epic Health +8</entry>
+  <entry id="51717" lang="en" sex="m">Bracers of Epic Health +10</entry>
+  <entry id="51718" lang="en" sex="m">Bracers of Epic Health +12</entry>
+  <entry id="51719" lang="en" sex="m">Bracers of Relentless Might</entry>
+  <entry id="51720" lang="en" sex="m">Circlet of Persuasion</entry>
+  <entry id="51721" lang="en" sex="m">Cloak of Charisma +2</entry>
+  <entry id="51722" lang="en" sex="m">Cloak of Charisma +4</entry>
+  <entry id="51723" lang="en" sex="m">Cloak of Charisma +6</entry>
+  <entry id="51724" lang="en" sex="m">Cloak of Epic Charisma +8</entry>
+  <entry id="51725" lang="en" sex="m">Cloak of Epic Charisma +10</entry>
+  <entry id="51726" lang="en" sex="m">Cloak of Epic Charisma +12</entry>
+  <entry id="51727" lang="en" sex="m">Minor Cloak of Displacement</entry>
+  <entry id="51728" lang="en" sex="m">Major Cloak of Displacement</entry>
+  <entry id="51729" lang="en" sex="m">Cloak of Etherealness</entry>
+  <entry id="51730" lang="en" sex="m">Cloak of Epic Resistance +6</entry>
+  <entry id="51731" lang="en" sex="m">Cloak of Epic Resistance +7</entry>
+  <entry id="51732" lang="en" sex="m">Cloak of Epic Resistance +8</entry>
+  <entry id="51733" lang="en" sex="m">Cloak of Epic Resistance +9</entry>
+  <entry id="51734" lang="en" sex="m">Cloak of Epic Resistance +10</entry>
+  <entry id="51735" lang="en" sex="m">Gloves of Dexterity +2</entry>
+  <entry id="51736" lang="en" sex="m">Gloves of Dexterity +4</entry>
+  <entry id="51737" lang="en" sex="m">Gloves of Dexterity +6</entry>
+  <entry id="51738" lang="en" sex="m">Gloves of Epic Dexterity +8</entry>
+  <entry id="51739" lang="en" sex="m">Gloves of Epic Dexterity +10</entry>
+  <entry id="51740" lang="en" sex="m">Gloves of Epic Dexterity +12</entry>
+  <entry id="51741" lang="en" sex="m">Hand of Glory</entry>
+  <entry id="51742" lang="en" sex="m">Hand of the Mage</entry>
+  <entry id="51743" lang="en" sex="m">Headband of Epic Intellect +8</entry>
+  <entry id="51744" lang="en" sex="m">Headband of Epic Intellect +10</entry>
+  <entry id="51745" lang="en" sex="m">Headband of Epic Intellect +12</entry>
+  <entry id="51746" lang="en" sex="m">Helm of Teleportation</entry>
+  <entry id="51747" lang="en" sex="m">Mantle of Spell Resistance</entry>
+  <entry id="51748" lang="en" sex="m">Necklace of Adaptation</entry>
+  <entry id="51749" lang="en" sex="m">Necklace of Fireballs I</entry>
+  <entry id="51750" lang="en" sex="m">Necklace of Fireballs II</entry>
+  <entry id="51751" lang="en" sex="m">Necklace of Fireballs III</entry>
+  <entry id="51752" lang="en" sex="m">Necklace of Fireballs IV</entry>
+  <entry id="51753" lang="en" sex="m">Necklace of Fireballs V</entry>
+  <entry id="51754" lang="en" sex="m">Necklace of Fireballs VI</entry>
+  <entry id="51755" lang="en" sex="m">Necklace of Fireballs VII</entry>
+  <entry id="51756" lang="en" sex="m">Periapt of Health</entry>
+  <entry id="51757" lang="en" sex="m">Periapt of Proof against Poison</entry>
+  <entry id="51758" lang="en" sex="m">Periapt of Epic Wisdom +8</entry>
+  <entry id="51759" lang="en" sex="m">Periapt of Epic Wisdom +10</entry>
+  <entry id="51760" lang="en" sex="m">Periapt of Epic Wisdom +12</entry>
+  <entry id="51761" lang="en" sex="m">Periapt of Wound Closure</entry>
+  <entry id="51762" lang="en" sex="m">Robe of Eyes</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4

@@ -10,7 +10,7 @@ Casting Time: 1 round
 Range: Touch
 Target: Evil extraplanar creature touched
 Duration: Concentration 
-Saving Throw: Fortitude partial 
+Saving Throw: Fortitude negates
 Spell Resistance: Yes
  
 When you cast this spell, you attempt to draw out 

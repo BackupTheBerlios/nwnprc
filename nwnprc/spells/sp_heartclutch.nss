@@ -46,8 +46,9 @@ void main()
     object oPC = OBJECT_SELF;
     object oTarget = GetSpellTargetObject();
     int nCasterLvl = PRCGetCasterLevel(oPC);
-    int nDelay = (d3(1) - 1);
+    int nDelay = d3(1);
     int nType = MyPRCGetRacialType(oTarget);
+    int nDC = SPGetSpellSaveDC(oTarget, oPC);
         
     //Spellhook
     if(!X2PreSpellCastCode()) return;
@@ -69,8 +70,20 @@ void main()
             //Check for Spell resistance
             if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
             {
-                //Clutching loop
-                ClutchLoop(oTarget, nDelay, oPC);
+        	//Save
+        	if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+        	{
+			if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
+			{
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3) + nCasterLvl), oTarget);
+			}
+        	    
+        	} 
+        	else
+        	{
+	                //Clutching loop
+                	ClutchLoop(oTarget, nDelay, oPC);        	
+        	}
             }
         }
     }
@@ -82,21 +95,8 @@ void ClutchLoop(object oTarget, int nDelay, object oPC)
 {       
     if(nDelay < 1)
     {
-        int nDC = SPGetSpellSaveDC(oTarget, oPC);
-        //Save
-        if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-        {
-		if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
-		{
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3)), oTarget);
-		}
-            
-        }
-        else
-        {
             DeathlessFrenzyCheck(oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
-        }
     }
     
     nDelay--;

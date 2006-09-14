@@ -41,7 +41,12 @@ void RunFlensing(object oCaster, object oTarget, int nSaveDC,
     int nChaDrain = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 8, 0, 0, nMetaMagic);
     effect eDamage;
     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
+    {
+	if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+	// This script does nothing if it has Mettle, bail
+		return;    	
         eDamage = SPEffectDamage(nDamage / 2);
+    }
     else
     {
         eDamage = SPEffectDamage(nDamage);

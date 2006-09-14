@@ -96,7 +96,12 @@ void main()
                     nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
                     // Fort save for half
                     if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                    {
+				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					nDamage = 0;                       
                         nDamage /= 2;
+                    }
                     // Target-specific stuff
                     nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage);
 

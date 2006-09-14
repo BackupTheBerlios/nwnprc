@@ -97,6 +97,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                 int bKills = FALSE;
                 if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_SPELL))
                 {
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				return 0;                
                     int nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1 == iAttackRoll ? 5 : 10, 6);
 
                     // Determine if we should show the special kill VFX

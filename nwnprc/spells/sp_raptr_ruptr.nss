@@ -164,10 +164,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string
                 {
                     nDam = (nDam/2);
                     
-                    if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-                    {
-                        nDam = 0;
-                    }
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				nDam = 0;
                 }
                 
                 //if failed

@@ -61,6 +61,9 @@ void main()
         if (PRCMySavingThrow(SAVING_THROW_FORT,oTarget,GetEpicSpellSaveDC(OBJECT_SELF, oTarget),SAVING_THROW_TYPE_SPELL,OBJECT_SELF) != 0 )
         {
             nDam /=2;
+				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					nDam = 0;               
         }
 
         effect eDam = EffectDamage(nDam, DAMAGE_TYPE_DIVINE, DAMAGE_POWER_PLUS_TWENTY);

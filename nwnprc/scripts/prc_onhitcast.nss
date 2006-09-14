@@ -330,17 +330,22 @@ void main()
             {
                 if(spellsIsTarget(oFlareTarget, SPELL_TARGET_STANDARDHOSTILE, oSpellOrigin))
                 {
-                    if(!(MyPRCResistSpell(oSpellOrigin, oFlareTarget, nSpellfire) ||
-                        PRCMySavingThrow(SAVING_THROW_FORT, oFlareTarget, nDC)))
+                    if(!MyPRCResistSpell(oSpellOrigin, oFlareTarget, nSpellfire))
                     {
-                        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_S), oFlareTarget);
-                        //EffectDazzled from race_hb
-                        effect eAttack = EffectAttackDecrease(1);
-                        effect eSearch = EffectSkillDecrease(SKILL_SEARCH, 1);
-                        effect eSpot   = EffectSkillDecrease(SKILL_SPOT,   1);
-                        effect eLink   = EffectLinkEffects(eAttack, eSearch);
-                        eLink          = EffectLinkEffects(eLink,   eSpot);
-                        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFlareTarget, 60.0);
+                        if (PRCMySavingThrow(SAVING_THROW_FORT, oFlareTarget, nDC))
+                    	{
+				if (GetHasMettle(oFlareTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					return;  		                    	
+                    	    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_S), oFlareTarget);
+                    	    //EffectDazzled from race_hb
+                    	    effect eAttack = EffectAttackDecrease(1);
+                    	    effect eSearch = EffectSkillDecrease(SKILL_SEARCH, 1);
+                    	    effect eSpot   = EffectSkillDecrease(SKILL_SPOT,   1);
+                    	    effect eLink   = EffectLinkEffects(eAttack, eSearch);
+                    	    eLink          = EffectLinkEffects(eLink,   eSpot);
+                    	    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oFlareTarget, 60.0);
+                    	}
                     }
                 }
                 oFlareTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_SMALL, lTarget, TRUE, OBJECT_TYPE_CREATURE);

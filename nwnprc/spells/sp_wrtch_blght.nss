@@ -85,11 +85,10 @@ void main()
 				//Save for 1/2 dam
 				if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 				{
+					if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+						// This script does nothing if it has Mettle, bail
+						return;
 					nDam = nDam/2;
-					if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-					{
-						nDam = 0;
-					}
 				}
 				else
 				{
@@ -105,6 +104,9 @@ void main()
 				//Save for furter 1/2
 				if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 				{
+					if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+						// This script does nothing if it has Mettle, bail
+						return;				
 					nDam = nDam/2;
 				}
 			}

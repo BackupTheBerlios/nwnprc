@@ -1168,6 +1168,15 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     {
         return 0;
     }
+    
+    // Hexblade gets a bonus against spells equal to his Charisma (Min +1)
+    int nHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget);    
+    if (nHex > 0)
+    {
+    	int nHexCha = GetAbilityModifier(ABILITY_CHARISMA, oTarget);
+    	if (nHexCha < 1) nHexCha = 1;
+    	nDC -= nHexCha;
+    }
 
     // This is done here because it is possible to tell the saving throw type here
     // Tyranny Domain increases the DC of mind spells by +2.

@@ -55,7 +55,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                     effect eVis = EffectVisualEffect(VFX_IMP_DISEASE_S);
                     effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS, 10);
                     effect eLink = EffectLinkEffects(eBite,eVis);
-                    if(PRCMySavingThrow(SAVING_THROW_FORT,oTarget,20,SAVING_THROW_TYPE_DISEASE) == 0)
+                    if(!PRCMySavingThrow(SAVING_THROW_FORT,oTarget,20,SAVING_THROW_TYPE_DISEASE))
                     //if(nDamage > 0)
                     {
                         //Apply delayed effects

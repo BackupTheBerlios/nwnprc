@@ -68,7 +68,6 @@ void main()
 				if(nMetaMagic == METAMAGIC_MAXIMIZE)
 				{
 					nDam = 8 * (min(nCasterLvl, 20));
-					fDur = 24.0f;
 				}
 			}
 			
@@ -79,7 +78,6 @@ void main()
 				if(nMetaMagic == METAMAGIC_MAXIMIZE)
 				{
 					nDam = 6 * (min(nCasterLvl, 20));
-					fDur = 24.0f;
 				}
 			}		
 			
@@ -89,22 +87,17 @@ void main()
 			}
 			
 			//Save for 1/2
-			if(PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+			if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
 			{
-				nDam = (nDam/2);
-				
-				if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-				{
-					nDam = 0;
-				}
+				if(nAlign == ALIGNMENT_EVIL)
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur);					
 			}
-			
-			if(nAlign == ALIGNMENT_EVIL)
+			else
 			{
-				if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
-				{			
-					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBlindness(), oTarget, fDur);
-				}				
+				if (GetHasMettle(oTarget, SAVING_THROW_WILL))
+				// This script does nothing if it has Mettle, bail
+					return;
+				nDam = (nDam/2);					
 			}
 			
 			if(nAlign == ALIGNMENT_NEUTRAL)

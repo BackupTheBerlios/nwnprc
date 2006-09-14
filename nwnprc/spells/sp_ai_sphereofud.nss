@@ -23,11 +23,15 @@ void DoDisintegrate(object oCaster, object oTarget, int nSpellSaveDC)
             // should be tested to see if it works on non-living targets, and if it does it should
             // be used instead.
             int nDamage = 9999;
-            if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSpellSaveDC, 
-                SAVING_THROW_TYPE_SPELL, oCaster))
+            if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSpellSaveDC, SAVING_THROW_TYPE_SPELL, oCaster))
+            {
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				return;
+			
                 nDamage = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 
                     1 == nTouchAttack ? 5 : 10, 6, 0, 0, 0); 
-            
+            }
             // Apply damage effect and VFX impact, and if the target is dead then apply
             // the fancy rune circle too.
             if (nDamage >= GetCurrentHitPoints (oTarget)) 

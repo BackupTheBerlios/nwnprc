@@ -37,7 +37,7 @@ void ooze_touch_fungus()
 
         nDuration = GetLevelByClass(CLASS_TYPE_OOZEMASTER);
 
-        //Fire cast spell at event for the specified target
+        //Fire cast spell at event for the specified oTarget
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
 
         //Apply the VFX impact and effects
@@ -51,9 +51,9 @@ int ooze_touch_damage(effect eDamage)
 
     if(!GetIsReactionTypeFriendly(oTarget))
     {
-        //Fire cast spell at event for the specified target
+        //Fire cast spell at event for the specified oTarget
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-        //Make a touch attack to afflict target
+        //Make a touch attack to afflict oTarget
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
         if (PRCDoMeleeTouchAttack(oTarget))
@@ -74,9 +74,9 @@ int OozeTouchEffect(effect eDamage, int time)
 
     if(!GetIsReactionTypeFriendly(oTarget))
     {
-        //Fire cast spell at event for the specified target
+        //Fire cast spell at event for the specified oTarget
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-        //Make a touch attack to afflict target
+        //Make a touch attack to afflict oTarget
 
        // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
         if (PRCDoMeleeTouchAttack(oTarget))
@@ -93,7 +93,7 @@ int OozeTouchEffect(effect eDamage, int time)
 
 void main()
 {
-    object target = PRCGetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int level = GetLevelByClass(CLASS_TYPE_OOZEMASTER);
 
     switch (PRCGetSpellId())
@@ -114,17 +114,17 @@ void main()
         case 2012:
         {
             effect damage = EffectDamage(d4() + level, DAMAGE_TYPE_ACID);
-            object target = PRCGetSpellTargetObject();
+            object oTarget = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
             if (ooze_touch_damage(damage))
             {
-                if (!PRCMySavingThrow(SAVING_THROW_REFLEX, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
+                if (!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
                 {
                     effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
                     effect stun = EffectLinkEffects(EffectStunned(), eMind);
 
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, stun, target, RoundsToSeconds(1));
+                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, stun, oTarget, RoundsToSeconds(1));
                 }
             }
             break;
@@ -143,10 +143,9 @@ void main()
         /* Gelatinous cube */
         case 2015:
         {
-            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
-            if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
             {
                 effect damage = EffectParalyze();
                 effect eMind = EffectVisualEffect(VFX_DUR_PARALYZED);
@@ -160,18 +159,17 @@ void main()
         case 2016:
         {
             effect damage = EffectDamage(d6() + level, DAMAGE_TYPE_ACID);
-            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
             if (ooze_touch_damage(damage))
             {
-                if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
+                if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, DC, SAVING_THROW_TYPE_ACID, OBJECT_SELF))
                 {
                     effect eMind = EffectVisualEffect(VFX_DUR_IOUNSTONE_RED);
                     //effect stun = EffectLinkEffects(EffectAbilityDecrease(ABILITY_CONSTITUTION, d6()), eMind);
 
-                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, target, RoundsToSeconds(1 + (level / 2)));
-                    ApplyAbilityDamage(target, ABILITY_CONSTITUTION, d6(), DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(1 + (level / 2)));
+                    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eMind, oTarget, RoundsToSeconds(1 + (level / 2)));
+                    ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d6(), DURATION_TYPE_TEMPORARY, TRUE, RoundsToSeconds(1 + (level / 2)));
                 }
             }
             break;
@@ -181,16 +179,18 @@ void main()
         {
             //effect damage;
             int nDamage;
-            object target = PRCGetSpellTargetObject();
             int DC = 15 + level;
 
-            if (!PRCMySavingThrow(SAVING_THROW_FORT, target, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
+            if (!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, DC, SAVING_THROW_TYPE_NONE, OBJECT_SELF))
             {
                 //damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6(2));
                 nDamage = d4(2);
             }
             else
             {
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				return;              
                 //damage = EffectAbilityDecrease(ABILITY_CONSTITUTION, d6());
                 nDamage  = d4();
             }
@@ -198,13 +198,11 @@ void main()
             //effect paralyze = EffectLinkEffects(damage, eMind);
 
             //ooze_touch_effect(paralyze, 1 + level); // Inlined the code to make ApplyAbilityDamage work
-            object oTarget = PRCGetSpellTargetObject();
-
             if(!GetIsReactionTypeFriendly(oTarget))
             {
-                //Fire cast spell at event for the specified target
+                //Fire cast spell at event for the specified oTarget
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId()));
-                //Make a touch attack to afflict target
+                //Make a touch attack to afflict oTarget
 
                // GZ: * GetSpellCastItem() == OBJECT_INVALID is used to prevent feedback from showing up when used as OnHitCastSpell property
                 if (PRCDoMeleeTouchAttack(oTarget))

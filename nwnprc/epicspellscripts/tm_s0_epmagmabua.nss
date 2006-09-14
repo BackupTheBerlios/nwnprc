@@ -60,6 +60,9 @@ void main()
             }
             else
             {
+				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					nDamage = 0;               
                 nDamage = nDamage / 2;
                 eDam = EffectDamage( nDamage, DAMAGE_TYPE_FIRE );
                 DelayCommand( fDelay,

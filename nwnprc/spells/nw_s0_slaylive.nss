@@ -42,6 +42,11 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
                     DeathlessFrenzyCheck(oTarget);
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDeath(), oTarget);
                 }
+                else if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+                {
+			// This script does nothing if it has Mettle, bail
+				return 0;
+		}
                 else
                 {
                     nDamage = d6(3)+ nCasterLevel;

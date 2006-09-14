@@ -77,10 +77,9 @@ void main()
 		{
 			nDam = nDam/2;
 			
-			if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-			{
-				nDam = 0;
-			}
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				return;
 		}
 		
 		else

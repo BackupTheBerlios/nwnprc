@@ -80,7 +80,12 @@ void main()
                 {
                     int nSave = PRCMySavingThrow(SAVING_THROW_FORT, oVictim, SAVING_THROW_TYPE_TRAP);
                     if(nSave)
+                    {
                         nDamage /= 2; 
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				nDamage = 0;                          
+                    }    
                 }   
                 if(tTrap.nAllowWillSave)
                 {

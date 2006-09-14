@@ -28,11 +28,14 @@ void main()
                 eDead = EffectLinkEffects(eDead, EffectVisualEffect(VFX_IMP_DEATH));
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDead, oTarget);
             }
+            else if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+            {
+		// This script does nothing if it has Mettle, bail
+			return;
+	    }
             else if (!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget,OBJECT_SELF), SAVING_THROW_TYPE_SPELL))
             {
-                // Apply metamagic to the 1d4 rounds duration.
-                int nRounds = SPGetMetaMagicDamage(DAMAGE_TYPE_MAGICAL, 1, 4);
-                float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(nRounds));
+                float fDuration = SPGetMetaMagicDuration(RoundsToSeconds(d4()));
                 
                 effect eDazed = EffectDazed();
                 eDazed = EffectLinkEffects(eDazed, EffectVisualEffect(VFX_IMP_DAZED_S));

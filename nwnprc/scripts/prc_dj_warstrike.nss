@@ -40,6 +40,9 @@ int    nCon     = d6(2);
 if(FortitudeSave(oTarget, nFortDC, SAVING_THROW_FORT, oPC))
 {
     nCon = nCon/2;
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				return;      
     //Debug
     //SpeakString("Debug Save Succeeded.  Damage Dealt ="+IntToString(nCon));
 }

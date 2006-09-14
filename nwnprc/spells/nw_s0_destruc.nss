@@ -68,6 +68,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 //Apply the VFX impact and effects
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oTarget);
             }
+            else if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+            {
+		// This script does nothing if it has Mettle, bail
+			return;
+	    }
             else
             {
                 nDamage = d6(10);

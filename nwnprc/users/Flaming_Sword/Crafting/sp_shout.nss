@@ -92,12 +92,10 @@ void main()
                     if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                     {
                          nDamage = 6 * nDamageDice;
-                         nDuration = 6 * nDeafenedDice;
                     }
                     if ((nMetaMagic & METAMAGIC_EMPOWER))
                     {
                          nDamage += (nDamage/2);
-                         nDuration += (nDuration/2);
                     }
                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                     if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget,
@@ -106,7 +104,8 @@ void main()
                     {
                         nDamage /= 2;
                         if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-                            nDamage = 0;
+                        // Bail from the spell, it does nothing
+                            return;
                         if(nSpellID == SPELL_SHOUT_GREATER)
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDeaf(), oTarget, RoundsToSeconds(nDuration/2)));
                     }

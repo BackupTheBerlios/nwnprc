@@ -72,6 +72,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                     //Make a Fort save
                     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF),SAVING_THROW_TYPE_DEATH))
                     {
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				return;                    
                          //Check for metamagic
                          if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                          {

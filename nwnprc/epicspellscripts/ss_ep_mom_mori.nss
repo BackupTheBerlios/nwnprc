@@ -42,6 +42,9 @@ void main()
                  {
                     //Roll damage
                     nDamage = d6(3) + 20;
+				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					nDamage = 0;                       
                     //Set damage effect
                     eDam = EffectDamage(nDamage, DAMAGE_TYPE_NEGATIVE);
                     //Apply damage effect and VFX impact

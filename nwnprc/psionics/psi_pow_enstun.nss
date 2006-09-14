@@ -129,7 +129,12 @@ void main()
                         {
                             // Cold has a fort save for half
                             if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, enAdj.nSaveType))
+                            {
+				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					nDamage = 0;                              
                                 nDamage /= 2;
+                            }
                             // Failed save, now Will save vs Stun
                             else if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
                                 bStun = TRUE;

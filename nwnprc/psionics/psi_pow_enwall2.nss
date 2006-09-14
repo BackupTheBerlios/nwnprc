@@ -81,7 +81,12 @@ void main()
             {
                 // Cold has a fort save for half
                 if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, enAdj.nSaveType))
+                {
                     nDamage /= 2;
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				nDamage = 0;                      
+                }
             }
             else
                 // Adjust damage according to Reflex Save, Evasion or Improved Evasion

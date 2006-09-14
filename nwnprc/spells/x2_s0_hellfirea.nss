@@ -37,6 +37,8 @@ ActionDoCommand(SetAllAoEInts(761,OBJECT_SELF, GetSpellSaveDC()));
         {
             nDamage = nDamage / 2;
         }
+        if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+        	nDamage = 0;
         //Set the damage effect
         eDam = EffectDamage(nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_FIRE));
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget,0.0f,FALSE);

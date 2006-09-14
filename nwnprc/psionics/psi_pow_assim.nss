@@ -74,8 +74,12 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
                 int nDamage       = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
                 // Fort save for half
                 if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, GetManifesterDC(oManifester), SAVING_THROW_TYPE_NONE))
+                {
                     nDamage /= 2;
-
+				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					nDamage = 0;                       
+		}
                 nDamage = GetTargetSpecificChangesToDamage(oTarget, manif.oManifester, nDamage);
                 // Apply damage and the accompanying VFX
                 ApplyTouchAttackDamage(manif.oManifester, oTarget, nTouchAttack, nDamage, DAMAGE_TYPE_MAGICAL);

@@ -103,6 +103,9 @@ void main()
                     }
                     else
                     {
+				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+				// This script does nothing if it has Mettle, bail
+					return;                       
                         // Roll damage
                         nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
                         // Target-specific stuff

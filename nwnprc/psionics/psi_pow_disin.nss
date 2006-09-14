@@ -118,6 +118,9 @@ void DoPower(struct manifestation manif, object oTarget, int nDC, int nPen, int 
             // Fort save partial
             if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC))
             {
+		if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+		// This script does nothing if it has Mettle, bail
+			return;               
                 nNumberOfDice = 5;
             }
 

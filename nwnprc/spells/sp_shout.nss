@@ -105,8 +105,9 @@ void main()
                                         SAVING_THROW_TYPE_SONIC))
                     {
                         nDamage /= 2;
-                        if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-                            nDamage = 0;
+			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+			// This script does nothing if it has Mettle, bail
+				return;
                         if(nSpellID == SPELL_SHOUT_GREATER)
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDeaf(), oTarget, RoundsToSeconds(nDuration/2)));
                     }

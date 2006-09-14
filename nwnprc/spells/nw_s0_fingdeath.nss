@@ -76,7 +76,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                  else
                  {
                     // Target shouldn't take damage if they are immune to death magic.
-                    if (!GetIsImmune( oTarget, IMMUNITY_TYPE_DEATH))
+                    if (!GetIsImmune( oTarget, IMMUNITY_TYPE_DEATH) && !(GetHasMettle(oTarget, SAVING_THROW_FORT)))
                     {
                         //Roll damage
                         nDamage = d6(3) + nCasterLvl;

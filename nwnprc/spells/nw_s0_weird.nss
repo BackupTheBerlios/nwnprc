@@ -88,7 +88,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ILLUSION);
                                 //Make a fortitude save against death
                                 if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_DEATH, OBJECT_SELF, fDelay))
                                 {
-                                    // * I made my saving throw but I still have to take the 3d6 damage
+					if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+					// This script does nothing if it has Mettle, bail
+						return;
 
                                     //Roll damage
                                     nDamage = d6(3);

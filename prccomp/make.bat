@@ -36,7 +36,6 @@ SET MERGE=prc
 SET OUTPUT=prcc
 SET NAME=prcc
 start /B /wAIT makeb.bat
-pause
 
 REM Merge CEP 2 & PRC Companion
 REM put this in its own dir for later

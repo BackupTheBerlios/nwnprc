@@ -53,17 +53,18 @@ void main()
 	}
 		
 	//else we have a magical weapon
-	/*
+	else
+	{
+		if(PRCMySavingThrow(SAVING_THROW_REFLEX, GetLastDamager(), 15, SAVING_THROW_TYPE_NONE))
+		{
+			nDam = GetTotalDamageDealt() / 2;
+			
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nDam), oSpellOrigin);
+		}
+	}
 	
-	[10:42] <Tenjac> I'm not sure how to go about doing the magical weapon part... in essence, when a character with Starmantle on them gets hit by a +1 or better weapon, they get a save at DC15 to take only half damage
-	[10:43] <Tenjac> I'm compeletely clueless as to how I'm going to pull that off.
-	[10:43] <Primogenitor> this is a spell, right?
-	[10:43] <Tenjac> yep
-	[10:43] <Tenjac> has an event script already
-	[10:44] <Tenjac> Some ideas were to add back half damage, or to give 50% resistance to all and deal damage again if they fail the save
-	[10:44] <Primogenitor> Well, the only way to do it is an Onhit event on the defenders armor/hide, get the attackers weapon, if its +1 or more make the save and heal half the damage back
-	[10:45] <Primogenitor> Dealing damage again gets fugly with other resistances and DR
-	[10:45] <Tenjac> ok, but how do I get the damage?
+	/*
+		
 	[10:45] <Primogenitor> GetLastDamager() will get the attacker
 	[10:46] <Primogenitor> GetTotalDamageDealt() compared to a local int from the previous hit (and also put in the original spellscript too)
 	[10:46] <Primogenitor> Or GetDamageDealtByType() in a loop would be better, but check on its behaviour with multiple hits etc.
@@ -74,15 +75,7 @@ void main()
 	[10:49] <Primogenitor> In effect, an OnHit event is much the same as an OnDamaged event
 	[10:53] <Tenjac> right
 	[10:53] <Tenjac> well, hopefully that will work.  THanks :P
-	[10:55] <Primogenitor> Run some tests first to make sure those functions can be used.
-	[10:55] <Primogenitor> I vaguely remember something fruity about them
-	[10:57] <Tenjac> At work, so I'll have to test later :P
-	[11:00] <Primogenitor> Amen to that ;)
-	[11:01] <Tenjac> hehe
-	[11:01] <Primogenitor> But there is nothing worse than assuming someting workes one way, then finding out it works a completely different way
-	[11:10] <Tenjac> oh yeah... not good :P
-        [11:11] <Tenjac> hopefully that will do it
-        
+	        
         Georg Zoeller: It depends on whether OnDamage or OnHit fires first. If OnDamage fires first, you could set the damage in a variable and retrieve
         it from OnHit.  
         

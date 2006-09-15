@@ -25,3 +25,17 @@ ability score drops below the minimum required to cast
 spells of that level.
 
 **/
+
+////////////////////////////////////////////////////
+// Author: Tenjac
+// Date:   15.9.2006
+////////////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	

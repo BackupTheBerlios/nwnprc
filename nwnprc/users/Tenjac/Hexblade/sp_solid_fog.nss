@@ -8,11 +8,12 @@ Level: Sor/Wiz 4, Hexblade 4
 Components: V, S, M
 Duration: 1 min./level
 Spell Resistance: No
+
 This spell functions like fog cloud, but in addition
 to obscuring sight, the solid fog is so thick that 
 any creature attempting to move through it progresses
 at a speed of 5 feet, regardless of its normal speed,
-and it takes a –2 penalty on all melee attack and 
+and it takes a -2 penalty on all melee attack and 
 melee damage rolls. The vapors prevent effective 
 ranged weapon attacks (except for magic rays and the
 like). A creature or object that falls into solid fog
@@ -31,3 +32,4 @@ reforms in 10 minutes.
 Material Component: A pinch of dried, powdered peas 
                     combined with powdered animal hoof.
 **/
+

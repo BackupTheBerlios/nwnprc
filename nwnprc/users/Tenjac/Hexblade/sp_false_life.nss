@@ -21,5 +21,44 @@ distilled spirits, which you use to trace certain
 sigils on your body during casting. These sigils 
 cannot be seen once the alcohol or spirits evaporate.
 
-
 **/
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = HoursToSeconds(nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	int nBonus = d10(1) + (min(10, nCasterLvl));
+	
+	if(nMetaMagic == METAMAGIC_MAXIMIZE)
+	{
+		nBonus = 10 + (min(10, nCasterLvl));
+	}
+	
+	if(nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nBonus += (nBonus/2);
+	}
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectTemporaryHitpoints(nBonus), oPC, fDur);
+	
+	SPSetSchool();
+}
+
+	
+	
+	

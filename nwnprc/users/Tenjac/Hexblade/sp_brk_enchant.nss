@@ -30,3 +30,14 @@ enchantment does not remove the curse from the item, but
 it does frees the victim from the item’s effects. 
 
 **/
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+}

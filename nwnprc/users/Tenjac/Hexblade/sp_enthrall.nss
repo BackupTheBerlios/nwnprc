@@ -12,6 +12,7 @@ Targets: Any number of creatures
 Duration: 1 hour or less
 Saving Throw: Will negates; see text
 Spell Resistance: Yes
+
 If you have the attention of a group of creatures, 
 you can use this spell to hold them spellbound. To 
 cast the spell, you must speak or sing without 

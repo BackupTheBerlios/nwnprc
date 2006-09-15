@@ -104,9 +104,8 @@ void main()
                     {
                         nDamage /= 2;
                         if(GetHasMettle(oTarget, SAVING_THROW_FORT))
-                        // Bail from the spell, it does nothing
-                            return;
-                        if(nSpellID == SPELL_SHOUT_GREATER)
+                            nDamage = 0;
+                        else if(nSpellID == SPELL_SHOUT_GREATER)
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDeaf(), oTarget, RoundsToSeconds(nDuration/2)));
                     }
                     else

@@ -92,12 +92,10 @@ void main()
                     if ((nMetaMagic & METAMAGIC_MAXIMIZE))
                     {
                          nDamage = 6 * nDamageDice;
-                         nDuration = 6 * nDeafenedDice;
                     }
                     if ((nMetaMagic & METAMAGIC_EMPOWER))
                     {
                          nDamage += (nDamage/2);
-                         nDuration += (nDuration/2);
                     }
                     nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                     if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget,
@@ -105,10 +103,9 @@ void main()
                                         SAVING_THROW_TYPE_SONIC))
                     {
                         nDamage /= 2;
-			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
-			// This script does nothing if it has Mettle, bail
-				return;
-                        if(nSpellID == SPELL_SHOUT_GREATER)
+                        if(GetHasMettle(oTarget, SAVING_THROW_FORT))
+                            nDamage = 0;
+                        else if(nSpellID == SPELL_SHOUT_GREATER)
                             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDeaf(), oTarget, RoundsToSeconds(nDuration/2)));
                     }
                     else

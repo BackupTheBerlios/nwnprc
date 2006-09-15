@@ -40,3 +40,67 @@ hound is instantly dispelled.
 //:: Author: Tenjac
 //:: Date:   8.9.2006 
 ///////////////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ILLUSION);
+	
+	object oPC = OBJECT_SELF;
+	location lLoc = GetSpellTargetLocation();
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = (60.0f * nCasterLvl);
+	
+	effect eSummon = EffectSummonCreature("PRC_Hound_Doom", VFX_NONE, 0.0f);
+	
+	int i = 1;
+	object oTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
+		
+	while (GetIsObjectValid(oTest))
+	{
+		if (GetTag(oTest) == ("PRC_Hound_Doom")
+		{
+			DestroyObject(oTest);
+			break;
+		}	
+		
+		i += 1;
+		oTest = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);				
+	}
+	
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, lLoc, fDur);
+	
+	int n = 1;
+	object oHound = GetObjectByTag("PRC_Hound_Doom", n);
+	
+	while (GetIsObjectValid(oHound))
+	{
+		if (GetMaster(oHound) == oPC)
+		{
+			break;
+		}
+		
+		n++;
+		oHound = GetObjectByTag("PRC_Hound_Doom", n);
+	}
+	
+	effect eVis = EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR);
+	effect eBuff = EffectACIncrease(GetAbilityModifier(ABILITY_CHARISMA, oPC), AC_DEFLECTION_BONUS);
+	       eBuff = EffectLinkEffects(eBuff, EffectTemporaryHitpoints(max(0,GetCurrentHitPoints(oPC) - GetCurrentHitPoints(oHound)));	
+	       eBuff = EffectLinkEffects(eBuff, eVis);
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oHound, fDur);
+	
+	SetBaseAttackBonus(GetBaseAttackBonus(oPC), oHound);
+	
+	SPSetSchool();
+}
+	
+
+	
+	

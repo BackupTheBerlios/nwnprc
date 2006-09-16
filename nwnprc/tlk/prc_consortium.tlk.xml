@@ -3502,7 +3502,10 @@ COMPANION POWER:
 Arcane Caster Level
 up to 8: gains Improved Evasion, Share Spells
 9 - 11: Spell Resistance (Arcane Spellcaster level +5)
-12+: Improved Speed (+10 feet). </entry>
+12+: Improved Speed (+33%).
+
+However, if your familiar is killed, you will take damage equal to its number of hit dice, plus 1d4 damage to each ability score.
+</entry>
   <entry id="45800" lang="en" sex="m">Disciple of Mephistopheles</entry>
   <entry id="45801" lang="en" sex="m">Disciples of Mephistopheles</entry>
   <entry id="45802" lang="en" sex="m">disciple of Mephistopheles</entry>

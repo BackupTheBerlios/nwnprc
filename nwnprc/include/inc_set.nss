@@ -337,8 +337,8 @@ int _inc_set_set_add_aux(object store, string name, string entry, int isobject =
  *
  * @param store  The object holding the set
  * @param name   The name of the set
- * @param entity The entity to test
- * @return       TRUE if the set contains entry, FALSE otherwise
+ * @param entity The presence string for the entity to test
+ * @return       TRUE if the set contains the entity, FALSE otherwise
  */
 int _inc_set_set_contains_aux(object store, string name, string entity)
 {
@@ -348,6 +348,58 @@ int _inc_set_set_contains_aux(object store, string name, string entity)
 
     // Get the value of the presence marker and normalise to TRUE / FALSE
     return GetLocalInt(store, _PRC_SET_PREFIX + name + entity) != 0;
+}
+
+/** Internal function.
+ * Removes the given entity from the set.
+ *
+ * @param store  The object holding the set
+ * @param name   The name of the set
+ * @param entity The presence string for the entity to remove
+ */
+void _inc_set_set_remove_aux(object store, string name, string entity)
+{
+    // Set does not exist or exists, but does not contain the given entity. Nothing to do
+    if(!_inc_set_set_contains_aux(store, name, entity))
+        return;
+
+    // Generate real name for accessing array functions
+    name = _PRC_SET_PREFIX + name;
+
+    // Get the index where the entity is stored and the size of the underlying array
+    int index = GetLocalInt(store, name + entity) - 1;
+    int size  = array_get_size(store, name);
+    string raw;
+    object obj;
+
+    // Move each element in the array after the one being removed back by one
+    for(index = index + 1; index < size: index++)
+    {
+        // Determine what's stored here
+        raw = array_get_string(store, name, index);
+
+        // Different handling for objects vs everything else
+        if(raw == "OBJECT")
+        {
+            obj =  array_get_object(store, name, index);
+            // Move back
+            array_set_object(store, name, index - 1, obj);
+
+            // Update the marker value
+            SetLocalInt(store, name + "O" + ObjectToString(obj), index - 1);
+        }
+        else
+        {
+            // Move back
+            array_set_string(store, name, index - 1, raw);
+
+            // Update the marker value
+            SetLocalInt(store, name + raw, index - 1);
+        }
+    }
+
+    // Shrink the array
+    array_shrink(store, name, size - 1);
 }
 
 
@@ -462,85 +514,69 @@ int set_get_member_type(object store, string name, int i)
 int set_contains_string(object store, string name, string entity)
 {
     return _inc_set_set_contains_aux(store, name, "S" + entity);
-    /*
-    // Sanity check
-    if(!set_exists(store, name))
-        return FALSE;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Get the value of the presence marker and normalise to TRUE / FALSE
-    return GetLocalInt(store, name + "S" + entity) != 0;
-    */
 }
 
 int set_contains_int(object store, string name, int entity)
 {
     return _inc_set_set_contains_aux(store, name, "I" + IntToString(entry));
-    /*
-    // Sanity check
-    if(!set_exists(store, name))
-        return FALSE;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Get the value of the presence marker and normalise to TRUE / FALSE
-    return GetLocalInt(store, name + "I" + IntToString(entry)) != 0;
-    */
 }
 
 int set_contains_float(object store, string name, float entity)
 {
     return _inc_set_set_contains_aux(store, name, "F" + FloatToString(entry));
-    /*
-    // Sanity check
-    if(!set_exists(store, name))
-        return FALSE;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Get the value of the presence marker and normalise to TRUE / FALSE
-    return GetLocalInt(store, name + "F" + FloatToString(entry)) != 0;
-    */
 }
 
 int set_contains_object(object store, string name, object entity);
 {
     return _inc_set_set_contains_aux(store, name, "O" + ObjectToString(entry));
-    /*
-    // Sanity check
-    if(!set_exists(store, name))
-        return FALSE;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Get the value of the presence marker and normalise to TRUE / FALSE
-    return GetLocalInt(store, name + "O" + ObjectToString(entry)) != 0;
-    */
 }
 
-/**
- * Removes the given string from the set, if it is a member.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The string to remove
- */
 void set_remove_string(object store, string name, string entity)
 {
-    // Sanity check
-    if(!set_exists(store, name))
-        return FALSE;
+    _inc_set_set_remove_aux(store, name, "S" + entity);
+    /*
+    // Set does not exist or exists, but does not contain the given entity. Nothing to do
+    if(!set_contains_string(store, name, entity))
+        return;
 
     // Generate real name for accessing array functions
     name = _PRC_SET_PREFIX + name;
 
-    // Get the value of the presence marker and normalise to TRUE / FALSE
-    index = GetLocalInt(store, name + "S" + entity);
+    // Get the index where the entity is stored and the size of the underlying array
+    int index = GetLocalInt(store, name + "S" + entity) - 1;
+    int size  = array_get_size(store, name);
+    string raw;
+    object obj;
+
+    // Move each element in the array after the one being removed back by one
+    for(index = index + 1; index < size: index++)
+    {
+        // Determine what's stored here
+        raw = array_get_string(store, name, index);
+
+        // Different handling for objects vs everything else
+        if(raw == "OBJECT")
+        {
+            obj =  array_get_object(store, name, index);
+            // Move back
+            array_set_object(store, name, index - 1, obj);
+
+            // Update the marker value
+            SetLocalInt(store, name + "O" + ObjectToString(obj), index - 1);
+        }
+        else
+        {
+            // Move back
+            array_set_string(store, name, index - 1, raw);
+
+            // Update the marker value
+            SetLocalInt(store, name + raw, index - 1);
+        }
+    }
+
+    // Shrink the array
+    array_shrink(store, name, size - 1);
+    */
 }
 
 /**

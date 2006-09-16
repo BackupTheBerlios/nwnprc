@@ -295,41 +295,61 @@ int _inc_set_set_add_aux(object store, string name, string entry, int isobject =
     // Generate real name for accessing array functions
     name = _PRC_SET_PREFIX + name;
 
-    // Set the presence marker
-    SetLocalInt(store, name + entry, TRUE);
+    // Set the presence marker to be the index where the entity will be stored + 1 to avoid storing a 0
+    int index = array_get_size(store, name);
+    SetLocalInt(store, name + entry, index + 1);
 
     // Store the member's value in the array
     if(isobject)
     {
         if(DEBUG)
         {
-            Assert(array_set_object(store, name, array_get_size(store, name), obj) == SDL_SUCCESS,
-                   "array_set_object(store, name, array_get_size(store, name), obj) == SDL_SUCCESS",
+            Assert(array_set_object(store, name, index, obj) == SDL_SUCCESS,
+                   "array_set_object(store, name, index, obj) == SDL_SUCCESS",
                    "", "inc_set", "_inc_set_set_add_aux"
                    );
             return SDL_SUCCESS;
         }
         else
         {
-            return array_set_object(store, name, array_get_size(store, name), obj);
+            return array_set_object(store, name, index, obj);
         }
     }
     else
     {
         if(DEBUG)
         {
-            Assert(array_set_string(store, name, array_get_size(store, name), entry) == SDL_SUCCESS,
-                   "array_set_string(store, name, array_get_size(store, name), entry) == SDL_SUCCESS",
+            Assert(array_set_string(store, name, index, entry) == SDL_SUCCESS,
+                   "array_set_string(store, name, index, entry) == SDL_SUCCESS",
                    "", "inc_set", "_inc_set_set_add_aux"
                    );
             return SDL_SUCCESS;
         }
         else
         {
-            return array_set_string(store, name, array_get_size(store, name), entry);
+            return array_set_string(store, name, index, entry);
         }
     }
 }
+
+/** Internal function.
+ * Determines whether the set contains the given entity.
+ *
+ * @param store  The object holding the set
+ * @param name   The name of the set
+ * @param entity The entity to test
+ * @return       TRUE if the set contains entry, FALSE otherwise
+ */
+int _inc_set_set_contains_aux(object store, string name, string entity)
+{
+    // Sanity check
+    if(!set_exists(store, name))
+        return FALSE;
+
+    // Get the value of the presence marker and normalise to TRUE / FALSE
+    return GetLocalInt(store, _PRC_SET_PREFIX + name + entity) != 0;
+}
+
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -397,133 +417,21 @@ int set_delete(object store, string name)
 int set_add_string(object store, string name, string entry)
 {
     return _inc_set_set_add_aux(store, name, "S" + entry);
-
-    /*
-    // Sanity checks
-    if(!set_exists(store, name))
-        return SDL_ERROR_DOES_NOT_EXIST;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Create the value to be stored in array and presence marker
-    string realentry = "S" + entry;
-
-    // Set the presence marker
-    SetLocalInt(store, name + realentry, TRUE);
-
-    // Store the member's value in the array
-    if(DEBUG)
-    {
-        Assert(array_set_string(store, name, array_get_size(store, name), realentry) == SDL_SUCCESS,
-               "array_set_string(store, name, array_get_size(store, name), realentry) == SDL_SUCCESS",
-               "", "inc_set", "set_add_string"
-               );
-        return SDL_SUCCESS;
-    }
-    else
-    {
-        return array_set_string(store, name, array_get_size(store, name), realentry);
-    }*/
 }
 
 int set_add_int(object store, string name, int entry)
 {
     return _inc_set_set_add_aux(store, name, "I" + IntToString(entry));
-
-    /*
-    // Sanity checks
-    if(!set_exists(store, name))
-        return SDL_ERROR_DOES_NOT_EXIST;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Create the value to be stored in array and presence marker
-    string realentry = "I" + IntToString(entry);
-
-    // Set the presence marker
-    SetLocalInt(store, name + realentry, TRUE);
-
-    // Store the member's value in the array
-    if(DEBUG)
-    {
-        Assert(array_set_string(store, name, array_get_size(store, name), realentry) == SDL_SUCCESS,
-               "array_set_string(store, name, array_get_size(store, name), realentry) == SDL_SUCCESS",
-               "", "inc_set", "set_add_int"
-               );
-        return SDL_SUCCESS;
-    }
-    else
-    {
-        return array_set_string(store, name, array_get_size(store, name), realentry);
-    }*/
 }
 
 int set_add_float(object store, string name, float entry)
 {
     return _inc_set_set_add_aux(store, name, "F" + FloatToString(entry));
-
-    /*
-    // Sanity checks
-    if(!set_exists(store, name))
-        return SDL_ERROR_DOES_NOT_EXIST;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Create the value to be stored in array and presence marker
-    string realentry = "F" + FloatToString(entry);
-
-    // Set the presence marker
-    SetLocalInt(store, name + realentry, TRUE);
-
-    // Store the member's value in the array
-    if(DEBUG)
-    {
-        Assert(array_set_string(store, name, array_get_size(store, name), realentry) == SDL_SUCCESS,
-               "array_set_string(store, name, array_get_size(store, name), realentry) == SDL_SUCCESS",
-               "", "inc_set", "set_add_float"
-               );
-        return SDL_SUCCESS;
-    }
-    else
-    {
-        return array_set_string(store, name, array_get_size(store, name), realentry);
-    }*/
 }
 
 int set_add_object(object store, string name, object entry)
 {
     return _inc_set_set_add_aux(store, name, "O" + ObjectToString(entry), TRUE, entry);
-
-    /*
-    // Sanity checks
-    if(!set_exists(store, name))
-        return SDL_ERROR_DOES_NOT_EXIST;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Create the value to be stored in presence marker
-    string markerentry = "O" + ObjectToString(entry);
-
-    // Set the presence marker
-    SetLocalInt(store, name + markerentry, TRUE);
-
-    // Store the member's value in the array
-    if(DEBUG)
-    {
-        Assert(array_set_object(store, name, array_get_size(store, name), entry) == SDL_SUCCESS,
-               "array_set_object(store, name, array_get_size(store, name), entry) == SDL_SUCCESS",
-               "", "inc_set", "set_add_object"
-               );
-        return SDL_SUCCESS;
-    }
-    else
-    {
-        return array_set_object(store, name, array_get_size(store, name), entry);
-    }*/
 }
 
 int set_get_member_type(object store, string name, int i)
@@ -551,45 +459,69 @@ int set_get_member_type(object store, string name, int i)
         return 0;
 }
 
-/**
- * Determines whether the set contains the given string.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The string to test
- * @return       TRUE if the set contains entry, FALSE otherwise
- */
-int set_contains_string(object store, string name, string entity);
+int set_contains_string(object store, string name, string entity)
+{
+    return _inc_set_set_contains_aux(store, name, "S" + entity);
+    /*
+    // Sanity check
+    if(!set_exists(store, name))
+        return FALSE;
 
-/**
- * Determines whether the set contains the given integer.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The integer to test
- * @return       TRUE if the set contains entry, FALSE otherwise
- */
-int set_contains_int(object store, string name, int entity);
+    // Generate real name for accessing array functions
+    name = _PRC_SET_PREFIX + name;
 
-/**
- * Determines whether the set contains the given float.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The float to test
- * @return       TRUE if the set contains entry, FALSE otherwise
- */
-int set_contains_float(object store, string name, float entity);
+    // Get the value of the presence marker and normalise to TRUE / FALSE
+    return GetLocalInt(store, name + "S" + entity) != 0;
+    */
+}
 
-/**
- * Determines whether the set contains the given object.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The object to test
- * @return       TRUE if the set contains entry, FALSE otherwise
- */
+int set_contains_int(object store, string name, int entity)
+{
+    return _inc_set_set_contains_aux(store, name, "I" + IntToString(entry));
+    /*
+    // Sanity check
+    if(!set_exists(store, name))
+        return FALSE;
+
+    // Generate real name for accessing array functions
+    name = _PRC_SET_PREFIX + name;
+
+    // Get the value of the presence marker and normalise to TRUE / FALSE
+    return GetLocalInt(store, name + "I" + IntToString(entry)) != 0;
+    */
+}
+
+int set_contains_float(object store, string name, float entity)
+{
+    return _inc_set_set_contains_aux(store, name, "F" + FloatToString(entry));
+    /*
+    // Sanity check
+    if(!set_exists(store, name))
+        return FALSE;
+
+    // Generate real name for accessing array functions
+    name = _PRC_SET_PREFIX + name;
+
+    // Get the value of the presence marker and normalise to TRUE / FALSE
+    return GetLocalInt(store, name + "F" + FloatToString(entry)) != 0;
+    */
+}
+
 int set_contains_object(object store, string name, object entity);
+{
+    return _inc_set_set_contains_aux(store, name, "O" + ObjectToString(entry));
+    /*
+    // Sanity check
+    if(!set_exists(store, name))
+        return FALSE;
+
+    // Generate real name for accessing array functions
+    name = _PRC_SET_PREFIX + name;
+
+    // Get the value of the presence marker and normalise to TRUE / FALSE
+    return GetLocalInt(store, name + "O" + ObjectToString(entry)) != 0;
+    */
+}
 
 /**
  * Removes the given string from the set, if it is a member.
@@ -598,7 +530,18 @@ int set_contains_object(object store, string name, object entity);
  * @param name   The name of the set
  * @param entity The string to remove
  */
-void set_remove_string(object store, string name, string entity);
+void set_remove_string(object store, string name, string entity)
+{
+    // Sanity check
+    if(!set_exists(store, name))
+        return FALSE;
+
+    // Generate real name for accessing array functions
+    name = _PRC_SET_PREFIX + name;
+
+    // Get the value of the presence marker and normalise to TRUE / FALSE
+    index = GetLocalInt(store, name + "S" + entity);
+}
 
 /**
  * Removes the given integer from the set, if it is a member.

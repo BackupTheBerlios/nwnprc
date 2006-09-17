@@ -15,9 +15,9 @@
      - Get operations on the underlying array
 
     The memory complexity is O(n), specifically 2n(m + c), where
-    m is the memory taken up the local variable store of a member
-    entity and c is a constant overhead from disambiguation
-    strings.
+    n is the number of entities stored in the set, m is the memory
+    taken up the local variable store of a member entity and c is
+    a constant overhead from disambiguation strings.
 
     Note that a set can contain only contain one instance
     of any specific entity. Any attempts to add an entity to
@@ -29,7 +29,7 @@
 
 
     @author Ornedan
-    @data   Created - 2006.09.16
+    @date   Created - 2006.09.16
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////

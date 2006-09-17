@@ -19,6 +19,14 @@
     entity and c is a constant overhead from disambiguation
     strings.
 
+    Note that a set can contain only contain one instance
+    of any specific entity. Any attempts to add an entity to
+    a set that is already a member of will return with success,
+    but do nothing.
+    For example, if a set contains {"Foo", "Bar, 123, OBJECT_INVALID}
+    calling set_add_string(container, setname, "Foo") will return
+    SDL_SUCCESS, but not modify the contents of the set.
+
 
     @author Ornedan
     @data   Created - 2006.09.16
@@ -206,7 +214,7 @@ string set_get_string(object store, string name, int i);
  * @return      The value contained at the index on success,
  *              0 on error
  */
-string set_get_int(object store, string name, int i);
+int set_get_int(object store, string name, int i);
 
 /**
  * Gets the i:th member of the set as an float.
@@ -221,7 +229,7 @@ string set_get_int(object store, string name, int i);
  * @return      The value contained at the index on success,
  *              0.0 on error
  */
-string set_get_float(object store, string name, int i);
+float set_get_float(object store, string name, int i);
 
 /**
  * Gets the i:th member of the set as an object.
@@ -236,7 +244,7 @@ string set_get_float(object store, string name, int i);
  * @return      The value contained at the index on success,
  *              OBJECT_INVALID on error
  */
-string set_get_object(object store, string name, int i);
+object set_get_object(object store, string name, int i);
 
 /**
  * Gets the number of members in the set
@@ -263,6 +271,7 @@ int set_exists(object store, string name);
 //////////////////////////////////////////////////
 
 #include "inc_array"
+#include "inc_debug";
 #include "inc_heap"
 
 
@@ -270,7 +279,7 @@ int set_exists(object store, string name);
 /*             Internal Constants               */
 //////////////////////////////////////////////////
 
-const int _PRC_SET_PREFIX = "@@@set";
+const string _PRC_SET_PREFIX = "@@@set";
 
 
 //////////////////////////////////////////////////
@@ -373,7 +382,7 @@ void _inc_set_set_remove_aux(object store, string name, string entity)
     object obj;
 
     // Move each element in the array after the one being removed back by one
-    for(index = index + 1; index < size: index++)
+    for(index = index + 1; index < size; index++)
     {
         // Determine what's stored here
         raw = array_get_string(store, name, index);
@@ -381,12 +390,12 @@ void _inc_set_set_remove_aux(object store, string name, string entity)
         // Different handling for objects vs everything else
         if(raw == "OBJECT")
         {
-            obj =  array_get_object(store, name, index);
+            obj = array_get_object(store, name, index);
             // Move back
             array_set_object(store, name, index - 1, obj);
 
             // Update the marker value
-            SetLocalInt(store, name + "O" + ObjectToString(obj), index - 1);
+            SetLocalInt(store, name + "O" + ObjectToString(obj), index/* - 1 + 1 */);
         }
         else
         {
@@ -394,9 +403,12 @@ void _inc_set_set_remove_aux(object store, string name, string entity)
             array_set_string(store, name, index - 1, raw);
 
             // Update the marker value
-            SetLocalInt(store, name + raw, index - 1);
+            SetLocalInt(store, name + raw, index/* - 1 + 1 */);
         }
     }
+
+    // Delete the marker local
+    DeleteLocalInt(store, name + entity);
 
     // Shrink the array
     array_shrink(store, name, size - 1);
@@ -445,7 +457,7 @@ int set_delete(object store, string name)
         raw = array_get_string(store, name, i);
 
         // Construct the presence marker name. Special handling for objects
-        if(GetSubString(raw, 0, 1) == "O")
+        if(raw == "OBJECT")
             member = name + "O" + ObjectToString(array_get_object(store, name, i));
         else
             member = name + raw;
@@ -468,22 +480,50 @@ int set_delete(object store, string name)
 
 int set_add_string(object store, string name, string entry)
 {
-    return _inc_set_set_add_aux(store, name, "S" + entry);
+    // Convert the entry to the storable string form
+    entry = "S" + entry;
+
+    // If the set already contains the entry being added, nothing happens
+    if(_inc_set_set_contains_aux(store, name, entry))
+        return SDL_SUCCESS;
+
+    return _inc_set_set_add_aux(store, name, entry);
 }
 
 int set_add_int(object store, string name, int entry)
 {
-    return _inc_set_set_add_aux(store, name, "I" + IntToString(entry));
+    // Convert the entry to the storable string form
+    string strentry = "I" + IntToString(entry);
+
+    // If the set already contains the entry being added, nothing happens
+    if(_inc_set_set_contains_aux(store, name, strentry))
+        return SDL_SUCCESS;
+
+    return _inc_set_set_add_aux(store, name, strentry);
 }
 
 int set_add_float(object store, string name, float entry)
 {
-    return _inc_set_set_add_aux(store, name, "F" + FloatToString(entry));
+    // Convert the entry to the storable string form
+    string strentry = "F" + FloatToString(entry);
+
+    // If the set already contains the entry being added, nothing happens
+    if(_inc_set_set_contains_aux(store, name, strentry))
+        return SDL_SUCCESS;
+
+    return _inc_set_set_add_aux(store, name, strentry);
 }
 
 int set_add_object(object store, string name, object entry)
 {
-    return _inc_set_set_add_aux(store, name, "O" + ObjectToString(entry), TRUE, entry);
+    // Convert the entry to the storable string form
+    string strentry = "O" + ObjectToString(entry);
+
+    // If the set already contains the entry being added, nothing happens
+    if(_inc_set_set_contains_aux(store, name, strentry))
+        return SDL_SUCCESS;
+
+    return _inc_set_set_add_aux(store, name, strentry, TRUE, entry);
 }
 
 int set_get_member_type(object store, string name, int i)
@@ -518,99 +558,44 @@ int set_contains_string(object store, string name, string entity)
 
 int set_contains_int(object store, string name, int entity)
 {
-    return _inc_set_set_contains_aux(store, name, "I" + IntToString(entry));
+    return _inc_set_set_contains_aux(store, name, "I" + IntToString(entity));
 }
 
 int set_contains_float(object store, string name, float entity)
 {
-    return _inc_set_set_contains_aux(store, name, "F" + FloatToString(entry));
+    return _inc_set_set_contains_aux(store, name, "F" + FloatToString(entity));
 }
 
-int set_contains_object(object store, string name, object entity);
+int set_contains_object(object store, string name, object entity)
 {
-    return _inc_set_set_contains_aux(store, name, "O" + ObjectToString(entry));
+    return _inc_set_set_contains_aux(store, name, "O" + ObjectToString(entity));
 }
 
 void set_remove_string(object store, string name, string entity)
 {
     _inc_set_set_remove_aux(store, name, "S" + entity);
-    /*
-    // Set does not exist or exists, but does not contain the given entity. Nothing to do
-    if(!set_contains_string(store, name, entity))
-        return;
-
-    // Generate real name for accessing array functions
-    name = _PRC_SET_PREFIX + name;
-
-    // Get the index where the entity is stored and the size of the underlying array
-    int index = GetLocalInt(store, name + "S" + entity) - 1;
-    int size  = array_get_size(store, name);
-    string raw;
-    object obj;
-
-    // Move each element in the array after the one being removed back by one
-    for(index = index + 1; index < size: index++)
-    {
-        // Determine what's stored here
-        raw = array_get_string(store, name, index);
-
-        // Different handling for objects vs everything else
-        if(raw == "OBJECT")
-        {
-            obj =  array_get_object(store, name, index);
-            // Move back
-            array_set_object(store, name, index - 1, obj);
-
-            // Update the marker value
-            SetLocalInt(store, name + "O" + ObjectToString(obj), index - 1);
-        }
-        else
-        {
-            // Move back
-            array_set_string(store, name, index - 1, raw);
-
-            // Update the marker value
-            SetLocalInt(store, name + raw, index - 1);
-        }
-    }
-
-    // Shrink the array
-    array_shrink(store, name, size - 1);
-    */
 }
 
-/**
- * Removes the given integer from the set, if it is a member.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The integer to remove
- */
-void set_remove_int(object store, string name, int entity);
+void set_remove_int(object store, string name, int entity)
+{
+    _inc_set_set_remove_aux(store, name, "I" + IntToString(entity));
+}
 
-/**
- * Removes the given float from the set, if it is a member.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The float to remove
- */
-void set_remove_float(object store, string name, float entity);
+void set_remove_float(object store, string name, float entity)
+{
+    _inc_set_set_remove_aux(store, name, "F" + FloatToString(entity));
+}
 
-/**
- * Removes the given object from the set, if it is a member.
- *
- * @param store  The object holding the set
- * @param name   The name of the set
- * @param entity The object to remove
- */
-void set_remove_object(object store, string name, object entity);
+void set_remove_object(object store, string name, object entity)
+{
+    _inc_set_set_remove_aux(store, name, "O" + ObjectToString(entity));
+}
 
 string set_get_string(object store, string name, int i)
 {
     // Sanity check
     if(!set_exists(store, name) || i >= set_get_size(store, name))
-        return 0;
+        return "";
 
     // Generate real name for accessing array functions
     name = _PRC_SET_PREFIX + name;
@@ -620,7 +605,7 @@ string set_get_string(object store, string name, int i)
     return GetSubString(raw, 1, GetStringLength(raw));
 }
 
-string set_get_int(object store, string name, int i)
+int set_get_int(object store, string name, int i)
 {
     // Sanity check
     if(!set_exists(store, name) || i >= set_get_size(store, name))
@@ -631,28 +616,28 @@ string set_get_int(object store, string name, int i)
 
     // Chop off the first character from the raw string and return the rest
     string raw = array_get_string(store, name, i);
-    return StrintToInt(GetSubString(raw, 1, GetStringLength(raw)));
+    return StringToInt(GetSubString(raw, 1, GetStringLength(raw)));
 }
 
-string set_get_float(object store, string name, int i)
+float set_get_float(object store, string name, int i)
 {
     // Sanity check
     if(!set_exists(store, name) || i >= set_get_size(store, name))
-        return 0;
+        return 0.0f;
 
     // Generate real name for accessing array functions
     name = _PRC_SET_PREFIX + name;
 
     // Chop off the first character from the raw string and return the rest
     string raw = array_get_string(store, name, i);
-    return StrintToFloat(GetSubString(raw, 1, GetStringLength(raw)));
+    return StringToFloat(GetSubString(raw, 1, GetStringLength(raw)));
 }
 
-string set_get_object(object store, string name, int i)
+object set_get_object(object store, string name, int i)
 {
     // Sanity check
     if(!set_exists(store, name) || i >= set_get_size(store, name))
-        return 0;
+        return OBJECT_INVALID;
 
     // Generate real name for accessing array functions
     name = _PRC_SET_PREFIX + name;
@@ -675,3 +660,7 @@ int set_exists(object store, string name)
 
     return array_exists(store, name);
 }
+
+
+// Test main
+//void main() {}

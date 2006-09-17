@@ -17855,8 +17855,7 @@ ABILITIES:
 
 Level
 1: Ki Frenzy 1/Day - +2 Str, Dex, Extra Attack
-   Weapon Focus - Gain Weapon Focus in your chosen weapon.
-2:
+2: Weapon Focus - Gain Weapon Focus in your chosen weapon.
 3: Ki Frenzy 2/Day
    Deflect Arrows
 4:
@@ -17951,6 +17950,146 @@ Level
 38: Damage Resistance 10/-
 39: Ki Frenzy 11/Day
 40: Bonus Feat</entry>
+  <entry id="50227" lang="en" sex="m">Focused Lexicon: Aberration</entry>
+  <entry id="50228" lang="en" sex="m">Focused Lexicon: Animal</entry>  
+  <entry id="50229" lang="en" sex="m">Focused Lexicon: Beast</entry>
+  <entry id="50230" lang="en" sex="m">Focused Lexicon: Construct</entry>
+  <entry id="50231" lang="en" sex="m">Focused Lexicon: Dragon</entry>
+  <entry id="50232" lang="en" sex="m">Focused Lexicon: Dwarf</entry>
+  <entry id="50233" lang="en" sex="m">Focused Lexicon: Elemental</entry>
+  <entry id="50234" lang="en" sex="m">Focused Lexicon: Elf</entry>
+  <entry id="50235" lang="en" sex="m">Focused Lexicon: Fey</entry>
+  <entry id="50236" lang="en" sex="m">Focused Lexicon: Giant</entry>
+  <entry id="50237" lang="en" sex="m">Focused Lexicon: Gnome</entry>
+  <entry id="50238" lang="en" sex="m">Focused Lexicon: Halfelf</entry>
+  <entry id="50239" lang="en" sex="m">Focused Lexicon: Halfling</entry>
+  <entry id="50240" lang="en" sex="m">Focused Lexicon: Halforc</entry>
+  <entry id="50241" lang="en" sex="m">Focused Lexicon: Human</entry>
+  <entry id="50242" lang="en" sex="m">Focused Lexicon: Goblinoid</entry>
+  <entry id="50243" lang="en" sex="m">Focused Lexicon: Monstrous Humanoid</entry>
+  <entry id="50244" lang="en" sex="m">Focused Lexicon: Orc</entry>
+  <entry id="50245" lang="en" sex="m">Focused Lexicon: Reptilian Humanoid</entry>
+  <entry id="50246" lang="en" sex="m">Focused Lexicon: Magical Beast</entry>
+  <entry id="50247" lang="en" sex="m">Focused Lexicon: Ooze</entry>
+  <entry id="50248" lang="en" sex="m">Focused Lexicon: Outsider</entry>
+  <entry id="50249" lang="en" sex="m">Focused Lexicon: Shapechanger</entry>
+  <entry id="50250" lang="en" sex="m">Focused Lexicon: Undead</entry>
+  <entry id="50251" lang="en" sex="m">Focused Lexicon: Vermin</entry>
+  <entry id="50252" lang="en" sex="m">Type of Feat: General
+Prerequisite: Truespeak 6, able to speak utterances.
+Specifics: Choose a creature type. The DC of your utterances against that creature type is increased by 1.
+Use: Automatic.</entry>  
+  <entry id="50253" lang="en" sex="m">Focused Lexicon</entry>
+  <entry id="50254" lang="en" sex="m">Utterance Focus: Breath of Cleansing</entry>
+  <entry id="50255" lang="en" sex="m">Utterance Focus: Breath of Recovery</entry>  
+  <entry id="50256" lang="en" sex="m">Utterance Focus: Eldritch Attraction</entry>
+  <entry id="50257" lang="en" sex="m">Utterance Focus: Morale Boost</entry>
+  <entry id="50258" lang="en" sex="m">Utterance Focus: Preturnatural Clarity</entry>
+  <entry id="50259" lang="en" sex="m">Utterance Focus: Sensory Focus</entry>
+  <entry id="50260" lang="en" sex="m">Utterance Focus: Silent Caster</entry>
+  <entry id="50261" lang="en" sex="m">Utterance Focus: Singular Mind</entry>
+  <entry id="50262" lang="en" sex="m">Utterance Focus: Temporal Spiral</entry>
+  <entry id="50263" lang="en" sex="m">Utterance Focus: Temporal Twist</entry>
+  <entry id="50264" lang="en" sex="m">Utterance Focus: Ward of Peace</entry>
+  <entry id="50265" lang="en" sex="m">Utterance Focus: Shockwave</entry> 
+  <entry id="50266" lang="en" sex="m">Type of Feat: General
+Prerequisite: Able to speak utterances.
+Specifics: Choose a specific utterance. The DC of the chosen utterance is increased by 1.
+Use: Automatic.</entry>   
+  <entry id="50267" lang="en" sex="m">Utterance Focus</entry> 
+  <entry id="50268" lang="en" sex="m">Recitation of the Fortified State</entry> 
+  <entry id="50269" lang="en" sex="m">Type of Feat: Recitation
+Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
+Specifics: You gain a natural armour bonus equal to 1/3rd your Truenamer level. This lasts for one round. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
+Use: Selected.</entry> 
+  <entry id="50270" lang="en" sex="m">Recitation of Meditative State</entry> 
+  <entry id="50271" lang="en" sex="m">Type of Feat: Recitation
+Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
+Specifics: Use of this Recitation dispels most negative mental effects. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
+Use: Selected.</entry> 
+  <entry id="50272" lang="en" sex="m">Recitation of Mindful State</entry> 
+  <entry id="50273" lang="en" sex="m">Type of Feat: Recitation
+Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
+Specifics: You gain a skill bonus equal to 1/3rd your Truenamer level on Open Lock, Disable Trap, and Craft skills. This lasts for two rounds. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
+Use: Selected.</entry> 
+  <entry id="50274" lang="en" sex="m">Recitation of the Sanguine State</entry> 
+  <entry id="50275" lang="en" sex="m">TType of Feat: Recitation
+Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
+Specifics: Use of this Recitation cleanses your body of Poisons. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
+Use: Selected.</entry> 
+  <entry id="50276" lang="en" sex="m">Recitation of Vital State</entry> 
+  <entry id="50277" lang="en" sex="m">Type of Feat: Recitation
+Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
+Specifics: Use of this Recitation cleanses your body of Disease. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
+Use: Selected.</entry> 
+  <entry id="50278" lang="en" sex="m">Empower Utterance</entry> 
+  <entry id="50279" lang="en" sex="m">Type of Feat: General
+Prerequisite: Truespeak 9 ranks, Able to speak utterances.
+Specifics: You can empower an utterance. All variable, numeric effects of an empowered utterance are increased by one-half. An empowered utterance deals half again as much damage as normal, cures half again as many hit points, affects half again as many targets, and so forth, as appropriate. Saving throws and opposed checks are not affected, nor are utterances without random variables.
+Using this feat increases the DC to speak the utterance by 10.
+Use: Selected.</entry> 
+  <entry id="50280" lang="en" sex="m">Extend Utterance</entry> 
+  <entry id="50281" lang="en" sex="m">Type of Feat: General
+Prerequisite: Truespeak 6 ranks, Able to speak utterances.
+Specifics: You can speak an extended utterance. An extended utterance lasts twice as long as normal. A utterance with a duration of concentration, instantenous, or permanent is not affected by this feat.
+Using this feat increases the DC to speak the utterance by 5.
+Use: Selected.</entry> 
+  <entry id="50282" lang="en" sex="m">Quicken Utterance</entry> 
+  <entry id="50283" lang="en" sex="m">Type of Feat: General
+Prerequisite: Truespeak 12 ranks, Able to speak utterances.
+Specifics: You can quicken an utterance. You can perform another action, even speak another utterance, in the same round that you speak a quickened utterance. You can speak only one quickened utterance per round. A utterance whose speaking time is longer than 1 round cannot be quickened.
+Using this feat increases the DC to speak the utterance by 20.
+Use: Selected.</entry> 
+  <entry id="50284" lang="en" sex="m">Truename Training</entry> 
+  <entry id="50285" lang="en" sex="m">Type of Feat: General
+Prerequisite: None
+Specifics: Truespeech is now a class skill for you.
+Use: Automatic.</entry> 
+  <entry id="50286" lang="en" sex="m">Ignore Spell Resistance</entry> 
+  <entry id="50287" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Truenamer level 1
+Specifics: You can choose to ignore Spell Resistance entirely as you speak an utterance.
+Using this feat increases the DC to speak the utterance by 5.
+Use: Selected.</entry> 
+  <entry id="50288" lang="en" sex="m">Crafted Tool Targetting</entry> 
+  <entry id="50289" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Truenamer level 4
+Specifics: This feat allows you to choose which Inventory Slot you would like to target on the chosen creature. 
+If a Crafted Tool utterance is targetted directly on an item, it affects that item. Otherwise follow the instructions below.
+Crafted Tool Targetting Conversation brings up a conversation that allows you to fill the four Crafted Tool Quickslots with chosen inventory slots.
+Simply click on the chosen quickslot to have all your Crafted Tool utterances target that slot.
+If the chosen slot is empty, the utterance will then attempt to find the proper target and affect that.
+Use: Selected.</entry> 
+  <entry id="50290" lang="en" sex="m">Crafted Tool Targetting Conversation</entry> 
+  <entry id="50291" lang="en" sex="m">Crafted Tool Quickslot #1</entry> 
+  <entry id="50292" lang="en" sex="m">Crafted Tool Quickslot #2</entry> 
+  <entry id="50293" lang="en" sex="m">Crafted Tool Quickslot #3</entry> 
+  <entry id="50294" lang="en" sex="m">Crafted Tool Quickslot #4</entry> 
+  <entry id="50295" lang="en" sex="m">See the Named</entry> 
+  <entry id="50296" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Truenamer level 9
+Specifics: You see the named creature for one round, as per the Scry spell.
+Use: Selected.</entry> 
+  <entry id="50297" lang="en" sex="m">Speak Unto The Masses</entry> 
+  <entry id="50298" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Truenamer level 17
+Specifics: You can choose to affect all creatures of a racial type within 30' of the target. This only affects utterances from the Lexicon of the Evolving Mind.
+When you do so, the DC to speak the utterance changes as follows:
+The racial type chosen is that of the creature targetted.
+The DC becomes 15 + (2 * The highest CR creature of the chosen racial type in the area) + (2 * The number of targets beyond the first).
+For example, you target a Goblin, and within the area are three other Goblins and one Goblin Shaman, for a total of five creatures.
+The DC is 15 + (2 * 4 [The Shaman's CR]) + (2 * 4 [The four other creatures in the area]), for a total of 31.
+Use: Selected.</entry> 
+  <entry id="50299" lang="en" sex="m">Say My Name and I Am There</entry> 
+  <entry id="50300" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Truenamer level 20
+Specifics: You can choose to teleport to any party member by speaking their True nickname. This does not require a Truespeak check.
+Use: Selected.</entry> 
+  <entry id="50301" lang="en" sex="m">Knowledge Focus</entry> 
+  <entry id="50302" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Truenamer level 2
+Specifics: You gain a +3 bonus to Lore. This increases to +6 at 7th, +9 at 10th, and +12 at 14th.
+Use: Automatic.</entry> 
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
@@ -19359,7 +19498,7 @@ Save: None (Normal) or Will Negates (Reverse)
 Metautterances: Extend
 
 Normal:  Your utterance calms the heart of your target, filling her with resolution and peace.
-         Remove feat from your target.
+         Remove fear from your target.
 Reverse: Your words evoke feelings of terror, dread, and awe in your target.
          Your foe struck with fear.</entry>
   <entry id="51404" lang="en" sex="m">Morale Boost, Normal</entry>
@@ -19680,8 +19819,8 @@ Metautterances: Extend
 
 Normal:  With a complex string of syllables, an intagible tower superimposes itself over your ally, greatly enhancing his ability to protect himself.
          Your ally gains 5/- Damage Resistance, and +5 saves.
-Reverse: You speak words of cursing, significantly reducing your target's effectiveness in battle.
-         Your target takes a -5 Attack and Damage Penalty.</entry>
+Reverse: You speak and your target becomes vulnerable.
+         Your target takes a -5 AC and Saving Throw Penalty.</entry>
   <entry id="51489" lang="en" sex="m">Mystic Rampart, Normal</entry>
   <entry id="51490" lang="en" sex="m">Mystic Rampart, Reverse</entry>
   <entry id="51491" lang="en" sex="m">Singular Mind</entry>

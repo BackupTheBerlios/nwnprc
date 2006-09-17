@@ -16,14 +16,20 @@
 
 
 //////////////////////////////////////////////////
-/*                 Constants                    */
+/*                  Globals                     */
 //////////////////////////////////////////////////
+
+/**
+ * Set this TRUE when we want to force debugging to be on irrespective
+ * of the switch value.
+ */
+const int DEBUG_HARDCODE = TRUE;
 
 /**
  * Prefix all your debug calls with an if(DEBUG) so that they get stripped away
  * during compilation as dead code when this is turned off.
  */
-const int DEBUG = TRUE;
+int DEBUG = DEBUG_HARDCODE || GetLocalInt(GetModule(), "PRC_DEBUG");
 
 
 //////////////////////////////////////////////////

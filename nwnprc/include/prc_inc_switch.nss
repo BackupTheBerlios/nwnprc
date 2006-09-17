@@ -16,9 +16,9 @@
  This will not work in multiplayer.
  An example is below. Copy and paste it into a plain text file saved
  as personal_switch.2da
- 
- If there is a file named personal_switchl.2da then it will be loaded 
- at module load and the switches set accordingly. 
+
+ If there is a file named personal_switchl.2da then it will be loaded
+ at module load and the switches set accordingly.
 
 
 2DA V2.0
@@ -2338,7 +2338,7 @@ const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS"
  * Ex: To multiply by 1.5, set this value to 150
  *
  * The formula used is (CR * Multiplier) + 15
- * 
+ *
  * defaults to PnP: (CR * 2) + 15
  */
 const string PRC_TRUENAME_CR_MULTIPLIER              = "PRC_TRUENAME_CR_MULTIPLIER";
@@ -2349,7 +2349,7 @@ const string PRC_TRUENAME_CR_MULTIPLIER              = "PRC_TRUENAME_CR_MULTIPLI
  * Ex: To give a bonus equal to 1/2 Truenamer level, set this to 2
  *
  * The formula used is (CR * Multiplier) + 15 - Bonus
- * 
+ *
  * defaults to PnP: 0/No bonus
  */
 const string PRC_TRUENAME_LEVEL_BONUS                = "PRC_TRUENAME_LEVEL_BONUS";
@@ -2359,7 +2359,7 @@ const string PRC_TRUENAME_LEVEL_BONUS                = "PRC_TRUENAME_LEVEL_BONUS
  * Ex: To make the constant 10, simply set this value to 10
  *
  * The formula used is (CR * Multiplier) + Constant
- * 
+ *
  * defaults to PnP: +15.
  */
 const string PRC_TRUENAME_DC_CONSTANT                = "PRC_TRUENAME_DC_CONSTANT";
@@ -2369,7 +2369,7 @@ const string PRC_TRUENAME_DC_CONSTANT                = "PRC_TRUENAME_DC_CONSTANT
  * Ex: To make the constant 10, simply set this value to 10
  *
  * The formula used is Constant + (2 * Utterance Level)
- * 
+ *
  * defaults to PnP: +25.
  */
 const string PRC_PERFECTED_MAP_CONSTANT              = "PRC_PERFECTED_MAP_CONSTANT";
@@ -2379,10 +2379,22 @@ const string PRC_PERFECTED_MAP_CONSTANT              = "PRC_PERFECTED_MAP_CONSTA
  * Ex: To make the multiplier 4, simply set this value to 4
  *
  * The formula used is 25 + (Multiplier * Utterance Level)
- * 
+ *
  * defaults to PnP: 2.
  */
 const string PRC_PERFECTED_MAP_MULTIPLIER            = "PRC_PERFECTED_MAP_MULTIPLIER";
+
+
+/******************************************************************************\
+*                             Debugging Switches                               *
+\******************************************************************************/
+
+/**
+ * Toggles everything guarded by "if(DEBUG)". Mostly calls to DoDebug().
+ */
+const string PRC_DEBUG                               = "PRC_DEBUG";
+
+
 
 
 ///////////////////////
@@ -2441,6 +2453,7 @@ void SetDefaultFileEnds();
  * It is used for the switch setting convo to loop over switches easily
  */
 void CreateSwitchNameArray();
+
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -2860,4 +2873,5 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_DC_CONSTANT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PERFECTED_MAP_CONSTANT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PERFECTED_MAP_MULTIPLIER);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEBUG);
 }

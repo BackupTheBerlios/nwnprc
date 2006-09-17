@@ -270,12 +270,13 @@ void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0);
  * in the slot given. Used for getting around the fact that a player can
  * cancel the action. They will give up eventually :D
  *
- * @param oPC    The creature to do the unequipping.
- * @param oItem  The item to unequip.
- * @param nSlot  INVENTORY_SLOT_* constant of the slot containing oItem.
- * @param bFirst Leave this to TRUE when calling, see code for reason.
+ * @param oPC     The creature to do the unequipping.
+ * @param oItem   The item to unequip.
+ * @param nSlot   INVENTORY_SLOT_* constant of the slot containing oItem.
+ * @param nThCall Internal parameter, leave as default. This determines
+ *                how many times ForceUnequip has called itself.
  */
-void ForceUnequip(object oPC, object oItem, int nSlot, int bFirst = TRUE);
+void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0);
 
 /**
  * Checks either of the given creature's hand slots are empty.

@@ -6,19 +6,15 @@
 Primary
 -----------------------------------------------------
 
-Bugs: Dwarf Domain, Strength Domain
-
 Truenaming:
 
 Truenamer
 62/63 Utterances
 4 Prestige Classes
-2da all feats/recitations.
 
 Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
 
-Make list of possible utterances.
-Make Truenamer Class: Class feats and TLK left. Class abilities: Scry (Need Tenjac to complete it).
+Make Truenamer Class: See the Named to go.
 "Say My Name" - Easy Idea: Teleport to Party Member. <- I used this one
               - Old Idea: PRC Options Conversation + a switch for the TrueNamer, "Accept/Deny 'Say my Name and I am There'"
 
@@ -28,15 +24,9 @@ Brimstone Speaker - 2das/TLK, add as a spellcaster. Add Utterances/feats to Word
 Acolyte of the Ego - Unstarted
 Fiendbinder - Unstarted
 
-Feats: Feat.2da
-       TLK
-       Add Recitations to cls_feat_true.2da
-       Add restriction code to prc_enforce_psi
-
 Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
             
 Base Classes:
-Sohei - Swap Deflect Arrows and Weapon Focus
 Duskblade - All to do
 
 Psionic PrCs:

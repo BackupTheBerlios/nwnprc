@@ -10,6 +10,7 @@
 #include "psi_inc_psifunc"
 #include "prc_sp_func"
 #include "prc_inc_domain"
+#include "true_inc_trufunc"
 #include "inc_epicspells"
 
 void PrcFeats(object oPC)
@@ -49,6 +50,7 @@ void RestFinished(object oPC)
     //Restore Power Points for Psionics
     ExecuteScript("prc_psi_ppoints", oPC);
     BonusDomainRest(oPC);
+    ClearLawLocalVars(oPC);
 
     // To heal up enslaved creatures...
     object oSlave = GetLocalObject(oPC, "EnslavedCreature");

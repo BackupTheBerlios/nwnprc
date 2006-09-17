@@ -17,8 +17,6 @@ Truenamer
 
 Line Numbers: Feat.2da - 2058-2213, Spells.2da - 3224 - 3649
 
-true_inc_truespk: ClearLawLocalVars update numbers, add to prc_rest
-true_inc_trufunc: Add CheckTrueSpeechSkill to prc_enforce_psi
 Make list of possible utterances.
 Make Truenamer Class: Class feats and TLK left. Class abilities: Scry (Need Tenjac to complete it).
 "Say My Name" - Easy Idea: Teleport to Party Member. <- I used this one
@@ -35,13 +33,10 @@ Feats: Feat.2da
        Add Recitations to cls_feat_true.2da
        Add restriction code to prc_enforce_psi
 
-Utterances: Need to update spellIds in feat.2da
-	    Incarnation of Angels skipped, needs Primo to work on templates.
-            Add Seize Item to the 2da that lets it target items on the ground.
-
+Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
+            
 Base Classes:
-Hexblade - Mettle (edit spells as well), Arcane Resistance.
-Sohei - Mettle (coding)
+Sohei - Swap Deflect Arrows and Weapon Focus
 Duskblade - All to do
 
 Psionic PrCs:

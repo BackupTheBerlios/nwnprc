@@ -13,6 +13,7 @@
 */
 
 #include "psi_inc_psifunc"
+#include "true_inc_trufunc"
 
 string PLEASE_RESELECT = GetStringByStrRef(16826471); //"Please reselect your feats."
 
@@ -275,6 +276,8 @@ void main()
     bRelevel |= PsionDiscipline(oPC);
     // Thrallherd
     bRelevel |= Thrallherd(oPC);
+    // Cross class cap on TrueSpeech
+    CheckTrueSpeechSkill(oPC);
 
 
     if(GetIsPsionicCharacter(oPC))

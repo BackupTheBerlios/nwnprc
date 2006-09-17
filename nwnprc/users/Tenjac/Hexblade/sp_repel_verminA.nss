@@ -92,6 +92,10 @@ void DoPush(object oTarget, object oCreator, int nReverse = FALSE)
             location lTargetDestination = Location(GetArea(oTarget), vTarget, GetFacing(oTarget));
             AssignCommand(oTarget, ClearAllActions(TRUE));
             AssignCommand(oTarget, JumpToLocation(lTargetDestination));
+            
+            int nDam = d6(2);
+            
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 }
 	
 	

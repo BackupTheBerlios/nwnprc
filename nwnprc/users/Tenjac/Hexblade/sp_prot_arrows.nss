@@ -50,4 +50,4 @@ void main()
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur);
 	
 	SPSetSchool();
-
+}

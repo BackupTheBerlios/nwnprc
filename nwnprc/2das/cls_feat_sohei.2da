@@ -192,12 +192,10 @@
 188 FEAT_EPIC_TOUGHNESS_10                         763       1    -1             0      
 189 FEAT_EPIC_DEVASTATING_CRITICAL_DWAXE           955       1    -1             0      
 190 FEAT_EPIC_WEAPON_FOCUS_DWAXE                   956       1    -1             0      
-191 FEAT_EPIC_WEAPON_SPECIALIZATION_DWAXE          957       1    -1             0      
 192 FEAT_EPIC_OVERWHELMING_CRITICAL_DWAXE          958       1    -1             0      
 193 FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0      
 194 FEAT_EPIC_DEVASTATING_CRITICAL_WHIP            996       1    -1             0      
 195 FEAT_EPIC_OVERWHELMING_CRITICAL_WHIP           999       1    -1             0      
-196 FEAT_EPIC_WEAPON_SPECIALIZATION_WHIP           998       1    -1             0      
 197 FEAT_EPIC_IMPROVED_STUNNING_FIST_1             844       1    -1             0      
 198 FEAT_EPIC_IMPROVED_STUNNING_FIST_2             845       1    -1             0      
 199 FEAT_EPIC_IMPROVED_STUNNING_FIST_3             846       1    -1             0      
@@ -215,7 +213,6 @@
 211 OverWCrit_Mindblade                            3615      1    -1             0      
 212 DevCrit_Mindblade                              3616      1    -1             0      
 213 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
-214 Epic_WeaponSpecialization_Mindblade            3619      1    -1             0      
 215 GREATER_TWO_WEAPON_FIGHTING                    4315      1    -1             0      
 216 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0      
 217 FEAT_EPIC_LEADERSHIP                           4366      1    -1             0      

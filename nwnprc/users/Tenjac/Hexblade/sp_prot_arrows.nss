@@ -24,3 +24,30 @@ points), it is discharged.
 Focus: A piece of shell from a tortoise or a turtle.
 
 **/
+
+//////////////////////////////////////////////////
+//  Author: Tenjac
+//  Date:   16.9.2006
+/////////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = HoursToSeconds(nCasterLvl);
+		
+	// Damage Resistance 10 piercing, max of 100 total
+	effect eBuff = = EffectLinkEffects(EffectDamageResistance(DAMAGE_TYPE_PIERCING, 10, min((10 * nCasterLvl), 100), EffectVisualEffect(VFX_DUR_PROTECTION_ARROWS));
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur);
+	
+	SPSetSchool();
+

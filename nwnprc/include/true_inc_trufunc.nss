@@ -409,7 +409,8 @@ int GetTrueSpeakPenetration(object oTrueSpeaker = OBJECT_SELF)
     else if(GetHasFeat(FEAT_SPELL_PENETRATION, oTrueSpeaker)) nPen += 2;
     
     // Blow away SR totally, just add 9000
-    if (GetLocalInt(oTrueSpeaker, TRUE_IGNORE_SR)) nPen += 9000;
+    // Does not work on Syllables, only utterances
+    if (GetLocalInt(oTrueSpeaker, TRUE_IGNORE_SR) && !GetIsSyllable(PRCGetSpellId())) nPen += 9000;
     
     if(DEBUG) DoDebug("GetTrueSpeakPenetration(" + GetName(oTrueSpeaker) + "): " + IntToString(nPen));
 
@@ -605,7 +606,7 @@ object CraftedToolTarget(object oTrueSpeaker, object oTarget)
 		// If its a valid weapon, return it
 		if (GetBaseItemType(oItem) != BASE_ITEM_INVALID) return oItem;
 		// Check the spare hand, and make sure its not a shield
-		oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
+		oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget);
 		// If its a valid weapon and not a shield, return it
 		if (GetBaseItemType(oItem) != BASE_ITEM_INVALID     &&    
 		    GetBaseItemType(oItem) != BASE_ITEM_LARGESHIELD &&

@@ -148,10 +148,10 @@ const int BRIMSTONE_HEAVEN_NORMAL  = -1;
 const int BRIMSTONE_HEAVEN_GREATER = -1;
 
 // Crafted Tool Target Constants
-const int CRAFTED_TOOL_QUICKSLOT1  = -1;
-const int CRAFTED_TOOL_QUICKSLOT2  = -1;
-const int CRAFTED_TOOL_QUICKSLOT3  = -1;
-const int CRAFTED_TOOL_QUICKSLOT4  = -1;
+const int CRAFTED_TOOL_QUICKSLOT1  = 3411;
+const int CRAFTED_TOOL_QUICKSLOT2  = 3412;
+const int CRAFTED_TOOL_QUICKSLOT3  = 3413;
+const int CRAFTED_TOOL_QUICKSLOT4  = 3414;
 
 // AoE Constants for Perfected Map
 const int AOE_PER_FOG_VOID_CLOUD      = 142;

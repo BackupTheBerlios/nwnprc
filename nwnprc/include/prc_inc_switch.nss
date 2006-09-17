@@ -2364,6 +2364,26 @@ const string PRC_TRUENAME_LEVEL_BONUS                = "PRC_TRUENAME_LEVEL_BONUS
  */
 const string PRC_TRUENAME_DC_CONSTANT                = "PRC_TRUENAME_DC_CONSTANT";
 
+/**
+ * Sets the Constant value added to the DC
+ * Ex: To make the constant 10, simply set this value to 10
+ *
+ * The formula used is Constant + (2 * Utterance Level)
+ * 
+ * defaults to PnP: +25.
+ */
+const string PRC_PERFECTED_MAP_CONSTANT              = "PRC_PERFECTED_MAP_CONSTANT";
+
+/**
+ * Sets the Multiplier value added to the DC
+ * Ex: To make the multiplier 4, simply set this value to 4
+ *
+ * The formula used is 25 + (Multiplier * Utterance Level)
+ * 
+ * defaults to PnP: 2.
+ */
+const string PRC_PERFECTED_MAP_MULTIPLIER            = "PRC_PERFECTED_MAP_MULTIPLIER";
+
 
 ///////////////////////
 // Function protypes //
@@ -2838,4 +2858,6 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_CR_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_LEVEL_BONUS);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_DC_CONSTANT);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PERFECTED_MAP_CONSTANT);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PERFECTED_MAP_MULTIPLIER);
 }

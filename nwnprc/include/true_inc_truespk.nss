@@ -313,8 +313,17 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 	// Targetting the land
 	else if (nLexicon == LEXICON_PERFECTED_MAP)
 	{
+		// Default is 0, off
+		int nMulti = GetPRCSwitch(PRC_PERFECTED_MAP_MULTIPLIER);
+		int nConst = GetPRCSwitch(PRC_PERFECTED_MAP_CONSTANT);
+		
 		// Using Errata formula to prevent abuses
 		nDC = 25 + (GetUtteranceLevel(oTrueSpeaker) * 2);
+		
+		// nMulti is stored as an int
+		if(nMulti) nDC = 25 + (GetUtteranceLevel(oTrueSpeaker) * nMulti);
+		// Remove the existing constant and add the new one
+		if(nConst) nDC = (nDC - 25) + nConst;		
 	}	
 	// Later on there will be switches in here to change the DC to different formulas.
 	// Thats why the PC is passed in

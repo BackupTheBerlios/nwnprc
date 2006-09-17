@@ -14,27 +14,27 @@ Duration: Instantaneous
 Saving Throw: Fortitude half
 Spell Resistance: Yes
 
-With this spell, the caster's touch deals grievous 
+With this spell, the caster's touch deals grievous
 wounds to multiple targets. After rapture of rupture
-is cast, the caster can touch one target per round 
-until she has touched a number of targets equal to 
-her caster level. The same creature cannot be 
-affected twice by the same rapture of rupture. A 
+is cast, the caster can touch one target per round
+until she has touched a number of targets equal to
+her caster level. The same creature cannot be
+affected twice by the same rapture of rupture. A
 creature with no discernible anatomy is unaffected by
 this spell.
 
-When the caster touches a subject, his flesh bursts 
-open suddenly in multiple places. Each subject takes 
-6d6 points of damage and is stunned for 1 round; a 
+When the caster touches a subject, his flesh bursts
+open suddenly in multiple places. Each subject takes
+6d6 points of damage and is stunned for 1 round; a
 successful Fortitude save reduces damage by half and
-negates the stun effect. Subjects who fail their 
+negates the stun effect. Subjects who fail their
 Fortitude save continue to take 1d6 points of damage
 per round until they receive magical healing, succeed
 at a Heal check (DC 20), or die. If a subject takes 6
-points of damage from rapture of rupture in a single 
+points of damage from rapture of rupture in a single
 round, he is stunned in the following round.
 
-Corruption Cost: 1 point of Strength damage per target 
+Corruption Cost: 1 point of Strength damage per target
 touched.
 
 */
@@ -42,25 +42,14 @@ touched.
 //  Created:  5/31/2006
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-    
-/*  
-    <EXTRA NOTES>
-
-    <BEGIN NOTES TO SCRIPTER - MAY BE DELETED LATER>
-    Modify as necessary
-    Most code should be put in DoSpell()
-
-    PRC_SPELL_EVENT_ATTACK is set when a
-        touch or ranged attack is used
-    <END NOTES TO SCRIPTER>
-*/
-
-int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string sScript);
-
-void WoundLoop(object oTarget, int nPrevious);
 
 #include "spinc_common"
 #include "prc_sp_func"
+
+
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string sScript);
+void WoundLoop(object oTarget, int nDamage = 0);
+
 
 void main()
 {
@@ -99,11 +88,12 @@ void main()
         if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
         {   //holding the charge, casting spell on self
             SetLocalSpellVariables(oCaster, PRCGetCasterLevel(oCaster));
-            
-            //SetLocalString for identification purposes
-            string sLocal = GetName(oCaster) + IntToString(GetTimeMillisecond());
-            SetLocalString(oCaster, "PRCRuptureID", sLocal);
-            
+
+            // Setup target tracking set. If one remains from a previous casting, delete it first
+            if(set_exists(oCaster, "PRC_Spell_RoRTargets"))
+                set_delete(oCaster, "PRC_Spell_RoRTargets");
+            set_create(oCaster, "PRC_Spell_RoRTargets");
+
             return;
         }
         DoSpell(oCaster, oTarget, nCasterLevel, nEvent, sScript);
@@ -116,8 +106,8 @@ void main()
             if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent, sScript))
                 DecrementSpellCharges(oCaster);
         }
-    }   
-    
+    }
+
    SPSetSchool();
 }
 
@@ -130,82 +120,77 @@ void main()
 int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string sScript)
 {
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
-    int nPenetr = nCasterLevel + SPGetPenetr();
-    
-    float fMaxDuration = RoundsToSeconds(nCasterLevel); //modify if necessary
+    int nSaveDC    = PRCGetSaveDC(oTarget, oCaster);
+    int nPenetr    = nCasterLevel + SPGetPenetr();
     string sCaster = GetLocalString(oCaster, "PRCRuptureID");
-    string sTest = GetLocalString(oTarget, "PRCRuptureTargetID");
+    string sTest   = GetLocalString(oTarget, "PRCRuptureTargetID");
 
-    int iAttackRoll = 0;    //placeholder
-
-    iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+    // Roll to hit
+    int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
     if (iAttackRoll > 0)
     {
-        if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel + SPGetPenetr()))
+        // Target validity check - should not have been targeted before
+        // and should have discernible anatomy (excludes constructs, elementals, oozes, plants, undead)
+        int nRace = MyPRCGetRacialType(oTarget);
+        if(!set_contains_object(oCaster, "PRC_Spell_RoRTargets", oTarget) &&
+           nRace != RACIAL_TYPE_CONSTRUCT                                 &&
+           nRace != RACIAL_TYPE_ELEMENTAL                                 &&
+           nRace != RACIAL_TYPE_OOZE                                      &&
+           //nRace != RACIAL_TYPE_PLANT                                     &&
+           nRace != RACIAL_TYPE_UNDEAD
+           )
         {
-            if(sCaster != sTest)
+            if(!MyPRCResistSpell(oCaster, oTarget, nPenetr))
             {
-                //Damage
+                // Roll damage and apply metamagic
                 int nDam = d6(6);
-                
-                if(nMetaMagic == METAMAGIC_MAXIMIZE)
-                {
+                if(nMetaMagic & METAMAGIC_MAXIMIZE)
                     nDam = 36;
-                }
-                
-                if(nMetaMagic == METAMAGIC_EMPOWER)
+                else if(nMetaMagic & METAMAGIC_EMPOWER)
+                    nDam += nDam / 2;
+
+                // Save for half damage
+                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_EVIL))
                 {
-                    nDam += (nDam/2);
+                    nDam /=  2;
+
+                    // If the target has Mettle, do no damage. However, the target will still count as having been affected by the spell
+    		        if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+    			        nDam = 0;
                 }
-           
-                //half damage for save
-                if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nSaveDC, SAVING_THROW_TYPE_MIND_SPELLS))
-                {
-                    nDam = (nDam/2);
-                    
-			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
-			// This script does nothing if it has Mettle, bail
-				nDam = 0;
-                }
-                
-                //if failed
+                // On failed save, stun for a round and start bleeding
                 else
                 {
                     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
-                    
-                    //Bleeding
-                    WoundLoop(oTarget, 0);      
+                    WoundLoop(oTarget); // Init the wound loop. This will deal d6 damage, which in turn determines whether the target will be stunned again next round
                 }
-                //Apply Damage
+
+                // Apply Damage
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
-            } 
-            
-            //Apply String
-            SetLocalString(oTarget, "PRCRuptureTargetID", sCaster);
+
+                // If this spell was a held charge, it can have multiple targets. So we need to keep track of who has been already affected
+                if(nEvent)
+                    set_add_object(oCaster, "PRC_Spell_RoRTargets", oTarget);
+            }
         }
+
+        // Corruption cost is paid whenever something is hit
+        DoCorruptionCost(oCaster, ABILITY_STRENGTH, 1, 0);
     }
-    
-    DoCorruptionCost(oCaster, ABILITY_STRENGTH, 1, 0);
-    
-    return iAttackRoll;    //return TRUE if spell charges should be decremented
- 
-        
+
+    // Return the result of the touch attack, will be used to determine whether to reduce number of touch attacks remaining
+    return iAttackRoll;
 }
 
-void WoundLoop(object oTarget, int nPrevious)
+void WoundLoop(object oTarget, int nDamage = 0)
 {
-    if(nPrevious == 6)
-    {
+    // If previous round's damage roll was 6, stun this round
+    if(nDamage == 6)
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectStunned(), oTarget, 6.0f);
-    }
-    
-    int nDamage = d6();
-        
-    //Deal damage
+
+    // Roll and apply new damage
+    nDamage = d6();
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oTarget);
-    
-    int nPrevious = nDamage ;
-    
-    DelayCommand(6.0f, WoundLoop(oTarget, nPrevious));
+
+    DelayCommand(6.0f, WoundLoop(oTarget, nDamage));
 }

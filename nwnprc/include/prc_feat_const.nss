@@ -2166,6 +2166,9 @@ const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
 //////////////// TRUENAMING ////////////////////////
 //////////////////////////////////////////////////*/
 
+// General Feats
+const int FEAT_TRUENAME_TRAINING                        = -1;
+
 // Metautterance feats
 const int FEAT_EMPOWER_UTTERANCE                        = -1;
 const int FEAT_EXTEND_UTTERANCE                         = -1;
@@ -2193,7 +2196,7 @@ const int FEAT_UTTERANCE_FOCUS_WARD_PEACE               = -1;
 const int FEAT_UTTERANCE_FOCUS_SHOCKWAVE                = -1;
 
 // Focused Lexicon
-const int FEAT_FOCUSED_LEXICON_ABBERATION               = -1;
+const int FEAT_FOCUSED_LEXICON_ABERRATION               = -1;
 const int FEAT_FOCUSED_LEXICON_ANIMAL                   = -1;
 const int FEAT_FOCUSED_LEXICON_BEAST                    = -1;
 const int FEAT_FOCUSED_LEXICON_CONSTRUCT                = -1;

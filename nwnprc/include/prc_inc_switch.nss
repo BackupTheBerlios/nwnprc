@@ -2328,7 +2328,41 @@ const string PRC_CONVOCC_SKILL_MULTIPLIER            = "PRC_CONVOCC_SKILL_MULTIP
  */
 const string PRC_CONVOCC_SKILL_BONUS                 = "PRC_CONVOCC_SKILL_BONUS";
 
+/******************************************************************************\
+*                              Truenaming switches                             *
+\******************************************************************************/
 
+/**
+ * Sets the CR Multiplier for Evolving Mind utterances
+ * This is divided by 100 to get a float.
+ * Ex: To multiply by 1.5, set this value to 150
+ *
+ * The formula used is (CR * Multiplier) + 15
+ * 
+ * defaults to PnP: (CR * 2) + 15
+ */
+const string PRC_TRUENAME_CR_MULTIPLIER              = "PRC_TRUENAME_CR_MULTIPLIER";
+
+/**
+ * Gives a bonus based on Truenamer level
+ * PC Truenamer level is divided by this value
+ * Ex: To give a bonus equal to 1/2 Truenamer level, set this to 2
+ *
+ * The formula used is (CR * Multiplier) + 15 - Bonus
+ * 
+ * defaults to PnP: 0/No bonus
+ */
+const string PRC_TRUENAME_LEVEL_BONUS                = "PRC_TRUENAME_LEVEL_BONUS";
+
+/**
+ * Sets the Constant value added to the DC
+ * Ex: To make the constant 10, simply set this value to 10
+ *
+ * The formula used is (CR * Multiplier) + Constant
+ * 
+ * defaults to PnP: +15.
+ */
+const string PRC_TRUENAME_DC_CONSTANT                = "PRC_TRUENAME_DC_CONSTANT";
 
 
 ///////////////////////
@@ -2387,16 +2421,6 @@ void SetDefaultFileEnds();
  * It is used for the switch setting convo to loop over switches easily
  */
 void CreateSwitchNameArray();
-
-/******************************************************************************\
-*                              Truenaming switches                             *
-\******************************************************************************/
-
-/**
- * Blank for the moment: To-do, add options
- */
-const string PRC_TRUENAME_DC                      = "PRC_TRUENAME_DC";
-
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -2811,5 +2835,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_MAX_STAT);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_MULTIPLIER);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CONVOCC_SKILL_BONUS);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_DC);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_CR_MULTIPLIER);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_LEVEL_BONUS);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_TRUENAME_DC_CONSTANT);
 }

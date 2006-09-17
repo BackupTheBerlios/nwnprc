@@ -2328,6 +2328,22 @@ Use: Automatic.</entry>
   <entry id="45441" lang="en" sex="m">Male, Kingmaker, Trip</entry>
   <entry id="45442" lang="en" sex="m">Female, Kingmaker, Jaboli</entry>
   <entry id="45443" lang="en" sex="m">Female, Kingmaker, Kaidala</entry>
+  <entry id="45444" lang="en" sex="m">Disguise Self</entry>
+  <entry id="45445" lang="en" sex="m">School: Illusion (Glamer)
+Level: Bard/Sorcerer/Wizard/Hexblade 1
+Components: V, S
+Range: Personal
+Target: Self
+Duration: 10 min/level
+Save: Will
+Spell Resistance: No
+
+You make yourself - including clothing, armor, weapons and equipment - look different. There is no actual change to your abilities or equipment. A creature that interacts with the glamer gets a will save (DC 10 + your CHA mod) to recognize the illusion.</entry>
+  <entry id="45446" lang="en" sex="m">Disguise Self, Human</entry>
+  <entry id="45447" lang="en" sex="m">Disguise Self, Elf</entry>
+  <entry id="45448" lang="en" sex="m">Disguise Self, Halforc</entry>
+  <entry id="45449" lang="en" sex="m">Disguise Self, Halfling</entry>
+  <entry id="45450" lang="en" sex="m">Disguise Self, Dwarf</entry>
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>
   <entry id="45460" lang="en" sex="m">Elemental Focus +6</entry>
@@ -8992,6 +9008,100 @@ Power Points: 1
 Metapsionics: Extend
 
 Your skin and equipment take on the color and texture of nearby objects, including floors and walls. You receive a +10 enhancement bonus on Hide checks.</entry>
+  <entry id="46952" lang="en" sex="m">Duskblade</entry>
+  <entry id="46953" lang="en" sex="m">Duskblades</entry>
+  <entry id="46954" lang="en" sex="m">duskblade</entry>
+  <entry id="46955" lang="en" sex="m">(BASE CLASS)
+"My blade and my magic are one and the same."
+
+The Duskblade blurs the line between spellcaster and warrior, marrying the power of magic with hand-to-hand combat prowess.
+A student of arcane spellcasting techniques, the Duskblade combines arcane spellcasting with the combat skills of a fighter. While the ability to cast arcane spells in armor originated with the elves, over the millenia the secrets of the Duskblade have been disseminated to the other races, and today members of any race can become a Duskblade.
+
+- Aligment Restrictions: none
+- Hit Die: d8
+- Proficiencies: A Duskblade is proficient with Simple and Martial Weapons, all Armor and Shields. 
+- Skill Points: 2 + Int Modifier 
+
+ABILITIES: 
+
+Level 
+ 1: Armored Mage (light)
+ 2: Combat Casting
+ 3: Arcane Channeling
+ 4: Armored Mage (medium)
+ 5: Quick Cast 1/day
+ 6: Spell Power +2
+ 7: Armored Mage (shields)
+ 8: -
+ 9: -
+10: Quick Cast 2/day
+11: Spell Power +3
+12: - 
+13: Arcane Channeling (full attack)
+14: -
+15: Quick Cast 3/day
+16: Spell Power +4
+17: -
+18: Spell Power +5
+19: -
+20: Quick Cast 4/day
+
+SPELLCASTING 
+
+To cast a spell, the Duskblade must have an Intelligence score of 10 + the spell level. The DC of a Hexblade's spell is 10 + Spell Level + Intelligence Modifier. A Hexblade's caster level is equal to his class level. He casts spells as a Sorcerer does. He initially does not suffer arcane spell failure chance when casting in light armor, later on he learns to cast without arcane spell failure in medium armor and with shields, however failure chance from heavy armor applies normally.
+
+Spells Known:
+The Duskblade starts knowinging two level 0 spells and two level 1 spells, as well as one additional level 0 spell for each point of Intelligence bonus. Each time he gains a new class level, he learns one additional spell of any level he can cast.
+
+Spells per day: 
+Level:  0  1  2  3  4  5
+
+    1:  3  2  -  -  -  - 
+    2:  4  3  -  -  -  -
+    3:  5  4  -  -  -  -
+    4:  6  5  -  -  -  -
+    5:  6  5  2  -  -  - 
+    6:  6  6  3  -  -  - 
+    7:  6  6  5  -  -  - 
+    8:  6  7  6  -  -  - 
+    9:  6  7  6  2  -  - 
+   10:  6  8  7  3  -  - 
+   11:  6  8  7  5  -  - 
+   12:  6  8  8  6  -  - 
+   13:  6  9  8  6  2  - 
+   14:  6  9  8  7  3  - 
+   15:  6  9  8  7  5  -
+   16:  6  9  9  8  6  -
+   17:  6 10  9  8  6  2
+   18:  6 10  9  8  7  3
+   19:  6 10 10  9  7  5
+   20:  6 10 10 10  8  6</entry>
+  <entry id="46956" lang="en" sex="m">Epic Duskblade</entry>
+  <entry id="46957" lang="en" sex="m">The Epic Duskblade is a Juggernaut on the battlefield, wasting his foes with steel and spell.
+
+ABILITIES: 
+
+Level 
+21: Spell Power +6
+22: -
+23: Bonus Feat
+24: -
+25: Quick Cast 5/day
+26: Spell Power +7, Bonus Feat
+27: -
+28: -
+29: Bonus Feat
+30: Quick Cast 6/day
+31: Spell Power +8
+32: Bonus Feat
+33: -
+34: -
+35: Quick Cast 7/day, Bonus Feat
+36: Spell Power +9
+37: -
+38: Spell Power +10, Bonus Feat
+39: -
+40: Quick Cast 8/day</entry>
   <entry id="46960" lang="en" sex="m">Augment Quickselect 4</entry>
   <entry id="46961" lang="en" sex="m">Augment Quickselect 5</entry>
   <entry id="46962" lang="en" sex="m">Augment Quickselect 6</entry>
@@ -10807,6 +10917,20 @@ Use: Automatic.</entry>
 Prerequisite: Skullclan Hunter level 3.
 Specifics: As the Skullclan Hunter gains in power and ability, he adds a number of immunities. At level 3, he is immune to fear, at level 4 disease, at level 7 paralysis, at level 8 ability damage, and at level 10, he is immune to energy drain.
 Use: Automatic.</entry>
+  <entry id="47665" lang="en" sex="m">Armored Mage (Ex)</entry>
+  <entry id="47666" lang="en" sex="m">Type of feat: Class Specific
+
+A duskblade suffers no chance of arcane spell failure when wearing light armor and using light shields.
+
+At 4th level he learns to use medium armor without arcane spell failure.
+
+At 7th level he learns to use heavy shields without arcane spell failure.</entry>
+  <entry id="47667" lang="en" sex="m">Arcane Channeling (Su)</entry>
+  <entry id="47668" lang="en" sex="m">Type of Feat: Class Specific
+
+Beginning at 3rd level, the Duskblade can use a standard action to cast any touch spell he knows and deliver the spell through his weapon with a melee attack. Casting a spell in this manner does not provoke attacks of opportunity. If the melee attack is successful, the attack deals damage normally; then the effect of the spell is resolved.
+
+At 13th level the Duskblade can cast any touch spell he knows as part of a full attack action, and the spell affects each target you hit in melee combat that round.</entry>
   <entry id="47671" lang="en" sex="m">Legendary Commander </entry>
   <entry id="47672" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Cha 25, Epic Leadership, Persuade 30 ranks
@@ -13874,15 +13998,6 @@ Spell Resistance: Yes
 You create the sensation in the subject's mind that it is threatened by more foes than it actually faces. A creature affected by this spell is considered flanked, even if not threatened by other creatures. A creature that can't be flanked is immune to this spell.
 
 (due to the way NWN is set up, you can't sneak attack a target affected by this spell, as you could in PnP)</entry>
-  <entry id="48586" lang="en" sex="m">Alter Self</entry>
-  <entry id="48587" lang="en" sex="m">School: Transmutation
-Caster Level: Bard/Sorcerer/Wizard/Hexblade 2
-Components: V, S
-Range: Personal
-Target: You
-Duration: 10 min/level
-
-You assume the form of a creature of the same type as your normal form. The new form must be within one size category of your normal size</entry>
   <entry id="48588" lang="en" sex="m">Enthrall</entry>
   <entry id="48589" lang="en" sex="m">School: Enchantment (Charm) [Mind-Affecting, Sonic]
 Caster Level: Bard/Cleric/Hexblade 2
@@ -18792,7 +18907,7 @@ Normal:  Your words show your ally a way to strike more accurately.
 Reverse: By speaking the reverse of this utterance, you impede an enemy's ability to strike.
          Your foe takes a -2 to Attacks.</entry>
   <entry id="51287" lang="en" sex="m">Knight's Puissance, Normal</entry>
-  <entry id="51288" lang="en" sex="m">Knight's Puissance, Reverse</entry> 
+  <entry id="51288" lang="en" sex="m">Knight's Puissance, Reverse</entry>
   <entry id="51289" lang="en" sex="m">Universal Aptitude</entry>
   <entry id="51290" lang="en" sex="m">Level: Evolving Mind 1
 Range: 60 feet
@@ -18807,7 +18922,7 @@ Normal:  You speak a word of proficiency and ability, increasing the natural apt
 Reverse: You instruct the universe to hinder your foe's ability to perform even everyday tasks.
          Your foe takes a -5 penalty to all Skill checks.</entry>
   <entry id="51291" lang="en" sex="m">Universal Aptitude, Normal</entry>
-  <entry id="51292" lang="en" sex="m">Universal Aptitude, Reverse</entry>   
+  <entry id="51292" lang="en" sex="m">Universal Aptitude, Reverse</entry>
   <entry id="51293" lang="en" sex="m">Word of Nurturing, Minor</entry>
   <entry id="51294" lang="en" sex="m">Level: Evolving Mind 1
 Range: 60 feet
@@ -18822,7 +18937,7 @@ Normal:  You speak a simple word of health, providing an ally with minor healing
 Reverse: You cause your enemy to experience painful bleeding wounds that spontaneously emerge.
          Your foe takes a 1d6 damage, and 1d6 damage the next round if you concentrate. Concentration involves doing nothing more strenous than moving.</entry>
   <entry id="51295" lang="en" sex="m">Word of Nurturing, Minor, Normal</entry>
-  <entry id="51296" lang="en" sex="m">Word of Nurturing, Minor, Reverse</entry>  
+  <entry id="51296" lang="en" sex="m">Word of Nurturing, Minor, Reverse</entry>
   <entry id="51297" lang="en" sex="m">Fortify Armour</entry>
   <entry id="51298" lang="en" sex="m">Level: Crafted Tool 1
 Range: 30 feet
@@ -18835,7 +18950,7 @@ A suit of armour covers its wearer's vital areas more effectively, providing bet
 Sneak: Makes the target armour grant immunity to sneak attacks.
 Critical Hits: Makes the target armour grant immunity to critical hits, but increases the Truespeech DC by 10.</entry>
   <entry id="51299" lang="en" sex="m">Fortify Armour, Sneak Attacks</entry>
-  <entry id="51300" lang="en" sex="m">Fortify Armour, Critical Hits</entry>     
+  <entry id="51300" lang="en" sex="m">Fortify Armour, Critical Hits</entry>
   <entry id="51301" lang="en" sex="m">Keen Weapon</entry>
   <entry id="51302" lang="en" sex="m">Level: Crafted Tool 1
 Range: 30 feet
@@ -18911,7 +19026,7 @@ Normal:  Your words allow your target to tap into a reserve of knowledge
 Reverse: Your target's words ring true thanks to this utterance - even if they actually are not.
          Your ally gains +10 to all Bluff checks.</entry>
   <entry id="51317" lang="en" sex="m">Hidden Truth, Normal</entry>
-  <entry id="51318" lang="en" sex="m">Hidden Truth, Reverse</entry>  
+  <entry id="51318" lang="en" sex="m">Hidden Truth, Reverse</entry>
   <entry id="51319" lang="en" sex="m">Perceive the Unseen</entry>
   <entry id="51320" lang="en" sex="m">Level: Evolving Mind 2
 Range: 60 feet
@@ -18926,7 +19041,7 @@ Normal:  Your ally gains a sixth sense about where nearby enemies are.
 Reverse: The reverse of this utterance confounds your foes, preventing them from precisely locating an ally's position
          Your target gains 20% concealment.</entry>
   <entry id="51321" lang="en" sex="m">Perceive the Unseen, Normal</entry>
-  <entry id="51322" lang="en" sex="m">Perceive the Unseen, Reverse</entry>   
+  <entry id="51322" lang="en" sex="m">Perceive the Unseen, Reverse</entry>
   <entry id="51323" lang="en" sex="m">Silent Caster</entry>
   <entry id="51324" lang="en" sex="m">Level: Evolving Mind 2
 Range: 60 feet
@@ -18941,7 +19056,7 @@ Normal:  Your ally can cast spells without making a sound.
 Reverse: An enemy creature is unable to speak or make a peep, its vocal cords completely stilled
          Your target is silenced.</entry>
   <entry id="51325" lang="en" sex="m">Silent Caster, Normal</entry>
-  <entry id="51326" lang="en" sex="m">Silent Caster, Reverse</entry>  
+  <entry id="51326" lang="en" sex="m">Silent Caster, Reverse</entry>
   <entry id="51327" lang="en" sex="m">Speed of the Zephyr</entry>
   <entry id="51328" lang="en" sex="m">Level: Evolving Mind 2
 Range: 60 feet
@@ -18956,8 +19071,8 @@ Normal:  You urge your ally on to greater speed with this utterance.
 Reverse: The target of this utterance cannot move as quickly as it had just a moment before.
          Your target takes a 10' per round speed penalty.</entry>
   <entry id="51329" lang="en" sex="m">Speed of the Zephyr, Normal</entry>
-  <entry id="51330" lang="en" sex="m">Speed of the Zephyr, Reverse</entry> 
-  <entry id="51331" lang="en" sex="m">Temporal Twist</entry>  
+  <entry id="51330" lang="en" sex="m">Speed of the Zephyr, Reverse</entry>
+  <entry id="51331" lang="en" sex="m">Temporal Twist</entry>
   <entry id="51332" lang="en" sex="m">Level: Evolving Mind 2
 Range: 60 feet
 Target: One Creature
@@ -18971,8 +19086,8 @@ Normal:  With a word of Truespeech, you grant a creature incredible reflexes, en
 Reverse: You cause a creature to lose its focus and become bewildered.
          Your foe is dazed for one round.</entry>
   <entry id="51333" lang="en" sex="m">Temporal Twist, Normal</entry>
-  <entry id="51334" lang="en" sex="m">Temporal Twist, Reverse</entry>  
-  <entry id="51335" lang="en" sex="m">Word of Nurturing, Lesser</entry>  
+  <entry id="51334" lang="en" sex="m">Temporal Twist, Reverse</entry>
+  <entry id="51335" lang="en" sex="m">Word of Nurturing, Lesser</entry>
   <entry id="51336" lang="en" sex="m">Level: Evolving Mind 2
 Range: 60 feet
 Target: One Creature
@@ -18986,8 +19101,8 @@ Normal:  You speak a more complex utterance of health, providing an ally with th
 Reverse: You speak a word that tears at an enemy's flesh, causing it to bleed from several wounds.
          Your foe takes a 2d6 damage, and 2d6 damage the next round if you concentrate. Concentration involves doing nothing more strenous than moving.</entry>
   <entry id="51337" lang="en" sex="m">Word of Nurturing, Lesser, Normal</entry>
-  <entry id="51338" lang="en" sex="m">Word of Nurturing, Lesser, Reverse</entry>  
-  <entry id="51339" lang="en" sex="m">Agitate Item</entry>  
+  <entry id="51338" lang="en" sex="m">Word of Nurturing, Lesser, Reverse</entry>
+  <entry id="51339" lang="en" sex="m">Agitate Item</entry>
   <entry id="51340" lang="en" sex="m">Level: Crafted Tool 2
 Range: 30 feet.
 Target: One Object (Or Possesor)
@@ -18998,8 +19113,8 @@ Metautterances: Extend
 You increase or decrease the temperature of the object, harming creatures in physical contact with it.
 You affect the target with either the Heat Metal or Chill Metal spell.</entry>
   <entry id="51341" lang="en" sex="m">Agitate Item, Hot</entry>
-  <entry id="51342" lang="en" sex="m">Agitate Item, Cold</entry>   
-  <entry id="51343" lang="en" sex="m">Analyze Item</entry>  
+  <entry id="51342" lang="en" sex="m">Agitate Item, Cold</entry>
+  <entry id="51343" lang="en" sex="m">Analyze Item</entry>
   <entry id="51344" lang="en" sex="m">Level: Crafted Tool 2
 Range: Touch
 Target: One Object
@@ -19008,8 +19123,8 @@ Spell Resistance: No
 Metautterances: No
 
 By studying an item, you can determine a great deal about it, including its magical properties, if any.
-You identify the target object.</entry>  
-  <entry id="51345" lang="en" sex="m">Energy Vortex</entry>  
+You identify the target object.</entry>
+  <entry id="51345" lang="en" sex="m">Energy Vortex</entry>
   <entry id="51346" lang="en" sex="m">Level: Perfected Map 2
 Range: 100 feet
 Area: 20' Radius 
@@ -19021,10 +19136,10 @@ Metautterances: Extend, Empower
 Your words transform the nature of the air, turning it from harmless gas into a swirling mass of harmful energy.
 You fill the air around your foes with energy, dealing 2d6 acid, cold, electrical, or fire damage per round.</entry>
   <entry id="51347" lang="en" sex="m">Energy Vortex, Acid</entry>
-  <entry id="51348" lang="en" sex="m">Energy Vortex, Cold</entry> 
+  <entry id="51348" lang="en" sex="m">Energy Vortex, Cold</entry>
   <entry id="51349" lang="en" sex="m">Energy Vortex, Electricity</entry>
   <entry id="51350" lang="en" sex="m">Energy Vortex, Fire</entry>
-  <entry id="51351" lang="en" sex="m">Speak Rock to Mud</entry>  
+  <entry id="51351" lang="en" sex="m">Speak Rock to Mud</entry>
   <entry id="51352" lang="en" sex="m">Level: Perfected Map 2
 Range: 100 feet
 Area: 20' Radius
@@ -19034,8 +19149,8 @@ Save: None
 Metautterances: Extend
 
 With a word, you create an area of viscous, sucking mud.
-Every creature in the area has their speed reduced by 80%, and take a -2 penalty to AC and Attack.</entry> 
-  <entry id="51353" lang="en" sex="m">Transform the Landscape</entry>  
+Every creature in the area has their speed reduced by 80%, and take a -2 penalty to AC and Attack.</entry>
+  <entry id="51353" lang="en" sex="m">Transform the Landscape</entry>
   <entry id="51354" lang="en" sex="m">Level: Perfected Map 2
 Range: 100 feet
 Area: 20' Radius
@@ -19045,8 +19160,8 @@ Save: None
 Metautterances: Extend
 
 You cause the grouns to crack and split beneath your enemies' feet, impeding their progress.
-All enemies in the area are affected by difficult terrain (50% movement speed reduction).</entry> 
-  <entry id="51355" lang="en" sex="m">Accelerated Attack</entry>  
+All enemies in the area are affected by difficult terrain (50% movement speed reduction).</entry>
+  <entry id="51355" lang="en" sex="m">Accelerated Attack</entry>
   <entry id="51356" lang="en" sex="m">Level: Evolving Mind 3
 Range: 60 feet
 Target: One Creature
@@ -19060,8 +19175,8 @@ Normal:  Your utterance allows your target to move quickly through the crowded b
 Reverse: A spellcaster you target gains the ability to cast a spell quickly while moving.
          Your target spellcaster gains a 20' speed boost.</entry>
   <entry id="51357" lang="en" sex="m">Accelerated Attack, Normal</entry>
-  <entry id="51358" lang="en" sex="m">Accelerated Attack, Reverse</entry> 
-  <entry id="51359" lang="en" sex="m">Energy Negation</entry>  
+  <entry id="51358" lang="en" sex="m">Accelerated Attack, Reverse</entry>
+  <entry id="51359" lang="en" sex="m">Energy Negation</entry>
   <entry id="51360" lang="en" sex="m">Level: Evolving Mind 3
 Range: 60 feet
 Target: One Creature
@@ -19075,9 +19190,9 @@ Normal:  The air crackles with yours words as you protect your target from energ
 Reverse: The flesh and skin of an enemy are imbued with energy, causing it great pain.
          Your foe takes 2d6 damage per round. Acid, Cold, Elec or Fire. Use the "Energy Negation, Choice" option to pick the damage type.</entry>
   <entry id="51361" lang="en" sex="m">Energy Negation, Normal</entry>
-  <entry id="51362" lang="en" sex="m">Energy Negation, Reverse</entry> 
+  <entry id="51362" lang="en" sex="m">Energy Negation, Reverse</entry>
   <entry id="51363" lang="en" sex="m">Energy Negation, Choice</entry>
-  <entry id="51364" lang="en" sex="m">Speed of the Zephyr, Greater</entry>  
+  <entry id="51364" lang="en" sex="m">Speed of the Zephyr, Greater</entry>
   <entry id="51365" lang="en" sex="m">Level: Evolving Mind 3
 Range: 60 feet
 Target: One Creature
@@ -19091,8 +19206,8 @@ Normal:  Your ally's movements are quicker, enhacing his offensive and defensive
 Reverse: When you speak this utterance, your target moves as though through molasses
          Your target is slowed.</entry>
   <entry id="51366" lang="en" sex="m">Speed of the Zephyr, Greater, Normal</entry>
-  <entry id="51367" lang="en" sex="m">Speed of the Zephyr, Greater, Reverse</entry> 
-  <entry id="51368" lang="en" sex="m">Temporal Spiral</entry>  
+  <entry id="51367" lang="en" sex="m">Speed of the Zephyr, Greater, Reverse</entry>
+  <entry id="51368" lang="en" sex="m">Temporal Spiral</entry>
   <entry id="51369" lang="en" sex="m">Level: Evolving Mind 3
 Range: 60 feet
 Target: One Creature
@@ -19106,8 +19221,8 @@ Normal:  Everything your target does seems quicker.
 Reverse: This powerful utterance sounds like the churning of ancient earth, freezing your target in place.
          Your foe is dazed for three rounds.</entry>
   <entry id="51370" lang="en" sex="m">Temporal Spiral, Normal</entry>
-  <entry id="51371" lang="en" sex="m">Temporal Spiral, Reverse</entry>  
-  <entry id="51372" lang="en" sex="m">Vision Sharpened</entry>  
+  <entry id="51371" lang="en" sex="m">Temporal Spiral, Reverse</entry>
+  <entry id="51372" lang="en" sex="m">Vision Sharpened</entry>
   <entry id="51373" lang="en" sex="m">Level: Evolving Mind 3
 Range: 60 feet
 Target: One Creature
@@ -19121,8 +19236,8 @@ Normal:  Your ally can see the unseen in the warp and weft of air nearby.
 Reverse: With the reverse of this utterance, your target disappears from view.
          Your ally becomes invisibile.</entry>
   <entry id="51374" lang="en" sex="m">Vision Sharpened, Normal</entry>
-  <entry id="51375" lang="en" sex="m">Vision Sharpened, Reverse</entry>  
-  <entry id="51376" lang="en" sex="m">Word of Nurturing, Moderate</entry>  
+  <entry id="51375" lang="en" sex="m">Vision Sharpened, Reverse</entry>
+  <entry id="51376" lang="en" sex="m">Word of Nurturing, Moderate</entry>
   <entry id="51377" lang="en" sex="m">Level: Evolving Mind 3
 Range: 60 feet
 Target: One Creature
@@ -19136,8 +19251,8 @@ Normal:  Your words soothe your ally, gradually restoring some of the damage he 
 Reverse: Your words rip at your enemy, tearing at its flesh and bones.
          Your foe takes a 4d6 damage, and 4d6 damage the next round if you concentrate. Concentration involves doing nothing more strenous than moving.</entry>
   <entry id="51378" lang="en" sex="m">Word of Nurturing, Moderate, Normal</entry>
-  <entry id="51379" lang="en" sex="m">Word of Nurturing, Moderate, Reverse</entry>    
-  <entry id="51380" lang="en" sex="m">Remove Item</entry>  
+  <entry id="51379" lang="en" sex="m">Word of Nurturing, Moderate, Reverse</entry>
+  <entry id="51380" lang="en" sex="m">Remove Item</entry>
   <entry id="51381" lang="en" sex="m">Level: Crafted Tool 3
 Range: 30 feet
 Target: One Item (Or Possessor)
@@ -19147,7 +19262,7 @@ Metautterances: Extend
 
 Your words of Truespeech remove an item from your target's possession
 The targeted item is removed from the target's possession for one round.</entry>
-  <entry id="51382" lang="en" sex="m">Suppress Weapon</entry>  
+  <entry id="51382" lang="en" sex="m">Suppress Weapon</entry>
   <entry id="51383" lang="en" sex="m">Level: Crafted Tool 3
 Range: 30 feet
 Target: One Weapon with an Energy Special
@@ -19157,7 +19272,7 @@ Metautterances: Extend
 
 You can suppress the energy properties of a single weapon.
 The targeted weapon loses any energy damage property.</entry>
-  <entry id="51384" lang="en" sex="m">Lore of the World</entry>  
+  <entry id="51384" lang="en" sex="m">Lore of the World</entry>
   <entry id="51385" lang="en" sex="m">Level: Perfected Map 3
 Range: Personal
 Duration: 1 Minute
@@ -19167,7 +19282,7 @@ Metautterances: Extend
 
 The world around you comes alive at your words, willing to share its ancient knowledge with you.
 You gain a Lore bonus equal to your Truenamer level.</entry>
-  <entry id="51386" lang="en" sex="m">Master the Four Winds</entry>  
+  <entry id="51386" lang="en" sex="m">Master the Four Winds</entry>
   <entry id="51387" lang="en" sex="m">Level: Perfected Map 3
 Range: 100 feet
 Area: 20' Radius
@@ -19178,7 +19293,7 @@ Metautterances: None
 
 The air reacts to your utterance, obeying your every command.
 The area is affected as if by the Gust of Wind spell.</entry>
-  <entry id="51388" lang="en" sex="m">Thwart the Traveler</entry>  
+  <entry id="51388" lang="en" sex="m">Thwart the Traveler</entry>
   <entry id="51389" lang="en" sex="m">Level: Perfected Map 3
 Range: 100 feet
 Area: 20' Radius
@@ -19189,7 +19304,7 @@ Metautterances: Extend
 
 The air grows thick and heavy, making extradimensional travel impossible.
 The area is affected as if by the Dimensional Lock spell.</entry>
-  <entry id="51390" lang="en" sex="m">Breath of Cleansing</entry>  
+  <entry id="51390" lang="en" sex="m">Breath of Cleansing</entry>
   <entry id="51391" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19204,7 +19319,7 @@ Reverse: Your words evoke feelings of terror, dread, and awe in your target.
          Your target is nauseated.</entry>
   <entry id="51392" lang="en" sex="m">Breath of Cleansing, Normal</entry>
   <entry id="51393" lang="en" sex="m">Breath of Cleansing, Reverse</entry>
-  <entry id="51394" lang="en" sex="m">Caster Lens</entry>  
+  <entry id="51394" lang="en" sex="m">Caster Lens</entry>
   <entry id="51395" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19219,7 +19334,7 @@ Reverse: The reverse of this utterance impedes the flow of magical energy throug
          Your foe takes a -2 to Caster Level.</entry>
   <entry id="51396" lang="en" sex="m">Caster Lens, Normal</entry>
   <entry id="51397" lang="en" sex="m">Caster Lens, Reverse</entry>
-  <entry id="51398" lang="en" sex="m">Confounding Resistance</entry>  
+  <entry id="51398" lang="en" sex="m">Confounding Resistance</entry>
   <entry id="51399" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19234,7 +19349,7 @@ Reverse: Your utterance strips your target of its ability to evade harm.
          Your target loses Evasion.</entry>
   <entry id="51400" lang="en" sex="m">Confounding Resistance, Normal</entry>
   <entry id="51401" lang="en" sex="m">Confounding Resistance, Reverse</entry>
-  <entry id="51402" lang="en" sex="m">Morale Boost</entry>  
+  <entry id="51402" lang="en" sex="m">Morale Boost</entry>
   <entry id="51403" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19249,7 +19364,7 @@ Reverse: Your words evoke feelings of terror, dread, and awe in your target.
          Your foe struck with fear.</entry>
   <entry id="51404" lang="en" sex="m">Morale Boost, Normal</entry>
   <entry id="51405" lang="en" sex="m">Morale Boost, Reverse</entry>
-  <entry id="51406" lang="en" sex="m">Magical Contraction</entry>  
+  <entry id="51406" lang="en" sex="m">Magical Contraction</entry>
   <entry id="51407" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19264,7 +19379,7 @@ Reverse: A string of complex syllables allows you to enhance the power of an all
          Your ally's spells are automatically Empowered.</entry>
   <entry id="51408" lang="en" sex="m">Magical Contraction, Normal</entry>
   <entry id="51409" lang="en" sex="m">Magical Contraction, Reverse</entry>
-  <entry id="51410" lang="en" sex="m">Spell Rebirth</entry>  
+  <entry id="51410" lang="en" sex="m">Spell Rebirth</entry>
   <entry id="51411" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19279,7 +19394,7 @@ Reverse: Your words strip away a magical effect from your target.
          Dispel the highest caster level spell on the target.</entry>
   <entry id="51412" lang="en" sex="m">Spell Rebirth, Normal</entry>
   <entry id="51413" lang="en" sex="m">Spell Rebirth, Reverse</entry>
-  <entry id="51414" lang="en" sex="m">Word of Nurturing, Potent</entry>  
+  <entry id="51414" lang="en" sex="m">Word of Nurturing, Potent</entry>
   <entry id="51415" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19294,7 +19409,7 @@ Reverse: You tear at the fabric of your enemy's connection to its body, causing 
          Your foe takes a 6d6 damage, and 6d6 damage the next round if you concentrate. Concentration involves doing nothing more strenous than moving.</entry>
   <entry id="51416" lang="en" sex="m">Word of Nurturing, Potent, Normal</entry>
   <entry id="51417" lang="en" sex="m">Word of Nurturing, Potent, Reverse</entry>
-  <entry id="51418" lang="en" sex="m">Suppress Item</entry>  
+  <entry id="51418" lang="en" sex="m">Suppress Item</entry>
   <entry id="51419" lang="en" sex="m">Level: Crafted Tool 4
 Range: 60 feet
 Target: One Magic Item
@@ -19304,7 +19419,7 @@ Metautterances: Extend
 
 Your focus on a magic item keeps it from functioning, turning it grey and rendering it useless.
 You prevent any magic properties of the item from functioning.</entry>
-  <entry id="51420" lang="en" sex="m">Transmute Weapon</entry>  
+  <entry id="51420" lang="en" sex="m">Transmute Weapon</entry>
   <entry id="51421" lang="en" sex="m">Level: Crafted Tool 4
 Range: 30 feet
 Target: One Weapon (Or Possessor)
@@ -19314,7 +19429,7 @@ Metautterances: Extend
 
 Your words fundamentally alter the material of which a weapon is made, transforming it according to your whim.
 The target weapon ignores all non-epic (x/+5 or lower) DR.</entry>
-  <entry id="51422" lang="en" sex="m">Anger the Sleeping Earth</entry>  
+  <entry id="51422" lang="en" sex="m">Anger the Sleeping Earth</entry>
   <entry id="51423" lang="en" sex="m">Level: Perfected Map 4
 Range: 100 feet
 Area: 20' Radius 
@@ -19325,7 +19440,7 @@ Metautterances: Extend
 
 Your words shake the foundation of the earth, causing massive devastation and widespread mayhem.
 This utterance functions as the Earthquake spell.</entry>
-  <entry id="51424" lang="en" sex="m">Conjunctive Gate</entry>  
+  <entry id="51424" lang="en" sex="m">Conjunctive Gate</entry>
   <entry id="51425" lang="en" sex="m">Level: Perfected Map 4
 Range: Personal
 Duration: 1 Minute
@@ -19335,7 +19450,7 @@ Metautterances: Extend
 
 You forge a connection between this plane and another, temporarily linking them together with a swirling portal you speak into being.
 As the Gate spell.</entry>
-  <entry id="51426" lang="en" sex="m">Deny Passage</entry>  
+  <entry id="51426" lang="en" sex="m">Deny Passage</entry>
   <entry id="51427" lang="en" sex="m">Level: Perfected Map 4
 Range: 100 feet
 Area: 20' Radius
@@ -19345,8 +19460,8 @@ Save: None
 Metautterances: Extend
 
 You force an area to deny access to a group of creatures specified by your utterance. 
-Hostile creatures cannot enter or exit the area of effect.</entry> 
-  <entry id="51428" lang="en" sex="m">Eldritch Attraction</entry>  
+Hostile creatures cannot enter or exit the area of effect.</entry>
+  <entry id="51428" lang="en" sex="m">Eldritch Attraction</entry>
   <entry id="51429" lang="en" sex="m">Level: Evolving Mind 5
 Range: 60 feet
 Target: One Creature
@@ -19361,7 +19476,7 @@ Reverse: Your target is repelled, forced away by your command of Truespeech.
          Your target is moved away from you by 40 feet.</entry>
   <entry id="51430" lang="en" sex="m">Eldritch Attraction, Normal</entry>
   <entry id="51431" lang="en" sex="m">Eldritch Attraction, Reverse</entry>
-  <entry id="51432" lang="en" sex="m">Energy Negation, Greater</entry>  
+  <entry id="51432" lang="en" sex="m">Energy Negation, Greater</entry>
   <entry id="51433" lang="en" sex="m">Level: Evolving Mind 5
 Range: 60 feet
 Target: One Creature
@@ -19375,9 +19490,9 @@ Normal:  Your utterance renders your target impervious to harm from one type of 
 Reverse: You wreathe your ally in energy that lashes out at those who strike him in battle.
          Any foe that strikes your target in melee combat takes 20 points of damage from the chosen element. Acid, Cold, Elec or Fire. Use the "Energy Negation, Greater, Choice" option to pick the damage type.</entry>
   <entry id="51434" lang="en" sex="m">Energy Negation, Greater, Normal</entry>
-  <entry id="51435" lang="en" sex="m">Energy Negation, Greater, Reverse</entry> 
-  <entry id="51436" lang="en" sex="m">Energy Negation, Greater, Choice</entry> 
-  <entry id="51437" lang="en" sex="m">Essence of Lifespark</entry>  
+  <entry id="51435" lang="en" sex="m">Energy Negation, Greater, Reverse</entry>
+  <entry id="51436" lang="en" sex="m">Energy Negation, Greater, Choice</entry>
+  <entry id="51437" lang="en" sex="m">Essence of Lifespark</entry>
   <entry id="51438" lang="en" sex="m">Level: Evolving Mind 5
 Range: 60 feet
 Target: One Creature
@@ -19391,8 +19506,8 @@ Normal:  With soothing words, you revitalize an ally and restore some of his los
 Reverse: You instruct the universe to sap some of the life force of a target creature.
          Your target gains a negative level.</entry>
   <entry id="51439" lang="en" sex="m">Essence of Lifespark, Normal</entry>
-  <entry id="51440" lang="en" sex="m">Essence of Lifespark, Reverse</entry>  
-  <entry id="51441" lang="en" sex="m">Preternatural Clarity</entry>  
+  <entry id="51440" lang="en" sex="m">Essence of Lifespark, Reverse</entry>
+  <entry id="51441" lang="en" sex="m">Preternatural Clarity</entry>
   <entry id="51442" lang="en" sex="m">LLevel: Evolving Mind 5
 Range: 60 feet
 Target: One Creature
@@ -19406,10 +19521,10 @@ Normal:  You speak and sharpen you ally's mind with an awareness of all that is 
 Reverse: At your command, the universe temporarily becomes incomprehensible to your target. 
          Your foe becomes confused.</entry>
   <entry id="51443" lang="en" sex="m">Preternatural Clarity, Attack</entry>
-  <entry id="51444" lang="en" sex="m">Preternatural Clarity, Skill</entry> 
+  <entry id="51444" lang="en" sex="m">Preternatural Clarity, Skill</entry>
   <entry id="51445" lang="en" sex="m">Preternatural Clarity, Save</entry>
-  <entry id="51446" lang="en" sex="m">Preternatural Clarity, Reverse</entry>  
-  <entry id="51447" lang="en" sex="m">Sensory Focus</entry>  
+  <entry id="51446" lang="en" sex="m">Preternatural Clarity, Reverse</entry>
+  <entry id="51447" lang="en" sex="m">Sensory Focus</entry>
   <entry id="51448" lang="en" sex="m">Level: Evolving Mind 5
 Range: 60 feet
 Target: One Creature
@@ -19424,7 +19539,7 @@ Reverse: Your words strip away your target's ability to see or hear
          Your target is struck blind and deaf.</entry>
   <entry id="51449" lang="en" sex="m">Sensory Focus, Normal</entry>
   <entry id="51450" lang="en" sex="m">Sensory Focus, Reverse</entry>
-  <entry id="51451" lang="en" sex="m">Ward of Peace</entry>  
+  <entry id="51451" lang="en" sex="m">Ward of Peace</entry>
   <entry id="51452" lang="en" sex="m">Level: Evolving Mind 5
 Range: 60 feet
 Target: One Creature
@@ -19439,7 +19554,7 @@ Reverse: With a harsh sequence of words, you force a creature to another plane.
          Your foe is forced into another plane.</entry>
   <entry id="51453" lang="en" sex="m">Ward of Peace, Normal</entry>
   <entry id="51454" lang="en" sex="m">Ward of Peace, Reverse</entry>
-  <entry id="51455" lang="en" sex="m">Word of Nurturing, Critical</entry>  
+  <entry id="51455" lang="en" sex="m">Word of Nurturing, Critical</entry>
   <entry id="51456" lang="en" sex="m">Level: Evolving Mind 5
 Range: 60 feet
 Target: One Creature
@@ -19453,8 +19568,8 @@ Normal:  Your ally experiences a tremendous rejuvenation as healing energy sooth
 Reverse: Massive rents and tears appear on the body of your foe.
          Your foe takes a 8d6 damage, and 8d6 damage the next round if you concentrate. Concentration involves doing nothing more strenous than moving.</entry>
   <entry id="51457" lang="en" sex="m">Word of Nurturing, Critical, Normal</entry>
-  <entry id="51458" lang="en" sex="m">Word of Nurturing, Critical, Reverse</entry>  
-  <entry id="51459" lang="en" sex="m">Metamagic Catalyst</entry>  
+  <entry id="51458" lang="en" sex="m">Word of Nurturing, Critical, Reverse</entry>
+  <entry id="51459" lang="en" sex="m">Metamagic Catalyst</entry>
   <entry id="51460" lang="en" sex="m">Level: Crafted Tool 5
 Range: Touch
 Target: One Scroll or Potion
@@ -19466,9 +19581,9 @@ Your touch enables a potion consumed or scroll read to be augmented with metamag
 You may Extend or Empower a scroll or potion.
 You may Maximize a scroll or potion, but this increases the Truespeech DC by 10.</entry>
   <entry id="51461" lang="en" sex="m">Metamagic Catalyst, Empower</entry>
-  <entry id="51462" lang="en" sex="m">Metamagic Catalyst, Extend</entry>  
-  <entry id="51463" lang="en" sex="m">Metamagic Catalyst, Maximize</entry>  
-  <entry id="51464" lang="en" sex="m">Seize Item</entry>  
+  <entry id="51462" lang="en" sex="m">Metamagic Catalyst, Extend</entry>
+  <entry id="51463" lang="en" sex="m">Metamagic Catalyst, Maximize</entry>
+  <entry id="51464" lang="en" sex="m">Seize Item</entry>
   <entry id="51465" lang="en" sex="m">Level: Crafted Tool 5
 Range: 30 feet
 Target: One Object
@@ -19477,8 +19592,8 @@ Spell Resistance: Yes
 Metautterances: None
 
 You speak a word to make an object your own, forcing it out of the hands of its owner, if necessary.
-This utterance brings an object within range to your hand. If it is possessed by another creature, you must make a disarm attempt to gain the item.</entry>  
-  <entry id="51466" lang="en" sex="m">Strike of Might</entry>  
+This utterance brings an object within range to your hand. If it is possessed by another creature, you must make a disarm attempt to gain the item.</entry>
+  <entry id="51466" lang="en" sex="m">Strike of Might</entry>
   <entry id="51467" lang="en" sex="m">Level: Evolving Mind 2
 Range: 60 feet
 Target: One Creature
@@ -19493,7 +19608,7 @@ Reverse: You briefly enfeeble an enemy, causing its swing to slow and deal less 
          Your target deals 5 less damage on his next attack.</entry>
   <entry id="51468" lang="en" sex="m">Strike of Might, Normal</entry>
   <entry id="51469" lang="en" sex="m">Strike of Might, Reverse</entry>
-  <entry id="51470" lang="en" sex="m">Word of Bolstering</entry>  
+  <entry id="51470" lang="en" sex="m">Word of Bolstering</entry>
   <entry id="51471" lang="en" sex="m">Level: Evolving Mind 4
 Range: 60 feet
 Target: One Creature
@@ -19507,9 +19622,9 @@ Normal:  Suffusing your ally with the glow of positive energy, you eliminate the
 Reverse: Your words cause the body of a foe to weaken and grow more frail.
          Your foe takes a 1d6 penalty to Dex, Con, or Str. Choose the Ability to drain with Word of Bolstering, Choice.</entry>
   <entry id="51472" lang="en" sex="m">Word of Bolstering, Normal</entry>
-  <entry id="51473" lang="en" sex="m">Word of Bolstering, Reverse</entry> 
-  <entry id="51474" lang="en" sex="m">Word of Bolstering, Choice</entry> 
-  <entry id="51475" lang="en" sex="m">Breath of Recovery</entry>  
+  <entry id="51473" lang="en" sex="m">Word of Bolstering, Reverse</entry>
+  <entry id="51474" lang="en" sex="m">Word of Bolstering, Choice</entry>
+  <entry id="51475" lang="en" sex="m">Breath of Recovery</entry>
   <entry id="51476" lang="en" sex="m">Level: Evolving Mind 6
 Range: 60 feet
 Target: One Creature
@@ -19523,8 +19638,8 @@ Normal:  You speak a word of purity in the language of Truespeech, reminding the
 Reverse: Your words of power roll over you target's body, which stiffens into rigidity.
          Your target is paralyzed.</entry>
   <entry id="51477" lang="en" sex="m">Breath of Recovery, Normal</entry>
-  <entry id="51478" lang="en" sex="m">Breath of Recovery, Reverse</entry> 
-  <entry id="51479" lang="en" sex="m">Ether Reforged</entry>  
+  <entry id="51478" lang="en" sex="m">Breath of Recovery, Reverse</entry>
+  <entry id="51479" lang="en" sex="m">Ether Reforged</entry>
   <entry id="51480" lang="en" sex="m">Level: Evolving Mind 6
 Range: 60 feet
 Target: One Creature
@@ -19538,8 +19653,8 @@ Normal:  With this utterance, creatures of the ethereal world become as solid as
 Reverse: One of your allies slips into the space between worlds and leaps onto the Ethereal Plane.
          Your ally becomes ethereal.</entry>
   <entry id="51481" lang="en" sex="m">Ether Reforged, Normal</entry>
-  <entry id="51482" lang="en" sex="m">Ether Reforged, Reverse</entry> 
-  <entry id="51483" lang="en" sex="m">Knight's Puissance, Greater</entry>  
+  <entry id="51482" lang="en" sex="m">Ether Reforged, Reverse</entry>
+  <entry id="51483" lang="en" sex="m">Knight's Puissance, Greater</entry>
   <entry id="51484" lang="en" sex="m">Level: Evolving Mind 6
 Range: 60 feet
 Target: One Creature
@@ -19553,8 +19668,8 @@ Normal:  The blows of your target fall more surely and strike more soundly after
 Reverse: You speak words of cursing, significantly reducing your target's effectiveness in battle.
          Your target takes a -5 Attack and Damage Penalty.</entry>
   <entry id="51485" lang="en" sex="m">Knight's Puissance, Greater, Normal</entry>
-  <entry id="51486" lang="en" sex="m">Knight's Puissance, Greater, Reverse</entry> 
-  <entry id="51487" lang="en" sex="m">Mystic Rampart</entry>  
+  <entry id="51486" lang="en" sex="m">Knight's Puissance, Greater, Reverse</entry>
+  <entry id="51487" lang="en" sex="m">Mystic Rampart</entry>
   <entry id="51488" lang="en" sex="m">Level: Evolving Mind 6
 Range: 60 feet
 Target: One Creature
@@ -19568,8 +19683,8 @@ Normal:  With a complex string of syllables, an intagible tower superimposes its
 Reverse: You speak words of cursing, significantly reducing your target's effectiveness in battle.
          Your target takes a -5 Attack and Damage Penalty.</entry>
   <entry id="51489" lang="en" sex="m">Mystic Rampart, Normal</entry>
-  <entry id="51490" lang="en" sex="m">Mystic Rampart, Reverse</entry> 
-  <entry id="51491" lang="en" sex="m">Singular Mind</entry>  
+  <entry id="51490" lang="en" sex="m">Mystic Rampart, Reverse</entry>
+  <entry id="51491" lang="en" sex="m">Singular Mind</entry>
   <entry id="51492" lang="en" sex="m">Level: Evolving Mind 6
 Range: 60 feet
 Target: One Creature
@@ -19583,8 +19698,8 @@ Normal:  With a word, you liberate your target from all foreign influence, freei
 Reverse: Your words crawl into the mind of your enemy, allowing you to control your foe's body as if it were your puppet.
          Your target is dominated.</entry>
   <entry id="51493" lang="en" sex="m">Singular Mind, Normal</entry>
-  <entry id="51494" lang="en" sex="m">Singular Mind, Reverse</entry> 
-  <entry id="51495" lang="en" sex="m">Word of Nurturing, Greater</entry>  
+  <entry id="51494" lang="en" sex="m">Singular Mind, Reverse</entry>
+  <entry id="51495" lang="en" sex="m">Word of Nurturing, Greater</entry>
   <entry id="51496" lang="en" sex="m">Level: Evolving Mind 6
 Range: 60 feet
 Target: One Creature
@@ -19598,7 +19713,7 @@ Normal:  With this powerful utterance, you remind the universe of your ally's tr
 Reverse: Great gashes and terrible wounds tear at your enemy's body, causing massive bleeding and awful pain.
          Your foe takes a 10d6 damage, and 10d6 damage the next round if you concentrate. Concentration involves doing nothing more strenous than moving.</entry>
   <entry id="51497" lang="en" sex="m">Word of Nurturing, Greater, Normal</entry>
-  <entry id="51498" lang="en" sex="m">Word of Nurturing, Greater, Reverse</entry>   
+  <entry id="51498" lang="en" sex="m">Word of Nurturing, Greater, Reverse</entry>
   <entry id="51501" lang="en" sex="m">50% of Weight</entry>
   <entry id="51502" lang="en" sex="m">Craft Epic Wondrous Item</entry>
   <entry id="51503" lang="en" sex="m">Type of Feat: General
@@ -19640,41 +19755,516 @@ Use: Automatic.</entry>
   <entry id="51527" lang="en" sex="m">Enhancement +18</entry>
   <entry id="51528" lang="en" sex="m">Enhancement +19</entry>
   <entry id="51529" lang="en" sex="m">Enhancement +20</entry>
+  <entry id="51530" lang="en" sex="m">Description: 
+
+Enhancement Bonus: +X 
+
+Prerequisites: 
+
+Level: 3X Enhancement bonus
+
+Cost: 
+
++X Enhancement
+</entry>
   <entry id="51531" lang="en" sex="m">Acid Resistance</entry>
+  <entry id="51532" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
   <entry id="51533" lang="en" sex="m">Acid Resistance, Improved</entry>
+  <entry id="51534" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
   <entry id="51535" lang="en" sex="m">Acid Resistance, Greater</entry>
+  <entry id="51536" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
   <entry id="51537" lang="en" sex="m">Arrow Deflection</entry>
+  <entry id="51538" lang="en" sex="m">Description: 
+
+Bonus Feat: Deflect Arrows 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Shield
+
+Cost: 
+
++2 Enhancement
+</entry>
   <entry id="51539" lang="en" sex="m">Cold Resistance</entry>
+  <entry id="51540" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
   <entry id="51541" lang="en" sex="m">Cold Resistance, Improved</entry>
+  <entry id="51542" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
   <entry id="51543" lang="en" sex="m">Cold Resistance, Greater</entry>
+  <entry id="51544" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
   <entry id="51545" lang="en" sex="m">Electricity Resistance</entry>
+  <entry id="51546" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
   <entry id="51547" lang="en" sex="m">Electricity Resistance, Improved</entry>
+  <entry id="51548" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
   <entry id="51549" lang="en" sex="m">Electricity Resistance, Greater</entry>
+  <entry id="51550" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
   <entry id="51551" lang="en" sex="m">Etherealness</entry>
+  <entry id="51552" lang="en" sex="m">Description: 
+
+Use: Greater Sanctuary (18) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Greater Sanctuary
+
+Cost: 
+
++49000gp
+</entry>
   <entry id="51553" lang="en" sex="m">Fire Resistance</entry>
+  <entry id="51554" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
   <entry id="51555" lang="en" sex="m">Fire Resistance, Improved</entry>
+  <entry id="51556" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
   <entry id="51557" lang="en" sex="m">Fire Resistance, Greater</entry>
+  <entry id="51558" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
   <entry id="51559" lang="en" sex="m">Invulnerability 5 / +1</entry>
+  <entry id="51560" lang="en" sex="m">Description: 
+
+Damage Reduction: +1 Soak 5 Damage 
+
+Prerequisites: 
+
+Caster Level: 18
+Spell(s): Stoneskin
+
+Cost: 
+
++3 Enhancement
+</entry>
   <entry id="51561" lang="en" sex="m">Reflecting</entry>
+  <entry id="51562" lang="en" sex="m">Description: 
+
+Use: Spell Turning (13) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Spell Turning
+
+Cost: 
+
++5 Enhancement
+</entry>
   <entry id="51563" lang="en" sex="m">Shadow</entry>
+  <entry id="51564" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +5 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Invisibility
+
+Cost: 
+
++3750gp
+</entry>
   <entry id="51565" lang="en" sex="m">Shadow, Improved</entry>
+  <entry id="51566" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +10 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Invisibility
+
+Cost: 
+
++15000gp
+</entry>
   <entry id="51567" lang="en" sex="m">Shadow, Greater</entry>
+  <entry id="51568" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Invisibility
+
+Cost: 
+
++33750gp
+</entry>
   <entry id="51569" lang="en" sex="m">Silent Moves</entry>
+  <entry id="51570" lang="en" sex="m">Description: 
+
+Skill Bonus: Move Silently +5 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Silence
+
+Cost: 
+
++3750gp
+</entry>
   <entry id="51571" lang="en" sex="m">Silent Moves, Improved</entry>
+  <entry id="51572" lang="en" sex="m">Description: 
+
+Skill Bonus: Move Silently +10 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Silence
+
+Cost: 
+
++15000gp
+</entry>
   <entry id="51573" lang="en" sex="m">Silent Moves, Greater</entry>
+  <entry id="51574" lang="en" sex="m">Description: 
+
+Skill Bonus: Move Silently +15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Silence
+
+Cost: 
+
++33750gp
+</entry>
   <entry id="51575" lang="en" sex="m">Sonic Resistance</entry>
+  <entry id="51576" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Endure Elements
+
+Cost: 
+
++18000gp
+</entry>
   <entry id="51577" lang="en" sex="m">Sonic Resistance, Improved</entry>
+  <entry id="51578" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Endure Elements
+
+Cost: 
+
++42000gp
+</entry>
   <entry id="51579" lang="en" sex="m">Sonic Resistance, Greater</entry>
+  <entry id="51580" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Endure Elements
+
+Cost: 
+
++66000gp
+</entry>
   <entry id="51581" lang="en" sex="m">Spell Resistance 13</entry>
+  <entry id="51582" lang="en" sex="m">Description: 
+
+Spell Resistance: 13 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++2 Enhancement
+</entry>
   <entry id="51583" lang="en" sex="m">Undead Controlling</entry>
+  <entry id="51584" lang="en" sex="m">Description: 
+
+Use: Control Undead (13) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Control Undead
+
+Cost: 
+
++49000gp
+</entry>
   <entry id="51585" lang="en" sex="m">Acid Warding</entry>
+  <entry id="51586" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
   <entry id="51587" lang="en" sex="m">Cold Warding</entry>
+  <entry id="51588" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
   <entry id="51589" lang="en" sex="m">Fire Warding</entry>
+  <entry id="51590" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
   <entry id="51591" lang="en" sex="m">Great Invulnerability 10 / +1</entry>
+  <entry id="51592" lang="en" sex="m">Description: 
+
+Damage Reduction: +1 Soak 10 Damage 
+
+Prerequisites: 
+
+Caster Level: 19
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++4 Enhancement
+</entry>
   <entry id="51593" lang="en" sex="m">Great Reflection</entry>
+  <entry id="51594" lang="en" sex="m">Description: 
+
+Use: Spell Turning (13) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 25
+Spell(s): Spell Turning
+Epic
+
+Cost: 
+
++10 Enhancement
+</entry>
   <entry id="51595" lang="en" sex="m">Great Spell Resistance 21</entry>
+  <entry id="51596" lang="en" sex="m">Description: 
+
+Spell Resistance: 21 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
   <entry id="51597" lang="en" sex="m">Lightning Warding</entry>
+  <entry id="51598" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
   <entry id="51599" lang="en" sex="m">Sonic Warding</entry>
+  <entry id="51600" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 50 / - 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
   <entry id="51601" lang="en" sex="m">Spell Turning</entry>
   <entry id="51602" lang="en" sex="m">Caster Level(s): Wizard / Sorcerer 7
 Innate Level: 7
@@ -19701,698 +20291,6 @@ Use: Automatic.</entry>
   <entry id="51606" lang="en" sex="m">Craft Item</entry>
   <entry id="51607" lang="en" sex="m">Target yourself to create a new item, or target an existing item to upgrade it.</entry>
   <entry id="51608" lang="en" sex="m">Anarchic</entry>
-  <entry id="51610" lang="en" sex="m">Axiomatic</entry>
-  <entry id="51612" lang="en" sex="m">Bane</entry>
-  <entry id="51614" lang="en" sex="m">Disruption</entry>
-  <entry id="51616" lang="en" sex="m">Flaming</entry>
-  <entry id="51618" lang="en" sex="m">Frost</entry>
-  <entry id="51620" lang="en" sex="m">Holy</entry>
-  <entry id="51622" lang="en" sex="m">Keen</entry>
-  <entry id="51624" lang="en" sex="m">Shock</entry>
-  <entry id="51626" lang="en" sex="m">Unholy</entry>
-  <entry id="51628" lang="en" sex="m">Vorpal</entry>
-  <entry id="51630" lang="en" sex="m">Acidic Blast</entry>
-  <entry id="51632" lang="en" sex="m">Anarchic Power</entry>
-  <entry id="51634" lang="en" sex="m">Axiomatic Power</entry>
-  <entry id="51636" lang="en" sex="m">Dread</entry>
-  <entry id="51638" lang="en" sex="m">Fiery Blast</entry>
-  <entry id="51640" lang="en" sex="m">Holy Power</entry>
-  <entry id="51642" lang="en" sex="m">Icy Blast</entry>
-  <entry id="51644" lang="en" sex="m">Lightning Blast</entry>
-  <entry id="51646" lang="en" sex="m">Mighty Disruption</entry>
-  <entry id="51648" lang="en" sex="m">Sonic Blast</entry>
-  <entry id="51650" lang="en" sex="m">Unholy Power</entry>
-  <entry id="51652" lang="en" sex="m">Wounding</entry>
-  <entry id="51663" lang="en" sex="m">DC=58</entry>
-  <entry id="51664" lang="en" sex="m">DC=59</entry>
-  <entry id="51665" lang="en" sex="m">DC=60</entry>
-  <entry id="51666" lang="en" sex="m">DC=61</entry>
-  <entry id="51667" lang="en" sex="m">DC=62</entry>
-  <entry id="51668" lang="en" sex="m">DC=63</entry>
-  <entry id="51669" lang="en" sex="m">DC=64</entry>
-  <entry id="51670" lang="en" sex="m">DC=65</entry>
-  <entry id="51671" lang="en" sex="m">DC=66</entry>
-  <entry id="51672" lang="en" sex="m">DC=67</entry>
-  <entry id="51673" lang="en" sex="m">DC=68</entry>
-  <entry id="51674" lang="en" sex="m">DC=69</entry>
-  <entry id="51675" lang="en" sex="m">DC=70</entry>
-  <entry id="51530" lang="en" sex="m">Description: 
-
-Enhancement Bonus: +X 
-
-Prerequisites: 
-
-Level: 3X Enhancement bonus
-
-Cost: 
-
-+X Enhancement
-</entry>
-  <entry id="51532" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Endure Elements
-
-Cost: 
-
-+18000gp
-</entry>
-
-  <entry id="51534" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Endure Elements
-
-Cost: 
-
-+42000gp
-</entry>
-
-  <entry id="51536" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Endure Elements
-
-Cost: 
-
-+66000gp
-</entry>
-
-  <entry id="51586" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 50 / - 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51538" lang="en" sex="m">Description: 
-
-Bonus Feat: Deflect Arrows 
-
-Prerequisites: 
-
-Caster Level: 5
-Spell(s): Shield
-
-Cost: 
-
-+2 Enhancement
-</entry>
-
-  <entry id="51540" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Endure Elements
-
-Cost: 
-
-+18000gp
-</entry>
-
-  <entry id="51542" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Endure Elements
-
-Cost: 
-
-+42000gp
-</entry>
-
-  <entry id="51544" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Endure Elements
-
-Cost: 
-
-+66000gp
-</entry>
-
-  <entry id="51588" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 50 / - 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51546" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Endure Elements
-
-Cost: 
-
-+18000gp
-</entry>
-
-  <entry id="51548" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Endure Elements
-
-Cost: 
-
-+42000gp
-</entry>
-
-  <entry id="51550" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Endure Elements
-
-Cost: 
-
-+66000gp
-</entry>
-
-  <entry id="51598" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 50 / - 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51552" lang="en" sex="m">Description: 
-
-Use: Greater Sanctuary (18) 1 Use/Day 
-
-Prerequisites: 
-
-Caster Level: 13
-Spell(s): Greater Sanctuary
-
-Cost: 
-
-+49000gp
-</entry>
-
-  <entry id="51554" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Endure Elements
-
-Cost: 
-
-+18000gp
-</entry>
-
-  <entry id="51556" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Endure Elements
-
-Cost: 
-
-+42000gp
-</entry>
-
-  <entry id="51558" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Endure Elements
-
-Cost: 
-
-+66000gp
-</entry>
-
-  <entry id="51590" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 50 / - 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51560" lang="en" sex="m">Description: 
-
-Damage Reduction: +1 Soak 5 Damage 
-
-Prerequisites: 
-
-Caster Level: 18
-Spell(s): Stoneskin
-
-Cost: 
-
-+3 Enhancement
-</entry>
-
-  <entry id="51592" lang="en" sex="m">Description: 
-
-Damage Reduction: +1 Soak 10 Damage 
-
-Prerequisites: 
-
-Caster Level: 19
-Spell(s): Stoneskin
-Epic
-
-Cost: 
-
-+4 Enhancement
-</entry>
-
-  <entry id="51654" lang="en" sex="m">Description: 
-
-Damage Reduction: +1 Soak 15 Damage 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Stoneskin
-Epic
-
-Cost: 
-
-+5 Enhancement
-</entry>
-
-  <entry id="51655" lang="en" sex="m">Description: 
-
-Damage Reduction: +6 Soak 5 Damage 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Stoneskin
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51656" lang="en" sex="m">Description: 
-
-Damage Reduction: +6 Soak 10 Damage 
-
-Prerequisites: 
-
-Caster Level: 22
-Spell(s): Stoneskin
-Epic
-
-Cost: 
-
-+7 Enhancement
-</entry>
-
-  <entry id="51562" lang="en" sex="m">Description: 
-
-Use: Spell Turning (13) 1 Use/Day 
-
-Prerequisites: 
-
-Caster Level: 14
-Spell(s): Spell Turning
-
-Cost: 
-
-+5 Enhancement
-</entry>
-
-  <entry id="51594" lang="en" sex="m">Description: 
-
-Use: Spell Turning (13) Unlimited Uses/Day 
-
-Prerequisites: 
-
-Caster Level: 25
-Spell(s): Spell Turning
-Epic
-
-Cost: 
-
-+10 Enhancement
-</entry>
-
-  <entry id="51564" lang="en" sex="m">Description: 
-
-Skill Bonus: Hide +5 
-
-Prerequisites: 
-
-Caster Level: 5
-Spell(s): Invisibility
-
-Cost: 
-
-+3750gp
-</entry>
-
-  <entry id="51566" lang="en" sex="m">Description: 
-
-Skill Bonus: Hide +10 
-
-Prerequisites: 
-
-Caster Level: 10
-Spell(s): Invisibility
-
-Cost: 
-
-+15000gp
-</entry>
-
-  <entry id="51568" lang="en" sex="m">Description: 
-
-Skill Bonus: Hide +15 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Invisibility
-
-Cost: 
-
-+33750gp
-</entry>
-
-  <entry id="51570" lang="en" sex="m">Description: 
-
-Skill Bonus: Move Silently +5 
-
-Prerequisites: 
-
-Caster Level: 5
-Spell(s): Silence
-
-Cost: 
-
-+3750gp
-</entry>
-
-  <entry id="51572" lang="en" sex="m">Description: 
-
-Skill Bonus: Move Silently +10 
-
-Prerequisites: 
-
-Caster Level: 10
-Spell(s): Silence
-
-Cost: 
-
-+15000gp
-</entry>
-
-  <entry id="51574" lang="en" sex="m">Description: 
-
-Skill Bonus: Move Silently +15 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Silence
-
-Cost: 
-
-+33750gp
-</entry>
-
-  <entry id="51576" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Endure Elements
-
-Cost: 
-
-+18000gp
-</entry>
-
-  <entry id="51578" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Endure Elements
-
-Cost: 
-
-+42000gp
-</entry>
-
-  <entry id="51580" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Endure Elements
-
-Cost: 
-
-+66000gp
-</entry>
-
-  <entry id="51600" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 50 / - 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51582" lang="en" sex="m">Description: 
-
-Spell Resistance: 13 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Spell Resistance
-
-Cost: 
-
-+2 Enhancement
-</entry>
-
-  <entry id="51657" lang="en" sex="m">Description: 
-
-Spell Resistance: 15 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Spell Resistance
-
-Cost: 
-
-+3 Enhancement
-</entry>
-
-  <entry id="51658" lang="en" sex="m">Description: 
-
-Spell Resistance: 17 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Spell Resistance
-
-Cost: 
-
-+4 Enhancement
-</entry>
-
-  <entry id="51659" lang="en" sex="m">Description: 
-
-Spell Resistance: 19 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Spell Resistance
-
-Cost: 
-
-+5 Enhancement
-</entry>
-
-  <entry id="51596" lang="en" sex="m">Description: 
-
-Spell Resistance: 21 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Spell Resistance
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51660" lang="en" sex="m">Description: 
-
-Spell Resistance: 23 
-
-Prerequisites: 
-
-Caster Level: 22
-Spell(s): Spell Resistance
-Epic
-
-Cost: 
-
-+7 Enhancement
-</entry>
-
-  <entry id="51661" lang="en" sex="m">Description: 
-
-Spell Resistance: 25 
-
-Prerequisites: 
-
-Caster Level: 23
-Spell(s): Spell Resistance
-Epic
-
-Cost: 
-
-+8 Enhancement
-</entry>
-
-  <entry id="51662" lang="en" sex="m">Description: 
-
-Spell Resistance: 27 
-
-Prerequisites: 
-
-Caster Level: 24
-Spell(s): Spell Resistance
-Epic
-
-Cost: 
-
-+9 Enhancement
-</entry>
-
-  <entry id="51584" lang="en" sex="m">Description: 
-
-Use: Control Undead (13) 1 Use/Day 
-
-Prerequisites: 
-
-Caster Level: 13
-Spell(s): Control Undead
-
-Cost: 
-
-+49000gp
-</entry>
-
-  <entry id="51631" lang="en" sex="m">Description: 
-
-Damage Bonus: Acid 3d6 Damage 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Acid Fog
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
   <entry id="51609" lang="en" sex="m">Description: 
 
 Damage Bonus vs.: Lawful 2d6 Damage Type Divine 
@@ -20407,7 +20305,166 @@ Cost:
 
 +2 Enhancement
 </entry>
+  <entry id="51610" lang="en" sex="m">Axiomatic</entry>
+  <entry id="51611" lang="en" sex="m">Description: 
 
+Damage Bonus vs.: Chaotic 2d6 Damage Type Divine 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Lawful 
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+  <entry id="51612" lang="en" sex="m">Bane</entry>
+  <entry id="51613" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: [Race] 2d6 Damage Physical 
+Enhancement Bonus vs.: [Race] +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Summon Creature I
+
+Cost: 
+
++1 Enhancement
+</entry>
+  <entry id="51614" lang="en" sex="m">Disruption</entry>
+  <entry id="51615" lang="en" sex="m">Description: 
+
+On Hit: Slay Racial Group DC=14 Monster Type Undead 
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Heal
+
+Cost: 
+
++2 Enhancement
+</entry>
+  <entry id="51616" lang="en" sex="m">Flaming</entry>
+  <entry id="51617" lang="en" sex="m">Description: 
+
+Damage Bonus: Fire 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Flame Weapon, Fireball or Flame Strike
+
+Cost: 
+
++1 Enhancement
+</entry>
+  <entry id="51618" lang="en" sex="m">Frost</entry>
+  <entry id="51619" lang="en" sex="m">Description: 
+
+Damage Bonus: Cold 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Ice Storm
+
+Cost: 
+
++1 Enhancement
+</entry>
+  <entry id="51620" lang="en" sex="m">Holy</entry>
+  <entry id="51621" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Evil 2d6 Damage Type Divine 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Good
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+  <entry id="51622" lang="en" sex="m">Keen</entry>
+  <entry id="51623" lang="en" sex="m">Description: 
+
+Keen 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Keen Edge
+
+Cost: 
+
++1 Enhancement
+</entry>
+  <entry id="51624" lang="en" sex="m">Shock</entry>
+  <entry id="51625" lang="en" sex="m">Description: 
+
+Damage Bonus: Electrical 1d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Call Lightning or Lightning Bolt
+
+Cost: 
+
++1 Enhancement
+</entry>
+  <entry id="51626" lang="en" sex="m">Unholy</entry>
+  <entry id="51627" lang="en" sex="m">Description: 
+
+Damage Bonus vs.: Good 2d6 Damage Type Divine 
+
+Prerequisites: 
+
+Caster Level: 7
+Alignment: Evil
+Spell(s): Hammer of the Gods
+
+Cost: 
+
++2 Enhancement
+</entry>
+  <entry id="51628" lang="en" sex="m">Vorpal</entry>
+  <entry id="51629" lang="en" sex="m">Description: 
+
+On Hit: Vorpal DC=70 
+
+Prerequisites: 
+
+Caster Level: 18
+Spell(s): Circle of Death, Keen Edge
+
+Cost: 
+
++5 Enhancement
+</entry>
+  <entry id="51630" lang="en" sex="m">Acidic Blast</entry>
+  <entry id="51631" lang="en" sex="m">Description: 
+
+Damage Bonus: Acid 3d6 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Acid Fog
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+  <entry id="51632" lang="en" sex="m">Anarchic Power</entry>
   <entry id="51633" lang="en" sex="m">Description: 
 
 Damage Bonus vs.: Lawful 3d6 Damage Type Divine 
@@ -20424,22 +20481,7 @@ Cost:
 
 +8 Enhancement
 </entry>
-
-  <entry id="51611" lang="en" sex="m">Description: 
-
-Damage Bonus vs.: Chaotic 2d6 Damage Type Divine 
-
-Prerequisites: 
-
-Caster Level: 7
-Alignment: Lawful 
-Spell(s): Hammer of the Gods
-
-Cost: 
-
-+2 Enhancement
-</entry>
-
+  <entry id="51634" lang="en" sex="m">Axiomatic Power</entry>
   <entry id="51635" lang="en" sex="m">Description: 
 
 Damage Bonus vs.: Chaotic 3d6 Damage Type Divine 
@@ -20456,22 +20498,7 @@ Cost:
 
 +8 Enhancement
 </entry>
-
-  <entry id="51613" lang="en" sex="m">Description: 
-
-Damage Bonus vs.: [Race] 2d6 Damage Physical 
-Enhancement Bonus vs.: [Race] +2 
-
-Prerequisites: 
-
-Caster Level: 8
-Spell(s): Summon Creature I
-
-Cost: 
-
-+1 Enhancement
-</entry>
-
+  <entry id="51636" lang="en" sex="m">Dread</entry>
   <entry id="51637" lang="en" sex="m">Description: 
 
 Damage Bonus vs.: [Race] 4d6 Damage Physical 
@@ -20488,50 +20515,7 @@ Cost:
 
 +7 Enhancement
 </entry>
-
-  <entry id="51615" lang="en" sex="m">Description: 
-
-On Hit: Slay Racial Group DC=14 Monster Type Undead 
-
-Prerequisites: 
-
-Caster Level: 14
-Spell(s): Heal
-
-Cost: 
-
-+2 Enhancement
-</entry>
-
-  <entry id="51647" lang="en" sex="m">Description: 
-
-On Hit: Slay Racial Group DC=21 Monster Type Undead 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Resurrection
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51617" lang="en" sex="m">Description: 
-
-Damage Bonus: Fire 1d6 Damage 
-
-Prerequisites: 
-
-Caster Level: 10
-Spell(s): Flame Weapon, Fireball or Flame Strike
-
-Cost: 
-
-+1 Enhancement
-</entry>
-
+  <entry id="51638" lang="en" sex="m">Fiery Blast</entry>
   <entry id="51639" lang="en" sex="m">Description: 
 
 Damage Bonus: Fire 3d6 Damage 
@@ -20546,51 +20530,7 @@ Cost:
 
 +6 Enhancement
 </entry>
-
-  <entry id="51619" lang="en" sex="m">Description: 
-
-Damage Bonus: Cold 1d6 Damage 
-
-Prerequisites: 
-
-Caster Level: 8
-Spell(s): Ice Storm
-
-Cost: 
-
-+1 Enhancement
-</entry>
-
-  <entry id="51643" lang="en" sex="m">Description: 
-
-Damage Bonus: Cold 3d6 Damage 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Cone of Cold
-Epic
-
-Cost: 
-
-+6 Enhancement
-</entry>
-
-  <entry id="51621" lang="en" sex="m">Description: 
-
-Damage Bonus vs.: Evil 2d6 Damage Type Divine 
-
-Prerequisites: 
-
-Caster Level: 7
-Alignment: Good
-Spell(s): Hammer of the Gods
-
-Cost: 
-
-+2 Enhancement
-</entry>
-
+  <entry id="51640" lang="en" sex="m">Holy Power</entry>
   <entry id="51641" lang="en" sex="m">Description: 
 
 Damage Bonus vs.: Evil 3d6 Damage Type Divine 
@@ -20607,35 +20547,22 @@ Cost:
 
 +8 Enhancement
 </entry>
+  <entry id="51642" lang="en" sex="m">Icy Blast</entry>
+  <entry id="51643" lang="en" sex="m">Description: 
 
-  <entry id="51623" lang="en" sex="m">Description: 
-
-Keen 
-
-Prerequisites: 
-
-Caster Level: 10
-Spell(s): Keen Edge
-
-Cost: 
-
-+1 Enhancement
-</entry>
-
-  <entry id="51625" lang="en" sex="m">Description: 
-
-Damage Bonus: Electrical 1d6 Damage 
+Damage Bonus: Cold 3d6 Damage 
 
 Prerequisites: 
 
-Caster Level: 8
-Spell(s): Call Lightning or Lightning Bolt
+Caster Level: 21
+Spell(s): Cone of Cold
+Epic
 
 Cost: 
 
-+1 Enhancement
++6 Enhancement
 </entry>
-
+  <entry id="51644" lang="en" sex="m">Lightning Blast</entry>
   <entry id="51645" lang="en" sex="m">Description: 
 
 Damage Bonus: Electrical 3d6 Damage 
@@ -20650,7 +20577,22 @@ Cost:
 
 +6 Enhancement
 </entry>
+  <entry id="51646" lang="en" sex="m">Mighty Disruption</entry>
+  <entry id="51647" lang="en" sex="m">Description: 
 
+On Hit: Slay Racial Group DC=21 Monster Type Undead 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Resurrection
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+  <entry id="51648" lang="en" sex="m">Sonic Blast</entry>
   <entry id="51649" lang="en" sex="m">Description: 
 
 Damage Bonus: Sonic 3d6 Damage 
@@ -20665,22 +20607,7 @@ Cost:
 
 +6 Enhancement
 </entry>
-
-  <entry id="51627" lang="en" sex="m">Description: 
-
-Damage Bonus vs.: Good 2d6 Damage Type Divine 
-
-Prerequisites: 
-
-Caster Level: 7
-Alignment: Evil
-Spell(s): Hammer of the Gods
-
-Cost: 
-
-+2 Enhancement
-</entry>
-
+  <entry id="51650" lang="en" sex="m">Unholy Power</entry>
   <entry id="51651" lang="en" sex="m">Description: 
 
 Damage Bonus vs.: Good 3d6 Damage Type Divine 
@@ -20697,21 +20624,7 @@ Cost:
 
 +8 Enhancement
 </entry>
-
-  <entry id="51629" lang="en" sex="m">Description: 
-
-On Hit: Vorpal DC=70 
-
-Prerequisites: 
-
-Caster Level: 18
-Spell(s): Circle of Death, Keen Edge
-
-Cost: 
-
-+5 Enhancement
-</entry>
-
+  <entry id="51652" lang="en" sex="m">Wounding</entry>
   <entry id="51653" lang="en" sex="m">Description: 
 
 On Hit: Wounding DC=70 
@@ -20725,6 +20638,142 @@ Cost:
 
 +2 Enhancement
 </entry>
+  <entry id="51654" lang="en" sex="m">Description: 
+
+Damage Reduction: +1 Soak 15 Damage 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++5 Enhancement
+</entry>
+  <entry id="51655" lang="en" sex="m">Description: 
+
+Damage Reduction: +6 Soak 5 Damage 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++6 Enhancement
+</entry>
+  <entry id="51656" lang="en" sex="m">Description: 
+
+Damage Reduction: +6 Soak 10 Damage 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Stoneskin
+Epic
+
+Cost: 
+
++7 Enhancement
+</entry>
+  <entry id="51657" lang="en" sex="m">Description: 
+
+Spell Resistance: 15 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++3 Enhancement
+</entry>
+  <entry id="51658" lang="en" sex="m">Description: 
+
+Spell Resistance: 17 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++4 Enhancement
+</entry>
+  <entry id="51659" lang="en" sex="m">Description: 
+
+Spell Resistance: 19 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Spell Resistance
+
+Cost: 
+
++5 Enhancement
+</entry>
+  <entry id="51660" lang="en" sex="m">Description: 
+
+Spell Resistance: 23 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++7 Enhancement
+</entry>
+  <entry id="51661" lang="en" sex="m">Description: 
+
+Spell Resistance: 25 
+
+Prerequisites: 
+
+Caster Level: 23
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++8 Enhancement
+</entry>
+  <entry id="51662" lang="en" sex="m">Description: 
+
+Spell Resistance: 27 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++9 Enhancement
+</entry>
+  <entry id="51663" lang="en" sex="m">DC=58</entry>
+  <entry id="51664" lang="en" sex="m">DC=59</entry>
+  <entry id="51665" lang="en" sex="m">DC=60</entry>
+  <entry id="51666" lang="en" sex="m">DC=61</entry>
+  <entry id="51667" lang="en" sex="m">DC=62</entry>
+  <entry id="51668" lang="en" sex="m">DC=63</entry>
+  <entry id="51669" lang="en" sex="m">DC=64</entry>
+  <entry id="51670" lang="en" sex="m">DC=65</entry>
+  <entry id="51671" lang="en" sex="m">DC=66</entry>
+  <entry id="51672" lang="en" sex="m">DC=67</entry>
+  <entry id="51673" lang="en" sex="m">DC=68</entry>
+  <entry id="51674" lang="en" sex="m">DC=69</entry>
+  <entry id="51675" lang="en" sex="m">DC=70</entry>
   <entry id="51676" lang="en" sex="m">Shout</entry>
   <entry id="51677" lang="en" sex="m">Evocation [Sonic]
 Level: Brd 4, Sor/Wiz 4

@@ -209,12 +209,15 @@ int array_2d_exists(object store, string name);
 // Error Returns
 /////////////////////////////////////
 
-const int SDL_SUCCESS = 1;
-const int SDL_ERROR_ALREADY_EXISTS = 1001;
-const int SDL_ERROR_DOES_NOT_EXIST = 1002;
-const int SDL_ERROR_OUT_OF_BOUNDS  = 1003;
-//int SDL_ERROR_NO_ZERO_SIZE = 1004;  - Not used
-const int SDL_ERROR_NOT_VALID_OBJECT = 1005;
+const int SDL_SUCCESS                 = 1;
+const int SDL_ERROR                   = 1000;
+const int SDL_ERROR_ALREADY_EXISTS    = 1001;
+const int SDL_ERROR_DOES_NOT_EXIST    = 1002;
+const int SDL_ERROR_OUT_OF_BOUNDS     = 1003;
+const int SDL_ERROR_NO_ZERO_SIZE      = 1004; // Not used - Ornedan 2006.09.15
+const int SDL_ERROR_NOT_VALID_OBJECT  = 1005;
+const int SDL_ERROR_INVALID_PARAMETER = 1006;
+
 
 /////////////////////////////////////
 // Implementation
@@ -225,10 +228,8 @@ int array_create(object store, string name)
     // error checking
     if(!GetIsObjectValid(store))
         return SDL_ERROR_NOT_VALID_OBJECT;
-    else if(GetLocalInt(store,name))
+    else if(array_exists(store, name))
         return SDL_ERROR_ALREADY_EXISTS;
-    else if(array_exists(store, name))  
-        return SDL_ERROR_ALREADY_EXISTS;  
     else
     {
         // Initialize the size (always one greater than the actual size)
@@ -247,10 +248,10 @@ int array_delete(object store, string name)
     int i;
     for (i=0; i < size; i++)
     {
-        DeleteLocalString(store,name+"_"+IntToString(i));
+        DeleteLocalString(store, name+"_"+IntToString(i));
 
         // just in case, delete possible object names
-        DeleteLocalObject(store,name+"_"+IntToString(i)+"_OBJECT");
+        DeleteLocalObject(store, name+"_"+IntToString(i)+"_OBJECT");
     }
 
     DeleteLocalInt(store,name);
@@ -287,14 +288,9 @@ int array_set_float(object store, string name, int i, float entry)
 
 int array_set_object(object store, string name, int i, object entry)
 {
-    // object is a little more complicated.
-    // we want to create an object as a local variable too
-    if (!GetIsObjectValid(entry))
-        return SDL_ERROR_NOT_VALID_OBJECT;
-
-    int results=array_set_string(store,name,i,"OBJECT");
-    if (results==SDL_SUCCESS)
-        SetLocalObject(store,name+"_"+IntToString(i)+"_OBJECT",entry);
+    int results = array_set_string(store, name, i, "OBJECT");
+    if (results == SDL_SUCCESS)
+        SetLocalObject(store, name + "_" + IntToString(i) + "_OBJECT", entry);
 
     return results;
 }
@@ -345,7 +341,7 @@ int array_shrink(object store, string name, int size_new)
         DeleteLocalString(store, name+"_"+IntToString(i));
 
         // just in case, delete possible object names
-        DeleteLocalString(store, name+"_"+IntToString(i)+"_OBJECT");
+        DeleteLocalObject(store, name+"_"+IntToString(i)+"_OBJECT");
     }
 
     // Store the new size, with the +1 existence marker
@@ -356,15 +352,13 @@ int array_shrink(object store, string name, int size_new)
 
 int array_get_size(object store, string name)
 {
-    return GetLocalInt(store,name)-1;
+    return GetLocalInt(store, name) - 1;
 }
 
 int array_exists(object store, string name)
 {
-    if (GetLocalInt(store,name)==0)
-        return FALSE;
-    else
-        return TRUE;
+    // If the size and presence indicator local is non-zero, the array exists. Normalize it's value to TRUE / FALSE and return
+    return GetLocalInt(store, name) != 0;
 }
 
 /*

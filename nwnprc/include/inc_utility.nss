@@ -464,6 +464,7 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
 #include "inc_array_sort"   // Depends on inc_array and inc_debug
 #include "inc_uniqueid"     // Depends on inc_array
 #include "prc_inc_actions"
+#include "inc_set"          // Depends on inc_array, inc_heap
 
 
 /**********************\
@@ -1118,17 +1119,17 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
         //potions are self-only
         if(oTarget != OBJECT_SELF)
             return;
-            
+
         if(nCategory == TALENT_CATEGORY_BENEFICIAL_HEALING_AREAEFFECT
             || nCategory == TALENT_CATEGORY_BENEFICIAL_HEALING_TOUCH)
             nCategory = TALENT_CATEGORY_BENEFICIAL_HEALING_POTION;
         else if(nCategory == TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_AREAEFFECT
             || nCategory == TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_SINGLE)
-            nCategory = TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_POTION;            
+            nCategory = TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_POTION;
         else if(nCategory == TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_AREAEFFECT
             || nCategory == TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_SINGLE
             || nCategory == TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_SELF)
-            nCategory = TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_POTION;            
+            nCategory = TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_POTION;
         else if(nCategory == TALENT_CATEGORY_BENEFICIAL_PROTECTION_SELF
             || nCategory == TALENT_CATEGORY_BENEFICIAL_PROTECTION_SINGLE
             || nCategory == TALENT_CATEGORY_BENEFICIAL_PROTECTION_AREAEFFECT)
@@ -1138,8 +1139,8 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
             //something odd here add strage randomized coding inside the loop
             nCategoryPotionRandom = TRUE;
             nCategory = TALENT_CATEGORY_BENEFICIAL_HEALING_POTION;
-        }    
-        
+        }
+
     }
 
     talent tItem;
@@ -1156,10 +1157,10 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
                 case 1: nCategory = TALENT_CATEGORY_BENEFICIAL_HEALING_POTION; break;
                 case 2: nCategory = TALENT_CATEGORY_BENEFICIAL_CONDITIONAL_POTION; break;
                 case 3: nCategory = TALENT_CATEGORY_BENEFICIAL_ENHANCEMENT_POTION; break;
-                case 4: nCategory = TALENT_CATEGORY_BENEFICIAL_PROTECTION_POTION; break;                
+                case 4: nCategory = TALENT_CATEGORY_BENEFICIAL_PROTECTION_POTION; break;
             }
         }
-        
+
         if(GetTypeFromTalent(tItem) == TALENT_TYPE_SPELL
             && GetIdFromTalent(tItem) == nSpellID)
         {
@@ -1208,3 +1209,6 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
     DoDebug("ERROR: ActionUseItemProperty() failed for "+GetName(OBJECT_SELF)+" using "+GetName(oItem)+" to cast "+IntToString(nSpellID));
 }
 
+
+// Test main
+//void main() {}

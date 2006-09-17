@@ -25,6 +25,8 @@ Acolyte of the Ego - Unstarted
 Fiendbinder - Unstarted
 
 Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
+
+Spells: Update Gate to use the new code
             
 Base Classes:
 Duskblade - All to do

@@ -16,7 +16,7 @@
 #include "prc_alterations"
 #include "psi_inc_soulkn"
 
-const int LOCAL_DEBUG = DEBUG;
+int LOCAL_DEBUG = DEBUG;
 
 //////////////////////////////////////////////////
 /* Function prototypes                          */

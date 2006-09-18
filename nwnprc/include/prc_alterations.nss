@@ -715,6 +715,10 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
     if(GetArea(oWP) != GetArea(oPC))
         AssignCommand(oWP,
             ActionJumpToObject(oPC));
+    //jump back to limbo afterwards
+    DelayCommand(0.1, 
+        AssignCommand(oWP,
+            ActionJumpToObject(oLimbo)));
     return oWP;
 }
 

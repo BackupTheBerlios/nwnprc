@@ -186,6 +186,12 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nSR = GetERSpellResistance(nCasterLvl);
 	float fDur = (60.0f * nCasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
 	
 	itemproperty ipArmor = ItemPropertyACBonus(nCasterLvl / 5);
 	itemproperty ipDR    = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_PHYSICAL, IP_CONST_DAMAGERESIST_10);

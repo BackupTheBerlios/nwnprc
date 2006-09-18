@@ -3,6 +3,7 @@ Book of Vile Darkness
 Aberrate
 Absorb Strength
 Abyssal Might
+Addiction
 Angry Ache
 Apocalypse from the Sky
 Bestow Wound
@@ -92,6 +93,7 @@ Lantern Light
 Leonal's Roar
 Last Judgement
 Luminous Armor
+Luminous Armor, Greater
 Phieren's Resolve
 Phoenix Fire
 Rain of Black Tulips

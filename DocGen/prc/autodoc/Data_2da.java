@@ -23,6 +23,10 @@ public class Data_2da implements Cloneable{
 	//private int entries = 0;
 	private String name;
 	private String defaultValue;
+	
+	/** Bugcompatibility feature for a special case where the first line of a 2da has * for line number instead of 0*/
+	private boolean starOnLine0 = false;
+	
 	/** Used for storing the original case of the labels. The ones used in the hashmap are lowercase */
 	private ArrayList<String> realLabels = new ArrayList<String>();
 
@@ -153,7 +157,10 @@ public class Data_2da implements Cloneable{
 		// Write the data
 		for(int i = 0; i < this.getEntryCount(); i++){
 			// Write the number row and it's padding
-			fw.write("" + i);
+			if(i == 0 && starOnLine0)
+				fw.write("*");
+			else
+				fw.write("" + i);
 			for(int j = 0; j < widths[widths.length - 1] - new Integer(i).toString().length(); j++) fw.write(" ");
 			// Loop over columns
 			for(int j = 0; j < labels.length; j++){
@@ -246,7 +253,8 @@ public class Data_2da implements Cloneable{
 		if(!reader.hasNextLine())
 			throw new TwoDAReadException("Empty file: " + name + "!");
 		String data = reader.nextLine();
-		if(!data.contains("2DA V2.0"))
+		
+		if(!(bugCompat ? Pattern.matches("2DA[ \t]V2\\.0\\s*", data) : data.contains("2DA V2.0")))
 			throw new TwoDAReadException("2da header missing or invalid: " + name);
 
 		// Initialise the return object
@@ -356,7 +364,12 @@ public class Data_2da implements Cloneable{
 
 			// Check for the presence of the row number
 			try{
-				line = Integer.parseInt(matcher.group());
+				// Special case - In bugcompatibility mode, 0 can be replaced with *
+				if(bugCompat && line == 0 && matcher.group().trim().equals("*")) {
+					starOnLine0 = true;
+				}
+				else
+					line = Integer.parseInt(matcher.group());
 			}catch(NumberFormatException e){
 				throw new TwoDAReadException("Numberless 2da line: " + (line + 1));
 			}

@@ -25,6 +25,7 @@
 //Random Treasure area.. Spawn in the assassin when the area is first entered..
 
 #include "prc_alterations"
+#include "inc_ecl"
 
 //::///////////////////////////////////////////////
 //:: ExcludeItem
@@ -307,13 +308,13 @@ void main()
                 //Don't destroy the reaper stone, rogue stone or Deekin's book
                 //if (GetTag(oGear) != "x2_p_reaper" && GetTag(oGear) != "x2_p_rogue" && GetTag(oGear) != "bookoflegends")
                 //{
-                
+
                 // don't destroy PRC items
                 // Lich's Phylactery or soul stones
                 // Shifters spark of life    archfocusofpower
                 // Archmage Focus Power
-                if(GetTag(oGear) != "soul_gem"    && 
-                   GetTag(oGear) != "sparkoflife" && 
+                if(GetTag(oGear) != "soul_gem"    &&
+                   GetTag(oGear) != "sparkoflife" &&
                    GetTag(oGear) != "lichamulet"  &&
                    GetTag(oGear) != "archfocusofpower"
                   )

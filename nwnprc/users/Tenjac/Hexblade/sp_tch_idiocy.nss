@@ -31,11 +31,91 @@ spells of that level.
 // Date:   15.9.2006
 ////////////////////////////////////////////////////
 
+/*
+    PRC_SPELL_EVENT_ATTACK is set when a
+        touch or ranged attack is used
+    <END NOTES TO SCRIPTER>
+*/
+
 #include "prc_alterations"
 #include "spinc_common"
+#include "prc_sp_func"
+
+//Implements the spell impact, put code here
+//  if called in many places, return TRUE if
+//  stored charges should be decreased
+//  eg. touch attack hits
+//
+//  Variables passed may be changed if necessary
+int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
+{
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nSaveDC = PRCGetSaveDC(oTarget, oCaster);
+    int nPenetr = nCasterLevel + SPGetPenetr();
+    int nDam = d6(1);
+    float fDur = (60.0f * nCasterLevel);
+
+    //INSERT SPELL CODE HERE
+    int iAttackRoll = 0;    //placeholder
+
+    int iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+    if (iAttackRoll > 0)
+    {
+	     //Touch attack code goes here
+	    if (!MyPRCResistSpell(oPC, oTarget, nCasterLevel + SPGetPenetr()))
+	    {
+		    if(nMetaMagic == METAMAGIC_MAXIMIZE)
+		    {
+			    nDam = 6;
+		    }
+		    
+		    if(nMetaMagic == METAMAGIC_EMPOWER)
+		    {
+			    nDam += (nDam/2);
+		    }
+		    
+		    if(nMetaMagic == METAMAGIC_EXTEND)
+		    {
+			    fDur += fDur;
+		    }
+		    
+		    int nDamInt = min(nDam, (GetAbilityScore(oTarget, ABILITY_INTELLIGENCE) - 1));
+		    int nDamWis = min(nDam, (GetAbilityScore(oTarget, ABILITY_WISDOM) - 1));
+		    int nDamCha = min(nDam, (GetAbilityScore(oTarget, ABILITY_CHARISMA) - 1));
+		    
+		    ApplyAbilityDamage(oTarget, ABILITY_INTELLIGENCE, nDamInt, fDur, TRUE, SPELL_TOUCH_OF_IDIOCY, nCasterLevel, oPC);
+		    ApplyAbilityDamage(oTarget, ABILITY_WISDOM, nDamWis, fDur, TRUE, SPELL_TOUCH_OF_IDIOCY, nCasterLevel, oPC);
+		    ApplyAbilityDamage(oTarget, ABILITY_CHARISMA, nDamCha, fDur, TRUE, SPELL_TOUCH_OF_IDIOCY, nCasterLevel, oPC);
+	    }
+    }
+
+    return iAttackRoll;    //return TRUE if spell charges should be decremented
+}
 
 void main()
 {
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    object oTarget = PRCGetSpellTargetObject();
+    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
+    if(!nEvent) //normal cast
+    {
+        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
+        {   //holding the charge, casting spell on self
+            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
+            return;
+        }
+        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
+    }
+    else
+    {
+        if(nEvent & PRC_SPELL_EVENT_ATTACK)
+        {
+            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
+                DecrementSpellCharges(oCaster);
+        }
+    }
+    SPSetSchool();
+}

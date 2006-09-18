@@ -343,7 +343,10 @@ public class Data_2da implements Cloneable{
 
 		// Error if there are empty lines between the header and the data or no lines at all
 		if(!reader.hasNextLine())
-			throw new TwoDAReadException("No data in 2da file!");
+			if(!bugCompat)
+				throw new TwoDAReadException("No data in 2da file!");
+			else
+				return;
 		if((data = reader.nextLine()).trim().equals(""))
 			if(!bugCompat)
 				throw new TwoDAReadException("Blank lines following labels row!");
@@ -354,7 +357,7 @@ public class Data_2da implements Cloneable{
 						if(!data.trim().equals(""))
 							break;
 					}else
-						throw new TwoDAReadException("No data in 2da file!");
+						return;
 				}
 
 		while(true){

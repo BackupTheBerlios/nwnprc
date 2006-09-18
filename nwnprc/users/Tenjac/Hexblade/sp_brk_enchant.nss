@@ -40,4 +40,7 @@ void main()
 	
 	SPSetSchool(SPELL_SCHOOL_ABJURATION);
 	
+	object oPC = OBJECT_SELF;
+	
+	
 }

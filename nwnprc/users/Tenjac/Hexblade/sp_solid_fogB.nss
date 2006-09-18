@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Solid Fog
-//:: FileName  sp_solid_fog.nss
+//:: Name      Solid Fog: On Exit
+//:: FileName  sp_solid_fogB.nss
 //:://////////////////////////////////////////////
 /**@file Solid Fog
 Conjuration (Creation)
@@ -33,30 +33,33 @@ Material Component: A pinch of dried, powdered peas
                     combined with powdered animal hoof.
 **/
 
-///////////////////////////////////////////////////////
-// Author: Tenjac
-// Date:   17.9.06
-//////////////////////////////////////////////////////
-
 #include "prc_alterations"
 #include "spinc_common"
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget      = PRCGetSpellTargetObject();
-	float fDur       = 60.0f * PRCGetCasterLevel(oPC);
-	effect eAoE = EffectAreaOfEffect(AOE_PER_FOG_VOID_SOLID);
-			
-	// Duration Effects
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, GetSpellTargetLocation(), utter.fDur);
-	
-	SPSetSchool();
+    //Declare major variables
+    //Get the object that is exiting the AOE
+    object oTarget = GetExitingObject();
+    int bValid = FALSE;
+    effect eAOE;
+    if(GetHasSpellEffect(SPELL_SOLID_FOG, oTarget))
+    {
+        //Search through the valid effects on the target.
+        eAOE = GetFirstEffect(oTarget);
+        while (GetIsEffectValid(eAOE) && bValid == FALSE)
+        {
+            if (GetEffectCreator(eAOE) == GetAreaOfEffectCreator())
+            {
+                    //If the effect was created by either half of Fog from the Void
+                    if(GetEffectSpellId(eAOE) == SPELL_SOLID_CLOUD)
+                    {
+                        RemoveEffect(oTarget, eAOE);
+                        bValid = TRUE;
+                    }
+            }
+            //Get next effect on the target
+            eAOE = GetNextEffect(oTarget);
+        }
+    }
 }
-
-		        
-	

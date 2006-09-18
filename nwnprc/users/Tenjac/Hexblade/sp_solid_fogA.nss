@@ -1,6 +1,6 @@
 //::///////////////////////////////////////////////
-//:: Name      Solid Fog
-//:: FileName  sp_solid_fog.nss
+//:: Name      Solid Fog: On Enter
+//:: FileName  sp_solid_fogA.nss
 //:://////////////////////////////////////////////
 /**@file Solid Fog
 Conjuration (Creation)
@@ -33,30 +33,31 @@ Material Component: A pinch of dried, powdered peas
                     combined with powdered animal hoof.
 **/
 
-///////////////////////////////////////////////////////
-// Author: Tenjac
-// Date:   17.9.06
-//////////////////////////////////////////////////////
-
 #include "prc_alterations"
 #include "spinc_common"
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_CONJURATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget      = PRCGetSpellTargetObject();
-	float fDur       = 60.0f * PRCGetCasterLevel(oPC);
-	effect eAoE = EffectAreaOfEffect(AOE_PER_FOG_VOID_SOLID);
-			
-	// Duration Effects
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, GetSpellTargetLocation(), utter.fDur);
-	
-	SPSetSchool();
-}
+ ActionDoCommand(SetAllAoEInts(SPELL_SOLID_FOG,OBJECT_SELF, GetSpellSaveDC()));
 
-		        
-	
+    //Declare major variables
+    effect eSlow = EffectMovementSpeedDecrease(80);
+    effect eConceal = EffectConcealment(20, MISS_CHANCE_TYPE_VS_MELEE);
+    effect eConceal2 = EffectConcealment(100, MISS_CHANCE_TYPE_VS_RANGED);
+    effect eMiss = EffectMissChance(100, MISS_CHANCE_TYPE_VS_RANGED);
+    effect eHitReduce = EffectAttackDecrease(2);
+    effect eDamReduce = EffectDamageDecrease(2);
+   
+    // Link
+    effect eLink = EffectLinkEffects(eConceal, eConceal2);
+    eLink = EffectLinkEffects(eLink, eSlow);
+    eLink = EffectLinkEffects(eLink, eMiss);
+    eLink = EffectLinkEffects(eLink, eHitReduce);
+    eLink = EffectLinkEffects(eLink, eDamReduce);
+
+    //Fire cast spell at event for the target
+    SignalEvent(oTarget, EventSpellCastAt(GetAreaOfEffectCreator(), SPELL_SOLID_FOG));
+
+    // Maximum time possible. If its less, its simply cleaned up when the spell ends.
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, (60.0f * PRCGetCasterLevel(GetAreaOfEffectCreator()));
+}

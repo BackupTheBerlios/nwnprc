@@ -17951,7 +17951,7 @@ Level
 39: Ki Frenzy 11/Day
 40: Bonus Feat</entry>
   <entry id="50227" lang="en" sex="m">Focused Lexicon: Aberration</entry>
-  <entry id="50228" lang="en" sex="m">Focused Lexicon: Animal</entry>  
+  <entry id="50228" lang="en" sex="m">Focused Lexicon: Animal</entry>
   <entry id="50229" lang="en" sex="m">Focused Lexicon: Beast</entry>
   <entry id="50230" lang="en" sex="m">Focused Lexicon: Construct</entry>
   <entry id="50231" lang="en" sex="m">Focused Lexicon: Dragon</entry>
@@ -17978,10 +17978,10 @@ Level
   <entry id="50252" lang="en" sex="m">Type of Feat: General
 Prerequisite: Truespeak 6, able to speak utterances.
 Specifics: Choose a creature type. The DC of your utterances against that creature type is increased by 1.
-Use: Automatic.</entry>  
+Use: Automatic.</entry>
   <entry id="50253" lang="en" sex="m">Focused Lexicon</entry>
   <entry id="50254" lang="en" sex="m">Utterance Focus: Breath of Cleansing</entry>
-  <entry id="50255" lang="en" sex="m">Utterance Focus: Breath of Recovery</entry>  
+  <entry id="50255" lang="en" sex="m">Utterance Focus: Breath of Recovery</entry>
   <entry id="50256" lang="en" sex="m">Utterance Focus: Eldritch Attraction</entry>
   <entry id="50257" lang="en" sex="m">Utterance Focus: Morale Boost</entry>
   <entry id="50258" lang="en" sex="m">Utterance Focus: Preturnatural Clarity</entry>
@@ -17991,67 +17991,67 @@ Use: Automatic.</entry>
   <entry id="50262" lang="en" sex="m">Utterance Focus: Temporal Spiral</entry>
   <entry id="50263" lang="en" sex="m">Utterance Focus: Temporal Twist</entry>
   <entry id="50264" lang="en" sex="m">Utterance Focus: Ward of Peace</entry>
-  <entry id="50265" lang="en" sex="m">Utterance Focus: Shockwave</entry> 
+  <entry id="50265" lang="en" sex="m">Utterance Focus: Shockwave</entry>
   <entry id="50266" lang="en" sex="m">Type of Feat: General
 Prerequisite: Able to speak utterances.
 Specifics: Choose a specific utterance. The DC of the chosen utterance is increased by 1.
-Use: Automatic.</entry>   
-  <entry id="50267" lang="en" sex="m">Utterance Focus</entry> 
-  <entry id="50268" lang="en" sex="m">Recitation of the Fortified State</entry> 
+Use: Automatic.</entry>
+  <entry id="50267" lang="en" sex="m">Utterance Focus</entry>
+  <entry id="50268" lang="en" sex="m">Recitation of the Fortified State</entry>
   <entry id="50269" lang="en" sex="m">Type of Feat: Recitation
 Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
 Specifics: You gain a natural armour bonus equal to 1/3rd your Truenamer level. This lasts for one round. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
-Use: Selected.</entry> 
-  <entry id="50270" lang="en" sex="m">Recitation of Meditative State</entry> 
+Use: Selected.</entry>
+  <entry id="50270" lang="en" sex="m">Recitation of Meditative State</entry>
   <entry id="50271" lang="en" sex="m">Type of Feat: Recitation
 Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
 Specifics: Use of this Recitation dispels most negative mental effects. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
-Use: Selected.</entry> 
-  <entry id="50272" lang="en" sex="m">Recitation of Mindful State</entry> 
+Use: Selected.</entry>
+  <entry id="50272" lang="en" sex="m">Recitation of Mindful State</entry>
   <entry id="50273" lang="en" sex="m">Type of Feat: Recitation
 Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
 Specifics: You gain a skill bonus equal to 1/3rd your Truenamer level on Open Lock, Disable Trap, and Craft skills. This lasts for two rounds. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
-Use: Selected.</entry> 
-  <entry id="50274" lang="en" sex="m">Recitation of the Sanguine State</entry> 
+Use: Selected.</entry>
+  <entry id="50274" lang="en" sex="m">Recitation of the Sanguine State</entry>
   <entry id="50275" lang="en" sex="m">TType of Feat: Recitation
 Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
 Specifics: Use of this Recitation cleanses your body of Poisons. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
-Use: Selected.</entry> 
-  <entry id="50276" lang="en" sex="m">Recitation of Vital State</entry> 
+Use: Selected.</entry>
+  <entry id="50276" lang="en" sex="m">Recitation of Vital State</entry>
   <entry id="50277" lang="en" sex="m">Type of Feat: Recitation
 Prerequisite: Truespeak 9 ranks, levels in Truenamer class.
 Specifics: Use of this Recitation cleanses your body of Disease. You must succeed on a Truespeak check of 15 + (2 * your HD) - 2.
-Use: Selected.</entry> 
-  <entry id="50278" lang="en" sex="m">Empower Utterance</entry> 
+Use: Selected.</entry>
+  <entry id="50278" lang="en" sex="m">Empower Utterance</entry>
   <entry id="50279" lang="en" sex="m">Type of Feat: General
 Prerequisite: Truespeak 9 ranks, Able to speak utterances.
 Specifics: You can empower an utterance. All variable, numeric effects of an empowered utterance are increased by one-half. An empowered utterance deals half again as much damage as normal, cures half again as many hit points, affects half again as many targets, and so forth, as appropriate. Saving throws and opposed checks are not affected, nor are utterances without random variables.
 Using this feat increases the DC to speak the utterance by 10.
-Use: Selected.</entry> 
-  <entry id="50280" lang="en" sex="m">Extend Utterance</entry> 
+Use: Selected.</entry>
+  <entry id="50280" lang="en" sex="m">Extend Utterance</entry>
   <entry id="50281" lang="en" sex="m">Type of Feat: General
 Prerequisite: Truespeak 6 ranks, Able to speak utterances.
 Specifics: You can speak an extended utterance. An extended utterance lasts twice as long as normal. A utterance with a duration of concentration, instantenous, or permanent is not affected by this feat.
 Using this feat increases the DC to speak the utterance by 5.
-Use: Selected.</entry> 
-  <entry id="50282" lang="en" sex="m">Quicken Utterance</entry> 
+Use: Selected.</entry>
+  <entry id="50282" lang="en" sex="m">Quicken Utterance</entry>
   <entry id="50283" lang="en" sex="m">Type of Feat: General
 Prerequisite: Truespeak 12 ranks, Able to speak utterances.
 Specifics: You can quicken an utterance. You can perform another action, even speak another utterance, in the same round that you speak a quickened utterance. You can speak only one quickened utterance per round. A utterance whose speaking time is longer than 1 round cannot be quickened.
 Using this feat increases the DC to speak the utterance by 20.
-Use: Selected.</entry> 
-  <entry id="50284" lang="en" sex="m">Truename Training</entry> 
+Use: Selected.</entry>
+  <entry id="50284" lang="en" sex="m">Truename Training</entry>
   <entry id="50285" lang="en" sex="m">Type of Feat: General
 Prerequisite: None
 Specifics: Truespeech is now a class skill for you.
-Use: Automatic.</entry> 
-  <entry id="50286" lang="en" sex="m">Ignore Spell Resistance</entry> 
+Use: Automatic.</entry>
+  <entry id="50286" lang="en" sex="m">Ignore Spell Resistance</entry>
   <entry id="50287" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Truenamer level 1
 Specifics: You can choose to ignore Spell Resistance entirely as you speak an utterance.
 Using this feat increases the DC to speak the utterance by 5.
-Use: Selected.</entry> 
-  <entry id="50288" lang="en" sex="m">Crafted Tool Targetting</entry> 
+Use: Selected.</entry>
+  <entry id="50288" lang="en" sex="m">Crafted Tool Targetting</entry>
   <entry id="50289" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Truenamer level 4
 Specifics: This feat allows you to choose which Inventory Slot you would like to target on the chosen creature. 
@@ -18059,18 +18059,18 @@ If a Crafted Tool utterance is targetted directly on an item, it affects that it
 Crafted Tool Targetting Conversation brings up a conversation that allows you to fill the four Crafted Tool Quickslots with chosen inventory slots.
 Simply click on the chosen quickslot to have all your Crafted Tool utterances target that slot.
 If the chosen slot is empty, the utterance will then attempt to find the proper target and affect that.
-Use: Selected.</entry> 
-  <entry id="50290" lang="en" sex="m">Crafted Tool Targetting Conversation</entry> 
-  <entry id="50291" lang="en" sex="m">Crafted Tool Quickslot #1</entry> 
-  <entry id="50292" lang="en" sex="m">Crafted Tool Quickslot #2</entry> 
-  <entry id="50293" lang="en" sex="m">Crafted Tool Quickslot #3</entry> 
-  <entry id="50294" lang="en" sex="m">Crafted Tool Quickslot #4</entry> 
-  <entry id="50295" lang="en" sex="m">See the Named</entry> 
+Use: Selected.</entry>
+  <entry id="50290" lang="en" sex="m">Crafted Tool Targetting Conversation</entry>
+  <entry id="50291" lang="en" sex="m">Crafted Tool Quickslot #1</entry>
+  <entry id="50292" lang="en" sex="m">Crafted Tool Quickslot #2</entry>
+  <entry id="50293" lang="en" sex="m">Crafted Tool Quickslot #3</entry>
+  <entry id="50294" lang="en" sex="m">Crafted Tool Quickslot #4</entry>
+  <entry id="50295" lang="en" sex="m">See the Named</entry>
   <entry id="50296" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Truenamer level 9
 Specifics: You see the named creature for one round, as per the Scry spell.
-Use: Selected.</entry> 
-  <entry id="50297" lang="en" sex="m">Speak Unto The Masses</entry> 
+Use: Selected.</entry>
+  <entry id="50297" lang="en" sex="m">Speak Unto The Masses</entry>
   <entry id="50298" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Truenamer level 17
 Specifics: You can choose to affect all creatures of a racial type within 30' of the target. This only affects utterances from the Lexicon of the Evolving Mind.
@@ -18079,17 +18079,17 @@ The racial type chosen is that of the creature targetted.
 The DC becomes 15 + (2 * The highest CR creature of the chosen racial type in the area) + (2 * The number of targets beyond the first).
 For example, you target a Goblin, and within the area are three other Goblins and one Goblin Shaman, for a total of five creatures.
 The DC is 15 + (2 * 4 [The Shaman's CR]) + (2 * 4 [The four other creatures in the area]), for a total of 31.
-Use: Selected.</entry> 
-  <entry id="50299" lang="en" sex="m">Say My Name and I Am There</entry> 
+Use: Selected.</entry>
+  <entry id="50299" lang="en" sex="m">Say My Name and I Am There</entry>
   <entry id="50300" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Truenamer level 20
 Specifics: You can choose to teleport to any party member by speaking their True nickname. This does not require a Truespeak check.
-Use: Selected.</entry> 
-  <entry id="50301" lang="en" sex="m">Knowledge Focus</entry> 
+Use: Selected.</entry>
+  <entry id="50301" lang="en" sex="m">Knowledge Focus</entry>
   <entry id="50302" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Truenamer level 2
 Specifics: You gain a +3 bonus to Lore. This increases to +6 at 7th, +9 at 10th, and +12 at 14th.
-Use: Automatic.</entry> 
+Use: Automatic.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.
@@ -21033,7 +21033,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51764" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +4 
@@ -21047,7 +21046,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51765" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +6 
@@ -21061,7 +21059,6 @@ Cost:
 
 +36000gp
 </entry>
-
   <entry id="51766" lang="en" sex="m">Description: 
 
 Armor Bonus: +1 
@@ -21075,7 +21072,6 @@ Cost:
 
 +2000gp
 </entry>
-
   <entry id="51767" lang="en" sex="m">Description: 
 
 Armor Bonus: +2 
@@ -21089,7 +21085,6 @@ Cost:
 
 +8000gp
 </entry>
-
   <entry id="51768" lang="en" sex="m">Description: 
 
 Armor Bonus: +3 
@@ -21103,7 +21098,6 @@ Cost:
 
 +18000gp
 </entry>
-
   <entry id="51769" lang="en" sex="m">Description: 
 
 Armor Bonus: +4 
@@ -21117,7 +21111,6 @@ Cost:
 
 +32000gp
 </entry>
-
   <entry id="51770" lang="en" sex="m">Description: 
 
 Armor Bonus: +5 
@@ -21131,7 +21124,6 @@ Cost:
 
 +50000gp
 </entry>
-
   <entry id="51771" lang="en" sex="m">Description: 
 
 Armor Bonus: +6 
@@ -21146,7 +21138,6 @@ Cost:
 
 +720000gp
 </entry>
-
   <entry id="51772" lang="en" sex="m">Description: 
 
 Armor Bonus: +7 
@@ -21161,7 +21152,6 @@ Cost:
 
 +980000gp
 </entry>
-
   <entry id="51773" lang="en" sex="m">Description: 
 
 Armor Bonus: +8 
@@ -21176,7 +21166,6 @@ Cost:
 
 +1280000gp
 </entry>
-
   <entry id="51774" lang="en" sex="m">Description: 
 
 Armor Bonus: +9 
@@ -21191,7 +21180,6 @@ Cost:
 
 +1620000gp
 </entry>
-
   <entry id="51775" lang="en" sex="m">Description: 
 
 Armor Bonus: +10 
@@ -21206,7 +21194,6 @@ Cost:
 
 +2000000gp
 </entry>
-
   <entry id="51776" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +4 
@@ -21220,7 +21207,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51777" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +6 
@@ -21234,7 +21220,6 @@ Cost:
 
 +36000gp
 </entry>
-
   <entry id="51778" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +8 
@@ -21249,7 +21234,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51779" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +10 
@@ -21264,7 +21248,6 @@ Cost:
 
 +1000000gp
 </entry>
-
   <entry id="51780" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +12 
@@ -21279,7 +21262,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51781" lang="en" sex="m">Description: 
 
 Skill Bonus: Move Silently +5 
@@ -21293,7 +21275,6 @@ Cost:
 
 +2500gp
 </entry>
-
   <entry id="51782" lang="en" sex="m">Description: 
 
 Use: Haste (10) 1 Use/Day 
@@ -21307,7 +21288,6 @@ Cost:
 
 +12000gp
 </entry>
-
   <entry id="51783" lang="en" sex="m">Description: 
 
 
@@ -21321,7 +21301,6 @@ Cost:
 
 +256000gp
 </entry>
-
   <entry id="51784" lang="en" sex="m">Description: 
 
 Use: Teleport (9) 3 Uses/Day 
@@ -21335,7 +21314,6 @@ Cost:
 
 +49000gp
 </entry>
-
   <entry id="51785" lang="en" sex="m">Description: 
 
 Damage Resistance: Cold Resist 5 / - 
@@ -21349,7 +21327,6 @@ Cost:
 
 +2500gp
 </entry>
-
   <entry id="51786" lang="en" sex="m">Description: 
 
 Armor Bonus: +1 
@@ -21363,7 +21340,6 @@ Cost:
 
 +1000gp
 </entry>
-
   <entry id="51787" lang="en" sex="m">Description: 
 
 Armor Bonus: +2 
@@ -21377,7 +21353,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51788" lang="en" sex="m">Description: 
 
 Armor Bonus: +3 
@@ -21391,7 +21366,6 @@ Cost:
 
 +9000gp
 </entry>
-
   <entry id="51789" lang="en" sex="m">Description: 
 
 Armor Bonus: +4 
@@ -21405,7 +21379,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51790" lang="en" sex="m">Description: 
 
 Armor Bonus: +5 
@@ -21419,7 +21392,6 @@ Cost:
 
 +25000gp
 </entry>
-
   <entry id="51791" lang="en" sex="m">Description: 
 
 Armor Bonus: +6 
@@ -21433,7 +21405,6 @@ Cost:
 
 +36000gp
 </entry>
-
   <entry id="51792" lang="en" sex="m">Description: 
 
 Armor Bonus: +7 
@@ -21447,7 +21418,6 @@ Cost:
 
 +49000gp
 </entry>
-
   <entry id="51793" lang="en" sex="m">Description: 
 
 Armor Bonus: +8 
@@ -21461,7 +21431,6 @@ Cost:
 
 +64000gp
 </entry>
-
   <entry id="51794" lang="en" sex="m">Description: 
 
 Armor Bonus: +11 
@@ -21476,7 +21445,6 @@ Cost:
 
 +1210000gp
 </entry>
-
   <entry id="51795" lang="en" sex="m">Description: 
 
 Armor Bonus: +12 
@@ -21491,7 +21459,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51796" lang="en" sex="m">Description: 
 
 Armor Bonus: +13 
@@ -21506,7 +21473,6 @@ Cost:
 
 +1690000gp
 </entry>
-
   <entry id="51797" lang="en" sex="m">Description: 
 
 Armor Bonus: +14 
@@ -21521,7 +21487,6 @@ Cost:
 
 +1960000gp
 </entry>
-
   <entry id="51798" lang="en" sex="m">Description: 
 
 Armor Bonus: +15 
@@ -21536,7 +21501,6 @@ Cost:
 
 +2250000gp
 </entry>
-
   <entry id="51799" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +8 
@@ -21551,7 +21515,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51800" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +10 
@@ -21566,7 +21529,6 @@ Cost:
 
 +1000000gp
 </entry>
-
   <entry id="51801" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +12 
@@ -21581,7 +21543,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51802" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +12 
@@ -21597,7 +21558,6 @@ Cost:
 
 +4384000gp
 </entry>
-
   <entry id="51803" lang="en" sex="m">Description: 
 
 Spell Immunity: Magic Missile 
@@ -21613,7 +21573,6 @@ Cost:
 
 +1500gp
 </entry>
-
   <entry id="51804" lang="en" sex="m">Description: 
 
 Use: Searing Light (5) 1 Use/Day 
@@ -21628,7 +21587,6 @@ Cost:
 
 +6480gp
 </entry>
-
   <entry id="51805" lang="en" sex="m">Description: 
 
 Use: Searing Light (5) 1 Use/Day 
@@ -21644,7 +21602,6 @@ Cost:
 
 +23760gp
 </entry>
-
   <entry id="51806" lang="en" sex="m">Description: 
 
 
@@ -21657,7 +21614,6 @@ Cost:
 
 +4500gp
 </entry>
-
   <entry id="51807" lang="en" sex="m">Description: 
 
 Bonus Spell Slot: Cleric Level 0 
@@ -21672,7 +21628,6 @@ Cost:
 +14000 Enhancement
 +80gp
 </entry>
-
   <entry id="51809" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +2 
@@ -21686,7 +21641,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51810" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +4 
@@ -21700,7 +21654,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51811" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +6 
@@ -21714,7 +21667,6 @@ Cost:
 
 +36000gp
 </entry>
-
   <entry id="51812" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +8 
@@ -21729,7 +21681,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51813" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +10 
@@ -21744,7 +21695,6 @@ Cost:
 
 +1000000gp
 </entry>
-
   <entry id="51814" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +12 
@@ -21759,7 +21709,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51815" lang="en" sex="m">Description: 
 
 Use: Blur (5) Unlimited Uses/Day 
@@ -21773,7 +21722,6 @@ Cost:
 
 +24000gp
 </entry>
-
   <entry id="51816" lang="en" sex="m">Description: 
 
 Use: Displacement (9) 1 Use/Day 
@@ -21789,7 +21737,6 @@ Cost:
 
 +50000gp
 </entry>
-
   <entry id="51817" lang="en" sex="m">Description: 
 
 Skill Bonus: Hide +5 
@@ -21804,7 +21751,6 @@ Cost:
 
 +2500gp
 </entry>
-
   <entry id="51818" lang="en" sex="m">Description: 
 
 Use: Greater Sanctuary (18) 1 Use/Day 
@@ -21818,7 +21764,6 @@ Cost:
 
 +55000gp
 </entry>
-
   <entry id="51819" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +1 
@@ -21832,7 +21777,6 @@ Cost:
 
 +1000gp
 </entry>
-
   <entry id="51820" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +2 
@@ -21846,7 +21790,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51821" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +3 
@@ -21860,7 +21803,6 @@ Cost:
 
 +9000gp
 </entry>
-
   <entry id="51822" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +4 
@@ -21874,7 +21816,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51823" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +5 
@@ -21888,7 +21829,6 @@ Cost:
 
 +25000gp
 </entry>
-
   <entry id="51824" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +6 
@@ -21903,7 +21843,6 @@ Cost:
 
 +360000gp
 </entry>
-
   <entry id="51825" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +7 
@@ -21918,7 +21857,6 @@ Cost:
 
 +490000gp
 </entry>
-
   <entry id="51826" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +8 
@@ -21933,7 +21871,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51827" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +9 
@@ -21948,7 +21885,6 @@ Cost:
 
 +810000gp
 </entry>
-
   <entry id="51828" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +10 
@@ -21963,7 +21899,6 @@ Cost:
 
 +1000000gp
 </entry>
-
   <entry id="51829" lang="en" sex="m">Description: 
 
 Use: Charm Person (10) Unlimited Uses/Day 
@@ -21978,7 +21913,6 @@ Cost:
 
 +56000gp
 </entry>
-
   <entry id="51830" lang="en" sex="m">Description: 
 
 Use: Doom (5) 1 Use/Day 
@@ -21993,7 +21927,6 @@ Cost:
 
 +25000gp
 </entry>
-
   <entry id="51831" lang="en" sex="m">Description: 
 
 Skill Bonus: Spot +5 
@@ -22007,7 +21940,6 @@ Cost:
 
 +2500gp
 </entry>
-
   <entry id="51832" lang="en" sex="m">Description: 
 
 Use: Flesh to Stone (5) 1 Use/Day 
@@ -22022,7 +21954,6 @@ Cost:
 
 +98000gp
 </entry>
-
   <entry id="51833" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +2 
@@ -22036,7 +21967,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51834" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Dexterity +2 
@@ -22050,7 +21980,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51835" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Dexterity +4 
@@ -22064,7 +21993,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51836" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Dexterity +6 
@@ -22078,7 +22006,6 @@ Cost:
 
 +36000gp
 </entry>
-
   <entry id="51837" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Dexterity +8 
@@ -22093,7 +22020,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51838" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Dexterity +10 
@@ -22108,7 +22034,6 @@ Cost:
 
 +1000000gp
 </entry>
-
   <entry id="51839" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Dexterity +12 
@@ -22123,7 +22048,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51840" lang="en" sex="m">Description: 
 
 Skill Bonus: Search +5 
@@ -22137,7 +22061,6 @@ Cost:
 
 +1250gp
 </entry>
-
   <entry id="51841" lang="en" sex="m">Description: 
 
 Darkvision 
@@ -22151,7 +22074,6 @@ Cost:
 
 +12000gp
 </entry>
-
   <entry id="51843" lang="en" sex="m">Description: 
 
 Use: Acid Fog (11) Unlimited Uses/Day 
@@ -22165,7 +22087,6 @@ Cost:
 
 +900gp
 </entry>
-
   <entry id="51844" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Intelligence +2 
@@ -22179,7 +22100,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51845" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Intelligence +4 
@@ -22193,7 +22113,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51846" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Intelligence +6 
@@ -22207,7 +22126,6 @@ Cost:
 
 +36000gp
 </entry>
-
   <entry id="51847" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Intelligence +8 
@@ -22222,7 +22140,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51848" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Intelligence +10 
@@ -22237,7 +22154,6 @@ Cost:
 
 +1000000gp
 </entry>
-
   <entry id="51849" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Intelligence +12 
@@ -22252,7 +22168,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51850" lang="en" sex="m">Description: 
 
 
@@ -22264,7 +22179,6 @@ Cost:
 
 +125000gp
 </entry>
-
   <entry id="51851" lang="en" sex="m">Description: 
 
 Use: Teleport (9) 3 Uses/Day 
@@ -22278,7 +22192,6 @@ Cost:
 
 +73500gp
 </entry>
-
   <entry id="51852" lang="en" sex="m">Description: 
 
 Spell Resistance: 21 
@@ -22292,7 +22205,6 @@ Cost:
 
 +90000gp
 </entry>
-
   <entry id="51853" lang="en" sex="m">Description: 
 
 Spell Resistance: 40 
@@ -22307,7 +22219,6 @@ Cost:
 
 +290000gp
 </entry>
-
   <entry id="51854" lang="en" sex="m">Description: 
 
 Skill Bonus: Hide +30 
@@ -22324,7 +22235,6 @@ Cost:
 
 +242000gp
 </entry>
-
   <entry id="51855" lang="en" sex="m">Description: 
 
 Use: Finger of Death (13) 1 Use/Day 
@@ -22339,7 +22249,6 @@ Cost:
 
 +22000gp
 </entry>
-
   <entry id="51857" lang="en" sex="m">Description: 
 
 
@@ -22352,7 +22261,6 @@ Cost:
 
 +1650gp
 </entry>
-
   <entry id="51858" lang="en" sex="m">Description: 
 
 
@@ -22365,7 +22273,6 @@ Cost:
 
 +2700gp
 </entry>
-
   <entry id="51859" lang="en" sex="m">Description: 
 
 
@@ -22378,7 +22285,6 @@ Cost:
 
 +4350gp
 </entry>
-
   <entry id="51860" lang="en" sex="m">Description: 
 
 
@@ -22391,7 +22297,6 @@ Cost:
 
 +5400gp
 </entry>
-
   <entry id="51861" lang="en" sex="m">Description: 
 
 
@@ -22404,7 +22309,6 @@ Cost:
 
 +5850gp
 </entry>
-
   <entry id="51862" lang="en" sex="m">Description: 
 
 
@@ -22417,7 +22321,6 @@ Cost:
 
 +8100gp
 </entry>
-
   <entry id="51863" lang="en" sex="m">Description: 
 
 
@@ -22430,7 +22333,6 @@ Cost:
 
 +8700gp
 </entry>
-
   <entry id="51864" lang="en" sex="m">Description: 
 
 Immunity: Disease 
@@ -22444,7 +22346,6 @@ Cost:
 
 +7500gp
 </entry>
-
   <entry id="51865" lang="en" sex="m">Description: 
 
 Immunity: Poison 
@@ -22458,7 +22359,6 @@ Cost:
 
 +27000gp
 </entry>
-
   <entry id="51866" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Wisdom +2 
@@ -22472,7 +22372,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51867" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Wisdom +4 
@@ -22486,7 +22385,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51868" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Wisdom +6 
@@ -22500,7 +22398,6 @@ Cost:
 
 +36000gp
 </entry>
-
   <entry id="51869" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Wisdom +8 
@@ -22515,7 +22412,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51870" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Wisdom +10 
@@ -22530,7 +22426,6 @@ Cost:
 
 +1000000gp
 </entry>
-
   <entry id="51871" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Wisdom +12 
@@ -22545,7 +22440,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51872" lang="en" sex="m">Description: 
 
 Regeneration: +1 
@@ -22559,7 +22453,6 @@ Cost:
 
 +15000gp
 </entry>
-
   <entry id="51873" lang="en" sex="m">Description: 
 
 
@@ -22572,7 +22465,6 @@ Cost:
 
 +75000gp
 </entry>
-
   <entry id="51874" lang="en" sex="m">Description: 
 
 
@@ -22585,7 +22477,6 @@ Cost:
 
 +75000gp
 </entry>
-
   <entry id="51875" lang="en" sex="m">Description: 
 
 
@@ -22598,7 +22489,6 @@ Cost:
 
 +75000gp
 </entry>
-
   <entry id="51876" lang="en" sex="m">Description: 
 
 
@@ -22611,7 +22501,6 @@ Cost:
 
 +120000gp
 </entry>
-
   <entry id="51877" lang="en" sex="m">Description: 
 
 
@@ -22624,7 +22513,6 @@ Cost:
 
 +27000gp
 </entry>
-
   <entry id="51878" lang="en" sex="m">Description: 
 
 Spell Resistance: 20 

@@ -1,11 +1,11 @@
 ; Script generated with the Venis Install Wizard
 
 !ifndef PRCSPVERSION
-	!define PRCSPVERSION "15"
+	!define PRCSPVERSION "16"
 !endif
 
 !ifndef PRCSPINSTALLVERSION
-	!define PRCSPINSTALLVERSION "1.5"
+	!define PRCSPINSTALLVERSION "1.6"
 !endif
 
 ; Define your application name
@@ -70,6 +70,9 @@ Section "PRC Pack" Section1
     File "nwnx_profiler.dll"
     File "nwnx_profiler.html"
     File "profilersrc.exe"
+    File "nwnx_invfixpl.dll"
+    File "invfixpl_src.exe"
+    File "invfixpl_readme.txt"
 	
 	;Precacher specifics
 	File "precacher sqlite prc.bat"
@@ -149,6 +152,9 @@ Section Uninstall
     Delete "$NWNPATH\nwnx_profiler.dll"
     Delete "$NWNPATH\nwnx_profiler.html"
     Delete "$NWNPATH\profilersrc.exe"
+    Delete "$NWNPATH\nwnx_invfixpl.dll"
+    Delete "$NWNPATH\invfixpl_src.exe"
+    Delete "$NWNPATH\invfixpl_readme.txt"
         Delete "$NWNPATH\override\directory.2da"
 	
 	;Precacher specifics

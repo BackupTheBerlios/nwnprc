@@ -11,6 +11,9 @@ NWNX-Profiler      1.60
 SQLite             3.3.6
 Precacher, part of prc.jar
 NWNX for Linux  2.5.3rc1  (source plus precompiled binary)
+NWNX-InvFixpl	1.0
+
+NWNX-InvFixpl - Fixes the inventory lag caused by the prc creature hides, however it also alters the value of some items - see invfixpl_readme.txt for details.
 
 Note: the Linux version has important information in nwnx_linux_readme.txt. It ONLY supports mySQL.
 You do not need to download anything else, buf for reference:

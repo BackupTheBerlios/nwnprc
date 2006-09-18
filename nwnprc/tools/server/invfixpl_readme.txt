@@ -1,0 +1,1 @@
+This fix disables counting of that part of item's price from bonus feats - this fixes problem of long inventory lag made by prc skin bonus feats, however it changes a bit price of items with bonus feats (bonus feat price not counted).

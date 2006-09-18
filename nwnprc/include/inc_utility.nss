@@ -459,8 +459,6 @@ void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location l
 #include "inc_pers_array"   // includes inc_array, inc_persist_loca, inc_item_props, inc_prc_npc and inc_2dacache
 #include "inc_eventhook"    // Should be after inc_pers_array, which it is dependent on
 #include "inc_heap"         // Should be after inc_pers_array, as it needs inc_array
-#include "prc_inc_switch"   // Should be after inc_pers_array, as it needs inc_array
-#include "inc_ecl"          // Depends on inc_2dacache, prc_inc_switch and inc_class_by_pos
 #include "inc_metalocation" // Depends on inc_persist_loca
 #include "inc_array_sort"   // Depends on inc_array and inc_debug
 #include "inc_uniqueid"     // Depends on inc_array

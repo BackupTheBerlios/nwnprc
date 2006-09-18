@@ -44,6 +44,7 @@ void StoreCohort(object oCohort);
 
 #include "prc_feat_const"
 #include "inc_utility"
+#include "inc_ecl"
 #include "pnp_shft_poly" //for DoDisguise
 
 
@@ -211,43 +212,43 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
             //first name
             switch(MyPRCGetRacialType(oCohort))
             {
-                case RACIAL_TYPE_DWARF: 
+                case RACIAL_TYPE_DWARF:
                     if(GetGender(oCohort) == GENDER_FEMALE)
                         sName += RandomName(NAME_FIRST_DWARF_FEMALE);
                     else
                         sName += RandomName(NAME_FIRST_DWARF_MALE);
                     break;
-                case RACIAL_TYPE_ELF: 
+                case RACIAL_TYPE_ELF:
                     if(GetGender(oCohort) == GENDER_FEMALE)
                         sName += RandomName(NAME_FIRST_ELF_FEMALE);
                     else
                         sName += RandomName(NAME_FIRST_ELF_MALE);
                     break;
-                case RACIAL_TYPE_GNOME: 
+                case RACIAL_TYPE_GNOME:
                     if(GetGender(oCohort) == GENDER_FEMALE)
                         sName += RandomName(NAME_FIRST_GNOME_FEMALE);
                     else
                         sName += RandomName(NAME_FIRST_GNOME_MALE);
                     break;
-                case RACIAL_TYPE_HUMAN: 
+                case RACIAL_TYPE_HUMAN:
                     if(GetGender(oCohort) == GENDER_FEMALE)
                         sName += RandomName(NAME_FIRST_HUMAN_FEMALE);
                     else
                         sName += RandomName(NAME_FIRST_HUMAN_MALE);
                     break;
-                case RACIAL_TYPE_HALFELF: 
+                case RACIAL_TYPE_HALFELF:
                     if(GetGender(oCohort) == GENDER_FEMALE)
                         sName += RandomName(NAME_FIRST_HALFELF_FEMALE);
                     else
                         sName += RandomName(NAME_FIRST_HALFELF_MALE);
                     break;
-                case RACIAL_TYPE_HALFORC: 
+                case RACIAL_TYPE_HALFORC:
                     if(GetGender(oCohort) == GENDER_FEMALE)
                         sName += RandomName(NAME_FIRST_HALFORC_FEMALE);
                     else
                         sName += RandomName(NAME_FIRST_HALFORC_MALE);
                     break;
-                case RACIAL_TYPE_HALFLING: 
+                case RACIAL_TYPE_HALFLING:
                     if(GetGender(oCohort) == GENDER_FEMALE)
                         sName += RandomName(NAME_FIRST_HALFLING_FEMALE);
                     else
@@ -258,37 +259,37 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
             //surname
             switch(MyPRCGetRacialType(oCohort))
             {
-                case RACIAL_TYPE_DWARF: 
+                case RACIAL_TYPE_DWARF:
                     sName += RandomName(NAME_LAST_DWARF);
                     break;
-                case RACIAL_TYPE_ELF: 
+                case RACIAL_TYPE_ELF:
                     sName += RandomName(NAME_LAST_ELF);
                     break;
-                case RACIAL_TYPE_GNOME: 
+                case RACIAL_TYPE_GNOME:
                     sName += RandomName(NAME_LAST_GNOME);
                     break;
-                case RACIAL_TYPE_HUMAN: 
+                case RACIAL_TYPE_HUMAN:
                     sName += RandomName(NAME_LAST_HUMAN);
                     break;
-                case RACIAL_TYPE_HALFELF: 
+                case RACIAL_TYPE_HALFELF:
                     sName += RandomName(NAME_LAST_HALFELF);
                     break;
-                case RACIAL_TYPE_HALFORC: 
+                case RACIAL_TYPE_HALFORC:
                     sName += RandomName(NAME_LAST_HALFORC);
                     break;
-                case RACIAL_TYPE_HALFLING: 
+                case RACIAL_TYPE_HALFLING:
                     sName += RandomName(NAME_LAST_HALFLING);
                     break;
             }
-            //sanity check 
+            //sanity check
             if(sName == " ")
                 sName = "";
             //change the name
             AssignCommand(oCohort, SetName(oCohort, sName));
-            
+
             //use disguise code to alter head etc
             DoDisguise(MyPRCGetRacialType(oCohort), oCohort);
-            
+
             //DoDisguise removed wings/tails need to re-add
             if(GetRacialType(oCohort) == RACIAL_TYPE_FEYRI)
                 SetCreatureWingType(CREATURE_WING_TYPE_DEMON, oCohort);
@@ -334,7 +335,7 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
     //clean up any leftovers on the skin
     ScrubPCSkin(oCohort, oSkin);
     DeletePRCLocalInts(oSkin);
-    
+
     //turn on its scripts
     //normal MoB set
     AddEventScript(oCohort, EVENT_VIRTUAL_ONPHYSICALATTACKED,   "prc_ai_mob_attck", TRUE, FALSE);
@@ -453,8 +454,8 @@ void CheckHB(object oPC)
     if(GetLocalInt(oPC, "CohortCheckHB") > 1)
         return;
     SetLocalInt(oPC, "CohortCheckHB", GetLocalInt(oPC, "CohortCheckHB")+1);
-    DelayCommand(0.99, 
-        SetLocalInt(oPC, "CohortCheckHB", GetLocalInt(oPC, "CohortCheckHB")-1));   
+    DelayCommand(0.99,
+        SetLocalInt(oPC, "CohortCheckHB", GetLocalInt(oPC, "CohortCheckHB")-1));
     SetCommandable(FALSE, oPC);
     if(GetHitDice(oPC) == 40)
     {
@@ -568,7 +569,7 @@ int GetCohortMaxLevel(int nLeadership, object oPC)
         case 66: nLevel = 38; break;
         case 67: nLevel = 39; break;
         case 68: nLevel = 39; break;
-        case 69: nLevel = 40; break;    
+        case 69: nLevel = 40; break;
         case 70: nLevel = 40; break;
     }
     //apply a level lag
@@ -653,18 +654,18 @@ int GetMaximumCohortCount(object oPC)
     if(GetHasFeat(FEAT_LEGENDARY_COMMANDER, oPC)
         && !GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC))
         nCount++;
-    //hathran class    
+    //hathran class
     if(GetHasFeat(FEAT_HATH_COHORT, oPC))
         nCount++;
-    //orc warlord with switch    
+    //orc warlord with switch
     if(GetHasFeat(FEAT_GATHER_HORDE_I, oPC)
         && GetPRCSwitch(PRC_ORC_WARLORD_COHORT))
-        nCount++;    
-    //thrallherd with switch    
+        nCount++;
+    //thrallherd with switch
     if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
         && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC))
-        nCount++;  
-    //twofold masteer    
+        nCount++;
+    //twofold masteer
     if(GetPRCSwitch(PRC_THRALLHERD_LEADERSHIP)
         && GetLevelByClass(CLASS_TYPE_THRALLHERD, oPC) >= 10)
         nCount++;

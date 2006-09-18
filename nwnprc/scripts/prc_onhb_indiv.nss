@@ -12,6 +12,8 @@
 
 #include "prc_alterations"
 #include "prc_inc_natweap"
+#include "inc_ecl"
+
 
 void main()
 {
@@ -83,7 +85,7 @@ void main()
                 {
                     SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
                     SetDroppableFlag(oTest, FALSE); // nondroppable so it doesnt show on NPCs
-                }    
+                }
             }
             if(bHasScrollFeat && !bHasScroll)
             {
@@ -94,7 +96,7 @@ void main()
                 {
                     SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
                     SetDroppableFlag(oTest, FALSE); // nondroppable so it doesnt show on NPCs
-                }    
+                }
             }
             if(bHasWandFeat && !bHasWand)
             {
@@ -105,7 +107,7 @@ void main()
                 {
                     SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
                     SetDroppableFlag(oTest, FALSE); // nondroppable so it doesnt show on NPCs
-                }    
+                }
             }
         }
     }

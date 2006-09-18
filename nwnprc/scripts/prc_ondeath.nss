@@ -9,7 +9,7 @@
 #include "prc_inc_clsfunc"
 #include "psi_inc_psifunc"
 #include "prc_inc_death"
-
+#include "inc_ecl"
 
 void main()
 {

@@ -17,6 +17,7 @@
 #include "prc_alterations"
 #include "prc_inc_sneak"
 #include "psi_inc_psifunc"
+#include "inc_ecl"
 
 //  Prevents a Man at Arms from taking improved critical
 //  in a weapon that he does not have focus in.
@@ -360,10 +361,10 @@ int FavouredSoul(object oPC = OBJECT_SELF)
      int nEnergy;
      int nFocus;
      int nCheck;
-     
+
      if (nFS >= 3)
      {
-	nFocus += GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,    oPC) + 
+	nFocus += GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,    oPC) +
 	GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,       oPC) 	      +
 	GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,             oPC) 	      +
 	GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE,         oPC) 	      +
@@ -402,7 +403,7 @@ int FavouredSoul(object oPC = OBJECT_SELF)
 	GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC) 	      +
     	GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC) 	      +
 	GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC) 	      ;
-								      
+
      if (nFocus >= 1 && nFS >= 3) { nCheck = TRUE; }
      else { nCheck = FALSE; }
 
@@ -414,7 +415,7 @@ int FavouredSoul(object oPC = OBJECT_SELF)
      }
 
      }
-     return TRUE;     
+     return TRUE;
 
      if (nFS >= 5)
      {
@@ -1061,19 +1062,19 @@ int LeadershipHD(object oPC)
         if(GetHasFeat(FEAT_LEADERSHIP, oPC))
         {
             FloatingTextStringOnCreature("A thrallherd cannot take the Leadership feat.", oPC, FALSE);
-            return FALSE;    
+            return FALSE;
         }
         if(GetHasFeat(FEAT_EPIC_LEADERSHIP, oPC))
         {
             FloatingTextStringOnCreature("A thrallherd cannot take the Epic Leadership feat.", oPC, FALSE);
-            return FALSE;    
+            return FALSE;
         }
         if(GetHasFeat(FEAT_LEGENDARY_COMMANDER, oPC))
         {
             FloatingTextStringOnCreature("A thrallherd cannot take the Legendary Commander feat.", oPC, FALSE);
-            return FALSE;    
+            return FALSE;
         }
-    }   
+    }
     return TRUE;
 }
 

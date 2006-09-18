@@ -6,11 +6,11 @@
 /*
         This was orignally designed to allow respawning ground traps
         However, as of NWN 1.67 this is no longer needed.
-        
+
         The secondary purpose of this is now most useful and that
         is to provide a system where a wide variety of traps
         can be set and used.
-        
+
         This particular file details the trap struct used to track
         all the relevant information in it
 */
@@ -20,6 +20,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_misc_const"
+#include "inc_ecl"
 
 
 struct trap
@@ -47,7 +48,7 @@ struct trap
     int nDamageDice;
     int nDamageSize;
     int nDamageBonus;
-//visual things    
+//visual things
     int nTargetVFX;
     int nTrapVFX;
     int nBeamVFX;
@@ -68,7 +69,7 @@ struct trap
     int nRespawnRandomCR;
 //this is the size of the trap on the ground
 //if zero, 2.0 is used
-    float fSize;    
+    float fSize;
 };
 
 struct trap GetLocalTrap(object oObject, string sVarName);

@@ -1,3 +1,48 @@
+Book of Exalted Deeds
+
+Amber Sarcophagus
+Ayailla's Radiant Burst
+Blinding Glory
+Blood of the Martyr
+Bolt of Glory
+Brilliant Emanation
+Call Faithful Servants
+Celestial Blood
+Chaav's Laugh
+Convert Wand
+Divine Inspiration
+Divine Sacrifice
+Diamond Spray
+Dragon Cloud
+Drug Resistance
+Elation
+Energize Potion
+Exalted Fury
+Exalted Raiment
+Eyes of the Avoral
+Hammer of Righteousness
+Lantern Light
+Leonal's Roar
+Last Judgement
+Luminous Armor
+Luminous Armor, Greater
+Phieren's Resolve
+Phoenix Fire
+Rain of Black Tulips
+Rain of Embers
+Rain of Roses
+Ray of Hope
+Righteous Smite
+Sicken Evil
+Starmantle
+Storm of Shards
+Sunmantle
+Sword of Conscience
+Tomb of Light
+Twilight Luck
+Vision of Heaven
+
+
 Book of Vile Darkness
 
 Aberrate
@@ -43,6 +88,7 @@ Hellfire Storm
 Lahm's Finger Darts
 Liquid Pain
 Masochism
+Morality Undone
 Power Leech
 Rapture of Rupture
 Reality Blind
@@ -68,43 +114,60 @@ Wave of Pain
 Wrack
 Wretched Blight
 
-Book of Exalted Deeds
-Amber Sarcophagus
-Ayailla's Radiant Burst
-Blinding Glory
-Bolt of Glory
-Brilliant Emanation
-Call Faithful Servants
-Celestial Blood
-Chaav's Laugh
-Convert Wand
-Divine Inspiration
-Divine Sacrifice
-Diamond Spray
-Dragon Cloud
-Drug Resistance
-Elation
-Energize Potion
-Exalted Fury
-Exalted Raiment
-Eyes of the Avoral
-Hammer of Righteousness
-Lantern Light
-Leonal's Roar
-Last Judgement
-Luminous Armor
-Luminous Armor, Greater
-Phieren's Resolve
-Phoenix Fire
-Rain of Black Tulips
-Rain of Embers
-Rain of Roses
-Ray of Hope
-Righteous Smite
-Sicken Evil
-Starmantle
-Storm of Shards
-Sunmantle
-Tomb of Light
-Twilight Luck
-Vision of Heaven
+
+Complete Warrior
+
+Augment Familiar
+Cursed Blade
+Hound of Doom
+
+
+Frostburn
+
+Lesser Shivering Touch
+Shivering Touch
+
+
+PHB
+
+Baelful Polymorph
+Break Enchantment
+Command
+Command, Greater
+Deep Slumber
+Detect Scrying
+False Life
+Obscuring Mist
+Protection from Arrows
+Repel Vermin
+Solid Fog
+Touch of Idiocy
+
+
+PHB II
+
+Animalistic Power
+Bigby's Striking Fist
+Bibgy's Tripping Hand
+Blade of Blood
+Channeled Pyroburst
+Crown of Might
+Crown of Protection
+Deflect
+Deflect, Lesser
+Dimension Hop
+Dispelling Touch
+Doom Scarabs
+Energy Aegis
+Energy Surge
+Halt
+Kelgore's Fire Bolt
+Regroup
+Rouse
+Seeking Ray
+Slashing Dispell
+Sonic Shield
+Sure Strike
+
+
+

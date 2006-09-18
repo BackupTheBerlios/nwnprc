@@ -147,7 +147,8 @@ void main()
                     AddChoice("Manage Epic Spells.", 2);
                 AddChoice("Purchase general items, such as scrolls or crafting materials.", 3);
                 AddChoice("Attempt to identify everything in my inventory.", 4);
-                if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD)
+                if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD
+                    && !GetPersistantLocalInt(oPC, "shadowwalkerstok"))
                     AddChoice("Join the Shadowlords as a prerequisited for the Teflammar Shadowlord class.", 5);
                 if(GetCanRegister(oPC)
                     && !GetPRCSwitch(PRC_DISABLE_REGISTER_COHORTS))

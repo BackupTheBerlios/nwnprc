@@ -45,11 +45,13 @@ public final class MenuGeneration{
 		TreeMap<String, String> normalSpellLinks  = new TreeMap<String, String>(),
 		                        epicSpellLinks    = new TreeMap<String, String>(),
 		                        psionicPowerLinks = new TreeMap<String, String>(),
+		                        utteranceLinks    = new TreeMap<String, String>(),
 		                        modSpellLinks     = new TreeMap<String, String>();
-		StringBuffer normalPrint   = new StringBuffer(),
-		             epicPrint     = new StringBuffer(),
-		             psionicPrint  = new StringBuffer(),
-		             modSpellPrint = new StringBuffer();
+		StringBuffer normalPrint    = new StringBuffer(),
+		             epicPrint      = new StringBuffer(),
+		             psionicPrint   = new StringBuffer(),
+		             utterancePrint = new StringBuffer(),
+		             modSpellPrint  = new StringBuffer();
 		String temp = null;
 		
 		if(verbose) System.out.println("Printing spell menus");
@@ -72,6 +74,11 @@ public final class MenuGeneration{
 					                                                              spell.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
 					                                                  .replaceAll("~~~targetName~~~", spell.name));
 					break;
+				case UTTERANCE:
+					utteranceLinks.put(spell.name, menuItemTemplate.replaceAll("~~~TargetPath~~~",
+					                                                           spell.filePath.replace(mainPath, "../").replaceAll("\\\\", "/"))
+					                                               .replaceAll("~~~targetName~~~", spell.name));
+					break;
 				
 				default: throw new AssertionError("Unhandled spelltype: " + spell.type);
 			}
@@ -88,6 +95,8 @@ public final class MenuGeneration{
 			epicPrint.append(epicSpellLinks.remove(epicSpellLinks.firstKey()));
 		while(psionicPowerLinks.size() > 0)
 			psionicPrint.append(psionicPowerLinks.remove(psionicPowerLinks.firstKey()));
+		while(utteranceLinks.size() > 0)
+			utterancePrint.append(utteranceLinks.remove(utteranceLinks.firstKey()));
 		while(modSpellLinks.size() > 0)
 			modSpellPrint.append(modSpellLinks.remove(modSpellLinks.firstKey()));
 		
@@ -97,6 +106,8 @@ public final class MenuGeneration{
 		                                                                  .replaceAll("~~~menuEntries~~~", epicPrint.toString()));
 		printPage(menuPath + "manual_menus_psionic_powers.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_PSIONICPOWERSTXT])
 		                                                                     .replaceAll("~~~menuEntries~~~", psionicPrint.toString()));
+		printPage(menuPath + "manual_menus_truename_utterances.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_TRUENAMEUTTERANCETXT])
+		                                                                          .replaceAll("~~~menuEntries~~~", utterancePrint.toString()));
 		printPage(menuPath + "manual_menus_modified_spells.html", menuTemplate.replaceAll("~~~menuName~~~", curLanguageData[LANGDATA_MODIFIEDSPELLSTXT])
 		                                                                      .replaceAll("~~~menuEntries~~~", modSpellPrint.toString()));
 	}

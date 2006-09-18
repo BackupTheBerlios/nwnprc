@@ -350,6 +350,12 @@ public class Main{
 								paraMatch.find();
 								temp[LANGDATA_POWERTXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
 							}
+							else if(result.startsWith("truenameutterances=")){
+								paraMatch.reset(result);
+								paraMatch.find();
+								temp[LANGDATA_TRUENAMEUTTERANCETXT] = paraMatch.group().substring(1, paraMatch.group().length() - 1);
+							}
+							
 							else
 								throw new Exception("Unknown language parameter encountered\n" + check);
 						}
@@ -398,7 +404,11 @@ public class Main{
 		/**
 		 * The spell is a psionic power.
 		 */
-		PSIONIC
+		PSIONIC,
+		/**
+		 * The spell is a truename utterance.
+		 */
+		UTTERANCE
 		};
 	
 	/** A switche determinining how errors are handled */
@@ -420,43 +430,45 @@ public class Main{
 	public static String[] curLanguageData = null;
 	
 	/** Size of the curLanguageData array */
-	public static final int LANGDATA_NUMENTRIES         = 18;
+	public static final int LANGDATA_NUMENTRIES           = 19;
 	/** curLanguageData index of the language name */
-	public static final int LANGDATA_LANGNAME           = 0;
+	public static final int LANGDATA_LANGNAME             = 0;
 	/** curLanguageData index of the name of the dialog.tlk equivalent for this language */
-	public static final int LANGDATA_BASETLK            = 1;
+	public static final int LANGDATA_BASETLK              = 1;
 	/** curLanguageData index of the name of the prc_consortium.tlk equivalent for this language */
-	public static final int LANGDATA_PRCTLK             = 2;
+	public static final int LANGDATA_PRCTLK               = 2;
 	/** curLanguageData index of the name of the "All Feats" string equivalent for this language */
-	public static final int LANGDATA_ALLFEATSTXT        = 3;
+	public static final int LANGDATA_ALLFEATSTXT          = 3;
 	/** curLanguageData index of the name of the "All Epic Feats" string equivalent for this language */
-	public static final int LANGDATA_ALLEPICFEATSTXT    = 4;
+	public static final int LANGDATA_ALLEPICFEATSTXT      = 4;
 	/** curLanguageData index of the name of the "Feats" string equivalent for this language */
-	public static final int LANGDATA_FEATSTXT           = 5;
+	public static final int LANGDATA_FEATSTXT             = 5;
 	/** curLanguageData index of the name of the "Epic Feats" string equivalent for this language */
-	public static final int LANGDATA_EPICFEATSTXT       = 6;
+	public static final int LANGDATA_EPICFEATSTXT         = 6;
 	/** curLanguageData index of the name of the "Base Classes" string equivalent for this language */
-	public static final int LANGDATA_BASECLASSESTXT     = 7;
+	public static final int LANGDATA_BASECLASSESTXT       = 7;
 	/** curLanguageData index of the name of the "Prestige Classes" string equivalent for this language */
-	public static final int LANGDATA_PRESTIGECLASSESTXT = 8;
+	public static final int LANGDATA_PRESTIGECLASSESTXT   = 8;
 	/** curLanguageData index of the name of the "Spells" string equivalent for this language */
-	public static final int LANGDATA_SPELLSTXT          = 9;
+	public static final int LANGDATA_SPELLSTXT            = 9;
 	/** curLanguageData index of the name of the "Epic Spells" string equivalent for this language */
-	public static final int LANGDATA_EPICSPELLSTXT      = 10;
+	public static final int LANGDATA_EPICSPELLSTXT        = 10;
 	/** curLanguageData index of the name of the "Psionic Powers" string equivalent for this language */
-	public static final int LANGDATA_PSIONICPOWERSTXT   = 11;
+	public static final int LANGDATA_PSIONICPOWERSTXT     = 11;
 	/** curLanguageData index of the name of the "Modified Spells" string equivalent for this language */
-	public static final int LANGDATA_MODIFIEDSPELLSTXT  = 12;
+	public static final int LANGDATA_MODIFIEDSPELLSTXT    = 12;
 	/** curLanguageData index of the name of the "Domains" string equivalent for this language */
-	public static final int LANGDATA_DOMAINSTXT         = 13;
+	public static final int LANGDATA_DOMAINSTXT           = 13;
 	/** curLanguageData index of the name of the "Skills" string equivalent for this language */
-	public static final int LANGDATA_SKILLSTXT          = 14;
+	public static final int LANGDATA_SKILLSTXT            = 14;
 	/** curLanguageData index of the name of the "Races" string equivalent for this language */
-	public static final int LANGDATA_RACESTXT           = 15;
+	public static final int LANGDATA_RACESTXT             = 15;
 	/** curLanguageData index of the name of the "Spellbook" string equivalent for this language */
-	public static final int LANGDATA_SPELLBOOKTXT       = 16;
+	public static final int LANGDATA_SPELLBOOKTXT         = 16;
 	/** curLanguageData index of the name of the "Powers" string equivalent for this language */
-	public static final int LANGDATA_POWERTXT           = 17;
+	public static final int LANGDATA_POWERTXT             = 17;
+	/** curLanguageData index of the name of the "Truename Utterances" string equivalent for this language */
+	public static final int LANGDATA_TRUENAMEUTTERANCETXT = 18;
 	
 	
 	/** Current language name */
@@ -518,6 +530,9 @@ public class Main{
 	                                             races;
 	/** Map of psionic power names to the indexes of the spells.2da entries chosen to represent the power in question */
 	public static HashMap<String, Integer> psiPowMap;
+	
+	/** Map of truenaming utterance names to the spells.2da indexes that contain utterance feat-linked entries */
+	public static HashMap<String, Integer> utterMap;
 	
 	
 	/**
@@ -703,6 +718,7 @@ public class Main{
 		           && buildDir(dirPath + "races")
 		           && buildDir(dirPath + "skills")
 		           && buildDir(dirPath + "spells")
+		           && buildDir(dirPath + "utterances")
 		
 		           && buildDir(mainPath + "menus");
 		
@@ -784,6 +800,7 @@ public class Main{
 		/* First, do the pages that do not require linking to other pages */
 		doSkills();
 		listPsionicPowers();
+		listTruenameUtterances();
 		doSpells();
 		
 		/* Then, build the feats */

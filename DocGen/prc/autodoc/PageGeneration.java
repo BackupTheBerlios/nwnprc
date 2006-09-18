@@ -91,9 +91,10 @@ public final class PageGeneration{
 	 * The enumeration class used here is found at the end of the file
 	 */
 	public static void doSpells(){
-		String spellPath = contentPath + "spells" + fileSeparator,
-		       epicPath  = contentPath + "epic_spells" + fileSeparator,
-		       psiPath   = contentPath + "psionic_powers" + fileSeparator;
+		String spellPath = contentPath + "spells"         + fileSeparator,
+		       epicPath  = contentPath + "epic_spells"    + fileSeparator,
+		       psiPath   = contentPath + "psionic_powers" + fileSeparator,
+		       utterPath = contentPath + "utterances"     + fileSeparator;
 
 		String path = null,
 		       name = null,
@@ -114,9 +115,10 @@ public final class PageGeneration{
 			spelltype = NONE;
 			errored = false;
 			try{
-				if(isNormalSpell(spells2da, i))       spelltype = NORMAL;
-				else if(isEpicSpell(spells2da, i))    spelltype = EPIC;
-				else if(isPsionicPower(spells2da, i)) spelltype = PSIONIC;
+				if(isNormalSpell(spells2da, i))            spelltype = NORMAL;
+				else if(isEpicSpell(spells2da, i))         spelltype = EPIC;
+				else if(isPsionicPower(spells2da, i))      spelltype = PSIONIC;
+				else if(isTruenameUtterance(spells2da, i)) spelltype = UTTERANCE;
 
 				if(spelltype != NONE){
 					name = tlk.get(spells2da.getEntry("Name", i))
@@ -199,6 +201,9 @@ public final class PageGeneration{
 						case PSIONIC:
 							path = psiPath + i + ".html";
 							break;
+						case UTTERANCE:
+							path = utterPath + i + ".html";
+							break;
 
 						default:
 							throw new AssertionError("Unhandled spelltype: " + spelltype);
@@ -257,6 +262,41 @@ public final class PageGeneration{
 			}
 		}
 	}
+	
+	/**
+	 * Creates a list of spells.2da rows that should contain a truenaming utterance's 
+	 */
+	public static void listTruenameUtterances(){
+		// A map of power name to class-specific spells.2da entry
+		utterMap = new HashMap<String, Integer>();
+		
+		// Load cls_*_utter.2da
+		String[] fileNames = new File("2da").list(new FilenameFilter(){
+			public boolean accept(File dir, String name){
+				return name.toLowerCase().startsWith("cls_") &&
+				       name.toLowerCase().endsWith("_utter.2da");
+			}
+		});
+		
+		Data_2da[] cls_utter_2das = new Data_2da[fileNames.length];
+		for(int i = 0; i < fileNames.length; i++)
+			//Strip out the ".2da" from the filenames before loading, since the loader function assumes it's missing
+			cls_utter_2das[i] = twoDA.get(fileNames[i].replace(".2da", ""));
+		
+		// Parse the 2das
+		for(Data_2da cls_utter : cls_utter_2das){
+			for(int i = 0; i < cls_utter.getEntryCount(); i++){
+				// Column FeatID is used to determine if the row specifies the main entry of a power
+				if(!cls_utter.getEntry("FeatID", i).equals("****")) {
+					try {
+						utterMap.put(tlk.get(cls_utter.getEntry("Name", i)), Integer.parseInt(cls_utter.getEntry("SpellID", i)));
+					} catch(NumberFormatException e) {
+						err_pr.println("Invalid SpellID entry in " + cls_utter.getName() + ", line " + i);
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * A small convenience method for wrapping all the normal spell checks into
@@ -299,12 +339,12 @@ public final class PageGeneration{
 	/**
 	 * A small convenience method for testing if the given entry contains a
 	 * psionic power. This is determined by whether the power's id is
-	 * in the psiPowIDs Set. 
+	 * in the psiPowMap Map. 
 	 *
 	 * @param spells2da the Data_2da entry containing spells.2da
 	 * @param entryNum  the line number to use for testing
 	 *
-	 * @return <code>true</code> if the impactscript name starts with strings specified in settings,
+	 * @return <code>true</code> if entryNum in spells2da contains a psionic power,
 	 *           <code>false</code> otherwise
 	 */
 	private static boolean isPsionicPower(Data_2da spells2da, int entryNum){
@@ -330,6 +370,21 @@ public final class PageGeneration{
 		return false;
 		*/
 		return psiPowMap.containsValue(entryNum);
+	}
+	
+	/**
+	 * A small convenience method for testing if the given entry contains a
+	 * truenaming utterance. This is determined by whether the power's id is
+	 * in the utterMap Map. 
+	 *
+	 * @param spells2da the Data_2da entry containing spells.2da
+	 * @param entryNum  the line number to use for testing
+	 *
+	 * @return <code>true</code> if entryNum in spells2da contains an utterance,
+	 *           <code>false</code> otherwise
+	 */
+	private static boolean isTruenameUtterance(Data_2da spells2da, int entryNum){
+		return utterMap.containsValue(entryNum);
 	}
 
 

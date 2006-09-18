@@ -40,7 +40,47 @@ void main()
 	
 	SPSetSchool(SPELL_SCHOOL_ABJURATION);
 	
-	object oPC = OBJECT_SELF;
+	object    oPC          = OBJECT_SELF;
+	effect    eVis         = EffectVisualEffect(VFX_IMP_BREACH);
+	effect    eImpact      = EffectVisualEffect(VFX_FNF_DISPEL);
+	object    oTarget      = PRCGetSpellTargetObject();
+	location  lLocal       = PRCGetSpellTargetLocation();
+	int       nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
+	int       iTypeDispel  = GetLocalInt(GetModule(),"BIODispel");
 	
+	//----------------------------------------------------------------------
+	// Area of Effect - Only dispel best effect
+	//----------------------------------------------------------------------
+	
+	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
+	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE );
+	while (GetIsObjectValid(oTarget))
+	{
+		if(GetObjectType(oTarget) == OBJECT_TYPE_AREA_OF_EFFECT)
+		{
+			//--------------------------------------------------------------
+			// Handle Area of Effects
+			//--------------------------------------------------------------
+			if (iTypeDispel)
+			spellsDispelAoE(oTarget, OBJECT_SELF,nCasterLevel);
+			else
+			spellsDispelAoEMod(oTarget, OBJECT_SELF,nCasterLevel);
+		}
+		else if (GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
+		{
+			SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+		}
+		
+		else
+		{				
+			if (iTypeDispel)
+			spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact, FALSE);
+			else
+			spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact, FALSE);
+		}
+		
+		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE,lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE);
+	}
+}
 	
 }

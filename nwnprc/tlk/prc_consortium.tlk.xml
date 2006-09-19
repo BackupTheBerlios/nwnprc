@@ -18090,12 +18090,12 @@ Use: Selected.</entry>
 Prerequisite: Truenamer level 2
 Specifics: You gain a +3 bonus to Lore. This increases to +6 at 7th, +9 at 10th, and +12 at 14th.
 Use: Automatic.</entry>
-  <entry id="50303" lang="en" sex="m">Skill Focus: Truespeech</entry>
+  <entry id="50303" lang="en" sex="m">Skill Focus (Truespeech)</entry>
   <entry id="50304" lang="en" sex="m">Type of Feat: General
 Prerequisite: Truespeech rank 1
 Specifics: You gain a +3 bonus to Truespeech.
 Use: Automatic.</entry>
-  <entry id="50305" lang="en" sex="m">Epic Skill Focus: Truespeech</entry>
+  <entry id="50305" lang="en" sex="m">Epic Skill Focus (Truespeech)</entry>
   <entry id="50306" lang="en" sex="m">Type of Feat: General
 Prerequisite: Truespeech rank 20, Epic Character
 Specifics: You gain a +10 bonus to Truespeech.

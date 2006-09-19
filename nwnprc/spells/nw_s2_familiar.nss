@@ -64,6 +64,9 @@ void BondedSummon2()
     }
     //add their ondeath special
     AddEventScript(oSummon, EVENT_NPC_ONDEATH, "prc_bond_death");
+    //set it so the spell-share detects it
+    SetLocalObject(oPC, "BONDED", oSummon);
+    //SetLocalObject(oPC, "Familiar", oSummon);
 }  
 
 void BondedSummoner()

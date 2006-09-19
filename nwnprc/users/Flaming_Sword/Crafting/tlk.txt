@@ -1394,6 +1394,1627 @@ Cost:
 +2 Enhancement
 </entry>
 
+  <entry id="51763" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Constitution +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Endurance
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51764" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Constitution +4 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Endurance
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51765" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Constitution +6 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Endurance
+
+Cost: 
+
++36000gp
+</entry>
+
+  <entry id="51766" lang="en" sex="m">Description: 
+
+Armor Bonus: +1 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Barkskin
+
+Cost: 
+
++2000gp
+</entry>
+
+  <entry id="51767" lang="en" sex="m">Description: 
+
+Armor Bonus: +2 
+
+Prerequisites: 
+
+Caster Level: 6
+Spell(s): Barkskin
+
+Cost: 
+
++8000gp
+</entry>
+
+  <entry id="51768" lang="en" sex="m">Description: 
+
+Armor Bonus: +3 
+
+Prerequisites: 
+
+Caster Level: 9
+Spell(s): Barkskin
+
+Cost: 
+
++18000gp
+</entry>
+
+  <entry id="51769" lang="en" sex="m">Description: 
+
+Armor Bonus: +4 
+
+Prerequisites: 
+
+Caster Level: 12
+Spell(s): Barkskin
+
+Cost: 
+
++32000gp
+</entry>
+
+  <entry id="51770" lang="en" sex="m">Description: 
+
+Armor Bonus: +5 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Barkskin
+
+Cost: 
+
++50000gp
+</entry>
+
+  <entry id="51771" lang="en" sex="m">Description: 
+
+Armor Bonus: +6 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Barkskin
+Epic
+
+Cost: 
+
++720000gp
+</entry>
+
+  <entry id="51772" lang="en" sex="m">Description: 
+
+Armor Bonus: +7 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Barkskin
+Epic
+
+Cost: 
+
++980000gp
+</entry>
+
+  <entry id="51773" lang="en" sex="m">Description: 
+
+Armor Bonus: +8 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Barkskin
+Epic
+
+Cost: 
+
++1280000gp
+</entry>
+
+  <entry id="51774" lang="en" sex="m">Description: 
+
+Armor Bonus: +9 
+
+Prerequisites: 
+
+Caster Level: 27
+Spell(s): Barkskin
+Epic
+
+Cost: 
+
++1620000gp
+</entry>
+
+  <entry id="51775" lang="en" sex="m">Description: 
+
+Armor Bonus: +10 
+
+Prerequisites: 
+
+Caster Level: 30
+Spell(s): Barkskin
+Epic
+
+Cost: 
+
++2000000gp
+</entry>
+
+  <entry id="51776" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Strength +4 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Bull's Strength
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51777" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Strength +6 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Bull's Strength
+
+Cost: 
+
++36000gp
+</entry>
+
+  <entry id="51778" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Strength +8 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Bull's Strength
+Epic
+
+Cost: 
+
++640000gp
+</entry>
+
+  <entry id="51779" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Strength +10 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Bull's Strength
+Epic
+
+Cost: 
+
++1000000gp
+</entry>
+
+  <entry id="51780" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Strength +12 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Bull's Strength
+Epic
+
+Cost: 
+
++1440000gp
+</entry>
+
+  <entry id="51781" lang="en" sex="m">Description: 
+
+Skill Bonus: Move Silently +5 
+
+Prerequisites: 
+
+Caster Level: 5
+Race: Elf
+
+Cost: 
+
++2500gp
+</entry>
+
+  <entry id="51782" lang="en" sex="m">Description: 
+
+Use: Haste (10) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Haste
+
+Cost: 
+
++12000gp
+</entry>
+
+  <entry id="51783" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Acid Fog, Acid Fog, Acid Fog, Acid Fog
+Epic
+
+Cost: 
+
++256000gp
+</entry>
+
+  <entry id="51784" lang="en" sex="m">Description: 
+
+Use: Teleport (9) 3 Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 9
+Spell(s): Teleport
+
+Cost: 
+
++49000gp
+</entry>
+
+  <entry id="51785" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 5 / - 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Cat's Grace, Endure Elements
+
+Cost: 
+
++2500gp
+</entry>
+
+  <entry id="51786" lang="en" sex="m">Description: 
+
+Armor Bonus: +1 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Mage Armor
+
+Cost: 
+
++1000gp
+</entry>
+
+  <entry id="51787" lang="en" sex="m">Description: 
+
+Armor Bonus: +2 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Mage Armor
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51788" lang="en" sex="m">Description: 
+
+Armor Bonus: +3 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Mage Armor
+
+Cost: 
+
++9000gp
+</entry>
+
+  <entry id="51789" lang="en" sex="m">Description: 
+
+Armor Bonus: +4 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Mage Armor
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51790" lang="en" sex="m">Description: 
+
+Armor Bonus: +5 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Mage Armor
+
+Cost: 
+
++25000gp
+</entry>
+
+  <entry id="51791" lang="en" sex="m">Description: 
+
+Armor Bonus: +6 
+
+Prerequisites: 
+
+Caster Level: 12
+Spell(s): Mage Armor
+
+Cost: 
+
++36000gp
+</entry>
+
+  <entry id="51792" lang="en" sex="m">Description: 
+
+Armor Bonus: +7 
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Mage Armor
+
+Cost: 
+
++49000gp
+</entry>
+
+  <entry id="51793" lang="en" sex="m">Description: 
+
+Armor Bonus: +8 
+
+Prerequisites: 
+
+Caster Level: 16
+Spell(s): Mage Armor
+
+Cost: 
+
++64000gp
+</entry>
+
+  <entry id="51794" lang="en" sex="m">Description: 
+
+Armor Bonus: +11 
+
+Prerequisites: 
+
+Caster Level: 22
+Spell(s): Mage Armor
+Epic
+
+Cost: 
+
++1210000gp
+</entry>
+
+  <entry id="51795" lang="en" sex="m">Description: 
+
+Armor Bonus: +12 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Mage Armor
+Epic
+
+Cost: 
+
++1440000gp
+</entry>
+
+  <entry id="51796" lang="en" sex="m">Description: 
+
+Armor Bonus: +13 
+
+Prerequisites: 
+
+Caster Level: 26
+Spell(s): Mage Armor
+Epic
+
+Cost: 
+
++1690000gp
+</entry>
+
+  <entry id="51797" lang="en" sex="m">Description: 
+
+Armor Bonus: +14 
+
+Prerequisites: 
+
+Caster Level: 28
+Spell(s): Mage Armor
+Epic
+
+Cost: 
+
++1960000gp
+</entry>
+
+  <entry id="51798" lang="en" sex="m">Description: 
+
+Armor Bonus: +15 
+
+Prerequisites: 
+
+Caster Level: 30
+Spell(s): Mage Armor
+Epic
+
+Cost: 
+
++2250000gp
+</entry>
+
+  <entry id="51799" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Constitution +8 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Endurance
+Epic
+
+Cost: 
+
++640000gp
+</entry>
+
+  <entry id="51800" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Constitution +10 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Endurance
+Epic
+
+Cost: 
+
++1000000gp
+</entry>
+
+  <entry id="51801" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Constitution +12 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Endurance
+Epic
+
+Cost: 
+
++1440000gp
+</entry>
+
+  <entry id="51802" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Strength +12 
+Enhancement Bonus: Constitution +12 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Bull's Strength, Endurance, Acid Fog
+Epic
+
+Cost: 
+
++4384000gp
+</entry>
+
+  <entry id="51803" lang="en" sex="m">Description: 
+
+Spell Immunity: Magic Missile 
+Spell Immunity: Isaac's Lesser Missile Storm 
+Spell Immunity: Isaac's Greater Missile Storm 
+
+Prerequisites: 
+
+Caster Level: 1
+Spell(s): Shield
+
+Cost: 
+
++1500gp
+</entry>
+
+  <entry id="51804" lang="en" sex="m">Description: 
+
+Use: Searing Light (5) 1 Use/Day 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Searing Light (5) 6 
+
+Prerequisites: 
+
+Caster Level: 6
+Spell(s): Searing Light
+
+Cost: 
+
++6480gp
+</entry>
+
+  <entry id="51805" lang="en" sex="m">Description: 
+
+Use: Searing Light (5) 1 Use/Day 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Searing Light (5) 10 
+Cast Spell: Metamagic: Searing Light (5) Maximize Spell 
+
+Prerequisites: 
+
+Caster Level: 17
+Spell(s): Searing Light
+
+Cost: 
+
++23760gp
+</entry>
+
+  <entry id="51806" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Eagle's Splendor
+
+Cost: 
+
++4500gp
+</entry>
+
+  <entry id="51807" lang="en" sex="m">Description: 
+
+Bonus Spell Slot: Cleric Level 0 
+
+Prerequisites: 
+
+Caster Level: 6
+Spell(s): Web
+
+Cost: 
+
++14000 Enhancement
++80gp
+</entry>
+
+  <entry id="51809" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Charisma +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Eagle's Splendor
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51810" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Charisma +4 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Eagle's Splendor
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51811" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Charisma +6 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Eagle's Splendor
+
+Cost: 
+
++36000gp
+</entry>
+
+  <entry id="51812" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Charisma +8 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Charm Monster
+Epic
+
+Cost: 
+
++640000gp
+</entry>
+
+  <entry id="51813" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Charisma +10 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Charm Monster
+Epic
+
+Cost: 
+
++1000000gp
+</entry>
+
+  <entry id="51814" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Charisma +12 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Charm Monster
+Epic
+
+Cost: 
+
++1440000gp
+</entry>
+
+  <entry id="51815" lang="en" sex="m">Description: 
+
+Use: Blur (5) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Displacement
+
+Cost: 
+
++24000gp
+</entry>
+
+  <entry id="51816" lang="en" sex="m">Description: 
+
+Use: Displacement (9) 1 Use/Day 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Displacement (9) 15 
+
+Prerequisites: 
+
+Caster Level: 7
+Feat: Extend Spell
+Spell(s): Displacement
+
+Cost: 
+
++50000gp
+</entry>
+
+  <entry id="51817" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +5 
+
+Prerequisites: 
+
+Caster Level: 6
+Race: Elf
+Spell(s): Invisibility
+
+Cost: 
+
++2500gp
+</entry>
+
+  <entry id="51818" lang="en" sex="m">Description: 
+
+Use: Greater Sanctuary (18) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Greater Sanctuary
+
+Cost: 
+
++55000gp
+</entry>
+
+  <entry id="51819" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +1 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Resistance
+
+Cost: 
+
++1000gp
+</entry>
+
+  <entry id="51820" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +2 
+
+Prerequisites: 
+
+Caster Level: 6
+Spell(s): Resistance
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51821" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +3 
+
+Prerequisites: 
+
+Caster Level: 9
+Spell(s): Resistance
+
+Cost: 
+
++9000gp
+</entry>
+
+  <entry id="51822" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +4 
+
+Prerequisites: 
+
+Caster Level: 12
+Spell(s): Resistance
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51823" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +5 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Resistance
+
+Cost: 
+
++25000gp
+</entry>
+
+  <entry id="51824" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +6 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Resistance
+Epic
+
+Cost: 
+
++360000gp
+</entry>
+
+  <entry id="51825" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +7 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Resistance
+Epic
+
+Cost: 
+
++490000gp
+</entry>
+
+  <entry id="51826" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +8 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Resistance
+Epic
+
+Cost: 
+
++640000gp
+</entry>
+
+  <entry id="51827" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +9 
+
+Prerequisites: 
+
+Caster Level: 27
+Spell(s): Resistance
+Epic
+
+Cost: 
+
++810000gp
+</entry>
+
+  <entry id="51828" lang="en" sex="m">Description: 
+
+Improved Saving Throws: Universal +10 
+
+Prerequisites: 
+
+Caster Level: 30
+Spell(s): Resistance
+Epic
+
+Cost: 
+
++1000000gp
+</entry>
+
+  <entry id="51829" lang="en" sex="m">Description: 
+
+Use: Charm Person (10) Unlimited Uses/Day 
+Cast Spell: DC: This item property modifies the DC at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Charm Person (10) 16 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Charm Person
+
+Cost: 
+
++56000gp
+</entry>
+
+  <entry id="51830" lang="en" sex="m">Description: 
+
+Use: Doom (5) 1 Use/Day 
+Use: Fear (5) 1 Use/Day 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Doom, Fear
+
+Cost: 
+
++25000gp
+</entry>
+
+  <entry id="51831" lang="en" sex="m">Description: 
+
+Skill Bonus: Spot +5 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Clairaudience/Clairvoyance
+
+Cost: 
+
++2500gp
+</entry>
+
+  <entry id="51832" lang="en" sex="m">Description: 
+
+Use: Flesh to Stone (5) 1 Use/Day 
+Cast Spell: DC: This item property modifies the DC at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Flesh to Stone (5) 19 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Flesh to Stone
+
+Cost: 
+
++98000gp
+</entry>
+
+  <entry id="51833" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Strength +2 
+
+Prerequisites: 
+
+Caster Level: 6
+Spell(s): Bull's Strength
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51834" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Dexterity +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Cat's Grace
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51835" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Dexterity +4 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Cat's Grace
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51836" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Dexterity +6 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Cat's Grace
+
+Cost: 
+
++36000gp
+</entry>
+
+  <entry id="51837" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Dexterity +8 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Cat's Grace
+Epic
+
+Cost: 
+
++640000gp
+</entry>
+
+  <entry id="51838" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Dexterity +10 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Cat's Grace
+Epic
+
+Cost: 
+
++1000000gp
+</entry>
+
+  <entry id="51839" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Dexterity +12 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Cat's Grace
+Epic
+
+Cost: 
+
++1440000gp
+</entry>
+
+  <entry id="51840" lang="en" sex="m">Description: 
+
+Skill Bonus: Search +5 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): True Seeing
+
+Cost: 
+
++1250gp
+</entry>
+
+  <entry id="51841" lang="en" sex="m">Description: 
+
+Darkvision 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Acid Fog
+
+Cost: 
+
++12000gp
+</entry>
+
+  <entry id="51843" lang="en" sex="m">Description: 
+
+Use: Acid Fog (11) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 2
+Spell(s): Acid Fog
+
+Cost: 
+
++900gp
+</entry>
+
+  <entry id="51844" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Intelligence +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Fox's Cunning
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51845" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Intelligence +4 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Fox's Cunning
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51846" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Intelligence +6 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Fox's Cunning
+
+Cost: 
+
++36000gp
+</entry>
+
+  <entry id="51847" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Intelligence +8 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Legend Lore
+Epic
+
+Cost: 
+
++640000gp
+</entry>
+
+  <entry id="51848" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Intelligence +10 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Legend Lore
+Epic
+
+Cost: 
+
++1000000gp
+</entry>
+
+  <entry id="51849" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Intelligence +12 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Legend Lore
+Epic
+
+Cost: 
+
++1440000gp
+</entry>
+
+  <entry id="51850" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 13
+
+Cost: 
+
++125000gp
+</entry>
+
+  <entry id="51851" lang="en" sex="m">Description: 
+
+Use: Teleport (9) 3 Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 9
+Spell(s): Teleport
+
+Cost: 
+
++73500gp
+</entry>
+
+  <entry id="51852" lang="en" sex="m">Description: 
+
+Spell Resistance: 21 
+
+Prerequisites: 
+
+Caster Level: 9
+Spell(s): Spell Resistance
+
+Cost: 
+
++90000gp
+</entry>
+
+  <entry id="51853" lang="en" sex="m">Description: 
+
+Spell Resistance: 40 
+
+Prerequisites: 
+
+Caster Level: 29
+Spell(s): Spell Resistance
+Epic
+
+Cost: 
+
++290000gp
+</entry>
+
+  <entry id="51854" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +30 
+Skill Bonus: Move Silently +30 
+Use: Blur (5) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Blur, Invisibility, Silence, Acid Fog
+Epic
+
+Cost: 
+
++242000gp
+</entry>
+
+  <entry id="51855" lang="en" sex="m">Description: 
+
+Use: Finger of Death (13) 1 Use/Day 
+Cast Spell: DC: This item property modifies the DC at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Finger of Death (13) 20 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Animate Objects, Finger of Death
+
+Cost: 
+
++22000gp
+</entry>
+
+  <entry id="51857" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Fireball
+
+Cost: 
+
++1650gp
+</entry>
+
+  <entry id="51858" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Fireball
+
+Cost: 
+
++2700gp
+</entry>
+
+  <entry id="51859" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 12
+Spell(s): Fireball
+
+Cost: 
+
++4350gp
+</entry>
+
+  <entry id="51860" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Fireball
+
+Cost: 
+
++5400gp
+</entry>
+
+  <entry id="51861" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 14
+Spell(s): Fireball
+
+Cost: 
+
++5850gp
+</entry>
+
+  <entry id="51862" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Fireball
+
+Cost: 
+
++8100gp
+</entry>
+
+  <entry id="51863" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 16
+Spell(s): Fireball
+
+Cost: 
+
++8700gp
+</entry>
+
+  <entry id="51864" lang="en" sex="m">Description: 
+
+Immunity: Disease 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Remove Disease
+
+Cost: 
+
++7500gp
+</entry>
+
+  <entry id="51865" lang="en" sex="m">Description: 
+
+Immunity: Poison 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Neutralize Poison
+
+Cost: 
+
++27000gp
+</entry>
+
+  <entry id="51866" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Wisdom +2 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Owl's Wisdom
+
+Cost: 
+
++4000gp
+</entry>
+
+  <entry id="51867" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Wisdom +4 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Owl's Wisdom
+
+Cost: 
+
++16000gp
+</entry>
+
+  <entry id="51868" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Wisdom +6 
+
+Prerequisites: 
+
+Caster Level: 8
+Spell(s): Owl's Wisdom
+
+Cost: 
+
++36000gp
+</entry>
+
+  <entry id="51869" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Wisdom +8 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Legend Lore
+Epic
+
+Cost: 
+
++640000gp
+</entry>
+
+  <entry id="51870" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Wisdom +10 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Legend Lore
+Epic
+
+Cost: 
+
++1000000gp
+</entry>
+
+  <entry id="51871" lang="en" sex="m">Description: 
+
+Enhancement Bonus: Wisdom +12 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Legend Lore
+Epic
+
+Cost: 
+
++1440000gp
+</entry>
+
+  <entry id="51872" lang="en" sex="m">Description: 
+
+Regeneration: +1 
+
+Prerequisites: 
+
+Caster Level: 10
+Spell(s): Heal
+
+Cost: 
+
++15000gp
+</entry>
+
+  <entry id="51873" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 14
+Alignment: Good
+
+Cost: 
+
++75000gp
+</entry>
+
+  <entry id="51874" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 14
+Alignment: Neutral
+
+Cost: 
+
++75000gp
+</entry>
+
+  <entry id="51875" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 14
+Alignment: Evil
+
+Cost: 
+
++75000gp
+</entry>
+
+  <entry id="51876" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): True Seeing
+
+Cost: 
+
++120000gp
+</entry>
+
+  <entry id="51877" lang="en" sex="m">Description: 
+
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Blur, Acid Fog
+
+Cost: 
+
++27000gp
+</entry>
+
+  <entry id="51878" lang="en" sex="m">Description: 
+
+Spell Resistance: 20 
+Immunity: Level/Ability Drain 
+Immunity: Death Magic 
+
+Prerequisites: 
+
+Caster Level: 18
+Spell(s): Death Ward, Spell Resistance
+
+Cost: 
+
++38000gp
+</entry>
+
 
       LABEL                                                     FEAT     DESCRIPTION ICON             MINATTACKBONUS MINSTR MINDEX MININT MINWIS MINCON MINCHA MINSPELLLVL PREREQFEAT1 PREREQFEAT2 GAINMULTIPLE EFFECTSSTACK ALLCLASSESCANUSE CATEGORY MAXCR SPELLID SUCCESSOR CRValue USESPERDAY MASTERFEAT TARGETSELF OrReqFeat0 OrReqFeat1 OrReqFeat2 OrReqFeat3 OrReqFeat4 REQSKILL ReqSkillMinRanks REQSKILL2 ReqSkillMinRanks2 Constant                                       TOOLSCATEGORIES HostileFeat MinLevel MinLevelClass MaxLevel MinFortSave PreReqEpic ReqAction 
 3488  CraftEpicWondrousItem                                     16828718 16828719    ife_crft_wonditm ****           ****   ****   ****   ****   ****   ****   ****        ****        ****        0            0            1                ****     ****  ****    ****      1       ****       ****       ****       ****       ****       ****       ****       ****       7        26               16        26                FEAT_CRAFT_EPIC_WONDROUS_ITEM                  4               ****        ****     ****          ****     ****        1          1         

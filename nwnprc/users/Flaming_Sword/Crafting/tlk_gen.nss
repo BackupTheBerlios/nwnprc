@@ -30,7 +30,7 @@ void DumpCrafting2DAHB(string sFile, int nEnd, int i = 0)
     sDesc += sDoubleQuote + " lang=" + sDoubleQuote + "en" + sDoubleQuote + " sex=";
     sDesc += sDoubleQuote + "m" + sDoubleQuote + ">";
     sDesc += "Description: \n\n";
-    for(j = 1; j <= 3; j++)
+    for(j = 1; j <= 6; j++)
     {
         ip = ReadIPFrom2DA(sFile, i, j);
         if(Get2DACache(sFile, "Type" + IntToString(j), i) != "")
@@ -112,6 +112,7 @@ void DumpCrafting2DAHB(string sFile, int nEnd, int i = 0)
 
 void main()
 {
-    DumpCrafting2DAHB("craft_armour", PRCGetFileEnd("craft_armour"), 20);
-    DelayCommand(6.0, DumpCrafting2DAHB("craft_weapon", PRCGetFileEnd("craft_weapon"), 20));
+    //DumpCrafting2DAHB("craft_armour", PRCGetFileEnd("craft_armour"), 20);
+    //DelayCommand(6.0, DumpCrafting2DAHB("craft_weapon", PRCGetFileEnd("craft_weapon"), 20));
+    DumpCrafting2DAHB("craft_wondrous", 113);
 }

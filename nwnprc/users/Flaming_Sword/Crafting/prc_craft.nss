@@ -440,27 +440,35 @@ void main()
         else if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
         {   //cast on item, crafting targeted item
             int nFeat = GetCraftingFeat(oTarget);
-            if(nFeat == -1)
+            if(GetPlotFlag(oTarget) || nFeat == -1)
             {
                 SendMessageToPC(oPC, "You cannot craft this item.");
                 return;
             }
+            string sMaterial = GetStringLeft(GetTag(oTarget), 3);
             if(!GetHasFeat(nFeat, oPC))
             {
                 SendMessageToPC(oPC, "You do not have the required feat to craft this item.");
                 return;
             }
-            string sMaterial = GetStringLeft(GetTag(oTarget), 3);
-            if(GetPlotFlag(oTarget) || (!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oTarget)))
-            {   //REPLACE LATER
-                SendMessageToPC(oPC, "This is not a craftable magic item.");
-                return;
-            }
-            else
+            if(!GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
             {
-                SetLocalInt(OBJECT_SELF, PRC_CRAFT_SCRIPT_STATE, PRC_CRAFT_STATE_MAGIC);
-                SetLocalObject(OBJECT_SELF, PRC_CRAFT_ITEM, oTarget);
+                if(nFeat == FEAT_CRAFT_ARMS_ARMOR)
+                {
+                    if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oTarget)))
+                    {
+                        SendMessageToPC(oPC, "This is not a craftable magic item.");
+                        return;
+                    }
+                }
+                else if(GetIsMagicItem(oTarget))
+                {
+                    SendMessageToPC(oPC, "This is not a craftable magic item.");
+                    return;
+                }
             }
+            SetLocalInt(OBJECT_SELF, PRC_CRAFT_SCRIPT_STATE, PRC_CRAFT_STATE_MAGIC);
+            SetLocalObject(OBJECT_SELF, PRC_CRAFT_ITEM, oTarget);
         }
         StartDynamicConversation("prc_craft", OBJECT_SELF, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE);
         return;

@@ -195,6 +195,15 @@ void main()
                 
                 int nCountCT = GetUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_CRAFTED_TOOL);
                 int nCountPM = GetUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_PERFECTED_MAP);
+                
+                if(DEBUG) 
+                {
+                	DoDebug("true_utterconv: Truenamer Level: " + IntToString(nTrueSpeakLevel));
+                	DoDebug("true_utterconv: Max Crafted Tool Known: " + IntToString(nMaxCT));
+                	DoDebug("true_utterconv: Max Perfected Map Known: " + IntToString(nMaxPM));
+                	DoDebug("true_utterconv: Utterance Count Crafted Tool: " + IntToString(nCountCT));
+                	DoDebug("true_utterconv: Utterance Count Perfected Map: " + IntToString(nCountPM));
+                }
 
                 // Set the tokens
                 // This one is always here
@@ -228,6 +237,12 @@ void main()
                 // Determine maximum utterance level
                 int nTrueSpeakLevel = GetLevelByClass(nClass, oPC);
                 int nMaxLevel = StringToInt(Get2DACache("cls_true_maxlvl", sLexicon, nTrueSpeakLevel - 1));
+                
+                if(DEBUG) 
+                {
+                	DoDebug("true_utterconv: Truenamer Level: " + IntToString(nTrueSpeakLevel));
+                	DoDebug("true_utterconv: Max " + sLexicon + " Level: " + IntToString(nMaxLevel));
+                }                
 
                 // Set the tokens
                 int i;
@@ -269,6 +284,17 @@ void main()
 
 
                 int nUtterLevelToBrowse = GetLocalInt(oPC, "nUtterLevelToBrowse");
+                
+                if(DEBUG) 
+                {
+                	DoDebug("true_utterconv: Current Utterances: " + IntToString(nCurrentUtters));
+                	DoDebug("true_utterconv: Max Utterances: " + IntToString(nMaxUtters));
+                	DoDebug("true_utterconv: Truenamer Level: " + IntToString(nTrueSpeakLevel));
+                	DoDebug("true_utterconv: Max " + sLexicon + " Level: " + IntToString(nMaxLevel));
+                	DoDebug("true_utterconv: Utterance Level To Browse: " + IntToString(nUtterLevelToBrowse));
+                }
+                
+                
                 int i, nUtterLevel;
                 string sFeatID;
                 for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
@@ -420,8 +446,9 @@ void main()
             {
                 if(DEBUG) DoDebug("true_utterconv: Adding power");
                 int nUtter = GetLocalInt(oPC, "nUtter");
+                int nLexicon = GetLocalInt(oPC, "nLexiconToBrowse");
 
-                AddUtteranceKnown(oPC, nClass, nUtter, TRUE, GetHitDice(oPC));
+                AddUtteranceKnown(oPC, nClass, nUtter, nLexicon, GetHitDice(oPC));
 
                 // Delete the stored offset
                 DeleteLocalInt(oPC, "UTTERLISTChoiceOffset");
@@ -433,6 +460,18 @@ void main()
             int nMaxCT = GetMaxUtteranceCount(oPC, nClass, LEXICON_CRAFTED_TOOL);
             int nPM = GetUtteranceCount(oPC, nClass, LEXICON_PERFECTED_MAP);
             int nMaxPM = GetMaxUtteranceCount(oPC, nClass, LEXICON_PERFECTED_MAP);
+            
+                if(DEBUG) 
+                {
+                	DoDebug("true_utterconv: Checking all Lexicons for being full");
+                	DoDebug("true_utterconv: Evolving Mind Count: " + IntToString(nEM));
+                	DoDebug("true_utterconv: Evolving Mind Max: " + IntToString(nMaxEM));
+                	DoDebug("true_utterconv: Crafted Tool Count: " + IntToString(nCT));
+                	DoDebug("true_utterconv: Crafted Tool Max: " + IntToString(nMaxCT));
+                	DoDebug("true_utterconv: Perfected Map Count: " + IntToString(nPM));
+                	DoDebug("true_utterconv: Perfected Map Max: " + IntToString(nMaxPM));
+                }            
+            
 	    //Check all three lexicons for being full
     	    if(nEM >= nMaxEM && nCT >= nMaxCT && nPM >= nMaxPM)
                 nStage = STAGE_ALL_UTTERS_SELECTED;

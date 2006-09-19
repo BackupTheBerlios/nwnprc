@@ -246,6 +246,16 @@ int GetSwitchAdjustedDC(int nCR, int nTargets, object oTrueSpeaker)
 	return nDC;
 }
 
+int GetFeatAdjustedDC(object oTrueSpeaker)
+{
+	int nDC = 0;
+	// Check for both, not either or
+	if (GetHasFeat(FEAT_SKILL_FOCUS_TRUESPEAK, oTrueSpeaker)) nDC += 3;
+	if (GetHasFeat(FEAT_EPIC_SKILL_FOCUS_TRUESPEAK, oTrueSpeaker)) nDC += 10;
+	
+	return nDC;
+}
+
 //////////////////////////////////////////////////
 /*             Function definitions             */
 //////////////////////////////////////////////////
@@ -325,8 +335,9 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 		// Remove the existing constant and add the new one
 		if(nConst) nDC = (nDC - 25) + nConst;		
 	}	
-	// Later on there will be switches in here to change the DC to different formulas.
-	// Thats why the PC is passed in
+	// Check to see if the PC has either of the Skill Focus feats.
+	// If so, subtract (They are a bonus to the PC) from the DC roll
+	nDC -= GetFeatAdjustedDC(oTrueSpeaker);
 	
 	return nDC;
 }

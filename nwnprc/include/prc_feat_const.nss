@@ -2168,6 +2168,8 @@ const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
 
 // General Feats
 const int FEAT_TRUENAME_TRAINING                        = 2175;
+const int FEAT_SKILL_FOCUS_TRUESPEAK                    = 2182;
+const int FEAT_EPIC_SKILL_FOCUS_TRUESPEAK               = 2183;
 
 // Metautterance feats
 const int FEAT_EMPOWER_UTTERANCE                        = 2172;

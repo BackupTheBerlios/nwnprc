@@ -53,32 +53,25 @@ void main()
 	//----------------------------------------------------------------------
 	
 	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
-	oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE );
-	while (GetIsObjectValid(oTarget))
+	oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 9.14f, lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE );
+	
+	//Set up for loop
+	int i = nCasterLevel;
+	
+	while (i > 0)
 	{
-		if(GetObjectType(oTarget) == OBJECT_TYPE_AREA_OF_EFFECT)
+		
+		if (GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
 		{
-			//--------------------------------------------------------------
-			// Handle Area of Effects
-			//--------------------------------------------------------------
-			if (iTypeDispel)
-			spellsDispelAoE(oTarget, OBJECT_SELF,nCasterLevel);
-			else
-			spellsDispelAoEMod(oTarget, OBJECT_SELF,nCasterLevel);
-		}
-		else if (GetObjectType(oTarget) == OBJECT_TYPE_PLACEABLE)
-		{
-			SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+			SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_REMOVE_CURSE));
 		}
 		
 		else
-		{				
-			if (iTypeDispel)
-			spellsDispelMagic(oTarget, nCasterLevel, eVis, eImpact, FALSE);
-			else
-			spellsDispelMagicMod(oTarget, nCasterLevel, eVis, eImpact, FALSE);
+		{
+			DispellLoop(oTarget, 
 		}
 		
+		i--;
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE,lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE);
 	}
 }

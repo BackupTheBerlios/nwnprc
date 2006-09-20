@@ -41,3 +41,123 @@ the spell, you decide that you are finished casting after
 the appropriate time has passed.
 
 **/
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	int nSpell = GetSpellId();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	object oTarget = GetSpellTargetObject();
+	location lLoc = GetSpellTargetLocation();
+	int nDC
+	int nDam;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fRadius = 0.0f;
+	
+	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_CHANNELED_PYROBURST, oPC);
+	
+	//Check Spell Resistance
+	if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		//swift
+		if(nSpell == SPELL_CHANNELED_PYROBURST_1)
+		{			
+			if(!TakeSwiftAction(oPC))
+			{
+				return;
+			}
+			
+			nDam = d4(min((nCasterLvl/2), 10));
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 4 * (min((nCasterLvl/2), 10));
+			}
+		}
+		
+		//standard
+		else if(nSpell == SPELL_CHANNELED_PYROBURST_2)
+		{
+			nDam = d6(min(10, nCasterLvl));
+			fRadius = 3.048f;
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 6 * (min(10, nCasterLvl));
+			}
+		}
+		
+		//full round
+		else if(nSpell == SPELL_CHANNELED_PYROBURST_3)
+		{
+			nDam = d8(min(10, nCasterLvl));
+			fRadius = 4.57f;
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 8 * (min(10, nCasterLvl));
+			}
+		}
+		
+		//two rounds
+		else if(nSpell == SPELL_CHANNELED_PYROBURST_4)
+		{
+			nDam = d10(min(10, nCasterLvl));
+			fRadius = 6.10f;
+			
+			if(nMetaMagic == METAMAGIC_MAXIMIZE)
+			{
+				nDam = 10 * (min(10, nCasterLvl));
+			}
+		}
+		
+		else
+		{
+			SPSetSchool();
+			return;
+		}
+		
+		//Metamagic Empower
+		if(nMetaMagic == METAMAGIC_EMPOWER)
+		{
+			nDam += (nDam/2);
+		}
+		
+		if(PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_FIRE))
+		{
+			nDam = nDam/2;			
+		}
+		
+		effect eDam = EffectDamage(DAMAGE_TYPE_FIRE, nDam);
+		
+		if(fRadius == 0.0f)
+		{
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+		}
+		
+		else
+		{
+			oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+			
+			while(GetIsObjectValid(oTarget))
+			{
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+				
+				oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
+			}
+		}
+	}
+	SPSetSchool();
+}
+			
+			
+		
+			
+			

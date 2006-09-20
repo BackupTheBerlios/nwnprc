@@ -35,7 +35,9 @@ int CheckMissingSpells(object oPC, int nClass, int nMinLevel, int nMaxLevel)
         if(nMaxSpells > 0)
         {
             int nCurrentSpells = GetSpellKnownCurrentCount(oPC, i, nClass);
-            if(nCurrentSpells < nMaxSpells)
+            int nSpellsAvaliable = GetSpellUnknownCurrentCount(oPC, i, nClass);
+            if(nCurrentSpells < nMaxSpells
+                && nSpellsAvaliable >= nMaxSpells-nCurrentSpells)
             {
                 // Mark the class for which the PC is to gain powers and start the conversation
                 SetLocalInt(oPC, "SpellGainClass", nClass);

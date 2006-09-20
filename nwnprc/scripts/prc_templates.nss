@@ -28,7 +28,7 @@ void RunTemplateStuff(int nTemplate, object oPC = OBJECT_SELF)
 
 void main()
 {
-
+    DoDebug("Running Prc_templates");
     object oPC = OBJECT_SELF;
     //stop infinite loop
     if(GetLocalInt(oPC, "TemplateTest"))
@@ -45,11 +45,19 @@ void main()
             RunTemplateStuff(i, oPC);    
         }    
     }
+    
     if(bHasTemplate)
     {
+    
+    /*
         //call evalPRCFeats again to repeat templates
         SetLocalInt(oPC, "TemplateTest", TRUE);
         DelayCommand(1.0, DeleteLocalInt(oPC, "TemplateTest"));
         EvalPRCFeats(oPC);
+    */
+        DoDebug("Re-running prc_feat");
+        
+        //run the main PRC feat system so we trigger any other feats weve borrowed
+        ExecuteScript("prc_feat", oPC);
     }
 }

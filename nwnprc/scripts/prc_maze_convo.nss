@@ -27,6 +27,8 @@ const int STAGE_EXIT  = 1;
 const int SELECTION_ESCAPE = 1;
 const int SELECTION_WAIT   = 2;
 
+const int ERROR_CODE_5_FIX = 1;
+
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////

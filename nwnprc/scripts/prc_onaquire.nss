@@ -49,12 +49,15 @@ void main()
 
     // This is a resource hog. To work around, we assume that it's not going to cause noticeable issues if
     // racial restrictions are only ever expanded when a PC is involved
-    if(GetIsPC(oCreature) || GetIsPC(GetMaster(oCreature)))
+    if(GetIsPC(oCreature) 
+        || GetIsPC(GetMaster(oCreature))
+        || GetPRCSwitch(PRC_NPC_FORCE_RACE_ACQUIRE))
         ExecuteScript("race_ev_aquire", OBJECT_SELF);
         
     //fix for all-beige 1.67 -> 1.68 cloaks
     //gives them a random color
     if(GetBaseItemType(oItem) == BASE_ITEM_CLOAK
+        && !GetPRCSwitch(PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE)
 //        && GetItemAppearance(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0) == 1
         && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1) == 0
         && GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2) == 0

@@ -63,7 +63,7 @@ void AddCohortRaces(int nMin, int nMax, object oPC)
     int nMaxHD = GetCohortMaxLevel(GetLeadershipScore(oPC), oPC);
     int bUseSimpleRacialHD = GetPRCSwitch(PRC_XP_USE_SIMPLE_RACIAL_HD);
     string sName;
-    for(i=nMin;i<nMax;i++)
+    for(i=nMin;i<nMin+100;i++)
     {
         if(Get2DACache("racialtypes", "PlayerRace", i) == "1")
         {
@@ -78,6 +78,8 @@ void AddCohortRaces(int nMin, int nMax, object oPC)
                 AddChoice(sName, i, oPC);
         }
     }
+    if(i < nMax)
+        DelayCommand(0.00, AddCohortRaces(i, nMax, oPC));
 }
 
 void AddTemplates(int nMin, int nMax, object oPC)
@@ -103,7 +105,24 @@ void AddTemplates(int nMin, int nMax, object oPC)
         else
             AddChoice(sName, i);
     }
-    DelayCommand(0.01, AddTemplates(i, nMax, oPC));
+    if(i < nMax)
+        DelayCommand(0.01, AddTemplates(i, nMax, oPC));
+}
+
+void CohortSetAlignment(int nMoral, int nOrder, object oCohort)
+{
+    if(!GetIsObjectValid(oCohort))
+        return;
+    int nCurrentOrder = GetAlignmentLawChaos(oCohort);
+    int nCurrentMoral = GetAlignmentGoodEvil(oCohort);
+    if(nCurrentMoral < nMoral)
+        AdjustAlignment(oCohort, ALIGNMENT_GOOD, nMoral-nCurrentMoral);
+    else if(nCurrentMoral > nMoral)
+        AdjustAlignment(oCohort, ALIGNMENT_EVIL, nCurrentMoral-nMoral);
+    if(nCurrentOrder < nOrder)
+        AdjustAlignment(oCohort, ALIGNMENT_LAWFUL, nOrder-nCurrentOrder);
+    else if(nCurrentOrder > nOrder)
+        AdjustAlignment(oCohort, ALIGNMENT_CHAOTIC, nCurrentOrder-nOrder);
 }
 
 void main()
@@ -157,7 +176,7 @@ void main()
                     AddChoice("Manage cohorts.", 7);
                 if(GetPrimaryNaturalWeaponCount(oPC))
                     AddChoice("Select primary natural weapon.", 8);
-                //AddChoice("Gain a template.", 9);
+                AddChoice("Gain a template.", 9);
 
 
                 MarkStageSetUp(nStage, oPC);
@@ -981,16 +1000,10 @@ void main()
                 location lSpawn = GetLocation(oPC);
                 object oCohort = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn, TRUE, COHORT_TAG);
                 //change alignment
-                int nCurrentOrder = GetAlignmentLawChaos(oCohort);
-                int nCurrentMoral = GetAlignmentGoodEvil(oCohort);
-                if(nCurrentMoral < nMoral)
-                    AdjustAlignment(oCohort, ALIGNMENT_GOOD, nMoral-nCurrentMoral);
-                else if(nCurrentMoral > nMoral)
-                    AdjustAlignment(oCohort, ALIGNMENT_EVIL, nCurrentMoral-nMoral);
-                if(nCurrentOrder < nOrder)
-                    AdjustAlignment(oCohort, ALIGNMENT_LAWFUL, nOrder-nCurrentOrder);
-                else if(nCurrentOrder > nOrder)
-                    AdjustAlignment(oCohort, ALIGNMENT_CHAOTIC, nCurrentOrder-nOrder);
+                CohortSetAlignment(nMoral, nOrder, oCohort);
+                DelayCommand(1.0, CohortSetAlignment(nMoral, nOrder, oCohort));
+                DelayCommand(3.0, CohortSetAlignment(nMoral, nOrder, oCohort));
+                DelayCommand(5.0, CohortSetAlignment(nMoral, nOrder, oCohort));
                 //level it up
                 int i;
                 //if simple racial HD on, give them racial HD
@@ -1013,7 +1026,7 @@ void main()
                 }
                 //add to player
                 //also does name/portrait/bodypart changes via DoDisguise
-                AddCohortToPlayerByObject(oCohort, oPC);
+                DelayCommand(0.01, AddCohortToPlayerByObject(oCohort, oPC));
                 //mark the player as having recruited for the day
                 SetLocalInt(oPC, "CohortRecruited", TRUE);
                 nStage = STAGE_LEADERSHIP;

@@ -25,6 +25,8 @@
 const int STAGE_MAIN           = 0;
 const int STAGE_SELECTION_MADE = 1;
 
+const int ERROR_CODE_5_again =1 ;
+
 
 //////////////////////////////////////////////////
 /* Aid functions                                */

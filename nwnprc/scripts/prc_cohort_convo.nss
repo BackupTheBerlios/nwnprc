@@ -300,10 +300,11 @@ void main()
                     while(GetIsObjectValid(oTest))
                     {
                         int nType = GetObjectType(oTest);
-                        if((nType == OBJECT_TYPE_CREATURE && nCreature)
+                        if(((nType == OBJECT_TYPE_CREATURE && nCreature)
                             || (nType == OBJECT_TYPE_DOOR && nDoor)
                             || (nType == OBJECT_TYPE_PLACEABLE && nPlaceable)
                             || nLocation)
+                            && oTest != oCohort)//self-casting is covered earlier
                         {
                             AddChoice(GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
                             array_set_object(oCohort, "PRC_ItemsToUse_Target",

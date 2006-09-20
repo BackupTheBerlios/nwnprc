@@ -27,3 +27,36 @@ The weapon loses this property if its wielder drops
 it or otherwise loses contact with it.
 
 **/
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nSpell = GetSpellId();
+	int nHPLoss;
+	float fDur = RoundsToSeconds(nCasterLvl);
+	int nDamBonus = d6(1);
+	
+	if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
+	{
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, 5), oPC);
+		nDamBonus = d6(3);
+	}
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDam, DAMAGE_TYPE_MAGICAL), oPC, fDur);
+	
+	//Set up removal
+	itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+	object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+	
+	IPSafeAddItemProperty(oWeapon, ipHook, fDur);
+	
+	AddEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_bloodb", FALSE, FALSE);
+	
+	SPSetSchool();
+}

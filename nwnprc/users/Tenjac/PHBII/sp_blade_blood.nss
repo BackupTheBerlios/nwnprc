@@ -46,9 +46,10 @@ void main()
 	{
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, 5), oPC);
 		nDamBonus = d6(3);
+		SPApplyAffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
 	}
 	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDam, DAMAGE_TYPE_MAGICAL), oPC, fDur);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDamBonus, DAMAGE_TYPE_MAGICAL), oPC, fDur);
 	
 	//Set up removal
 	itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);

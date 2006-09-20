@@ -62,6 +62,7 @@ void main()
 		i--;
 		oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE,lLocal, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_AREA_OF_EFFECT | OBJECT_TYPE_PLACEABLE);
 	}
+	SPSetSchool();
 }
 	
 void DispellLoop(object oTarget, int nCasterLevel)
@@ -72,6 +73,7 @@ void DispellLoop(object oTarget, int nCasterLevel)
 	object oEffectCaster;
 	int ModWeave;
 	int nBonus = 0;
+	int nSchool;
 	
 	int nLastEntry = GetLocalInt(oTarget, "X2_Effects_Index_Number");
 	effect eToDispel;
@@ -89,59 +91,67 @@ void DispellLoop(object oTarget, int nCasterLevel)
 	for(nIndex; nIndex <= nLastEntry; nIndex++)
 	{
 		nEffectSpellID = GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex));
-		if(GetHasSpellEffect(nEffectSpellID, oTarget))
+		
+		nSchool = GetSpellSchool(nEffectSpellID);
+		
+		//Only dispells enchantments and transmutations
+		if(nSchool == SPELL_SCHOOL_ENCHANTMENT || 
+		   nSchool == SPELL_SCHOOL_TRANSMUTATION)
 		{
-			ModWeave = 0;
-			string SchoolWeave = lookup_spell_school(nEffectSpellID);
-			SpellName = GetStringByStrRef(StringToInt(lookup_spell_name(nEffectSpellID)));
-			nEffectCasterLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex));
-			if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nIndex)) && !Weave) ModWeave = 4;
-			if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
-			
-			int iDice = d20(1);
-			//     SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nEffectSpellID)+" T "+GetName(oTarget)+" C "+GetName(GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex))));
-			//     SendMessageToPC(GetFirstPC(), "Dispell :"+IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + nEffectCasterLevel+ModWeave)+" Weave :"+IntToString(ModWeave)+" "+SchoolWeave);
-			
-			
-			if(iDice + nCasterLevel >= 11 + nEffectCasterLevel + ModWeave + nBonus)
+			if(GetHasSpellEffect(nEffectSpellID, oTarget))
 			{
-				sList += SpellName+", ";
-				oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex));
+				ModWeave = 0;
+				string SchoolWeave = lookup_spell_school(nEffectSpellID);
+				SpellName = GetStringByStrRef(StringToInt(lookup_spell_name(nEffectSpellID)));
+				nEffectCasterLevel = GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex));
+				if (GetLocalInt(oTarget, " X2_Effect_Weave_ID_"+ IntToString(nIndex)) && !Weave) ModWeave = 4;
+				if (SchoolWeave=="V" ||SchoolWeave=="T"  ) ModWeave = 0;
 				
-				//:: If the check is successful, go through and remove all effects originating
-				//:: from that particular spell.
-				effect eToDispel = GetFirstEffect(oTarget);
+				int iDice = d20(1);
+				//     SendMessageToPC(GetFirstPC(), "Spell :"+ IntToString(nEffectSpellID)+" T "+GetName(oTarget)+" C "+GetName(GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex))));
+				//     SendMessageToPC(GetFirstPC(), "Dispell :"+IntToString(iDice + nCasterLevel)+" vs DC :"+IntToString(11 + nEffectCasterLevel+ModWeave)+" Weave :"+IntToString(ModWeave)+" "+SchoolWeave);
 				
-				while(GetIsEffectValid(eToDispel))
+				
+				if(iDice + nCasterLevel >= 11 + nEffectCasterLevel + ModWeave + nBonus)
 				{
-					if(GetEffectSpellId(eToDispel) == nEffectSpellID)
+					sList += SpellName+", ";
+					oEffectCaster = GetLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex));
+					
+					//:: If the check is successful, go through and remove all effects originating
+					//:: from that particular spell.
+					effect eToDispel = GetFirstEffect(oTarget);
+					
+					while(GetIsEffectValid(eToDispel))
 					{
-						if(GetEffectCreator(eToDispel) == oEffectCaster)
+						if(GetEffectSpellId(eToDispel) == nEffectSpellID)
 						{
-							RemoveEffect(oTarget, eToDispel);
-							
-							//Spell Removal Check
-							SpellRemovalCheck(oEffectCaster, oTarget);
-						}// end if effect comes from this caster
-					}// end if effect comes from this spell
-					eToDispel = GetNextEffect(oTarget);
-				}// end of while loop
-				
-				// These are stored for one round for Spell Rebirth
-				SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex))); 
-				SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex)));
-				DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
-				DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
-				
-				// Delete the saved references to the spell's effects.
-				// This will save some time when reordering things a bit.
-				DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex));
-				DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex));
-				DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex));
-				DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex));
-				
-			}// end of if caster check is sucessful
-		}// end of if oTarget has effects from this spell
+							if(GetEffectCreator(eToDispel) == oEffectCaster)
+							{
+								RemoveEffect(oTarget, eToDispel);
+								
+								//Spell Removal Check
+								SpellRemovalCheck(oEffectCaster, oTarget);
+							}// end if effect comes from this caster
+						}// end if effect comes from this spell
+						eToDispel = GetNextEffect(oTarget);
+					}// end of while loop
+					
+					// These are stored for one round for Spell Rebirth
+					SetLocalInt(oTarget, "TrueSpellRebirthSpellId", GetLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex))); 
+					SetLocalInt(oTarget, "TrueSpellRebirthCasterLvl", GetLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex)));
+					DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthSpellId"));
+					DelayCommand(6.0, DeleteLocalInt(oTarget, "TrueSpellRebirthCasterLvl"));
+					
+					// Delete the saved references to the spell's effects.
+					// This will save some time when reordering things a bit.
+					DeleteLocalInt(oTarget, " X2_Effect_Spell_ID_" + IntToString(nIndex));
+					DeleteLocalInt(oTarget, " X2_Effect_Cast_Level_" + IntToString(nIndex));
+					DeleteLocalObject(oTarget, " X2_Effect_Caster_" + IntToString(nIndex));
+					DeleteLocalInt(oTarget, " X2_Effect_Weave_ID_" + IntToString(nIndex));
+					
+				}// end of if caster check is sucessful
+			}// end of if oTarget has effects from this spell
+		}
 	}// end of for statement
 	
 	

@@ -1,57 +1,56 @@
 2DA V2.0
 
-          LABEL                             MODEL                ENVMAP                    
-0         None                              ****                 ****                      
-1         Demon                             c_wingsdm            default                      
-2         Angel                             c_wingsan            ****                      
-3         Bat                               c_wingbat            default                      
-4         "Dragon, Red"                     c_wingdra            default                      
-5         Butterfly                         c_wingbut            default                      
-6         Bird                              c_wingbird           ****                      
-7         ****                              ****                 ****                      
-8         ****                              ****                 ****                      
-9         ****                              ****                 ****                      
-10        ****                              ****                 ****                      
-11        ****                              ****                 ****                      
-12        ****                              ****                 ****                      
-13        ****                              ****                 ****                      
-14        ****                              ****                 ****                      
-15        ****                              ****                 ****                      
-16        ****                              ****                 ****                      
-17        ****                              ****                 ****                      
-18        ****                              ****                 ****                      
-19        ****                              ****                 ****                      
-20        ****                              ****                 ****                      
-21        ****                              ****                 ****                      
-22        ****                              ****                 ****                      
-23        ****                              ****                 ****                      
-24        ****                              ****                 ****                      
-25        ****                              ****                 ****                      
-26        ****                              ****                 ****                      
-27        ****                              ****                 ****                      
-28        ****                              ****                 ****                      
-29        ****                              ****                 ****                      
-30        "Demon, Erinyes (CEP)"            zep_wingerin         ****                      
-31        "Bird, Red (CEP)"                 zep_wingsbird2       ****                      
-32        "Bird, Dark (CEP)"                zep_wingsbird3       ****                      
-33        "Bird, Blue (CEP)"                zep_wingsbird4       ****                      
-34        "Dragon, Black (CEP)"             zep_wingdrablack     default                      
-35        "Dragon, Blue (CEP)"              zep_wingdrablue      default                      
-36        "Dragon, Brass (CEP)"             zep_wingdrabrass     default                      
-37        "Dragon, Bronze (CEP)"            zep_wingdrabronz     default                      
-38        "Dragon, Copper (CEP)"            zep_wingdracoppe     default                      
-39        "Dragon, Gold (CEP)"              zep_wingdragold      default                      
-40        "Dragon, Green (CEP)"             zep_wingdragreen     default                      
-41        "Dragon, Silver (CEP)"            zep_wingdrasilve     default                      
-42        "Dragon, White (CEP)"             zep_wingdrawhite     default                      
-43        ****                              ****                 ****                      
-44        "Bird, Kenku (Ryuujin)"           c_wingkenkub         ****                      
-46        "Half Dragon, Gold (Ryuujin)"     c_winggldhdrg        default                      
-45        "Angel, Armored (unknown)"        c_wingsarman         ****                      
-46        "Fallen Angel (unknown)"          c_wingsfallen        ****                      
-47        Raven                             c_wingsraven         ****                      
-48        ****                              ****                 ****                      
-49        "Mephisto Wings (unknown)"        c_wingsmeph          ****                      
-50        "Dragon, Shadow (unknown)"        c_wingdrashadow      ****                      
-51        "Dragon, Dracolich (unknown)"     c_wingdralich        ****                      
-52        "Dragon, Prismatic (unknown)"     c_wingdraprism       ****                      
+   LABEL                           MODEL            ENVMAP  
+0  None                            ****             ****    
+1  Demon                           c_wingsdm        default 
+2  Angel                           c_wingsan        ****    
+3  Bat                             c_wingbat        default 
+4  "Dragon, Red"                   c_wingdra        default 
+5  Butterfly                       c_wingbut        default 
+6  Bird                            c_wingbird       ****    
+7  ****                            ****             ****    
+8  ****                            ****             ****    
+9  ****                            ****             ****    
+10 ****                            ****             ****    
+11 ****                            ****             ****    
+12 ****                            ****             ****    
+13 ****                            ****             ****    
+14 ****                            ****             ****    
+15 ****                            ****             ****    
+16 ****                            ****             ****    
+17 ****                            ****             ****    
+18 ****                            ****             ****    
+19 ****                            ****             ****    
+20 ****                            ****             ****    
+21 ****                            ****             ****    
+22 ****                            ****             ****    
+23 ****                            ****             ****    
+24 ****                            ****             ****    
+25 ****                            ****             ****    
+26 ****                            ****             ****    
+27 ****                            ****             ****    
+28 ****                            ****             ****    
+29 ****                            ****             ****    
+30 "Demon, Erinyes (CEP)"          zep_wingerin     ****    
+31 "Bird, Red (CEP)"               zep_wingsbird2   ****    
+32 "Bird, Dark (CEP)"              zep_wingsbird3   ****    
+33 "Bird, Blue (CEP)"              zep_wingsbird4   ****    
+34 "Dragon, Black (CEP)"           zep_wingdrablack default 
+35 "Dragon, Blue (CEP)"            zep_wingdrablue  default 
+36 "Dragon, Brass (CEP)"           zep_wingdrabrass default 
+37 "Dragon, Bronze (CEP)"          zep_wingdrabronz default 
+38 "Dragon, Copper (CEP)"          zep_wingdracoppe default 
+39 "Dragon, Gold (CEP)"            zep_wingdragold  default 
+40 "Dragon, Green (CEP)"           zep_wingdragreen default 
+41 "Dragon, Silver (CEP)"          zep_wingdrasilve default 
+42 "Dragon, White (CEP)"           zep_wingdrawhite default 
+43 "Bird, Kenku (Ryuujin)"         c_wingkenkub     ****    
+44 "Half Dragon, Gold (Ryuujin)"   c_winggldhdrg    default 
+45 "Half Dragon, Silver (apeiron)" c_wingslvhdrg    default 
+46 "Angel, Armored (Bloodsong)"    c_wingsarman     ****    
+47 "Fallen Angel (Bloodsong)"      c_wingsfallen    ****    
+48 "Raven (Bloodsong)"             c_wingsraven     ****    
+49 "Mephisto Wings (Saja)"         c_wingsmeph      ****    
+50 "Dragon, Shadow (Saja)"         c_wingdrashadow  ****    
+51 "Dragon, Dracolich (Saja)"      c_wingdralich    ****    
+52 "Dragon, Prismatic (Saja)"      c_wingdraprism   default 

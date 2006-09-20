@@ -122,6 +122,7 @@ void main()
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_CRAFT_TRAP, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_CRAFT_ARMOR, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_APPRAISE, MarshCha), oTarget);
+              ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_TRUESPEAK, MarshCha), oTarget);
                  SetLocalInt(PCMarshal,"MarshalMinor",1);
                  }
               }

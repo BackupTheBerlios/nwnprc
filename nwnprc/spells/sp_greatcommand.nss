@@ -4,7 +4,7 @@
 //:://////////////////////////////////////////////
 /**@file Greater Command
 Enchantment (Compulsion) [Mind-Affecting]
-Level: Cleric 1
+Level: Cleric 5
 Components: V
 Casting Time: 1 action
 Range: Close (25 ft. + 5 ft/2 levels)
@@ -16,11 +16,11 @@ Spell Resistance: Yes
  
 You give the subjects a single command, which they obey to the best of their ability. At the beginning of each round, the targets get a new saving throw to end the effect.
 
-Approach - The target runs directly towards you for one round.
+Approach - The target runs directly towards you for the duration of the spell.
 Drop - The target drops what it is holding (This will not work on creatures that cannot be disarmed). 
-Fall - The target falls to the ground for one round.
-Flee - The target runs away from the caster for one round.
-Halt - The target stands in place and takes no action for one round.
+Fall - The target falls to the ground for the duration of the spell.
+Flee - The target runs away from the caster for the duration of the spell.
+Halt - The target stands in place and takes no action for the duration of the spell.
 
 Author:    Stratovarius
 Created:   29/4/06

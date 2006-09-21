@@ -404,7 +404,7 @@ const int SPELL_TELEPORTATION_CIRCLE                = 2877;
 const int SPELL_DIMENSIONAL_LOCK                    = 2898;
 const int SPELL_TELEPORT                            = 2874;
 const int SPELL_BLOOD_OF_THE_MARTYR                 = 3099;
-const int SPELL_POLAR_RAY                   = 3098;
+const int SPELL_POLAR_RAY                           = 3098;
 const int SPELL_COMMAND_APPROACH                    = 3093;
 const int SPELL_COMMAND_DROP                        = 3094;
 const int SPELL_COMMAND_FALL                        = 3095;
@@ -703,12 +703,21 @@ const int SPELL_TURN_BLIGHTSPAWNED  = 1734;
 const int SPELL_SLAYER_DOMIEL_DIVINE_GRACE = -1;
 
 // Disciple of Asmodeus
-const int SPELL_DISCIPLE_ASMODEUS_DREAD_MIGHT = -1;
-const int SPELL_DISCIPLE_ASMODEUS_DEVIL_CORN  = -1;
-const int SPELL_DISCIPLE_ASMODEUS_DEVIL_GEL   = -1;
-const int SPELL_DISCIPLE_ASMODEUS_DEVIL_GLAB  = -1;
-const int SPELL_DISCIPLE_ASMODEUS_DEVIL_HAM   = -1;
-const int SPELL_DISCIPLE_ASMODEUS_DEVIL_OSY   = -1;
+const int SPELL_DISCIPLE_ASMODEUS_DEVIL_CORN  = 3060;
+const int SPELL_DISCIPLE_ASMODEUS_DEVIL_GEL   = 3061;
+const int SPELL_DISCIPLE_ASMODEUS_DEVIL_GLAB  = 3062;
+const int SPELL_DISCIPLE_ASMODEUS_DEVIL_HAM   = 3063;
+const int SPELL_DISCIPLE_ASMODEUS_DEVIL_OSY   = 3064;
+const int SPELL_DOA_COMMAND_APPROACH          = 3093;
+const int SPELL_DOA_COMMAND_DROP              = 3094;
+const int SPELL_DOA_COMMAND_FALL              = 3095;
+const int SPELL_DOA_COMMAND_FLEE              = 3096;
+const int SPELL_DOA_COMMAND_HALT              = 3097;
+const int SPELL_DOA_GREATER_COMMAND_APPROACH  = 3087;
+const int SPELL_DOA_GREATER_COMMAND_DROP      = 3088;
+const int SPELL_DOA_GREATER_COMMAND_FALL      = 3089;
+const int SPELL_DOA_GREATER_COMMAND_FLEE      = 3090;
+const int SPELL_DOA_GREATER_COMMAND_HALT      = 3091;
 
 // Soulknife
 const int SPELL_MINDBLADE_LUCKY                     = 2429;

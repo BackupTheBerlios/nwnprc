@@ -18098,6 +18098,53 @@ Use: Automatic.</entry>
 Prerequisite: Truespeech rank 20, Epic Character
 Specifics: You gain a +10 bonus to Truespeech.
 Use: Automatic.</entry>
+  <entry id="50307" lang="en" sex="m">Command</entry>
+  <entry id="50308" lang="en" sex="m">Enchantment (Compulsion) [Mind-Affecting]
+Level: Cleric 1
+Components: V
+Casting Time: 1 action
+Range: Close (25 ft. + 5 ft/2 levels)
+Targets: 1 living creature
+Duration: 1 Round
+Saving Throw: Will Negates
+Spell Resistance: Yes
+ 
+You give the subject a single command, which it obeys to the best of its ability.
+
+Approach - The target runs directly towards you for one round.
+Drop - The target drops what it is holding (This will not work on creatures that cannot be disarmed). 
+Fall - The target falls to the ground for one round.
+Flee - The target runs away from the caster for one round.
+Halt - The target stands in place and takes no action for one round.</entry>
+  <entry id="50309" lang="en" sex="m">Command Approach</entry>
+  <entry id="50310" lang="en" sex="m">Command Drop</entry>
+  <entry id="50311" lang="en" sex="m">Command Fall</entry>
+  <entry id="50312" lang="en" sex="m">Command Flee</entry>
+  <entry id="50313" lang="en" sex="m">Command Halt</entry>
+  <entry id="50314" lang="en" sex="m">Greater Command</entry>
+  <entry id="50315" lang="en" sex="m">Enchantment (Compulsion) [Mind-Affecting]
+Level: Cleric 5
+Components: V
+Casting Time: 1 action
+Range: Close (25 ft. + 5 ft/2 levels)
+Targets: 1 living creature/level
+AoE: 30' Burst
+Duration: 1 Round/level
+Saving Throw: Will Negates
+Spell Resistance: Yes
+ 
+You give the subjects a single command, which they obey to the best of their ability. At the beginning of each round, the targets get a new saving throw to end the effect.
+
+Approach - The target runs directly towards you for the duration of the spell.
+Drop - The target drops what it is holding (This will not work on creatures that cannot be disarmed). 
+Fall - The target falls to the ground for the duration of the spell.
+Flee - The target runs away from the caster for the duration of the spell.
+Halt - The target stands in place and takes no action for the duration of the spell.</entry>
+  <entry id="50316" lang="en" sex="m">Greater Command Approach</entry>
+  <entry id="50317" lang="en" sex="m">Greater Command Drop</entry>
+  <entry id="50318" lang="en" sex="m">Greater Command Fall</entry>
+  <entry id="50319" lang="en" sex="m">Greater Command Flee</entry>
+  <entry id="50320" lang="en" sex="m">Greater Command Halt</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

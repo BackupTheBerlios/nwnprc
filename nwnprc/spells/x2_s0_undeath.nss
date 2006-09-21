@@ -16,13 +16,12 @@
 //:://////////////////////////////////////////////
 
 //:: altered by mr_bumpkin Dec 4, 2003 for prc stuff
-#include "spinc_common"
-
-
-#include "NW_I0_SPELLS"
-#include "x0_i0_spells"
+#include "prc_alterations"
 #include "x2_inc_toollib"
 #include "x2_inc_spellhook"
+#include "spinc_common"
+
+const int SRROR_CODE_5_FIX = 1;
 
 void DoUndeadToDeath(object oCreature,int CasterLvl)
 {

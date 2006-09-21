@@ -56,7 +56,7 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	object oTarget = GetSpellTargetObject();
 	location lLoc = GetSpellTargetLocation();
-	int nDC
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	int nDam;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fRadius = 0.0f;

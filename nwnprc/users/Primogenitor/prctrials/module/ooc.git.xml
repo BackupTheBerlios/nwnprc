@@ -1022,7 +1022,7 @@
                 <element name="BodyBag" type="0" value="0" />
                 <element name="Static" type="0" value="0" />
                 <element name="Type" type="0" value="0" />
-                <element name="Useable" type="0" value="0" />
+                <element name="Useable" type="0" value="1" />
                 <element name="OnInvDisturbed" type="11" value="" />
                 <element name="OnUsed" type="11" value="" />
                 <element name="X" type="8" value="18.832653" />

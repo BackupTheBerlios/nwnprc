@@ -12,6 +12,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "inc_ecl"
 #include "inc_utility"
 #include "nw_i0_plot"
 

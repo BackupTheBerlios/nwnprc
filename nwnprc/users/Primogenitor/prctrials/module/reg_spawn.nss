@@ -2,6 +2,8 @@
 #include "ref_inc"
 #include "rng_inc"
 #include "pnp_shft_poly"
+#include "prc_alterations"
+#include "inc_ecl"
 
 void EquipByType(int nType, int nSlot, int nAC = 0)
 {

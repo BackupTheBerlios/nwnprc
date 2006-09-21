@@ -32,6 +32,8 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
 
 int GetHasTemplate(int nTemplate, object oPC = OBJECT_SELF)
 {
+    if(GetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate)))
+        DoDebug("GetHasTemplate("+IntToString(nTemplate)+", "+GetName(oPC)+") is true");
     return GetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate));
 }
 
@@ -78,9 +80,8 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
     //mark the PC as possessing the template
     SetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate), TRUE);
     
-    //run the main PRC function system
-    //run the whole thing so we trigger any other feats weve borrowed
-    DelayCommand(0.1, EvalPRCFeats(oPC));
+    //run the main PRC feat system so we trigger any other feats weve borrowed
+    ExecuteScript("prc_feat", oPC);
     //ran, evalated, done
     return TRUE;
 }

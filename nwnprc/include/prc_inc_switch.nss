@@ -867,7 +867,22 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   */
  const string PRC_REMOVE_PLAYER_SPEED                      = "PRC_REMOVE_PLAYER_SPEED";
 
+ /*
+  * by default, on aquire script for races only runs for NPCs if they have a PC as a master
+  * This runs it for all NPCs, note this will take significantly more CPU time.
+  */
+ const string PRC_NPC_FORCE_RACE_ACQUIRE                      = "PRC_NPC_FORCE_RACE_ACQUIRE";
 
+ /*
+  * by default, if you acquire a pre-1.68 cloak it will be randomly recolored so that it
+  * doenst look beiger than beige. This disables that if you realy want beige cloaks for some reason.
+  */
+ const string PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE                      = "PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE";
+
+
+/******************************************************************************\
+*                               death system switches                              *
+\******************************************************************************/
  /*
   * Turns on the PRC PnP Bleeding & Death system
   * see prc_inc_death for details
@@ -937,6 +952,8 @@ const string PRC_DEATH_STABLE_TO_BLEED_CHANCE      = "PRC_DEATH_STABLE_TO_BLEED_
  * By PnP, this would be 10
  */
 const string PRC_DEATH_STABLE_TO_DISABLED_CHANCE   = "PRC_DEATH_STABLE_TO_DISABLED_CHANCE";
+
+
 /******************************************************************************\
 *                               ACP switches                              *
 \******************************************************************************/
@@ -2744,6 +2761,8 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_REMOVE_PLAYER_SPEED);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_NPC_FORCE_RACE_ACQUIRE);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_STABLE_TO_DISABLED_CHANCE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_STABLE_TO_BLEED_CHANCE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_BLEED_TO_STABLE_CHANCE);

@@ -401,7 +401,7 @@ void main()
             SetLocalInt(oPC, "nLexiconToBrowse", nChoice);
             nStage = STAGE_SELECT_LEVEL;
         }        
-        if(nStage == STAGE_SELECT_LEVEL)
+        else if(nStage == STAGE_SELECT_LEVEL)
         {
             if(nChoice == CHOICE_BACK_TO_LSELECT)
             {

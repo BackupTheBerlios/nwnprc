@@ -36,7 +36,7 @@ void main()
 
         // Do token setup
         SetupTokens();
-        ExecuteScript("prc_ccc_debug", oPC);
+        ExecuteScript("prc_ccc_debug", oPC); // it doesn't do anything
     }
     else if(nValue == DYNCONV_EXITED)
     {

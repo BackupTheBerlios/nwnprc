@@ -535,7 +535,7 @@ void SetupHeader()
             //SetToken(DYNCONV_TOKEN_HEADER, sText);
             break;
         default:
-            sText = "Error";
+            sText = "Error: nStage not an expected value";
             SetHeader(sText);
             //SetToken(DYNCONV_TOKEN_HEADER, "Error");
             break;

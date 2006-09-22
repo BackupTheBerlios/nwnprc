@@ -210,14 +210,14 @@ int NullPsionicsField()
 
 int WardOfPeace()
 {
-	object oCaster = OBJECT_SELF;
-	int nReturn = TRUE;
-	if (GetLocalInt(oCaster, "TrueWardOfPeace") && GetLastSpellHarmful())
-	{
-		nReturn = FALSE;
-	}
-	
-	return nReturn;
+    object oCaster = OBJECT_SELF;
+    int nReturn = TRUE;
+    if (GetLocalInt(oCaster, "TrueWardOfPeace") && GetLastSpellHarmful())
+    {
+        nReturn = FALSE;
+    }
+    
+    return nReturn;
 }
 
 int BardSorcPrCCheck()
@@ -949,7 +949,7 @@ int X2PreSpellCastCode()
     {
         nContinue = FALSE; // Prevent casting
     }
-DoDebug("x2_inc_spellhook pre-crafting");
+DoDebug("x2_inc_spellhook pre-crafting "+IntToString(nContinue));
 
 
     //---------------------------------------------------------------------------
@@ -958,14 +958,14 @@ DoDebug("x2_inc_spellhook pre-crafting");
     if (GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
     {
 
-DoDebug("x2_inc_spellhook pre-x2_pc_craft");
+DoDebug("x2_inc_spellhook pre-x2_pc_craft "+IntToString(nContinue));
         //-----------------------------------------------------------------------
         // Check if spell was used to trigger item creation feat
         //-----------------------------------------------------------------------
         if (nContinue)
             nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft", oCaster);
 
-DoDebug("x2_inc_spellhook pre-sequencer");
+DoDebug("x2_inc_spellhook pre-sequencer "+IntToString(nContinue));
         //-----------------------------------------------------------------------
         // Check if spell was used for on a sequencer item
         //-----------------------------------------------------------------------
@@ -984,7 +984,7 @@ DoDebug("x2_inc_spellhook pre-sequencer");
 //        if (nContinue)
 //            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel", oCaster);
 
-DoDebug("x2_inc_spellhook pre-tagbased");
+DoDebug("x2_inc_spellhook pre-tagbased "+IntToString(nContinue));
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated
         //-----------------------------------------------------------------------
@@ -996,7 +996,7 @@ DoDebug("x2_inc_spellhook pre-tagbased");
             if (nRet == X2_EXECUTE_SCRIPT_END)
                 return FALSE;
         }
-DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
+DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nContinue));
 
         //-----------------------------------------------------------------------
         // Prevent any spell that has no special coding to handle targetting of items
@@ -1084,7 +1084,7 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed");
         SetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE, nDC);
         DelayCommand(0.01, DeleteLocalInt(oCaster, PRC_DC_BASE_OVERRIDE));
     }
-DoDebug("x2_inc_spellhook pre-spellfire");
+DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
     //---------------------------------------------------------------------------
     // Spellfire
     //---------------------------------------------------------------------------

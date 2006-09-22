@@ -113,8 +113,13 @@ void CohortSetAlignment(int nMoral, int nOrder, object oCohort)
 {
     if(!GetIsObjectValid(oCohort))
         return;
-    int nCurrentOrder = GetAlignmentLawChaos(oCohort);
-    int nCurrentMoral = GetAlignmentGoodEvil(oCohort);
+    if(GetIsPC(oCohort))
+        return;
+    int nCurrentOrder = GetLawChaosValue(oCohort);
+    int nCurrentMoral = GetGoodEvilValue(oCohort);
+    if(nCurrentOrder == -1 
+        || nCurrentMoral == -1)
+        return;    
     if(nCurrentMoral < nMoral)
         AdjustAlignment(oCohort, ALIGNMENT_GOOD, nMoral-nCurrentMoral);
     else if(nCurrentMoral > nMoral)

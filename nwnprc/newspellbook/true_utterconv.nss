@@ -476,7 +476,7 @@ void main()
     	    if(nEM >= nMaxEM && nCT >= nMaxCT && nPM >= nMaxPM)
                 nStage = STAGE_ALL_UTTERS_SELECTED;
             else
-                nStage = STAGE_SELECT_UTTERANCE;
+                nStage = STAGE_SELECT_LEXICON;
         }
 
         if(DEBUG) DoDebug("true_utterconv: New stage: " + IntToString(nStage));

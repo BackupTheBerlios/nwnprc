@@ -9049,31 +9049,54 @@ SPELLCASTING
 To cast a spell, the Duskblade must have an Intelligence score of 10 + the spell level. The DC of a Hexblade's spell is 10 + Spell Level + Intelligence Modifier. A Duskblade's caster level is equal to his class level. He casts spells as a Sorcerer does. He initially does not suffer arcane spell failure chance when casting in light armor, later on he learns to cast without arcane spell failure in medium armor and with shields, however failure chance from heavy armor applies normally.
 
 Spells Known:
-The Duskblade starts knowing two level 0 spells and two level 1 spells, as well as one additional level 0 spell for each point of Intelligence bonus. Each time he gains a new class level, he learns one additional spell of any level he can cast.
+The Duskblade starts knowing all level 0 combat spells and two level 1 spells. Each time he gains a new class level, he learns one additional spell of the highest level he can cast.
 
-Spells per day: 
 Level:  0  1  2  3  4  5
 
-    1:  3  2  -  -  -  - 
-    2:  4  3  -  -  -  -
-    3:  5  4  -  -  -  -
-    4:  6  5  -  -  -  -
-    5:  6  5  2  -  -  - 
-    6:  6  6  3  -  -  - 
-    7:  6  6  5  -  -  - 
-    8:  6  7  6  -  -  - 
-    9:  6  7  6  2  -  - 
-   10:  6  8  7  3  -  - 
-   11:  6  8  7  5  -  - 
-   12:  6  8  8  6  -  - 
-   13:  6  9  8  6  2  - 
-   14:  6  9  8  7  3  - 
-   15:  6  9  8  7  5  -
-   16:  6  9  9  8  6  -
-   17:  6 10  9  8  6  2
-   18:  6 10  9  8  7  3
-   19:  6 10 10  9  7  5
-   20:  6 10 10 10  8  6</entry>
+       1:  2  2   -   -   -   - 
+       2:  2  3   -   -   -   -
+       3:  2  4   -   -   -   -
+       4:  2  5   -   -   -   -
+       5:  2  5  1   -   -   - 
+       6:  2  5  2   -   -   - 
+       7:  2  5  3   -   -   - 
+       8:  2  5  4   -   -   - 
+       9:  2  5  4  1   -   - 
+     10:  2  5  4  2   -   - 
+     11:  2  5  4  3   -   - 
+     12:  2  5  4  4   -   - 
+     13:  2  5  4  4  1   - 
+     14:  2  5  4  4  2   - 
+     15:  2  5  4  4  3   -
+     16:  2  5  4  4  4   -
+     17:  2  5  4  4  4  1
+     18:  2  5  4  4  4  2
+     19:  2  5  4  4  4  3
+     20:  2  5  4  4  4  4
+
+Spells per day: 
+Level:  0   1   2   3   4   5
+
+       1:  3   2    -    -    -    - 
+       2:  4   3    -    -    -    -
+       3:  5   4    -    -    -    -
+       4:  6   5    -    -    -    -
+       5:  6   5   2    -    -    - 
+       6:  6   6   3    -    -    - 
+       7:  6   6   5    -    -    - 
+       8:  6   7   6    -    -    - 
+       9:  6   7   6   2    -    - 
+     10:  6   8   7   3    -    - 
+     11:  6   8   7   5    -    - 
+     12:  6   8   8   6    -    - 
+     13:  6   9   8   6   2     - 
+     14:  6   9   8   7   3    - 
+     15:  6   9   8   7   5    -
+     16:  6   9   9   8   6    -
+     17:  6 10   9   8   6   2
+     18:  6 10   9   8   7   3
+     19:  6 10 10   9   7   5
+     20:  6 10 10 10   8   6</entry>
   <entry id="46956" lang="en" sex="m">Epic Duskblade</entry>
   <entry id="46957" lang="en" sex="m">The Epic Duskblade is a Juggernaut on the battlefield, wasting his foes with steel and spell.
 
@@ -11342,6 +11365,42 @@ Prerequisite: Archmage Level 1
 Specifics: An Archmage who selects this type of high arcana can permanently prepare one of her arcane spells as a spell-like ability that can be used twice per day.
 The spell-like ability normally uses a spell slot of the spell's level, although the Archmage can choose to make a spell modified by a metamagic feat into a spell-like ability at the appropriate spell level.
 Use: Selected.</entry>
+  <entry id="47814" lang="en" sex="m">Animalistic Power</entry>
+  <entry id="47815" lang="en" sex="m">Caster Level(s): Cleric/Druid/Duskblade/Ranger/Sorcerer/Wizard 2
+Innate Level: 2
+School: Transmutation
+Component(s): Verbal, Somatic, Material
+Range: Touch
+Area of Effect / Target: Creature touched
+Duration: 1 min/level
+Save: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+You imbue the subject with an aspect of the natural world. The subject gains a +2 enhancement bonus to Strength, Dexterity and Constitution.</entry>
+  <entry id="47816" lang="en" sex="m">Bigby's Striking Fist</entry>
+  <entry id="47817" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 2
+Innate Level: 2
+School: Evocation [Force]
+Component(s): Verbal, Somatic, Material
+Range: Medium (100ft. + 10 ft./level)
+Area of Effect / Target: One creature
+Duration: Instantaneous
+Save: Reflex for half
+Spell Resistance: Yes
+
+A large glowing fist, the size of a human torso, appears in front of the creature and slams into it with great force. The attack bonus of this Striking Fist equals your caster level + your key ability modifier +2 for the hand's Strength score (14). The fist deals 1d6 points of nonlethal damage per two caster levels (maximum 5d6). A subject that succeeds on it's Reflex save takes half damage.</entry>
+  <entry id="47818" lang="en" sex="m">Bigby's Tripping Hand</entry>
+  <entry id="47819" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 1
+Innate Level: 1
+School: Evocation [Force]
+Component(s): Verbal, Somatic, Material
+Range: Medium (100ft. + 10 ft./level)
+Area of Effect / Target: One creature
+Duration: Instantaneous
+Save: Reflex negates
+Spell Resistance: Yes
+
+A large glowing fist, the size of a human torso, appears in front of the creature and sweeps at it's legs. The large hand sweeps at the target creature's legs in a tripping maneuver. This trip attempt does not provoke attacks of opportunity. It's attack bonus equals your caster level + your key ability modifier + 2 for the hand's Strength score (14). The hand has a bonus of +1 on the trip attempt for every three caster levels, to a maximum of +5 at 15th level.</entry>
   <entry id="47820" lang="en" sex="m">Oozemaster</entry>
   <entry id="47821" lang="en" sex="m">Oozemasters</entry>
   <entry id="47822" lang="en" sex="m">oozemaster</entry>
@@ -15502,6 +15561,20 @@ Epic Skill Focus(Intimidate), Epic Skill Focus(Move Silently), Epic Weapon Focus
   <entry id="49037" lang="en" sex="m">You notice</entry>
   <entry id="49038" lang="en" sex="m">is covered with poison and pick it up very carefully.</entry>
   <entry id="49039" lang="en" sex="m">You suddenly remember that the item you were about to use is covered with poison and try cleaning it first.</entry>
+  <entry id="49040" lang="en" sex="m">Blade of Blood</entry>
+  <entry id="49041" lang="en" sex="m">Caster Level(s): Assassin/Blackguard/Cleric/Duskblade/Sorcerer/Wizard 1
+Innate Level: 1
+School: Necromancy
+Component(s): Verbal, Somatic
+Range: Touch
+Area of Effect / Target: Weapon touched
+Duration: 1 round/level or until discharged
+Save: None
+Spell Resistance: No
+
+This spell infuses the weapon touched with baleful energy. The next time this weapon strikes a living creature, Blade of Blood discharges. The spell deals an extra 1d6 points of damage against the target of the attack. You can voluntarily take 5 hitpoints of damage to empower the weapon to deal an extra 2d6 of damage (for a total of 3d6 extra damage). The weapon loses this property if it's wielder drops it or otherwise loses contact with it.</entry>
+  <entry id="49042" lang="en" sex="m">Blade of Blood 1d6</entry>
+  <entry id="49043" lang="en" sex="m">Blade of Blood 3d6</entry>
   <entry id="49044" lang="en" sex="m">Contact</entry>
   <entry id="49045" lang="en" sex="m">Ingested</entry>
   <entry id="49046" lang="en" sex="m">Inhaled</entry>
@@ -15538,6 +15611,50 @@ Epic Skill Focus(Intimidate), Epic Skill Focus(Move Silently), Epic Weapon Focus
   <entry id="49077" lang="en" sex="m">The venom of a couatl, when milked from the creature and purified, becomes a potent ravage that severly weakens the victim.</entry>
   <entry id="49078" lang="en" sex="m">Unicorn Blood</entry>
   <entry id="49079" lang="en" sex="m">Drawn from a willing unicorn, unicorn blood retains it's potency as a ravage only as long as the unicorn that donated the blood remains alive.</entry>
+  <entry id="49080" lang="en" sex="m">Channeled Pyroburst</entry>
+  <entry id="49081" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 4
+Innate Level: 4
+School: Evocation [Fire]
+Component(s): Verbal, Somatic
+Range: Medium (100 ft. +10 ft./level)
+Area of Effect / Target: special
+Duration: Instantaneous
+Save: Reflex for half
+Spell Resistance: Yes
+
+This spell creates a bolt of fiery energy that blasts your enemies. The spell's strength depends on the amount of time you spend channeling energy into it.
+If you cast this spell as a swift action, it deals 1d4 of fire damage per two caster levels (maximum 10d4) against a single target of your choice.
+If you cast this spell as a standard action, it deals 1d6 points of fire damage per caster level (/maximum 10d6) to all creatures in a 10-foot-radius spread.
+If you cast this spell as a full round action, it deals 1d8 points of fire damage per caster level (maximum 10d8) to all creatures in a 15-foot-radius spread.
+If you spend 2 rounds casting this spell, it deals 1d10 fire damage per caster level (maximum 10d10) to all creatures in a 20-foot-radius spread.</entry>
+  <entry id="49082" lang="en" sex="m">Swift Channeled Pyroburst</entry>
+  <entry id="49083" lang="en" sex="m">Standard Channeled Pyroburst</entry>
+  <entry id="49084" lang="en" sex="m">Full round Channeled Pyroburst</entry>
+  <entry id="49085" lang="en" sex="m">Two rounds Channeled Pyroburst</entry>
+  <entry id="49086" lang="en" sex="m">Crown of Might</entry>
+  <entry id="49087" lang="en" sex="m">Caster Level(s): Cleric/Duskblade/Sorcerer/Wizard 3
+Innate Level: 3
+School: Transmutation
+Component(s): Verbal, Somatic, Material
+Range: Touch
+Area of Effect / Target: Creature touched
+Duration: 1 hour/level or until discharged
+Save: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+This spell creates a crown of magical energy that grants the spell's recipient a +2 enhancement bonus to Strength. As an immediate action, the creature wearing a Crown of Might can discharge it's magic to gain a +8 enhancement bonus to Strength for 1 round. The spell ends after the wearer uses the crown in this manner. The crown occupies space on the body as a headband, hat, or helm. If the crown is removed, the spell immediately ends.</entry>
+  <entry id="49088" lang="en" sex="m">Crown of Protection</entry>
+  <entry id="49089" lang="en" sex="m">Caster Level(s): Cleric/Duskblade/Sorcerer/Wizard 3
+Innate Level: 3
+School: Transmutation
+Component(s): Verbal, Somatic, Material
+Range: Touch
+Area of Effect / Target: Creature touched
+Duration: 1 hour/level or until discharged
+Save: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+This spell creates a crown of magical energy that grants the spell's recipient a +1 deflection bonus to AC and a +1 resistance bonus on all saves. As an immediate action, the creature wearing a Crown of Might can discharge it's magic to gain a a +4 deflection bonus to AC and a +4 resistance bonus on all saves for 1 round. The spell ends after the wearer uses the crown in this manner. The crown occupies space on the body as a headband, hat, or helm. If the crown is removed, the spell immediately ends.</entry>
   <entry id="49090" lang="en" sex="m">Caster Level(s): Cleric 4, Druid 3
 Innate Level: 3
 School: Necromancy

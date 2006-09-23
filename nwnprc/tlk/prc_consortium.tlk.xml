@@ -15966,6 +15966,50 @@ Incorporeal creatures can be harmed only by other incorporeal creatures, by magi
 Even when struck by magic or magic weapons, an incorporeal creature has a 50% chance to ignore any damage from a corporeal source.
 
 Incorporeal creatures are immune to critical hits and sneak attacks.</entry>
+  <entry id="49175" lang="en" sex="m">Lesser Deflect</entry>
+  <entry id="49176" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 1
+Innate Level: 1
+School: Abjuration [Force]
+Component(s): Verbal
+Range: Personal
+Area of Effect / Target: Weapon touched
+Duration: instantaneous
+
+You project a field of invisible force, creating a short-lived protective barrier. You gain a deflection bonus to your AC against a single attack; this bonus is equal to +1 per three caster levels (maximum +5)</entry>
+  <entry id="49177" lang="en" sex="m">Dimension Hop</entry>
+  <entry id="49178" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 2
+Innate Level: 2
+School: Conjuration (Teleportation)
+Component(s): Verbal
+Range: Touch
+Area of Effect / Target: Creature touched
+Duration: instantaneous
+Saving Throw: Will negates
+Spell Resistance: Yes
+
+You instantly teleport the subject creature a distance of 5 feet per two caster levels. The destination must be an unoccupied space within line of sight.</entry>
+  <entry id="49179" lang="en" sex="m">Dispelling Touch</entry>
+  <entry id="49180" lang="en" sex="m">Caster Level(s): Duskblade 3, Sorcerer/Wizard 2
+Innate Level: 2
+School: Abjuration
+Component(s): Verbal, Somatic
+Range: Touch
+Area of Effect / Target: One touched creature, object, or spell effect
+Duration: instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+You can use Dispelling Touch to end an ongoing spell that has been cast on a creature or object, or a spell that has a noticeable ongoing effect. You make a dispel check (1d20 + your caster level, maximum +10) against the spell effect with the highest caster level. If that check fails, you make dispel checks against progressively weaker spells until you dispel one spell or until you fail all your checks. Magic items carried by a creature are not affected.</entry>
+  <entry id="49181" lang="en" sex="m">Doom Scarabs</entry>
+  <entry id="49182" lang="en" sex="m">Caster Level(s): Duskblade 3, Sorcerer/Wizard 2
+Innate Level: 2
+School: Abjuration
+Component(s): Verbal, Somatic
+Range: Touch
+Area of Effect / Target: One touched creature, object, or spell effect
+Duration: instantaneous
+Saving Throw: None
+Spell Resistance: No</entry>
   <entry id="49193" lang="en" sex="m">Power Points</entry>
   <entry id="49194" lang="en" sex="m">Your manifester level is not high enough to spend</entry>
   <entry id="49195" lang="en" sex="m">You do not have a high enough ability score to manifest this power</entry>

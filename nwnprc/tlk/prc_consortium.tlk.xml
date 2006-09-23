@@ -13699,6 +13699,14 @@ Notes:
   <entry id="48475" lang="en" sex="m">Teleport - Self only</entry>
   <entry id="48476" lang="en" sex="m">Teleport - Party within 10ft</entry>
   <entry id="48477" lang="en" sex="m">Teleport (9)</entry>
+  <entry id="48478" lang="en" sex="m">Quick Cast</entry>
+  <entry id="48479" lang="en" sex="m">Type of Feat: Class Specific
+
+Beginning at 5th level, a Duskblade can cast one spell each day as a swift action, so long as the casting time of the spell is 1 standard action or less. At 10th level and every 5 levels afterwards the Duskblade gains one additional use per day.</entry>
+  <entry id="48480" lang="en" sex="m">Spell Power (Ex)</entry>
+  <entry id="48481" lang="en" sex="m">Type of Feat: Class specific
+
+Starting at 6th level, a Duskblade can more easily overcome the spell resistance of any opponent he successfully injures with a melee attack. If he has injured an opponent with a melee attack, he gains a +2 bonus on his caster level check to overcome spell resistance for the remainder of the encounter. This bonus increases by 1 every five levels afterwards, with an additional increase at level 18 and 38.</entry>
   <entry id="48482" lang="en" sex="m">Attempt to escape.</entry>
   <entry id="48483" lang="en" sex="m">Wait here.</entry>
   <entry id="48484" lang="en" sex="m">Do you want to attempt to escape the maze'
@@ -18167,7 +18175,7 @@ Level
 2: Syllable of Affliction - Damage target's senses
 3: Syllable of Exile - Maze target
 4: Syllable of Dissolution - Target takes 8d6 damage
-5: Syllable of Enervation - Target takes 2 Negative Levels.</entry>  
+5: Syllable of Enervation - Target takes 2 Negative Levels.</entry>
   <entry id="50325" lang="en" sex="m">Syllable of Detachment</entry>
   <entry id="50326" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Bereft 1
@@ -18232,10 +18240,10 @@ Level
 
 SPELLCASTING
 
-Every odd level in Brimstone Speaker, the character gains new spells per day as if he had also gained a level in his highest divine caster class.</entry>  
+Every odd level in Brimstone Speaker, the character gains new spells per day as if he had also gained a level in his highest divine caster class.</entry>
   <entry id="50342" lang="en" sex="m">Tongue of Fire 3d6</entry>
   <entry id="50343" lang="en" sex="m">Tongue of Fire 5d6</entry>
-  <entry id="50344" lang="en" sex="m">Tongue of Fire 8d6</entry>  
+  <entry id="50344" lang="en" sex="m">Tongue of Fire 8d6</entry>
   <entry id="50345" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Brimstone Speaker 1
 Specifics: The Brimstone Speaker can speak a truename that translates as "tongue of fire". This ability allows them to create a line of fire 20 feet long. Those hit by the fire have a DC vs 10 + Class levels + Con modifier. There are three versions of the Tongue of Fire: 3d6 with a Truespeak DC of 25, 5d6 with a DC of 30, and 8d6 with a DC of 35. This ability is affected by the Law of Resistance.

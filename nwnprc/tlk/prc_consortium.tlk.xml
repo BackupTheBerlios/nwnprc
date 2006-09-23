@@ -18145,6 +18145,108 @@ Halt - The target stands in place and takes no action for the duration of the sp
   <entry id="50318" lang="en" sex="m">Greater Command Fall</entry>
   <entry id="50319" lang="en" sex="m">Greater Command Flee</entry>
   <entry id="50320" lang="en" sex="m">Greater Command Halt</entry>
+  <entry id="50321" lang="en" sex="m">Bereft</entry>
+  <entry id="50322" lang="en" sex="m">Berefts</entry>
+  <entry id="50323" lang="en" sex="m">bereft</entry>
+  <entry id="50324" lang="en" sex="m">(PRESTIGE CLASS)
+The bereft are a group of truenamers who devote themselves to mastering the word of unmaking, a powerful component of Truespeech purportedly able to unravel creation. Through liberal use of the word's syllables, a bereft studies its effects so that one day he can master the complete word of unmaking and perhaps unlock the meaning of reality.
+
+- Hit Die: d6
+- Proficiencies: A Bereft gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
+
+REQUIREMENTS:
+
+Alignment: Any neutral
+Skills: Truespeak 13 ranks.
+
+ABILITIES:
+
+Level
+1: Syllable of Detachment - -2 Penalty on checks
+2: Syllable of Affliction - Damage target's senses
+3: Syllable of Exile - Maze target
+4: Syllable of Dissolution - Target takes 8d6 damage
+5: Syllable of Enervation - Target takes 2 Negative Levels.</entry>  
+  <entry id="50325" lang="en" sex="m">Syllable of Detachment</entry>
+  <entry id="50326" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bereft 1
+Specifics: When the Bereft successfully speak this syllable, the target takes a -2 penalty to skills, AB, and saves for a number of rounds equal to the Bereft's class level.
+Use: Selected.</entry>
+  <entry id="50327" lang="en" sex="m">Syllable of Affliction</entry>
+  <entry id="50328" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bereft 2
+Specifics: When the Bereft successfully speak this syllable, the target takes loses one of his senses for a number of rounds equal to the Bereft's class level.
+Sight: The target is struck blind.
+Hearing: The target becomes deaf.
+Touch: The target takes a -2 penalty on Disable Trap, Jump, Open Lock, Search, and Tumble.
+Use: Selected.</entry>
+  <entry id="50329" lang="en" sex="m">Afflict Sight</entry>
+  <entry id="50330" lang="en" sex="m">Afflict Hearing</entry>
+  <entry id="50331" lang="en" sex="m">Afflict Touch</entry>
+  <entry id="50332" lang="en" sex="m">Syllable of Exile</entry>
+  <entry id="50333" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bereft 3
+Specifics: When the Bereft successfully speak this syllable, the target is affected as by the Maze spell, for one round.
+Use: Selected.</entry>
+  <entry id="50334" lang="en" sex="m">Syllable of Dissolution</entry>
+  <entry id="50335" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bereft 4
+Specifics: When the Bereft successfully speak this syllable, the target takes 8d6 damage.
+Use: Selected.</entry>
+  <entry id="50336" lang="en" sex="m">Syllable of Enervation</entry>
+  <entry id="50337" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Bereft 5
+Specifics: When the Bereft successfully speak this syllable, the target gains two negative levels for 24 hours.
+Use: Selected.</entry>
+  <entry id="50338" lang="en" sex="m">Brimstone Speaker</entry>
+  <entry id="50339" lang="en" sex="m">Brimstone Speakers</entry>
+  <entry id="50340" lang="en" sex="m">brimstone speaker</entry>
+  <entry id="50341" lang="en" sex="m">(PRESTIGE CLASS)
+Brimstone Speakers regard the secret language of Truenames as nothing less than a gift from the gods. Through assiduous study, they master truenames that enable them to call eladrins, archons and angels to fight on their behalf. They also know the truename they're most famous for: the tongue of fire that burns away the stain of evil everywhere.
+
+- Hit Die: d8
+- Proficiencies: A Brimstone Speaker gains no additional proficiencies.
+- Skill Points: 2 + Int Modifier
+
+REQUIREMENTS:
+
+Alignment: Any Good
+Skills: Truespeak 10 ranks.
+Spellcasting: Must be able to cast 4th level divine spells.
+Special: Clerics must have Fire or Good domains.
+
+ABILITIES:
+
+Level
+1: Tongue of Fire 3d6 - A line of fire dealing damage
+2: 
+3: Lesser Heavenly Entreaty - Call a Bralani Eladrin
+4: 
+5: Tongue of Fire 5d6
+6: Heavenly Entreaty - Call a Word Archon
+7: 
+8:
+9: Greater Heavenly Entreaty - Call an Astral Deva
+10: Tongue of Fire 8d6
+
+SPELLCASTING
+
+Every odd level in Brimstone Speaker, the character gains new spells per day as if he had also gained a level in his highest divine caster class.</entry>  
+  <entry id="50342" lang="en" sex="m">Tongue of Fire 3d6</entry>
+  <entry id="50343" lang="en" sex="m">Tongue of Fire 5d6</entry>
+  <entry id="50344" lang="en" sex="m">Tongue of Fire 8d6</entry>  
+  <entry id="50345" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Brimstone Speaker 1
+Specifics: The Brimstone Speaker can speak a truename that translates as "tongue of fire". This ability allows them to create a line of fire 20 feet long. Those hit by the fire have a DC vs 10 + Class levels + Con modifier. There are three versions of the Tongue of Fire: 3d6 with a Truespeak DC of 25, 5d6 with a DC of 30, and 8d6 with a DC of 35. This ability is affected by the Law of Resistance.
+Use: Selected.</entry>
+  <entry id="50346" lang="en" sex="m">Lesser Heavenly Entreaty</entry>
+  <entry id="50347" lang="en" sex="m">Heavenly Entreaty</entry>
+  <entry id="50348" lang="en" sex="m">Greater Heavenly Entreaty</entry>
+  <entry id="50349" lang="en" sex="m">Type of Feat: Class
+Prerequisite: Brimstone Speaker 3
+Specifics: The Brimstone Speaker can shout the truenames of angelic powers, being granted their services in return. There are three versions of the Heavenly Entreaty: Lesser, which summons a Bralani Eladrin with a Truespeak DC of 27, Normal, which summons a Word Archon with a Truespeak DC of 33, and Greater, which summons an Astral Deva with a Truespeak DC of 43. This ability is affected by the Law of Resistance.
+Use: Selected.</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
   <entry id="50502" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Metal domain.

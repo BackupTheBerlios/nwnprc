@@ -383,7 +383,7 @@ int GetDivinePRCLevels (object oCaster)
            +  GetLevelByClass(CLASS_TYPE_RUNECASTER,        oCaster)
 
            +  (GetLevelByClass(CLASS_TYPE_OLLAM,                 oCaster) + 1) / 2
-           //+  (GetLevelByClass(CLASS_TYPE_OCULAR,              oCaster) + 1) / 2
+           +  (GetLevelByClass(CLASS_TYPE_BRIMSTONE_SPEAKER,     oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_TEMPUS,                oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_HATHRAN,               oCaster) + 1) / 2
            +  (GetLevelByClass(CLASS_TYPE_BFZ,                   oCaster) + 1) / 2

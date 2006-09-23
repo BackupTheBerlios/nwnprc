@@ -243,6 +243,20 @@ void BFZ(object oPC)
      }
 }
 
+void Brimstone(object oPC)
+{
+     if (GetLevelByClass(CLASS_TYPE_CLERIC, oPC) > 0)
+     {
+          SetLocalInt(oPC, "PRC_PrereqBrimstone", 1);
+          int nBrim = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
+                      GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC);
+          if (nBrim >= 1)
+          {
+            SetLocalInt(oPC, "PRC_PrereqBrimstone", 0);
+          }
+     }
+}
+
 void ShiningBlade(object oPC)
 {
      int iCleric = GetLevelByClass(CLASS_TYPE_CLERIC, oPC);
@@ -891,6 +905,7 @@ void main()
      Asmodeus(oPC);
      RacialHD(oPC);
      Virtuoso(oPC);
+     Brimstone(oPC);
      // Truly massive debug message flood if activated.
      /*
      SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));

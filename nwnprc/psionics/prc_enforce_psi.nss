@@ -277,7 +277,7 @@ void main()
     // Thrallherd
     bRelevel |= Thrallherd(oPC);
     // Cross class cap on TrueSpeech
-    CheckTrueSpeechSkill(oPC);
+    bRelevel |= CheckTrueSpeechSkill(oPC);
 
 
     if(GetIsPsionicCharacter(oPC))

@@ -807,6 +807,11 @@ if(DEBUG) DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellb
     //remove any old effects
     //seems cheat-casting breaks hardcoded removal
     //and cant remove effects because I dont know all the targets!
+    
+    // This does the Duskblade's Quick Cast
+    // Yes, I know it overrides other metamagic
+    if (nClass == CLASS_TYPE_DUSKBLADE && GetLocalInt(oPC, "DBQuickCast"))
+    	nMetamagic = METAMAGIC_QUICKEN;
 
 
     //cast the spell

@@ -33,6 +33,8 @@ int RunecasterRunePowerSP(object oCaster);
 
 int MarshalDeterminedCaster(object oCaster);
 
+int DuskbladeSpellPower(object oCaster);
+
 // Use this function to get the adjustments to a spell or SLAs spell penetration
 // from the various class effects
 // Update this function if any new classes change spell pentration
@@ -305,6 +307,26 @@ int MarshalDeterminedCaster(object oCaster)
     return nSP;
 }
 
+int DuskbladeSpellPower(object oCaster)
+{
+	int nSP = 0;
+    	int nClass = GetLevelByClass(CLASS_TYPE_DUSKBLADE, oCaster);
+    	object oTarget = PRCGetSpellTargetObject();
+    	int nHit = GetLocalInt(oTarget, "DuskbladeSpellPower");
+    	
+    	if (nHit && nClass >= 38)      nSP = 10;
+    	else if (nHit && nClass >= 36) nSP = 9;
+    	else if (nHit && nClass >= 31) nSP = 8;
+    	else if (nHit && nClass >= 26) nSP = 7;
+    	else if (nHit && nClass >= 21) nSP = 6;
+    	else if (nHit && nClass >= 18) nSP = 5;
+    	else if (nHit && nClass >= 16) nSP = 4;
+    	else if (nHit && nClass >= 11) nSP = 3;
+    	else if (nHit && nClass >= 6)  nSP = 2;
+    	
+    	return nSP;
+}
+
 int add_spl_pen(object oCaster = OBJECT_SELF)
 {
     int spell_id = PRCGetSpellId();
@@ -317,6 +339,7 @@ int add_spl_pen(object oCaster = OBJECT_SELF)
     nSP += KOTCSpellPenVsDemons(oCaster);
     nSP += RunecasterRunePowerSP(oCaster);
     nSP += MarshalDeterminedCaster(oCaster);
+    nSP += DuskbladeSpellPower(oCaster);
 
     return nSP;
 }

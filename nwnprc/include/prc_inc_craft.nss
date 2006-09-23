@@ -418,22 +418,20 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
     //Consume them even if you don't meet the requisites (i.e. you failed a skill check)
     if (report.GPcost < 0)
         report.GPcost = 0;
-
-    int nOwnedGold = GetGold(OBJECT_SELF);
-    int nOwnedXP   = GetAvailXP(OBJECT_SELF);
-
-    if (nOwnedGold < report.GPcost || nOwnedXP < report.XPcost)
+        
+    if (!GetHasGPToSpend(OBJECT_SELF, report.GPcost)    
+        || !GetHasXPToSpend(OBJECT_SELF, report.XPcost))
         report.result = "";
 
     if (report.display) {
         string sMessage = GetStringByStrRef(STRREF_MARKETPRICE) + ": " + IntToString(report.marketprice) + "\n";
         sMessage += GetStringByStrRef(STRREF_GPCOST) + ": " + IntToString(report.GPcost);
         if(GetModule() != OBJECT_SELF)
-            sMessage += " - " + (nOwnedGold < report.GPcost ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK));
+            sMessage += " - " + (GetHasGPToSpend(OBJECT_SELF, report.GPcost) ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK));
         sMessage += "\n";
         sMessage += GetStringByStrRef(STRREF_XPCOST) + ": " + IntToString(report.XPcost);
         if(GetModule() != OBJECT_SELF)
-            sMessage += " - " + (nOwnedXP < report.XPcost   ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK));
+            sMessage += " - " + (GetHasXPToSpend(OBJECT_SELF, report.XPcost)   ? GetStringByStrRef(STRREF_FAILED) : GetStringByStrRef(STRREF_OK));
         if(GetModule() != OBJECT_SELF)
         {
             sMessage += "\n";
@@ -448,9 +446,11 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
 
     if (report.consume) {
         //Consume GP and XP if we're not meeting all the requisites, too (i.e. on a failed skill check)
-        if (nOwnedGold >= report.GPcost && nOwnedXP >= report.XPcost) {
-            TakeGoldFromCreature(report.GPcost, OBJECT_SELF, TRUE);
-            SetXP(OBJECT_SELF, GetXP(OBJECT_SELF) - report.XPcost);
+        if (GetHasGPToSpend(OBJECT_SELF, report.GPcost) 
+            && GetHasXPToSpend(OBJECT_SELF, report.XPcost))
+        {
+            SpendXP(OBJECT_SELF, report.XPcost);
+            SpendGP(OBJECT_SELF, report.GPcost);
         }
     }
 

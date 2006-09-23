@@ -404,6 +404,26 @@ int GetHasXPToSpend(object oPC, int nCost);
  */
 void SpendXP(object oPC, int nCost);
 
+
+/**
+ * Tests if a creature can burn the amount of Gold specified
+ *
+ * @param oPC   Creature to test, can be an NPC or a PC
+ * @param nCost Amount of Gold to chck for
+ *
+ * @return       TRUE/FALSE
+ */
+int GetHasGPToSpend(object oPC, int nCost);
+
+
+/**
+ * Removes an amount of Gold
+ *
+ * @param oPC   Creature to remove Gold from, can be an NPC or a PC
+ * @param nCost Amount of Gold to remove for
+ */
+void SpendGP(object oPC, int nCost);
+
 /*
  *  Convinence function for testing off-hand weapons
  */
@@ -439,6 +459,12 @@ void ActionUseItemPropertyAtObject(object oItem, itemproperty ipIP, object oTarg
  */
 void ActionUseItemPropertyAtLocation(object oItem, itemproperty ipIP, location lTarget);
 
+
+const int ERROR_CODE_5_ONCE_MORE = -1;
+const int ERROR_CODE_5_ONCE_MORE2 = -1;
+const int ERROR_CODE_5_ONCE_MORE3 = -1;
+const int ERROR_CODE_5_ONCE_MORE4 = -1;
+const int ERROR_CODE_5_ONCE_MORE5 = -1;
 
 //////////////////////////////////////////////////
 /* Include section                              */
@@ -1071,7 +1097,11 @@ int GetHasXPToSpend(object oPC, int nCost)
     // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
     int nHitDice = GetHitDice(oPC);
     int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
+    //get current XP    
     int nXP = GetXP(oPC);
+    if(!nXP)
+        nXP = GetLocalInt(oPC, "NPC_XP");
+    //the test    
     if (nXP >= (nHitDiceXP + nCost))
         return TRUE;
     return FALSE;
@@ -1082,7 +1112,49 @@ void SpendXP(object oPC, int nCost)
 {
     if (nCost > 0)
     {
-        SetXP(oPC, GetXP(oPC) - nCost);
+        if(GetXP(oPC))
+            SetXP(oPC, GetXP(oPC) - nCost);
+        else if(GetLocalInt(oPC, "NPC_XP"))
+            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-nCost);
+    }
+}
+
+//Check for GP
+int GetHasGPToSpend(object oPC, int nCost)
+{
+    //if its a NPC, get master
+    while(!GetIsPC(oPC)
+        && GetIsObjectValid(GetMaster(oPC)))
+    {
+        oPC = GetMaster(oPC);
+    }    
+    //test if it has gold
+    if(GetIsPC(oPC))
+    {
+        int nGold = GetGold(oPC);
+        //has enough gold
+        if(nGold >= nCost)
+            return TRUE;
+        //does not have enough gold    
+        return FALSE;
+    }
+    //NPC in NPC faction
+    //cannot posses gold
+    return FALSE;
+}
+
+//Spend GP
+void SpendGP(object oPC, int nCost)
+{
+    if (nCost > 0)
+    {
+        //if its a NPC, get master
+        while(!GetIsPC(oPC)
+            && GetIsObjectValid(GetMaster(oPC)))
+        {
+            oPC = GetMaster(oPC);
+        }
+        TakeGoldFromCreature(nCost, oPC, TRUE);
     }
 }
 

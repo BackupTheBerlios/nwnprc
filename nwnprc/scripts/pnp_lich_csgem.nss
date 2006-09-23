@@ -15,19 +15,15 @@ void main()
     object oPC = GetPCSpeaker();
 
     // Make sure the PC has enough gold
-    if (GetGold(oPC) < 120000)
+    if (!GetHasGPToSpend(oPC, 120000))
     {
         FloatingTextStringOnCreature("You do not have enough gold to craft the soul gem", oPC);
         return;
     }
-    // Make sure the PC has enough exp so they dont go back a level
-    int nHD = GetHitDice(oPC);
-    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = GetXP(oPC) - 4800;
     // -------------------------------------------------------------------------
     // check for sufficient XP to create
     // -------------------------------------------------------------------------
-    if (nMinXPForLevel > nNewXP || nNewXP == 0 )
+    if (!GetHasXPToSpend(oPC, 4800))
     {
         FloatingTextStrRefOnCreature(3785, oPC); // Item Creation Failed - Not enough XP
         return;
@@ -35,11 +31,12 @@ void main()
     // Allow the pc to get lich levels
     SetLocalInt(oPC,"PNP_AllowLich", 0);
 
+
     // Remove some gold from the player
-    TakeGoldFromCreature(120000, oPC, TRUE);
+    SpendGP(oPC, 120000);
 
     // Remove some xp from the player
-    SetXP(oPC, nNewXP);
+    SpendXP(oPC, 4800);
 
     // do some VFX
     CraftVFX(OBJECT_SELF);

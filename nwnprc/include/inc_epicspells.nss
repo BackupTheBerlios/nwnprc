@@ -375,17 +375,16 @@ int GetSpellcraftSkill(object oPC)
 
 int GetHasEnoughGoldToResearch(object oPC, int nSpellDC)
 {
-    if (GetGold(oPC) >= nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER))
+    int nCost = nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER);
+    if (GetHasGPToSpend(oPC, nCost))
         return TRUE;
     return FALSE;
 }
 
 int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
 {
-    int nHitDice = GetHitDice(oPC);
-    int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
-    int nXP = GetXP(oPC);
-    if (nXP >= (nHitDiceXP + (nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION))))
+    int nXPCost = nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION);
+    if (GetHasXPToSpend(oPC, nXPCost))
         return TRUE;
     return FALSE;
 }
@@ -441,15 +440,17 @@ int GetResearchResult(object oPC, int nSpellDC)
 void TakeResourcesFromPC(object oPC, int nSpellDC, int nSuccess)
 {
     if (nSuccess != TRUE)
-        TakeGoldFromCreature(nSpellDC *
-            GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_FAILURE_FRACTION_GOLD), oPC, TRUE);
+    {
+        int nGold = nSpellDC *
+            GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_FAILURE_FRACTION_GOLD);    
+        SpendGP(oPC, nGold);    
+    }    
     else
     {
-        TakeGoldFromCreature(nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER), oPC, TRUE);
-        if(GetIsPC(oPC))
-            SetXP(oPC, GetXP(oPC) - (nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION)));
-        else
-            SetLocalInt(oPC, "NPC_XP", GetLocalInt(oPC, "NPC_XP")-(nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION)));
+        int nGold = nSpellDC *  GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER);    
+        SpendGP(oPC, nGold); 
+        int nXP = nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION);
+        SpendXP(oPC, nXP); 
     }
 }
 

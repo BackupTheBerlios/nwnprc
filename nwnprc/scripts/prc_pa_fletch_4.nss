@@ -11,22 +11,18 @@
 //:://////////////////////////////////////////////
 
 #include "prc_feat_const"
+#include "inc_utility"
 
 void main()
 {
 
- int nHD = GetHitDice(OBJECT_SELF);
- int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
- int nNewXP = GetXP(OBJECT_SELF) - 675;
- int nGold = GetGold(OBJECT_SELF);
-
- if (nMinXPForLevel > nNewXP || nNewXP == 0 )
+ if (!GetHasXPToSpend(OBJECT_SELF, 675))
  {
        FloatingTextStrRefOnCreature(3785, OBJECT_SELF); // Item Creation Failed - Not enough XP
        IncrementRemainingFeatUses(OBJECT_SELF, FEAT_PA_FLETCH_4);
        return ;
  }
- if (nGold < 6750)
+ if (!GetHasGPToSpend(OBJECT_SELF, 6750))
  {
        FloatingTextStrRefOnCreature(3785, OBJECT_SELF); // Item Creation Failed - Not enough XP
        IncrementRemainingFeatUses(OBJECT_SELF, FEAT_PA_FLETCH_4);
@@ -35,6 +31,6 @@ void main()
 
 
  SetIdentified(CreateItemOnObject("X2_WAMMAR012", OBJECT_SELF, 99), TRUE);
- SetXP(OBJECT_SELF,nNewXP);
- TakeGoldFromCreature(6750, OBJECT_SELF, TRUE);
+ SpendXP(OBJECT_SELF, 675);
+ SpendGP(OBJECT_SELF, 6750);
 }

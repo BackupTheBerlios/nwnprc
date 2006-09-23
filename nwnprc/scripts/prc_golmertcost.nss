@@ -3,7 +3,6 @@ int StartingConditional()
 {
     object oPC = GetPCSpeaker();
     int nCost;
-    int nGold = GetGold(oPC);
     int nGolemType = GetLocalInt(oPC, "GolemType");
     int nGolemHD   = GetLocalInt(oPC, "GolemHD");
     switch(nGolemType)
@@ -82,7 +81,7 @@ int StartingConditional()
             }
             break;
     }
-    if(nGold < nCost
+    if(!GetHasGPToSpend(oPC, nCost)
         || nCost == -1)
         return TRUE;//show the cant afford it message
     return FALSE;//allow the player to buy it

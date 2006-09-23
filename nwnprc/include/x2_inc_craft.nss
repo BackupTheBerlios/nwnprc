@@ -521,21 +521,17 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // Does Player have enough gold?
     // -------------------------------------------------------------------------
-    if (GetGold(oCaster) < nGoldCost)
+    if(!GetHasGPToSpend(oCaster, nGoldCost))
     {
         FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
     }
 
-    int nHD = GetHitDice(oCaster);
-    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = FloatToInt(GetXP(oCaster) - nExperienceCost);
-
 
     // -------------------------------------------------------------------------
     // check for sufficient XP to cast spell
     // -------------------------------------------------------------------------
-    if (nMinXPForLevel > nNewXP || nNewXP == 0 )
+    if (!GetHasXPToSpend(oCaster, FloatToInt(nExperienceCost)))
     {
         FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
         return TRUE;
@@ -551,8 +547,8 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     if (GetIsObjectValid(oPotion))
     {
-        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
-        SetXP(oCaster, nNewXP);
+        SpendXP(oCaster, FloatToInt(nExperienceCost));
+        SpendGP(oCaster, nGoldCost);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         //if time is enabled, fast forward
@@ -639,20 +635,17 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // Does Player have enough gold?
     // -------------------------------------------------------------------------
-    if (GetGold(oCaster) < nGoldCost)  //  enough gold?
+    if(!GetHasGPToSpend(oCaster, nGoldCost))
     {
         FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
     }
 
-    int nHD = GetHitDice(oCaster);
-    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = FloatToInt(GetXP(oCaster) - fExperienceCost);
 
     // -------------------------------------------------------------------------
     // check for sufficient XP to cast spell
     // -------------------------------------------------------------------------
-    if (nMinXPForLevel > nNewXP || nNewXP == 0 )
+    if (!GetHasXPToSpend(oCaster, FloatToInt(fExperienceCost)))
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
@@ -673,8 +666,8 @@ These dont work as IPs since they are hardcoded */
         //----------------------------------------------------------------------
         SetIdentified(oScroll,TRUE);
         ActionPlayAnimation (ANIMATION_FIREFORGET_READ,1.0);
-        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
-        SetXP(oCaster, nNewXP);
+        SpendXP(oCaster, FloatToInt(fExperienceCost));
+        SpendGP(oCaster, nGoldCost);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         //1 day per 1000GP base cost, min 1
@@ -774,21 +767,17 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     // Does Player have enough gold?
     // -------------------------------------------------------------------------
-     if (GetGold(oCaster) < nGoldCost)  //  enough gold?
+    if(!GetHasGPToSpend(oCaster, nGoldCost))
     {
         FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
     }
 
-    // more calculations on XP cost
-    int nHD = GetHitDice(oCaster);
-    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = FloatToInt(GetXP(oCaster) - nExperienceCost);
 
     // -------------------------------------------------------------------------
     // check for sufficient XP to cast spell
     // -------------------------------------------------------------------------
-     if (nMinXPForLevel > nNewXP || nNewXP == 0 )
+     if (!GetHasXPToSpend(oCaster, FloatToInt(nExperienceCost)))
     {
          FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
@@ -803,9 +792,9 @@ These dont work as IPs since they are hardcoded */
     // Verify Results
     // -------------------------------------------------------------------------
     if (GetIsObjectValid(oWand))
-    {
-        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
-        SetXP(oCaster, nNewXP);
+    {   
+        SpendXP(oCaster, FloatToInt(nExperienceCost));
+        SpendGP(oCaster, nGoldCost); 
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         //if time is enabled, fast forward
@@ -934,10 +923,6 @@ int InscribeRune()
 
     // See if the caster has enough gold and XP to scribe a rune, and that he passes the skill check.
     int nHD = GetHitDice(oCaster);
-    int nMinXPForLevel = ((nHD * (nHD - 1)) / 2) * 1000;
-    int nNewXP = GetXP(oCaster) - nXPCost;
-    int nGold = GetGold(oCaster);
-    int nNewGold = nGold - nGoldCost;
     int nCheck = FALSE;
     // Does the PC have Maximize Rune turned on?
     int nMaximize = 0;
@@ -946,9 +931,15 @@ int InscribeRune()
     if ((GetSkillRank(SKILL_CRAFT_ARMOR, oCaster) + d20() + nRuneCraft) >= (20 + nSpellLevel + nMaximize)) nCheck = TRUE;
 
 
-    if (nMinXPForLevel > nNewXP || nNewXP == 0 || nNewGold < 0)
+    if (!GetHasGPToSpend(oCaster, nGoldCost))
     {
-        FloatingTextStringOnCreature("You do not have enough gold and/or experience to scribe this rune.", oCaster, FALSE);
+        FloatingTextStringOnCreature("You do not have enough gold to scribe this rune.", oCaster, FALSE);
+        // Since they don't have enough, the spell casts normally
+        return TRUE;
+    }
+    if (!GetHasXPToSpend(oCaster, nXPCost) )
+    {
+        FloatingTextStringOnCreature("You do not have enough experience to scribe this rune.", oCaster, FALSE);
         // Since they don't have enough, the spell casts normally
         return TRUE;
     }
@@ -1018,8 +1009,8 @@ int InscribeRune()
             AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oRune);
         }
         SetItemCharges(oRune,nCharges);
-        SetXP(oCaster,nNewXP);
-        TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
+        SpendXP(oCaster, nXPCost);
+        SpendGP(oCaster, nGoldCost);
         //if time is enabled, fast forward
         //1 day per 1000GP base cost, min 1
         int nDays = nGoldCost/500;
@@ -1274,7 +1265,7 @@ int CIDoCraftItemFromConversation(int nNumber)
       // community
       // to enable magic item creation from the crafting system
       // -----------------------------------------------------------------------
-       if (GetGold(oPC)<stItem.nCost)
+       if (!GetHasGPToSpend(oPC, stItem.nCost))
        {
           DeleteLocalInt(oPC,"X2_CRAFT_SUCCESS");
           FloatingTextStrRefOnCreature(86675,oPC);
@@ -1283,7 +1274,7 @@ int CIDoCraftItemFromConversation(int nNumber)
        }
        else
        {
-          TakeGoldFromCreature(stItem.nCost, oPC,TRUE);
+          SpendGP(oPC, stItem.nCost);
           IPCopyItemProperties(oMajor,oRet);
         }
       // set success variable for conversation
@@ -1291,7 +1282,7 @@ int CIDoCraftItemFromConversation(int nNumber)
   }
   else
   {
-      TakeGoldFromCreature(stItem.nCost / 4, oPC,TRUE);
+      SpendGP(oPC, stItem.nCost/4);
       // make sure there is no success
       DeleteLocalInt(oPC,"X2_CRAFT_SUCCESS");
   }

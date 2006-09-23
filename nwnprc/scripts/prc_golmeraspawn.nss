@@ -3,7 +3,6 @@ void main()
 {
     object oPC = GetPCSpeaker();
     int nCost;
-    int nGold = GetGold(oPC);
     int nGolemType = GetLocalInt(oPC, "GolemType");
     int nGolemHD   = GetLocalInt(oPC, "GolemHD");
     string sResRef = "prc_con_";

@@ -328,7 +328,7 @@ void main()
             else if(nStage == STAGE_TEFLAMMAR_SHADOWLORD)
             {
                 SetHeader("This will cost you 10,000 GP, are you prepared to pay this?");
-                if(GetGold(oPC) >= 10000)
+                if(GetHasGPToSpend(oPC, 10000))
                     AddChoice("Yes", 1);
                 AddChoice("Back", CHOICE_RETURN_TO_PREVIOUS);
 

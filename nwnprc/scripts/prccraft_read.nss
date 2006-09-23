@@ -22,7 +22,7 @@ void CreateRecipeAndTakeGold(string sRecipeTag)
 {
     object oRecipe = CreateObject(OBJECT_TYPE_ITEM, "itemrecipe", GetLocation(OBJECT_SELF), FALSE, sRecipeTag);
     ActionDoCommand(ActionPickUpItem(oRecipe));
-    TakeGoldFromCreature(1, OBJECT_SELF, TRUE);
+    SpendGP(OBJECT_SELF, 1);
 }
 
 void SafeGetRecipeTagFromItem(string sResRef, int nRow = 0)
@@ -191,7 +191,7 @@ void main()
             SendMessageToPCByStrRef(OBJECT_SELF, STRREF_TRYTOWRITERECIPE);
 
             //Need 1 GP
-            if (GetGold(OBJECT_SELF) < 1)
+            if (!GetHasGPToSpend(OBJECT_SELF, 1))
                 SendMessageToPCByStrRef(OBJECT_SELF, STRREF_NEED1GOLD);
 
             //Try to make a recipe for the item (must be identified)

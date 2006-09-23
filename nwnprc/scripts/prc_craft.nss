@@ -340,15 +340,12 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
 //use heartbeat
 void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine)
 {
-    if(GetGold(oPC) < nCost)
+    if(!GetHasGPToSpend(oPC, nCost))
     {
         FloatingTextStringOnCreature("Crafting: Insufficient gold!", oPC);
         return;
     }
-    int nHD = GetHitDice(oPC);
-    int nMinXP = nHD * (nHD - 1) * 500;
-    int nCurrentXP = GetXP(oPC);
-    if((nCurrentXP - nMinXP) < nXP)
+    if(!GetHasXPToSpend(oPC, nXP))
     {
         FloatingTextStringOnCreature("Crafting: Insufficient XP!", oPC);
         return;
@@ -386,8 +383,8 @@ void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int n
         ApplyItemProps(oItem, sFile, nLine);
     }
     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
-    TakeGoldFromCreature(nCost, oPC, TRUE);
-    SetXP(oPC, GetXP(oPC) - nXP);
+    SpendXP(oPC, nXP);
+    SpendGP(oPC, nCost);
 }
 
 void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine, int nRounds)
@@ -638,10 +635,8 @@ void main()
                         sTemp += "\nTime: " + IntToString(nTime) + " rounds";
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    int nHD = GetHitDice(oPC);
-                    int nMinXP = nHD * (nHD - 1) * 500;
-                    int nCurrentXP = GetXP(oPC);
-                    if(GetGold(oPC) >= nTemp && (nCurrentXP - nMinXP) >= nTemp2)
+                    if(GetHasGPToSpend(oPC, nTemp)
+                        && GetHasXPToSpend(oPC, nTemp2))
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     MarkStageSetUp(nStage);
                     break;
@@ -725,7 +720,7 @@ void main()
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
                     SetHeader("You have chosen to craft:\n\n" + ItemStats(oNewItem) + "\nPrice: " + IntToString(nTemp) + "gp");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    if(GetGold(oPC) >= nTemp)
+                    if(GetHasGPToSpend(oPC, nTemp))
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     //DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);
@@ -776,11 +771,9 @@ void main()
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
 
-                    int nHD = GetHitDice(oPC);
-                    int nMinXP = nHD * (nHD - 1) * 500;
-                    int nCurrentXP = GetXP(oPC);
 
-                    if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff)
+                    if(GetHasGPToSpend(oPC, nCostDiff)
+                        && GetHasXPToSpend(oPC, nXPDiff))
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);
@@ -829,11 +822,8 @@ void main()
                         sTemp += "\nTime: " + IntToString(nTime) + " rounds";
                     SetHeader(sTemp);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    int nHD = GetHitDice(oPC);
-                    int nMinXP = nHD * (nHD - 1) * 500;
-                    int nCurrentXP = GetXP(oPC);
-
-                    if(GetGold(oPC) >= nCost && (nCurrentXP - nMinXP) >= nXP)
+                    if(GetHasGPToSpend(oPC, nCost)
+                        && GetHasXPToSpend(oPC, nXP))
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);

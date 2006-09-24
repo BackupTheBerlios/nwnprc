@@ -167,6 +167,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) > 0)            ExecuteScript("prc_hexblade", oPC);
     if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC) > 0)           ExecuteScript("true_truenamer", oPC);
     if(GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC) > 0)           ExecuteScript("prc_duskblade", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SCOUT, oPC) > 0)               ExecuteScript("prc_scout", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -445,7 +446,13 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SoheiDamageResist"); 
     
     // Duskblade
-    DeleteLocalInt(oSkin, "DuskbladeArmourCasting");    
+    DeleteLocalInt(oSkin, "DuskbladeArmourCasting");  
+    
+    // Scout
+    DeleteLocalInt(oPC, "ScoutBattleFort");
+    DeleteLocalInt(oPC, "ScoutFreeMove");
+    DeleteLocalInt(oPC, "ScoutFastMove");
+    DeleteLocalInt(oPC, "ScoutBlindsight");
 
     // future PRCs Go below here
 }

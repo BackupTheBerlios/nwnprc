@@ -69,7 +69,7 @@ void main()
         // Only applies when using expertise
         if(GetModeActive(ACTION_MODE_EXPERTISE))
         {
-       		effect eAtk = EffectAttackIncrease(2);
+       		effect eAtk = EffectAttackIncrease(4);
        		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, 6.0);
         }
     }// end if - Running OnHeart event       

@@ -13,6 +13,7 @@ if(DEBUG) DoDebug("m1q0boldgred_item running");
         if(GetLevelByClass(CLASS_TYPE_BARD,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
            GetLevelByClass(CLASS_TYPE_SOULKNIFE,oPC) > 0 ||

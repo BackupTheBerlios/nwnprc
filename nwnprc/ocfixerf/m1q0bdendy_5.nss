@@ -38,6 +38,7 @@ if(DEBUG) DoDebug("m1q0bdendy_5 running");
                GetLevelByClass(CLASS_TYPE_SAMURAI,oAttacker) > 0 ||
                GetLevelByClass(CLASS_TYPE_CORRUPTER,oAttacker) > 0 ||
                GetLevelByClass(CLASS_TYPE_ARCHER,oAttacker) > 0 ||
+               GetLevelByClass(CLASS_TYPE_SCOUT,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_TRUENAMER,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_SOHEI,oAttacker) > 0 ||
 	       GetLevelByClass(CLASS_TYPE_DUSKBLADE,oAttacker) > 0 ||

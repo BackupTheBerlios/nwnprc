@@ -11,6 +11,7 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
     {
         SetLocalInt(oPC,"NW_L_M1Q0Item2",TRUE);
         if(GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0)
         {
             sItemTemplate = "NW_IT_MRING024"; //boots of fortitude

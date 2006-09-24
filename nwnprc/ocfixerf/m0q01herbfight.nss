@@ -22,6 +22,7 @@ if(DEBUG) DoDebug("M0q01herbfight running");
        (GetLevelByClass(CLASS_TYPE_TRUENAMER, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_HEXBLADE, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_SOHEI, GetPCSpeaker()) == 0) &&
+       (GetLevelByClass(CLASS_TYPE_SCOUT, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_DUSKBLADE, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_ANTI_PALADIN, GetPCSpeaker()) == 0) &&
        (GetLevelByClass(CLASS_TYPE_CORRUPTER, GetPCSpeaker()) == 0) &&

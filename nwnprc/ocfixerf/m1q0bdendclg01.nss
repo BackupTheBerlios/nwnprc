@@ -17,6 +17,7 @@ if(DEBUG) DoDebug("m1q0bdendclg01 running");
                       GetLevelByClass(CLASS_TYPE_HEXBLADE, GetPCSpeaker()) > 0 ||
 		      GetLevelByClass(CLASS_TYPE_DUSKBLADE, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_ARCHER, GetPCSpeaker()) > 0 ||
+                      GetLevelByClass(CLASS_TYPE_SCOUT, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_BRAWLER, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_SOULKNIFE, GetPCSpeaker()) > 0 ||
                       GetLevelByClass(CLASS_TYPE_PSYWAR, GetPCSpeaker()) > 0 ||

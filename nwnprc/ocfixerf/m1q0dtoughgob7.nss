@@ -35,6 +35,7 @@ void main()
         sItemTemplate = "NW_MAARCL098"; //Cloak of Protection vs Chaos
     }
     else if(GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
+	    GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
 	    GetLevelByClass(CLASS_TYPE_ROGUE,oPC) > 0)
     {
         sItemTemplate = "nw_wammar004"; //Arrows of peircing

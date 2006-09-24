@@ -52,7 +52,12 @@ public class ListSubradials {
 			entry = feats.getEntry("FeatID", i);
 			// Skip blanks
 			if(entry.equals("****")) continue;
-			subnum = Integer.parseInt(entry);
+			try {
+				subnum = Integer.parseInt(entry);
+			} catch (NumberFormatException e) {
+				System.out.println("Corrupt value in FeatID on row " + i + ": " + entry);
+				continue;
+			}
 			// Skip non-subradial FeatIDs
 			if(subnum < 0x10000) continue;
 			subnum = subnum >>> 16;

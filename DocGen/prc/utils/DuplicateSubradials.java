@@ -41,17 +41,22 @@ public class DuplicateSubradials{
 		}
 		
 		// Load the 2da to memory
-		Data_2da feats = Data_2da.load2da(pathtospells2da);
+		Data_2da spells = Data_2da.load2da(pathtospells2da);
 		HashSet<Integer> subrads = new HashSet<Integer>();
 		ArrayList<Integer> duplicates = new ArrayList<Integer>();
 		String entry;
-		int subnum;
+		int subnum = 0;
 		// Parse through the 2da, looking for FeatID references that contain a subradial ID
-		for(int i = 0; i < feats.getEntryCount(); i++){
-			entry = feats.getEntry("FeatID", i);
+		for(int i = 0; i < spells.getEntryCount(); i++){
+			entry = spells.getEntry("FeatID", i);
 			// Skip blanks
 			if(entry.equals("****")) continue;
-			subnum = Integer.parseInt(entry);
+			try {
+				subnum = Integer.parseInt(entry);
+			} catch (NumberFormatException e) {
+				System.out.println("Corrupt value in FeatID on row " + i + ": " + entry);
+				continue;
+			}
 			// Skip non-subradial FeatIDs
 			if(subnum < 0x10000) continue;
 			subnum = subnum >>> 16;
@@ -62,10 +67,12 @@ public class DuplicateSubradials{
 		
 		// Print the results
 		for(int dup : duplicates){
-			for(int i = 0; i < feats.getEntryCount(); i++){
-				entry = feats.getEntry("FeatID", i);
+			for(int i = 0; i < spells.getEntryCount(); i++){
+				entry = spells.getEntry("FeatID", i);
 				if(entry.equals("****")) continue;
-				subnum = Integer.parseInt(entry);
+				try {
+					subnum = Integer.parseInt(entry);
+				} catch (NumberFormatException e) {continue;}
 				if(subnum < 0x10000) continue;
 				subnum = subnum >>> 16;
 				

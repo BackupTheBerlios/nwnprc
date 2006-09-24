@@ -69,7 +69,7 @@ DoDebug("nDC = "+IntToString(nDC));
                 bSuccess = TRUE;
                 nSpellId --; // I added +1 to the spellID when the sequencer was created, so I have to remove it here
                 //modified to use the PRCs casterlevel override to cheatcast at the right level                
-                ActionCastSpell(nSpellID, nLevel,0, nDC, nMeta);  
+                ActionCastSpell(nSpellId, nLevel,0, nDC, nMeta);  
             }
         }
         if (!bSuccess)

@@ -153,4 +153,4 @@ const int CLASS_TYPE_ENLIGHTENEDFIST         = 204;
 const int CLASS_TYPE_HEXBLADE                = 61;
 const int CLASS_TYPE_DUSKBLADE               = 62;
 const int CLASS_TYPE_SOHEI                   = 233;
-const int CLASS_TYPE_SCOUT                   = -1;
+const int CLASS_TYPE_SCOUT                   = 63;

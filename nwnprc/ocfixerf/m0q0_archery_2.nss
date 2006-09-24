@@ -25,7 +25,7 @@ if(DEBUG) DoDebug("m0q0_archery_2 running");
                    GetLevelByClass(CLASS_TYPE_MONK,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_PALADIN,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_ANTI_PALADIN,oAttacker) > 0 ||
-                   GetLevelByClass(CLASS_TYPE_ANTI_SCOUT,oAttacker) > 0 ||
+                   GetLevelByClass(CLASS_TYPE_SCOUT,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_SAMURAI,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_CORRUPTER,oAttacker) > 0 ||
                    GetLevelByClass(CLASS_TYPE_ARCHER,oAttacker) > 0 ||

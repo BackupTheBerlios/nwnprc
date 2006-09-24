@@ -586,8 +586,6 @@ Use: Selected.</entry>
   <entry id="20415" lang="en" sex="m">Fighting Style: Normal (Reset).</entry>
   <entry id="20416" lang="en" sex="m">You prepare to fight normally once more.</entry>
   <entry id="20417" lang="en" sex="m">&lt;CUSTOM0&gt; changes stance.</entry>
-  <entry id="31067" lang="en" sex="m">Treant£</entry>
-  <entry id="31321" lang="en" sex="m">Monodrone£</entry>
   <entry id="45000" lang="en" sex="m">+++++++++++++ PRC Pack Feats 45,000 - 54,999 ++++++++++++++</entry>
   <entry id="45001" lang="en" sex="m">Type of Feat: Metamagic.
 Prerequisite: Ability to cast 2nd-level spells.
@@ -1168,8 +1166,6 @@ Spells: The epic eldritch knights caster level increases by 1 per level gained a
 Bonus Feats: The epic eldritch knight gains a bonus feat (selected from the list of epic eldritch knight feats) every 4 levels after 10th.
 
 Epic Eldritch Knight Bonus Feat List: Armor Skin, Epic Damage Reduction, Devastating Critical, Epic Prowess, Epic Weapon Focus, Overwhelming Critical, Epic Toughness, Improved Whirlwind, Superior Initiative, Epic Spell Focus, Epic Spell Penetration, Improved Combat Casting, Automatic Still SpellR</entry>
-  <entry id="45152" lang="en" sex="m">Treant</entry>
-  <entry id="45153" lang="en" sex="m">Modron, Monodrone</entry>
   <entry id="45154" lang="en" sex="m">Red Wizard of Thay</entry>
   <entry id="45155" lang="en" sex="m">Red Wizards of Thay</entry>
   <entry id="45156" lang="en" sex="m">red wizard of Thay</entry>

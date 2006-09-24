@@ -88,6 +88,7 @@ int PRCGetFileEnd(string sTable)
     if(sTable == "cls_true_utter") return 8;
     if(sTable == "combatmodes") return 4;
     if(sTable == "craft_armour") return 63;
+    if(sTable == "craft_ring") return 41;
     if(sTable == "craft_weapon") return 42;
     if(sTable == "craft_wondrous") return 113;
     if(sTable == "creaturesize") return 5;
@@ -451,7 +452,7 @@ int PRCGetFileEnd(string sTable)
     if(sTable == "poisontypedef") return 3;
     if(sTable == "polymorph") return 150;
     if(sTable == "portraits") return 1068;
-    if(sTable == "prc_craft_gen_it") return 112;
+    if(sTable == "prc_craft_gen_it") return 201;
     if(sTable == "prc_rune_craft") return 4;
     if(sTable == "pregen") return 79;
     if(sTable == "prioritygroups") return 21;

@@ -340,12 +340,15 @@ void PopulateList(object oPC, int MaxValue, int bSort, string sTable, object oIt
 //use heartbeat
 void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine)
 {
-    if(!GetHasGPToSpend(oPC, nCost))
+    if(GetGold(oPC) < nCost)
     {
         FloatingTextStringOnCreature("Crafting: Insufficient gold!", oPC);
         return;
     }
-    if(!GetHasXPToSpend(oPC, nXP))
+    int nHD = GetHitDice(oPC);
+    int nMinXP = nHD * (nHD - 1) * 500;
+    int nCurrentXP = GetXP(oPC);
+    if((nCurrentXP - nMinXP) < nXP)
     {
         FloatingTextStringOnCreature("Crafting: Insufficient XP!", oPC);
         return;
@@ -383,8 +386,8 @@ void ApplyProperties(object oPC, object oItem, itemproperty ip, int nCost, int n
         ApplyItemProps(oItem, sFile, nLine);
     }
     ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
-    SpendXP(oPC, nXP);
-    SpendGP(oPC, nCost);
+    TakeGoldFromCreature(nCost, oPC, TRUE);
+    SetXP(oPC, GetXP(oPC) - nXP);
 }
 
 void CraftingHB(object oPC, object oItem, itemproperty ip, int nCost, int nXP, string sFile, int nLine, int nRounds)
@@ -425,6 +428,16 @@ void main()
     if(DEBUG) DoDebug("prc_craft: nValue = " + IntToString(nValue));
     if(nValue == 0)
     {   //as part of a cast spell and not in the convo
+        if(GetPRCSwitch(PRC_DISABLE_CRAFT))
+        {
+            SendMessageToPC(oPC, "Crafting has been disabled.");
+            return;
+        }
+        if(GetLocalInt(GetArea(oPC), PRC_AREA_DISABLE_CRAFTING))
+        {
+            SendMessageToPC(oPC, "Crafting has been disabled in this area.");
+            return;
+        }
         if(GetLocalInt(oPC, PRC_CRAFT_HB))
         {
             SendMessageToPC(oPC, "You are already crafting an item.");
@@ -450,6 +463,7 @@ void main()
             }
             if(!GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
             {
+                int nBase = GetBaseItemType(oTarget);
                 if(nFeat == FEAT_CRAFT_ARMS_ARMOR)
                 {
                     if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oTarget)))
@@ -457,6 +471,11 @@ void main()
                         SendMessageToPC(oPC, "This is not a craftable magic item.");
                         return;
                     }
+                }
+                else if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) == PRC_CRAFT_ITEM_TYPE_CASTSPELL)
+                {
+                    SendMessageToPC(oPC, "This item must be crafted by casting spells on it.");
+                    return;
                 }
                 else if(GetIsMagicItem(oTarget))
                 {
@@ -635,8 +654,10 @@ void main()
                         sTemp += "\nTime: " + IntToString(nTime) + " rounds";
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    if(GetHasGPToSpend(oPC, nTemp)
-                        && GetHasXPToSpend(oPC, nTemp2))
+                    int nHD = GetHitDice(oPC);
+                    int nMinXP = nHD * (nHD - 1) * 500;
+                    int nCurrentXP = GetXP(oPC);
+                    if(GetGold(oPC) >= nTemp && (nCurrentXP - nMinXP) >= nTemp2)
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     MarkStageSetUp(nStage);
                     break;
@@ -677,9 +698,11 @@ void main()
                     AllowExit(DYNCONV_EXIT_NOT_ALLOWED, FALSE, oPC);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
                     AddChoice(ActionString("Normal"), PRC_CRAFT_FLAG_NONE, oPC);
+                    nTemp = StringToInt(Get2DACache("prc_craft_gen_it", "Type", nBase));
                     if(!(
                         ((nBase == BASE_ITEM_ARMOR) && (!nAC)) ||
-                        (StringToInt(Get2DACache("prc_craft_gen_it", "Type", nBase)) == PRC_CRAFT_ITEM_TYPE_MISC)
+                        (nTemp == PRC_CRAFT_ITEM_TYPE_MISC) ||
+                        (nTemp == PRC_CRAFT_ITEM_TYPE_CASTSPELL)
                         )
                         )
                     {
@@ -720,7 +743,7 @@ void main()
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
                     SetHeader("You have chosen to craft:\n\n" + ItemStats(oNewItem) + "\nPrice: " + IntToString(nTemp) + "gp");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    if(GetHasGPToSpend(oPC, nTemp))
+                    if(GetGold(oPC) >= nTemp)
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     //DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);
@@ -771,9 +794,11 @@ void main()
                     SetHeader("You have selected:\n\n" + sTemp + "\n\nPlease confirm your selection.");
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
 
+                    int nHD = GetHitDice(oPC);
+                    int nMinXP = nHD * (nHD - 1) * 500;
+                    int nCurrentXP = GetXP(oPC);
 
-                    if(GetHasGPToSpend(oPC, nCostDiff)
-                        && GetHasXPToSpend(oPC, nXPDiff))
+                    if(GetGold(oPC) >= nCostDiff && (nCurrentXP - nMinXP) >= nXPDiff)
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);
@@ -822,8 +847,11 @@ void main()
                         sTemp += "\nTime: " + IntToString(nTime) + " rounds";
                     SetHeader(sTemp);
                     AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
-                    if(GetHasGPToSpend(oPC, nCost)
-                        && GetHasXPToSpend(oPC, nXP))
+                    int nHD = GetHitDice(oPC);
+                    int nMinXP = nHD * (nHD - 1) * 500;
+                    int nCurrentXP = GetXP(oPC);
+
+                    if(GetGold(oPC) >= nCost && (nCurrentXP - nMinXP) >= nXP)
                         AddChoice(ActionString("Confirm"), CHOICE_CONFIRM, oPC);
                     DestroyObject(oNewItem);
                     MarkStageSetUp(nStage);

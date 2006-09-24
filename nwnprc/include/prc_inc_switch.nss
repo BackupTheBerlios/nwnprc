@@ -1544,6 +1544,11 @@ const string PRC_SCRIBE_SCROLL_CASTER_LEVEL          = "PRC_SCRIBE_SCROLL_CASTER
  */
 const string PRC_CRAFT_WAND_CASTER_LEVEL             = "PRC_CRAFT_WAND_CASTER_LEVEL";
 
+/**
+ * As above, except it applies to staffs
+ */
+const string PRC_CRAFT_STAFF_CASTER_LEVEL             = "PRC_CRAFT_STAFF_CASTER_LEVEL";
+
 /*
  * Characters with a crafting feat always have the appropriate base item in their inventory
  */
@@ -1578,6 +1583,12 @@ const string X2_CI_CRAFTWAND_MAXLEVEL                = "X2_CI_CRAFTWAND_MAXLEVEL
  * defaults to 750
  */
 const string X2_CI_CRAFTWAND_COSTMODIFIER            = "X2_CI_CRAFTWAND_COSTMODIFIER";
+
+/*
+ * cost modifier of spells crafted into staffs
+ * defaults to 750
+ */
+const string X2_CI_CRAFTSTAFF_COSTMODIFIER            = "X2_CI_CRAFTSTAFF_COSTMODIFIER";
 
 /**
  * Allows the use of arbitrary itemproperties and uses NWN item costs

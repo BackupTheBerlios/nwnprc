@@ -29,6 +29,8 @@ int GetItemArmourCheckPenalty(object oItem);
 
 int GetCraftingFeat(object oItem);
 
+string GetItemPropertyString(itemproperty ip);
+
 #include "prc_alterations"
 #include "inc_newspellbook"
 #include "prc_inc_spells"
@@ -74,6 +76,8 @@ const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
 const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
 const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
 const int PRC_CRAFT_ITEM_TYPE_MISC      = 5;
+const int PRC_CRAFT_ITEM_TYPE_CASTSPELL = 6;
+
 
 const string PRC_CRAFT_SPECIAL_BANE     = "PRC_CRAFT_SPECIAL_BANE";
 const string PRC_CRAFT_SPECIAL_BANE_RACE = "PRC_CRAFT_SPECIAL_BANE_RACE";
@@ -123,7 +127,9 @@ object GetTempCraftChest()
 int GetCraftingSkill(object oItem)
 {
     int nType = StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oItem)));
-    if((nType == PRC_CRAFT_ITEM_TYPE_WEAPON) || (nType == PRC_CRAFT_ITEM_TYPE_AMMO))
+    if((nType == PRC_CRAFT_ITEM_TYPE_WEAPON) ||
+        (nType == PRC_CRAFT_ITEM_TYPE_AMMO)
+        )
         return SKILL_CRAFT_WEAPON;
     return SKILL_CRAFT_ARMOR;
 }
@@ -567,7 +573,7 @@ int PrereqSpecialHandling(string sFile, object oItem, int nLine)
         {
         }
     }
-    else if(sFile == "craft_wondrous")
+    if(sFile == "craft_wondrous")
         return nBase == StringToInt(Get2DACache(sFile, "BaseItem", nLine));
     return TRUE;
 }
@@ -583,6 +589,34 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
     {
         if(nSpellPattern & 1)
         {
+            if(sFile == "craft_wondrous")
+            {
+                switch(nLine)
+                {
+                    case 85:
+                    {
+                        bOR = (PRCGetHasSpell(SPELL_DETECT_UNDEAD) &&
+                                PRCGetHasSpell(SPELL_FIREBALL) &&
+                                PRCGetHasSpell(SPELL_FLAME_WEAPON) &&
+                                PRCGetHasSpell(SPELL_LIGHT) &&
+                                PRCGetHasSpell(SPELL_PRISMATIC_SPRAY) &&
+                                PRCGetHasSpell(SPELL_PROTECTION_FROM_ELEMENTS) &&
+                                PRCGetHasSpell(SPELL_WALL_OF_FIRE));
+                        if(bDecrement)
+                        {
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_DETECT_UNDEAD);
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_FIREBALL);
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_FLAME_WEAPON);
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_LIGHT);
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_PRISMATIC_SPRAY);
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_PROTECTION_FROM_ELEMENTS);
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_WALL_OF_FIRE);
+                        }
+                        return bOR;
+                        break;
+                    }
+                }
+            }
             nSpell1 = StringToInt(Get2DACache(sFile, "Spell1", nLine));
             if(!PRCGetHasSpell(nSpell1))
                 return FALSE;
@@ -631,38 +665,6 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                 PRCDecrementRemainingSpellUses(oPC, (bOR) ? nSpellOR2 : nSpellOR1);
             else if(nSpellPattern & 16)
                 PRCDecrementRemainingSpellUses(oPC, nSpellOR2);
-        }
-    }
-    else if(StringToInt(Get2DACache(sFile, "Special", nLine)))
-    {
-        if(sFile == "craft_wondrous")
-        {
-            switch(nLine)
-            {
-                case 85:
-                {
-                    bOR = (PRCGetHasSpell(SPELL_DETECT_UNDEAD) &&
-                            PRCGetHasSpell(SPELL_FIREBALL) &&
-                            PRCGetHasSpell(SPELL_FLAME_WEAPON) &&
-                            PRCGetHasSpell(SPELL_LIGHT) &&
-                            PRCGetHasSpell(SPELL_PRISMATIC_SPRAY) &&
-                            PRCGetHasSpell(SPELL_PROTECTION_FROM_ELEMENTS) &&
-                            PRCGetHasSpell(SPELL_WALL_OF_FIRE));
-                    if(bDecrement)
-                    {
-                        PRCDecrementRemainingSpellUses(oPC, SPELL_DETECT_UNDEAD);
-                        PRCDecrementRemainingSpellUses(oPC, SPELL_FIREBALL);
-                        PRCDecrementRemainingSpellUses(oPC, SPELL_FLAME_WEAPON);
-                        PRCDecrementRemainingSpellUses(oPC, SPELL_LIGHT);
-                        PRCDecrementRemainingSpellUses(oPC, SPELL_PRISMATIC_SPRAY);
-                        PRCDecrementRemainingSpellUses(oPC, SPELL_PROTECTION_FROM_ELEMENTS);
-                        PRCDecrementRemainingSpellUses(oPC, SPELL_WALL_OF_FIRE);
-                    }
-                    return bOR;
-
-                    break;
-                }
-            }
         }
     }
     return TRUE;
@@ -924,6 +926,12 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
                     array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
                     continue;
                 }
+                sTemp = Get2DACache(sFile, "Skill", i);
+                if(sTemp != "" && (GetSkillRank(StringToInt(sTemp), oPC) < StringToInt(Get2DACache(sFile, "SkillRanks", i))))
+                {
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                    continue;
+                }
             }
         }
     }
@@ -1042,7 +1050,14 @@ void ApplyItemProps(object oItem, string sFile, int nLine)
                     return;
                     break;
                 }
-                case 85: SetItemCharges(oItem, 50); break;
+                case 85:    //helm of brilliance
+                case 91:    //necklace of fireballs
+                case 92:
+                case 93:
+                case 94:
+                case 95:
+                case 96:
+                case 97: SetItemCharges(oItem, 50); break;
                 case 108: IPSafeAddItemProperty(oItem, ConstructIP(ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT, IP_CONST_ALIGNMENT_TN), 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING); break;
             }
         }
@@ -1051,7 +1066,10 @@ void ApplyItemProps(object oItem, string sFile, int nLine)
     {
         ip = PropSpecialHandling(oItem, sFile, nLine, i);
         if(GetIsItemPropertyValid(ip))
+        {
+            if(DEBUG) DoDebug(GetItemPropertyString(ip));
             IPSafeAddItemProperty(oItem, ip, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        }
     }
     if(sFile != "craft_weapon" && sFile != "craft_armour")
         SetName(oItem, GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine))));
@@ -1175,7 +1193,10 @@ int GetCraftingFeat(object oItem)
 
     if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
     if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
-    if(nBase == BASE_ITEM_MAGICSTAFF) return FEAT_CRAFT_STAFF;
+    if((nBase == BASE_ITEM_MAGICSTAFF) ||
+        (nBase == 201)
+        )
+        return FEAT_CRAFT_STAFF;
     if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;
 
     if(((nBase == BASE_ITEM_HELMET) ||

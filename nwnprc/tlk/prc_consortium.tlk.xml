@@ -15969,7 +15969,7 @@ School: Abjuration [Force]
 Component(s): Verbal
 Range: Personal
 Area of Effect / Target: Weapon touched
-Duration: instantaneous
+Duration: Instantaneous
 
 You project a field of invisible force, creating a short-lived protective barrier. You gain a deflection bonus to your AC against a single attack; this bonus is equal to +1 per three caster levels (maximum +5)</entry>
   <entry id="49177" lang="en" sex="m">Dimension Hop</entry>
@@ -15979,7 +15979,7 @@ School: Conjuration (Teleportation)
 Component(s): Verbal
 Range: Touch
 Area of Effect / Target: Creature touched
-Duration: instantaneous
+Duration: Instantaneous
 Saving Throw: Will negates
 Spell Resistance: Yes
 
@@ -15991,21 +15991,52 @@ School: Abjuration
 Component(s): Verbal, Somatic
 Range: Touch
 Area of Effect / Target: One touched creature, object, or spell effect
-Duration: instantaneous
+Duration: Instantaneous
 Saving Throw: None
 Spell Resistance: No
 
 You can use Dispelling Touch to end an ongoing spell that has been cast on a creature or object, or a spell that has a noticeable ongoing effect. You make a dispel check (1d20 + your caster level, maximum +10) against the spell effect with the highest caster level. If that check fails, you make dispel checks against progressively weaker spells until you dispel one spell or until you fail all your checks. Magic items carried by a creature are not affected.</entry>
   <entry id="49181" lang="en" sex="m">Doom Scarabs</entry>
-  <entry id="49182" lang="en" sex="m">Caster Level(s): Duskblade 3, Sorcerer/Wizard 2
-Innate Level: 2
-School: Abjuration
+  <entry id="49182" lang="en" sex="m">Caster Level(s): Duskblade 3, Sorcerer/Wizard 4
+Innate Level: 4
+School: Necromancy
 Component(s): Verbal, Somatic
-Range: Touch
-Area of Effect / Target: One touched creature, object, or spell effect
-Duration: instantaneous
-Saving Throw: None
-Spell Resistance: No</entry>
+Range: 60 ft.
+Area of Effect / Target: Cone-shaped burst
+Duration: Instantaneous
+Saving Throw: Will for half
+Spell Resistance: special
+
+A swarm of scarabs surges from your outstretched hand. These insects rip and bite at all living creatures in the are, the return to you with life essence stolen from their victims. This spell has two effects. It deals 1d6 points of damage per two caster levels (maximum 10d6) to all creatures in the area. Spell resistance does not apply to this damage. However, spell resistance does apply to the spell's secondary effect. If you overcome a creature's spell resistance, you gain 1d4 temorary hit points as the scarabs feast on the creature's arcane energy and bleed it back to you. You gain these temporary hit points for each creature whose spell resistance you overcome. You never gain temporary hit points from creatures that do not have spell resistance. The temporary hit points gained from this spell last for up to 1 hour.</entry>
+  <entry id="49183" lang="en" sex="m">Energy Aegis</entry>
+  <entry id="49184" lang="en" sex="m">Caster Level(s): Cleric/Duskblade/Sorcerer/Wizard 3
+Innate Level: 3
+School: Abjuration
+Component(s): Verbal
+Range: Close
+Area of Effect / Target: One creature
+Duration: 1 round
+Saving Throw: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+When you cast Energy Aegis, specify an energy type (acid, cold, electricity, fire, or sonic). Against the next attack using this energy type that targets the subject, it gains resistance 20.</entry>
+  <entry id="49185" lang="en" sex="m">Energy Aegis, Acid</entry>
+  <entry id="49186" lang="en" sex="m">Energy Aegis, Cold</entry>
+  <entry id="49187" lang="en" sex="m">Energy Aegis, Electricity</entry>
+  <entry id="49188" lang="en" sex="m">Energy Aegis, Fire</entry>
+  <entry id="49189" lang="en" sex="m">Energy Aegis, Sonic</entry>
+  <entry id="49190" lang="en" sex="m">Halt</entry>
+  <entry id="49191" lang="en" sex="m">Caster Level(s): Bard/Duskblade/Sorcerer/Wizard 3
+Innate Level: 3
+School: Transmutation
+Component(s): Verbal
+Range: Close
+Area of Effect / Target: One creature
+Duration: 1 round
+Saving Throw: Will negates
+Spell Resistance: Yes
+
+The subject creature's feet (or whatever pass for it's feet) become momentarily stuck to the floor. The creature must stop moving, and cannot move farther in it's current turn. This spell has no effect on creatures that are not touching the ground (such as flying creatures), and the subject can still use a standard action (if it has one available in this round) to move by means of teleportation magic.</entry>
   <entry id="49193" lang="en" sex="m">Power Points</entry>
   <entry id="49194" lang="en" sex="m">Your manifester level is not high enough to spend</entry>
   <entry id="49195" lang="en" sex="m">You do not have a high enough ability score to manifest this power</entry>
@@ -16463,6 +16494,103 @@ Use: Selected</entry>
   <entry id="49453" lang="en" sex="m">Target is not wielding a weapon!</entry>
   <entry id="49454" lang="en" sex="m">Force of Will used for this round.</entry>
   <entry id="49455" lang="en" sex="m">PRC note: Though Jaroo will not say so, you may pass his test by using a spell or a power to destroy the statue.</entry>
+  <entry id="49456" lang="en" sex="m">Energy Surge</entry>
+  <entry id="49457" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 3
+Innate Level: 3
+School: Transmutation
+Component(s): Verbal
+Range: Close
+Area of Effect / Target: One weapon
+Duration: 1 round
+Saving Throw: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+You temporarily imbue a weapon with elemental energy. When you cast this spell, specify an energy type (acid, cold, electricity, fire, or sonic). This spell is a spell of that type, and the target weapon is sheathed in that energy. If the attack is successful, it deals an extra 3d6 points of damage of the specified energy type.</entry>
+  <entry id="49458" lang="en" sex="m">Energy Surge, Acid</entry>
+  <entry id="49459" lang="en" sex="m">Energy Surge, Cold</entry>
+  <entry id="49460" lang="en" sex="m">Energy Surge, Electricity</entry>
+  <entry id="49461" lang="en" sex="m">Energy Surge, Fire</entry>
+  <entry id="49462" lang="en" sex="m">Energy Surge, Sonic</entry>
+  <entry id="49463" lang="en" sex="m">Kelgore's Fire Bolt</entry>
+  <entry id="49464" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 1
+Innate Level: 1
+School: Evocation [Fire]
+Component(s): Verbal, Somatic, Material
+Range: Medium
+Area of Effect / Target: One creature
+Duration: Instantaneous
+Saving Throw: Reflex for half
+Spell Resistance: special
+
+This spell conjures a small orb of rock and sheathes it in arcane energy. This spell deals 1d6 points of fire damage per caster level (maximum of 5d6). If you fail to overcome the target's spell resistance, the spell still deals 1d6 points of fire damage from the heat and force of the conjured orb's impact.</entry>
+  <entry id="49465" lang="en" sex="m">Regroup</entry>
+  <entry id="49466" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 3
+Innate Level: 3
+School: Conjuration (Teleportation)
+Component(s): Verbal, Somatic
+Range: Close
+Area of Effect / Target: One willing creature/level
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+You teleport your companions to your side. Each subject of this spell teleports to a square adjacent to you. If those squares are occupied or cannot support the teleported creatures, the creatures appear as close to you as possible, on a surface that can support them, in an unoccupied square.</entry>
+  <entry id="49467" lang="en" sex="m">Rouse</entry>
+  <entry id="49468" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 1
+Innate Level: 1
+School: Enchantment (Compulsion) [Mind-Affecting]
+Component(s): Verbal, Somatic
+Range: Close
+Area of Effect / Target: 10-ft.-radius burst
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+With a loud snap of your fingers, you cause any sleeping creatures in the spell's area to awaken. This spell has no effect on creatures that are unconscious due to being reduced to negative hit points or that have taken nonlethal damage in excess of their current hit points.</entry>
+  <entry id="49469" lang="en" sex="m">Seeking Ray</entry>
+  <entry id="49470" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 2
+Innate Level: 2
+School: Evocation
+Component(s): Verbal, Somatic
+Range: Medium
+Area of Effect / Target: Ray
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: Yes
+
+A ray of electricity springs from your hand. It snakes around obstacles, cover, and other impediments on it's way toward your target. The ray deals 4d6 of electricity damage if it strikes your target. While this ray requires a ranged touch attack to strike an opponent, it ignores concealment and cover (but not total concealment and total cover), and it does not take the standard penalty for firing into melee.</entry>
+  <entry id="49471" lang="en" sex="m">Slashing Dispel</entry>
+  <entry id="49472" lang="en" sex="m">Caster Level(s): Duskblade 5 Sorcerer/Wizard 4
+Innate Level: 4
+School: Abjuration
+Component(s): Verbal, Somatic
+Range: Medium
+Area of Effect / Target: One Creature or 20-ft.-radius burst
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+This spell functions like a Dispel Magic, except as noted here. Any creature that has a spell effect removed from it takes 2 points of damage per level of the dispelled effect. If a creature loses the effects of multiple spells, it takes damage for each one.</entry>
+  <entry id="49473" lang="en" sex="m">Sonic Shield</entry>
+  <entry id="49474" lang="en" sex="m">Caster Level(s): Bard 3, Duskblade/Sorcerer/Wizard 5
+Innate Level: 5
+School: Evocation
+Component(s): Verbal, Somatic
+Range: Personal
+Area of Effect / Target: Self
+Duration: 1 round/level
+
+This spell grants you a +4 deflection bonus to AC. In addition, anyone who successfully hits you with a melee attack takes 1d8 points of sonic damage and must make a Fortitude saving throw or be knocked 5 feet away from you into an unoccupied space. If no space of sufficient size is available for it to enter, it instead takes an extra 1d8 points of damage.</entry>
+  <entry id="49475" lang="en" sex="m">Sure Strike</entry>
+  <entry id="49476" lang="en" sex="m">Caster Level(s): Duskblade/Sorcerer/Wizard 2
+Innate Level: 2
+School: Divination
+Component(s): Verbal
+Range: Personal
+Area of Effect / Target: Self
+Duration: 1 round or until discharged
+
+You gain a fleeting glimpse into the future, enough to guide your impending attack. You cast this spell immediately before you make an attack roll. You can see into the future for that attack, granting you a +1 insight bonus per three caster levels on your next attack roll.</entry>
   <entry id="49479" lang="en" sex="m">Area of effect</entry>
   <entry id="49480" lang="en" sex="m">Decreased Cost A</entry>
   <entry id="49481" lang="en" sex="m">Decreased Cost B</entry>

@@ -21740,17 +21740,26 @@ Cost:
 </entry>
   <entry id="51783" lang="en" sex="m">Description: 
 
+Enhancement Bonus: Dexterity +6 
+Bonus Feat: Type of Feat: Class
+Prerequisite: Monk level 1, rogue level 2 or shadowdancer level 2.
+Specifics: Whenever a Reflex save is allowed for half damage, the character instead takes no damage if he succeeds at the save.
+Use: Automatic. 
+Skill Bonus: Tumble +20 
+Skill Bonus: Jump +20 
+Use: Haste (10) 3 Uses/Day 
 
 Prerequisites: 
 
 Caster Level: 20
-Spell(s): Acid Fog, Acid Fog, Acid Fog, Acid Fog
+Spell(s): Cat's Grace, Expeditious Retreat, Haste, Acid Fog
 Epic
 
 Cost: 
 
 +256000gp
 </entry>
+
   <entry id="51784" lang="en" sex="m">Description: 
 
 Use: Teleport (9) 3 Uses/Day 
@@ -21764,9 +21773,11 @@ Cost:
 
 +49000gp
 </entry>
+
   <entry id="51785" lang="en" sex="m">Description: 
 
 Damage Resistance: Cold Resist 5 / - 
+Damage Resistance: Fire Resist 5 / - 
 
 Prerequisites: 
 
@@ -21777,6 +21788,7 @@ Cost:
 
 +2500gp
 </entry>
+
   <entry id="51786" lang="en" sex="m">Description: 
 
 Armor Bonus: +1 
@@ -21790,6 +21802,35 @@ Cost:
 
 +1000gp
 </entry>
+
+  <entry id="51911" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +10 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Invisibility
+
+Cost: 
+
++12700gp
+</entry>
+
+  <entry id="51912" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+
   <entry id="51787" lang="en" sex="m">Description: 
 
 Armor Bonus: +2 
@@ -21816,6 +21857,35 @@ Cost:
 
 +9000gp
 </entry>
+
+  <entry id="51913" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+
+  <entry id="51914" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+
   <entry id="51789" lang="en" sex="m">Description: 
 
 Armor Bonus: +4 
@@ -21829,6 +21899,7 @@ Cost:
 
 +16000gp
 </entry>
+
   <entry id="51790" lang="en" sex="m">Description: 
 
 Armor Bonus: +5 
@@ -21842,6 +21913,36 @@ Cost:
 
 +25000gp
 </entry>
+
+  <entry id="51915" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+
+  <entry id="51916" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+
   <entry id="51791" lang="en" sex="m">Description: 
 
 Armor Bonus: +6 
@@ -21868,6 +21969,35 @@ Cost:
 
 +49000gp
 </entry>
+
+  <entry id="51917" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+
+  <entry id="51918" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+
   <entry id="51793" lang="en" sex="m">Description: 
 
 Armor Bonus: +8 
@@ -21881,6 +22011,7 @@ Cost:
 
 +64000gp
 </entry>
+
   <entry id="51794" lang="en" sex="m">Description: 
 
 Armor Bonus: +11 
@@ -21895,6 +22026,36 @@ Cost:
 
 +1210000gp
 </entry>
+
+  <entry id="51919" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+
+  <entry id="51920" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+
   <entry id="51795" lang="en" sex="m">Description: 
 
 Armor Bonus: +12 
@@ -21923,6 +22084,35 @@ Cost:
 
 +1690000gp
 </entry>
+
+  <entry id="51921" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+
+  <entry id="51922" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+
   <entry id="51797" lang="en" sex="m">Description: 
 
 Armor Bonus: +14 
@@ -21937,6 +22127,7 @@ Cost:
 
 +1960000gp
 </entry>
+
   <entry id="51798" lang="en" sex="m">Description: 
 
 Armor Bonus: +15 
@@ -21951,6 +22142,36 @@ Cost:
 
 +2250000gp
 </entry>
+
+  <entry id="51923" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+
+  <entry id="51924" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+
   <entry id="51799" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +8 
@@ -21965,6 +22186,7 @@ Cost:
 
 +640000gp
 </entry>
+
   <entry id="51800" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +10 
@@ -21979,6 +22201,35 @@ Cost:
 
 +1000000gp
 </entry>
+
+  <entry id="51925" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+
+  <entry id="51926" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+
   <entry id="51801" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +12 
@@ -21993,10 +22244,12 @@ Cost:
 
 +1440000gp
 </entry>
+
   <entry id="51802" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +12 
 Enhancement Bonus: Constitution +12 
+Use: Acid Fog (11) Unlimited Uses/Day 
 
 Prerequisites: 
 
@@ -22008,6 +22261,36 @@ Cost:
 
 +4384000gp
 </entry>
+
+  <entry id="51927" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+
+  <entry id="51928" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+
   <entry id="51803" lang="en" sex="m">Description: 
 
 Spell Immunity: Magic Missile 
@@ -22023,6 +22306,7 @@ Cost:
 
 +1500gp
 </entry>
+
   <entry id="51804" lang="en" sex="m">Description: 
 
 Use: Searing Light (5) 1 Use/Day 
@@ -22037,6 +22321,35 @@ Cost:
 
 +6480gp
 </entry>
+
+  <entry id="51929" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+
+  <entry id="51930" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+
   <entry id="51805" lang="en" sex="m">Description: 
 
 Use: Searing Light (5) 1 Use/Day 
@@ -22052,6 +22365,7 @@ Cost:
 
 +23760gp
 </entry>
+
   <entry id="51806" lang="en" sex="m">Description: 
 
 
@@ -22064,6 +22378,41 @@ Cost:
 
 +4500gp
 </entry>
+
+  <entry id="51931" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+
+  <entry id="51932" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 30 / - 
+Damage Resistance: Cold Resist 30 / - 
+Damage Resistance: Electrical Resist 30 / - 
+Damage Resistance: Fire Resist 30 / - 
+Damage Resistance: Sonic Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++308000gp
+</entry>
+
   <entry id="51807" lang="en" sex="m">Description: 
 
 Bonus Spell Slot: Cleric Level 0 
@@ -22078,6 +22427,7 @@ Cost:
 +14000 Enhancement
 +80gp
 </entry>
+
   <entry id="51809" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +2 
@@ -22091,6 +22441,43 @@ Cost:
 
 +4000gp
 </entry>
+
+  <entry id="51933" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 500 / - 
+Damage Resistance: Cold Resist 500 / - 
+Damage Resistance: Electrical Resist 500 / - 
+Damage Resistance: Fire Resist 500 / - 
+Damage Resistance: Sonic Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++2160000gp
+</entry>
+
+  <entry id="51934" lang="en" sex="m">Description: 
+
+Bonus Feat: Type of Feat: Class
+Prerequisite: Monk level 1, rogue level 2 or shadowdancer level 2.
+Specifics: Whenever a Reflex save is allowed for half damage, the character instead takes no damage if he succeeds at the save.
+Use: Automatic. 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Acid Fog
+
+Cost: 
+
++25000gp
+</entry>
+
   <entry id="51810" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +4 
@@ -22104,6 +22491,7 @@ Cost:
 
 +16000gp
 </entry>
+
   <entry id="51811" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +6 
@@ -22117,6 +22505,35 @@ Cost:
 
 +36000gp
 </entry>
+
+  <entry id="51935" lang="en" sex="m">Description: 
+
+Freedom 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Freedom of Movement
+
+Cost: 
+
++40000gp
+</entry>
+
+  <entry id="51936" lang="en" sex="m">Description: 
+
+Use: Invisibility (3) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Invisibility
+
+Cost: 
+
++20000gp
+</entry>
+
   <entry id="51812" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +8 
@@ -22131,6 +22548,7 @@ Cost:
 
 +640000gp
 </entry>
+
   <entry id="51813" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +10 
@@ -22145,6 +22563,36 @@ Cost:
 
 +1000000gp
 </entry>
+
+  <entry id="51937" lang="en" sex="m">Description: 
+
+Damage Reduction: +5 Soak 15 Damage 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Acid Fog
+Epic
+
+Cost: 
+
++400000gp
+</entry>
+
+  <entry id="51938" lang="en" sex="m">Description: 
+
+Skill Bonus: Jump +5 
+
+Prerequisites: 
+
+Caster Level: 2
+Skill: Jump 5 ranks
+
+Cost: 
+
++2500gp
+</entry>
+
   <entry id="51814" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +12 
@@ -22159,6 +22607,7 @@ Cost:
 
 +1440000gp
 </entry>
+
   <entry id="51815" lang="en" sex="m">Description: 
 
 Use: Blur (5) Unlimited Uses/Day 
@@ -22172,6 +22621,35 @@ Cost:
 
 +24000gp
 </entry>
+
+  <entry id="51939" lang="en" sex="m">Description: 
+
+Skill Bonus: Jump +10 
+
+Prerequisites: 
+
+Caster Level: 7
+Skill: Jump 10 ranks
+
+Cost: 
+
++10000gp
+</entry>
+
+  <entry id="51940" lang="en" sex="m">Description: 
+
+Armor Bonus: +1 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Shield of Faith
+
+Cost: 
+
++2000gp
+</entry>
+
   <entry id="51816" lang="en" sex="m">Description: 
 
 Use: Displacement (9) 1 Use/Day 
@@ -22187,6 +22665,7 @@ Cost:
 
 +50000gp
 </entry>
+
   <entry id="51817" lang="en" sex="m">Description: 
 
 Skill Bonus: Hide +5 
@@ -22201,6 +22680,35 @@ Cost:
 
 +2500gp
 </entry>
+
+  <entry id="51941" lang="en" sex="m">Description: 
+
+Armor Bonus: +2 
+
+Prerequisites: 
+
+Caster Level: 6
+Spell(s): Shield of Faith
+
+Cost: 
+
++8000gp
+</entry>
+
+  <entry id="51942" lang="en" sex="m">Description: 
+
+Armor Bonus: +3 
+
+Prerequisites: 
+
+Caster Level: 9
+Spell(s): Shield of Faith
+
+Cost: 
+
++18000gp
+</entry>
+
   <entry id="51818" lang="en" sex="m">Description: 
 
 Use: Greater Sanctuary (18) 1 Use/Day 
@@ -22214,6 +22722,7 @@ Cost:
 
 +55000gp
 </entry>
+
   <entry id="51819" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +1 
@@ -22227,6 +22736,35 @@ Cost:
 
 +1000gp
 </entry>
+
+  <entry id="51943" lang="en" sex="m">Description: 
+
+Armor Bonus: +4 
+
+Prerequisites: 
+
+Caster Level: 12
+Spell(s): Shield of Faith
+
+Cost: 
+
++32000gp
+</entry>
+
+  <entry id="51944" lang="en" sex="m">Description: 
+
+Armor Bonus: +5 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Shield of Faith
+
+Cost: 
+
++50000gp
+</entry>
+
   <entry id="51820" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +2 
@@ -22240,6 +22778,7 @@ Cost:
 
 +4000gp
 </entry>
+
   <entry id="51821" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +3 
@@ -22253,6 +22792,37 @@ Cost:
 
 +9000gp
 </entry>
+
+  <entry id="51945" lang="en" sex="m">Description: 
+
+Armor Bonus: +6 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++720000gp
+</entry>
+
+  <entry id="51946" lang="en" sex="m">Description: 
+
+Armor Bonus: +7 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++980000gp
+</entry>
+
   <entry id="51822" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +4 
@@ -22266,6 +22836,7 @@ Cost:
 
 +16000gp
 </entry>
+
   <entry id="51823" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +5 
@@ -22279,6 +22850,37 @@ Cost:
 
 +25000gp
 </entry>
+
+  <entry id="51947" lang="en" sex="m">Description: 
+
+Armor Bonus: +8 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++1280000gp
+</entry>
+
+  <entry id="51948" lang="en" sex="m">Description: 
+
+Armor Bonus: +9 
+
+Prerequisites: 
+
+Caster Level: 27
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++1620000gp
+</entry>
+
   <entry id="51824" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +6 
@@ -22293,6 +22895,7 @@ Cost:
 
 +360000gp
 </entry>
+
   <entry id="51825" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +7 
@@ -22307,6 +22910,36 @@ Cost:
 
 +490000gp
 </entry>
+
+  <entry id="51949" lang="en" sex="m">Description: 
+
+Armor Bonus: +10 
+
+Prerequisites: 
+
+Caster Level: 30
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++2000000gp
+</entry>
+
+  <entry id="51950" lang="en" sex="m">Description: 
+
+Regeneration: +1 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Regenerate
+
+Cost: 
+
++90000gp
+</entry>
+
   <entry id="51826" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +8 
@@ -22321,6 +22954,7 @@ Cost:
 
 +640000gp
 </entry>
+
   <entry id="51827" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +9 
@@ -22334,6 +22968,35 @@ Epic
 Cost: 
 
 +810000gp
+</entry>
+
+  <entry id="51951" lang="en" sex="m">Description: 
+
+Regeneration: +3 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Regenerate
+Epic
+
+Cost: 
+
++300000gp
+</entry>
+
+  <entry id="51952" lang="en" sex="m">Description: 
+
+Use: Spell Turning (13) 3 Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Spell Turning
+
+Cost: 
+
++98280gp
 </entry>
   <entry id="51828" lang="en" sex="m">Description: 
 
@@ -22620,10 +23283,16 @@ Cost:
 </entry>
   <entry id="51850" lang="en" sex="m">Description: 
 
+Damage Resistance: Fire Resist 30 / - 
+Use: Prismatic Spray (13) 5 Charges/Use 
+Use: Wall of Fire (9) 2 Charges/Use 
+Use: Fireball (10) 1 Charge/Use 
+Use: Acid Fog (11) Unlimited Uses/Day 
 
 Prerequisites: 
 
 Caster Level: 13
+Spell(s): Acid Fog
 
 Cost: 
 
@@ -22701,6 +23370,8 @@ Cost:
 </entry>
   <entry id="51857" lang="en" sex="m">Description: 
 
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 4 
 
 Prerequisites: 
 
@@ -22713,6 +23384,8 @@ Cost:
 </entry>
   <entry id="51858" lang="en" sex="m">Description: 
 
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 5 
 
 Prerequisites: 
 
@@ -22725,6 +23398,8 @@ Cost:
 </entry>
   <entry id="51859" lang="en" sex="m">Description: 
 
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 6 
 
 Prerequisites: 
 
@@ -22737,6 +23412,8 @@ Cost:
 </entry>
   <entry id="51860" lang="en" sex="m">Description: 
 
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 7 
 
 Prerequisites: 
 
@@ -22747,8 +23424,11 @@ Cost:
 
 +5400gp
 </entry>
+
   <entry id="51861" lang="en" sex="m">Description: 
 
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 8 
 
 Prerequisites: 
 
@@ -22761,6 +23441,8 @@ Cost:
 </entry>
   <entry id="51862" lang="en" sex="m">Description: 
 
+Use: Fireball (10) 5 Charges/Use 
+Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item. Fireball (10) 9 
 
 Prerequisites: 
 
@@ -22773,6 +23455,7 @@ Cost:
 </entry>
   <entry id="51863" lang="en" sex="m">Description: 
 
+Use: Fireball (10) 5 Charges/Use 
 
 Prerequisites: 
 
@@ -22905,23 +23588,37 @@ Cost:
 </entry>
   <entry id="51873" lang="en" sex="m">Description: 
 
+Armor Bonus: +5 
+Spell Resistance: 18 
+Improved Saving Throws: Universal +4 
+Bonus Feat: Spell Penetration 
+Only Useable By: Good 
 
 Prerequisites: 
 
 Caster Level: 14
 Alignment: Good
+Spell(s): Acid Fog, Mage Armor or Shield of Faith
 
 Cost: 
 
 +75000gp
 </entry>
+
   <entry id="51874" lang="en" sex="m">Description: 
 
+Armor Bonus: +5 
+Spell Resistance: 18 
+Improved Saving Throws: Universal +4 
+Bonus Feat: Spell Penetration 
+Only Useable By: Lawful Neutral 
+Only Useable By: Chaotic Neutral 
 
 Prerequisites: 
 
 Caster Level: 14
 Alignment: Neutral
+Spell(s): Acid Fog, Mage Armor or Shield of Faith
 
 Cost: 
 
@@ -22929,18 +23626,30 @@ Cost:
 </entry>
   <entry id="51875" lang="en" sex="m">Description: 
 
+Armor Bonus: +5 
+Spell Resistance: 18 
+Improved Saving Throws: Universal +4 
+Bonus Feat: Spell Penetration 
+Only Useable By: Evil 
 
 Prerequisites: 
 
 Caster Level: 14
 Alignment: Evil
+Spell(s): Acid Fog, Mage Armor or Shield of Faith
 
 Cost: 
 
 +75000gp
 </entry>
+
   <entry id="51876" lang="en" sex="m">Description: 
 
+Darkvision 
+True Seeing 
+Skill Bonus: Search +10 
+Skill Bonus: Spot +10 
+Bonus Feat: Uncanny Dodge I 
 
 Prerequisites: 
 
@@ -22951,8 +23660,12 @@ Cost:
 
 +120000gp
 </entry>
+
   <entry id="51877" lang="en" sex="m">Description: 
 
+Use: Daze (1) Unlimited Uses/Day 
+Use: Displacement (9) 1 Use/Day 
+Light Bright (20m) Color Purple 
 
 Prerequisites: 
 
@@ -22963,6 +23676,7 @@ Cost:
 
 +27000gp
 </entry>
+
   <entry id="51878" lang="en" sex="m">Description: 
 
 Spell Resistance: 20 
@@ -22978,6 +23692,53 @@ Cost:
 
 +38000gp
 </entry>
+
+  <entry id="51879" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +4 
+Skill Bonus: Tumble +6 
+
+Prerequisites: 
+
+Caster Level: 4
+Spell(s): Grease, Knock
+
+Cost: 
+
++5200gp
+</entry>
+  <entry id="51880" lang="en" sex="m">Crafted Rod</entry>
+  <entry id="51881" lang="en" sex="m">Crafted Staff</entry>
+  <entry id="51882" lang="en" sex="m">Ring of Chameleon Power</entry>
+  <entry id="51883" lang="en" sex="m">Minor Ring of Energy Resistance (acid)</entry>
+  <entry id="51884" lang="en" sex="m">Major Ring of Energy Resistance (acid)</entry>
+  <entry id="51885" lang="en" sex="m">Greater Ring of Energy Resistance (acid)</entry>
+  <entry id="51886" lang="en" sex="m">Ring of Energy Immunity (acid)</entry>
+  <entry id="51887" lang="en" sex="m">Minor Ring of Energy Resistance (cold)</entry>
+  <entry id="51888" lang="en" sex="m">Major Ring of Energy Resistance (cold)</entry>
+  <entry id="51889" lang="en" sex="m">Greater Ring of Energy Resistance (cold)</entry>
+  <entry id="51890" lang="en" sex="m">Ring of Energy Immunity (cold)</entry>
+  <entry id="51891" lang="en" sex="m">Minor Ring of Energy Resistance (electricity)</entry>
+  <entry id="51892" lang="en" sex="m">Major Ring of Energy Resistance (electricity)</entry>
+  <entry id="51893" lang="en" sex="m">Greater Ring of Energy Resistance (electricity)</entry>
+  <entry id="51894" lang="en" sex="m">Ring of Energy Immunity (electricity)</entry>
+  <entry id="51895" lang="en" sex="m">Minor Ring of Energy Resistance (fire)</entry>
+  <entry id="51896" lang="en" sex="m">Major Ring of Energy Resistance (fire)</entry>
+  <entry id="51897" lang="en" sex="m">Greater Ring of Energy Resistance (fire)</entry>
+  <entry id="51898" lang="en" sex="m">Ring of Energy Immunity (fire)</entry>
+  <entry id="51899" lang="en" sex="m">Minor Ring of Energy Resistance (sonic)</entry>
+  <entry id="51900" lang="en" sex="m">Major Ring of Energy Resistance (sonic)</entry>
+  <entry id="51901" lang="en" sex="m">Greater Ring of Energy Resistance (sonic)</entry>
+  <entry id="51902" lang="en" sex="m">Ring of Energy Immunity (sonic)</entry>
+  <entry id="51903" lang="en" sex="m">Greater Ring of Universal Energy Resistance</entry>
+  <entry id="51904" lang="en" sex="m">Ring of Universal Energy Immunity</entry>
+  <entry id="51905" lang="en" sex="m">Ring of Evasion</entry>
+  <entry id="51906" lang="en" sex="m">Ring of Freedom of Movement</entry>
+  <entry id="51907" lang="en" sex="m">Ring of Jumping</entry>
+  <entry id="51908" lang="en" sex="m">Improved Ring of Jumping</entry>
+  <entry id="51909" lang="en" sex="m">Ring of Rapid Healing</entry>
+  <entry id="51910" lang="en" sex="m">Ring of Spell Turning</entry>
+  <entry id="51953" lang="en" sex="m">This spell can not be used with the Craft Staff feat</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat
 Prerequisite:  Baelnorn Level 4

@@ -1166,6 +1166,8 @@ Spells: The epic eldritch knights caster level increases by 1 per level gained a
 Bonus Feats: The epic eldritch knight gains a bonus feat (selected from the list of epic eldritch knight feats) every 4 levels after 10th.
 
 Epic Eldritch Knight Bonus Feat List: Armor Skin, Epic Damage Reduction, Devastating Critical, Epic Prowess, Epic Weapon Focus, Overwhelming Critical, Epic Toughness, Improved Whirlwind, Superior Initiative, Epic Spell Focus, Epic Spell Penetration, Improved Combat Casting, Automatic Still SpellR</entry>
+  <entry id="45152" lang="en" sex="m">Free Movement (Ex)</entry>
+  <entry id="45153" lang="en" sex="m">At 18th level and higher, a Scout can slip out of bonds, grapples, and even the effects of confining spells easily. This ability duplicates the effect of a Freedom of Movement spell, except that it is always active. A Scout loses this benefit when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
   <entry id="45154" lang="en" sex="m">Red Wizard of Thay</entry>
   <entry id="45155" lang="en" sex="m">Red Wizards of Thay</entry>
   <entry id="45156" lang="en" sex="m">red wizard of Thay</entry>
@@ -1619,6 +1621,7 @@ Use: Automatic.</entry>
 Prerequisite: Corpsecrafter
 Specifics: Each undead you raise or create with any necromancy spell deals an extra 1d6 cold damage with its natural weapons.
 Use: Automatic.</entry>
+  <entry id="45270" lang="en" sex="m">Scout</entry>
   <entry id="45271" lang="en" sex="m">Rebuke</entry>
   <entry id="45272" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: True Necromancer Level 1
@@ -1700,6 +1703,38 @@ Use: Automatic.</entry>
 Prerequisite: Corpsecrafter
 Specifics: Each undead you raise or create with any necromancy spell gains Improved Initiative as a bonus feat and a 10 foot increase to its speed.
 Use: Automatic.</entry>
+  <entry id="45297" lang="en" sex="m">Scouts</entry>
+  <entry id="45298" lang="en" sex="m">scout</entry>
+  <entry id="45299" lang="en" sex="m">(BASE CLASS)
+Any force on the move, whether it's an army or an adventuring group, needs information about what's ahead and what's behind and, most important, time to prepare for battle. A Scout can navigate difficult terrain at good speed, and she specializes in seeing her foe before the opponent ever detects her presence. In a dungeon or in the wild, a Scout is only seen when she wants to be
+
+- Hit Die: d8
+- Proficiencies: A Scout is proficient with simple and rogue weapons, as well as light armor, but no shields.
+- Skill Points: 8 + Int Modifier
+
+ABILITIES:
+
+Level
+  1: Skirmish (+1d6)
+  2: Battle Fortitude +1, Uncanny Dodge
+  3: Fast Movement +10 ft., Skirmish (+1d6, +1 AC), Trackless Step
+  4: Bonus Feat
+  5: Evasion, Skirmish (+2d6, +1 AC)
+  6: Woodland Stride
+  7: Skirmish (+2d6, +2 AC)
+  8: Bonus Feat
+  9: Skirmish (+3d6, +2 AC)
+10: Blindsense 30 ft.
+11: Battle Fortitude +2, Fast Movement 20 ft., Skirmish (+3d6, +3 AC)
+12: Bonus Feat
+13: Skirmish (+4d6, +3 AC)
+14: Hide in Plain Sight
+15: Skirmish (+4d6, +4 AC)
+16: Bonus Feat
+17: Skirmish (+5d6, +4 AC)
+18: Free Movement
+19: Skirmish (+5d6, +5 AC)
+20: Battle Fortitude +3, Blindsight 30 ft., Bonus Feat</entry>
   <entry id="45300" lang="en" sex="m">Create Undead</entry>
   <entry id="45301" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: True Necromancer Level 4
@@ -2338,6 +2373,40 @@ You make yourself - including clothing, armor, weapons and equipment - look diff
   <entry id="45448" lang="en" sex="m">Disguise Self, Halforc</entry>
   <entry id="45449" lang="en" sex="m">Disguise Self, Halfling</entry>
   <entry id="45450" lang="en" sex="m">Disguise Self, Dwarf</entry>
+  <entry id="45451" lang="en" sex="m">Epic Scout</entry>
+  <entry id="45452" lang="en" sex="m">The Epic Scout is a phantom on the battlefield, seemingly everywhere at once, yet never seen.
+
+Level
+21: Skirmish (+6d6, +5 AC)
+22: 
+23: Skirmish (+6d6, +6 AC)
+24: Bonus Feat
+25: Skirmish (+7d6, +6 AC)
+26: 
+27: Skirmish (+7d6, +7 AC)
+28: Bonus Feat
+29: Battle Fortitude +4, Skirmish (+8d6, +7 AC)
+30: 
+31: Skirmish (+8d6, +8 AC)
+32: Bonus Feat
+33: Skirmish (+9d6, +8 AC)
+34: 
+35: Skirmish (+9d6, +9 AC)
+36: Bonus Feat
+37: Skirmish (+10d6, +9 AC)
+38: Battle Fortitude +5
+39: Skirmish (+10d6, +10 AC)
+40: Bonus Feat</entry>
+  <entry id="45453" lang="en" sex="m">Skirmish (Ex)</entry>
+  <entry id="45454" lang="en" sex="m">A Scout relies on mobility to deal extra damage and improve her defense. She deals an extra 1d6 points of damage on all attacks she makes during any round in which she moves at least 10 feet. The extra dammage applies only to attacks taken during the Scout's turn. This extra damage increases by 1d6 for every four levels gained above 1st.
+The extra damage only applies to living creatures that have a discernible anatomy. Undead, constructs, oozes, plants, incorporeal creatures and creatures immune to extra damage from critical hits are not vulnerable to this additional damage. The Scout must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. Scouts can apply this extra damage to ranged attacks made while skirmishing, but only if the target is within 30 feet.
+At 3rd level, a Scout gains a +1 competence bonus to AC during any round in which she moves at least 10 feet. The bonus applies as soon as the Scout has moved 10 feet, and lasts until the start of her next turn. This bonus improves by 1 for every four levels gained above 3rd.
+A Scout loses this ability when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
+  <entry id="45455" lang="en" sex="m">Battle Fortitude (Ex)</entry>
+  <entry id="45456" lang="en" sex="m">At 2nd level, a Scout gains a +1 competence bonus on Fortitude saves and Initiative checks. This bonus increases by +1 for every nine levels gained above 2nd. A Scout loses this bonus when wearing medium or heavy armor or when carrying a medium or heavy load.
+
+(Due to NWN limits, only the bonus on Fortitude save bonus is actually granted. For Initiative the Blooded and Thug feats are given at levels 11 and 29 instead)</entry>
+  <entry id="45457" lang="en" sex="m">Fast Movement (Ex)</entry>
   <entry id="45458" lang="en" sex="m">Elemental Focus +4</entry>
   <entry id="45459" lang="en" sex="m">Elemental Focus +5</entry>
   <entry id="45460" lang="en" sex="m">Elemental Focus +6</entry>
@@ -2725,6 +2794,7 @@ Prerequisite: Knight of the Chalice Level 10
 Specifics: The Knight of the Chalice may create Holy Aura against demons. This functions just like the spell, but the effects only apply to outsiders. This ability may be used at will.
 Use: Selected.</entry>
   <entry id="45590" lang="en" sex="m">Elaborate Parry: Parry Bonus</entry>
+  <entry id="45591" lang="en" sex="m">Starting at 3rd level, a Scout gains a +10 feet enhancement bonus to her base land speed. At 11th level, this bonus increases to +20 feet. A Scout loses this benefit when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
   <entry id="45592" lang="en" sex="m">Hunter of the Dead</entry>
   <entry id="45593" lang="en" sex="m">Hunters of the Dead</entry>
   <entry id="45594" lang="en" sex="m">hunter of the dead</entry>
@@ -2806,6 +2876,10 @@ Special:
 Epic Hunter of the Dead Bonus Feats List:
 Armor Skin, Epic Toughness, Great Wisdom, Epic Energy Resistance, Great Smiting, Perfect Health
 </entry>
+  <entry id="45610" lang="en" sex="m">Blindsense (Ex)</entry>
+  <entry id="45611" lang="en" sex="m">Using nonvisual senses, such as acute smell or hearing, a creature with blindsense notices things it cannot see. The creature usually does not need to make Spot or Listen checks to pinpoint the location of a creature within range of its blindsense ability, provided that it has line of effect to that creature. Any opponent the creature cannot see still has total concealment against the creature with blindsense, and the creature still has the normal miss chance when attacking foes that have concealment. Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see.
+
+(Since there is no actual Blindsense in NWN, Ultravision is used instead)</entry>
   <entry id="45612" lang="en" sex="m">Holy Liberator</entry>
   <entry id="45613" lang="en" sex="m">Holy Liberators</entry>
   <entry id="45614" lang="en" sex="m">holy liberator</entry>
@@ -2907,6 +2981,7 @@ Special:
 Epic Holy Liberator Bonus Feats List:
 Armor Skin, Epic Toughness, Great Wisdom, Epic Energy Resistance, Great Smiting, Perfect Health, Epic Will, Epic Reputation
 </entry>
+  <entry id="45628" lang="en" sex="m">Blindsight (Ex)</entry>
   <entry id="45629" lang="en" sex="m">Sacred Vow</entry>
   <entry id="45630" lang="en" sex="m">Type of Feat: Exalted
 Prerequisite: Good Alignment*
@@ -3102,6 +3177,7 @@ Due to technical reasons, we cannot enforce this limitation directly. If you do 
   Effects of Metapsionic Feats on a Power: In all ways, a metapsionic power operates at it's original power level, even though it costs additional power points. The modifications to a power made by a metapsionic feat have only their noted effect on the power. A manifester can't use a metapsionic feat to alter a power being cast from a power stone, dorje, or other device.
 Manifesting a power modified by the Quicken Power feat does not provoke attacks of opportunity.
 Some metapsionic feats apply only to certain powers, as described in each specific feat entry.</entry>
+  <entry id="45699" lang="en" sex="m">A 20th-level Scout gains the Blindsight ability out to 30 feet. Her senses become so acute that she can maneuver and fight flawlessly even in total darkness. Invisibility, darkness, and most kinds of concealment are irrelevant, though the Scout must have line of effect to a creature or object to discern it.</entry>
   <entry id="45700" lang="en" sex="m">Heartwarder</entry>
   <entry id="45701" lang="en" sex="m">Heartwarders</entry>
   <entry id="45702" lang="en" sex="m">heartwarder</entry>

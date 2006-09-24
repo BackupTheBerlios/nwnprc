@@ -68,32 +68,16 @@ DoDebug("nDC = "+IntToString(nDC));
             {
                 bSuccess = TRUE;
                 nSpellId --; // I added +1 to the spellID when the sequencer was created, so I have to remove it here
-                //modified to use the PRCs casterlevel override to cheatcast at the right level
-                
-                ActionDoCommand(SetLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE, nLevel));
-                ActionDoCommand(SetLocalInt(oPC, PRC_METAMAGIC_OVERRIDE,   nMeta));
-                ActionDoCommand(SetLocalInt(oPC, PRC_DC_TOTAL_OVERRIDE,    nDC));
-                ActionCastSpellAtObject(nSpellId, PRCGetSpellTargetObject(), METAMAGIC_ANY, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE);
-                ActionDoCommand(DelayCommand(3.0, DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE)));
-                ActionDoCommand(DelayCommand(3.0, DeleteLocalInt(oPC, PRC_METAMAGIC_OVERRIDE)));
-                ActionDoCommand(DelayCommand(3.0, DeleteLocalInt(oPC, PRC_DC_TOTAL_OVERRIDE)));
-                
-                /*
-                SetLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE, nLevel);
-                SetLocalInt(oPC, PRC_METAMAGIC_OVERRIDE,   nMeta);
-                SetLocalInt(oPC, PRC_DC_TOTAL_OVERRIDE,    nDC);
-                ExecuteScript(Get2DACache("spells", "ImpactScript", nSpellId), oPC);
-                DeleteLocalInt(oPC, PRC_CASTERLEVEL_OVERRIDE);
-                DeleteLocalInt(oPC, PRC_METAMAGIC_OVERRIDE);
-                DeleteLocalInt(oPC, PRC_DC_TOTAL_OVERRIDE);
-                */    
+                //modified to use the PRCs casterlevel override to cheatcast at the right level                
+                ActionCastSpell(nSpellID, nLevel,0, nDC, nMeta);  
             }
         }
         if (!bSuccess)
         {
             FloatingTextStrRefOnCreature(83886,OBJECT_SELF); // no spells stored
         }
-        if(nMode == 700) //Fired via OnHit:CastUniqueSpell
+        if(nMode == 700 //Fired via OnHit:CastUniqueSpell
+            && !GetLocalInt(oItem, "DuskbladeChannelDischarge"))//and not a discharging duskblade
         {
             ActionAttack(GetAttackTarget());
             //clear the settings

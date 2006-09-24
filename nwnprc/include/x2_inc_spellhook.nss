@@ -46,6 +46,10 @@ int NullPsionicsField();
 // Utterance. Prevents the casting of hostile spells by the target
 int WardOfPeace();
 
+// Duskblade channeling. While channeling, stops non-touch spells
+// from working
+int DuskbladeArcaneChanneling();
+
 // Bard / Sorc PrC handling
 // returns FALSE if it is a bard or a sorcerer spell from a character
 // with an arcane PrC via bioware spellcasting rather than via PrC spellcasting
@@ -110,7 +114,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "inc_utility"
 #include "prc_inc_itmrstr"
 #include "inc_newspellbook"
-//#include "prc_sp_func"
+#include "prc_sp_func"
 #include "psi_inc_manifest"
 
 int RedWizRestrictedSchool()
@@ -218,6 +222,67 @@ int WardOfPeace()
     }
     
     return nReturn;
+}
+
+int DuskbladeArcaneChanneling()
+{
+    int nReturn = TRUE;
+    object oPC = OBJECT_SELF;
+    if(GetLocalInt(oPC, "DuskbladeChannelActive"))
+    {
+        //dont cast
+        nReturn = FALSE;
+        int nSpell     = PRCGetSpellId();
+        //channeling active
+        //find the item
+        object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+        if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
+        if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
+        if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);
+        if(GetIsObjectValid(oItem)
+            && IsTouchSpell(nSpell)
+            && IPGetIsMeleeWeapon(oItem)
+            && GetIsEnemy(PRCGetSpellTargetObject())
+            && !GetLocalInt(oItem, "X2_L_NUMTRIGGERS"))
+        {
+            //valid spell, store
+            //this uses similar things to the spellsequencer/spellsword/arcanearcher stuff
+            effect eVisual = EffectVisualEffect(VFX_IMP_BREACH);
+            //NOTE: I add +1 to the SpellId to spell 0 can be used to trap failure
+            int nSID = PRCGetSpellId()+1;
+            int i;
+            int nMax = 1;
+            if(GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC) >= 13)
+                nMax = 5;
+            for(i=1; i<=nMax; i++)
+            {
+                SetLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(i)  , nSID);
+                SetLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(i), PRCGetCasterLevel(OBJECT_SELF));
+                SetLocalInt(oItem, "X2_L_SPELLTRIGGER_M" + IntToString(i), PRCGetMetaMagicFeat());
+                SetLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i), PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+            }
+            SetLocalInt(oItem, "X2_L_NUMTRIGGERS", nMax);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, OBJECT_SELF);
+            itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+            IPSafeAddItemProperty(oItem ,ipTest, 6.0);
+            for (i = 1; i <= nMax; i++)
+            {
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(i)));
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(i)));
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_M" + IntToString(i)));
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i)));
+            }
+            DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_NUMTRIGGERS"));
+            //mark it as discharging
+            SetLocalInt(oItem, "DuskbladeChannelDischarge", TRUE);
+            DelayCommand(6.0, DeleteLocalInt(oItem, "DuskbladeChannelDischarge"));
+            //make attack
+            ClearAllActions();
+            ActionAttack(PRCGetSpellTargetObject());
+        }
+    }
+    return nReturn;
+
 }
 
 int BardSorcPrCCheck()
@@ -894,6 +959,17 @@ int X2PreSpellCastCode()
         nContinue = EShamConc();
 
     //---------------------------------------------------------------------------
+    // Baelnorn attempting to use items while projection
+    //---------------------------------------------------------------------------
+    if(nContinue                                         && // No need to evaluate if casting has been cancelled already
+       GetLocalInt(oCaster, "BaelnornProjection_Active") && // If projection is active AND
+       GetIsObjectValid(oSpellCastItem)                     // Cast from an item
+       )
+    {
+        nContinue = FALSE; // Prevent casting
+    }
+
+    //---------------------------------------------------------------------------
     // Run Knight of the Chalice Heavenly Devotion check
     //---------------------------------------------------------------------------
     if (nContinue)
@@ -938,18 +1014,12 @@ int X2PreSpellCastCode()
         SendMessageToPC(oCaster, "You cannot use "+GetName(oSpellCastItem));
         nContinue = FALSE;
     }
-
-    //---------------------------------------------------------------------------
-    // Baelnorn attempting to use items while projection
-    //---------------------------------------------------------------------------
-    if(nContinue                                         && // No need to evaluate if casting has been cancelled already
-       GetLocalInt(oCaster, "BaelnornProjection_Active") && // If projection is active AND
-       GetIsObjectValid(oSpellCastItem)                     // Cast from an item
-       )
-    {
-        nContinue = FALSE; // Prevent casting
-    }
 DoDebug("x2_inc_spellhook pre-crafting "+IntToString(nContinue));
+    //-----------------------------------------------------------------------
+    // Check if spell was used for Duskblade channeling
+    //-----------------------------------------------------------------------
+    if (nContinue)
+        nContinue = (!DuskbladeArcaneChanneling());
 
 
     //---------------------------------------------------------------------------
@@ -968,21 +1038,12 @@ DoDebug("x2_inc_spellhook pre-x2_pc_craft "+IntToString(nContinue));
 DoDebug("x2_inc_spellhook pre-sequencer "+IntToString(nContinue));
         //-----------------------------------------------------------------------
         // Check if spell was used for on a sequencer item
+        // Check if spell was used for Arcane Archer Imbue Arrow
+        // Check if spell was used for Spellsword ChannelSpell
         //-----------------------------------------------------------------------
         if (nContinue)
             nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
 
-        //-----------------------------------------------------------------------
-        // Check if spell was used for Arcane Archer Imbue Arrow
-        //-----------------------------------------------------------------------
-//        if (nContinue)
-//            nContinue = !ExecuteScriptAndReturnInt("aa_spellhook", oCaster);
-
-        //-----------------------------------------------------------------------
-        // Check if spell was used for Spellsword ChannelSpell
-        //-----------------------------------------------------------------------
-//        if (nContinue)
-//            nContinue = !ExecuteScriptAndReturnInt("prc_spell_chanel", oCaster);
 
 DoDebug("x2_inc_spellhook pre-tagbased "+IntToString(nContinue));
         //-----------------------------------------------------------------------

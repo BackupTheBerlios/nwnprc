@@ -8,6 +8,14 @@ import java.util.*;
  * subradial IDs.
  */
 public class DuplicateSubradials{
+	private static class DuplicateData {
+		int subnum;
+		//Set<Integer> indices = new HashSet<Integer>();
+		List<Integer> indices = new ArrayList<Integer>();
+		DuplicateData(int subnum) {
+			this.subnum = subnum;
+		}
+	}
 	
 	/**
 	 * Main method
@@ -17,15 +25,20 @@ public class DuplicateSubradials{
 	public static void main(String[] args){
 		if(args.length == 0) readMe();
 		String pathtospells2da = null;
+		boolean fixduplicates = false;
+		int replacementstart = -1;
 		
 		// parse args
-		for(String param : args){//[--help] | pathtospells2da
+		for(String param : args){//[--help] | [-f replacestart] pathtospells2da
 			// Parameter parseage
 			if(param.startsWith("-")){
 				if(param.equals("--help")) readMe();
 				else{
 					for(char c : param.substring(1).toCharArray()){
 						switch(c){
+						/*case 'f':
+							fixduplicates = true;
+							break;*/
 						default:
 							System.out.println("Unknown parameter: " + c);
 							readMe();
@@ -34,16 +47,29 @@ public class DuplicateSubradials{
 				}
 			}
 			else{
+				// The option to attempt fixing the duplicates is on and the first replacement number hasn't been given yet
+				/*if(fixduplicates == true && replacementstart == -1) {
+					try {
+						replacementstart = Integer.parseInt(param);
+					} catch (NumberFormatException e) {
+						System.out.println("replacestart value given is not numeric: " + param);
+						readMe();
+					}
+					if(replacementstart < 0 || replacementstart > 9999) {
+						System.out.println("replacestart value given is not in valid range");
+						readMe();
+					}
+				}
 				// It's a pathname
-				if(pathtospells2da == null)
+				else */if(pathtospells2da == null)
 					pathtospells2da = param;
 			}
 		}
 		
 		// Load the 2da to memory
 		Data_2da spells = Data_2da.load2da(pathtospells2da);
-		HashSet<Integer> subrads = new HashSet<Integer>();
-		ArrayList<Integer> duplicates = new ArrayList<Integer>();
+		Map<Integer, Integer> subrads = new HashMap<Integer, Integer>(); // Map of subradial # to the first line it occurs on
+		Map<Integer, DuplicateData> duplicates = new HashMap<Integer, DuplicateData>();
 		String entry;
 		int subnum = 0;
 		// Parse through the 2da, looking for FeatID references that contain a subradial ID
@@ -61,23 +87,27 @@ public class DuplicateSubradials{
 			if(subnum < 0x10000) continue;
 			subnum = subnum >>> 16;
 			
-			if(subrads.contains(subnum)) duplicates.add(subnum);
-			else subrads.add(subnum);
+			if(subrads.containsKey(subnum)){
+				if(!duplicates.containsKey(subnum))
+					duplicates.put(subnum, new DuplicateData(subnum));
+				
+				duplicates.get(subnum).indices.add(i);
+			}
+			else subrads.put(subnum, i);
 		}
 		
 		// Print the results
-		for(int dup : duplicates){
-			for(int i = 0; i < spells.getEntryCount(); i++){
-				entry = spells.getEntry("FeatID", i);
-				if(entry.equals("****")) continue;
-				try {
-					subnum = Integer.parseInt(entry);
-				} catch (NumberFormatException e) {continue;}
-				if(subnum < 0x10000) continue;
-				subnum = subnum >>> 16;
-				
-				if(subnum == dup) System.out.println("Duplicate subradial ID: " + subnum + " on row " + i);
-			}
+		for(DuplicateData dup : duplicates.values()){
+			System.out.println("Duplicate subradial ID: " + dup.subnum + " first occurrence on row " + subrads.get(dup.subnum));
+			for(int i : dup.indices)
+				System.out.println("Duplicate subradial ID: " + dup.subnum + " on row " + i);
+		}
+		if(duplicates.size() > 0) {
+			int requiredtofix = 0;
+			for(DuplicateData dup : duplicates.values())
+				requiredtofix += dup.indices.size();
+			
+			System.out.println("\nNumber of new subradial IDs required to make all unique: " + requiredtofix);
 		}
 	}
 	

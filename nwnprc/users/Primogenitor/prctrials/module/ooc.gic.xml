@@ -61,6 +61,9 @@
             <struct id="9" >
                 <element name="Comment" type="10" value="Signpost - 2" />
             </struct>
+            <struct id="9" >
+                <element name="Comment" type="10" value="" />
+            </struct>
         </element>
     </struct>
 </gff>

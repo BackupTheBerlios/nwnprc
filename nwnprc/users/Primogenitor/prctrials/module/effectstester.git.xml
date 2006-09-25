@@ -317,7 +317,7 @@
                 <element name="X" type="8" value="14.33" />
                 <element name="Y" type="8" value="7.63" />
                 <element name="Z" type="8" value="0.4" />
-                <element name="Bearing" type="8" value="-1.5707959" />
+                <element name="Bearing" type="8" value="-1.5707957" />
             </struct>
             <struct id="8" >
                 <element name="Tag" type="10" value="FenceDoor" />
@@ -372,7 +372,7 @@
                 <element name="X" type="8" value="11.52" />
                 <element name="Y" type="8" value="30.24" />
                 <element name="Z" type="8" value="0.0" />
-                <element name="Bearing" type="8" value="-1.5707959" />
+                <element name="Bearing" type="8" value="-1.5707957" />
             </struct>
         </element>
         <element name="Encounter List" type="15" />
@@ -512,7 +512,73 @@
                 <element name="X" type="8" value="18.443317" />
                 <element name="Y" type="8" value="18.55534" />
                 <element name="Z" type="8" value="-8.389354E-6" />
-                <element name="Bearing" type="8" value="-2.9452426" />
+                <element name="Bearing" type="8" value="-2.9452424" />
+            </struct>
+            <struct id="9" >
+                <element name="Tag" type="10" value="PaintingonEasel" />
+                <element name="LocName" type="12" value="14701" >
+                    <localString languageId="0" value="Appearance Changer" />
+                </element>
+                <element name="Description" type="12" value="14700" />
+                <element name="TemplateResRef" type="11" value="plc_pntingeasel" />
+                <element name="AutoRemoveKey" type="0" value="0" />
+                <element name="CloseLockDC" type="0" value="0" />
+                <element name="Conversation" type="11" value="" />
+                <element name="Interruptable" type="0" value="1" />
+                <element name="Faction" type="4" value="1" />
+                <element name="Plot" type="0" value="1" />
+                <element name="KeyRequired" type="0" value="0" />
+                <element name="Lockable" type="0" value="0" />
+                <element name="Locked" type="0" value="0" />
+                <element name="OpenLockDC" type="0" value="18" />
+                <element name="PortraitId" type="2" value="989" />
+                <element name="TrapDetectable" type="0" value="1" />
+                <element name="TrapDetectDC" type="0" value="0" />
+                <element name="TrapDisarmable" type="0" value="1" />
+                <element name="DisarmDC" type="0" value="15" />
+                <element name="TrapFlag" type="0" value="0" />
+                <element name="TrapOneShot" type="0" value="1" />
+                <element name="TrapType" type="0" value="0" />
+                <element name="KeyName" type="10" value="" />
+                <element name="AnimationState" type="0" value="0" />
+                <element name="Appearance" type="4" value="453" />
+                <element name="HP" type="3" value="15" />
+                <element name="CurrentHP" type="3" value="15" />
+                <element name="Hardness" type="0" value="5" />
+                <element name="Fort" type="0" value="16" />
+                <element name="Ref" type="0" value="0" />
+                <element name="Will" type="0" value="0" />
+                <element name="OnClosed" type="11" value="" />
+                <element name="OnDamaged" type="11" value="" />
+                <element name="OnDeath" type="11" value="" />
+                <element name="OnDisarm" type="11" value="" />
+                <element name="OnHeartbeat" type="11" value="" />
+                <element name="OnLock" type="11" value="" />
+                <element name="OnMeleeAttacked" type="11" value="" />
+                <element name="OnOpen" type="11" value="" />
+                <element name="OnSpellCastAt" type="11" value="" />
+                <element name="OnTrapTriggered" type="11" value="" />
+                <element name="OnUnlock" type="11" value="" />
+                <element name="OnUserDefined" type="11" value="" />
+                <element name="OnClick" type="11" value="" />
+                <element name="VarTable" type="15" >
+                    <struct id="0" >
+                        <element name="Name" type="10" value="DynamicConvResRef" />
+                        <element name="Type" type="4" value="3" />
+                        <element name="Value" type="10" value="appearconv" />
+                    </struct>
+                </element>
+                <element name="HasInventory" type="0" value="0" />
+                <element name="BodyBag" type="0" value="0" />
+                <element name="Static" type="0" value="0" />
+                <element name="Type" type="0" value="0" />
+                <element name="Useable" type="0" value="1" />
+                <element name="OnInvDisturbed" type="11" value="" />
+                <element name="OnUsed" type="11" value="util_startdyncon" />
+                <element name="X" type="8" value="8.504869" />
+                <element name="Y" type="8" value="13.592633" />
+                <element name="Z" type="8" value="0.0033402443" />
+                <element name="Bearing" type="8" value="-2.9452424" />
             </struct>
         </element>
     </struct>

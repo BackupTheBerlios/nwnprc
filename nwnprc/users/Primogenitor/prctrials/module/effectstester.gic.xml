@@ -30,6 +30,9 @@
             <struct id="9" >
                 <element name="Comment" type="10" value="Painting on Easel" />
             </struct>
+            <struct id="9" >
+                <element name="Comment" type="10" value="Painting on Easel" />
+            </struct>
         </element>
     </struct>
 </gff>

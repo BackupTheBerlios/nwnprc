@@ -9629,7 +9629,7 @@
                             <struct id="0" >
                                 <element name="NAME" type="10" value="Word Archon" />
                                 <element name="RESREF" type="11" value="true_wordarch" />
-                                <element name="CR" type="8" value="0.125" />
+                                <element name="CR" type="8" value="9.0" />
                                 <element name="FACTION" type="10" value="Hostile" />
                             </struct>
                             <struct id="0" >

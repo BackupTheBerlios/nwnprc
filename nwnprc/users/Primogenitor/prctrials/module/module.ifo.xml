@@ -142,6 +142,9 @@
             <struct id="6" >
                 <element name="Area_Name" type="11" value="room4" />
             </struct>
+            <struct id="6" >
+                <element name="Area_Name" type="11" value="battlefield1442" />
+            </struct>
         </element>
         <element name="Mod_HakList" type="15" >
             <struct id="8" >

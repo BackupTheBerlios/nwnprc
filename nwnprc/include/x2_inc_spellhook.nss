@@ -1038,7 +1038,7 @@ DoDebug("x2_inc_spellhook pre-crafting "+IntToString(nContinue));
     // Check if spell was used for Duskblade channeling
     //-----------------------------------------------------------------------
     if (nContinue)
-        nContinue = (!DuskbladeArcaneChanneling());
+        nContinue = DuskbladeArcaneChanneling();
 
 
     //---------------------------------------------------------------------------

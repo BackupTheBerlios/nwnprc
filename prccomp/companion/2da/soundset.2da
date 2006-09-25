@@ -257,8 +257,8 @@
 253       HobWarrior                 c_hobgob        3055         0          4        
 254       HobWiz                     c_hobgobwiz     3056         0          4        
 255       Devil                      c_devil         3057         0          4        
-256       Maggris                    c_maggris       16808546     ****       4        
-257       Wereboar                   c_wboar         16808547     ****       4        
+256       Maggris                    c_maggris       16797726     ****       4        
+257       Wereboar                   c_wboar         16797727     ****       4        
 258       User03                     ****            ****         ****       4        
 259       User04                     ****            ****         ****       4        
 260       User05                     ****            ****         ****       4        
@@ -801,10 +801,10 @@
 797       ****                       ****            ****         ****       ****     
 798       ****                       ****            ****         ****       ****     
 799       ****                       ****            ****         ****       ****     
-800       "Male, Kingmaker, Calibast (ID)"         vs_nkmcalm      16808542     0          0
-801       "Female, Kingmaker, Jaboli (ID)"           vs_nkmjabf      16808544     1          0
-802       "Female, Kingmaker, Kaidala (ID)"          vs_nkmkaif      16808545     1          0
-803       "Male, Kingmaker, Trip (ID)"             vs_nkmtripm     16808543     0          0
+800       "Male, Kingmaker, Calibast (ID)"         vs_nkmcalm      16797722     0          0
+801       "Female, Kingmaker, Jaboli (ID)"           vs_nkmjabf      16797724     1          0
+802       "Female, Kingmaker, Kaidala (ID)"          vs_nkmkaif      16797725     1          0
+803       "Male, Kingmaker, Trip (ID)"             vs_nkmtripm     16797723     0          0
 804       ****                       ****            ****         ****       ****     
 805       ****                       ****            ****         ****       ****     
 806       ****                       ****            ****         ****       ****     
@@ -854,13 +854,13 @@
 850       ****                       ****            ****         ****       ****     
 851       ****                       ****            ****         ****       ****     
 852       ****                       ****            ****         ****       ****     
-853       "Treant (DLA)"             c_treant        16808283     0          4        
+853       "Treant (DLA)"             c_treant        16797716     0          4        
 854       ****                       ****            ****         ****       ****     
-855       "Monodrone (CODI)"         c_monodrone     16808537     4          4        
-856       "Marut (CODI)"             c_marut         16808538     4          4 
-857       "Parai (CODI)"             c_parai         16808539     4          4 
-858       "Primus (CODI)"            c_primus        16808540     4          4      
-859       "Secundus (CODI)"          c_secundus      16808541     4          4   
+855       "Monodrone (CODI)"         c_monodrone     16797717     4          4        
+856       "Marut (CODI)"             c_marut         16797718     4          4 
+857       "Parai (CODI)"             c_parai         16797719     4          4 
+858       "Primus (CODI)"            c_primus        16797720     4          4      
+859       "Secundus (CODI)"          c_secundus      16797721     4          4   
 860       ****                       ****            ****         ****       ****     
 861       ****                       ****            ****         ****       ****     
 862       ****                       ****            ****         ****       ****     

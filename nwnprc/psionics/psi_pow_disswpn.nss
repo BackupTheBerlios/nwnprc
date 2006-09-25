@@ -104,7 +104,7 @@ void main()
         object oTarget     = PRCGetSpellTargetObject();
 
         int nDamage = array_get_int(oWeapon, "PRC_Power_DissolvingWeapon_Damages",
-                                    array_get_size(oWeapon, "PRC_Power_DissolvingWeapon_Damages")
+                                    array_get_size(oWeapon, "PRC_Power_DissolvingWeapon_Damages") - 1
                                     );
         nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
 

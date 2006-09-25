@@ -6,7 +6,7 @@
 Primary
 -----------------------------------------------------
 
-Bugs: Sohei spellbook, Favoured Soul spellbook, Skullclan Hunter Sneak Undead
+Bugs: Sohei spellbook, Skullclan Hunter Sneak Undead
 
 Truenaming:
 

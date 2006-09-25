@@ -404,40 +404,39 @@ int FavouredSoul(object oPC = OBJECT_SELF)
     	GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC) 	      +
 	GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC) 	      ;
 
-     if (nFocus >= 1 && nFS >= 3) { nCheck = TRUE; }
-     else { nCheck = FALSE; }
+     	if (nFocus >= 1 && nFS >= 3) { nCheck = TRUE; }
+     	else { nCheck = FALSE; }
 
-     if (nCheck != TRUE)
-     {
+     	if (nCheck != TRUE)
+    	{
 
-          FloatingTextStringOnCreature("You must select a Weapon Focus Feat. Please reselect your feats.", oPC, FALSE);
-               return FALSE;
+      	    FloatingTextStringOnCreature("You must select a Weapon Focus Feat. Please reselect your feats.", oPC, FALSE);
+      	         return FALSE;
+     	}
+
      }
-
-     }
-     return TRUE;
 
      if (nFS >= 5)
      {
 
-     nEnergy += GetHasFeat(FEAT_FAVOURED_SOUL_ACID, oPC) +
-               GetHasFeat(FEAT_FAVOURED_SOUL_COLD, oPC) +
-               GetHasFeat(FEAT_FAVOURED_SOUL_ELEC, oPC) +
-               GetHasFeat(FEAT_FAVOURED_SOUL_FIRE, oPC) +
-               GetHasFeat(FEAT_FAVOURED_SOUL_SONIC, oPC);
+     	nEnergy += GetHasFeat(FEAT_FAVOURED_SOUL_ACID, oPC) +
+     	           GetHasFeat(FEAT_FAVOURED_SOUL_COLD, oPC) +
+     	           GetHasFeat(FEAT_FAVOURED_SOUL_ELEC, oPC) +
+     	           GetHasFeat(FEAT_FAVOURED_SOUL_FIRE, oPC) +
+     	           GetHasFeat(FEAT_FAVOURED_SOUL_SONIC, oPC);
 
-     if (nEnergy == 3 && nFS >= 15) { nCheck = TRUE; }
-     else if (nEnergy == 2 && nFS > 5 && nFS < 15) { nCheck = TRUE; }
-     else if (nEnergy == 1 && nFS >= 5) { nCheck = TRUE; }
-     else { nCheck = FALSE; }
-
-     if (nCheck != TRUE)
-     {
-
-          FloatingTextStringOnCreature("You must select an Energy Resistance Feat. Please reselect your feats.", oPC, FALSE);
-               return FALSE;
-     }
-
+     	if (nEnergy == 3 && nFS >= 15) { nCheck = TRUE; }
+     	else if (nEnergy == 2 && nFS > 5 && nFS < 15) { nCheck = TRUE; }
+     	else if (nEnergy == 1 && nFS >= 5) { nCheck = TRUE; }
+     	else { nCheck = FALSE; }
+	
+     	if (nCheck != TRUE)
+     	{
+	
+     	     FloatingTextStringOnCreature("You must select an Energy Resistance Feat. Please reselect your feats.", oPC, FALSE);
+     	          return FALSE;
+     	}
+	
      }
      return TRUE;
 }

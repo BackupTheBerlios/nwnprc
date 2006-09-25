@@ -84,6 +84,8 @@ void main()
     //if(nClass >= 8) SkullClanImmunity(oPC, oSkin, IP_CONST_IMMUNITYMISC_LEVEL_ABIL_DRAIN,  "SkullClanAbilityDrain");
     //Bioware doesn't have ability and level drain seperately. Damn them.
     if(nClass >= 10) SkullClanImmunity(oPC, oSkin, IP_CONST_IMMUNITYMISC_LEVEL_ABIL_DRAIN, "SkullClanLevelDrain");  
+
+    if(DEBUG) DoDebug("prc_skullclan: Completed Immunities, running Event Handlers");
     
     // We aren't being called from any event, instead from EvalPRCFeats, so set up the eventhooks
     // Don't start doing this until the Skullclan Hunter is level 2
@@ -96,6 +98,7 @@ void main()
         AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_skullclan", TRUE, FALSE);
     }
     // We're being called from the OnHit eventhook, so deal the damage
+    if(DEBUG) DoDebug("prc_skullclan: Pre OnHit");
     else if(nEvent == EVENT_ITEM_ONHIT)
     {
         oItem          = GetSpellCastItem();
@@ -115,12 +118,14 @@ void main()
         	{
         		// Get the total damage it can do
         		int nDam = d6(GetTotalSneakAttackDice(oPC));
+        		if(DEBUG) DoDebug("prc_skullclan: OnHit Sneak Damage: " + IntToString(nDam));
         		effect eDam = EffectDamage(nDam, DAMAGE_TYPE_POSITIVE);
         		ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
         	}
         }// end if - Item is a melee weapon and Two-Weapon Rend hasn't already been used up for the round
     }// end if - Running OnHit event        
     // We are called from the OnPlayerEquipItem eventhook. Add OnHitCast: Unique Power to oPC's weapon
+    if(DEBUG) DoDebug("prc_skullclan: Pre OnEquip");
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {
         oPC   = GetItemLastEquippedBy();
@@ -148,6 +153,7 @@ void main()
         }
     }
     // We are called from the OnPlayerUnEquipItem eventhook. Remove OnHitCast: Unique Power from oPC's weapon
+    if(DEBUG) DoDebug("prc_skullclan: Pre OnUnequip");
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
         oPC   = GetItemLastUnequippedBy();
@@ -173,5 +179,6 @@ void main()
             oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);            
             RemoveSpecificProperty(oAmmo, ITEM_PROPERTY_ONHITCASTSPELL, IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 0, 1, "", 1, DURATION_TYPE_TEMPORARY);            
         }
-    }    
+    } 
+    if(DEBUG) DoDebug("prc_skullclan: Exiting");
 }

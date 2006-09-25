@@ -99,6 +99,8 @@ void main()
     	int nClass = GetLevelByClass(CLASS_TYPE_SCOUT, oPC);
     	int nEvent = GetRunningEvent();	
     	int nArmour = GetBaseAC(oArmour);
+    	
+    	if(DEBUG) DoDebug("prc_scout running, event: " + IntToString(nEvent));
 	
 	// Light armour only
 	if (3 >= nArmour)

@@ -227,6 +227,7 @@ const string PRC_DC_TOTAL_OVERRIDE                   = "PRC_DC_TOTAL_OVERRIDE";
  * This is for builders. It should not be set on the module, but should be set on players/creatures.
  * When this is set, it will override spell DC for all spells cast (including SLAs and items)
  * This will ony override base DC+spelllevel+statmod, feats race etc are added on top of this
+ * If this is set to -1, DC is calculated including class & spell level
 */
 const string PRC_DC_BASE_OVERRIDE                   = "PRC_DC_BASE_OVERRIDE";
 
@@ -868,6 +869,11 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
  const string PRC_REMOVE_PLAYER_SPEED                      = "PRC_REMOVE_PLAYER_SPEED";
 
  /*
+  * Enforces racial appearance as defined in racialtypes.2da
+  */
+ const string PRC_ENFORCE_RACIAL_APPEARANCE                = "PRC_ENFORCE_RACIAL_APPEARANCE";
+ 
+ /*
   * by default, on aquire script for races only runs for NPCs if they have a PC as a master
   * This runs it for all NPCs, note this will take significantly more CPU time.
   */
@@ -880,8 +886,10 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
  const string PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE                      = "PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE";
 
 
+
+
 /******************************************************************************\
-*                               death system switches                              *
+*                               Death system                                   *
 \******************************************************************************/
  /*
   * Turns on the PRC PnP Bleeding & Death system
@@ -2488,6 +2496,7 @@ void CreateSwitchNameArray();
 //////////////////////////////////////////////////
 
 #include "inc_array" // Needs direct include instead of inc_utility
+#include "prc_inc_fileend"
 
 
 //////////////////////////
@@ -2620,54 +2629,35 @@ void DoEpicSpellDefaults()
 
 void SetDefaultFileEnds()
 {
-    //check for CEP2
-    //run the script in the CEP haks
-    ExecuteScript("zep_cepverif", OBJECT_SELF);
-
     //there is also the fileends.2da file, but that
     //isnt read in here yet. may be later though
     if(GetPRCSwitch(FILE_END_MANUAL))
         return;
-    SetPRCSwitch(FILE_END_CLASSES,         255);
-    SetPRCSwitch(FILE_END_RACIALTYPES,     255);
-    SetPRCSwitch(FILE_END_GENDER,          2);
-    SetPRCSwitch(FILE_END_PORTRAITS,       1100);
-    SetPRCSwitch(FILE_END_SKILLS,          50);
+    SetPRCSwitch(FILE_END_CLASSES,         PRCGetFileEnd("classes"));
+    SetPRCSwitch(FILE_END_RACIALTYPES,     PRCGetFileEnd("racialtypes"));
+    SetPRCSwitch(FILE_END_GENDER,          2);//overriden to 2
+    SetPRCSwitch(FILE_END_PORTRAITS,       PRCGetFileEnd("portraits"));
+    SetPRCSwitch(FILE_END_SKILLS,          PRCGetFileEnd("skills"));
     SetPRCSwitch(FILE_END_CLASS_FEAT,      600);
     SetPRCSwitch(FILE_END_CLASS_SKILLS,    50);
     SetPRCSwitch(FILE_END_CLASS_POWER,     300);
     SetPRCSwitch(FILE_END_CLASS_SPELLBOOK, 1500); //sorc is 1427
-    SetPRCSwitch(FILE_END_FEAT,            22300);
+    SetPRCSwitch(FILE_END_FEAT,            PRCGetFileEnd("feat"));
     SetPRCSwitch(FILE_END_CLASS_PREREQ,    25);
-    SetPRCSwitch(FILE_END_FAMILIAR,        20);
-    SetPRCSwitch(FILE_END_ANIMALCOMP,      20);
-    SetPRCSwitch(FILE_END_DOMAINS,         70);
-    SetPRCSwitch(FILE_END_SOUNDSET,        450);
-    SetPRCSwitch(FILE_END_SPELLS,          16100);
-    SetPRCSwitch(FILE_END_SPELLSCHOOL,     10);
-    SetPRCSwitch(FILE_END_APPEARANCE,      500);
-    SetPRCSwitch(FILE_END_WINGS,           10);
-    SetPRCSwitch(FILE_END_TAILS,           10);
-    SetPRCSwitch(FILE_END_PACKAGE,         150);
+    SetPRCSwitch(FILE_END_FAMILIAR,        PRCGetFileEnd("hen_familiar"));
+    SetPRCSwitch(FILE_END_ANIMALCOMP,      PRCGetFileEnd("hen_companion"));
+    SetPRCSwitch(FILE_END_DOMAINS,         PRCGetFileEnd("domains"));
+    SetPRCSwitch(FILE_END_SOUNDSET,        PRCGetFileEnd("soundset"));
+    SetPRCSwitch(FILE_END_SPELLS,          PRCGetFileEnd("spells"));
+    SetPRCSwitch(FILE_END_SPELLSCHOOL,     PRCGetFileEnd("spellschools"));
+    SetPRCSwitch(FILE_END_APPEARANCE,      PRCGetFileEnd("appearance"));
+    SetPRCSwitch(FILE_END_WINGS,           PRCGetFileEnd("wingmodel"));
+    SetPRCSwitch(FILE_END_TAILS,           PRCGetFileEnd("tailmodel"));
+    SetPRCSwitch(FILE_END_PACKAGE,         PRCGetFileEnd("packages"));
     SetPRCSwitch(FILE_END_RACE_FEAT,       30);
     SetPRCSwitch(FILE_END_IREQ,            50);
-    SetPRCSwitch(FILE_END_ITEM_TO_IREQ,    700);
-    SetPRCSwitch(FILE_END_BASEITEMS,       115);
-    //Companion alone
-    /*
-    if(GetPRCSwitch(PRC_COMPANION_IN_USE))
-    {
-        SetPRCSwitch(FILE_END_APPEARANCE,   2100);
-        SetPRCSwitch(FILE_END_SOUNDSET,     1000);
-        SetPRCSwitch(FILE_END_PORTRAITS,    3550);
-    }
-    //Companion with CEP
-    if(GetPRCSwitch(PRC_CEP_COMPANION_IN_USE))
-    {
-        SetPRCSwitch(FILE_END_APPEARANCE,   2100);
-        SetPRCSwitch(FILE_END_SOUNDSET,     1000);
-        SetPRCSwitch(FILE_END_PORTRAITS,    3550);
-    }*/
+    SetPRCSwitch(FILE_END_ITEM_TO_IREQ,    PRCGetFileEnd("item_to_ireq"));
+    SetPRCSwitch(FILE_END_BASEITEMS,       PRCGetFileEnd("baseitems"));
 }
 
 void CreateSwitchNameArray()
@@ -2772,6 +2762,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_REMOVE_PLAYER_SPEED);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_ENFORCE_RACIAL_APPEARANCE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_NPC_FORCE_RACE_ACQUIRE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DEATH_STABLE_TO_DISABLED_CHANCE);

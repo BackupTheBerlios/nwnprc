@@ -586,6 +586,18 @@ Use: Selected.</entry>
   <entry id="20415" lang="en" sex="m">Fighting Style: Normal (Reset).</entry>
   <entry id="20416" lang="en" sex="m">You prepare to fight normally once more.</entry>
   <entry id="20417" lang="en" sex="m">&lt;CUSTOM0&gt; changes stance.</entry>
+  <entry id="20500" lang="en" sex="m">Treant (DLA)</entry>
+  <entry id="20501" lang="en" sex="m">Monodrone (CODI)</entry>
+  <entry id="20502" lang="en" sex="m">Marut (CODI)</entry>
+  <entry id="20503" lang="en" sex="m">Parai (CODI)</entry>
+  <entry id="20504" lang="en" sex="m">Primus (CODI)</entry>
+  <entry id="20505" lang="en" sex="m">Secundus (CODI)</entry>
+  <entry id="20506" lang="en" sex="m">Male, Kingmaker, Calibast (ID)</entry>
+  <entry id="20507" lang="en" sex="m">Male, Kingmaker, Trip (ID)</entry>
+  <entry id="20508" lang="en" sex="m">Female, Kingmaker, Jaboli (ID)</entry>
+  <entry id="20509" lang="en" sex="m">Female, Kingmaker, Kaidala (ID)</entry>
+  <entry id="20510" lang="en" sex="m">Maggris (ID)</entry>
+  <entry id="20511" lang="en" sex="m">Wereboar (ID)</entry>
   <entry id="45000" lang="en" sex="m">+++++++++++++ PRC Pack Feats 45,000 - 54,999 ++++++++++++++</entry>
   <entry id="45001" lang="en" sex="m">Type of Feat: Metamagic.
 Prerequisite: Ability to cast 2nd-level spells.
@@ -2353,10 +2365,6 @@ Use: Automatic.</entry>
   <entry id="45437" lang="en" sex="m">Energy Resistance, Electricity</entry>
   <entry id="45438" lang="en" sex="m">Energy Resistance, Fire</entry>
   <entry id="45439" lang="en" sex="m">Energy Resistance, Sonic</entry>
-  <entry id="45440" lang="en" sex="m">Male, Kingmaker, Calibast</entry>
-  <entry id="45441" lang="en" sex="m">Male, Kingmaker, Trip</entry>
-  <entry id="45442" lang="en" sex="m">Female, Kingmaker, Jaboli</entry>
-  <entry id="45443" lang="en" sex="m">Female, Kingmaker, Kaidala</entry>
   <entry id="45444" lang="en" sex="m">Disguise Self</entry>
   <entry id="45445" lang="en" sex="m">School: Illusion (Glamer)
 Level: Bard/Sorcerer/Wizard/Hexblade 1

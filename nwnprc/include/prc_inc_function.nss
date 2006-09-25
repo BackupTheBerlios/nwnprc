@@ -258,6 +258,9 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_sneak_att", oPC);
     ExecuteScript("race_skin", oPC);
     ExecuteScript("prc_mithral", oPC);
+    if(GetPRCSwitch(PRC_ENFORCE_RACIAL_APPEARANCE))
+        ExecuteScript("race_appear", oPC);
+    
 
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))

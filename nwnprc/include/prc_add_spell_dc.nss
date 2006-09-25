@@ -15,82 +15,8 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
 #include "prcsp_archmaginc"
 #include "prc_alterations"
 #include "prc_inc_racial"
+#include "inc_newspellbook"
 
-
-
-// Check for CLASS_TYPE_HIEROPHANT > 0 in caller
-int GetWasLastSpellHieroSLA(int spell_id, object oCaster = OBJECT_SELF)
-{
-    int iAbility = PRCGetLastSpellCastClass() == CLASS_TYPE_INVALID;
-    int iSpell   = spell_id == SPELL_HOLY_AURA ||
-                   spell_id == SPELL_UNHOLY_AURA ||
-                   spell_id == SPELL_BANISHMENT ||
-                   spell_id == SPELL_BATTLETIDE ||
-                   spell_id == SPELL_BLADE_BARRIER ||
-                   spell_id == SPELL_CIRCLE_OF_DOOM ||
-                   spell_id == SPELL_CONTROL_UNDEAD ||
-                   spell_id == SPELL_CREATE_GREATER_UNDEAD ||
-                   spell_id == SPELL_CREATE_UNDEAD ||
-                   spell_id == SPELL_CURE_CRITICAL_WOUNDS ||
-                   spell_id == SPELL_DEATH_WARD ||
-                   spell_id == SPELL_DESTRUCTION ||
-                   spell_id == SPELL_DISMISSAL ||
-                   spell_id == SPELL_DIVINE_POWER ||
-                   spell_id == SPELL_EARTHQUAKE ||
-                   spell_id == SPELL_ENERGY_DRAIN ||
-                   spell_id == SPELL_ETHEREALNESS ||
-                   spell_id == SPELL_FIRE_STORM ||
-                   spell_id == SPELL_FLAME_STRIKE ||
-                   spell_id == SPELL_FREEDOM_OF_MOVEMENT ||
-                   spell_id == SPELL_GATE ||
-                   spell_id == SPELL_GREATER_DISPELLING ||
-                   spell_id == SPELL_GREATER_MAGIC_WEAPON ||
-                   spell_id == SPELL_GREATER_RESTORATION ||
-                   spell_id == SPELL_HAMMER_OF_THE_GODS ||
-                   spell_id == SPELL_HARM ||
-                   spell_id == SPELL_HEAL ||
-                   spell_id == SPELL_HEALING_CIRCLE ||
-                   spell_id == SPELL_IMPLOSION ||
-                   spell_id == SPELL_INFLICT_CRITICAL_WOUNDS ||
-                   spell_id == SPELL_MASS_HEAL ||
-                   spell_id == SPELL_MONSTROUS_REGENERATION ||
-                   spell_id == SPELL_NEUTRALIZE_POISON ||
-                   spell_id == SPELL_PLANAR_ALLY ||
-                   spell_id == SPELL_POISON ||
-                   spell_id == SPELL_RAISE_DEAD ||
-                   spell_id == SPELL_REGENERATE ||
-                   spell_id == SPELL_RESTORATION ||
-                   spell_id == SPELL_RESURRECTION ||
-                   spell_id == SPELL_SLAY_LIVING ||
-                   spell_id == SPELL_SPELL_RESISTANCE ||
-                   spell_id == SPELL_STORM_OF_VENGEANCE ||
-                   spell_id == SPELL_SUMMON_CREATURE_IV ||
-                   spell_id == SPELL_SUMMON_CREATURE_IX ||
-                   spell_id == SPELL_SUMMON_CREATURE_V ||
-                   spell_id == SPELL_SUMMON_CREATURE_VI ||
-                   spell_id == SPELL_SUMMON_CREATURE_VII ||
-                   spell_id == SPELL_SUMMON_CREATURE_VIII ||
-                   spell_id == SPELL_SUNBEAM ||
-                   spell_id == SPELL_TRUE_SEEING ||
-                   spell_id == SPELL_UNDEATH_TO_DEATH ||
-                   spell_id == SPELL_UNDEATHS_ETERNAL_FOE ||
-                   spell_id == SPELL_WORD_OF_FAITH;
-
-    return iAbility && iSpell;
-}
-
-int GetHierophantSLAAdjustment(int spell_id, object oCaster = OBJECT_SELF)
-{
-    int retval = 0;
-
-    if (GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster) > 0 && GetWasLastSpellHieroSLA(spell_id, oCaster) )
-    {
-             retval = StringToInt( Get2DACache("spells", "Cleric", spell_id));//lookup_spell_cleric_level(spell_id) );
-         retval -= GetLevelByClass(CLASS_TYPE_HIEROPHANT, oCaster);
-        }
-
-   return retval;
-}
 
 int GetHeartWarderDC(int spell_id, object oCaster = OBJECT_SELF)
 {
@@ -456,6 +382,31 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
     else if (GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE) != 0)
     {
         nDC = GetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE);
+        if(nDC == -1)
+        {
+            int nClass = PRCGetLastSpellCastClass();
+            nDC = 10;
+            if(nClass == CLASS_TYPE_BARD)
+                nDC += StringToInt(Get2DACache("Spells", "Bard", nSpellID));
+            else if(nClass == CLASS_TYPE_CLERIC)
+                nDC += StringToInt(Get2DACache("Spells", "Cleric", nSpellID));
+            else if(nClass == CLASS_TYPE_DRUID)
+                nDC += StringToInt(Get2DACache("Spells", "Druid", nSpellID));
+            else if(nClass == CLASS_TYPE_RANGER)
+                nDC += StringToInt(Get2DACache("Spells", "Ranger", nSpellID));
+            else if(nClass == CLASS_TYPE_PALADIN)
+                nDC += StringToInt(Get2DACache("Spells", "Paladin", nSpellID));
+            else if(nClass == CLASS_TYPE_WIZARD 
+                || nClass == CLASS_TYPE_SORCERER)
+                nDC += StringToInt(Get2DACache("Spells", "Wiz_Sorc", nSpellID));
+            else    
+            nDC += StringToInt(Get2DACache("Spells", "Innate", nSpellID));
+            if(nClass == CLASS_TYPE_FAVOURED_SOUL)
+                nDC += (GetAbilityModifier(ABILITY_WISDOM, oCaster));
+            else
+                nDC += ((GetAbilityForClass(nClass, oCaster)-10)/2);
+        }
+            
         DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
         if(!GetIsObjectValid(oItem)
             || (GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF
@@ -574,7 +525,6 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
         nSpellID = PRCGetSpellId();
     int nDC;
     nDC += ElementalSavantDC(nSpellID, oCaster);
-    nDC += GetHierophantSLAAdjustment(nSpellID, oCaster);
     nDC += GetHeartWarderDC(nSpellID, oCaster);
     nDC += GetSpellPowerBonus(oCaster);
     nDC += ShadowWeaveDC(nSpellID, oCaster);

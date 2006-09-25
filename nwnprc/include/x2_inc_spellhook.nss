@@ -459,6 +459,19 @@ void Battlecast()
     }
 }
 
+
+int ClassSLAStore()
+{
+    if(GetLocalInt(OBJECT_SELF, ""))
+    {
+        FloatingTextStringOnCreature("SLA stored", OBJECT_SELF);
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_SpellID", PRCGetSpellId());
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Class", PRCGetLastSpellCastClass());
+        return FALSE;
+    }   
+    return TRUE;
+}
+
 int X2UseMagicDeviceCheck()
 {
     int nRet = ExecuteScriptAndReturnInt("x2_pc_umdcheck",OBJECT_SELF);
@@ -988,6 +1001,12 @@ int X2PreSpellCastCode()
         nContinue = InscribeRune();
 
     //---------------------------------------------------------------------------
+    // Run Class Spell-like-ability Check
+    //---------------------------------------------------------------------------
+    if (nContinue)
+        nContinue = ClassSLAStore();
+
+    //---------------------------------------------------------------------------
     // Run use magic device skill check
     //---------------------------------------------------------------------------
     if (nContinue)
@@ -1071,46 +1090,27 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nContinue));
 
 
     //spellsharing for bonded summoner
-    if (nContinue
-        && GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER)
-        && !GetPRCSwitch(PRC_PNP_FAMILIARS))
-    {
-        object oFam = GetLocalObject(oCaster, "BONDED");
-        // Run the ShareSpell code to duplicate the spell on the familiar
-        if (GetIsObjectValid(oFam))
-        {
-            int bIsWizSorc = (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
-                PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER);
-
-            // spell has to be wiz/sorc and cast on self to be shared
-            if ((oTarget == oCaster) && (bIsWizSorc) &&
-                (!(GetLocalInt(oCaster, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", nSpellID) == "T"))) &&
-                (!GetIsObjectValid(oSpellCastItem))  && // no item spells
-                (nSpellID!=SPELL_SHAPECHANGE)    &&       // no polymorphs
-                (nSpellID!=SPELL_POLYMORPH_SELF) &&
-                (nSpellID!=SPELL_TENSERS_TRANSFORMATION))
-            {
-                SetLocalInt(oFam, PRC_CASTERLEVEL_OVERRIDE, PRCGetCasterLevel());
-                AssignCommand(oFam, ActionCastSpellAtObject (nSpellID, oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-                // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-                AssignCommand(oFam, DeleteLocalInt(oFam, PRC_CASTERLEVEL_OVERRIDE));
-            }
-        }
-    }
     //Pnp familiar spellsharing
-    if(nContinue
-        && GetPRCSwitch(PRC_PNP_FAMILIARS)
-        && !(GetLocalInt(oCaster, "PRC_SPELL_HOLD") && (Get2DACache("spells", "Range", nSpellID) == "T"))
-        && !GetIsObjectValid(oSpellCastItem)
-        && oTarget == oCaster
-        && GetHasFeat(FEAT_SUMMON_FAMILIAR))
+    if (nContinue
+        && GetHasFeat(FEAT_SUMMON_FAMILIAR, oCaster)
+        && (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)
+            || !GetPRCSwitch(PRC_PNP_FAMILIARS)
+        && oTarget == oCaster 
+        && GetIsObjectValid(GetLocalObject(oCaster, "Familiar"))
+        && (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
+            PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER)
+        && !GetLocalInt(oCaster, "PRC_SPELL_HOLD")     //holding the charge doesnt work
+        && Get2DACache("spells", "Range", nSpellID) == "T" 
+        && !GetIsObjectValid(oSpellCastItem)     // no item spells
+        && nSpellID != SPELL_SHAPECHANGE         // no polymorphs
+        && nSpellID != SPELL_POLYMORPH_SELF 
+        && nSpellID != SPELL_TENSERS_TRANSFORMATION))
     {
         object oFam = GetLocalObject(oCaster, "Familiar");
-        AssignCommand(oFam, ActionDoCommand(SetLocalInt(oFam, "PRC_Castlevel_Override", PRCGetCasterLevel())));
-        AssignCommand(oFam, ActionCastSpellAtObject (nSpellID, oFam, PRCGetMetaMagicFeat(), TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
-        // Make sure this variable gets deleted as quickly as possible in case it's added in error.
-        AssignCommand(oFam, ActionDoCommand(DeleteLocalInt(oFam, "PRC_Castlevel_Override")));
-
+        // Run the ShareSpell code to duplicate the spell on the familiar
+       // spell has to be wiz/sorc and cast on self to be shared
+        AssignCommand(oFam, 
+            ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oFam, oFam, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oFam));
     }
 
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))

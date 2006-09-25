@@ -65,8 +65,8 @@ void BondedSummon2()
     //add their ondeath special
     AddEventScript(oSummon, EVENT_NPC_ONDEATH, "prc_bond_death");
     //set it so the spell-share detects it
-    SetLocalObject(oPC, "BONDED", oSummon);
-    //SetLocalObject(oPC, "Familiar", oSummon);
+    //SetLocalObject(oPC, "BONDED", oSummon);
+    SetLocalObject(oPC, "Familiar", oSummon);
 }  
 
 void BondedSummoner()
@@ -128,7 +128,7 @@ void BondedSummoner()
     }
     //piggy-backed onto multisummon code
     MultisummonPreSummon(oPC, TRUE);
-    effect eSummon = SupernaturalEffect(EffectSummonCreature(sResRef, VFX_IMP_UNSUMMON));
+    effect eSummon = SupernaturalEffect(SupernaturalEffect(EffectSummonCreature(sResRef, VFX_IMP_UNSUMMON)));
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSummon, oPC);
     //needs to be delayed so it finds thew new summon properly
     DelayCommand(0.0, BondedSummon2());

@@ -150,3 +150,43 @@ int GetIsPolyMorphedOrShifted(object oCreature)
 
     return bPoly;
 }
+
+//utility functions to make sure characters that gain wings/tails permanently
+//interact with the polymorph system by overwriting the default form
+
+
+void DoWings(object oPC, int nWingType)
+{
+    //wing invalid, abort
+    if(nWingType <= 0) 
+        return;
+    //already has wings, keep them
+    if(GetCreatureWingType(oPC) != CREATURE_WING_TYPE_NONE) 
+        return;   
+    //already has a default wings, keep them   
+    if(GetPersistantLocalInt(oPC,    "AppearanceStoredWing"))
+        return;
+    //if polymorphed or shifted, dont do the real change
+    if(!GetIsPolyMorphedOrShifted(oPC)) 
+        SetCreatureWingType(nWingType, oPC);
+    //override any stored default appearance
+    SetPersistantLocalInt(oPC,    "AppearanceStoredWing", nWingType);    
+}
+
+void DoTail(object oPC, int nTailType)
+{
+    //tail invalid, use current
+    if(nTailType == -1) 
+        return;
+    //already has tail, keep it
+    if(GetCreatureTailType(oPC)) 
+        return;
+    //already has a default tail, keep it   
+    if(GetPersistantLocalInt(oPC,    "AppearanceStoredTail"))
+        return;
+    //if polymorphed or shifted, dont do the real change
+    if(!GetIsPolyMorphedOrShifted(oPC)) 
+        SetCreatureTailType(nTailType, oPC);
+    //override any stored default appearance
+    SetPersistantLocalInt(oPC,    "AppearanceStoredTail", nTailType);
+}

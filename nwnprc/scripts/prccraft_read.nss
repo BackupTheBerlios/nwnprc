@@ -172,7 +172,7 @@ void main()
                     // Maester class cuts crafting time in half.
                     if (GetLevelByClass(CLASS_TYPE_MAESTER, OBJECT_SELF)) nDays /= 2;
                     if(!nDays) nDays = 1;
-                    //AdvanceTimeForPlayer(OBJECT_SELF, HoursToSeconds(nDays*24));
+                    AdvanceTimeForPlayer(OBJECT_SELF, HoursToSeconds(nDays*24));
                 }
             } else if (iReport.validrecipe == FALSE) {
                 //not a valid recipe

@@ -72,5 +72,32 @@ void main()
     if (bRitScar>0) RitScar(oPC, oSkin,bRitScar);
     if (bRitDR>0) RitDR(oPC, oSkin,bRitDR);
 
+    //rest part to regenerate spells
+    if(GetLocalInt(oPC,"ONREST"))
+    {
+        int nLevel1;
+        int nLevel2;
+        int nLevel3;
+        int nLevel4;
+        int nLevel5;
+        switch(GetLevelByClass(CLASS_TYPE_RUNESCARRED, oPC))
+        {
+            case  1: nLevel1 = 1; break; 
+            case  2: nLevel1 = 2; break; 
+            case  3: nLevel1 = 2; nLevel2 = 1; break; 
+            case  4: nLevel1 = 3; nLevel2 = 2; break; 
+            case  5: nLevel1 = 3; nLevel2 = 2; nLevel3 = 1; break; 
+            case  6: nLevel1 = 3; nLevel2 = 3; nLevel3 = 2; break; 
+            case  7: nLevel1 = 4; nLevel2 = 3; nLevel3 = 2; nLevel4 = 1; break; 
+            case  8: nLevel1 = 4; nLevel2 = 3; nLevel3 = 3; nLevel4 = 2; break; 
+            case  9: nLevel1 = 4; nLevel2 = 4; nLevel3 = 3; nLevel4 = 2; nLevel5 = 1; break; 
+            case 10: nLevel1 = 4; nLevel2 = 4; nLevel3 = 3; nLevel4 = 3; nLevel5 = 2; break; 
+        }
+        SetLocalInt(oPC, "Runescar_slot_1", nLevel1);
+        SetLocalInt(oPC, "Runescar_slot_2", nLevel2);
+        SetLocalInt(oPC, "Runescar_slot_3", nLevel3);
+        SetLocalInt(oPC, "Runescar_slot_4", nLevel4);
+        SetLocalInt(oPC, "Runescar_slot_5", nLevel5);
+    }
 
 }

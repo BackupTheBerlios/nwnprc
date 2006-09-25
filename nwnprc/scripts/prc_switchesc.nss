@@ -23,29 +23,33 @@
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_ENTRY                           =  0;
-const int STAGE_SWITCHES                        =  1;
-const int STAGE_SWITCHES_VALUE                  =  2;
-const int STAGE_EPIC_SPELLS                     =  3;
-const int STAGE_EPIC_SPELLS_ADD                 =  4;
-const int STAGE_EPIC_SPELLS_REMOVE              =  5;
-const int STAGE_EPIC_SPELLS_CONTING             =  6;
-const int STAGE_SHOPS                           =  8;
-const int STAGE_TEFLAMMAR_SHADOWLORD            =  9;
-const int STAGE_LEADERSHIP                      = 10;
-const int STAGE_LEADERSHIP_ADD_STANDARD         = 11;
-const int STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM = 12;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_RACE      = 13;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_GENDER    = 14;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_CLASS     = 15;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN     = 16;
-const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM   = 17;
-const int STAGE_LEADERSHIP_REMOVE               = 18;
-const int STAGE_LEADERSHIP_DELETE               = 19;
-const int STAGE_LEADERSHIP_DELETE_CONFIRM       = 20;
-const int STAGE_NATURAL_WEAPON                  = 30;
-const int STAGE_TEMPLATE                        = 31;
-const int STAGE_TEMPLATE_CONFIRM                = 32;
+const int STAGE_ENTRY                           =   0;
+const int STAGE_SWITCHES                        =   1;
+const int STAGE_SWITCHES_VALUE                  =   2;
+const int STAGE_EPIC_SPELLS                     =   3;
+const int STAGE_EPIC_SPELLS_ADD                 =   4;
+const int STAGE_EPIC_SPELLS_REMOVE              =   5;
+const int STAGE_EPIC_SPELLS_CONTING             =   6;
+const int STAGE_SHOPS                           =   8;
+const int STAGE_TEFLAMMAR_SHADOWLORD            =   9;
+const int STAGE_LEADERSHIP                      =  10;
+const int STAGE_LEADERSHIP_ADD_STANDARD         =  11;
+const int STAGE_LEADERSHIP_ADD_STANDARD_CONFIRM =  12;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_RACE      =  13;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_GENDER    =  14;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_CLASS     =  15;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_ALIGN     =  16;
+const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM   =  17;
+const int STAGE_LEADERSHIP_REMOVE               =  18;
+const int STAGE_LEADERSHIP_DELETE               =  19;
+const int STAGE_LEADERSHIP_DELETE_CONFIRM       =  20;
+const int STAGE_APPEARANCE                      = 100;
+const int STAGE_APPEARANCE_ITEM                 = 110;
+const int STAGE_APPEARANCE_PART                 = 101;
+const int STAGE_APPEARANCE_PART_LIST            = 102;
+const int STAGE_NATURAL_WEAPON                  =  30;
+const int STAGE_TEMPLATE                        =  31;
+const int STAGE_TEMPLATE_CONFIRM                =  32;
 
 const int CHOICE_RETURN_TO_PREVIOUS             = 0xEFFFFFFF;
 const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;

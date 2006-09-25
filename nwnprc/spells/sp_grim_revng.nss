@@ -2,28 +2,28 @@
 //:: Name      Grim Revenge
 //:: FileName  sp_grim_revng.nss
 //:://////////////////////////////////////////////
-/**@file Grim Revenge 
-Necromancy [Evil] 
-Level: Sor/Wiz 4 
-Components: V, S, Undead 
-Casting Time: 1 action 
+/**@file Grim Revenge
+Necromancy [Evil]
+Level: Sor/Wiz 4
+Components: V, S, Undead
+Casting Time: 1 action
 Range: Medium (100 ft. + 10 ft./level)
-Target: One living humanoid 
-Duration: Instantaneous 
-Saving Throw: Fortitude negates 
+Target: One living humanoid
+Duration: Instantaneous
+Saving Throw: Fortitude negates
 Spell Resistance: Yes
 
 The hand of the subject tears itself away from one
-of his arms, leaving a bloody stump. This trauma 
+of his arms, leaving a bloody stump. This trauma
 deals 6d6 points of damage. Then the hand, animated
-and floating in the air, begins to attack the 
+and floating in the air, begins to attack the
 subject. The hand attacks as if it were a wight
 (see the Monster Manual) in terms of its statistics,
 special attacks, and special qualities, except that
 it is considered Tiny and gains a +4 bonus to AC
-and a +4 bonus on attack rolls. The hand can be 
-turned or rebuked as a wight. If the hand is 
-defeated, only a regenerate spell can restore the 
+and a +4 bonus on attack rolls. The hand can be
+turned or rebuked as a wight. If the hand is
+defeated, only a regenerate spell can restore the
 victim to normal.
 
 Author:    Tenjac
@@ -47,24 +47,24 @@ void main()
 	int bRightHandMissing;
 	int bLeftAnimated = FALSE;
 	int bRightAnimated = FALSE;
-	
+
 	if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) == nModelNumber)
 	{
 		bLeftHandMissing = TRUE;
 	}
-	
-	if(GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, oTarget) == nModelNumber)	
+
+	if(GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, oTarget) == nModelNumber)
 	{
 		bRightHandMissing = TRUE;
 	}
-	
+
 	//Spellhook
 	if(!X2PreSpellCastCode()) return;
-	
+
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
+
 	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_GRIM_REVENGE, oPC);
-	
+
 	//Check for undead
 	if(nType == RACIAL_TYPE_UNDEAD)
 	{
@@ -75,7 +75,7 @@ void main()
 			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
 			{
 				int nDam = d6(6);
-				
+
 				if(nMetaMagic == METAMAGIC_MAXIMIZE)
 				{
 					nDam = 36;
@@ -84,48 +84,48 @@ void main()
 				{
 					nDam += (nDam/2);
 				}
-				
+
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
-				
+
 				//Remove hand from oTarget - left hand first?
 				//http://nwn.bioware.com/players/167/scripts_commandslist.html
-				
+
 				if(!bLeftHandMissing)
 				{
 					//deal damage
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
-					
+
 					SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
 					SetPersistantLocalInt(oTarget, "LEFT_HAND_USELESS", 1);
-					
+
 					//Force unequip
-					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget), INVENTORY_SLOT_LEFTHAND, TRUE);
-					
+					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget), INVENTORY_SLOT_LEFTHAND);
+
 					bLeftAnimated = TRUE;
 				}
-				
+
 				else if(!bRightHandMissing)
 				{
 					//deal damage
 					SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
-					
+
 					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
 					SetPersistantLocalInt(oTarget, "RIGHT_HAND_USELESS", 1);
-					
+
 					//Force unequip
-					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget), INVENTORY_SLOT_RIGHTHAND, TRUE);
-					
+					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget), INVENTORY_SLOT_RIGHTHAND);
+
 					bRightAnimated = TRUE;
 				}
-				
+
 				else
 				{
 					SendMessageToPC(oPC, "Your target has no hands!");
 				}
-				
+
 				//Create copy of target, set all body parts null
 				object oHand = CopyObject(oTarget, GetLocation(oTarget), OBJECT_INVALID);
-												
+
 				SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, nModelNumber, oHand);
 				SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, nModelNumber, oHand);
 				SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, nModelNumber, oHand);
@@ -143,33 +143,32 @@ void main()
 				SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER, nModelNumber, oHand);
 				SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER, nModelNumber, oHand);
 				SetCreatureBodyPart(CREATURE_PART_HEAD, nModelNumber, oHand);
-				
+
 				if(!bLeftAnimated)
 				{
 					SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oHand);
 				}
-				
+
 				if(!bRightAnimated)
 				{
 					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oHand);
 				}
-				
+
 				//Set Bonuses
 				effect eLink = EffectACIncrease(4, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
 				       eLink = EffectLinkEffects(eLink, EffectAttackIncrease(4, ATTACK_BONUS_MISC));
-				       
+
 				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oHand);
-				
+
 				itemproperty iUndead = ItemPropertyBonusFeat(FEAT_UNDEAD);
 				IPSafeAddItemProperty(GetPCSkin(oHand), iUndead);
-				
-				//Make hand hostile to target				
+
+				//Make hand hostile to target
 				AssignCommand(oHand, SetIsEnemy(oTarget));
-			}			
+			}
 		}
 	}
 	SPEvilShift(oPC);
 	SPSetSchool();
 }
-				
-				
+

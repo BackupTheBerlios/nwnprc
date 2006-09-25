@@ -48,14 +48,14 @@ void main()
     if(GetPersistantLocalInt(oPC, "LEFT_HAND_USELESS"))
     {
         //Force unequip
-        ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), INVENTORY_SLOT_LEFTHAND, TRUE);
+        ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oPC), INVENTORY_SLOT_LEFTHAND);
         SendMessageToPC(oPC, "You cannot use your left hand");
     }
 
     if(GetPersistantLocalInt(oPC, "RIGHT_HAND_USELESS"))
     {
         //Force unequip
-        ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC), INVENTORY_SLOT_RIGHTHAND, TRUE);
+        ForceUnequip(oPC, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC), INVENTORY_SLOT_RIGHTHAND);
         SendMessageToPC(oPC, "You cannot use your right hand");
     }
 

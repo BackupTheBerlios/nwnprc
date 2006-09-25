@@ -1611,13 +1611,17 @@ object MyNextObjectInShape(int nShape,
                            vector vOrigin=[0.0, 0.0, 0.0])
 {
     // War Wizard of Cormyr's Widen Spell ability
+    if (DEBUG) DoDebug("Value for WarWizardOfCormyr_Widen: " + IntToString(GetLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen")));
+    if (DEBUG) DoDebug("Original Spell Size: " + FloatToString(fSize));
     if (GetLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen"))
     {
         // At level 5 its 100% area increase
         if (GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, OBJECT_SELF) >= 5) fSize *= 2;
         // At level 3 its 50% area increase
         else if (GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, OBJECT_SELF) >= 3) fSize *= 1.5;
-        DeleteLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen");
+        if (DEBUG) DoDebug("Widened Spell Size: " + FloatToString(fSize));
+        // This allows it to affect the entire casting
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen"));
     }
 
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");
@@ -1646,13 +1650,17 @@ object MyFirstObjectInShape(int nShape,
     DelayCommand(0.1, DeleteLocalInt(OBJECT_SELF, sName));
 
     // War Wizard of Cormyr's Widen Spell ability
+    if (DEBUG) DoDebug("Value for WarWizardOfCormyr_Widen: " + IntToString(GetLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen")));
+    if (DEBUG) DoDebug("Original Spell Size: " + FloatToString(fSize));
     if (GetLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen"))
     {
         // At level 5 its 100% area increase
         if (GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, OBJECT_SELF) >= 5) fSize *= 2;
         // At level 3 its 50% area increase
         else if (GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, OBJECT_SELF) >= 3) fSize *= 1.5;
-        DeleteLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen");
+        if (DEBUG) DoDebug("Widened Spell Size: " + FloatToString(fSize));
+        // This allows it to affect the entire casting
+        DelayCommand(1.0, DeleteLocalInt(OBJECT_SELF, "WarWizardOfCormyr_Widen"));
     }
 
     int nChannel = GetLocalInt(OBJECT_SELF,"spellswd_aoe");

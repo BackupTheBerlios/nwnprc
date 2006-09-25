@@ -2,7 +2,7 @@
 // Activates the Widen Spell ability of the War Wizard of Cormyr
 // This is read in the PRC AoE function in prc_inc_spells, where it increases the area.
 
-#include "prc_feat_const"
+#include "prc_alterations"
 
 void main()
 {
@@ -23,5 +23,6 @@ void main()
 	IncrementRemainingFeatUses(oPC, FEAT_WWOC_WIDEN_SPELL);
      }
 
+     if (DEBUG) DoDebug("Value for WarWizardOfCormyr_Widen: " + IntToString(GetLocalInt(oPC, "WarWizardOfCormyr_Widen")));
      FloatingTextStringOnCreature(nMes, oPC, FALSE);
 }

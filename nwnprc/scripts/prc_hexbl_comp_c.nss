@@ -21,7 +21,11 @@ void main()
     while(GetIsObjectValid(oTarget))
     {
 	// Apply the loss
-    	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+	// Doesn't affect allies
+	if (!GetIsFriend(oTarget, GetAreaOfEffectCreator()))
+    	{
+    		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+    	}
     	
         //Get next target.
         oTarget = GetNextInPersistentObject(OBJECT_SELF);

@@ -20,5 +20,9 @@ void main()
     effect eLink = EffectLinkEffects(eAC, eSave);
 
     // Apply the Dark Companion penalties.
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+    // Doesn't affect allies
+    if (!GetIsFriend(oTarget, GetAreaOfEffectCreator()))
+    {
+    	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
+    }
 }

@@ -125,7 +125,7 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
     //check itws not an invalid type
     if(nBaseItemType == BASE_ITEM_INVALID)
         return OBJECT_INVALID;
-        
+DoDebug("GetRandomizedItemByType() running at level "+IntToString(nLevel));        
     string sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(nAC);
     object oChest = GetObjectByTag(sTag);
     //chest is valid
@@ -295,6 +295,7 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
     {
 //DoDebug("rig_inc line 215");
         oReturn = CopyItem(oTemp, GetObjectByTag("HEARTOFCHAOS"), TRUE);
+        SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
         sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
         sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
 //DoDebug("Timer CreateRandomizeItemByType() Q : GetIsObjectValid(oReturn) : "+QueryTimer(OBJECT_SELF, "CreateRandomizeItemByType"));
@@ -306,13 +307,14 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
         }
         nSuffix = StringToInt(sSuffix);
         nPrefix = StringToInt(sPrefix);
-//DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" "+sPrefix+" "+sSuffix);
         while(nPrefix == nSuffix && nPrefix != 0 && nSuffix != 0)
         {
-DoDebug("rig_inc line 231");
+//DoDebug("rig_inc line 231");
+            SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
             sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
             nPrefix = StringToInt(sPrefix);
         }
+DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" "+sPrefix+" "+sSuffix+" at level "+IntToString(nLevel));
 //DoDebug("sResRef = "+sResRef);
         if(GetIsObjectValid(oReturn))
         oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property1", nSuffix)));

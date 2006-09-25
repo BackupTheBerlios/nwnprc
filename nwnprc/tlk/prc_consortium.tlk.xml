@@ -1179,7 +1179,9 @@ Bonus Feats: The epic eldritch knight gains a bonus feat (selected from the list
 
 Epic Eldritch Knight Bonus Feat List: Armor Skin, Epic Damage Reduction, Devastating Critical, Epic Prowess, Epic Weapon Focus, Overwhelming Critical, Epic Toughness, Improved Whirlwind, Superior Initiative, Epic Spell Focus, Epic Spell Penetration, Improved Combat Casting, Automatic Still SpellR</entry>
   <entry id="45152" lang="en" sex="m">Free Movement (Ex)</entry>
-  <entry id="45153" lang="en" sex="m">At 18th level and higher, a Scout can slip out of bonds, grapples, and even the effects of confining spells easily. This ability duplicates the effect of a Freedom of Movement spell, except that it is always active. A Scout loses this benefit when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
+  <entry id="45153" lang="en" sex="m">Type: Class
+Prerequisite: Scout level 18
+At 18th level and higher, a Scout can slip out of bonds, grapples, and even the effects of confining spells easily. This ability duplicates the effect of a Freedom of Movement spell, except that it is always active. A Scout loses this benefit when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
   <entry id="45154" lang="en" sex="m">Red Wizard of Thay</entry>
   <entry id="45155" lang="en" sex="m">Red Wizards of Thay</entry>
   <entry id="45156" lang="en" sex="m">red wizard of Thay</entry>
@@ -2382,7 +2384,9 @@ You make yourself - including clothing, armor, weapons and equipment - look diff
   <entry id="45449" lang="en" sex="m">Disguise Self, Halfling</entry>
   <entry id="45450" lang="en" sex="m">Disguise Self, Dwarf</entry>
   <entry id="45451" lang="en" sex="m">Epic Scout</entry>
-  <entry id="45452" lang="en" sex="m">The Epic Scout is a phantom on the battlefield, seemingly everywhere at once, yet never seen.
+  <entry id="45452" lang="en" sex="m">Type: Class
+Prerequisite: Scout level 21
+The Epic Scout is a phantom on the battlefield, seemingly everywhere at once, yet never seen.
 
 Level
 21: Skirmish (+6d6, +5 AC)
@@ -2406,12 +2410,16 @@ Level
 39: Skirmish (+10d6, +10 AC)
 40: Bonus Feat</entry>
   <entry id="45453" lang="en" sex="m">Skirmish (Ex)</entry>
-  <entry id="45454" lang="en" sex="m">A Scout relies on mobility to deal extra damage and improve her defense. She deals an extra 1d6 points of damage on all attacks she makes during any round in which she moves at least 10 feet. The extra dammage applies only to attacks taken during the Scout's turn. This extra damage increases by 1d6 for every four levels gained above 1st.
+  <entry id="45454" lang="en" sex="m">Type: Class
+Prerequisite: Scout level 1
+A Scout relies on mobility to deal extra damage and improve her defense. She deals an extra 1d6 points of damage on all attacks she makes during any round in which she moves at least 10 feet. The extra dammage applies only to attacks taken during the Scout's turn. This extra damage increases by 1d6 for every four levels gained above 1st.
 The extra damage only applies to living creatures that have a discernible anatomy. Undead, constructs, oozes, plants, incorporeal creatures and creatures immune to extra damage from critical hits are not vulnerable to this additional damage. The Scout must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. Scouts can apply this extra damage to ranged attacks made while skirmishing, but only if the target is within 30 feet.
 At 3rd level, a Scout gains a +1 competence bonus to AC during any round in which she moves at least 10 feet. The bonus applies as soon as the Scout has moved 10 feet, and lasts until the start of her next turn. This bonus improves by 1 for every four levels gained above 3rd.
 A Scout loses this ability when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
   <entry id="45455" lang="en" sex="m">Battle Fortitude (Ex)</entry>
-  <entry id="45456" lang="en" sex="m">At 2nd level, a Scout gains a +1 competence bonus on Fortitude saves and Initiative checks. This bonus increases by +1 for every nine levels gained above 2nd. A Scout loses this bonus when wearing medium or heavy armor or when carrying a medium or heavy load.
+  <entry id="45456" lang="en" sex="m">Type: Class
+Prerequisite: Scout level 2
+At 2nd level, a Scout gains a +1 competence bonus on Fortitude saves and Initiative checks. This bonus increases by +1 for every nine levels gained above 2nd. A Scout loses this bonus when wearing medium or heavy armor or when carrying a medium or heavy load.
 
 (Due to NWN limits, only the bonus on Fortitude save bonus is actually granted. For Initiative the Blooded and Thug feats are given at levels 11 and 29 instead)</entry>
   <entry id="45457" lang="en" sex="m">Fast Movement (Ex)</entry>
@@ -2802,7 +2810,9 @@ Prerequisite: Knight of the Chalice Level 10
 Specifics: The Knight of the Chalice may create Holy Aura against demons. This functions just like the spell, but the effects only apply to outsiders. This ability may be used at will.
 Use: Selected.</entry>
   <entry id="45590" lang="en" sex="m">Elaborate Parry: Parry Bonus</entry>
-  <entry id="45591" lang="en" sex="m">Starting at 3rd level, a Scout gains a +10 feet enhancement bonus to her base land speed. At 11th level, this bonus increases to +20 feet. A Scout loses this benefit when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
+  <entry id="45591" lang="en" sex="m">Type: Class
+Prerequisite: Scout level 3
+Starting at 3rd level, a Scout gains a +10 feet enhancement bonus to her base land speed. At 11th level, this bonus increases to +20 feet. A Scout loses this benefit when wearing medium or heavy armor or when carrying a medium or heavy load.</entry>
   <entry id="45592" lang="en" sex="m">Hunter of the Dead</entry>
   <entry id="45593" lang="en" sex="m">Hunters of the Dead</entry>
   <entry id="45594" lang="en" sex="m">hunter of the dead</entry>
@@ -2885,7 +2895,9 @@ Epic Hunter of the Dead Bonus Feats List:
 Armor Skin, Epic Toughness, Great Wisdom, Epic Energy Resistance, Great Smiting, Perfect Health
 </entry>
   <entry id="45610" lang="en" sex="m">Blindsense (Ex)</entry>
-  <entry id="45611" lang="en" sex="m">Using nonvisual senses, such as acute smell or hearing, a creature with blindsense notices things it cannot see. The creature usually does not need to make Spot or Listen checks to pinpoint the location of a creature within range of its blindsense ability, provided that it has line of effect to that creature. Any opponent the creature cannot see still has total concealment against the creature with blindsense, and the creature still has the normal miss chance when attacking foes that have concealment. Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see.
+  <entry id="45611" lang="en" sex="m">Type: Class
+Prerequisite: Scout level 10
+Using nonvisual senses, such as acute smell or hearing, a creature with blindsense notices things it cannot see. The creature usually does not need to make Spot or Listen checks to pinpoint the location of a creature within range of its blindsense ability, provided that it has line of effect to that creature. Any opponent the creature cannot see still has total concealment against the creature with blindsense, and the creature still has the normal miss chance when attacking foes that have concealment. Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see.
 
 (Since there is no actual Blindsense in NWN, Ultravision is used instead)</entry>
   <entry id="45612" lang="en" sex="m">Holy Liberator</entry>
@@ -3185,7 +3197,9 @@ Due to technical reasons, we cannot enforce this limitation directly. If you do 
   Effects of Metapsionic Feats on a Power: In all ways, a metapsionic power operates at it's original power level, even though it costs additional power points. The modifications to a power made by a metapsionic feat have only their noted effect on the power. A manifester can't use a metapsionic feat to alter a power being cast from a power stone, dorje, or other device.
 Manifesting a power modified by the Quicken Power feat does not provoke attacks of opportunity.
 Some metapsionic feats apply only to certain powers, as described in each specific feat entry.</entry>
-  <entry id="45699" lang="en" sex="m">A 20th-level Scout gains the Blindsight ability out to 30 feet. Her senses become so acute that she can maneuver and fight flawlessly even in total darkness. Invisibility, darkness, and most kinds of concealment are irrelevant, though the Scout must have line of effect to a creature or object to discern it.</entry>
+  <entry id="45699" lang="en" sex="m">Type: Class
+Prerequisite: Scout level 20
+A 20th-level Scout gains the Blindsight ability out to 30 feet. Her senses become so acute that she can maneuver and fight flawlessly even in total darkness. Invisibility, darkness, and most kinds of concealment are irrelevant, though the Scout must have line of effect to a creature or object to discern it.</entry>
   <entry id="45700" lang="en" sex="m">Heartwarder</entry>
   <entry id="45701" lang="en" sex="m">Heartwarders</entry>
   <entry id="45702" lang="en" sex="m">heartwarder</entry>
@@ -9178,7 +9192,9 @@ Level:  0   1   2   3   4   5
      19:  6 10 10   9   7   5
      20:  6 10 10 10   8   6</entry>
   <entry id="46956" lang="en" sex="m">Epic Duskblade</entry>
-  <entry id="46957" lang="en" sex="m">The Epic Duskblade is a Juggernaut on the battlefield, wasting his foes with steel and spell.
+  <entry id="46957" lang="en" sex="m">Type: Class
+Prerequisite: Duskblade level 21
+The Epic Duskblade is a Juggernaut on the battlefield, wasting his foes with steel and spell.
 
 ABILITIES: 
 
@@ -11020,7 +11036,7 @@ Specifics: As the Skullclan Hunter gains in power and ability, he adds a number 
 Use: Automatic.</entry>
   <entry id="47665" lang="en" sex="m">Armored Mage (Ex)</entry>
   <entry id="47666" lang="en" sex="m">Type of feat: Class Specific
-
+Prerequisite: Duskblade level 1
 A duskblade suffers no chance of arcane spell failure when wearing light armor and using light shields.
 
 At 4th level he learns to use medium armor without arcane spell failure.
@@ -11028,7 +11044,7 @@ At 4th level he learns to use medium armor without arcane spell failure.
 At 7th level he learns to use heavy shields without arcane spell failure.</entry>
   <entry id="47667" lang="en" sex="m">Arcane Channeling (Su)</entry>
   <entry id="47668" lang="en" sex="m">Type of Feat: Class Specific
-
+Prerequisite: Duskblade level 3
 Beginning at 3rd level, the Duskblade can use a standard action to cast any touch spell he knows and deliver the spell through his weapon with a melee attack. Casting a spell in this manner does not provoke attacks of opportunity. If the melee attack is successful, the attack deals damage normally; then the effect of the spell is resolved.
 
 At 13th level the Duskblade can cast any touch spell he knows as part of a full attack action, and the spell affects each target you hit in melee combat that round.</entry>
@@ -13840,11 +13856,11 @@ Notes:
   <entry id="48477" lang="en" sex="m">Teleport (9)</entry>
   <entry id="48478" lang="en" sex="m">Quick Cast</entry>
   <entry id="48479" lang="en" sex="m">Type of Feat: Class Specific
-
+Prerequisite: Duskblade level 5
 Beginning at 5th level, a Duskblade can cast one spell each day as a swift action, so long as the casting time of the spell is 1 standard action or less. At 10th level and every 5 levels afterwards the Duskblade gains one additional use per day.</entry>
   <entry id="48480" lang="en" sex="m">Spell Power (Ex)</entry>
   <entry id="48481" lang="en" sex="m">Type of Feat: Class specific
-
+Prerequisite: Duskblade level 6
 Starting at 6th level, a Duskblade can more easily overcome the spell resistance of any opponent he successfully injures with a melee attack. If he has injured an opponent with a melee attack, he gains a +2 bonus on his caster level check to overcome spell resistance for the remainder of the encounter. This bonus increases by 1 every five levels afterwards, with an additional increase at level 18 and 38.</entry>
   <entry id="48482" lang="en" sex="m">Attempt to escape.</entry>
   <entry id="48483" lang="en" sex="m">Wait here.</entry>
@@ -14056,7 +14072,7 @@ Use: Selected.</entry>
   <entry id="48565" lang="en" sex="m">10d12</entry>
   <entry id="48566" lang="en" sex="m">Hexblade's Curse</entry>
   <entry id="48567" lang="en" sex="m">type of feat: Class
-
+Prerequisite: Hexblade level 1
 Once per day, as a free action, a hexblade can unleash a curse upon a foe. The target must be visible to the Hexblade and within 60 feet. The target of a Hexblade's curse takes a -2 penalty on attacks, saves, ability checks, skill checks and weapon damage rolls for one hour thereafter. A successful Will save (DC 10 + 1/2 Hexblade's class level + Hexblade's CHA mod)negates the effect. At every 4th level beyond 1st, a Hexblade gains the ability to use his curse one additional time per day.
 
 Greater Hexblade's Curse
@@ -14072,18 +14088,20 @@ Epic Hexblade's Curse
 When a Hexblade attains 37th level, the penalties incurred by a target of his curse become -8 instead of -6.</entry>
   <entry id="48568" lang="en" sex="m">Mettle</entry>
   <entry id="48569" lang="en" sex="m">type of feat: Class
-
-At 3rd level and higher, a Hexblade can resist magical and unusual attacks with great willpower or fortitude. If he makes a successful Will or Fortitude save against an attack that would normally have a lesser effect on a successful save, he instead completely negates the effect</entry>
+Prerequisite: Hexblade level 3
+At 3rd level and higher, a Hexblade can resist magical and unusual attacks with great willpower or fortitude. If he makes a successful Will or Fortitude save against an attack that would normally have a lesser effect on a successful save, he instead completely negates the effect.</entry>
   <entry id="48570" lang="en" sex="m">Aura of Unluck</entry>
   <entry id="48571" lang="en" sex="m">type of feat: Class
-
+Prerequisite: Hexblade level 12
 Once per day, a Hexblade of 12th level or higher can create a baleful aura of misfortune. Any melee or ranged attack made against the Hexblade while this Aura of Unluck is active has a 20 % miss chance. Activating this aura is a free action, and the aura lasts for a number of rounds equal to 3 + the Hexblade's Charisma bonus (if any). At 16th level and every 4 levels onward, a Hexblade can use his Aura of Unluck one additional time per day</entry>
   <entry id="48572" lang="en" sex="m">Arcane Resistance</entry>
   <entry id="48573" lang="en" sex="m">type of feat: Class
-
+Prerequisite: Hexblade level 2
 At 2nd level a Hexblade gains a bonus equal to his Charisma bonus (minimum +1) on saving throws against spells and spell-like effects.</entry>
   <entry id="48574" lang="en" sex="m">Epic Hexblade</entry>
-  <entry id="48575" lang="en" sex="m">The Epic Hexblade is a true bane for his enemies. The daily uses of his abilities continue to increase, while his curse and Dark Companion become even more potent as he progresses.
+  <entry id="48575" lang="en" sex="m">Type: Class
+Prerequisite: Hexblade level 21
+The Epic Hexblade is a true bane for his enemies. The daily uses of his abilities continue to increase, while his curse and Dark Companion become even more potent as he progresses.
 
 ABILITIES: 
 
@@ -14113,7 +14131,9 @@ Level
   <entry id="48578" lang="en" sex="m">Epic Hexblade's Curse</entry>
   <entry id="48579" lang="en" sex="m">Dark Companion</entry>
   <entry id="48580" lang="en" sex="m">Epic Dark Companion</entry>
-  <entry id="48581" lang="en" sex="m">You create an illusionary companion resembling a panther, spun from the darkness of the night. Any enemy adjacent to your Dark Companion takes a -2 penalty on it's saves and to it's AC. Your Dark Companion has no real substance and thus can't attack or otherwise affect creatures or objects. It is immune to any damage or other effects that might harm creatures, though it can be dispelled or suppressed just like a spell effect. Your Dark Companion is treated as a spell whose level is equal to 1/4 your Hexblade level.
+  <entry id="48581" lang="en" sex="m">Type: Class
+Prerequisite: Hexblade level 4
+You create an illusionary companion resembling a panther, spun from the darkness of the night. Any enemy adjacent to your Dark Companion takes a -2 penalty on it's saves and to it's AC. Your Dark Companion has no real substance and thus can't attack or otherwise affect creatures or objects. It is immune to any damage or other effects that might harm creatures, though it can be dispelled or suppressed just like a spell effect. Your Dark Companion is treated as a spell whose level is equal to 1/4 your Hexblade level.
 
 For the Epic Hexblade the effects of the Dark Companion increase to -4 instead of -2.</entry>
   <entry id="48582" lang="en" sex="m">Augment Familiar</entry>
@@ -21843,7 +21863,6 @@ Cost:
 
 +256000gp
 </entry>
-
   <entry id="51784" lang="en" sex="m">Description: 
 
 Use: Teleport (9) 3 Uses/Day 
@@ -21857,7 +21876,6 @@ Cost:
 
 +49000gp
 </entry>
-
   <entry id="51785" lang="en" sex="m">Description: 
 
 Damage Resistance: Cold Resist 5 / - 
@@ -21872,7 +21890,6 @@ Cost:
 
 +2500gp
 </entry>
-
   <entry id="51786" lang="en" sex="m">Description: 
 
 Armor Bonus: +1 
@@ -21886,35 +21903,6 @@ Cost:
 
 +1000gp
 </entry>
-
-  <entry id="51911" lang="en" sex="m">Description: 
-
-Skill Bonus: Hide +10 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Invisibility
-
-Cost: 
-
-+12700gp
-</entry>
-
-  <entry id="51912" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Resist Elements
-
-Cost: 
-
-+12000gp
-</entry>
-
   <entry id="51787" lang="en" sex="m">Description: 
 
 Armor Bonus: +2 
@@ -21941,35 +21929,6 @@ Cost:
 
 +9000gp
 </entry>
-
-  <entry id="51913" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Resist Elements
-
-Cost: 
-
-+28000gp
-</entry>
-
-  <entry id="51914" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Resist Elements
-
-Cost: 
-
-+44000gp
-</entry>
-
   <entry id="51789" lang="en" sex="m">Description: 
 
 Armor Bonus: +4 
@@ -21983,7 +21942,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51790" lang="en" sex="m">Description: 
 
 Armor Bonus: +5 
@@ -21997,36 +21955,6 @@ Cost:
 
 +25000gp
 </entry>
-
-  <entry id="51915" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 500 / - 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+240000gp
-</entry>
-
-  <entry id="51916" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Resist Elements
-
-Cost: 
-
-+12000gp
-</entry>
-
   <entry id="51791" lang="en" sex="m">Description: 
 
 Armor Bonus: +6 
@@ -22053,35 +21981,6 @@ Cost:
 
 +49000gp
 </entry>
-
-  <entry id="51917" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Resist Elements
-
-Cost: 
-
-+28000gp
-</entry>
-
-  <entry id="51918" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Resist Elements
-
-Cost: 
-
-+44000gp
-</entry>
-
   <entry id="51793" lang="en" sex="m">Description: 
 
 Armor Bonus: +8 
@@ -22095,7 +21994,6 @@ Cost:
 
 +64000gp
 </entry>
-
   <entry id="51794" lang="en" sex="m">Description: 
 
 Armor Bonus: +11 
@@ -22110,36 +22008,6 @@ Cost:
 
 +1210000gp
 </entry>
-
-  <entry id="51919" lang="en" sex="m">Description: 
-
-Damage Resistance: Cold Resist 500 / - 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+240000gp
-</entry>
-
-  <entry id="51920" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Resist Elements
-
-Cost: 
-
-+12000gp
-</entry>
-
   <entry id="51795" lang="en" sex="m">Description: 
 
 Armor Bonus: +12 
@@ -22168,35 +22036,6 @@ Cost:
 
 +1690000gp
 </entry>
-
-  <entry id="51921" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Resist Elements
-
-Cost: 
-
-+28000gp
-</entry>
-
-  <entry id="51922" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Resist Elements
-
-Cost: 
-
-+44000gp
-</entry>
-
   <entry id="51797" lang="en" sex="m">Description: 
 
 Armor Bonus: +14 
@@ -22211,7 +22050,6 @@ Cost:
 
 +1960000gp
 </entry>
-
   <entry id="51798" lang="en" sex="m">Description: 
 
 Armor Bonus: +15 
@@ -22226,36 +22064,6 @@ Cost:
 
 +2250000gp
 </entry>
-
-  <entry id="51923" lang="en" sex="m">Description: 
-
-Damage Resistance: Electrical Resist 500 / - 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+240000gp
-</entry>
-
-  <entry id="51924" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Resist Elements
-
-Cost: 
-
-+12000gp
-</entry>
-
   <entry id="51799" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +8 
@@ -22270,7 +22078,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51800" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +10 
@@ -22285,35 +22092,6 @@ Cost:
 
 +1000000gp
 </entry>
-
-  <entry id="51925" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Resist Elements
-
-Cost: 
-
-+28000gp
-</entry>
-
-  <entry id="51926" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Resist Elements
-
-Cost: 
-
-+44000gp
-</entry>
-
   <entry id="51801" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Constitution +12 
@@ -22328,7 +22106,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51802" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Strength +12 
@@ -22345,36 +22122,6 @@ Cost:
 
 +4384000gp
 </entry>
-
-  <entry id="51927" lang="en" sex="m">Description: 
-
-Damage Resistance: Fire Resist 500 / - 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+240000gp
-</entry>
-
-  <entry id="51928" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 10 / - 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Resist Elements
-
-Cost: 
-
-+12000gp
-</entry>
-
   <entry id="51803" lang="en" sex="m">Description: 
 
 Spell Immunity: Magic Missile 
@@ -22390,7 +22137,6 @@ Cost:
 
 +1500gp
 </entry>
-
   <entry id="51804" lang="en" sex="m">Description: 
 
 Use: Searing Light (5) 1 Use/Day 
@@ -22405,35 +22151,6 @@ Cost:
 
 +6480gp
 </entry>
-
-  <entry id="51929" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 20 / - 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Resist Elements
-
-Cost: 
-
-+28000gp
-</entry>
-
-  <entry id="51930" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Resist Elements
-
-Cost: 
-
-+44000gp
-</entry>
-
   <entry id="51805" lang="en" sex="m">Description: 
 
 Use: Searing Light (5) 1 Use/Day 
@@ -22449,7 +22166,6 @@ Cost:
 
 +23760gp
 </entry>
-
   <entry id="51806" lang="en" sex="m">Description: 
 
 
@@ -22462,41 +22178,6 @@ Cost:
 
 +4500gp
 </entry>
-
-  <entry id="51931" lang="en" sex="m">Description: 
-
-Damage Resistance: Sonic Resist 500 / - 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+240000gp
-</entry>
-
-  <entry id="51932" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 30 / - 
-Damage Resistance: Cold Resist 30 / - 
-Damage Resistance: Electrical Resist 30 / - 
-Damage Resistance: Fire Resist 30 / - 
-Damage Resistance: Sonic Resist 30 / - 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+308000gp
-</entry>
-
   <entry id="51807" lang="en" sex="m">Description: 
 
 Bonus Spell Slot: Cleric Level 0 
@@ -22511,7 +22192,6 @@ Cost:
 +14000 Enhancement
 +80gp
 </entry>
-
   <entry id="51809" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +2 
@@ -22525,43 +22205,6 @@ Cost:
 
 +4000gp
 </entry>
-
-  <entry id="51933" lang="en" sex="m">Description: 
-
-Damage Resistance: Acid Resist 500 / - 
-Damage Resistance: Cold Resist 500 / - 
-Damage Resistance: Electrical Resist 500 / - 
-Damage Resistance: Fire Resist 500 / - 
-Damage Resistance: Sonic Resist 500 / - 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Protection from Elements
-Epic
-
-Cost: 
-
-+2160000gp
-</entry>
-
-  <entry id="51934" lang="en" sex="m">Description: 
-
-Bonus Feat: Type of Feat: Class
-Prerequisite: Monk level 1, rogue level 2 or shadowdancer level 2.
-Specifics: Whenever a Reflex save is allowed for half damage, the character instead takes no damage if he succeeds at the save.
-Use: Automatic. 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Acid Fog
-
-Cost: 
-
-+25000gp
-</entry>
-
   <entry id="51810" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +4 
@@ -22575,7 +22218,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51811" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +6 
@@ -22589,35 +22231,6 @@ Cost:
 
 +36000gp
 </entry>
-
-  <entry id="51935" lang="en" sex="m">Description: 
-
-Freedom 
-
-Prerequisites: 
-
-Caster Level: 7
-Spell(s): Freedom of Movement
-
-Cost: 
-
-+40000gp
-</entry>
-
-  <entry id="51936" lang="en" sex="m">Description: 
-
-Use: Invisibility (3) Unlimited Uses/Day 
-
-Prerequisites: 
-
-Caster Level: 3
-Spell(s): Invisibility
-
-Cost: 
-
-+20000gp
-</entry>
-
   <entry id="51812" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +8 
@@ -22632,7 +22245,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51813" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +10 
@@ -22647,36 +22259,6 @@ Cost:
 
 +1000000gp
 </entry>
-
-  <entry id="51937" lang="en" sex="m">Description: 
-
-Damage Reduction: +5 Soak 15 Damage 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Acid Fog
-Epic
-
-Cost: 
-
-+400000gp
-</entry>
-
-  <entry id="51938" lang="en" sex="m">Description: 
-
-Skill Bonus: Jump +5 
-
-Prerequisites: 
-
-Caster Level: 2
-Skill: Jump 5 ranks
-
-Cost: 
-
-+2500gp
-</entry>
-
   <entry id="51814" lang="en" sex="m">Description: 
 
 Enhancement Bonus: Charisma +12 
@@ -22691,7 +22273,6 @@ Cost:
 
 +1440000gp
 </entry>
-
   <entry id="51815" lang="en" sex="m">Description: 
 
 Use: Blur (5) Unlimited Uses/Day 
@@ -22705,35 +22286,6 @@ Cost:
 
 +24000gp
 </entry>
-
-  <entry id="51939" lang="en" sex="m">Description: 
-
-Skill Bonus: Jump +10 
-
-Prerequisites: 
-
-Caster Level: 7
-Skill: Jump 10 ranks
-
-Cost: 
-
-+10000gp
-</entry>
-
-  <entry id="51940" lang="en" sex="m">Description: 
-
-Armor Bonus: +1 
-
-Prerequisites: 
-
-Caster Level: 5
-Spell(s): Shield of Faith
-
-Cost: 
-
-+2000gp
-</entry>
-
   <entry id="51816" lang="en" sex="m">Description: 
 
 Use: Displacement (9) 1 Use/Day 
@@ -22749,7 +22301,6 @@ Cost:
 
 +50000gp
 </entry>
-
   <entry id="51817" lang="en" sex="m">Description: 
 
 Skill Bonus: Hide +5 
@@ -22764,35 +22315,6 @@ Cost:
 
 +2500gp
 </entry>
-
-  <entry id="51941" lang="en" sex="m">Description: 
-
-Armor Bonus: +2 
-
-Prerequisites: 
-
-Caster Level: 6
-Spell(s): Shield of Faith
-
-Cost: 
-
-+8000gp
-</entry>
-
-  <entry id="51942" lang="en" sex="m">Description: 
-
-Armor Bonus: +3 
-
-Prerequisites: 
-
-Caster Level: 9
-Spell(s): Shield of Faith
-
-Cost: 
-
-+18000gp
-</entry>
-
   <entry id="51818" lang="en" sex="m">Description: 
 
 Use: Greater Sanctuary (18) 1 Use/Day 
@@ -22806,7 +22328,6 @@ Cost:
 
 +55000gp
 </entry>
-
   <entry id="51819" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +1 
@@ -22820,35 +22341,6 @@ Cost:
 
 +1000gp
 </entry>
-
-  <entry id="51943" lang="en" sex="m">Description: 
-
-Armor Bonus: +4 
-
-Prerequisites: 
-
-Caster Level: 12
-Spell(s): Shield of Faith
-
-Cost: 
-
-+32000gp
-</entry>
-
-  <entry id="51944" lang="en" sex="m">Description: 
-
-Armor Bonus: +5 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Shield of Faith
-
-Cost: 
-
-+50000gp
-</entry>
-
   <entry id="51820" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +2 
@@ -22862,7 +22354,6 @@ Cost:
 
 +4000gp
 </entry>
-
   <entry id="51821" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +3 
@@ -22876,37 +22367,6 @@ Cost:
 
 +9000gp
 </entry>
-
-  <entry id="51945" lang="en" sex="m">Description: 
-
-Armor Bonus: +6 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Shield of Faith
-Epic
-
-Cost: 
-
-+720000gp
-</entry>
-
-  <entry id="51946" lang="en" sex="m">Description: 
-
-Armor Bonus: +7 
-
-Prerequisites: 
-
-Caster Level: 21
-Spell(s): Shield of Faith
-Epic
-
-Cost: 
-
-+980000gp
-</entry>
-
   <entry id="51822" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +4 
@@ -22920,7 +22380,6 @@ Cost:
 
 +16000gp
 </entry>
-
   <entry id="51823" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +5 
@@ -22934,37 +22393,6 @@ Cost:
 
 +25000gp
 </entry>
-
-  <entry id="51947" lang="en" sex="m">Description: 
-
-Armor Bonus: +8 
-
-Prerequisites: 
-
-Caster Level: 24
-Spell(s): Shield of Faith
-Epic
-
-Cost: 
-
-+1280000gp
-</entry>
-
-  <entry id="51948" lang="en" sex="m">Description: 
-
-Armor Bonus: +9 
-
-Prerequisites: 
-
-Caster Level: 27
-Spell(s): Shield of Faith
-Epic
-
-Cost: 
-
-+1620000gp
-</entry>
-
   <entry id="51824" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +6 
@@ -22979,7 +22407,6 @@ Cost:
 
 +360000gp
 </entry>
-
   <entry id="51825" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +7 
@@ -22994,36 +22421,6 @@ Cost:
 
 +490000gp
 </entry>
-
-  <entry id="51949" lang="en" sex="m">Description: 
-
-Armor Bonus: +10 
-
-Prerequisites: 
-
-Caster Level: 30
-Spell(s): Shield of Faith
-Epic
-
-Cost: 
-
-+2000000gp
-</entry>
-
-  <entry id="51950" lang="en" sex="m">Description: 
-
-Regeneration: +1 
-
-Prerequisites: 
-
-Caster Level: 15
-Spell(s): Regenerate
-
-Cost: 
-
-+90000gp
-</entry>
-
   <entry id="51826" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +8 
@@ -23038,7 +22435,6 @@ Cost:
 
 +640000gp
 </entry>
-
   <entry id="51827" lang="en" sex="m">Description: 
 
 Improved Saving Throws: Universal +9 
@@ -23052,35 +22448,6 @@ Epic
 Cost: 
 
 +810000gp
-</entry>
-
-  <entry id="51951" lang="en" sex="m">Description: 
-
-Regeneration: +3 
-
-Prerequisites: 
-
-Caster Level: 20
-Spell(s): Regenerate
-Epic
-
-Cost: 
-
-+300000gp
-</entry>
-
-  <entry id="51952" lang="en" sex="m">Description: 
-
-Use: Spell Turning (13) 3 Uses/Day 
-
-Prerequisites: 
-
-Caster Level: 13
-Spell(s): Spell Turning
-
-Cost: 
-
-+98280gp
 </entry>
   <entry id="51828" lang="en" sex="m">Description: 
 
@@ -23508,7 +22875,6 @@ Cost:
 
 +5400gp
 </entry>
-
   <entry id="51861" lang="en" sex="m">Description: 
 
 Use: Fireball (10) 5 Charges/Use 
@@ -23688,7 +23054,6 @@ Cost:
 
 +75000gp
 </entry>
-
   <entry id="51874" lang="en" sex="m">Description: 
 
 Armor Bonus: +5 
@@ -23726,7 +23091,6 @@ Cost:
 
 +75000gp
 </entry>
-
   <entry id="51876" lang="en" sex="m">Description: 
 
 Darkvision 
@@ -23744,7 +23108,6 @@ Cost:
 
 +120000gp
 </entry>
-
   <entry id="51877" lang="en" sex="m">Description: 
 
 Use: Daze (1) Unlimited Uses/Day 
@@ -23760,7 +23123,6 @@ Cost:
 
 +27000gp
 </entry>
-
   <entry id="51878" lang="en" sex="m">Description: 
 
 Spell Resistance: 20 
@@ -23776,7 +23138,6 @@ Cost:
 
 +38000gp
 </entry>
-
   <entry id="51879" lang="en" sex="m">Description: 
 
 Skill Bonus: Hide +4 
@@ -23822,6 +23183,577 @@ Cost:
   <entry id="51908" lang="en" sex="m">Improved Ring of Jumping</entry>
   <entry id="51909" lang="en" sex="m">Ring of Rapid Healing</entry>
   <entry id="51910" lang="en" sex="m">Ring of Spell Turning</entry>
+  <entry id="51911" lang="en" sex="m">Description: 
+
+Skill Bonus: Hide +10 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Invisibility
+
+Cost: 
+
++12700gp
+</entry>
+  <entry id="51912" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+  <entry id="51913" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+  <entry id="51914" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+  <entry id="51915" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+  <entry id="51916" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+  <entry id="51917" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+  <entry id="51918" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+  <entry id="51919" lang="en" sex="m">Description: 
+
+Damage Resistance: Cold Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+  <entry id="51920" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+  <entry id="51921" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+  <entry id="51922" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+  <entry id="51923" lang="en" sex="m">Description: 
+
+Damage Resistance: Electrical Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+  <entry id="51924" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+  <entry id="51925" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+  <entry id="51926" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+  <entry id="51927" lang="en" sex="m">Description: 
+
+Damage Resistance: Fire Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+  <entry id="51928" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 10 / - 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Resist Elements
+
+Cost: 
+
++12000gp
+</entry>
+  <entry id="51929" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 20 / - 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Resist Elements
+
+Cost: 
+
++28000gp
+</entry>
+  <entry id="51930" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 11
+Spell(s): Resist Elements
+
+Cost: 
+
++44000gp
+</entry>
+  <entry id="51931" lang="en" sex="m">Description: 
+
+Damage Resistance: Sonic Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++240000gp
+</entry>
+  <entry id="51932" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 30 / - 
+Damage Resistance: Cold Resist 30 / - 
+Damage Resistance: Electrical Resist 30 / - 
+Damage Resistance: Fire Resist 30 / - 
+Damage Resistance: Sonic Resist 30 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++308000gp
+</entry>
+  <entry id="51933" lang="en" sex="m">Description: 
+
+Damage Resistance: Acid Resist 500 / - 
+Damage Resistance: Cold Resist 500 / - 
+Damage Resistance: Electrical Resist 500 / - 
+Damage Resistance: Fire Resist 500 / - 
+Damage Resistance: Sonic Resist 500 / - 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Protection from Elements
+Epic
+
+Cost: 
+
++2160000gp
+</entry>
+  <entry id="51934" lang="en" sex="m">Description: 
+
+Bonus Feat: Type of Feat: Class
+Prerequisite: Monk level 1, rogue level 2 or shadowdancer level 2.
+Specifics: Whenever a Reflex save is allowed for half damage, the character instead takes no damage if he succeeds at the save.
+Use: Automatic. 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Acid Fog
+
+Cost: 
+
++25000gp
+</entry>
+  <entry id="51935" lang="en" sex="m">Description: 
+
+Freedom 
+
+Prerequisites: 
+
+Caster Level: 7
+Spell(s): Freedom of Movement
+
+Cost: 
+
++40000gp
+</entry>
+  <entry id="51936" lang="en" sex="m">Description: 
+
+Use: Invisibility (3) Unlimited Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 3
+Spell(s): Invisibility
+
+Cost: 
+
++20000gp
+</entry>
+  <entry id="51937" lang="en" sex="m">Description: 
+
+Damage Reduction: +5 Soak 15 Damage 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Acid Fog
+Epic
+
+Cost: 
+
++400000gp
+</entry>
+  <entry id="51938" lang="en" sex="m">Description: 
+
+Skill Bonus: Jump +5 
+
+Prerequisites: 
+
+Caster Level: 2
+Skill: Jump 5 ranks
+
+Cost: 
+
++2500gp
+</entry>
+  <entry id="51939" lang="en" sex="m">Description: 
+
+Skill Bonus: Jump +10 
+
+Prerequisites: 
+
+Caster Level: 7
+Skill: Jump 10 ranks
+
+Cost: 
+
++10000gp
+</entry>
+  <entry id="51940" lang="en" sex="m">Description: 
+
+Armor Bonus: +1 
+
+Prerequisites: 
+
+Caster Level: 5
+Spell(s): Shield of Faith
+
+Cost: 
+
++2000gp
+</entry>
+  <entry id="51941" lang="en" sex="m">Description: 
+
+Armor Bonus: +2 
+
+Prerequisites: 
+
+Caster Level: 6
+Spell(s): Shield of Faith
+
+Cost: 
+
++8000gp
+</entry>
+  <entry id="51942" lang="en" sex="m">Description: 
+
+Armor Bonus: +3 
+
+Prerequisites: 
+
+Caster Level: 9
+Spell(s): Shield of Faith
+
+Cost: 
+
++18000gp
+</entry>
+  <entry id="51943" lang="en" sex="m">Description: 
+
+Armor Bonus: +4 
+
+Prerequisites: 
+
+Caster Level: 12
+Spell(s): Shield of Faith
+
+Cost: 
+
++32000gp
+</entry>
+  <entry id="51944" lang="en" sex="m">Description: 
+
+Armor Bonus: +5 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Shield of Faith
+
+Cost: 
+
++50000gp
+</entry>
+  <entry id="51945" lang="en" sex="m">Description: 
+
+Armor Bonus: +6 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++720000gp
+</entry>
+  <entry id="51946" lang="en" sex="m">Description: 
+
+Armor Bonus: +7 
+
+Prerequisites: 
+
+Caster Level: 21
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++980000gp
+</entry>
+  <entry id="51947" lang="en" sex="m">Description: 
+
+Armor Bonus: +8 
+
+Prerequisites: 
+
+Caster Level: 24
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++1280000gp
+</entry>
+  <entry id="51948" lang="en" sex="m">Description: 
+
+Armor Bonus: +9 
+
+Prerequisites: 
+
+Caster Level: 27
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++1620000gp
+</entry>
+  <entry id="51949" lang="en" sex="m">Description: 
+
+Armor Bonus: +10 
+
+Prerequisites: 
+
+Caster Level: 30
+Spell(s): Shield of Faith
+Epic
+
+Cost: 
+
++2000000gp
+</entry>
+  <entry id="51950" lang="en" sex="m">Description: 
+
+Regeneration: +1 
+
+Prerequisites: 
+
+Caster Level: 15
+Spell(s): Regenerate
+
+Cost: 
+
++90000gp
+</entry>
+  <entry id="51951" lang="en" sex="m">Description: 
+
+Regeneration: +3 
+
+Prerequisites: 
+
+Caster Level: 20
+Spell(s): Regenerate
+Epic
+
+Cost: 
+
++300000gp
+</entry>
+  <entry id="51952" lang="en" sex="m">Description: 
+
+Use: Spell Turning (13) 3 Uses/Day 
+
+Prerequisites: 
+
+Caster Level: 13
+Spell(s): Spell Turning
+
+Cost: 
+
++98280gp
+</entry>
   <entry id="51953" lang="en" sex="m">This spell can not be used with the Craft Staff feat</entry>
   <entry id="51972" lang="en" sex="m">Turning Immunity</entry>
   <entry id="51973" lang="en" sex="m">Feat Type:  Class Feat

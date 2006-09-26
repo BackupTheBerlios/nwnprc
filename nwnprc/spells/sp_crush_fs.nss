@@ -61,7 +61,7 @@ void main()
 	MultisummonPreSummon();	
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_3), lLoc);	
 	
-	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature("sp_crush_fist"), lLoc, fDuration);
+	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectSummonCreature("prc_crush_fist"), lLoc, fDuration);
 	
 	SPEvilShift(oPC);
 	SPSetSchool();	

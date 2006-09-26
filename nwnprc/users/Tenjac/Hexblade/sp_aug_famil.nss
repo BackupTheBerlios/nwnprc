@@ -40,6 +40,8 @@ void main()
 	float fDur = RoundsToSeconds(nCasterLvl);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
+	 SPRaiseSpellCastAt(oPC,FALSE, SPELL_AUGMENT_FAMILIAR, oPC);
+	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
 		fDur += fDur;

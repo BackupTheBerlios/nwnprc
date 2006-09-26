@@ -47,6 +47,8 @@ void main()
 	effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
+	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_CROWN_OF_PROTECTION, oPC);
+	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
 		fDur += fDur;

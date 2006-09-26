@@ -45,6 +45,8 @@ void main()
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
 	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_KELGORES_FIRE_BOLT, oPC);
+	
 	if(MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 	{
 		nDam = d6(1);

@@ -43,7 +43,9 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = HoursToSeconds(nCasterLvl);
-		
+	
+	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_PROTECTION_FROM_ARROWS, oPC);
+	
 	// Damage Resistance 10 piercing, max of 100 total
 	effect eBuff = = EffectLinkEffects(EffectDamageResistance(DAMAGE_TYPE_PIERCING, 10, min((10 * nCasterLvl), 100), EffectVisualEffect(VFX_DUR_PROTECTION_ARROWS));
 	

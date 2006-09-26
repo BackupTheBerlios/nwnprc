@@ -55,6 +55,8 @@ void main()
 	int nSpell = GetSpellId();
 	int nBonus = min(5, (nCasterLvl/3));
 	
+	SPRaiseSpellCastAt(oPC,FALSE, nSpell, oPC);
+	
 	if(nSPell == SPELL_DEFLECT)
 	{
 		nBonus = (nCasterLvl/2);

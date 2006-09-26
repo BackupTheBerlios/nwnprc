@@ -23,3 +23,53 @@ can still use a standard action to move by means of
 teleporation magic.
 
 **/
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = GetSpellTargetObject();
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	float fDur = RoundsToSeconds(1);
+	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_HALT, oPC);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	if (!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_DEATH))
+		{
+			effect eHalt = EffectCutsceneImmobilize();
+			
+			//if(!flying)
+			{
+				SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eHalt, oTarget, fDur);
+			}
+		}
+	}
+	
+	SPSetSchool();
+}
+	
+
+		
+		
+	
+	
+	
+	
+	
+	
+	

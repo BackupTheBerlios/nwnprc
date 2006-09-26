@@ -54,6 +54,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int nPenetr = nCasterLevel + SPGetPenetr();
     int nDam = d6(1);
     float fDur = (60.0f * nCasterLevel);
+    
+    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_TOUCH_OF_IDIOCY, oCaster);
 
     //INSERT SPELL CODE HERE
     int iAttackRoll = 0;    //placeholder

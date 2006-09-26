@@ -31,11 +31,13 @@ void main()
 	if(!X2PreSpellCastCode()) return;
 	
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
-	
+			
 	object oPC = OBJECT_SELF;
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = HoursToSeconds(nCasterLvl);
+	
+	SPRaiseSpellCastAt(oPC,FALSE, SPELL_FALSE_LIFE, oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{

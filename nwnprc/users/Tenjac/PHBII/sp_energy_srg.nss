@@ -35,7 +35,7 @@ void main()
 	float fDur = RoundsToSeconds(1);
 	int nDamType;
 	int nDam = d6(2);
-	
+		
 	if(nMetaMagic == METAMAGIC_MAXIMIZE)
 	{
 		nDam = 12;

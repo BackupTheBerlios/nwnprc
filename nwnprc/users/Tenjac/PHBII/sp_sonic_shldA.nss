@@ -1,33 +1,25 @@
 //::///////////////////////////////////////////////
-//:: Name      Repel Vermin
-//:: FileName  sp_repel_vermin.nss
+//:: Name      Sonic Shield: OnEnter
+//:: FileName  sp_sonic_shldA.nss
 //:://////////////////////////////////////////////
-/**@file Repel Vermin
-Abjuration
-Level: Brd 4, Clr 4, Drd 4, Rgr 3, Hexblade 3
-Components: V, S, DF
+/**@file Sonic Shield
+Evocation
+Level: Bard 3, duskblade 5, sorcerer/wizard 5
+Components: V,S
 Casting Time: 1 standard action
-Range: 10 ft.
-Area: 10-ft.-radius emanation centered on you
-Duration: 10 min./level (D)
-Saving Throw: None or Will negates; see text
-Spell Resistance: Yes
+Range: Personal
+Target: You
+Duration: 1 round/level
 
-An invisible barrier holds back vermin. A vermin 
-with Hit Dice of less than one-third your level 
-cannot penetrate the barrier. A vermin with Hit 
-Dice of one-third your level or more can penetrate
-the barrier if it succeeds on a Will save. Even so,
-crossing the barrier deals the vermin 2d6 points 
-of damage, and pressing against the barrier causes
-pain, which deters most vermin.
-
+This spell grants you a +4 deflection bonus to AC.
+In addition, anyone who successfully hits you with
+a melee attack takes 1d8 points of sonic damage 
+and must make a Fortitude saving throw or be
+knocked 5 feet away from you into an unoccupied
+space of your choice. If no space of sufficient
+size is available for it to enter, it instead
+takes an extra 1d8 points of sonic damage.
 **/
-
-//////////////////////////////////////////////////
-//:: Author: Tenjac
-//:: Date:   No, thanks. I'm married now.
-//////////////////////////////////////////////////
 
 #include "prc_alterations"
 #include "spinc_common"
@@ -36,15 +28,17 @@ void DoPush(object oTarget, object oCreator, int nReverse = FALSE);
 
 void main()
 {
-    ActionDoCommand(SetAllAoEInts(SPELL_REPEL_VERMIN, OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(SPELL_SONIC_SHIELD, OBJECT_SELF, GetSpellSaveDC()));
     object oTarget = GetEnteringObject();
     object oCreator = GetAreaOfEffectCreator();
-           
-    // Only affect vermin
-    if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_VERMIN)
+    int nDC = SPGetSpellSaveDC(oTarget, oCreator); 
+    int nCasterLvl = PRCGetCasterLevel(oCreator);
+     
+    // Make Save
+    if(!MyPRCResistSpell(oCreator, oTarget, nCasterLvl + SPGetPenetr()))
     {
    	//Fire cast spell at event for the target
-    	SignalEvent(oTarget, EventSpellCastAt(oCreator, SPELL_REPEL_VERMIN));
+    	SignalEvent(oTarget, EventSpellCastAt(oCreator, SPELL_SONIC_SHIELD));
     	
     	// Punt them out of the area
 	DoPush(oTarget, oCreator);
@@ -54,7 +48,7 @@ void main()
 void DoPush(object oTarget, object oCreator, int nReverse = FALSE)
 {
             // Calculate how far the creature gets pushed
-            float fDistance = FeetToMeters(6.096);
+            float fDistance = FeetToMeters(5);
             // Determine if they hit a wall on the way
             location lCreator   = GetLocation(oCreator);
             location lTargetOrigin = GetLocation(oTarget);
@@ -92,11 +86,4 @@ void DoPush(object oTarget, object oCreator, int nReverse = FALSE)
             location lTargetDestination = Location(GetArea(oTarget), vTarget, GetFacing(oTarget));
             AssignCommand(oTarget, ClearAllActions(TRUE));
             AssignCommand(oTarget, JumpToLocation(lTargetDestination));
-            
-            int nDam = d6(2);
-            
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 }
-	
-	
-	

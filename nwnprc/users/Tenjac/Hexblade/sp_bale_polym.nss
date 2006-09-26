@@ -55,6 +55,8 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC)
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
+	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_BALEFUL_POLYMORPH, oPC);
+	
 	//SR
 	if(!MyPRCResistSpell(oCaster, oTarget, nCasterLevel + SPGetPenetr()))
 	{

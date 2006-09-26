@@ -42,6 +42,8 @@ void main()
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	float fDur = (60.0f * nCasterLvl);
 	
+	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_ANIMALISTIC_POWER, oPC);
+	
 	//Build effect
 	effect eBuff = EffectLinkEffects(EffectAbilityIncrease(ABILITY_STRENGTH, 2), EffectAbilityIncrease(ABILITY_DEXTERITY, 2));
 	       eBuff = EffectLinkEffects(eBuff, EffectAbilityIncrease(ABILITY_CONSTITUTION, 2));

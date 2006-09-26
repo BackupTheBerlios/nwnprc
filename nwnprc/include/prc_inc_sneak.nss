@@ -488,6 +488,8 @@ int GetCanSneakAttack(object oDefender, object oAttacker)
           // checking for other factors that remove sneak attack
           if( GetIsImmune(oDefender, IMMUNITY_TYPE_CRITICAL_HIT, OBJECT_INVALID) )   bReturnVal = FALSE;
           if( GetIsImmune(oDefender, IMMUNITY_TYPE_SNEAK_ATTACK, OBJECT_INVALID) )   bReturnVal = FALSE;
+          // Skullclan Hunters can sneak attack undead, so they return true here.
+          if( GetLevelByClass(CLASS_TYPE_SKULLCLAN_HUNTER, oAttacker) && GetRacialType(oDefender) == RACIAL_TYPE_UNDEAD) bReturnVal = TRUE;
 
           if( GetIsConcealed(oDefender, oAttacker) )   bReturnVal = FALSE;
      }

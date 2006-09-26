@@ -110,7 +110,6 @@ void main()
         }
     }
     // We're being called from the OnHit eventhook, so deal the damage
-    if(DEBUG) DoDebug("prc_skullclan: Pre OnHit");
     else if(nEvent == EVENT_ITEM_ONHIT)
     {
         oItem          = GetSpellCastItem();
@@ -137,7 +136,6 @@ void main()
         }// end if - Item is a melee weapon and Two-Weapon Rend hasn't already been used up for the round
     }// end if - Running OnHit event
     // We are called from the OnPlayerEquipItem eventhook. Add OnHitCast: Unique Power to oPC's weapon
-    if(DEBUG) DoDebug("prc_skullclan: Pre OnEquip");
     else if(nEvent == EVENT_ONPLAYEREQUIPITEM)
     {
         oPC   = GetItemLastEquippedBy();
@@ -165,7 +163,6 @@ void main()
         }
     }
     // We are called from the OnPlayerUnEquipItem eventhook. Remove OnHitCast: Unique Power from oPC's weapon
-    if(DEBUG) DoDebug("prc_skullclan: Pre OnUnequip");
     else if(nEvent == EVENT_ONPLAYERUNEQUIPITEM)
     {
         oPC   = GetItemLastUnequippedBy();

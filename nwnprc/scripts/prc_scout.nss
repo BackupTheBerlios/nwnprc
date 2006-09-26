@@ -128,15 +128,11 @@ void main()
         // Doesn't depend on light armour
         BlindSight(oPC, nClass);
 
-        // Set up the eventhooks, but don't start doing this until the scout is level 6
-        if(nClass >= 6)
-        {
-            if(DEBUG) DoDebug("prc_scout: Adding eventhooks");
-
-            AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "prc_scout", TRUE, FALSE);
-            AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_scout", TRUE, FALSE);
-            AddEventScript(oPC, EVENT_ONHEARTBEAT,         "prc_scout", TRUE, FALSE);
-        }
+	// Hook in the events, needed from level 1 for Skirmish
+        if(DEBUG) DoDebug("prc_scout: Adding eventhooks");
+        AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "prc_scout", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_scout", TRUE, FALSE);
+        AddEventScript(oPC, EVENT_ONHEARTBEAT,         "prc_scout", TRUE, FALSE);
     }
     // We're being called from the OnHit eventhook, so deal the damage
     // Light armour only
@@ -218,7 +214,7 @@ void main()
     else if(nEvent == EVENT_ONHEARTBEAT && 3 >= nArmour)
     {
         // Check to see if the WP is valid
-        object oTestWP = GetWaypointByTag(GetName(oPC));
+        object oTestWP = GetWaypointByTag("PRC_ScoutWP_" + GetName(oPC));
         if (!GetIsObjectValid(oTestWP))
         {
             // Create waypoint for the movement

@@ -42,7 +42,7 @@ void main()
     object oPC = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel(oPC);
     location lLoc = GetSpellTargetLocation();
-    string sResRef = "nw_dretch";
+    string sResRef = "prc_sum_dretch";
     if(!X2PreSpellCastCode()) return;
 
     SPSetSchool(SPELL_SCHOOL_CONJURATION);

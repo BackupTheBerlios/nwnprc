@@ -39,21 +39,23 @@ Created:   5/7/2006
 
 void main()
 {
+    if(!X2PreSpellCastCode()) return;
+	  
+     SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	  
+	  
     object oPC = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel(oPC);
     location lLoc = GetSpellTargetLocation();
     string sResRef = "prc_sum_dretch";
-    if(!X2PreSpellCastCode()) return;
-
-    SPSetSchool(SPELL_SCHOOL_CONJURATION);
-
+    effect eModify = EffectModifyAttacks(2);	  
 
     MultisummonPreSummon();
     if(GetPRCSwitch(PRC_MULTISUMMON))
     {
         effect eSummon = EffectSummonCreature(sResRef);
-        //eSummon = ExtraordinaryEffect(eSummon); //still goes away on rest, use supernatural instead
-        eSummon = SupernaturalEffect(eSummon);    
+               eSummon = SupernaturalEffect(eSummon);    
+        
         //determine how many to take control of
         int nTotalCount = d4(2);
         int i;

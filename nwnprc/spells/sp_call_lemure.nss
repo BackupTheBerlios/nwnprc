@@ -54,10 +54,10 @@ void main()
     if(GetPRCSwitch(PRC_MULTISUMMON))
     {
         effect eSummon = EffectSummonCreature(sResRef);
-        //eSummon = ExtraordinaryEffect(eSummon); //still goes away on rest, use supernatural instead
         eSummon = SupernaturalEffect(eSummon);    
         //determine how many to take control of
         int nTotalCount = d4(2);
+         effect eModify = EffectModifyAttacks(1);        
         int i;
         int nMaxHDControlled = nCasterLvl * 2;
         int nTotalControlled = GetControlledFiendTotalHD(oPC);
@@ -69,7 +69,7 @@ void main()
             i++;    
             nTotalControlled = GetControlledFiendTotalHD(oPC);
         }
-        FloatingTextStringOnCreature("Currently have "+IntToString(nTotalControlled)+"HD out of "+IntToString(nMaxHDControlled)+"HD.", OBJECT_SELF);
+        FloatingTextStringOnCreature(" You currently have "+IntToString(nTotalControlled)+"HD out of "+IntToString(nMaxHDControlled)+"HD.", OBJECT_SELF);
     }
     else
     {

@@ -2,6 +2,67 @@
 //:: Name      Rouse
 //:: FileName  sp_rouse.nss
 //:://////////////////////////////////////////////
-/**@file
+/**@file Rouse
+Enchantment (Compulsion) [Mind-Affecting]
+Level: Beguiler 1, duskblade 1, sorcerer/wizard 1
+Components: V,S
+Casting Time: 1 standard action
+Range: Close
+Area 10-ft radius burst
+Duration: Instantaneous
+Saving Throw: None
+Spell Resistance: No
+
+This spell has no effect on creatures that are
+unconscious due to being reduced to negative hit 
+points or that have taken nonlethal damage in 
+excess of their current hit points.
 
 **/
+/////////////////////////////////////////////////
+// Author: Tenjac
+// Date:   26.9.06
+/////////////////////////////////////////////////
+
+void RemoveSleep(object oTarget);
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
+	
+	object oPC = OBJECT_SELF;
+	location lLoc = GetSpellTargetLocation();
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, 3.048f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	
+	while(GetIsObjectValid(oTarget))
+	{
+		RemoveSleep(oTarget);
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 3.048f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	}
+	
+	SPSetSchool();
+}
+
+void RemoveSleep(object oTarget)
+{
+	effect eTest = GetFirstEffect(oTarget);
+	
+	while(GetIsEffectValid(eTest))
+	{
+		if(eTest == EffectSleep());
+		{
+			RemoveEffect(eTest);
+		}
+		eTest = GetNextEffect(oTarget);
+	}
+	
+	if(GetLastRestEventType(oTarget) == REST_EVENTTYPE_REST_STARTED)
+	{
+		ClearAllActions(oTarget);
+	}
+}

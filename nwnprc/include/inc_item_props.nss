@@ -1033,7 +1033,6 @@ int GetItemPropertyDamageType(object oWeapon)
 
     int iWeaponType = GetBaseItemType(oWeapon);
     int iDamageType = StringToInt(Get2DACache("baseitems","WeaponType",iWeaponType));
-    //int iDamageType = StringToInt(Get2DAString("baseitems","WeaponType",iWeaponType));
     switch(iDamageType)
     {
         case 1: return IP_CONST_DAMAGETYPE_PIERCING;    break;
@@ -1053,7 +1052,6 @@ int GetItemDamageType(object oWeapon)
 
     int iWeaponType = GetBaseItemType(oWeapon);
     int iDamageType = StringToInt( Get2DACache("baseitems","WeaponType",iWeaponType) );
-    //int iDamageType = StringToInt( Get2DAString("baseitems","WeaponType",iWeaponType) );
     switch(iDamageType)
     {
         case 1: return DAMAGE_TYPE_PIERCING;    break;
@@ -1540,44 +1538,44 @@ int FocusToWeapProf(int nFeat)
 {
             switch(nFeat)
             {
-	        case FEAT_WEAPON_FOCUS_CLUB: return              BASE_ITEM_CLUB              ;
-	        case FEAT_WEAPON_FOCUS_DAGGER: return            BASE_ITEM_DAGGER            ;
-	        case FEAT_WEAPON_FOCUS_DART: return              BASE_ITEM_DART              ;
-	        case FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW: return    BASE_ITEM_HEAVYCROSSBOW    ;
-	        case FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW: return    BASE_ITEM_LIGHTCROSSBOW    ;
-	        case FEAT_WEAPON_FOCUS_LIGHT_MACE: return        BASE_ITEM_LIGHTMACE        ;
-	        case FEAT_WEAPON_FOCUS_MORNING_STAR: return      BASE_ITEM_MORNINGSTAR      ;
-	        case FEAT_WEAPON_FOCUS_STAFF: return             BASE_ITEM_QUARTERSTAFF             ;
-	        case FEAT_WEAPON_FOCUS_SPEAR: return             BASE_ITEM_SHORTSPEAR             ;
-	        case FEAT_WEAPON_FOCUS_SICKLE: return            BASE_ITEM_SICKLE            ;
-	        case FEAT_WEAPON_FOCUS_SLING: return             BASE_ITEM_SLING             ;
-	        case FEAT_WEAPON_FOCUS_LONGBOW: return           BASE_ITEM_LONGBOW           ;
-	        case FEAT_WEAPON_FOCUS_SHORTBOW: return          BASE_ITEM_SHORTBOW          ;
-	        case FEAT_WEAPON_FOCUS_SHORT_SWORD: return       BASE_ITEM_SHORTSWORD       ;
-	        case FEAT_WEAPON_FOCUS_RAPIER: return            BASE_ITEM_RAPIER            ;
-	        case FEAT_WEAPON_FOCUS_SCIMITAR: return          BASE_ITEM_SCIMITAR          ;
-		case FEAT_WEAPON_FOCUS_LONG_SWORD: return        BASE_ITEM_LONGSWORD        ;
-	        case FEAT_WEAPON_FOCUS_GREAT_SWORD: return       BASE_ITEM_GREATSWORD       ;
-	        case FEAT_WEAPON_FOCUS_HAND_AXE: return          BASE_ITEM_HANDAXE          ;
-	        case FEAT_WEAPON_FOCUS_THROWING_AXE: return      BASE_ITEM_THROWINGAXE      ;
-	        case FEAT_WEAPON_FOCUS_BATTLE_AXE: return        BASE_ITEM_BATTLEAXE        ;
-	        case FEAT_WEAPON_FOCUS_GREAT_AXE: return         BASE_ITEM_GREATAXE         ;
-	        case FEAT_WEAPON_FOCUS_HALBERD: return           BASE_ITEM_HALBERD           ;
-	        case FEAT_WEAPON_FOCUS_LIGHT_HAMMER: return      BASE_ITEM_LIGHTHAMMER      ;
-	        case FEAT_WEAPON_FOCUS_LIGHT_FLAIL: return       BASE_ITEM_LIGHTFLAIL       ;
-		case FEAT_WEAPON_FOCUS_WAR_HAMMER: return        BASE_ITEM_WARHAMMER        ;
-	        case FEAT_WEAPON_FOCUS_HEAVY_FLAIL: return       BASE_ITEM_HEAVYFLAIL       ;
-	        case FEAT_WEAPON_FOCUS_KAMA: return              BASE_ITEM_KAMA              ;
-	        case FEAT_WEAPON_FOCUS_KUKRI: return             BASE_ITEM_KUKRI             ;
-	        case FEAT_WEAPON_FOCUS_SHURIKEN: return          BASE_ITEM_SHURIKEN          ;
-	        case FEAT_WEAPON_FOCUS_SCYTHE: return            BASE_ITEM_SCYTHE            ;
-	        case FEAT_WEAPON_FOCUS_KATANA: return            BASE_ITEM_KATANA            ;
-	        case FEAT_WEAPON_FOCUS_BASTARD_SWORD: return     BASE_ITEM_BASTARDSWORD     ;
-	        case FEAT_WEAPON_FOCUS_DIRE_MACE: return         BASE_ITEM_DIREMACE         ;
-	        case FEAT_WEAPON_FOCUS_DOUBLE_AXE: return        BASE_ITEM_DOUBLEAXE        ;
-	        case FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD: return  BASE_ITEM_TWOBLADEDSWORD  ;
-	        case FEAT_WEAPON_FOCUS_DWAXE: return             BASE_ITEM_DWARVENWARAXE             ;
-	        case FEAT_WEAPON_FOCUS_WHIP: return              BASE_ITEM_WHIP              ;
+            case FEAT_WEAPON_FOCUS_CLUB: return              BASE_ITEM_CLUB              ;
+            case FEAT_WEAPON_FOCUS_DAGGER: return            BASE_ITEM_DAGGER            ;
+            case FEAT_WEAPON_FOCUS_DART: return              BASE_ITEM_DART              ;
+            case FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW: return    BASE_ITEM_HEAVYCROSSBOW    ;
+            case FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW: return    BASE_ITEM_LIGHTCROSSBOW    ;
+            case FEAT_WEAPON_FOCUS_LIGHT_MACE: return        BASE_ITEM_LIGHTMACE        ;
+            case FEAT_WEAPON_FOCUS_MORNING_STAR: return      BASE_ITEM_MORNINGSTAR      ;
+            case FEAT_WEAPON_FOCUS_STAFF: return             BASE_ITEM_QUARTERSTAFF             ;
+            case FEAT_WEAPON_FOCUS_SPEAR: return             BASE_ITEM_SHORTSPEAR             ;
+            case FEAT_WEAPON_FOCUS_SICKLE: return            BASE_ITEM_SICKLE            ;
+            case FEAT_WEAPON_FOCUS_SLING: return             BASE_ITEM_SLING             ;
+            case FEAT_WEAPON_FOCUS_LONGBOW: return           BASE_ITEM_LONGBOW           ;
+            case FEAT_WEAPON_FOCUS_SHORTBOW: return          BASE_ITEM_SHORTBOW          ;
+            case FEAT_WEAPON_FOCUS_SHORT_SWORD: return       BASE_ITEM_SHORTSWORD       ;
+            case FEAT_WEAPON_FOCUS_RAPIER: return            BASE_ITEM_RAPIER            ;
+            case FEAT_WEAPON_FOCUS_SCIMITAR: return          BASE_ITEM_SCIMITAR          ;
+        case FEAT_WEAPON_FOCUS_LONG_SWORD: return        BASE_ITEM_LONGSWORD        ;
+            case FEAT_WEAPON_FOCUS_GREAT_SWORD: return       BASE_ITEM_GREATSWORD       ;
+            case FEAT_WEAPON_FOCUS_HAND_AXE: return          BASE_ITEM_HANDAXE          ;
+            case FEAT_WEAPON_FOCUS_THROWING_AXE: return      BASE_ITEM_THROWINGAXE      ;
+            case FEAT_WEAPON_FOCUS_BATTLE_AXE: return        BASE_ITEM_BATTLEAXE        ;
+            case FEAT_WEAPON_FOCUS_GREAT_AXE: return         BASE_ITEM_GREATAXE         ;
+            case FEAT_WEAPON_FOCUS_HALBERD: return           BASE_ITEM_HALBERD           ;
+            case FEAT_WEAPON_FOCUS_LIGHT_HAMMER: return      BASE_ITEM_LIGHTHAMMER      ;
+            case FEAT_WEAPON_FOCUS_LIGHT_FLAIL: return       BASE_ITEM_LIGHTFLAIL       ;
+        case FEAT_WEAPON_FOCUS_WAR_HAMMER: return        BASE_ITEM_WARHAMMER        ;
+            case FEAT_WEAPON_FOCUS_HEAVY_FLAIL: return       BASE_ITEM_HEAVYFLAIL       ;
+            case FEAT_WEAPON_FOCUS_KAMA: return              BASE_ITEM_KAMA              ;
+            case FEAT_WEAPON_FOCUS_KUKRI: return             BASE_ITEM_KUKRI             ;
+            case FEAT_WEAPON_FOCUS_SHURIKEN: return          BASE_ITEM_SHURIKEN          ;
+            case FEAT_WEAPON_FOCUS_SCYTHE: return            BASE_ITEM_SCYTHE            ;
+            case FEAT_WEAPON_FOCUS_KATANA: return            BASE_ITEM_KATANA            ;
+            case FEAT_WEAPON_FOCUS_BASTARD_SWORD: return     BASE_ITEM_BASTARDSWORD     ;
+            case FEAT_WEAPON_FOCUS_DIRE_MACE: return         BASE_ITEM_DIREMACE         ;
+            case FEAT_WEAPON_FOCUS_DOUBLE_AXE: return        BASE_ITEM_DOUBLEAXE        ;
+            case FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD: return  BASE_ITEM_TWOBLADEDSWORD  ;
+            case FEAT_WEAPON_FOCUS_DWAXE: return             BASE_ITEM_DWARVENWARAXE             ;
+            case FEAT_WEAPON_FOCUS_WHIP: return              BASE_ITEM_WHIP              ;
             }
     return - 1;
 }

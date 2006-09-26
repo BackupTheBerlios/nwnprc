@@ -96,6 +96,66 @@ void main()
         //mark it as set just to be sure
         SetLocalInt(oItem, "CloakDone", TRUE);
     }    
+    
+    //PRC Companion
+    //DOA visible dyepot items
+    if(GetPRCSwitch(MARKER_PRC_COMPANION))
+    {
+        if(GetBaseItemType(oItem) == BASE_ITEM_MISCSMALL)
+        {
+            //x2_it_dyec23
+            string sTag = GetTag(oItem);
+            if(GetStringLeft(sTag, 9) == "x2_it_dye")
+            {
+                //get the color
+                //taken from x2_s3_dyearmour
+                // GZ@2006/03/26: Added new color palette support. Note: Will only work
+                //                if craig updates the in engine functions as well.
+                int nColor     =  0;
+                // See if we find a valid int between 0 and 127 in the last three letters
+                // of the tag, use it as color
+                int nTest      =  StringToInt(GetStringRight(sTag,3));
+                if (nTest > 0 && 
+                    nTest < 175 )//magic number, bad!
+                    nColor = nTest;
+                else //otherwise, use last two letters, as per legacy HotU
+                    nColor = StringToInt(GetStringRight(sTag,2));
+                    
+                //use limbo for crafting in
+                object oLimbo = GetObjectByTag("HEARTOFCHAOS");
+                //create the new one with the same tag as the old
+                object oDye = CreateItemOnObject("prccompdye", oLimbo, 1, sTag);
+                //ensure old one is cleaned up
+                DestroyObject(oItem);
+                //if its a metalic dye, modify it to use model 2
+                if(GetStringRight(GetStringLeft(sTag, 10), 1) == "m")
+                {
+                    DestroyObject(oDye);
+                    oDye = CopyItemAndModify(oDye, ITEM_APPR_TYPE_SIMPLE_MODEL, 0, 2);
+                    //metal dye color
+                    DestroyObject(oDye);
+                    oDye = CopyItemAndModify(oDye, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1, nColor);
+                }
+                else
+                {
+                    //standard dye
+                    DestroyObject(oDye);
+                    //cloth and leather use same palettee
+                    oDye = CopyItemAndModify(oDye, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1, nColor);
+                }
+                //copy the itemprops to cast the dye "spell"
+                itemproperty ipTest = GetFirstItemProperty(oItem);
+                while(GetIsItemPropertyValid(ipTest))
+                {
+                    AddItemProperty(DURATION_TYPE_PERMANENT, ipTest, oDye);
+                    ipTest = GetNextItemProperty(oItem);
+                }
+                //move it back to the player
+                CopyItem(oDye, oCreature);
+                DestroyObject(oDye);
+            }
+        }   
+    }
 
     // Execute scripts hooked to this event for the creature and item triggering it
     ExecuteAllScriptsHookedToEvent(oCreature, EVENT_ONACQUIREITEM);

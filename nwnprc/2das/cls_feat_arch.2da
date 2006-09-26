@@ -9,8 +9,12 @@
 5  FEAT_SPELL_POWER_III               3009      2    -1             0      
 6  FEAT_SPELL_POWER_IV                3010      2    -1             0      
 7  FEAT_SPELL_POWER_V                 3011      2    -1             0      
-8  FEAT_ARCANE_FIRE                   3012      2    -1             1      
-9  FEAT_SPELL_LIKE                    3013      2    -1             1      
+8  FEAT_ARCANE_FIRE                   3012      2    -1             1     
+14 SLA_I                              2825      2    -1             1        
+15 SLA_II                             2826      2    -1             1        
+16 SLA_III                            2827      2    -1             1        
+17 SLA_IV                             2828      2    -1             1        
+18 SLA_V                              2829      2    -1             1         
 10 WeapProfSim                        46        0    -1             0      
 11 WeapProfEx                         44        0    -1             0      
 12 WeapProfMar                        45        0    -1             0      

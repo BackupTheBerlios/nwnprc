@@ -6,7 +6,7 @@
 Primary
 -----------------------------------------------------
 
-Bugs: Sohei spellbook, Skullclan Hunter Sneak Undead
+Bugs: Sohei spellbook
 
 Truenaming:
 
@@ -27,13 +27,7 @@ Spells: Update Gate to use the new code
 Feats: Add enforcement of recitation choice
             
 Base Classes:
-Duskblade - All to do
-
-Psionic PrCs:
-Shadowmind - All to do, (Mass) Cloud Mind powers
-
-Normal PrCs:
-Slayer of Domiel - cls_feat.2da, TLK, Spells, Spellbook, Update spell constant
+Duskblade - Spellbook
 
 -----------------------------------------------------
 Secondary
@@ -46,6 +40,7 @@ Dread Necromancer - All to do, Spells
 Beguiler - All to do, Spells
 
 Psionic PrCs:
+Shadowmind - All to do, (Mass) Cloud Mind powers
 Metamind - All to do
 Psion Uncarnate - All to do
 Pyrokineticist - All to do

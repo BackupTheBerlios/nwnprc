@@ -34,3 +34,13 @@ Material Components: Three glass beads.
 
 #include "prc_alterations"
 #include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	
+	

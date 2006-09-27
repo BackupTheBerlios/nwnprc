@@ -107,6 +107,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_PSION:
         case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_SHADOWLORD:
+        case CLASS_TYPE_DUSKBLADE;
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:

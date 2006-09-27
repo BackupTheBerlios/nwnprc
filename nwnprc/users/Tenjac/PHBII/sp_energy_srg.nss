@@ -81,7 +81,7 @@ void main()
 		nDamType = IP_CONST_DAMAGETYPE_COLD;
 	}
 	
-	else if(nSpell == SPELL_ENERGY_SURGE_ELECTRICAL)
+	else if(nSpell == SPELL_ENERGY_SURGE_ELEC)
 	{
 		nDamType = IP_CONST_DAMAGETYPE_ELECTRICAL;
 	}

@@ -53,7 +53,7 @@ void main()
 		nDamType = DAMAGE_TYPE_COLD;
 	}
 	
-	else if(nSpell == SPELL_ENERGY_AEGIS_ELECTRICAL)
+	else if(nSpell == SPELL_ENERGY_AEGIS_ELEC)
 	{
 		nDamType = DAMAGE_TYPE_ELECTRICAL;
 	}

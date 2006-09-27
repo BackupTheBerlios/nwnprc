@@ -415,6 +415,8 @@ const int SPELL_GREATER_COMMAND_DROP                = 3088;
 const int SPELL_GREATER_COMMAND_FALL                = 3089;
 const int SPELL_GREATER_COMMAND_FLEE                = 3090;
 const int SPELL_GREATER_COMMAND_HALT                = 3091;
+const int SPELL_VISION_OF_HEAVEN                    = 3083;
+const int SPELL_SWORD_OF_CONSCIENCE                 = 3084;
 const int SPELL_OBSCURING_MIST                      = 3085;
 const int SPELL_SHOUT                               = 1953;
 const int SPELL_SHOUT_GREATER                       = 1954;
@@ -747,7 +749,7 @@ const int SPELL_TURN_WATER      = 1733;
 const int SPELL_TURN_BLIGHTSPAWNED  = 1734;
 
 // Slayer of Domiel
-const int SPELL_SLAYER_DOMIEL_DIVINE_GRACE = -1;
+const int SPELL_SLAYER_DOMIEL_DIVINE_GRACE = 2748;
 
 // Disciple of Asmodeus
 const int SPELL_DISCIPLE_ASMODEUS_DREAD_MIGHT = 3059;

@@ -66,6 +66,7 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_SHADOWLORD:
         case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_SOHEI:
+        case CLASS_TYPE_SLAYEROFDOMIEL:
             return SPELLBOOK_TYPE_PREPARED;
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
@@ -100,6 +101,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_FIST_OF_ZUOKEN:
         case CLASS_TYPE_WARMIND:
         case CLASS_TYPE_SOHEI:
+        case CLASS_TYPE_SLAYEROFDOMIEL: 
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_WIZARD:
         case CLASS_TYPE_PSION:

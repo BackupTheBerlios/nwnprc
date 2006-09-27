@@ -444,7 +444,7 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_VIGILANT ||
             nClass==CLASS_TYPE_FAVOURED_SOUL ||
             nClass==CLASS_TYPE_SOHEI ||
-            nClass==CLASS_TYPE_SLAYEROFDOMIEL || 
+            nClass==CLASS_TYPE_SLAYER_OF_DOMIEL || 
             nClass==CLASS_TYPE_OCULAR);
 }
 
@@ -1327,7 +1327,7 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
     int iSue = GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oCaster);
     int iHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oCaster);
     int iSoh = GetLevelByClass(CLASS_TYPE_SOHEI, oCaster);
-    int iSod = GetLevelByClass(CLASS_TYPE_SLAYEROFDOMIEL, oCaster);
+    int iSod = GetLevelByClass(CLASS_TYPE_SLAYER_OF_DOMIEL, oCaster);
     int iSha = GetLevelByClass(CLASS_TYPE_SHADOWLORD, oCaster);
     int iBlk = GetLevelByClass(CLASS_TYPE_BLACKGUARD, oCaster);
     int iVob = GetLevelByClass(CLASS_TYPE_VASSAL, oCaster);
@@ -1446,8 +1446,8 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iSoh / 2;
              return iTemp;
              break; 
-        case CLASS_TYPE_SLAYEROFDOMIEL:
-             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_SLAYEROFDOMIEL)
+        case CLASS_TYPE_SLAYER_OF_DOMIEL:
+             if (GetFirstDivineClass(oCaster) == CLASS_TYPE_SLAYER_OF_DOMIEL)
                  iTemp = iDiv;
              else
                  iTemp = iSod;

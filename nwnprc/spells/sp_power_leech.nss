@@ -40,31 +40,6 @@ Corruption Cost: 1 point of Wisdom drain.
 #include "spinc_common"
 #include "inc_dynconv"
 
-
-void DrainLoop(object oTarget, object oPC, float fRemove, int nRoundCounter)
-{
-	if (nRoundCounter > 0)
-	{
-		effect eDex  = EffectAbilityIncrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
-		effect eDex2 = EffectAbilityDecrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
-		
-		//Impact VFX
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE), oPC);
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
-		
-		//Drain
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex, oPC, fRemove);
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex2, oTarget, fRemove);
-		
-		fRemove = (fRemove - 6.0f);
-		nRoundCounter--;
-		
-		DelayCommand(6.0f, DrainLoop(oTarget, oPC, fRemove, nRoundCounter));
-				
-	}
-	else DeleteLocalInt(oPC, "PRC_Power_Leech_Stat");
-}
-
 void main()
 {
 	
@@ -93,15 +68,22 @@ void main()
 		fRemove = (fRemove * 2);
 	}
 	
+	//Set float
+	SetLocalFloat(oPC, "PRC_Power_Leech_fDur", fRemove);
+	
+	//Set counter int
+	SetLocalInt(oPC, "PRC_Power_Leech_Counter", nRoundCounter);
+		
+	//Clear actions for the convo
+		ClearAllActions(TRUE);
+		
 	//Check for ability to drain
 		
 	/*  <Stratovarius> That would be easiest to do as a convo I think
             <Stratovarius> just steal the animal affinity one from psionics and modify*/
-	
+		
 	StartDynamicConversation("power_leech", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
-	
-	DrainLoop(oTarget, oPC, fRemove, nRoundCounter);
-					
+						
 	//Corruption Cost
 	{
 		DelayCommand(fRemove, DoCorruptionCost(oPC, ABILITY_WISDOM, 1, 1));

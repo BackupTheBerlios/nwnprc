@@ -649,6 +649,53 @@ const int SPELL_TOMB_OF_LIGHT                       = 2643;
 const int SPELL_MASOCHISM                           = 2644;
 const int SPELL_ADDICTION                           = 2645;
 
+const int SPELL_AUGMENT_FAMILIAR                    = 1796;
+const int SPELL_FALSE_LIFE                          = 1799;
+const int SPELL_PROTECTION_FROM_ARROWS              = 1800;
+const int SPELL_TOUCH_OF_IDIOCY                     = 1801;
+const int SPELL_DEEP_SLUMBER                        = 1802;
+const int SPELL_HOUND_OF_DOOM                       = 1803;
+const int SPELL_REPEL_VERMIN                        = 1804;
+const int SPELL_BALEFUL_POLYMORPH                   = 1805;
+const int SPELL_BREAK_ENCHANTMENT                   = 1806;
+const int SPELL_CURSED_BLADE                        = 1807;
+const int SPELL_SOLID_FOG                           = 1808;
+const int SPELL_DETECT_SCRYING                      = 1809;
+
+const int SPELL_CHANNELED_PYROBURST                 = 1810;
+const int SPELL_CHANNELED_PYROBURST_1               = 1811;
+const int SPELL_CHANNELED_PYROBURST_2               = 1812;
+const int SPELL_CHANNELED_PYROBURST_3               = 1813;
+const int SPELL_CHANNELED_PYROBURST_4               = 1814;
+const int SPELL_CROWN_OF_MIGHT                      = 1815;
+const int SPELL_CROWN_OF_PROTECTION                 = 1816;
+const int SPELL_LESSER_DEFLECT                      = 1817;
+const int SPELL_DEFLECT                             = 1797;
+const int SPELL_DIMENSION_HOP                       = 1818;
+const int SPELL_DISPELLING_TOUCH                    = 1819;
+const int SPELL_DOOM_SCARABS                        = 1820;
+const int SPELL_ENERGY_AEGIS                        = 1821;
+const int SPELL_ENERGY_AEGIS_ACID                   = 1822;
+const int SPELL_ENERGY_AEGIS_COLD                   = 1823;
+const int SPELL_ENERGY_AEGIS_ELEC                   = 1824;
+const int SPELL_ENERGY_AEGIS_FIRE                   = 1825;
+const int SPELL_ENERGY_AEGIS_SONIC                  = 1826;
+const int SPELL_ENERGY_SURGE                        = 1827;
+const int SPELL_ENERGY_SURGE_ACID                   = 1828;
+const int SPELL_ENERGY_SURGE_COLD                   = 1829;
+const int SPELL_ENERGY_SURGE_ELEC                   = 1830;
+const int SPELL_ENERGY_SURGE_FIRE                   = 1831;
+const int SPELL_ENERGY_SURGE_SONIC                  = 1832;
+const int SPELL_HALT                                = 1833;
+const int SPELL_KELGORES_FIRE_ORB                   = 1834;
+const int SPELL_REGROUP                             = 1835;
+const int SPELL_ROUSE                               = 1836;
+const int SPELL_SEEKING_RAY                         = 1837;
+const int SPELL_SLASHING_DISPEL                     = 1838;
+const int SPELL_SONIC_SHIELD                        = 1839;
+const int SPELL_SURE_STRIKE                         = 1840;
+
+
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;
 const int SPELL_INSIGHTFUL_REFLEXES                 = 1916;

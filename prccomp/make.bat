@@ -10,7 +10,7 @@ erf -u prccomp.hak companion\data\*.*
 
 ECHO copying the prc companion 2das somewhere to be merged
 mkdir prccc
-copy companion\2da\*.2da prccc\*.2da
+REM copy companion\2da\*.2da prccc\*.2da
 
 ECHO Merging tlk xml files
 tlktools tlkmerge.xml
@@ -31,8 +31,8 @@ REM c1   = CEP1 (1.68)
 
 REM Merge PRC & Companion
 REM put this in its own dir for later
-SET SOURCE=companion\2da
-SET MERGE=prc
+SET SOURCE=prc
+SET MERGE=companion\2da
 SET OUTPUT=prcc
 SET NAME=prcc
 start /B /wAIT makeb.bat

@@ -40,6 +40,32 @@ string StatToName(int nStat)
     return "";
 }
 
+void DrainLoop(object oTarget, object oPC, float fRemove, int nRoundCounter)
+{
+	if ((nRoundCounter > 0) && (!GetIsDead(oTarget)))
+	{
+		effect eDex  = EffectAbilityIncrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
+		effect eDex2 = EffectAbilityDecrease(GetLocalInt(oPC, "PRC_Power_Leech_Stat"), 1);
+		
+		//Impact VFX
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE), oPC);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE), oTarget);
+		
+		//Drain
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex, oPC, fRemove);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDex2, oTarget, fRemove);
+		
+		fRemove = (fRemove - 6.0f);
+		nRoundCounter--;
+		
+		DelayCommand(6.0f, DrainLoop(oTarget, oPC, fRemove, nRoundCounter));
+				
+	}
+	else
+	{
+		DeleteLocalInt(oPC, "PRC_Power_Leech_Stat");
+	}
+}
 
 //////////////////////////////////////////////////
 /* Main function                                */
@@ -48,6 +74,7 @@ string StatToName(int nStat)
 void main()
 {
     object oPC = GetPCSpeaker();
+    object oTarget = GetLocalObject(oPC, "PRC_PowerLeechTarget");
     /* Get the value of the local variable set by the conversation script calling
      * this script. Values:
      * DYNCONV_ABORTED     Conversation aborted
@@ -144,6 +171,12 @@ void main()
             {
             // We're all done
             AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+            
+            //Do the drain
+            int nRoundCounter = GetLocalInt(oPC, "PRC_Power_Leech_Counter");
+            float fRemove = GetLocalFloat(oPC, "PRC_Power_Leech_fDur");
+            
+            DrainLoop(oTarget, oPC, fRemove, nRoundCounter);
 
             }
             else
@@ -156,9 +189,12 @@ void main()
             }
 
             DeleteLocalInt(oPC, "PRC_Power_Leech_Stat");
+            DeleteLocalFloat(oPC, "PRC_Power_Leech_fDur");
+            DeleteLocalInt(oPC, "PRC_Power_Leech_Counter");
         }
 
         // Store the stage value. If it has been changed, this clears out the choices
         SetStage(nStage, oPC);
     }
 }
+

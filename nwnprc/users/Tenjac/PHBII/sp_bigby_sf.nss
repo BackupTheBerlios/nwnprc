@@ -27,3 +27,10 @@ not subject to the bull rush attempt.
 
 Material Components: Three glass beads.
 **/
+///////////////////////////////////////////////////////
+// Author: Tenjac
+// Date:   27.9.06
+///////////////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"

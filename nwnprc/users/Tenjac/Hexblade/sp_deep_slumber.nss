@@ -4,7 +4,7 @@
 //:://////////////////////////////////////////////
 /**@file Deep Slumber
 Enchantment (Compulsion) [Mind-Affecting]
-Level: Brd 3, Sor/Wiz 3
+Level: Brd 3, Sor/Wiz 3, Hexblade 3
 Range: Close (25 ft. + 5 ft./2 levels)
 This spell functions like sleep, except that it affects 10 HD of creatures.
 

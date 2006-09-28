@@ -420,7 +420,17 @@ const int SPELL_SWORD_OF_CONSCIENCE                 = 3084;
 const int SPELL_OBSCURING_MIST                      = 3085;
 const int SPELL_SHOUT                               = 1953;
 const int SPELL_SHOUT_GREATER                       = 1954;
-
+const int SPELL_JUMP                                = 2070;
+const int SPELL_IRON_BODY                           = 2071;
+const int SPELL_ENLARGE_PERSON                      = 2072;
+const int SPELL_ENLARGE_PERSON_MASS                 = 2073;
+const int SPELL_REDUCE_PERSON                       = 2074;
+const int SPELL_REDUCE_PERSON_MASS                  = 2075;
+const int SPELL_ANTIMAGIC_FIELD                     = 2076;
+const int SPELL_NONDETECTION                        = 2077;
+const int SPELL_RAINBOW_PATTERN                     = 2078;
+const int SPELL_MAGE_HAND                           = 2079;
+const int SPELL_DETECT_UNDEAD                       = 2080;
 
 //racial spell additions
 const int SPELL_RAKSHASA_DISGUISE                   = 1951;

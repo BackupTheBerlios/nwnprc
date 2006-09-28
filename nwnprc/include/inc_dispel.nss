@@ -327,6 +327,17 @@ void DispelMagicBestMod(object oTarget, int nCasterLevel)
                     if(GetEffectCreator(eToDispel) == oEffectCaster)
                     {
                       RemoveEffect(oTarget, eToDispel);
+                      
+                      if(GetSpellId() == SPELL_SLASHING_DISPEL)
+                      {
+			      //Get spell level
+			      int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+			      //Damage = 2 * spell level
+			      effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
+			      
+			      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
+		      }
+                      
                     }// end if effect comes from this caster
                 }// end if effect comes from this spell
                 eToDispel = GetNextEffect(oTarget);
@@ -460,6 +471,16 @@ void DispelMagicAllMod(object oTarget, int nCasterLevel)
             if(GetEffectCreator(eToDispel) == oEffectCaster)
             {
               RemoveEffect(oTarget, eToDispel);
+              
+              if(GetSpellId() == SPELL_SLASHING_DISPEL)
+              {
+		      //Get spell level
+		      int nEffectSpellLevel = StringToInt(Get2DACache("spells", "Innate", nEffectSpellID));
+		      //Damage = 2 * spell level
+		      effect eSlashDam = EffectDamage(DAMAGE_TYPE_MAGICAL, 2 * nEffectSpellLevel);
+		      
+		      SPApplyEffectToObject(DURATION_TYPE_INSTANT, eSlashDam, oTarget);
+	      }
 
               //Spell Removal Check
               SpellRemovalCheck(oEffectCaster, oTarget);

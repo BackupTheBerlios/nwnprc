@@ -652,6 +652,7 @@ const int SPELL_MASOCHISM                           = 2644;
 const int SPELL_ADDICTION                           = 2645;
 
 const int SPELL_AUGMENT_FAMILIAR                    = 1796;
+const int SPELL_BLADE_OF_BLOOD                      = 1798;
 const int SPELL_FALSE_LIFE                          = 1799;
 const int SPELL_PROTECTION_FROM_ARROWS              = 1800;
 const int SPELL_TOUCH_OF_IDIOCY                     = 1801;
@@ -696,6 +697,9 @@ const int SPELL_SEEKING_RAY                         = 1837;
 const int SPELL_SLASHING_DISPEL                     = 1838;
 const int SPELL_SONIC_SHIELD                        = 1839;
 const int SPELL_SURE_STRIKE                         = 1840;
+const int SPELL_ANIMALISTIC_POWER                   = 1841;
+const int SPELL_BLADE_OF_BLOOD_NRM                  = 1842;
+const int SPELL_BLADE_OF_BLOOD_EMP                  = 1843;
 
 
 // Passive feats

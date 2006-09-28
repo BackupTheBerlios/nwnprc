@@ -18,7 +18,6 @@ Spont:
 Make cls_spbk_*.2da
 Make cls_spkn_*.2da
 Make cls_spcr_*.2da
-Add the spellbook feat to cls_feat_*.2da at the appropriate level
 Add class to GetSpellbookTypeForClass() below
 Add class to GetAbilityForClass() below
 Add class to GetIsArcaneClass() or GetIsDivineClass() in prc_inc_spells as appropriate
@@ -815,7 +814,7 @@ if(DEBUG) DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellb
     // This does the Duskblade's Quick Cast
     // Yes, I know it overrides other metamagic
     if (nClass == CLASS_TYPE_DUSKBLADE && GetLocalInt(oPC, "DBQuickCast"))
-    	nMetamagic = METAMAGIC_QUICKEN;
+        nMetamagic = METAMAGIC_QUICKEN;
 
 
     //cast the spell

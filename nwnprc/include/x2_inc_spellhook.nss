@@ -460,13 +460,17 @@ void Battlecast()
 }
 
 
+//Archmage and Heirophant SLA slection/storage setting
 int ClassSLAStore()
 {
-    if(GetLocalInt(OBJECT_SELF, ""))
+    int nSLAID = GetLocalInt(OBJECT_SELF, "PRC_SLA_Store");
+    if(nSLAID)
     {
-        FloatingTextStringOnCreature("SLA stored", OBJECT_SELF);
-        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_SpellID", PRCGetSpellId());
-        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Class", PRCGetLastSpellCastClass());
+        FloatingTextStringOnCreature("SLA "+IntToString(nSLAID)+" stored", OBJECT_SELF);
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_SpellID_"+IntToString(nSLAID), PRCGetSpellId());
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Class_"+IntToString(nSLAID), PRCGetLastSpellCastClass());
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Meta_"+IntToString(nSLAID), PRCGetMetaMagicFeat());
+        DeleteLocalInt(OBJECT_SELF, "PRC_SLA_Store");
         return FALSE;
     }   
     return TRUE;

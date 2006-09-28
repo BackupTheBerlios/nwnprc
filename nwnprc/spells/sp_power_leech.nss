@@ -73,7 +73,10 @@ void main()
 	
 	//Set counter int
 	SetLocalInt(oPC, "PRC_Power_Leech_Counter", nRoundCounter);
-		
+	
+	//Set target as local object
+	SetLocalObject(oPC, "PRC_PowerLeechTarget", oTarget);
+	
 	//Clear actions for the convo
 		ClearAllActions(TRUE);
 		

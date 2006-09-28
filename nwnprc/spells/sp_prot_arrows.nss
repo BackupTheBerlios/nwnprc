@@ -43,7 +43,13 @@ void main()
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = HoursToSeconds(nCasterLvl);
-	
+	int nMetaMagic = PRCGetMetaMagicFeat();
+		
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+		
 	SPRaiseSpellCastAt(oTarget,FALSE, SPELL_PROTECTION_FROM_ARROWS, oPC);
 	
 	// Damage Resistance 10 piercing, max of 100 total

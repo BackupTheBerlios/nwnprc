@@ -867,7 +867,7 @@ int CICraftCheckCraftStaff(object oSpellTarget, object oCaster)
     }
     if(CIGetIsSpellRestrictedFromCraftFeat(nSpellID, X2_CI_CRAFTSTAFF_FEAT_ID))
     {
-        FloatingTextStrRefOnCreature(16829095, oCaster); // can not be used with this feat
+        FloatingTextStrRefOnCreature(16829169, oCaster); // can not be used with this feat
         return TRUE;
     }
     int nLevel = CIGetSpellInnateLevel(nSpellID,TRUE);
@@ -897,7 +897,7 @@ These dont work as IPs since they are hardcoded */
         }
     }
     int nCostMod = GetPRCSwitch(X2_CI_CRAFTSTAFF_COSTMODIFIER);
-    if(!nCostMod == 0) nCostMod = 750;
+    if(!nCostMod) nCostMod = 750;
     int nLvlRow = IPGetIPConstCastSpellFromSpellID(nSpellID);
     int nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
     int nCost = CIGetCraftGPCost(nLevel, nCostMod, PRC_CRAFT_STAFF_CASTER_LEVEL);
@@ -934,22 +934,6 @@ These dont work as IPs since they are hardcoded */
             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyCastSpellMetamagic(nSpellID, PRCGetMetaMagicFeat()),oSpellTarget);
             AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF)),oSpellTarget);
         }
-        int nType = CI_GetClassMagicType(PRCGetLastSpellCastClass());
-        if (nType == X2_CI_MAGICTYPE_DIVINE)
-        {
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyLimitUseByClass(CLASS_TYPE_PALADIN),oSpellTarget);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyLimitUseByClass(CLASS_TYPE_RANGER),oSpellTarget);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyLimitUseByClass(CLASS_TYPE_DRUID),oSpellTarget);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyLimitUseByClass(CLASS_TYPE_CLERIC),oSpellTarget);
-        }
-        else if (nType == X2_CI_MAGICTYPE_ARCANE)
-        {
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyLimitUseByClass(CLASS_TYPE_WIZARD),oSpellTarget);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyLimitUseByClass(CLASS_TYPE_SORCERER),oSpellTarget);
-            AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyLimitUseByClass(CLASS_TYPE_BARD),oSpellTarget);
-        }
-        SetItemCharges(oSpellTarget,50);
-        // TODOL Add use restrictions there when item becomes available
     }
     else
         bSuccess = FALSE;

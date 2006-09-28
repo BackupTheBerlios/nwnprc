@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 10, 2006
+    Modified: Sept 25, 2006
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -71,16 +71,30 @@ const int PRC_CRAFT_FLAG_ALCHEMICAL_SILVER  = 64;   //not implemented
 const int PRC_CRAFT_FLAG_MUNDANE_CRYSTAL    = 128;
 const int PRC_CRAFT_FLAG_DEEP_CRYSTAL       = 256;
 
-const int PRC_CRAFT_ITEM_TYPE_WEAPON    = 1;
-const int PRC_CRAFT_ITEM_TYPE_ARMOUR    = 2;
-const int PRC_CRAFT_ITEM_TYPE_SHIELD    = 3;
-const int PRC_CRAFT_ITEM_TYPE_AMMO      = 4;
-const int PRC_CRAFT_ITEM_TYPE_MISC      = 5;
-const int PRC_CRAFT_ITEM_TYPE_CASTSPELL = 6;
+const int PRC_CRAFT_ITEM_TYPE_WEAPON        = 1;
+const int PRC_CRAFT_ITEM_TYPE_ARMOUR        = 2;
+const int PRC_CRAFT_ITEM_TYPE_SHIELD        = 3;
+const int PRC_CRAFT_ITEM_TYPE_AMMO          = 4;
+const int PRC_CRAFT_ITEM_TYPE_MISC          = 5;
+const int PRC_CRAFT_ITEM_TYPE_CASTSPELL     = 6;
 
+const string PRC_CRAFT_SPECIAL_BANE         = "PRC_CRAFT_SPECIAL_BANE";
+const string PRC_CRAFT_SPECIAL_BANE_RACE    = "PRC_CRAFT_SPECIAL_BANE_RACE";
 
-const string PRC_CRAFT_SPECIAL_BANE     = "PRC_CRAFT_SPECIAL_BANE";
-const string PRC_CRAFT_SPECIAL_BANE_RACE = "PRC_CRAFT_SPECIAL_BANE_RACE";
+const string PRC_CRAFT_LISTEN               = "PRC_CRAFT_LISTEN";
+
+const string PRC_CRAFT_APPEARANCE_ARRAY     = "PRC_CRAFT_APPEARANCE_ARRAY";
+
+const int PRC_CRAFT_LISTEN_SETNAME          = 1;
+const int PRC_CRAFT_LISTEN_SETAPPEARANCE    = 2;
+/*
+const int PRC_CRAFT_LISTEN_SETNAME          = 1;
+const int PRC_CRAFT_LISTEN_SETNAME          = 1;
+const int PRC_CRAFT_LISTEN_SETNAME          = 1;
+const int PRC_CRAFT_LISTEN_SETNAME          = 1;
+const int PRC_CRAFT_LISTEN_SETNAME          = 1;
+*/
+
 
 //Placeholders
 
@@ -2278,3 +2292,432 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
     }
     return ip;
 }
+
+string PRCGetItemAppearanceString(object oPC, object oItem)
+{
+    int nBase = GetBaseItemType(oItem);
+    int nModelType = StringToInt(Get2DACache("baseitems", "ModelType", nBase));
+    //PRCSetAppearanceArray(oPC, sString);
+    string sReturn = "";
+
+    switch(nModelType)
+    {
+        case 0:
+        {   //simple model, 1 value
+            sReturn = IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0));
+            break;
+        }
+        case 1:
+        {   //helmet, cloak, model + 6 colours, 7 values
+            sReturn = IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL2))
+                        ;
+            break;
+        }
+        case 2:
+        {   //weapon, 3 sections + 3 colours, 6 values
+            sReturn = IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_WEAPON_COLOR, ITEM_APPR_WEAPON_COLOR_BOTTOM)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_WEAPON_COLOR, ITEM_APPR_WEAPON_COLOR_MIDDLE)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_WEAPON_COLOR, ITEM_APPR_WEAPON_COLOR_TOP)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_WEAPON_MODEL, ITEM_APPR_WEAPON_MODEL_BOTTOM)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_WEAPON_MODEL, ITEM_APPR_WEAPON_MODEL_MIDDLE)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_WEAPON_MODEL, ITEM_APPR_WEAPON_MODEL_TOP))
+                        ;
+            break;
+        }
+        case 3:
+        {   //armour, 19 sections + 6 colours, 25 values
+            sReturn = IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RFOOT)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LFOOT)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RSHIN)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LSHIN)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LTHIGH)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RTHIGH)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_PELVIS)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_TORSO)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_BELT)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_NECK)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RFOREARM)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LFOREARM)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RBICEP)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LBICEP)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RSHOULDER)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LSHOULDER)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RHAND)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LHAND)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_ROBE)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL2))
+                        ;
+            break;
+        }
+    }
+    return sReturn;
+}
+
+//reads a string with ints delimited by "-", then set the appearance
+//  of an item accordingly
+object PRCSetItemAppearance(object oPC, object oItem, string sArray, string sName = PRC_CRAFT_APPEARANCE_ARRAY)
+{
+    //initialise array
+    if(array_exists(oPC, sName))
+        array_delete(oPC, sName);
+    array_create(oPC, sName);
+    //initialise variables
+    string sTemp = sArray;
+    string sSub;
+    int nLength = GetStringLength(sTemp);
+    int nPosition;
+    int nTemp;
+    int nIndex = 0;
+    object oChest = GetTempCraftChest();
+    object oTemp;
+    while(nLength > 0)
+    {
+        nPosition = FindSubString(sTemp, "-");
+        if(nPosition == -1)
+        {   //last value
+            sSub = sTemp;
+            nLength = 0;
+        }
+        else
+        {
+            sSub = GetStringLeft(sTemp, nPosition);
+            nLength -= (nPosition + 1);
+        }
+        if(sSub == "*")
+            nTemp = -1;
+        else
+            nTemp = StringToInt(sSub);
+        array_set_int(oPC, sName, nIndex, nTemp);
+        nIndex++;
+        if(nPosition == -1) break;  //last value
+        if(nLength < 0)
+        {
+            if(DEBUG) DoDebug("PRCSetItemAppearanceString: Error processing string");
+            return oItem;   //something went wrong
+        }
+        sTemp = GetSubString(sTemp, nPosition + 1, nLength);
+    }
+    int nBase = GetBaseItemType(oItem);
+    int nModelType = StringToInt(Get2DACache("baseitems", "ModelType", nBase));
+    DestroyObject(oItem);
+    oItem = CopyItem(oItem, oChest, TRUE);
+    switch(nModelType)
+    {
+        case 0:
+        {   //simple model, 1 value
+            nTemp = array_get_int(oPC, sName, 0);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0, nTemp, TRUE);
+            }
+            break;
+        }
+        case 1:
+        {   //helmet, cloak, model + 6 colours, 7 values, cloak model change doesn't work in 1.68
+            nTemp = array_get_int(oPC, sName, 0);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 1);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 2);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 3);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 4);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 5);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 6);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL2, nTemp, TRUE);
+            }
+            break;
+        }
+        case 2:
+        {   //weapon, 3 sections + 3 colours, 6 values
+            nTemp = array_get_int(oPC, sName, 0);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_WEAPON_COLOR, ITEM_APPR_WEAPON_COLOR_BOTTOM, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 1);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_WEAPON_COLOR, ITEM_APPR_WEAPON_COLOR_MIDDLE, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 2);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_WEAPON_COLOR, ITEM_APPR_WEAPON_COLOR_TOP, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 3);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_WEAPON_MODEL, ITEM_APPR_WEAPON_MODEL_BOTTOM, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 4);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_WEAPON_MODEL, ITEM_APPR_WEAPON_MODEL_MIDDLE, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 5);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_WEAPON_MODEL, ITEM_APPR_WEAPON_MODEL_TOP, nTemp, TRUE);
+            }
+            break;
+        }
+        case 3:
+        {   //armour, 19 sections + 6 colours, 25 values
+            nTemp = array_get_int(oPC, sName, 0);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RFOOT, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 1);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LFOOT, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 2);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RSHIN, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 3);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LSHIN, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 4);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LTHIGH, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 5);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RTHIGH, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 6);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_PELVIS, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 7);
+            if(nTemp != -1)
+            {
+                if(FloatToInt(StringToFloat(Get2DACache("parts_chest", "ACBONUS", GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_TORSO)))) == FloatToInt(StringToFloat(Get2DACache("parts_chest", "ACBONUS", nTemp))))
+                {   //won't allow change to armour with different AC
+                    DestroyObject(oItem);
+                    oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_TORSO, nTemp, TRUE);
+                }
+                else
+                {
+                    SendMessageToPC(oPC, "This torso appearance has a different AC value to the current appearance, aborting torso change.");
+                }
+            }
+            nTemp = array_get_int(oPC, sName, 8);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_BELT, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 9);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_NECK, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 10);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RFOREARM, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 11);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LFOREARM, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 12);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RBICEP, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 13);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LBICEP, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 14);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RSHOULDER, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 15);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LSHOULDER, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 16);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_RHAND, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 17);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_LHAND, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 18);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_MODEL, ITEM_APPR_ARMOR_MODEL_ROBE, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 19);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 20);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 21);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 22);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 23);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1, nTemp, TRUE);
+            }
+            nTemp = array_get_int(oPC, sName, 24);
+            if(nTemp != -1)
+            {
+                DestroyObject(oItem);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL2, nTemp, TRUE);
+            }
+            break;
+        }
+    }
+    DestroyObject(oItem);
+    oItem = CopyItem(oItem, oPC, TRUE);
+    return oItem;
+}
+/*
+int ITEM_APPR_TYPE_SIMPLE_MODEL         = 0;
+int ITEM_APPR_TYPE_WEAPON_COLOR         = 1;
+int ITEM_APPR_TYPE_WEAPON_MODEL         = 2;
+int ITEM_APPR_TYPE_ARMOR_MODEL          = 3;
+int ITEM_APPR_TYPE_ARMOR_COLOR          = 4;
+int ITEM_APPR_NUM_TYPES                 = 5;
+
+int ITEM_APPR_ARMOR_COLOR_LEATHER1      = 0;
+int ITEM_APPR_ARMOR_COLOR_LEATHER2      = 1;
+int ITEM_APPR_ARMOR_COLOR_CLOTH1        = 2;
+int ITEM_APPR_ARMOR_COLOR_CLOTH2        = 3;
+int ITEM_APPR_ARMOR_COLOR_METAL1        = 4;
+int ITEM_APPR_ARMOR_COLOR_METAL2        = 5;
+int ITEM_APPR_ARMOR_NUM_COLORS          = 6;
+
+int ITEM_APPR_ARMOR_MODEL_RFOOT         = 0;
+int ITEM_APPR_ARMOR_MODEL_LFOOT         = 1;
+int ITEM_APPR_ARMOR_MODEL_RSHIN         = 2;
+int ITEM_APPR_ARMOR_MODEL_LSHIN         = 3;
+int ITEM_APPR_ARMOR_MODEL_LTHIGH        = 4;
+int ITEM_APPR_ARMOR_MODEL_RTHIGH        = 5;
+int ITEM_APPR_ARMOR_MODEL_PELVIS        = 6;
+int ITEM_APPR_ARMOR_MODEL_TORSO         = 7;
+int ITEM_APPR_ARMOR_MODEL_BELT          = 8;
+int ITEM_APPR_ARMOR_MODEL_NECK          = 9;
+int ITEM_APPR_ARMOR_MODEL_RFOREARM      = 10;
+int ITEM_APPR_ARMOR_MODEL_LFOREARM      = 11;
+int ITEM_APPR_ARMOR_MODEL_RBICEP        = 12;
+int ITEM_APPR_ARMOR_MODEL_LBICEP        = 13;
+int ITEM_APPR_ARMOR_MODEL_RSHOULDER     = 14;
+int ITEM_APPR_ARMOR_MODEL_LSHOULDER     = 15;
+int ITEM_APPR_ARMOR_MODEL_RHAND         = 16;
+int ITEM_APPR_ARMOR_MODEL_LHAND         = 17;
+int ITEM_APPR_ARMOR_MODEL_ROBE          = 18;
+int ITEM_APPR_ARMOR_NUM_MODELS          = 19;
+
+int ITEM_APPR_WEAPON_MODEL_BOTTOM       = 0;
+int ITEM_APPR_WEAPON_MODEL_MIDDLE       = 1;
+int ITEM_APPR_WEAPON_MODEL_TOP          = 2;
+
+int ITEM_APPR_WEAPON_COLOR_BOTTOM       = 0;
+int ITEM_APPR_WEAPON_COLOR_MIDDLE       = 1;
+int ITEM_APPR_WEAPON_COLOR_TOP          = 2;
+*/

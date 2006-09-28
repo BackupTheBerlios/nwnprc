@@ -872,7 +872,7 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * Enforces racial appearance as defined in racialtypes.2da
   */
  const string PRC_ENFORCE_RACIAL_APPEARANCE                = "PRC_ENFORCE_RACIAL_APPEARANCE";
- 
+
  /*
   * by default, on aquire script for races only runs for NPCs if they have a PC as a master
   * This runs it for all NPCs, note this will take significantly more CPU time.
@@ -1620,13 +1620,6 @@ const string PRC_CRAFTING_COST_SCALE                 = "PRC_CRAFTING_COST_SCALE"
  * defaults to 1 hour/1000gp
  */
 const string PRC_CRAFTING_TIME_SCALE                 = "PRC_CRAFTING_TIME_SCALE";
-
-/*
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SPELLFIRE_DISALLOW_DRAIN_SCROLL_POTION);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_ARBITRARY);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_COST_SCALE);
-    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CRAFTING_TIME_SCALE);
-*/
 
 /**
  * TO DISABLE SPECIFIC PROPERTIES:

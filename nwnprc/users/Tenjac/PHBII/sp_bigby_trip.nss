@@ -24,7 +24,8 @@ maximum of +5 at 15th level.
 Material component: Three glass beads
 **/
 
-int BigbyTripPRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
+int BigbyTripPRCDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
+int EvalSizeBonus(object oSubject);
 
 #include "prc_alterations"
 #include "spinc_common"
@@ -55,18 +56,44 @@ void main()
 		nClassType = CLASS_TYPE_DUSKBLADE;
 	}	
 	
+	/*If your attack succeeds, make a Strength check opposed by the
+	defender’s Dexterity or Strength check (whichever ability score
+	has the higher modifier). A combatant gets a +4 bonus for every
+	size category he is larger than Medium or a -4 penalty for every
+	size category he is smaller than Medium. The defender gets a +4
+	bonus on his check if he has more than two legs or is otherwise 
+	more stable than a normal humanoid. If you win, you trip the 
+	defender.
+	*/
+	
 	int nAttackBonus = (2 + nCasterLvl +  GetAbilityModifier(GetAbilityForClass(nClassType, oPC)), oPC);
 	int nTripBonus = min(5,(nCasterLvl/3));
 	
-	 int iAttackRoll = BigbyTripDoMeleeTouchAttack(oTarget);
-	 if (iAttackRoll > 0)
-	 {
-		 
-	 }
-	 
- }	
+	int iAttackRoll = BigbyTripDoMeleeTouchAttack(oTarget, nAttackBonus);
+	if (iAttackRoll > 0)
+	{
+		//SR
+		if(!MyPRCResistSpell(oCaster, oTarget, nCasterLvl + SPGetPenetr()))
+		{
+			//save
+			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
+			{
+				
+				int nOpposing = (max(GetAbilityModifier(ABILITY_STRENGTH, oTarget), GetAbilityModifier(ABILITY_DEXTERITY, oTarget))) + EvalSizeBonus(oTarget);
+				int nCheck    = GetAbilityModifier(ABILITY_STRENGTH, oPC) + EvalSizeBonus(oPC);
+				
+				if(nCheck > nOpposing)
+				{
+					SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, 6.0f);
+				}
+			}
+		}
+	}
+	SPSetSchool();
+}
+
 	
-int BigbyTripPRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
+int BigbyTripPRCDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
 {
     if(GetLocalInt(oCaster, "AttackHasHit"))
         return GetLocalInt(oCaster, "AttackHasHit");
@@ -78,3 +105,51 @@ int BigbyTripPRCDoMeleeTouchAttack(object oTarget, int nDisplayFeedback = TRUE, 
     DelayCommand(1.0, DeleteLocalInt(oCaster, sCacheName));
     return nResult;
 }
+
+int EvalSizeBonus(object oSubject)
+{
+	int nSize = PRCGetCreatureSize(oSubject);
+	int nBonus;
+	
+	//Eval size
+		
+	if(nSize == CREATURE_SIZE_LARGE)
+	{
+		nBonus = 4;
+	}
+	else if(nSize == CREATURE_SIZE_HUGE)
+	{
+		nBonus = 8;
+	}
+	else if(nSize == CREATURE_SIZE_GARGANTUAN)
+	{
+		nBonus = 12;
+	}
+	else if(nSize == CREATURE_SIZE_COLOSSAL)
+	{
+		nBonus = 16;
+	}
+	else if(nSize == CREATURE_SIZE_SMALL)
+	{
+		nBonus = -4;
+	}
+	else if(nSize == CREATURE_SIZE_TINY)
+	{
+		nBonus = -8;
+	}
+	else if(nSize == CREATURE_SIZE_DIMINUTIVE)
+	{
+		nBonus = -12;
+	}
+	else if (nSize == CREATURE_SIZE_FINE)
+	{
+		nBonus = -16;
+	}
+	else
+	{
+		nBonus = 0;
+	}
+	
+	return nBonus;
+}
+	

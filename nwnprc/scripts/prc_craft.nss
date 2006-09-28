@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 10, 2006
+    Modified: Sept 25, 2006
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -33,14 +33,6 @@
 //const int STAGE_                        = ;
 
 const int STAGE_START                   = 0;
-/*
-const int STAGE_SELECT_ITEM             = 1;
-const int STAGE_SELECT_TYPE             = 2;
-const int STAGE_SELECT_SUBTYPE          = 3;
-const int STAGE_SELECT_COSTTABLEVALUE   = 4;
-const int STAGE_SELECT_PARAM1VALUE      = 5;
-const int STAGE_CONFIRM                 = 6;
-*/
 const int STAGE_SELECT_SUBTYPE          = 1;
 const int STAGE_SELECT_COSTTABLEVALUE   = 2;
 const int STAGE_SELECT_PARAM1VALUE      = 3;
@@ -50,6 +42,8 @@ const int STAGE_BANE                    = 5;
 const int STAGE_CONFIRM_MAGIC           = 7;
 const int STAGE_APPEARANCE              = 8;
 const int STAGE_CLONE                   = 9;
+const int STAGE_APPEARANCE_LIST         = 10;
+const int STAGE_APPEARANCE_VALUE        = 11;
 const int STAGE_CRAFT                   = 101;
 const int STAGE_CRAFT_SELECT            = 102;
 const int STAGE_CRAFT_MASTERWORK        = 103;
@@ -71,6 +65,9 @@ const int CHOICE_CONFIRM                = 20005;
 const int CHOICE_SETNAME                = 20006;
 const int CHOICE_SETAPPEARANCE          = 20007;
 const int CHOICE_CLONE                  = 20008;
+
+const int CHOICE_APPEARANCE_SHOUT       = 20009;
+const int CHOICE_APPEARANCE_SELECT      = 20010;
 
 const int CHOICE_CRAFT                  = 20101;
 
@@ -115,18 +112,6 @@ const int PRC_CRAFT_STATE_NORMAL        = 1;
 const int PRC_CRAFT_STATE_MAGIC         = 2;
 
 const string PRC_CRAFT_HB               = "PRC_CRAFT_HB";
-
-const string PRC_CRAFT_LISTEN           = "PRC_CRAFT_LISTEN";
-
-const int PRC_CRAFT_LISTEN_SETNAME      = 1;
-/*
-const int PRC_CRAFT_LISTEN_SETNAME      = 1;
-const int PRC_CRAFT_LISTEN_SETNAME      = 1;
-const int PRC_CRAFT_LISTEN_SETNAME      = 1;
-const int PRC_CRAFT_LISTEN_SETNAME      = 1;
-const int PRC_CRAFT_LISTEN_SETNAME      = 1;
-const int PRC_CRAFT_LISTEN_SETNAME      = 1;
-*/
 
 const int SORT       = TRUE; // If the sorting takes too much CPU, set to FALSE
 const int DEBUG_LIST = FALSE;
@@ -471,12 +456,12 @@ void main()
                         SendMessageToPC(oPC, "This is not a craftable magic item.");
                         return;
                     }
-                }
+                }/*
                 else if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) == PRC_CRAFT_ITEM_TYPE_CASTSPELL)
                 {
                     SendMessageToPC(oPC, "This item must be crafted by casting spells on it.");
                     return;
-                }
+                }*/
                 else if(GetIsMagicItem(oTarget))
                 {
                     SendMessageToPC(oPC, "This is not a craftable magic item.");
@@ -564,42 +549,44 @@ void main()
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ADDITIONAL, strTemp.additionalcost);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC, strTemp.epic);
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
-                        //AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
-                        AddChoice(ActionString("Clone Item"), CHOICE_CLONE, oPC);
-                        SetLocalInt(oPC, "DynConv_Waiting", TRUE);
-                        if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
+                        AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
+                        if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) != PRC_CRAFT_ITEM_TYPE_CASTSPELL)
                         {
-                            sFile = "itempropdef";
-                            SetLocalString(oPC, PRC_CRAFT_FILE, sFile);
-                            PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, sFile, oItem);
-                        }
-                        else if(sFile == "")
-                        {
-                            sFile = "iprp_spells";
-                            PopulateList(oPC, PRCGetFileEnd(sFile), TRUE, sFile);
-                        }
-                        else
-                        {
-                            PopulateList(oPC, PRCGetFileEnd(sFile), FALSE, sFile);
-                        }
-                        string sMaterial = GetStringLeft(GetTag(oTarget), 3);
-                        object oChest = GetCraftChest();
-                        string sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
-                        while(GetIsObjectValid(GetItemPossessedBy(oChest, sTag)))//make sure there aren't any tag conflicts
-                            sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;    //may choke if all uids are taken :P
-                        oNewItem = CopyObject(oItem, GetLocation(oChest), oChest, sTag);
-                        SetIdentified(oNewItem, TRUE);  //just in case
-                        SetLocalString(oPC, PRC_CRAFT_TAG, GetTag(oNewItem));
+                            AddChoice(ActionString("Clone Item"), CHOICE_CLONE, oPC);
+                            SetLocalInt(oPC, "DynConv_Waiting", TRUE);
+                            if(GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
+                            {
+                                sFile = "itempropdef";
+                                SetLocalString(oPC, PRC_CRAFT_FILE, sFile);
+                                PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, sFile, oItem);
+                            }
+                            else if(sFile == "")
+                            {
+                                sFile = "iprp_spells";
+                                PopulateList(oPC, PRCGetFileEnd(sFile), TRUE, sFile);
+                            }
+                            else
+                            {
+                                PopulateList(oPC, PRCGetFileEnd(sFile), FALSE, sFile);
+                            }
+                            string sMaterial = GetStringLeft(GetTag(oTarget), 3);
+                            object oChest = GetCraftChest();
+                            string sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
+                            while(GetIsObjectValid(GetItemPossessedBy(oChest, sTag)))//make sure there aren't any tag conflicts
+                                sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;    //may choke if all uids are taken :P
+                            oNewItem = CopyObject(oItem, GetLocation(oChest), oChest, sTag);
+                            SetIdentified(oNewItem, TRUE);  //just in case
+                            SetLocalString(oPC, PRC_CRAFT_TAG, GetTag(oNewItem));
 
-                        SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
-                        SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
-                        SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, -1);
-                        SetLocalString(oPC, PRC_CRAFT_COSTTABLE, "");
-                        SetLocalInt(oPC, PRC_CRAFT_COSTTABLEVALUE, -1);
-                        SetLocalString(oPC, PRC_CRAFT_PARAM1, "");
-                        SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, -1);
-                        //PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, "itempropdef");
-
+                            SetLocalInt(oPC, PRC_CRAFT_TYPE, -1);
+                            SetLocalString(oPC, PRC_CRAFT_SUBTYPE, "");
+                            SetLocalInt(oPC, PRC_CRAFT_SUBTYPEVALUE, -1);
+                            SetLocalString(oPC, PRC_CRAFT_COSTTABLE, "");
+                            SetLocalInt(oPC, PRC_CRAFT_COSTTABLEVALUE, -1);
+                            SetLocalString(oPC, PRC_CRAFT_PARAM1, "");
+                            SetLocalInt(oPC, PRC_CRAFT_PARAM1VALUE, -1);
+                            //PopulateList(oPC, NUM_MAX_PROPERTIES, TRUE, "itempropdef");
+                        }
                     }
                     SetDefaultTokens();
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
@@ -806,8 +793,11 @@ void main()
                 }
                 case STAGE_APPEARANCE:
                 {
-                    SetHeader("");
-                    AddChoice(ActionString(""), 1, oPC);
+                    sTemp = PRCGetItemAppearanceString(oPC, oItem);
+                    SetHeader("Please make a selection.\n\nYour item appearance code is: \n\n" + sTemp);
+                    AddChoice(ActionString("Back"), CHOICE_BACK, oPC);
+                    AddChoice(ActionString("Set new appearance code"), CHOICE_APPEARANCE_SHOUT, oPC);
+                    //AddChoice(ActionString("Select new appearance"), CHOICE_APPEARANCE_SELECT, oPC);
                     MarkStageSetUp(nStage);
                     break;
                 }
@@ -947,7 +937,7 @@ void main()
                 {
                     if(nChoice == CHOICE_SETNAME)
                     {
-                        nStage = GetPrevItemPropStage(nStage, oPC, nPropList);
+                        //nStage = GetPrevItemPropStage(nStage, oPC, nPropList);
                         object oListener = SpawnListener("prc_craft_listen", GetLocation(oPC), "**", oPC, 30.0f, TRUE);
                         SetLocalObject(oListener, PRC_CRAFT_ITEM, oItem);
                         SetLocalInt(oListener, PRC_CRAFT_LISTEN, PRC_CRAFT_LISTEN_SETNAME);
@@ -957,6 +947,7 @@ void main()
                     }
                     else if(nChoice == CHOICE_SETAPPEARANCE)
                     {
+                        nStage = STAGE_APPEARANCE;
                     }
                     else if(nChoice == CHOICE_CLONE)
                     {
@@ -1178,6 +1169,31 @@ void main()
                 }
                 break;
             }
+            case STAGE_APPEARANCE:
+            {
+                if(nChoice == CHOICE_BACK)
+                {
+                    nStage = STAGE_START;
+                    MarkStageNotSetUp(nStage, oPC);
+                }
+                else
+                {
+                    //code here
+                    switch(nChoice)
+                    {
+                        case CHOICE_APPEARANCE_SHOUT:
+                        {
+                            object oListener = SpawnListener("prc_craft_listen", GetLocation(oPC), "**", oPC, 30.0f, TRUE);
+                            SetLocalObject(oListener, PRC_CRAFT_ITEM, oItem);
+                            SetLocalInt(oListener, PRC_CRAFT_LISTEN, PRC_CRAFT_LISTEN_SETAPPEARANCE);
+                            SendMessageToPC(oPC, "Please state (use chat) the new item appearance code within the next 30 seconds.");
+                            AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                        }
+                        case CHOICE_APPEARANCE_SELECT: nStage = STAGE_APPEARANCE_LIST; break;
+                    }
+                }
+                break;
+            }
             case STAGE_CLONE:
             {
                 if(nChoice == CHOICE_BACK)
@@ -1196,6 +1212,27 @@ void main()
                 }
                 break;
             }
+            /*
+            case <CONSTANT>:
+            {
+                if(nChoice == CHOICE_BACK)
+                {
+                    nStage = STAGE_START;
+                    MarkStageNotSetUp(nStage, oPC);
+                }
+                else
+                {
+                    //code here
+                    switch(nChoice)
+                    {
+                        case a: nStage = a; break;
+                        case a: nStage = a; break;
+                        case a: nStage = a; break;
+                    }
+                }
+                break;
+            }
+            */
         }
         if(DEBUG) DoDebug("Next stage: " + IntToString(nStage));
         SetStage(nStage, oPC);

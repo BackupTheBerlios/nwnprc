@@ -73,7 +73,7 @@ void main()
 	while(nRay > 0)
 	{
 		nRay--;
-		iAttackRoll = PRCDoMeleeTouchAttack(oTarget);
+		iAttackRoll = PRCDoRangedTouchAttack(oTarget);
 		
 		//Beam
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_FIRE, oCaster, BODY_NODE_HAND, !iAttackRoll), oTarget, 1.0f); 

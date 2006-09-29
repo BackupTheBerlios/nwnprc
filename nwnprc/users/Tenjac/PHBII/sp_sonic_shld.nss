@@ -48,9 +48,12 @@ void main()
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oPC, fDur);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShield, oPC, fDur);
 	
-	effect eAOE = EffectAreaOfEffect(AOE_PER_SONIC_SHIELD);
-	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDur);
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+	itemproperty ipOnHit = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
+	IPSafeAddItemProperty(oArmor, ipOnHit, fDur);
+		
+	//Add event script
+	AddEventScript(oTarget, EVENT_ONHIT, "prc_evnt_snshld", TRUE, FALSE);		
 	
 	SPSetSchool();
 }

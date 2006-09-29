@@ -94,7 +94,7 @@ void main()
 					nDam += (nDam/2);
 				}
 				
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_FIRE, nDam), oTarget);
+				ApplyTouchAttackDamage(oPC, oTarget, iAttackRoll, nDam, DAMAGE_TYPE_FIRE);
 			}
 		}			
 			

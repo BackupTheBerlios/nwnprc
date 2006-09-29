@@ -265,6 +265,23 @@ int Thrallherd(object oPC)
     	return FALSE;
 }
 
+int Recitations(object oPC)
+{
+    int nTrue = GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC);
+    int nRec =     GetHasFeat(FEAT_RECITATION_FORTIFIED,    oPC) +
+                   GetHasFeat(FEAT_RECITATION_MEDITATIVE,    oPC) +
+                   GetHasFeat(FEAT_RECITATION_MINDFUL,       oPC) +
+                   GetHasFeat(FEAT_RECITATION_SANGUINE,      oPC) +
+                   GetHasFeat(FEAT_RECITATION_VITAL,         oPC);
+    // Need 2 at level 15, 1 at level 8
+    if((nTrue >= 15 && 2 > nRec) || (nTrue >= 8 && 1 > nRec))
+    {   
+        FloatingTextStringOnCreature("You must select a Recitation feat.", oPC, FALSE);
+        return TRUE;
+    }
+
+    return FALSE;
+}
 
 void main()
 {
@@ -278,6 +295,8 @@ void main()
     bRelevel |= Thrallherd(oPC);
     // Cross class cap on TrueSpeech
     bRelevel |= CheckTrueSpeechSkill(oPC);
+    // Recitations
+    bRelevel |= Recitations(oPC);    
 
 
     if(GetIsPsionicCharacter(oPC))

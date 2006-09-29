@@ -6,7 +6,7 @@
 Primary
 -----------------------------------------------------
 
-Bugs: Sohei spellbook
+Bugs: Sohei spellbook (?)
 
 Truenaming:
 
@@ -23,18 +23,16 @@ Fiendbinder - Unstarted
 Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
 
 Spells: Update Gate to use the new code
-
-Feats: Add enforcement of recitation choice
             
 Base Classes:
 Duskblade - Spellbook
+Healer - Spellbook, Unicorn Script, Cha to Healing
 
 -----------------------------------------------------
 Secondary
 -----------------------------------------------------
 
 Base Classes:
-Healer - All to do
 Warmage - All to do, Spells
 Dread Necromancer - All to do, Spells
 Beguiler - All to do, Spells

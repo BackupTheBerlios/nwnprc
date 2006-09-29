@@ -103,6 +103,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                     {
                         nModify += (nModify/2); //Damage/Healing is +50%
                     }
+                    if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
+            		nModify += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
                     //Make Fort save
                     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                     {
@@ -141,6 +143,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 }
                 //Set healing effect
                 nHP = nHP + nCasterLvl;
+                if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
+                    nHP += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
                 eHeal = EffectHeal(nHP);
                 //Apply heal effect and VFX impact
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget));

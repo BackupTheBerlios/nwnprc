@@ -96,6 +96,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
             nHeal += (nHeal / 2);
         if(GetHasFeat(FEAT_AUGMENT_HEALING, oCaster) && bIsCure)
             nHeal += (nSpellLevel * 2);
+        if (GetLevelByClass(CLASS_TYPE_HEALER, oCaster))
+            nHeal += GetAbilityModifier(ABILITY_CHARISMA, oCaster);
         // Some special handling? - Ornedan
         if(nDice == 0)
             nHeal = 1;

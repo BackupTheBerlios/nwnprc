@@ -83,8 +83,6 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
     // CHANGED CODE
     effect eVis = vfx_impactHurt;
     effect eVis2 = vfx_impactHeal;
-    //effect eVis = EffectVisualEffect(vfx_impactHurt);
-    //effect eVis2 = EffectVisualEffect(vfx_impactHeal);
     effect eHeal, eDam;
 
     int nExtraDamage = nCasterLvl; // * figure out the bonus damage
@@ -92,15 +90,7 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
     {
         nExtraDamage = nMaxExtraDamage;
     }
-    // * if low or normal difficulty is treated as MAXIMIZED
-    if(GetIsPC(oTarget) && GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)
-    {
-        nDamage = nMaximized + nExtraDamage;
-    }
-    else
-    {
-        nDamage = nDamage + nExtraDamage;
-    }
+    nDamage = nDamage + nExtraDamage;
 
 
     //Make metamagic checks
@@ -118,6 +108,8 @@ int biowareSpellsCure(int nCasterLvl,object oTarget, int nDamage, int nMaxExtraD
     {
         nDamage = nDamage + (nDamage/2);
     }
+    if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
+        nDamage += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);    
 
     // The caster is the one who called the script, so OBJECT_SELF should work
     // Applies the Augment Healing feat, which adds 2 points of healing per spell level.

@@ -95,11 +95,6 @@ const int PRC_CRAFT_LISTEN_SETNAME          = 1;
 const int PRC_CRAFT_LISTEN_SETNAME          = 1;
 */
 
-
-//Placeholders
-
-const int SPELL_DETECT_UNDEAD = 0;
-
 struct itemvars
 {
     object item;

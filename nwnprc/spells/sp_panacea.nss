@@ -62,6 +62,8 @@ void main()
                 
         // Roll the healing 'damage'.
         int nHeal = SPGetMetaMagicDamage(DAMAGE_TYPE_POSITIVE, 1, 8, 0, nAdd);
+        if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
+            nHeal += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
 
         // Apply the healing and VFX.
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget);

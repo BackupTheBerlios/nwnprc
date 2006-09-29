@@ -33,6 +33,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int nPenetr = nCasterLevel + SPGetPenetr();
     float fMaxDuration = RoundsToSeconds(nCasterLevel); //modify if necessary
 
+    SPRaiseSpellCastAt(oTarget, TRUE);
+
     //INSERT SPELL CODE HERE
     int iAttackRoll = 0;    //placeholder
 

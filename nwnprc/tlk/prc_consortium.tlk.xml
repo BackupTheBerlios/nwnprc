@@ -2367,6 +2367,71 @@ Use: Automatic.</entry>
   <entry id="45437" lang="en" sex="m">Energy Resistance, Electricity</entry>
   <entry id="45438" lang="en" sex="m">Energy Resistance, Fire</entry>
   <entry id="45439" lang="en" sex="m">Energy Resistance, Sonic</entry>
+  <entry id="45440" lang="en" sex="m">Healer</entry>
+  <entry id="45441" lang="en" sex="m">Healers</entry>
+  <entry id="45442" lang="en" sex="m">healer</entry>
+  <entry id="45443" lang="en" sex="m">(BASE CLASS)
+The hurts of the world are manifold. Minor accidents are common, and usually easily dealt with. However, when conflict and all-out warfare occur, they leave misery and hurt in their wake that can stagger the imagination. While good-aligned Clerics are called upon to heal, their complex obligations and abilities often get in the way of pure solace and remediation. Not so the Healer. One of the Healer's great purposes in life is to provide protection, and failing that, healing, to all good people who require her aid.
+Empathetic, a Healer is adept both at detecting the ailments of allies and understanding the coarse, unruly thoughts of beasts. Her way with animals wins her friends among otherwise savage creatures of the wild.
+A Healer is easy to spot. She moves about behind an adventuring company or combat unit, applying her divine skills to bring relief to the injured. After she passes, the wounded press forward with renewed vigor, and the fallen may yet rise again.
+
+- Hit Die: d8
+- Alignment: good only
+- Proficiencies: A Healer gains proficiency with Simple Weapons and Light Armor. Wearing heavier armor and shields violates her oaths und supresses her healer powers.
+- Skill Points: 4 + Int Modifier
+
+ABILITIES:
+
+Level
+  1: Healing Hands
+  2: Skill Focus (Heal)
+  3: Cleanse Paralysis
+  4: Cleanse Disease
+  5: Cleanse Fear
+  6: Cleanse Poison
+  7:  -
+  8: Unicorn Companion
+  9: Cleanse Blindness
+10: Cleanse Spirit
+11:  -
+12:  -
+13: Cleanse Petrification
+14:  -
+15: New Limb
+16:  -
+17:  -
+18:  -
+19:  -
+20: New Life
+
+SPELLCASTING
+
+A Healer must choose and prepare her spells in advance, like a Cleric does. To cast or prepare a spell, the Healer must have a Wisdom score of 10 + the spell level. The DC of a Favoured Soul's spell is 10 + Spell Level + Charisma Modifier. A Healer's caster level is equal to his class level. She automatically knows all spells she can cast.
+
+Spells per day:
+Level: 0 1 2 3 4 5 6 7 8 9
+
+  1:      4 3  -  -  -  -  -  -  -  -
+  2:      4 4  -  -  -  -  -  -  -  -
+  3:      5 4 3  -  -  -  -  -  -  -
+  4:      5 4 4  -  -  -  -  -  -  -
+  5:      5 5 4 3  -  -  -  -  -  -
+  6:      5 5 4 4  -  -  -  -  -  -
+  7:      6 5 5 4 3  -  -  -  -  -
+  8:      6 5 5 4 4  -  -  -  -  -
+  9:      6 6 5 5 4 3  -  -  -  -
+10:      6 6 5 5 4 4  -  -  -  -
+11:      6 6 6 5 5 4 3  -  -  -
+12:      6 6 6 5 5 4 4  -  -  -
+13:      6 6 6 6 5 5 4 3  -  -
+14:      6 6 6 6 5 5 4 4  -  -
+15:      6 6 6 6 6 5 5 4 3  -
+16:      6 6 6 6 6 5 5 4 4  -
+17:      6 6 6 6 6 6 5 5 4 3
+18:      6 6 6 6 6 6 5 5 4 4
+19:      6 6 6 6 6 6 6 5 5 4
+20:      6 6 6 6 6 6 6 5 5 4
+</entry>
   <entry id="45444" lang="en" sex="m">Disguise Self</entry>
   <entry id="45445" lang="en" sex="m">School: Illusion (Glamer)
 Level: Bard/Sorcerer/Wizard/Hexblade 1

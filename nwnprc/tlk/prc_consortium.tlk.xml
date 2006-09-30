@@ -2375,6 +2375,9 @@ The hurts of the world are manifold. Minor accidents are common, and usually eas
 Empathetic, a Healer is adept both at detecting the ailments of allies and understanding the coarse, unruly thoughts of beasts. Her way with animals wins her friends among otherwise savage creatures of the wild.
 A Healer is easy to spot. She moves about behind an adventuring company or combat unit, applying her divine skills to bring relief to the injured. After she passes, the wounded press forward with renewed vigor, and the fallen may yet rise again.
 
+Ex-Healers
+A Healer who grossly violates her ethos (such as by refusing to heal an ally or a good-aligned creature) loses all spells and class features. She cannot thereafter gain levels as a healer until she atones.
+
 - Hit Die: d8
 - Alignment: good only
 - Proficiencies: A Healer gains proficiency with Simple Weapons and Light Armor. Wearing heavier armor and shields violates her oaths und supresses her healer powers.
@@ -4328,6 +4331,7 @@ Specifics: You know how to shapechange. You feel you are able to explore this mo
   <entry id="45933" lang="en" sex="m">Prereq: Improved Power Attack feat</entry>
   <entry id="45934" lang="en" sex="m">You may not use this feat with a ranged weapon.</entry>
   <entry id="45935" lang="en" sex="m">Your base attack bonus isn't high enough to pay for chosen Power Attack level.</entry>
+  <entry id="45936" lang="en" sex="m">Epic Healer</entry>
   <entry id="45937" lang="en" sex="m">You spellcaster (or manifester) level is not high enough to take the following crafting feats:</entry>
   <entry id="45938" lang="en" sex="m">Craft Construct</entry>
   <entry id="45939" lang="en" sex="m">Type of Feat: General
@@ -4706,6 +4710,31 @@ Use: Automatic.
 
 (*Note: You can select this feat even when evil or neutral, but it will not give you any benefits, so be smart and don't choose it if you can't use it.)
 </entry>
+  <entry id="46103" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 21
+An epic healer seems to exude an aura of serenity and peace, since she has finally reached a level of power where suffering and death no longer seem like insurmountable foes.
+
+Abilities:
+21: Epic cleansing +1 
+22:  - 
+23: Bonus feat 
+24: Epic unicorn companion 
+25: Epic cleansing +2 
+26: Bonus feat 
+27:  - 
+28: Epic unicorn companion 
+29: Bonus feat 
+30: Epic Cleansing +3
+31:  -
+32: Bonus Feat, Epic unicorn companion
+33:  -
+34:  -
+35: Bonus Feat
+36: Epic unicorn companion, Epic Cleansing +4
+37:  -
+38: Bonus Feat
+39:  -
+40: Epic unicorn companion</entry>
   <entry id="46104" lang="en" sex="m">Thrall of Orcus</entry>
   <entry id="46105" lang="en" sex="m">Thralls of Orcus</entry>
   <entry id="46106" lang="en" sex="m">thrall of Orcus</entry>
@@ -4948,6 +4977,7 @@ Use: Selected</entry>
 Prerequisite: Successful casting of Eternal Freedom epic spell
 Specifics: You are able to move as if you had the Freedom spell cast upon you. Most spells and spell-like abilities that would slow you down or stop you will not work.
 Use: Automatic.</entry>
+  <entry id="46162" lang="en" sex="m">New Life (Su)</entry>
   <entry id="46163" lang="en" sex="m">This feat is just a level marker used for scripts. Ignore it.</entry>
   <entry id="46164" lang="en" sex="m">Hospitaler</entry>
   <entry id="46165" lang="en" sex="m">Hospitalers</entry>
@@ -9284,6 +9314,10 @@ Level
 38: Spell Power +10, Bonus Feat
 39: -
 40: Quick Cast 8/day</entry>
+  <entry id="46958" lang="en" sex="m">Healing Hands (Ex)</entry>
+  <entry id="46959" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 1
+Whenever a Healer casts a spell that cures hit point damage, she adds her Charima modifier to the amount of damage healed. For instance, if a 5th level Healer with an 18 Charisma casts Cure Light Wounds, she cures 1d8+5 points of damage normally, plus an additional 4 points of damage due to her Charisma bonus.</entry>
   <entry id="46960" lang="en" sex="m">Augment Quickselect 4</entry>
   <entry id="46961" lang="en" sex="m">Augment Quickselect 5</entry>
   <entry id="46962" lang="en" sex="m">Augment Quickselect 6</entry>
@@ -9714,6 +9748,9 @@ Activating this feat allows your current summoned horde to leave. You can summon
   <entry id="47115" lang="en" sex="m">Gather Horde: Orc Weapon Master</entry>
   <entry id="47116" lang="en" sex="m">Gather Horde: Orc Axe Thrower</entry>
   <entry id="47117" lang="en" sex="m">Gather Horde: Orc Shaman</entry>
+  <entry id="47118" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 20
+Once per day, a 20th-level Healer can bring a dead creature back to life, as if casting a True Ressurection spell.</entry>
   <entry id="47119" lang="en" sex="m">Shifter (PnP)</entry>
   <entry id="47120" lang="en" sex="m">Quick Shift Slots (1-5)</entry>
   <entry id="47121" lang="en" sex="m">Quick Shift Slots (6-10)</entry>
@@ -10167,12 +10204,17 @@ At 4th level, a Thrall of Graz'zt can summon a demon of 5 HD or less once per da
 The HD of the demon summoned increases to 10 HD at level 9, 15 HD at level 15, 20 HD at level 20, 25 HD at level 25, and 30 HD at level 30.
 </entry>
   <entry id="47314" lang="en" sex="m">Your mindblade enhancements have been reset and your mindblades destroyed due to level loss.</entry>
+  <entry id="47315" lang="en" sex="m">Cleanse Disease (Su)</entry>
   <entry id="47316" lang="en" sex="m">Thrall of Graz'zt (Divine)</entry>
   <entry id="47317" lang="en" sex="m">Summon Succubus</entry>
   <entry id="47318" lang="en" sex="m">Summon Vrock</entry>
   <entry id="47319" lang="en" sex="m">Summon Glabrezu</entry>
   <entry id="47320" lang="en" sex="m">Summon Marilith</entry>
   <entry id="47321" lang="en" sex="m">Summon Balor</entry>
+  <entry id="47322" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 4
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 4th level, a healer gains the ability to cleanse disease once per day, as if casting a Remove Disease spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
   <entry id="47323" lang="en" sex="m">Kensai</entry>
   <entry id="47324" lang="en" sex="m">Assassin</entry>
   <entry id="47325" lang="en" sex="m">Heavy</entry>
@@ -11113,6 +11155,11 @@ Prerequisite: Duskblade level 3
 Beginning at 3rd level, the Duskblade can use a standard action to cast any touch spell he knows and deliver the spell through his weapon with a melee attack. Casting a spell in this manner does not provoke attacks of opportunity. If the melee attack is successful, the attack deals damage normally; then the effect of the spell is resolved.
 
 At 13th level the Duskblade can cast any touch spell he knows as part of a full attack action, and the spell affects each target you hit in melee combat that round.</entry>
+  <entry id="47669" lang="en" sex="m">Cleanse Paralysis (Su)</entry>
+  <entry id="47670" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 3
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 3rd level, a healer gains the ability to cleanse paralysis once per day, as if casting a Remove Paralysis spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
   <entry id="47671" lang="en" sex="m">Legendary Commander </entry>
   <entry id="47672" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Cha 25, Epic Leadership, Persuade 30 ranks
@@ -11364,6 +11411,7 @@ Damage: 1d4 Constitution, 1d4 Charisma. Damage continues until saved or Constitu
   <entry id="47747" lang="en" sex="m">Cast Spell: Caster Level</entry>
   <entry id="47748" lang="en" sex="m">Cast Spell: Caster Level:</entry>
   <entry id="47749" lang="en" sex="m">Cast Spell: Caster Level: This item property modifies the Caster Level at which the associated spell is cast from this item. Can be used for Cast Spell and OnHit type item.</entry>
+  <entry id="47750" lang="en" sex="m">Cleanse Fear (Su)</entry>
   <entry id="47751" lang="en" sex="m">Increased Movement Speed</entry>
   <entry id="47752" lang="en" sex="m">Decreased Movement Speed</entry>
   <entry id="47753" lang="en" sex="m">Decreased Movement Speed:</entry>
@@ -11428,6 +11476,15 @@ Use: Selected.</entry>
 Prerequisite: Talontar Blightlord 4.
 Specifics: Once per day, the Blightlord gains the ability to dominate a blightspawned creature. The creature must make a saving throw vs 10 + Blightlord level + Wisdom modifier or be dominated for 1 minute per Blightlord level.
 Use: Selected.</entry>
+  <entry id="47781" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 5
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 5th level, a healer gains the ability to cleanse fear once per day, as if casting a Remove Fear spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
+  <entry id="47782" lang="en" sex="m">Cleanse Poison (Su)</entry>
+  <entry id="47783" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 6
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 6th level, a healer gains the ability to cleanse poison once per day, as if casting a Neutralize Poison spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
   <entry id="47784" lang="en" sex="m">Archmage</entry>
   <entry id="47785" lang="en" sex="m">Archmages</entry>
   <entry id="47786" lang="en" sex="m">archmage</entry>
@@ -14580,6 +14637,11 @@ Specifics: Use a Turn attempt to add +2d6 positive damage to his weapon against 
   <entry id="48667" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Soldier of Light level 8
 Specifics: Use two Turn attempt to damage all undead within 100 feet of the character, dealing 1d6 Positive damage per Light of Soldier level. Undead make a reflex Save (DC: 10+soldier level) for half damage.</entry>
+  <entry id="48668" lang="en" sex="m">Remove Blindness (Su)</entry>
+  <entry id="48669" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 9
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 9th level, a healer gains the ability to cleanse blindness once per day, as if casting a Remove Blindness/Deafness spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
   <entry id="48670" lang="en" sex="m">Share Spells</entry>
   <entry id="48671" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Tamer of Beasts level 7
@@ -16071,6 +16133,11 @@ Armor Skin, Automatic Quicken Spell, Automatic Silent Spell, Automatic Still Spe
 Prerequisite: Can only take this feat at 1st-level.
 Specifics: This feat qualifies you to take the Dragon Disciple Prestige Class, even if you are not a Sorcerer or Bard.  You must still meet all other requirements.
 Use: Automatic.</entry>
+  <entry id="49148" lang="en" sex="m">Cleanse Spirit (Su)</entry>
+  <entry id="49149" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 10
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 10th level, a healer gains the ability to restore a creature to health once per day, as if casting a Greater Restoration spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
   <entry id="49150" lang="en" sex="m">3d8</entry>
   <entry id="49151" lang="en" sex="m">4d8</entry>
   <entry id="49152" lang="en" sex="m">5d8</entry>
@@ -16134,6 +16201,7 @@ Ranged Precision: Your ranged precision damage increases to 6d8 at level 11, and
 
 Epic Order of the Bow Initiate Bonus Feats List:
 Blinding Speed, Epic Prowess, Weapon Focus: Long/Short Bow, Overwhelming Critical: Long/Short Bow, Devastating Critical: Long/Short Bow, Manyshot, Improved Manyshot, Pinpoint Accuracy, Great Dexterity, Epic Reflexes, Epic Toughness.</entry>
+  <entry id="49170" lang="en" sex="m">Cleanse Petrification (Su)</entry>
   <entry id="49171" lang="en" sex="m">Ethereal</entry>
   <entry id="49172" lang="en" sex="m">You exist on the Ethereal Plane. While on the Ethereal Plane, a creature is called ethereal. Unlike incorporeal creatures, ethereal creatures are not present on the Material Plane.
 
@@ -16227,6 +16295,10 @@ Saving Throw: Will negates
 Spell Resistance: Yes
 
 The subject creature's feet (or whatever pass for it's feet) become momentarily stuck to the floor. The creature must stop moving, and cannot move farther in it's current turn. This spell has no effect on creatures that are not touching the ground (such as flying creatures), and the subject can still use a standard action (if it has one available in this round) to move by means of teleportation magic.</entry>
+  <entry id="49192" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 13
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 13th level, a healer gains the ability to restore a petrified creature to health once per day, as if casting a Stone to Flesh spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
   <entry id="49193" lang="en" sex="m">Power Points</entry>
   <entry id="49194" lang="en" sex="m">Your manifester level is not high enough to spend</entry>
   <entry id="49195" lang="en" sex="m">You do not have a high enough ability score to manifest this power</entry>
@@ -16781,6 +16853,11 @@ Area of Effect / Target: Self
 Duration: 1 round or until discharged
 
 You gain a fleeting glimpse into the future, enough to guide your impending attack. You cast this spell immediately before you make an attack roll. You can see into the future for that attack, granting you a +1 insight bonus per three caster levels on your next attack roll.</entry>
+  <entry id="49477" lang="en" sex="m">New Limb (Su)</entry>
+  <entry id="49478" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 15
+A Healer deals with certain kinds of maladies so often, that eventually she can cure them without resorting to a spell. At 15th level, a healer gains the ability to regrow a creature's lost or damaged body part once per day, as if casting a Regenerate spell.
+At epic levels a Healer gains +1 use per day every 4 levels, starting at  21st level.</entry>
   <entry id="49479" lang="en" sex="m">Area of effect</entry>
   <entry id="49480" lang="en" sex="m">Decreased Cost A</entry>
   <entry id="49481" lang="en" sex="m">Decreased Cost B</entry>

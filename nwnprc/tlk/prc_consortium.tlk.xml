@@ -2393,7 +2393,7 @@ Level
   5: Cleanse Fear
   6: Cleanse Poison
   7:  -
-  8: Unicorn Companion
+  8: Celestial Companion
   9: Cleanse Blindness
 10: Cleanse Spirit
 11:  -
@@ -4718,23 +4718,23 @@ Abilities:
 21: Epic cleansing +1 
 22:  - 
 23: Bonus feat 
-24: Epic unicorn companion 
+24: Epic celestial companion 
 25: Epic cleansing +2 
 26: Bonus feat 
 27:  - 
-28: Epic unicorn companion 
-29: Bonus feat 
-30: Epic Cleansing +3
+28: Epic celestial companion 
+29: Bonus feat, Epic Cleansing +3
+30:  -
 31:  -
-32: Bonus Feat, Epic unicorn companion
-33:  -
+32: Bonus Feat, Epic celestial companion
+33: Epic Cleansing +4
 34:  -
 35: Bonus Feat
-36: Epic unicorn companion, Epic Cleansing +4
-37:  -
+36: Epic celestial companion
+37: Epic Cleansing +5
 38: Bonus Feat
 39:  -
-40: Epic unicorn companion</entry>
+40: Epic celestial companion</entry>
   <entry id="46104" lang="en" sex="m">Thrall of Orcus</entry>
   <entry id="46105" lang="en" sex="m">Thralls of Orcus</entry>
   <entry id="46106" lang="en" sex="m">thrall of Orcus</entry>
@@ -12060,6 +12060,7 @@ Use: Automatic.</entry>
 Prerequisite: Hathran levels 3, 6 and 8.
 Specifics: Can cast Fear as 4th level sorcerer/wizard spell once per day at level 3, twice per day at level 6, and three times per day at level 8.
 Use: Selected.</entry>
+  <entry id="47950" lang="en" sex="m">Celestial Companion (Ex)</entry>
   <entry id="47951" lang="en" sex="m">Use Limitation: Minimum Ability Score</entry>
   <entry id="47952" lang="en" sex="m">Use Limitation: Minimum Skill Ranks</entry>
   <entry id="47953" lang="en" sex="m">Only Useable By Those With At Least:</entry>
@@ -12710,6 +12711,7 @@ Note: Turning this off will not remove existing map pins. Also, if you remove a 
   <entry id="48089" lang="en" sex="m">You do not have any locations marked for teleporting to!</entry>
   <entry id="48090" lang="en" sex="m">Selection made. Select finish to continue.</entry>
   <entry id="48091" lang="en" sex="m">Name gotten:</entry>
+  <entry id="48092" lang="en" sex="m">Summon Unicorn</entry>
   <entry id="48093" lang="en" sex="m">Zone Of Animation</entry>
   <entry id="48094" lang="en" sex="m">Type of Feat: Epic
 Prerequisite: Turn Undead, 25 Charisma, Undead Mastery
@@ -15777,6 +15779,7 @@ Visage of Terror
 
 Bonus Feat List
 Epic Skill Focus(Intimidate), Epic Skill Focus(Move Silently), Epic Weapon Focus, Overwhelming Critical, Devastating Critical, Great Strength, Great Dexterity, Great Charisma, Epic Toughness, Epic Prowess, Armour Skin, Epic DR.</entry>
+  <entry id="49007" lang="en" sex="m">Summon Lammasu</entry>
   <entry id="49008" lang="en" sex="m">You have identified the</entry>
   <entry id="49009" lang="en" sex="m">in your inventory</entry>
   <entry id="49010" lang="en" sex="m">Poisoned Weapon</entry>
@@ -16630,6 +16633,7 @@ Use: Selected</entry>
   <entry id="49331" lang="en" sex="m">Gain Psionic Focus</entry>
   <entry id="49332" lang="en" sex="m">Turn off all Psionic Focus -based abilities</entry>
   <entry id="49333" lang="en" sex="m">You already have the maximum amount of psionic focus expending feats active.</entry>
+  <entry id="49334" lang="en" sex="m">Summon Androsphinx</entry>
   <entry id="49335" lang="en" sex="m">Epic Psionic Focus I</entry>
   <entry id="49336" lang="en" sex="m">Epic Psionic Focus II</entry>
   <entry id="49337" lang="en" sex="m">Epic Psionic Focus III</entry>
@@ -19494,6 +19498,13 @@ Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any 
 Prerequisite: Marshal
 Specifics: While this Major Aura is active, you and all allies within a 60 foot radius receive a bonus to your Wisdom.  This bonus is based on your level.  It is a +1 bonus at level 2, gaining an additional +1 at levels 7, 14, 20, 25, 30, 35, and 40.
 Use: Activated.  A Marshal can only have 1 Minor and 1 Major aura active at any given time.</entry>
+  <entry id="51101" lang="en" sex="m">Type: Class
+Prerequisite: Healer level 8
+When a Healer attains 8th level, the deities recognize her devotion and grant her a Celestial Unicorn Companion as her aide. The Unicorn, a symbol of healing and purity, serves the Healer willingly and unswervingly.
+Once per day, the Healer may magically call her companion from the celestial realms in which it resides. The companion immediately appears adjacent to the Healer and remains for 2 hours per Healer level. It may be dismissed at any time as a free action. The companion is the same creature each time it is called, though the Healer may release a particular companion from service to gain a companion of a different kind. Each time the companion is called, it appears in full health, regardless of any damage it may have taken previously.
+A Healer of 12th level or higher may select a Lammasu as her companion. Should she do so, the creature gains abilities, as if the character's Healer level was 4 levels lower than it actually is.
+A Healer of 16th level or higher may select an Androsphinx as her companion. Should she do so, the creature gains abilities, as if the character's Healer level was 8 levels lower than it actually is.</entry>
+  <entry id="51102" lang="en" sex="m">Dismiss Companion</entry>
   <entry id="51110" lang="en" sex="m">You need</entry>
   <entry id="51111" lang="en" sex="m">more character levels before you can take on that form.</entry>
   <entry id="51112" lang="en" sex="m">You cannot polymorph into a PC.</entry>

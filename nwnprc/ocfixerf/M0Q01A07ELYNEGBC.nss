@@ -6,5 +6,6 @@ int StartingConditional()
 {
     return GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, GetPCSpeaker()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_BARD, GetPCSpeaker()) > 0 ||
+	   GetLevelByClass(CLASS_TYPE_HEALER, GetPCSpeaker()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_DRUID, GetPCSpeaker()) > 0;
 }

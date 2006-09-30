@@ -26,6 +26,7 @@ if(DEBUG) DoDebug("m1q0bteach_item running");
                 GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ARCHER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_SOHEI,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_HEXBLADE,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_CW_SAMURAI,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||

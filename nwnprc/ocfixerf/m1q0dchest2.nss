@@ -54,6 +54,7 @@ if(DEBUG) DoDebug("m1q0dchest2 running");
         }
         else if(GetLevelByClass(CLASS_TYPE_ULTIMATE_RANGER,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_SCOUT,oPC) > 0 ||
+		GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
 		GetLevelByClass(CLASS_TYPE_RANGER,oPC) > 0)
         {
             sItemTemplate1 = "NW_MAARCL097"; //Cloak of prot vs. evil

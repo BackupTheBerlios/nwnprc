@@ -16,6 +16,7 @@ void main()
         RemoveEffect(OBJECT_SELF,GetFirstEffect(OBJECT_SELF));
         if(GetLocalInt(GetModule(),"NW_G_M1Q0HalfPriest") == TRUE ||
            GetLevelByClass(CLASS_TYPE_BARD,GetLastSpellCaster()) > 0 ||
+           GetLevelByClass(CLASS_TYPE_HEALER,GetLastSpellCaster()) > 0 ||
 	   GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,GetLastSpellCaster()) > 0 ||
  	   GetLevelByClass(CLASS_TYPE_DRUID,GetLastSpellCaster()) > 0)
         {

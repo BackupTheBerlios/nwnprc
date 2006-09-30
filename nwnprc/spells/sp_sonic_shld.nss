@@ -48,12 +48,12 @@ void main()
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAC, oPC, fDur);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eShield, oPC, fDur);
 	
-	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
 	itemproperty ipOnHit = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
 	IPSafeAddItemProperty(oArmor, ipOnHit, fDur);
 		
 	//Add event script
-	AddEventScript(oTarget, EVENT_ONHIT, "prc_evnt_snshld", TRUE, FALSE);		
+	AddEventScript(oPC, EVENT_ONHIT, "prc_evnt_snshld", TRUE, FALSE);		
 	
 	SPSetSchool();
 }

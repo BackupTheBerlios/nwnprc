@@ -14275,18 +14275,16 @@ This spell grants your familiar a +4 enhancement bonus to Strength, Dexterity an
 (note that a Hexblade can't get a familiar due to NWN hardcoding, and it's unlikely that this changes)
 </entry>
   <entry id="48584" lang="en" sex="m">Deflect</entry>
-  <entry id="48585" lang="en" sex="m">School: Illusion (Phantasm) [Mind-Affecting]
-Caster Level: Bard 1, Hexblade 1
-Components: V, S
-Range: Close
-Target: One creature
-Duration: 1 round/level
-Saving Throw: Will negates
-Spell Resistance: Yes
+  <entry id="48585" lang="en" sex="m">Deflect
+Abjuration [Force]
+Level: Duskblade 2, sorcerer/wizard 2
+Components: V
+Casting Time: 1 immediate action
+Range: Personal
+Duration: 1 round or until discharged
 
-You create the sensation in the subject's mind that it is threatened by more foes than it actually faces. A creature affected by this spell is considered flanked, even if not threatened by other creatures. A creature that can't be flanked is immune to this spell.
 
-(due to the way NWN is set up, you can't sneak attack a target affected by this spell, as you could in PnP)</entry>
+You project a field of ivisible force, creating a short-lived protective barrier.  You gain a deflection bonus to your AC against a single attack; this bonus is equal to 1/2 your caster level (round down).</entry>
   <entry id="48586" lang="en" sex="m">Blade of Blood
 </entry>
   <entry id="48587" lang="en" sex="m">Blade of Blood

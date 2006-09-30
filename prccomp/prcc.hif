@@ -22,7 +22,7 @@ module.Hak : prc_race.hak
 module.Hak : prc_textures.hak
 module.Hak : prc_misc.hak
 module.Hak : prc_craft2das.hak
-module.Hak : prc_companion.hak
+module.Hak : prccomp.hak
 
 # Custom tlk used by the prc pack.
 module.CustomTlk : prc_consortium.tlk

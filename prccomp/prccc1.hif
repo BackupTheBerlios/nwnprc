@@ -22,7 +22,7 @@ module.Hak : prc_race.hak
 module.Hak : prc_textures.hak
 module.Hak : prc_misc.hak
 module.Hak : prc_craft2das.hak
-module.Hak : prc_companion.hak
+module.Hak : prccomp.hak
 module.Hak : cep1patch153.hak
 module.Hak : cep1patch152.hak
 module.Hak : cep1patch150.hak

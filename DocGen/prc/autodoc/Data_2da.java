@@ -740,9 +740,9 @@ public class Data_2da implements Cloneable{
 
 		for(String label : labels){
 			if(defaultValue.equals(""))
-				mainData.get(label).add("****");
+				mainData.get(label).add(index, "****");
 			else
-				mainData.get(label).add(defaultValue);
+				mainData.get(label).add(index, defaultValue);
 		}
 	}
 

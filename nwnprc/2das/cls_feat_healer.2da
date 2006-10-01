@@ -176,9 +176,9 @@
 172 FEAT_EPIC_ENERGY_RESISTANCE_SONIC_10           582       1    -1             0      
 173 FEAT_EPIC_SKILL_FOCUS_CRAFT_ARMOR              913       1    -1             0      
 174 FEAT_EPIC_SKILL_FOCUS_CRAFT_WEAPON             914       1    -1             0      
-175 FEAT_FAST_HEALING1                             3137      1    -1             0      
-176 FEAT_FAST_HEALING2                             3138      1    -1             0      
-177 FEAT_FAST_HEALING3                             3314      1    -1             0      
+175 FEAT_FAST_HEALING_1                            4145      1    -1             0      
+176 FEAT_FAST_HEALING_2                            4146      1    -1             0      
+177 FEAT_FAST_HEALING_3                            4147      1    -1             0      
 178 FEAT_TENACIOUS_MAGIC                           2961      1    -1             0      
 179 CraftEpicWondrousItem                          3488      1    -1             1      
 180 CraftEpicStaff                                 3491      1    -1             1      

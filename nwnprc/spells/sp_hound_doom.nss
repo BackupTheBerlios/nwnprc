@@ -56,6 +56,11 @@ void main()
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	float fDur = (60.0f * nCasterLvl);
 	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
 	effect eSummon = EffectSummonCreature("PRC_Hound_Doom", VFX_NONE, 0.0f);
 	
 	int i = 1;

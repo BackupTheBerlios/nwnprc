@@ -49,7 +49,14 @@ void main()
 	
 	object oPC = OBJECT_SELF;
 	object oTarget      = PRCGetSpellTargetObject();
+	int nMetaMagic == PRCGetMetaMagicFeat();
 	float fDur       = 60.0f * PRCGetCasterLevel(oPC);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
 	effect eAOE = EffectAreaOfEffect(AOE_PER_SOLID_FOG);
 			
 	// Duration Effects

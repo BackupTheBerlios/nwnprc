@@ -40,13 +40,37 @@ void main()
 	int nSpell = PRCGetSpellId();
 	int nHPLoss;
 	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	int nMetaMagic = PRCGetMetaMagicFeat()
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+				
 	int nDamBonus = d6(1);
 	
+	if(nMetaMagic == METAMAGIC_MAXIMIZE)
+	{
+		nDamBonus = 6;
+	}
+		
 	if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
 	{
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, 5), oPC);
 		nDamBonus = d6(3);
+		
+		if(nMetaMagic == METAMAGIC_MAXIMIZE)
+		{
+			nDamBonus = 18;
+		}
+		
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
+	}
+	
+	if(nMetaMagic == METAMAGIC_EMPOWER)
+	{
+		nDamBonus += (nDamBonus/2);
 	}
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDamBonus, DAMAGE_TYPE_MAGICAL), oPC, fDur);

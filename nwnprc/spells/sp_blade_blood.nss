@@ -41,7 +41,7 @@ void main()
 	int nHPLoss;
 	float fDur = RoundsToSeconds(nCasterLvl);
 	
-	int nMetaMagic = PRCGetMetaMagicFeat()
+	int nMetaMagic = PRCGetMetaMagicFeat();
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{

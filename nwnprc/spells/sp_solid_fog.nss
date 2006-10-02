@@ -47,10 +47,10 @@ void main()
 	
 	SPSetSchool(SPELL_SCHOOL_CONJURATION);
 	
-	object oPC = OBJECT_SELF;
-	object oTarget      = PRCGetSpellTargetObject();
-	int nMetaMagic == PRCGetMetaMagicFeat();
-	float fDur       = 60.0f * PRCGetCasterLevel(oPC);
+	object oPC     = OBJECT_SELF;
+	object oTarget = PRCGetSpellTargetObject();
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur     = 60.0f * PRCGetCasterLevel(oPC);
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{

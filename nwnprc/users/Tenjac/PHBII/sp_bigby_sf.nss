@@ -33,6 +33,9 @@ Material Components: Three glass beads.
 ///////////////////////////////////////////////////////
 
 int BigbyStrikeDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
+int DoBullRushAttack(object oTarget, int nAttackBonus, int nCasterLevel);
+void DoPush(object oTarget, object oCreator, int nReverse = FALSE);
+int EvalSizeBonus(object oSubject);
 
 #include "prc_alterations"
 #include "spinc_common"
@@ -90,7 +93,10 @@ void main()
 		if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
 		{
 			//Bull Rush
-			
+			if(DoBullRushAttack(oTarget, nAttackBonus, nCasterLevel))
+			{
+				DoPush(oTarget, oPC);
+			}			
 		}
 		
 		else
@@ -98,7 +104,9 @@ void main()
 			nDam = (nDam / 2);
 		}
 		
-	
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+	}
+	SPSetSchool();	
 }
 
 int BigbyStrikeDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
@@ -114,10 +122,61 @@ int BigbyStrikeDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplay
     return nResult;
 }
 		
-int DoBullRushAttack(object oTarget, int nAttackBonus)
+int DoBullRushAttack(object oTarget, int nAttackBonus, int nCasterLevel)
 {
+	int nSuccess = 0;
+	int nSizeBonus = EvalSizeBonus(oTarget);
+	int nBullRushFist = 14 + (4 + (nCasterLevel/2));
+	int nBullRushOpposed = GetAbilityScore(oTarget, ABILITY_STRENGTH) + nSizeBonus; 
 	
-	
+	if(nBullRushFist > nBullRushOpposed)
+	{
+		nSuccess = 1;
+	}
+	return nSuccess;	
+}
+
+void DoPush(object oTarget, object oCreator, int nReverse = FALSE)
+{
+            // Calculate how far the creature gets pushed
+            float fDistance = FeetToMeters(10.0f);
+            // Determine if they hit a wall on the way
+            location lCreator   = GetLocation(oCreator);
+            location lTargetOrigin = GetLocation(oTarget);
+            vector vAngle          = AngleToVector(GetRelativeAngleBetweenLocations(lCreator, lTargetOrigin));
+            vector vTargetOrigin   = GetPosition(oTarget);
+            vector vTarget         = vTargetOrigin + (vAngle * fDistance);
+
+            if(!LineOfSightVector(vTargetOrigin, vTarget))
+            {
+                // Hit a wall, binary search for the wall
+                float fEpsilon    = 1.0f;          // Search precision
+                float fLowerBound = 0.0f;          // The lower search bound, initialise to 0
+                float fUpperBound = fDistance;     // The upper search bound, initialise to the initial distance
+                fDistance         = fDistance / 2; // The search position, set to middle of the range
+
+                do{
+                    // Create test vector for this iteration
+                    vTarget = vTargetOrigin + (vAngle * fDistance);
+
+                    // Determine which bound to move.
+                    if(LineOfSightVector(vTargetOrigin, vTarget))
+                        fLowerBound = fDistance;
+                    else
+                        fUpperBound = fDistance;
+
+                    // Get the new middle point
+                    fDistance = (fUpperBound + fLowerBound) / 2;
+                }while(fabs(fUpperBound - fLowerBound) > fEpsilon);
+            }
+
+            // Create the final target vector
+            vTarget = vTargetOrigin + (vAngle * fDistance);
+
+            // Move the target
+            location lTargetDestination = Location(GetArea(oTarget), vTarget, GetFacing(oTarget));
+            AssignCommand(oTarget, ClearAllActions(TRUE));
+            AssignCommand(oTarget, JumpToLocation(lTargetDestination))
 }
 
 int EvalSizeBonus(object oSubject)
@@ -165,7 +224,6 @@ int EvalSizeBonus(object oSubject)
 	}
 	
 	return nBonus;
-}
-	
+}	
 	
 	

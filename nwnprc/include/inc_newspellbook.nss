@@ -66,12 +66,14 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_SOHEI:
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
+        case CLASS_TYPE_HEALER:
             return SPELLBOOK_TYPE_PREPARED;
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
         case CLASS_TYPE_SUEL_ARCHANAMACH:
         case CLASS_TYPE_FAVOURED_SOUL:
         case CLASS_TYPE_HEXBLADE:
+        case CLASS_TYPE_DUSKBLADE:
 
             return SPELLBOOK_TYPE_SPONTANEOUS;
         //outsider HD count as sorc for raks
@@ -101,12 +103,15 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_FIST_OF_ZUOKEN:
         case CLASS_TYPE_WARMIND:
         case CLASS_TYPE_SOHEI:
+        case CLASS_TYPE_SLAYER_OF_DOMIEL: 
+        case CLASS_TYPE_HEALER:
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_WIZARD:
         case CLASS_TYPE_PSION:
         case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_SHADOWLORD:
+        case CLASS_TYPE_DUSKBLADE:
 
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
         case CLASS_TYPE_SORCERER:

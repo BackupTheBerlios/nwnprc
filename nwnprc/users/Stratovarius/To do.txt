@@ -6,8 +6,6 @@
 Primary
 -----------------------------------------------------
 
-Bugs: Sohei spellbook (?)
-
 Truenaming:
 
 Truenamer
@@ -25,8 +23,8 @@ Utterances: Incarnation of Angels skipped, needs Primo to work on templates.
 Spells: Update Gate to use the new code
             
 Base Classes:
-Duskblade - Spellbook
-Healer - Spellbook, Unicorn Script, Cha to Healing
+Duskblade - Spellbook: Spells to add: Shocking Grasp, Scorching Ray, Ray of Exhaustion, Waves of Fatigue
+Healer - Newspellbook scripts, Update Companion SpellIds
 
 -----------------------------------------------------
 Secondary

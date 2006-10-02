@@ -30,7 +30,7 @@ Make the prc_* scripts in newspellbook
 
 */
 
-const int SPELLBOOK_IPRP_FEATS_START = 10400;
+const int SPELLBOOK_IPRP_FEATS_START = 5000;
 const int SPELLBOOK_IPRP_FEATS_END = 11999;
 const int SPELLBOOK_TYPE_PREPARED = 1;
 const int SPELLBOOK_TYPE_SPONTANEOUS = 2;
@@ -72,7 +72,7 @@ int GetSpellbookTypeForClass(int nClass)
         case CLASS_TYPE_SUEL_ARCHANAMACH:
         case CLASS_TYPE_FAVOURED_SOUL:
         case CLASS_TYPE_HEXBLADE:
-        
+
             return SPELLBOOK_TYPE_SPONTANEOUS;
         //outsider HD count as sorc for raks
         case CLASS_TYPE_OUTSIDER:
@@ -101,13 +101,13 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_FIST_OF_ZUOKEN:
         case CLASS_TYPE_WARMIND:
         case CLASS_TYPE_SOHEI:
-        case CLASS_TYPE_SLAYER_OF_DOMIEL: 
+        case CLASS_TYPE_SLAYER_OF_DOMIEL:
             return GetAbilityScore(oPC, ABILITY_WISDOM);
         case CLASS_TYPE_WIZARD:
         case CLASS_TYPE_PSION:
         case CLASS_TYPE_ASSASSIN:
         case CLASS_TYPE_SHADOWLORD:
-        
+
             return GetAbilityScore(oPC, ABILITY_INTELLIGENCE);
         case CLASS_TYPE_SORCERER:
         case CLASS_TYPE_BARD:
@@ -488,7 +488,7 @@ int GetSpellUses(object oPC, int nSpellID, int nClass)
     string sReqFeat = Get2DACache(sFile, "ReqFeat", nSpellbookID);
     if (sReqFeat != "" && !GetHasFeat(StringToInt(sReqFeat), oPC))
         return 0;
-    
+
     if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nClass)))
     {
 if(DEBUG) DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creating.");
@@ -538,7 +538,7 @@ int GetSpellLevel(object oPC, int nSpellID, int nClass)
     // get spell level
     int nSpellLevel = -1;
     string sSpellLevel = Get2DACache(sFile, "Level", nSpellbookID);
-    
+
     if (sSpellLevel != "")
         nSpellLevel = StringToInt(sSpellLevel);
 
@@ -673,7 +673,7 @@ if(DEBUG) DoDebug("nLevel="+IntToString(nLevel));
                 && nClass == CLASS_TYPE_SORCERER))
         {
             //do nothing
-        }        
+        }
         else if(nLevel)
         {
             //raks cast as sorcs
@@ -810,7 +810,7 @@ if(DEBUG) DoDebug("NewSpellbookMem_"+IntToString(nClass)+"["+IntToString(nSpellb
     //remove any old effects
     //seems cheat-casting breaks hardcoded removal
     //and cant remove effects because I dont know all the targets!
-    
+
     // This does the Duskblade's Quick Cast
     // Yes, I know it overrides other metamagic
     if (nClass == CLASS_TYPE_DUSKBLADE && GetLocalInt(oPC, "DBQuickCast"))

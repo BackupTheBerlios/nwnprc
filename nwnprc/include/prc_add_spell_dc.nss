@@ -133,24 +133,21 @@ int RedWizardDC(int spell_id, object oCaster = OBJECT_SELF)
 
         if (iSpellSchool == iRWSpec)
         {
-
-            nDC = 1;
-
-            if (iRedWizard > 29)        nDC = 16;
-            else if (iRedWizard > 27)   nDC = 15;
-            else if (iRedWizard > 25)   nDC = 14;
-            else if (iRedWizard > 23)   nDC = 13;
-            else if (iRedWizard > 21)   nDC = 12;
-            else if (iRedWizard > 19)   nDC = 11;
-            else if (iRedWizard > 17)   nDC = 10;
-            else if (iRedWizard > 15)   nDC = 9;
-            else if (iRedWizard > 13)   nDC = 8;
-            else if (iRedWizard > 11)   nDC = 7;
-            else if (iRedWizard > 9)    nDC = 6;
-            else if (iRedWizard > 7)    nDC = 5;
-            else if (iRedWizard > 5)    nDC = 4;
-            else if (iRedWizard > 3)    nDC = 3;
-            else if (iRedWizard > 1)    nDC = 2;
+            if (iRedWizard > 29)        nDC = 15;
+            else if (iRedWizard > 27)   nDC = 14;
+            else if (iRedWizard > 25)   nDC = 13;
+            else if (iRedWizard > 23)   nDC = 12;
+            else if (iRedWizard > 21)   nDC = 11;
+            else if (iRedWizard > 19)   nDC = 10;
+            else if (iRedWizard > 17)   nDC = 9;
+            else if (iRedWizard > 15)   nDC = 8;
+            else if (iRedWizard > 13)   nDC = 7;
+            else if (iRedWizard > 11)   nDC = 6;
+            else if (iRedWizard > 9)    nDC = 5;
+            else if (iRedWizard > 7)    nDC = 4;
+            else if (iRedWizard > 5)    nDC = 3;
+            else if (iRedWizard > 3)    nDC = 2;
+            else if (iRedWizard > 1)    nDC = 1;
         }
 
 

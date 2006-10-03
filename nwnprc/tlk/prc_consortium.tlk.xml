@@ -19509,6 +19509,30 @@ A Healer of 16th level or higher may select an Androsphinx as her companion. Sho
   <entry id="51104" lang="en" sex="m">Type: Class
 Prerequisite: Healer level 24
 The Epic Healer's Celestial Companion continues to increase in power. Starting at level 24 and if the healer's effective level for the companion is 21 or higher, the companion gains +2 bonus Hit Dice, it's natural armor increases by +2, and its Strength, Dexterity, and Intelligence increase by +1. The Companion's spell resistance equals the Healer's effective level +5.</entry>
+  <entry id="51105" lang="en" sex="m">Close Wounds</entry>
+  <entry id="51106" lang="en" sex="m">School: Conjuration (Healing)
+Level: Cleric/Healer 3
+Components: V
+Range: Short
+Target: One Creature
+Duration: Instantaneous
+Save: Will for half (harmless)
+Spell Resistance: Yes (harmless)
+
+This spell cures 2d4 points of damage. You can cast this spell with an instant utterance. If you cast this spell immediately after the subject takes damage, it effectively prevents the damage. It would keep alive someone who had just dropped to -10 hit points, for example, leaving the character at negative hit points but stable.
+Used against an undead creature, Close Wounds deals damage instead of curing the creature (which takes half damage if it makes a Will saving throw).</entry>
+  <entry id="51107" lang="en" sex="m">Revivify</entry>
+  <entry id="51108" lang="en" sex="m">School: Conjuration (Healing)
+Level: Cleric/Healer 5
+Components: V, S, M
+Range: Touch
+Target: Dead creature touched
+Duration: Instantaneous
+Save: None
+Spell Resistance: Yes (harmless)
+
+Revivify miraculously restores life to a recently deceased creature. However, the spell must be cast within 1 round of the victim's death. Before the soul of the deceased has completely left the body, this spell halts it's journey while repairing somewhat the damage to the body. Ths spell functions like Raise Dead, except that the raised creature receives no level loss, no Constitution loss, and no loss of spells. The creature is only restored to -1 hit points (but is stable).</entry>
+  <entry id="51109" lang="en" sex="m">Bless Water</entry>
   <entry id="51110" lang="en" sex="m">You need</entry>
   <entry id="51111" lang="en" sex="m">more character levels before you can take on that form.</entry>
   <entry id="51112" lang="en" sex="m">You cannot polymorph into a PC.</entry>
@@ -19520,6 +19544,79 @@ The Epic Healer's Celestial Companion continues to increase in power. Starting a
   <entry id="51118" lang="en" sex="m">The PRC Polymorphing system will not work while you are affected by a polymorph effect. Please remove it before trying again.</entry>
   <entry id="51119" lang="en" sex="m">Another PRC Polymorph transformation is underway at this moment. Please wait until it completes before trying again.</entry>
   <entry id="51120" lang="en" sex="m">Polymorph failed: Failed to create a template of the creature to polymorph into.</entry>
+  <entry id="51121" lang="en" sex="m">School: Transmutation (Good)
+Level: Cleric/Paladin/Healer 1
+Components: V, S, M
+Range: Touch
+Target: Flask of water touched
+Duration: Instantaneous
+Save: Will negates (object)
+Spell Resistance: Yes (object)
+
+This transmutation imbues a flask of water with positive energy, turning it into Holy Water.</entry>
+  <entry id="51122" lang="en" sex="m">Calm Emotions</entry>
+  <entry id="51123" lang="en" sex="m">School: Enchantment (Compulsion) [Mind-Affecting]
+Level: Bard/Cleric/Healer 2, Law Domain 2
+Components: V, S
+Range: Medium
+Target: Creatures in a 20ft.-radius spread
+Duration: Concentration, up to 1 round/level
+Save: Will negates
+Spell Resistance: Yes
+
+This spell calms agitated creatures. You have no control over the affected creatures, but Calm Emotions can stop raging creatures from fighting or joyous ones from reveling. Creatures so affected cannot take violent actions (although they can defend themselves) or do anything destructive. Any aggressive action against or damage dealt to a calmed creature immediately breaks the spell on all calmed creatures.
+This spell automatically suppresses any morale bonuses granted by spells such as Bless, Good Hope and Rage, as well as negating a Bard's ability to inspire courage or a Barbarian's rage ability. It also suppresses any feat effects and removes the Confused condition from all targets.</entry>
+  <entry id="51124" lang="en" sex="m">Repulsion</entry>
+  <entry id="51125" lang="en" sex="m">School: Abjuration
+Level: Cleric/Healer 7, Sorcerer/Wizard 6
+Components: V, S
+Range: Personal
+Target: Up to 10-ft.-radius/level emanantion centered on you
+Duration: 1 round/level
+Save: Will negates
+Spell Resistance: Yes
+
+An invisible mobile field surrounds you and prevents creatures from approaching you. Any creature within or entering the field must attempt a save. If it fails, it becomes unable to move toward you for the duration of the spell. Repelled creatures' actions are not otherwise restricted. They can fight other creatures and can cast spells and attack you with ranged weapons.</entry>
+  <entry id="51126" lang="en" sex="m">Holy Aura</entry>
+  <entry id="51127" lang="en" sex="m">School: Abjuration [Good]
+Level: Cleric/Healer 8, Good Domain 8
+Components: V, S
+Range: Personal
+Target: One creature/level in a 20-ft.-radius burst centered on you
+Duration: 1 round/level
+Save: special
+Spell Resistance: Yes (harmless)
+
+A brilliant divine radiance surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by evil creatures, and causing evil creatures to become blinded when they strike the subjects. This abjuration has four effects.
+First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike Protection from Evil, this benefit applies against all attacks, not just attacks by evil creatures.
+Second, each warded creatures gains spell resistance 25 against evil spells and spells cast be evil creatures.
+Third, the abjuration blocks possession and mental influence, just as Protection from Evil does.
+Finally, if an evil creature succeeds on a melee attack against a warded creature, the offending attacker is blinded (Fortitude save negates, as Blindness/Deafness, but against Holy Aura's save DC)</entry>
+  <entry id="51128" lang="en" sex="m">True Resurrection</entry>
+  <entry id="51129" lang="en" sex="m">School: Conjuration (Healing)
+Level: Cleric/Healer 9
+Components: V, S, M
+Range: Touch
+Target: Dead creature touched
+Duration: Instantaneous
+Save: None
+Spell Resistance: Yes (harmless)
+
+This spell functions like Resurrection, except that you can resurrect a creature that has been dead for as long as 10 years per caster level. This spell can even bring back creatures whose bodies have been destroyed, provided that you unambiguously identify the deceased in some fashion (reciting the deceased's time and place of birth or death is the most common method).
+Upon completion of the spell, the creature is immediately restored to full hit points, vigor and health, with no loss of level (or Constitution points) or prepared spells.
+You can revive someone killed by a death effect or someone who has been turned into an undead creature and then destroyed. This spell can also resurrect elementals or outsiders, but it cant resurrect constructs or undead creatures.
+Even true Resurrection can't restore to life a creature who has died of old age.</entry>
+  <entry id="51130" lang="en" sex="m">Foresight</entry>
+  <entry id="51131" lang="en" sex="m">School: Divination
+Level: Druid/Sorcerer/Wizard/Healer 9, Knowledege Domain 9
+Components: V, S, M
+Range: Personal
+Target: Self
+Duration: 10 min./level
+Save: Will negates (harmless)
+Spell Resistance: Yes (harmless)
+
+This spell grants you a powerful sixth sense in relation to yourself. Once Foresight is cast, you receive instantaneous warnings of impending danger or harm. You would be warned in advance if a Rogue were about to attempt a sneak attack on you, or if a creature were about to leap out from a hiding place, or if an attacker were specifically targeting you with a spell or ranged weapon. You are never surprised or flat-footed. In addition the spell gives you a general idea of what action you might take to best protect yourself -- duck, jump right, close your eyes, and so on -- and gives you a +2 insight bonus to AC and Reflex saves. This insight bonus is lost whenever you would lose a Dexterity bonus to AC.</entry>
   <entry id="51197" lang="en" sex="m">rends</entry>
   <entry id="51198" lang="en" sex="m">Two-Weapon Rend</entry>
   <entry id="51199" lang="en" sex="m">Type of Feat: Epic

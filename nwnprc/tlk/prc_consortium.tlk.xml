@@ -19031,6 +19031,7 @@ Prerequisite: Access to the Spells domain.
 Granted Power: You gain +2 Concentration and Spellcraft.
 Bonus Spells: The cleric gains access to the following spells at the specified spell level: Lesser Spell Breach (4), Spell Mantle (5), Greater Spell Breach (9), Protection From Spells (7)
 Use: Automatic.</entry>
+  <entry id="50554" lang="en" sex="m">Detect Undead</entry>
   <entry id="50555" lang="en" sex="m">Type of Feat: Domain
 Prerequisite: Access to the Air domain.
 Specifics:
@@ -23462,7 +23463,7 @@ Prerequisites:
 
 Caster Level: 14
 Alignment: Evil
-Spell(s): Acid Fog, Mage Armor or Shield of Faith
+Spell(s): Antimagic Field, Mage Armor or Shield of Faith
 
 Cost: 
 
@@ -23494,7 +23495,7 @@ Light Bright (20m) Color Purple
 Prerequisites: 
 
 Caster Level: 11
-Spell(s): Blur, Acid Fog
+Spell(s): Blur, Rainbow Pattern
 
 Cost: 
 
@@ -23586,41 +23587,6 @@ Cost:
 
 +12000gp
 </entry>
-  <entry id="51875" lang="en" sex="m">Description: 
-
-Armor Bonus: +5 
-Spell Resistance: 18 
-Improved Saving Throws: Universal +4 
-Bonus Feat: Spell Penetration 
-Only Useable By: Evil 
-
-Prerequisites: 
-
-Caster Level: 14
-Alignment: Evil
-Spell(s): Antimagic Field, Mage Armor or Shield of Faith
-
-Cost: 
-
-+75000gp
-</entry>
-  <entry id="51876" lang="en" sex="m">Description: 
-
-Darkvision 
-True Seeing 
-Skill Bonus: Search +10 
-Skill Bonus: Spot +10 
-Bonus Feat: Uncanny Dodge I 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): True Seeing
-
-Cost: 
-
-+120000gp
-</entry>
   <entry id="51913" lang="en" sex="m">Description: 
 
 Damage Resistance: Acid Resist 20 / - 
@@ -23646,36 +23612,6 @@ Spell(s): Resist Elements
 Cost: 
 
 +44000gp
-</entry>
-  <entry id="51877" lang="en" sex="m">Description: 
-
-Use: Daze (1) Unlimited Uses/Day 
-Use: Displacement (9) 1 Use/Day 
-Light Bright (20m) Color Purple 
-
-Prerequisites: 
-
-Caster Level: 11
-Spell(s): Blur, Rainbow Pattern
-
-Cost: 
-
-+27000gp
-</entry>
-  <entry id="51878" lang="en" sex="m">Description: 
-
-Spell Resistance: 20 
-Immunity: Level/Ability Drain 
-Immunity: Death Magic 
-
-Prerequisites: 
-
-Caster Level: 18
-Spell(s): Death Ward, Spell Resistance
-
-Cost: 
-
-+38000gp
 </entry>
   <entry id="51915" lang="en" sex="m">Description: 
 
@@ -23703,20 +23639,6 @@ Spell(s): Resist Elements
 Cost: 
 
 +12000gp
-</entry>
-  <entry id="51879" lang="en" sex="m">Description: 
-
-Skill Bonus: Hide +4 
-Skill Bonus: Tumble +6 
-
-Prerequisites: 
-
-Caster Level: 4
-Spell(s): Grease, Knock
-
-Cost: 
-
-+5200gp
 </entry>
   <entry id="51917" lang="en" sex="m">Description: 
 

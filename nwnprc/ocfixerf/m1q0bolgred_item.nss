@@ -25,6 +25,7 @@ if(DEBUG) DoDebug("m1q0boldgred_item running");
         else if(GetLevelByClass(CLASS_TYPE_SORCERER,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_PSION,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WILDER,oPC) > 0 ||
+                GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_NINJA,oPC) > 0 ||
                 GetLevelByClass(CLASS_TYPE_WIZARD,oPC) > 0)
         {

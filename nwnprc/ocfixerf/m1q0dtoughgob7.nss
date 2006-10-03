@@ -17,6 +17,7 @@ void main()
     if(GetLevelByClass(CLASS_TYPE_CLERIC,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_TRUENAMER,oPC) > 0 ||
+       GetLevelByClass(CLASS_TYPE_SHUGENJA,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_HEALER,oPC) > 0 ||
        GetLevelByClass(CLASS_TYPE_DRUID,oPC) > 0 )
     {

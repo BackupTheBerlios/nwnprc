@@ -373,7 +373,7 @@ void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments
                             {
 				if (GetHasMettle(oMainTarget, SAVING_THROW_FORT))
 				// This script does nothing if it has Mettle, bail
-					nDamage = 0;                              
+					nDamage = 0;
                                 nDamage /= 2;
                             }
     }
@@ -383,6 +383,9 @@ void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments
 
     // Fire the ray
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(enAdj.nVFX2, manif.oManifester, BODY_NODE_HAND, nDamage == 0), oMainTarget, 1.7f, FALSE);
+
+    // Let the main target's AI know it's being targeted with a hostile spell
+    SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, manif.oManifester);
 
     // Deal damage if the target didn't Evade it
     if(nDamage > 0)
@@ -417,6 +420,9 @@ void DoEnergyCurrentDamage(struct manifestation manif, struct energy_adjustments
 
             // Fire the ray
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(enAdj.nVFX2, oMainTarget, BODY_NODE_CHEST, nSecondaryDamage == 0), oSecondaryTarget, 1.7f, FALSE);
+
+            // Let the secondary target's AI know it's being targeted with a hostile spell
+            SPRaiseSpellCastAt(oSecondaryTarget, TRUE, manif.nSpellID, manif.oManifester);
 
             // Deal damage if the target didn't Evade it
             if(nSecondaryDamage > 0)

@@ -84,8 +84,10 @@ void main()
             // Check for Power Resistance
             if(PRCMyResistPower(oManifester, oTarget, nPen))
             {
-                // Roll to avoid disarm, if wielding anything
-                if(GetIsObjectValid(oWeapon)                            &&
+                // Roll to avoid disarm, if disarmable and wielding anything
+                if(GetIsCreatureDisarmable(oTarget)                     &&
+                   !GetPlotFlag(oTarget)                                && // Someone whined that plot critters should not be disarmable even if they are set to be disarmable
+                   GetIsObjectValid(oWeapon)                            &&
                    !GetIsSkillSuccessful(oTarget, SKILL_DISCIPLINE, nDC)
                    )
                 {

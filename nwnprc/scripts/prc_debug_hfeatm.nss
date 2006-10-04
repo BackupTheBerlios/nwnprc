@@ -14,56 +14,64 @@
 
 #include "prc_alterations"
 
-int nErrorFound = FALSE;
+const string SET_NAME = "PRC_DEBUG_HFeatM_IPs";
 
-void Recurse(object oPC, object oSkin)
-{
-    itemproperty ip = GetNextItemProperty(oSkin);
-    if(!GetIsItemPropertyValid(ip))
-        return;
-
-    int bFeat = GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT;
-    string sLocal;
-    if(bFeat)
-    {
-        int nIndex = GetItemPropertySubType(ip);
-        sLocal = "prc_debug_hfeatm_" + IntToString(nIndex);
-        if(!GetLocalInt(oPC, sLocal))
-            SetLocalInt(oPC, sLocal, TRUE);
-        else
-        {
-            DoDebug("prc_debug_hfeatm: Duplicate bonus feat on the hide: " + IntToString(nIndex) + " - '" + GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nIndex))) + "'");
-            nErrorFound = TRUE;
-        }
-    }
-    // Test next ip
-    Recurse(oPC, oSkin);
-    // All ips checked, clean up
-    if(bFeat)
-        DeleteLocalInt(oPC, sLocal);
-}
 
 void main()
-{if(DEBUG){ // To ensure the whole script gets considered dead code by compiler when DEBUG is turned off
-    object oPC = OBJECT_SELF;
+{if(DEBUG){ // This should do nothing if DEBUG is not active
+    object oPC   = OBJECT_SELF;
     object oSkin = GetPCSkin(oPC);
 
+    // If the skin has no itemproperties, nothing to do
     itemproperty ip = GetFirstItemProperty(oSkin);
     if(!GetIsItemPropertyValid(ip))
         return;
-    int bFeat = GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT;
-    string sLocal;
-    if(bFeat)
-        SetLocalInt(oPC, (sLocal = "prc_debug_hfeatm_" + IntToString(GetItemPropertySubType(ip))), TRUE);
-    // Test next ip
-    Recurse(oPC, oSkin);
-    // All ips checked, clean up
-    if(bFeat)
-        DeleteLocalInt(oPC, sLocal);
 
+    // Create the set to store the ipfeat numbers in
+    if(set_exists(oPC, SET_NAME))
+        set_delete(oPC, SET_NAME);
+    set_create(oPC, SET_NAME);
+
+    // Loop over all itemproperties, looking for duplicates
+    int nErrorFound = FALSE;
+    while(GetIsItemPropertyValid(ip))
+    {
+        if(GetItemPropertyType(ip) == ITEM_PROPERTY_BONUS_FEAT)
+        {
+            int nIPFeat = GetItemPropertySubType(ip);
+            if(set_contains_int(oPC, SET_NAME, nIPFeat))
+            {
+                DoDebug("prc_debug_hfeatm: Duplicate bonus feat on the hide: " + IntToString(nIPFeat) + " - '" + GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nIPFeat))) + "'");
+                nErrorFound = TRUE;
+            }
+            else
+                set_add_int(oPC, SET_NAME, nIPFeat);
+        }
+
+        ip = GetNextItemProperty(oSkin);
+    }
+
+    // Cleanup
+    set_delete(oPC, SET_NAME);
+
+    // Request a bugreport
     if(nErrorFound)
-        DoDebug("prc_debug_hfeatm: ERROR: A duplicate itemproperty feat has been discovered. This is a critical bug, so please report it.\n\n"
+    {
+        DoDebug("prc_debug_hfeatm: Found duplicate bonus feats on the hide of " + DebugObject2Str(oPC) + "; Build: "
+              + GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", GetClassByPosition(1, oPC)))) + " " + IntToString(GetLevelByPosition(1, oPC))
+              + (GetClassByPosition(2, oPC) != CLASS_TYPE_INVALID ?
+                 " / " + GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", GetClassByPosition(2, oPC)))) + " " + IntToString(GetLevelByPosition(2, oPC))
+                 : ""
+                 )
+              + (GetClassByPosition(3, oPC) != CLASS_TYPE_INVALID ?
+                 " / " + GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", GetClassByPosition(3, oPC)))) + " " + IntToString(GetLevelByPosition(3, oPC))
+                 : ""
+                 )
+                );
+
+        DoDebug("A duplicate itemproperty feat has been discovered. This is a critical bug, so please report it.\n\n"
               + "The report should contain an excerpt from your log (nwn/logs/nwclientlog1.txt) that contains all lines starting with"
-              + "'prc_debug_hfeatm:'.",
-                oPC != GetFirstPC() ? oPC : OBJECT_INVALID); // Avoid duplicate message spam
+              + "'prc_debug_hfeatm:'."
+                );
+    }
 }}

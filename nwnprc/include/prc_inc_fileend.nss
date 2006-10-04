@@ -90,7 +90,7 @@ int PRCGetFileEnd(string sTable)
     if(sTable == "craft_armour") return 63;
     if(sTable == "craft_ring") return 41;
     if(sTable == "craft_weapon") return 42;
-    if(sTable == "craft_wondrous") return 113;
+    if(sTable == "craft_wondrous") return 115;
     if(sTable == "creaturesize") return 5;
     if(sTable == "creaturespeed") return 7;
     if(sTable == "crtemplates") return 10;

@@ -294,7 +294,7 @@ int GetItemCasterLevelFromCastSpell(object oItem, itemproperty ip)
 //Returns TRUE if an item is drained
 int SpellfireDrainItem(object oPC, object oItem, int bCharged = TRUE, int bSingleUse = TRUE)
 {
-    if(GetIsObjectValid(oItem))
+    if(GetIsObjectValid(oItem) && GetIsMagicItem(oItem))
     {   //drain charged item
         if(bCharged)    //because big compound if statements are messy
         {

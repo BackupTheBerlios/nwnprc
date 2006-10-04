@@ -183,7 +183,7 @@ void main()
                 SetHeaderStrRef(STRREF_MAKE_SELECTION); // "Make your selection."
 
                 // Back to main choice
-                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC); // "Back to main menu"
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, STAGE_ENTRY, oPC); // "Back to main menu"
 
                 // The augment levels / PP personal switch
                 AddChoiceStrRef(STRREF_ENTERSTAGE_LVLORPP, STAGE_LEV_OR_PP, oPC); // "Set how the values in an augmentation profile are treated."

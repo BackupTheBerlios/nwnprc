@@ -15,8 +15,8 @@
 #include "psi_inc_augment"
 
 
-const int SLOT_1 = 2356;
-const int SLOT_2 = 2357;
+const int SLOT_1 = 2357;
+const int SLOT_2 = 2358;
 const int SLOT_3 = 2392;
 const int SLOT_4 = 2393;
 const int SLOT_5 = 2394;
@@ -41,13 +41,9 @@ void main()
         case SLOT_6: nSlot = 6; break;
         case SLOT_7: nSlot = 7; break;
 
-        default: nSlot = -1;
-    }
-
-    if(nSlot == -1)
-    {
-        if(DEBUG) DoDebug("prc_aug_qslot: ERROR: Unknown spellID - " + IntToString(nSpellID));
-        return;
+        default:
+            if(DEBUG) DoDebug("prc_aug_qslot: ERROR: Unknown spellID - " + IntToString(nSpellID));
+            return;
     }
 
     // The quickslot indexes are stored as negative to differentiate them from normal slots

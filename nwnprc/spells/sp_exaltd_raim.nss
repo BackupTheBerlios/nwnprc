@@ -193,17 +193,18 @@ void main()
 		fDur += fDur;
 	}
 	
+	effect eArmor = EffectACIncrease(nCasterLvl / 5, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
 	itemproperty ipArmor = ItemPropertyACBonus(nCasterLvl / 5);
 	itemproperty ipDR    = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_PHYSICAL, IP_CONST_DAMAGERESIST_10);
 	itemproperty ipSR    = ItemPropertyBonusSpellResistance(nSR);
 	
 	//check to make sure it has no AC
-	int nAC = GetItemACBase(oMyArmor);
+	int nAC = GetBaseAC(oMyArmor);
 	
 	//object is valid but has no AC value (clothes, robes, etc).
 	if((GetIsObjectValid(oMyArmor)) && (nAC < 1))
 	{
-		IPSafeAddItemProperty(oMyArmor, ipArmor, fDur);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oMyArmor, fDur);
 		IPSafeAddItemProperty(oMyArmor, ipDR, fDur);
 		IPSafeAddItemProperty(oMyArmor, ipSR, fDur);
 		SetLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment", 1);

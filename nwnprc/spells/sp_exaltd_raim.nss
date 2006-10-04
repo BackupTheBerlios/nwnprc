@@ -205,7 +205,6 @@ void main()
 	if((GetIsObjectValid(oMyArmor)) && (nAC < 1))
 	{
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oMyArmor, fDur);
-		IPSafeAddItemProperty(oMyArmor, ipDR, fDur);
 		IPSafeAddItemProperty(oMyArmor, ipSR, fDur);
 		SetLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment", 1);
 		DelayCommand(fDur, DeleteLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment"));

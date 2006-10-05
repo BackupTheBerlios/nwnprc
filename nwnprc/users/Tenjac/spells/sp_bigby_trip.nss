@@ -38,8 +38,6 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);	
-	int nSorcLevel = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
-	int nDuskLevel = GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC);
 	int nClassType = PRCGetLastSpellCastClass();
 	
 	// Let the AI know

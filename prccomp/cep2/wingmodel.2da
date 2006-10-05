@@ -22,7 +22,7 @@
 18        "Dragon: Prismatic"           c_wingdraprism      ****        
 19        "Dragon: Big"                 c_winged            ****        
 20        "Demon: Mephisto"             c_wingsmeph         ****        
-21        "Gargoyle (dragon)"           c_wingsgarg         ****        
+21        ****                          Reserved_CEP        ****        
 22        "Demon: SkinColours"          c_w_dm_plt          ****        
 23        "Angel: SkinColours"          c_w_an_plt          ****        
 24        "Bat: SkinColours"            c_w_bat_plt         ****        
@@ -116,7 +116,7 @@
 112       "Smoke"                       vdr_smoke           ****        
 113       "Smoke: Overhead(laggy)"      vim_mentcloud       ****        
 114       "Smoke: Ghost"                vdr_ghostsmoke      ****        
-115       "Smoke: Ghost"                vdr_ghostsmoke      ****        
+115       "Smoke: Ghost"                vdr_ghostsmoke2     ****        
 116       "ButterflyCone(laggy)"        var_conebfly        ****        
 117       "GemCone(laggy)"              var_conegems        ****        
 118       "Sparkles: Mage"              vdr_magearmor       ****        
@@ -158,13 +158,13 @@
 154       "LavaSpurt"                   fx_lavaspurt        ****        
 155       "Spark: Fire"                 fx_ref_fire         ****        
 156       "Trace: Ribbon"               fx_ribbon           ****        
-157       "Backpack"                    plc_b09             ****        
+157       ****                          Reserved_CEP        ****        
 158       "Fire(Azer)"                  vcm_hitfire         ****        
-159       "Fog: Blue"                   vco_atoblue         ****        
-160       "Fog: Green"                  vco_atogren         ****        
-161       "Fog: Purple"                 vco_atopurp         ****        
-162       "Fog: Red"                    vco_atored          ****        
-163       "Fog: Yellow"                 vco_atoyelo         ****        
+159       "Fog: Blue"                   vco_atomblue        ****        
+160       "Fog: Green"                  vco_atomgren        ****        
+161       "Fog: Purple"                 vco_atompurp        ****        
+162       "Fog: Red"                    vco_atomred         ****        
+163       "Fog: Yellow"                 vco_atomyelo        ****        
 164       "Butterflies"                 plc_t02             ****        
 165       "RingCone(laggy)"             vco_gazemind        ****        
 166       "Trace: Blue"                 vco_grndblue        ****        
@@ -229,13 +229,13 @@
 225       "Gas Jet: Smoke"              vff_gassmoke        ****        
 226       "Trace: Colorful"             vim_bonabil         ****        
 227       "Trace: Rays"                 vim_bonholy         ****        
-228       "Summoning Circle"            px_g01              ****        
+228       "Summoning Circle"            px2_g01             ****        
 229       "Fog: Big Green"              vdr_bigby_int       ****        
 230       "Trace: White"                vim_bonac           ****        
 231       "Fog: Black"                  vps_tentacle        ****        
 232       "Negative Rays(laggy)"        vim_negabil         ****        
-233       "Big Cloud"                   vff_summon          ****        
-234       "Sparkles/Tracers"            vff_summon          ****        
+233       "Big Cloud"                   vff_summon1         ****        
+234       "Sparkles/Tracers"            vff_summon2         ****        
 235       "Sparks: Body Encasing"       vff_summund         ****        
 236       "Wilting(laggy)"              vff_wilting         ****        
 237       "Hyper Fireball"              vpr_fireball        ****        

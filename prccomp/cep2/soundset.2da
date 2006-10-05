@@ -896,9 +896,9 @@
 892       cep_reserved               ****            ****         ****       4        
 893       cep_reserved               ****            ****         ****       4        
 894       cep_reserved               ****            ****         ****       4        
-895       cep_reserved               ****            ****         ****       4        
-896       cep_reserved               ****            ****         ****       4        
-897       cep_reserved               ****            ****         ****       4        
-898       cep_reserved               ****            ****         ****       4        
-899       cep_reserved               ****            ****         ****       4        
+895       CODI_Parai                 c_parai         16818964     4          4        
+896       CODI_Secundus              c_secundus      16818963     4          4        
+897       CODI_Primus                c_primus        16818962     4          4        
+898       CODI_Marut                 c_marut         16818961     4          4        
+899       CODI_Mane                  c_codi_mane     16818960     0          4        
 900       User                       ****            ****         ****       4        

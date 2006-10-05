@@ -22,12 +22,12 @@ module.Hak : prc_race.hak
 module.Hak : prc_textures.hak
 module.Hak : prc_misc.hak
 module.Hak : prc_craft2das.hak
-module.Hak : cep2_top_vb2.hak
-module.Hak : cep2_core1_vb2.hak
-module.Hak : cep2_core2_vb2.hak
-module.Hak : cep2_core3_vb2.hak
-module.Hak : cep2_core4_vb2.hak
-module.Hak : cep2_core5_vb2.hak
+module.Hak : cep2_top_v1.hak
+module.Hak : cep2_core1.hak
+module.Hak : cep2_core2.hak
+module.Hak : cep2_core3.hak
+module.Hak : cep2_core4.hak
+module.Hak : cep2_core5.hak
 
 # Custom tlk used by the prc pack.
 module.CustomTlk : prccep.tlk

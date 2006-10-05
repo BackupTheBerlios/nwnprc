@@ -5,255 +5,239 @@
 1         Lizard                        c_tailliz           default     
 2         Bone                          c_tailbone          ****        
 3         Devil                         c_taildevil         default     
-4         "Ice"                         c_tailice           ****        
-5         "Fire"                        c_tailfire          ****        
-6         "Black"                       c_tailblack         ****        
-7         "Red"                         c_tailred           ****        
-8         "Blue"                        c_tailblue          ****        
-9         "Green"                       c_tailgreen         ****        
-10        "Lizard: Mage"                c_magetail          ****        
-11        "Lizard: Mage2"               c_tailomge          ****        
-12        "Lizard: War"                 c_tailowar          ****        
-13        "Lizard: Red"                 c_taillizr          ****        
-14        "Spike: Gray"                 c_tailspike         ****        
-15        "Spike: White"                c_tailspike1        ****        
-16        "Spike: Black"                c_tailspike2        ****        
-17        "Spike: Red"                  c_tailspike3        ****        
-18        "Spike: Blue"                 c_tailspike4        ****        
-19        "Spike: Green"                c_tailspike5        ****        
-20        "Lizard: Black"               c_taillizbk         ****        
-21        "Lizard: Blue"                c_taillizbl         ****        
-22        "Lizard; White"               c_taillizwh         ****        
-23        "Lizard: Prism"               c_taillizprz        ****        
-24        "Lizard: Shadow"              c_taillizsh         ****        
-25        "Lizard: Brass"               c_taillizbs         ****        
-26        "Lizard: Bronze"              c_taillizbz         ****        
-27        "Lizard: Copper"              c_taillizcp         ****        
-28        "Lizard: Gold"                c_taillizgd         ****        
-29        "Lizard: Silver"              c_taillizsl         ****        
-30        Cat                           zep_tailcat         ****        
-31        Gargoyle                      c_tailgarg          ****        
-32        Minotaur                      c_tailmino          ****        
-33        "Whip"                        c_tailwhip          ****        
-34        "Dragon: Skin Colors"         c_taildkin          ****        
-35        ****                          CEP_reserved        ****        
-36        Bulette                       c_tailbulette       ****        
-37        Raven                         c_tailraven         ****        
-38        Falcon                        c_tailfalcon        ****        
-39        Manticore                     c_tailmanticore     ****        
-40        Scorpion                      c_tailscorpion      ****        
-41        "Scorpion: Red"               c_tailscorpionr     ****        
-42        "Scorpion: Green"             c_tailscorpiong     ****        
-43        Leopard                       c_tailfeline_a      ****        
-44        "Leopard: Snow"               c_tailfeline_b      ****        
-45        Tiger                         c_tailfeline_c      ****        
-46        "Tiger: White"                c_tailfeline_d      ****        
-47        Fox                           c_tailfluffy_a      ****        
-48        Wolf                          c_tailfluffy_b      ****        
-49        "Wolf: Shaggy"                c_tailfluffy_c      ****        
-50        "Half-Dragon: Gold"           c_tailglddrg        ****        
-51        "Half-Dragon: Silver"         c_tailslvhdrg       ****        
-52        "Lizard: SkinColors"          c_t_liz_plt         ****        
-53        "Devil: SkinColors"           c_t_devil_plt       ****        
-54        "Demon: Blue Translucent"     c_demtailblu        ****        
-55        "Demon: Red Translucent"      c_demtailred        ****        
-56        "Parrot: Gold"                c_tailparrot1       ****        
-57        "Parrot: Blue"                c_tailparrot2       ****        
-58        "Feathers"                    c_tailfeathers1     ****        
-59        ****                          reserved_CEP        ****        
-60        ****                          reserved_CEP        ****        
-61        ****                          reserved_CEP        ****        
-62        ****                          reserved_CEP        ****        
-63        ****                          reserved_CEP        ****        
-64        ****                          reserved_CEP        ****        
-65        ****                          reserved_CEP        ****        
-66        ****                          reserved_CEP        ****        
-67        ****                          reserved_CEP        ****        
-68        ****                          reserved_CEP        ****        
-69        ****                          reserved_CEP        ****        
-70        ****                          reserved_CEP        ****        
-71        ****                          reserved_CEP        ****        
-72        ****                          reserved_CEP        ****        
-73        ****                          reserved_CEP        ****        
-74        ****                          reserved_CEP        ****        
-75        ****                          reserved_CEP        ****        
-76        ****                          reserved_CEP        ****        
-77        ****                          reserved_CEP        ****        
-78        ****                          reserved_CEP        ****        
-79        ****                          reserved_CEP        ****        
-80        ****                          USER                ****        
-81        ****                          USER                ****        
-82        ****                          USER                ****        
-83        ****                          USER                ****        
-84        ****                          USER                ****        
-85        ****                          USER                ****        
-86        ****                          USER                ****        
-87        ****                          USER                ****        
-88        ****                          USER                ****        
-89        ****                          USER                ****        
-90        ****                          reserved_CEP        ****        
-91        ****                          reserved_CEP        ****        
-92        ****                          Reserved_CEP        ****        
-93        ****                          Reserved_CEP        ****        
-94        ****                          Reserved_CEP        ****        
-95        ****                          Reserved_CEP        ****        
-96        ****                          Reserved_CEP        ****        
-97        ****                          Reserved_CEP        ****        
-98        ****                          Reserved_CEP        ****        
-99        ****                          Reserved_CEP        ****        
-100       "Caltrops"                    vdr_caltrops        ****        
-101       ****                          Reserved_CEP        ****        
-102       ****                          Reserved_CEP        ****        
-103       ****                          Reserved_CEP        ****        
-104       ****                          Reserved_CEP        ****        
-105       ****                          Reserved_CEP        ****        
-106       ****                          Reserved_CEP        ****        
-107       ****                          Reserved_CEP        ****        
-108       "Mecha (Black Ball)"          px2_f06             ****        
-109       "Combust (flames, lag)"       vim_ballfire        ****        
-110       "Dust"                        rockexpld           ****        
-111       "Dust 2"                      rockexpld01         ****        
-112       "Smoke"                       vdr_smoke           ****        
-113       "Smoke: Overhead(lag)"        vim_mentcloud       ****        
-114       "Smoke: Ghost"                vdr_ghostsmoke      ****        
-115       "Smoke: Ghost"                vdr_ghostsmoke      ****        
-116       "Cone: Butterfly (lag)"       var_conebfly        ****        
-117       "Cone: Gem (lag)"             var_conegems        ****        
-118       "Sparkles: Mage"              vdr_magearmor       ****        
-119       "Sparkles: Multi"             vff_deck            ****        
-120       "Big Red Hand"                vff_rayhand         ****        
-121       "Flag: Blue"                  vfx_flagblue        ****        
-122       "Flag: Purple"                vfx_flagpurp        ****        
-123       "Flag: Red"                   vfx_flagred         ****        
-124       "Flag: Yellow"                vfx_flagyelo        ****        
-125       "Sparks: Acid"                vim_shwngacid01     ****        
-126       "Sparks: Cold"                vim_shwngcold01     ****        
-127       "Sparks: Electric"            vim_shwngelec01     ****        
-128       "Sparks: Evil"                vim_shwngevil01     ****        
-129       "Sparks: Fire"                vim_shwngfire01     ****        
-130       "Sparks: Heal"                vim_shwngheal01     ****        
-131       "Sparks: Holy"                vim_shwngholy01     ****        
-132       "Sparks: Mind"                vim_shwngmind01     ****        
-133       "Sparks: Nature"              vim_shwngnatr01     ****        
-134       "Sparks: Odd"                 vim_shwngodd01      ****        
-135       "Sparks: Sonic"               vim_shwngsonc01     ****        
-136       "Whipfire"                    wwhip_fxfire        ****        
-137       "IceShards"                   vpr_shardice        ****        
-138       "Trace 1: Acid"               vco_lgspracid01     ****        
-139       "Trace 1: Cold"               vco_lgsprcold01     ****        
-140       "Trace 1: Electric"           vco_lgsprelec01     ****        
-141       "Trace 1: Evil"               vco_lgsprevil01     ****        
-142       "Trace 1: Fire"               vco_lgsprfire01     ****        
-143       "Trace 1: Heal"               vco_lgsprheal01     ****        
-144       "Trace 1: Holy"               vco_lgsprholy01     ****        
-145       "Trace 1: Mind"               vco_lgsprmind01     ****        
-146       "Trace 1: Nature"             vco_lgsprnatr01     ****        
-147       "Trace 1: Odd"                vco_lgsprodd01      ****        
-148       "Trace 1: Sonic"              vco_lgsprsonc01     ****        
-149       "FearSkull"                   fx_skull            ****        
-150       "FearSkull 2"                 fx_Skull01          ****        
-151       "Red Atom"                    vco_atomred         ****        
-152       "Animal: Bat"                 c_a_bat             ****        
-153       "Animal: Penguin"             c_a_penguin         ****        
-154       "LavaSpurt"                   fx_lavaspurt        ****        
-155       "Spark: Fire"                 fx_ref_fire         ****        
-156       "Trace: Ribbon"               fx_ribbon           ****        
-157       "Backpack"                    plc_b09             ****        
-158       "Fire(Azer)"                  vcm_hitfire         ****        
-159       "Fog: Blue"                   vco_atoblue         ****        
-160       "Fog: Green"                  vco_atogren         ****        
-161       "Fog: Purple"                 vco_atopurp         ****        
-162       "Fog: Red"                    vco_atored          ****        
-163       "Fog: Yellow"                 vco_atoyelo         ****        
-164       "Butterflies"                 plc_t02             ****        
-165       "Cone: Ring (laggy)"          vco_gazemind        ****        
-166       "Trace: Blue"                 vco_grndblue        ****        
-167       "Trace: Skull"                vco_grndskul        ****        
-168       "Lights: Acid"                vco_mebalacid01     ****        
-169       "Lights: Cold"                vco_mebalcold01     ****        
-170       "Lights: Electric"            vco_mebalelec01     ****        
-171       "Lights: Evil"                vco_mebalevil01     ****        
-172       "Lights: Fire"                vco_mebalfire01     ****        
-173       "Lights: Heal"                vco_mebalheal01     ****        
-174       "Lights: Holy"                vco_mebalholy01     ****        
-175       "Lights: Mind"                vco_mebalmind01     ****        
-176       "Lights: Nature"              vco_mebalnatr01     ****        
-177       "Lights: Odd"                 vco_mebalodd01      ****        
-178       "Lights: Sonic"               vco_mebalsonc01     ****        
-179       "Fog: Acid"                   vco_megrdacid01     ****        
-180       "Fog: Cold"                   vco_megrdcold01     ****        
-181       "Fog: Electric"               vco_megrdelec01     ****        
-182       "Fog: Evil"                   vco_megrdevil01     ****        
-183       "Fog: Fire"                   vco_megrdfire01     ****        
-184       "Fog: Heal"                   vco_megrdheal01     ****        
-185       "Fog: Holy"                   vco_megrdholy01     ****        
-186       "Fog: Mind"                   vco_megrdmind01     ****        
-187       "Fog: Nature"                 vco_megrdnatr01     ****        
-188       "Fog: Odd"                    vco_megrdodd01      ****        
-189       "Fog: Sonic"                  vco_megrdsonc01     ****        
-190       "Trace 2: Acid"               vco_mehanacid01     ****        
-191       "Trace 2: Cold"               vco_mehancold01     ****        
-192       "Trace 2: Electric"           vco_mehanelec01     ****        
-193       "Trace 2: Evil"               vco_mehanevil01     ****        
-194       "Trace 2: Fire"               vco_mehanfire01     ****        
-195       "Trace 2: Heal"               vco_mehanheal01     ****        
-196       "Trace 2: Holy"               vco_mehanholy01     ****        
-197       "Trace 2: Mind"               vco_mehanmind01     ****        
-198       "Trace 2: Nature"             vco_mehannatr01     ****        
-199       "Trace 2: Odd"                vco_mehanodd01      ****        
-200       "Trace 2: Sonic"              vco_mehansonc01     ****        
-201       "Flies"                       vps_bugs            ****        
-202       "Trace 3: Acid"               vco_mehedacid01     ****        
-203       "Trace 3: Cold"               vco_mehedcold01     ****        
-204       "Trace 3: Electric"           vco_mehedelec01     ****        
+4         ****                          ****                ****        
+5         ****                          ****                ****        
+6         ****                          ****                ****        
+7         ****                          ****                ****        
+8         ****                          ****                ****        
+9         ****                          ****                ****        
+10        ****                          ****                ****        
+11        ****                          ****                ****        
+12        ****                          ****                ****        
+13        ****                          ****                ****        
+14        ****                          ****                ****        
+15        ****                          ****                ****        
+16        ****                          ****                ****        
+17        ****                          ****                ****        
+18        ****                          ****                ****        
+19        ****                          ****                ****        
+20        ****                          ****                ****        
+21        ****                          ****                ****        
+22        ****                          ****                ****        
+23        ****                          ****                ****        
+24        ****                          ****                ****        
+25        ****                          ****                ****        
+26        ****                          ****                ****        
+27        ****                          ****                ****        
+28        ****                          ****                ****        
+29        ****                          ****                ****        
+30        ****                          ****                ****        
+31        ****                          ****                ****        
+32        ****                          ****                ****        
+33        ****                          ****                ****        
+34        ****                          ****                ****        
+35        ****                          ****                ****        
+36        ****                          ****                ****        
+37        ****                          ****                ****        
+38        ****                          ****                ****        
+39        ****                          ****                ****        
+40        ****                          ****                ****        
+41        ****                          ****                ****        
+42        ****                          ****                ****        
+43        ****                          ****                ****        
+44        ****                          ****                ****        
+45        ****                          ****                ****        
+46        ****                          ****                ****        
+47        ****                          ****                ****        
+48        ****                          ****                ****        
+49        ****                          ****                ****        
+50        ****                          ****                ****        
+51        ****                          ****                ****        
+52        ****                          ****                ****        
+53        ****                          ****                ****        
+54        ****                          ****                ****        
+55        ****                          ****                ****        
+56        ****                          ****                ****        
+57        ****                          ****                ****        
+58        ****                          ****                ****        
+59        ****                          ****                ****        
+60        ****                          ****                ****        
+61        ****                          ****                ****        
+62        ****                          ****                ****        
+63        ****                          ****                ****        
+64        ****                          ****                ****        
+65        ****                          ****                ****        
+66        ****                          ****                ****        
+67        ****                          ****                ****        
+68        ****                          ****                ****        
+69        ****                          ****                ****        
+70        ****                          ****                ****        
+71        ****                          ****                ****        
+72        ****                          ****                ****        
+73        ****                          ****                ****        
+74        ****                          ****                ****        
+75        ****                          ****                ****        
+76        ****                          ****                ****        
+77        ****                          ****                ****        
+78        ****                          ****                ****        
+79        ****                          ****                ****        
+80        ****                          ****                ****        
+81        ****                          ****                ****        
+82        ****                          ****                ****        
+83        ****                          ****                ****        
+84        ****                          ****                ****        
+85        ****                          ****                ****        
+86        ****                          ****                ****        
+87        ****                          ****                ****        
+88        ****                          ****                ****        
+89        ****                          ****                ****        
+90        ****                          ****                ****        
+91        ****                          ****                ****        
+92        ****                          ****                ****        
+93        ****                          ****                ****        
+94        ****                          ****                ****        
+95        ****                          ****                ****        
+96        ****                          ****                ****        
+97        ****                          ****                ****        
+98        ****                          ****                ****        
+99        ****                          ****                ****        
+100       ****                          ****                ****        
+101       ****                          ****                ****        
+102       ****                          ****                ****        
+103       ****                          ****                ****        
+104       ****                          ****                ****        
+105       ****                          ****                ****        
+106       ****                          ****                ****        
+107       ****                          ****                ****        
+108       ****                          ****                ****        
+109       ****                          ****                ****        
+110       ****                          ****                ****        
+111       ****                          ****                ****        
+112       ****                          ****                ****        
+113       ****                          ****                ****        
+114       ****                          ****                ****        
+115       ****                          ****                ****        
+116       ****                          ****                ****        
+117       ****                          ****                ****        
+118       ****                          ****                ****        
+119       ****                          ****                ****        
+120       ****                          ****                ****        
+121       ****                          ****                ****        
+122       ****                          ****                ****        
+123       ****                          ****                ****        
+124       ****                          ****                ****        
+125       ****                          ****                ****        
+126       ****                          ****                ****        
+127       ****                          ****                ****        
+128       ****                          ****                ****        
+129       ****                          ****                ****        
+130       ****                          ****                ****        
+131       ****                          ****                ****        
+132       ****                          ****                ****        
+133       ****                          ****                ****        
+134       ****                          ****                ****        
+135       ****                          ****                ****        
+136       ****                          ****                ****        
+137       ****                          ****                ****        
+138       ****                          ****                ****        
+139       ****                          ****                ****        
+140       ****                          ****                ****        
+141       ****                          ****                ****        
+142       ****                          ****                ****        
+143       ****                          ****                ****        
+144       ****                          ****                ****        
+145       ****                          ****                ****        
+146       ****                          ****                ****        
+147       ****                          ****                ****        
+148       ****                          ****                ****        
+149       ****                          ****                ****        
+150       "Ice"                         c_tailice           ****        
+151       "Fire"                        c_tailfire          ****        
+152       "Black"                       c_tailblack         ****        
+153       "Red"                         c_tailred           ****        
+154       "Blue"                        c_tailblue          ****        
+155       "Green"                       c_tailgreen         ****        
+156       ****                          CEP_reserved        ****        
+157       "Lizard: Mage2"               c_tailomge          ****        
+158       "Lizard: War"                 c_tailowar          ****        
+159       "Lizard: Red"                 c_taillizr          ****        
+160       "Spike: Gray"                 c_tailspike         ****        
+161       "Spike: White"                c_tailspike1        ****        
+162       "Spike: Black"                c_tailspike2        ****        
+163       "Spike: Red"                  c_tailspike3        ****        
+164       "Spike: Blue"                 c_tailspike4        ****        
+165       "Spike: Green"                c_tailspike5        ****        
+166       "Lizard: Black"               c_taillizbk         ****        
+167       "Lizard: Blue"                c_taillizbl         ****        
+168       "Lizard; White"               c_taillizwh         ****        
+169       "Lizard: Prism"               c_taillizprz        ****        
+170       "Lizard: Shadow"              c_taillizsh         ****        
+171       "Lizard: Brass"               c_taillizbs         default     
+172       "Lizard: Bronze"              c_taillizbz         default     
+173       "Lizard: Copper"              c_taillizcp         default     
+174       "Lizard: Gold"                c_taillizgd         default     
+175       "Lizard: Silver"              c_taillizsl         default     
+176       Cat                           zep_tailcat         ****        
+177       Gargoyle                      c_tailgarg          ****        
+178       Minotaur                      c_tailmino          ****        
+179       "Whip"                        c_tailwhip          ****        
+180       ****                          CEP_reserved        ****        
+181       ****                          CEP_reserved        ****        
+182       Bulette                       c_tailbulette       ****        
+183       Raven                         c_tailraven         ****        
+184       Falcon                        c_tailfalcon        ****        
+185       Manticore                     c_tailmanticore     ****        
+186       Scorpion                      c_tailscorpion      ****        
+187       "Scorpion: Red"               c_tailscorpionr     ****        
+188       "Scorpion: Green"             c_tailscorpiong     ****        
+189       Leopard                       c_tailfeline_a      ****        
+190       "Leopard: Snow"               c_tailfeline_b      ****        
+191       Tiger                         c_tailfeline_c      ****        
+192       "Tiger: White"                c_tailfeline_d      ****        
+193       Fox                           c_tailfluffy_a      ****        
+194       Wolf                          c_tailfluffy_b      ****        
+195       "Wolf: Shaggy"                c_tailfluffy_c      ****        
+196       "Half-Dragon: Gold"           c_tailglddrg        ****        
+197       "Half-Dragon: Silver"         c_tailslvhdrg       ****        
+198       "Lizard: SkinColors"          c_t_liz_plt         ****        
+199       "Devil: SkinColors"           c_t_devil_plt       ****        
+200       "Demon: Blue Translucent"     c_demtailblu        ****        
+201       "Demon: Red Translucent"      c_demtailred        ****        
+202       "Parrot: Gold"                c_tailparrot1       ****        
+203       "Parrot: Blue"                c_tailparrot2       ****        
+204       "Feathers"                    c_tailfeathers1     ****        
 205       None                          ****                ****        
-206       "Trace 3: Evil"               vco_mehedevil01     ****        
-207       "Trace 3: Fire"               vco_mehedfire01     ****        
-208       "Trace 3: Heal"               vco_mehedheal01     ****        
-209       "Trace 3: Holy"               vco_mehedholy01     ****        
-210       "Trace 3: Mind"               vco_mehedmind01     ****        
-211       "Trace 3: Nature"             vco_mehednatr01     ****        
-212       "Trace 3: Odd"                vco_mehedodd01      ****        
-213       "Trace 3: Sonic"              vco_mehedsonc01     ****        
-214       "Trace 3: Electric"           vco_smhanelec01     ****        
-215       "Death Shield"                vim_protdeath       ****        
-216       "Destruction (blood)"         vim_destruct        ****        
-217       "Blue Flames"                 vdr_eleshield02     ****        
-218       "Destruction (rays)"          vim_destruct_l      ****        
-219       "Gas Jet: Acid"               vff_gasacid         ****        
-220       "Gas Jet: Evil"               vff_gasevil         ****        
-221       "Gas Jet: Fire"               vff_gasfire         ****        
-222       "Gas Jet: Grease"             vff_gasgrease       ****        
-223       "Gas Jet: Mind"               vff_gasmind         ****        
-224       "Gas Jet: Nature"             vff_gasnatr         ****        
-225       "Gas Jet: Smoke"              vff_gassmoke        ****        
-226       "Trace: Colorful"             vim_bonabil         ****        
-227       "Trace: Rays"                 vim_bonholy         ****        
-228       "Summoning Circle"            px_g01              ****        
-229       "Fog: Big Green"              vdr_bigby_int       ****        
-230       "Trace: White"                vim_bonac           ****        
-231       "Fog: Black"                  vps_tentacle        ****        
-232       "Negative Rays(laggy)"        vim_negabil         ****        
-233       "Big Cloud"                   vff_summon          ****        
-234       "Sparkles/Tracers"            vff_summon          ****        
-235       "Sparks: Body Encasing"       vff_summund         ****        
-236       "Wilting(laggy)"              vff_wilting         ****        
-237       "Hyper Fireball"              vpr_fireball        ****        
-238       "Fountain: Cold"              vim_pulscold        ****        
-239       "Fountain: Fire"              vim_pulsfire        ****        
-240       "Fountain: Holy"              vim_pulsholy        ****        
-241       "Trace: Wierd"                vim_pulsneg         ****        
-242       "Beam: Flame Lash"            vim_lashfire        ****        
-243       "Doom(Stormcloud)"            vim_magdoom         ****        
-244       "Aura: Green"                 vpm_circfear        ****        
-245       "Aura: Black"                 vpm_circcont        ****        
-246       "Aura: Red/White"             vpm_circdrain       ****        
-247       "Aura: Orange"                vpm_circfire        ****        
-248       "Aura: Blue"                  vpm_circfrost       ****        
-249       "Aura: Blue/Green"            vpm_circpois        ****        
-250       "Aura: Yellow"                vpm_circprot        ****        
-251       "Aura: Purple"                vpm_circradi        ****        
-252       "Aura: White"                 vpm_circsilc        ****        
-253       "Aura: Green"                 vpm_circvisag       ****        
-254       "Aura: Green,LG"              vpm_dragfear        ****        
-255       "RayCold"                     vim_raycold         ****        
+206       "Dust"                        rockexpld           ****        
+207       "Smoke: Ghost"                vdr_ghostsmoke      ****        
+208       "Big Red Hand"                vff_rayhand         ****        
+209       "Whipfire"                    wwhip_fxfire        ****        
+210       "LavaSpurt"                   fx_lavaspurt        ****        
+211       "Spark: Fire"                 fx_ref_fire         ****        
+212       "Trace: Ribbon"               fx_ribbon           ****        
+213       "Backpack"                    plc_b09             ****        
+214       "Fire(Azer)"                  vcm_hitfire         ****        
+215       "Trace 2: Acid"               vco_mehanacid01     ****        
+216       "Trace 2: Cold"               vco_mehancold01     ****        
+217       "Trace 2: Electric"           vco_mehanelec01     ****        
+218       "Trace 2: Evil"               vco_mehanevil01     ****        
+219       "Trace 2: Fire"               vco_mehanfire01     ****        
+220       "Trace 2: Heal"               vco_mehanheal01     ****        
+221       "Trace 2: Holy"               vco_mehanholy01     ****        
+222       "Trace 2: Mind"               vco_mehanmind01     ****        
+223       "Trace 2: Nature"             vco_mehannatr01     ****        
+224       "Trace 2: Odd"                vco_mehanodd01      ****        
+225       "Trace 2: Sonic"              vco_mehansonc01     ****        
+226       "Death Shield"                vim_protdeath       ****        
+227       "Destruction (blood)"         vim_destruct        ****        
+228       "Blue Flames"                 vdr_eleshield02     ****        
+229       "Destruction (rays)"          vim_destruct_l      ****        
+230       "Trace: Rays"                 vim_bonholy         ****        
+231       "Fog: Big Green"              vdr_bigby_int       ****        
+232       "Fog: Black"                  vps_tentacle        ****        
+233       "Negative Rays(laggy)"        vim_negabil         ****        
+234       "Big Cloud"                   vff_summon1         ****        
+235       "Sparkles/Tracers"            vff_summon2         ****        
+236       "Sparks: Body Encasing"       vff_summund         ****        
+237       "Trace: Wierd"                vim_pulsneg         ****        
+238       "Beam: Flame Lash"            vim_lashfire        ****        
+239       "Doom(Stormcloud)"            vim_magdoom         ****        

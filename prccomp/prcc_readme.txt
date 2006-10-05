@@ -1,8 +1,48 @@
 Player Resource Consortium Companion
-------------------------------------
+====================================
 
 This is an optional additional hak to the PRC that contains the best of the vault combined together.
-When used, the PRC code will auto-detect its presence and swap to useing the content automatically.
+When used, the PRC code will auto-detect its presence and swap to using the content automatically.
+
+In addition, this includes merges for different combinations of PRC, PRC Companion, and CEP1/2.
+
+Installation Instructions
+-------------------------
+
+The companion comes in two formats. Either a self-extracting version designed for windows users and a manual 7zip version for other OS or manual installation.
+
+
+Automatic Installation
+
+The self-extraction file should automatically place the files in their correct locations.
+Once you have them done that, you need to add them to any modules you are using. Note, this will not affect saved games only new ones.
+The easiest way to do this is using the PRC module updater directly. 
+By default, it will be installed to NeverwinterNights\PRCPack\PRCModuleUpdater.exe
+Once you run it, you will be presented with a range of options to use to install; these correspond to the .hif files you extracted earlier:
+
+PRC Pack		This is the normal PRC installation
+prc_ocfix		This is the PRC original campaign fix
+prcc			This is the PRC and the PRC Companion
+prcc1			This is the PRC, CEP1 and the PRC/CEP1 merge
+prcc2			This is the PRC, CEP2 and the PRC/CEP2 merge
+prccC1			This is the PRC, PRC Companion, CEP1 and the relevant merge
+prccC2			This is the PRC, PRC Companion, CEP2 and the relevant merge
+
+Since the PRC is included in all of these files, you should only run them on non-prc versions of the module.
+
+
+Manual Installation
+
+7Zip tools can be obtained from http://www.7-zip.org/ for windows, http://sourceforge.net/projects/p7zip/ for linux, and http://homepage.mac.com/krmathis/ for mac.
+
+.hak & .hif files go in your hak directory
+.tlk files go in your tlk directory
+
+The next step is to associate the haks with the module, normally though the toolset.
+The exact order that the haks are in is not that important. 
+The key points are that:
+A) The relevent merge hak (named as with the hif files above) must be the top hak
+B) That if you have both PRC and CEP (either 1 or 2) on the module you must use prccep as your custom tlk file
 
 
 ===================================

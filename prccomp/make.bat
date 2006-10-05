@@ -1,4 +1,4 @@
-@ECHO off
+REM @ECHO off
 
 del /q *.hak
 del /q *.log
@@ -11,9 +11,6 @@ erf -u prccomp.hak companion\data\*.*
 ECHO copying the prc companion 2das somewhere to be merged
 mkdir prccc
 REM copy companion\2da\*.2da prccc\*.2da
-
-ECHO Merging tlk xml files
-tlktools tlkmerge.xml
 
 ECHO Compiling marker scripts
 nwnnsscomp -g *.nss
@@ -69,6 +66,9 @@ SET OUTPUT=prccep1
 SET NAME=prcc1
 start /B /wAIT makeb.bat
 
+
+ECHO Merging tlk xml files
+tlktools tlkmerge.xml
 
 start /B copyhak.bat
 pause

@@ -40,7 +40,7 @@ void main()
     	int nEvent = GetRunningEvent();	
 
 	// Duskblade can cast in light armour.
-	ReducedASF(oPC);
+	if (GetIsPC(oPC)) ReducedASF(oPC);
 	
     // We aren't being called from any event, instead from EvalPRCFeats, so set up the eventhooks
     // Don't start doing this until the Duskblade is level 2

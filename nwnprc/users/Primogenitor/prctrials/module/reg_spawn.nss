@@ -18,9 +18,10 @@ void EquipByType(int nType, int nSlot, int nAC = 0)
         return;
     }
 
-    ForceEquip(OBJECT_SELF,
-        oItem,
-        nSlot);
+    if(nSlot != -1)
+        ForceEquip(OBJECT_SELF,
+            oItem,
+            nSlot);
 }
 
 void DoArmor()
@@ -259,11 +260,7 @@ void main()
     //create melee weapons for later
     //will also make shields
     DelayCommand(4.0,
-        VoidGetRandomizedItemByType(
-            GetHandItemType(OBJECT_SELF, FALSE, FALSE),
-            GetECL(OBJECT_SELF)));
+        EquipByType(GetHandItemType(OBJECT_SELF, FALSE, FALSE),-1));
     DelayCommand(5.0,
-        VoidGetRandomizedItemByType(
-            GetHandItemType(OBJECT_SELF, TRUE, FALSE),
-            GetECL(OBJECT_SELF)));
+        EquipByType(GetHandItemType(OBJECT_SELF, TRUE, FALSE),-1));
 }

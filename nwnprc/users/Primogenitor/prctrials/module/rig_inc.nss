@@ -137,7 +137,7 @@ DoDebug("GetRandomizedItemByType() found existing chest "+sTag);
         {
 //DoDebug("rig_inc line 132");
             DoDebug("GetRandomizedItemByType() looking at "+GetName(oTest)+" "+IntToString(GetLocalInt(oTest, "RigLevel")));
-            if(GetLocalInt(oTest, "RigLevel") != nLevel
+            if(GetLocalInt(oTest, "RigLevel") == nLevel
                 //&& RIG_CheckLimitations(oTest)
                 )    
                 break;//end while loop
@@ -178,6 +178,8 @@ DoDebug("GetRandomizedItemByType() made a new chest "+sTag);
         SetLocalInt(oChest, "BaseItem", nBaseItemType);
         //SetLocalInt(oChest, "Level", nLevel);
         SetLocalInt(oChest, "AC", nAC);
+        //return something invalid so we can try again later
+        return OBJECT_INVALID;
         //return a randomitem by type
         return CreateRandomizeItemByType(nBaseItemType, nLevel, nAC);
     }
@@ -700,11 +702,11 @@ void RIG_DoSetup2(location lLimbo, int nBaseItemType, int nAC = 0)
     }
     //create it if it doesnt exist
     if(!GetIsObjectValid(oChest))
-    {
+    {/*
         oChest = CreateObject(OBJECT_TYPE_CREATURE, "rig_chest", lLimbo, FALSE, sTag);
         SetLocalInt(oChest, "BaseItem", nBaseItemType);
         //SetLocalInt(oChest, "Level", nLevel);
-        SetLocalInt(oChest, "AC", nAC);
+        SetLocalInt(oChest, "AC", nAC);*/
     }
 }
 

@@ -30,7 +30,7 @@
 26         dart           "Dart"             nw_wthdt001      31       **** 
 27         diremace       "Dire Mace"        nw_wdbma001      32       **** 
 28         doubleaxe      "Double Axe"       nw_wdbax001      33       **** 
-29         heavyflail     "Heavy Flail"      ailnw_wblfh001   35       **** 
+29         heavyflail     "Heavy Flail"      nw_wblfh001      35       **** 
 30         gloves         "Gloves"           rig_gloves       36       **** 
 31         lighthammer    "Light Hammer"     nw_wblhl001      37       **** 
 32         handaxe        "Hand Axe"         nw_waxhn001      38       **** 

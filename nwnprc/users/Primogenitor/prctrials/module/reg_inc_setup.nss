@@ -250,7 +250,7 @@ object REG_CreateNPC(location lSpawn, float fCR, int nRace)
 
     //use delay command to avoid TMIs
     AssignCommand(oSpawn,
-        DelayCommand(0.01,
+        DelayCommand(1.00,
             ExecuteScript("reg_spawn", oSpawn)));
 //DoDebug("Timer REG_CreateNPC(): "+StopTimer(OBJECT_SELF, "REG_CreateNPC"));
     return oSpawn;

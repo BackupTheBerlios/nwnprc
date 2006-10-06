@@ -3,7 +3,7 @@
    Label                      Level SpellID 
 0  Acid_Splash                0     424     
 1  Ray_of_Frost               0     144     
-2  Blade_of_Blood             1     1798    
+2  Blade_of_Blood             1     1744    
 3  Kelgores_Fire_Orb          1     1834    
 4  Lesser_Deflect             1     1817    
 5  Rouse                      1     1836    
@@ -19,7 +19,7 @@
 15 Scare                      1     155     
 16 True_Strike                1     415     
 17 Resist_Elements            1     150     
-18 Animalistic_Power          2     1841    
+18 Animalistic_Power          2     1741    
 19 Deflect                    2     1797    
 20 Dimension_Hop              2     1818    
 21 Seeking_Ray                2     1837    

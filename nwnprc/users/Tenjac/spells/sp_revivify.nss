@@ -39,3 +39,26 @@ void main()
 	if(!X2PreSpellCastCode()) return;
 	
 	SPSetSchool(SPELL_SCHOOL_CONJURATION);
+	
+	effect eResurrect = EffectResurrection();
+	effect eVis       = EffectVisualEffect(VFX_IMP_RAISE_DEAD);
+	
+	// Make sure the target is in fact dead
+	if(GetIsDead(oTarget))
+	{
+		// Let the AI know - Special handling
+		SPRaiseSpellCastAt(oTarget, FALSE, SPELL_RAISE_DEAD, oPC);
+		
+		// Apply effects
+		ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oTarget));
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, eResurrect, oTarget);
+			       
+	        // Do special stuff
+	        ExecuteScript("prc_pw_raisedead", oPC);
+	        if(GetPRCSwitch(PRC_PW_DEATH_TRACKING) && GetIsPC(oTarget))
+	            SetPersistantLocalInt(oTarget, "persist_dead", FALSE);
+	}
+	// end if - Deadness check
+	
+	SPSetSchool();
+}

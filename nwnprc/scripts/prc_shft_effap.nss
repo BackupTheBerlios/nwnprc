@@ -1,5 +1,5 @@
 //::///////////////////////////////////////////////
-//:: Shifter effects application spellscript
+//:: Shifting effects application spellscript
 //:: prc_shft_effap
 //::///////////////////////////////////////////////
 /** @file prc_shft_effap

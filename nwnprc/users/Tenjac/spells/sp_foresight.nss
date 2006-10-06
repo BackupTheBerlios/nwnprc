@@ -7,11 +7,11 @@ Divination
 Level: 	Drd 9, Knowledge 9, Sor/Wiz 9, Hlr 9
 Components: 	  V, S, M/DF
 Casting Time: 	  1 standard action
-Range: 	          Personal or touch
+Range: 	          Personal
 Target: 	  See text
 Duration: 	  10 min./level
-Saving Throw: 	  None or Will negates (harmless)
-Spell Resistance: No or Yes (harmless)
+Saving Throw: 	  None 
+Spell Resistance: No 
 
 This spell grants you a powerful sixth sense in 
 relation to yourself or another. Once foresight is 
@@ -24,17 +24,37 @@ might take to best protect yourself and gives you a
 bonus is lost whenever you would lose a Dexterity 
 bonus to AC.
 
-When another creature is the subject of the spell, 
-you receive warnings about that creature. You must 
-communicate what you learn to the other creature for
-the warning to be useful, and the creature can be 
-caught unprepared in the absence of such a warning.
-Shouting a warning, yanking a person back, and even 
-telepathically communicating (via an appropriate 
-spell) can all be accomplished before some danger
-befalls the subject, provided you act on the warning
-without delay. The subject, however, does not gain 
-the insight bonus to AC and Reflex saves.
-
 Arcane Material Component: A hummingbird’s feather. 
 **/
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_DIVINATION);
+	
+	object oPC = OBJECT_SELF;
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = (600.0f * nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+		
+	itemproperty iDodge = ItemPropertyBonusFeat(FEAT_UNCANNY_DODGE_1);
+	effect eLink = EffectLinkEffects(EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK), EffectACIncrease(2, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL));
+	eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_REFLEX, 2, SAVING_THROW_TYPE_ALL));
+	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+	IPSafeAddItemProperty(oArmor, iDodge, fDur);
+	
+	SPSetSchool();
+}
+	
+	

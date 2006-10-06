@@ -1,5 +1,6 @@
 int PRCGetFileEnd(string sTable)
 {
+    sTable = GetStringLowerCase(sTable);
     if(sTable == "ammunitiontypes") return 46;
     if(sTable == "appearance") return 481;
     if(sTable == "appearancesndset") return 28;
@@ -176,7 +177,7 @@ int PRCGetFileEnd(string sTable)
     if(sTable == "iprp_damvulcost") return 7;
     if(sTable == "iprp_decvalue1") return 9;
     if(sTable == "iprp_decvalue2") return 9;
-    if(sTable == "iprp_feats") return 17300;
+    if(sTable == "iprp_feats") return 390;  //17300; //overridden to prevent TMI
     if(sTable == "iprp_immuncost") return 7;
     if(sTable == "iprp_immunity") return 9;
     if(sTable == "iprp_incvalue1") return 9;
@@ -211,7 +212,7 @@ int PRCGetFileEnd(string sTable)
     if(sTable == "iprp_spellcstr") return 42;
     if(sTable == "iprp_spelllvcost") return 9;
     if(sTable == "iprp_spelllvlimm") return 9;
-    if(sTable == "iprp_spells") return 1291;
+    if(sTable == "iprp_spells") return 539; //1291; //overridden to prevent TMI
     if(sTable == "iprp_spellshl") return 7;
     if(sTable == "iprp_srcost") return 61;
     if(sTable == "iprp_staminacost") return -1;

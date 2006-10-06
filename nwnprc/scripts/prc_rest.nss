@@ -66,7 +66,8 @@ void RestFinished(object oPC)
     }
 
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-    GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC)) {
+        GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
+        GetIsEpicFavSoul(oPC) || GetIsEpicHealer(oPC)) {
         FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
         ReplenishSlots(oPC);
     }

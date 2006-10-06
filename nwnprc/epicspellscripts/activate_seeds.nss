@@ -22,13 +22,19 @@ void main()
 
     // Is the player's class allowed to learn the seed?
     int nAllowed = FALSE;
-    if (nXX == 1 && GetIsEpicCleric(OBJECT_SELF)) nAllowed = TRUE;
+    if (nXX == 1 && (GetIsEpicCleric(OBJECT_SELF) ||
+                    GetIsEpicFavSoul(OBJECT_SELF) ||
+                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 2 && GetIsEpicDruid(OBJECT_SELF)) nAllowed = TRUE;
     if (nXX == 3 && (GetIsEpicCleric(OBJECT_SELF) ||
-                    GetIsEpicDruid(OBJECT_SELF))) nAllowed = TRUE;
+                    GetIsEpicDruid(OBJECT_SELF)   ||
+                    GetIsEpicFavSoul(OBJECT_SELF) ||
+                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 4 && GetIsEpicSorcerer(OBJECT_SELF)) nAllowed = TRUE;
     if (nXX == 5 && (GetIsEpicCleric(OBJECT_SELF) ||
-                    GetIsEpicSorcerer(OBJECT_SELF))) nAllowed = TRUE;
+                    GetIsEpicSorcerer(OBJECT_SELF)||
+                    GetIsEpicFavSoul(OBJECT_SELF) ||
+                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 6 && (GetIsEpicDruid(OBJECT_SELF) ||
                     GetIsEpicSorcerer(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 7 && (GetIsEpicCleric(OBJECT_SELF) ||
@@ -38,22 +44,30 @@ void main()
     if (nXX == 9 && (GetIsEpicCleric(OBJECT_SELF) ||
                     GetIsEpicWizard(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 10 && (GetIsEpicDruid(OBJECT_SELF) ||
-                    GetIsEpicWizard(OBJECT_SELF))) nAllowed = TRUE;
+                    GetIsEpicWizard(OBJECT_SELF)||
+                    GetIsEpicFavSoul(OBJECT_SELF) ||
+                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 11 && (GetIsEpicCleric(OBJECT_SELF) ||
                     GetIsEpicDruid(OBJECT_SELF) ||
-                    GetIsEpicWizard(OBJECT_SELF))) nAllowed = TRUE;
+                    GetIsEpicWizard(OBJECT_SELF)||
+                    GetIsEpicFavSoul(OBJECT_SELF) ||
+                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 12 && (GetIsEpicSorcerer(OBJECT_SELF) ||
                     GetIsEpicWizard(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 13 && (GetIsEpicCleric(OBJECT_SELF) ||
                     GetIsEpicSorcerer(OBJECT_SELF) ||
-                    GetIsEpicWizard(OBJECT_SELF))) nAllowed = TRUE;
+                    GetIsEpicWizard(OBJECT_SELF)||
+                    GetIsEpicFavSoul(OBJECT_SELF) ||
+                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 14 && (GetIsEpicDruid(OBJECT_SELF) ||
                     GetIsEpicSorcerer(OBJECT_SELF) ||
                     GetIsEpicWizard(OBJECT_SELF))) nAllowed = TRUE;
     if (nXX == 15 && (GetIsEpicCleric(OBJECT_SELF) ||
                     GetIsEpicDruid(OBJECT_SELF) ||
                     GetIsEpicSorcerer(OBJECT_SELF) ||
-                    GetIsEpicWizard(OBJECT_SELF))) nAllowed = TRUE;
+                    GetIsEpicWizard(OBJECT_SELF)||
+                    GetIsEpicFavSoul(OBJECT_SELF) ||
+                    GetIsEpicHealer(OBJECT_SELF))) nAllowed = TRUE;
     // Give the seed if the player is able to comprehend it, doesn't already
     // have it, and is allowed to learn it.
     if (nAllowed == TRUE)

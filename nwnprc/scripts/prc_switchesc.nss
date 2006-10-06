@@ -171,7 +171,9 @@ void main()
                 if (GetIsEpicCleric(oPC)
                         || GetIsEpicDruid(oPC)
                         || GetIsEpicSorcerer(oPC)
-                        || GetIsEpicWizard(oPC))
+                        || GetIsEpicWizard(oPC)
+                        || GetIsEpicFavSoul(oPC)
+                        || GetIsEpicHealer(oPC))
                     AddChoice("Manage Epic Spells.", 2);
                 AddChoice("Purchase general items, such as scrolls or crafting materials.", 3);
                 AddChoice("Attempt to identify everything in my inventory.", 4);
@@ -321,7 +323,9 @@ void main()
                 if ((GetIsEpicCleric(oPC)
                         || GetIsEpicDruid(oPC)
                         || GetIsEpicSorcerer(oPC)
-                        || GetIsEpicWizard(oPC))
+                        || GetIsEpicWizard(oPC)
+                        || GetIsEpicFavSoul(oPC)
+                        || GetIsEpicHealer(oPC))
                     && GetPRCSwitch(PRC_SPELLSLAB) != 3
                     )
                     AddChoice("Epic spell books", 4);

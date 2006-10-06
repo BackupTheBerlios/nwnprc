@@ -211,6 +211,21 @@ FUNCTION BODIES
 ******************************************************************************/
 
 
+int GetIsEpicHealer(object oPC)
+{
+    if (GetCasterLvl(CLASS_TYPE_HEALER, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_WISDOM) >= 19)
+            return TRUE;
+    return FALSE;
+}
+
+int GetIsEpicFavSoul(object oPC)
+{
+    if (GetCasterLvl(CLASS_TYPE_FAVOURED_SOUL, oPC) >= 17 && GetHitDice(oPC) >= 21 &&
+        GetAbilityScore(oPC, ABILITY_CHARISMA) >= 19)
+            return TRUE;
+    return FALSE;
+}
 
 int GetIsEpicCleric(object oPC)
 {
@@ -263,12 +278,12 @@ int GetEpicSpellSlotLimit(object oPC)
     // Variant rule implementation.
     if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
-        if (GetIsEpicSorcerer(oPC))
+        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC))
         {
             nLimit -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nLimit += GetAbilityModifier(ABILITY_CHARISMA, oPC);
         }
-        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC))
+        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicHealer(oPC))
         {
             nLimit -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nLimit += GetAbilityModifier(ABILITY_WISDOM, oPC);
@@ -359,12 +374,12 @@ int GetSpellcraftSkill(object oPC)
     // Variant rule implementation.
     if (GetPRCSwitch(PRC_EPIC_PRIMARY_ABILITY_MODIFIER_RULE) == TRUE)
     {
-        if (GetIsEpicSorcerer(oPC))
+        if (GetIsEpicSorcerer(oPC) || GetIsEpicFavSoul(oPC))
         {
             nSkill -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nSkill += GetAbilityModifier(ABILITY_CHARISMA, oPC);
         }
-        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC))
+        else if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || GetIsEpicHealer(oPC))
         {
             nSkill -= GetAbilityModifier(ABILITY_INTELLIGENCE, oPC);
             nSkill += GetAbilityModifier(ABILITY_WISDOM, oPC);

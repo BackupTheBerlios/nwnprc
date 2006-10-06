@@ -28,6 +28,8 @@ int DoEpicSpells()
     if(GetIsEpicCleric(OBJECT_SELF) ==FALSE
         && GetIsEpicDruid(OBJECT_SELF) ==FALSE
         && GetIsEpicSorcerer(OBJECT_SELF) ==FALSE
+        && GetIsEpicFavSoul(OBJECT_SELF) ==FALSE
+        && GetIsEpicHealer(OBJECT_SELF) ==FALSE
         && GetIsEpicWizard(OBJECT_SELF) ==FALSE)
         return FALSE;
     if(GetSpellSlots(OBJECT_SELF) < 1)
@@ -634,6 +636,8 @@ void DoEpicSpellcasterSpawn()
     if(GetIsEpicCleric(OBJECT_SELF) ==FALSE
         && GetIsEpicDruid(OBJECT_SELF) ==FALSE
         && GetIsEpicSorcerer(OBJECT_SELF) ==FALSE
+        && GetIsEpicFavSoul(OBJECT_SELF) ==FALSE
+        && GetIsEpicHealer(OBJECT_SELF) ==FALSE
         && GetIsEpicWizard(OBJECT_SELF) ==FALSE)
         return;
     int nLevel = GetHitDice(OBJECT_SELF);

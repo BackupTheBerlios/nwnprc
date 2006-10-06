@@ -23,7 +23,9 @@
 // Keywords to use for this constant:
 // For CLERICS ONLY ---- "CLERIC"
 // For DRUIDS ONLY ---- "DRUID"
-// For BOTH DRUIDS AND CLERICS ---- "DIVINE"
+// For HEALERS ONLY ---- "HEALER"
+// For FAVOURED SOULS ONLY ---- "FAVSOUL"
+// For ALL DIVINE ---- "DIVINE"
 // For SORCERERS AND WIZARDS ONLY ---- "ARCANE"
 // For EVERYONE ---- "ALL"
 string WHO_CAN_RESEARCH = "ALL";
@@ -59,13 +61,17 @@ void main()
         int nAllowed = FALSE;
         if (WHO_CAN_RESEARCH == "CLERIC" && GetIsEpicCleric(oPC)) nAllowed = TRUE;
         if (WHO_CAN_RESEARCH == "DRUID" && GetIsEpicDruid(oPC)) nAllowed = TRUE;
+        if (WHO_CAN_RESEARCH == "HEALER" && GetIsEpicHealer(oPC)) nAllowed = TRUE;
+        if (WHO_CAN_RESEARCH == "FAVSOUL" && GetIsEpicFavSoul(oPC)) nAllowed = TRUE;
         if (WHO_CAN_RESEARCH == "DIVINE" &&
-            (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC))) nAllowed = TRUE;
+            (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) || 
+            GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC))) nAllowed = TRUE;
         if (WHO_CAN_RESEARCH == "ARCANE" && GetIsEpicSorcerer(oPC)) nAllowed = TRUE;
         if (WHO_CAN_RESEARCH == "ARCANE" && GetIsEpicWizard(oPC)) nAllowed = TRUE;
         if (WHO_CAN_RESEARCH == "ALL" &&
             (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
-            GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC))) nAllowed = TRUE;
+            GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) || 
+            GetIsEpicHealer(oPC) || GetIsEpicFavSoul(oPC))) nAllowed = TRUE;
         if (nAllowed == TRUE)
         {
             // Make sure the player doesn't already know this spell.

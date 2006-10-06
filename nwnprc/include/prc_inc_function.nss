@@ -246,6 +246,8 @@ void EvalPRCFeats(object oPC)
     if((GetCasterLvl(CLASS_TYPE_CLERIC,   oPC) >= 21 ||
         GetCasterLvl(CLASS_TYPE_DRUID,    oPC) >= 21 ||
         GetCasterLvl(CLASS_TYPE_SORCERER, oPC) >= 21 ||
+        GetCasterLvl(CLASS_TYPE_FAVOURED_SOUL, oPC) >= 21 ||
+        GetCasterLvl(CLASS_TYPE_HEALER, oPC) >= 21 ||
         GetCasterLvl(CLASS_TYPE_WIZARD,   oPC) >= 21
         ) &&
         !GetHasFeat(FEAT_EPIC_SPELLCASTING_REST, oPC)

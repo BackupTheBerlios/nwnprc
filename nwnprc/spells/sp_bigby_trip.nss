@@ -24,7 +24,6 @@ maximum of +5 at 15th level.
 Material component: Three glass beads
 **/
 
-int BigbyTripDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
 int EvalSizeBonus(object oSubject);
 
 #include "prc_alterations"
@@ -39,23 +38,11 @@ void main()
 	object oPC = OBJECT_SELF;
 	object oTarget = GetSpellTargetObject();
 	int nCasterLvl = PRCGetCasterLevel(oPC);	
-	int nSorcLevel = GetLevelByClass(CLASS_TYPE_SORCERER, oPC);
-	int nDuskLevel = GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC);
-	int nClassType;
+	int nClassType = PRCGetLastSpellCastClass();
+	int nDisplayFeedback;
 	
-	if((nSorcLevel + nDuskLevel) < 1)
-	{
-		return;
-	}
-	
-	if(nSorcLevel > nDuskLevel)
-	{
-		nClassType = CLASS_TYPE_SORCERER;
-	}
-	else
-	{
-		nClassType = CLASS_TYPE_DUSKBLADE;
-	}	
+	// Let the AI know
+        SPRaiseSpellCastAt(oTarget, TRUE, SPELL_BIGBYS_TRIPPING_HAND, oPC);
 	
 	/*If your attack succeeds, make a Strength check opposed by the
 	defender’s Dexterity or Strength check (whichever ability score
@@ -71,7 +58,7 @@ void main()
 	int nAttackBonus = (2 + nCasterLvl +  GetAbilityModifier(nAbility, oPC));
 	int nTripBonus = min(5,(nCasterLvl/3));
 	
-	int iAttackRoll = BigbyTripDoMeleeTouchAttack(oTarget, nAttackBonus);
+	int iAttackRoll = GetAttackRoll(oTarget, OBJECT_INVALID, OBJECT_INVALID, 0, nAttackBonus,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
 	if (iAttackRoll > 0)
 	{
 		//SR
@@ -79,10 +66,9 @@ void main()
 		{
 			//save
 			if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, SPGetSpellSaveDC(oTarget, oPC), SAVING_THROW_TYPE_SPELL))
-			{
-				
-				int nOpposing = (max(GetAbilityModifier(ABILITY_STRENGTH, oTarget), GetAbilityModifier(ABILITY_DEXTERITY, oTarget))) + EvalSizeBonus(oTarget);
-				int nCheck    = GetAbilityModifier(ABILITY_STRENGTH, oPC) + EvalSizeBonus(oPC);
+			{				
+				int nOpposing = d20() + (max(GetAbilityModifier(ABILITY_STRENGTH, oTarget), GetAbilityModifier(ABILITY_DEXTERITY, oTarget))) + EvalSizeBonus(oTarget);
+				int nCheck    = d20() + 2 + nTripBonus;
 				
 				if(nCheck > nOpposing)
 				{
@@ -92,20 +78,6 @@ void main()
 		}
 	}
 	SPSetSchool();
-}
-
-	
-int BigbyTripDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
-{
-    if(GetLocalInt(oCaster, "AttackHasHit"))
-        return GetLocalInt(oCaster, "AttackHasHit");
-    string sCacheName = "AttackHasHit_"+ObjectToString(oTarget);
-    if(GetLocalInt(oCaster, sCacheName))
-        return GetLocalInt(oCaster, sCacheName);
-    int nResult = GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, nAttackBonus,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
-    SetLocalInt(oCaster, sCacheName, nResult);
-    DelayCommand(1.0, DeleteLocalInt(oCaster, sCacheName));
-    return nResult;
 }
 
 int EvalSizeBonus(object oSubject)

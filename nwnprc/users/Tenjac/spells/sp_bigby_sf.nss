@@ -32,7 +32,6 @@ Material Components: Three glass beads.
 // Date:   27.9.06
 ///////////////////////////////////////////////////////
 
-int BigbyStrikeDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF);
 int DoBullRushAttack(object oTarget, int nAttackBonus, int nCasterLevel);
 void DoPush(object oTarget, object oCreator, int nReverse = FALSE);
 int EvalSizeBonus(object oSubject);
@@ -73,7 +72,7 @@ void main()
 	int nAbility = GetAbilityForClass(nClassType, oPC);
 	int nAttackBonus = (2 + nCasterLvl +  GetAbilityModifier(nAbility, oPC));
 	
-	int iAttackRoll = BigbyStrikeDoMeleeTouchAttack(oTarget, nAttackBonus);
+	int iAttackRoll = GetAttackRoll(oTarget, OBJECT_INVALID, OBJECT_INVALID, 0, nAttackBonus,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
 	
 	if (iAttackRoll > 0)
 	{	
@@ -109,18 +108,6 @@ void main()
 	SPSetSchool();	
 }
 
-int BigbyStrikeDoMeleeTouchAttack(object oTarget, int nAttackBonus, int nDisplayFeedback = TRUE, object oCaster = OBJECT_SELF)
-{
-    if(GetLocalInt(oCaster, "AttackHasHit"))
-        return GetLocalInt(oCaster, "AttackHasHit");
-    string sCacheName = "AttackHasHit_"+ObjectToString(oTarget);
-    if(GetLocalInt(oCaster, sCacheName))
-        return GetLocalInt(oCaster, sCacheName);
-    int nResult = GetAttackRoll(oTarget, oCaster, OBJECT_INVALID, 0, nAttackBonus,0,nDisplayFeedback, 0.0, TOUCH_ATTACK_MELEE_SPELL);
-    SetLocalInt(oCaster, sCacheName, nResult);
-    DelayCommand(1.0, DeleteLocalInt(oCaster, sCacheName));
-    return nResult;
-}
 		
 int DoBullRushAttack(object oTarget, int nAttackBonus, int nCasterLevel)
 {

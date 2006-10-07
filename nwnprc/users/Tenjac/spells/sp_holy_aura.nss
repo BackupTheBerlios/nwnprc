@@ -19,8 +19,8 @@ to spells cast by evil creatures, and causing evil
 creatures to become blinded when they strike the
 subjects. This abjuration has four effects.
 
-First, each warded creature gains a +4 deflection bonus t
-o AC and a +4 resistance bonus on saves. Unlike 
+First, each warded creature gains a +4 deflection bonus 
+to AC and a +4 resistance bonus on saves. Unlike 
 protection from evil, this benefit applies against all 
 attacks, not just against attacks by evil creatures.
 
@@ -39,3 +39,54 @@ Focus: A tiny reliquary containing some sacred relic.
 The reliquary costs at least 500 gp. 
 
 **/
+////////////////////////////////////////////////////
+// Author: Tenjac
+// Date :  7.10.06
+////////////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	location lLoc = GetLocation(oPC);
+	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nCounter = nCasterLvl;
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	float fDur = RoundsToSeconds(nCasterLvl);
+	effect eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
+	eDur = EffectLinkEffects(EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE), eDur);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	effect eLink = EffectLinkEffects(VersusAlignmentEffect(EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS), ALIGNMENT_ALL, ALIGNMENT_EVIL), EffectACIncrease(4, AC_DEFLECTION_BONUS, AC_VS_DAMAGE_TYPE_ALL));
+	eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_ALL, 4, SAVING_THROW_TYPE_ALL));
+	eLink = EffectLinkEffects(eLink, VersusAlignmentEffect(EffectSpellResistanceIncrease(25), ALIGNMENT_ALL, ALIGNMENT_EVIL));
+	eLink = EffectLinkEffects(eLink, eDur);
+	
+	while(GetIsObjectValid(oTarget) && nCounter > 0)
+	{
+		if(GetIsFriend(oTarget, oPC))
+		{
+			nCounter--;
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDur);
+		}
+		oTarget = GetNextObjectInShape(SHAPE_SPHERE, FeetToMeters(20.0f), lLoc, FALSE, OBJECT_TYPE_CREATURE);
+	}
+	
+	SPSetSchool();
+}
+	
+	
+	
+	
+	

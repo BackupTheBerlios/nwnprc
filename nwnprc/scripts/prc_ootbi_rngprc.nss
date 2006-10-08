@@ -53,7 +53,8 @@ void main()
     else
     {
     	// So as not to penalize the player, this script performs a full attack round if the target is outside of the distance
-    	FloatingTextStringOnCreature("You are too far away to use Ranged Precision", oPC, FALSE);
+    	// Stops him from being told the wrong error message.
+    	if (nCrittable) FloatingTextStringOnCreature("You are too far away to use Ranged Precision", oPC, FALSE);
     	FloatingTextStringOnCreature("Performing a full attack action", oPC, FALSE);
 	PerformAttackRound(oTarget, oPC, eDummy);
     }

@@ -10,7 +10,7 @@ void CreateRandomizeItemByTypeForChest(int nBaseItemType, int nLevel, int nAC)
 
 void main()
 {
-    int nMax = 5;/*
+    int nMax = RIG_ITEM_CACHE_SIZE;/*
     object oTest = GetFirstItemInInventory();
     while(GetIsObjectValid(oTest))
     {
@@ -22,16 +22,18 @@ void main()
     }*/
     int i;
     int nLevel = 1;
-    int nCount = nMax;
+    int nCount = nMax; //lowest number of items of nLevel level
     for(i=1;i<=40;i++)
     {
-        int nItemCount = GetLocalInt(OBJECT_SELF, "ContentsLevel"+IntToString(nLevel));
+        int nItemCount = GetLocalInt(OBJECT_SELF, "ContentsLevel"+IntToString(i));
         if(nItemCount < nCount)   
         {
             nLevel = i;
             nCount = nItemCount;
         }
-    
+        //shortcut if totally out of something cant get lower
+        if(nCount == 0)
+            break;    
     }
     if(nCount < nMax)
     {

@@ -161,7 +161,7 @@
                 <element name="X" type="8" value="40.016613" />
                 <element name="Y" type="8" value="30.055717" />
                 <element name="Z" type="8" value="-8.381903E-9" />
-                <element name="Bearing" type="8" value="3.1415894" />
+                <element name="Bearing" type="8" value="3.141589" />
             </struct>
             <struct id="9" >
                 <element name="Tag" type="10" value="PRC_MANIFTOKEN_STORE" />

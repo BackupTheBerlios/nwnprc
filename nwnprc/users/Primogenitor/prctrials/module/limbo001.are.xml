@@ -6,7 +6,7 @@
     <struct id="-1" >
         <element name="ID" type="5" value="-1" />
         <element name="Creator_ID" type="5" value="-1" />
-        <element name="Version" type="4" value="10" />
+        <element name="Version" type="4" value="11" />
         <element name="Tag" type="10" value="Limbo" />
         <element name="Name" type="12" value="-1" >
             <localString languageId="0" value="Limbo" />

@@ -5,16 +5,26 @@
 #include "prc_alterations"
 #include "inc_ecl"
 
-void EquipByType(int nType, int nSlot, int nAC = 0)
+void EquipByType(int nType, int nSlot, int nAC = 0, int nTrial = 10)
 {
+    //repeated failures, abort
+    if(nTrial <= 0)
+        return;
+    //dead, abort
+    if(GetIsDead(OBJECT_SELF))
+        return;    
+        
     object oItem = GetRandomizedItemByType(
         nType,
-        GetECL(OBJECT_SELF),
+        //GetECL(OBJECT_SELF),
+        GetHitDice(OBJECT_SELF),
         nAC);
         
     if(!GetIsObjectValid(oItem))
     {
-        DelayCommand(1.0, EquipByType(nType, nSlot, nAC));
+        float fDelay = IntToFloat(Random(60))/10.0;
+        DelayCommand(fDelay, 
+            EquipByType(nType, nSlot, nAC, nTrial-1));
         return;
     }
 
@@ -100,6 +110,8 @@ void ForceSetCreatureBodyPart(int nPart, int nModelNumber, object oCreature=OBJE
 //based on the target race with a degree of randomization.
 void MyDoDisguise(int nRace, object oTarget = OBJECT_SELF)
 {
+    //tends to go wrong, not sure why
+    return;
     //store current appearance to be safe
     StoreAppearance(oTarget);
     int nAppearance; //appearance to change into
@@ -211,7 +223,9 @@ void ReapplyWingsAndTails()
 
 void main()
 {
-    if(GetLocalInt(OBJECT_SELF, "Spawned")) return;
+    //make sure it only runs once
+    if(GetLocalInt(OBJECT_SELF, "Spawned")) 
+        return;
     SetLocalInt(OBJECT_SELF, "Spawned", TRUE);
 
     //attatch prc_ai_mob_* scripts via eventhook
@@ -263,4 +277,35 @@ void main()
         EquipByType(GetHandItemType(OBJECT_SELF, FALSE, FALSE),-1));
     DelayCommand(5.0,
         EquipByType(GetHandItemType(OBJECT_SELF, TRUE, FALSE),-1));
+        
+    //other items
+    int nECL = GetHitDice(OBJECT_SELF);
+    //head
+    if(Random(10) < nECL)
+        DelayCommand(5.0,
+            EquipByType(BASE_ITEM_HELMET, INVENTORY_SLOT_HEAD));
+    //rings
+    if(Random(20) < nECL)
+        DelayCommand(6.0,
+            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_LEFTHAND));
+    if(Random(20) < nECL)
+        DelayCommand(7.0,
+            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_RIGHTHAND));
+    //belt        
+    if(Random(15) < nECL)
+        DelayCommand(8.0,
+            EquipByType(BASE_ITEM_BELT, INVENTORY_SLOT_BELT));
+    //belt        
+    if(Random(15) < nECL)
+        DelayCommand(9.0,
+            EquipByType(BASE_ITEM_BOOTS, INVENTORY_SLOT_BOOTS));
+    //cloak        
+    if(Random(10) < nECL)
+        DelayCommand(10.0,
+            EquipByType(BASE_ITEM_CLOAK, INVENTORY_SLOT_CLOAK));
+    //necklace        
+    if(Random(10) < nECL)
+        DelayCommand(11.0,
+            EquipByType(BASE_ITEM_AMULET, INVENTORY_SLOT_NECK));
+        
 }

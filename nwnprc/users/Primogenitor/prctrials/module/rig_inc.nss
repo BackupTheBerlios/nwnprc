@@ -1,6 +1,6 @@
 const int           RIG_ROOT_COUNT      = 70;
 const string        RIG_DB              = "rig";
-const float         RIG_DB_DELAY        = 600.0;
+const float         RIG_DB_DELAY        = 6000.0;
 
 object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
 object RandomizeItem(object oItem, int nLevel, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
@@ -10,6 +10,9 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
 int RIG_GetRandomMatchingRootByType(int nBase, int nAC = 0);
 int RIG_GetRandomMatchingRoot(object oItem, int nAC = 0);
 int RIG_CheckLimitations(object oItem, object oPC = OBJECT_SELF);
+
+const int RIG_CREATE_ALL_CACHE_CHESTS_ON_LOAD = TRUE;
+const int RIG_ITEM_CACHE_SIZE                 = 10;
 
 #include "prc_gateway"
 #include "rig_inc_app"
@@ -130,8 +133,15 @@ DoDebug("GetRandomizedItemByType() running at level "+IntToString(nLevel));
     object oChest = GetObjectByTag(sTag);
     //chest is valid
     if(GetIsObjectValid(oChest))
-    {
+    {   
 DoDebug("GetRandomizedItemByType() found existing chest "+sTag);    
+        //test against the counter local
+        //no objects in it abort now
+        if(!GetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel))) 
+            return OBJECT_INVALID;
+            
+        //loop over them to find one    
+        //Possible TMI point?
         object oTest = GetFirstItemInInventory(oChest);
         while(GetIsObjectValid(oTest))
         {
@@ -143,12 +153,18 @@ DoDebug("GetRandomizedItemByType() found existing chest "+sTag);
                 break;//end while loop
             oTest = GetNextItemInInventory(oChest);
         }
+        //we didnt find anything
         if(!GetIsObjectValid(oTest))
         {
+            //return something invalid so we can try again later
+            return OBJECT_INVALID;
+            /*
             object oReturn = CreateRandomizeItemByType(nBaseItemType, nLevel, nAC);
             DoDebug("GetRandomizedItemByType() made new item "+GetName(oReturn));
             return oReturn;
+            */
         }    
+        //we did find something, bring it back
         object oReturn = CopyItem(oTest, OBJECT_SELF, TRUE);
         DestroyObject(oTest);
         SetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel), 
@@ -163,8 +179,12 @@ DoDebug("GetRandomizedItemByType() found existing chest "+sTag);
 DoDebug("GetRandomizedItemByType() made a new chest "+sTag);    
         location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
         oChest = RetrieveCampaignObject(RIG_DB, sTag, lLimbo);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oChest);
         if(!GetIsObjectValid(oChest))
+        {
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "rig_chest", lLimbo, FALSE, sTag);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oChest);
+        }    
         else
         {
             int i;
@@ -178,10 +198,13 @@ DoDebug("GetRandomizedItemByType() made a new chest "+sTag);
         SetLocalInt(oChest, "BaseItem", nBaseItemType);
         //SetLocalInt(oChest, "Level", nLevel);
         SetLocalInt(oChest, "AC", nAC);
+        
         //return something invalid so we can try again later
         return OBJECT_INVALID;
+        /*
         //return a randomitem by type
-        return CreateRandomizeItemByType(nBaseItemType, nLevel, nAC);
+        //return CreateRandomizeItemByType(nBaseItemType, nLevel, nAC);
+        */
     }
 }
 
@@ -194,6 +217,7 @@ void VoidGetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int
 //for equiping restrictions
 object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
 {
+DoDebug("CreateRandomizeItemByType() Starting "+IntToString(nBaseItemType)+" "+IntToString(nLevel)+" ");
     if(nBaseItemType == BASE_ITEM_INVALID)
     {
 DoDebug("CreateRandomizeItemByType() invalid base item type");
@@ -212,8 +236,8 @@ DoDebug("CreateRandomizeItemByType() invalid after Rig_Core");
     }
 
     //randomize appearance
-    if(nRandomizeAppearance)
-        oItem = RandomizeItemAppearance(oItem, nAC);
+    //if(nRandomizeAppearance)
+    //    oItem = RandomizeItemAppearance(oItem, nAC);
     if(!GetIsObjectValid(oItem))
     {
 DoDebug("CreateRandomizeItemByType() invalid after RandomizeItemAppearance");
@@ -251,7 +275,7 @@ DoDebug("CreateRandomizeItemByType() invalid after copy back");
     }
     
     SetLocalInt(oItem, "RigLevel", nLevel);
-//    DoDebug(GetName(oItem)+" has finished being randomized");
+DoDebug("CreateRandomizeItemByType() "+GetName(oItem)+" has finished being randomized");
     return oItem;
 }
 
@@ -269,7 +293,7 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
         nRoot = RIG_GetRandomMatchingRootByType(nType, nAC);
 //DoDebug("Timer CreateRandomizeItemByType() Q : "+QueryTimer(OBJECT_SELF, "CreateRandomizeItemByType"));
     string sResRef = Get2DACache("rig_root", "ResRef", nRoot);
-//DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" sResRef = "+sResRef);
+DoDebug("RIG_Core() starting nRoot = "+IntToString(nRoot)+" sResRef = "+sResRef);
     int nSuffix, nPrefix;
     string sSuffix, sPrefix;
     if(nType == BASE_ITEM_INVALID
@@ -282,14 +306,14 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
     object oTemp = CreateItemOnObject(sResRef, GetObjectByTag("HEARTOFCHAOS"));
     if(!GetIsObjectValid(GetObjectByTag("HEARTOFCHAOS")))
     {
-//        DoDebug("RIG_Core() HEARTOFCHAOS is not valid");
+        DoDebug("RIG_Core() HEARTOFCHAOS is not valid");
         return OBJECT_INVALID;
     }
     if(!GetIsObjectValid(oTemp))
         oTemp = oItem;
     if(!GetIsObjectValid(oTemp))
     {
-//DoDebug("RIG_Core() oTemp is not valid");
+DoDebug("RIG_Core() oTemp is not valid");
         return OBJECT_INVALID;
     }
 //DoDebug("RIG_Core() name = "+GetName(oTemp));
@@ -309,35 +333,50 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
         }
         nSuffix = StringToInt(sSuffix);
         nPrefix = StringToInt(sPrefix);
-        while(nPrefix == nSuffix && nPrefix != 0 && nSuffix != 0)
+        while(nPrefix == nSuffix 
+            && nPrefix != 0 
+            && nSuffix != 0)
         {
 //DoDebug("rig_inc line 231");
+            /*
             SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
             sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
             nPrefix = StringToInt(sPrefix);
+            */
+            //Duplicates become single-affixs
+            if(Random(2))
+                nPrefix = 0;
+            else
+                nSuffix = 0;
         }
 DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" "+sPrefix+" "+sSuffix+" at level "+IntToString(nLevel));
 //DoDebug("sResRef = "+sResRef);
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property1", nSuffix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property2", nSuffix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property3", nSuffix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property4", nSuffix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property5", nSuffix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property1", nPrefix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property2", nPrefix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property3", nPrefix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property4", nPrefix)));
-        if(GetIsObjectValid(oReturn))
-        oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property5", nPrefix)));
+        if(nSuffix != 0)
+        {
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property1", nSuffix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property2", nSuffix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property3", nSuffix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property4", nSuffix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property5", nSuffix)));
+        }
+        if(nPrefix != 0)
+        {
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property1", nPrefix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property2", nPrefix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property3", nPrefix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property4", nPrefix)));
+            if(GetIsObjectValid(oReturn))
+            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property5", nPrefix)));
+        }
     }
     DeleteLocalInt(GetModule(), "RIG_LEVEL");
     DestroyObject(oItem);
@@ -354,11 +393,14 @@ DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" "+sPrefix+" "+sSuffix+" at le
 
 int RIG_GetRandomMatchingRootByType(int nBase, int nAC = 0)
 {
+    //if the root is the same as the base item type, return it
+    if(StringToInt(Get2DACache("rig_root", "BaseItem", nBase)) == nBase)
+        return nBase;
     int i = 0;
     string sValue = Get2DACache("rig_root", "BaseItem", i);
     while(sValue != "")
     {
-//DoDebug("rig_inc line 278");
+//DoDebug("RIG_GetRandomMatchingRootByType() loop row "+IntToString (i));
         if(StringToInt(sValue) == nBase)
         {
             //fuggly hardcoding for different armors
@@ -373,6 +415,7 @@ int RIG_GetRandomMatchingRootByType(int nBase, int nAC = 0)
         i++;
         sValue = Get2DACache("rig_root", "BaseItem", i);
     }
+    //should never get here
     return -1;
 }
 
@@ -393,18 +436,18 @@ object RIG_AddItemProperty(object oItem, int nRIGIP)
     //sanity testing
     if(!GetIsObjectValid(oItem))
     {
-//        DoDebug("oItem is not valid going into RIG_AddItemProperty");
+        DoDebug("oItem is not valid going into RIG_AddItemProperty");
         return OBJECT_INVALID;
     }
     if(nRIGIP <0)
     {
-//        DoDebug("nRIGIP is less than 0 going into RIG_AddItemProperty");
+        DoDebug("nRIGIP is less than 0 going into RIG_AddItemProperty");
         DestroyObject(oItem);
         return OBJECT_INVALID;
     }
     if(nRIGIP == 0)
     {
-//        DoDebug("nRIGIP is 0 going into RIG_AddItemProperty");
+        DoDebug("nRIGIP is 0 going into RIG_AddItemProperty");
         //no itemproperty, do nothing
         return oItem;
     }
@@ -667,7 +710,7 @@ void RIG_DoDBStore()
     //doesnt work on linux but oh well
     //DestroyCampaignDatabase(RIG_DB);
     DelayCommand(RIG_DB_DELAY, RIG_DoDBStore());
-
+    DoDebug("RIG_DoDBStore started");
     int i;
     for(i=0;i<RIG_ROOT_COUNT;i++)
     {
@@ -675,38 +718,48 @@ void RIG_DoDBStore()
         int nAC = StringToInt(Get2DACache("rig_root", "AC", i));
         if(RIG_UseBaseItem(nBaseType))
         {
-            DelayCommand(0.1, RIG_DoDBStore2(nBaseType, nAC));
+            float fDelay = IntToFloat(i)/10.0;
+            DelayCommand(fDelay, RIG_DoDBStore2(nBaseType, nAC));
         }
     }
 }
 
-//spawn 1-40 for each base item type
+//spawn a chest for each base item type
 void RIG_DoSetup2(location lLimbo, int nBaseItemType, int nAC = 0)
 {
+DoDebug("RIG_DoSetup2() for "+IntToString(nBaseItemType));
     string sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(nAC);
     object oChest = GetObjectByTag(sTag);
     //check DB next
     if(!GetIsObjectValid(oChest))
     {
         oChest = RetrieveCampaignObject(RIG_DB, sTag, lLimbo);
-        SetLocalInt(oChest, "BaseItem", nBaseItemType);
-        //SetLocalInt(oChest, "Level", nLevel);
-        SetLocalInt(oChest, "AC", nAC);
-        int i;
-        for(i=1;i<=40;i++)
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oChest);
+        if(GetIsObjectValid(oChest))
         {
-            sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(i)+"_"+IntToString(nAC);
-            int nCount = GetCampaignInt(RIG_DB, sTag+"!");
-            SetLocalInt(oChest, "ContentsLevel"+IntToString(i), nCount);
-        }    
-    }
-    //create it if it doesnt exist
-    if(!GetIsObjectValid(oChest))
-    {/*
-        oChest = CreateObject(OBJECT_TYPE_CREATURE, "rig_chest", lLimbo, FALSE, sTag);
-        SetLocalInt(oChest, "BaseItem", nBaseItemType);
-        //SetLocalInt(oChest, "Level", nLevel);
-        SetLocalInt(oChest, "AC", nAC);*/
+            SetLocalInt(oChest, "BaseItem", nBaseItemType);
+            //SetLocalInt(oChest, "Level", nLevel);
+            SetLocalInt(oChest, "AC", nAC);
+            //because locals arent stored on the object
+            //they are stored on the database in parallel
+            int i;
+            for(i=1;i<=40;i++)
+            {
+                sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(i)+"_"+IntToString(nAC);
+                int nCount = GetCampaignInt(RIG_DB, sTag+"!");
+                SetLocalInt(oChest, "ContentsLevel"+IntToString(i), nCount);
+            }    
+        }
+        //create it if it doesnt exist
+        //check the constant too
+        else if(RIG_CREATE_ALL_CACHE_CHESTS_ON_LOAD)
+        {
+            oChest = CreateObject(OBJECT_TYPE_CREATURE, "rig_chest", lLimbo, FALSE, sTag);
+            ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oChest);
+            SetLocalInt(oChest, "BaseItem", nBaseItemType);
+            //SetLocalInt(oChest, "Level", nLevel);
+            SetLocalInt(oChest, "AC", nAC);
+        }
     }
 }
 
@@ -722,7 +775,8 @@ void RIG_DoSetup()
         int nAC = StringToInt(Get2DACache("rig_root", "AC", i));
         if(RIG_UseBaseItem(nBaseType))
         {
-            DelayCommand(0.1, RIG_DoSetup2(lLimbo, nBaseType, nAC));  
+            float fDelay = IntToFloat(i)/10.0;
+            DelayCommand(fDelay, RIG_DoSetup2(lLimbo, nBaseType, nAC));  
         }
     }
 }

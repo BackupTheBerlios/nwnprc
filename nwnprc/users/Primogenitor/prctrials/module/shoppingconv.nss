@@ -14,12 +14,15 @@
 
 #include "prc_alterations"
 #include "inc_dynconv"
+#include "rig_inc"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
 //////////////////////////////////////////////////
 
-const int STAGE_SHOP        = 0;
+const int STAGE_SHOP                = 0;
+const int STAGE_BIOWARE_SHOP        = 1;
+const int STAGE_RANDOM_SHOP         = 2;
 
 
 //////////////////////////////////////////////////
@@ -60,6 +63,14 @@ void main()
         if(!GetIsStageSetUp(nStage, oPC))
         {
             if(nStage == STAGE_SHOP)
+            {
+                SetHeader("Select a type of shop");                
+                AddChoice("Bioware stores",  1, oPC);              
+                AddChoice("Random Item Generator stores",  2, oPC);
+                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+            }
+            else if(nStage == STAGE_BIOWARE_SHOP)
             {
                 SetHeader("Select an shop");                
                 AddChoice("nw_storethief001",  0, oPC);
@@ -107,6 +118,13 @@ void main()
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
+            else if(nStage == STAGE_RANDOM_SHOP)
+            {
+                SetHeader("Select a type of item");                
+                AddChoice("Short sword",  1, oPC);          
+                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+            }
         }
 
         // Do token setup
@@ -133,6 +151,14 @@ void main()
         int nChoice = GetChoice(oPC);
         if(nStage == STAGE_SHOP)
         {
+            if(nChoice == 1)
+                nStage = STAGE_BIOWARE_SHOP;
+            else if(nChoice == 2)
+                nStage = STAGE_RANDOM_SHOP;
+            
+        }
+        else if(nStage == STAGE_BIOWARE_SHOP)
+        {
             string sResRef = GetChoiceText(oPC);
             object oStore = CreateObject(OBJECT_TYPE_STORE, sResRef, GetLocation(OBJECT_SELF));
             DelayCommand(1.0, OpenStore(oStore, oPC));
@@ -140,6 +166,28 @@ void main()
                 DelayCommand(300.0, 
                 DestroyObject(oStore)));
             AllowExit(DYNCONV_EXIT_FORCE_EXIT);    
+        }
+        else if(nStage == STAGE_RANDOM_SHOP)
+        {
+            string sResRef = "store_sale";
+            object oStore = CreateObject(OBJECT_TYPE_STORE, sResRef, GetLocation(OBJECT_SELF));
+            DelayCommand(1.0, OpenStore(oStore, oPC));
+            AssignCommand(oStore, 
+                DelayCommand(300.0, 
+                DestroyObject(oStore)));
+            int nType = BASE_ITEM_SHORTSWORD; 
+            int nECL = GetHitDice(oPC);
+            int nAC = 0;
+            int i;
+            for(i=0; i< RIG_ITEM_CACHE_SIZE;i++)
+            {
+                AssignCommand(oStore, 
+                    VoidGetRandomizedItemByType(
+                        nType,
+                        nECL,
+                        nAC));
+            }
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);  
         }
 
         // Store the stage value. If it has been changed, this clears out the choices

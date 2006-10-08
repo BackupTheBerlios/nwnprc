@@ -8,6 +8,12 @@
             <struct id="0" >
                 <element name="STRREF" type="4" value="6789" />
                 <element name="ID" type="0" value="5" />
+                <element name="LIST" type="15" >
+                    <struct id="0" >
+                        <element name="NAME" type="10" value="store_sale" />
+                        <element name="RESREF" type="11" value="store_sale" />
+                    </struct>
+                </element>
             </struct>
             <struct id="0" >
                 <element name="STRREF" type="4" value="6687" />

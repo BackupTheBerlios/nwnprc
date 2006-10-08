@@ -43,23 +43,31 @@ void main()
         //DoDebug("nValue = "+IntToString(nValue));
     }    
     else if(nValue >= 1200 && nValue < 1300)
+    {
         //greater than level
         if(nLevel >  (nValue-1200)) nValue = 100; else nValue = 0;
+    }    
     else if(nValue >= 1300 && nValue < 1400)
+    {
         //less than level
         if(nLevel <  (nValue-1300)) nValue = 100; else nValue = 0;
+    }    
     else if(nValue == 1500)
+    {
         //is epic
         if(nLevel > 20)
             nValue = 100;
         else
             nValue = 0;
+    }        
     else if(nValue == 1501)
+    {
         //is not epic
         if(nLevel > 20)
             nValue = 0;
         else
             nValue = 100;
+    }        
     else if(nValue >= 1600 && nValue < 1650)
         //fire once in this script for self
     {

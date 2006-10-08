@@ -35,3 +35,32 @@ Arcane Focus: A pair of small iron bars attached to two
 small canine statuettes, one black and one white, the 
 whole array worth 50 gp. 
 **/
+//////////////////////////////////////////////////////
+// Author: Tenjac
+// Date:   7.10.06
+//////////////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_ABJURATION);
+	
+	object oPC = OBJECT_SELF;
+	effect eAoE = EffectAreaOfEffect(AOE_PER_REPULSION);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = RoundsToSeconds(nCasterLvl);
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
+	
+	SPSetSchool();
+}

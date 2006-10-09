@@ -52,9 +52,12 @@ void main()
     // Let the AI know
     SPRaiseSpellCastAt(oTarget, TRUE, POWER_ECTOSHAMBLER, GetAreaOfEffectCreator());
 
-    // Apply effects
-    SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+    {
+	// Apply effects
+	SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eBlind, oTarget);
+	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+    }
 
     // Increase the value of the marker informing a creature is inside Ectoplasmic Shambler
     SetLocalInt(oTarget, "PRC_IsInEctoplasmicShambler", GetLocalInt(oTarget, "PRC_IsInEctoplasmicShambler") + 1);

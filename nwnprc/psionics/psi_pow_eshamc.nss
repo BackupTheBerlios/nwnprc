@@ -54,7 +54,10 @@ void main()
         // Let the AI know
         SPRaiseSpellCastAt(oTarget, TRUE, POWER_ECTOSHAMBLER, oCreator);
 
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+    	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+    	{
+        	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
+        }
 
         //Select the next target within the spell shape.
         oTarget = GetNextInPersistentObject(oAoE, OBJECT_TYPE_CREATURE);

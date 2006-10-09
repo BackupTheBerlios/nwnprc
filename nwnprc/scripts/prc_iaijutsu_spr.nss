@@ -37,6 +37,8 @@ void main()
         nDamage = d6(iDie);
 
         if(GetHasFeat(FEAT_STRIKE_VOID)) nDamage = nDamage + iChaMod*iDie;
+        // Only works on flatfooted foes
+        if (!GetIsDeniedDexBonusToAC(oTarget, oPC)) nDamage = 0;
     }
 
     //Begin Attack Scripting

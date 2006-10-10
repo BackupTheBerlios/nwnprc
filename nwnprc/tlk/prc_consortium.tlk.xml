@@ -5009,66 +5009,26 @@ Level
 BONUS DIVINE SPELLS
 
 Every level in Hospitalier, the character gains new spells per day as if he had also gained a level in his highest divine caster class.</entry>
-  <entry id="46168" lang="en" sex="m">Hosp_I</entry>
-  <entry id="46169" lang="en" sex="m">Hosp_II</entry>
-  <entry id="46170" lang="en" sex="m">Hosp_III</entry>
-  <entry id="46171" lang="en" sex="m">Hosp_IV</entry>
-  <entry id="46172" lang="en" sex="m">Hosp_V</entry>
-  <entry id="46173" lang="en" sex="m">Hosp_VI</entry>
-  <entry id="46174" lang="en" sex="m">Hosp_VII</entry>
-  <entry id="46175" lang="en" sex="m">Hosp_VIII</entry>
-  <entry id="46176" lang="en" sex="m">Hosp_IX</entry>
-  <entry id="46177" lang="en" sex="m">Hosp_X</entry>
-  <entry id="46178" lang="en" sex="m">Hosp_XI</entry>
-  <entry id="46179" lang="en" sex="m">Hosp_XII</entry>
-  <entry id="46180" lang="en" sex="m">Hosp_XIII</entry>
-  <entry id="46181" lang="en" sex="m">Hosp_XIV</entry>
-  <entry id="46182" lang="en" sex="m">Hosp_XV</entry>
-  <entry id="46183" lang="en" sex="m">Hosp_XVI</entry>
-  <entry id="46184" lang="en" sex="m">Hosp_XVII</entry>
-  <entry id="46185" lang="en" sex="m">Hosp_XVIII</entry>
-  <entry id="46186" lang="en" sex="m">Hosp_XIX</entry>
-  <entry id="46187" lang="en" sex="m">Hosp_XX</entry>
-  <entry id="46188" lang="en" sex="m">Hosp_XXI</entry>
-  <entry id="46189" lang="en" sex="m">Hosp_XXII</entry>
-  <entry id="46190" lang="en" sex="m">Hosp_XXIII</entry>
-  <entry id="46191" lang="en" sex="m">Hosp_XXIV</entry>
-  <entry id="46192" lang="en" sex="m">Hosp_XXV</entry>
-  <entry id="46193" lang="en" sex="m">Hosp_XXVI</entry>
-  <entry id="46194" lang="en" sex="m">Hosp_XXVII</entry>
-  <entry id="46195" lang="en" sex="m">Hosp_XXVIII</entry>
-  <entry id="46196" lang="en" sex="m">Hosp_XXIX</entry>
-  <entry id="46197" lang="en" sex="m">Hosp_XXX</entry>
-  <entry id="46198" lang="en" sex="m">Fist_I</entry>
-  <entry id="46199" lang="en" sex="m">Fist_II</entry>
-  <entry id="46200" lang="en" sex="m">Fist_III</entry>
-  <entry id="46201" lang="en" sex="m">Fist_IV</entry>
-  <entry id="46202" lang="en" sex="m">Fist_V</entry>
-  <entry id="46203" lang="en" sex="m">Fist_VI</entry>
-  <entry id="46204" lang="en" sex="m">Fist_VII</entry>
-  <entry id="46205" lang="en" sex="m">Fist_VIII</entry>
-  <entry id="46206" lang="en" sex="m">Fist_IX</entry>
-  <entry id="46207" lang="en" sex="m">Fist_X</entry>
-  <entry id="46208" lang="en" sex="m">Fist_XI</entry>
-  <entry id="46209" lang="en" sex="m">Fist_XII</entry>
-  <entry id="46210" lang="en" sex="m">Fist_XIII</entry>
-  <entry id="46211" lang="en" sex="m">Fist_XIV</entry>
-  <entry id="46212" lang="en" sex="m">Fist_XV</entry>
-  <entry id="46213" lang="en" sex="m">Fist_XVI</entry>
-  <entry id="46214" lang="en" sex="m">Fist_XVII</entry>
-  <entry id="46215" lang="en" sex="m">Fist_XVIII</entry>
-  <entry id="46216" lang="en" sex="m">Fist_XIX</entry>
-  <entry id="46217" lang="en" sex="m">Fist_XX</entry>
-  <entry id="46218" lang="en" sex="m">Fist_XXI</entry>
-  <entry id="46219" lang="en" sex="m">Fist_XXII</entry>
-  <entry id="46220" lang="en" sex="m">Fist_XXIII</entry>
-  <entry id="46221" lang="en" sex="m">Fist_XXIV</entry>
-  <entry id="46222" lang="en" sex="m">Fist_XXV</entry>
-  <entry id="46223" lang="en" sex="m">Fist_XXVI</entry>
-  <entry id="46224" lang="en" sex="m">Fist_XXVII</entry>
-  <entry id="46225" lang="en" sex="m">Fist_XXVIII</entry>
-  <entry id="46226" lang="en" sex="m">Fist_XXIX</entry>
-  <entry id="46227" lang="en" sex="m">Fist_XXX</entry>
+  <entry id="46168" lang="en" sex="m">Spell-like Ability I</entry>
+  <entry id="46169" lang="en" sex="m">Spell-like Ability II</entry>
+  <entry id="46170" lang="en" sex="m">Spell-like Ability III</entry>
+  <entry id="46171" lang="en" sex="m">Spell-like Ability IV</entry>
+  <entry id="46172" lang="en" sex="m">Spell-like Ability V</entry>
+  <entry id="46173" lang="en" sex="m">Type of Feat: Class Specific
+Prerequisite: Archmage Level 1, Hierophant Level 1
+Specifics: The character can permanently prepare one of her spells as a spell-like ability. The number of times per day that this ability can be used depends on the level of the spell.
+Level No of uses
+    0 5
+    1 5
+    2 4
+    3 4
+    4 3
+    5 3
+    6 2 
+    7 2
+    8 1
+    9 1
+Use: Selected.</entry>
   <entry id="46228" lang="en" sex="m">Shining Blade of Heironeous</entry>
   <entry id="46229" lang="en" sex="m">Shining Blades of Heironeous</entry>
   <entry id="46230" lang="en" sex="m">shining blade of Heironeous</entry>

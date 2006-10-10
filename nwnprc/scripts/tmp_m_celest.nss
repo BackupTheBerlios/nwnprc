@@ -121,9 +121,9 @@ void main()
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
     }
     //smite evil
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL);
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_SMITE_EVIL);
     IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);    
     //marker feat
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_MARKER);
+    ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_CELESTIAL_MARKER);
     IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);   
 }

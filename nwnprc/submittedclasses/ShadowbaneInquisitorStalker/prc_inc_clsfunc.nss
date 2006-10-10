@@ -2386,7 +2386,7 @@ void CorpseCrafter(object oPC, object oSummon)
             AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
             SetDroppableFlag(oSkin, FALSE);
         }
-        itemproperty iInit = ItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT);
+        itemproperty iInit = PRCItemPropertyBonusFeat(IP_CONST_FEAT_IMPROVED_INIT);
         AddItemProperty(DURATION_TYPE_PERMANENT, iInit, oSkin);
 
         // Speed boost, average speed is 30 feet, so a 10 foot boost is a 33% boost

@@ -22,6 +22,6 @@ void main()
     {
         object oSkin = GetPCSkin(OBJECT_SELF);
 
-        AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyBonusFeat(IP_CONST_FEAT_TELEPORT_MANAGEMENT_RADIAL), oSkin);
+        AddItemProperty(DURATION_TYPE_PERMANENT, PRCItemPropertyBonusFeat(IP_CONST_FEAT_TELEPORT_MANAGEMENT_RADIAL), oSkin);
     }
 }

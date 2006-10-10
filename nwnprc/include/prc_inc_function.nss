@@ -739,6 +739,32 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_DOMAIN_POWER_SCALEYKIND, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_PLANT_DOMAIN_POWER, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
+    
+    if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_1, oPC))    
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, 1);
+        
+    if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_2"))
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_2, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_2"));
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_2, oPC))    
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_2, -1, 1);
+        
+    if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_3"))
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_3, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_3"));
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_3, oPC))    
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_3, -1, 1);
+        
+    if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_4"))
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_4, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_4"));
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_4, oPC))    
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_4, -1, 1);
+        
+    if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_5"))
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_5, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_5"));
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_5, oPC))    
+        FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_5, -1, 1);
+        
     BardSong(oPC);
     FeatVirtuoso(oPC);
     ResetExtraStunfistUses(oPC);

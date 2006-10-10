@@ -36,139 +36,139 @@ Created:   5/20/06
 
 void main()
 {
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	int nDC = SPGetSpellSaveDC(oTarget, oPC);
-	int nType = MyPRCGetRacialType(oPC);
-	int nModelNumber = 0;
-	int bLeftHandMissing;
-	int bRightHandMissing;
-	int bLeftAnimated = FALSE;
-	int bRightAnimated = FALSE;
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nDC = SPGetSpellSaveDC(oTarget, oPC);
+    int nType = MyPRCGetRacialType(oPC);
+    int nModelNumber = 0;
+    int bLeftHandMissing;
+    int bRightHandMissing;
+    int bLeftAnimated = FALSE;
+    int bRightAnimated = FALSE;
 
-	if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) == nModelNumber)
-	{
-		bLeftHandMissing = TRUE;
-	}
+    if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) == nModelNumber)
+    {
+        bLeftHandMissing = TRUE;
+    }
 
-	if(GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, oTarget) == nModelNumber)
-	{
-		bRightHandMissing = TRUE;
-	}
+    if(GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, oTarget) == nModelNumber)
+    {
+        bRightHandMissing = TRUE;
+    }
 
-	//Spellhook
-	if(!X2PreSpellCastCode()) return;
+    //Spellhook
+    if(!X2PreSpellCastCode()) return;
 
-	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
+    SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 
-	SPRaiseSpellCastAt(oTarget, TRUE, SPELL_GRIM_REVENGE, oPC);
+    SPRaiseSpellCastAt(oTarget, TRUE, SPELL_GRIM_REVENGE, oPC);
 
-	//Check for undead
-	if(nType == RACIAL_TYPE_UNDEAD)
-	{
-		//Check Spell Resistance
-		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-		{
-			//Will save
-			if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-			{
-				int nDam = d6(6);
+    //Check for undead
+    if(nType == RACIAL_TYPE_UNDEAD)
+    {
+        //Check Spell Resistance
+        if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+        {
+            //Will save
+            if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+            {
+                int nDam = d6(6);
 
-				if(nMetaMagic == METAMAGIC_MAXIMIZE)
-				{
-					nDam = 36;
-				}
-				if(nMetaMagic == METAMAGIC_EMPOWER)
-				{
-					nDam += (nDam/2);
-				}
+                if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                {
+                    nDam = 36;
+                }
+                if(nMetaMagic == METAMAGIC_EMPOWER)
+                {
+                    nDam += (nDam/2);
+                }
 
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 
-				//Remove hand from oTarget - left hand first?
-				//http://nwn.bioware.com/players/167/scripts_commandslist.html
+                //Remove hand from oTarget - left hand first?
+                //http://nwn.bioware.com/players/167/scripts_commandslist.html
 
-				if(!bLeftHandMissing)
-				{
-					//deal damage
-					SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                if(!bLeftHandMissing)
+                {
+                    //deal damage
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 
-					SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
-					SetPersistantLocalInt(oTarget, "LEFT_HAND_USELESS", 1);
+                    SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
+                    SetPersistantLocalInt(oTarget, "LEFT_HAND_USELESS", 1);
 
-					//Force unequip
-					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget), INVENTORY_SLOT_LEFTHAND);
+                    //Force unequip
+                    ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget), INVENTORY_SLOT_LEFTHAND);
 
-					bLeftAnimated = TRUE;
-				}
+                    bLeftAnimated = TRUE;
+                }
 
-				else if(!bRightHandMissing)
-				{
-					//deal damage
-					SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                else if(!bRightHandMissing)
+                {
+                    //deal damage
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 
-					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
-					SetPersistantLocalInt(oTarget, "RIGHT_HAND_USELESS", 1);
+                    SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
+                    SetPersistantLocalInt(oTarget, "RIGHT_HAND_USELESS", 1);
 
-					//Force unequip
-					ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget), INVENTORY_SLOT_RIGHTHAND);
+                    //Force unequip
+                    ForceUnequip(oTarget, GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget), INVENTORY_SLOT_RIGHTHAND);
 
-					bRightAnimated = TRUE;
-				}
+                    bRightAnimated = TRUE;
+                }
 
-				else
-				{
-					SendMessageToPC(oPC, "Your target has no hands!");
-				}
+                else
+                {
+                    SendMessageToPC(oPC, "Your target has no hands!");
+                }
 
-				//Create copy of target, set all body parts null
-				object oHand = CopyObject(oTarget, GetLocation(oTarget), OBJECT_INVALID);
+                //Create copy of target, set all body parts null
+                object oHand = CopyObject(oTarget, GetLocation(oTarget), OBJECT_INVALID);
 
-				SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_PELVIS, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_TORSO, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_BELT, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_NECK, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER, nModelNumber, oHand);
-				SetCreatureBodyPart(CREATURE_PART_HEAD, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_PELVIS, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_TORSO, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_BELT, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_NECK, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER, nModelNumber, oHand);
+                SetCreatureBodyPart(CREATURE_PART_HEAD, nModelNumber, oHand);
 
-				if(!bLeftAnimated)
-				{
-					SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oHand);
-				}
+                if(!bLeftAnimated)
+                {
+                    SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oHand);
+                }
 
-				if(!bRightAnimated)
-				{
-					SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oHand);
-				}
+                if(!bRightAnimated)
+                {
+                    SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oHand);
+                }
 
-				//Set Bonuses
-				effect eLink = EffectACIncrease(4, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
-				       eLink = EffectLinkEffects(eLink, EffectAttackIncrease(4, ATTACK_BONUS_MISC));
+                //Set Bonuses
+                effect eLink = EffectACIncrease(4, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
+                       eLink = EffectLinkEffects(eLink, EffectAttackIncrease(4, ATTACK_BONUS_MISC));
 
-				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oHand);
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oHand);
 
-				itemproperty iUndead = ItemPropertyBonusFeat(FEAT_UNDEAD);
-				IPSafeAddItemProperty(GetPCSkin(oHand), iUndead);
+                itemproperty iUndead = PRCItemPropertyBonusFeat(FEAT_UNDEAD);
+                IPSafeAddItemProperty(GetPCSkin(oHand), iUndead);
 
-				//Make hand hostile to target
-				AssignCommand(oHand, SetIsEnemy(oTarget));
-			}
-		}
-	}
-	SPEvilShift(oPC);
-	SPSetSchool();
+                //Make hand hostile to target
+                AssignCommand(oHand, SetIsEnemy(oTarget));
+            }
+        }
+    }
+    SPEvilShift(oPC);
+    SPSetSchool();
 }
 

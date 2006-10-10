@@ -114,39 +114,39 @@ void main()
     itemproperty ipIP;
     
     //wings
-    SetCreatureWingType(CREATURE_WING_TYPE_ANGEL, oPC);
+    DoWings(oPC, CREATURE_WING_TYPE_ANGEL);
     //naturalAC
     SetCompositeBonus(oSkin, "Template_hceles_natAC", 1, ITEM_PROPERTY_AC_BONUS); 
     //darkvision
     ipIP = ItemPropertyDarkvision();
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     //immunity to disease
     ipIP = ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_DISEASE);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     //resistance to acid 10 cold 10 elec 10
     ipIP = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_COLD, IP_CONST_DAMAGERESIST_10);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     ipIP = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ACID, IP_CONST_DAMAGERESIST_10);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     ipIP = ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_10);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     //damage reduction 5/+1 or 10/+1
     if(nHD <= 11)
     {
         ipIP = ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_5_HP);
-        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     }
     else if(nHD >= 12)
     {
         ipIP = ItemPropertyDamageReduction(IP_CONST_DAMAGEREDUCTION_1, IP_CONST_DAMAGESOAK_10_HP);
-        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     }
     //SR
     int nSR = nHD+10;
     if(nSR > 35)
         nSR = 35;
     ipIP = ItemPropertyBonusSpellResistance(GetSRByValue(nSR));
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
+    IPSafeAddItemProperty(oSkin, ipIP, 0.0);
     //+4 vs poison
     SetCompositeBonus(oSkin, "Template_hceles_poison", 4, ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC, IP_CONST_SAVEVS_POISON); 
     //ability mods
@@ -156,12 +156,18 @@ void main()
     SetCompositeBonus(oSkin, "Template_hceles_int", 2, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_INT); 
     SetCompositeBonus(oSkin, "Template_hceles_wis", 4, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_WIS); 
     SetCompositeBonus(oSkin, "Template_hceles_cha", 4, ITEM_PROPERTY_ABILITY_BONUS, IP_CONST_ABILITY_CHA); 
+    if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_SMITE_EVIL))
+    {
     //smite evil
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_SMITE_EVIL);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_SMITE_EVIL);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+    }
+    if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_MARKER))
+    {
     //marker feat
-    ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_MARKER);
-    IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_MARKER);
+        IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+    }    
     //daylight
 //TO BE ADDED
     //SLAs
@@ -169,36 +175,57 @@ void main()
         || GetAbilityScore(oPC, ABILITY_INTELLIGENCE, TRUE) >= 8)
     {   
         //protection from evil 3/day
-        ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_PROTECTION);
-        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_PROTECTION))
+        {
+            ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_PROTECTION);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+        }    
         //bless 1/day
-        ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_BLESS);
-        IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+        if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_BLESS))
+        {
+            ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_BLESS);
+            IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+        }
         if(nHD >= 3)
         {
             //aid 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_AID);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_AID))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_AID);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }
             //detect evil 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_DETECT);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_DETECT))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_DETECT);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }    
         }   
         if(nHD >= 5)
         {
             //cure serious wounds 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_CURE_SERIOUS);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_CURE_SERIOUS))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_CURE_SERIOUS);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }    
             //neutralize poison 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_NEUTRALIZE_POISON);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_NEUTRALIZE_POISON))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_NEUTRALIZE_POISON);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }
         }   
         if(nHD >= 7)
         {
             //holy smite 1/day
 //TO BE ADDED
             //remove disease 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_REMOVE_DISEASE);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_REMOVE_DISEASE))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_REMOVE_DISEASE);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }
         }   
         if(nHD >= 9)
         {
@@ -208,8 +235,11 @@ void main()
         if(nHD >= 11)
         {
             //holy word 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_HOLY_WORD);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_HOLY_WORD))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_HOLY_WORD);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }
         }   
         if(nHD >= 13)
         {
@@ -221,20 +251,29 @@ void main()
         if(nHD >= 15)
         {
             //mass charm monster 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_MASS_CHARM);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }    
         }   
         if(nHD >= 17)
         {
             //summon monster IX 1/day
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_SUMMON_IX);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }    
         }   
         if(nHD >= 19)
         {
             //resurrection
-            ipIP = ItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION);
-            IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
+            if(!GetHasFeat(FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION))
+            {
+                ipIP = PRCItemPropertyBonusFeat(IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_RESURRECTION);
+                IPSafeAddItemProperty(oSkin, ipIP, 0.0); 
+            }
         }   
     }    
 }

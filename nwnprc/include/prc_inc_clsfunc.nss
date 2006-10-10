@@ -1746,8 +1746,8 @@ int VirtuosoPerformanceDecrement(object oPC, int nSpellID)
 
 void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int nSLAID)
 {
-    int nSLAFeatID = 0; //feat  ID of the SLA in use
-    int nSLASpellID = 0;//spell ID of the SLA in use NOT THE SPELL BEING CAST
+    int nSLAFeatID = -1; //feat  ID of the SLA in use
+    int nSLASpellID = -1;//spell ID of the SLA in use NOT THE SPELL BEING CAST
     
     //get the spellID of the spell your trying to cast    
     //+1 offset for unassigned

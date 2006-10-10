@@ -211,7 +211,7 @@ void main()
     // Insert various debug things here
     if(DEBUG)
     {
-        // Duplicate ItemPropertyBonusFeat monitor
+        // Duplicate PRCItemPropertyBonusFeat monitor
         SpawnNewThread("PRC_Duplicate_IPBFeat_Mon", "prc_debug_hfeatm", 30.0f, oPC);
     }
 

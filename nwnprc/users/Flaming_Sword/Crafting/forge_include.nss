@@ -340,7 +340,7 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
         }
         case ITEM_PROPERTY_BONUS_FEAT:
         {
-            ip = ItemPropertyBonusFeat(nSubTypeValue);
+            ip = PRCItemPropertyBonusFeat(nSubTypeValue);
             break;
         }
         case ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N:

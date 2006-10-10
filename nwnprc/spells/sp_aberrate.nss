@@ -71,7 +71,7 @@ void main()
             
             if(nCasterLvl > 19) nBonus = 5;
                         
-            itemproperty ipRace = ItemPropertyBonusFeat(FEAT_ABERRATION);   
+            itemproperty ipRace = PRCItemPropertyBonusFeat(FEAT_ABERRATION);   
             effect eArmor = EffectACIncrease(nBonus, AC_NATURAL_BONUS);
             effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_2);
             

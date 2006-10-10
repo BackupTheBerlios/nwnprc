@@ -444,6 +444,19 @@ const string PRC_BARD_DISALLOW_NEWSPELLBOOK     = "PRC_BARD_DISALLOW_NEWSPELLBOO
  */
 const string PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO = "PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO";
 
+
+
+/******************************************************************************\
+  *                               Template switches                            *
+\******************************************************************************/
+
+/**
+ * Disable players selecting templates via PRC Options convo
+ */
+const string PRC_DISABLE_CONVO_TEMPLATE_GAIN = "PRC_DISABLE_CONVO_TEMPLATE_GAIN";
+
+
+
 /******************************************************************************\
 *                               Epic Spell switches                            *
 \******************************************************************************/
@@ -884,6 +897,11 @@ const string PRC_PNP_HOLY_AVENGER_IPROP              = "PRC_PNP_HOLY_AVENGER_IPR
   * doenst look beiger than beige. This disables that if you realy want beige cloaks for some reason.
   */
  const string PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE                      = "PRC_DYNAMIC_CLOAK_AUTOCOLOUR_DISABLE";
+
+ /*
+  * disable all the appearance-changing options on the PRC OPtions convo
+  */
+ const string PRC_APPEARNCE_CHANGE_DISABLE                      = "PRC_APPEARNCE_CHANGE_DISABLE";
 
 
 
@@ -2752,6 +2770,7 @@ void CreateSwitchNameArray()
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_SORC_DISALLOW_NEWSPELLBOOK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_BARD_DISALLOW_NEWSPELLBOOK);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO);
+    array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_DISABLE_CONVO_TEMPLATE_GAIN);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_ARMOR_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_PNP_RACIAL_SPEED);
     array_set_string(oWP, "Switch_Name", array_get_size(oWP, "Switch_Name"), PRC_REMOVE_PLAYER_SPEED);

@@ -4,13 +4,13 @@
 //::///////////////////////////////////////////////
 /** @file Foresight
 Divination
-Level: 	Drd 9, Knowledge 9, Sor/Wiz 9, Hlr 9
-Components: 	  V, S, M/DF
-Casting Time: 	  1 standard action
-Range: 	          Personal
-Target: 	  See text
-Duration: 	  10 min./level
-Saving Throw: 	  None 
+Level:  Drd 9, Knowledge 9, Sor/Wiz 9, Hlr 9
+Components:       V, S, M/DF
+Casting Time:     1 standard action
+Range:            Personal
+Target:       See text
+Duration:     10 min./level
+Saving Throw:     None 
 Spell Resistance: No 
 
 This spell grants you a powerful sixth sense in 
@@ -32,29 +32,29 @@ Arcane Material Component: A hummingbird’s feather.
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_DIVINATION);
-	
-	object oPC = OBJECT_SELF;
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDur = (600.0f * nCasterLvl);
-	
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-		
-	itemproperty iDodge = ItemPropertyBonusFeat(FEAT_UNCANNY_DODGE_1);
-	effect eLink = EffectLinkEffects(EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK), EffectACIncrease(2, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL));
-	eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_REFLEX, 2, SAVING_THROW_TYPE_ALL));
-	object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
-	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
-	IPSafeAddItemProperty(oArmor, iDodge, fDur);
-	
-	SPSetSchool();
+    if(!X2PreSpellCastCode()) return;
+    
+    SPSetSchool(SPELL_SCHOOL_DIVINATION);
+    
+    object oPC = OBJECT_SELF;
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    float fDur = (600.0f * nCasterLvl);
+    
+    if(nMetaMagic == METAMAGIC_EXTEND)
+    {
+        fDur += fDur;
+    }
+        
+    itemproperty iDodge = PRCItemPropertyBonusFeat(FEAT_UNCANNY_DODGE_1);
+    effect eLink = EffectLinkEffects(EffectImmunity(IMMUNITY_TYPE_SNEAK_ATTACK), EffectACIncrease(2, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL));
+    eLink = EffectLinkEffects(eLink, EffectSavingThrowIncrease(SAVING_THROW_REFLEX, 2, SAVING_THROW_TYPE_ALL));
+    object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oPC);
+    
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
+    IPSafeAddItemProperty(oArmor, iDodge, fDur);
+    
+    SPSetSchool();
 }
-	
-	
+    
+    

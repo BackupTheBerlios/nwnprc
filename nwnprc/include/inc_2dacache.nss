@@ -10,6 +10,9 @@ const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
 
 string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE);
+
+string GetBiowareDBName();
+
 void PRC_SQLInit();
 void PRC_SQLExecDirect(string sSQL);
 int PRC_SQLFetch();
@@ -600,7 +603,7 @@ if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
         && GetPRCSwitch(PRC_2DA_CACHE_IN_BIOWAREDB))
     {
         sBiowareDBEntry = s2DA+"_"+sColumn+"_"+IntToString(nRow)+"_2DA";
-        s = GetCampaignString("prc_data2", sBiowareDBEntry);
+        s = GetCampaignString(GetBiowareDBName()+"b", sBiowareDBEntry);
         if(s == "")
             nNotBiowareCached = TRUE;
     }
@@ -697,7 +700,7 @@ if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
     if (nNotBiowareCached 
         && GetPRCSwitch(PRC_2DA_CACHE_IN_BIOWAREDB))
     {
-        SetCampaignString("prc_data2", sBiowareDBEntry, s);
+        SetCampaignString(GetBiowareDBName()+"b", sBiowareDBEntry, s);
     }
 
 if(nDebug) PrintString("Get2DACache: returned value is "+s);
@@ -706,6 +709,20 @@ if(nDebug) PrintString("Get2DACache: returned value is "+s);
         return "";
     else
         return s;
+}
+
+string GetBiowareDBName()
+{
+    string sReturn;
+    sReturn = "prc_data";
+    if(GetPRCSwitch(MARKER_PRC_COMPANION))
+        sReturn += "cp";
+    if(GetPRCSwitch(MARKER_CEP1))
+        sReturn += "c1";
+    if(GetPRCSwitch(MARKER_CEP2))
+        sReturn += "c2";
+    return sReturn;
+
 }
 
 //Caching functions

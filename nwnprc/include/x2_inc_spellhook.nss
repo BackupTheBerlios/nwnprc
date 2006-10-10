@@ -467,9 +467,37 @@ int ClassSLAStore()
     if(nSLAID)
     {
         FloatingTextStringOnCreature("SLA "+IntToString(nSLAID)+" stored", OBJECT_SELF);
-        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_SpellID_"+IntToString(nSLAID), PRCGetSpellId());
+        int nMetamagic = PRCGetMetaMagicFeat();
+        int nSpellID = PRCGetSpellId();
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_SpellID_"+IntToString(nSLAID), nSpellID+1);
         SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Class_"+IntToString(nSLAID), PRCGetLastSpellCastClass());
-        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Meta_"+IntToString(nSLAID), PRCGetMetaMagicFeat());
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Meta_"+IntToString(nSLAID), nMetamagic);
+        int nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
+        switch(nMetamagic)
+        {
+            case METAMAGIC_QUICKEN:     nSpellLevel += 4; break;
+            case METAMAGIC_STILL:       nSpellLevel += 1; break;
+            case METAMAGIC_SILENT:      nSpellLevel += 1; break;
+            case METAMAGIC_MAXIMIZE:    nSpellLevel += 3; break;
+            case METAMAGIC_EMPOWER:     nSpellLevel += 2; break;
+            case METAMAGIC_EXTEND:      nSpellLevel += 1; break;
+        }
+        int nUses = 1;
+        switch(nSpellLevel)
+        {
+            default:
+            case 9:
+            case 8: nUses = 1; break;
+            case 7:
+            case 6: nUses = 2; break;
+            case 5:
+            case 4: nUses = 3; break;
+            case 3:
+            case 2: nUses = 4; break;
+            case 1:
+            case 0: nUses = 5; break;
+        }
+        SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Uses_"+IntToString(nSLAID), nUses);
         DeleteLocalInt(OBJECT_SELF, "PRC_SLA_Store");
         return FALSE;
     }   
@@ -1120,8 +1148,8 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nContinue));
     // Healer Spellsharing
     if(nContinue && GetLevelByClass(CLASS_TYPE_HEALER, oCaster) >= 8)
     {
-    	object oComp = GetLocalObject(oCaster, "HealerCompanion");
-    	ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
+        object oComp = GetLocalObject(oCaster, "HealerCompanion");
+        ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
     }
 
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))

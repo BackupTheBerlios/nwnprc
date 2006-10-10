@@ -342,10 +342,21 @@ void main()
             {
                 SetHeader("If I must. Which item do you want me to activate?");
 
-                object oItem = GetFirstItemInInventory(oCohort);
                 if(!array_exists(oCohort, "PRC_ItemsToUse"))
                 {
                     array_create(oCohort, "PRC_ItemsToUse");
+                    int nSlot;
+                    for(nSlot = 0; nSlot < 14; nSlot++)
+                    {
+                        object oItem = GetItemInSlot(nSlot, oCohort);
+                        if(GetIsObjectValid(oItem)  
+                            && GetIdentified(oItem))
+                        {
+                            AddChoice(GetName(oItem), array_get_size(oCohort, "PRC_ItemsToUse"));
+                            array_set_object(oCohort, "PRC_ItemsToUse", array_get_size(oCohort, "PRC_ItemsToUse"), oItem);
+                        }
+                    }
+                    object oItem = GetFirstItemInInventory(oCohort);
                     while(GetIsObjectValid(oItem))
                     {
                         if(GetIdentified(oItem))
@@ -482,6 +493,16 @@ void main()
                 //items in inventory
                 if(nItem)
                 {
+                    int nSlot;
+                    for(nSlot = 0; nSlot < 14; nSlot++)
+                    {
+                        object oItem = GetItemInSlot(nSlot, oCohort);
+                        if(GetIsObjectValid(oItem))
+                        {
+                            AddChoice("(in inventory) "+GetName(oItem), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
+                            array_set_object(oPC, "PRC_ItemsToUse_Target", array_get_size(oPC, "PRC_ItemsToUse_Target"), oItem);
+                        }
+                    }
                     object oTest = GetFirstItemInInventory(oCohort);
                     while(GetIsObjectValid(oTest))
                     {

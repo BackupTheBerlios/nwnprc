@@ -43,13 +43,22 @@ const int STAGE_LEADERSHIP_ADD_CUSTOM_CONFIRM   =  17;
 const int STAGE_LEADERSHIP_REMOVE               =  18;
 const int STAGE_LEADERSHIP_DELETE               =  19;
 const int STAGE_LEADERSHIP_DELETE_CONFIRM       =  20;
-const int STAGE_APPEARANCE                      = 100;
-const int STAGE_APPEARANCE_ITEM                 = 110;
-const int STAGE_APPEARANCE_PART                 = 101;
-const int STAGE_APPEARANCE_PART_LIST            = 102;
 const int STAGE_NATURAL_WEAPON                  =  30;
 const int STAGE_TEMPLATE                        =  31;
 const int STAGE_TEMPLATE_CONFIRM                =  32;
+const int STAGE_APPEARANCE                  = 510;
+const int STAGE_HEAD                        = 520;
+const int STAGE_WINGS                       = 530;
+const int STAGE_TAIL                        = 540;
+const int STAGE_BODYPART                    = 550;
+const int STAGE_BODYPART_CHANGE             = 551;
+const int STAGE_PORTRAIT                    = 560;
+const int STAGE_EQUIPMENT                   = 590;
+const int STAGE_EQUIPMENT_SIMPLE            = 591; //e.g. shield
+const int STAGE_EQUIPMENT_LAYERED           = 592; //e.g. helm
+const int STAGE_EQUIPMENT_COMPOSITE         = 593; //e.g. sword
+const int STAGE_EQUIPMENT_COMPOSITE_B       = 594; 
+const int STAGE_EQUIPMENT_ARMOR             = 595; //e.g. armor
 
 const int CHOICE_RETURN_TO_PREVIOUS             = 0xEFFFFFFF;
 const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;
@@ -58,8 +67,78 @@ const int CHOICE_SWITCHES_USE_2DA               = 0xEFFFFFFE;
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
-void AddCohortRaces(int nMin, int nMax, object oPC);
-void AddTemplates(int nMin, int nMax, object oPC);
+
+void AddPortraits(int nMin, int nMax, object oPC)
+{
+    int i;
+    string sName;
+    for(i=nMin;i<nMin+100;i++)
+    {
+        //test for model
+        if(Get2DACache("portraits", "Race", i) != "")
+        {
+            sName = Get2DACache("portraits", "BaseResRef", i);
+            AddChoice(sName, i, oPC);
+        }
+    }
+    if(i < nMax)
+        DelayCommand(0.00, AddPortraits(i, nMax, oPC));        
+}
+
+void AddTails(int nMin, int nMax, object oPC)
+{
+    int i;
+    string sName;
+    for(i=nMin;i<nMin+100;i++)
+    {
+        //test for model
+        if(Get2DACache("tailmodel", "MODEL", i) != "")
+        {
+            sName = Get2DACache("wingmodel", "LABEL", i);
+            AddChoice(sName, i, oPC);
+        }
+    }
+    if(i < nMax)
+        DelayCommand(0.00, AddTails(i, nMax, oPC));        
+}
+
+void AddWings(int nMin, int nMax, object oPC)
+{
+    int i;
+    string sName;
+    for(i=nMin;i<nMin+100;i++)
+    {
+        //test for model
+        if(Get2DACache("wingmodel", "MODEL", i) != "")
+        {
+            sName = Get2DACache("wingmodel", "LABEL", i);
+            AddChoice(sName, i, oPC);
+        }
+    }
+    if(i < nMax)
+        DelayCommand(0.00, AddWings(i, nMax, oPC));
+}
+
+void AddAppearances(int nMin, int nMax, object oPC)
+{
+    int i;
+    string sName;
+    for(i=nMin;i<nMin+100;i++)
+    {
+        //test for model
+        if(Get2DACache("appearance", "RACE", i) != "")
+        {
+            //test for tlk name
+            sName = GetStringByStrRef(StringToInt(Get2DACache("appearance", "STRING_REF", i)));
+            //no tlk name, use label
+            if(sName == "")
+                sName = Get2DACache("appearance", "LABEL", i);
+            AddChoice(sName, i, oPC);
+        }
+    }
+    if(i < nMax)
+        DelayCommand(0.00, AddAppearances(i, nMax, oPC));
+}
 
 void AddCohortRaces(int nMin, int nMax, object oPC)
 {
@@ -187,7 +266,11 @@ void main()
                     AddChoice("Manage cohorts.", 7);
                 if(GetPrimaryNaturalWeaponCount(oPC))
                     AddChoice("Select primary natural weapon.", 8);
-                AddChoice("Gain a template.", 9);
+                if(!GetPRCSwitch(PRC_DISABLE_CONVO_TEMPLATE_GAIN))
+                    AddChoice("Gain a template.", 9);
+                if(!GetPRCSwitch(PRC_APPEARNCE_CHANGE_DISABLE))
+                    AddChoice("Change appearance.", 10);
+                
 
 
                 MarkStageSetUp(nStage, oPC);

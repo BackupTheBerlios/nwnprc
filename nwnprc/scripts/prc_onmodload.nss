@@ -6,22 +6,23 @@
 
 void CheckDB()
 {
+     string sDBName = GetBiowareDBName();
     //check PRC version
-    if(GetCampaignString("prc_data", "version") != PRC_VERSION)
+    if(GetCampaignString(sDBName, "version") != PRC_VERSION)
     {
         DoDebug("Removing old databases");
-        DestroyCampaignDatabase("prc_data");
+        DestroyCampaignDatabase(sDBName);
         DestroyCampaignDatabase(COHORT_DATABASE);
     }
-    SetCampaignString("prc_data", "version", PRC_VERSION);
+    SetCampaignString(sDBName, "version", PRC_VERSION);
 
     location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
     //only get it if one doesnt already exist (saved games)
     if(GetIsObjectValid(GetObjectByTag("Bioware2DACache")))
         DestroyObject(GetObjectByTag("Bioware2DACache"));
-    object oChest = RetrieveCampaignObject("prc_data", "CacheChest", lLoc);
+    object oChest = RetrieveCampaignObject(sDBName, "CacheChest", lLoc);
     if(!GetIsObjectValid(oChest))
-        DoDebug("Unable to retieve CacheChest from prc_data");
+        DoDebug("Unable to retieve CacheChest from "+sDBName);
 }
 
 void main()

@@ -21,9 +21,9 @@ void main()
             if(DEBUG) DoDebug("prc_spellf_eval: Adding the Spellfire radials", oPC);
             object oSkin = GetPCSkin(oPC);
 
-            IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFIRE_INCREASE), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-            IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFIRE_DECREASE), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-            IPSafeAddItemProperty(oSkin, ItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFIRE_QUICKSELECT), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFIRE_INCREASE), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFIRE_DECREASE), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_SPELLFIRE_QUICKSELECT), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }
         if(!GetLocalInt(oPC, "SpellfireOnhit") && GetLevelByClass(CLASS_TYPE_SPELLFIRE, oPC))
         {   //only spellfire channelers need to have the onhit

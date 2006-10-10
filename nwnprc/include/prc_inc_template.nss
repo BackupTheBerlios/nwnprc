@@ -39,6 +39,9 @@ int GetHasTemplate(int nTemplate, object oPC = OBJECT_SELF)
 
 int GetTemplateLA(object oPC)
 {
+    return GetPersistantLocalInt(oPC, "template_LA");
+    /*
+    //Loop could TMI avoid it
     int nLA;
     //loop over all templates and see if the player has them
     int i;
@@ -47,7 +50,7 @@ int GetTemplateLA(object oPC)
         if(GetHasTemplate(i, oPC))
             nLA += StringToInt(Get2DACache("templates", "LA", i));
     }
-    return nLA;
+    return nLA;*/
 }
 
 int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = TRUE)
@@ -79,9 +82,14 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
     
     //mark the PC as possessing the template
     SetPersistantLocalInt(oPC, "template_"+IntToString(nTemplate), TRUE);
+    //adjust the LA marker accordingly
+    SetPersistantLocalInt(oPC, "template_LA", 
+        GetPersistantLocalInt(oPC, "template_LA")+StringToInt(Get2DACache("templates", "LA", nTemplate)));
+    
     
     //run the main PRC feat system so we trigger any other feats weve borrowed
-    ExecuteScript("prc_feat", oPC);
+    DelayCommand(0.01, EvalPRCFeats(oPC));
+    //ExecuteScript("prc_feat", oPC);
     //ran, evalated, done
     return TRUE;
 }

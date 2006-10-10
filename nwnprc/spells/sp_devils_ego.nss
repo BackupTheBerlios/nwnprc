@@ -28,36 +28,36 @@ Created:
 
 void main()
 {
-	//Spellhook
-	if(!X2PreSpellCastCode()) return;
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
-	object oPC = OBJECT_SELF;
-	object oSkin = GetPCSkin(oPC);
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	float fDur = 60.0f * nCasterLvl;
-	int nBonus = 4;
-	
-	//eval metamagic
-	if (nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur = (fDur * 2);
-	}
-	
-	if (nMetaMagic == METAMAGIC_EMPOWER)
-	{
-		nBonus = (nBonus + (nBonus/2));
-	}
-	
-	itemproperty ipRace = ItemPropertyBonusFeat(FEAT_OUTSIDER);
-	itemproperty ipCha = ItemPropertyAbilityBonus(ABILITY_CHARISMA, nBonus);
-		
-	AddItemProperty(DURATION_TYPE_TEMPORARY, ipRace, oSkin, fDur);
-	IPSafeAddItemProperty(oSkin, ipCha, fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE, TRUE);
-	
-	SPEvilShift(oPC);
-	SPSetSchool();
+    //Spellhook
+    if(!X2PreSpellCastCode()) return;
+    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    
+    object oPC = OBJECT_SELF;
+    object oSkin = GetPCSkin(oPC);
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    float fDur = 60.0f * nCasterLvl;
+    int nBonus = 4;
+    
+    //eval metamagic
+    if (nMetaMagic == METAMAGIC_EXTEND)
+    {
+        fDur = (fDur * 2);
+    }
+    
+    if (nMetaMagic == METAMAGIC_EMPOWER)
+    {
+        nBonus = (nBonus + (nBonus/2));
+    }
+    
+    itemproperty ipRace = PRCItemPropertyBonusFeat(FEAT_OUTSIDER);
+    itemproperty ipCha = ItemPropertyAbilityBonus(ABILITY_CHARISMA, nBonus);
+        
+    AddItemProperty(DURATION_TYPE_TEMPORARY, ipRace, oSkin, fDur);
+    IPSafeAddItemProperty(oSkin, ipCha, fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, TRUE, TRUE);
+    
+    SPEvilShift(oPC);
+    SPSetSchool();
 }
-	
-	
+    
+    

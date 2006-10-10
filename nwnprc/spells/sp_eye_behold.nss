@@ -78,86 +78,86 @@ Created:   6/12/06
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
-	
-	object oPC = OBJECT_SELF;
-	object oSkin = GetPCSkin(oPC);
-	int nRandom = d10(1);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-		
-	while(nRandom == 10)
-	{
-		nRandom = d10(1);
-	}
-	
-	int nCasterLevel = PRCGetCasterLevel(oPC);
-	float fDur = RoundsToSeconds(nCasterLevel);
-	itemproperty iEye;
-	
-	if(nMetaMagic == METAMAGIC_EXTEND)
-	{
-		fDur += fDur;
-	}
-	
-	switch(nRandom)
-	{
-		case 1: 
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_CHARM_PERSON);
-		}
-		
-		case 2:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_CHARM_MONSTER);
-		}
-		
-		case 3:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_SLEEP);
-		}
-		
-		case 4:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_FLESH_TO_STONE);
-		}
-		
-		case 5:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_DISINTEGRATE);
-		}
-		
-		case 6:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_FEAR);
-		}
-		
-		case 7:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_SLOW);
-		}
-		
-		case 8:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_INFLICT_MODERATE_WOUNDS);
-		}
-		
-		case 9:
-		{
-			iEye = ItemPropertyBonusFeat(FEAT_RAY_FINGER_OF_DEATH);
-		}
-	}
-	
-	IPSafeAddItemProperty(oSkin, iEye, fDur);
-	
-	effect eSkill = EffectSkillIncrease(SKILL_SPOT, 2);
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSkill, oPC, fDur);
-	
-	SPEvilShift(oPC);
-	SPSetSchool();
+    if(!X2PreSpellCastCode()) return;
+    
+    SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
+    
+    object oPC = OBJECT_SELF;
+    object oSkin = GetPCSkin(oPC);
+    int nRandom = d10(1);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+        
+    while(nRandom == 10)
+    {
+        nRandom = d10(1);
+    }
+    
+    int nCasterLevel = PRCGetCasterLevel(oPC);
+    float fDur = RoundsToSeconds(nCasterLevel);
+    itemproperty iEye;
+    
+    if(nMetaMagic == METAMAGIC_EXTEND)
+    {
+        fDur += fDur;
+    }
+    
+    switch(nRandom)
+    {
+        case 1: 
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_CHARM_PERSON);
+        }
+        
+        case 2:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_CHARM_MONSTER);
+        }
+        
+        case 3:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_SLEEP);
+        }
+        
+        case 4:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_FLESH_TO_STONE);
+        }
+        
+        case 5:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_DISINTEGRATE);
+        }
+        
+        case 6:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_FEAR);
+        }
+        
+        case 7:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_SLOW);
+        }
+        
+        case 8:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_INFLICT_MODERATE_WOUNDS);
+        }
+        
+        case 9:
+        {
+            iEye = PRCItemPropertyBonusFeat(FEAT_RAY_FINGER_OF_DEATH);
+        }
+    }
+    
+    IPSafeAddItemProperty(oSkin, iEye, fDur);
+    
+    effect eSkill = EffectSkillIncrease(SKILL_SPOT, 2);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSkill, oPC, fDur);
+    
+    SPEvilShift(oPC);
+    SPSetSchool();
 }
-		
-		
-	
+        
+        
+    
 

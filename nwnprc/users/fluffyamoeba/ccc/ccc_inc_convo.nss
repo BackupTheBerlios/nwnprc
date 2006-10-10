@@ -40,8 +40,8 @@ void DoHeaderAndChoices(int nStage)
             sText+= "\n"+GetStringByStrRef(16824210);
             SetHeader(sText);
             // choices Y/N
-            AddChoice(GetStringByStringRef(4753), -1); // no
-            AddChoice(GetStringByStringRef(4752), 1); // yes
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
         case STAGE_RACE:
@@ -62,8 +62,8 @@ void DoHeaderAndChoices(int nStage)
             sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
             SetHeader(sText);
             // choices Y/N
-            AddChoice(GetStringByStringRef(4753), -1); // no
-            AddChoice(GetStringByStringRef(4752), 1); // yes
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
     }
@@ -107,7 +107,11 @@ int HandleChoice(int nStage, int nChoice)
                 // invisible/undead etc body parts
                 DoSetRaceAppearance();
                 // clone the PC and hide the swap with a special effect
-                CreateClone();
+                CreateCloneCutscene();
+                // use letoscript to assign the gender
+                DoCloneGender();
+                // set up the camera and animations
+                DoRotatingCamera();
             }
             else // go back and pick race
             {

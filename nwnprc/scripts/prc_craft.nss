@@ -803,6 +803,11 @@ void main()
                     else
                     {
                         nCostDiff = StringToInt(Get2DACache(sFile, "AdditionalCost", nLine));
+                        int nScale = GetPRCSwitch(PRC_CRAFTING_COST_SCALE);
+                        if(nScale > 0)
+                        {   //you're not getting away with negative values that easily :P
+                            nCostDiff = FloatToInt(IntToFloat(nCostDiff) * IntToFloat(nScale) / 100.0);
+                        }
                         if(!bToken)
                             nXPDiff = GetPnPItemXPCost(nCostDiff, StringToInt(Get2DACache(sFile, "Epic", nLine)));
                     }

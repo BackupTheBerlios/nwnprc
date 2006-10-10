@@ -435,17 +435,33 @@ void main()
         else if(GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
         {   //cast on item, crafting targeted item
             int nFeat = GetCraftingFeat(oTarget);
+            int bToken = 0;
             if(GetPlotFlag(oTarget) || nFeat == -1)
             {
                 SendMessageToPC(oPC, "You cannot craft this item.");
                 return;
             }
-            string sMaterial = GetStringLeft(GetTag(oTarget), 3);
-            if(!GetHasFeat(nFeat, oPC))
+            location lLoc = GetLocation(oPC);
+            object oContainer = GetFirstObjectInShape(SHAPE_SPHERE, 10.0, lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE);
+            string sToken = PRC_CRAFT_TOKEN;
+            while(GetIsObjectValid(oContainer))
+            {
+                if(!GetIsPC(oContainer) && GetHasInventory(oContainer))
+                {
+                    if(GetIsObjectValid(GetItemPossessedBy(oContainer, sToken)))
+                    {
+                        SetLocalInt(oPC, PRC_CRAFT_TOKEN, 1);
+                        bToken = 1;
+                        break;
+                    }
+                }
+                oContainer = GetNextObjectInShape(SHAPE_SPHERE, 10.0, lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_PLACEABLE);
+            }
+            if(!GetHasFeat(nFeat, oPC) && !bToken)
             {
                 SendMessageToPC(oPC, "You do not have the required feat to craft this item.");
                 return;
-            }
+            }/*
             if(!GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
             {
                 int nBase = GetBaseItemType(oTarget);
@@ -456,18 +472,18 @@ void main()
                         SendMessageToPC(oPC, "This is not a craftable magic item.");
                         return;
                     }
-                }/*
+                }
                 else if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) == PRC_CRAFT_ITEM_TYPE_CASTSPELL)
                 {
                     SendMessageToPC(oPC, "This item must be crafted by casting spells on it.");
                     return;
-                }*/
+                }
                 else if(GetIsMagicItem(oTarget))
                 {
                     SendMessageToPC(oPC, "This is not a craftable magic item.");
                     return;
                 }
-            }
+            }*/
             SetLocalInt(OBJECT_SELF, PRC_CRAFT_SCRIPT_STATE, PRC_CRAFT_STATE_MAGIC);
             SetLocalObject(OBJECT_SELF, PRC_CRAFT_ITEM, oTarget);
         }
@@ -497,6 +513,7 @@ void main()
     int nMighty = GetLocalInt(oPC, PRC_CRAFT_MIGHTY);
     int nPropList = GetLocalInt(oPC, PRC_CRAFT_PROPLIST);
     int nState = GetLocalInt(oPC, PRC_CRAFT_SCRIPT_STATE);
+    int bToken = GetLocalInt(oPC, PRC_CRAFT_TOKEN);
 
     string sFile = GetLocalString(oPC, PRC_CRAFT_FILE);
 
@@ -539,10 +556,15 @@ void main()
                     {
                         int nCasterLevel = max(GetLevelByTypeArcane(), GetLevelByTypeDivine());
                         int nBaseItem = GetBaseItemType(oItem);
+                        int bAllow = TRUE;
                         sFile = GetCrafting2DA(oItem);
+                        string sMaterial = GetStringLeft(GetTag(oItem), 3);
                         SetLocalString(oPC, PRC_CRAFT_FILE, sFile);
                         int nFeat = GetCraftingFeat(oItem);
                         int bEpic = GetHasFeat(GetEpicCraftingFeat(nFeat), oPC);
+                        if(bToken)
+                            sTemp = "Using crafting facilities\n\n";
+                        sTemp += ItemStats(oItem) + "\nPlease make a selection.";
                         SetHeader(ItemStats(oItem) + "\nPlease make a selection.");
                         struct itemvars strTemp = GetItemVars(oPC, oItem, sFile, bEpic, 1);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ENHANCE, strTemp.enhancement);
@@ -550,7 +572,20 @@ void main()
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC, strTemp.epic);
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
                         AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
-                        if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) != PRC_CRAFT_ITEM_TYPE_CASTSPELL)
+                        if(!GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
+                        {
+                            if(nFeat == FEAT_CRAFT_ARMS_ARMOR)
+                            {
+                                if((!(GetMaterialString(StringToInt(sMaterial)) == sMaterial && sMaterial != "000") && !GetIsMagicItem(oItem)))
+                                    bAllow = FALSE;
+                            }
+                            else if(GetIsMagicItem(oItem))
+                                    bAllow = FALSE;
+                        }
+                        if(bAllow)
+                            if(StringToInt(Get2DACache("prc_craft_gen_it", "Type", GetBaseItemType(oTarget))) == PRC_CRAFT_ITEM_TYPE_CASTSPELL)
+                                bAllow = FALSE;
+                        if(bAllow)
                         {
                             AddChoice(ActionString("Clone Item"), CHOICE_CLONE, oPC);
                             SetLocalInt(oPC, "DynConv_Waiting", TRUE);
@@ -629,10 +664,14 @@ void main()
                     IPSafeAddItemProperty(oNewItem, ip, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);
                     nTemp = GetGoldPieceValue(oNewItem) - GetGoldPieceValue(oItem);
                     int nTime = GetCraftingTime(nTemp);
-                    int nTemp2 = nTemp / 25;
-                    nTemp /= 2;
+                    int nTemp2 = 0;
+                    if(!bToken)
+                    {
+                        nTemp /= 2;
+                        nTemp2 = nTemp / 25;
+                        if(nTemp2 < 1) nTemp2 = 1;
+                    }
                     if(nTemp < 1) nTemp = 1;
-                    if(nTemp2 < 1) nTemp2 = 1;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nTemp);
                     SetLocalInt(oPC, PRC_CRAFT_XP, nTemp2);
                     sTemp = GetItemPropertyString(ip);
@@ -740,7 +779,7 @@ void main()
                 {
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, oPC);
                     int nCostDiff;
-                    int nXPDiff;
+                    int nXPDiff = 0;
                     if(GetCraftingFeat(oItem) == FEAT_CRAFT_ARMS_ARMOR)
                     {
                         ApplyItemProps(oNewItem, sFile, nLine);
@@ -754,18 +793,26 @@ void main()
                         int nCostOld = GetPnPItemCost(strTempOld);
                         int nCostNew = GetPnPItemCost(strTempNew);
                         nCostDiff = nCostNew - nCostOld;    //assumes cost increases with addition of itemprops :P
-                        int nXPOld = GetPnPItemXPCost(nCostOld, nEpic);
-                        int nXPNew = GetPnPItemXPCost(nCostNew, strTempNew.epic);
-                        nXPDiff = nXPNew - nXPOld;
+                        if(!bToken)
+                        {
+                            int nXPOld = GetPnPItemXPCost(nCostOld, nEpic);
+                            int nXPNew = GetPnPItemXPCost(nCostNew, strTempNew.epic);
+                            nXPDiff = nXPNew - nXPOld;
+                        }
                     }
                     else
                     {
                         nCostDiff = StringToInt(Get2DACache(sFile, "AdditionalCost", nLine));
-                        nXPDiff = GetPnPItemXPCost(nCostDiff, StringToInt(Get2DACache(sFile, "Epic", nLine)));
+                        if(!bToken)
+                            nXPDiff = GetPnPItemXPCost(nCostDiff, StringToInt(Get2DACache(sFile, "Epic", nLine)));
                     }
                     int nTime = GetCraftingTime(nCostDiff);
-                    nCostDiff /= 2;
-                    nXPDiff /= 2;
+
+                    if(!bToken)
+                    {
+                        nCostDiff /= 2;
+                        nXPDiff /= 2;
+                    }
                     if(nCostDiff < 1) nCostDiff = 1;
                     if(nXPDiff < 0) nXPDiff = 0;
                     SetLocalInt(oPC, PRC_CRAFT_COST, nCostDiff);
@@ -898,6 +945,7 @@ void main()
         DeleteLocalString(oPC, PRC_CRAFT_FILE);
         DeleteLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE);
         DeleteLocalInt(oPC, PRC_CRAFT_SPECIAL_BANE_RACE);
+        DeleteLocalInt(oPC, PRC_CRAFT_TOKEN);
         array_delete(oPC, PRC_CRAFT_ITEMPROP_ARRAY);
         /*
         while(GetIsObjectValid(oNewItem))   //clearing inventory

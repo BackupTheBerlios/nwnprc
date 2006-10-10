@@ -95,6 +95,8 @@ const int PRC_CRAFT_LISTEN_SETNAME          = 1;
 const int PRC_CRAFT_LISTEN_SETNAME          = 1;
 */
 
+const string PRC_CRAFT_TOKEN                = "PRC_CRAFT_TOKEN";
+
 struct itemvars
 {
     object item;
@@ -869,77 +871,80 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
     }
     string sTemp;
     //Checking available spells, epic flag, caster level
-    for(i = 0; i <= nFileEnd; i++)
-    {   //will skip over properties already disallowed
-        if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
-        {
-            sPropertyType = Get2DACache(sFile, "PropertyType", i);
-            if(sPropertyType == "M")
-                nLevel = nCasterLevel;
-            else if(sPropertyType == "P")
-                nLevel = nManifesterLevel;
-            else
-                nLevel = max(nCasterLevel, nManifesterLevel);
-            if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
-                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else if(nLevel < StringToInt(Get2DACache(sFile, "Level", i)))
-                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
-                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-            else
+    if(!GetLocalInt(oPC, PRC_CRAFT_TOKEN))
+    {
+        for(i = 0; i <= nFileEnd; i++)
+        {   //will skip over properties already disallowed
+            if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i))
             {
-                if(StringToInt(Get2DACache(sFile, "SpellPattern", i)))
+                sPropertyType = Get2DACache(sFile, "PropertyType", i);
+                if(sPropertyType == "M")
+                    nLevel = nCasterLevel;
+                else if(sPropertyType == "P")
+                    nLevel = nManifesterLevel;
+                else
+                    nLevel = max(nCasterLevel, nManifesterLevel);
+                if(!bEpic && Get2DACache(sFile, "Epic", i) == "1")
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                else if(nLevel < StringToInt(Get2DACache(sFile, "Level", i)))
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                else if(!bEpic && ((StringToInt(Get2DACache(sFile, "Enhancement", i)) + strTemp.enhancement) > 10))
+                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                else
                 {
-                    if(
-                        (sPropertyType == "M") &&
-                        !CheckCraftingSpells(oPC, sFile, i)
-                        )
+                    if(StringToInt(Get2DACache(sFile, "SpellPattern", i)))
+                    {
+                        if(
+                            (sPropertyType == "M") &&
+                            !CheckCraftingSpells(oPC, sFile, i)
+                            )
+                        {
+                            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                            continue;
+                        }
+                        if(
+                            (sPropertyType == "P") &&
+                            !CheckCraftingPowerPoints(oPC, sFile, i)
+                            )
+                        {
+                            array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                            continue;
+                        }
+                    }
+                    sTemp = Get2DACache(sFile, "Race", i);
+                    if(sTemp != "" && nRace != StringToInt(sTemp))
                     {
                         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
                         continue;
                     }
-                    if(
-                        (sPropertyType == "P") &&
-                        !CheckCraftingPowerPoints(oPC, sFile, i)
-                        )
+                    sTemp = Get2DACache(sFile, "Feat", i);
+                    if(sTemp != "" && !GetHasFeat(StringToInt(sTemp)))
                     {
                         array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
                         continue;
                     }
-                }
-                sTemp = Get2DACache(sFile, "Race", i);
-                if(sTemp != "" && nRace != StringToInt(sTemp))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
-                }
-                sTemp = Get2DACache(sFile, "Feat", i);
-                if(sTemp != "" && !GetHasFeat(StringToInt(sTemp)))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
-                }
-                sTemp = Get2DACache(sFile, "AlignGE", i);
-                if((sTemp == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
-                    (sTemp == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
-                    (sTemp == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
-                }
-                sTemp = Get2DACache(sFile, "AlignLC", i);
-                if((sTemp == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
-                    (sTemp == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
-                    (sTemp == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
-                }
-                sTemp = Get2DACache(sFile, "Skill", i);
-                if(sTemp != "" && (GetSkillRank(StringToInt(sTemp), oPC) < StringToInt(Get2DACache(sFile, "SkillRanks", i))))
-                {
-                    array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
-                    continue;
+                    sTemp = Get2DACache(sFile, "AlignGE", i);
+                    if((sTemp == "G" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD) ||
+                        (sTemp == "E" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL) ||
+                        (sTemp == "N" && GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL))
+                    {
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
+                    sTemp = Get2DACache(sFile, "AlignLC", i);
+                    if((sTemp == "L" && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL) ||
+                        (sTemp == "C" && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC) ||
+                        (sTemp == "N" && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL))
+                    {
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
+                    sTemp = Get2DACache(sFile, "Skill", i);
+                    if(sTemp != "" && (GetSkillRank(StringToInt(sTemp), oPC) < StringToInt(Get2DACache(sFile, "SkillRanks", i))))
+                    {
+                        array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+                        continue;
+                    }
                 }
             }
         }

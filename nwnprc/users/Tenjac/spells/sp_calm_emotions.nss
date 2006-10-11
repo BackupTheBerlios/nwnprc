@@ -9,7 +9,7 @@ Components: 	V, S, DF
 Casting Time: 	1 standard action
 Range: 	Medium (100 ft. + 10 ft./level)
 Area: 	Creatures in a 20-ft.-radius spread
-Duration: 	Concentration, up to 1 round/level (D)
+Duration: 	1 round/level
 Saving Throw: 	Will negates
 Spell Resistance: 	Yes
 
@@ -18,20 +18,9 @@ control over the affected creatures, but calm emotions
 can stop raging creatures from fighting or joyous ones
 from reveling. Creatures so affected cannot take 
 violent actions (although they can defend themselves) 
-or do anything destructive. Any aggressive action 
-against or damage dealt to a calmed creature immediately
-breaks the spell on all calmed creatures.
+or do anything destructive. 
 
-This spell automatically suppresses (but does not dispel)
-any morale bonuses granted by spells such as bless, good
-hope, and rage, as well as negating a bard’s ability to 
-inspire courage or a barbarian’s rage ability. It also 
-suppresses any fear effects and removes the confused 
-condition from all targets. While the spell lasts, a 
-suppressed spell or effect has no effect. When the calm 
-emotions spell ends, the original spell or effect takes 
-hold of the creature again, provided that its duration 
-has not expired in the meantime. 
+
 **/
 //////////////////////////////////////////////////////
 // Author: Tenjac
@@ -48,5 +37,20 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_ENCHANTMENT);
 	
 	object oPC = OBJECT_SELF;
+	effect eAoE = EffectAreaOfEffect(AOE_PER_CALM_EMOTIONS);
+	int nCasterLvl = PRCGetCasterLevel(oPC);
+	float fDur = RoundsToSeconds(nCasterLvl);
+	int nMetaMagic = PRCGetMetaMagicFeat();
+	
+	if(nMetaMagic == METAMAGIC_EXTEND)
+	{
+		fDur += fDur;
+	}
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
+	
+	SPSetSchool();
+}
+	
 	
 	

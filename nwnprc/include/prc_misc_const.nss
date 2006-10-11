@@ -22,6 +22,7 @@ const int VFX_AOE_RAIN_OF_ROSES                 = 181;
 const int AOE_PER_REPEL_VERMIN                  = 180;
 const int AOE_PER_SOLID_FOG                     = 179;
 const int AOE_PER_REPULSION                     = 178;
+const int AOE_PER_CALM_EMOTIONS                 = 177;
 
 // Psionic Area of Effects
 const int AOE_PER_PSIGREASE                     = 131;

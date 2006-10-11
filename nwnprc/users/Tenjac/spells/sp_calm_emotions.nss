@@ -27,6 +27,8 @@ or do anything destructive.
 // Date:   8.10.06
 //////////////////////////////////////////////////////
 
+void DoConcLoop(object oCaster, float fDur, int nCounter);
+
 #include "prc_alterations"
 #include "spinc_common"
 
@@ -49,8 +51,30 @@ void main()
 	
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAoE, oPC, fDur);
 	
+	//Get the number of rounds
+	int nCounter = (FloatToInt(fDur) / 6);
+	
+	//Start conc monitor
+	DoConcLoop(oPC, fDur, nCounter);
+	
 	SPSetSchool();
 }
+
+void DoConcLoop(object oCaster, float fDur, int nCounter)
+{
+	if((nCounter == 0) || GetBreakConcentrationCheck(oCaster) > 0)
+	{
+		RemoveSpellEffects(SPELL_CALM_EMOTIONS, oPC, oPC);
+	}
+	
+	else
+	{
+		nCounter--;
+		DelayCommand(6.0f, DoConcLoop(oCaster, fDur, nCounter));
+	}
+}
+	
+	
 	
 	
 	

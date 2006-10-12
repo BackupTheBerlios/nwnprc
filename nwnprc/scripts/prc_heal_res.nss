@@ -7,5 +7,5 @@
 void main()
 {
 	// This is all it does.
-	ActionCastSpell(SPELL_RESURRECTION);
+	ActionCastSpell(SPELL_TRUE_RESURRECTION);
 }

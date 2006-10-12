@@ -1,4 +1,4 @@
-PRC Server Pack v1.3
+PRC Server Pack v1.6
 
 This is an server package for the PRC, avalibale in self-install and manual-install editions. This should only be installed after the main PRC packages. To make full use of this you should be using PRC 3.0c or higher. 
 
@@ -22,7 +22,7 @@ NWNX-Letoscript is avaliable from http://weathersong.infopop.cc/groupee/forums/a
 SQLite is avaliable from www.sqlite.org
 The Precacher is based on a version made for the PRC by Yuritch, but rewritten into java by the PRC. As a jar file its source code is included in the jar
 
-For full instructions, see the PRC Web site www.nwn-prc.com In particular see the PRC Server Pack installation instructions, http://www.nwn-prc.com/guide/english/content/installation/prc_server_pg01.htm
+For full instructions, see the PRC Web site http://nwnprc.netgamers.co.uk/manual/index.html In particular see the PRC Server Pack installation instructions, http://nwnprc.netgamers.co.uk/manual/english/content/installation/prc_server_pg01.htm
 
 Changelog
 v1.6    Removed a few unneeded bioware 2das, updated rest to NWN 1.68, added NWNx for Linux to the manual-install version
@@ -32,6 +32,6 @@ v1.2	Replaced Yuriched precacher with a java version
 v1.1 	Fixed issue with incorect version of SQLite
      	Added SSed step to filter output from precacher to be SQLite compatible
 	Added bioware 2das to the cacher
-	Added override\directoory.2da creation
+	Added override\directory.2da creation
 
 v1.0 	Initial Release

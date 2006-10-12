@@ -712,7 +712,7 @@ const int SPELL_SEEKING_RAY                         = 1837;
 const int SPELL_SLASHING_DISPEL                     = 1838;
 const int SPELL_SONIC_SHIELD                        = 1839;
 const int SPELL_SURE_STRIKE                         = 1840;
-
+const int SPELL_TRUE_RESURRECTION                   = 1855;
 
 // Passive feats
 const int SPELL_FORCE_PERSONALITY                   = 1915;

@@ -30,6 +30,7 @@ by Flaming_Sword<br></center>
 <a href="#cost">Crafting Cost Information</a><br>
 <a href="#playerarb">Arbitrary (non-PnP) Crafting</a><p>
 <b>For Builders</b><p>
+<a href="#npc">Crafting Facilities</a><br>
 <a href="#switch">Switches</a><br>
 <a href="#2da">2DAs</a><br>
 <a href="#script">Scripting - Adding New Items/Special Abilities</a><br>
@@ -189,6 +190,10 @@ Time cost is 1 game hour/1,000gp market price by default.<p>
 <a name="playerarb"><b>Arbitrary (non-PnP) Crafting</b></a><p>
 If a particular switch is set (see switches below), Most of the information above relating to magic item crafting may be ignored. Instead of choosing special abilites or making specific items, you instead choose particular itemproperties.<p>
 You will be presented with a list of itemproperty types to choose from. If applicable, you will then be able to choose the subtype, costtablevalue and param1value. Cost will be the difference in cost between the old and the new item according to NWN, with gp/xp/time costs calculated according to the rules in the section above.<p>
+<a href="#top">Back to Top</a><p><hr><p>
+<a name="npc"><b>Crafting Facilities</b></a><p>
+You can provide facilities to player for crafting, either through a npc or placeable. To create a facility, find the item named &quot;PRC_CRAFT_TOKEN&quot; and put it in the inventory of the npc or placeable, taking care to make sure the object is plot, the item cannot be pickpocketed, the placeable is locked, etc.<p>
+Players within 10m of the object will be able to craft without the normal restrictions, for market price in gp and zero xp.<p>
 <a href="#top">Back to Top</a><p><hr><p>
 <a name="switch"><b>Switches</b></a><p>
 These are all &quot;int&quot; type switches<p>

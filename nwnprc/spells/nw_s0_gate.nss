@@ -39,6 +39,23 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
 // End of Spell Cast Hook
 
+
+        if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
+	{
+		// Do the gating
+        	float fDur     = RoundsToSeconds(PRCGetCasterLevel(OBJECT_SELF));
+        	int nMetaMagic = PRCGetMetaMagicFeat();
+        	if(nMetaMagic & METAMAGIC_EXTEND) fDur *= 2;
+        	SetLocalFloat(OBJECT_SELF, "TrueGateDuration", fDur);
+        	
+        	StartDynamicConversation("true_gate_conv", OBJECT_SELF, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, OBJECT_SELF);
+        }
+        else
+        {
+        	FloatingTextStringOnCreature("You are under a Dimensional Anchor. Utterance fails.", OBJECT_SELF, FALSE);
+        }
+
+/*
 if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
 {
 
@@ -75,7 +92,7 @@ if (!GetLocalInt(OBJECT_SELF, "DimAnchor"))
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lSpellTargetLOC);
         DelayCommand(3.0, CreateBalor());
     }
-}
+}*/
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
 }

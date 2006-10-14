@@ -18,6 +18,6 @@ Silver half-dragon				: apeiron          	: http://nwvault.ign.com/View.php?view
 Alyla                                           : Ryuujin          	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=8963&id=6560
 Base Item Models                                : Den of Assassins 	: http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=778
 Various other CODI models			: CODI		   	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=6800
-Various other CODI portriats and soundsets      : CODI		   	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=6985
+Various other CODI portraits and soundsets      : CODI		   	: http://nwvault.ign.com/View.php?view=Hakpaks.Detail&id=6985
 Wings and tails					: Saja and bloodsong 	: http://nwvault.ign.com/View.php?view=hakpaks.Detail&id=5272
 Recolored dragon wings				: CEP team		: http://nwvault.ign.com/?dir=cep/downloads

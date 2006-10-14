@@ -29,12 +29,6 @@ const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 // that he is banned from casting.
 int RedWizRestrictedSchool();
 
-// This function checks whether Inscribe Rune is turned on
-// and if so, deducts the appropriate experience and gold
-// then creates the rune in the caster's inventory.
-// This will also cause the spell to fail if turned on.
-int InscribeRune();
-
 // This function checks whether the Combat Medic's Healing Kicker
 // feats are active, and if so imbues the spell target with additional
 // beneficial effects.
@@ -248,12 +242,19 @@ int DuskbladeArcaneChanneling()
             //valid spell, store
             //this uses similar things to the spellsequencer/spellsword/arcanearcher stuff
             effect eVisual = EffectVisualEffect(VFX_IMP_BREACH);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, OBJECT_SELF);
+            FloatingTextStringOnCreature("Duskblade Channel spell stored", OBJECT_SELF);
             //NOTE: I add +1 to the SpellId to spell 0 can be used to trap failure
             int nSID = PRCGetSpellId()+1;
             int i;
             int nMax = 1;
+            int nVal = 1;
+            float fDelay = 60.0;
             if(GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC) >= 13)
+            {
                 nMax = 5;
+                nVal = 2;
+            }    
             for(i=1; i<=nMax; i++)
             {
                 SetLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(i)  , nSID);
@@ -262,20 +263,21 @@ int DuskbladeArcaneChanneling()
                 SetLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i), PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
             }
             SetLocalInt(oItem, "X2_L_NUMTRIGGERS", nMax);
-            ApplyEffectToObject(DURATION_TYPE_INSTANT, eVisual, OBJECT_SELF);
+            
             itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
-            IPSafeAddItemProperty(oItem ,ipTest, 6.0);
+            IPSafeAddItemProperty(oItem ,ipTest, fDelay);
+            
             for (i = 1; i <= nMax; i++)
             {
-                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(i)));
-                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(i)));
-                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_M" + IntToString(i)));
-                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i)));
+                DelayCommand(fDelay, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(i)));
+                DelayCommand(fDelay, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(i)));
+                DelayCommand(fDelay, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_M" + IntToString(i)));
+                DelayCommand(fDelay, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i)));
             }
-            DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_NUMTRIGGERS"));
+            DelayCommand(fDelay, DeleteLocalInt(oItem, "X2_L_NUMTRIGGERS"));
             //mark it as discharging
-            SetLocalInt(oItem, "DuskbladeChannelDischarge", TRUE);
-            DelayCommand(6.0, DeleteLocalInt(oItem, "DuskbladeChannelDischarge"));
+            SetLocalInt(oItem, "DuskbladeChannelDischarge", nVal);
+            DelayCommand(fDelay, DeleteLocalInt(oItem, "DuskbladeChannelDischarge"));
             //make attack
             ClearAllActions();
             ActionAttack(PRCGetSpellTargetObject());

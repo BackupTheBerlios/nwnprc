@@ -65,9 +65,9 @@ void main()
             
             effect eDamage;
             //handle negative vs undead and positive vs non-undead
-            if((tTrap.nDamageType = DAMAGE_TYPE_NEGATIVE
+            if((tTrap.nDamageType == DAMAGE_TYPE_NEGATIVE
                     && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
-                || (tTrap.nDamageType = DAMAGE_TYPE_POSITIVE
+                || (tTrap.nDamageType == DAMAGE_TYPE_POSITIVE
                     && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD))
             {        
                 eDamage = EffectHeal(nDamage);

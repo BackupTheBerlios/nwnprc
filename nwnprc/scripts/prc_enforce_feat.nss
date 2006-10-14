@@ -926,11 +926,11 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
 
 int CasterFeats(object oPC = OBJECT_SELF)
 {
-    if (GetHasFeat(FEAT_INSCRIBE_RUNE, oPC) && GetLocalInt(oPC, "PRC_DivSpell2") != 0)
+    if (GetHasFeat(FEAT_INSCRIBE_RUNE, oPC) && GetCasterLvl(TYPE_DIVINE, oPC) >= 3)
     {
             FloatingTextStringOnCreature("Inscribe Rune requires Level 2 Divine Spells", oPC, FALSE);
             return FALSE;
-        }
+    }
 
     return TRUE;
 }

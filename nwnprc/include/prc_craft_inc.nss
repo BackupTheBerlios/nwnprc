@@ -1653,7 +1653,9 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
     if(nMighty)
     {
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_MIGHTY, 0, nMighty);
+        itemproperty ip2 = ConstructIP(ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE, ABILITY_STRENGTH, nMighty);
         IPSafeAddItemProperty(oNew, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+        IPSafeAddItemProperty(oNew, ip2, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
     }
     DestroyObject(oTemp, 0.1);
     if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)   //name prefix will be overridden by materials

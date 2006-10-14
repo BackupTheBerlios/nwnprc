@@ -73,13 +73,13 @@ void main()
                 {
                     if(sResRef == "x2_it_cfm_pbottl")
                         bHasPotion = TRUE;
-                    if(sResRef == "x2_it_cfm_bscrl")
+                    else if(sResRef == "x2_it_cfm_bscrl")
                         bHasScroll = TRUE;
-                    if(sResRef == "x2_it_cfm_wand")
-                        bHasWand = TRUE;
-                    if(sResRef == "craft_staff")
-                        bHasStaff = TRUE;
+                    else if(sResRef == "x2_it_cfm_wand")
+                        bHasWand = TRUE;                    
                 }
+                if(sResRef == "craft_staff")
+                    bHasStaff = TRUE;
                 oTest = GetNextItemInInventory(oPC);
             }
             if(bHasPotionFeat && !bHasPotion)

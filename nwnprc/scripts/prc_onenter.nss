@@ -22,7 +22,8 @@ void main()
     // Since OnEnter event fires for the PC when loading a saved game (no idea why,
     // since it makes saving and reloading change the state of the module),
     // make sure that the event gets run only once
-    if(GetLocalInt(oPC, "PRC_ModuleOnEnterDone"))
+    // but not in MP games, so check if it's single player or not!!
+    if(GetLocalInt(oPC, "PRC_ModuleOnEnterDone") && (GetPCPublicCDKey(oPC) == ""))
         return;
     // Use a local integer to mark the event as done for the PC, so that it gets
     // cleared when the character is saved.

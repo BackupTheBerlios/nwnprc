@@ -47,17 +47,21 @@ void main()
     {
         int bHasPotion,
             bHasScroll,
-            bHasWand;
+            bHasWand,
+            bHasStaff;
         int bHasPotionFeat,
             bHasScrollFeat,
-            bHasWandFeat;
+            bHasWandFeat,
+            bHasStaffFeat;
         if(GetHasFeat(FEAT_BREW_POTION, oPC))
             bHasPotionFeat = TRUE;
         if(GetHasFeat(FEAT_SCRIBE_SCROLL, oPC))
             bHasScrollFeat = TRUE;
         if(GetHasFeat(FEAT_CRAFT_WAND, oPC))
             bHasWandFeat = TRUE;
-        if(bHasPotionFeat || bHasScrollFeat || bHasWandFeat)
+        if(GetHasFeat(FEAT_CRAFT_STAFF, oPC))
+            bHasStaffFeat = TRUE;
+        if(bHasPotionFeat || bHasScrollFeat || bHasWandFeat || bHasStaffFeat)
         {
             object oTest = GetFirstItemInInventory(oPC);
             while(GetIsObjectValid(oTest)
@@ -73,6 +77,8 @@ void main()
                         bHasScroll = TRUE;
                     if(sResRef == "x2_it_cfm_wand")
                         bHasWand = TRUE;
+                    if(sResRef == "craft_staff")
+                        bHasStaff = TRUE;
                 }
                 oTest = GetNextItemInInventory(oPC);
             }
@@ -101,6 +107,17 @@ void main()
             if(bHasWandFeat && !bHasWand)
             {
                 oTest = CreateItemOnObject("x2_it_cfm_wand", oPC);
+                if(GetItemPossessor(oTest) != oPC)
+                    DestroyObject(oTest); //not enough room in inventory
+                else
+                {
+                    SetItemCursedFlag(oTest, TRUE); //curse it so it cant be sold etc
+                    SetDroppableFlag(oTest, FALSE); // nondroppable so it doesnt show on NPCs
+                }
+            }
+            if(bHasStaffFeat && !bHasStaff)
+            {
+                oTest = CreateItemOnObject("craft_staff", oPC);
                 if(GetItemPossessor(oTest) != oPC)
                     DestroyObject(oTest); //not enough room in inventory
                 else

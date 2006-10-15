@@ -156,8 +156,7 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 #include "x2_i0_spells"
 //#include "prc_inc_s_det"
 #include "prc_inc_descrptr"
-#include "inc_dynconv"
-#include "x2_inc_spellhook"
+//#include "x2_inc_spellhook"
 
 
 //////////////////////////////////////////////////
@@ -716,7 +715,7 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
         AssignCommand(oWP,
             ActionJumpToObject(oPC));
     //jump back to limbo afterwards
-    DelayCommand(0.1, 
+    DelayCommand(0.1,
         AssignCommand(oWP,
             ActionJumpToObject(oLimbo)));
     return oWP;

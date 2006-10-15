@@ -11,7 +11,8 @@
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
-#include "prc_alterations"
+
+#include "inc_dynconv"
 
 void main()
 {
@@ -48,11 +49,11 @@ void main()
         //check in inventory
         if(GetItemPossessor(oKatana2) != OBJECT_SELF)
             DestroyObject(oKatana2);
-        else    
+        else
         {
             SetItemCursedFlag(oKatana2, TRUE);
             SetStolenFlag(oKatana2, TRUE);
-        }    
+        }
         SetName(oKatana2, GetName(OBJECT_SELF)+"'s "+GetName(oKatana2));
     }
     //wakizashi (short sword)
@@ -64,11 +65,11 @@ void main()
         //check in inventory
         if(GetItemPossessor(oWakizashi2) != OBJECT_SELF)
             DestroyObject(oWakizashi2);
-        else    
+        else
         {
             SetItemCursedFlag(oWakizashi2, TRUE);
             SetStolenFlag(oWakizashi2, TRUE);
-        }    
+        }
         SetName(oWakizashi2, GetName(OBJECT_SELF)+"'s Wakizashi");
     }
 }

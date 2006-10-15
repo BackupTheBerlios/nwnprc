@@ -13,7 +13,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "inc_dynconv"
 #include "inc_epicspells"
 #include "prc_inc_leadersh"
 #include "prc_inc_natweap"
@@ -57,7 +57,7 @@ const int STAGE_EQUIPMENT                   = 590;
 const int STAGE_EQUIPMENT_SIMPLE            = 591; //e.g. shield
 const int STAGE_EQUIPMENT_LAYERED           = 592; //e.g. helm
 const int STAGE_EQUIPMENT_COMPOSITE         = 593; //e.g. sword
-const int STAGE_EQUIPMENT_COMPOSITE_B       = 594; 
+const int STAGE_EQUIPMENT_COMPOSITE_B       = 594;
 const int STAGE_EQUIPMENT_ARMOR             = 595; //e.g. armor
 
 const int CHOICE_RETURN_TO_PREVIOUS             = 0xEFFFFFFF;
@@ -82,7 +82,7 @@ void AddPortraits(int nMin, int nMax, object oPC)
         }
     }
     if(i < nMax)
-        DelayCommand(0.00, AddPortraits(i, nMax, oPC));        
+        DelayCommand(0.00, AddPortraits(i, nMax, oPC));
 }
 
 void AddTails(int nMin, int nMax, object oPC)
@@ -99,7 +99,7 @@ void AddTails(int nMin, int nMax, object oPC)
         }
     }
     if(i < nMax)
-        DelayCommand(0.00, AddTails(i, nMax, oPC));        
+        DelayCommand(0.00, AddTails(i, nMax, oPC));
 }
 
 void AddWings(int nMin, int nMax, object oPC)
@@ -179,7 +179,7 @@ void AddTemplates(int nMin, int nMax, object oPC)
             sName = Get2DACache("templates", "Label", i);
         //check type
         //inherited templates can only be taken with 1 HD
-        if(((StringToInt(Get2DACache("templates", "Type", i)) & 1) 
+        if(((StringToInt(Get2DACache("templates", "Type", i)) & 1)
                 && GetHitDice(oPC) > 1)
             || !ApplyTemplateToObject(i, oPC, FALSE))
         {
@@ -200,9 +200,9 @@ void CohortSetAlignment(int nMoral, int nOrder, object oCohort)
         return;
     int nCurrentOrder = GetLawChaosValue(oCohort);
     int nCurrentMoral = GetGoodEvilValue(oCohort);
-    if(nCurrentOrder == -1 
+    if(nCurrentOrder == -1
         || nCurrentMoral == -1)
-        return;    
+        return;
     if(nCurrentMoral < nMoral)
         AdjustAlignment(oCohort, ALIGNMENT_GOOD, nMoral-nCurrentMoral);
     else if(nCurrentMoral > nMoral)
@@ -270,7 +270,7 @@ void main()
                     AddChoice("Gain a template.", 9);
                 if(!GetPRCSwitch(PRC_APPEARNCE_CHANGE_DISABLE))
                     AddChoice("Change appearance.", 10);
-                
+
 
 
                 MarkStageSetUp(nStage, oPC);
@@ -354,7 +354,7 @@ void main()
                 for(i = 0; i < 71; i++)
                 {
                     int nSpellFeat = GetFeatForSpell(i);
-                    if(GetHasEpicSpellKnown(i, oPC) 
+                    if(GetHasEpicSpellKnown(i, oPC)
                         && !GetHasFeat(nSpellFeat, oPC))
                     {
                         string sName = GetNameForSpell(i);

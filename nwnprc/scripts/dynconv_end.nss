@@ -11,13 +11,13 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "inc_dynconv"
 
 
 void main()
 {
     object oPC = GetPCSpeaker();
-    
+
     // Run the exit handler
     _DynConvInternal_ExitedConvo(oPC, FALSE);
 }

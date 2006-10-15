@@ -36,13 +36,31 @@ const int SPELLBOOK_TYPE_PREPARED = 1;
 const int SPELLBOOK_TYPE_SPONTANEOUS = 2;
 const int SPELLBOOK_TYPE_INVALID = 0;
 
-void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
-int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1);
+int GetSpellbookTypeForClass(int nClass);
+int GetAbilityForClass(int nClass, object oPC);
 string GetFileForClass(int nClass);
+int SpellToSpellbookID(int nSpell, string sFile = "", int nClass = -1);
+int GetSpellslotLevel(int nClass, object oPC);
+int GetItemBonusSlotCount(object oPC, int nClass, int nSpellLevel);
+int GetSlotCount(int nLevel, int nSpellLevel, int nAbilityScore, int nClass, object oItemPosessor = OBJECT_INVALID);
+int GetSpellKnownMaxCount(int nLevel, int nSpellLevel, int nClass, object oPC);
+int GetSpellKnownCurrentCount(object oPC, int nSpellLevel, int nClass);
+int GetSpellUnknownCurrentCount(object oPC, int nSpellLevel, int nClass);
+void AddSpellUse(object oPC, int nSpellbookID, int nClass, string sFile, string sArrayName, int nSpellbookType, object oSkin, int nFeatID, int nIPFeatID);
+void RemoveSpellUse(object oPC, int nSpellID, int nClass);
+int GetSpellUses(object oPC, int nSpellID, int nClass);
+int GetSpellLevel(object oPC, int nSpellID, int nClass);
+void SetupSpells(object oPC, int nClass);
+void CheckAndRemoveFeat(object oHide, itemproperty ipFeat);
+void WipeSpellbookHideFeats(object oPC);
+void CheckNewSpellbooks(object oPC);
+void NewSpellbookSpell(int nClass, int nMetamagic, int nSpellID);
+
 
 #include "x2_inc_itemprop"
 #include "inc_utility"
 #include "prc_inc_spells"
+#include "nw_i0_generic"
 //#include "prc_inc_clsfunc"
 
 
@@ -103,7 +121,7 @@ int GetAbilityForClass(int nClass, object oPC)
         case CLASS_TYPE_FIST_OF_ZUOKEN:
         case CLASS_TYPE_WARMIND:
         case CLASS_TYPE_SOHEI:
-        case CLASS_TYPE_SLAYER_OF_DOMIEL: 
+        case CLASS_TYPE_SLAYER_OF_DOMIEL:
         case CLASS_TYPE_HEALER:
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
             return GetAbilityScore(oPC, ABILITY_WISDOM);

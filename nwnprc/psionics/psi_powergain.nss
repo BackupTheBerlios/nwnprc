@@ -14,7 +14,8 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "psi_inc_psifunc"
+#include "inc_dynconv"
 
 
 int CheckMissingPowers(object oPC, int nClass)
@@ -58,5 +59,5 @@ void main()
     if(CheckMissingPowers(oPC, CLASS_TYPE_FIST_OF_ZUOKEN))
         return;
     if(CheckMissingPowers(oPC, CLASS_TYPE_WARMIND))
-        return;        
+        return;
 }

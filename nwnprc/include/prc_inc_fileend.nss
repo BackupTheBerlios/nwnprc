@@ -1,3 +1,5 @@
+#include "inc_utility"
+
 int PRCGetFileEnd(string sTable)
 {
     sTable = GetStringLowerCase(sTable);

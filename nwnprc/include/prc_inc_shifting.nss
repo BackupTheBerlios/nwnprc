@@ -754,13 +754,13 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         if(GetIsObjectValid(oTemplateCWpL))
         {
             oShifterCWpL = CopyItem(oTemplateCWpL, oShifter, TRUE);
-            SetIdentified(oTemplateCWpL, TRUE);
+            SetIdentified(oShifterCWpL, TRUE);
             AssignCommand(oShifter, ActionEquipItem(oShifterCWpL, INVENTORY_SLOT_CWEAPON_L));
         }
         if(GetIsObjectValid(oTemplateCWpB))
         {
             oShifterCWpB = CopyItem(oTemplateCWpB, oShifter, TRUE);
-            SetIdentified(oTemplateCWpB, TRUE);
+            SetIdentified(oShifterCWpB, TRUE);
             AssignCommand(oShifter, ActionEquipItem(oShifterCWpB, INVENTORY_SLOT_CWEAPON_B));
         }
 

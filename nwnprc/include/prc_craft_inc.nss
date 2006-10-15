@@ -31,7 +31,7 @@ int GetCraftingFeat(object oItem);
 
 string GetItemPropertyString(itemproperty ip);
 
-#include "prc_alterations"
+#include "psi_inc_psifunc"
 #include "inc_newspellbook"
 #include "prc_inc_spells"
 #include "prc_inc_listener"

@@ -11,7 +11,7 @@
 //:: Created On: Sept 27, 2001
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "inc_dynconv"
 #include "inc_dispel"
 
 const int PACKAGE_ELEMENTAL_STR = PACKAGE_ELEMENTAL ;
@@ -48,12 +48,12 @@ void BondedSummon2()
     object oSkin  = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oSummon);
     //in all cases
     IPSafeAddItemProperty(oSkin,
-        PRCItemPropertyBonusFeat(ITEM_PROPERTY_IMPROVED_EVASION));  
+        PRCItemPropertyBonusFeat(ITEM_PROPERTY_IMPROVED_EVASION));
     //9+ levels
     if(nArcaneLevel >= 9)
     {
         IPSafeAddItemProperty(oSkin,
-            ItemPropertyBonusSpellResistance(GetSRByValue(nArcaneLevel+5)));    
+            ItemPropertyBonusSpellResistance(GetSRByValue(nArcaneLevel+5)));
     }
     //11+ levels
     if(nArcaneLevel >= 11)
@@ -67,7 +67,7 @@ void BondedSummon2()
     //set it so the spell-share detects it
     //SetLocalObject(oPC, "BONDED", oSummon);
     SetLocalObject(oPC, "Familiar", oSummon);
-}  
+}
 
 void BondedSummoner()
 {
@@ -85,7 +85,7 @@ void BondedSummoner()
         if(GetHasFeat(FEAT_ELE_COMPANION_GRE, OBJECT_SELF))
             sResRef = "nw_s_airgreat";
         if(GetHasFeat(FEAT_ELE_COMPANION_ELD, OBJECT_SELF))
-            sResRef = "nw_s_airelder";    
+            sResRef = "nw_s_airelder";
     }
     else if(GetHasFeat(FEAT_BONDED_EARTH, OBJECT_SELF))
     {
@@ -98,7 +98,7 @@ void BondedSummoner()
         if(GetHasFeat(FEAT_ELE_COMPANION_GRE, OBJECT_SELF))
             sResRef = "nw_s_earthgreat";
         if(GetHasFeat(FEAT_ELE_COMPANION_ELD, OBJECT_SELF))
-            sResRef = "nw_s_earthelder";    
+            sResRef = "nw_s_earthelder";
     }
     else if(GetHasFeat(FEAT_BONDED_FIRE, OBJECT_SELF))
     {
@@ -111,7 +111,7 @@ void BondedSummoner()
         if(GetHasFeat(FEAT_ELE_COMPANION_GRE, OBJECT_SELF))
             sResRef = "nw_s_firegreat";
         if(GetHasFeat(FEAT_ELE_COMPANION_ELD, OBJECT_SELF))
-            sResRef = "nw_s_fireelder";    
+            sResRef = "nw_s_fireelder";
     }
     else if(GetHasFeat(FEAT_BONDED_WATER, OBJECT_SELF))
     {
@@ -124,7 +124,7 @@ void BondedSummoner()
         if(GetHasFeat(FEAT_ELE_COMPANION_GRE, OBJECT_SELF))
             sResRef = "nw_s_watergreat";
         if(GetHasFeat(FEAT_ELE_COMPANION_ELD, OBJECT_SELF))
-            sResRef = "nw_s_waterelder";    
+            sResRef = "nw_s_waterelder";
     }
     //piggy-backed onto multisummon code
     MultisummonPreSummon(oPC, TRUE);
@@ -132,7 +132,7 @@ void BondedSummoner()
     SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eSummon, oPC);
     //needs to be delayed so it finds thew new summon properly
     DelayCommand(0.0, BondedSummon2());
-}  
+}
 
 void main()
 {

@@ -13,6 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "inc_dynconv"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -54,10 +55,10 @@ string GetCanScribeLocation(string sHeader, int nLoc, object oPC)
         nSpellID = nSpellID-1;
         //string sSpellIDName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
         sHeader += (sName+": "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)))+"\n");
-    }    
+    }
     else
         AddChoice(sName, nLoc, oPC);
-    return sHeader;    
+    return sHeader;
 }
 
 void AddRunescarSpellChoice(int nSpellID, object oPC, int nSpellLevel = -1)
@@ -65,15 +66,15 @@ void AddRunescarSpellChoice(int nSpellID, object oPC, int nSpellLevel = -1)
     //default to innate level
     if(nSpellLevel == -1)
         nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
-        
+
     string sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)));
-    
+
     sName += " (level "+IntToString(nSpellLevel)+")";
-    
+
     //test if spare slot this day
     if(GetLocalInt(oPC, "Runescar_slot_"+IntToString(nSpellLevel))
         && GetAbilityScore(oPC, ABILITY_WISDOM)>=10+nSpellLevel)
-        AddChoice(sName, nSpellID, oPC); 
+        AddChoice(sName, nSpellID, oPC);
     //store the level to cast it at
     SetLocalInt(oPC, "Runescar_spell_level_"+IntToString(nSpellID), nSpellLevel);
 }
@@ -117,12 +118,12 @@ void main()
                 sHeader = GetCanScribeLocation(sHeader, 5, oPC);
                 sHeader = GetCanScribeLocation(sHeader, 6, oPC);
                 sHeader = GetCanScribeLocation(sHeader, 7, oPC);
-                
+
                 if(nRuneCount < 7)
                     sHeader += "\nWhere would you like to scribe a new Runescar?";
-                else    
+                else
                     sHeader += "\nYou cannot scribe a new Runescar at this time.";
-                
+
                 SetHeader(sHeader);
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
@@ -163,18 +164,18 @@ void main()
                 AddRunescarSpellChoice(SPELL_SPELL_RESISTANCE,          oPC, 5);
                 /*
                 missing spells
-                LEVEL 1 --  
-                    Low-Light Vision, 
-                LEVEL 3 -- 
-                    Air Walk, 
-                LEVEL 4 -- 
-                    Spell Immunity, 
-                LEVEL 5 -- 
-                    Antimagic Field, 
+                LEVEL 1 --
+                    Low-Light Vision,
+                LEVEL 3 --
+                    Air Walk,
+                LEVEL 4 --
+                    Spell Immunity,
+                LEVEL 5 --
+                    Antimagic Field,
                     //these need subradials, complicated
-                    Dimension Door, 
-                    Polymorph, 
-                */    
+                    Dimension Door,
+                    Polymorph,
+                */
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -224,14 +225,14 @@ void main()
                         AddChoice("Insufficient gold and experience",  0);
                     else
                         AddChoice("Insufficient gold",  0);
-                }    
+                }
                 else if((GetXP(oPC)-nHitDiceXP)<nXP)
                     AddChoice("Insufficient experience",  0);
-                else    
-                {    
+                else
+                {
                     AddChoice("Yes", 1);
                     AddChoice("No",  0);
-                }   
+                }
                 SetHeader(sHeader);
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
@@ -312,7 +313,7 @@ void main()
                 SetPersistantLocalInt(oPC, sVar, nSpellID+1);
                 SetPersistantLocalInt(oPC, sVar+"_level", nLevel);
                 //use a useage
-                SetLocalInt(oPC, "Runescar_slot_"+IntToString(nSpellLevel), 
+                SetLocalInt(oPC, "Runescar_slot_"+IntToString(nSpellLevel),
                     GetLocalInt(oPC, "Runescar_slot_"+IntToString(nSpellLevel))-1);
             }
             MarkStageNotSetUp(STAGE_ENTRY, oPC);

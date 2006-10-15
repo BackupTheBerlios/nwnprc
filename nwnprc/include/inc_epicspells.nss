@@ -150,7 +150,7 @@ int GetHasEnoughGoldToResearch(object oPC, int nSpellDC);
 int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC);
 
 // Returns TRUE if oPC has the passed in required feats (Seeds or other Epic spells)... needs BLAH_IP's
-int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0, 
+int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0,
     int nSeed1 = 0, int nSeed2 = 0, int nSeed3 = 0, int nSeed4 = 0, int nSeed5 = 0);
 
 // Returns success (TRUE) or failure (FALSE) in oPC's researching of a spell.
@@ -205,6 +205,8 @@ void SetEpicSeedKnown(int nEpicSeed, object oPC, int nState = TRUE);
 #include "inc_epicspelldef"
 #include "inc_epicspellfnc"
 #include "inc_utility"
+#include "x2_inc_spellhook"
+
 
 /******************************************************************************
 FUNCTION BODIES
@@ -404,7 +406,7 @@ int GetHasEnoughExperienceToResearch(object oPC, int nSpellDC)
     return FALSE;
 }
 
-int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0, 
+int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nReq3 = 0, int nReq4 = 0,
     int nSeed1 = 0, int nSeed2 = 0, int nSeed3 = 0, int nSeed4 = 0, int nSeed5 = 0)
 {
     if(DEBUG)
@@ -419,7 +421,7 @@ int GetHasRequiredFeatsForResearch(object oPC, int nReq1, int nReq2 = 0, int nRe
         DoDebug("Seed #4: " + IntToString(nSeed4));
         DoDebug("Seed #4: " + IntToString(nSeed5));
     }
-    
+
     if ((GetHasFeat(nReq1, oPC) || nReq1 == 0)
         && (GetHasFeat(nReq2, oPC) || nReq2 == 0)
         && (GetHasFeat(nReq3, oPC) || nReq3 == 0)
@@ -457,15 +459,15 @@ void TakeResourcesFromPC(object oPC, int nSpellDC, int nSuccess)
     if (nSuccess != TRUE)
     {
         int nGold = nSpellDC *
-            GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_FAILURE_FRACTION_GOLD);    
-        SpendGP(oPC, nGold);    
-    }    
+            GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_FAILURE_FRACTION_GOLD);
+        SpendGP(oPC, nGold);
+    }
     else
     {
-        int nGold = nSpellDC *  GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER);    
-        SpendGP(oPC, nGold); 
+        int nGold = nSpellDC *  GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER);
+        SpendGP(oPC, nGold);
         int nXP = nSpellDC * GetPRCSwitch(PRC_EPIC_GOLD_MULTIPLIER) / GetPRCSwitch(PRC_EPIC_XP_FRACTION);
-        SpendXP(oPC, nXP); 
+        SpendXP(oPC, nXP);
     }
 }
 
@@ -547,7 +549,7 @@ int GetCastableFeatCount(object oPC)
     int nFeat = GetFeatForSpell(i);
     while(nFeat != 0)
     {
-        //test for the castable feat 
+        //test for the castable feat
         if(GetHasFeat(nFeat, oPC))
             nX += 1;
         i++;

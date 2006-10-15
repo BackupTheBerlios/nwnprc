@@ -10,7 +10,7 @@
 //:://////////////////////////////////////////////
 
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
-#include "prc_alterations"
+#include "inc_dynconv"
 #include "x2_inc_spellhook"
 
 
@@ -47,7 +47,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         	int nMetaMagic = PRCGetMetaMagicFeat();
         	if(nMetaMagic & METAMAGIC_EXTEND) fDur *= 2;
         	SetLocalFloat(OBJECT_SELF, "TrueGateDuration", fDur);
-        	
+
         	StartDynamicConversation("true_gate_conv", OBJECT_SELF, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, OBJECT_SELF);
         }
         else

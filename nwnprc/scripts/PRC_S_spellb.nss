@@ -14,7 +14,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
-
+#include "inc_dynconv"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -161,13 +161,13 @@ void main()
                     int nRow = array_get_int(oWP, sTag, i);
                     if(Get2DACache(sFile, "ReqFeat", nRow)==""                                // Has no prerequisites
                         || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", nRow)), oPC)) // Or has prerequisites which the PC posseses
-                    {                  
+                    {
                         int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nRow));
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), nRow, oPC);
-DoDebug("PRC_S_spellb i="+IntToString(nRow));                    
+DoDebug("PRC_S_spellb i="+IntToString(nRow));
 DoDebug("PRC_S_spellb sFile="+sFile);
-DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));  
-DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));  
+DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
+DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
                     }
                 }
                 /*
@@ -177,13 +177,13 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
                         && Get2DACache(sFile, "Level", i) != ""                                 // And not undefined spell level in case of SL 0
                         && (Get2DACache(sFile, "ReqFeat", i)==""                                // Has no prerequisites
                             || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", i)), oPC))) // Or has prerequisites which the PC posseses
-                    {                  
+                    {
                         int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", i));
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), i, oPC);
-DoDebug("PRC_S_spellb i="+IntToString(i));                    
+DoDebug("PRC_S_spellb i="+IntToString(i));
 DoDebug("PRC_S_spellb sFile="+sFile);
-DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));  
-DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));  
+DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
+DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
                     }
                 }
                 */

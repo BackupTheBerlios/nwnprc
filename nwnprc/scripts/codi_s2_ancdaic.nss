@@ -3,7 +3,7 @@
 //:: codi_s2_ancdaic
 //:://////////////////////////////////////////////
 /** @file
-    
+
 
 
     @author Primogenitor
@@ -13,6 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "inc_dynconv"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -99,7 +100,7 @@ void main()
                     {
                         int nStrRef = StringToInt(Get2DACache("itemprops", "StringRef", nRow));
                         if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nRow)+"_*_*_*"))
-                            AddChoice(GetStringByStrRef(nStrRef), nRow, oPC);                    
+                            AddChoice(GetStringByStrRef(nStrRef), nRow, oPC);
                     }
                     nRow++;
                     sLabel = Get2DACache("itempropdef", "Label", nRow);
@@ -118,7 +119,7 @@ void main()
                     if(nStrRef != 0)
                     {
                         if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_"+IntToString(i)+"_*_*"))
-                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
+                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);
                     }
                 }
             }
@@ -136,7 +137,7 @@ void main()
                     if(sSubTypeResRef != "")
                     {
                         sParam1ResRef = Get2DACache(sSubTypeResRef, "Param1ResRef", nSubType);
-                    }                
+                    }
                 }
                 //lookup the number to get the real filename
                 sParam1ResRef = Get2DACache("iprp_paramtable", "TableResRef", StringToInt(sParam1ResRef));
@@ -149,7 +150,7 @@ void main()
                     {
                         if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_"+IntToString(nSubType)+"_"+IntToString(i)+"_*")
                             && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_*_"+IntToString(i)+"_*"))
-                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
+                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);
                     }
                 }
             }
@@ -172,7 +173,7 @@ void main()
                         if(!GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_"+IntToString(nSubType)+"_"+IntToString(nParam1)+"_"+IntToString(i))
                             && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_*_"+IntToString(nParam1)+"_"+IntToString(i))
                             && !GetPRCSwitch(PRC_SAMURAI_BAN_+IntToString(nType)+"_*_*_"+IntToString(i)))
-                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);                         
+                            AddChoice(GetStringByStrRef(nStrRef), i, oPC);
                     }
                 }
             }
@@ -194,8 +195,8 @@ void main()
                     //if there is a subtype, param1 may be defined there
                     if(sSubType != "")
                         sParam1ResRef = Get2DACache(sSubType, "Param1ResRef", nSubType);
-                }   
-                
+                }
+
                 if(sSubType != "")
                 {
                     nVar2 = nSubType;
@@ -204,16 +205,16 @@ void main()
                         nVar3 = nParam1;
                         if(sValueResRef != "")
                             nVar4 = nValue;
-                    }   
+                    }
                     else if(sValueResRef != "")
                         nVar3 = nValue;
-                }    
+                }
                 else if(sParam1ResRef != "")
                 {
                     nVar2 = nParam1;
                     if(sValueResRef != "")
                         nVar3 = nValue;
-                }    
+                }
                 else if(sValueResRef != "")
                     nVar2 = nValue;
                 //fudges to turn types into vars
@@ -229,12 +230,12 @@ void main()
                 itemproperty ipToAdd = IPGetItemPropertyByID(nType, nVar2, nVar3, nVar4);
                 if(!GetIsItemPropertyValid(ipToAdd))
                     DoDebug("Itemproperty Not Valid");
-                    
+
                 //set the header
                 SetHeader("You are attempting to add "+ItemPropertyToString(ipToAdd));
-                    
+
                 //work out cost
-                object oItem = GetLocalObject(oPC, "codi_ancdai"); 
+                object oItem = GetLocalObject(oPC, "codi_ancdai");
                 object oCopy = CopyItem(oItem, GetObjectByTag("HEARTOFCHAOS"), TRUE);
                 if(!GetIsObjectValid(oCopy))
                     DoDebug("Copy not valid");
@@ -302,7 +303,7 @@ void main()
                                 nMaxValue =  2880000;
                             else if(GetHasFeat(FEAT_EPIC_ANCESTRAL_DAISHO_1))
                                 nMaxValue =  2420000;
-                        }    
+                        }
                         if(GetPRCSwitch(PRC_SAMURAI_VALUE_SCALAR_x100))
                             nMaxValue = FloatToInt(IntToFloat(nMaxValue)*(IntToFloat(GetPRCSwitch(PRC_SAMURAI_VALUE_SCALAR_x100))/100.0));
                         //get the items
@@ -319,7 +320,7 @@ void main()
                         }
                         object oTest = GetFirstItemInInventory(oPC);
                         while(GetIsObjectValid(oTest)
-                            && (!GetIsObjectValid(oKatana) 
+                            && (!GetIsObjectValid(oKatana)
                                 || !GetIsObjectValid(oWakizashi)))
                         {
                             if(GetTag(oTest) == "codi_katana")
@@ -333,10 +334,10 @@ void main()
                         if(oWakizashi == oItem)
                         {
                             nCurrentValue += GetGoldPieceValue(oKatana);
-                        }    
+                        }
                         else
                             nCurrentValue += GetGoldPieceValue(oWakizashi);
-                            
+
                         if(nCurrentValue > nMaxValue)
                         {
                             AddChoice("You cannot add this because it would bring the total value above your limit ("+
@@ -346,7 +347,7 @@ void main()
                         {
                             AddChoice("This will cost "+IntToString(nIPCost)+" from your sacrificed total of "+IntToString(nSacrificed), TRUE, oPC);
                             AddChoice("This cost is too great at the moment", CHOICE_RETURN_TO_PREVIOUS, oPC);
-                        }    
+                        }
                     }
                 }
             }
@@ -359,11 +360,11 @@ void main()
     else if(nValue == DYNCONV_EXITED)
     {
         // Add any locals set through this conversation
-        DeleteLocalObject(oPC, "codi_ancdai"); 
-        DeleteLocalInt(oPC, "codi_ancdai_type"); 
-        DeleteLocalInt(oPC, "codi_ancdai_subtype"); 
-        DeleteLocalInt(oPC, "codi_ancdai_param1"); 
-        DeleteLocalInt(oPC, "codi_ancdai_value"); 
+        DeleteLocalObject(oPC, "codi_ancdai");
+        DeleteLocalInt(oPC, "codi_ancdai_type");
+        DeleteLocalInt(oPC, "codi_ancdai_subtype");
+        DeleteLocalInt(oPC, "codi_ancdai_param1");
+        DeleteLocalInt(oPC, "codi_ancdai_value");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -372,11 +373,11 @@ void main()
     else if(nValue == DYNCONV_ABORTED)
     {
         // Add any locals set through this conversation
-        DeleteLocalObject(oPC, "codi_ancdai"); 
-        DeleteLocalInt(oPC, "codi_ancdai_type"); 
-        DeleteLocalInt(oPC, "codi_ancdai_subtype"); 
-        DeleteLocalInt(oPC, "codi_ancdai_param1"); 
-        DeleteLocalInt(oPC, "codi_ancdai_value"); 
+        DeleteLocalObject(oPC, "codi_ancdai");
+        DeleteLocalInt(oPC, "codi_ancdai_type");
+        DeleteLocalInt(oPC, "codi_ancdai_subtype");
+        DeleteLocalInt(oPC, "codi_ancdai_param1");
+        DeleteLocalInt(oPC, "codi_ancdai_value");
     }
     // Handle PC responses
     else
@@ -393,7 +394,7 @@ void main()
                 AssignCommand(oPC, DoPlaceableObjectAction(oAltar, PLACEABLE_ACTION_USE));
                 SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oAltar);
                 DestroyObject(oAltar, 360.0); //6 minutes
-                AllowExit(DYNCONV_EXIT_FORCE_EXIT);            
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
             else if(nChoice == 2) //improve weapon
             {
@@ -401,7 +402,7 @@ void main()
                 nStage = STAGE_IMPROVE;
                 MarkStageNotSetUp(nStage, oPC);
             }
-            
+
         }
         else if(nStage == STAGE_IMPROVE)
         {
@@ -417,17 +418,17 @@ void main()
                         oKatana = oTest;
                 }
                 oTest = GetFirstItemInInventory(OBJECT_SELF);
-                while(GetIsObjectValid(oTest) 
+                while(GetIsObjectValid(oTest)
                     && !GetIsObjectValid(oKatana))
                 {
                     if(GetTag(oTest) == "codi_katana")
                         oKatana = oTest;
                     oTest = GetNextItemInInventory(OBJECT_SELF);
                 }
-                SetLocalObject(oPC, "codi_ancdai", oKatana); 
+                SetLocalObject(oPC, "codi_ancdai", oKatana);
                 MarkStageNotSetUp(nStage, oPC);
-                nStage = STAGE_IMPROVE_TYPE;   
-                MarkStageNotSetUp(nStage, oPC);         
+                nStage = STAGE_IMPROVE_TYPE;
+                MarkStageNotSetUp(nStage, oPC);
             }
             else if(nChoice == 2) //wakizashi
             {
@@ -441,24 +442,24 @@ void main()
                         oWakizashi = oTest;
                 }
                 oTest = GetFirstItemInInventory(OBJECT_SELF);
-                while(GetIsObjectValid(oTest) 
+                while(GetIsObjectValid(oTest)
                     && !GetIsObjectValid(oWakizashi))
                 {
                     if(GetTag(oTest) == "codi_wakizashi")
                         oWakizashi = oTest;
                     oTest = GetNextItemInInventory(OBJECT_SELF);
                 }
-                SetLocalObject(oPC, "codi_ancdai", oWakizashi); 
+                SetLocalObject(oPC, "codi_ancdai", oWakizashi);
                 MarkStageNotSetUp(nStage, oPC);
-                nStage = STAGE_IMPROVE_TYPE;      
-                MarkStageNotSetUp(nStage, oPC);      
+                nStage = STAGE_IMPROVE_TYPE;
+                MarkStageNotSetUp(nStage, oPC);
             }
             else if(nChoice == CHOICE_RETURN_TO_PREVIOUS)
             {
                 MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_ENTRY;
                 MarkStageNotSetUp(nStage, oPC);
-            }    
+            }
         }
         else if(nStage == STAGE_IMPROVE_TYPE)
         {
@@ -467,7 +468,7 @@ void main()
                 MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_IMPROVE;
                 MarkStageNotSetUp(nStage, oPC);
-            }    
+            }
             else
             {
                 int nType = nChoice;
@@ -483,7 +484,7 @@ void main()
                     string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
                     if(sParam1ResRef != "")
                     {
-                        nStage = STAGE_IMPROVE_PARAM1;                
+                        nStage = STAGE_IMPROVE_PARAM1;
                     }
                     else
                     {
@@ -492,20 +493,20 @@ void main()
                         int nValueResRef = StringToInt(Get2DACache("itempropdef", "CostTableResRef", nType));
                         if(nValueResRef)
                         {
-                            nStage = STAGE_IMPROVE_VALUE;                     
+                            nStage = STAGE_IMPROVE_VALUE;
                         }
                         else
                         {
                             //no value
                             //proceed to add
                             MarkStageNotSetUp(nStage, oPC);
-                            nStage = STAGE_IMPROVE_ADD; 
+                            nStage = STAGE_IMPROVE_ADD;
                             MarkStageNotSetUp(nStage, oPC);
                         }
                     }
                 }
             }
-            
+
         }
         else if(nStage == STAGE_IMPROVE_SUB_TYPE)
         {
@@ -514,7 +515,7 @@ void main()
                 MarkStageNotSetUp(nStage, oPC);
                 nStage = STAGE_IMPROVE_TYPE;
                 MarkStageNotSetUp(nStage, oPC);
-            }    
+            }
             else
             {
                 SetLocalInt(oPC, "codi_ancdai_subtype", nChoice);
@@ -524,7 +525,7 @@ void main()
                 string sParam1ResRef = Get2DACache("itempropdef", "Param1ResRef", nType);
                 if(sParam1ResRef != "")
                 {
-                    nStage = STAGE_IMPROVE_PARAM1;                
+                    nStage = STAGE_IMPROVE_PARAM1;
                 }
                 else
                 {
@@ -535,7 +536,7 @@ void main()
                         sParam1ResRef = Get2DACache(sSubType, "Param1ResRef", nSubType);
                         if(sParam1ResRef != "")
                         {
-                            nStage = STAGE_IMPROVE_PARAM1;                
+                            nStage = STAGE_IMPROVE_PARAM1;
                         }
                         else
                         {
@@ -552,14 +553,14 @@ void main()
                         int nValueResRef = StringToInt(Get2DACache("itempropdef", "CostTableResRef", nType));
                         if(nValueResRef)
                         {
-                            nStage = STAGE_IMPROVE_VALUE;                     
+                            nStage = STAGE_IMPROVE_VALUE;
                         }
                         else
                         {
                             //no value
                             //proceed to add
                             MarkStageNotSetUp(nStage, oPC);
-                            nStage = STAGE_IMPROVE_ADD; 
+                            nStage = STAGE_IMPROVE_ADD;
                             MarkStageNotSetUp(nStage, oPC);
                         }
                     }
@@ -583,17 +584,17 @@ void main()
                 string sValueResRef = Get2DACache("itempropdef", "CostTableResRef", nType);
                 if(sValueResRef != "")
                 {
-                    nStage = STAGE_IMPROVE_VALUE;                     
+                    nStage = STAGE_IMPROVE_VALUE;
                 }
                 else
                 {
                     //no value
                     //proceed to add
                     MarkStageNotSetUp(nStage, oPC);
-                    nStage = STAGE_IMPROVE_ADD; 
+                    nStage = STAGE_IMPROVE_ADD;
                     MarkStageNotSetUp(nStage, oPC);
                 }
-            }   
+            }
         }
         else if(nStage == STAGE_IMPROVE_VALUE)
         {
@@ -608,8 +609,8 @@ void main()
                 SetLocalInt(oPC, "codi_ancdai_value", nChoice);
                 int nType = GetLocalInt(oPC, "codi_ancdai_type");
                 //proceed to add
-                nStage = STAGE_IMPROVE_ADD; 
-            }   
+                nStage = STAGE_IMPROVE_ADD;
+            }
         }
         else if(nStage == STAGE_IMPROVE_ADD)
         {
@@ -622,7 +623,7 @@ void main()
             else if(nChoice == TRUE)
             {
                 //store old cost
-                object oItem = GetLocalObject(oPC, "codi_ancdai"); 
+                object oItem = GetLocalObject(oPC, "codi_ancdai");
                 int nOldPlot = GetPlotFlag(oItem);
                 int nOldValue = GetGoldPieceValue(oItem);
                 SetPlotFlag(oItem, nOldPlot);
@@ -645,8 +646,8 @@ void main()
                     //if there is a subtype, param1 may be defined there
                     if(sSubType != "")
                         sParam1ResRef = Get2DACache(sSubType, "Param1ResRef", nSubType);
-                }   
-                
+                }
+
                 if(sSubType != "")
                 {
                     nVar2 = nSubType;
@@ -655,16 +656,16 @@ void main()
                         nVar3 = nParam1;
                         if(sValueResRef != "")
                             nVar4 = nValue;
-                    }   
+                    }
                     else if(sValueResRef != "")
                         nVar3 = nValue;
-                }    
+                }
                 else if(sParam1ResRef != "")
                 {
                     nVar2 = nParam1;
                     if(sValueResRef != "")
                         nVar3 = nValue;
-                }    
+                }
                 else if(sValueResRef != "")
                     nVar2 = nValue;
                 //fudges to turn types into vars

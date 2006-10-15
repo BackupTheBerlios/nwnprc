@@ -13,8 +13,8 @@
 //:://////////////////////////////////////////////
 
 #include "prc_spell_const"
-#include "prc_alterations"
-#include "inc_2dacache"
+#include "inc_dynconv"
+#include "inc_newspellbook"
 
 /* Constant defintions                          */
 const int STAGE_ENTRY = 0;
@@ -49,7 +49,7 @@ void PopulateListNewSpellBook(object oPC, int iClass, int nLevel, int nStart, in
 				string sName = GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpell)));
 				AddChoice(sName, nChoice, oPC);
 				SetLocalInt(oPC, "EF_SPELL_CHOICE_" + IntToString(nChoice), nSpell);
-				nChoice++;	
+				nChoice++;
 			}
 			i++;
 		}
@@ -57,7 +57,7 @@ void PopulateListNewSpellBook(object oPC, int iClass, int nLevel, int nStart, in
 
 	if (i >= MaxValue)
 	{
-		if (iClass == 3) 
+		if (iClass == 3)
 		{
 			SetDefaultTokens();
 			DeleteLocalInt(oPC, "DynConv_Waiting");
@@ -168,7 +168,7 @@ void main()
 					// Set the header
 					SetHeader("Select Spell:");
 					int nLevel = nStage - STAGE_LVL0;
-					SetLocalInt(oPC, "DynConv_Waiting", TRUE); 
+					SetLocalInt(oPC, "DynConv_Waiting", TRUE);
 
 					PopulateList(oPC, nLevel);
 
@@ -184,7 +184,7 @@ void main()
 					MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
 					SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
 				}
- 
+
 			//add more stages for more nodes with Else If clauses
 			}
 
@@ -227,9 +227,9 @@ void main()
 				nStage = STAGE_LVL0 + nChoice - 1;
 				// Move to another stage based on response, for example
 				//nStage = STAGE_QUUX;
-			} 
+			}
 			else if (nStage >= STAGE_LVL0 && nStage <= STAGE_LVL9)
-			{	
+			{
 				MarkStageNotSetUp(nStage, oPC);
 				int nSpell = GetLocalInt(oPC, "EF_SPELL_CHOICE_" + IntToString(nChoice));
 
@@ -239,7 +239,7 @@ void main()
 			}
 			else if (nStage = STAGE_SLOT)
 			{
-				int nSpell = GetLocalInt(oPC, "EF_SPELL_ID"); 
+				int nSpell = GetLocalInt(oPC, "EF_SPELL_ID");
 
 				SetLocalInt(oPC, "EF_SPELL_QUICK" + IntToString(nChoice), nSpell);
 				nStage = STAGE_ENTRY;

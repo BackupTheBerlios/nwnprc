@@ -20,7 +20,7 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
+#include "inc_dynconv"
 #include "prc_inc_leadersh"
 #include "x0_inc_henai"
 #include "x0_i0_henchman"
@@ -79,9 +79,9 @@ void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort)
                 //test if it has a sucessor
                 string sSucessor = Get2DACache("feat", "SUCCESSOR", i);
                 if(sSucessor == ""
-                    || (sSucessor != "" 
+                    || (sSucessor != ""
                         && !GetHasFeat(StringToInt(sSucessor), oCohort)))
-                {    
+                {
                     string sName = GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", i)));
                     //test for subradials
                     if(Get2DACache("spells", "SubRadSpell1", nSpellID) != "")
@@ -104,8 +104,8 @@ void AddUseableFeats(int nMin, int nMax, object oPC, object oCohort)
                     else
                     {
                         AddChoice(sName, i, oPC);
-                    }    
-                }    
+                    }
+                }
             }
         }
     }
@@ -142,7 +142,7 @@ void AddUseableSpells(int nMin, int nMax, object oPC, object oCohort)
             else
             {
                 AddChoice(sName, i, oPC);
-            }    
+            }
         }
     }
     if(i<GetPRCSwitch(FILE_END_SPELLS))
@@ -326,11 +326,11 @@ void main()
                     }
                 }
 
-                if(nStage == STAGE_FEAT_TARGET) 
+                if(nStage == STAGE_FEAT_TARGET)
                 {
-                    
+
                     SetHeader("Who or what do you want me to use "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)))+" on?");
-                }    
+                }
                 else if(nStage == STAGE_SPELL_TARGET)
                     SetHeader("Who or what do you want me to cast "+GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellID)))+" on?");
 
@@ -349,7 +349,7 @@ void main()
                     for(nSlot = 0; nSlot < 14; nSlot++)
                     {
                         object oItem = GetItemInSlot(nSlot, oCohort);
-                        if(GetIsObjectValid(oItem)  
+                        if(GetIsObjectValid(oItem)
                             && GetIdentified(oItem))
                         {
                             AddChoice(GetName(oItem), array_get_size(oCohort, "PRC_ItemsToUse"));
@@ -481,7 +481,7 @@ void main()
                              || (nType == OBJECT_TYPE_DOOR && nDoor)
                              || (nType == OBJECT_TYPE_PLACEABLE && nPlaceable)
                              || nLocation)
-                            && oTest != oCohort) 
+                            && oTest != oCohort)
                         {
                             AddChoice(GetName(oTest), array_get_size(oCohort, "PRC_ItemsToUse_Target"));
                             array_set_object(oCohort, "PRC_ItemsToUse_Target",
@@ -751,7 +751,7 @@ void main()
         {
             int nSpellID = GetLocalInt(oCohort, "PRC_SpellToUse");
             object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
-                       
+
             //test if location or object
             //use object by preference
 
@@ -786,8 +786,8 @@ void main()
                 AssignCommand(oCohort, ClearAllActions());
                 AssignCommand(oCohort, ActionCastSpellAtLocation(nSpellID, GetLocation(oTarget)));
             }
-            
-            AllowExit(DYNCONV_EXIT_FORCE_EXIT);  
+
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);
         }
         else if(nStage == STAGE_FEAT)
         {
@@ -797,22 +797,22 @@ void main()
             {
                 DecrementRemainingFeatUses(oCohort, FEAT_ANIMAL_COMPANION);
                 AssignCommand(oCohort, SummonAnimalCompanion());
-                AllowExit(DYNCONV_EXIT_FORCE_EXIT);                               
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
             else if(nChoice == FEAT_SUMMON_FAMILIAR)
             {
                 DecrementRemainingFeatUses(oCohort, FEAT_SUMMON_FAMILIAR);
                 AssignCommand(oCohort, SummonFamiliar());
-                AllowExit(DYNCONV_EXIT_FORCE_EXIT);               
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
-            
+
             //if its self only, use it
             if(StringToInt(Get2DACache("feat", "TARGETSELF", nChoice)))
             {
                 AssignCommand(oCohort, ClearAllActions());
                 AssignCommand(oCohort, ActionUseFeat(nChoice, oCohort));
                 //feat used, end conversation
-                AllowExit(DYNCONV_EXIT_FORCE_EXIT);            
+                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
             nStage = STAGE_FEAT_TARGET;
         }
@@ -836,7 +836,7 @@ void main()
                 AssignCommand(oCohort, ClearAllActions());
                 AssignCommand(oCohort, ActionUseFeat(nFeat, oTarget));
             }
-            AllowExit(DYNCONV_EXIT_FORCE_EXIT);  
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);
         }
         else if(nStage == STAGE_ITEM)
         {
@@ -876,7 +876,7 @@ void main()
         {
             SetLocalInt(oCohort, "PRC_ItemToUse_Spell", nChoice);
             //check if its self-only, if so use it
-            
+
             object oItem = GetLocalObject(oCohort, "PRC_ItemToUse");
             int nSpellID = GetLocalInt(oCohort, "PRC_ItemToUse_Spell");
             object oTarget = array_get_object(oCohort, "PRC_ItemsToUse_Target", nChoice);
@@ -900,9 +900,9 @@ void main()
 
             //test if location or object
             //use object by preference
-            
+
             int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
-            
+
             if(nTargetType == 1)
             {
                 //self only item, use it
@@ -913,7 +913,7 @@ void main()
                 //item used, end conversation
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             }
-            
+
             nStage = STAGE_ITEM_TARGET;
         }
         else if(nStage == STAGE_ITEM_TARGET)

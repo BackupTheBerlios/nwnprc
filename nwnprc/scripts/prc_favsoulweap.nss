@@ -13,6 +13,7 @@
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
+#include "inc_dynconv"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -141,11 +142,11 @@ void main()
         int nWeaponFocus = GetFeatByWeaponType(nWeapon, "Focus");
         int nWFIprop = FeatToIprop(nWeaponFocus);
         int nWeaponSpec = GetFeatByWeaponType(nWeapon, "Specialization");
-        int nWSIprop = FeatToIprop(nWeaponSpec);        
-        
+        int nWSIprop = FeatToIprop(nWeaponSpec);
+
         IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWFIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         if (GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oPC) >= 12) IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nWSIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        
+
         // Store the weapon for later reuse
         // The reason we use the weapon is so we can use the GetFeatByWeaponType function to get both Focus and Spec
         SetPersistantLocalInt(oPC, "FavouredSoulDietyWeapon", nWeapon);

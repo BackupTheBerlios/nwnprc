@@ -12,7 +12,6 @@
 //:: Created On: 01.08.2005
 //:://////////////////////////////////////////////
 
-#include "prc_alterations"
 #include "inc_abil_damage"
 
 void main()

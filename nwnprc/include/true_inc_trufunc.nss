@@ -434,7 +434,7 @@ int CheckLawOfSequence(object oTrueSpeaker, int nSpellId)
 
 string GetUtteranceName(int nSpellId)
 {
-	return Get2DACache("spells", "Name", nSpellId);
+	return GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", nSpellId)));
 }
 
 string GetLexiconName(int nLexicon)

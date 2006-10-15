@@ -4,6 +4,7 @@
 #include "prc_inc_teleport"
 #include "prc_inc_leadersh"
 #include "prc_inc_domain"
+#include "true_inc_trufunc"
 
 
 void main()
@@ -57,6 +58,8 @@ void main()
     CheckBonusDomains(oPC);
     // Set the uses per day for domains
     BonusDomainRest(oPC);
+    // Clear old variables for Truenaming
+    ClearLawLocalVars(oPC);
 
     SetLocalInt(oPC,"ONENTER",1);
     // Make sure we reapply any bonuses before the player notices they are gone.

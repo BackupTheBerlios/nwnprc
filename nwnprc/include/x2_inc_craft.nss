@@ -1139,11 +1139,27 @@ int InscribeRune()
     if (nPropID != -1)
     {
         // This part is always done
+        int nRuneChant = 0;
+        // If they have this active, the bonuses are already added, so skip
+        // If they don't, add the bonuses down below
+        if(!GetHasSpellEffect(SPELL_RUNE_CHANT))
+        {
+            if (nClass >= 30)        nRuneChant = 10;
+            else if (nClass >= 27)   nRuneChant = 9;
+            else if (nClass >= 24)   nRuneChant = 8;
+            else if (nClass >= 21)   nRuneChant = 7;
+            else if (nClass >= 18)   nRuneChant = 6;
+            else if (nClass >= 15)   nRuneChant = 5;
+            else if (nClass >= 12)   nRuneChant = 4;
+            else if (nClass >= 9)    nRuneChant = 3;
+            else if (nClass >= 5)    nRuneChant = 2;
+            else if (nClass >= 2)    nRuneChant = 1;
+        }
         itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpell, PRCGetCasterLevel());
         AddItemProperty(DURATION_TYPE_PERMANENT,ipLevel,oRune);
         itemproperty ipMeta = ItemPropertyCastSpellMetamagic(nSpell, PRCGetMetaMagicFeat());
         AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oRune);
-        itemproperty ipDC = ItemPropertyCastSpellDC(nSpell, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
+        itemproperty ipDC = ItemPropertyCastSpellDC(nSpell, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF) + nRuneChant);
         AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oRune);
         // If Maximize Rune is turned on and we pass the check, add the Maximize IProp
         if (GetLocalInt(oCaster, "MaximizeRune"))
@@ -1183,7 +1199,7 @@ int InscribeRune()
         TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
         //if time is enabled, fast forward
         //1 day per 1000GP base cost, min 1
-        int nDays = nGoldCost/500;
+        int nDays = nGoldCost/1000;
         // Maester class cuts crafting time in half.
         if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
         if(!nDays) nDays = 1;

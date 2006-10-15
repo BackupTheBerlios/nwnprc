@@ -90,6 +90,8 @@ void main()
         	}
         }
         if(utter.bExtend) utter.fDur *= 2;
+        // This stops a bug where it doesnt apply for the first round and so they only get 4 rounds of healing
+        if (utter.nSpellId == UTTER_WORD_NURTURING_MINOR) utter.fDur += 6.0;        
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
         // Impact Effects

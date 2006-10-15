@@ -44,6 +44,12 @@ void Do2daLoop(string s2da, string sColumnName, int nFileEnd);
 // loops through racialtypes.2da
 void DoRacialtypesLoop();
 
+// loops through classes.2da
+void DoClassesLoop();
+
+// stores the feats found in race_feat_***.2da as an array on the PC
+void AddRaceFeats(int nRace);
+
 /* function definitions */
 
 int DoLetoscriptTest(object oPC)
@@ -337,5 +343,89 @@ void DoRacialtypesLoop()
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         DeleteLocalInt(OBJECT_SELF, "i");
         return;
+    }
+}
+
+void DoClassesLoop()
+{
+    // remove if decide not to make the convo wait
+    if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
+        return;
+    // get the table/column name quote mark
+    string q = PRC_SQLGetTick();
+    // get the results 25 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    /*
+    SELECT `rowid`, `PreReqTable` FROM `prc_cached2da_classes`
+    WHERE (`PlayerClass` = 1) AND (`XPPenalty` = 1) 
+    LIMIT 25 OFFSET <nReali>
+    */
+    string sSQL = "SELECT "+q+"rowid"+q+", "+q+"PreReqTable"+q+" FROM "+q+"prc_cached2da_classes"+q+" WHERE ("+q+"PlayerClass"+q+" = 1) AND ("+q+"XPPenalty"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali);
+    PRC_SQLExecDirect(sSQL);
+    // to keep track of where in the 25 rows we stop getting a result
+    int nCounter = 0;
+    string sReqType, sParam1, sParam2;
+    // this needs storing in a temp array because the 2da cache retrieval will clear
+    // the query above if both steps are done in the same loop
+    // hmmm...unless...LEFT JOIN...
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+        int nClass = StringToInt(PRC_SQLGetData(1)); // rowid
+        // check if this base class is allowed
+        string sPreReq = PRC_SQLGetData(2); // PreReq tablename
+        int i = 0;
+        do
+        {
+            sReqType = Get2DACache(sPreReq, "ReqType", i);
+            if (sReqType == "VAR") // if we've found the class allowed variable
+            {
+                sParam1 = Get2DACache(sPreReq, "ReqParam1", i);
+                if(!GetLocalInt(OBJECT_SELF, sParam1)) // if the class is allowed
+                {
+                    // adds the class tot he choice list
+                    string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
+                    AddChoice(sName, nClass);
+                }
+            } // end of if (sReqType == "VAR")
+            i++;
+            
+        } while (sReqType != "VAR"); // terminates as soon as we get the allowed variable
+
+    } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    
+    // IF there were 25 rows, carry on
+    if(nCounter == 25)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+25);
+        DelayCommand(0.01, DoClassesLoop());
+    }
+    else // there were less than 25 rows, it's the end of the 2da
+    {
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        DeleteLocalInt(OBJECT_SELF, "i");
+        return;
+    }
+}
+
+void AddRaceFeats(int nRace)
+{
+    // gets which race_feat***.2da to use
+    string sFile = GetStringLowerCase(Get2DACache("racialtypes", "FeatsTable", nRace));
+    int i = 0;
+    // create the Feats array
+    array_create(OBJECT_SELF, "Feats");
+    // initialise the while loop
+    string sFeat = Get2DACache(sFile, "FeatIndex", i);
+    while(sFeat != "") // while there's non empty lines in the 2da
+    {
+        //alertness fix
+        if(sFeat == "0")
+            sFeat = "-1";
+        array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
+            StringToInt(sFeat));
+        i++;
+        sFeat = Get2DACache(sFile, "FeatIndex", i);
     }
 }

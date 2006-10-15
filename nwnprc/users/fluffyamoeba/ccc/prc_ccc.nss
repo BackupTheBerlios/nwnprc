@@ -134,7 +134,7 @@ void main()
     
             // Do token setup
             SetupTokens();
-            // ExecuteScript("prc_ccc_debug", oPC); // doesn't do anything right now
+            ExecuteScript("prc_ccc_debug", oPC); // doesn't do anything right now
         }
         // End of conversation cleanup
         else if(nValue == DYNCONV_EXITED)

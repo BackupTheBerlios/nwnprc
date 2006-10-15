@@ -22,13 +22,14 @@ void main()
     // Since OnEnter event fires for the PC when loading a saved game (no idea why,
     // since it makes saving and reloading change the state of the module),
     // make sure that the event gets run only once
-    if(GetLocalInt(oPC, "PRC_ModuleOnEnterDone"))
+    if(GetLocalInt(oPC, "PRC_ModuleOnEnterDone") && (GetPCPublicCDKey(oPC) == ""))
         return;
     // Use a local integer to mark the event as done for the PC, so that it gets
     // cleared when the character is saved.
     else
         SetLocalInt(oPC, "PRC_ModuleOnEnterDone", TRUE);
         
+    DoDebug("Running prc_enter");
     //if server is loading, boot player
     if(GetLocalInt(GetModule(), PRC_PW_LOGON_DELAY+"_TIMER"))
     {

@@ -66,6 +66,16 @@ void DoHeaderAndChoices(int nStage)
             AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
+        case STAGE_CLASS:
+            sText = GetStringByStrRef(61920); // Select a Class for Your Character
+            SetHeader(sText);
+            // set up choices
+            // try with waiting set up first
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            DelayCommand(0.01, DoClassesLoop());
+            MarkStageSetUp(nStage);
+            SetDefaultTokens();
+            break;
     }
 }
 
@@ -102,7 +112,6 @@ int HandleChoice(int nStage, int nChoice)
             if(nChoice == 1)
             {
                 nStage++;
-                /* TODO eeek!! */
                 // set race appearance, remove wings and tails, get rid of
                 // invisible/undead etc body parts
                 DoSetRaceAppearance();
@@ -112,6 +121,8 @@ int HandleChoice(int nStage, int nChoice)
                 DoCloneGender();
                 // set up the camera and animations
                 DoRotatingCamera();
+                // store racial feat variables
+                AddRaceFeats(GetLocalInt(OBJECT_SELF, "Race"));
             }
             else // go back and pick race
             {

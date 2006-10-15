@@ -214,7 +214,7 @@ int WardOfPeace()
     {
         nReturn = FALSE;
     }
-    
+
     return nReturn;
 }
 
@@ -254,7 +254,7 @@ int DuskbladeArcaneChanneling()
             {
                 nMax = 5;
                 nVal = 2;
-            }    
+            }
             for(i=1; i<=nMax; i++)
             {
                 SetLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(i)  , nSID);
@@ -263,10 +263,10 @@ int DuskbladeArcaneChanneling()
                 SetLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i), PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
             }
             SetLocalInt(oItem, "X2_L_NUMTRIGGERS", nMax);
-            
+
             itemproperty ipTest = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
             IPSafeAddItemProperty(oItem ,ipTest, fDelay);
-            
+
             for (i = 1; i <= nMax; i++)
             {
                 DelayCommand(fDelay, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER" + IntToString(i)));
@@ -502,7 +502,7 @@ int ClassSLAStore()
         SetPersistantLocalInt(OBJECT_SELF, "PRC_SLA_Uses_"+IntToString(nSLAID), nUses);
         DeleteLocalInt(OBJECT_SELF, "PRC_SLA_Store");
         return FALSE;
-    }   
+    }
     return TRUE;
 }
 
@@ -992,12 +992,12 @@ int X2PreSpellCastCode()
     //---------------------------------------------------------------------------
     if (nContinue)
         nContinue = NullPsionicsField();
-        
+
     //---------------------------------------------------------------------------
     // Run WardOfPeace Check
     //---------------------------------------------------------------------------
     if (nContinue)
-        nContinue = WardOfPeace();        
+        nContinue = WardOfPeace();
 
     //---------------------------------------------------------------------------
     // Run Ectoplasmic Shambler Concentration Check
@@ -1067,7 +1067,7 @@ int X2PreSpellCastCode()
         SendMessageToPC(oCaster, "You cannot use "+GetName(oSpellCastItem));
         nContinue = FALSE;
     }
-DoDebug("x2_inc_spellhook pre-crafting "+IntToString(nContinue));
+if(DEBUG) DoDebug("x2_inc_spellhook pre-crafting "+IntToString(nContinue));
     //-----------------------------------------------------------------------
     // Check if spell was used for Duskblade channeling
     //-----------------------------------------------------------------------
@@ -1081,14 +1081,14 @@ DoDebug("x2_inc_spellhook pre-crafting "+IntToString(nContinue));
     if (GetIsObjectValid(oTarget) && GetObjectType(oTarget) == OBJECT_TYPE_ITEM)
     {
 
-DoDebug("x2_inc_spellhook pre-x2_pc_craft "+IntToString(nContinue));
+if(DEBUG) DoDebug("x2_inc_spellhook pre-x2_pc_craft "+IntToString(nContinue));
         //-----------------------------------------------------------------------
         // Check if spell was used to trigger item creation feat
         //-----------------------------------------------------------------------
         if (nContinue)
             nContinue = !ExecuteScriptAndReturnInt("x2_pc_craft", oCaster);
 
-DoDebug("x2_inc_spellhook pre-sequencer "+IntToString(nContinue));
+if(DEBUG) DoDebug("x2_inc_spellhook pre-sequencer "+IntToString(nContinue));
         //-----------------------------------------------------------------------
         // Check if spell was used for on a sequencer item
         // Check if spell was used for Arcane Archer Imbue Arrow
@@ -1098,7 +1098,7 @@ DoDebug("x2_inc_spellhook pre-sequencer "+IntToString(nContinue));
             nContinue = (!X2GetSpellCastOnSequencerItem(oTarget));
 
 
-DoDebug("x2_inc_spellhook pre-tagbased "+IntToString(nContinue));
+if(DEBUG) DoDebug("x2_inc_spellhook pre-tagbased "+IntToString(nContinue));
         //-----------------------------------------------------------------------
         // * Execute item OnSpellCast At routing script if activated
         //-----------------------------------------------------------------------
@@ -1110,7 +1110,7 @@ DoDebug("x2_inc_spellhook pre-tagbased "+IntToString(nContinue));
             if (nRet == X2_EXECUTE_SCRIPT_END)
                 return FALSE;
         }
-DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nContinue));
+if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nContinue));
 
         //-----------------------------------------------------------------------
         // Prevent any spell that has no special coding to handle targetting of items
@@ -1129,24 +1129,24 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nContinue));
         && GetHasFeat(FEAT_SUMMON_FAMILIAR, oCaster)
         && (GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oCaster)
             || !GetPRCSwitch(PRC_PNP_FAMILIARS)
-        && oTarget == oCaster 
+        && oTarget == oCaster
         && GetIsObjectValid(GetLocalObject(oCaster, "Familiar"))
         && (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
             PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER)
         && !GetLocalInt(oCaster, "PRC_SPELL_HOLD")     //holding the charge doesnt work
-        && Get2DACache("spells", "Range", nSpellID) == "T" 
+        && Get2DACache("spells", "Range", nSpellID) == "T"
         && !GetIsObjectValid(oSpellCastItem)     // no item spells
         && nSpellID != SPELL_SHAPECHANGE         // no polymorphs
-        && nSpellID != SPELL_POLYMORPH_SELF 
+        && nSpellID != SPELL_POLYMORPH_SELF
         && nSpellID != SPELL_TENSERS_TRANSFORMATION))
     {
         object oFam = GetLocalObject(oCaster, "Familiar");
         // Run the ShareSpell code to duplicate the spell on the familiar
        // spell has to be wiz/sorc and cast on self to be shared
-        AssignCommand(oFam, 
+        AssignCommand(oFam,
             ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oFam, oFam, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oFam));
     }
-    
+
     // Healer Spellsharing
     if(nContinue && GetLevelByClass(CLASS_TYPE_HEALER, oCaster) >= 8)
     {
@@ -1186,7 +1186,7 @@ DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nContinue));
         SetLocalInt(oCaster, PRC_DC_BASE_OVERRIDE, nDC);
         DelayCommand(0.01, DeleteLocalInt(oCaster, PRC_DC_BASE_OVERRIDE));
     }
-DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
+if(DEBUG) DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
     //---------------------------------------------------------------------------
     // Spellfire
     //---------------------------------------------------------------------------
@@ -1222,9 +1222,14 @@ DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
     // with somatic or vocal components and is lacking Natural Spell feat
     if(nContinue                                                             && // Any point to checking this?
        GetLocalInt(oCaster, "PRC_Shifting_RestrictSpells")                   && // See if the restriction might apply
-       (FindSubString(sComponent, "V") != -1 || FindSubString(sComponent, "S")) // And then check if the restriction does apply
+       ((FindSubString(sComponent, "V") != -1 && (PRCGetMetaMagicFeat() & METAMAGIC_SILENT)) || // Vocal component and no silent metamagic
+        (FindSubString(sComponent, "S") != -1 && (PRCGetMetaMagicFeat() & METAMAGIC_STILL))     // Somatic component and no still metamagic
+        )
        )
+    {
+        FloatingTextStrRefOnCreature(16828386, oCaster, FALSE); // "Your spell failed due to being in a form that prevented either a somatic or a vocal component from being used"
         nContinue = FALSE;
+    }
 
     //Cleaning spell variables used for holding the charge
     if(!GetLocalInt(oCaster, "PRC_SPELL_EVENT"))

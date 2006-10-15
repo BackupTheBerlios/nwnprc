@@ -1612,6 +1612,7 @@ const string X2_CI_CRAFTWAND_COSTMODIFIER            = "X2_CI_CRAFTWAND_COSTMODI
 
 /*
  * cost modifier of spells crafted into staffs
+ * note that adding a second spell costs 75% and 3 or more costs 50%
  * defaults to 750
  */
 const string X2_CI_CRAFTSTAFF_COSTMODIFIER            = "X2_CI_CRAFTSTAFF_COSTMODIFIER";

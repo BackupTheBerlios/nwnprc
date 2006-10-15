@@ -35,14 +35,17 @@ void main()
         return;
     
     //loop over all templates and see if the player has them
+    if(!persistant_array_exists(oPC, "templates"))
+        persistant_array_create(oPC, "templates");
     int i;
     int bHasTemplate = FALSE;
-    for(i=0;i<200;i++)
+    for(i=0; i<persistant_array_get_size(oPC, "templates"); i++)
     {
-        if(GetHasTemplate(i, oPC))
+        int nTemplate = persistant_array_get_int(oPC, "templates", i);
+        if(GetHasTemplate(nTemplate, oPC))
         {
             bHasTemplate = TRUE;
-            RunTemplateStuff(i, oPC);    
+            RunTemplateStuff(nTemplate, oPC);    
         }    
     }
     

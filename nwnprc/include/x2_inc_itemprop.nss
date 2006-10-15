@@ -590,11 +590,11 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1=0, int nParam2=0, in
    }
    else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS)
    {
-        ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
+        ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
    }
    else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC)
    {
-        ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
+        ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
    }
    else if (nPropID == ITEM_PROPERTY_SKILL_BONUS)
    {

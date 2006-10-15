@@ -912,6 +912,12 @@ These dont work as IPs since they are hardcoded */
     int nLvlRow = IPGetIPConstCastSpellFromSpellID(nSpellID);
     int nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
     int nCost = CIGetCraftGPCost(nLevel, nCostMod, PRC_CRAFT_STAFF_CASTER_LEVEL);
+    //discount for second or 3+ spells
+    if(nCount+1 == 2)
+        nCost = (nCost*3)/4;
+    else if(nCount+1 >= 3)
+        nCost = nCost/2;
+        
     int nXP = nCost / 25;
     int nGoldCost = nCost / 2;
     if(nGoldCost < 1) nXP = 1;
@@ -966,10 +972,11 @@ These dont work as IPs since they are hardcoded */
         if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
         if(!nDays) nDays = 1;
         AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
-        //string sName;
+        string sName;
+        sName = GetName(oCaster)+"'s Magic Staff";
         //sName = Get2DACache("spells", "Name", nID);
         //sName = "Wand of "+GetStringByStrRef(StringToInt(sName));
-        //SetName(oWand, sName);
+        SetName(oSpellTarget, sName);
         return TRUE;
     }
     else

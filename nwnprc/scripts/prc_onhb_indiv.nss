@@ -82,6 +82,15 @@ void main()
                     bHasStaff = TRUE;
                 oTest = GetNextItemInInventory(oPC);
             }
+            //check for equipable items in slots
+            if(!bHasStaff)
+            {
+                oTest = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+                string sResRef = GetResRef(oTest);
+                if(sResRef == "craft_staff")
+                        bHasStaff = TRUE;
+            }        
+            
             if(bHasPotionFeat && !bHasPotion)
             {
                 oTest = CreateItemOnObject("x2_it_cfm_pbottl", oPC);

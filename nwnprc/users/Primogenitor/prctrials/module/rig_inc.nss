@@ -1,6 +1,7 @@
 const int           RIG_ROOT_COUNT      = 70;
 const string        RIG_DB              = "rig";
 const float         RIG_DB_DELAY        = 6000.0;
+const int           RIG_GRIBT_REPLICATION = 75;
 
 object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
 object RandomizeItem(object oItem, int nLevel, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
@@ -13,6 +14,7 @@ int RIG_CheckLimitations(object oItem, object oPC = OBJECT_SELF);
 
 const int RIG_CREATE_ALL_CACHE_CHESTS_ON_LOAD = TRUE;
 const int RIG_ITEM_CACHE_SIZE                 = 10;
+const int RIG_PRE_EPIC_ONE_AFFIX_LIMIT        = TRUE;
 
 #include "prc_gateway"
 #include "rig_inc_app"
@@ -128,13 +130,13 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
     //check itws not an invalid type
     if(nBaseItemType == BASE_ITEM_INVALID)
         return OBJECT_INVALID;
-DoDebug("GetRandomizedItemByType() running at level "+IntToString(nLevel));        
+//DoDebug("GetRandomizedItemByType() running at level "+IntToString(nLevel));        
     string sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(nAC);
     object oChest = GetObjectByTag(sTag);
     //chest is valid
     if(GetIsObjectValid(oChest))
     {   
-DoDebug("GetRandomizedItemByType() found existing chest "+sTag);    
+//DoDebug("GetRandomizedItemByType() found existing chest "+sTag);    
         //test against the counter local
         //no objects in it abort now
         if(!GetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel))) 
@@ -146,7 +148,7 @@ DoDebug("GetRandomizedItemByType() found existing chest "+sTag);
         while(GetIsObjectValid(oTest))
         {
 //DoDebug("rig_inc line 132");
-            DoDebug("GetRandomizedItemByType() looking at "+GetName(oTest)+" "+IntToString(GetLocalInt(oTest, "RigLevel")));
+//DoDebug("GetRandomizedItemByType() looking at "+GetName(oTest)+" "+IntToString(GetLocalInt(oTest, "RigLevel")));
             if(GetLocalInt(oTest, "RigLevel") == nLevel
                 //&& RIG_CheckLimitations(oTest)
                 )    
@@ -166,7 +168,9 @@ DoDebug("GetRandomizedItemByType() found existing chest "+sTag);
         }    
         //we did find something, bring it back
         object oReturn = CopyItem(oTest, OBJECT_SELF, TRUE);
-        DestroyObject(oTest);
+        //to save time, only destroy a proportion of originals
+        if(RandomI(100) > RIG_GRIBT_REPLICATION)
+            DestroyObject(oTest);
         SetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel), 
             GetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel))-1);
         return oReturn;
@@ -176,7 +180,7 @@ DoDebug("GetRandomizedItemByType() found existing chest "+sTag);
     {
         //try to get it from database first
         
-DoDebug("GetRandomizedItemByType() made a new chest "+sTag);    
+//DoDebug("GetRandomizedItemByType() made a new chest "+sTag);    
         location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
         oChest = RetrieveCampaignObject(RIG_DB, sTag, lLimbo);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oChest);
@@ -217,7 +221,7 @@ void VoidGetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int
 //for equiping restrictions
 object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
 {
-DoDebug("CreateRandomizeItemByType() Starting "+IntToString(nBaseItemType)+" "+IntToString(nLevel)+" ");
+//DoDebug("CreateRandomizeItemByType() Starting "+IntToString(nBaseItemType)+" "+IntToString(nLevel)+" ");
     if(nBaseItemType == BASE_ITEM_INVALID)
     {
 DoDebug("CreateRandomizeItemByType() invalid base item type");
@@ -275,7 +279,7 @@ DoDebug("CreateRandomizeItemByType() invalid after copy back");
     }
     
     SetLocalInt(oItem, "RigLevel", nLevel);
-DoDebug("CreateRandomizeItemByType() "+GetName(oItem)+" has finished being randomized");
+//DoDebug("CreateRandomizeItemByType() "+GetName(oItem)+" has finished being randomized");
     return oItem;
 }
 
@@ -293,7 +297,7 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
         nRoot = RIG_GetRandomMatchingRootByType(nType, nAC);
 //DoDebug("Timer CreateRandomizeItemByType() Q : "+QueryTimer(OBJECT_SELF, "CreateRandomizeItemByType"));
     string sResRef = Get2DACache("rig_root", "ResRef", nRoot);
-DoDebug("RIG_Core() starting nRoot = "+IntToString(nRoot)+" sResRef = "+sResRef);
+//DoDebug("RIG_Core() starting nRoot = "+IntToString(nRoot)+" sResRef = "+sResRef);
     int nSuffix, nPrefix;
     string sSuffix, sPrefix;
     if(nType == BASE_ITEM_INVALID
@@ -313,7 +317,7 @@ DoDebug("RIG_Core() starting nRoot = "+IntToString(nRoot)+" sResRef = "+sResRef)
         oTemp = oItem;
     if(!GetIsObjectValid(oTemp))
     {
-DoDebug("RIG_Core() oTemp is not valid");
+        DoDebug("RIG_Core() oTemp is not valid");
         return OBJECT_INVALID;
     }
 //DoDebug("RIG_Core() name = "+GetName(oTemp));
@@ -322,14 +326,45 @@ DoDebug("RIG_Core() oTemp is not valid");
 //DoDebug("rig_inc line 215");
         oReturn = CopyItem(oTemp, GetObjectByTag("HEARTOFCHAOS"), TRUE);
         SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
-        sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
-        sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
+        SetLocalObject(OBJECT_SELF, "Random_Default_Object", oReturn);
+        if(nLevel <= 20
+            && RIG_PRE_EPIC_ONE_AFFIX_LIMIT)
+        {    
+            //pre-epic, either a prefix or a suffix, not both
+            if(Random(2))
+                sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);            
+            else          
+                sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
+        }
+        else
+        {
+            //epic item, can have both prefix and suffix
+            //random order of selection though
+            if(Random(2))
+            {
+                sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType); 
+                //second one is a number of levels lower equal to the difference from the max
+                nLevel  = nLevel-(40-nLevel);
+                SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
+                sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);           
+            }    
+            else          
+            {
+                sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
+                //second one is a number of levels lower equal to the difference from the max
+                nLevel  = nLevel-(40-nLevel);
+                SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
+                sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType); 
+            }    
+        }    
 //DoDebug("Timer CreateRandomizeItemByType() Q : GetIsObjectValid(oReturn) : "+QueryTimer(OBJECT_SELF, "CreateRandomizeItemByType"));
         //sanity check. No prefix/suffixs at all, then abort.
-        if(sSuffix == "" || sPrefix == "")
+        if(sSuffix == "" 
+            && sPrefix == "")
         {
             DestroyObject(oItem);
-            return oReturn;
+            DestroyObject(oReturn);
+            return OBJECT_INVALID;
         }
         nSuffix = StringToInt(sSuffix);
         nPrefix = StringToInt(sPrefix);
@@ -338,18 +373,13 @@ DoDebug("RIG_Core() oTemp is not valid");
             && nSuffix != 0)
         {
 //DoDebug("rig_inc line 231");
-            /*
-            SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
-            sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
-            nPrefix = StringToInt(sPrefix);
-            */
             //Duplicates become single-affixs
             if(Random(2))
                 nPrefix = 0;
             else
                 nSuffix = 0;
         }
-DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" "+sPrefix+" "+sSuffix+" at level "+IntToString(nLevel));
+//DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" "+sPrefix+" "+sSuffix+" at level "+IntToString(nLevel));
 //DoDebug("sResRef = "+sResRef);
         if(nSuffix != 0)
         {
@@ -447,7 +477,7 @@ object RIG_AddItemProperty(object oItem, int nRIGIP)
     }
     if(nRIGIP == 0)
     {
-        DoDebug("nRIGIP is 0 going into RIG_AddItemProperty");
+        //DoDebug("nRIGIP is 0 going into RIG_AddItemProperty");
         //no itemproperty, do nothing
         return oItem;
     }
@@ -477,7 +507,7 @@ object RIG_AddItemProperty(object oItem, int nRIGIP)
     ipToApply = IPGetItemPropertyByID(nType, nVar2, nVar3, nVar4);
     if(!GetIsItemPropertyValid(ipToApply))
     {
-        DoDebug("Itemproperty is not valid to apply");
+        DoDebug("Itemproperty is not valid to apply nRIGIP="+IntToString(nRIGIP));
         DestroyObject(oItem);
         return OBJECT_INVALID;
     }
@@ -492,7 +522,7 @@ object RIG_AddItemProperty(object oItem, int nRIGIP)
         ipTemp = GetNextItemProperty(oItem);
     }
     //didnt work
-    DoDebug("Itemproperty is not applicable to this base item. "+GetName(oItem)+" "+IntToString(nType));
+    DoDebug("Itemproperty is not applicable to this base item. Name="+GetName(oItem)+" IPType="+IntToString(nType)+" nRIGIP="+IntToString(nRIGIP));
     DestroyObject(oItem);
     return OBJECT_INVALID;
 }

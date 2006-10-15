@@ -141,7 +141,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             && sRandom9 == ""
             && sReturn == "")
         {   
-            DoDebug("GetRandomFrom2DA() sanity check, no valid results");    
+            DoDebug("GetRandomFrom2DA() sanity check, no valid results: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow));    
             return "";
         }    
         if(nRandom0Weight == 0
@@ -156,7 +156,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             && nRandom9Weight == 0
             && sReturn == "")
         {   
-            DoDebug("GetRandomFrom2DA() sanity check, no valid weights");    
+            DoDebug("GetRandomFrom2DA() sanity check, no valid results: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow));    
             return "";
         }    
         nRandomWeightTotal += nRandom0Weight;
@@ -176,7 +176,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         if(nRandomWeight < nRandom0Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 0);
+            GetRandomWeight(sScript, s2DA, nRow, 0);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom0, 1) == "r")
                 sReturn = sRandom0;
@@ -185,7 +185,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 1);
+            GetRandomWeight(sScript, s2DA, nRow, 1);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom1, 1) == "r")
                 sReturn = sRandom1;
@@ -194,7 +194,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 2);
+            GetRandomWeight(sScript, s2DA, nRow, 2);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom2, 1) == "r")
                 sReturn = sRandom2;
@@ -203,7 +203,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 3);
+            GetRandomWeight(sScript, s2DA, nRow, 3);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom3, 1) == "r")
                 sReturn = sRandom3;
@@ -212,7 +212,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 4);
+            GetRandomWeight(sScript, s2DA, nRow, 4);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom4, 1) == "r")
                 sReturn = sRandom4;
@@ -221,7 +221,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 5);
+            GetRandomWeight(sScript, s2DA, nRow, 5);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom5, 1) == "r")
                 sReturn = sRandom5;
@@ -230,7 +230,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 6);
+            GetRandomWeight(sScript, s2DA, nRow, 6);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom6, 1) == "r")
                 sReturn = sRandom6;
@@ -239,7 +239,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight+nRandom7Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 7);
+            GetRandomWeight(sScript, s2DA, nRow, 7);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom7, 1) == "r")
                 sReturn = sRandom7;
@@ -248,7 +248,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight+nRandom7Weight+nRandom8Weight)
         {
             SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            //GetRandomWeight(sScript, s2DA, nRow, 8);
+            GetRandomWeight(sScript, s2DA, nRow, 8);
             DeleteLocalInt(GetModule(), "RandomResultRun");
             if(GetStringLeft(sRandom8, 1) == "r")
                 sReturn = sRandom8;
@@ -264,7 +264,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             nRow = nRandom9;
         }
 
-DoDebug("GetRandomFrom2DA("+s2DA+", "+sScript+", "+IntToString(nSeed)+") nRow is now "+IntToString(nRow)+" from "+IntToString(nOrigRow));
+/*DoDebug("GetRandomFrom2DA("+s2DA+", "+sScript+", "+IntToString(nSeed)+") nRow is now "+IntToString(nRow)+" from "+IntToString(nOrigRow));
 if(nRandom0Weight > 0) DoDebug("0 weight: "+IntToString(nRandom0Weight)+" row: "+IntToString(nRandom0));
 if(nRandom1Weight > 0) DoDebug("1 weight: "+IntToString(nRandom1Weight)+" row: "+IntToString(nRandom1));
 if(nRandom2Weight > 0) DoDebug("2 weight: "+IntToString(nRandom2Weight)+" row: "+IntToString(nRandom2));
@@ -274,7 +274,7 @@ if(nRandom5Weight > 0) DoDebug("5 weight: "+IntToString(nRandom5Weight)+" row: "
 if(nRandom6Weight > 0) DoDebug("6 weight: "+IntToString(nRandom6Weight)+" row: "+IntToString(nRandom6));
 if(nRandom7Weight > 0) DoDebug("7 weight: "+IntToString(nRandom7Weight)+" row: "+IntToString(nRandom7));
 if(nRandom8Weight > 0) DoDebug("8 weight: "+IntToString(nRandom8Weight)+" row: "+IntToString(nRandom8));
-if(nRandom9Weight > 0) DoDebug("9 weight: "+IntToString(nRandom9Weight)+" row: "+IntToString(nRandom9));
+if(nRandom9Weight > 0) DoDebug("9 weight: "+IntToString(nRandom9Weight)+" row: "+IntToString(nRandom9));*/
 
 
     }

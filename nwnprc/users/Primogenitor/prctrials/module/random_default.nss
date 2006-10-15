@@ -6,6 +6,7 @@ void main()
     int nValue = GetLocalInt(OBJECT_SELF, RANDOM_2DA_SEED);
     int nOriginalValue = nValue;
     int nLevel = GetLocalInt(OBJECT_SELF, "Random_Default_Level");
+    object oObject = GetLocalObject(OBJECT_SELF, "Random_Default_Object");
     if(nValue >= 1000 && nValue < 1100)
     {
         //narrowband 2-sided at level;
@@ -125,6 +126,25 @@ void main()
         else
             nValue = 100;
     }
+    else if(nValue >= 1800 && nValue < 2000)
+    {
+        //spare for future use
+        nValue = 0;
+    }
+    else if(nValue >= 2000 && nValue < 2300)
+    {
+        //split items by base item type
+        if(GetObjectType(oObject) != OBJECT_TYPE_ITEM)        
+            nValue = 0;
+        else
+        {
+            int nType = GetBaseItemType(oObject)+2000;
+            if(nType != nValue)
+                nValue = 0;
+            else
+                nValue = 100;
+        }
+    }    
     else
     {
         //some other value, shouldnt happen

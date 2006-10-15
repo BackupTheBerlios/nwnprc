@@ -85,6 +85,10 @@ int ApplyTemplateToObject(int nTemplate, object oPC = OBJECT_SELF, int bApply = 
     //adjust the LA marker accordingly
     SetPersistantLocalInt(oPC, "template_LA", 
         GetPersistantLocalInt(oPC, "template_LA")+StringToInt(Get2DACache("templates", "LA", nTemplate)));
+    //add the template to the array
+    if(!persistant_array_exists(oPC, "templates"))
+        persistant_array_create(oPC, "templates");
+    persistant_array_set_int(oPC, "templates", persistant_array_get_size(oPC, "templates"), nTemplate);    
     
     
     //run the main PRC feat system so we trigger any other feats weve borrowed

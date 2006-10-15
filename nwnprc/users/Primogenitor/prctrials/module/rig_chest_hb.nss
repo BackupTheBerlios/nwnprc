@@ -8,7 +8,7 @@ void CreateRandomizeItemByTypeForChest(int nBaseItemType, int nLevel, int nAC)
         SetLocalInt(OBJECT_SELF, "ContentsLevel"+IntToString(nLevel), nItemCount+1);
 }
 
-void main()
+void DoStuff()
 {
     int nMax = RIG_ITEM_CACHE_SIZE;/*
     object oTest = GetFirstItemInInventory();
@@ -37,11 +37,21 @@ void main()
     }
     if(nCount < nMax)
     {
-        //DoDebug(GetTag(OBJECT_SELF)+" creating level "+IntToString(nLevel));
+        DoDebug(GetTag(OBJECT_SELF)+" creating level "+IntToString(nLevel));
         int nBaseItemType = GetLocalInt(OBJECT_SELF, "BaseItem");
         int nAC = GetLocalInt(OBJECT_SELF, "AC");
-        float fDelay = IntToFloat(Random(600))/100.0;
+        float fDelay = 0.01; //IntToFloat(Random(600))/100.0;
         DelayCommand(fDelay, CreateRandomizeItemByTypeForChest(nBaseItemType, nLevel, nAC));
         return;
+    }
+
+}
+
+void main()
+{
+    float fDelay;
+    for(fDelay = 0.0; fDelay < 6.0; fDelay += 1.0)
+    {
+        DelayCommand(fDelay, DoStuff());
     }
 }

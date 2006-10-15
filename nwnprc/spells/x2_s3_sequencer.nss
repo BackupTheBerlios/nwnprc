@@ -77,7 +77,7 @@ DoDebug("nDC = "+IntToString(nDC));
             FloatingTextStrRefOnCreature(83886,OBJECT_SELF); // no spells stored
         }
         if(nMode == 700 //Fired via OnHit:CastUniqueSpell
-            && !GetLocalInt(oItem, "DuskbladeChannelDischarge"))//and not a discharging duskblade
+            && GetLocalInt(oItem, "DuskbladeChannelDischarge")!=2)//and not a discharging duskblade
         {
             ActionAttack(GetAttackTarget());
             //clear the settings
@@ -89,6 +89,20 @@ DoDebug("nDC = "+IntToString(nDC));
                 DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i));
             }
             DeleteLocalInt(oItem, "X2_L_NUMTRIGGERS");
+        }
+        else if(nMode == 700 //Fired via OnHit:CastUniqueSpell
+            && GetLocalInt(oItem, "DuskbladeChannelDischarge")==2)//and is a discharging duskblade
+        {
+            ActionAttack(GetAttackTarget());
+            //clear the settings
+            for (i = 1; i <= iMax; i++)
+            {
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER"   + IntToString(i)));
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_L" + IntToString(i)));
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_M" + IntToString(i)));
+                DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_SPELLTRIGGER_D" + IntToString(i)));
+            }
+            DelayCommand(6.0, DeleteLocalInt(oItem, "X2_L_NUMTRIGGERS"));
         }
     }
 }

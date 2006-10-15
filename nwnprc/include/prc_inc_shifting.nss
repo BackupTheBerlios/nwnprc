@@ -15,9 +15,6 @@
       gotten
 
 
-    @todo unshift on login
-    @todo spell restriction checks to spellhook
-
     @author Ornedan
     @date   Created - 2006.03.04
 */
@@ -45,7 +42,7 @@ const float SHIFTER_MUTEX_UNSET_DELAY = 3.0f;
 const string SHIFTER_RESREFS_ARRAY    = "PRC_ShiftingResRefs_";
 const string SHIFTER_NAMES_ARRAY      = "PRC_ShiftingNames_";
 const string SHIFTER_TRUEAPPEARANCE   = "PRC_ShiftingTrueAppearance";
-const string SHIFTER_ISSHIFTED_MARKER = "PRC_IsShifted";
+const string SHIFTER_ISSHIFTED_MARKER = "nPCShifted"; //"PRC_IsShifted"; // @todo Refactor across all scripts
 const string SHIFTER_SHIFT_MUTEX      = "PRC_Shifting_InProcess";
 const string SHIFTER_RESTRICT_SPELLS  = "PRC_Shifting_RestrictSpells";
 const string SHIFTER_OVERRIDE_RACE    = "PRC_ShiftingOverride_Race";
@@ -245,8 +242,11 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
  * @param nShifterType            SHIFTER_TYPE_*
  * @param oTemplate               The creature to shift into
  * @param bGainSpellLikeAbilities Whether to give the shifter access the template's SLAs
+ *
+ * @return                        TRUE if the shifting started successfully,
+ *                                FALSE if it failed outright
  */
-void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE);
+int ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE);
 
 /**
  * Attempts to shift into the given template creature. If the shifter is already
@@ -257,8 +257,11 @@ void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int 
  * @param nShifterType            SHIFTER_TYPE_*
  * @param sResRef                 Resref of the creature to shift into
  * @param bGainSpellLikeAbilities Whether to give the shifter access the template's SLAs
+ *
+ * @return                        TRUE if the shifting started successfully,
+ *                                FALSE if it failed outright
  */
-void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE);
+int ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE);
 
 /**
  * Undoes any currently active shifting, restoring original appearance &
@@ -434,32 +437,34 @@ int _prc_inc_shifting_GetCanFormCast(object oTemplate)
     switch (nRacialType)
     {
         case RACIAL_TYPE_ABERRATION:
+        case RACIAL_TYPE_ANIMAL:
+        case RACIAL_TYPE_BEAST:
         case RACIAL_TYPE_MAGICAL_BEAST:
         case RACIAL_TYPE_VERMIN:
-        case RACIAL_TYPE_BEAST:
-        case RACIAL_TYPE_ANIMAL:
         case RACIAL_TYPE_OOZE:
 //        case RACIAL_TYPE_PLANT:
             // These forms can't cast spells
             return FALSE;
-        case RACIAL_TYPE_SHAPECHANGER:
-        case RACIAL_TYPE_ELEMENTAL:
-        case RACIAL_TYPE_DRAGON:
-        case RACIAL_TYPE_OUTSIDER:
-        case RACIAL_TYPE_UNDEAD:
-        case RACIAL_TYPE_CONSTRUCT:
-        case RACIAL_TYPE_GIANT:
-        case RACIAL_TYPE_HUMANOID_MONSTROUS:
         case RACIAL_TYPE_DWARF:
         case RACIAL_TYPE_ELF:
         case RACIAL_TYPE_GNOME:
-        case RACIAL_TYPE_HALFELF:
         case RACIAL_TYPE_HALFLING:
+        case RACIAL_TYPE_HALFELF:
         case RACIAL_TYPE_HALFORC:
         case RACIAL_TYPE_HUMAN:
+        case RACIAL_TYPE_CONSTRUCT:
+        case RACIAL_TYPE_DRAGON:
+        case RACIAL_TYPE_HUMANOID_GOBLINOID:
+        case RACIAL_TYPE_HUMANOID_MONSTROUS:
         case RACIAL_TYPE_HUMANOID_ORC:
         case RACIAL_TYPE_HUMANOID_REPTILIAN:
+        case RACIAL_TYPE_ELEMENTAL:
         case RACIAL_TYPE_FEY:
+        case RACIAL_TYPE_GIANT:
+        case RACIAL_TYPE_OUTSIDER:
+        case RACIAL_TYPE_SHAPECHANGER:
+        case RACIAL_TYPE_UNDEAD:
+            // Break and go return TRUE at the end of the function
             break;
 
         default:{
@@ -700,6 +705,9 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
     }
     else
     {
+        // Queue unsetting the mutex. Done here so that even if something breaks along the way, this has a good chance of getting executed
+        DelayCommand(SHIFTER_MUTEX_UNSET_DELAY, SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE));
+
         /* Start the actual shifting */
         int bNeedSpellCast = FALSE;
         int i;
@@ -900,7 +908,8 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
 
         // Feats - read from shifter_feats.2da, check if template has it and copy over if it does
-        _prc_inc_shifting_CopyFeats(oTemplate, oShifterHide);
+        // Delayed, since this takes way too long
+        DelayCommand(0.0f, _prc_inc_shifting_CopyFeats(oTemplate, oShifterHide));
 
         // Casting restrictions if our - inaccurate - check indicates the template can't cast spells
         if(!_prc_inc_shifting_GetCanFormCast(oTemplate))
@@ -924,7 +933,8 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         if(bGainSpellLikeAbilities)
         {
             object oSLAItem = CreateItemOnObject(SHIFTING_SLAITEM_RESREF, oShifter);
-            _prc_inc_shifting_CreateShifterActiveAbilitiesItem(oTemplate, oSLAItem);
+            // Delayed to prevent potential TMI
+            DelayCommand(0.0f, _prc_inc_shifting_CreateShifterActiveAbilitiesItem(oTemplate, oSLAItem));
         }
 
         // Change the appearance to that of the template
@@ -954,17 +964,14 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
         // Run the class & feat evaluation code
         // In case of TMIs, add two domino blocks
-        /*
-        DelayCommand(0.0f,
+        //*
+        DelayCommand(0.1f,
         // */
                      EvalPRCFeats(oShifter)
-        /*
+        //*
                      )
         // */
                       ;
-
-        // Delay unsetting the mutex a bit to give the assigned commands time to execute
-        DelayCommand(SHIFTER_MUTEX_UNSET_DELAY, SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE));
     }
 
     // Destroy the template creature
@@ -1074,6 +1081,9 @@ void _prc_inc_shifting_UnShiftAux(object oShifter, int nShifterType, object oTem
     // Queue reshifting to happen if needed. Let a short while pass so any fallout from the unshift gets handled
     if(GetIsObjectValid(oTemplate))
         DelayCommand(1.0f, _prc_inc_shifting_ShiftIntoTemplateAux(oShifter, nShifterType, oTemplate, bGainSpellLikeAbilities));
+    // Since there is no reshifting, we can unset the mutex now
+    else
+        SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, FALSE);
 }
 
 /** Internal function.
@@ -1434,17 +1444,17 @@ int GetCanShiftIntoCreature(object oShifter, int nShifterType, object oTemplate)
     return bReturn;
 }
 
-void ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE)
+int ShiftIntoCreature(object oShifter, int nShifterType, object oTemplate, int bGainSpellLikeAbilities = FALSE)
 {
     // Just grab the resref and move on
-    ShiftIntoResRef(oShifter, nShifterType, GetResRef(oTemplate), bGainSpellLikeAbilities);
+    return ShiftIntoResRef(oShifter, nShifterType, GetResRef(oTemplate), bGainSpellLikeAbilities);
 }
 
-void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE)
+int ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGainSpellLikeAbilities = FALSE)
 {
     // Make sure there is nothing that would prevent the successfull execution of the shift from happening
     if(!_prc_inc_shifting_GetCanShift(oShifter))
-        return;
+        return FALSE;
 
     /* Create the template to shift into */
     // Get the waypoint in Limbo where shifting template creatures are spawned
@@ -1483,8 +1493,14 @@ void ShiftIntoResRef(object oShifter, int nShifterType, string sResRef, int bGai
                 DelayCommand(0.1f, _prc_inc_shifting_UnShiftAux(oShifter, nShifterType, oTemplate, bGainSpellLikeAbilities));
             else
                 DelayCommand(0.1f, _prc_inc_shifting_ShiftIntoTemplateAux(oShifter, nShifterType, oTemplate, bGainSpellLikeAbilities));
+
+            // Return that we were able to successfully start shifting
+            return TRUE;
         }
     }
+
+    // We didn't reach the success branch for some reason
+    return FALSE;
 }
 
 int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = FALSE)
@@ -1514,6 +1530,9 @@ int UnShift(object oShifter, int bRemovePoly = TRUE, int bIgnoreShiftingMutex = 
     // Check for true form being stored
     if(!GetPersistantLocalInt(oShifter, SHIFTER_TRUEAPPEARANCE))
         return UNSHIFT_FAIL;
+
+    // The unshifting should always proceed succesfully from this point on, so set the mutex
+    SetLocalInt(oShifter, SHIFTER_SHIFT_MUTEX, TRUE);
 
     // If we had a polymorph effect present, start the removal monitor
     if(bHadPoly)
@@ -1573,28 +1592,31 @@ struct appearancevalues GetAppearanceData(object oTemplate)
 
 void SetAppearanceData(object oTarget, struct appearancevalues appval)
 {
+//DoDebug("Setting the appearance of " + DebugObject2Str(oTarget) + "to:\n" + DebugAppearancevalues2Str(appval));
 	// The appearance type
 	SetCreatureAppearanceType(oTarget, appval.nAppearanceType);
-	// Body parts
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT     , appval.nBodyPart_RightFoot     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT      , appval.nBodyPart_LeftFoot      , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN     , appval.nBodyPart_RightShin     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN      , appval.nBodyPart_LeftShin      , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH    , appval.nBodyPart_RightThigh    , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH     , appval.nBodyPart_LeftThight    , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_PELVIS         , appval.nBodyPart_Pelvis        , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_TORSO          , appval.nBodyPart_Torso         , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_BELT           , appval.nBodyPart_Belt          , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_NECK           , appval.nBodyPart_Neck          , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM  , appval.nBodyPart_RightForearm  , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM   , appval.nBodyPart_LeftForearm   , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP    , appval.nBodyPart_RightBicep    , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP     , appval.nBodyPart_LeftBicep     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER , appval.nBodyPart_RightShoulder , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER  , appval.nBodyPart_LeftShoulder  , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND     , appval.nBodyPart_RightHand     , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_LEFT_HAND      , appval.nBodyPart_LeftHand      , oTarget);
-	SetCreatureBodyPart(CREATURE_PART_HEAD           , appval.nBodyPart_Head          , oTarget);
+	// Body parts - Delayed, since it seems not delaying this makes the body part setting fail, instead resulting in no visible
+	// parts. Some interaction with SetCreatureAppearance(), maybe?
+	// Applies to NWN1 1.68. Kudos to Primogenitor for originally figuring this out - Ornedan
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT     , appval.nBodyPart_RightFoot     , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT      , appval.nBodyPart_LeftFoot      , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN     , appval.nBodyPart_RightShin     , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_SHIN      , appval.nBodyPart_LeftShin      , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_THIGH    , appval.nBodyPart_RightThigh    , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_THIGH     , appval.nBodyPart_LeftThight    , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_PELVIS         , appval.nBodyPart_Pelvis        , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_TORSO          , appval.nBodyPart_Torso         , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_BELT           , appval.nBodyPart_Belt          , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_NECK           , appval.nBodyPart_Neck          , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_FOREARM  , appval.nBodyPart_RightForearm  , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_FOREARM   , appval.nBodyPart_LeftForearm   , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP    , appval.nBodyPart_RightBicep    , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_BICEP     , appval.nBodyPart_LeftBicep     , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_SHOULDER , appval.nBodyPart_RightShoulder , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_SHOULDER  , appval.nBodyPart_LeftShoulder  , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND     , appval.nBodyPart_RightHand     , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_HAND      , appval.nBodyPart_LeftHand      , oTarget));
+	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_HEAD           , appval.nBodyPart_Head          , oTarget));
 	// Wings
 	SetCreatureWingType(appval.nWingType, oTarget);
 	// Tail

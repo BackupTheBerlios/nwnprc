@@ -1220,15 +1220,36 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
     //-----------------------------------------------------------------------
     // The variable tells that the new form is unable to cast spells (very inaccurate, determined by racial type)
     // with somatic or vocal components and is lacking Natural Spell feat
-    if(nContinue                                                             && // Any point to checking this?
-       GetLocalInt(oCaster, "PRC_Shifting_RestrictSpells")                   && // See if the restriction might apply
-       ((FindSubString(sComponent, "V") != -1 && (PRCGetMetaMagicFeat() & METAMAGIC_SILENT)) || // Vocal component and no silent metamagic
-        (FindSubString(sComponent, "S") != -1 && (PRCGetMetaMagicFeat() & METAMAGIC_STILL))     // Somatic component and no still metamagic
-        )
+    if(nContinue                                           && // Any point to checking this?
+       GetLocalInt(oCaster, "PRC_Shifting_RestrictSpells")    // See if the restriction might apply
        )
     {
-        FloatingTextStrRefOnCreature(16828386, oCaster, FALSE); // "Your spell failed due to being in a form that prevented either a somatic or a vocal component from being used"
-        nContinue = FALSE;
+        int bDisrupted  = FALSE;
+        int nSpellLevel = StringToInt(Get2DACache("spells", "Innate", nSpellID));
+
+        // Somatic component and no silent meta or high enough auto-still
+        if((FindSubString(sComponent, "S") != -1)                                       &&
+           !(PRCGetMetaMagicFeat() & METAMAGIC_STILL)                                   &&
+           !(GetHasFeat(FEAT_EPIC_AUTOMATIC_STILL_SPELL_3, oCaster)                       ||
+             (nSpellLevel <= 6 && GetHasFeat(FEAT_EPIC_AUTOMATIC_STILL_SPELL_2, oCaster)) ||
+             (nSpellLevel <= 3 && GetHasFeat(FEAT_EPIC_AUTOMATIC_STILL_SPELL_1, oCaster))
+             )
+           )
+            bDisrupted = TRUE;
+        // Vocal component and no silent meta or high enough auto-silent
+        if((FindSubString(sComponent, "V") != -1)                                        &&
+           !(PRCGetMetaMagicFeat() & METAMAGIC_SILENT)                                   &&
+           !(GetHasFeat(FEAT_EPIC_AUTOMATIC_SILENT_SPELL_3, oCaster)                       ||
+             (nSpellLevel <= 6 && GetHasFeat(FEAT_EPIC_AUTOMATIC_SILENT_SPELL_2, oCaster)) ||
+             (nSpellLevel <= 3 && GetHasFeat(FEAT_EPIC_AUTOMATIC_SILENT_SPELL_1, oCaster))
+             )
+           )
+            bDisrupted = TRUE;
+        if(bDisrupted)
+        {
+            FloatingTextStrRefOnCreature(16828386, oCaster, FALSE); // "Your spell failed due to being in a form that prevented either a somatic or a vocal component from being used"
+            nContinue = FALSE;
+        }
     }
 
     //Cleaning spell variables used for holding the charge
@@ -1250,4 +1271,4 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
 
 
 // Test main
-//svoid main(){}
+//void main(){}

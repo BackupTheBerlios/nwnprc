@@ -50,6 +50,9 @@ void DoClassesLoop();
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
 
+// stores the feats found in cls_feat_***.2da in the feat array on the PC
+void AddClassFeats(int nClass);
+
 /* function definitions */
 
 int DoLetoscriptTest(object oPC)
@@ -364,35 +367,52 @@ void DoClassesLoop()
     PRC_SQLExecDirect(sSQL);
     // to keep track of where in the 25 rows we stop getting a result
     int nCounter = 0;
-    string sReqType, sParam1, sParam2;
+    int nClass;
+    string sPreReq, sReqType, sParam1, sParam2;
     // this needs storing in a temp array because the 2da cache retrieval will clear
     // the query above if both steps are done in the same loop
-    // hmmm...unless...LEFT JOIN...
+    // two parallel arrays as there's no struct arrays
+    array_create(OBJECT_SELF, "temp_classes");
+    array_create(OBJECT_SELF, "temp_class_prereq");
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
         nCounter++;
-        int nClass = StringToInt(PRC_SQLGetData(1)); // rowid
+        nClass = StringToInt(PRC_SQLGetData(1)); // rowid
+        array_set_int(OBJECT_SELF, "temp_classes", array_get_size(OBJECT_SELF, "temp_classes"), nClass);
+        sPreReq = PRC_SQLGetData(2); // PreReq tablename
+        array_set_string(OBJECT_SELF, "temp_class_prereq", array_get_size(OBJECT_SELF, "temp_class_prereq"), sPreReq);
+
+    }
+    
+    // loop through the temp array to check for banned classes
+    int i;
+    for (i=0; i < array_get_size(OBJECT_SELF, "temp_classes"); i++)
+    {
+        nClass = array_get_int(OBJECT_SELF, "temp_classes", i); // class
+        sPreReq = array_get_string(OBJECT_SELF, "temp_class_prereq", i); // prereq table name
+        int j = 0;
         // check if this base class is allowed
-        string sPreReq = PRC_SQLGetData(2); // PreReq tablename
-        int i = 0;
         do
         {
-            sReqType = Get2DACache(sPreReq, "ReqType", i);
+            sReqType = Get2DACache(sPreReq, "ReqType", j);
             if (sReqType == "VAR") // if we've found the class allowed variable
             {
-                sParam1 = Get2DACache(sPreReq, "ReqParam1", i);
+                sParam1 = Get2DACache(sPreReq, "ReqParam1", j);
                 if(!GetLocalInt(OBJECT_SELF, sParam1)) // if the class is allowed
                 {
-                    // adds the class tot he choice list
+                    // adds the class to the choice list
                     string sName = GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)));
                     AddChoice(sName, nClass);
                 }
             } // end of if (sReqType == "VAR")
-            i++;
+            j++;
             
         } while (sReqType != "VAR"); // terminates as soon as we get the allowed variable
-
-    } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        
+    } // end of for loop
+    // clean up
+    array_delete(OBJECT_SELF, "temp_classes");
+    array_delete(OBJECT_SELF, "temp_class_prereq");
     
     // IF there were 25 rows, carry on
     if(nCounter == 25)
@@ -427,5 +447,22 @@ void AddRaceFeats(int nRace)
             StringToInt(sFeat));
         i++;
         sFeat = Get2DACache(sFile, "FeatIndex", i);
+    }
+}
+
+void AddClassFeats(int nClass)
+{
+    // gets which class_feat_***.2da to use
+    string sFile = GetStringLowerCase(Get2DACache("classes", "FeatsTable", nClass));
+    int i = 0;
+    // Feats array should already exist, but check anyway
+    int nArraySize = array_get_size(OBJECT_SELF, "Feats")
+    if (nArraySize) // if there's stuff in there already
+    {
+        
+    }
+    else // no feat array - screw up
+    {
+        /* TODO - start again */
     }
 }

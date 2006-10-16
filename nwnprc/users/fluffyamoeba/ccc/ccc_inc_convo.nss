@@ -76,6 +76,18 @@ void DoHeaderAndChoices(int nStage)
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;
+        case STAGE_CLASS_CHECK:
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            sText += GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", GetLocalInt(OBJECT_SELF, "Class"))));
+            sText += "\n";
+            sText+= GetStringByStrRef(StringToInt(Get2DACache("classes", "Description", GetLocalInt(OBJECT_SELF, "Class"))));
+            sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
     }
 }
 
@@ -130,6 +142,25 @@ int HandleChoice(int nStage, int nChoice)
                 MarkStageNotSetUp(STAGE_RACE_CHECK, OBJECT_SELF);
                 MarkStageNotSetUp(STAGE_RACE, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Race");
+            }
+            break;
+        case STAGE_CLASS:
+            SetLocalInt(OBJECT_SELF, "Class", GetChoice(OBJECT_SELF);
+            nStage++;
+            break;
+        case STAGE_CLASS_CHECK:
+            if(nChoice == 1)
+            {
+                nStage++;
+                // add class feats
+                AddClassFeats(GetLocalInt(OBJECT_SELF, "Class");
+            }
+            else // go back and pick class
+            {
+                nStage = STAGE_CLASS;
+                MarkStageNotSetUp(STAGE_CLASS_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_CLASS, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Class");
             }
             break;
     }

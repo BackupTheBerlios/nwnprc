@@ -4,7 +4,7 @@
 //:://////////////////////////////////////////////
 /**@file Shocking Grasp
 Evocation [Electricity]
-Level: 	Sor/Wiz 1
+Level: 	Sor/Wiz 1, Duskblade 1
 Components: 	V, S
 Casting Time: 	1 standard action
 Range: 	Touch
@@ -23,7 +23,7 @@ of electricity damage per caster level (maximum 5d6).
 //::////////////////////////////////////////////////
 
 
-/*
+/*3055
 <BEGIN NOTES TO SCRIPTER - MAY BE DELETED LATER>
 Modify as necessary
 Most code should be put in DoSpell()

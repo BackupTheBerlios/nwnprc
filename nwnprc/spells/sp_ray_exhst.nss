@@ -4,7 +4,7 @@
 //:://////////////////////////////////////////////
 /**@file Ray of Exhaustion
 Necromancy
-Level: 	Sor/Wiz 3
+Level: 	Sor/Wiz 3, Duskblade 3
 Components: 	V, S, M
 Casting Time: 	1 standard action
 Range: 	Close (25 ft. + 5 ft./2 levels)

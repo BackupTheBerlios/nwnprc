@@ -2,9 +2,9 @@
 //:: Name      Scorching Ray
 //:: FileName  sp_scorch_ray.nss
 //:://////////////////////////////////////////////
-/**@fileScorching Ray
+/**@file Scorching Ray
 Evocation [Fire]
-Level: 	Sor/Wiz 2
+Level: 	Sor/Wiz 2, Duskblade 2
 Components: 	V, S
 Casting Time: 	1 standard action
 Range: 	Close (25 ft. + 5 ft./2 levels)

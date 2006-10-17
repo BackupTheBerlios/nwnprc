@@ -1,38 +1,53 @@
-//mimic shifter class feat script
+//:://////////////////////////////////////////////
+//:: Shifter - Greater Wildshape use
+//:: pnp_shft_gwshape
+//:://////////////////////////////////////////////
+/** @file
+    Targets some creature to have it be stored
+    as a known template and attempts to shift
+    into it.
 
-#include "prc_alterations"
+
+    @author Shane Hennessy
+    @date   Modified - 2006.10.08 - rewritten by Ornedan
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+#include "prc_inc_shifting"
+
 
 void main()
 {
-	StoreAppearance(OBJECT_SELF);
-	if (CanShift(OBJECT_SELF))
-	{
-		object oTarget = GetSpellTargetObject();
-		if (GetValidShift(OBJECT_SELF,oTarget))
-		{
-			SetShift(OBJECT_SELF,oTarget);
-			RecognizeCreature( OBJECT_SELF, GetResRef(oTarget), GetName(oTarget) ); //recognize now takes the name of oTarget as well as the resref
-			if (!GetHasFeat(FEAT_PRESTIGE_SHIFTER_GWSHAPE_1, OBJECT_SELF))  //if your out of GWS
-			{
-				if (GetHasFeat(FEAT_WILD_SHAPE, OBJECT_SELF)) //and you have DWS left
-				{
-					if(GetLocalInt(OBJECT_SELF, "DWS") == 1) //and you wont to change then over to GWS
-					{
-						IncrementRemainingFeatUses(OBJECT_SELF,FEAT_PRESTIGE_SHIFTER_GWSHAPE_1); // +1 GWS
-						DecrementRemainingFeatUses(OBJECT_SELF,FEAT_WILD_SHAPE); //-1 DWS
-					}
-				}
-			}
-		}
-		else
-			IncrementRemainingFeatUses(OBJECT_SELF,FEAT_PRESTIGE_SHIFTER_GWSHAPE_1); // only uses a feat if they shift
-	}
-	else
-	{
-		IncrementRemainingFeatUses(OBJECT_SELF,FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1); // only uses a feat if they shift
-	}
+    object oPC     = OBJECT_SELF;
+    object oTarget = PRCGetSpellTargetObject();
 
+    // Store the PC's current appearance as true appearance
+    /// @note This may be a bad idea, we have no way of knowing if the current appearance really is the "true appearance" - Ornedan
+    StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
+
+    // See if the creature is shiftable to. If so, store it as a template and shift
+    if(GetCanShiftIntoCreature(oPC, SHIFTER_TYPE_SHIFTER, oTarget))
+    {
+        StoreShiftingTemplate(oPC, SHIFTER_TYPE_SHIFTER, oTarget);
+
+        // If we reached 0 Greater Wildshape uses, see if we could pay with Druid Wildshape uses instead
+        if(!GetHasFeat(FEAT_PRESTIGE_SHIFTER_GWSHAPE_1, oPC)    &&
+           GetPersistantLocalInt(oPC, "PRC_Shifter_UseDruidWS") &&
+           GetHasFeat(FEAT_WILD_SHAPE, oPC)
+           )
+        {
+            IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
+            DecrementRemainingFeatUses(oPC, FEAT_WILD_SHAPE);
+        }
+
+        // Start shifting. If this fails immediately, refund the shifting use
+        if(!ShiftIntoCreature(oPC, SHIFTER_TYPE_SHIFTER, oTarget, FALSE))
+        {
+            IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
+        }
+    }
+    // Couldn't shift, refund the feat use
+    else
+        IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
 }
-
-
-

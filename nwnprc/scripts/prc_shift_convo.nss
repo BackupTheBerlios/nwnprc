@@ -6,8 +6,6 @@
     PnP Shifter shifting & shifting options management
     conversation script.
 
-    @todo Externalise spoken strings
-
 
     @author Ornedan
     @date   Created  - 2006.03.01
@@ -30,6 +28,7 @@ const int STAGE_DELETESHAPE             = 3;
 const int STAGE_SETTINGS                = 4;
 const int STAGE_SELECTQUICKSHIFTTYPE    = 5;
 const int STAGE_SELECTQUICKSHIFTSHAPE   = 6;
+const int STAGE_COULDNTSHIFT            = 7;
 
 
 const int CHOICE_CHANGESHAPE            = 1;
@@ -39,12 +38,13 @@ const int CHOICE_DELETESHAPE            = 6;
 const int CHOICE_SETTINGS               = 7;
 
 const int CHOICE_DRUIDWS                = 1;
+const int CHOICE_STORE_TRUEAPPEARANCE   = 2;
 
 const int CHOICE_NORMAL                 = 1;
 const int CHOICE_EPIC                   = 2;
 
-const int CHOICE_BACK_TO_MAIN = -1;
-const int STRREF_BACK_TO_MAIN = 16824794;  // "Back to main menu"
+const int CHOICE_BACK_TO_MAIN           = -1;
+const int STRREF_BACK_TO_MAIN           = 16824794; // "Back to main menu"
 
 const string EPICVAR        = "PRC_ShiftConvo_Epic";
 const string QSMODIFYVAR    = "PRC_ShiftConvo_QSToModify";
@@ -99,32 +99,38 @@ void main()
             // Function AddChoice to add a response option for the PC. The responses are show in order added
             if(nStage == STAGE_ENTRY)
             {
-                // Set the header
-                SetHeader("Shifter options:");
-                // Add responses for the PC
-                AddChoice("Change shape",                                     CHOICE_CHANGESHAPE,      oPC);
-                if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) >= 10)
-                    AddChoice("Change shape (epic)",                          CHOICE_CHANGESHAPE_EPIC, oPC);
-                AddChoice("View / Assign shapes to your 'Quick Shift Slots'", CHOICE_LISTQUICKSHIFTS,  oPC);
-                AddChoice("Delete shapes you do not want anymore",            CHOICE_DELETESHAPE,      oPC);
-                AddChoice("Special settings",                                 CHOICE_SETTINGS,         oPC);
+                SetHeader(GetStringByStrRef(16824364) + " :"); // "Shifter Options :"
+
+
+                AddChoiceStrRef(16828366,     CHOICE_CHANGESHAPE,      oPC); // "Change shape"
+                if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) > 10) // Show the epic shift choice only if the character could use it
+                    AddChoiceStrRef(16828367, CHOICE_CHANGESHAPE_EPIC, oPC); // "Change shape (epic)"
+                AddChoiceStrRef(16828368,     CHOICE_LISTQUICKSHIFTS,  oPC); // "View / Assign shapes to your 'Quick Shift Slots'"
+                AddChoiceStrRef(16828369,     CHOICE_DELETESHAPE,      oPC); // "Delete shapes you do not want anymore"
+                AddChoiceStrRef(16828370,     CHOICE_SETTINGS,         oPC); // "Special settings"
 
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens();          // Set the next, previous, exit and wait tokens to default values
             }
             else if(nStage == STAGE_CHANGESHAPE)
             {
-                SetHeader(GetLocalInt(oPC, EPICVAR) ?
-                          "Select epic shape to become" :
-                          "Select shape to become"
+                SetHeaderStrRef(GetLocalInt(oPC, EPICVAR) ?
+                          16828371 : // "Select epic shape to become"
+                          16828372   // "Select shape to become"
                           );
 
                 // The list may be long, so list the back choice first
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
                 GenerateShapeList(oPC);
 
                 MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_COULDNTSHIFT)
+            {
+                SetHeaderStrRef(16828373); // "You didn't have (Epic) Greater Wildshape uses available."
+
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
             }
             else if(nStage == STAGE_LISTQUICKSHIFTS)
             {
@@ -132,35 +138,35 @@ void main()
 
                 int i;
                 for(i = 1; i <= 10; i++)
-                    AddChoice("Quick Shift Slot" + " " + IntToString(i) + " - "
-                            + (GetLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(i) + "_ResRef") != "" ?
-                               GetLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(i) + "_Name") :
+                    AddChoice(GetStringByStrRef(16828374) + " " + IntToString(i) + " - " // "Quick Shift Slot N - "
+                            + (GetPersistantLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(i) + "_ResRef") != "" ?
+                               GetPersistantLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(i) + "_Name") :
                                GetStringByStrRef(16825282) // "Blank"
                                ),
                               i, oPC);
 
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_SELECTQUICKSHIFTTYPE)
             {
-                SetHeader("Select whether you want this 'Quick Shift Slot' to use a normal shift or an epic shift.");
+                SetHeaderStrRef(16828375); // "Select whether you want this 'Quick Shift Slot' to use a normal shift or an epic shift."
 
-                AddChoice("Normal", CHOICE_NORMAL, oPC);
-                AddChoice("Epic",   CHOICE_EPIC,   oPC);
+                AddChoiceStrRef(66788, CHOICE_NORMAL, oPC); // "Normal"
+                AddChoiceStrRef(83333, CHOICE_EPIC,   oPC); // "Epic"
 
                 MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_SELECTQUICKSHIFTSHAPE)
             {
-                SetHeader(GetLocalInt(oPC, EPICVAR) ?
-                          "Select epic shape to store" :
-                          "Select shape to store"
-                          );
+                SetHeaderStrRef(GetLocalInt(oPC, EPICVAR) ?
+                                16828376 : // "Select epic shape to store"
+                                16828377   // "Select shape to store"
+                                );
 
                 // The list may be long, so list the back choice first
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
                 GenerateShapeList(oPC);
 
@@ -168,10 +174,10 @@ void main()
             }
             else if(nStage == STAGE_DELETESHAPE)
             {
-                SetHeader("Select shape to delete.\nNote that if the shape is stored in any quickslots, the shape will still remain in those until you change their contents.");
+                SetHeaderStrRef(16828378); // "Select shape to delete.\nNote that if the shape is stored in any quickslots, the shape will still remain in those until you change their contents."
 
                 // The list may be long, so list the back choice first
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
                 GenerateShapeList(oPC);
 
@@ -179,17 +185,17 @@ void main()
             }
             else if(nStage == STAGE_SETTINGS)
             {
-                SetHeader("Select special setting to alter.");
+                SetHeaderStrRef(16828384); // "Select special setting to alter."
 
-                AddChoice("Toggle using Druid Wildshape uses for Shifter Greater Wildshape when out of GWS uses. Current state: "
-                        + (GetLocalInt(oPC, "PRC_Shifter_UseDruidWS") ?
-                           "On" :
-                           "Off"
+                AddChoice(GetStringByStrRef(16828379) // "Toggle using Druid Wildshape uses for Shifter Greater Wildshape when out of GWS uses. Current state: "
+                        + (GetPersistantLocalInt(oPC, "PRC_Shifter_UseDruidWS") ?
+                           GetStringByStrRef(16828380) : // "On"
+                           GetStringByStrRef(16828381)   // "Off"
                            ),
                           CHOICE_DRUIDWS, oPC);
+                AddChoiceStrRef(16828385, CHOICE_STORE_TRUEAPPEARANCE, oPC); // "Store your current appearance as your true appearance (will not work if polymorphed or shifted)."
 
-
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_MAIN), CHOICE_BACK_TO_MAIN, oPC);
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -221,6 +227,7 @@ void main()
         // variable named nChoice is the value of the player's choice as stored when building the choice list
         // variable named nStage determines the current conversation node
         int nChoice = GetChoice(oPC);
+        ClearCurrentStage(oPC);
         if(nStage == STAGE_ENTRY)
         {
             switch(nChoice)
@@ -253,12 +260,74 @@ void main()
             // Something chosen to be shifted into
             else
             {
-                // Choice is index into the template list
-                ShiftIntoResRef(oPC, SHIFTER_TYPE_SHIFTER, GetStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice), GetLocalInt(oPC, EPICVAR));
+                // Make sure the character has uses left for shifting
+                int bPaid = FALSE;
+                if(!GetLocalInt(oPC, EPICVAR)) // Normal shapechange
+                {
+                    // First try paying using Greater Wildshape uses
+                    if(GetHasFeat(FEAT_PRESTIGE_SHIFTER_GWSHAPE_1, oPC))
+                    {
+                        DecrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
 
-                // The convo should end now
-                AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                        // If we would reach 0 uses this way, see if we could pay with Druid Wildshape uses instead
+                        if(!GetHasFeat(FEAT_PRESTIGE_SHIFTER_GWSHAPE_1, oPC)    &&
+                           GetPersistantLocalInt(oPC, "PRC_Shifter_UseDruidWS") &&
+                           GetHasFeat(FEAT_WILD_SHAPE, oPC)
+                           )
+                        {
+                            IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
+						    DecrementRemainingFeatUses(oPC, FEAT_WILD_SHAPE);
+                        }
+
+                        bPaid = TRUE;
+                    }
+                    // Otherwise try paying with Druid Wildshape uses
+                    else if(GetPersistantLocalInt(oPC, "PRC_Shifter_UseDruidWS") &&
+                            GetHasFeat(FEAT_WILD_SHAPE, oPC)
+                            )
+                    {
+					    DecrementRemainingFeatUses(oPC, FEAT_WILD_SHAPE);
+					    bPaid = TRUE;
+                    }
+                }
+                // Epic shift, uses Epic Greater Wildshape
+                else if(GetHasFeat(FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1, oPC))
+                {
+                    DecrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1);
+                    bPaid = TRUE;
+                }
+
+                // If the user could pay for the shifting, do it
+                if(bPaid)
+                {
+                    // Choice is index into the template list
+                    if(!ShiftIntoResRef(oPC, SHIFTER_TYPE_SHIFTER,
+                                        GetStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice),
+                                        GetLocalInt(oPC, EPICVAR)
+                                        )
+                       )
+                    {
+                        // In case of shifting failure, refund the shifting use
+                        if(GetLocalInt(oPC, EPICVAR))
+                            IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1);
+                        else
+                            IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
+                    }
+
+                    // The convo should end now
+                    AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                }
+                // Otherwise, move to nag at them about it
+                else
+                    nStage = STAGE_COULDNTSHIFT;
             }
+        }
+        else if(nStage == STAGE_COULDNTSHIFT)
+        {
+            // Clear the epicness variable and return to main menu
+            DeleteLocalInt(oPC, EPICVAR);
+
+            nStage = STAGE_ENTRY;
         }
         else if(nStage == STAGE_LISTQUICKSHIFTS)
         {
@@ -271,7 +340,7 @@ void main()
                 // Store the number of the slot to be modified
                 SetLocalInt(oPC, QSMODIFYVAR, nChoice);
                 // If the character is an epic shifter, they can select whether the quickselection is normal or epic shift
-                if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) >= 10)
+                if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) > 10)
                     nStage = STAGE_SELECTQUICKSHIFTTYPE;
                 else
                     nStage = STAGE_SELECTQUICKSHIFTSHAPE;
@@ -295,13 +364,15 @@ void main()
             {
                 // Store the chosen template into the quickslot, choice is the template's index in the main list
                 int nSlot = GetLocalInt(oPC, QSMODIFYVAR);
-                SetLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(nSlot) + "_ResRef",
-                               GetStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice)
-                               );
-                SetLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(nSlot) + "_Name",
-                               GetStoredTemplateName(oPC, SHIFTER_TYPE_SHIFTER, nChoice)
-                             + (GetLocalInt(oPC, EPICVAR) ? " (epic)" : "")
-                               );
+                int bEpic = GetLocalInt(oPC, EPICVAR);
+                SetPersistantLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(nSlot) + "_ResRef",
+                                         GetStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice)
+                                         );
+                SetPersistantLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(nSlot) + "_Name",
+                                         GetStoredTemplateName(oPC, SHIFTER_TYPE_SHIFTER, nChoice)
+                                       + (bEpic ? " (epic)" : "")
+                                         );
+                SetPersistantLocalInt(oPC, "PRC_Shifter_Quick_" + IntToString(nSlot) + "_Epic", bEpic);
 
                 // Clean up
                 DeleteLocalInt(oPC, EPICVAR);
@@ -331,7 +402,13 @@ void main()
             // Toggle using Druid Wildshape for Greater Wildshape
             else if(nChoice == CHOICE_DRUIDWS)
             {
-                SetLocalInt(oPC, "PRC_Shifter_UseDruidWS", !GetLocalInt(oPC, "PRC_Shifter_UseDruidWS"));
+                SetPersistantLocalInt(oPC, "PRC_Shifter_UseDruidWS", !GetPersistantLocalInt(oPC, "PRC_Shifter_UseDruidWS"));
+                nStage = STAGE_ENTRY;
+            }
+            else if(nChoice == CHOICE_STORE_TRUEAPPEARANCE)
+            {
+                // Probably should give feedback about whether this was successfull or not. Though the warning in the selection text could be enough
+                StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
                 nStage = STAGE_ENTRY;
             }
         }

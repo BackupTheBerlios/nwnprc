@@ -4,6 +4,7 @@
 #include "prc_inc_teleport"
 #include "prc_inc_leadersh"
 #include "prc_inc_domain"
+#include "prc_inc_shifting"
 #include "true_inc_trufunc"
 
 
@@ -30,7 +31,7 @@ void main()
     // cleared when the character is saved.
     else
         SetLocalInt(oPC, "PRC_ModuleOnEnterDone", TRUE);
-        
+
     //if server is loading, boot player
     if(GetLocalInt(GetModule(), PRC_PW_LOGON_DELAY+"_TIMER"))
     {
@@ -41,7 +42,7 @@ void main()
     // return here for DMs as they don't need all this stuff
     if(GetIsDM(oPC))
         return;
-    
+
     //do this first so other things dont interfere with it
     if(GetPRCSwitch(PRC_USE_LETOSCRIPT) && !GetIsDM(oPC))
         LetoPCEnter(oPC);
@@ -70,7 +71,7 @@ void main()
     ExecuteScript("prc_prereq", oPC);
     ExecuteScript("prc_psi_ppoints", oPC);
     DelayCommand(0.15, DeleteLocalInt(oPC,"ONENTER"));
-    
+
     //remove effects from hides, can stack otherwise
     effect eTest=GetFirstEffect(oPC);
 
@@ -86,14 +87,6 @@ void main()
             RemoveEffect(oPC, eTest);
         eTest=GetNextEffect(oPC);
    }
-
-    //Anti Forum Troll Code
-    //Thats right, the PRC now has grudges.
-    string sPlayerName = GetStringLowerCase(GetPCPlayerName(oPC));
-    if(sPlayerName == "archfiend")
-    {
-        BlackScreen(oPC);//cant see or do anything
-    }
 
 
     if(GetPRCSwitch(PRC_LETOSCRIPT_FIX_ABILITIES) && !GetIsDM(oPC))
@@ -114,12 +107,12 @@ void main()
     {
         struct time tTime = GetPersistantLocalTime(oPC, "persist_Time");
             //first pc logging on
-        if(GetIsObjectValid(GetFirstPC()) 
+        if(GetIsObjectValid(GetFirstPC())
             && !GetIsObjectValid(GetNextPC()))
         {
             SetTimeAndDate(tTime);
         }
-        RecalculateTime();              
+        RecalculateTime();
     }
     if(GetPRCSwitch(PRC_PW_LOCATION_TRACKING))
     {
@@ -222,11 +215,16 @@ void main()
     if(GetHasFeat(FEAT_SPELLFIRE_WIELDER, oPC) && GetThreadState("PRC_Spellfire", oPC) == THREAD_STATE_DEAD)
         SpawnNewThread("PRC_Spellfire", "prc_spellfire_hb", 6.0f, oPC);
 
-    //if the player logged off while being registered as a cohort    
+    //if the player logged off while being registered as a cohort
     if(GetPersistantLocalInt(oPC, "RegisteringAsCohort"))
         AssignCommand(GetModule(), CheckHB(oPC));
 
+    // If the PC logs in shifted, unshift them
+    if(GetPersistantLocalInt(oPC, SHIFTER_ISSHIFTED_MARKER))
+        UnShift(oPC);
+
     // Execute scripts hooked to this event for the player triggering it
     //How can this work? The PC isnt a valid object before this. - Primogenitor
+    //Some stuff may have gone "When this PC next logs in, run script X" - Ornedan
     ExecuteAllScriptsHookedToEvent(oPC, EVENT_ONCLIENTENTER);
 }

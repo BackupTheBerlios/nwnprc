@@ -1,84 +1,75 @@
-//::///////////////////////////////////////////////
-//:: Name        Shifter evaluation
-//:: FileName    prc_shifter.nss
-//:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
-/*
+//:: Shifter - Class evaluation
+//:: prc_shifter
+//:://////////////////////////////////////////////
+/** @file
+    Stores the PC's true form if it has not been
+    stored already.
+    Adds the default creatures to templates
+    known list.
 
+
+    @author Shane Hennessy
+    @date   Modified - 2006.10.08 - rewritten by Ornedan
 */
 //:://////////////////////////////////////////////
-//:: Created By: Shane Hennessy
-//:: Created On:
 //:://////////////////////////////////////////////
-// Fills in some default critters from the shifterlist.2da file
 
-// Called by the EvalPRC function
+#include "prc_inc_shifting"
 
-#include "prc_alterations"
+const string SHIFTER_DEFAULT_TEMPLATES = "shifterlist";
+
+void DelayedStoreTemplate(object oPC, location lSpawn, string sResRef)
+{
+    object oTemplate = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
+    StoreShiftingTemplate(oPC, SHIFTER_TYPE_SHIFTER, oTemplate);
+    DestroyObject(oTemplate, 0.5f);
+}
 
 void main()
 {
-    // being called by EvalPRCFeats
+    // Called from EvalPRCFeats(), so the PC is OBJECT_SELF
     object oPC = OBJECT_SELF;
 
-    int nShifterLevel = GetLevelByClass(CLASS_TYPE_PNP_SHIFTER,oPC);
+    // Store true form if not stored already. But not if affected by a polymorph effect
+    if(!GetPersistantLocalInt(oPC, SHIFTER_TRUEAPPEARANCE))
+        StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
 
-    object oHidePC = GetItemInSlot(INVENTORY_SLOT_CARMOUR,oPC);
-    if (!GetLocalInt(oPC,"SHIFTOnEnterHit") || !GetIsObjectValid(oHidePC))
+    // Variables for the default templates granting
+    int nShifterLevel = GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC);
+    int nGainedUpTo   = GetLocalInt(oPC, "PRC_Shifter_AutoGranted");
+    int nLevel, i     = 0;
+    string sLevel;
+    object oSpawnWP   = GetWaypointByTag(SHIFTING_TEMPLATE_WP_TAG);
+    object oTemplate;
+
+    // Paranoia check - the WP should be built into the area data of Limbo
+    if(!GetIsObjectValid(oSpawnWP))
     {
-
-        // If we are entering a module, we have been stripped of the skin
-        // and our powers are gone, shift back to true form so we dont confuse the player
-        if ( (GetTrueForm(oPC) != GetAppearanceType(oPC)) && !(GetLocalInt(oHidePC,"nPCShifted")) )
-        {
-			// added a check to see if the player is under a polymorph effect. if they are dont unshift
-			// if this script was not run when the player entered the server they may not get it until
-			// they try to use polymorph. if they do they would be auto unpolymorphed.
-			effect eEff = GetFirstEffect(oPC);
-			int iNoGo = FALSE;
-			while (GetIsEffectValid(eEff))
-			{
-				int eType = GetEffectType(eEff);
-				if (eType == EFFECT_TYPE_POLYMORPH)
-				{
-					iNoGo = TRUE;
-				}
-				eEff = GetNextEffect(oPC);
-			}
-			if (!iNoGo)
-				SetShiftTrueForm(oPC);
-        }
-		// Set a local on the pc so we dont have to do this more than once
-		SetLocalInt(oPC,"SHIFTOnEnterHit",1);
+        if(DEBUG) DoDebug("prc_shifter: ERROR: Template spawn waypoint does not exist.");
+        // Create the WP
+        oSpawnWP = CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, SHIFTING_TEMPLATE_WP_TAG);
     }
 
-    // Make sure we are not doing this io intesive loop more than once per level
-    if (nShifterLevel <= GetLocalInt(oPC,"ShifterDefaultListLevel"))
-		return;
+    // Get the WP's location
+    location lSpawn  = GetLocation(oSpawnWP);
 
-    string sShifterFile = "shifterlist";
-    string sCreatureResRef = "";
-    string sCreatureName = "";
-    string sShifterLevel = "0";
-    int i = 0;
-    int nShiftLevelFile = 0;
-
-    while(sShifterLevel != "")
+    // Check if there could be something in the 2da that could be granted, but hasn't been yet
+    if(nShifterLevel > nGainedUpTo)
     {
-        sShifterLevel = Get2DACache(sShifterFile,"SLEVEL",i);
-        nShiftLevelFile = StringToInt(sShifterLevel);
-        if ((nShiftLevelFile <= nShifterLevel) && (sShifterLevel != ""))
+        // The file ends at the first blank row
+        while((sLevel = Get2DACache(SHIFTER_DEFAULT_TEMPLATES, "SLEVEL", i)) != "")
         {
-			// The creature is a standard that we apply to the shifters spark of life list
-			sCreatureResRef = Get2DACache(sShifterFile,"CResRef",i);
-	        sCreatureName = Get2DACache(sShifterFile,"CreatureName",i);
-	        RecognizeCreature( oPC, sCreatureResRef, sCreatureName);
+            nLevel = StringToInt(sLevel);
+            if(nLevel <= nShifterLevel && nLevel > nGainedUpTo)
+            {
+                DelayCommand(0.01f * i, DelayedStoreTemplate(oPC, lSpawn, Get2DACache(SHIFTER_DEFAULT_TEMPLATES, "CResRef", i)));
+            }
+
+            i++;
         }
-		i++;
+
+        // Update the variable listing the highest level of autogranted templates
+        SetLocalInt(oPC, "PRC_Shifter_AutoGranted", nShifterLevel);
     }
-
-    // Set a local on the PC so we dont do this more than once per level
-    SetLocalInt(oPC,"ShifterDefaultListLevel",nShifterLevel);
-
-    return;
 }

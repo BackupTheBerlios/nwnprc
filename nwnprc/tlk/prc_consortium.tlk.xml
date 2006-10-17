@@ -19775,6 +19775,28 @@ You choose to follow the Order of the Gentle Rain, specializing in Water magic. 
   <entry id="51147" lang="en" sex="m">Type: Class
 Prerequisite: Shugenja level 1
 You choose to follow the Order of the Ineffable Mystery, leaving the choice of element to you. Shugenjas of this order are the most enigmatic and secretive of them all. Followers are known for protracted silence, evading direct questions, and speaking in riddles.</entry>
+  <entry id="51150" lang="en" sex="m">Change shape</entry>
+  <entry id="51151" lang="en" sex="m">Change shape (epic)</entry>
+  <entry id="51152" lang="en" sex="m">View / Assign shapes to your 'Quick Shift Slots'</entry>
+  <entry id="51153" lang="en" sex="m">Delete shapes you do not want anymore</entry>
+  <entry id="51154" lang="en" sex="m">Special settings</entry>
+  <entry id="51155" lang="en" sex="m">Select epic shape to become</entry>
+  <entry id="51156" lang="en" sex="m">Select shape to become</entry>
+  <entry id="51157" lang="en" sex="m">You didn't have (Epic) Greater Wildshape uses available.</entry>
+  <entry id="51158" lang="en" sex="m">Quick Shift Slot</entry>
+  <entry id="51159" lang="en" sex="m">Select whether you want this 'Quick Shift Slot' to use a normal shift or an epic shift.</entry>
+  <entry id="51160" lang="en" sex="m">Select epic shape to store</entry>
+  <entry id="51161" lang="en" sex="m">Select shape to store</entry>
+  <entry id="51162" lang="en" sex="m">Select shape to delete.
+Note that if the shape is stored in any quickslots, the shape will still remain in those until you change their contents.</entry>
+  <entry id="51163" lang="en" sex="m">Toggle using Druid Wildshape uses for Shifter Greater Wildshape when out of GWS uses. Current state: </entry>
+  <entry id="51164" lang="en" sex="m">On</entry>
+  <entry id="51165" lang="en" sex="m">Off</entry>
+  <entry id="51166" lang="en" sex="m">This Quick Shift Slot is empty!</entry>
+  <entry id="51167" lang="en" sex="m">Failed to return to true form!</entry>
+  <entry id="51168" lang="en" sex="m">Select special setting to alter.</entry>
+  <entry id="51169" lang="en" sex="m">Store your current appearance as your true appearance (will not work if polymorphed or shifted).</entry>
+  <entry id="51170" lang="en" sex="m">Your spell failed due to being in a form that prevented either a somatic or a vocal component from being used</entry>
   <entry id="51197" lang="en" sex="m">rends</entry>
   <entry id="51198" lang="en" sex="m">Two-Weapon Rend</entry>
   <entry id="51199" lang="en" sex="m">Type of Feat: Epic
@@ -30389,14 +30411,14 @@ Cleric of an evil deity     Caster Level   </entry>
   <entry id="54858" lang="en" sex="m">Sword of Conscience (7)</entry>
   <entry id="54859" lang="en" sex="m">Obscuring Mist</entry>
   <entry id="54860" lang="en" sex="m">Conjuration (Creation)
-Level: 	Air 1, Clr 1, Drd 1, Sor/Wiz 1, Water 1
-Components: 	V, S
-Casting Time: 	1 standard action
-Range: 	20 ft.
-Effect: 	Cloud spreads in 20-ft. radius from you, 20 ft. high
-Duration: 	1 min./level
-Saving Throw: 	None
-Spell Resistance: 	No
+Level: Air 1, Clr 1, Drd 1, Sor/Wiz 1, Water 1
+Components: V, S
+Casting Time: 1 standard action
+Range: 20 ft.
+Effect: Cloud spreads in 20-ft. radius from you, 20 ft. high
+Duration: 1 min./level
+Saving Throw: None
+Spell Resistance: No
 
 A misty vapor arises around you. It is stationary once created. The vapor obscures all sight, including darkvision, beyond 5 feet. A creature 5 feet away has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50% miss chance, and the attacker cannot use sight to locate the target).
 

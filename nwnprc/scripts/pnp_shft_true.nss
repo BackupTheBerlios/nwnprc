@@ -1,19 +1,27 @@
-//true form shifter class feat script
-#include "prc_alterations"
+//:://////////////////////////////////////////////
+//:: Shifter - return to true form
+//:: pnp_shft_true
+//:://////////////////////////////////////////////
+/** @file
+    Undoes any shifting that the character may
+    have undergone. Also removes any polymorph
+    effects.
+
+
+    @author Shane Hennessy
+    @date   Modified - 2006.10.08 - rewritten by Ornedan
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
+#include "prc_inc_shifting"
+
 
 void main()
 {
-    if (CanShift(OBJECT_SELF))
-    {
-        //unshift
-        SetShiftTrueForm(OBJECT_SELF);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_POLYMORPH),OBJECT_SELF);
+    object oPC = OBJECT_SELF;
 
-        // Reset any PRC feats that might have been lost from the shift
-        DelayCommand(1.0, EvalPRCFeats(OBJECT_SELF));
-        //clean up
-        DeleteLocalInt(OBJECT_SELF, "shifting");
-        //DelayCommand(1.5, ClearShifterItems(OBJECT_SELF));
-    }
-
+    // Attempt to unshift and if it fails, inform the user with a message so they don't wonder whether something is happening or not
+    if(UnShift(oPC, TRUE) == UNSHIFT_FAIL)
+        FloatingTextStrRefOnCreature(16828383, oPC, FALSE); // "Failed to return to true form!"
 }

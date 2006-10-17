@@ -15,7 +15,7 @@ void DoHeaderAndChoices(int nStage)
     int i = 0; // loop counter
     switch(nStage)
     {
-        case STAGE_INTRODUCTION:
+        case STAGE_INTRODUCTION: {
             sText = "This is the Conversation Character Creator (CCC) by Primogenitor.\n";
             sText+= "This is a replicate of the bioware character creator, but it will allow you to select custom content at level 1.\n";
             sText+= "Simply follow the step by step instructions and select what you want. ";
@@ -25,16 +25,16 @@ void DoHeaderAndChoices(int nStage)
             AddChoice("continue", 0);
             MarkStageSetUp(nStage);
             break;
-            
-        case STAGE_GENDER:
+        }
+        case STAGE_GENDER: {
             sText = GetStringByStrRef(158);
             SetHeader(sText);
             // set up the choices
             Do2daLoop("gender", "NAME", GetPRCSwitch(FILE_END_GENDER));
             MarkStageSetUp(nStage);
             break;
-            
-        case STAGE_GENDER_CHECK:
+        }
+        case STAGE_GENDER_CHECK: {
             sText = GetStringByStrRef(16824209) + " "; // You have selected:
             sText+= GetStringByStrRef(StringToInt(Get2DACache("gender", "NAME", GetLocalInt(OBJECT_SELF, "Gender"))));
             sText+= "\n"+GetStringByStrRef(16824210);
@@ -44,7 +44,8 @@ void DoHeaderAndChoices(int nStage)
             AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
-        case STAGE_RACE:
+        }
+        case STAGE_RACE: {
             sText = GetStringByStrRef(162); // Select a Race for your Character
             SetHeader(sText);
             // set up choices
@@ -54,7 +55,8 @@ void DoHeaderAndChoices(int nStage)
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;
-        case STAGE_RACE_CHECK:
+        }
+        case STAGE_RACE_CHECK: {
             sText = GetStringByStrRef(16824209) + " "; // You have selected:
             sText += GetStringByStrRef(StringToInt(Get2DACache("racialtypes", "Name", GetLocalInt(OBJECT_SELF, "Race"))));
             sText += "\n";
@@ -66,7 +68,8 @@ void DoHeaderAndChoices(int nStage)
             AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
-        case STAGE_CLASS:
+        }
+        case STAGE_CLASS: {
             sText = GetStringByStrRef(61920); // Select a Class for Your Character
             SetHeader(sText);
             // set up choices
@@ -76,7 +79,8 @@ void DoHeaderAndChoices(int nStage)
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;
-        case STAGE_CLASS_CHECK:
+        }
+        case STAGE_CLASS_CHECK: {
             sText = GetStringByStrRef(16824209) + " "; // You have selected:
             sText += GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", GetLocalInt(OBJECT_SELF, "Class"))));
             sText += "\n";
@@ -88,7 +92,8 @@ void DoHeaderAndChoices(int nStage)
             AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
-        case STAGE_ALIGNMENT:
+        }
+        case STAGE_ALIGNMENT: {
             sText = GetStringByStrRef(111); // Select an Alignment for your Character
             SetHeader(sText);
             // get the restriction info from classes.2da
@@ -119,7 +124,8 @@ void DoHeaderAndChoices(int nStage)
             DelayCommand(0.01, DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting"));
             MarkStageSetUp(nStage);
             break;
-        case STAGE_ALIGNMENT_CHECK:
+        }
+        case STAGE_ALIGNMENT_CHECK: {
             DoDebug(IntToString(nStage));
             sText = GetStringByStrRef(16824209) + " "; // You have selected:
             int nStrRef = GetLocalInt(OBJECT_SELF, "AlignChoice"); // strref for the alignment
@@ -137,8 +143,9 @@ void DoHeaderAndChoices(int nStage)
             MarkStageSetUp(nStage);
             DoDebug("4");
             break;
+        }
         default:
-            DoDebug("Huh?");
+            DoDebug("ccc_inc_convo: DoHeaderAndChoices(): Unknown nStage value: " + IntToString(nStage));
     }
 }
 
@@ -149,12 +156,12 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_INTRODUCTION:
             nStage++;
             break;
-            
+
         case STAGE_GENDER:
             SetLocalInt(OBJECT_SELF, "Gender", nChoice);
             nStage++;
             break;
-            
+
         case STAGE_GENDER_CHECK:
             if(nChoice == 1)
                 nStage++;

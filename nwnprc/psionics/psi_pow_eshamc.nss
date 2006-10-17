@@ -51,11 +51,11 @@ void main()
     object oTarget = GetFirstInPersistentObject(oAoE, OBJECT_TYPE_CREATURE);
     while(GetIsObjectValid(oTarget))
     {
-        // Let the AI know
-        SPRaiseSpellCastAt(oTarget, TRUE, POWER_ECTOSHAMBLER, oCreator);
 
     	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
     	{
+		// Let the AI know
+        	SPRaiseSpellCastAt(oTarget, TRUE, POWER_ECTOSHAMBLER, oCreator);
         	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDamage, oTarget);
         }
 

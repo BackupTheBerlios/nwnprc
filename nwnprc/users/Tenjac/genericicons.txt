@@ -1,0 +1,7 @@
+is_abjure
+is_conjure
+is_divine
+is_evoke
+is_enchant
+is_necromancy
+is_transmut

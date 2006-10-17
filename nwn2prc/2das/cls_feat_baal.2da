@@ -1,0 +1,22 @@
+2DA V2.0
+
+   FeatLabel                        FeatIndex List GrantedOnLevel OnMenu 
+0  ArmProfLgt                       3         3    1              0      
+1  WeapProfSim                      46        3    1              0      
+2  WeapProfMar                      45        3    1              0      
+3  FEAT_KING_LIES                   6408      3    10             0      
+4  FEAT_TONGUE_DEVIL                6409      3    1              0      
+5  FEAT_SUGGESTION                  6410      3    3              1      
+6  FEAT_SUMMON_OSYLUTH              6411      3    4              1      
+7  FEAT_INSECT_PLAGUE               6412      3    6              1      
+8  FEAT_SUMMON_CORNUGON             6413      3    9              1      
+9  FEAT_BEGUILEING_NATURE           6414      3    7              1      
+10 FEAT_BLACKGUARD_SNEAK_ATTACK_1D6 460       3    2              0      
+11 FEAT_BLACKGUARD_SNEAK_ATTACK_2D6 461       3    5              0      
+12 FEAT_BLACKGUARD_SNEAK_ATTACK_3D6 462       3    8              0      
+13 WeapProfEx                       44        0    -1             0      
+14 FEAT_EPIC_BLINDING_SPEED         491       0    -1             1      
+15 DefArrow                         8         0    -1             0      
+16 TwoWeap                          41        0    -1             0      
+17 Ambidex                          1         0    -1             0      
+18 FEAT_LINGERING_DAMAGE            3099      0    -1             0      

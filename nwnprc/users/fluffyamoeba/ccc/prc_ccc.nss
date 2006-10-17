@@ -94,8 +94,9 @@ void main()
     else // in convo
     {
         /* dynamic convo from here*/
-        
-    
+        // double check it's a PC
+        if(!GetIsPC(oPC) || GetIsDM(oPC) || !GetPRCSwitch(PRC_CONVOCC_ENABLE))
+            return;
         // The stage is used to determine the active conversation node.
         // 0 is the entry node.
         int nStage = GetStage(oPC);
@@ -129,7 +130,10 @@ void main()
                 // for the current conversation node
                 if(DEBUG) DoDebug("prc_ccc: Stage was not already set up");
                 /* TODO - function*/
+                DoDebug("Pass to DoHeaderAndChoices(): " + IntToString(nStage));
+                   // SpawnScriptDebugger();
                 DoHeaderAndChoices(nStage);
+                DoDebug("DoHeaderAndChoices() finished");
             }
     
             // Do token setup
@@ -169,7 +173,9 @@ void main()
             int nChoice = GetChoice(oPC);
             
             // get nStage back so SetStage() actually changes the stage
+            DoDebug("nStage before HandleChoice: " + IntToString(nStage));
             nStage = HandleChoice(nStage, nChoice);
+            DoDebug("nStage after HandleChoice: " + IntToString(nStage));
     
             // Store the stage value. If it has been changed, this clears out the choices
             SetStage(nStage, oPC);

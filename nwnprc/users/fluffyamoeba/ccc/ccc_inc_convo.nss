@@ -88,6 +88,57 @@ void DoHeaderAndChoices(int nStage)
             AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
+        case STAGE_ALIGNMENT:
+            sText = GetStringByStrRef(111); // Select an Alignment for your Character
+            SetHeader(sText);
+            // get the restriction info from classes.2da
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            int nClass = GetLocalInt(OBJECT_SELF, "Class");
+            int iAlignRestrict = HexToInt(Get2DACache("classes", "AlignRestrict",nClass));
+            int iAlignRstrctType = HexToInt(Get2DACache("classes", "AlignRstrctType",nClass));
+            int iInvertRestrict = HexToInt(Get2DACache("classes", "InvertRestrict",nClass));
+            // set up choices
+            if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_GOOD,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(112), 112);
+            if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_GOOD,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(115), 115);
+            if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_GOOD,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(118), 118);
+            if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_NEUTRAL,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(113), 113);
+            if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_NEUTRAL,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(116), 116);
+            if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_NEUTRAL,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(119), 119);
+            if(GetIsValidAlignment(ALIGNMENT_LAWFUL, ALIGNMENT_EVIL,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(114), 114);
+            if(GetIsValidAlignment(ALIGNMENT_NEUTRAL, ALIGNMENT_EVIL,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(117), 117);
+            if(GetIsValidAlignment(ALIGNMENT_CHAOTIC, ALIGNMENT_EVIL,iAlignRestrict, iAlignRstrctType, iInvertRestrict))
+                AddChoice(GetStringByStrRef(120), 120);
+            DelayCommand(0.01, DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting"));
+            MarkStageSetUp(nStage);
+            break;
+        case STAGE_ALIGNMENT_CHECK:
+            DoDebug(IntToString(nStage));
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            int nStrRef = GetLocalInt(OBJECT_SELF, "AlignChoice"); // strref for the alignment
+            sText += GetStringByStrRef(nStrRef);
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            DoDebug(sText);
+            SetHeader(sText);
+            DoDebug("1");
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            DoDebug("2");
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            DoDebug("3");
+            DoDebug(IntToString(nStage));
+            MarkStageSetUp(nStage);
+            DoDebug("4");
+            break;
+        default:
+            DoDebug("Huh?");
     }
 }
 
@@ -100,8 +151,7 @@ int HandleChoice(int nStage, int nChoice)
             break;
             
         case STAGE_GENDER:
-            SetLocalInt(OBJECT_SELF, "Gender",
-                GetChoice(OBJECT_SELF));
+            SetLocalInt(OBJECT_SELF, "Gender", nChoice);
             nStage++;
             break;
             
@@ -117,7 +167,7 @@ int HandleChoice(int nStage, int nChoice)
             }
             break;
         case STAGE_RACE:
-            SetLocalInt(OBJECT_SELF, "Race", GetChoice(OBJECT_SELF));
+            SetLocalInt(OBJECT_SELF, "Race", nChoice);
             nStage++;
             break;
         case STAGE_RACE_CHECK:
@@ -145,7 +195,7 @@ int HandleChoice(int nStage, int nChoice)
             }
             break;
         case STAGE_CLASS:
-            SetLocalInt(OBJECT_SELF, "Class", GetChoice(OBJECT_SELF);
+            SetLocalInt(OBJECT_SELF, "Class", nChoice);
             nStage++;
             break;
         case STAGE_CLASS_CHECK:
@@ -153,7 +203,11 @@ int HandleChoice(int nStage, int nChoice)
             {
                 nStage++;
                 // add class feats
-                AddClassFeats(GetLocalInt(OBJECT_SELF, "Class");
+                AddClassFeats(GetLocalInt(OBJECT_SELF, "Class"));
+                // now for hitpoints (without con alteration)
+                SetLocalInt(OBJECT_SELF, "HitPoints",
+                    StringToInt(Get2DACache("classes", "HitDie",
+                        GetLocalInt(OBJECT_SELF, "Class"))));
             }
             else // go back and pick class
             {
@@ -161,6 +215,70 @@ int HandleChoice(int nStage, int nChoice)
                 MarkStageNotSetUp(STAGE_CLASS_CHECK, OBJECT_SELF);
                 MarkStageNotSetUp(STAGE_CLASS, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Class");
+            }
+            break;
+        case STAGE_ALIGNMENT:
+            // for stage check later
+            SetLocalInt(OBJECT_SELF, "AlignChoice", nChoice);
+            DoDebug("AlignChoice is: " + IntToString(nChoice));
+            switch(nChoice)
+            {
+                case 112: //lawful good
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 85);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 85);
+                    break;
+                case 115: //neutral good
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 50);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 85);
+                    break;
+                case 118: //chaotic good
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 15);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 85);
+                    break;
+                case 113: //lawful neutral
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 85);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 50);
+                    break;
+                case 116: //true neutral
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 50);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 50);
+                    break;
+                case 119: //chaotic neutral
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 15);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 50);
+                    break;
+                case 114: //lawful evil
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 85);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 15);
+                    break;
+                case 117: //neutral evil
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 50);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 15);
+                    break;
+                case 120: //chaotic evil
+                    SetLocalInt(OBJECT_SELF, "LawfulChaotic", 15);
+                    SetLocalInt(OBJECT_SELF, "GoodEvil", 15);
+                    break;
+                default:
+                    DoDebug("Duh, that clearly didn't work right");
+            }
+            nStage++;
+            DoDebug("LawfulChaotic is: " + IntToString(GetLocalInt(OBJECT_SELF, "LawfulChaotic")));
+            DoDebug("GoodEvil is: " + IntToString(GetLocalInt(OBJECT_SELF, "GoodEvil")));
+            break;
+        case STAGE_ALIGNMENT_CHECK:
+            if(nChoice == 1)
+            {
+                nStage++;
+            }
+            else // go back and pick alignment
+            {
+                nStage = STAGE_ALIGNMENT;
+                MarkStageNotSetUp(STAGE_ALIGNMENT_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_ALIGNMENT, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "AlignChoice");
+                DeleteLocalInt(OBJECT_SELF, "LawfulChaotic");
+                DeleteLocalInt(OBJECT_SELF, "GoodEvil");
             }
             break;
     }

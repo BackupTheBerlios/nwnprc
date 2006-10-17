@@ -454,15 +454,33 @@ void AddClassFeats(int nClass)
 {
     // gets which class_feat_***.2da to use
     string sFile = GetStringLowerCase(Get2DACache("classes", "FeatsTable", nClass));
-    int i = 0;
     // Feats array should already exist, but check anyway
-    int nArraySize = array_get_size(OBJECT_SELF, "Feats")
+    int nArraySize = array_get_size(OBJECT_SELF, "Feats");
     if (nArraySize) // if there's stuff in there already
     {
-        
+        // has it's own table, so SQL is easiest
+        // get the table/column name quote mark
+        string q = PRC_SQLGetTick();
+        // class feats granted at level 1
+        /*
+        SELECT `FeatIndex` FROM `prc_cached2da_cls_feat`
+        WHERE (`file` = <cls_feat***>) AND (`List` = 3) AND (`GrantedOnLevel` = 1)
+        */
+        string sSQL = "SELECT "+q+"FeatIndex"+q+" FROM "+q+"prc_cached2da_cls_feat"+q+" WHERE ("+q+"file"+q+" = '" + sFile + "') AND ("+q+"List"+q+" = 3) AND ("+q+"GrantedOnLevel"+q+" = 1)";
+        PRC_SQLExecDirect(sSQL);
+        int nFeat;
+        while (PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        {
+            nFeat = StringToInt(PRC_SQLGetData(1)); // feat index
+            //alertness fix
+            if(nFeat == 0)
+                nFeat = -1;
+            array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"), nFeat);
+        }
     }
     else // no feat array - screw up
     {
         /* TODO - start again */
     }
+    
 }

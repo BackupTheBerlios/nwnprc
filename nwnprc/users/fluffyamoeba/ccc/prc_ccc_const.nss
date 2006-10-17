@@ -11,3 +11,5 @@ const int STAGE_RACE                =  3;
 const int STAGE_RACE_CHECK          =  4;
 const int STAGE_CLASS               =  5;
 const int STAGE_CLASS_CHECK         =  6;
+const int STAGE_ALIGNMENT           =  7;
+const int STAGE_ALIGNMENT_CHECK     =  8;

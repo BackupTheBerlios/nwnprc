@@ -1402,6 +1402,9 @@ void DeleteNamedComposites(object oItem, string sBase)
         DeleteLocalInt(oItem, sComposite);
         DeleteLocalInt(oItem, sBase + "_Exist_" + sComposite);
     }
+
+    // Delete the array
+    array_delete(oItem, sArrayName);
 }
 
 int GetIsMagicItem(object oItem)

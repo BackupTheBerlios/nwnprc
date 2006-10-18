@@ -1,0 +1,5 @@
+nw_it_sparscr119   Angry Ache 
+nw_it_spdvscr205   Demoncall
+NW_IT_SPDVSCR114   Demonflesh
+NW_IT_SPARSCR431   FleshArmor
+

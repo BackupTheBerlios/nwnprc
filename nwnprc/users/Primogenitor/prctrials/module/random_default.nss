@@ -7,13 +7,14 @@ void main()
     int nOriginalValue = nValue;
     int nLevel = GetLocalInt(OBJECT_SELF, "Random_Default_Level");
     object oObject = GetLocalObject(OBJECT_SELF, "Random_Default_Object");
-    if(nValue >= 1000 && nValue < 1100)
+    /*
+    if(nValue >= 10000 && nValue < 11000)
     {
         //narrowband 2-sided at level;
         //   0  25  50  75 100  75  50  25   0
         //nValue = 100-(25*abs(nLevel-(nValue-1000)));
         //DoDebug("nValue = "+IntToString(nValue));
-        int nTemp = nValue-1000;
+        int nTemp = nValue-10000;
         //DoDebug("nTemp = "+IntToString(nTemp));
         nTemp = nLevel-nTemp;
         //DoDebug("nTemp = "+IntToString(nTemp));
@@ -24,7 +25,7 @@ void main()
         nValue = 100-nTemp;
         //DoDebug("nValue = "+IntToString(nValue));
     }    
-    else if(nValue >= 1100 && nValue < 1200)
+    else if(nValue >= 11000 && nValue < 12000)
         //broadband 2-sided at level;
         //   0  10  20  30  40  50  60  70   80  90 100  90  80  70  60  50  40  30  20  10  0
         //nValue = 100-(10*abs(nLevel-(nValue-1100)));
@@ -32,7 +33,7 @@ void main()
         //narrowband 2-sided at level;
         //   0  25  50  75 100  75  50  25   0
         //DoDebug("nValue = "+IntToString(nValue));
-        int nTemp = nValue-1100;
+        int nTemp = nValue-11000;
         //DoDebug("nTemp = "+IntToString(nTemp));
         nTemp = nLevel-nTemp;
         //DoDebug("nTemp = "+IntToString(nTemp));
@@ -43,6 +44,54 @@ void main()
         nValue = 100-nTemp;
         //DoDebug("nValue = "+IntToString(nValue));
     }    
+    */            
+    if(nValue >= 100000 && nValue < 1000000)
+    {
+//((sin((1-(ABS(offset-A16)/(width*0.5)))*pi()*0.5)*100)*0.5)+50
+        int nTemp  =          nValue %  1000;
+        int nWidth = (nValue-100000) /  1000;
+        if(nLevel < nTemp-nWidth)
+            nValue = 0;
+        else if(nLevel > nTemp+nWidth)
+            nValue = 0;
+        else
+        {
+            float fTemp;
+            fTemp = IntToFloat(nTemp-nLevel);
+            fTemp = fabs(fTemp);
+            fTemp = (fTemp/IntToFloat(nWidth))/0.5;
+            fTemp = 1.0-fTemp;
+            //fTemp = fTemp*PI*0.5;
+            fTemp = fTemp*90;
+            fTemp = sin(fTemp);
+            fTemp = fTemp* 100.0;
+            fTemp = fTemp*   0.5;
+            fTemp = fTemp+  50.0; 
+            nTemp = FloatToInt(fTemp);
+            nValue = nTemp;
+        }    
+       DoDebug("random_default nOriginalValue="+IntToString(nOriginalValue)+" nValue="+IntToString(nValue)+" nTemp="+IntToString(nTemp)+" nWidth="+IntToString(nWidth));
+    }  
+    else if(nValue >= 1000 && nValue < 1100)
+    {  
+        //narrowband 1-sided at level;
+        //   100 100 100 100  75  50  25   0
+        nValue = nValue-1000;
+        if(nValue < nLevel)
+            nValue = 100;
+        else    
+            nValue = 100-(25*abs(nLevel-nValue));
+    }
+    else if(nValue >= 1100 && nValue < 1200)
+    {  
+        //wideband 1-sided at level;
+        //   100 100 100 100  90  80  70  60  50  40  30  20  10  0
+        nValue = nValue-1100;
+        if(nValue < nLevel)
+            nValue = 100;
+        else    
+            nValue = 100-(10*abs(nLevel-nValue));
+    }
     else if(nValue >= 1200 && nValue < 1300)
     {
         //greater than level

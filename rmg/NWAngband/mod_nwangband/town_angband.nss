@@ -15,6 +15,7 @@
 #include "prc_alterations"
 #include "inc_dynconv"
 #include "ral_inc"
+#include "inc_ecl"
 #include "time_tokensetup"
 
 //////////////////////////////////////////////////

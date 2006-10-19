@@ -3,6 +3,7 @@
 #include "ref_inc"
 #include "prs_inc"
 #include "rng_inc"
+#include "inc_ecl"
 #include "pnp_shft_poly"
 
 void DoArmor()

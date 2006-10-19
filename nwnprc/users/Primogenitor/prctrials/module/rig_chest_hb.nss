@@ -50,7 +50,7 @@ void DoStuff()
 void main()
 {
     float fDelay;
-    for(fDelay = 0.0; fDelay < 6.0; fDelay += 1.0)
+    for(fDelay = 0.0; fDelay < 6.0; fDelay += 7.0)
     {
         DelayCommand(fDelay, DoStuff());
     }

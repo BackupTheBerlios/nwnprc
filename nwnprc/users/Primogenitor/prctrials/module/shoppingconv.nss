@@ -15,6 +15,7 @@
 #include "prc_alterations"
 #include "inc_dynconv"
 #include "rig_inc"
+#include "inc_ecl"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -176,7 +177,7 @@ void main()
                 DelayCommand(300.0, 
                 DestroyObject(oStore)));
             int nType = BASE_ITEM_SHORTSWORD; 
-            int nECL = GetHitDice(oPC);
+            int nECL = GetECL(oPC);
             int nAC = 0;
             int i;
             for(i=0; i< RIG_ITEM_CACHE_SIZE;i++)

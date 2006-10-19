@@ -57,10 +57,10 @@ int GetRandomWeight(string sScript, string s2DA, int nRow, int nColumn)
 
 string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSeed = 0)
 {
-    int nRow;
+    int nRow = nSeed;
+    int nOrigRow = nSeed;
     string sReturn;
     string sWeight;
-    nRow = nSeed;
 
 //DoDebug("GetRandomFrom2DA("+s2DA+", "+IntToString(nSeed)+")");
     while(sReturn == "")
@@ -76,7 +76,6 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             nRandom4Weight, nRandom5Weight, nRandom6Weight, nRandom7Weight,
             nRandom8Weight, nRandom9Weight;
         int nRandomWeightTotal;
-        int nOrigRow = nRow;
         nRandom0Weight = GetRandomWeight(sScript, s2DA, nRow, 0);
         sRandom0 = Get2DACache(s2DA, "Random0", nRow);
         if(sRandom0 != "")
@@ -138,13 +137,15 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             && sRandom6 == ""
             && sRandom7 == ""
             && sRandom8 == ""
-            && sRandom9 == ""
-            && sReturn == "")
+            && sRandom9 == "")
         {   
-            DoDebug("GetRandomFrom2DA() sanity check, no valid results: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow));    
-            return "";
+            DoDebug("GetRandomFrom2DA() sanity check, no valid results: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow)+", "+IntToString(nOrigRow));    
+            nRow = nOrigRow;
+            if(nRow == nSeed)
+                return "";
+            nOrigRow = nSeed;
         }    
-        if(nRandom0Weight == 0
+        else if(nRandom0Weight == 0
             && nRandom1Weight == 0
             && nRandom2Weight == 0
             && nRandom3Weight == 0
@@ -153,118 +154,125 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             && nRandom6Weight == 0
             && nRandom7Weight == 0
             && nRandom8Weight == 0
-            && nRandom9Weight == 0
-            && sReturn == "")
+            && nRandom9Weight == 0)
         {   
-            DoDebug("GetRandomFrom2DA() sanity check, no valid results: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow));    
-            return "";
-        }    
-        nRandomWeightTotal += nRandom0Weight;
-        nRandomWeightTotal += nRandom1Weight;
-        nRandomWeightTotal += nRandom2Weight;
-        nRandomWeightTotal += nRandom3Weight;
-        nRandomWeightTotal += nRandom4Weight;
-        nRandomWeightTotal += nRandom5Weight;
-        nRandomWeightTotal += nRandom6Weight;
-        nRandomWeightTotal += nRandom7Weight;
-        nRandomWeightTotal += nRandom8Weight;
-        nRandomWeightTotal += nRandom9Weight;
-        //get a random point in that weight
-        int nRandomWeight = Random(nRandomWeightTotal);//RandomI(nRandomWeightTotal);
+            DoDebug("GetRandomFrom2DA() sanity check, no valid weights: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow)+", "+IntToString(nOrigRow));    
+            nRow = nOrigRow;
+            if(nRow == nSeed)
+                return "";
+            nOrigRow = nSeed;    
+        } 
+        else 
+        {
+            nOrigRow = nRow;
+            
+            nRandomWeightTotal += nRandom0Weight;
+            nRandomWeightTotal += nRandom1Weight;
+            nRandomWeightTotal += nRandom2Weight;
+            nRandomWeightTotal += nRandom3Weight;
+            nRandomWeightTotal += nRandom4Weight;
+            nRandomWeightTotal += nRandom5Weight;
+            nRandomWeightTotal += nRandom6Weight;
+            nRandomWeightTotal += nRandom7Weight;
+            nRandomWeightTotal += nRandom8Weight;
+            nRandomWeightTotal += nRandom9Weight;
+            //get a random point in that weight
+            int nRandomWeight = Random(nRandomWeightTotal);//RandomI(nRandomWeightTotal);
 //DoDebug("nRandomWeightTotal="+IntToString(nRandomWeightTotal)+" nRandomWeight"+IntToString(nRandomWeight));        
-        //keep adding up untill you reach the point picked
-        if(nRandomWeight < nRandom0Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 0);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom0, 1) == "r")
-                sReturn = sRandom0;
-            nRow = nRandom0;
+            //keep adding up untill you reach the point picked
+            if(nRandomWeight < nRandom0Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 0);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom0, 1) == "r")
+                    sReturn = sRandom0;
+                nRow = nRandom0;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 1);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom1, 1) == "r")
+                    sReturn = sRandom1;
+                nRow = nRandom1;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 2);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom2, 1) == "r")
+                    sReturn = sRandom2;
+                nRow = nRandom2;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 3);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom3, 1) == "r")
+                    sReturn = sRandom3;
+                nRow = nRandom3;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 4);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom4, 1) == "r")
+                    sReturn = sRandom4;
+                nRow = nRandom4;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 5);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom5, 1) == "r")
+                    sReturn = sRandom5;
+                nRow = nRandom5;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 6);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom6, 1) == "r")
+                    sReturn = sRandom6;
+                nRow = nRandom6;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight+nRandom7Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 7);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom7, 1) == "r")
+                    sReturn = sRandom7;
+                nRow = nRandom7;
+            }
+            else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight+nRandom7Weight+nRandom8Weight)
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 8);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom8, 1) == "r")
+                    sReturn = sRandom8;
+                nRow = nRandom8;
+            }
+            else
+            {
+                SetLocalInt(GetModule(), "RandomResultRun", TRUE);
+                GetRandomWeight(sScript, s2DA, nRow, 9);
+                DeleteLocalInt(GetModule(), "RandomResultRun");
+                if(GetStringLeft(sRandom9, 1) == "r")
+                    sReturn = sRandom9;
+                nRow = nRandom9;
+            }
         }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 1);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom1, 1) == "r")
-                sReturn = sRandom1;
-            nRow = nRandom1;
-        }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 2);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom2, 1) == "r")
-                sReturn = sRandom2;
-            nRow = nRandom2;
-        }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 3);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom3, 1) == "r")
-                sReturn = sRandom3;
-            nRow = nRandom3;
-        }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 4);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom4, 1) == "r")
-                sReturn = sRandom4;
-            nRow = nRandom4;
-        }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 5);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom5, 1) == "r")
-                sReturn = sRandom5;
-            nRow = nRandom5;
-        }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 6);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom6, 1) == "r")
-                sReturn = sRandom6;
-            nRow = nRandom6;
-        }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight+nRandom7Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 7);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom7, 1) == "r")
-                sReturn = sRandom7;
-            nRow = nRandom7;
-        }
-        else if(nRandomWeight < nRandom0Weight+nRandom1Weight+nRandom2Weight+nRandom3Weight+nRandom4Weight+nRandom5Weight+nRandom6Weight+nRandom7Weight+nRandom8Weight)
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 8);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom8, 1) == "r")
-                sReturn = sRandom8;
-            nRow = nRandom8;
-        }
-        else
-        {
-            SetLocalInt(GetModule(), "RandomResultRun", TRUE);
-            GetRandomWeight(sScript, s2DA, nRow, 9);
-            DeleteLocalInt(GetModule(), "RandomResultRun");
-            if(GetStringLeft(sRandom9, 1) == "r")
-                sReturn = sRandom9;
-            nRow = nRandom9;
-        }
-
-/*DoDebug("GetRandomFrom2DA("+s2DA+", "+sScript+", "+IntToString(nSeed)+") nRow is now "+IntToString(nRow)+" from "+IntToString(nOrigRow));
+/*        
+DoDebug("GetRandomFrom2DA("+s2DA+", "+sScript+", "+IntToString(nSeed)+") nRow is now "+IntToString(nRow)+" from "+IntToString(nOrigRow));
 if(nRandom0Weight > 0) DoDebug("0 weight: "+IntToString(nRandom0Weight)+" row: "+IntToString(nRandom0));
 if(nRandom1Weight > 0) DoDebug("1 weight: "+IntToString(nRandom1Weight)+" row: "+IntToString(nRandom1));
 if(nRandom2Weight > 0) DoDebug("2 weight: "+IntToString(nRandom2Weight)+" row: "+IntToString(nRandom2));
@@ -274,7 +282,8 @@ if(nRandom5Weight > 0) DoDebug("5 weight: "+IntToString(nRandom5Weight)+" row: "
 if(nRandom6Weight > 0) DoDebug("6 weight: "+IntToString(nRandom6Weight)+" row: "+IntToString(nRandom6));
 if(nRandom7Weight > 0) DoDebug("7 weight: "+IntToString(nRandom7Weight)+" row: "+IntToString(nRandom7));
 if(nRandom8Weight > 0) DoDebug("8 weight: "+IntToString(nRandom8Weight)+" row: "+IntToString(nRandom8));
-if(nRandom9Weight > 0) DoDebug("9 weight: "+IntToString(nRandom9Weight)+" row: "+IntToString(nRandom9));*/
+if(nRandom9Weight > 0) DoDebug("9 weight: "+IntToString(nRandom9Weight)+" row: "+IntToString(nRandom9));
+*/       
 
 
     }

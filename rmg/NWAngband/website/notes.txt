@@ -1,0 +1,30 @@
+NWN Angband website:
+
+Background
+	History of Roguelikes
+	What is NWN?
+	Comparable games
+		Infinite Dungeons
+		Diablo
+	Why NWN 1 not 2?
+
+Features
+	Setting & background
+	System
+		RIG
+		REG
+		RAD
+		RAL
+		RQG
+	Custom content
+		PRC
+		CTP
+		other
+		Not CEP
+
+Media
+	Screenshots
+	Movies
+	Samples
+	
+	

@@ -1,7 +1,4 @@
-const int           RIG_ROOT_COUNT      = 70;
-const string        RIG_DB              = "rig";
-const float         RIG_DB_DELAY        = 6000.0;
-const int           RIG_GRIBT_REPLICATION = 75;
+
 
 object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
 object RandomizeItem(object oItem, int nLevel, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
@@ -15,9 +12,14 @@ int RIG_CheckLimitations(object oItem, object oPC = OBJECT_SELF);
 const int RIG_CREATE_ALL_CACHE_CHESTS_ON_LOAD = TRUE;
 const int RIG_ITEM_CACHE_SIZE                 = 10;
 const int RIG_PRE_EPIC_ONE_AFFIX_LIMIT        = TRUE;
+const int           RIG_ROOT_COUNT      = 70;
+const string        RIG_DB              = "rig";
+const float         RIG_DB_DELAY        = 6000.0;//1 hour
+//const int           RIG_GRIBT_REPLICATION = 75;
 
 #include "prc_gateway"
 #include "rig_inc_app"
+#include "rig_inc_core"
 
 //Returns TRUE if oItem is stackable
 int GetIsStackableItem(object oItem)
@@ -125,6 +127,7 @@ object RandomizeItem(object oItem, int nLevel, int nRandomizeAppearance = TRUE, 
     return oItem;
 }
 
+
 object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
 {
     //check itws not an invalid type
@@ -149,6 +152,12 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
         {
 //DoDebug("rig_inc line 132");
 //DoDebug("GetRandomizedItemByType() looking at "+GetName(oTest)+" "+IntToString(GetLocalInt(oTest, "RigLevel")));
+            //clean up things that arnt supposed to be their
+            if(GetLocalInt(oTest, "RigLevel") ==0)
+            {
+                DoDebug("GetRandomizedItemByType() found RigLevel=0 item in "+sTag);
+                DestroyObject(oTest, 0.01);
+            }    
             if(GetLocalInt(oTest, "RigLevel") == nLevel
                 //&& RIG_CheckLimitations(oTest)
                 )    
@@ -168,11 +177,14 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
         }    
         //we did find something, bring it back
         object oReturn = CopyItem(oTest, OBJECT_SELF, TRUE);
-        //to save time, only destroy a proportion of originals
-        if(RandomI(100) > RIG_GRIBT_REPLICATION)
-            DestroyObject(oTest);
         SetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel), 
             GetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel))-1);
+        //to save time, only destroy a proportion of originals
+        //this is based on how many items of that level are in the chest. 
+        //If its full, never duplicate.
+        //If its empty, always duplicate.
+        if(RandomI(RIG_ITEM_CACHE_SIZE) < GetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel)))
+            DestroyObject(oTest);
         return oReturn;
     }
     //chest not valid, create one
@@ -240,8 +252,8 @@ DoDebug("CreateRandomizeItemByType() invalid after Rig_Core");
     }
 
     //randomize appearance
-    //if(nRandomizeAppearance)
-    //    oItem = RandomizeItemAppearance(oItem, nAC);
+    if(nRandomizeAppearance)
+        oItem = RandomizeItemAppearance(oItem, nAC);
     if(!GetIsObjectValid(oItem))
     {
 DoDebug("CreateRandomizeItemByType() invalid after RandomizeItemAppearance");
@@ -344,7 +356,7 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
             {
                 sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType); 
                 //second one is a number of levels lower equal to the difference from the max
-                nLevel  = nLevel-(40-nLevel);
+                //nLevel  = nLevel-(40-nLevel);
                 SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
                 sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);           
             }    
@@ -352,7 +364,7 @@ object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC
             {
                 sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
                 //second one is a number of levels lower equal to the difference from the max
-                nLevel  = nLevel-(40-nLevel);
+                //nLevel  = nLevel-(40-nLevel);
                 SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
                 sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType); 
             }    
@@ -661,152 +673,4 @@ int RIG_CheckLimitations(object oItem, object oPC = OBJECT_SELF)
         return FALSE;
     }
     return TRUE;
-}
-
-int RIG_UseBaseItem(int nBaseItem)
-{
-    switch(nBaseItem)
-    {
-        case BASE_ITEM_ARMOR:
-        case BASE_ITEM_ARROW:
-        case BASE_ITEM_BASTARDSWORD:
-        case BASE_ITEM_BATTLEAXE:
-        case BASE_ITEM_BOLT:
-        case BASE_ITEM_BULLET:
-        case BASE_ITEM_CLUB:
-        case BASE_ITEM_DAGGER:
-        case BASE_ITEM_DART:
-        case BASE_ITEM_DIREMACE:
-        case BASE_ITEM_DOUBLEAXE:
-        case BASE_ITEM_DWARVENWARAXE:
-        case BASE_ITEM_GREATAXE:
-        case BASE_ITEM_GREATSWORD:
-        case BASE_ITEM_HALBERD:
-        case BASE_ITEM_HANDAXE:
-        case BASE_ITEM_HEAVYCROSSBOW:
-        case BASE_ITEM_HEAVYFLAIL:
-        case BASE_ITEM_KAMA:
-        case BASE_ITEM_KATANA:
-        case BASE_ITEM_KUKRI:
-        case BASE_ITEM_LARGESHIELD:
-        case BASE_ITEM_LIGHTCROSSBOW:
-        case BASE_ITEM_LIGHTFLAIL:
-        case BASE_ITEM_LIGHTHAMMER:
-        case BASE_ITEM_LIGHTMACE:
-        case BASE_ITEM_LONGBOW:
-        case BASE_ITEM_LONGSWORD:
-        case BASE_ITEM_MORNINGSTAR:
-        case BASE_ITEM_QUARTERSTAFF:
-        case BASE_ITEM_RAPIER:
-        case BASE_ITEM_SCIMITAR:
-        case BASE_ITEM_SCYTHE:
-        case BASE_ITEM_SHORTBOW:
-        case BASE_ITEM_SHORTSPEAR:
-        case BASE_ITEM_SHORTSWORD:
-        case BASE_ITEM_SHURIKEN:
-        case BASE_ITEM_SICKLE:
-        case BASE_ITEM_SLING:
-        case BASE_ITEM_SMALLSHIELD:
-        case BASE_ITEM_THROWINGAXE:
-        case BASE_ITEM_TOWERSHIELD:
-        case BASE_ITEM_TWOBLADEDSWORD:
-        case BASE_ITEM_WARHAMMER:
-        case BASE_ITEM_WHIP:
-            return TRUE;
-    }
-    return FALSE;
-}
-
-void RIG_DoDBStore2(int nBaseItemType, int nAC = 0)
-{
-    string sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(nAC);
-    object oChest = GetObjectByTag(sTag);
-    if(GetIsObjectValid(oChest))
-    {
-        StoreCampaignObject(RIG_DB, sTag+"!", oChest); 
-        int i;
-        for(i=1;i<=40;i++)
-        {
-            sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(i)+"_"+IntToString(nAC);
-            int nCount = GetLocalInt(oChest, "ContentsLevel"+IntToString(i));
-            SetCampaignInt(RIG_DB, sTag+"!", nCount);
-        }    
-    }
-}
-
-void RIG_DoDBStore()
-{
-    //destroy database to stop inifinite bloat
-    //doesnt work on linux but oh well
-    //DestroyCampaignDatabase(RIG_DB);
-    DelayCommand(RIG_DB_DELAY, RIG_DoDBStore());
-    DoDebug("RIG_DoDBStore started");
-    int i;
-    for(i=0;i<RIG_ROOT_COUNT;i++)
-    {
-        int nBaseType = StringToInt(Get2DACache("rig_root", "BaseItem", i));
-        int nAC = StringToInt(Get2DACache("rig_root", "AC", i));
-        if(RIG_UseBaseItem(nBaseType))
-        {
-            float fDelay = IntToFloat(i)/10.0;
-            DelayCommand(fDelay, RIG_DoDBStore2(nBaseType, nAC));
-        }
-    }
-}
-
-//spawn a chest for each base item type
-void RIG_DoSetup2(location lLimbo, int nBaseItemType, int nAC = 0)
-{
-DoDebug("RIG_DoSetup2() for "+IntToString(nBaseItemType));
-    string sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(nAC);
-    object oChest = GetObjectByTag(sTag);
-    //check DB next
-    if(!GetIsObjectValid(oChest))
-    {
-        oChest = RetrieveCampaignObject(RIG_DB, sTag, lLimbo);
-        ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oChest);
-        if(GetIsObjectValid(oChest))
-        {
-            SetLocalInt(oChest, "BaseItem", nBaseItemType);
-            //SetLocalInt(oChest, "Level", nLevel);
-            SetLocalInt(oChest, "AC", nAC);
-            //because locals arent stored on the object
-            //they are stored on the database in parallel
-            int i;
-            for(i=1;i<=40;i++)
-            {
-                sTag = "RIG_Chest_"+IntToString(nBaseItemType)+"_"+IntToString(i)+"_"+IntToString(nAC);
-                int nCount = GetCampaignInt(RIG_DB, sTag+"!");
-                SetLocalInt(oChest, "ContentsLevel"+IntToString(i), nCount);
-            }    
-        }
-        //create it if it doesnt exist
-        //check the constant too
-        else if(RIG_CREATE_ALL_CACHE_CHESTS_ON_LOAD)
-        {
-            oChest = CreateObject(OBJECT_TYPE_CREATURE, "rig_chest", lLimbo, FALSE, sTag);
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectCutsceneGhost(), oChest);
-            SetLocalInt(oChest, "BaseItem", nBaseItemType);
-            //SetLocalInt(oChest, "Level", nLevel);
-            SetLocalInt(oChest, "AC", nAC);
-        }
-    }
-}
-
-void RIG_DoSetup()
-{
-    //start Pseudo-hb to store them in a database
-    DelayCommand(RIG_DB_DELAY, RIG_DoDBStore());
-    location lLimbo = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
-    int i;
-    for(i=0;i<RIG_ROOT_COUNT;i++)
-    {
-        int nBaseType = StringToInt(Get2DACache("rig_root", "BaseItem", i));
-        int nAC = StringToInt(Get2DACache("rig_root", "AC", i));
-        if(RIG_UseBaseItem(nBaseType))
-        {
-            float fDelay = IntToFloat(i)/10.0;
-            DelayCommand(fDelay, RIG_DoSetup2(lLimbo, nBaseType, nAC));  
-        }
-    }
 }

@@ -2312,10 +2312,10 @@ string PRCGetItemAppearanceString(object oPC, object oItem)
         case 1:
         {   //helmet, cloak, model + 6 colours, 7 values
             sReturn = IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_SIMPLE_MODEL, 0)) + "-" +
-                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1)) + "-" +
-                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2)) + "-" +
                         IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1)) + "-" +
                         IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1)) + "-" +
+                        IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2)) + "-" +
                         IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL1)) + "-" +
                         IntToString(GetItemAppearance(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_METAL2))
                         ;
@@ -2438,25 +2438,25 @@ object PRCSetItemAppearance(object oPC, object oItem, string sArray, string sNam
             if(nTemp != -1)
             {
                 DestroyObject(oItem);
-                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1, nTemp, TRUE);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1, nTemp, TRUE);
             }
             nTemp = array_get_int(oPC, sName, 2);
             if(nTemp != -1)
             {
                 DestroyObject(oItem);
-                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2, nTemp, TRUE);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2, nTemp, TRUE);
             }
             nTemp = array_get_int(oPC, sName, 3);
             if(nTemp != -1)
             {
                 DestroyObject(oItem);
-                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER1, nTemp, TRUE);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH1, nTemp, TRUE);
             }
             nTemp = array_get_int(oPC, sName, 4);
             if(nTemp != -1)
             {
                 DestroyObject(oItem);
-                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_LEATHER2, nTemp, TRUE);
+                oItem = CopyItemAndModify(oItem, ITEM_APPR_TYPE_ARMOR_COLOR, ITEM_APPR_ARMOR_COLOR_CLOTH2, nTemp, TRUE);
             }
             nTemp = array_get_int(oPC, sName, 5);
             if(nTemp != -1)

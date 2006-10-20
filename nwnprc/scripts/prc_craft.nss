@@ -997,6 +997,7 @@ void main()
                         SendMessageToPC(oPC, "Please state (use chat) the new name of the item within the next 30 seconds.");
                         //ClearCurrentStage(oPC);
                         AllowExit(DYNCONV_EXIT_FORCE_EXIT);
+                        break;
                     }
                     else if(nChoice == CHOICE_SETAPPEARANCE)
                     {

@@ -131,7 +131,7 @@
                 <element name="X" type="8" value="35.0" />
                 <element name="Y" type="8" value="14.59" />
                 <element name="Z" type="8" value="0.46" />
-                <element name="Bearing" type="8" value="-3.1415904" />
+                <element name="Bearing" type="8" value="-3.1415899" />
             </struct>
             <struct id="8" >
                 <element name="Tag" type="10" value="Quest1BtoCa" />
@@ -188,7 +188,7 @@
                 <element name="X" type="8" value="73.69" />
                 <element name="Y" type="8" value="15.0" />
                 <element name="Z" type="8" value="12.0" />
-                <element name="Bearing" type="8" value="-1.5707953" />
+                <element name="Bearing" type="8" value="-1.5707952" />
             </struct>
             <struct id="8" >
                 <element name="Tag" type="10" value="Quest1BtoCb" />
@@ -245,7 +245,7 @@
                 <element name="X" type="8" value="73.3" />
                 <element name="Y" type="8" value="55.0" />
                 <element name="Z" type="8" value="12.0" />
-                <element name="Bearing" type="8" value="-1.5707953" />
+                <element name="Bearing" type="8" value="-1.5707952" />
             </struct>
         </element>
         <element name="Encounter List" type="15" />
@@ -322,11 +322,11 @@
                 <element name="HasMapNote" type="0" value="0" />
                 <element name="MapNote" type="12" value="-1" />
                 <element name="MapNoteEnabled" type="0" value="0" />
-                <element name="XPosition" type="8" value="1.6999897" />
-                <element name="YPosition" type="8" value="39.176346" />
-                <element name="ZPosition" type="8" value="0.22499987" />
-                <element name="XOrientation" type="8" value="0.0" />
-                <element name="YOrientation" type="8" value="1.0" />
+                <element name="XPosition" type="8" value="1.4813962" />
+                <element name="YPosition" type="8" value="40.007042" />
+                <element name="ZPosition" type="8" value="-7.8585E-6" />
+                <element name="XOrientation" type="8" value="1.0" />
+                <element name="YOrientation" type="8" value="7.54979E-8" />
             </struct>
             <struct id="5" >
                 <element name="Appearance" type="0" value="2" />

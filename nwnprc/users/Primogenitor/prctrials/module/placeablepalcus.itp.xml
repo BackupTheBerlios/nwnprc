@@ -31,6 +31,10 @@
                         <element name="NAME" type="10" value="Null Psionics Field Chest" />
                         <element name="RESREF" type="11" value="npf_keep_chest" />
                     </struct>
+                    <struct id="0" >
+                        <element name="NAME" type="10" value="rig_chest" />
+                        <element name="RESREF" type="11" value="rig_chest" />
+                    </struct>
                 </element>
             </struct>
             <struct id="0" >

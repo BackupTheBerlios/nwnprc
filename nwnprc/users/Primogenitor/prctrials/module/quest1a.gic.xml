@@ -24,9 +24,6 @@
                 <element name="Comment" type="10" value="" />
             </struct>
             <struct id="5" >
-                <element name="Comment" type="10" value="On the Advanced tab, replace &lt;Place text here&gt; with whatever information you wish to appear on the Map of an area." />
-            </struct>
-            <struct id="5" >
                 <element name="Comment" type="10" value="" />
             </struct>
             <struct id="5" >
@@ -36,6 +33,10 @@
                 <element name="Comment" type="10" value="" />
             </struct>
         </element>
-        <element name="Placeable List" type="15" />
+        <element name="Placeable List" type="15" >
+            <struct id="9" >
+                <element name="Comment" type="10" value="" />
+            </struct>
+        </element>
     </struct>
 </gff>

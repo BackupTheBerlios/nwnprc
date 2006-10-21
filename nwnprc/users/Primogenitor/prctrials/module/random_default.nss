@@ -69,15 +69,18 @@ void main()
             fTemp = fTemp+  50.0; 
             nTemp = FloatToInt(fTemp);
             nValue = nTemp;
+            if(nValue < 1)
+                nValue = 1;
+            
         }    
-       DoDebug("random_default nOriginalValue="+IntToString(nOriginalValue)+" nValue="+IntToString(nValue)+" nTemp="+IntToString(nTemp)+" nWidth="+IntToString(nWidth));
+//DoDebug("random_default nOriginalValue="+IntToString(nOriginalValue)+" nValue="+IntToString(nValue)+" nTemp="+IntToString(nTemp)+" nWidth="+IntToString(nWidth));
     }  
     else if(nValue >= 1000 && nValue < 1100)
     {  
         //narrowband 1-sided at level;
         //   100 100 100 100  75  50  25   0
         nValue = nValue-1000;
-        if(nValue < nLevel)
+        if(nLevel < nValue)
             nValue = 100;
         else    
             nValue = 100-(25*abs(nLevel-nValue));
@@ -87,7 +90,7 @@ void main()
         //wideband 1-sided at level;
         //   100 100 100 100  90  80  70  60  50  40  30  20  10  0
         nValue = nValue-1100;
-        if(nValue < nLevel)
+        if(nLevel < nValue)
             nValue = 100;
         else    
             nValue = 100-(10*abs(nLevel-nValue));

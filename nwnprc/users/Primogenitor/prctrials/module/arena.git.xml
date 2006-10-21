@@ -131,7 +131,7 @@
                 <element name="X" type="8" value="25.0" />
                 <element name="Y" type="8" value="1.71" />
                 <element name="Z" type="8" value="0.0" />
-                <element name="Bearing" type="8" value="-3.1415918" />
+                <element name="Bearing" type="8" value="-3.1415913" />
             </struct>
         </element>
         <element name="Encounter List" type="15" />
@@ -154,7 +154,7 @@
                 <element name="YPosition" type="8" value="15.116313" />
                 <element name="ZPosition" type="8" value="0.19999847" />
                 <element name="XOrientation" type="8" value="-1.0" />
-                <element name="YOrientation" type="8" value="3.1391647E-7" />
+                <element name="YOrientation" type="8" value="4.3312576E-7" />
             </struct>
             <struct id="5" >
                 <element name="Appearance" type="0" value="2" />
@@ -189,7 +189,7 @@
                 <element name="XPosition" type="8" value="25.036795" />
                 <element name="YPosition" type="8" value="26.115993" />
                 <element name="ZPosition" type="8" value="4.7683716E-7" />
-                <element name="XOrientation" type="8" value="-3.8941437E-7" />
+                <element name="XOrientation" type="8" value="-8.662515E-7" />
                 <element name="YOrientation" type="8" value="-1.0" />
             </struct>
         </element>

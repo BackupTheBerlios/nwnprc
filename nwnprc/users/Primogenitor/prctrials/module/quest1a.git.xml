@@ -74,7 +74,7 @@
                 <element name="X" type="8" value="75.0" />
                 <element name="Y" type="8" value="25.0" />
                 <element name="Z" type="8" value="0.0" />
-                <element name="Bearing" type="8" value="1.5707959" />
+                <element name="Bearing" type="8" value="1.5707957" />
             </struct>
         </element>
         <element name="Encounter List" type="15" />
@@ -153,27 +153,9 @@
                 <element name="MapNoteEnabled" type="0" value="0" />
                 <element name="XPosition" type="8" value="79.01827" />
                 <element name="YPosition" type="8" value="24.785042" />
-                <element name="ZPosition" type="8" value="0.02499997" />
-                <element name="XOrientation" type="8" value="0.0" />
-                <element name="YOrientation" type="8" value="1.0" />
-            </struct>
-            <struct id="5" >
-                <element name="Appearance" type="0" value="1" />
-                <element name="LinkedTo" type="10" value="" />
-                <element name="TemplateResRef" type="11" value="nw_mapnote001" />
-                <element name="Tag" type="10" value="Quest1Astart" />
-                <element name="LocalizedName" type="12" value="14814" />
-                <element name="Description" type="12" value="-1" />
-                <element name="HasMapNote" type="0" value="1" />
-                <element name="MapNote" type="12" value="14815" >
-                    <localString languageId="0" value="Portal" />
-                </element>
-                <element name="MapNoteEnabled" type="0" value="1" />
-                <element name="XPosition" type="8" value="14.836893" />
-                <element name="YPosition" type="8" value="64.69722" />
-                <element name="ZPosition" type="8" value="0.6000004" />
-                <element name="XOrientation" type="8" value="0.8314693" />
-                <element name="YOrientation" type="8" value="0.5555707" />
+                <element name="ZPosition" type="8" value="0.01000607" />
+                <element name="XOrientation" type="8" value="-1.0" />
+                <element name="YOrientation" type="8" value="7.54979E-8" />
             </struct>
             <struct id="5" >
                 <element name="Appearance" type="0" value="2" />
@@ -230,6 +212,75 @@
                 <element name="YOrientation" type="8" value="1.0" />
             </struct>
         </element>
-        <element name="Placeable List" type="15" />
+        <element name="Placeable List" type="15" >
+            <struct id="9" >
+                <element name="Tag" type="10" value="Quest1Astart" />
+                <element name="LocName" type="12" value="5670" >
+                    <localString languageId="0" value="Portal" />
+                </element>
+                <element name="Description" type="12" value="14533" >
+                    <localString languageId="0" value="A portal glows softly before you. You wonder where it leads." />
+                </element>
+                <element name="TemplateResRef" type="11" value="plc_portal003" />
+                <element name="AutoRemoveKey" type="0" value="0" />
+                <element name="CloseLockDC" type="0" value="0" />
+                <element name="Conversation" type="11" value="" />
+                <element name="Interruptable" type="0" value="1" />
+                <element name="Faction" type="4" value="1" />
+                <element name="Plot" type="0" value="1" />
+                <element name="KeyRequired" type="0" value="0" />
+                <element name="Lockable" type="0" value="0" />
+                <element name="Locked" type="0" value="0" />
+                <element name="OpenLockDC" type="0" value="0" />
+                <element name="PortraitId" type="2" value="826" />
+                <element name="TrapDetectable" type="0" value="1" />
+                <element name="TrapDetectDC" type="0" value="0" />
+                <element name="TrapDisarmable" type="0" value="1" />
+                <element name="DisarmDC" type="0" value="0" />
+                <element name="TrapFlag" type="0" value="0" />
+                <element name="TrapOneShot" type="0" value="1" />
+                <element name="TrapType" type="0" value="0" />
+                <element name="KeyName" type="10" value="" />
+                <element name="AnimationState" type="0" value="0" />
+                <element name="Appearance" type="4" value="391" />
+                <element name="HP" type="3" value="10" />
+                <element name="CurrentHP" type="3" value="10" />
+                <element name="Hardness" type="0" value="5" />
+                <element name="Fort" type="0" value="5" />
+                <element name="Ref" type="0" value="0" />
+                <element name="Will" type="0" value="0" />
+                <element name="OnClosed" type="11" value="" />
+                <element name="OnDamaged" type="11" value="" />
+                <element name="OnDeath" type="11" value="" />
+                <element name="OnDisarm" type="11" value="" />
+                <element name="OnHeartbeat" type="11" value="" />
+                <element name="OnLock" type="11" value="" />
+                <element name="OnMeleeAttacked" type="11" value="" />
+                <element name="OnOpen" type="11" value="" />
+                <element name="OnSpellCastAt" type="11" value="" />
+                <element name="OnTrapTriggered" type="11" value="" />
+                <element name="OnUnlock" type="11" value="" />
+                <element name="OnUserDefined" type="11" value="" />
+                <element name="OnClick" type="11" value="" />
+                <element name="VarTable" type="15" >
+                    <struct id="0" >
+                        <element name="Name" type="10" value="DestTag" />
+                        <element name="Type" type="4" value="3" />
+                        <element name="Value" type="10" value="WP_Start" />
+                    </struct>
+                </element>
+                <element name="HasInventory" type="0" value="0" />
+                <element name="BodyBag" type="0" value="0" />
+                <element name="Static" type="0" value="0" />
+                <element name="Type" type="0" value="0" />
+                <element name="Useable" type="0" value="1" />
+                <element name="OnInvDisturbed" type="11" value="" />
+                <element name="OnUsed" type="11" value="util_portal" />
+                <element name="X" type="8" value="15.003339" />
+                <element name="Y" type="8" value="64.93502" />
+                <element name="Z" type="8" value="0.59999275" />
+                <element name="Bearing" type="8" value="2.1598446" />
+            </struct>
+        </element>
     </struct>
 </gff>

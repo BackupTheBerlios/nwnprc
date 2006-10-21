@@ -61,6 +61,12 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
     int nOrigRow = nSeed;
     string sReturn;
     string sWeight;
+    int nBadRow1, nBadRow2, nBadRow3, nBadRow4, nBadRow5;
+    nBadRow1 = -1;
+    nBadRow2 = -1;
+    nBadRow3 = -1;
+    nBadRow4 = -1;
+    nBadRow5 = -1;
 
 //DoDebug("GetRandomFrom2DA("+s2DA+", "+IntToString(nSeed)+")");
     while(sReturn == "")
@@ -81,51 +87,122 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
         if(sRandom0 != "")
         {
             nRandom0 = CheckedStringToInt(sRandom0);
+            if(nRandom0 == nBadRow1
+                || nRandom0 == nBadRow2
+                || nRandom0 == nBadRow3
+                || nRandom0 == nBadRow4
+                || nRandom0 == nBadRow5)
+                nRandom1Weight = 0;
+            else    
+                nRandom1Weight = GetRandomWeight(sScript, s2DA, nRow, 1);
             sRandom1 = Get2DACache(s2DA, "Random1", nRow);
             if(sRandom1 != "")
             {
                 nRandom1 = CheckedStringToInt(sRandom1);
-                nRandom1Weight = GetRandomWeight(sScript, s2DA, nRow, 1);
+                if(nRandom1 == nBadRow1
+                    || nRandom1 == nBadRow2
+                    || nRandom1 == nBadRow3
+                    || nRandom1 == nBadRow4
+                    || nRandom1 == nBadRow5)
+                    nRandom1Weight = 0;
+                else    
+                    nRandom1Weight = GetRandomWeight(sScript, s2DA, nRow, 1);
                 sRandom2 = Get2DACache(s2DA, "Random2", nRow);
                 if(sRandom2 != "")
                 {
                     nRandom2 = CheckedStringToInt(sRandom2);
-                    nRandom2Weight = GetRandomWeight(sScript, s2DA, nRow, 2);
+                    if(nRandom2 == nBadRow1
+                        || nRandom2 == nBadRow2
+                        || nRandom2 == nBadRow3
+                        || nRandom2 == nBadRow4
+                        || nRandom2 == nBadRow5)
+                        nRandom2Weight = 0;
+                    else    
+                        nRandom2Weight = GetRandomWeight(sScript, s2DA, nRow, 2);
                     sRandom3 = Get2DACache(s2DA, "Random3", nRow);
                     if(sRandom3 != "")
                     {
                         nRandom3 = CheckedStringToInt(sRandom3);
-                        nRandom3Weight = GetRandomWeight(sScript, s2DA, nRow, 3);
+                        if(nRandom3 == nBadRow1
+                            || nRandom3 == nBadRow2
+                            || nRandom3 == nBadRow3
+                            || nRandom3 == nBadRow4
+                            || nRandom3 == nBadRow5)
+                            nRandom3Weight = 0;
+                        else    
+                            nRandom3Weight = GetRandomWeight(sScript, s2DA, nRow, 3);
                         sRandom4 = Get2DACache(s2DA, "Random4", nRow);
                         if(sRandom4 != "")
                         {
                             nRandom4 = CheckedStringToInt(sRandom4);
-                            nRandom4Weight = GetRandomWeight(sScript, s2DA, nRow, 4);
+                            if(nRandom4 == nBadRow1
+                                || nRandom4 == nBadRow2
+                                || nRandom4 == nBadRow3
+                                || nRandom4 == nBadRow4
+                                || nRandom4 == nBadRow5)
+                                nRandom4Weight = 0;
+                            else    
+                                nRandom4Weight = GetRandomWeight(sScript, s2DA, nRow, 4);
                             sRandom5 = Get2DACache(s2DA, "Random5", nRow);
                             if(sRandom5 != "")
                             {
                                 nRandom5 = CheckedStringToInt(sRandom5);
-                                nRandom5Weight = GetRandomWeight(sScript, s2DA, nRow, 5);
+                                if(nRandom5 == nBadRow1
+                                    || nRandom5 == nBadRow2
+                                    || nRandom5 == nBadRow3
+                                    || nRandom5 == nBadRow4
+                                    || nRandom5 == nBadRow5)
+                                    nRandom5Weight = 0;
+                                else    
+                                    nRandom5Weight = GetRandomWeight(sScript, s2DA, nRow, 5);
                                 sRandom6 = Get2DACache(s2DA, "Random6", nRow);
                                 if(sRandom6 != "")
                                 {
                                     nRandom6 = CheckedStringToInt(sRandom6);
-                                    nRandom6Weight = GetRandomWeight(sScript, s2DA, nRow, 6);
+                                    if(nRandom6 == nBadRow1
+                                        || nRandom6 == nBadRow2
+                                        || nRandom6 == nBadRow3
+                                        || nRandom6 == nBadRow4
+                                        || nRandom6 == nBadRow5)
+                                        nRandom6Weight = 0;
+                                    else    
+                                        nRandom6Weight = GetRandomWeight(sScript, s2DA, nRow, 6);
                                     sRandom7 = Get2DACache(s2DA, "Random7", nRow);
                                     if(sRandom7 != "")
                                     {
                                         nRandom7 = CheckedStringToInt(sRandom7);
-                                        nRandom7Weight = GetRandomWeight(sScript, s2DA, nRow, 7);
+                                        if(nRandom7 == nBadRow1
+                                            || nRandom7 == nBadRow2
+                                            || nRandom7 == nBadRow3
+                                            || nRandom7 == nBadRow4
+                                            || nRandom7 == nBadRow5)
+                                            nRandom7Weight = 0;
+                                        else    
+                                            nRandom7Weight = GetRandomWeight(sScript, s2DA, nRow, 7);
                                         sRandom8 = Get2DACache(s2DA, "Random8", nRow);
                                         if(sRandom8 != "")
                                         {
                                             nRandom8 = CheckedStringToInt(sRandom8);
-                                            nRandom8Weight = GetRandomWeight(sScript, s2DA, nRow, 8);
+                                                if(nRandom8 == nBadRow1
+                                                    || nRandom8 == nBadRow2
+                                                    || nRandom8 == nBadRow3
+                                                    || nRandom8 == nBadRow4
+                                                    || nRandom8 == nBadRow5)
+                                                    nRandom8Weight = 0;
+                                                else    
+                                                    nRandom8Weight = GetRandomWeight(sScript, s2DA, nRow, 8);
                                             sRandom9 = Get2DACache(s2DA, "Random9", nRow);
                                             if(sRandom8 != "")
                                             {
                                                 nRandom9 = CheckedStringToInt(sRandom9);
-                                                nRandom9Weight = GetRandomWeight(sScript, s2DA, nRow, 9);                                                
+                                                if(nRandom9 == nBadRow1
+                                                    || nRandom9 == nBadRow2
+                                                    || nRandom9 == nBadRow3
+                                                    || nRandom9 == nBadRow4
+                                                    || nRandom9 == nBadRow5)
+                                                    nRandom9Weight = 0;
+                                                else    
+                                                    nRandom9Weight = GetRandomWeight(sScript, s2DA, nRow, 9);                                                
         }   }   }   }   }   }   }   }   }   }
         //sanity check
         if(sRandom0 == ""
@@ -140,6 +217,16 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             && sRandom9 == "")
         {   
             DoDebug("GetRandomFrom2DA() sanity check, no valid results: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow)+", "+IntToString(nOrigRow));    
+            if(nBadRow1 == -1)
+                nBadRow1 = nRow;
+            else if(nBadRow2 == -1)
+                nBadRow2 = nRow;
+            else if(nBadRow3 == -1)
+                nBadRow3 = nRow;
+            else if(nBadRow4 == -1)
+                nBadRow4 = nRow;
+            else if(nBadRow5 == -1)
+                nBadRow5 = nRow;
             nRow = nOrigRow;
             if(nRow == nSeed)
                 return "";
@@ -156,7 +243,17 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
             && nRandom8Weight == 0
             && nRandom9Weight == 0)
         {   
-            DoDebug("GetRandomFrom2DA() sanity check, no valid weights: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow)+", "+IntToString(nOrigRow));    
+            DoDebug("GetRandomFrom2DA() sanity check, no valid weights: "+s2DA+", "+sScript+", "+IntToString(nSeed)+", "+IntToString(nRow)+", "+IntToString(nOrigRow));       
+            if(nBadRow1 == -1)
+                nBadRow1 = nRow;
+            else if(nBadRow2 == -1)
+                nBadRow2 = nRow;
+            else if(nBadRow3 == -1)
+                nBadRow3 = nRow;
+            else if(nBadRow4 == -1)
+                nBadRow4 = nRow;
+            else if(nBadRow5 == -1)
+                nBadRow5 = nRow;
             nRow = nOrigRow;
             if(nRow == nSeed)
                 return "";

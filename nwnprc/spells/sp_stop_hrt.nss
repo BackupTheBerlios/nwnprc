@@ -94,21 +94,22 @@ void main()
     //must be under effect of baccaran
     if(GetHasSpellEffect(SPELL_BACCARAN, oPC))
     {
-        //Fort save
-        if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
-        {
-            //Spell Resistance
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
-            {
-                //They should be unable to act via PnP
-                effect ePar = EffectCutsceneParalyze();
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, 19.0f);
-                
-                //Sucker...
-                Deathloop(oTarget, nHP, nCounter);
-            }
-        }
+	    //Spell Resistance
+	    if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	    {
+		    //Fort save
+		    if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
+		    {
+			    //They should be unable to act via PnP
+			    effect ePar = EffectCutsceneParalyze();
+			    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, 19.0f);
+			    
+			    //Sucker...
+			    Deathloop(oTarget, nHP, nCounter);
+		    }
+	    }
     }
+    
     
     SPEvilShift(oPC);
     SPSetSchool();

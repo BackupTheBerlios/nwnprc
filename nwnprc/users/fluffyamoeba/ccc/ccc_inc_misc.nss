@@ -34,6 +34,17 @@ void CloneMasterCheck();
 // and the clone do random animations
 void DoRotatingCamera();
 
+// set up the ability choice in "<statvalue> (racial <+/-modifier>) <statname>. Cost to increase <cost>" format
+void AddAbilityChoice(int nStatValue, string sStatName, string sRacialAdjust, int nAbilityConst);
+
+// subtracts the correct amount of points for increasing the current ability score
+// returns the current ability score incremented by 1
+int IncreaseAbilityScore(int nCurrentAbilityScore);
+
+//this returns the cost to get to a score
+//or the cost saved by dropping from that score
+int GetCost(int nAbilityScore);
+
 /* 2da cache functions */
 
 // loops through a 2da, using the cache
@@ -46,6 +57,9 @@ void DoRacialtypesLoop();
 
 // loops through classes.2da
 void DoClassesLoop();
+
+// loops through skills.2da
+void DoSkillsLoop();
 
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
@@ -278,6 +292,35 @@ void DoRotatingCamera()
         AssignCommand(oPC, ActionPlayAnimation(100+Random(21), 1.0, 6.0));
 }
 
+void AddAbilityChoice(int nAbilityScore, string sAbilityName, string sRacialAdjust, int nAbilityConst)
+{
+    // if it is still possible to increase the ability score, add that choice
+    if (nAbilityScore < GetLocalInt(OBJECT_SELF, "MaxStat") && GetLocalInt(OBJECT_SELF, "Points") >= GetCost(nAbilityScore + 1))
+    {
+        AddChoice(sAbilityName + " " + IntToString(nAbilityScore) + " (Racial " + sRacialAdjust + "). " 
+            + GetStringByStrRef(137) + " " + IntToString(GetCost(nAbilityScore + 1)), nAbilityConst);
+    }
+}
+
+int IncreaseAbilityScore(int nCurrentAbilityScore)
+{
+    int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+    // get cost and remove from total
+    // note: because of how GetCost() works, the ability score is incremented here not later
+    nPoints -= GetCost(++nCurrentAbilityScore);
+    // store the total points left on the PC
+    SetLocalInt(OBJECT_SELF, "Points", nPoints);
+    return nCurrentAbilityScore;
+}
+
+int GetCost(int nAbilityScore)
+{
+    int nCost = (nAbilityScore-11)/2;
+    if(nCost < 1)
+        nCost = 1;
+    return nCost;
+}
+
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
 {
     int i = 0;
@@ -426,6 +469,63 @@ void DoClassesLoop()
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         DeleteLocalInt(OBJECT_SELF, "i");
         return;
+    }
+}
+
+void DoSkillsLoop()
+{
+    if(GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
+    {
+        // add the "store" option
+        AddChoice("Store all remaining points.", -2);
+    }
+    // get the cls_skill_*** 2da to use
+    string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(OBJECT_SELF, "Class"));
+    // too convoluted to do via SQL..meh
+    // set up the while
+    int i = 0;
+    // because with strings, "0" (Animal Empathy) and "" (blank entry) are different
+    string sSkillIndex = Get2DACache(sFile, "SkillIndex", i);
+    // loop over each valid row - as soon as we hit an empty line, quit
+    while(sSkillIndex != "")
+    {
+        // see if it's class or cross-class
+        int nClassSkill = StringToInt(Get2DACache(sFile, "ClassSkill", i));
+        int nSkillID = StringToInt(sSkillIndex); // line of skills.2da for the skill
+        // get the skill name
+        string sName = GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", nSkillID)));
+        if (nClassSkill == 1) // class skill
+        {
+            sName += " " + GetStringByStrRef(52951); // (Class Skill)
+            // check there's not already 4 points in there
+            int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkillID);
+            if (nStoredPoints < 4) // level (ie 1) + 3
+            {
+                sName += " : "+IntToString(nStoredPoints);
+                // only add if there's less than the maximum points allowed
+                AddChoice(sName, i); // uses cls_skill_*** rowid as choice number
+            }
+        }
+        else // cross-class skill
+        {
+            // check there's not already 2 points in there
+            int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkillID);
+            if (nStoredPoints < 2) // level (ie 1) + 1
+            {
+                sName += " : "+IntToString(nStoredPoints);
+                // only add if there's less than the maximum points allowed
+                AddChoice(sName, i); // uses cls_skill_*** rowid as choice number
+            }
+        }
+        i++; // go to next line
+        sSkillIndex = Get2DACache(sFile, "SkillIndex", i);
+    }
+    // if the dynamic convo is set waiting (first time through only)
+    // then mark as done
+    if (GetLocalInt(OBJECT_SELF, "DynConv_Waiting"))
+    {
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
     }
 }
 

@@ -73,7 +73,6 @@ void DoHeaderAndChoices(int nStage)
             sText = GetStringByStrRef(61920); // Select a Class for Your Character
             SetHeader(sText);
             // set up choices
-            // try with waiting set up first
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DelayCommand(0.01, DoClassesLoop());
             MarkStageSetUp(nStage);
@@ -126,22 +125,131 @@ void DoHeaderAndChoices(int nStage)
             break;
         }
         case STAGE_ALIGNMENT_CHECK: {
-            DoDebug(IntToString(nStage));
             sText = GetStringByStrRef(16824209) + " "; // You have selected:
             int nStrRef = GetLocalInt(OBJECT_SELF, "AlignChoice"); // strref for the alignment
             sText += GetStringByStrRef(nStrRef);
             sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
-            DoDebug(sText);
             SetHeader(sText);
-            DoDebug("1");
             // choices Y/N
             AddChoice(GetStringByStrRef(4753), -1); // no
-            DoDebug("2");
             AddChoice(GetStringByStrRef(4752), 1); // yes
-            DoDebug("3");
-            DoDebug(IntToString(nStage));
             MarkStageSetUp(nStage);
-            DoDebug("4");
+            break;
+        }
+        case STAGE_ABILITY: {
+            // the first time through this stage set everything up
+            if(GetLocalInt(OBJECT_SELF, "Str") == 0)
+            {
+                // get the starting points to allocate
+                int nPoints = GetPRCSwitch(PRC_CONVOCC_STAT_POINTS);
+                if(nPoints == 0)
+                    nPoints = 30; // default
+                SetLocalInt(OBJECT_SELF, "Points", nPoints);
+                // get the max stat level (before racial modifiers)
+                int nMaxStat = GetPRCSwitch(PRC_CONVOCC_MAX_STAT);
+                if(nMaxStat == 0)
+                    nMaxStat = 18; // default
+                SetLocalInt(OBJECT_SELF, "MaxStat", nMaxStat);
+                // set the starting stat values
+                SetLocalInt(OBJECT_SELF, "Str", 8);
+                SetLocalInt(OBJECT_SELF, "Dex", 8);
+                SetLocalInt(OBJECT_SELF, "Con", 8);
+                SetLocalInt(OBJECT_SELF, "Int", 8);
+                SetLocalInt(OBJECT_SELF, "Wis", 8);
+                SetLocalInt(OBJECT_SELF, "Cha", 8);
+            }
+            sText = GetStringByStrRef(130) + "\n"; // Select Ability Scores for your Character
+            sText += GetStringByStrRef(138) + ": "; // Remaining Points
+            sText += IntToString(GetLocalInt(OBJECT_SELF, "Points"));
+            SetHeader(sText);
+            // get the racial adjustment
+            int nRace = GetLocalInt(OBJECT_SELF, "Race");
+            string sStrAdjust = Get2DACache("racialtypes", "StrAdjust", nRace);
+            string sDexAdjust = Get2DACache("racialtypes", "DexAdjust", nRace);
+            string sConAdjust = Get2DACache("racialtypes", "ConAdjust", nRace);
+            string sIntAdjust = Get2DACache("racialtypes", "IntAdjust", nRace);
+            string sWisAdjust = Get2DACache("racialtypes", "WisAdjust", nRace);
+            string sChaAdjust = Get2DACache("racialtypes", "ChaAdjust", nRace);
+            // set up the choices in "<statvalue> (racial <+/-modifier>) <statname>. Cost to increase <cost>" format
+            AddAbilityChoice(GetLocalInt(OBJECT_SELF, "Str"), GetStringByStrRef(135), sStrAdjust, ABILITY_STRENGTH);
+            AddAbilityChoice(GetLocalInt(OBJECT_SELF, "Dex"), GetStringByStrRef(133), sDexAdjust, ABILITY_DEXTERITY);
+            AddAbilityChoice(GetLocalInt(OBJECT_SELF, "Con"), GetStringByStrRef(132), sConAdjust, ABILITY_CONSTITUTION);
+            AddAbilityChoice(GetLocalInt(OBJECT_SELF, "Int"), GetStringByStrRef(134), sIntAdjust, ABILITY_INTELLIGENCE);
+            AddAbilityChoice(GetLocalInt(OBJECT_SELF, "Wis"), GetStringByStrRef(136), sWisAdjust, ABILITY_WISDOM);
+            AddAbilityChoice(GetLocalInt(OBJECT_SELF, "Cha"), GetStringByStrRef(131), sChaAdjust, ABILITY_CHARISMA);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_ABILITY_CHECK: {
+            sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
+            sText += GetStringByStrRef(135) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Str")) + "\n"; // str
+            sText += GetStringByStrRef(133) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Dex")) + "\n"; // dex
+            sText += GetStringByStrRef(132) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Con")) + "\n"; // con
+            sText += GetStringByStrRef(134) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Int")) + "\n"; // int
+            sText += GetStringByStrRef(136) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Wis")) + "\n"; // wis
+            sText += GetStringByStrRef(131) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Cha")) + "\n"; // cha
+            sText += "\n" + GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SKILL: {
+            // the first time through this stage set everything up
+            int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+            if(nPoints == 0)
+            {
+                //calculate number of points
+                nPoints += StringToInt(Get2DACache("classes", "SkillPointBase", GetLocalInt(OBJECT_SELF, "Class")));
+                // calculate the intelligence bonus/penalty
+                int nInt = GetLocalInt(OBJECT_SELF, "Int");
+                int nRace = GetLocalInt(OBJECT_SELF, "Race");
+                nPoints += (nInt-10+StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace)))/2;
+                if(GetPRCSwitch(PRC_CONVOCC_SKILL_MULTIPLIER))
+                    nPoints *= GetPRCSwitch(PRC_CONVOCC_SKILL_MULTIPLIER);
+                else
+                    nPoints *= 4;
+                
+                nPoints += GetPRCSwitch(PRC_CONVOCC_SKILL_BONUS);
+                // minimum of 4, regardless of int
+                if(nPoints < 4)
+                    nPoints = 4;
+                SetLocalInt(OBJECT_SELF, "Points", nPoints);
+                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            }
+            // do header
+            sText = GetStringByStrRef(396) + "\n"; // Allocate skill points
+            sText += GetStringByStrRef(395) + ": "; // Remaining Points
+            sText += IntToString(GetLocalInt(OBJECT_SELF, "Points"));
+            SetHeader(sText);
+            DoSkillsLoop();
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SKILL_CHECK: {
+            sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
+            if(GetPRCSwitch(PRC_CONVOCC_ALLOW_SKILL_POINT_ROLLOVER))
+            {
+                sText += "Stored skill points: ";
+                sText += IntToString(GetLocalInt(OBJECT_SELF, "SavedSkillPoints")) + "\n";
+            }
+            // loop through the "Skills" array
+            for(i=0; i < GetPRCSwitch(FILE_END_SKILLS); i++) // the array can't be bigger than the skills 2da
+            {
+                if(array_get_int(OBJECT_SELF, "Skills",i) != 0) // if there are points in the skill, add it to the header
+                {
+                    sText+= GetStringByStrRef(StringToInt(Get2DACache("skills", "Name", i)));
+                    sText+= " "+IntToString(array_get_int(OBJECT_SELF, "Skills",i))+"\n";
+                }
+            }
+            sText += "\n" + GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
             break;
         }
         default:
@@ -224,7 +332,7 @@ int HandleChoice(int nStage, int nChoice)
                 DeleteLocalInt(OBJECT_SELF, "Class");
             }
             break;
-        case STAGE_ALIGNMENT:
+        case STAGE_ALIGNMENT: {
             // for stage check later
             SetLocalInt(OBJECT_SELF, "AlignChoice", nChoice);
             DoDebug("AlignChoice is: " + IntToString(nChoice));
@@ -273,7 +381,8 @@ int HandleChoice(int nStage, int nChoice)
             DoDebug("LawfulChaotic is: " + IntToString(GetLocalInt(OBJECT_SELF, "LawfulChaotic")));
             DoDebug("GoodEvil is: " + IntToString(GetLocalInt(OBJECT_SELF, "GoodEvil")));
             break;
-        case STAGE_ALIGNMENT_CHECK:
+        }
+        case STAGE_ALIGNMENT_CHECK: {
             if(nChoice == 1)
             {
                 nStage++;
@@ -288,6 +397,116 @@ int HandleChoice(int nStage, int nChoice)
                 DeleteLocalInt(OBJECT_SELF, "GoodEvil");
             }
             break;
+        }
+        case STAGE_ABILITY: {
+            int nAbilityScore;
+            switch(nChoice)
+            {
+                case ABILITY_STRENGTH:
+                    nAbilityScore = IncreaseAbilityScore(GetLocalInt(OBJECT_SELF, "Str"));
+                    SetLocalInt(OBJECT_SELF, "Str", nAbilityScore);
+                    break;
+                case ABILITY_DEXTERITY:
+                    nAbilityScore = IncreaseAbilityScore(GetLocalInt(OBJECT_SELF, "Dex"));
+                    SetLocalInt(OBJECT_SELF, "Dex", nAbilityScore);
+                    break;
+                case ABILITY_CONSTITUTION:
+                    nAbilityScore = IncreaseAbilityScore(GetLocalInt(OBJECT_SELF, "Con"));
+                    SetLocalInt(OBJECT_SELF, "Con", nAbilityScore);
+                    break;
+                case ABILITY_INTELLIGENCE:
+                    nAbilityScore = IncreaseAbilityScore(GetLocalInt(OBJECT_SELF, "Int"));
+                    SetLocalInt(OBJECT_SELF, "Int", nAbilityScore);
+                    break;
+                case ABILITY_WISDOM:
+                    nAbilityScore = IncreaseAbilityScore(GetLocalInt(OBJECT_SELF, "Wis"));
+                    SetLocalInt(OBJECT_SELF, "Wis", nAbilityScore);
+                    break;
+                case ABILITY_CHARISMA:
+                    nAbilityScore = IncreaseAbilityScore(GetLocalInt(OBJECT_SELF, "Cha"));
+                    SetLocalInt(OBJECT_SELF, "Cha", nAbilityScore);
+                    break;
+            }
+            int nPoints = GetLocalInt(OBJECT_SELF, "Points"); // new total
+            if (nPoints) // if there's still points to allocate
+            {
+                // resets the stage so that the convo choices reflect the new ability scores
+                ClearCurrentStage();
+            }
+            else
+                nStage++; // go to next stage
+            break;
+        }
+        case STAGE_ABILITY_CHECK:{
+            if(nChoice == 1)
+            {
+                nStage++;
+            }
+            else // go back and reselect ability score
+            {
+                nStage = STAGE_ABILITY;
+                MarkStageNotSetUp(STAGE_ABILITY_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_ABILITY, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Str");
+                DeleteLocalInt(OBJECT_SELF, "Dex");
+                DeleteLocalInt(OBJECT_SELF, "Con");
+                DeleteLocalInt(OBJECT_SELF, "Int");
+                DeleteLocalInt(OBJECT_SELF, "Wis");
+                DeleteLocalInt(OBJECT_SELF, "Cha");
+            }
+            break;
+        }
+        case STAGE_SKILL: {
+            // first time through, create the skills array
+            if(!array_exists(OBJECT_SELF, "Skills"))
+                array_create(OBJECT_SELF, "Skills");
+            // get current points
+            int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+            if(GetChoice(OBJECT_SELF) == -2) // save all remaining points
+            {
+                SetLocalInt(OBJECT_SELF, "SavedSkillPoints", nPoints);
+                nPoints = 0;    
+            }
+            else // chosen a skill to increase
+            {
+                // get the cls_skill_*** 2da to use
+                string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(OBJECT_SELF, "Class"));
+                // work out what line in skills.2da it corresponds to
+                int nSkillIndex = StringToInt(Get2DACache(sFile, "SkillIndex", nChoice));
+                //increase the points in that skill
+                // the array index is the line number in skills.2da
+                array_set_int(OBJECT_SELF, "Skills", nSkillIndex,
+                    array_get_int(OBJECT_SELF, "Skills", nSkillIndex)+1);
+                //decrease points remaining
+                // see if it's class or cross-class
+                int nClassSkill = StringToInt(Get2DACache(sFile, "ClassSkill", nChoice));
+                if (nClassSkill) // class skill
+                    nPoints -= 1;
+                else // cross class skill
+                    nPoints -= 2;
+            }
+            // store new points total
+            SetLocalInt(OBJECT_SELF, "Points", nPoints);
+            if (nPoints) // still some left to allocate
+                ClearCurrentStage();
+            else
+                nStage++;
+            break;
+        }
+        case STAGE_SKILL_CHECK: {
+            if (nChoice = 1)
+                nStage++;
+            else
+            {
+                nStage = STAGE_SKILL;
+                MarkStageNotSetUp(STAGE_SKILL_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_SKILL, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "SavedSkillPoints");
+                DeleteLocalInt(OBJECT_SELF, "Points");
+                array_delete(OBJECT_SELF, "Skills");
+            }
+            break;
+        }
     }
     return nStage;
 }

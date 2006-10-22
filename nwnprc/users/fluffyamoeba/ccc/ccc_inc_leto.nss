@@ -36,5 +36,4 @@ void DoCloneGender()
     RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
     sResult = GetLocalString(GetModule(), "LetoResult");
     SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
-    SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
 }

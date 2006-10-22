@@ -151,6 +151,7 @@ NEWSPELLBOOKOBJSPATH    = $(MAKENEWSPELLBOOKOBJSPATH)
 MISCPATH                = $(MAKEMISCPATH)
 OCFIXERFPATH            = $(MAKEOCFIXERFPATH)
 OCFIXERFOBJSPATH        = $(MAKEOCFIXERFOBJSPATH)
+GFXPATH                 = gfx
 
 # Paths for the various folders in the NWN install directory.
 NWN_ERF                 = $(NWN_DIR)\erf
@@ -480,7 +481,8 @@ $(2DASHAK): $(2DAS)
 $(TEXTURESHAK): $(GFX)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $**
+	@"$(ERFCOMPILER)" -c $@ $(GFXPATH)\*.*
+#	"$(ERFCOMPILER)" -c $@ $**
 
 
 # Rule to build the 2.0 misc HAK file.

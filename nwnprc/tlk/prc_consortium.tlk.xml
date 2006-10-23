@@ -19840,6 +19840,8 @@ You choose to follow the Order of the Gentle Rain, specializing in Water magic. 
   <entry id="51147" lang="en" sex="m">Type: Class
 Prerequisite: Shugenja level 1
 You choose to follow the Order of the Ineffable Mystery, leaving the choice of element to you. Shugenjas of this order are the most enigmatic and secretive of them all. Followers are known for protracted silence, evading direct questions, and speaking in riddles.</entry>
+  <entry id="51148" lang="en" sex="m">Champion of Corellon</entry>
+  <entry id="51149" lang="en" sex="m">Champions of Corellon</entry>
   <entry id="51150" lang="en" sex="m">Change shape</entry>
   <entry id="51151" lang="en" sex="m">Change shape (epic)</entry>
   <entry id="51152" lang="en" sex="m">View / Assign shapes to your 'Quick Shift Slots'</entry>
@@ -19862,6 +19864,39 @@ Note that if the shape is stored in any quickslots, the shape will still remain 
   <entry id="51168" lang="en" sex="m">Select special setting to alter.</entry>
   <entry id="51169" lang="en" sex="m">Store your current appearance as your true appearance (will not work if polymorphed or shifted).</entry>
   <entry id="51170" lang="en" sex="m">Your spell failed due to being in a form that prevented either a somatic or a vocal component from being used</entry>
+  <entry id="51171" lang="en" sex="m">champion of corellon</entry>
+  <entry id="51172" lang="en" sex="m">(PRESTIGE CLASS)
+"When an arrow will not suffice, when no spell will overcome, a stout heart and a sharp blade may prevail. With Corellon's grace, I fear no foe who stands within reach of my sword."
+
+Many evil warriors believe that elves, while dangerous in ranged combat, have no stomach for melee. They expect that elves would fall like leaves in an autumn windstorm once the battle becomes the work of sword and axe rather than arrow and spell. These warriors have never encountered a Champion of Corellon Larethian.
+The Champion of Corellon Larethian is a noble elf fighter, an elf knight or lord who can stand up to any orc or human warrior. All elves admire the grace, discipline, and skill necessary to become a swordmaster, and the Champion of Corellon Larethian is the very paragon of elven swordmanship. Clad in shining elven mail or plate, the Champion relies on quickness, agility, and an almost scholarly study of swordplay instead of brute power.
+
+- Hit Die: d10.
+- Proficiencies: The Champion of Corellon gains no weapon or armor proficiency.
+- Skill Points: 2 + Int Modifier.
+
+REQUIREMENTS:
+
+Race: Any elven or half-elven.
+Alignment: Any non-evil.
+Feats: Martial Weapon Proficiency, Heavy Armor Proficiency, Dodge, Mobility, Expertise, Weapon Focus with either Rapier, Longsword or Greatsword.
+Skills: Lore 2, Persuade 4.
+Base Attack Bonus: +7.
+Special: Must worship Corellon Larethian. (Clerics taking this class must have two of the following domains: Good, Protection, War)
+
+ABILITIES:
+
+Level
+  1: Corellon's blessing, Bonus Feat
+  2: Elegant Strike
+  3: Superior Defense +1.
+  4: Bonus Feat.
+  5: Unimpeded Movement.
+  6: Superior Defense +2.
+  7: Bonus Feat.
+  8: Corellon's Wrath.
+  9: Superior Defense +3.
+10: Bonus Feat.</entry>
   <entry id="51197" lang="en" sex="m">rends</entry>
   <entry id="51198" lang="en" sex="m">Two-Weapon Rend</entry>
   <entry id="51199" lang="en" sex="m">Type of Feat: Epic

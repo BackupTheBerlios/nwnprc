@@ -156,3 +156,4 @@ const int CLASS_TYPE_SUEL_ARCHANAMACH        = 203;
 const int CLASS_TYPE_FAVOURED_SOUL           = 204;
 //const int CLASS_TYPE_SHADOWCASTER            = 204;
 //const int CLASS_TYPE_CHILD_OF_NIGHT          = 205;
+const int CLASS_TYPE_COC                     = 217;

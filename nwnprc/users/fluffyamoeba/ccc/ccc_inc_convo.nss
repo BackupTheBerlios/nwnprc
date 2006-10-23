@@ -1,5 +1,4 @@
 #include "ccc_inc_misc"
-#include "prc_ccc_const"
 
 // sets up the header and the choices for each stage of the convoCC
 void DoHeaderAndChoices(int nStage);
@@ -211,7 +210,9 @@ void DoHeaderAndChoices(int nStage)
                     nPoints *= GetPRCSwitch(PRC_CONVOCC_SKILL_MULTIPLIER);
                 else
                     nPoints *= 4;
-                
+                // humans get an extra 4 skill points at level 1
+                if (GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_HUMAN)
+                    nPoints += 4;
                 nPoints += GetPRCSwitch(PRC_CONVOCC_SKILL_BONUS);
                 // minimum of 4, regardless of int
                 if(nPoints < 4)
@@ -245,6 +246,45 @@ void DoHeaderAndChoices(int nStage)
                 }
             }
             sText += "\n" + GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_FEAT: {
+            sText = GetStringByStrRef(397) + "\n"; // Select Feats
+            sText += GetStringByStrRef(398) + ": "; // Feats remaining
+            // if it's the first time through, work out the number of feats
+            int nFeatsRemaining = GetLocalInt(OBJECT_SELF, "Points");
+            if (!nFeatsRemaining) // first time through
+            {
+                nFeatsRemaining = 1; // always have at least 1
+                // check for quick to master
+                nFeatsRemaining += GetLocalInt(OBJECT_SELF, "QTM");
+                // set how many times to go through this stage
+                SetLocalInt(OBJECT_SELF, "Points", nFeatsRemaining);
+            }
+            // check for bonus feat(s) from class - show the player the total feats
+            // even though class bonuses are a different stage
+            int nClass = GetLocalInt(OBJECT_SELF, "Class");
+            nFeatsRemaining += StringToInt(Get2DACache(Get2DACache("Classes", "BonusFeatsTable", nClass), "Bonus", 0));
+            sText += IntToString(nFeatsRemaining);
+            SetHeader(sText);
+            // do feat list
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            DoFeatLoop();
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_FEAT_CHECK: {
+            sText = GetStringByStrRef(16824209) + ": "; // You have selected:
+            // get feat
+            int nFeat = array_get_int(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1));
+            sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat))) + "\n"; // name
+            sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeat))) + "\n"; // description
+            sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
             SetHeader(sText);
             // choices Y/N
             AddChoice(GetStringByStrRef(4753), -1); // no
@@ -506,6 +546,57 @@ int HandleChoice(int nStage, int nChoice)
                 array_delete(OBJECT_SELF, "Skills");
             }
             break;
+        }
+        case STAGE_FEAT: {
+            int nArraySize = array_get_size(OBJECT_SELF, "Feats");
+            // add the feat chosen to the feat array
+            array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"), nChoice);
+            nStage++;
+            break;
+        }
+        case STAGE_FEAT_CHECK: {
+            if (nChoice = 1)
+            {
+                // decrement the number of feats left to pick
+                int nFeatsRemaining = GetLocalInt(OBJECT_SELF, "Points");
+                --nFeatsRemaining;
+                // check new number of feats left
+                if (nFeatsRemaining == 0)
+                {
+                    // no more feats left to pick
+                    // if there's a bonus feat to pick, go to next stage
+                    nFeatsRemaining = StringToInt(Get2DACache(Get2DACache("Classes", "BonusFeatsTable", 
+                        GetLocalInt(OBJECT_SELF, "Class")), "Bonus", 0));
+                    if (nFeatsRemaining)
+                    {
+                        // go to bonus feat stage
+                        nStage = STAGE_BONUS_FEAT;
+                    }
+                    else
+                    {
+                        // go to next stage after that the PC qualifies for
+                        /* TODO */
+                        nStage = GetNextCCCStage(nStage);
+                    }
+                }
+                else 
+                {
+                    // go back to feat stage to pick next feat
+                    nStage = STAGE_FEAT;
+                    MarkStageNotSetUp(STAGE_FEAT_CHECK, OBJECT_SELF);
+                    MarkStageNotSetUp(STAGE_FEAT, OBJECT_SELF);
+                }
+                SetLocalInt(OBJECT_SELF, "Points", nFeatsRemaining);
+            }
+            else
+            {
+                nStage = STAGE_FEAT;
+                MarkStageNotSetUp(STAGE_FEAT_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_FEAT, OBJECT_SELF);
+                // delete the chosen feat
+                if(array_shrink(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1)) != SDL_SUCCESS)
+                    DoDebug("No feats array!");
+            }
         }
     }
     return nStage;

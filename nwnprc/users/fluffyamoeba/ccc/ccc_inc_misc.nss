@@ -5,6 +5,8 @@
 #include "inc_utility"
 #include "prc_alterations"
 #include "ccc_inc_leto"
+#include "inc_dynconv"
+#include "prc_ccc_const"
 
 // checks if it's a multiplayer game and that letoscript is set up correctly
 // returns 0 for pass and 1 for fail
@@ -45,6 +47,11 @@ int IncreaseAbilityScore(int nCurrentAbilityScore);
 //or the cost saved by dropping from that score
 int GetCost(int nAbilityScore);
 
+// works out the next stage to go to between STAGE_FEAT_CHECK and STAGE_APPEARANCE
+// when given the stage just completed
+// covers caster and familiar related choices
+int GetNextCCCStage(int nStage);
+
 /* 2da cache functions */
 
 // loops through a 2da, using the cache
@@ -60,6 +67,9 @@ void DoClassesLoop();
 
 // loops through skills.2da
 void DoSkillsLoop();
+
+// loops through feat.2da
+void DoFeatLoop();
 
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
@@ -321,6 +331,43 @@ int GetCost(int nAbilityScore)
     return nCost;
 }
 
+int GetNextCCCStage(int nStage)
+{
+    // check we're in the right place
+    if (nStage < STAGE_FEAT_CHECK)
+        return -1; // sent here too early
+    // get some info
+    int nClass = GetLocalInt(OBJECT_SELF, "Class");
+    switch (nStage) // with no breaks to go all the way through
+    {
+        case STAGE_FEAT_CHECK:
+            if(nClass == CLASS_TYPE_WIZARD)
+            {
+                return STAGE_WIZ_SCHOOL;
+            }
+        case STAGE_WIZ_SCHOOL_CHECK:
+            if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+            {
+                return STAGE_SPELLS;
+            }
+        case STAGE_SPELLS_CHECK:
+            if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_DRUID)
+            {
+                return STAGE_FAMILIAR; // also does animal companion
+            }
+        case STAGE_FAMILIAR_CHECK:
+            if (nClass == CLASS_TYPE_CLERIC)
+            {
+                return STAGE_DOMAIN1;
+            }
+        case STAGE_DOMAIN_CHECK:
+            return STAGE_APPEARANCE;
+        default:
+            return -1; // shouldn't get here
+    }
+    return -1; // silly compiler
+}
+
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
 {
     int i = 0;
@@ -529,6 +576,12 @@ void DoSkillsLoop()
     }
 }
 
+void DoFeatLoop()
+{
+    FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+    DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+}
+
 void AddRaceFeats(int nRace)
 {
     // gets which race_feat***.2da to use
@@ -543,6 +596,14 @@ void AddRaceFeats(int nRace)
         //alertness fix
         if(sFeat == "0")
             sFeat = "-1";
+        int nQTMCount = 0;
+        // if one of these is quick to master, mark for doing the bonus feat later
+        if (sFeat == "258")
+            nQTMCount++;
+        // add on any bonus feats from switches here
+        nQTMCount += (GetPRCSwitch(PRC_CONVOCC_BONUS_FEATS));
+        SetLocalInt(OBJECT_SELF, "QTM", nQTMCount);
+        
         array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
             StringToInt(sFeat));
         i++;

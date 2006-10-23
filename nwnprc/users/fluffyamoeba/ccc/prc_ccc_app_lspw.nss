@@ -44,5 +44,4 @@ void main()
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
     //stop the waiting
     DeleteLocalInt(oPC, "DynConv_Waiting");
-    FloatingTextStringOnCreature("Done", oPC);
 }

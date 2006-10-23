@@ -156,3 +156,4 @@ const int CLASS_TYPE_SOHEI                   = 233;
 const int CLASS_TYPE_SCOUT                   = 63;
 const int CLASS_TYPE_HEALER                  = 64;
 const int CLASS_TYPE_SHUGENJA		     = 79;
+const int CLASS_TYPE_COC                     = 92;

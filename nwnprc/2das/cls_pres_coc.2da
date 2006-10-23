@@ -1,0 +1,28 @@
+2DA V2.0
+
+   LABEL            ReqType ReqParam1    ReqParam2 
+0  Persuade         SKILL   45           4         
+1  Lore             SKILL   7            2         
+2  WeapProfMar      FEAT    45           ****      
+3  ArmProfHvy       FEAT    2            ****      
+4  Mobility         FEAT    26           ****      
+5  Dodge            FEAT    10           ****      
+6  Expertise        FEAT    37           ****      
+7  WeapFocRapier    FEATOR  104          ****      
+8  WeapFocLSw       FEATOR  106          ****      
+9  WeapFocGSw       FEATOR  107          ****      
+10 Elf              RACE    1            ****      
+11 Half-Elf         RACE    4            ****      
+12 Aquatic-Elf      RACE    161          ****      
+13 Avariel          RACE    162          ****      
+14 Drow_female      RACE    163          ****      
+15 Drow_male        RACE    164          ****      
+16 Sun-Elf          RACE    166          ****      
+17 wild-Elf         RACE    167          ****      
+18 wood-Elf         RACE    168          ****      
+19 dark-Elf         RACE    169          ****      
+20 Half_aquatic-Elf RACE    182          ****      
+21 Half-drow        RACE    183          ****      
+22 feyri            RACE    201          ****      
+23 Base_Attack      BAB     7            ****      
+24 ScriptVar        VAR     PRC_AllowCoC 0         

@@ -31,3 +31,6 @@
 27 CraftAlchemy      111469 8788        isk_X2CAlc     1         INT        0                 1                ****     ****  SKILL_CRAFT_ALCHEMY    0            1339             0               ****       0          0       
 28 DEL_Ride          ***    ***         isk_pocket     0         DEX        0                 0                ****     1     SKILL_RIDE             1            -1               0               ****       0          1       
 29 Survival          111471 113156      isk_survival   1         WIS        0                 1                ****     ****  SKILL_SURVIVAL         0            1341             0               ****       0          0       
+30 IaijutsuFocus     16826112 16826113  is_iaijutsu    0         CHA        0                 1                ****     ****  SKILL_IAIJUTSU_FOCUS   0            ****             0               ****       0          0
+31 Jump              16826011 16826012  is_jump        1         STR        1                 1                ****     ****  SKILL_JUMP             0            ****             1               ****       1          0
+32 Truespeak         16828470 16828471  is_truespeak   0         INT        0                 1                ****     ****  SKILL_TRUESPEAK        0            ****             0               ****       0          0

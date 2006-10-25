@@ -52,6 +52,30 @@ int GetCost(int nAbilityScore);
 // covers caster and familiar related choices
 int GetNextCCCStage(int nStage);
 
+// checks if the PC has the two feats given as arguements
+// '****' as an arguement is treated as an automatic TRUE for that arguement
+// used to check if the PC meets the prerequisites in the PreReqFeat1 AND PreReqFeat2
+// columns of feat.2da
+int GetMeetsANDPreReq(string sPreReqFeat1, string sPreReqFeat2);
+
+// checks if the PC has any one of the 5 feats given as arguements
+// '****' as an arguement is treated as an automatic TRUE for that arguement
+// used to check if the PC meets the prerequisites in the OrReqFeat0 OR OrReqFeat1 
+// OR OrReqFeat2 OR OrReqFeat3 OR OrReqFeat4 columns of feat.2da
+int GetMeetsORPreReq(string sOrReqFeat0, string sOrReqFeat1, string sOrReqFeat2, string sOrReqFeat3, string sOrReqFeat4);
+
+// loops through the feat array on the PC to see if it has nReqFeat
+int PreReqFeatArrayLoop(int nReqFeat);
+
+// checks if the PC has enough skill ranks in the two skills
+// '****' as ReqSkill arguement is treated as an automatic TRUE for that arguement
+// used to check if the PC meets the prerequisites in the ReqSkill AND ReqSkill2
+// columns of feat.2da
+int GetMeetSkillPrereq(string sReqSkill, string sReqSkill2, string sReqSkillRanks,  string sReqSkillRanks2);
+
+// checks if the PC has enough points in sReqSkill
+int CheckSkillPrereq(string sReqSkill, string sReqSkillRanks);
+
 /* 2da cache functions */
 
 // loops through a 2da, using the cache
@@ -368,6 +392,107 @@ int GetNextCCCStage(int nStage)
     return -1; // silly compiler
 }
 
+int GetMeetsANDPreReq(string sPreReqFeat1, string sPreReqFeat2)
+{
+    // are there any prereq?
+    if (sPreReqFeat1 == "****" && sPreReqFeat2 == "****")
+        return TRUE;
+    // test if the PC meets the first prereq
+    // if not, exit
+    if(!PreReqFeatArrayLoop(StringToInt(sPreReqFeat1)))
+        return FALSE;
+    // got this far, then the first prereq was met
+    // is there a second prereq? If not, done
+    if (sPreReqFeat2 == "****")
+        return TRUE;
+    // test if the PC meets the second one
+    if(!PreReqFeatArrayLoop(StringToInt(sPreReqFeat2)))
+        return FALSE;
+    // got this far, so second one matched too
+    return TRUE;
+}
+
+int GetMeetsORPreReq(string sOrReqFeat0, string sOrReqFeat1, string sOrReqFeat2, string sOrReqFeat3, string sOrReqFeat4)
+{
+    // are there any prereq
+    if (sOrReqFeat0 == "****")
+        return TRUE;
+    // first one
+    if(PreReqFeatArrayLoop(StringToInt(sOrReqFeat0)))
+        return TRUE;
+    // second one
+    if(PreReqFeatArrayLoop(StringToInt(sOrReqFeat1)))
+        return TRUE;
+    // third one
+    if(PreReqFeatArrayLoop(StringToInt(sOrReqFeat2)))
+        return TRUE;
+    // 4th one
+    if(PreReqFeatArrayLoop(StringToInt(sOrReqFeat3)))
+        return TRUE;
+    // 5th one
+    if(PreReqFeatArrayLoop(StringToInt(sOrReqFeat4)))
+        return TRUE;
+    // no match
+    return FALSE;
+}
+
+int PreReqFeatArrayLoop(int nOrReqFeat)
+{
+    // as alertness is stored in the array as -1
+    if (nOrReqFeat == 0)
+        nOrReqFeat == -1;
+    int i = 0;
+    while (i != array_get_size(OBJECT_SELF, "Feats"))
+    {
+        int nFeat  = array_get_int(OBJECT_SELF, "Feats", i);
+        if(nFeat == nOrReqFeat) // if there's a match, the prereq are met
+            return TRUE;
+        i++;
+    }
+    // otherwise no match
+    return FALSE;
+}
+
+int GetMeetSkillPrereq(string sReqSkill, string sReqSkill2, string sReqSkillRanks,  string sReqSkillRanks2)
+{
+    if(sReqSkill == "****" && sReqSkill2 == "****")
+        return TRUE;
+    // test if the PC meets the first prereq
+    if(!CheckSkillPrereq(sReqSkill, sReqSkillRanks))
+        return FALSE;
+    
+    // got this far, then the first prereq was met
+	// is there a second prereq? If not, done
+    if(sReqSkill2 == "****")
+        return TRUE;
+    if(!CheckSkillPrereq(sReqSkill2, sReqSkillRanks2))
+        return FALSE;
+    // got this far, so second one matched too
+    return TRUE;
+}
+
+int CheckSkillPrereq(string sReqSkill, string sReqSkillRanks)
+{
+    // for skill focus feats
+    if (sReqSkillRanks == "0" || sReqSkillRanks == "****") // then it just requires being able to put points in the skill
+    {
+        // if requires animal empathy, but the PC can't take ranks in it
+        if(sReqSkill == "0" && !GetLocalInt(OBJECT_SELF, "bHasAnimalEmpathy"))
+            return FALSE;
+        // if requires UMD, but the PC can't take ranks in it
+        if(sReqSkill == IntToString(SKILL_USE_MAGIC_DEVICE) && !GetLocalInt(OBJECT_SELF, "bHasUMD"))
+            return FALSE;
+    }
+    else // test if the PC has enough ranks in the skill
+    {
+        int nSkillPoints = array_get_int(OBJECT_SELF, "Skills", StringToInt(sReqSkill));
+        if (nSkillPoints < StringToInt(sReqSkillRanks))
+            return FALSE;
+    }
+    // get this far then not failed any fo the prereq
+    return TRUE;
+}
+
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
 {
     int i = 0;
@@ -578,8 +703,155 @@ void DoSkillsLoop()
 
 void DoFeatLoop()
 {
-    FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-    DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+    /* TODO - class feats, scripting feat enforcement */
+    // get the table/column name quote mark
+    string q = PRC_SQLGetTick();
+    object oPC = OBJECT_SELF;
+    
+    // check if UMD and animal empathy can be taken for prereq for the skill focus feats
+    // done here because reading the 2da cache clears out any existing SQL results
+    // note: any other skill that is restricted to certain classes needs to be hardcoded here
+    string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(oPC, "Class"));
+    
+    /*
+     * SELECT SkillIndex FROM <cls_feat_***> WHERE SkillIndex = <skill>
+     */
+    
+    // query to see if animal empathy is on that list
+    string sSkillAnimalEmpathy = "0"; // as int 0 is the same as a non existant row
+    string sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    +q+"data"+q+ " = '" + sSkillAnimalEmpathy + "'";
+    
+    PRC_SQLExecDirect(sSQL);
+    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == "0") // check it was the right skill
+        SetLocalInt(oPC, "bHasAnimalEmpathy", TRUE);
+    
+    // query to see if use magic device is on that list
+    string sSkillUMD = IntToString(SKILL_USE_MAGIC_DEVICE);
+    sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    +q+"data"+q+ " = '" + sSkillUMD + "'";
+    
+    PRC_SQLExecDirect(sSQL);
+    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == sSkillUMD) // check it was the right skill
+        SetLocalInt(oPC, "bHasUMD", TRUE);
+    
+    // get the information needed to work out if the prereqs are met
+    int nSex = GetLocalInt(oPC, "Gender");
+	int nRace = GetLocalInt(oPC, "Race");
+	int nClass = GetLocalInt(oPC, "Class");
+    int nStr = GetLocalInt(oPC, "Str");
+    int nDex = GetLocalInt(oPC, "Dex");
+    int nCon = GetLocalInt(oPC, "Con");
+    int nInt = GetLocalInt(oPC, "Int");
+    int nWis = GetLocalInt(oPC, "Wis");
+    int nCha = GetLocalInt(oPC, "Cha"); 
+    int nOrder = GetLocalInt(oPC, "LawfulChaotic");
+    int nMoral = GetLocalInt(oPC, "GoodEvil");
+
+    //add racial ability alterations
+    nStr += StringToInt(Get2DACache("racialtypes", "StrAdjust", nRace));
+    nDex += StringToInt(Get2DACache("racialtypes", "DexAdjust", nRace));
+    nCon += StringToInt(Get2DACache("racialtypes", "ConAdjust", nRace));
+    nInt += StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace));
+    nWis += StringToInt(Get2DACache("racialtypes", "WisAdjust", nRace));
+    nCha += StringToInt(Get2DACache("racialtypes", "ChaAdjust", nRace));
+    
+    // get BAB
+    int nBAB = StringToInt(Get2DACache(Get2DACache("classes", "AttackBonusTable", nClass), "BAB", 0));
+    
+    // get fortitude save
+    int nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", 0));
+    
+    /*
+    SELECT `rowid`, `feat`, `PREREQFEAT1`, `PREREQFEAT2`, `OrReqFeat0`, `OrReqFeat1`, `OrReqFeat2`, `OrReqFeat3`, `OrReqFeat4`,
+	`REQSKILL`, `REQSKILL2`, `ReqSkillMinRanks`, `ReqSkillMinRanks2`
+	FROM `prc_cached2da_feat`
+	WHERE (`feat` != '****') AND (`PreReqEpic` != 1)
+	AND (`MinLevel` = '****' OR `MinLevel` = '1')
+	AND `ALLCLASSESCANUSE` = 1
+	AND `minattackbonus` <= <nBAB>
+	AND `minspelllvl` <= 1
+	AND `minstr`<= <nStr>
+	AND `mindex`<= <nDex>
+	AND `mincon`<= <nCon>
+	AND `minint`<= <nInt>
+	AND `minwis`<= <nWis>
+	AND `mincha`<= <nCha>
+	AND `MinFortSave` <= <nFortSave>
+	*/
+    
+    // get the results 5 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    sSQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
+		    +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
+            +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
+            " FROM "+q+"prc_cached2da_feat"+q+
+            " WHERE ("+q+"FEAT"+q+" != '****') AND ("+q+"PreReqEpic"+q+" != 1)"
+			+" AND ("+q+"MinLevel"+q+" = '****' OR "+q+"MinLevel"+q+" = '1')"
+            +" AND ("+q+"ALLCLASSESCANUSE"+q+" = 1)"
+            +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
+            +" AND ("+q+"MINSPELLLVL"+q+" <= 1)"
+            +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
+            +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
+            +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
+            +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
+            +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
+            +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
+            +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
+            +" LIMIT 5 OFFSET "+IntToString(nReali);
+            
+    PRC_SQLExecDirect(sSQL);
+    // to keep track of where in the 25 rows we stop getting a result
+    int nCounter = 0;
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+	    int nRow = StringToInt(PRC_SQLGetData(1));
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        string sPreReqFeat1 = PRC_SQLGetData(3);
+        string sPreReqFeat2 = PRC_SQLGetData(4);
+        string sOrReqFeat0 = PRC_SQLGetData(5);
+        string sOrReqFeat1 = PRC_SQLGetData(6);
+        string sOrReqFeat2 = PRC_SQLGetData(7);
+        string sOrReqFeat3 = PRC_SQLGetData(8);
+        string sOrReqFeat4 = PRC_SQLGetData(9);
+        string sReqSkill = PRC_SQLGetData(10);
+        string sReqSkill2 = PRC_SQLGetData(11);
+        string sReqSkillRanks = PRC_SQLGetData(12);
+        string sReqSkillRanks2 = PRC_SQLGetData(13);
+        
+        // check AND feat prerequisites
+        if (GetMeetsANDPreReq(sPreReqFeat1, sPreReqFeat2))
+        {
+            // check OR feat prerequisites
+            if (GetMeetsORPreReq(sOrReqFeat0, sOrReqFeat1, sOrReqFeat2, sOrReqFeat3, sOrReqFeat4))
+            {
+                // check skill prerequisites
+                if(GetMeetSkillPrereq(sReqSkill, sReqSkill2, sReqSkillRanks, sReqSkillRanks2))
+                {
+                    // check they don't have it already
+                    if(!PreReqFeatArrayLoop(nRow))
+                        AddChoice(sName, nRow);
+                }
+            }
+        }
+    } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    
+    if(nCounter == 5)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+5);
+        DelayCommand(0.01, DoFeatLoop());
+    }
+    else // there were less than 5 rows, it's the end of the 2da
+    {
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        DeleteLocalInt(OBJECT_SELF, "i");
+        return;
+    }
 }
 
 void AddRaceFeats(int nRace)

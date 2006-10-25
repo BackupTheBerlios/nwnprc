@@ -93,7 +93,10 @@ void DoClassesLoop();
 void DoSkillsLoop();
 
 // loops through feat.2da
-void DoFeatLoop();
+void DoFeatLoop(int nClassFeatStage = FALSE);
+
+// loops through cls_feat_***.2da
+void DoBonusFeatLoop();
 
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
@@ -701,7 +704,7 @@ void DoSkillsLoop()
     }
 }
 
-void DoFeatLoop()
+void DoFeatLoop(int nClassFeatStage = FALSE)
 {
     /* TODO - class feats, scripting feat enforcement */
     // get the table/column name quote mark
@@ -714,7 +717,7 @@ void DoFeatLoop()
     string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(oPC, "Class"));
     
     /*
-     * SELECT SkillIndex FROM <cls_feat_***> WHERE SkillIndex = <skill>
+     * SELECT SkillIndex FROM <cls_skill_***> WHERE SkillIndex = <skill>
      */
     
     // query to see if animal empathy is on that list
@@ -764,45 +767,102 @@ void DoFeatLoop()
     // get fortitude save
     int nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", 0));
     
-    
-    /*
-    SELECT `rowid`, `feat`, `PREREQFEAT1`, `PREREQFEAT2`, `OrReqFeat0`, `OrReqFeat1`, `OrReqFeat2`, `OrReqFeat3`, `OrReqFeat4`,
-	`REQSKILL`, `REQSKILL2`, `ReqSkillMinRanks`, `ReqSkillMinRanks2`
-	FROM `prc_cached2da_feat`
-	WHERE (`feat` != '****') AND (`PreReqEpic` != 1)
-	AND (`MinLevel` = '****' OR `MinLevel` = '1')
-	AND `ALLCLASSESCANUSE` = 1
-	AND `minattackbonus` <= <nBAB>
-	AND `minspelllvl` <= 1
-	AND `minstr`<= <nStr>
-	AND `mindex`<= <nDex>
-	AND `mincon`<= <nCon>
-	AND `minint`<= <nInt>
-	AND `minwis`<= <nWis>
-	AND `mincha`<= <nCha>
-	AND `MinFortSave` <= <nFortSave>
-	*/
-    
     // get the results 5 rows at a time to avoid TMI
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    sSQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
-		    +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
-            +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
-            " FROM "+q+"prc_cached2da_feat"+q+
-            " WHERE ("+q+"FEAT"+q+" != '****') AND ("+q+"PreReqEpic"+q+" != 1)"
-			+" AND ("+q+"MinLevel"+q+" = '****' OR "+q+"MinLevel"+q+" = '1')"
-            +" AND ("+q+"ALLCLASSESCANUSE"+q+" = 1)"
-            +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
-            +" AND ("+q+"MINSPELLLVL"+q+" <= 1)"
-            +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
-            +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
-            +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
-            +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
-            +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
-            +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
-            +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
-            +" LIMIT 5 OFFSET "+IntToString(nReali);
-            
+    
+    if (!nClassFeatStage) // select the general feats
+    {
+        /*
+        SELECT `rowid`, `feat`, `PREREQFEAT1`, `PREREQFEAT2`, `OrReqFeat0`, `OrReqFeat1`, `OrReqFeat2`, `OrReqFeat3`, `OrReqFeat4`,
+        `REQSKILL`, `REQSKILL2`, `ReqSkillMinRanks`, `ReqSkillMinRanks2`
+        FROM `prc_cached2da_feat`
+        WHERE (`feat` != '****') AND (`PreReqEpic` != 1)
+        AND (`MinLevel` = '****' OR `MinLevel` = '1')
+        AND `ALLCLASSESCANUSE` = 1
+        AND `minattackbonus` <= <nBAB>
+        AND `minspelllvl` <= 1
+        AND `minstr`<= <nStr>
+        AND `mindex`<= <nDex>
+        AND `mincon`<= <nCon>
+        AND `minint`<= <nInt>
+        AND `minwis`<= <nWis>
+        AND `mincha`<= <nCha>
+        AND `MinFortSave` <= <nFortSave>
+        */
+        
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
+                +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
+                +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
+                " FROM "+q+"prc_cached2da_feat"+q+
+                " WHERE ("+q+"FEAT"+q+" != '****') AND ("+q+"PreReqEpic"+q+" != 1)"
+                +" AND ("+q+"MinLevel"+q+" = '****' OR "+q+"MinLevel"+q+" = '1')"
+                +" AND ("+q+"ALLCLASSESCANUSE"+q+" = 1)"
+                +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
+                +" AND ("+q+"MINSPELLLVL"+q+" <= 1)"
+                +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
+                +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
+                +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
+                +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
+                +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
+                +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
+                +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
+                +" LIMIT 5 OFFSET "+IntToString(nReali);
+    }
+    else // select the class feats
+    {
+        // get which cls_feat_*** 2da to use
+        string sFile = Get2DACache("classes", "FeatsTable", nClass);
+        
+        /*
+        SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT, 
+            prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, 
+            prc_cached2da_feat.OrReqFeat0, prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, 
+            prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,
+            prc_cached2da_feat.ReqMinSkillRanks, prc_cached2da_feat.ReqMinSkillRanks2
+        FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat
+        WHERE (prc_cached2da_feat.FEAT != '****') AND (prc_cached2da_cls_feat.FeatIndex != '****')
+            AND (prc_cached2da_cls_feat.file = '<cls_feat***>')
+            AND (prc_cached2da_cls_feat.List <= 1)
+            AND (prc_cached2da_cls_feat.GrantedOnLevel <= 1)
+            AND (prc_cached2da_feat.rowid = prc_cached2da_cls_feat.FeatIndex)
+            AND (`PreReqEpic` != 1)
+            AND (`MinLevel` = '****' OR `MinLevel` = '1')
+            AND `ALLCLASSESCANUSE` = 0
+            AND `minattackbonus` <= <nBAB>
+            AND `minspelllvl` <= 1
+            AND `minstr`<= <nStr>
+            AND `mindex`<= <nDex>
+            AND `mincon`<= <nCon>
+            AND `minint`<= <nInt>
+            AND `minwis`<= <nWis>
+            AND `mincha`<= <nCha>
+            AND `MinFortSave` <= <nFortSave>
+        */
+        
+        sSQL = "SELECT "+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
+                +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
+                +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
+                " FROM "+q+"prc_cached2da_feat"+q+ " INNER JOIN " +q+"prc_cached2da_cls_feat"+q+
+                " WHERE ("+q+"prc_cached2da_feat"+q+"."+q+"FEAT"+q+" != '****') AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')"
+                +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"file"+q+" = '" + sFile + "')"
+                +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" <= 1)"
+                +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"GrantedOnLevel"+q+" <= 1)"
+                +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")"
+                +" AND ("+q+"PreReqEpic"+q+" != 1)"
+                +" AND ("+q+"MinLevel"+q+" = '****' OR "+q+"MinLevel"+q+" = '1')"
+                +" AND ("+q+"ALLCLASSESCANUSE"+q+" != 1)"
+                +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
+                +" AND ("+q+"MINSPELLLVL"+q+" <= 1)"
+                +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
+                +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
+                +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
+                +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
+                +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
+                +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
+                +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
+                +" LIMIT 5 OFFSET "+IntToString(nReali);
+    }
+    
     // debug print the sql statement
     if(DEBUG)
     {
@@ -844,33 +904,236 @@ void DoFeatLoop()
                         AddChoice(sName, nRow);
                     else
                     {
-                        if(DEBUG) DoDebug("Already picked feat " + IntToString(nRow) + "Not added!");
+                        if(DEBUG) DoDebug("Already picked feat " + IntToString(nRow) + ". Not added!");
                     }
                 }
                 else
                 {
-                    if(DEBUG) DoDebug("Not met skill prereq for feat " + IntToString(nRow) + "Not added!");
+                    if(DEBUG) DoDebug("Not met skill prereq for feat " + IntToString(nRow) + ". Not added!");
                 }
             }
             else
             {
-                if(DEBUG) DoDebug("Not met OR prereqfeat test for feat " + IntToString(nRow) + "Not added!");
+                if(DEBUG) DoDebug("Not met OR prereqfeat test for feat " + IntToString(nRow) + ". Not added!");
             }
         }
         else
         {
-            if(DEBUG) DoDebug("Not met AND prereqfeat test for feat " + IntToString(nRow) + "Not added!");
+            if(DEBUG) DoDebug("Not met AND prereqfeat test for feat " + IntToString(nRow) + ". Not added!");
         }
     } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     
     if(nCounter == 5)
     {
         SetLocalInt(OBJECT_SELF, "i", nReali+5);
-        DelayCommand(0.01, DoFeatLoop());
+        DelayCommand(0.01, DoFeatLoop(nClassFeatStage));
+    }
+    else // there were less than 5 rows, it's the end of the 2da
+    {
+        if(nClassFeatStage)
+        {
+            FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+            if(DEBUG) DoDebug("Finished class feats");
+            DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+            DeleteLocalInt(OBJECT_SELF, "i");
+            return;
+        }
+        else // run again to select class feats
+        {
+            nClassFeatStage = TRUE;
+            if(DEBUG) DoDebug("Finished general feats");
+            DeleteLocalInt(OBJECT_SELF, "i");
+            DelayCommand(0.01, DoFeatLoop(nClassFeatStage));
+        }
+    }
+}
+
+void DoBonusFeatLoop()
+{
+    /* TODO - scripting feat enforcement */
+    // get the table/column name quote mark
+    string q = PRC_SQLGetTick();
+    object oPC = OBJECT_SELF;
+    
+    // check if UMD and animal empathy can be taken for prereq for the skill focus feats
+    // done here because reading the 2da cache clears out any existing SQL results
+    // note: any other skill that is restricted to certain classes needs to be hardcoded here
+    string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(oPC, "Class"));
+    
+    /*
+     * SELECT SkillIndex FROM <cls_skill_***> WHERE SkillIndex = <skill>
+     */
+    
+    // query to see if animal empathy is on that list
+    string sSkillAnimalEmpathy = "0"; // as int 0 is the same as a non existant row
+    string sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    +q+"data"+q+ " = '" + sSkillAnimalEmpathy + "'";
+    
+    PRC_SQLExecDirect(sSQL);
+    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == "0") // check it was the right skill
+        SetLocalInt(oPC, "bHasAnimalEmpathy", TRUE);
+    
+    // query to see if use magic device is on that list
+    string sSkillUMD = IntToString(SKILL_USE_MAGIC_DEVICE);
+    sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    +q+"data"+q+ " = '" + sSkillUMD + "'";
+    
+    PRC_SQLExecDirect(sSQL);
+    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == sSkillUMD) // check it was the right skill
+        SetLocalInt(oPC, "bHasUMD", TRUE);
+    
+    // get the information needed to work out if the prereqs are met
+    int nSex = GetLocalInt(oPC, "Gender");
+	int nRace = GetLocalInt(oPC, "Race");
+	int nClass = GetLocalInt(oPC, "Class");
+    int nStr = GetLocalInt(oPC, "Str");
+    int nDex = GetLocalInt(oPC, "Dex");
+    int nCon = GetLocalInt(oPC, "Con");
+    int nInt = GetLocalInt(oPC, "Int");
+    int nWis = GetLocalInt(oPC, "Wis");
+    int nCha = GetLocalInt(oPC, "Cha"); 
+    int nOrder = GetLocalInt(oPC, "LawfulChaotic");
+    int nMoral = GetLocalInt(oPC, "GoodEvil");
+
+    //add racial ability alterations
+    nStr += StringToInt(Get2DACache("racialtypes", "StrAdjust", nRace));
+    nDex += StringToInt(Get2DACache("racialtypes", "DexAdjust", nRace));
+    nCon += StringToInt(Get2DACache("racialtypes", "ConAdjust", nRace));
+    nInt += StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace));
+    nWis += StringToInt(Get2DACache("racialtypes", "WisAdjust", nRace));
+    nCha += StringToInt(Get2DACache("racialtypes", "ChaAdjust", nRace));
+    
+    // get BAB
+    int nBAB = StringToInt(Get2DACache(Get2DACache("classes", "AttackBonusTable", nClass), "BAB", 0));
+    
+    // get fortitude save
+    int nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", 0));
+    
+    // get the results 5 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    
+    // get which cls_feat_*** 2da to use
+    sFile = Get2DACache("classes", "FeatsTable", nClass);
+        
+        /*
+        SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT, 
+            prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, 
+            prc_cached2da_feat.OrReqFeat0, prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, 
+            prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,
+            prc_cached2da_feat.ReqMinSkillRanks, prc_cached2da_feat.ReqMinSkillRanks2
+        FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat
+        WHERE (prc_cached2da_feat.FEAT != '****') AND (prc_cached2da_cls_feat.FeatIndex != '****')
+            AND (prc_cached2da_cls_feat.file = '<cls_feat***>')
+            AND ((prc_cached2da_cls_feat.List = 1) OR (prc_cached2da_cls_feat.List = 2))
+            AND (prc_cached2da_cls_feat.GrantedOnLevel <= 1)
+            AND (prc_cached2da_feat.rowid = prc_cached2da_cls_feat.FeatIndex)
+            AND (`PreReqEpic` != 1)
+            AND (`MinLevel` = '****' OR `MinLevel` = '1')
+            AND `ALLCLASSESCANUSE` = 0
+            AND `minattackbonus` <= <nBAB>
+            AND `minspelllvl` <= 1
+            AND `minstr`<= <nStr>
+            AND `mindex`<= <nDex>
+            AND `mincon`<= <nCon>
+            AND `minint`<= <nInt>
+            AND `minwis`<= <nWis>
+            AND `mincha`<= <nCha>
+            AND `MinFortSave` <= <nFortSave>
+        */
+        
+        sSQL = "SELECT "+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
+                +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
+                +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
+                " FROM "+q+"prc_cached2da_feat"+q+ " INNER JOIN " +q+"prc_cached2da_cls_feat"+q+
+                " WHERE ("+q+"prc_cached2da_feat"+q+"."+q+"FEAT"+q+" != '****') AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')"
+                +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"file"+q+" = '" + sFile + "')"
+                +" AND (("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" = 1) OR ("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" = 2))"
+                +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"GrantedOnLevel"+q+" <= 1)"
+                +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")"
+                +" AND ("+q+"PreReqEpic"+q+" != 1)"
+                +" AND ("+q+"MinLevel"+q+" = '****' OR "+q+"MinLevel"+q+" = '1')"
+                +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
+                +" AND ("+q+"MINSPELLLVL"+q+" <= 1)"
+                +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
+                +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
+                +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
+                +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
+                +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
+                +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
+                +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
+                +" LIMIT 5 OFFSET "+IntToString(nReali);
+                
+        // debug print the sql statement
+    if(DEBUG)
+    {
+        DoDebug(sSQL);
+    }
+            
+    PRC_SQLExecDirect(sSQL);
+    // to keep track of where in the 25 rows we stop getting a result
+    int nCounter = 0;
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+	    int nRow = StringToInt(PRC_SQLGetData(1));
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        string sPreReqFeat1 = PRC_SQLGetData(3);
+        string sPreReqFeat2 = PRC_SQLGetData(4);
+        string sOrReqFeat0 = PRC_SQLGetData(5);
+        string sOrReqFeat1 = PRC_SQLGetData(6);
+        string sOrReqFeat2 = PRC_SQLGetData(7);
+        string sOrReqFeat3 = PRC_SQLGetData(8);
+        string sOrReqFeat4 = PRC_SQLGetData(9);
+        string sReqSkill = PRC_SQLGetData(10);
+        string sReqSkill2 = PRC_SQLGetData(11);
+        string sReqSkillRanks = PRC_SQLGetData(12);
+        string sReqSkillRanks2 = PRC_SQLGetData(13);
+        
+        // check AND feat prerequisites
+        if (GetMeetsANDPreReq(sPreReqFeat1, sPreReqFeat2))
+        {
+            // check OR feat prerequisites
+            if (GetMeetsORPreReq(sOrReqFeat0, sOrReqFeat1, sOrReqFeat2, sOrReqFeat3, sOrReqFeat4))
+            {
+                // check skill prerequisites
+                if(GetMeetSkillPrereq(sReqSkill, sReqSkill2, sReqSkillRanks, sReqSkillRanks2))
+                {
+                    // check they don't have it already
+                    if(!PreReqFeatArrayLoop(nRow))
+                        AddChoice(sName, nRow);
+                    else
+                    {
+                        if(DEBUG) DoDebug("Already picked feat " + IntToString(nRow) + ". Not added!");
+                    }
+                }
+                else
+                {
+                    if(DEBUG) DoDebug("Not met skill prereq for feat " + IntToString(nRow) + ". Not added!");
+                }
+            }
+            else
+            {
+                if(DEBUG) DoDebug("Not met OR prereqfeat test for feat " + IntToString(nRow) + ". Not added!");
+            }
+        }
+        else
+        {
+            if(DEBUG) DoDebug("Not met AND prereqfeat test for feat " + IntToString(nRow) + ". Not added!");
+        }
+    } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    
+    if(nCounter == 5)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+5);
+        DelayCommand(0.01, DoBonusFeatLoop());
     }
     else // there were less than 5 rows, it's the end of the 2da
     {
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        if(DEBUG) DoDebug("Finished bonus feats");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         DeleteLocalInt(OBJECT_SELF, "i");
         return;

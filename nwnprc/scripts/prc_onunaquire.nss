@@ -23,10 +23,22 @@ void main()
     if(GetPRCSwitch(PRC_AUTO_UNIDENTIFY_ON_UNACQUIRE))
     {
         object oNewOwner = GetItemPossessor(oItem);
-        if(GetObjectType(oNewOwner) != OBJECT_TYPE_STORE
-            && (GetIsFriend(oPC, oNewOwner)
-                || GetIsNeutral(oPC, oNewOwner)))
+        if(GetIsObjectValid(oNewOwner))
+        {
+            if((GetObjectType(oNewOwner) == OBJECT_TYPE_CREATURE
+                && (GetIsFriend(oPC, oNewOwner)
+                    || GetIsNeutral(oPC, oNewOwner)))
+                || GetObjectType(oNewOwner) == OBJECT_TYPE_STORE)
+            {
+            }
+            else
+                SetIdentified(oItem, FALSE);
+        }   
+        else
+        {
+            //put on ground?
             SetIdentified(oItem, FALSE);
+        }
     }
 
     // Remove all temporary item properties when dropped/given away/stolen/sold.

@@ -24,13 +24,18 @@
 const int STAGE_SHOP                = 0;
 const int STAGE_BIOWARE_SHOP        = 1;
 const int STAGE_RANDOM_SHOP         = 2;
+const int STAGE_RANDOM_SHOP_LEVEL   = 21;
+const int STAGE_RANDOM_SHOP_AC      = 22;
 
 
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
 
-
+void StoresGetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0)
+{
+    object oTest = GetRandomizedItemByType(nBaseItemType, nLevel, nAC);
+}
 
 //////////////////////////////////////////////////
 /* Main function                                */
@@ -121,8 +126,37 @@ void main()
             }
             else if(nStage == STAGE_RANDOM_SHOP)
             {
-                SetHeader("Select a type of item");                
-                AddChoice("Short sword",  1, oPC);          
+                SetHeader("Select a type of item"); 
+                int i;
+                for(i=0; i<RIG_ROOT_COUNT; i++)
+                {
+                        
+                    int nBaseItem = StringToInt(Get2DACache("rig_root", "BaseItem", i));
+                    string sName = GetStringByStrRef(StringToInt(Get2DACache("baseitems", "Name", nBaseItem)));
+                    AddChoice(sName,  nBaseItem, oPC);      
+                }    
+                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+            }
+            else if(nStage == STAGE_RANDOM_SHOP_AC)
+            {
+                SetHeader("Select a AC of item"); 
+                int i;
+                for(i=1;i<10;i++)
+                {
+                    AddChoice("AC "+IntToString(i),  i, oPC);      
+                }    
+                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+            }
+            else if(nStage == STAGE_RANDOM_SHOP_LEVEL)
+            {
+                SetHeader("Select a level of item"); 
+                int i;
+                for(i=1;i<40;i++)
+                {
+                    AddChoice("Level "+IntToString(i),  i, oPC);      
+                }    
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
@@ -135,6 +169,8 @@ void main()
     else if(nValue == DYNCONV_EXITED)
     {
         // Add any locals set through this conversation
+        DeleteLocalInt(OBJECT_SELF, "RIG_Item");
+        DeleteLocalInt(OBJECT_SELF, "RIG_AC");
     }
     // Abort conversation cleanup.
     // NOTE: This section is only run when the conversation is aborted
@@ -143,6 +179,8 @@ void main()
     else if(nValue == DYNCONV_ABORTED)
     {
         // Add any locals set through this conversation
+        DeleteLocalInt(OBJECT_SELF, "RIG_Item");
+        DeleteLocalInt(OBJECT_SELF, "RIG_AC");
     }
     // Handle PC responses
     else
@@ -170,22 +208,34 @@ void main()
         }
         else if(nStage == STAGE_RANDOM_SHOP)
         {
+            SetLocalInt(OBJECT_SELF, "RIG_Item", nChoice); 
+            if(nChoice == BASE_ITEM_ARMOR)
+                nStage = STAGE_RANDOM_SHOP_AC;
+            else    
+                nStage = STAGE_RANDOM_SHOP_LEVEL;
+        }
+        else if(nStage == STAGE_RANDOM_SHOP_AC)
+        {
+            SetLocalInt(OBJECT_SELF, "RIG_AC", nChoice); 
+            nStage = STAGE_RANDOM_SHOP_LEVEL;
+        }
+        else if(nStage == STAGE_RANDOM_SHOP_LEVEL)
+        {
             string sResRef = "store_sale";
             object oStore = CreateObject(OBJECT_TYPE_STORE, sResRef, GetLocation(OBJECT_SELF));
             DelayCommand(1.0, OpenStore(oStore, oPC));
             AssignCommand(oStore, 
                 DelayCommand(300.0, 
                 DestroyObject(oStore)));
-            int nType = BASE_ITEM_SHORTSWORD; 
-            int nECL = GetECL(oPC);
-            int nAC = 0;
+            int nType = GetLocalInt(OBJECT_SELF, "RIG_Item"); 
+            int nAC = GetLocalInt(OBJECT_SELF, "RIG_AC");
             int i;
-            for(i=0; i< RIG_ITEM_CACHE_SIZE;i++)
+            for(i=0; i < RIG_GetCacheSize(nType); i++)
             {
                 AssignCommand(oStore, 
-                    VoidGetRandomizedItemByType(
+                    StoresGetRandomizedItemByType(
                         nType,
-                        nECL,
+                        nChoice,
                         nAC));
             }
             AllowExit(DYNCONV_EXIT_FORCE_EXIT);  

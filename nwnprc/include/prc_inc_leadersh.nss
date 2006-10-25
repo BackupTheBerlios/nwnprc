@@ -56,6 +56,7 @@ object AddCohortToPlayer(int nCohortID, object oPC)
 {
     object oCohort = RetrieveCampaignObject(COHORT_DATABASE, "Cohort_"+IntToString(nCohortID)+"_obj", GetLocation(oPC));
     //give it a tag
+    AssignCommand(oCohort, SetIsDestroyable(TRUE, FALSE, FALSE));
     DestroyObject(oCohort);
     oCohort = CopyObject(oCohort, GetLocation(oPC), OBJECT_INVALID, COHORT_TAG);
     SetLocalInt(oCohort, "CohortID", nCohortID);
@@ -206,7 +207,7 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
 
         //if it was a premade one, give it a random name
         //randomize its appearance using DoDisguise
-        if(GetResRef(oCohort) != "")
+        if(GetResRef(oCohort) != COHORT_TAG)
         {
             string sName;
             //first name
@@ -298,7 +299,7 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
         }
 
         //if its a custom made cohort, need to cancel GreatX feats
-        if(GetResRef(oCohort) == "")
+        if(GetResRef(oCohort) == COHORT_TAG)
             CancelGreatFeats(oCohort);
 
 

@@ -29,9 +29,14 @@ void EquipByType(int nType, int nSlot, int nAC = 0, int nTrial = 10)
     }
 
     if(nSlot != -1)
+    {
+        //if its armor, make sure not in combat mode
+        if(nType == BASE_ITEM_ARMOR)
+            ClearAllActions(TRUE);
         ForceEquip(OBJECT_SELF,
             oItem,
             nSlot);
+    }        
 }
 
 void DoArmor()
@@ -221,6 +226,84 @@ void ReapplyWingsAndTails()
         SetCreatureWingType(CREATURE_WING_TYPE_BIRD, OBJECT_SELF);
 }        
 
+void EquipOther()
+{
+    //other items
+    int nECL = GetHitDice(OBJECT_SELF);
+    //number of slots to fill
+    int nSlotMax = 8;
+    //half by ECL, and half by chance
+    int nSlotCount = FloatToInt((IntToFloat(nECL)/20.0)*(IntToFloat(nSlotMax)/2.0));
+    nSlotCount += Random(nSlotCount+1);
+    //fill them
+    int nSlots;
+    int i;
+    for(0;i<nSlotCount;i++)
+    {
+        int nRandom = Random(8);
+        switch(nRandom)
+        {
+            case 0:
+                nSlots = nSlots | 1;
+                break;
+            case 1:
+                nSlots = nSlots | 2;
+                break;
+            case 2:
+                nSlots = nSlots | 4;
+                break;
+            case 3:
+                nSlots = nSlots | 8;
+                break;
+            case 4:
+                nSlots = nSlots | 16;
+                break;
+            case 5:
+                nSlots = nSlots | 32;
+                break;
+            case 6:
+                nSlots = nSlots | 64;
+                break;
+            case 7:
+                nSlots = nSlots | 128;
+                break;
+        }
+    }
+    //bitwise math
+    //head
+    if(nSlots & 1)
+        DelayCommand(5.0,
+            EquipByType(BASE_ITEM_HELMET, INVENTORY_SLOT_HEAD));
+    //rings
+    if(nSlots & 2)
+        DelayCommand(6.0,
+            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_LEFTHAND));
+    if(nSlots & 4)
+        DelayCommand(7.0,
+            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_RIGHTHAND));
+    //belt        
+    if(nSlots & 8)
+        DelayCommand(8.0,
+            EquipByType(BASE_ITEM_BELT, INVENTORY_SLOT_BELT));
+    //belt        
+    if(nSlots & 16)
+        DelayCommand(9.0,
+            EquipByType(BASE_ITEM_BOOTS, INVENTORY_SLOT_BOOTS));
+    //cloak        
+    if(nSlots & 32)
+        DelayCommand(10.0,
+            EquipByType(BASE_ITEM_CLOAK, INVENTORY_SLOT_CLOAK));
+    //necklace        
+    if(nSlots & 64)
+        DelayCommand(11.0,
+            EquipByType(BASE_ITEM_AMULET, INVENTORY_SLOT_NECK));
+    //bracers/gloves        
+    if(nSlots & 128)
+        DelayCommand(12.0,
+            EquipByType(BASE_ITEM_BRACER, INVENTORY_SLOT_ARMS));
+
+}
+
 void main()
 {
     //make sure it only runs once
@@ -277,111 +360,6 @@ void main()
         EquipByType(GetHandItemType(OBJECT_SELF, FALSE, FALSE),-1));
     DelayCommand(5.0,
         EquipByType(GetHandItemType(OBJECT_SELF, TRUE, FALSE),-1));
-        
-    //other items
-    int nECL = GetHitDice(OBJECT_SELF);
-    //number of slots to fill
-    int nSlotMax = 8;
-    //half by ECL, and half by chance
-    int nSlotCount = FloatToInt((IntToFloat(nECL)/20.0)*(IntToFloat(nSlotMax)/2.0));
-    nSlotCount += Random(nSlotCount+1);
-    //fill them
-    int nSlots;
-    int i;
-    while(i<nSlotCount)
-    {
-        int nRandom = Random(8);
-        switch(nRandom)
-        {
-            case 0:
-                if(!(nSlots & 1))
-                {
-                    nSlots = nSlots | 1;
-                    i++;
-                }    
-                break;
-            case 1:
-                if(!(nSlots & 2))
-                {
-                    nSlots = nSlots | 2;
-                    i++;
-                }    
-                break;
-            case 2:
-                if(!(nSlots & 4))
-                {
-                    nSlots = nSlots | 4;
-                    i++;
-                }    
-                break;
-            case 3:
-                if(!(nSlots & 8))
-                {
-                    nSlots = nSlots | 8;
-                    i++;
-                }    
-                break;
-            case 4:
-                if(!(nSlots & 16))
-                {
-                    nSlots = nSlots | 16;
-                    i++;
-                }    
-                break;
-            case 5:
-                if(!(nSlots & 32))
-                {
-                    nSlots = nSlots | 32;
-                    i++;
-                }    
-                break;
-            case 6:
-                if(!(nSlots & 64))
-                {
-                    nSlots = nSlots | 64;
-                    i++;
-                }    
-                break;
-            case 7:
-                if(!(nSlots & 128))
-                {
-                    nSlots = nSlots | 128;
-                    i++;
-                }    
-                break;
-        }
-    }
-    //bitwise math
-    //head
-    if(nSlots & 1)
-        DelayCommand(5.0,
-            EquipByType(BASE_ITEM_HELMET, INVENTORY_SLOT_HEAD));
-    //rings
-    if(nSlots & 2)
-        DelayCommand(6.0,
-            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_LEFTHAND));
-    if(nSlots & 4)
-        DelayCommand(7.0,
-            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_RIGHTHAND));
-    //belt        
-    if(nSlots & 8)
-        DelayCommand(8.0,
-            EquipByType(BASE_ITEM_BELT, INVENTORY_SLOT_BELT));
-    //belt        
-    if(nSlots & 16)
-        DelayCommand(9.0,
-            EquipByType(BASE_ITEM_BOOTS, INVENTORY_SLOT_BOOTS));
-    //cloak        
-    if(nSlots & 32)
-        DelayCommand(10.0,
-            EquipByType(BASE_ITEM_CLOAK, INVENTORY_SLOT_CLOAK));
-    //necklace        
-    if(nSlots & 64)
-        DelayCommand(11.0,
-            EquipByType(BASE_ITEM_AMULET, INVENTORY_SLOT_NECK));
-    //bracers/gloves        
-    if(nSlots & 128)
-        DelayCommand(12.0,
-            EquipByType(BASE_ITEM_BRACER, INVENTORY_SLOT_ARMS));
+    DelayCommand(6.0, EquipOther());
         
 }

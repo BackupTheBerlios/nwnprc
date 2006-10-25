@@ -1,21 +1,25 @@
 
+//called mainly by the caching system
+//does the actual creation and stuff
+void CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
 
-object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = FALSE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
-object RandomizeItem(object oItem, int nLevel, int nRandomizeAppearance = FALSE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE);
+//spliot to avoid TMI
+void CreateRandomizeItemByType_B(object oItem, int nLevel, int nAC, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)  ;
 
-object RIG_AddItemProperty(object oItem, int nRIGIP);
-object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC = 0);
-int RIG_GetRandomMatchingRootByType(int nBase, int nAC = 0);
-int RIG_GetRandomMatchingRoot(object oItem, int nAC = 0);
-int RIG_CheckLimitations(object oItem, object oPC = OBJECT_SELF);
+//retrieves an object from the cache
+object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0);
 
-const int RIG_CREATE_ALL_CACHE_CHESTS_ON_LOAD = TRUE;
-const int RIG_ITEM_CACHE_SIZE                 = 1;
-const int RIG_ITEM_CACHE_SIZE_MAX             = 10;
-const int RIG_PRE_EPIC_ONE_AFFIX_LIMIT        = TRUE;
-const int           RIG_ROOT_COUNT      = 70;
-const string        RIG_DB              = "rig";
-const float         RIG_DB_DELAY        = 6000.0;//1 hour
+const int       RIG_CREATE_ALL_CACHE_CHESTS_ON_LOAD = TRUE;
+const int       RIG_ITEM_CACHE_SIZE                 =   1;
+const int       RIG_ITEM_CACHE_SIZE_MAX             =  10;
+const int       RIG_PRE_EPIC_ONE_AFFIX_LIMIT        = TRUE;
+const int       RIG_ROOT_COUNT                      =  70;
+const int       RIG_STOLEN_RATE                     =   1; //percentage
+const int       RIG_CURSED_RATE                     =   1; //percentage
+const int       RIG_STACK_MIN_PROPORTION            =  50; //percentage
+const int       RIG_STACK_MAX_PROPORTION            = 100; //percentage
+const int       RIG_CHARGE_MIN_PROPORTION           =  25; //percentage
+const int       RIG_CHARGE_MAX_PROPORTION           =  75; //percentage
 
 #include "prc_gateway"
 #include "rig_inc_app"
@@ -40,104 +44,19 @@ int GetIsStackableItem(object oItem)
     return bStack;
 }
 
-
-void VoidRandomizeItem(object oItem, int nLevel)
+object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0)
 {
-    RandomizeItem(oItem, nLevel);
-}
-
-//during this function, the item is checked against OBJECT_SELF
-//for equiping restrictions
-object RandomizeItem(object oItem, int nLevel, int nRandomizeAppearance = FALSE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
-{
-//    DoDebug("RandomizeItem("+ObjectToString(oItem)+", "+IntToString(nLevel)+");");
-
-    object oOriginalItem = oItem;
-    int nIsDroppable = GetDroppableFlag(oItem);
-
-    //sanity testing
-    if(!GetIsObjectValid(oItem))
-    {
-//        DoDebug("oItem is not valid going into RandomizeItem");
-        return OBJECT_INVALID;
-    }
-
-    //already mid-randomization, abort
-    if(GetLocalInt(oItem, "RigEditing"))
-    {
-//        DoDebug(GetName(oItem)+" is already being randomized");
-        return oItem;
-    }
-
-    //set a local int to avoid multiple runs
-    SetLocalInt(oItem, "RigEditing", TRUE);
-
-    //store original items AC for later
-    //odd things if you get AC later on
-    //we want the base AC, excluding itemproperties
-    int nAC =  GetBaseAC(oItem);
-
-    //do the itemproperties
-    if(nRandomizeAffixs)
-        oItem = RIG_Core(oItem, nLevel, nAC);
-
-    //randomize appearance
-    if(nRandomizeAppearance)
-        oItem = RandomizeItemAppearance(oItem, nAC);
-
-    //move it back from temporary storage
-    DestroyObject(oItem);
-    oItem = CopyItem(oItem, OBJECT_SELF, TRUE);
-
-    if(nRandomizeOther)
-    {
-        //randomize charges if appropriate
-        if(GetItemCharges(oItem) > 0)
-            SetItemCharges(oItem, Random(49)+1);
-
-        //randomize stack size, if appropriate
-        if(GetIsStackableItem(oItem))
-            SetItemStackSize(oItem, Random(StringToInt(Get2DACache("baseitems", "ILRStackSize", GetBaseItemType(oItem)))));
-
-        //1% of items are cursed
-        SetItemCursedFlag(oItem, FALSE);
-        if(Random(100)==0)
-            SetItemCursedFlag(oItem, TRUE);
-
-        //1% of items are stolen
-        SetStolenFlag(oItem, FALSE);
-        if(Random(100)==0)
-            SetStolenFlag(oItem, TRUE);
-    }
-
-    //set it if it was droppable
-    SetDroppableFlag(oItem, nIsDroppable);
-
-    //clear local int to avoid multiple runs
-    DeleteLocalInt(oItem, "RigEditing");
-//    DoDebug(GetName(oItem)+" has finished being randomized");
-
-    SetLocalInt(oItem, "RigLevel", nLevel);
-    
-    //clean up the original
-    if(GetIsObjectValid(oItem))
-        DestroyObject(oOriginalItem);
-    else
-        oItem = oOriginalItem;
-    return oItem;
-}
-
-
-object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = FALSE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
-{
-    //check itws not an invalid type
+    //check its not an invalid type
     if(nBaseItemType == BASE_ITEM_INVALID)
-        return OBJECT_INVALID;
-//DoDebug("GetRandomizedItemByType() running at level "+IntToString(nLevel));    
+        return OBJECT_INVALID; 
     object oChest = RIG_GetCacheChest(nBaseItemType, nAC, nLevel);
-    //chest is valid
-//DoDebug("GetRandomizedItemByType() found existing chest "+sTag);    
-        //test against the counter local
+    //sanity check,chest is valid  
+    if(!GetIsObjectValid(oChest))
+    {
+        DoDebug("GetRandomizedItemByType() oChest is not valid!");
+        return OBJECT_INVALID;
+    }    
+    //test against the counter local
     //no objects in it abort now
     if(!GetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel))) 
         return OBJECT_INVALID;
@@ -149,15 +68,13 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
     object oTest = GetFirstItemInInventory(oChest);
     while(GetIsObjectValid(oTest))
     {
-//DoDebug("rig_inc line 132");
-//DoDebug("GetRandomizedItemByType() looking at "+GetName(oTest)+" "+IntToString(GetLocalInt(oTest, "RigLevel")));
         //clean up things that arnt supposed to be their
         if(GetLocalInt(oTest, "RigLevel") ==0)
         {
             DestroyObject(oTest);
         }    
         else if(GetLocalInt(oTest, "RigLevel") == nLevel
-            //&& RIG_CheckLimitations(oTest)
+            && RIG_CheckLimitations(oTest)
             )    
             break;//end while loop
         oTest = GetNextItemInInventory(oChest);
@@ -166,7 +83,7 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
     if(!GetIsObjectValid(oTest))
     {
         //check the size of the cache for this item, and if less than cachemax increase it
-        int nCacheMax = GetLocalInt(GetModule(), "RigCacheMax"+IntToString(nBaseItemType));
+        int nCacheMax = RIG_GetCacheSize(nBaseItemType);
         if(nCacheMax < RIG_ITEM_CACHE_SIZE_MAX)
         {
             SetLocalInt(GetModule(), "RigCacheMax"+IntToString(nBaseItemType), nCacheMax+1);
@@ -183,28 +100,20 @@ object GetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int n
     //this is based on how many items of that level are in the chest. 
     //If its full, never duplicate.
     //If its empty, always duplicate.
-    int nCacheSize = GetLocalInt(GetModule(), "RigCacheMax"+IntToString(nBaseItemType));
-    if(nCacheSize < RIG_ITEM_CACHE_SIZE)
-        nCacheSize = RIG_ITEM_CACHE_SIZE;
+    int nCacheSize = RIG_GetCacheSize(nBaseItemType);
     if(RandomI(nCacheSize) < GetLocalInt(oChest, "ContentsLevel"+IntToString(nLevel)))
         DestroyObject(oTest);
     return oReturn;    
 }
 
-void VoidGetRandomizedItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
-{
-    GetRandomizedItemByType(nBaseItemType, nLevel, nAC, nRandomizeAppearance, nRandomizeAffixs, nRandomizeOther);
-}
-
 //during this function, the item is checked against OBJECT_SELF
 //for equiping restrictions
-object CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = FALSE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
+void CreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
 {
-//DoDebug("CreateRandomizeItemByType() Starting "+IntToString(nBaseItemType)+" "+IntToString(nLevel)+" ");
     if(nBaseItemType == BASE_ITEM_INVALID)
     {
-DoDebug("CreateRandomizeItemByType() invalid base item type");
-        return OBJECT_INVALID;
+        DoDebug("CreateRandomizeItemByType() invalid base item type");
+        return;
     }
 
     SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
@@ -214,17 +123,22 @@ DoDebug("CreateRandomizeItemByType() invalid base item type");
         oItem = RIG_Core(oItem, nLevel, nBaseItemType, nAC);
     if(!GetIsObjectValid(oItem))
     {
-DoDebug("CreateRandomizeItemByType() invalid after Rig_Core");
-        return OBJECT_INVALID;
+        DoDebug("CreateRandomizeItemByType() invalid after Rig_Core");
+        return;
     }
+    //split to avoid TMI
+    DelayCommand(0.0, CreateRandomizeItemByType_B(oItem, nLevel, nAC, nRandomizeAppearance, nRandomizeAffixs, nRandomizeOther));
+}    
 
+void CreateRandomizeItemByType_B(object oItem, int nLevel, int nAC, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)   
+{    
     //randomize appearance
     if(nRandomizeAppearance)
         oItem = RandomizeItemAppearance(oItem, nAC);
     if(!GetIsObjectValid(oItem))
     {
-DoDebug("CreateRandomizeItemByType() invalid after RandomizeItemAppearance");
-        return OBJECT_INVALID;
+        DoDebug("CreateRandomizeItemByType() invalid after RandomizeItemAppearance");
+        return;
     }
 
     //move it back from temporary storage
@@ -232,420 +146,41 @@ DoDebug("CreateRandomizeItemByType() invalid after RandomizeItemAppearance");
     oItem = CopyItem(oItem, OBJECT_SELF, TRUE);
     if(!GetIsObjectValid(oItem))
     {
-DoDebug("CreateRandomizeItemByType() invalid after copy back");
-        return OBJECT_INVALID;
+        DoDebug("CreateRandomizeItemByType() invalid after copy back");
+        return;
     }
 
     if(nRandomizeOther)
     {
         //randomize charges if appropriate
         if(GetItemCharges(oItem) > 0)
-            SetItemCharges(oItem, RandomI(49)+1);
+        {
+            int nCharges = 50;
+            nCharges = FloatToInt(IntToFloat(nCharges)*IntToFloat(RandomI(RIG_CHARGE_MAX_PROPORTION-RIG_CHARGE_MIN_PROPORTION)+RIG_CHARGE_MIN_PROPORTION)*0.01);
+            SetItemCharges(oItem, nCharges);
+        }    
 
         //randomize stack size, if appropriate
         if(GetIsStackableItem(oItem))
-            SetItemStackSize(oItem, RandomI(StringToInt(Get2DACache("baseitems", "ILRStackSize", GetBaseItemType(oItem)))));
+        {
+            int nStack = StringToInt(Get2DACache("baseitems", "ILRStackSize", GetBaseItemType(oItem)));
+            nStack = FloatToInt(IntToFloat(nStack)*IntToFloat(RandomI(RIG_STACK_MAX_PROPORTION-RIG_STACK_MIN_PROPORTION)+RIG_STACK_MIN_PROPORTION)*0.01);
+            SetItemStackSize(oItem, nStack);
+        }    
 
-        //1% of items are cursed
+        //a % of items are cursed
         SetItemCursedFlag(oItem, FALSE);
-        if(RandomI(100)==0)
+        if(RandomI(100)<RIG_CURSED_RATE)
             SetItemCursedFlag(oItem, TRUE);
 
-        //1% of items are stolen
+        //a % of items are stolen
         SetStolenFlag(oItem, FALSE);
-        if(RandomI(100)==0)
+        if(RandomI(100)<RIG_STOLEN_RATE)
             SetStolenFlag(oItem, TRUE);
-    }
-    
-    SetLocalInt(oItem, "RigLevel", nLevel);
-DoDebug("CreateRandomizeItemByType() "+GetName(oItem)+" has finished being randomized");
-    return oItem;
-}
-
-void VoidCreateRandomizeItemByType(int nBaseItemType, int nLevel, int nAC = 0, int nRandomizeAppearance = TRUE, int nRandomizeAffixs = TRUE, int nRandomizeOther = TRUE)
-{
-    CreateRandomizeItemByType(nBaseItemType, nLevel, nAC, nRandomizeAppearance, nRandomizeAffixs, nRandomizeOther);
-}
-
-object RIG_Core(object oItem, int nLevel, int nType = BASE_ITEM_INVALID, int nAC = 0)
-{
-    int nRoot;
-    if(GetIsObjectValid(oItem))
-    {
-        nRoot = RIG_GetRandomMatchingRoot(oItem, nAC);
-        DestroyObject(oItem);
     }    
-    else
-        nRoot = RIG_GetRandomMatchingRootByType(nType, nAC);
-//DoDebug("Timer CreateRandomizeItemByType() Q : "+QueryTimer(OBJECT_SELF, "CreateRandomizeItemByType"));
-    string sResRef = Get2DACache("rig_root", "ResRef", nRoot);
-//DoDebug("RIG_Core() starting nRoot = "+IntToString(nRoot)+" sResRef = "+sResRef);
-    int nSuffix, nPrefix;
-    string sSuffix, sPrefix;
-    if(nType == BASE_ITEM_INVALID
-        && GetIsObjectValid(oItem))
-        nType = GetBaseItemType(oItem);
-    if(nType == BASE_ITEM_INVALID)
-        return OBJECT_INVALID;
-    int nIPType = StringToInt(Get2DACache("baseitems", "PropColumn", nType));
-    object oReturn;
-    object oTemp = CreateItemOnObject(sResRef, GetObjectByTag("HEARTOFCHAOS"));
-    if(!GetIsObjectValid(GetObjectByTag("HEARTOFCHAOS")))
-    {
-        DoDebug("RIG_Core() HEARTOFCHAOS is not valid");
-        return OBJECT_INVALID;
-    }
-    if(!GetIsObjectValid(oTemp))
-        oTemp = oItem;
-    if(!GetIsObjectValid(oTemp))
-    {
-        DoDebug("RIG_Core() oTemp is not valid");
-        return OBJECT_INVALID;
-    }
-//DoDebug("RIG_Core() name = "+GetName(oTemp));
-    //while (!GetIsObjectValid(oReturn))
-    //{
-//DoDebug("rig_inc line 215");
-        //oReturn = CopyItem(oTemp, GetObjectByTag("HEARTOFCHAOS"), TRUE);
-        oReturn = oTemp;
-        SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
-        SetLocalObject(OBJECT_SELF, "Random_Default_Object", oTemp);
-        if(nLevel <= 20
-            && RIG_PRE_EPIC_ONE_AFFIX_LIMIT)
-        {    
-            //pre-epic, either a prefix or a suffix, not both
-            if(Random(2))
-                sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);            
-            else          
-                sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
-        }
-        else
-        {
-            //epic item, can have both prefix and suffix
-            //random order of selection though
-            if(Random(2))
-            {
-                sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType); 
-                //second one is a number of levels lower equal to the difference from the max
-                //nLevel  = nLevel-(40-nLevel);
-                SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
-                sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);           
-            }    
-            else          
-            {
-                sPrefix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType);
-                //second one is a number of levels lower equal to the difference from the max
-                //nLevel  = nLevel-(40-nLevel);
-                SetLocalInt(OBJECT_SELF, "Random_Default_Level", nLevel);
-                sSuffix = GetRandomFrom2DA("rig_affix_r", "random_default", nIPType); 
-            }    
-        }    
-//DoDebug("Timer CreateRandomizeItemByType() Q : GetIsObjectValid(oReturn) : "+QueryTimer(OBJECT_SELF, "CreateRandomizeItemByType"));
-        //sanity check. No prefix/suffixs at all, then abort.
-        if(sSuffix == "" 
-            && sPrefix == "")
-        {
-            DestroyObject(oItem);
-            DestroyObject(oReturn);
-            return OBJECT_INVALID;
-        }
-        nSuffix = StringToInt(sSuffix);
-        nPrefix = StringToInt(sPrefix);
-        if(nPrefix == nSuffix 
-            && nPrefix != 0 
-            && nSuffix != 0)
-        {
-//DoDebug("rig_inc line 231");
-            //Duplicates become single-affixs
-            if(Random(2))
-                nPrefix = 0;
-            else
-                nSuffix = 0;
-        }
-//DoDebug("RIG_Core() nRoot = "+IntToString(nRoot)+" "+sPrefix+" "+sSuffix+" at level "+IntToString(nLevel));
-//DoDebug("sResRef = "+sResRef);
-        if(nSuffix != 0)
-        {
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property1", nSuffix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property2", nSuffix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property3", nSuffix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property4", nSuffix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property5", nSuffix)));
-        }
-        if(nPrefix != 0)
-        {
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property1", nPrefix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property2", nPrefix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property3", nPrefix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property4", nPrefix)));
-            if(GetIsObjectValid(oReturn))
-            oReturn = RIG_AddItemProperty(oReturn, StringToInt(Get2DACache("rig_affix", "Property5", nPrefix)));
-        }
-    //}
-    DestroyObject(oItem);
-    DeleteLocalInt(GetModule(), "RIG_LEVEL");
-    string sPrefixName = Get2DACache("rig_affix", "Text", nPrefix);
-    string sSuffixName = Get2DACache("rig_affix", "Text", nSuffix);
-    string sName = Get2DACache("rig_root", "Name", nRoot);
-    if(sPrefixName != "") sName = sPrefixName+" "+sName;
-    if(sSuffixName != "") sName = sName+" of "+sSuffixName;
-    SetName(oReturn, sName);
-DoDebug(GetName(oItem)+" was turned into "+GetName(oReturn));
-    return oReturn;
+    SetLocalInt(oItem, "RigLevel", nLevel);
 
-}
-
-int RIG_GetRandomMatchingRootByType(int nBase, int nAC = 0)
-{
-    //if the root is the same as the base item type, return it
-    if(StringToInt(Get2DACache("rig_root", "BaseItem", nBase)) == nBase)
-        return nBase;
-    int i = 0;
-    string sValue = Get2DACache("rig_root", "BaseItem", i);
-    while(sValue != "")
-    {
-//DoDebug("RIG_GetRandomMatchingRootByType() loop row "+IntToString (i));
-        if(StringToInt(sValue) == nBase)
-        {
-            //fuggly hardcoding for different armors
-            if(nBase == BASE_ITEM_ARMOR)
-            {
-                if(nAC == StringToInt(Get2DACache("rig_root", "AC", i)))
-                    return i;
-            }
-            else
-                return i;
-        }
-        i++;
-        sValue = Get2DACache("rig_root", "BaseItem", i);
-    }
-    //should never get here
-    return -1;
-}
-
-int RIG_GetRandomMatchingRoot(object oItem, int nAC = 0)
-{
-    //sanity testing
-    if(!GetIsObjectValid(oItem))
-    {
-        DoDebug("oItem is not valid going into RIG_GetRandomMatchingRoot");
-        return -1;
-    }
-    int nBase = GetBaseItemType(oItem);
-    return RIG_GetRandomMatchingRootByType(nBase, nAC);
-}
-
-object RIG_AddItemProperty(object oItem, int nRIGIP)
-{
-    //sanity testing
-    if(!GetIsObjectValid(oItem))
-    {
-        DoDebug("oItem is not valid going into RIG_AddItemProperty");
-        return OBJECT_INVALID;
-    }
-    if(nRIGIP <0)
-    {
-        DoDebug("nRIGIP is less than 0 going into RIG_AddItemProperty");
-        DestroyObject(oItem);
-        return OBJECT_INVALID;
-    }
-    if(nRIGIP == 0)
-    {
-        //DoDebug("nRIGIP is 0 going into RIG_AddItemProperty");
-        //no itemproperty, do nothing
-        return oItem;
-    }
-    int nType = StringToInt(Get2DACache("rig_ip", "Type", nRIGIP));
-    string sVar2 = Get2DACache("rig_ip", "Var2", nRIGIP);
-    string sVar3 = Get2DACache("rig_ip", "Var3", nRIGIP);
-    string sVar4 = Get2DACache("rig_ip", "Var4", nRIGIP);
-    int nVar2 = -1;
-    int nVar3 = -1;
-    int nVar4 = -1;
-    //if its not blank, convert to an int
-    if(sVar2 != "")
-        nVar2 = StringToInt(sVar2);
-    if(sVar3 != "")
-        nVar3 = StringToInt(sVar3);
-    if(sVar4 != "")
-        nVar4 = StringToInt(sVar4);
-    itemproperty ipToApply;
-//DoDebug("RIG_AddItemProperty() ipTApply nType = "+IntToString(nType)+" sVar2 = "+sVar2+" sVar3 = "+sVar3+" sVar4 = "+sVar4);
-    ipToApply = IPGetItemPropertyByID(nType, nVar2, nVar3, nVar4);
-//DoDebug("RIG_AddItemProperty() ipTApply GetItemPropertyType = "+IntToString(GetItemPropertyType(ipToApply))+" GetItemPropertySubType = "+IntToString(GetItemPropertySubType(ipToApply)));
-    if(!GetIsItemPropertyValid(ipToApply))
-    {
-        DoDebug("Itemproperty is not valid to apply nRIGIP="+IntToString(nRIGIP));
-        DestroyObject(oItem);
-        return OBJECT_INVALID;
-    }
-    //test if it already has an IP of that type & subtype
-    itemproperty ipTest = GetFirstItemProperty(oItem);
-    while(GetIsItemPropertyValid(ipTest))
-    {
-        if(GetItemPropertyType(ipTest) == GetItemPropertyType(ipToApply)
-            && (GetItemPropertySubType(ipTest) == GetItemPropertySubType(ipToApply)
-                    || GetItemPropertySubType(ipTest) == -1))
-            return OBJECT_INVALID;
-        ipTest = GetNextItemProperty(oItem);
-    }
-    IPSafeAddItemProperty(oItem, ipToApply);
-    //check it worked
-    itemproperty ipTemp = GetFirstItemProperty(oItem);
-    while(GetIsItemPropertyValid(ipTemp))
-    {
-//DoDebug("rig_inc line 363");
-        if(ipTemp == ipToApply)
-            return oItem;
-        ipTemp = GetNextItemProperty(oItem);
-    }
-    //didnt work
-    DoDebug("Itemproperty is not applicable to this base item. Name="+GetName(oItem)+" IPType="+IntToString(nType)+" nRIGIP="+IntToString(nRIGIP));
-    DestroyObject(oItem);
-    return OBJECT_INVALID;
-}
-
-int RIG_CheckLimitations(object oItem, object oPC = OBJECT_SELF)
-{
-    itemproperty ipTemp = GetFirstItemProperty(oItem);
-    int nClassValid = -1;
-    int nRaceValid = -1;
-    int nSAlignValid = -1;
-    int nAlignValid = -1;
-    while(GetIsItemPropertyValid(ipTemp))
-    {
-//DoDebug("rig_inc line 383");
-        int nType = GetItemPropertyType(ipTemp);
-        int nSubType = GetItemPropertySubType(ipTemp);
-        switch(nType)
-        {
-            case ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP:
-                switch(nSubType)
-                {
-                    case IP_CONST_ALIGNMENTGROUP_EVIL:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENTGROUP_GOOD:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENTGROUP_CHAOTIC:
-                        if(GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENTGROUP_LAWFUL:
-                        if(GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                }
-                break;
-            case ITEM_PROPERTY_USE_LIMITATION_CLASS:
-                if(GetLevelByClass(nSubType, oPC))
-                    nClassValid = TRUE;
-                else if(nClassValid == -1)
-                    nClassValid = FALSE;
-                break;
-            case ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE:
-                if(GetRacialType(oPC) == nSubType)
-                    nRaceValid = TRUE;
-                else if(nRaceValid == -1)
-                    nRaceValid = FALSE;
-                break;
-            case ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT:
-                switch(nSubType)
-                {
-                    case IP_CONST_ALIGNMENT_CE:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_CN:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_CG:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_CHAOTIC)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_NE:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_TN:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_NG:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_NEUTRAL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_LE:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_EVIL
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_LN:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_NEUTRAL
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                    case IP_CONST_ALIGNMENT_LG:
-                        if(GetAlignmentGoodEvil(oPC) != ALIGNMENT_GOOD
-                            && GetAlignmentLawChaos(oPC) != ALIGNMENT_LAWFUL)
-                            nAlignValid = TRUE;
-                        else if(nAlignValid == -1)
-                            nAlignValid = FALSE;
-                        break;
-                }
-                break;
-
-        }
-        ipTemp = GetNextItemProperty(oItem);
-    }
-    if(nAlignValid == FALSE
-        || nClassValid == FALSE
-        || nRaceValid == FALSE
-        || nSAlignValid == FALSE)
-    {
-        return FALSE;
-    }
-    return TRUE;
+    int nItemCount = GetLocalInt(OBJECT_SELF, "ContentsLevel"+IntToString(nLevel));
+    if(GetIsObjectValid(oItem))
+        SetLocalInt(OBJECT_SELF, "ContentsLevel"+IntToString(nLevel), nItemCount+1);    
 }

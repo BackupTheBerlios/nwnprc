@@ -68,7 +68,7 @@ string GetRandomFrom2DA(string s2DA, string sScript = "random_default", int nSee
     nBadRow4 = -1;
     nBadRow5 = -1;
 
-//DoDebug("GetRandomFrom2DA("+s2DA+", "+IntToString(nSeed)+")");
+DoDebug("GetRandomFrom2DA("+s2DA+", "+sScript+", "+IntToString(nSeed)+")");
     while(sReturn == "")
     {
 //DoDebug("random_inc line 66");

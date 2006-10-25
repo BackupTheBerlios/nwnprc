@@ -22,7 +22,9 @@ void main()
         RemoveCohortFromPlayer(oCohort, oPC);
         return;
     }    
-        
+    //if it doesnt have a tag, abort
+    if(GetTag(OBJECT_SELF) == "")
+        return;
 
     //cohort XP gain
     //get the amount the PC has gained

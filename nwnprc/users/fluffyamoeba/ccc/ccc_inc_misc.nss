@@ -764,6 +764,7 @@ void DoFeatLoop()
     // get fortitude save
     int nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", 0));
     
+    
     /*
     SELECT `rowid`, `feat`, `PREREQFEAT1`, `PREREQFEAT2`, `OrReqFeat0`, `OrReqFeat1`, `OrReqFeat2`, `OrReqFeat3`, `OrReqFeat4`,
 	`REQSKILL`, `REQSKILL2`, `ReqSkillMinRanks`, `ReqSkillMinRanks2`
@@ -802,6 +803,12 @@ void DoFeatLoop()
             +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
             +" LIMIT 5 OFFSET "+IntToString(nReali);
             
+    // debug print the sql statement
+    if(DEBUG)
+    {
+        DoDebug(sSQL);
+    }
+            
     PRC_SQLExecDirect(sSQL);
     // to keep track of where in the 25 rows we stop getting a result
     int nCounter = 0;
@@ -835,8 +842,24 @@ void DoFeatLoop()
                     // check they don't have it already
                     if(!PreReqFeatArrayLoop(nRow))
                         AddChoice(sName, nRow);
+                    else
+                    {
+                        if(DEBUG) DoDebug("Already picked feat " + IntToString(nRow) + "Not added!");
+                    }
+                }
+                else
+                {
+                    if(DEBUG) DoDebug("Not met skill prereq for feat " + IntToString(nRow) + "Not added!");
                 }
             }
+            else
+            {
+                if(DEBUG) DoDebug("Not met OR prereqfeat test for feat " + IntToString(nRow) + "Not added!");
+            }
+        }
+        else
+        {
+            if(DEBUG) DoDebug("Not met AND prereqfeat test for feat " + IntToString(nRow) + "Not added!");
         }
     } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     

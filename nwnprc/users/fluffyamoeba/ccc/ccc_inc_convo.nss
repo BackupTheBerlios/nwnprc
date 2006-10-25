@@ -279,7 +279,7 @@ void DoHeaderAndChoices(int nStage)
             break;
         }
         case STAGE_FEAT_CHECK: {
-            sText = GetStringByStrRef(16824209) + ": "; // You have selected:
+            sText = GetStringByStrRef(16824209); // You have selected:
             // get feat
             int nFeat = array_get_int(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1));
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat))) + "\n"; // name

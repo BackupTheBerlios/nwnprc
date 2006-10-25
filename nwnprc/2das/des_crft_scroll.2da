@@ -2637,8 +2637,8 @@
 2633 ****                                       ****             ****             ****             ****             ****             ****             
 2634 LANTERN_LIGHT                              NW_IT_SPARSCR129 NW_IT_SPDVSCR125 NW_IT_SPDVSCR125 ****             ****             ****             
 2635 LAST_JUDGEMENT                             NW_IT_SPARSCR815 NW_IT_SPDVSCR804 ****             ****             ****             ****             
-2636 LUMINOUS_ARMOR                             NW_IT_SPARSCR240 NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 NW_IT_SPARSCR240 
-2637 GREATER_LUMINOUS_ARMOR                     NW_IT_SPARSCR438 NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 NW_IT_SPARSCR438 
+2636 LUMINOUS_ARMOR                             NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 NW_IT_SPDVSCR214 
+2637 GREATER_LUMINOUS_ARMOR                     NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 NW_IT_SPDVSCR412 
 2638 RAIN_OF_BLACK_TULIPS                       ****             ****             ****             NW_IT_SPDVSCR904 ****             ****             
 2639 RAIN_OF_ROSES                              ****             ****             ****             NW_IT_SPDVSCR905 ****             ****             
 2640 RAY_OF_HOPE                                ****             NW_IT_SPDVSCR126 ****             ****             ****             NW_IT_SPARSCR130 

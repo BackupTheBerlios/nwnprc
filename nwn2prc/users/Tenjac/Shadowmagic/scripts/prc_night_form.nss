@@ -15,7 +15,6 @@ void main()
 {
 	object oPC = OBJECT_SELF;
 	effect eVis = EffectVisualEffect(VFX_DUR_GHOSTLY_PULSE);
-}
 	
     
     

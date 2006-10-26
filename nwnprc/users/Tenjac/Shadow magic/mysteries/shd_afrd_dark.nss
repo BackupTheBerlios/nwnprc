@@ -3,7 +3,7 @@
 //:: FileName  shd_afrd_dark.nss
 //:://////////////////////////////////////////////
 /**@file Afraid of the Dark
-Apprentic, Umbral Mind
+Apprentice, Umbral Mind
 Level/School: 3rd/Illusion (Mind-Affecting, Shadow)
 Range: Medium (100ft + 10ft/level)
 Duration:  Instantaneous
@@ -22,3 +22,27 @@ Created:
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+#include "spinc_common"
+#include "spinc_shadow"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = PRCGetSpellTargetObject();
+	object oCopy = CopyObject(oTarget, GetLocation(oTarget), oPC);
+	int nMystLevel = PRCGetMysteryUserLevel(oPC);
+	int nDam = d6(1) + min((nMystLevel/4), 5);
+	
+	//Metashadow
+	
+	//Force touch attack
+	
+	//SR
+	if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLvl + SPGetPenetr()))
+	{
+		
+	
+	

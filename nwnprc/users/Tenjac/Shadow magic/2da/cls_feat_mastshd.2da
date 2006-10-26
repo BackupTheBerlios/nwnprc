@@ -1,8 +1,7 @@
 2DA V2.0
 
-     FeatLabel          FeatIndex List GrantedOnLevel OnMenu 
-0    SHADOW_SERVANT     ****      3    1              1      
-1    MASTERS_BIDDING    ****      3    1              1      
-2    MASTERS_BIDDING_II ****      3    ****           ****   
-3    MAST_SHAD_COLD_RES ****      3    2              0      
-4    RAPID_SHADOW       ****      3    10             0      
+  FeatLabel          FeatIndex List GrantedOnLevel OnMenu 
+0 SHADOW_SERVANT     ****      3    1              1      
+1 MASTERS_BIDDING    ****      3    1              1      
+2 MAST_SHAD_COLD_RES ****      3    2              0      
+3 RAPID_SHADOW       ****      3    10             0      

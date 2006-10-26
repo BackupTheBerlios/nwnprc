@@ -1,0 +1,15 @@
+//::///////////////////////////////////////////////
+//:: Unseen Weapon: Ephemeral Weapon
+//:: prc_sb_ephmrl.nss
+//:://////////////////////////////////////////////
+//:: Your next attack does an extra 2d6 damage.
+//:://////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+	object oPC = OBJECT_SELF;
+	
+	SetLocalInt(oPC, "EphemeralWeapon", 1);
+}

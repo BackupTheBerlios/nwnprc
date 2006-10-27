@@ -108,6 +108,9 @@ void DoBonusFeatLoop();
 // loops through spells.2da
 void DoSpellsLoop(int nStage);
 
+// loops through domains.2da
+void  DoDomainsLoop();
+
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
 
@@ -417,7 +420,7 @@ int GetNextCCCStage(int nStage)
         case STAGE_FAMILIAR_CHECK: {
             if (nClass == CLASS_TYPE_CLERIC)
             {
-                return STAGE_DOMAIN1;
+                return STAGE_DOMAIN;
             }
         }
         case STAGE_DOMAIN_CHECK:
@@ -736,6 +739,7 @@ void DoSkillsLoop()
     // loop over each valid row - as soon as we hit an empty line, quit
     while(sSkillIndex != "")
     {
+        int nPoints = GetLocalInt(OBJECT_SELF, "Points");
         // see if it's class or cross-class
         int nClassSkill = StringToInt(Get2DACache(sFile, "ClassSkill", i));
         int nSkillID = StringToInt(sSkillIndex); // line of skills.2da for the skill
@@ -757,7 +761,8 @@ void DoSkillsLoop()
         {
             // check there's not already 2 points in there
             int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkillID);
-            if (nStoredPoints < 2) // level (ie 1) + 1
+            // if there's only 1 point left, then no cross class skills
+            if (nStoredPoints < 2 && nPoints > 1) // level (ie 1) + 1
             {
                 sName += " : "+IntToString(nStoredPoints);
                 // only add if there's less than the maximum points allowed
@@ -1220,22 +1225,22 @@ void DoSpellsLoop(int nStage)
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
     string sSQL;
     string q = PRC_SQLGetTick();
-    // get the results 50 rows at a time to avoid TMI
+    // get the results 30 rows at a time to avoid TMI
     int nReali = GetLocalInt(OBJECT_SELF, "i");
     switch(nClass)
     {
         case CLASS_TYPE_WIZARD: {
             int nSpellSchool = GetLocalInt(OBJECT_SELF, "School");
             string sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", nSpellSchool)));
-            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND ("+q+"Wiz_Sorc"+q+" = '1') AND ("+q+"School"+q+" != '"+sOpposition+"') LIMIT 50 OFFSET "+IntToString(nReali);
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND ("+q+"Wiz_Sorc"+q+" = '1') AND ("+q+"School"+q+" != '"+sOpposition+"') LIMIT 30 OFFSET "+IntToString(nReali);
             break;
         }
         case CLASS_TYPE_SORCERER: {
-            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND("+q+"Wiz_Sorc"+q+" = '"+IntToString(nSpellLevel)+"') LIMIT 50 OFFSET "+IntToString(nReali);
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND("+q+"Wiz_Sorc"+q+" = '"+IntToString(nSpellLevel)+"') LIMIT 30 OFFSET "+IntToString(nReali);
             break;
         }
         case CLASS_TYPE_BARD: {
-            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND("+q+"Bard"+q+" = '"+IntToString(nSpellLevel)+"') LIMIT 50 OFFSET "+IntToString(nReali);
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND("+q+"Bard"+q+" = '"+IntToString(nSpellLevel)+"') LIMIT 30 OFFSET "+IntToString(nReali);
             break;
         }
     }
@@ -1243,27 +1248,22 @@ void DoSpellsLoop(int nStage)
     PRC_SQLExecDirect(sSQL);
     // to keep track of where in the 10 rows we stop getting a result
     int nCounter = 0;
-    DoDebug("1");
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
         nCounter++;
-        DoDebug("loop counter: " + IntToString(nCounter));
         // has it already been chosen?
         int nSpell = StringToInt(PRC_SQLGetData(1));
-        DoDebug("2");
         // if they don't know the spell, add it to the choice list
         if(!GetIsSpellKnown(nSpell, nSpellLevel))
         {
-            DoDebug("3");
             string sName = GetStringByStrRef(StringToInt(PRC_SQLGetData(2)));
-            DoDebug("4");
             AddChoice(sName, nSpell);
         }
     } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     
-    if (nCounter == 50)
+    if (nCounter == 30)
     {
-        SetLocalInt(OBJECT_SELF, "i", nReali+10);
+        SetLocalInt(OBJECT_SELF, "i", nReali+30);
         DelayCommand(0.01, DoSpellsLoop(nStage));
     }
     else // end of the 2da
@@ -1273,6 +1273,11 @@ void DoSpellsLoop(int nStage)
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         return;
     }
+}
+
+void  DoDomainsLoop()
+{
+    
 }
 
 void AddRaceFeats(int nRace)

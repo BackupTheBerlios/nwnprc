@@ -6,7 +6,6 @@ void DoHeaderAndChoices(int nStage);
 // processes the player choices for each stage of the convoCC
 int HandleChoice(int nStage, int nChoice);
 
-// placeholders
 void DoHeaderAndChoices(int nStage)
 {
     string sText;
@@ -389,19 +388,21 @@ void DoHeaderAndChoices(int nStage)
             {
                 switch(nClass)
                 {
-                    case CLASS_TYPE_WIZARD:
+                    case CLASS_TYPE_WIZARD: {
                         // spells to pick is 3 + int modifier
                         int nIntMod = GetLocalInt(OBJECT_SELF, "Int");
                         nIntMod += StringToInt(Get2DACache("racialtypes", "IntAdjust", GetLocalInt(OBJECT_SELF, "Race")));
                         nIntMod = (nIntMod - 10)/2;
                         nPoints = 3 + nIntMod;
                         break;
-                    case CLASS_TYPE_SORCERER:
+                    }
+                    case CLASS_TYPE_SORCERER: {
                         // get the cls_spkn_***2da to use
                         string sSpkn = Get2DACache("classes", "SpellKnownTable", nClass);
                         // set the number of spells to pick
                         nPoints = StringToInt(Get2DACache(sSpkn, "SpellLevel1", 0));
                         break;
+                    }
                 }
                 SetLocalInt(OBJECT_SELF, "Points", nPoints);
                 // don't want to be waiting every time
@@ -437,6 +438,71 @@ void DoHeaderAndChoices(int nStage)
                 sText += "\n";
             }
             sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_FAMILIAR: {
+            int nClass = GetLocalInt(OBJECT_SELF, "Class");
+            sText = GetStringByStrRef(5607) + "\n"; // Choose a Familiar for your Character
+            sText += "(" + GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass))) + ")";
+            SetHeader(sText);
+            // do choices
+            if (nClass == CLASS_TYPE_DRUID)
+                Do2daLoop("hen_companion", "STRREF", GetPRCSwitch(FILE_END_ANIMALCOMP));
+            else // wizard or sorc
+                Do2daLoop("hen_familiar", "STRREF", GetPRCSwitch(FILE_END_FAMILIAR));
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_FAMILIAR_CHECK: {
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            if (GetLocalInt(OBJECT_SELF, "Class") == CLASS_TYPE_DRUID)
+            {
+                int nCompanion = GetLocalInt(OBJECT_SELF, "Companion");
+                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "STRREF", nCompanion)));
+                sText += "\n";
+                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "DESCRIPTION", nCompanion)));
+                sText += "\n";
+            }
+            else
+            {
+                int nFamiliar = GetLocalInt(OBJECT_SELF, "Familiar");
+                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "STRREF", nFamiliar)));
+                sText += "\n";
+                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "DESCRIPTION", nFamiliar)));
+                sText += "\n";
+            }
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_DOMAIN: {
+            sText = GetStringByStrRef(5982); // Pick Cleric Domain
+            SetHeader(sText);
+            // choices
+            DoDomainsLoop();
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_DOMAIN_CHECK: {
+            sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
+            // first domain
+            int nDomain = GetLocalInt(OBJECT_SELF,"Domain1");
+            sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", nDomain))) + "\n";
+            sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", nDomain))) + "\n";
+            // second domain
+            nDomain = GetLocalInt(OBJECT_SELF,"Domain2");
+            sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", nDomain))) + "\n";
+            sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", nDomain))) + "\n";
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
             SetHeader(sText);
             // choices Y/N
             AddChoice(GetStringByStrRef(4753), -1); // no
@@ -868,6 +934,55 @@ int HandleChoice(int nStage, int nChoice)
                 }
             }
             break;
+        }
+        case STAGE_FAMILIAR: {
+            if(GetLocalInt(OBJECT_SELF, "Class") == CLASS_TYPE_DRUID)
+                SetLocalInt(OBJECT_SELF, "Companion", nChoice);
+            else // sorc or wiz
+                SetLocalInt(OBJECT_SELF, "Familiar", nChoice);
+            nStage++;
+            break;
+        }
+        case STAGE_FAMILIAR_CHECK: {
+            if (nChoice == 1)
+                GetNextCCCStage(nStage);
+            else
+            {
+                nStage = STAGE_FAMILIAR;
+                MarkStageNotSetUp(STAGE_FAMILIAR_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_FAMILIAR, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Familiar");
+                DeleteLocalInt(OBJECT_SELF, "Companion");
+            }
+            break;
+        }
+        case STAGE_DOMAIN: {
+            // if this is the first domain chosen
+            if (GetLocalInt(OBJECT_SELF, "Domain1") == 0)
+            {
+                SetLocalInt(OBJECT_SELF, "Domain1", nChoice);
+            }
+            else // second domain
+            {
+                SetLocalInt(OBJECT_SELF, "Domain2", nChoice);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_DOMAIN_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage++;
+                // add domain feats
+            }
+            else
+            {
+                nStage = STAGE_DOMAIN;
+                MarkStageNotSetUp(STAGE_DOMAIN_CHECK);
+                MarkStageNotSetUp(STAGE_DOMAIN);
+                DeleteLocalInt(OBJECT_SELF,"Domain1");
+                DeleteLocalInt(OBJECT_SELF,"Domain2");
+            }
         }
     }
     return nStage;

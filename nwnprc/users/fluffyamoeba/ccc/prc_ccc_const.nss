@@ -28,7 +28,8 @@ const int STAGE_SPELLS_1            = 20;
 const int STAGE_SPELLS_CHECK        = 21;
 const int STAGE_FAMILIAR            = 22;
 const int STAGE_FAMILIAR_CHECK      = 23;
-const int STAGE_DOMAIN1             = 24;
-const int STAGE_DOMAIN2             = 25;
-const int STAGE_DOMAIN_CHECK        = 26;
-const int STAGE_APPEARANCE          = 27;
+const int STAGE_DOMAIN              = 24;
+const int STAGE_DOMAIN_CHECK        = 25;
+const int STAGE_APPEARANCE          = 26;
+
+const int FINAL_STAGE               = 99;

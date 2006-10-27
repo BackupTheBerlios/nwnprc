@@ -19044,7 +19044,7 @@ Saving Throw: 	Fortitude partial; see text
 Spell Resistance: 	Yes
 
 A black ray projects from your pointing finger. You must succeed on a ranged touch attack with the ray 
-to strike a target.  The subject is immediately exhausted for the spell’s duration. A successful Fortitude save means the creature is only fatigued. 
+to strike a target.  The subject is immediately exhausted for the spell?s duration. A successful Fortitude save means the creature is only fatigued. 
 
 Material Component: A drop of sweat.
 </entry>
@@ -19061,7 +19061,7 @@ Duration: 	Instantaneous
 Saving Throw: 	No
 Spell Resistance: 	Yes
 
-Waves of negative energy render all living creatures in the spell’s area fatigued. This spell has no effect 
+Waves of negative energy render all living creatures in the spell?s area fatigued. This spell has no effect 
 on a creature that is already fatigued. </entry>
   <entry id="50371" lang="en" sex="m">Waves of Fatigue (9)</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
@@ -29505,12 +29505,12 @@ Epic Levels:
   <entry id="54239" lang="en" sex="m">Sorcerer Maximized Lantern Light</entry>
   <entry id="54240" lang="en" sex="m">Sorcerer Quickened Lantern Light</entry>
   <entry id="54241" lang="en" sex="m">Sorcerer Still Lantern Light</entry>
-  <entry id="54242" lang="en" sex="m">Sorcerer Bad StrRef</entry>
-  <entry id="54243" lang="en" sex="m">Sorcerer Empowered Bad StrRef</entry>
-  <entry id="54244" lang="en" sex="m">Sorcerer Maximized Bad StrRef</entry>
-  <entry id="54245" lang="en" sex="m">Sorcerer Quickened Bad StrRef</entry>
-  <entry id="54246" lang="en" sex="m">Sorcerer Silent Bad StrRef</entry>
-  <entry id="54247" lang="en" sex="m">Sorcerer Still Bad StrRef</entry>
+  <entry id="54242" lang="en" sex="m">Sorcerer Shocking Grasp</entry>
+  <entry id="54243" lang="en" sex="m">Sorcerer Empowered Shocking Grasp</entry>
+  <entry id="54244" lang="en" sex="m">Sorcerer Maximized Shocking Grasp</entry>
+  <entry id="54245" lang="en" sex="m">Sorcerer Quickened Shocking Grasp</entry>
+  <entry id="54246" lang="en" sex="m">Sorcerer Silent Shocking Grasp</entry>
+  <entry id="54247" lang="en" sex="m">Sorcerer Still Shocking Grasp</entry>
   <entry id="54248" lang="en" sex="m">Sorcerer Bigby's Tripping Hand</entry>
   <entry id="54249" lang="en" sex="m">Sorcerer Quickened Bigby's Tripping Hand</entry>
   <entry id="54250" lang="en" sex="m">Sorcerer Silent Bigby's Tripping Hand</entry>
@@ -29810,12 +29810,12 @@ Epic Levels:
   <entry id="54544" lang="en" sex="m">Sorcerer Quickened Protection from Arrows</entry>
   <entry id="54545" lang="en" sex="m">Sorcerer Silent Protection from Arrows</entry>
   <entry id="54546" lang="en" sex="m">Sorcerer Still Protection from Arrows</entry>
-  <entry id="54547" lang="en" sex="m">Sorcerer Bad StrRef</entry>
-  <entry id="54548" lang="en" sex="m">Sorcerer Empowered Bad StrRef</entry>
-  <entry id="54549" lang="en" sex="m">Sorcerer Maximized Bad StrRef</entry>
-  <entry id="54550" lang="en" sex="m">Sorcerer Quickened Bad StrRef</entry>
-  <entry id="54551" lang="en" sex="m">Sorcerer Silent Bad StrRef</entry>
-  <entry id="54552" lang="en" sex="m">Sorcerer Still Bad StrRef</entry>
+  <entry id="54547" lang="en" sex="m">Sorcerer Scorching Ray</entry>
+  <entry id="54548" lang="en" sex="m">Sorcerer Empowered Scorching Ray</entry>
+  <entry id="54549" lang="en" sex="m">Sorcerer Maximized Scorching Ray</entry>
+  <entry id="54550" lang="en" sex="m">Sorcerer Quickened Scorching Ray</entry>
+  <entry id="54551" lang="en" sex="m">Sorcerer Silent Scorching Ray</entry>
+  <entry id="54552" lang="en" sex="m">Sorcerer Still Scorching Ray</entry>
   <entry id="54553" lang="en" sex="m">Sorcerer Bigby's Striking Fist</entry>
   <entry id="54554" lang="en" sex="m">Sorcerer Empowered Bigby's Striking Fist</entry>
   <entry id="54555" lang="en" sex="m">Sorcerer Maximized Bigby's Striking Fist</entry>
@@ -32320,8 +32320,8 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62203" lang="en" sex="m">Sorcerer Extended Halt</entry>
   <entry id="62204" lang="en" sex="m">Sorcerer Quickened Halt</entry>
   <entry id="62205" lang="en" sex="m">Sorcerer Silent Halt</entry>
-  <entry id="62206" lang="en" sex="m">Sorcerer Bad StrRef</entry>
-  <entry id="62207" lang="en" sex="m">Sorcerer Extended Bad StrRef</entry>
+  <entry id="62206" lang="en" sex="m">Sorcerer Ray of Exhaustion</entry>
+  <entry id="62207" lang="en" sex="m">Sorcerer Extended Ray of Exhaustion</entry>
   <entry id="62208" lang="en" sex="m">Sorcerer Acid Orb</entry>
   <entry id="62209" lang="en" sex="m">Sorcerer Empowered Acid Orb</entry>
   <entry id="62210" lang="en" sex="m">Sorcerer Maximized Acid Orb</entry>
@@ -32830,10 +32830,10 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="62713" lang="en" sex="m">Sorcerer Quickened Call Lemure Horde</entry>
   <entry id="62714" lang="en" sex="m">Sorcerer Silent Call Lemure Horde</entry>
   <entry id="62715" lang="en" sex="m">Sorcerer Still Call Lemure Horde</entry>
-  <entry id="62716" lang="en" sex="m">Sorcerer Bad StrRef</entry>
-  <entry id="62717" lang="en" sex="m">Sorcerer Quickened Bad StrRef</entry>
-  <entry id="62718" lang="en" sex="m">Sorcerer Silent Bad StrRef</entry>
-  <entry id="62719" lang="en" sex="m">Sorcerer Still Bad StrRef</entry>
+  <entry id="62716" lang="en" sex="m">Sorcerer Waves of Fatigue</entry>
+  <entry id="62717" lang="en" sex="m">Sorcerer Quickened Waves of Fatigue</entry>
+  <entry id="62718" lang="en" sex="m">Sorcerer Silent Waves of Fatigue</entry>
+  <entry id="62719" lang="en" sex="m">Sorcerer Still Waves of Fatigue</entry>
   <entry id="62720" lang="en" sex="m">Sorcerer Acid Fog</entry>
   <entry id="62721" lang="en" sex="m">Sorcerer Empowered Acid Fog</entry>
   <entry id="62722" lang="en" sex="m">Sorcerer Extended Acid Fog</entry>
@@ -34439,12 +34439,12 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="64322" lang="en" sex="m">Duskblade Quickened Resist Elements</entry>
   <entry id="64323" lang="en" sex="m">Duskblade Silent Resist Elements</entry>
   <entry id="64324" lang="en" sex="m">Duskblade Still Resist Elements</entry>
-  <entry id="64325" lang="en" sex="m">Duskblade Bad StrRef</entry>
-  <entry id="64326" lang="en" sex="m">Duskblade Empowered Bad StrRef</entry>
-  <entry id="64327" lang="en" sex="m">Duskblade Maximized Bad StrRef</entry>
-  <entry id="64328" lang="en" sex="m">Duskblade Quickened Bad StrRef</entry>
-  <entry id="64329" lang="en" sex="m">Duskblade Silent Bad StrRef</entry>
-  <entry id="64330" lang="en" sex="m">Duskblade Still Bad StrRef</entry>
+  <entry id="64325" lang="en" sex="m">Duskblade Shocking Grasp</entry>
+  <entry id="64326" lang="en" sex="m">Duskblade Empowered Shocking Grasp</entry>
+  <entry id="64327" lang="en" sex="m">Duskblade Maximized Shocking Grasp</entry>
+  <entry id="64328" lang="en" sex="m">Duskblade Quickened Shocking Grasp</entry>
+  <entry id="64329" lang="en" sex="m">Duskblade Silent Shocking Grasp</entry>
+  <entry id="64330" lang="en" sex="m">Duskblade Still Shocking Grasp</entry>
   <entry id="64331" lang="en" sex="m">Duskblade Animalistic Power</entry>
   <entry id="64332" lang="en" sex="m">Duskblade Extended Animalistic Power</entry>
   <entry id="64333" lang="en" sex="m">Duskblade Deflect</entry>
@@ -34506,11 +34506,11 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="64389" lang="en" sex="m">Duskblade Extended See Invisibility</entry>
   <entry id="64390" lang="en" sex="m">Duskblade Silent See Invisibility</entry>
   <entry id="64391" lang="en" sex="m">Duskblade Still See Invisibility</entry>
-  <entry id="64392" lang="en" sex="m">Duskblade Bad StrRef</entry>
-  <entry id="64393" lang="en" sex="m">Duskblade Empowered Bad StrRef</entry>
-  <entry id="64394" lang="en" sex="m">Duskblade Maximized Bad StrRef</entry>
-  <entry id="64395" lang="en" sex="m">Duskblade Silent Bad StrRef</entry>
-  <entry id="64396" lang="en" sex="m">Duskblade Still Bad StrRef</entry>
+  <entry id="64392" lang="en" sex="m">Duskblade Scorching Ray</entry>
+  <entry id="64393" lang="en" sex="m">Duskblade Empowered Scorching Ray</entry>
+  <entry id="64394" lang="en" sex="m">Duskblade Maximized Scorching Ray</entry>
+  <entry id="64395" lang="en" sex="m">Duskblade Silent Scorching Ray</entry>
+  <entry id="64396" lang="en" sex="m">Duskblade Still Scorching Ray</entry>
   <entry id="64397" lang="en" sex="m">Duskblade Crown of Might</entry>
   <entry id="64398" lang="en" sex="m">Duskblade Extended Crown of Might</entry>
   <entry id="64399" lang="en" sex="m">Duskblade Silent Crown of Might</entry>
@@ -34603,8 +34603,8 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="64486" lang="en" sex="m">Duskblade Empowered Vampiric Touch</entry>
   <entry id="64487" lang="en" sex="m">Duskblade Silent Vampiric Touch</entry>
   <entry id="64488" lang="en" sex="m">Duskblade Still Vampiric Touch</entry>
-  <entry id="64489" lang="en" sex="m">Duskblade Bad StrRef</entry>
-  <entry id="64490" lang="en" sex="m">Duskblade Extended Bad StrRef</entry>
+  <entry id="64489" lang="en" sex="m">Duskblade Ray of Exhaustion</entry>
+  <entry id="64490" lang="en" sex="m">Duskblade Extended Ray of Exhaustion</entry>
   <entry id="64491" lang="en" sex="m">Duskblade Channeled Pyroburst</entry>
   <entry id="64492" lang="en" sex="m">Duskblade Swift Channeled Pyroburst</entry>
   <entry id="64493" lang="en" sex="m">Duskblade Standard Channeled Pyroburst</entry>
@@ -34656,7 +34656,7 @@ The goddess Shar is called the Mistress of the Night, the Lady of Loss, and the 
   <entry id="64539" lang="en" sex="m">Duskblade Disintegrate</entry>
   <entry id="64540" lang="en" sex="m">Duskblade Bigby's Clenched Fist</entry>
   <entry id="64541" lang="en" sex="m">Duskblade Polar Ray</entry>
-  <entry id="64542" lang="en" sex="m">Duskblade Bad StrRef</entry>
+  <entry id="64542" lang="en" sex="m">Duskblade Waves of Fatigue</entry>
   <entry id="64543" lang="en" sex="m">Healer Cure Minor Wounds</entry>
   <entry id="64544" lang="en" sex="m">Healer Quickened Cure Minor Wounds</entry>
   <entry id="64545" lang="en" sex="m">Healer Silent Cure Minor Wounds</entry>

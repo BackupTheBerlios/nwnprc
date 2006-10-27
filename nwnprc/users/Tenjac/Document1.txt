@@ -1,173 +1,566 @@
-Book of Exalted Deeds
-
-Amber Sarcophagus
-Ayailla's Radiant Burst
-Blinding Glory
-Blood of the Martyr
-Bolt of Glory
-Brilliant Emanation
-Call Faithful Servants
-Celestial Blood
-Chaav's Laugh
-Convert Wand
-Divine Inspiration
-Divine Sacrifice
-Diamond Spray
-Dragon Cloud
-Drug Resistance
-Elation
-Energize Potion
-Exalted Fury
-Exalted Raiment
-Eyes of the Avoral
-Hammer of Righteousness
-Lantern Light
-Leonal's Roar
-Last Judgement
-Luminous Armor
-Luminous Armor, Greater
-Phieren's Resolve
-Phoenix Fire
-Rain of Black Tulips
-Rain of Embers
-Rain of Roses
-Ray of Hope
-Righteous Smite
-Sicken Evil
-Starmantle
-Storm of Shards
-Sunmantle
-Sword of Conscience
-Tomb of Light
-Twilight Luck
-Vision of Heaven
-
-
-Book of Vile Darkness
-
 Aberrate
 Absorb Strength
 Abyssal Might
+Acid Fog
+Acid Orb
+Acid Splash
+Acid Storm
 Addiction
+Agannazzar's Scorcher
+Aid
+Amber Sarcophagus
+Amplify
 Angry Ache
+Animalistic Power
+Animate Dead
+Animate Objects
 Apocalypse from the Sky
+Augment Familiar
+Aura of Glory
+Aura of Vitality
+Aura versus Alignment
+Avascular Mass
+Avasculate
+Awaken
+Ayailla's Radiant Burst
+Baelful Polymorph
+Balagarn's Iron Horn
+Baleful Transposition
+Ball Lightning
+Bane
+Banishment
+Barkskin
+Battletide
+Beltyn's Burning Blood
+Benign Transposition
+Bestow Curse
 Bestow Wound
+Bibgy's Tripping Hand
+Bigby's Clenched Fist
+Bigby's Crushing Hand
+Bigby's Forceful Hand
+Bigby's Grasping Hand
+Bigby's Interposing Hand
+Bigby's Striking Fist
+Black Blade of Disaster
+Blackstaff
+Blade Barrier
+Blade of Blood
+Blade Thirst
+Blasphemy
+Blast of Flame
+Bless
+Bless Weapon
+Blessing of Bahamut
+Blinding Glory
+Blindness / Deafness
+Blood Frenzy
+Blood of the Martyr
+Blood of the Martyr
+Blur
 Bodak Birth
+Bolt of Glory
+Bombardment
 Bone Blade
 Boneblast
+Break Enchantment
+Brilliant Emanation
+Bull's Strength
+Burning Bolt
+Burning Hands
 Call Dretch Horde
+Call Faithful Servants
 Call Lemure Horde
+Call Lightning
+Camouflage
+Cat's Grace
+Celestial Blood
+Chaav's Laugh
+Chain Lightning
+Channeled Pyroburst
+Charm Monster
+Charm Person
+Charm Person or Animal
+Chill Touch
+Circle of Death
+Circle of Doom
+Clairaudience / Clairvoyance
+Clarity
+Clarity of Mind
 Claws of the Bebilith
 Claws of the Savage
+Cloud of Bewilderment
 Cloud of the Achaierai
+Cloudkill
 Clutch of Orcus
+Cold Orb
+Color Spray
+Combust
+Command
+Command Undead
+Command, Greater
+Cone of Cold
+Confusion
+Consecrate
+Contagion
+Continual Flame
+Control Undead
+Convert Wand
+Conviction
+Create Greater Undead
+Create Magic Tattoo
+Create Undead
+Creeping Doom
+Crown of Might
+Crown of Protection
+Crumble
 Crushing Fist of Spite
+Cure Critical Wounds
+Cure Light Wounds
+Cure Minor Wounds
+Cure Moderate Wounds
+Cure Serious Wounds
+Curse of Impending Blades
+Curse of Petty Failing
 Curse of the Putrid Husk
+Cursed Blade
 Damning Darkness
+Darkfire
+Darkness
+Daze
+Deafening Clang
+Death Armor
+Death By Thorns
+Death Ward
+Deep Slumber
+Deeper Darkness
+Deflect
+Deflect, Lesser
+Delayed Blast Fireball
 Demoncall
 Demonflesh
 Despoil
+Destruction
+Detect Chaos
+Detect Evil
+Detect Good
+Detect Law
+Detect Scrying
 Devil's Ego
 Devil's Eye
+Diamond Spray
+Dictum
+Dimension Door
+Dimension Hop
+Dimensional Anchor
+Dimensional Lock
+Dirge
+Disintegrate
+Dismissal
+Dispel Magic
+Dispelling Touch
+Displacement
+Divine Favor
+Divine Inspiration
+Divine Power
+Divine Protection
+Divine Sacrifice
+Dominate Animal
+Dominate Monster
+Dominate Person
+Doom
+Doom Scarabs
+Dragon Cloud
 Dread Word
-Death By Thorns
+Drown
+Drug Resistance
+Eagle's Splendor
+Earthquake
 Ectoplamic Enhancement
+Elation
+Electric Jolt
+Electric Orb
+Elemental Shield
+Elemental Swarm
+Endurance
+Endure Elements
+Energize Potion
+Energy Aegis
+Energy Buffer
+Energy Drain
+Energy Ebb
+Energy Immunity
+Energy Surge
+Enervation
+Entangle
+Entropic Shield
 Eternity of Torture
+Ethereal Visage
+Evard's Black Tentacles
 Evil Eye
+Exalted Fury
+Exalted Raiment
+Expeditious Retreat
 Extract Drug
 Eye of the Beholder
+Eyes of the Avoral
+False Life
+Fear
+Feeblemind
 Fiendish Clarity
+Find Traps
+Finger of Death
+Fire Orb
+Fire Storm
+Fireball
+Firebrand
+Fireburst
+Flame Arrow
+Flame Lash
+Flame Strike
+Flame Weapon
+Flare
+Flashburst
+Flensing
 Flesh Armor
 Flesh Ripper
+Flesh to Stone
+Forceblast
+Fox's Cunning
+Freedom of Movement
+Gate
+Gedlee's Electric Loop
+Ghostly Visage
+Ghoul Gauntlet
+Ghoul Touch
+Glitterdust
+Globe of Invulnerability
+Glyph of Warding
+Grease
+Great Thunderclap
+Greater Dispelling
+Greater Fireburst
+Greater Harm
+Greater Heroism
+Greater Magic Fang
+Greater Magic Weapon
+Greater Planar Binding
+Greater Restoration
+Greater Sanctuary
+Greater Shadow Conjuration
+Greater Spell Breach
+Greater Spell Mantle
+Greater Stoneskin
+Greater Teleport
+Greenfire
 Grim Revenge
+Gust of Wind
 Gutwrench
+Hail of Stone
+Halt
+Hammer of Righteousness
+Hammer of the Gods
+Harm
+Haste
+Heal
+Healing Circle
+Healing Sting
 Heartache
 Heartclutch
 Hellfire
 Hellfire Storm
+Heroism
+Hold Animal
+Hold Monster
+Hold Person
+Holy Sword
+Holy Word
+Horizikaul's Boom
+Horrid Wilting
+Hound of Doom
+Ice Burst
+Ice Dagger
+Ice Storm
+Identify
+Ilyykur's Mantle
+Implosion
+Improved Invisibility
+Improved Mage Armor
+Incendiary Cloud
+Inferno
+Infestation of Maggots
+Inflict Critical Wounds
+Inflict Light Wounds
+Inflict Minor Wounds
+Inflict Moderate Wounds
+Inflict Serious Wounds
+Insanity
+Invisibility
+Invisibility Purge
+Invisibility Sphere
+Ironguts
+Isaac's Greater Missile Storm
+Isaac's Lesser Missile Storm
+Keen Edge
+Kelgore's Fire Bolt
+Knock
 Lahm's Finger Darts
+Lantern Light
+Last Judgement
+Legend Lore
+Legion's Conviction
+Legion's Curse of Impending Blades
+Legion's Curse of Petty Failing
+Legion's Shield of Faith
+Leonal's Roar
+Lesser Acid Orb
+Lesser Cold Orb
+Lesser Dispel
+Lesser Electric Orb
+Lesser Fire Orb
+Lesser Mind Blank
+Lesser Planar Binding
+Lesser Restoration
+Lesser Shivering Touch
+Lesser Sonic Orb
+Lesser Spell Breach
+Lesser Spell Mantle
+Light
+Lightning Bolt
+Lionheart
 Liquid Pain
+Living Undeath
+Lower Spell Resistance
+Luminous Armor
+Luminous Armor, Greater
+Mage Armor
+Magic Circle against Chaos
+Magic Circle against Evil
+Magic Circle against Good
+Magic Circle against Law
+Magic Fang
+Magic Missile
+Magic Vestment
+Magic Weapon
+Mantle of Egregious Might
 Masochism
+Mass Blindness / Deafness
+Mass Bull's Strength
+Mass Camouflage
+Mass Cat's Grace
+Mass Charm
+Mass Contagion
+Mass Cure Critical Wounds
+Mass Cure Light Wounds
+Mass Cure Moderate Wounds
+Mass Cure Serious Wounds
+Mass Drown
+Mass Eagle's Splendor
+Mass Endurance
+Mass Fox's Cunning
+Mass Haste
+Mass Heal
+Mass Hold Monster
+Mass Hold Person
+Mass Inflict Critical Wounds
+Mass Inflict Light Wounds
+Mass Inflict Moderate Wounds
+Mass Inflict Serious Wounds
+Mass Owl's Wisdom
+Mass Ultravision
+Maze
+Melf's Acid Arrow
+Mestil's Acid Breath
+Mestil's Acid Sheath
+Meteor Swarm
+Mind Blank
+Mind Fog
+Minor Globe of Invulnerability
+Mirror Image
+Monstrous Regeneration
 Morality Undone
+Mordenkainen's Disjunction
+Mordenkainen's Magnificent Mansion
+Mordenkainen's Sword
+Nature's Avatar
+Nature's Balance
+Necrotic Awareness
+Necrotic Bloat
+Necrotic Burst
+Necrotic Cyst
+Necrotic Domination
+Necrotic Empowerment
+Necrotic Eruption
+Necrotic Termination
+Negative Energy Burst
+Negative Energy Protection
+Negative Energy Ray
+Neutralize Poison
+Night's Caress
+Nybor's Gentle Reminder
+Nybor's Stern Reproof
+Obscuring Mist
+One with the Land
+Owl's Insight
+Owl's Wisdom
+Panacea
+Pestilence
+Phantasmal Killer
+Phieren's Resolve
+Phoenix Fire
+Planar Ally
+Planar Binding
+Poison
+Polar Ray
+Polymorph Self
 Power Leech
+Power Word, Kill
+Power Word, Stun
+Pox
+Prayer
+Premonition
+Prismatic Spray
+Protection from Arrows
+Protection from Chaos
+Protection from Elements
+Protection from Evil
+Protection from Good
+Protection from Law
+Protection from Spells
+Quillfire
+Rain of Black Tulips
+Rain of Embers
+Rain of Roses
+Raise Dead
 Rapture of Rupture
+Ray of Enfeeblement
+Ray of Frost
+Ray of Hope
 Reality Blind
+Recitation
 Red Fester
+Regenerate
+Regroup
+Remove Blindness / Deafness
+Remove Curse
+Remove Disease
+Remove Fear
+Remove Paralysis
+Repel Vermin
+Resist Elements
+Resistance
 Resonating Resistance
+Restoration
+Resurrection
+Righteous Might
+Righteous Smite
 Rotting Curse of Urfestra
+Rouse
+Sanctuary
+Scare
+Scintillating Sphere
+Searing Light
+See Invisibility
+Seeking Ray
 Seething Eyebane
+Serpent's Sigh
+Shades
+Shadow Conjuration
+Shadow Shield
+Shadow Spray
+Shapechange
+Shelgarn's Persistent Blade
+Shield
+Shield of Faith
+Shivering Touch
 Shriveling
+Sicken Evil
+Silence
+Sinsabur's Baleful Bolt
+Slashing Darkness
+Slashing Dispell
+Slay Living
+Sleep
+Slow
+Snilloc's Major Missile
+Snilloc's Snowball
+Snilloc's Snowball Swarm
+Solid Fog
 Song of Festering Death
+Sonic Orb
+Sonic Shield
 Sorrow
+Soul Scour
+Sound Burst
+Spell Mantle
+Spell Resistance
+Spell Turning
+Sphere of Ultimate Destruction
+Spiderskin
+Spike Growth
 Spore's of the Vrock
-Stunning Screech
+Starmantle
+Stinking Cloud
+Stone Bones
+Stone to Flesh
+Stonehold
+Stoneskin
 Stop Heart
-Touch of Juiblex
+Storm of Shards
+Storm of Vengeance
+Stunning Screech
+Summon Creature I
+Summon Creature II
+Summon Creature III
+Summon Creature IV
+Summon Creature IX
+Summon Creature V
+Summon Creature VI
+Summon Creature VII
+Summon Creature VIII
+Sunbeam
+Sunburst
+Sunmantle
+Sure Strike
+Sword of Conscience
+Tasha's Hideous Laughter
+Teleport
+Teleportation Circle
+Tenser's Transformation
 Thousand Needles
+Time Stop
+Tomb of Light
 Tongue of Baalzebul
+Touch of Idiocy
+Touch of Juiblex
+True Seeing
+True Strike
+Twilight Luck
+Ultravision
+Undeath to Death
+Undeath's Eternal Foe
+Undetectable Alignment
 Unheavened
 Unliving Weapon
 Unnerving Gaze
+Unyielding Roots
 Utterdark
+Vampiric Touch
+Vine Mine
+Virtue
+Viscid Globe
+Vision of Heaven
+Wail of the Banshee
+Wall of Fire
+Wall of Greater Dispel Magic
+War Cry
 Wave of Grief
 Wave of Pain
+Web
+Weird
+Word of Balance
+Word of Chaos
+Wounding Whispers
 Wrack
 Wretched Blight
-
-
-Complete Warrior
-
-Augment Familiar
-Cursed Blade
-Hound of Doom
-
-
-Frostburn
-
-Lesser Shivering Touch
-Shivering Touch
-
-
-PHB
-
-Baelful Polymorph
-Break Enchantment
-Command
-Command, Greater
-Deep Slumber
-Detect Scrying
-False Life
-Obscuring Mist
-Protection from Arrows
-Repel Vermin
-Solid Fog
-Touch of Idiocy
-
-
-PHB II
-
-Animalistic Power
-Bigby's Striking Fist
-Bibgy's Tripping Hand
-Blade of Blood
-Channeled Pyroburst
-Crown of Might
-Crown of Protection
-Deflect
-Deflect, Lesser
-Dimension Hop
-Dispelling Touch
-Doom Scarabs
-Energy Aegis
-Energy Surge
-Halt
-Kelgore's Fire Bolt
-Regroup
-Rouse
-Seeking Ray
-Slashing Dispell
-Sonic Shield
-Sure Strike
-
-
 

@@ -68,7 +68,7 @@ int PRCGetFileEnd(string sTable)
     if(sTable == "cls_spell_kotmc") return 40;
     if(sTable == "cls_spell_ocu") return 416;
     if(sTable == "cls_spell_sol") return 73;
-    if(sTable == "cls_spell_sorc") return 1427;
+    if(sTable == "cls_spell_sorc") return 1957;
     if(sTable == "cls_spell_suel") return 293;
     if(sTable == "cls_spell_tfshad") return 77;
     if(sTable == "cls_spell_vassal") return 51;

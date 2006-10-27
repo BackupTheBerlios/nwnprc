@@ -2653,7 +2653,7 @@ void SetDefaultFileEnds()
     SetPRCSwitch(FILE_END_CLASS_FEAT,      600);
     SetPRCSwitch(FILE_END_CLASS_SKILLS,    50);
     SetPRCSwitch(FILE_END_CLASS_POWER,     300);
-    SetPRCSwitch(FILE_END_CLASS_SPELLBOOK, 1500); //sorc is 1427
+    SetPRCSwitch(FILE_END_CLASS_SPELLBOOK, PRCGetFileEnd("cls_spell_sorc")); //sorc is 1957
     SetPRCSwitch(FILE_END_FEAT,            PRCGetFileEnd("feat"));
     SetPRCSwitch(FILE_END_CLASS_PREREQ,    25);
     SetPRCSwitch(FILE_END_FAMILIAR,        PRCGetFileEnd("hen_familiar"));

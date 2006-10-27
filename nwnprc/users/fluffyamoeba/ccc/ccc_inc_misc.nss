@@ -76,6 +76,13 @@ int GetMeetSkillPrereq(string sReqSkill, string sReqSkill2, string sReqSkillRank
 // checks if the PC has enough points in sReqSkill
 int CheckSkillPrereq(string sReqSkill, string sReqSkillRanks);
 
+// adds all the cantrips to a wizard's spellbook
+void SetWizCantrips(int iSpellschool);
+
+// loops through the spell array on the PC to see if they already know the spell
+// returns TRUE if they know it
+int GetIsSpellKnown(int nSpell, int nSpellLevel);
+
 /* 2da cache functions */
 
 // loops through a 2da, using the cache
@@ -97,6 +104,9 @@ void DoFeatLoop(int nClassFeatStage = FALSE);
 
 // loops through cls_feat_***.2da
 void DoBonusFeatLoop();
+
+// loops through spells.2da
+void DoSpellsLoop(int nStage);
 
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
@@ -367,26 +377,49 @@ int GetNextCCCStage(int nStage)
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
     switch (nStage) // with no breaks to go all the way through
     {
-        case STAGE_FEAT_CHECK:
+        case STAGE_FEAT_CHECK: {
             if(nClass == CLASS_TYPE_WIZARD)
             {
                 return STAGE_WIZ_SCHOOL;
             }
-        case STAGE_WIZ_SCHOOL_CHECK:
+        }
+        case STAGE_WIZ_SCHOOL_CHECK: {
+            if (nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+            {
+                return STAGE_SPELLS_0;
+            }
+            else if (nClass == CLASS_TYPE_WIZARD)
+            {
+                return STAGE_SPELLS_1;
+            }
+        }
+        case STAGE_SPELLS_0: {
+            if (nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+            {
+                string sSpkn = Get2DACache("classes", "SpellKnownTable", nClass);
+                // if they can pick level 1 spells
+                if (StringToInt(Get2DACache(sSpkn, "SpellLevel1", 0)))
+                    return STAGE_SPELLS_1;
+            }       
+        }
+        case STAGE_SPELLS_1: {
             if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
             {
-                return STAGE_SPELLS;
+                return STAGE_SPELLS_CHECK; // checks both 0 and 1 level spells
             }
-        case STAGE_SPELLS_CHECK:
+        }
+        case STAGE_SPELLS_CHECK: {
             if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_DRUID)
             {
                 return STAGE_FAMILIAR; // also does animal companion
             }
-        case STAGE_FAMILIAR_CHECK:
+        }
+        case STAGE_FAMILIAR_CHECK: {
             if (nClass == CLASS_TYPE_CLERIC)
             {
                 return STAGE_DOMAIN1;
             }
+        }
         case STAGE_DOMAIN_CHECK:
             return STAGE_APPEARANCE;
         default:
@@ -492,8 +525,47 @@ int CheckSkillPrereq(string sReqSkill, string sReqSkillRanks)
         if (nSkillPoints < StringToInt(sReqSkillRanks))
             return FALSE;
     }
-    // get this far then not failed any fo the prereq
+    // get this far then not failed any of the prereq
     return TRUE;
+}
+
+void SetWizCantrips(int iSpellschool)
+{
+    string sOpposition = "";
+    // if not a generalist
+    if(iSpellschool)
+    {
+        sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", iSpellschool)));
+    }
+    
+    array_create(OBJECT_SELF, "SpellLvl0");
+    string q = PRC_SQLGetTick();
+    string sSQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = '0') AND ("+q+"School"+q+" != '"+sOpposition+"')";
+    PRC_SQLExecDirect(sSQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        array_set_int(OBJECT_SELF, "SpellLvl0", array_get_size(OBJECT_SELF, "SpellLvl0"),nRow);
+    }
+}
+
+int GetIsSpellKnown(int nSpell, int nSpellLevel)
+{
+    // spell 0 is a level 6 spell, so no need to do the 0 == -1 workaround
+    int i = 0;
+    string sArray = "SpellLvl" + IntToString(nSpellLevel);
+    // if the array doesn't exist then there won't be a match
+    if (!array_exists(OBJECT_SELF, sArray))
+        return FALSE;
+    while (i != array_get_size(OBJECT_SELF, sArray))
+    {
+        int nKnownSpell  = array_get_int(OBJECT_SELF, sArray, i);
+        if(nKnownSpell == nSpell) // if there's a match, don't add it
+            return TRUE;
+        i++;
+    }
+    // otherwise no match
+    return FALSE;
 }
 
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
@@ -1065,7 +1137,7 @@ void DoBonusFeatLoop()
                 +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
                 +" LIMIT 5 OFFSET "+IntToString(nReali);
                 
-        // debug print the sql statement
+    // debug print the sql statement
     if(DEBUG)
     {
         DoDebug(sSQL);
@@ -1132,10 +1204,73 @@ void DoBonusFeatLoop()
     }
     else // there were less than 5 rows, it's the end of the 2da
     {
-        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         if(DEBUG) DoDebug("Finished bonus feats");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         DeleteLocalInt(OBJECT_SELF, "i");
+        return;
+    }
+}
+
+void DoSpellsLoop(int nStage)
+{
+    // get which spell level the choices are for
+    int nSpellLevel = 0;
+    if (nStage == STAGE_SPELLS_1)
+        nSpellLevel = 1;
+    int nClass = GetLocalInt(OBJECT_SELF, "Class");
+    string sSQL;
+    string q = PRC_SQLGetTick();
+    // get the results 50 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    switch(nClass)
+    {
+        case CLASS_TYPE_WIZARD: {
+            int nSpellSchool = GetLocalInt(OBJECT_SELF, "School");
+            string sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", nSpellSchool)));
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND ("+q+"Wiz_Sorc"+q+" = '1') AND ("+q+"School"+q+" != '"+sOpposition+"') LIMIT 50 OFFSET "+IntToString(nReali);
+            break;
+        }
+        case CLASS_TYPE_SORCERER: {
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND("+q+"Wiz_Sorc"+q+" = '"+IntToString(nSpellLevel)+"') LIMIT 50 OFFSET "+IntToString(nReali);
+            break;
+        }
+        case CLASS_TYPE_BARD: {
+            sSQL = "SELECT "+q+"rowid"+q+", "+q+"Name"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Name"+q+" != '****') AND("+q+"Bard"+q+" = '"+IntToString(nSpellLevel)+"') LIMIT 50 OFFSET "+IntToString(nReali);
+            break;
+        }
+    }
+    
+    PRC_SQLExecDirect(sSQL);
+    // to keep track of where in the 10 rows we stop getting a result
+    int nCounter = 0;
+    DoDebug("1");
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+        DoDebug("loop counter: " + IntToString(nCounter));
+        // has it already been chosen?
+        int nSpell = StringToInt(PRC_SQLGetData(1));
+        DoDebug("2");
+        // if they don't know the spell, add it to the choice list
+        if(!GetIsSpellKnown(nSpell, nSpellLevel))
+        {
+            DoDebug("3");
+            string sName = GetStringByStrRef(StringToInt(PRC_SQLGetData(2)));
+            DoDebug("4");
+            AddChoice(sName, nSpell);
+        }
+    } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    
+    if (nCounter == 50)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+10);
+        DelayCommand(0.01, DoSpellsLoop(nStage));
+    }
+    else // end of the 2da
+    {
+        if(DEBUG) DoDebug("Finished spells");
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         return;
     }
 }

@@ -279,7 +279,7 @@ void DoHeaderAndChoices(int nStage)
             break;
         }
         case STAGE_FEAT_CHECK: {
-            sText = GetStringByStrRef(16824209); // You have selected:
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
             // get feat
             int nFeat = array_get_int(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1));
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat))) + "\n"; // name
@@ -313,11 +313,129 @@ void DoHeaderAndChoices(int nStage)
             break;
         }
         case STAGE_BONUS_FEAT_CHECK: {
-            sText = GetStringByStrRef(16824209); // You have selected:
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
             // get feat
             int nFeat = array_get_int(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1));
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat))) + "\n"; // name
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeat))) + "\n"; // description
+            sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_WIZ_SCHOOL: {
+            sText = GetStringByStrRef(381); // Select a School of Magic
+            SetHeader(sText);
+            // choices
+            if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
+            {
+                AddChoice(GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", 9))), 9);
+            }
+            else
+            {
+                for(i = 0; i < 9; i++)
+                {
+                    AddChoice(GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", i))), i);
+                }
+            }
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_WIZ_SCHOOL_CHECK: {
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            sText+= GetStringByStrRef(StringToInt(Get2DACache("spellschools", "StringRef", GetLocalInt(OBJECT_SELF, "School"))));
+            sText+= "\n\n";
+            sText+= GetStringByStrRef(StringToInt(Get2DACache("spellschools", "Description", GetLocalInt(OBJECT_SELF, "School"))));
+            sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SPELLS_0: {
+            // if the first time through, set up the number of cantrips to pick
+            int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+            int nClass = GetLocalInt(OBJECT_SELF, "Class");
+            if(nPoints == 0)
+            {
+                // set up the number of spells to pick
+                // get the cls_spkn_***2da to use
+                string sSpkn = Get2DACache("classes", "SpellKnownTable", nClass);
+                // set the number of spells to pick
+                nPoints = StringToInt(Get2DACache(sSpkn, "SpellLevel0", 0));
+                SetLocalInt(OBJECT_SELF, "Points", nPoints);
+                // don't want to be waiting every time
+                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            }
+            sText = GetStringByStrRef(372) + "\n"; // Select Cantrips
+            sText += GetStringByStrRef(371) + ": "; // Remaining Spells
+            sText += IntToString(nPoints);
+            SetHeader(sText);
+            // choices, uses nStage to see if it's listing level 0 or level 1 spells
+            DoSpellsLoop(nStage);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SPELLS_1: {
+            // if the first time through, set up the number of spells to pick
+            int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+            int nClass = GetLocalInt(OBJECT_SELF, "Class");
+            if(nPoints == 0)
+            {
+                switch(nClass)
+                {
+                    case CLASS_TYPE_WIZARD:
+                        // spells to pick is 3 + int modifier
+                        int nIntMod = GetLocalInt(OBJECT_SELF, "Int");
+                        nIntMod += StringToInt(Get2DACache("racialtypes", "IntAdjust", GetLocalInt(OBJECT_SELF, "Race")));
+                        nIntMod = (nIntMod - 10)/2;
+                        nPoints = 3 + nIntMod;
+                        break;
+                    case CLASS_TYPE_SORCERER:
+                        // get the cls_spkn_***2da to use
+                        string sSpkn = Get2DACache("classes", "SpellKnownTable", nClass);
+                        // set the number of spells to pick
+                        nPoints = StringToInt(Get2DACache(sSpkn, "SpellLevel1", 0));
+                        break;
+                }
+                SetLocalInt(OBJECT_SELF, "Points", nPoints);
+                // don't want to be waiting every time
+                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            }
+            sText = GetStringByStrRef(368) + "\n"; // Select Spells for your Character
+            sText += GetStringByStrRef(371) + ": "; // Remaining Spells
+            sText += IntToString(GetLocalInt(OBJECT_SELF, "Points"));
+            SetHeader(sText);
+            // choices, uses nStage to see if it's listing level 0 or level 1 spells
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            DoSpellsLoop(nStage);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SPELLS_CHECK: {
+            sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
+            int spellID = 0;
+            sText += GetStringByStrRef(691) + " - \n"; // Cantrips
+            // loop through the spell choices
+            for (i = 0; i < array_get_size(OBJECT_SELF, "SpellLvl0"); i++)
+            {
+                spellID = array_get_int(OBJECT_SELF, "SpellLvl0", i);
+                sText+= GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", spellID)));
+                sText += "\n";
+            }
+            sText += GetStringByStrRef(61924) + " - \n"; // Level 1 Spells
+            // loop through the spell choices
+            for (i = 0; i < array_get_size(OBJECT_SELF, "SpellLvl1"); i++)
+            {
+                spellID = array_get_int(OBJECT_SELF, "SpellLvl1", i);
+                sText+= GetStringByStrRef(StringToInt(Get2DACache("spells", "Name", spellID)));
+                sText += "\n";
+            }
             sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
             SetHeader(sText);
             // choices Y/N
@@ -344,7 +462,7 @@ int HandleChoice(int nStage, int nChoice)
             nStage++;
             break;
 
-        case STAGE_GENDER_CHECK:
+        case STAGE_GENDER_CHECK: {
             if(nChoice == 1)
                 nStage++;
             else // go back to pick gender
@@ -355,11 +473,12 @@ int HandleChoice(int nStage, int nChoice)
                 DeleteLocalInt(OBJECT_SELF, "Gender");
             }
             break;
+        }
         case STAGE_RACE:
             SetLocalInt(OBJECT_SELF, "Race", nChoice);
             nStage++;
             break;
-        case STAGE_RACE_CHECK:
+        case STAGE_RACE_CHECK: {
             if(nChoice == 1)
             {
                 nStage++;
@@ -383,11 +502,12 @@ int HandleChoice(int nStage, int nChoice)
                 DeleteLocalInt(OBJECT_SELF, "Race");
             }
             break;
+        }
         case STAGE_CLASS:
             SetLocalInt(OBJECT_SELF, "Class", nChoice);
             nStage++;
             break;
-        case STAGE_CLASS_CHECK:
+        case STAGE_CLASS_CHECK: {
             if(nChoice == 1)
             {
                 nStage++;
@@ -406,6 +526,7 @@ int HandleChoice(int nStage, int nChoice)
                 DeleteLocalInt(OBJECT_SELF, "Class");
             }
             break;
+        }
         case STAGE_ALIGNMENT: {
             // for stage check later
             SetLocalInt(OBJECT_SELF, "AlignChoice", nChoice);
@@ -609,7 +730,6 @@ int HandleChoice(int nStage, int nChoice)
                     else
                     {
                         // go to next stage after that the PC qualifies for
-                        /* TODO */
                         nStage = GetNextCCCStage(nStage);
                     }
                 }
@@ -670,6 +790,82 @@ int HandleChoice(int nStage, int nChoice)
                 // delete the chosen feat
                 if(array_shrink(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1)) != SDL_SUCCESS)
                     DoDebug("No feats array!");
+            }
+            break;
+        }
+        case STAGE_WIZ_SCHOOL: {
+            SetLocalInt(OBJECT_SELF, "School", GetChoice());
+            nStage++;
+            break;
+        }
+        case STAGE_WIZ_SCHOOL_CHECK: {
+            if(nChoice == 1)
+            {
+                // go to next stage after that the PC qualifies for
+                nStage = GetNextCCCStage(nStage);
+                // add cantrips - wizards know all of them so don't need to choose
+                SetWizCantrips(GetLocalInt(OBJECT_SELF, "School"));
+            }
+            else // go back and pick the school again
+            {
+                nStage = STAGE_WIZ_SCHOOL;
+                MarkStageNotSetUp(STAGE_WIZ_SCHOOL_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_WIZ_SCHOOL, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "School");
+            }
+            break;
+        }
+        case STAGE_SPELLS_0: {
+            // create the array first time through
+            if (!array_exists(OBJECT_SELF, "SpellLvl0"))
+                array_create(OBJECT_SELF, "SpellLvl0");
+            int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+            // add the choice to the spells known array
+            array_set_int(OBJECT_SELF, "SpellLvl0", array_get_size(OBJECT_SELF, "SpellLvl0"), nChoice);
+            // decrement the number of spells left to select
+            SetLocalInt(OBJECT_SELF, "Points", --nPoints);
+            if (nPoints) // still some left to allocate
+                ClearCurrentStage();
+            else // go to next stage after that the PC qualifies for
+                nStage = GetNextCCCStage(nStage);
+            break;
+        }
+        case STAGE_SPELLS_1: {
+            // create the array first time through
+            if (!array_exists(OBJECT_SELF, "SpellLvl1"))
+                array_create(OBJECT_SELF, "SpellLvl1");
+            int nPoints = GetLocalInt(OBJECT_SELF, "Points");
+            // add the choice to the spells known array
+            array_set_int(OBJECT_SELF, "SpellLvl1", array_get_size(OBJECT_SELF, "SpellLvl1"), nChoice);
+            // decrement the number of spells left to select
+            SetLocalInt(OBJECT_SELF, "Points", --nPoints);
+            if (nPoints) // still some left to allocate
+                ClearCurrentStage();
+            else // go to next stage after that the PC qualifies for
+                nStage = GetNextCCCStage(nStage);
+            break;
+        }
+        case STAGE_SPELLS_CHECK: {
+            if(nChoice == 1)
+            {
+                // go to next stage after that the PC qualifies for
+                nStage = GetNextCCCStage(nStage);
+            }
+            else // go back and pick the spells again
+            {
+                // hacky...but returns the right stage, depending on the class
+                nStage = GetNextCCCStage(STAGE_WIZ_SCHOOL_CHECK);
+                MarkStageNotSetUp(STAGE_SPELLS_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_SPELLS_1, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_SPELLS_0, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Points");
+                array_delete(OBJECT_SELF, "spellLvl1");
+                if(nStage == STAGE_SPELLS_0)
+                {
+                    // if the new value of nStage takes us back to picking cantrips,
+                    // then also delete the level 0 array
+                    array_delete(OBJECT_SELF, "spellLvl0");
+                }
             }
             break;
         }

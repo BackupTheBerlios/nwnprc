@@ -1,294 +1,311 @@
-// check if UMD and animal empathy can be taken
-// find the cls_skill_***2da
 
-// do an sql query to see if that skill is there
-string sSkillAnimalEmpathy = "0"; // as int 0 is the same as a non existant row
-string sSKillUMD = IntToString(SKILL_TYPE_UMD); // check const name
+#include "prc_alterations"
+#include "inc_letocommands"
+#include "prc_racial_const"
+#include "prc_ccc_inc"
+#include "inc_encrypt"
 
-/*
- * SELECT SkillIndex FROM <cls_feat_***>
- * WHERE SkillIndex = <AE> OR SkillIndex = <UMD>
- */
-
-if (PRC_SQLFetch() == SQL_SUCCESS && PRC_SQLGetData(1) == "0") // check it was the right skill
-	SetLocalInt(OBJECT_SELF, "bHasAnimalEmpathy", TRUE);
-
-if (PRC_SQLFetch() == SQL_SUCCESS && PRC_SQLGetData(1) == IntToString(SKILL_TYPE_UMD)) // check it was the right skill
-	SetLocalInt(OBJECT_SELF, "bHasUMD", TRUE);
-
-
-// messing with the feat loop function
-
-	//get some stored data
+void main()
+{
+    //define some varaibles
     object oPC = OBJECT_SELF;
-	int nSex = GetLocalInt(oPC, "Gender");
-	int nRace = GetLocalInt(oPC, "Race");
-	int nClass = GetLocalInt(oPC, "Class");
-    int nStr = GetLocalInt(oPC, "Str");
-    int nDex = GetLocalInt(oPC, "Dex");
-    int nCon = GetLocalInt(oPC, "Con");
-    int nInt = GetLocalInt(oPC, "Int");
-    int nWis = GetLocalInt(oPC, "Wis");
-    int nCha = GetLocalInt(oPC, "Cha"); 
-    int nOrder = GetLocalInt(oPC, "LawfulChaotic");
-    int nMoral = GetLocalInt(oPC, "GoodEvil");
+    int i;
+    //get some stored data
+    int         nStr =              GetLocalInt(oPC, "Str");
+    int         nDex =              GetLocalInt(oPC, "Dex");
+    int         nCon =              GetLocalInt(oPC, "Con");
+    int         nInt =              GetLocalInt(oPC, "Int");
+    int         nWis =              GetLocalInt(oPC, "Wis");
+    int         nCha =              GetLocalInt(oPC, "Cha");
 
-    //add racial ability alterations
-    nStr += StringToInt(Get2DACache("racialypes", "StrAdjust", nRace));
-    nDex += StringToInt(Get2DACache("racialypes", "DexAdjust", nRace));
-    nCon += StringToInt(Get2DACache("racialypes", "ConAdjust", nRace));
-    nInt += StringToInt(Get2DACache("racialypes", "IntAdjust", nRace));
-    nWis += StringToInt(Get2DACache("racialypes", "WisAdjust", nRace));
-    nCha += StringToInt(Get2DACache("racialypes", "ChaAdjust", nRace));
+    int         nRace =             GetLocalInt(oPC, "Race");
 
-	// gets the BAB
-	/* TODO check for right 2da line */
-	int nBAB = StringToInt(Get2DACache(Get2DACache("classes", "AttackBonusTable",nClass),"BAB",1));
-	
-	// get caster level
-	int nCasterLevel = 0;
-    if(nClass == CLASS_TYPE_WIZARD
-        || nClass == CLASS_TYPE_SORCERER
-        || nClass == CLASS_TYPE_BARD
-        || nClass == CLASS_TYPE_CLERIC
-        || nClass == CLASS_TYPE_DRUID)
-        nCasterLevel = 1;
+    int         nClass =            GetLocalInt(oPC, "Class");
+    int         nHitPoints =        GetLocalInt(oPC, "HitPoints");
 
-	// fortitude save
-	/* TODO check for right 2da line */
-    int nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", 1));
+    int         nSex =              GetLocalInt(oPC, "Gender");
 
-	// and the sql statement
-	/* 
-	SELECT `rowid`, `feat`, `PREREQFEAT1`, `PREREQFEAT2`, `OrReqFeat0`, `OrReqFeat1`, `OrReqFeat2`, `OrReqFeat3`, `OrReqFeat4`,
-		`REQSKILL`, `REQSKILL2`, `ReqSkillMinRanks`, `ReqSkillMinRanks2`
-	FROM `prc_cached2da_feat`
-	WHERE (`feat` != '****') AND (`PreReqEpic` != 1)
-	AND (`MinLevel` = '****' OR `MinLevel` = '1')
-	AND `ALLCLASSESCANUSE` = 1
-	AND `minattackbonus` <= <nBAB>
-	AND `minspelllvl` = 1
-	AND `minstr`<= <nStr>
-	AND `mindex`<= <nDex>
-	AND `mincon`<= <nCon>
-	AND `minint`<= <nInt>
-	AND `minwis`<= <nWis>
-	AND `mincha`<= <nCha>
-	AND `MinFortSave` <= <nFortSave>
-	*/
+    int         nOrder =            GetLocalInt(oPC, "LawfulChaotic");
+    int         nMoral =            GetLocalInt(oPC, "GoodEvil");
 
 
-        string sSQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
-		+q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
-		+q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
-		" FROM "+q+"prc_cached2da_feat"+q+
-        " WHERE ("+q+"FEAT"+q+" != '****') AND ("+q+"PreReqEpic"+q+" != 1)"
-			+" AND ("+q+"MinLevel"+q+" = '****' OR "+q+"MinLevel"+q+" = '1')"
-            +" AND ("+q+"ALLCLASSESCANUSE"+q+" = 1)"
-            +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
-            +" AND ("+q+"MINSPELLLVL"+q+" <= "+IntToString(nCasterLevel)+")"
-            +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
-            +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
-            +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
-            +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
-            +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
-            +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
-            +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
-            +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
+    int         nFamiliar =         GetLocalInt(oPC, "Familiar");
 
-	PRC_SQLExecDirect(SQL);
-    int bAtLeastOneResult; // need to know if the query worked
-while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-{
-		bAtLeastOneResult = TRUE;
-	    int nRow = StringToInt(PRC_SQLGetData(1));
-        int nStrRef = StringToInt(PRC_SQLGetData(2));
-        string sName = GetStringByStrRef(nStrRef);
-        string sPreReqFeat1 = PRC_SQLGetData(3);
-        string sPreReqFeat2 = PRC_SQLGetData(4);
-        string sOrReqFeat0 = PRC_SQLGetData(5);
-        string sOrReqFeat1 = PRC_SQLGetData(6);
-        string sOrReqFeat2 = PRC_SQLGetData(7);
-        string sOrReqFeat3 = PRC_SQLGetData(8);
-        string sOrReqFeat4 = PRC_SQLGetData(9);
-        string sReqSkill = PRC_SQLGetData(10);
-        string sReqSkill2 = PRC_SQLGetData(11);
-        string sReqSkillRanks = PRC_SQLGetData(12);
-        string sReqSkillRanks2 = PRC_SQLGetData(13);
+    int         nAnimalCompanion =  GetLocalInt(oPC, "AnimalCompanion");
 
-	// prereq testing first	
-	// AND prereq
-	int GetMeetsANDPreReq(string sPreReqFeat1, string sPreReqFeat2)	
-	{
-		// are there any prereq?
-		if (sPreReqFeat1 == '****' && sPreReqFeat2 == '****')
-			return TRUE;
-		// test if the PC meets the first prereq
-		// if not, exit
-		if(!ANDPreReqFeatArrayLoop(StringToInt(sPreReqFeat1)))
-			return FALSE;
-		// got this far, then the first prereq was met
-		// is there a second prereq? If not, done
-		if (sPreReqFeat2 == '****')
-			return TRUE;
-		// test if the PC meets the second one
-		if(!ANDPreReqFeatArrayLoop(StringToInt(sPreReqFeat2)))
-			return FALSE;
-		// got this far, so second one matched too
-		return TRUE;
-	}
+    int         nDomain1 =          GetLocalInt(oPC, "Domain1");
+    int         nDomain2 =          GetLocalInt(oPC, "Domain2");
 
-	// AND feat array loop
-	int ANDPreReqFeatArrayLoop(int nPreReqFeat)
-	{
-		// as alertness is stored in the array as -1
-		if (nPreReqFeat == 0)
-			nPreReqFeat == -1;
-		int i = 0;
-		do
-		{
-			nFeat  = get_array_int(OBJECT_SELF, "Feat", i);
-			i++;
-			// if we get to the end of the array here,
-			// then there's been no match
-			if (i == array_get_size(OBJECT_SELF, "Feats"))
-				return FALSE;
-		} while(nFeat != nPreReqFeat);
-		// got this far, so must have a match
-		return TRUE;
-	}
+    int         nSchool =           GetLocalInt(oPC, "School");
 
+    int         nSpellsPerDay0 =    GetLocalInt(oPC, "SpellsPerDay0");
+    int         nSpellsPerDay1 =    GetLocalInt(oPC, "SpellsPerDay1");
+    int         nVoiceset =         GetLocalInt(oPC, "Soundset");
+    int         nSkin =             GetLocalInt(oPC, "Skin");
+    int         nHair =             GetLocalInt(oPC, "Hair");
+    int         nTattooColour1 =    GetLocalInt(oPC, "TattooColour1");
+    int         nTattooColour2 =    GetLocalInt(oPC, "TattooColour2");
 
-	// OR prereq
-	int GetMeetsORPreReq(string sOrReqFeat0, string sOrReqFeat1, string sOrReqFeat2, string sOrReqFeat3, string sOrReqFeat4)
-	{
-		// are there any prereq
-		if (OrReqFeat0 == '****')
-			return TRUE;
-		// first one
-		if(ORPreReqFeatArrayLoop(StringToInt(sOrReqFeat0)))
-			return TRUE;
-		// second one
-		if(ORPreReqFeatArrayLoop(StringToInt(sOrReqFeat1)))
-			return TRUE;
-		// third one
-		if(ORPreReqFeatArrayLoop(StringToInt(sOrReqFeat2)))
-			return TRUE;
-		// 4th one
-		if(ORPreReqFeatArrayLoop(StringToInt(sOrReqFeat3)))
-			return TRUE;
-		// 5th one
-		if(ORPreReqFeatArrayLoop(StringToInt(sOrReqFeat4)))
-			return TRUE;
-		// no match
-		return FALSE;
-	}
+    int         nLevel =            GetLocalInt(oPC, "Level");
 
-	// 
-	// OR feat array loop
-	int ORPreReqFeatArrayLoop(int nOrReqFeat)
-	{
-		// as alertness is stored in the array as -1
-		if (nOrReqFeat == 0)
-			nOrReqFeat == -1;
-		int i = 0;
-		while (i != array_get_size(OBJECT_SELF, "Feats"))
-		{
-			int nFeat  = get_array_int(OBJECT_SELF, "Feat", i);
-			if(nFeat == nOrReqFeat) // if there's a match, the prereq are met
-				return TRUE;
-			i++;
-		}
-		// otherwise no match
-		return FALSE;
-	}
+//game does this for you
+//    nStr+= StringToInt(Get2DACache("racialtypes", "StrAdjust", nRace));
+//    nDex+= StringToInt(Get2DACache("racialtypes", "DexAdjust", nRace));
+//    nCon+= StringToInt(Get2DACache("racialtypes", "ConAdjust", nRace));
+//    nInt+= StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace));
+//    nWis+= StringToInt(Get2DACache("racialtypes", "WisAdjust", nRace));
+//    nCha+= StringToInt(Get2DACache("racialtypes", "ChaAdjust", nRace));
+//    nHitPoints += (nCon-10)/2;
 
+    //clear existing stuff
+    string sScript;
+    sScript += LetoDelete("FeatList");
+    sScript += LetoDelete("ClassList");
+    sScript += LetoDelete("LvlStatList");
+    sScript += LetoDelete("SkillList");
+    sScript += LetoAdd("FeatList", "", "list");
+    sScript += LetoAdd("ClassList", "", "list");
+    sScript += LetoAdd("LvlStatList", "", "list");
+    sScript += LetoAdd("SkillList", "", "list");
 
-int GetMeetSkillPrereq(string sReqSkill, string sReqSkill2, string sReqSkillRanks,  string sReqSkillRanks2)
-{
-    if(sReqSkill == "****" && sReqSkill2 == "****")
-        return TRUE;
-    // test if the PC meets the first prereq
-    if(!CheckSkillPrereq(sReqSkill, sReqSkillRanks))
-        return FALSE;
-    
-    // got this far, then the first prereq was met
-	// is there a second prereq? If not, done
-    if(sReqSkill2 = "****")
-        return TRUE;
-    if(!CheckSkillPrereq(sReqSkill2, sReqSkillRanks2))
-        return FALSE;
-    // got this far, so second one matched too
-    return TRUE;
-}
+    //Sex
+    sScript += SetGender(nSex);
 
-int CheckSkillPrereq(string sReqSkill, string sReqSkillRanks)
-{
-    // for skill focus feats
-    if (sReqSkillRanks == "0" || sReqSkillRanks == "****") // then it just requires being able to put points in the skill
+    //Race
+    sScript += SetRace(nRace);
+
+    //Class
+    sScript += LetoAdd("ClassList/Class", IntToString(nClass), "int");
+    sScript += LetoAdd("ClassList/[0]/ClassLevel", IntToString(nLevel+1), "short");
+    sScript += LetoAdd("LvlStatList/LvlStatClass", IntToString(nClass), "byte");
+    sScript += LetoAdd("LvlStatList/[0]/EpicLevel", "0", "byte");
+    sScript += LetoAdd("LvlStatList/[0]/LvlStatHitDie", IntToString(nHitPoints), "byte");
+    sScript += LetoAdd("LvlStatList/[0]/FeatList", "", "list");
+    sScript += LetoAdd("LvlStatList/[0]/SkillList", "", "list");
+
+    //Alignment
+    sScript += LetoAdd("LawfulChaotic", IntToString(nOrder), "byte");
+    sScript += LetoAdd("GoodEvil", IntToString(nMoral), "byte");
+
+    //Familiar
+    //has a random name
+    if((nClass == CLASS_TYPE_WIZARD
+        || nClass == CLASS_TYPE_SORCERER)
+            && !GetPRCSwitch(PRC_PNP_FAMILIARS))
     {
-        // if requires animal empathy, but the PC can't take ranks in it
-        if(sReqSkill == "0" && !GetLocalInt(OBJECT_SELF, "bHasAnimalEmpathy"))
-            return FALSE;
-        // if requires UMD, but the PC can't take ranks in it
-        if(sReqSkill == IntToString(SKILL_USE_MAGIC_DEVICE) && !GetLocalInt(OBJECT_SELF, "bHasUMD"))
-            return FALSE;
+        sScript += LetoAdd("FamiliarType", IntToString(nFamiliar), "int");
+        if(GetFamiliarName(oPC) == "")
+            sScript += LetoAdd("FamiliarName", RandomName(NAME_FAMILIAR), "string");
     }
-    else // test if the PC has enough ranks in the skill
+
+    //Animal Companion
+    //has a random name
+    if(nClass == CLASS_TYPE_DRUID)
     {
-        int nSkillPoints = array_get_int(OBJECT_SELF, "Skills", StringToInt(sReqSkill));
-        if (nSkillPoints < StringToInt(sReqSkillRanks)
-            return FALSE;
+        sScript += LetoAdd("CompanionType", IntToString(nAnimalCompanion), "int");
+        if(GetAnimalCompanionName(oPC) == "")
+            sScript += LetoAdd("CompanionName", RandomName(NAME_ANIMAL), "string");
     }
-    // get this far then not failed any fo the prereq
-    return TRUE;
+
+    //Domains
+    if(nClass == CLASS_TYPE_CLERIC)
+    {
+        sScript += LetoAdd("ClassList/[0]/Domain1", IntToString(nDomain1), "byte");
+        sScript += LetoAdd("ClassList/[0]/Domain2", IntToString(nDomain2), "byte");
+    }
+
+    //Ability Scores
+    sScript += SetAbility(ABILITY_STRENGTH, nStr);
+    sScript += SetAbility(ABILITY_DEXTERITY, nDex);
+    sScript += SetAbility(ABILITY_CONSTITUTION, nCon);
+    sScript += SetAbility(ABILITY_INTELLIGENCE, nInt);
+    sScript += SetAbility(ABILITY_WISDOM, nWis);
+    sScript += SetAbility(ABILITY_CHARISMA, nCha);
+
+    //Feats
+    //Make sure the list exists
+    //Populate the list from array
+    for(i=0;i<array_get_size(oPC, "Feats"); i++)
+    {
+        string si = IntToString(i);
+        int nFeatID =array_get_int(oPC, "Feats", i);
+        if(nFeatID != 0)
+        {
+            if(nFeatID == -1)//alertness fix
+                nFeatID = 0;
+//            DoDebug("Feat array positon "+IntToString(i)+" is "+IntToString(nFeatID));
+            sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoAdd("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
+        }
+    }
+
+    //Skills
+    for (i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
+    {
+        sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
+        sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "char");
+    }
+    sScript += LetoAdd("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
+    sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
+
+    //Spells
+    if(nClass == CLASS_TYPE_WIZARD)
+    {
+        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("ClassList/[_]/KnownList1", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList1", "", "list");
+        for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
+        {
+            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+        }
+        for (i=0;i<array_get_size(oPC, "SpellLvl1");i++)
+        {
+            sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
+        }
+        //throw spellschoool in here too
+        if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
+            sScript += LetoAdd("ClassList/[_]/School", IntToString(9), "byte");
+        else
+            sScript += LetoAdd("ClassList/[_]/School", IntToString(nSchool), "byte");
+    }
+    else if (nClass == CLASS_TYPE_BARD)
+    {
+        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
+        for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
+        {
+            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+        }
+        //spells per day
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay0), "word");
+    }
+    else if (nClass == CLASS_TYPE_SORCERER)
+    {
+        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("ClassList/[_]/KnownList1", "", "list");
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
+        sScript += LetoAdd("LvlStatList/[_]/KnownList1", "", "list");
+        for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
+        {
+            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
+        }
+        for (i=0;i<array_get_size(oPC, "SpellLvl1");i++)
+        {
+            sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
+            sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
+        }
+        //spells per day
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay0), "word");
+        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay1), "word");
+    }
+
+    //Appearance stuff
+    if(nVoiceset != -1) //keep existing portrait
+        sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
+    sScript += SetSkinColor(nSkin);
+    sScript += SetHairColor(nHair);
+    sScript += SetTatooColor(nTattooColour1, 1);
+    sScript += SetTatooColor(nTattooColour2, 2);
+
+    //Special abilities
+    //since bioware screws this up in 1.64 its not needed
+    //the PRC does this via feats instead
+/*    sScript += "<gff:add 'SpecAbilityList' {type='list'}>";
+    for(i=0;i<array_get_size(oPC, "SpecAbilID"); i++)
+    {
+//        sScript += AddSpecialAbility(array_get_int(oPC, "SpecAbilID",i), 1, array_get_int(oPC, "SpecAbilLvl",i));
+        sScript +="<gff:add 'SpecAbilityList/Spell' {type='word' value="+IntToString(array_get_int(oPC, "SpecAbilID",i))+"}>";
+        sScript +="<gff:add 'SpecAbilityList/[_]/SpellCasterLevel' {type='byte' value="+IntToString(array_get_int(oPC, "SpecAbilLvl",i))+"}>";
+        sScript +="<gff:add 'SpecAbilityList/[_]/SpellFlags' {type='char' value="+IntToString(array_get_int(oPC, "SpecAbilFlag",i))+"}>";
+    } */
+
+    //Racial hit dice
+    for(i=1;i<=nLevel;i++)
+    {
+        //class
+        sScript += LetoAdd("LvlStatList/LvlStatClass", Get2DACache("ECL", "RaceClass", nRace), "byte");
+        //ability
+        if(i == 3 || i == 7 || i == 11 || i == 15
+                || i == 19 || i == 23 || i == 27 || i == 31
+                || i == 13 || i == 39)
+        {
+            sScript += AdjustAbility(GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Ability"),i);
+        }
+        //skills
+        sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/SkillList", "", "list");
+        int j;
+        for (j=0;j<GetPRCSwitch(FILE_END_SKILLS);j++)
+        {
+            int nMod = array_get_int(oPC, "RaceLevel"+IntToString(nLevel)+"Skills", j);
+            if(nMod)
+                sScript += AdjustSkill(j, nMod, i);
+        }
+        sScript += AdjustSpareSkill(array_get_int(oPC, "RaceLevel"+IntToString(i)+"Skills", -1), i);
+        //feat
+        if(i == 3 || i == 5 || i == 8 || i == 11
+                || i == 14 || i == 17 || i == 20 || i == 23
+                || i == 26 || i == 29 || i == 32 || i == 35
+                || i == 38 )
+        {
+            int nFeatID = GetLocalInt(OBJECT_SELF, "RaceLevel"+IntToString(i)+"Feat");
+            //alertness correction
+            if(nFeatID == -1)
+                nFeatID = 0;
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/FeatList", "", "list");
+            sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/FeatList/Feat", IntToString(nFeatID), "word");
+        }
+        //epic level
+        if(nLevel <21)
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "0", "byte");
+        else
+            sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/EpicLevel", "1", "byte");
+        //hitdice
+        int nRacialHitPoints = StringToInt(Get2DACache("classes", "HitDie", StringToInt(Get2DACache("ECL", "RacialClass", nRace))));
+        //first 3 racial levels get max HP
+        if(i > 3)
+            nRacialHitPoints = 1+Random(nRacialHitPoints);
+        sScript += LetoAdd("LvlStatList/["+IntToString(i-1)+"]/LvlStatHitDie", IntToString(nHitPoints), "byte");
+    }
+
+    //change the tag to mark the player as done
+    sScript += LetoAdd("Tag", Encrypt(oPC), "string");
+    //give an XP so the XP switch works
+    SetXP(oPC, 1);
+    //racial xp
+    if(nLevel > 0)
+    {
+        int nXP = nLevel*(nLevel-1)*500;
+        SetXP(oPC, nXP);
+        SetLocalInt(oPC, "sXP_AT_LAST_HEARTBEAT", nXP);//simple XPmod bypassing
+    }
+
+    SetLocalInt(oPC, "StopRotatingCamera", TRUE);
+    SetCutsceneMode(oPC, FALSE);
+    DoCleanup();
+    object oClone = GetLocalObject(oPC, "Clone");
+    AssignCommand(oClone, SetIsDestroyable(TRUE));
+    DestroyObject(oClone);
+    //do anti-hacker stuff
+    SetPlotFlag(oPC, FALSE);
+    SetImmortal(oPC, FALSE);
+    AssignCommand(oPC, SetIsDestroyable(TRUE));
+    ForceRest(oPC);
+    StackedLetoScript(sScript);
+    if(GetLocalInt(oPC, "NewCohort"))
+    {
+        object oCopy = CopyObject(oPC, GetLocation(oPC));
+        StackedLetoScript(SetCreatureName(RandomName(), FALSE));
+        StackedLetoScript(SetCreatureName(RandomName(), TRUE));
+        RunStackedLetoScriptOnObject(oCopy, "OBJECT", "SPAWN");
+    }
+    else
+        RunStackedLetoScriptOnObject(oPC, "OBJECT", "SPAWN");
 }
-
-        SQL = "SELECT "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"FEAT"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"PREREQFEAT2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat0"+q+","
-            +" "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat1"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat2"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat3"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"OrReqFeat4"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"REQSKILL2"+q+","
-            +" "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks"+q+", "+q+"prc_cached2da_feat"+q+"."+q+"ReqSkillMinRanks2"+q+""
-            +" FROM "+q+"prc_cached2da_cls_feat"+q+" INNER JOIN "+q+"prc_cached2da_feat"+q+""
-            +" WHERE (FEAT != '****')"
-            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"file"+q+" = '"+sFeatList+"')"
-            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"List"+q+" <= 1)"
-            +" AND (("+q+"PreReqEpic"+q+" = '****') OR ("+q+"PreReqEpic"+q+" = 0))"
-            +" AND (("+q+"ALLCLASSESCANUSE"+q+" = 0) OR ("+q+"ALLCLASSESCANUSE"+q+" = '****'))"
-            +" AND ("+q+"MINATTACKBONUS"+q+" <= "+IntToString(nBAB)+")"
-            +" AND ("+q+"MINSPELLLVL"+q+" <= "+IntToString(nCasterLevel)+")"
-            +" AND ("+q+"MINSTR"+q+" <= "+IntToString(nStr)+")"
-            +" AND ("+q+"MINDEX"+q+" <= "+IntToString(nDex)+")"
-            +" AND ("+q+"MINCON"+q+" <= "+IntToString(nCon)+")"
-            +" AND ("+q+"MININT"+q+" <= "+IntToString(nInt)+")"
-            +" AND ("+q+"MINWIS"+q+" <= "+IntToString(nWis)+")"
-            +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
-            +" AND (("+q+"MaxLevel"+q+" = '****') OR ("+q+"MaxLevel"+q+" > "+IntToString(nLevel)+"))"
-            +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
-            +" AND ("+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+" != '****')"
-            // inner join
-            +" AND ("+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+" = "+q+"prc_cached2da_cls_feat"+q+"."+q+"FeatIndex"+q+")"
-            +" LIMIT "+IntToString(iMax)+" OFFSET "+IntToString(i);
-
-SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT, 
-    prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, 
-    prc_cached2da_feat.OrReqFeat0, prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, 
-    prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,
-    prc_cached2da_feat.ReqMinSkillRanks, prc_cached2da_feat.ReqMinSkillRanks2
-FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat
-WHERE (prc_cached2da_feat.FEAT != '****') AND (prc_cached2da_cls_feat.FeatIndex != '****')
-    AND (prc_cached2da_cls_feat.file = '<cls_feat***>')
-    AND (prc_cached2da_cls_feat.List <= 1)
-    AND (prc_cached2da_cls_feat.GrantedOnLevel <= 1)
-    AND (prc_cached2da_feat.rowid = prc_cached2da_cls_feat.FeatIndex)
-    AND (`PreReqEpic` != 1)
-	AND (`MinLevel` = '****' OR `MinLevel` = '1')
-	AND `ALLCLASSESCANUSE` = 0
-	AND `minattackbonus` <= <nBAB>
-	AND `minspelllvl` <= 1
-	AND `minstr`<= <nStr>
-	AND `mindex`<= <nDex>
-	AND `mincon`<= <nCon>
-	AND `minint`<= <nInt>
-	AND `minwis`<= <nWis>
-	AND `mincha`<= <nCha>
-	AND `MinFortSave` <= <nFortSave>
-    

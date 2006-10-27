@@ -10,11 +10,8 @@ Animalistic Power
 Animate Objects
 Apocalypse from the Sky
 Augment Familiar
-Aura of Vitality
-Aura versus Alignment
 Avascular Mass
 Avasculate
-Awaken
 Ayailla's Radiant Burst
 Baelful Polymorph
 Baleful Transposition
@@ -54,14 +51,11 @@ Command
 Command Undead
 Command, Greater
 Consecrate
-Contagion
 Convert Wand
 Conviction
 Create Magic Tattoo
-Creeping Doom
 Crown of Might
 Crown of Protection
-Crumble
 Crushing Fist of Spite
 Curse of Impending Blades
 Curse of Petty Failing
@@ -76,7 +70,6 @@ Deflect, Lesser
 Demoncall
 Demonflesh
 Despoil
-Destruction
 Detect Chaos
 Detect Evil
 Detect Good
@@ -99,7 +92,6 @@ Doom Scarabs
 Dragon Cloud
 Dread Word
 Drug Resistance
-Eagle's Splendor
 Ectoplamic Enhancement
 Elation
 Electric Orb
@@ -118,7 +110,6 @@ Eye of the Beholder
 Eyes of the Avoral
 False Life
 Fiendish Clarity
-Find Traps
 Fire Orb
 Fireburst
 Flashburst
@@ -145,7 +136,6 @@ Hellfire
 Hellfire Storm
 Heroism
 Holy Word
-Horrid Wilting
 Hound of Doom
 Ice Burst
 Ilyykur's Mantle
@@ -196,7 +186,6 @@ Mass Owl's Wisdom
 Mass Ultravision
 Maze
 Mirror Image
-Monstrous Regeneration
 Morality Undone
 Mordenkainen's Magnificent Mansion
 Nature's Avatar
@@ -208,13 +197,10 @@ Necrotic Domination
 Necrotic Empowerment
 Necrotic Eruption
 Necrotic Termination
-Negative Energy Burst
-Negative Energy Ray
 Night's Caress
 Nybor's Gentle Reminder
 Nybor's Stern Reproof
 Obscuring Mist
-Owl's Wisdom
 Panacea
 Pestilence
 Phieren's Resolve
@@ -231,7 +217,6 @@ Ray of Hope
 Reality Blind
 Recitation
 Red Fester
-Regenerate
 Regroup
 Repel Vermin
 Resonating Resistance
@@ -263,7 +248,6 @@ Sphere of Ultimate Destruction
 Spiderskin
 Spores of the Vrock
 Starmantle
-Stonehold
 Stop Heart
 Storm of Shards
 Stunning Screech
@@ -278,7 +262,6 @@ Tongue of Baalzebul
 Touch of Idiocy
 Touch of Juiblex
 Twilight Luck
-Ultravision
 Undetectable Alignment
 Unheavened
 Unliving Weapon
@@ -288,7 +271,6 @@ Utterdark
 Viscid Globe
 Vision of Heaven
 Wall of Greater Dispel Magic
-War Cry
 Wave of Grief
 Wave of Pain
 Word of Balance

@@ -86,32 +86,37 @@ void main()
                 // Does not affect the user
                 if(oTarget != oManifester)
                 {
-                    //Fire cast spell at event for the specified target
-                    SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+			// only hostile
+    			if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+			{
 
-                    //Get the distance between the target and caster to delay the application of effects
-                    fDelay = GetDistanceBetween(oManifester, oTarget) / 20.0;
+	                    //Fire cast spell at event for the specified target
+        	            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+	
+        	            //Get the distance between the target and caster to delay the application of effects
+                	    fDelay = GetDistanceBetween(oManifester, oTarget) / 20.0;
 
-                    //Make SR check, and appropriate saving throw(s).
-                    if(PRCMyResistPower(oManifester, oTarget, nPen, fDelay))
-                    {
-                        // Roll damage
-                        nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
-                        //Adjust damage according to Reflex Save, Evasion or Improved Evasion
-                        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);
-                        // Target-specific stuff
-                        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
+	                    //Make SR check, and appropriate saving throw(s).
+        	            if(PRCMyResistPower(oManifester, oTarget, nPen, fDelay))
+                	    {
+                        	// Roll damage
+	                        nDamage = MetaPsionicsDamage(manif, nDieSize, nNumberOfDice, 0, 0, TRUE, FALSE);
+        	                //Adjust damage according to Reflex Save, Evasion or Improved Evasion
+                	        nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ACID);
+                        	// Target-specific stuff
+	                        nDamage = GetTargetSpecificChangesToDamage(oTarget, oManifester, nDamage, TRUE, TRUE);
 
-                        // If there's still any damage left to be dealt, deal it
-                        if(nDamage > 0)
-                        {
-                            // Apply effects to the currently selected target.
-                            eAcid = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
-                            //Apply delayed effects
-                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,  oTarget));
-                            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eAcid, oTarget));
-                        }
-                    }// end if - SR check
+	                        // If there's still any damage left to be dealt, deal it
+        	                if(nDamage > 0)
+                	        {
+                        	    // Apply effects to the currently selected target.
+	                            eAcid = EffectDamage(nDamage, DAMAGE_TYPE_ACID);
+        	                    //Apply delayed effects
+                	            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis,  oTarget));
+	                       	    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eAcid, oTarget));
+        	                }
+                	    }// end if - SR check
+			}
                 }// end if - The target gotten is someone else than the manifester
 
                 //Select the next target within the spell shape.

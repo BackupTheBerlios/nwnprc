@@ -82,16 +82,21 @@ void main()
             oTarget = MyFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
             while (GetIsObjectValid(oTarget))
             {
-                // Let the AI know
-                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+		// Only effect those that are hostile
+	    	if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, GetAreaOfEffectCreator()))
+		{
 
-                // Reflex negates
-                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
-                {
-                    // Apply effects
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, 4.5f, FALSE);
-                }// end if - Save
+        	        // Let the AI know
+	                SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+
+        	        // Reflex negates
+	                if(!PRCMySavingThrow(SAVING_THROW_REFLEX, oTarget, nDC, SAVING_THROW_TYPE_NONE))
+                	{
+        	            // Apply effects
+	       	            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+	                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, 4.5f, FALSE);
+                	}// end if - Save
+		}	
 
                 oTarget = MyNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
             }// end while - Target loop

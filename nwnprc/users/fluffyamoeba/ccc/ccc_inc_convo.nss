@@ -281,6 +281,9 @@ void DoHeaderAndChoices(int nStage)
             sText = GetStringByStrRef(16824209) + " "; // You have selected:
             // get feat
             int nFeat = array_get_int(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1));
+            // alertness fix
+            if (nFeat == -1)
+                nFeat == 0;
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat))) + "\n"; // name
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeat))) + "\n"; // description
             sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?
@@ -496,10 +499,16 @@ void DoHeaderAndChoices(int nStage)
             sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
             // first domain
             int nDomain = GetLocalInt(OBJECT_SELF,"Domain1");
+            // fix for air domain being 0
+            if (nDomain == -1)
+                nDomain = 0;
             sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", nDomain))) + "\n";
             sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", nDomain))) + "\n";
             // second domain
             nDomain = GetLocalInt(OBJECT_SELF,"Domain2");
+            // fix for air domain being 0
+            if (nDomain == -1)
+                nDomain = 0;
             sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Name", nDomain))) + "\n";
             sText += GetStringByStrRef(StringToInt(Get2DACache("domains", "Description", nDomain))) + "\n";
             sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
@@ -509,6 +518,10 @@ void DoHeaderAndChoices(int nStage)
             AddChoice(GetStringByStrRef(4752), 1); // yes
             MarkStageSetUp(nStage);
             break;
+        }
+        case STAGE_APPEARANCE: {
+            SetHeader("Placeholder");
+            AddChoice("Continue", 1);
         }
         default:
             DoDebug("ccc_inc_convo: DoHeaderAndChoices(): Unknown nStage value: " + IntToString(nStage));
@@ -770,6 +783,9 @@ int HandleChoice(int nStage, int nChoice)
         }
         case STAGE_FEAT: {
             int nArraySize = array_get_size(OBJECT_SELF, "Feats");
+            // alertness fix
+            if (nChoice == 0)
+                nChoice == -1;
             // add the feat chosen to the feat array
             array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"), nChoice);
             nStage++;
@@ -821,6 +837,9 @@ int HandleChoice(int nStage, int nChoice)
         }
         case STAGE_BONUS_FEAT: {
             int nArraySize = array_get_size(OBJECT_SELF, "Feats");
+            // alertness fix
+            if (nChoice == 0)
+                nChoice == -1;
             // add the feat chosen to the feat array
             array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"), nChoice);
             nStage++;
@@ -960,10 +979,16 @@ int HandleChoice(int nStage, int nChoice)
             // if this is the first domain chosen
             if (GetLocalInt(OBJECT_SELF, "Domain1") == 0)
             {
+                // fix for air domain being 0
+                if (nChoice == 0)
+                    nChoice = -1;
                 SetLocalInt(OBJECT_SELF, "Domain1", nChoice);
             }
             else // second domain
             {
+                // fix for air domain being 0
+                if (nChoice == 0)
+                    nChoice = -1;
                 SetLocalInt(OBJECT_SELF, "Domain2", nChoice);
                 nStage++;
             }
@@ -974,6 +999,7 @@ int HandleChoice(int nStage, int nChoice)
             {
                 nStage++;
                 // add domain feats
+                AddDomainFeats();
             }
             else
             {

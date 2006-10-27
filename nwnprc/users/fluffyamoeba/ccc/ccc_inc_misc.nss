@@ -117,6 +117,9 @@ void AddRaceFeats(int nRace);
 // stores the feats found in cls_feat_***.2da in the feat array on the PC
 void AddClassFeats(int nClass);
 
+// stores the feat listed in domais.2da in the feat array on the PC
+void AddDomainFeats();
+
 /* function definitions */
 
 int DoLetoscriptTest(object oPC)
@@ -1277,7 +1280,23 @@ void DoSpellsLoop(int nStage)
 
 void  DoDomainsLoop()
 {
-    
+    int i = 0;
+    string sName;
+    // get the first domain chosen if it's there
+    int nDomain = GetLocalInt(OBJECT_SELF, "Domain1");
+    // fix for air domain being 0
+    if (nDomain == -1)
+        nDomain = 0;
+    sName = Get2DACache("domains", "Name", i);
+    while(i < GetPRCSwitch(FILE_END_DOMAINS))
+    {
+        if (sName != "" && sName != IntToString(nDomain))
+        {
+            AddChoice(GetStringByStrRef(StringToInt(sName)), i);
+        }
+        i++;
+        sName = Get2DACache("domains", "Name", i);
+    }
 }
 
 void AddRaceFeats(int nRace)
@@ -1342,4 +1361,26 @@ void AddClassFeats(int nClass)
         /* TODO - start again */
     }
     
+}
+
+void AddDomainFeats()
+{
+    int nDomain = GetLocalInt(OBJECT_SELF, "Domain1");
+    // air domain fix
+    if (nDomain == -1)
+        nDomain = 0;
+    // get feat
+    string sFeat = Get2DACache("domains", "GrantedFeat", nDomain);
+    // add to the feat array
+    array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
+            StringToInt(sFeat));
+    
+    nDomain = GetLocalInt(OBJECT_SELF, "Domain2");
+    // air domain fix
+    if (nDomain == -1)
+        nDomain = 0;
+    sFeat = Get2DACache("domains", "GrantedFeat", nDomain);
+    // add to the feat array
+    array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
+            StringToInt(sFeat));
 }

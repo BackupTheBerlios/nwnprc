@@ -14,7 +14,11 @@
 void main()
 {
 	object oPC = OBJECT_SELF;
-	effect eVis = EffectVisualEffect(VFX_DUR_GHOSTLY_PULSE);
+	effect eLink = EffectLinkEffects(EffectVisualEffect(VFX_DUR_GHOSTLY_PULSE), EffectEthereal());
+	eLink = EffectLinkEffects(eLink, EffectMovementSpeedIncrease(25));
+	
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, 60.0f);	
+}
 	
     
     

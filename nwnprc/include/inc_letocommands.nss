@@ -101,7 +101,7 @@ string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE)
         if(sType != "list")
             sReturn += "Value => "+sValue+", ";
         sReturn += "Type => gff"+sType;
-        if(bAdd)
+        if(!bAdd)
             sReturn += ", SetIfExists => TRUE";
         sReturn += ";\n";
         return sReturn;

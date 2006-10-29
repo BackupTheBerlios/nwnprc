@@ -224,12 +224,18 @@ int DuskbladeArcaneChanneling()
     object oPC = OBJECT_SELF;
     if(GetLocalInt(oPC, "DuskbladeChannelActive"))
     {
+        object oItem   = GetSpellCastItem();
+
+        // Don't channel from objects
+        if(oItem != OBJECT_INVALID)
+            return TRUE;    
+    
         //dont cast
         nReturn = FALSE;
         int nSpell     = PRCGetSpellId();
         //channeling active
         //find the item
-        object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+        oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
         if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_B, oPC);
         if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_L, oPC);
         if(!GetIsObjectValid(oItem)) oItem = GetItemInSlot(INVENTORY_SLOT_CWEAPON_R, oPC);

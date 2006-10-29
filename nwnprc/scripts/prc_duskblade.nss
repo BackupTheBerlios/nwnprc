@@ -9,7 +9,7 @@ void ReducedASF(object oCreature)
 	int nAC = GetBaseAC(oArmor);
 	int nClass = GetLevelByClass(CLASS_TYPE_DUSKBLADE, oCreature);
 	int iBonus = GetLocalInt(oSkin, "DuskbladeArmourCasting");
-	int nASF;
+	int nASF = -1;
 	itemproperty ip;
 	
 	// First thing is to remove old ASF (in case armor is changed.)
@@ -18,11 +18,11 @@ void ReducedASF(object oCreature)
 	
 	// As long as they meet the requirements, just give em max ASF reduction
 	// I know it could cause problems if they have increased ASF, but thats unlikely
-	if (5 >= nAC && GetBaseItemType(oShield) == BASE_ITEM_LARGESHIELD && nClass >= 7)
+	if (5 >= nAC && GetBaseItemType(oShield) != BASE_ITEM_TOWERSHIELD && nClass >= 7)
 		nASF = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_45_PERCENT;
-	else if (5 >= nAC && GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD && nClass >= 4)
+	else if (5 >= nAC && GetBaseItemType(oShield) != BASE_ITEM_TOWERSHIELD && GetBaseItemType(oShield) != BASE_ITEM_LARGESHIELD && nClass >= 4)
 		nASF = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_35_PERCENT;	
-	else if (3 >= nAC && GetBaseItemType(oShield) == BASE_ITEM_SMALLSHIELD && nClass >= 1)
+	else if (3 >= nAC && GetBaseItemType(oShield) != BASE_ITEM_TOWERSHIELD && GetBaseItemType(oShield) != BASE_ITEM_LARGESHIELD && nClass >= 1)
 		nASF = IP_CONST_ARCANE_SPELL_FAILURE_MINUS_25_PERCENT;			
 
 	// Apply the ASF to the skin.

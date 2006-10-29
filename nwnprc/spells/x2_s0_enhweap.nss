@@ -78,7 +78,7 @@ void ApplyEffectsToWeapon(object oItem, int nSpellID, float fDuration, object oC
 
             // If the spell is cast again, any previous itemproperties matching are removed.
             if(!bDarkfire || (bDarkfire && !(GetBaseItemType(oItem) == BASE_ITEM_SHORTSPEAR && GetHasFeat(FEAT_THUNDER_WEAPON, oCaster))))
-                IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(bDarkfire ? 127 : 124,nCasterLevel), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
+                IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(bDarkfire ? 127 : 124, max(nCasterLevel, 10)), fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
             IPSafeAddItemProperty(oItem, ItemPropertyVisualEffect(nAppearanceType), fDuration,X2_IP_ADDPROP_POLICY_REPLACE_EXISTING,FALSE,TRUE);
             //DelayCommand(fDuration, DeleteTheInts(oItem));
             break;

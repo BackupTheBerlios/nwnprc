@@ -67,7 +67,7 @@ void main()
             //Take their Gold
             AssignCommand(oPC,TakeGoldFromCreature(GetGold(oPC),oPC,TRUE));
             //start the ConvoCC conversation
-            DelayCommand(10.0, StartDynamicConversation("prc_ccc", oPC, FALSE, FALSE, TRUE));
+            DelayCommand(10.0, StartDynamicConversation("prc_ccc_main", oPC, FALSE, FALSE, TRUE));
             //DISABLE FOR DEBUGGING
             if (!DEBUG)
             {

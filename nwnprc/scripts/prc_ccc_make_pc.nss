@@ -1,8 +1,8 @@
 #include "prc_alterations"
 #include "inc_letocommands"
 #include "prc_racial_const"
-#include "prc_ccc_inc"
-#include "inc_encrypt"
+#include "ccc_inc_convo"
+// #include "inc_encrypt"
 
 void main()
 {
@@ -30,7 +30,7 @@ void main()
 
     int         nFamiliar =         GetLocalInt(oPC, "Familiar");
 
-    int         nAnimalCompanion =  GetLocalInt(oPC, "AnimalCompanion");
+    int         nAnimalCompanion =  GetLocalInt(oPC, "Companion");
 
     int         nDomain1 =          GetLocalInt(oPC, "Domain1");
     int         nDomain2 =          GetLocalInt(oPC, "Domain2");
@@ -40,13 +40,13 @@ void main()
     int         nSpellsPerDay0 =    GetLocalInt(oPC, "SpellsPerDay0");
     int         nSpellsPerDay1 =    GetLocalInt(oPC, "SpellsPerDay1");
 
-/*
+    /*
     int         nVoiceset =         GetLocalInt(oPC, "Soundset");
     int         nSkin =             GetLocalInt(oPC, "Skin");
     int         nHair =             GetLocalInt(oPC, "Hair");
     int         nTattooColour1 =    GetLocalInt(oPC, "TattooColour1");
     int         nTattooColour2 =    GetLocalInt(oPC, "TattooColour2");
-*/
+    */
 
     //clear existing stuff
     string sScript;
@@ -67,7 +67,7 @@ void main()
 
     //Class
     sScript += LetoAdd("ClassList/Class", IntToString(nClass), "int");
-    sScript += LetoAdd("ClassList/[0]/ClassLevel", IntToString(nLevel+1), "short");
+    sScript += LetoAdd("ClassList/[0]/ClassLevel", "1", "short");
     sScript += LetoAdd("LvlStatList/LvlStatClass", IntToString(nClass), "byte");
     sScript += LetoAdd("LvlStatList/[0]/EpicLevel", "0", "byte");
     sScript += LetoAdd("LvlStatList/[0]/LvlStatHitDie", IntToString(nHitPoints), "byte");
@@ -124,7 +124,7 @@ void main()
         {
             if(nFeatID == -1)//alertness fix
                 nFeatID = 0;
-//            DoDebug("Feat array positon "+IntToString(i)+" is "+IntToString(nFeatID));
+            DoDebug("Feat array positon "+IntToString(i)+" is "+IntToString(nFeatID));
             sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
             sScript += LetoAdd("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
         }
@@ -134,7 +134,7 @@ void main()
     for (i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
     {
         sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
-        sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "char");
+        sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
     }
     sScript += LetoAdd("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
     sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
@@ -219,7 +219,7 @@ void main()
 
     SetLocalInt(oPC, "StopRotatingCamera", TRUE);
     SetCutsceneMode(oPC, FALSE);
-    DoCleanup();
+     // DoCleanup();
     object oClone = GetLocalObject(oPC, "Clone");
     AssignCommand(oClone, SetIsDestroyable(TRUE));
     DestroyObject(oClone);

@@ -1,5 +1,5 @@
 #include "inc_utility"
-
+// note: only used by ccc
 string Encrypt(object oPC)
 {
     string sName = GetName(oPC);

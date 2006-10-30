@@ -1,10 +1,6 @@
-void DoDebug(string s)
-{
-//    SendMessageToPC(GetFirstPC(), s);
-//    WriteTimestampedLogEntry(s);
-//    SendMessageToAllDMs(s);
-}
-
+// get DoDebug()
+#include "inc_debug"
+#include "inc_array"
 
 void main()
 {
@@ -12,7 +8,14 @@ void main()
     DoDebug("Name: "+GetName(oPC));
     DoDebug("Tag:  "+GetTag(oPC));
     DoDebug("Stage:  "+IntToString(GetLocalInt(oPC, "Stage")));
-    DoDebug("Level:  "+IntToString(GetLocalInt(oPC, "Level")));
+    // feats
+    int nArraySize = array_get_size(oPC, "Feats");
+    int i;
+    for(i = 0; i < nArraySize; i++)
+    {
+        int nFeat = array_get_int(oPC, "Feats", i);
+        DoDebug("Feat: " + IntToString(nFeat));
+    }
     DoDebug("Str:  "+IntToString(GetLocalInt(oPC, "Str")));
     DoDebug("Dex:  "+IntToString(GetLocalInt(oPC, "Dex")));
     DoDebug("Con:  "+IntToString(GetLocalInt(oPC, "Con")));

@@ -37,7 +37,7 @@ This may make characters illegal, so it is recommended that Enforce Legal Charac
 //general setting a variable in letoscript function
 //adds it if it doesnt exist
 //replaces a value if it does exist
-string LetoSet(string sLocation,string sValue, string sType, int bAdd = TRUE);
+string LetoSet(string sLocation,string sValue, string sType, int bAdd = FALSE);
 
 //general adjusting a variable in letoscript function
 //wont work with stringtypes

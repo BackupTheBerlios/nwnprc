@@ -1,6 +1,22 @@
+//:://////////////////////////////////////////////
+//:: change the PC clone using letoscript
+//:: prc_ccc_app_lspw.nss
+//:://////////////////////////////////////////////
+/** @file
+    Destroys the existing PC clone and replaces it 
+    with a new one, modified by letoscript.
+    
+    Note: the letoscript modifications are done elsewhere
+    this script simply uses the modified object
+
+    @author Primogenitor (commented by fluffyamoeba)
+    @date   Created  - 2006.10.10
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
 
 #include "prc_alterations"
-#include "prc_ccc_inc"
+#include "ccc_inc_misc"
 
 void main()
 {   
@@ -28,5 +44,4 @@ void main()
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
     //stop the waiting
     DeleteLocalInt(oPC, "DynConv_Waiting");
-    FloatingTextStringOnCreature("Done", oPC);
 }

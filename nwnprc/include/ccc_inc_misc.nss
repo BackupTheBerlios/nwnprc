@@ -309,8 +309,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
     // get whether this function has been called in setting up a stage,
     // in response to a choice or by prc_enter
     int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
-    
-    /* TODO - getting it to do the right stage */
+
     // if we are on STAGE_RACE_CHECK 
     // or if we are setting up the cutscene and have got at least that far in the convo
     if (nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
@@ -338,10 +337,10 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         // make the real PC invisible
         effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, 9999.9);
-        //make sure the PC and clone stays put
+        //make sure the clone stays put
         effect eParal = EffectCutsceneImmobilize();
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oClone, 9999.9);
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oPC, 9999.9);
+        // ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oPC, 9999.9);
         // swap local objects
         SetLocalObject(oPC, "Clone", oClone);
         SetLocalObject(oClone, "Master", oPC);

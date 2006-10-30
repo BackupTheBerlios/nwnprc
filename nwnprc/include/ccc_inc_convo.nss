@@ -1034,6 +1034,7 @@ int HandleChoice(int nStage, int nChoice)
         }
         case FINAL_STAGE: {
             ExecuteScript("prc_ccc_make_pc", OBJECT_SELF);
+            AllowExit(DYNCONV_EXIT_FORCE_EXIT);
             break;
         }
     }

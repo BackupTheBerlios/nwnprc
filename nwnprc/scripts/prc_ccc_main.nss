@@ -72,8 +72,11 @@ void main()
                 // start the cutscene
                 // off for debugging to see the debug text in the client
                 SetCutsceneMode(oPC, TRUE);
-                SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
             }
+            SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
+            //make sure the PC stays put
+            effect eParal = EffectCutsceneImmobilize();
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oPC, 9999.9);
             //start the ConvoCC conversation
             DelayCommand(10.0, StartDynamicConversation("prc_ccc_main", oPC, FALSE, FALSE, TRUE));
             // sets up the cutscene to the point in the convo at which the player logged out
@@ -150,8 +153,8 @@ void main()
             if(DEBUG) DoDebug("prc_ccc: Conversation exited");
             // Add any locals set through this conversation
             /* TODO via a function */
-            SetCutsceneMode(oPC, FALSE);
-            AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
+            //SetCutsceneMode(oPC, FALSE);
+            // AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
             // DoCleanup(); // cleans up variables
         }
         // Abort conversation cleanup.

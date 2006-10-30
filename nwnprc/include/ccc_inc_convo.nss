@@ -416,7 +416,6 @@ void DoHeaderAndChoices(int nStage)
             sText += IntToString(GetLocalInt(OBJECT_SELF, "Points"));
             SetHeader(sText);
             // choices, uses nStage to see if it's listing level 0 or level 1 spells
-            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DoSpellsLoop(nStage);
             MarkStageSetUp(nStage);
             break;
@@ -474,9 +473,9 @@ void DoHeaderAndChoices(int nStage)
             else
             {
                 int nFamiliar = GetLocalInt(OBJECT_SELF, "Familiar");
-                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "STRREF", nFamiliar)));
+                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_familiar", "STRREF", nFamiliar)));
                 sText += "\n";
-                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_companion", "DESCRIPTION", nFamiliar)));
+                sText += GetStringByStrRef(StringToInt(Get2DACache("hen_familiar", "DESCRIPTION", nFamiliar)));
                 sText += "\n";
             }
             sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
@@ -570,15 +569,7 @@ int HandleChoice(int nStage, int nChoice)
             if(nChoice == 1)
             {
                 nStage++;
-                // set race appearance, remove wings and tails, get rid of
-                // invisible/undead etc body parts
-                DoSetRaceAppearance();
-                // clone the PC and hide the swap with a special effect
-                CreateCloneCutscene();
-                // use letoscript to assign the gender
-                DoCloneGender();
-                // set up the camera and animations
-                DoRotatingCamera();
+                DoCutscene(OBJECT_SELF);
                 // store racial feat variables
                 AddRaceFeats(GetLocalInt(OBJECT_SELF, "Race"));
             }

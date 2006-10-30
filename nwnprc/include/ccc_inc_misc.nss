@@ -4,7 +4,8 @@
 
 #include "inc_utility"
 #include "prc_alterations"
-#include "ccc_inc_leto"
+#include "inc_letoscript"
+#include "inc_letocommands"
 #include "inc_dynconv"
 #include "prc_ccc_const"
 
@@ -24,17 +25,37 @@ void CheckAndBoot(object oPC);
 
 // sets race appearance as defined in racialtype.2da
 // removes wings, tails and undead graft arm as well as making invisible bits visible
-void DoSetRaceAppearance();
+void DoSetRaceAppearance(object oPC);
 
-// clones the PC, makes the PC cutscene invisible then hides the swap with an effect
-void CreateCloneCutscene();
+/**
+ * main cutscene function
+ * letoscript changes to the PC clone are done via this function
+ * nSetup indicates whether the cutscene needs seting up or not
+ */
+void DoCutscene(object oPC, int nSetup = FALSE);
 
+/**
+ * Cutscene pseudo HB functions
+ */
+ 
 // used to cleanup clones when a player leaves
 void CloneMasterCheck();
 
 // sets up the camera to rotate around the clone 
 // and the clone do random animations
-void DoRotatingCamera();
+void DoRotatingCamera(object oPC);
+
+/**
+ * functions to set appearance, portrait, soundset
+ */
+ 
+// sets race appearance as defined in racialtype.2da
+// removes wings, tails and undead graft arm as well as making invisible bits visible
+void DoSetRaceAppearance(object oPC);
+ 
+// assigns the ccc chosen gender to the clone and resets the soundset
+// if it's changed
+void DoCloneGender(object oPC);
 
 // set up the ability choice in "<statvalue> (racial <+/-modifier>) <statname>. Cost to increase <cost>" format
 void AddAbilityChoice(int nStatValue, string sStatName, string sRacialAdjust, int nAbilityConst);
@@ -222,24 +243,25 @@ void CheckAndBoot(object oPC)
         BootPC(oPC);
 }
 
-void DoSetRaceAppearance()
+void DoSetRaceAppearance(object oPC)
 {
+    DoDebug(DebugObject2Str(oPC));
     // sets the appearance type
-    int nSex = GetLocalInt(OBJECT_SELF, "Gender");
-    int nRace = GetLocalInt(OBJECT_SELF, "Race");
+    int nSex = GetLocalInt(oPC, "Gender");
+    int nRace = GetLocalInt(oPC, "Race");
     // appearance type switches go here
     if(nRace == RACIAL_TYPE_RAKSHASA
         && nSex == GENDER_FEMALE
         && GetPRCSwitch(PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE))
-        SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_RAKSHASA_TIGER_FEMALE);
+        SetCreatureAppearanceType(oPC, APPEARANCE_TYPE_RAKSHASA_TIGER_FEMALE);
     else if(nRace == RACIAL_TYPE_DRIDER
         && nSex == GENDER_FEMALE
         && GetPRCSwitch(PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE))
-        SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_DRIDER_FEMALE);
+        SetCreatureAppearanceType(oPC, APPEARANCE_TYPE_DRIDER_FEMALE);
     else
-        SetCreatureAppearanceType(OBJECT_SELF, 
+        SetCreatureAppearanceType(oPC, 
                     StringToInt(Get2DACache("racialtypes", "Appearance",
-                        GetLocalInt(OBJECT_SELF, "Race"))));
+                        GetLocalInt(oPC, "Race"))));
     
     // remove wings and tails - so this can be set later
     // enforcing wing and tail related switches comes later too
@@ -278,28 +300,58 @@ void DoSetRaceAppearance()
         SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, 2);
 }
 
-void CreateCloneCutscene()
+void DoCutscene(object oPC, int nSetup = FALSE)
 {
-    // make the real PC non-collideable
-    effect eGhost = EffectCutsceneGhost();
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGhost, OBJECT_SELF, 99999999.9);
-    // make the swap and hide with an effect
-    effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(OBJECT_SELF));
-    object oClone = CopyObject(OBJECT_SELF, GetLocation(OBJECT_SELF), OBJECT_INVALID, "PlayerClone");
-    ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
-    // make the real PC invisible
-    effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, OBJECT_SELF, 9999.9);
-    //make sure the clone stays put
-    effect eParal = EffectCutsceneImmobilize();
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oClone, 9999.9);
-    // swap local objects
-    SetLocalObject(OBJECT_SELF, "Clone", oClone);
-    SetLocalObject(oClone, "Master", OBJECT_SELF);
-    // this makes sure the clone gets destroyed if the PC leaves the game
-    AssignCommand(oClone, CloneMasterCheck());
+    
+    // get what stage we're at
+    int nStage = GetStage(oPC);
+    DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
+    // get whether this function has been called in setting up a stage,
+    // in response to a choice or by prc_enter
+    int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
+    
+    /* TODO - getting it to do the right stage */
+    // if we are on STAGE_RACE_CHECK 
+    // or if we are setting up the cutscene and have got at least that far in the convo
+    if (nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
+    {
+        DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
+        if(!GetIsObjectValid(GetArea(oPC)))
+        {
+            DelayCommand(1.0, DoCutscene(oPC, nSetup));
+            return;
+        }
 
+        // set race appearance, remove wings and tails, get rid of
+        // invisible/undead etc body parts
+        DoSetRaceAppearance(oPC);
+        // clone the PC and hide the swap with a special effect
+        // make the real PC non-collideable
+        effect eGhost = EffectCutsceneGhost();
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGhost, oPC, 99999999.9);
+        // make the swap and hide with an effect
+        effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
+        // make clone
+        object oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PlayerClone");
+        ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
+        // make the real PC invisible
+        effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, 9999.9);
+        //make sure the PC and clone stays put
+        effect eParal = EffectCutsceneImmobilize();
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oClone, 9999.9);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oPC, 9999.9);
+        // swap local objects
+        SetLocalObject(oPC, "Clone", oClone);
+        SetLocalObject(oClone, "Master", oPC);
+        // this makes sure the clone gets destroyed if the PC leaves the game
+        AssignCommand(oClone, CloneMasterCheck());
+        // use letoscript to assign the gender
+        DoCloneGender(oPC);
+        // set up the camera and animations
+        DoRotatingCamera(oPC);
+    }
 }
 
 void CloneMasterCheck()
@@ -314,9 +366,8 @@ void CloneMasterCheck()
         DelayCommand(10.0, CloneMasterCheck());
 }
 
-void DoRotatingCamera()
+void DoRotatingCamera(object oPC)
 {
-    object oPC = OBJECT_SELF;
     if(!GetIsObjectValid(oPC))
         return;
     if(GetLocalInt(oPC, "StopRotatingCamera"))
@@ -334,7 +385,7 @@ void DoRotatingCamera()
     SetLocalFloat(oPC, "DoRotatingCamera", fDirection);
     SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
     SetCameraFacing(fDirection, 4.0, 45.0, CAMERA_TRANSITION_TYPE_VERY_SLOW);
-    DelayCommand(6.0, DoRotatingCamera());
+    DelayCommand(6.0, DoRotatingCamera(oPC));
     //its the clone not the PC that does things
     object oClone = GetLocalObject(oPC, "Clone");
     if(GetIsObjectValid(oClone))
@@ -344,6 +395,7 @@ void DoRotatingCamera()
     else
         AssignCommand(oPC, ActionPlayAnimation(100+Random(21), 1.0, 6.0));
 }
+
 
 void AddAbilityChoice(int nAbilityScore, string sAbilityName, string sRacialAdjust, int nAbilityConst)
 {

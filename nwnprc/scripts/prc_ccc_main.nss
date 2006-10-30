@@ -66,14 +66,18 @@ void main()
             ForceRest(oPC);
             //Take their Gold
             AssignCommand(oPC,TakeGoldFromCreature(GetGold(oPC),oPC,TRUE));
-            //start the ConvoCC conversation
-            DelayCommand(10.0, StartDynamicConversation("prc_ccc_main", oPC, FALSE, FALSE, TRUE));
             //DISABLE FOR DEBUGGING
             if (!DEBUG)
             {
+                // start the cutscene
+                // off for debugging to see the debug text in the client
                 SetCutsceneMode(oPC, TRUE);
                 SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
             }
+            //start the ConvoCC conversation
+            DelayCommand(10.0, StartDynamicConversation("prc_ccc_main", oPC, FALSE, FALSE, TRUE));
+            // sets up the cutscene to the point in the convo at which the player logged out
+            DelayCommand(11.0, DoCutscene(oPC, TRUE));
             SetExecutedScriptReturnValue(X2_EXECUTE_SCRIPT_END);
         }
         else // returning character

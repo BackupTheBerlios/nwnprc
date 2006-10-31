@@ -9235,7 +9235,7 @@ Level
 
 SPELLCASTING
 
-To cast a spell, the Duskblade must have an Intelligence score of 10 + the spell level. The DC of a Hexblade's spell is 10 + Spell Level + Intelligence Modifier. A Duskblade's caster level is equal to his class level. He casts spells as a Sorcerer does. He initially does not suffer arcane spell failure chance when casting in light armor, later on he learns to cast without arcane spell failure in medium armor and with shields, however failure chance from heavy armor applies normally.
+To cast a spell, the Duskblade must have an Intelligence score of 10 + the spell level. The DC of a Duskblade's spell is 10 + Spell Level + Intelligence Modifier. A Duskblade's caster level is equal to his class level. He casts spells as a Sorcerer does. He initially does not suffer arcane spell failure chance when casting in light armor, later on he learns to cast without arcane spell failure in medium armor and with shields, however failure chance from heavy armor applies normally.
 
 Spells Known:
 The Duskblade starts knowing all level 0 combat spells and two level 1 spells. Each time he gains a new class level, he learns one additional spell of the highest level he can cast.

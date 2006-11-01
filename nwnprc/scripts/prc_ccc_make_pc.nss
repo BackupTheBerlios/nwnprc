@@ -101,6 +101,11 @@ void main()
     //Domains
     if(nClass == CLASS_TYPE_CLERIC)
     {
+        // fix for air domain being 0
+        if (nDomain1 == -1)
+            nDomain1 = 0;
+        if (nDomain2 == -1)
+            nDomain2 = 0;
         sScript += LetoAdd("ClassList/[0]/Domain1", IntToString(nDomain1), "byte");
         sScript += LetoAdd("ClassList/[0]/Domain2", IntToString(nDomain2), "byte");
     }
@@ -219,7 +224,8 @@ void main()
 
     SetLocalInt(oPC, "StopRotatingCamera", TRUE);
     SetCutsceneMode(oPC, FALSE);
-     // DoCleanup();
+    // clean up local variables
+    DoCleanup();
     object oClone = GetLocalObject(oPC, "Clone");
     AssignCommand(oClone, SetIsDestroyable(TRUE));
     DestroyObject(oClone);

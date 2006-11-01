@@ -151,11 +151,8 @@ void main()
         else if(nValue == DYNCONV_EXITED)
         {
             if(DEBUG) DoDebug("prc_ccc: Conversation exited");
-            // Add any locals set through this conversation
-            /* TODO via a function */
-            //SetCutsceneMode(oPC, FALSE);
-            // AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
-            // DoCleanup(); // cleans up variables
+            // cleanup is done in prc_ccc_make_pc
+            // deletes local variables used to create the character
         }
         // Abort conversation cleanup.
         // NOTE: This section is only run when the conversation is aborted
@@ -163,14 +160,9 @@ void main()
         // handles restoring the conversation in a transparent manner
         else if(nValue == DYNCONV_ABORTED)
         {
-            
-            // Add any locals set through this conversation
-            /* TODO via a function */
-            SetCutsceneMode(oPC, FALSE);
-            ForceRest(oPC);
+            // shouldn't reach this stage as aboting isn't allowed
             /* TODO - stick CheckAndBoot() in an include */
             AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
-            // DoCleanup(); // cleans up variables
         }
         // Handle PC responses
         else

@@ -29,7 +29,7 @@ void main()
     DoDebug("LawfulChaotic:  "+IntToString(GetLocalInt(oPC, "LawfulChaotic")));
     DoDebug("GoodEvil:  "+IntToString(GetLocalInt(oPC, "GoodEvil")));
     DoDebug("Familiar:  "+IntToString(GetLocalInt(oPC, "Familiar")));
-    DoDebug("AnimalCompanion:  "+IntToString(GetLocalInt(oPC, "AnimalCompanion")));
+    DoDebug("AnimalCompanion:  "+IntToString(GetLocalInt(oPC, "Companion")));
     DoDebug("Domain1:  "+IntToString(GetLocalInt(oPC, "Domain1")));
     DoDebug("Domain2:  "+IntToString(GetLocalInt(oPC, "Domain2")));
     DoDebug("School:  "+IntToString(GetLocalInt(oPC, "School")));
@@ -43,7 +43,6 @@ void main()
     DoDebug("Skin:  "+IntToString(GetLocalInt(oPC, "Skin")));
     DoDebug("Hair:  "+IntToString(GetLocalInt(oPC, "Hair")));
     DoDebug("Head:  "+IntToString(GetLocalInt(oPC, "Head")));
-    DoDebug("Path:  "+GetLocalString(oPC, "Path"));
     DoDebug("Points:  "+IntToString(GetLocalInt(oPC, "Points")));
     DoDebug("i:  "+IntToString(GetLocalInt(oPC, "i")));
 }

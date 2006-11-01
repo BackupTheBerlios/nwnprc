@@ -15,7 +15,7 @@ void DoHeaderAndChoices(int nStage)
     {
         case STAGE_INTRODUCTION: {
             sText = "This is the Conversation Character Creator (CCC) by Primogenitor.\n";
-            sText+= "This is a replicate of the bioware character creator, but it will allow you to select custom content at level 1.\n";
+            sText+= "This is a replicate of the bioware character creator, but it will allow you to select custom content at level 1. ";
             sText+= "Simply follow the step by step instructions and select what you want. ";
             sText+= "If you dont get all the options you think you should at a stage, select one, then select No at the confirmation step.";
             SetHeader(sText);

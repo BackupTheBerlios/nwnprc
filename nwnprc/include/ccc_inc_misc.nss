@@ -23,10 +23,6 @@ void DoStripPC(object oPC);
 // checks if oPC is valid and in an area then boots them
 void CheckAndBoot(object oPC);
 
-// sets race appearance as defined in racialtype.2da
-// removes wings, tails and undead graft arm as well as making invisible bits visible
-void DoSetRaceAppearance(object oPC);
-
 /**
  * main cutscene function
  * letoscript changes to the PC clone are done via this function
@@ -56,6 +52,9 @@ void DoSetRaceAppearance(object oPC);
 // assigns the ccc chosen gender to the clone and resets the soundset
 // if it's changed
 void DoCloneGender(object oPC);
+
+// deletes local variables stored on the PC before the player is booted to make the new character
+void DoCleanup();
 
 // set up the ability choice in "<statvalue> (racial <+/-modifier>) <statname>. Cost to increase <cost>" format
 void AddAbilityChoice(int nStatValue, string sStatName, string sRacialAdjust, int nAbilityConst);
@@ -300,6 +299,23 @@ void DoSetRaceAppearance(object oPC)
         SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, 2);
 }
 
+void DoCloneGender()
+{
+    object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+    if(!GetIsObjectValid(oClone))
+        return;
+    int nSex = GetLocalInt(OBJECT_SELF, "Gender");
+    int nCurrentSex = GetGender(oClone);
+    StackedLetoScript(LetoSet("Gender", IntToString(nSex), "byte"));
+    // if the gender needs changing, reset the soundset
+    if (nSex != nCurrentSex)
+        StackedLetoScript(LetoSet("SoundSetFile", IntToString(0), "word"));
+    string sResult;
+    RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
+    sResult = GetLocalString(GetModule(), "LetoResult");
+    SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
+}
+
 void DoCutscene(object oPC, int nSetup = FALSE)
 {
     
@@ -393,6 +409,46 @@ void DoRotatingCamera(object oPC)
         AssignCommand(oPC, ActionPlayAnimation(100+Random(17)));
     else
         AssignCommand(oPC, ActionPlayAnimation(100+Random(21), 1.0, 6.0));
+}
+
+void DoCleanup()
+{
+    object oPC = OBJECT_SELF;
+    // go through the ones used to make the character
+    // delete some ints
+    DeleteLocalInt(oPC, "Str");
+    DeleteLocalInt(oPC, "Dex");
+    DeleteLocalInt(oPC, "Con");
+    DeleteLocalInt(oPC, "Int");
+    DeleteLocalInt(oPC, "Wis");
+    DeleteLocalInt(oPC, "Cha");
+
+    DeleteLocalInt(oPC, "Race");
+
+    DeleteLocalInt(oPC, "Class");
+    DeleteLocalInt(oPC, "HitPoints");
+
+    DeleteLocalInt(oPC, "Gender");
+
+    DeleteLocalInt(oPC, "LawfulChaotic");
+    DeleteLocalInt(oPC, "GoodEvil");
+
+    DeleteLocalInt(oPC, "Familiar");
+    DeleteLocalInt(oPC, "Companion");
+
+    DeleteLocalInt(oPC, "Domain1");
+    DeleteLocalInt(oPC, "Domain2");
+
+    DeleteLocalInt(oPC, "School");
+    
+    DeleteLocalInt(oPC, "SpellsPerDay0");
+    DeleteLocalInt(oPC, "SpellsPerDay1");
+    
+    // delete some arrays
+    array_delete(oPC, "spellLvl0");
+    array_delete(oPC, "spellLvl1");
+    array_delete(oPC, "Feats");
+    array_delete(oPC, "Skills");
 }
 
 

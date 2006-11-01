@@ -299,7 +299,7 @@ void DoSetRaceAppearance(object oPC)
         SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, 2);
 }
 
-void DoCloneGender()
+void DoCloneGender(object oPC)
 {
     object oClone = GetLocalObject(OBJECT_SELF, "Clone");
     if(!GetIsObjectValid(oClone))

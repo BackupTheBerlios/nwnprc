@@ -22530,10 +22530,7 @@ Cost:
   <entry id="51783" lang="en" sex="m">Description:
 
 Enhancement Bonus: Dexterity +6
-Bonus Feat: Type of Feat: Class
-Prerequisite: Monk level 1, rogue level 2 or shadowdancer level 2.
-Specifics: Whenever a Reflex save is allowed for half damage, the character instead takes no damage if he succeeds at the save.
-Use: Automatic.
+Bonus Feat: Evasion
 Skill Bonus: Tumble +20
 Skill Bonus: Jump +20
 Use: Haste (10) 3 Uses/Day
@@ -24251,10 +24248,7 @@ Cost:
 </entry>
   <entry id="51934" lang="en" sex="m">Description:
 
-Bonus Feat: Type of Feat: Class
-Prerequisite: Monk level 1, rogue level 2 or shadowdancer level 2.
-Specifics: Whenever a Reflex save is allowed for half damage, the character instead takes no damage if he succeeds at the save.
-Use: Automatic.
+Bonus Feat: Evasion
 
 Prerequisites:
 

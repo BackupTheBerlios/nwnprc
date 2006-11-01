@@ -301,10 +301,10 @@ void DoSetRaceAppearance(object oPC)
 
 void DoCloneGender(object oPC)
 {
-    object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+    object oClone = GetLocalObject(oPC, "Clone");
     if(!GetIsObjectValid(oClone))
         return;
-    int nSex = GetLocalInt(OBJECT_SELF, "Gender");
+    int nSex = GetLocalInt(oPC, "Gender");
     int nCurrentSex = GetGender(oClone);
     StackedLetoScript(LetoSet("Gender", IntToString(nSex), "byte"));
     // if the gender needs changing, reset the soundset
@@ -313,7 +313,7 @@ void DoCloneGender(object oPC)
     string sResult;
     RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
     sResult = GetLocalString(GetModule(), "LetoResult");
-    SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
+    SetLocalObject(GetModule(), "PCForThread"+sResult, oPC);
 }
 
 void DoCutscene(object oPC, int nSetup = FALSE)

@@ -31090,6 +31090,33 @@ If the new target is flat-footed, this extra attack is also a frightful attack, 
   <entry id="55147" lang="en" sex="m">Failed Frightful Attack: Target is immune to fear.</entry>
   <entry id="55148" lang="en" sex="m">Failed Frightful Attack: Target has too many Hit Dice.</entry>
   <entry id="55149" lang="en" sex="m">Failed Frightful Attack: Target must not be immune to Sneak Attacks, Mind Affecting Effects, or Fear.</entry>
+  <entry id="55160" lang="en" sex="m">Type of feat: Class Specific
+Prerequisite: None
+Specifics: This feat allows the caster to gain spells per day as if they had gained a level in the specified class.</entry>
+  <entry id="55161" lang="en" sex="m">Spellcasting: Wizard</entry>
+  <entry id="55162" lang="en" sex="m">Spellcasting: Sorcerer</entry>
+  <entry id="55163" lang="en" sex="m">Spellcasting: Bard</entry>
+  <entry id="55164" lang="en" sex="m">Spellcasting: Assassin</entry>
+  <entry id="55165" lang="en" sex="m">Spellcasting: Suel Archanamach</entry>
+  <entry id="55166" lang="en" sex="m">Spellcasting: Shadowlord</entry>
+  <entry id="55167" lang="en" sex="m">Spellcasting: Hexblade</entry>
+  <entry id="55168" lang="en" sex="m">Spellcasting: Duskblade</entry>
+  <entry id="55169" lang="en" sex="m">Spellcasting: Cleric</entry>
+  <entry id="55170" lang="en" sex="m">Spellcasting: Druid</entry>
+  <entry id="55171" lang="en" sex="m">Spellcasting: Paladin</entry>
+  <entry id="55172" lang="en" sex="m">Spellcasting: Ranger</entry>
+  <entry id="55173" lang="en" sex="m">Spellcasting: Blackguard</entry>
+  <entry id="55174" lang="en" sex="m">Spellcasting: Soldier of Light</entry>
+  <entry id="55175" lang="en" sex="m">Spellcasting: Vassal</entry>
+  <entry id="55176" lang="en" sex="m">Spellcasting: Knight of the Middle Circle</entry>
+  <entry id="55177" lang="en" sex="m">Spellcasting: Knight of the Chalice</entry>
+  <entry id="55178" lang="en" sex="m">Spellcasting: Anti-Paladin</entry>
+  <entry id="55179" lang="en" sex="m">Spellcasting: Vigilant</entry>
+  <entry id="55180" lang="en" sex="m">Spellcasting: Favoured Soul</entry>
+  <entry id="55181" lang="en" sex="m">Spellcasting: Sohei</entry>
+  <entry id="55182" lang="en" sex="m">Spellcasting: Healer</entry>
+  <entry id="55183" lang="en" sex="m">Spellcasting: Slayer of Domiel</entry>
+  <entry id="55184" lang="en" sex="m">Spellcasting: Ocular Adept</entry>
   <entry id="55964" lang="en" sex="m">1</entry>
   <entry id="55965" lang="en" sex="m">2</entry>
   <entry id="55966" lang="en" sex="m">3</entry>

@@ -1,0 +1,20 @@
+2DA V2.0
+
+   LABEL            ReqType ReqParam1      ReqParam2 
+0  Point_Blank_Shot FEAT    27             ****      
+1  WeapFocLongBow   FEATOR  101            ****      
+2  WeapFocShortBow  FEATOR  102            ****      
+3  Elf              RACE    1              ****      
+4  HalfElf          RACE    4              ****      
+5  Aquatic_Elf      RACE    161            ****      
+6  Avariel          RACE    162            ****      
+7  Drow_female      RACE    163            ****      
+8  Drow_male        RACE    164            ****      
+9  Sun_Elf          RACE    166            ****      
+10 Wild_Elf         RACE    167            ****      
+11 Wood_Elf         RACE    168            ****      
+12 Half_Drow        RACE    183            ****      
+13 Feyri            RACE    201            ****      
+14 Base_Attack      BAB     6              ****      
+15 ScriptVar        VAR     X1_AllowArcher 0         
+16 ScriptVar        VAR     PRC_ArcSpell1  0         

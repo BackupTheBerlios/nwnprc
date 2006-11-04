@@ -1,0 +1,17 @@
+2DA V2.0
+
+   LABEL       ReqType ReqParam1      ReqParam2 
+0  Dwarf       RACE    0              ****      
+1  ArcticDwarf RACE    151            ****      
+2  GoldDwarf   RACE    152            ****      
+3  GreyDwarf   RACE    153            ****      
+4  ShieldDwarf RACE    154            ****      
+5  Urdunnir    RACE    155            ****      
+6  WildDwarf   RACE    156            ****      
+7  CraftWeapon SKILL   26             5         
+8  CraftArmor  SKILL   25             5         
+9  WeapProfMar FEAT    45             ****      
+10 PowerAtk    FEAT    28             ****      
+11 Base_Attack BAB     6              ****      
+12 ScriptVar   VAR     PRC_PrereqAlag 0         
+13 ScriptVar   VAR     PRC_AllowAlag  0         

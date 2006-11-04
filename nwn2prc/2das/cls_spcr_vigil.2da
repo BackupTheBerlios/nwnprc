@@ -1,0 +1,21 @@
+2DA V2.0
+
+   Label                     Level SpellID 
+0  VigExpeditiousRetreat     1     456     
+1  VigResistElements         1     150     
+2  TwilightLuck              1     2620    
+3  LanternLight              1     2634    
+4  VigProtectionFromElements 2     137     
+5  VigSilence                2     163     
+6  AyaillasRadiantBurst      2     2607    
+7  LuminousArmor             2     2636    
+8  VigEndurance              3     49      
+9  VigNeutralizePoison       3     126     
+10 VigRemoveDisease          3     147     
+11 VigSpikeGrowth            3     454     
+12 BrilliantEmanation        3     2608    
+13 HammerofRighteousness     3     2613    
+14 VigFreedomOfMovement      4     62      
+15 DiamondSpray              4     2610    
+16 Sunmantle                 4     2619    
+17 GreaterLuminousArmor      4     2637    

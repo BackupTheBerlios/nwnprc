@@ -43,7 +43,6 @@
 39  Bat_Fort_5                                     3738      3    38             0      
 40  Skirmish_10_10                                 3733      3    39             0      
 41  Alertness                                      0         1    -1             0      
-42  BlindFight                                     408       1    -1             0      
 43  DefArrow                                       8         0    -1             0      
 44  Dodge                                          10        1    -1             0      
 45  GreatFort                                      14        1    -1             0      
@@ -179,7 +178,6 @@
 175 FEAT_EPIC_OVERWHELMING_CRITICAL_TWOBLADEDSWORD 745       1    -1             0      
 176 FEAT_EPIC_DEVASTATING_CRITICAL_DWAXE           955       1    -1             0      
 177 FEAT_EPIC_WEAPON_FOCUS_DWAXE                   956       1    -1             0      
-178 FEAT_EPIC_DEVASTATING_CRITICAL_DWAXE           955       1    -1             0      
 179 FEAT_EPIC_OVERWHELMING_CRITICAL_DWAXE          958       1    -1             0      
 180 FEAT_IMPROVED_CRITICAL_WHIP                    995       1    -1             0      
 181 FEAT_EPIC_WEAPON_FOCUS_WHIP                    997       1    -1             0      

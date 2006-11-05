@@ -1,0 +1,8 @@
+2DA V2.0
+
+    Type           Cost
+0   BaseRune       100
+1   Charges        50
+2   PerDay         400  
+3   MaxCharges     50
+4   MaxUsesPerDay  5

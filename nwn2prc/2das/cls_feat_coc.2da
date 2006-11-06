@@ -16,11 +16,11 @@
 12  COC_DEF_9                                      3823      3    27             0      
 13  COC_DEF_10                                     3824      3    30             0      
 14  EPIC_COC                                       3825      3    11             0      
-15  Mobility                                       26        3    -1             0      
-16  Spring_Attack                                  392       3    -1             0      
-17  Whirlwind_Attack                               876       3    -1             1      
-18  Psionic_Dodge                                  4803      3    -1             0      
-19  Improved_Expertise                             390       3    -1             1      
+15  Mobility                                       26        1    -1             0      
+16  Spring_Attack                                  392       1    -1             0      
+17  Whirlwind_Attack                               876       1    -1             1      
+18  Psionic_Dodge                                  4803      1    -1             0      
+19  Improved_Expertise                             390       1    -1             1      
 20  Def_Arrow                                      8         0    -1             0      
 21  FEAT_EPIC_BLINDING_SPEED                       491       0    -1             0      
 22  FEAT_EPIC_ARMOR_SKIN                           490       1    -1             0      

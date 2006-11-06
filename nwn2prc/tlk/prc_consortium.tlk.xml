@@ -2409,7 +2409,7 @@ Level
 
 SPELLCASTING
 
-A Healer must choose and prepare her spells in advance, like a Cleric does. To cast or prepare a spell, the Healer must have a Wisdom score of 10 + the spell level. The DC of a Favoured Soul's spell is 10 + Spell Level + Charisma Modifier. A Healer's caster level is equal to his class level. She automatically knows all spells she can cast.
+A Healer must choose and prepare her spells in advance, like a Cleric does. To cast or prepare a spell, the Healer must have a Wisdom score of 10 + the spell level. The DC of a Healer's spell is 10 + Spell Level + Charisma Modifier. A Healer's caster level is equal to his class level. She automatically knows all spells she can cast.
 
 Spells per day:
 Level: 0 1 2 3 4 5 6 7 8 9

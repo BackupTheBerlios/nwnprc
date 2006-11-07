@@ -2400,7 +2400,7 @@ const int FEAT_ENLFST_SPELLCST_ASSN            = 14727;
 const int FEAT_ENLFST_SPELLCST_SUEL            = 14728;
 const int FEAT_ENLFST_SPELLCST_SHDL            = 14729;
 const int FEAT_ENLFST_SPELLCST_HEXBLD          = 14730;
-const int FEAT_DOA_SPELLCST_DSKBLD             = 14731;
+const int FEAT_ENLFST_SPELLCST_DSKBLD          = 14731;
 const int FEAT_FISTRA_SPELLCST_CLER            = 14732;
 const int FEAT_FISTRA_SPELLCST_DRUID           = 14733;
 const int FEAT_FISTRA_SPELLCST_PAL             = 14734;
@@ -2828,8 +2828,8 @@ const int FEAT_SNCMND_SPELLCST_PSYCH           = 15155;
 const int FEAT_SNCMND_SPELLCST_WILDER          = 15156;
 const int FEAT_SNCMND_SPELLCST_WARMIND         = 15157;
 const int FEAT_SNCMND_SPELLCST_FISTZ           = 15158;
- 								      	     
-/*//////////////////////////////////////////////////		      
+                                             
+/*//////////////////////////////////////////////////              
 //////////////// TRUENAMING ////////////////////////
 //////////////////////////////////////////////////*/
 

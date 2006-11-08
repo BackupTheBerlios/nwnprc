@@ -119,3 +119,11 @@
 115 FocusedSpellPenetrNec               3133      1    -1             0      
 116 FocusedSpellPenetrTra               3134      1    -1             0      
 117 FocusedSpellPenetrAbj               3135      1    -1             0      
+118 FEAT_DIABOL_SPELLCST_WIZ   		14676	  2    -1	      0
+119 FEAT_DIABOL_SPELLCST_SORC  		14677	  2    -1	      0
+120 FEAT_DIABOL_SPELLCST_BARD  		14678	  2    -1	      0
+121 FEAT_DIABOL_SPELLCST_ASSN  		14679	  2    -1	      0
+122 FEAT_DIABOL_SPELLCST_SUEL  		14680	  2    -1	      0
+123 FEAT_DIABOL_SPELLCST_SHDL  		14681	  2    -1	      0
+124 FEAT_DIABOL_SPELLCST_HEXBLD		14682	  2    -1	      0
+125 FEAT_DIABOL_SPELLCST_DSKBLD		14683	  2    -1	      0

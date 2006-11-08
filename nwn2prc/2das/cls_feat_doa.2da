@@ -1,15 +1,23 @@
 2DA V2.0
 
-   FeatLabel              FeatIndex List GrantedOnLevel OnMenu 
-0  AsmodeusCharm          6061      3    1              1      
-1  AsmodeusCommand        6062      3    2              1      
-2  AsmodeusHellcat        6063      3    4              1      
-3  AsmodeusEvilAuthority  6064      3    6	        1      
-4  AsmodeusSummonDevil    6065      3    8	        1      
-5  AsmodeusGreaterCommand 6066      3    9	        1      
-6  AsmodeusDreadMight     6067      3    10	        0      
-7  AsmodeusLearnSecrets1  6068      3    1	        1      
-8  AsmodeusLearnSecrets2  6069      3    3	        1      
-9  AsmodeusLearnSecrets3  6070	    3    5	        1      
-10 AsmodeusLearnSecrets4  6071	    3    7	        1      
-11 AsmodeusLearnSecrets5  6072	    3    9	        1      
+   FeatLabel                   FeatIndex List GrantedOnLevel OnMenu 
+0  AsmodeusCharm               6061      3    1              1      
+1  AsmodeusCommand             6062      3    2              1      
+2  AsmodeusHellcat             6063      3    4              1      
+3  AsmodeusEvilAuthority       6064      3    6	             1      
+4  AsmodeusSummonDevil         6065      3    8	             1      
+5  AsmodeusGreaterCommand      6066      3    9	             1      
+6  AsmodeusDreadMight          6067      3    10 	     0      
+7  AsmodeusLearnSecrets1       6068      3    1	             1      
+8  AsmodeusLearnSecrets2       6069      3    3	  	     1      
+9  AsmodeusLearnSecrets3       6070	 3    5	             1      
+10 AsmodeusLearnSecrets4       6071	 3    7	             1      
+11 AsmodeusLearnSecrets5       6072	 3    9	             1      
+12 FEAT_DOA_SPELLCST_WIZ       14684 	 2    -1             0
+13 FEAT_DOA_SPELLCST_SORC      14685     2    -1             0 	 
+14 FEAT_DOA_SPELLCST_BARD      14686     2    -1             0 
+15 FEAT_DOA_SPELLCST_ASSN      14687     2    -1             0 
+16 FEAT_DOA_SPELLCST_SUEL      14688     2    -1             0
+17 FEAT_DOA_SPELLCST_SHDL      14689     2    -1             0 
+18 FEAT_DOA_SPELLCST_HEXBLD    14690     2    -1             0
+19 FEAT_DOA_SPELLCST_DSKBLD    14691     2    -1             0

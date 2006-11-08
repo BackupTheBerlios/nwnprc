@@ -636,9 +636,9 @@ void Thrallherd(object oPC)
     {
         // Technically, you must be able to manifest mindlink, and the only class that can do so is a Telepath Psion
         // Thus, this restriction.
-    	if (GetHasFeat(FEAT_PSION_DIS_TELEPATH, oPC))
-    	{
-        	SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
+        if (GetHasFeat(FEAT_PSION_DIS_TELEPATH, oPC))
+        {
+            SetLocalInt(oPC, "PRC_PrereqThrallherd", 0);
         }
     }
 }
@@ -739,13 +739,6 @@ void RacialHD(object oPC)
         }
 
     }
-}
-
-void Virtuoso(object oPC)
-{   //Needs 6 ranks of Persuade OR 6 ranks of Intimidate
-    SetLocalInt(oPC, "PRC_PrereqVirtuoso", 1);
-    if((GetSkillRank(SKILL_PERSUADE, oPC) >= 6) || (GetSkillRank(SKILL_INTIMIDATE, oPC) >= 6))
-        SetLocalInt(oPC, "PRC_PrereqVirtuoso", 0);
 }
 
 void main()
@@ -904,7 +897,6 @@ void main()
      Tempus(oPC);
      Asmodeus(oPC);
      RacialHD(oPC);
-     Virtuoso(oPC);
      Brimstone(oPC);
      // Truly massive debug message flood if activated.
      /*

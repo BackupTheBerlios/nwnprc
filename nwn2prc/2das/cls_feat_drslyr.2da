@@ -223,3 +223,11 @@
 219 FEAT_EPIC_AUTOMATIC_GREATER_STILL     865       0    -1             0      
 220 WeapProfSim                           46        0    -1             0      
 221 WeapProfMar                           45        0    -1             0      
+222 FEAT_DRSLYR_SPELLCST_WIZ   		  14716	    2    -1             0
+223 FEAT_DRSLYR_SPELLCST_SORC  		  14717	    2    -1             0
+224 FEAT_DRSLYR_SPELLCST_BARD  		  14718	    2    -1             0
+225 FEAT_DRSLYR_SPELLCST_ASSN  		  14719	    2    -1             0
+226 FEAT_DRSLYR_SPELLCST_SUEL  		  14720	    2    -1             0
+227 FEAT_DRSLYR_SPELLCST_SHDL  		  14721	    2    -1             0
+228 FEAT_DRSLYR_SPELLCST_HEXBLD		  14722	    2    -1             0
+229 FEAT_DRSLYR_SPELLCST_DSKBLD		  14723	    2    -1             0

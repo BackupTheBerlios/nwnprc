@@ -1,4 +1,12 @@
 2DA V2.0
 
-  FeatLabel  FeatIndex List GrantedOnLevel OnMenu 
-0 BattleCast 3339      3    1              1      
+  FeatLabel                      FeatIndex List GrantedOnLevel OnMenu 
+0 BattleCast                     3339      3    1              1      
+1 FEAT_HAVOCM_SPELLCST_WIZ    	 14780	   2	-1	       0
+2 FEAT_HAVOCM_SPELLCST_SORC   	 14781	   2	-1	       0
+3 FEAT_HAVOCM_SPELLCST_BARD   	 14782	   2	-1	       0
+4 FEAT_HAVOCM_SPELLCST_ASSN   	 14783	   2	-1	       0
+5 FEAT_HAVOCM_SPELLCST_SUEL   	 14784	   2	-1	       0
+6 FEAT_HAVOCM_SPELLCST_SHDL   	 14785	   2	-1	       0
+7 FEAT_HAVOCM_SPELLCST_HEXBLD 	 14786	   2	-1	       0
+8 FEAT_HAVOCM_SPELLCST_DSKBLD 	 14787	   2	-1	       0

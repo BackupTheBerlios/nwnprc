@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="core.css" />
+		<title>NWAngband</title>
+	</head>
+	<body>
+		<h1>NWAngband - Features</h1>
+		<a href="features.html" target="main">back to main features page</a>
+		<h3>RAD - Random Area Decorator</h3>
+		<p>
+			This is one of the most innovative systems with NWAngband. Its aim is to randomly, yet sanely, create suitable placeables in appropriate locations within an area to decorate it and provide much of the background ambience for a setting. This also includes creating encounters via the REG as well as non-visual feedback through the Ambience Simulation system. In addition, all of this must be done without requiring extensive prior input from the module builder, such as placing specific waypoints or triggers.. The best way to explain how the RAD works given these restrictions is with a set of example diagrams.
+			<table>
+				<tr>
+					<td width="33%">&nbsp;</td>
+					<td width="33%">&nbsp;</td>
+					<td width="33%">&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="2"><img src="../images/feat_rig_stage1.jpg" alt="RIG Stage 1 diagram" width="100%" /></td>
+					<td>
+						<ol>
+							<li>Pick a random point in the area (the red dot). If it is a invalid location,  pick another until a valid point is found.</li>
+							<br />
+							<li>Trace lines out from the point in all 8 compass directions until you reach an invalid location (yellow lines).</li>
+							<br />
+							<li>Take the average of the 3 points on each of the north, south, east and west edges to assemble a rectangular room (pink lines).</li>
+							<br />
+							<li>Use the centre of the new room for the next stage (pink dot).</li>
+						</ol>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<ol>
+							<li>Based on the size of the room, determine how many items to spawn within it based upon it perimeter and area (3 in this example).</li>
+							<br />
+							<li>For each item, trace a line outwards from the centre untill you reach an invalid location. Keep all the lines approximately equidistantly spaced around the room.</li>
+							<br />
+							<li>Select a position along each line to create the object on. This is based on the type of object; some should be near a wall, some in the middle of the room, and some can be anywhere between those extremes. The size of the object applies certain limits upon the selection; this prevents objects overlapping with the wall</li>
+							<br />
+							<li>Once we have a position, we need to determine a facing. Some items can face in any direction equally, such as a circular pillar, however most items (particularly those next to walls) have a specific facing associated with them. Testing for the suitablility of a particular facing is done by tracing two lines perpendicular to the direction of the object to a short distance away. If both lines are valid, i.e. not into a wall, then the facing is deemed suitable.</li>
+						</ol>
+					</td>
+					<td colspan="2"><img src="../images/feat_rig_stage2.jpg" alt="RIG Stage 2 diagram" width="100%" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><img src="../images/feat_rig_stage3.jpg" alt="RIG Stage 3 diagram" width="100%" /></td>
+					<td>
+						<p>Before the objects are created, several final checks are carried out. These include checking that objects are not too close to each other, that a "wall" behind an object really is a wall and not a pit or river, etc. Once this is completed, the area is decorated with the objects; continuing with the example, this is shown to the left.
+						<br />A stone table has been spawned against the wall to the north, a shrine in the niche to the south, and a secret trapdoor in the floor in the middle of the room.</p>
+					</td>
+				</tr>
+			</table>
+		</p>
+<!-- FOOTER START -->
+		<div class="footer">
+			<hr />
+			<p>
+				This web page was made by Primogenitor and last updated on 31/10/06.
+				<br />If for some reason you should wish to contact me : <a href="mailto:primogenitor@nwangband.awardspace.com?subject=NWAngband">primogenitor@nwangband.awardspace.com</a>
+			</p>
+			<p>
+				<a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" />
+				<a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Frameset"  />
+			</p>
+		</div>
+<!-- FOOTER END -->
+	</body>
+</html>

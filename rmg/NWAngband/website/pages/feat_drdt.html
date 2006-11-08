@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="core.css" />
+		<title>NWAngband</title>
+	</head>
+	<body>
+		<h1>NWAngband - Features</h1>
+		<a href="features.html" target="main">back to main features page</a>
+		<h3>DRDT - Directed Randomised Data Tables</h3>
+		<p>
+			This is a system of 2das and straight-forward scripts that many of the other systems use to provide both structure and randomisation. It is based on weighted randomised selection of a set of limited options. The basic 2da structure looks something like this:
+		</p>
+		<pre><code>
+      Label Random0 Random0Weight Random1 Random1Weight Random2 Random2Weight Random3 Random3Weight Random4 Random4Weight
+0     Start r0      10            r1      25            r2      100           1       25            2       2
+1     Set1  r4      s1            r5      s2            r6      25            ****    ****          ****    ****
+2     Set2  r10     s1            0       10            ****    ****          ****    ****          ****    ****
+		</code></pre>
+		<p>
+			As you can see, there is a label column which, as with other 2das, is purely a human-read name for the row. There are also 5 pairs of columns (10 in a full DRDT 2da), RandomX and RandomXWeight, which may or may not have any values. The RandomX columns link to either a result if they have an "r" prefix, as with row zero, Random0, or to another row, as with row zero, Random3 & Random4. The RandomXWeight columns either have a fixed number, or a number that is based on a script if they have a "s" prefix. Typically, weights for each column are around 100, though some might be particularly high or low as required.
+		</p>
+		<p>
+			An "s" prefix indicates that the value after the "s" should be passed into the script associated with the DRDT call. The default script used is named "random_default", some example values are below.
+			<table border="1">
+			<tr>
+				<td>1</td>
+				<td>100, if it is currently the first day of the week, 0 otherwise</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>100, if it is morning, 0 otherwise</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>100, if it is in january, 0 otherwise</td>
+			</tr>
+			</table>
+		</p>
+		<p>
+			The 2da is processed on a row-by-row basis; the starting row defaults to row zero, but it may not be (in the case of the RIG tables, it is based on the type of item being randomised for example). For each row, the weights are summed together, being calculated if needed ("s" prefixes), until you reach an empty column or  the end of the column. Then once you have a total for that row, a random number is picked between zero and that maximum. The rows are then looped over again, stopping when the total weight is greater than the random number selected previously. Once a column has been settled on within the row, either a value is returned if it was prefixed with "r", or the script moves to a new row in the 2da and starts again.
+		</p>
+		<p>
+			Probably the best way is to work through an example.
+			<ul>
+				<li>Start with row zero at on a monday morning in january</li>
+				<li>First we have to sum up all the weights on the row
+					<ul>
+						<li>Random0Weight is 10</li>
+						<li>Random1Weight is 25 which makes a total of 35</li>
+						<li>Random2Weight is 100 which makes a total of 135</li>
+						<li>Random3Weight is 25 which makes a total of 160</li>
+						<li>Random4Weight is 2 which makes a total of 162</li>
+					</ul>
+				</li>
+				<li>Then we pick a random number between zero and 162, we get 144.</li>
+				<li>Adding weights back up again, we can see that once we add Random3Weight, we go above 144; therefore we stop at that and interpret Random3on row 0</li>
+				<li>Random3 is "1" for this row. As this does not have an "r" prefix, this means jump to row one and continue</li>
+				<li>We now sum up the weights for row 1
+					<ul>
+						<li>Random0Weight is "s1". This means "execute the script I pointed to in the function call and pass in a value of 1", in this case it is "100, if it is currently the first day of the week, 0 otherwise". As it is a monday, that is the first day of the week and therefore Random0Weight has a value of 100</li>
+						<li>Random1Weight is "s1" This means "execute the script I pointed to in the function call and pass in a value of 2", in this case it is "100, if it is morning, 0 otherwise". As it is morning, Random1Weight has a value of 100 which makes a total of 200</li>
+						<li>Random2Weight is 25 which makes a total of 225</li>
+						<li>Random3Weight is "****" so we stop and do not proceed to Random4Weight</li>
+					</ul></li>
+				<li>Pick a random number between zero and 225, we get 75.</li>
+				<li>Adding the weights back up again, we stop at Random0Weight and interpret Random0 on row 1</li>
+				<li>This value is "r4", and as it is prefixed with an "r" this is a result.</li>
+				<li>Therefore we stop the 2da lookups and return "4" as a string from the function.</li>
+			</ul>
+		</p>
+<!-- FOOTER START -->
+		<div class="footer">
+			<hr />
+			<p>
+				This web page was made by Primogenitor and last updated on 31/10/06.
+				<br />If for some reason you should wish to contact me : <a href="mailto:primogenitor@nwangband.awardspace.com?subject=NWAngband">primogenitor@nwangband.awardspace.com</a>
+			</p>
+			<p>
+				<a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" />
+				<a href="http://validator.w3.org/check?uri=referer"><img style="border:0;width:88px;height:31px" src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Frameset"  />
+			</p>
+		</div>
+<!-- FOOTER END -->
+	</body>
+</html>

@@ -1,0 +1,46 @@
+body
+{
+	color: #FFCC99;
+	background-color: #330000;
+}
+
+
+h1 
+{
+	text-align: center;
+}
+
+h3 
+{
+	text-decoration: underline;
+}
+
+h4 
+{
+	text-align: center;
+	text-decoration: underline;
+}
+
+
+div.footer
+{
+	text-align: center;
+	font-size: 75%;	
+}
+
+a:link 
+{
+	color: #CC6600;
+}
+a:visited 
+{
+	color: #990000;
+}
+a:hover 
+{
+	color: #CC6600;
+}
+a:active 
+{
+	color: #CC6600;
+}

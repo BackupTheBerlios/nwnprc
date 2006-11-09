@@ -450,6 +450,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         sResult = GetLocalString(GetModule(), "LetoResult");
         SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
     }
+    DoRotatingCamera(oPC);
 }
 
 void CloneMasterCheck()
@@ -1641,11 +1642,11 @@ void DoPortraitsLoop()
     {
         // get the gender and add it to the SQL statement
         string sGender = IntToString(GetLocalInt(OBJECT_SELF, "Gender"));
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****' AND "+q+"SEX"+q+" = '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****' AND "+q+"SEX"+q+" = '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
     }
     else
     {
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
     }
     PRC_SQLExecDirect(sSQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)

@@ -554,6 +554,19 @@ void DoHeaderAndChoices(int nStage)
             MarkStageSetUp(nStage);
             break;
         }
+        case STAGE_PORTRAIT_CHECK: {
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            int nPortrait = GetPortraitId(OBJECT_SELF);
+            sText += Get2DACache("portraits", "BaseResRef", nPortrait);
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice("View this portrait.", 2);
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
         case FINAL_STAGE: {
             sText = "Your character will now be generated. As part of this process, you will be booted. Please exit NWN completely before rejoining.";
             SetHeader(sText);
@@ -1066,6 +1079,8 @@ int HandleChoice(int nStage, int nChoice)
             else
             {
                 SetLocalInt(OBJECT_SELF, "Appearance", nChoice);
+                // change the appearance
+                DoCutscene(OBJECT_SELF);
                 nStage++;
             }
             break;
@@ -1073,8 +1088,6 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_APPEARANCE_CHECK: {
             if (nChoice == 1)
             {
-                // change the appearance
-                DoCutscene(OBJECT_SELF);
                 nStage++;
             }
             else
@@ -1083,6 +1096,42 @@ int HandleChoice(int nStage, int nChoice)
                 MarkStageNotSetUp(STAGE_APPEARANCE_CHECK, OBJECT_SELF);
                 MarkStageNotSetUp(STAGE_APPEARANCE, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Appearance");
+            }
+            break;
+        }
+        case STAGE_PORTRAIT: {
+            if (nChoice == -1) // no change
+            {
+                nStage == STAGE_SOUNDSET;
+            }
+            else
+            {
+                // change the portrait
+                SetPortraitId(OBJECT_SELF, nChoice);
+                // change the clone's portrait
+                object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+                SetPortraitId(oClone, nChoice);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_PORTRAIT_CHECK: {
+            if (nChoice == 2)
+            {
+                object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+                ActionExamine(oClone);
+                // DelayCommand(1.0, ActionExamine(oClone));
+                // DelayCommand(2.0, ActionExamine(oClone));
+            }
+            else if (nChoice == 1)
+            {
+                nStage++;
+            }
+            else
+            {
+                nStage = STAGE_PORTRAIT;
+                MarkStageNotSetUp(STAGE_PORTRAIT_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_PORTRAIT, OBJECT_SELF);
             }
             break;
         }

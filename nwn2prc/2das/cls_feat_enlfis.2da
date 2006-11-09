@@ -177,3 +177,4 @@
 181 FEAT_ENLFST_SPELLCST_SUEL  		      14728     2    -1             0
 182 FEAT_ENLFST_SPELLCST_SHDL  		      14729	2    -1             0
 183 FEAT_ENLFST_SPELLCST_HEXBLD		      14730	2    -1             0
+184 FEAT_ENLFST_SPELLCST_DSKBLD		      14731     2    -1             0

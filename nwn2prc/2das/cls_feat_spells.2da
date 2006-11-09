@@ -477,3 +477,11 @@
 473 FEAT_CHANNEL_SPELL_9                           4696      3    28             0      
 474 FEAT_SPELLS_15                                 6643      3    29             0      
 475 FEAT_MULTIPLE_CHANNEL_SPELL_3                  4699      3    30             0      
+476 FEAT_SPELLS_SPELLCST_WIZ   			   14820     2    -1             0
+477 FEAT_SPELLS_SPELLCST_SORC  			   14821     2    -1             0
+478 FEAT_SPELLS_SPELLCST_BARD  			   14822     2    -1             0
+479 FEAT_SPELLS_SPELLCST_ASSN  			   14823     2    -1             0
+480 FEAT_SPELLS_SPELLCST_SUEL  			   14824     2    -1             0
+481 FEAT_SPELLS_SPELLCST_SHDL  			   14825     2    -1             0
+482 FEAT_SPELLS_SPELLCST_HEXBLD			   14826     2    -1             0
+483 FEAT_SPELLS_SPELLCST_DSKBLD			   14827     2    -1             0

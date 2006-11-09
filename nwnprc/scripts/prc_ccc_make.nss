@@ -216,8 +216,8 @@ void main()
         sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
     sScript += SetSkinColor(nSkin);
     sScript += SetHairColor(nHair);
-    sScript += SetTatooColor(nTattooColour1, 1);
-    sScript += SetTatooColor(nTattooColour2, 2);
+    sScript += SetTattooColor(nTattooColour1, 1);
+    sScript += SetTattooColor(nTattooColour2, 2);
 
     //Special abilities
     //since bioware screws this up in 1.64 its not needed

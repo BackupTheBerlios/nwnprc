@@ -456,8 +456,8 @@ void DoCloneLetoscript()
     StackedLetoScript(LetoSet("SoundSetFile", IntToString(nSoundset), "word"));
     StackedLetoScript(SetSkinColor(nSkin));
     StackedLetoScript(SetHairColor(nHair));
-    StackedLetoScript(SetTatooColor(nTattooColour1, 1));
-    StackedLetoScript(SetTatooColor(nTattooColour2, 2));
+    StackedLetoScript(SetTattooColor(nTattooColour1, 1));
+    StackedLetoScript(SetTattooColor(nTattooColour2, 2));
     string sResult;
     RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
     sResult = GetLocalString(GetModule(), "LetoResult");

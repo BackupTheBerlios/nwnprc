@@ -241,7 +241,7 @@ string SetHairColor(int nColor);
 //the values are based on the windows in the toolset
 //start at 0 in top left
 //nTattoo determines if its tattoo 1 or 2
-string SetTatooColor(int nColor, int nTattoo);
+string SetTattooColor(int nColor, int nTattoo);
 
 //returns a script to change movement rate
 //as defined in creaturespeed.2da
@@ -555,7 +555,7 @@ string SetHairColor(int nColor)
     return LetoSet("Color_Hair", IntToString(nColor), "byte");
 }
 
-string SetTatooColor(int nColor, int nTattoo)
+string SetTattooColor(int nColor, int nTattoo)
 {
 //pheonix
 //<gff:add 'Color_Tattoo1' {value=2 setifexists=True}>

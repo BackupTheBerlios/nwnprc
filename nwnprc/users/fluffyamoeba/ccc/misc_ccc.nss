@@ -1,234 +1,132 @@
-#include "prc_alterations"
-#include "inc_letocommands"
-#include "prc_racial_const"
-#include "prc_ccc_inc"
-#include "inc_encrypt"
+tlk entries:
 
-void main()
+39  // Continue
+
+123 // Head
+124 // Select the Appearance of your Character
+125 // Hair Color
+128 // Skin Color
+147 // Portrait
+337 // Tattoo Colors
+
+2409 // Wings
+2410 // Tail
+7383 // Select a portrait
+7498 // Sound Set
+7535 // Select a sound set
+7880 // Select Character Colors
+7888 // Select Color
+
+52977 // Select
+65992 // Select None
+
+void DoCutscene(object oPC, int nSetup = FALSE)
 {
-    //define some varaibles
-    object oPC = OBJECT_SELF;
-    int i;
-    //get some stored data
-    int         nStr =              GetLocalInt(oPC, "Str");
-    int         nDex =              GetLocalInt(oPC, "Dex");
-    int         nCon =              GetLocalInt(oPC, "Con");
-    int         nInt =              GetLocalInt(oPC, "Int");
-    int         nWis =              GetLocalInt(oPC, "Wis");
-    int         nCha =              GetLocalInt(oPC, "Cha");
-
-    int         nRace =             GetLocalInt(oPC, "Race");
-
-    int         nClass =            GetLocalInt(oPC, "Class");
-    int         nHitPoints =        GetLocalInt(oPC, "HitPoints");
-
-    int         nSex =              GetLocalInt(oPC, "Gender");
-
-    int         nOrder =            GetLocalInt(oPC, "LawfulChaotic");
-    int         nMoral =            GetLocalInt(oPC, "GoodEvil");
-
-
-    int         nFamiliar =         GetLocalInt(oPC, "Familiar");
-
-    int         nAnimalCompanion =  GetLocalInt(oPC, "AnimalCompanion");
-
-    int         nDomain1 =          GetLocalInt(oPC, "Domain1");
-    int         nDomain2 =          GetLocalInt(oPC, "Domain2");
-
-    int         nSchool =           GetLocalInt(oPC, "School");
-    
-    int         nSpellsPerDay0 =    GetLocalInt(oPC, "SpellsPerDay0");
-    int         nSpellsPerDay1 =    GetLocalInt(oPC, "SpellsPerDay1");
-
-/*
-    int         nVoiceset =         GetLocalInt(oPC, "Soundset");
-    int         nSkin =             GetLocalInt(oPC, "Skin");
-    int         nHair =             GetLocalInt(oPC, "Hair");
-    int         nTattooColour1 =    GetLocalInt(oPC, "TattooColour1");
-    int         nTattooColour2 =    GetLocalInt(oPC, "TattooColour2");
-*/
-
-    //clear existing stuff
     string sScript;
-    sScript += LetoDelete("FeatList");
-    sScript += LetoDelete("ClassList");
-    sScript += LetoDelete("LvlStatList");
-    sScript += LetoDelete("SkillList");
-    sScript += LetoAdd("FeatList", "", "list");
-    sScript += LetoAdd("ClassList", "", "list");
-    sScript += LetoAdd("LvlStatList", "", "list");
-    sScript += LetoAdd("SkillList", "", "list");
-
-    //Sex
-    sScript += SetGender(nSex);
-
-    //Race
-    sScript += SetRace(nRace);
-
-    //Class
-    sScript += LetoAdd("ClassList/Class", IntToString(nClass), "int");
-    sScript += LetoAdd("ClassList/[0]/ClassLevel", IntToString(nLevel+1), "short");
-    sScript += LetoAdd("LvlStatList/LvlStatClass", IntToString(nClass), "byte");
-    sScript += LetoAdd("LvlStatList/[0]/EpicLevel", "0", "byte");
-    sScript += LetoAdd("LvlStatList/[0]/LvlStatHitDie", IntToString(nHitPoints), "byte");
-    sScript += LetoAdd("LvlStatList/[0]/FeatList", "", "list");
-    sScript += LetoAdd("LvlStatList/[0]/SkillList", "", "list");
-
-    //Alignment
-    sScript += LetoAdd("LawfulChaotic", IntToString(nOrder), "byte");
-    sScript += LetoAdd("GoodEvil", IntToString(nMoral), "byte");
-
-    //Familiar
-    //has a random name
-    if((nClass == CLASS_TYPE_WIZARD
-        || nClass == CLASS_TYPE_SORCERER)
-            && !GetPRCSwitch(PRC_PNP_FAMILIARS))
-    {
-        sScript += LetoAdd("FamiliarType", IntToString(nFamiliar), "int");
-        if(GetFamiliarName(oPC) == "")
-            sScript += LetoAdd("FamiliarName", RandomName(NAME_FAMILIAR), "string");
-    }
-
-    //Animal Companion
-    //has a random name
-    if(nClass == CLASS_TYPE_DRUID)
-    {
-        sScript += LetoAdd("CompanionType", IntToString(nAnimalCompanion), "int");
-        if(GetAnimalCompanionName(oPC) == "")
-            sScript += LetoAdd("CompanionName", RandomName(NAME_ANIMAL), "string");
-    }
-
-    //Domains
-    if(nClass == CLASS_TYPE_CLERIC)
-    {
-        sScript += LetoAdd("ClassList/[0]/Domain1", IntToString(nDomain1), "byte");
-        sScript += LetoAdd("ClassList/[0]/Domain2", IntToString(nDomain2), "byte");
-    }
-
-    //Ability Scores
-    sScript += SetAbility(ABILITY_STRENGTH, nStr);
-    sScript += SetAbility(ABILITY_DEXTERITY, nDex);
-    sScript += SetAbility(ABILITY_CONSTITUTION, nCon);
-    sScript += SetAbility(ABILITY_INTELLIGENCE, nInt);
-    sScript += SetAbility(ABILITY_WISDOM, nWis);
-    sScript += SetAbility(ABILITY_CHARISMA, nCha);
-
-    //Feats
-    //Make sure the list exists
-    //Populate the list from array
-    for(i=0;i<array_get_size(oPC, "Feats"); i++)
-    {
-        string si = IntToString(i);
-        int nFeatID =array_get_int(oPC, "Feats", i);
-        if(nFeatID != 0)
-        {
-            if(nFeatID == -1)//alertness fix
-                nFeatID = 0;
-//            DoDebug("Feat array positon "+IntToString(i)+" is "+IntToString(nFeatID));
-            sScript += LetoAdd("FeatList/Feat", IntToString(nFeatID), "word");
-            sScript += LetoAdd("LvlStatList/[0]/FeatList/Feat", IntToString(nFeatID), "word");
-        }
-    }
-
-    //Skills
-    for (i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
-    {
-        sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
-        sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "char");
-    }
-    sScript += LetoAdd("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
-    sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
-
-    //Spells
-    if(nClass == CLASS_TYPE_WIZARD)
-    {
-        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
-        sScript += LetoAdd("ClassList/[_]/KnownList1", "", "list");
-        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
-        sScript += LetoAdd("LvlStatList/[_]/KnownList1", "", "list");
-        for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
-        {
-            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
-            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
-        }
-        for (i=0;i<array_get_size(oPC, "SpellLvl1");i++)
-        {
-            sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
-            sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
-        }
-        //throw spellschoool in here too
-        if(GetPRCSwitch(PRC_PNP_SPELL_SCHOOLS))
-            sScript += LetoAdd("ClassList/[_]/School", IntToString(9), "byte");
-        else
-            sScript += LetoAdd("ClassList/[_]/School", IntToString(nSchool), "byte");
-    }
-    else if (nClass == CLASS_TYPE_BARD)
-    {
-        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
-        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList", "", "list");
-        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
-        for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
-        {
-            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
-            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
-        }
-        //spells per day
-        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay0), "word");
-    }
-    else if (nClass == CLASS_TYPE_SORCERER)
-    {
-        sScript += LetoAdd("ClassList/[_]/KnownList0", "", "list");
-        sScript += LetoAdd("ClassList/[_]/KnownList1", "", "list");
-        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList", "", "list");
-        sScript += LetoAdd("LvlStatList/[_]/KnownList0", "", "list");
-        sScript += LetoAdd("LvlStatList/[_]/KnownList1", "", "list");
-        for (i=0;i<array_get_size(oPC, "SpellLvl0");i++)
-        {
-            sScript += LetoAdd("ClassList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
-            sScript += LetoAdd("LvlStatList/[_]/KnownList0/Spell", IntToString(array_get_int(oPC, "SpellLvl0", i)), "word");
-        }
-        for (i=0;i<array_get_size(oPC, "SpellLvl1");i++)
-        {
-            sScript += LetoAdd("ClassList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
-            sScript += LetoAdd("LvlStatList/[_]/KnownList1/Spell", IntToString(array_get_int(oPC, "SpellLvl1", i)), "word");
-        }
-        //spells per day
-        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay0), "word");
-        sScript += LetoAdd("ClassList/[_]/SpellsPerDayList/NumSpellsLeft", IntToString(nSpellsPerDay1), "word");
-    }
-
-    //Appearance stuff
-    /*
-    if(nVoiceset != -1) //keep existing portrait
-        sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
-    sScript += SetSkinColor(nSkin);
-    sScript += SetHairColor(nHair);
-    sScript += SetTatooColor(nTattooColour1, 1);
-    sScript += SetTatooColor(nTattooColour2, 2);
+    int nStage = GetStage(oPC);
+    if (nStage < STAGE_RACE_CHECK) // if we don't need to set the clone up
+        return;
     
-    */
-
+    DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
+    object oClone;
     
-    /* -- FOR TESTING ONLY --
-    //change the tag to mark the player as done
-    sScript += LetoAdd("Tag", Encrypt(oPC), "string");
-    //give an XP so the XP switch works
-    SetXP(oPC, 1);
+    if(nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
+    {
+        // check the PC has finished entering the area
+        if(!GetIsObjectValid(GetArea(oPC)))
+        {
+            DelayCommand(1.0, DoCutscene(oPC, nSetup));
+            return;
+        }
+        // make the PC look like the race they have chosen
+        DoSetRaceAppearance(oPC);
+        // clone the PC and hide the swap with a special effect
+        // make the real PC non-collideable
+        effect eGhost = EffectCutsceneGhost();
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGhost, oPC, 99999999.9);
+        // make the swap and hide with an effect
+        effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
+        // make clone
+        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PlayerClone");
+        ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
+        // make the real PC invisible
+        effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, 9999.9);
+        // swap local objects
+        SetLocalObject(oPC, "Clone", oClone);
+        SetLocalObject(oClone, "Master", oPC);
+        // this makes sure the clone gets destroyed if the PC leaves the game
+        AssignCommand(oClone, CloneMasterCheck());
+        // end of clone making
+        
+        int nGender = GetLocalInt(oPC, "Gender");
+        // this only needs doing if the gender has changed
+        if (GetGender(oPC) != nGender)
+        {
+            sScript = LetoSet("Gender", IntToString(nSex), "byte");
+            // reset soundset only if we've not changed it yet
+            if (nStage < STAGE_SOUNDSET)
+                sScript += LetoSet("SoundSetFile", IntToString(0), "word");
+        }
+    }
     
-    */
-
-    SetLocalInt(oPC, "StopRotatingCamera", TRUE);
-    SetCutsceneMode(oPC, FALSE);
-    DoCleanup();
-    object oClone = GetLocalObject(oPC, "Clone");
-    AssignCommand(oClone, SetIsDestroyable(TRUE));
-    DestroyObject(oClone);
-    //do anti-hacker stuff
-    SetPlotFlag(oPC, FALSE);
-    SetImmortal(oPC, FALSE);
-    AssignCommand(oPC, SetIsDestroyable(TRUE));
-    ForceRest(oPC);
-    StackedLetoScript(sScript);
-
-    RunStackedLetoScriptOnObject(oPC, "OBJECT", "SPAWN");
+    if(nStage == STAGE_APPEARANCE || (nStage > STAGE_APPEARANCE && nSetup))
+    {
+        DoSetAppearance(oPC);
+    }
+    
+    if(nStage == STAGE_SOUNDSET || (nStage > STAGE_SOUNDSET && nSetup))
+    {
+        int nSoundset = GetLocalInt(oPC, "Soundset");
+        if (nSoundset != -1) // then it has been changed
+        {
+            sScript += LetoSet("SoundSetFile", IntToString(nSoundset), "word");
+        }
+    }
+    
+    if (nStage == STAGE_SKIN_COLOUR || (nStage > STAGE_SKIN_COLOUR && nSetup))
+    {
+        int nSkin = GetLocalInt(oPC, "Skin");
+        if (nSkin != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nSkin);
+        }
+    }
+    
+    if (nStage == STAGE_HAIR_COLOUR || (nStage > STAGE_HAIR_COLOUR && nSetup))
+    {
+        int nHair = GetLocalInt(oPC, "Hair");
+        if (nHair != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nHair);
+        }
+    }
+    
+    if (nStage == STAGE_TATTOO_COLOUR1 || (nStage > STAGE_TATTOO_COLOUR1 && nSetup))
+    {
+        int nTattooColour1 = GetLocalInt(oPC, "TattooColour1");
+        if (nTattooColour1 != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nTattooColour1, 1);
+        }
+    }
+    
+    if (nStage == STAGE_TATTOO_COLOUR2 || (nStage > STAGE_TATTOO_COLOUR2 && nSetup))
+    {
+        int nTattooColour2 = GetLocalInt(oPC, "TattooColour2");
+        if (nTattooColour2 != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nTattooColour2, 2);
+        }
+    }
+    // no point in running the letoscript commands if no changes are made
+    if (nScript != "")
+    {
+        StackedLetoScript(sScript);
+        string sResult;
+        RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
+        sResult = GetLocalString(GetModule(), "LetoResult");
+        SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
+    }
 }

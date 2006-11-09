@@ -53,6 +53,9 @@ void DoSetRaceAppearance(object oPC);
 // if it's changed
 void DoCloneGender(object oPC);
 
+// changes the appearance of the PC and clone
+void DoSetAppearance(object oPC);
+
 // deletes local variables stored on the PC before the player is booted to make the new character
 void DoCleanup();
 
@@ -103,6 +106,12 @@ void SetWizCantrips(int iSpellschool);
 // returns TRUE if they know it
 int GetIsSpellKnown(int nSpell, int nSpellLevel);
 
+// sets up the appearance choices if the PRC_CONVOCC_USE_RACIAL_APPEARANCES switch is set
+void SetupRacialAppearances();
+
+// adds appearance choices on being passed an APPEARANCE_TYPE_* constant
+void AddAppearanceChoice(int nType, int nOnlyChoice = FALSE);
+
 /* 2da cache functions */
 
 // loops through a 2da, using the cache
@@ -130,6 +139,12 @@ void DoSpellsLoop(int nStage);
 
 // loops through domains.2da
 void  DoDomainsLoop();
+
+// loops through appearance.2da
+void DoAppearanceLoop();
+
+// loops through portraits.2da
+void DoPortraitsLoop();
 
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
@@ -316,29 +331,35 @@ void DoCloneGender(object oPC)
     SetLocalObject(GetModule(), "PCForThread"+sResult, oPC);
 }
 
+void DoSetAppearance(object oPC)
+{
+    DoDebug(DebugObject2Str(oPC));
+    // get the appearance type
+    int nAppearance = GetLocalInt(oPC, "Appearance");
+    // get the clone object
+    object oClone = GetLocalObject(oPC, "Clone");
+    SetCreatureAppearanceType(oClone, nAppearance);
+}
+
 void DoCutscene(object oPC, int nSetup = FALSE)
 {
-    
-    // get what stage we're at
+    string sScript;
     int nStage = GetStage(oPC);
+    if (nStage < STAGE_RACE_CHECK) // if we don't need to set the clone up
+        return;
+    
     DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
-    // get whether this function has been called in setting up a stage,
-    // in response to a choice or by prc_enter
-    int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
-
-    // if we are on STAGE_RACE_CHECK 
-    // or if we are setting up the cutscene and have got at least that far in the convo
-    if (nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
+    object oClone;
+    
+    if(nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
     {
-        DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
+        // check the PC has finished entering the area
         if(!GetIsObjectValid(GetArea(oPC)))
         {
             DelayCommand(1.0, DoCutscene(oPC, nSetup));
             return;
         }
-
-        // set race appearance, remove wings and tails, get rid of
-        // invisible/undead etc body parts
+        // make the PC look like the race they have chosen
         DoSetRaceAppearance(oPC);
         // clone the PC and hide the swap with a special effect
         // make the real PC non-collideable
@@ -348,24 +369,86 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
         ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
         // make clone
-        object oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PlayerClone");
+        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PlayerClone");
         ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
         // make the real PC invisible
         effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, 9999.9);
-        //make sure the clone stays put
-        effect eParal = EffectCutsceneImmobilize();
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oClone, 9999.9);
-        // ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eParal, oPC, 9999.9);
         // swap local objects
         SetLocalObject(oPC, "Clone", oClone);
         SetLocalObject(oClone, "Master", oPC);
         // this makes sure the clone gets destroyed if the PC leaves the game
         AssignCommand(oClone, CloneMasterCheck());
-        // use letoscript to assign the gender
-        DoCloneGender(oPC);
-        // set up the camera and animations
-        DoRotatingCamera(oPC);
+        // end of clone making
+        
+        int nGender = GetLocalInt(oPC, "Gender");
+        // this only needs doing if the gender has changed
+        if (GetGender(oPC) != nGender)
+        {
+            sScript = LetoSet("Gender", IntToString(nSex), "byte");
+            // reset soundset only if we've not changed it yet
+            if (nStage < STAGE_SOUNDSET)
+                sScript += LetoSet("SoundSetFile", IntToString(0), "word");
+        }
+    }
+    
+    if(nStage == STAGE_APPEARANCE || (nStage > STAGE_APPEARANCE && nSetup))
+    {
+        DoSetAppearance(oPC);
+    }
+    
+    if(nStage == STAGE_SOUNDSET || (nStage > STAGE_SOUNDSET && nSetup))
+    {
+        int nSoundset = GetLocalInt(oPC, "Soundset");
+        if (nSoundset != -1) // then it has been changed
+        {
+            sScript += LetoSet("SoundSetFile", IntToString(nSoundset), "word");
+        }
+    }
+    
+    if (nStage == STAGE_SKIN_COLOUR || (nStage > STAGE_SKIN_COLOUR && nSetup))
+    {
+        int nSkin = GetLocalInt(oPC, "Skin");
+        if (nSkin != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nSkin);
+        }
+    }
+    
+    if (nStage == STAGE_HAIR_COLOUR || (nStage > STAGE_HAIR_COLOUR && nSetup))
+    {
+        int nHair = GetLocalInt(oPC, "Hair");
+        if (nHair != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nHair);
+        }
+    }
+    
+    if (nStage == STAGE_TATTOO_COLOUR1 || (nStage > STAGE_TATTOO_COLOUR1 && nSetup))
+    {
+        int nTattooColour1 = GetLocalInt(oPC, "TattooColour1");
+        if (nTattooColour1 != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nTattooColour1, 1);
+        }
+    }
+    
+    if (nStage == STAGE_TATTOO_COLOUR2 || (nStage > STAGE_TATTOO_COLOUR2 && nSetup))
+    {
+        int nTattooColour2 = GetLocalInt(oPC, "TattooColour2");
+        if (nTattooColour2 != -1) // then it has been changed
+        {
+            sScript += SetSkinColor(nTattooColour2, 2);
+        }
+    }
+    // no point in running the letoscript commands if no changes are made
+    if (nScript != "")
+    {
+        StackedLetoScript(sScript);
+        string sResult;
+        RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
+        sResult = GetLocalString(GetModule(), "LetoResult");
+        SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
     }
 }
 
@@ -677,6 +760,119 @@ int GetIsSpellKnown(int nSpell, int nSpellLevel)
     }
     // otherwise no match
     return FALSE;
+}
+
+void SetupRacialAppearances()
+{
+    int nRace = GetLocalInt(OBJECT_SELF, "Race");
+    int nSex  = GetLocalInt(OBJECT_SELF, "Gender");
+    if(nRace == RACIAL_TYPE_RAKSHASA)
+    {
+        if(nSex == GENDER_MALE)
+        {
+            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_BEAR_MALE);
+            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_TIGER_MALE);
+            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_WOLF_MALE);
+        }
+        else if(nSex == GENDER_FEMALE)
+            AddAppearanceChoice(APPEARANCE_TYPE_RAKSHASA_TIGER_FEMALE);
+    }
+    else if(nRace == RACIAL_TYPE_MINOTAUR)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_MINOTAUR);
+        AddAppearanceChoice(APPEARANCE_TYPE_MINOTAUR_CHIEFTAIN);
+        AddAppearanceChoice(APPEARANCE_TYPE_MINOTAUR_SHAMAN);
+    }
+    else if(nRace == RACIAL_TYPE_OGRE)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_OGRE);
+        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_CHIEFTAIN);
+        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_CHIEFTAINB);
+        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_MAGE);
+        AddAppearanceChoice(APPEARANCE_TYPE_OGRE_MAGEB);
+        AddAppearanceChoice(APPEARANCE_TYPE_OGREB);
+    }
+    else if(nRace == RACIAL_TYPE_GOBLIN)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_CHIEF_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_CHIEF_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_SHAMAN_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_GOBLIN_SHAMAN_B);
+    }
+    else if(nRace == RACIAL_TYPE_HOBGOBLIN)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_HOBGOBLIN_WARRIOR);
+        AddAppearanceChoice(APPEARANCE_TYPE_HOBGOBLIN_WIZARD);
+    }
+    else if(nRace == RACIAL_TYPE_BUGBEAR)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_CHIEFTAIN_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_CHIEFTAIN_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_SHAMAN_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_BUGBEAR_SHAMAN_B);
+    }
+    else if(nRace == RACIAL_TYPE_GNOLL)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_GNOLL_WARRIOR);
+        AddAppearanceChoice(APPEARANCE_TYPE_GNOLL_WIZ);
+    }
+    else if(nRace == RACIAL_TYPE_KOBOLD)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_CHIEF_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_CHIEF_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_SHAMAN_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_KOBOLD_SHAMAN_B);
+    }
+    else if(nRace == RACIAL_TYPE_TROLL)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_TROLL);
+        AddAppearanceChoice(APPEARANCE_TYPE_TROLL_CHIEFTAIN);
+        AddAppearanceChoice(APPEARANCE_TYPE_TROLL_SHAMAN);
+    }
+    else if(nRace == RACIAL_TYPE_ILLITHID)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_MINDFLAYER);
+        AddAppearanceChoice(APPEARANCE_TYPE_MINDFLAYER_2);
+        AddAppearanceChoice(APPEARANCE_TYPE_MINDFLAYER_ALHOON);
+    }
+    else if(nRace == RACIAL_TYPE_LIZARDFOLK)
+    {
+        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_SHAMAN_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_SHAMAN_B);
+        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_WARRIOR_A);
+        AddAppearanceChoice(APPEARANCE_TYPE_LIZARDFOLK_WARRIOR_B);
+    }
+    else // it is the appearance given at the race stage
+    {
+        // the only 'choice'
+        AddAppearanceChoice(StringToInt(Get2DACache("racialtypes", "Appearance", nRace)), TRUE);
+    }
+}
+
+void AddAppearanceChoice(int nType, int nOnlyChoice = FALSE)
+{
+    
+    // get the appearance type name
+    string sName = Get2DACache("appearance", "STRING_REF", nType);
+    sName = GetStringByStrRef(StringToInt(sName));
+    // if there's only one option, it has already been stored on the PC
+    // at the race choice stage
+    if (nOnlyChoice) 
+    {
+        // add a "continue" so player doesn't expect a choice
+        sName = GetStringByStrRef(39) + " (" + sName + ")";
+        // marker to skip the check stage
+        nType = -1;
+    }
+    AddChoice(sName, nType);
 }
 
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
@@ -1401,6 +1597,75 @@ void  DoDomainsLoop()
         }
         i++;
         sName = Get2DACache("domains", "Name", i);
+    }
+}
+
+void DoAppearanceLoop()
+{
+    string q = PRC_SQLGetTick();
+    // get the results 100 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    int nCounter = 0;
+    string sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRING_REF"+q+" FROM "+q+"prc_cached2da_appearance"+q+" WHERE ("+q+"STRING_REF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
+    PRC_SQLExecDirect(sSQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+        int nStrRef = StringToInt(PRC_SQLGetData(2));
+        string sName = GetStringByStrRef(nStrRef);
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        AddChoice(sName, nRow);
+    }
+    if (nCounter == 100)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+100);
+        DelayCommand(0.01, DoAppearanceLoop());
+    }
+    else // end of the 2da
+    {
+        if(DEBUG) DoDebug("Finished appearances");
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        return;
+    }
+}
+
+void DoPortraitsLoop()
+{
+    string q = PRC_SQLGetTick();
+    // get the results 100 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    int nCounter = 0;
+    string sSQL;
+    if (GetPRCSwitch(PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX))
+    {
+        // get the gender and add it to the SQL statement
+        string sGender = IntToString(GetLocalInt(OBJECT_SELF, "Gender"));
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****' AND "+q+"SEX"+q+" = '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
+    }
+    else
+    {
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+", FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
+    }
+    PRC_SQLExecDirect(sSQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        string sName = PRC_SQLGetData(2);
+        AddChoice(sName, nRow);
+    }
+    if (nCounter == 100)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+100);
+        DelayCommand(0.01, DoPortraitsLoop());
+    }
+    else // end of the 2da
+    {
+        if(DEBUG) DoDebug("Finished portraits");
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        return;
     }
 }
 

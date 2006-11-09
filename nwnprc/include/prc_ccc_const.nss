@@ -31,5 +31,15 @@ const int STAGE_FAMILIAR_CHECK      = 23;
 const int STAGE_DOMAIN              = 24;
 const int STAGE_DOMAIN_CHECK        = 25;
 const int STAGE_APPEARANCE          = 26;
+const int STAGE_APPEARANCE_CHECK    = 27;
+const int STAGE_PORTRAIT            = 28;
+const int STAGE_PORTRAIT_CHECK      = 29;
+const int STAGE_SOUNDSET            = 30;
+const int STAGE_SOUNDSET_CHECK      = 31;
+
+const int STAGE_SKIN_COLOUR         = 50;
+const int STAGE_HAIR_COLOUR         = 51;
+const int STAGE_TATTOO_COLOUR1      = 52;
+const int STAGE_TATTOO_COLOUR2      = 53;
 
 const int FINAL_STAGE               = 99;

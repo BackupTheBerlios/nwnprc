@@ -519,8 +519,38 @@ void DoHeaderAndChoices(int nStage)
             break;
         }
         case STAGE_APPEARANCE: {
-            SetHeader("Placeholder");
-            AddChoice("Continue", 1);
+            sText = GetStringByStrRef(124); // Select the Appearance of your Character
+            SetHeader(sText);
+            if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_APPEARANCES)) // restrict to what is given in the 2da
+                SetupRacialAppearances();
+            else
+            {
+                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+                DoAppearanceLoop();
+            }
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_APPEARANCE_CHECK: {
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            int nAppearance = GetLocalInt(OBJECT_SELF, "Appearance");
+            sText += GetStringByStrRef(StringToInt(Get2DACache("appearance", "STRING_REF", nAppearance)));
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_PORTRAIT: {
+            sText = GetStringByStrRef(7383); // Select a portrait
+            SetHeader(sText);
+            if(GetPRCSwitch(PRC_CONVOCC_ALLOW_TO_KEEP_PORTRAIT))
+                AddChoice("Keep existing portrait.", -1);
+            // if(GetPRCSwitch(PRC_CONVOCC_USE_RACIAL_PORTRAIT))
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            DoPortraitsLoop();
             MarkStageSetUp(nStage);
             break;
         }
@@ -1029,7 +1059,31 @@ int HandleChoice(int nStage, int nChoice)
             break;
         }
         case STAGE_APPEARANCE: {
-            nStage = FINAL_STAGE;
+            if (nChoice == -1) // no change
+            {
+                nStage == STAGE_PORTRAIT;
+            }
+            else
+            {
+                SetLocalInt(OBJECT_SELF, "Appearance", nChoice);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_APPEARANCE_CHECK: {
+            if (nChoice == 1)
+            {
+                // change the appearance
+                DoCutscene(OBJECT_SELF);
+                nStage++;
+            }
+            else
+            {
+                nStage = STAGE_APPEARANCE;
+                MarkStageNotSetUp(STAGE_APPEARANCE_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_APPEARANCE, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Appearance");
+            }
             break;
         }
         case FINAL_STAGE: {

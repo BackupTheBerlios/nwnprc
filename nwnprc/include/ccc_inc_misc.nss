@@ -385,7 +385,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         // this only needs doing if the gender has changed
         if (GetGender(oPC) != nGender)
         {
-            sScript = LetoSet("Gender", IntToString(nSex), "byte");
+            sScript = LetoSet("Gender", IntToString(nGender), "byte");
             // reset soundset only if we've not changed it yet
             if (nStage < STAGE_SOUNDSET)
                 sScript += LetoSet("SoundSetFile", IntToString(0), "word");
@@ -420,7 +420,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         int nHair = GetLocalInt(oPC, "Hair");
         if (nHair != -1) // then it has been changed
         {
-            sScript += SetSkinColor(nHair);
+            sScript += SetHairColor(nHair);
         }
     }
     
@@ -429,7 +429,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         int nTattooColour1 = GetLocalInt(oPC, "TattooColour1");
         if (nTattooColour1 != -1) // then it has been changed
         {
-            sScript += SetSkinColor(nTattooColour1, 1);
+            sScript += SetTattooColor(nTattooColour1, 1);
         }
     }
     
@@ -438,11 +438,11 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         int nTattooColour2 = GetLocalInt(oPC, "TattooColour2");
         if (nTattooColour2 != -1) // then it has been changed
         {
-            sScript += SetSkinColor(nTattooColour2, 2);
+            sScript += SetTattooColor(nTattooColour2, 2);
         }
     }
     // no point in running the letoscript commands if no changes are made
-    if (nScript != "")
+    if (sScript != "")
     {
         StackedLetoScript(sScript);
         string sResult;

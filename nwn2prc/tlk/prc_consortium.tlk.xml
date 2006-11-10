@@ -25069,6 +25069,16 @@ Prerequisite: Shadowblade 10
 Description: At 10th level, you can use your unseen weapon abilities as a free action, though you are still limited to one use per day per class level.</entry>
   <entry id="52093" lang="en" sex="m">Lesser Amulet of the Silver Tongue</entry>
   <entry id="52094" lang="en" sex="m">Greater Amulet of the Silver Tongue</entry>
+  <entry id="52095" lang="en" sex="m">Sense Motive</entry>
+  <entry id="52096" lang="en" sex="m">Ability: Wisdom.
+Requires Training: no.
+Classes: All.
+
+Use this skill to tell when someone is bluffing you, to discern hidden messages in conversations, or sense when someone is being magically influenced. This skill represents sensitivity to the body language, speech habits and mannerisms of others.
+
+Synergy: If you have 5+ ranks in Sense Motive, you get a +2 to Diplomacy checks.
+
+Use: Automatic.</entry>
   <entry id="52100" lang="en" sex="m">Necrotic cyst implanted.</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>

@@ -34,3 +34,4 @@
 30 IaijutsuFocus     16826112 16826113  is_iaijutsu    0         CHA        0                 1                ****     ****  SKILL_IAIJUTSU_FOCUS   0            ****             0               ****       0          0
 31 Jump              16826011 16826012  is_jump        1         STR        1                 1                ****     ****  SKILL_JUMP             0            ****             1               ****       1          0
 32 Truespeak         16828470 16828471  is_truespeak   0         INT        0                 1                ****     ****  SKILL_TRUESPEAK        0            ****             0               ****       0          0
+33 SenseMotive       16829311 16829312  is_sensemotive 1         WIS        0                 1                ****     ****  SKILL_SENSEMOTIVE      0            ****             0               ****       0          0

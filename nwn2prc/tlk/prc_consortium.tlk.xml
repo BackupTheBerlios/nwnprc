@@ -19986,64 +19986,57 @@ This change is irreversible, are you sure you want to do this?</entry>
   <entry id="51221" lang="en" sex="m">Virtuosos</entry>
   <entry id="51222" lang="en" sex="m">virtuoso</entry>
   <entry id="51223" lang="en" sex="m">(PRESTIGE CLASS)
-The roar of the crowd, the praise of spectators after a great performance, the showers of gifts from attractive admirers - why would anyone trade all that for sleeping in the woods or poking around in smelly old dungeons? The virtuoso leaves creeping down dark corridors and matching wits against deadly traps to others. Her place is on the stage, surrounded by adoring fans. Fortunately for her, every place she goes becomes a stage, and as long as there's anyone around for her to impress, she's in the spotlight.
+The roar of the crowd, the praise of spectators after a truly great performance, the showers of gifts from attractive admirers-why would anyone trade all that for sleeping in the woods or poking around in smelly old dungeons? The virtuoso leaves creeping down dark corridors and matching wits against deadly traps to others. His place is on the stage, surrounded by adoring fans. Fortunately for him, every place he goes becomes a stage, and so long as there's anyone around for him to impress, he's in the spotlight.
 
-The typical virtuoso is outgoing, charismatic, and gregarious. She loves to be around people and is quick to win friends with her charming manner. Some might call her a temperamental egomaniac, yet everyone feels a little better in her presence.
-
-Many virtuosos are musicians; others are accomplished dancers or actors. Still others choose to specialise in obscure and unusual forms of entertainment, such as stage magic or juggling.
-
-Since entertainers are often on the road, a virtuoso can travel wherever she likes, incorporating as much adventuring into her journeys as she wishes. Because of her talent for winning admirers, she usually remains above suspicion should anything underhanded occur in a place she is visiting on tour.
-
-Bards are most often drawn to this prestige class, although rogues, illusionists, and multiclass combinations of both can also excel in it. Bards tend to perform as musicians or actors, illusionists as stage magicians, and rogues as dancers, tumblers, or sleight-of-hand artists. Characters of most other classes are either not outgoing enough to enjoy being virtuosos, or they find other channels for their extrovertism.
+The typical virtuoso is outgoing, charismatic, and gregarious. He loves to be around people and is quick to win friends with his charming manner. Some might call him a temperamental egomaniac, yet everyone feels a little better in his presence. Many virtuosos are musicians; others are accomplished dancers or actors. Still others choose to specialise in obscure and unusual forms of entertainment, such as stage magic or juggling.
 
 - Hit Die: d6.
-- Proficiencies: A virtuoso does not gain any additional weapon or armor proficiencies.
-- Skill Points: 4 + Int Modifier.
+- Proficiencies: A virtuoso does not gain any additional weapon or armour proficiencies.
+- Skill Points: 6 + Int Modifier.
 
 REQUIREMENTS:
 
-Skills: Perform 10 ranks, Intimidate or Persuade 6 ranks.
-Spells: Able to cast 0-level arcane spells (cantrips).
+Skills: Diplomacy 4 ranks, Intimidate 4 ranks, Perform 10 ranks.
+Spells: Arcane Caster level 1st.
 
 ABILITIES:
 
 Level
-1: Bardic Music (see below), Virtuoso performance (sustaining song)
+1: Bardic music (fascinate), Virtuoso performance (persuasive song)
 2:
-3: Virtuoso performance (calumny)
-4: Virtuoso performance (jarring song)
-5: Virtuoso performance (sharp note)
-6: Virtuoso performance (mindbending melody)
-7: Virtuoso performance (greater calumny)
-8: Virtuoso performance (magical melody)
+3: Virtuoso performance (sustaining song)
+4: 
+5: Virtuoso performance (jarring song)
+6: 
+7: Virtuoso performance (mindbending melody)
+8: 
 9: Virtuoso performance (song of fury)
 10: Virtuoso performance (revealing melody)
 
 SPELLS PER DAY/SPELLS KNOWN
 
-Since the virtuoso often uses magic to enhance her performances, it's important for her to maintain her magical studies. Thus, whenever she gains a new virtuoso level, she gains new spells per day and spells known as if she had also gained a level in a spellcasting class she belonged to before adding the prestige class. She does not, however, gain any other benefit a character of that class would have gained (metamagic or item creation feats, new familiar abilities, and so on). This means that she adds her new level of virtuoso to the level of some other spellcasting class she has, then determines spells per day, caster level, and spells known (if formerly a bard or sorcerer) accordingly.
+Beginning at 2nd level, a virtuoso gains new spells per day (and spells known, if applicable) as if he had also gained a level in an arcan spellcasting class to which he belonged before adding the prestige class level. He does now, however, gain any other benefit a character of that class would have gained.
 
-BARD SONG
+BARDIC MUSIC
 
-At 1st level, the virtuoso gains the Bard Song ability if she did not already have it from a previous class. A virtuoso's class level stacks with Bard when determining the power of her Bard Song.
+Virtuoso levels stack with bard levels for the purpose of determining the virtuoso's daily uses of his bardic music abilities (if any) and the value of the bonus granted by inspire courage (if the virtuoso has that music ability). For example, a 10th-level bard/4th-level virtuoso could use bardic music fourteen times per day, and his inspire courage ability would grant a +3 morale bonus on the appropriate rolls.
+
+A virtuoso also gains the fascinate bardic music ability if he doesn't already have it.
 
 VIRTUOSO PERFORMANCE
 
-With an impassioned soliloquy or a haunting melody, the virtuoso can create magical effects beyond even the capabilities of Bard Song. Virtuoso performance can be used once per virtuoso level per day. If the virtuoso has bard levels, those stack with virtuoso levels to determine uses per day. Many virtuoso performance effects require more than one of the ability's allotted daily uses. Virtuoso Performance effects last 10 rounds unless otherwise specified.
+A virtuoso can use his perform skill to create magical effects on those around him. He can use this abiliy once per day per virtuoso level. Each ability requires both a minimum virtuoso level and a minimum number of ranks in perform to qualify. If a virtuoso does not have the required number of ranks in perform, the performance will fail. Starting a virtuoso performance effect is a standard action. Some virtuoso abilities require concentration, which means that the virtuoso must take a standard action each round to maintain the ability. Unlike with bardic music, virtuoso performance doesn't restrict a virtuoso's spellcasting or magic item activation. If the virtuoso has the bardic music class feature, he can spend two daily uses of bardic music to deliver a virtuoso performance.
 
+Persuasive Song: Influences audience using perform instead of diplomacy check (not implemented)
 Sustaining Song: Stabilises unconcious allies
-Calumny: Makes others less friendly towards target [not implemented yet]
-Jarring Song: Inhibits spellcasting (forces concentration check, 3 uses)
-Sharp Note: Sharpens piercing and slashing weapons (adds keen property, 3 uses)
-Mindbending Melody: Dominates target (2 uses)
-Greater Calumny: Makes others hostile towards target [not implemented yet]
-Magical Melody: Increases caster level of allies by 1 (2 uses)
-Song of Fury: Enrages allies (3 uses)
-Revealing Melody: Gives True Seeing effect (2 uses per round)</entry>
+Jarring Song: Inhibits spellcasting (forces concentration check)
+Mindbending Melody: Dominates target
+Song of Fury: Enrages allies
+Revealing Melody: Gives True Seeing effect</entry>
   <entry id="51224" lang="en" sex="m">Sustaining Song</entry>
   <entry id="51225" lang="en" sex="m">Type of Feat: Class
-Prerequisite: Virtuoso Level 1, Perform 11 ranks.
-Specifics: A 1st-level virtuoso with at least 11 ranks in Perform can sustain her unconcious allies, negating their need for stabilisation checks during her performance. Because they're not making stabilisation checks, the affected allies are neither stabilising nor losing hit points. Sustaining song is a supernatural ability.
+Prerequisite: Virtuoso Level 3, Perform 13 ranks.
+Specifics: A 1st-level virtuoso with at least 13 ranks in Perform can sustain her unconcious allies, negating their need for stabilisation checks during her performance. Because they're not making stabilisation checks, the affected allies are neither stabilising nor losing hit points. Sustaining song is a supernatural ability.
 Use: Selected.</entry>
   <entry id="51226" lang="en" sex="m">Calumny</entry>
   <entry id="51227" lang="en" sex="m">Type of Feat: Class
@@ -20052,8 +20045,8 @@ Specifics: A 3rd-level virtuoso with at least 13 ranks in Perform has mastered t
 Use: Selected.</entry>
   <entry id="51228" lang="en" sex="m">Jarring Song</entry>
   <entry id="51229" lang="en" sex="m">Type of Feat: Class
-Prerequisite: Virtuoso Level 4, Perform 14 ranks.
-Specifics: A 4th-level virtuoso with at least 14 ranks in Perform can inhibit spellcasting. Anyone attempting to cast a spell during a jarring song must make a Concentration check (DC 15 + the spell level). Success allows the normal completion of the spell; failure means it is lost. A jarring song requires three daily uses of virtuoso performance and is a supernatural, sonic ability.
+Prerequisite: Virtuoso Level 5, Perform 15 ranks.
+Specifics: A 4th-level virtuoso with at least 15 ranks in Perform can inhibit spellcasting. Anyone attempting to cast a spell during a jarring song must make a Concentration check (DC 15 + the spell level). Success allows the normal completion of the spell; failure means it is lost. A jarring song requires three daily uses of virtuoso performance and is a supernatural, sonic ability.
 Use: Selected.</entry>
   <entry id="51230" lang="en" sex="m">Sharp Note</entry>
   <entry id="51231" lang="en" sex="m">Type of Feat: Class
@@ -20062,8 +20055,8 @@ Specifics: A 5th-level virtuoso with at least 15 ranks in Perform can sharpen th
 Use: Selected.</entry>
   <entry id="51232" lang="en" sex="m">Mindbending Melody</entry>
   <entry id="51233" lang="en" sex="m">Type of Feat: Class
-Prerequisite: Virtuoso Level 6, Perform 16 ranks.
-Specifics: A 6th-level virtuoso with at least 16 ranks in Perform can dominate a humanoid. Thos ability functions exactly like a Dominate Person spell cast by a 9th-level sorcerer. The target can make a Will save (DC 15 + the virtuoso's Charisma modifier) to negate the effect. Mindbending melody requires two daily uses of virtuoso performance and is a spell-like, mind-affecting, language-dependent, charm ability.
+Prerequisite: Virtuoso Level 7, Perform 17 ranks.
+Specifics: A 6th-level virtuoso with at least 17 ranks in Perform can dominate a humanoid. Thos ability functions exactly like a Dominate Person spell cast by a 9th-level sorcerer. The target can make a Will save (DC 15 + the virtuoso's Charisma modifier) to negate the effect. Mindbending melody requires two daily uses of virtuoso performance and is a spell-like, mind-affecting, language-dependent, charm ability.
 Use: Selected.</entry>
   <entry id="51234" lang="en" sex="m">Greater Calumny</entry>
   <entry id="51235" lang="en" sex="m">Type of Feat: Class

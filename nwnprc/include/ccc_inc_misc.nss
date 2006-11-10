@@ -73,7 +73,7 @@ int GetCost(int nAbilityScore);
 // works out the next stage to go to between STAGE_FEAT_CHECK and STAGE_APPEARANCE
 // when given the stage just completed
 // covers caster and familiar related choices
-int GetNextCCCStage(int nStage);
+int GetNextCCCStage(int nStage, int nSpellCasterStage = TRUE);
 
 // checks if the PC has the two feats given as arguements
 // '****' as an arguement is treated as an automatic TRUE for that arguement
@@ -112,6 +112,9 @@ void SetupRacialAppearances();
 // adds appearance choices on being passed an APPEARANCE_TYPE_* constant
 void AddAppearanceChoice(int nType, int nOnlyChoice = FALSE);
 
+// adds the head choices based on race and gender
+void SetupHeadChoices();
+
 /* 2da cache functions */
 
 // loops through a 2da, using the cache
@@ -145,6 +148,9 @@ void DoAppearanceLoop();
 
 // loops through portraits.2da
 void DoPortraitsLoop();
+
+// loops through soundset.2da
+void DoSoundsetLoop();
 
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
@@ -565,60 +571,102 @@ int GetCost(int nAbilityScore)
     return nCost;
 }
 
-int GetNextCCCStage(int nStage)
+int GetNextCCCStage(int nStage, int nSpellCasterStage = TRUE)
 {
     // check we're in the right place
     if (nStage < STAGE_FEAT_CHECK)
         return -1; // sent here too early
     // get some info
     int nClass = GetLocalInt(OBJECT_SELF, "Class");
-    switch (nStage) // with no breaks to go all the way through
+    if(nSpellCasterStage)
     {
-        case STAGE_FEAT_CHECK: {
-            if(nClass == CLASS_TYPE_WIZARD)
-            {
-                return STAGE_WIZ_SCHOOL;
+        switch (nStage) // with no breaks to go all the way through
+        {
+            case STAGE_FEAT_CHECK: {
+                if(nClass == CLASS_TYPE_WIZARD)
+                {
+                    return STAGE_WIZ_SCHOOL;
+                }
             }
-        }
-        case STAGE_WIZ_SCHOOL_CHECK: {
-            if (nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
-            {
-                return STAGE_SPELLS_0;
-            }
-            else if (nClass == CLASS_TYPE_WIZARD)
-            {
-                return STAGE_SPELLS_1;
-            }
-        }
-        case STAGE_SPELLS_0: {
-            if (nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
-            {
-                string sSpkn = Get2DACache("classes", "SpellKnownTable", nClass);
-                // if they can pick level 1 spells
-                if (StringToInt(Get2DACache(sSpkn, "SpellLevel1", 0)))
+            case STAGE_WIZ_SCHOOL_CHECK: {
+                if (nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+                {
+                    return STAGE_SPELLS_0;
+                }
+                else if (nClass == CLASS_TYPE_WIZARD)
+                {
                     return STAGE_SPELLS_1;
-            }       
-        }
-        case STAGE_SPELLS_1: {
-            if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
-            {
-                return STAGE_SPELLS_CHECK; // checks both 0 and 1 level spells
+                }
             }
-        }
-        case STAGE_SPELLS_CHECK: {
-            if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_DRUID)
-            {
-                return STAGE_FAMILIAR; // also does animal companion
+            case STAGE_SPELLS_0: {
+                if (nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+                {
+                    string sSpkn = Get2DACache("classes", "SpellKnownTable", nClass);
+                    // if they can pick level 1 spells
+                    if (StringToInt(Get2DACache(sSpkn, "SpellLevel1", 0)))
+                        return STAGE_SPELLS_1;
+                }       
             }
-        }
-        case STAGE_FAMILIAR_CHECK: {
-            if (nClass == CLASS_TYPE_CLERIC)
-            {
-                return STAGE_DOMAIN;
+            case STAGE_SPELLS_1: {
+                if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+                {
+                    return STAGE_SPELLS_CHECK; // checks both 0 and 1 level spells
+                }
             }
+            case STAGE_SPELLS_CHECK: {
+                if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_DRUID)
+                {
+                    return STAGE_FAMILIAR; // also does animal companion
+                }
+            }
+            case STAGE_FAMILIAR_CHECK: {
+                if (nClass == CLASS_TYPE_CLERIC)
+                {
+                    return STAGE_DOMAIN;
+                }
+            }
+            default:
+                return STAGE_APPEARANCE;
         }
-        default:
-            return STAGE_APPEARANCE;
+    }
+    else
+    {
+        int nAppearance = GetLocalInt(OBJECT_SELF, "Appearance");
+        // the model type determines if the model is dynamic, can have wings or tails
+        string sModelType = Get2DACache("appearance", "MODELTYPE", nAppearance);
+        switch(nStage) // with no breaks to go all the way through
+        {
+            case STAGE_SOUNDSET:
+            case STAGE_SOUNDSET_CHECK:
+            {
+                if (sModelType == "P")
+                    return STAGE_HEAD;
+            }
+            case STAGE_HEAD:
+            case STAGE_HEAD_CHECK:
+            {
+                if (sModelType == "P")
+                    return STAGE_TATTOO;
+            }
+            case STAGE_TATTOO:
+            case STAGE_TATTOO_CHECK:
+            {
+                if (sModelType == "P" || TestStringAgainstPattern("**W**", sModelType))
+                    return STAGE_WINGS;
+            }
+            case STAGE_WINGS_CHECK:
+            {
+                if (sModelType == "P" || TestStringAgainstPattern("**T**", sModelType))
+                    return STAGE_TAIL;
+            }
+            case STAGE_TAIL_CHECK:
+            {
+                if (sModelType == "P")
+                    return STAGE_SKIN_COLOUR;
+            }
+            default:
+                return FINAL_STAGE;
+        }
     }
     return -1; // silly compiler
 }
@@ -860,7 +908,6 @@ void SetupRacialAppearances()
 
 void AddAppearanceChoice(int nType, int nOnlyChoice = FALSE)
 {
-    
     // get the appearance type name
     string sName = Get2DACache("appearance", "STRING_REF", nType);
     sName = GetStringByStrRef(StringToInt(sName));
@@ -874,6 +921,58 @@ void AddAppearanceChoice(int nType, int nOnlyChoice = FALSE)
         nType = -1;
     }
     AddChoice(sName, nType);
+}
+
+void SetupHeadChoices()
+{
+    int nGender = GetLocalInt(OBJECT_SELF, "Gender");
+    int nAppearance = GetLocalInt(OBJECT_SELF, "Appearance");
+    // determine the number of heads (based on both appearance and gender)
+    int nHeadNumber;
+    // change numbers to account for custom heads here
+    if(nAppearance == APPEARANCE_TYPE_HUMAN
+        || nAppearance == APPEARANCE_TYPE_HALF_ELF)
+    {
+        if(nGender == GENDER_MALE)
+            nHeadNumber = 21;
+        else if (nGender == GENDER_FEMALE)
+            nHeadNumber = 15;
+    }
+    else if (nAppearance == APPEARANCE_TYPE_ELF)
+    {
+        if(nGender == GENDER_MALE)
+            nHeadNumber = 10;
+        else if (nGender == GENDER_FEMALE)
+            nHeadNumber = 16;
+    }
+    else if (nAppearance == APPEARANCE_TYPE_HALFLING)
+    {
+        if(nGender == GENDER_MALE)
+            nHeadNumber = 8;
+        else if (nGender == GENDER_FEMALE)
+            nHeadNumber = 11;
+    }
+    else if (nAppearance == APPEARANCE_TYPE_HALF_ORC)
+    {
+        if(nGender == GENDER_MALE)
+            nHeadNumber = 11;
+        else if (nGender == GENDER_FEMALE)
+            nHeadNumber = 11;
+    }
+    else if (nAppearance == APPEARANCE_TYPE_DWARF)
+    {
+        if(nGender == GENDER_MALE)
+            nHeadNumber = 10;
+        else if (nGender == GENDER_FEMALE)
+            nHeadNumber = 12;
+    }
+    else if(nAppearance == APPEARANCE_TYPE_GNOME)
+    {
+        if(nGender == GENDER_MALE)
+            nHeadNumber = 11;
+        else if (nGender == GENDER_FEMALE)
+            nHeadNumber = 9;
+    }
 }
 
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
@@ -1515,6 +1614,7 @@ void DoBonusFeatLoop()
     else // there were less than 5 rows, it's the end of the 2da
     {
         if(DEBUG) DoDebug("Finished bonus feats");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         DeleteLocalInt(OBJECT_SELF, "i");
         return;
@@ -1574,6 +1674,7 @@ void DoSpellsLoop(int nStage)
     else // end of the 2da
     {
         if(DEBUG) DoDebug("Finished spells");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         return;
@@ -1664,6 +1765,42 @@ void DoPortraitsLoop()
     else // end of the 2da
     {
         if(DEBUG) DoDebug("Finished portraits");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+        return;
+    }
+}
+
+void DoSoundsetLoop()
+{
+    string q = PRC_SQLGetTick();
+    // get the results 100 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    int nCounter = 0;
+    string sSQL;
+    
+    // make the SQL string
+    sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
+    
+    PRC_SQLExecDirect(sSQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        string sName = GetStringByStrRef(StringToInt(PRC_SQLGetData(2)));
+        AddChoice(sName, nRow);
+    }
+    
+    if (nCounter == 100)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+100);
+        DelayCommand(0.01, DoSoundsetLoop());
+    }
+    else // end of the 2da
+    {
+        if(DEBUG) DoDebug("Finished Soundsets");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         DeleteLocalInt(OBJECT_SELF, "i");
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         return;

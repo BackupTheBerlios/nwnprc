@@ -567,6 +567,113 @@ void DoHeaderAndChoices(int nStage)
             MarkStageSetUp(nStage);
             break;
         }
+        case STAGE_SOUNDSET: {
+            sText = GetStringByStrRef(7535); // Select a sound set
+            SetHeader(sText);
+            if(GetPRCSwitch(PRC_CONVOCC_ALLOW_TO_KEEP_VOICESET))
+                AddChoice("keep existing soundset.", -1);
+            SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
+            DoSoundsetLoop();
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SOUNDSET_CHECK: {
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            int nSoundset = GetLocalInt(OBJECT_SELF, "Soundset");
+            sText += GetStringByStrRef(StringToInt(Get2DACache("soundset", "STRREF", nSoundset)));
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice("Listen to this soundset.", 2);
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_HEAD: {
+            sText = GetStringByStrRef(124); // Select the Appearance of your Character
+            sText += "(" + GetStringByStrRef(123) + ")"; // Head
+            SetHeader(sText);
+            AddChoice("keep existing head", -1);
+            SetupHeadChoices();
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_HEAD_CHECK: {
+            sText = "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO: {
+            sText = GetStringByStrRef(124); // Select the Appearance of your Character
+            sText += "(" + GetStringByStrRef(1591) + ")"; // Tattoo
+            SetHeader(sText);
+            AddChoice("keep current tatoos", -1);
+            AddChoice("torso", CREATURE_PART_TORSO);
+            AddChoice("right shin", CREATURE_PART_RIGHT_SHIN);
+            AddChoice("left shin", CREATURE_PART_LEFT_SHIN);
+            AddChoice("right thigh", CREATURE_PART_RIGHT_THIGH);
+            AddChoice("left thigh", CREATURE_PART_LEFT_THIGH);
+            AddChoice("right forearm", CREATURE_PART_RIGHT_FOREARM);
+            AddChoice("left forearm", CREATURE_PART_LEFT_FOREARM);
+            AddChoice("right bicep", CREATURE_PART_RIGHT_BICEP);
+            AddChoice("left bicep", CREATURE_PART_LEFT_BICEP);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO_CHECK: {
+            sText = "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_WINGS: {
+            sText = GetStringByStrRef(124); // Select the Appearance of your Character
+            sText += "(" + GetStringByStrRef(2409) + ")"; // Wings
+            SetHeader(sText);
+            Do2daLoop("wingmodel", "Label", GetPRCSwitch(FILE_END_WINGS));
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_WINGS_CHECK: {
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            int nWingType = GetCreatureWingType();
+            sText += Get2DACache("wingmodel", "label", nWingType);
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TAIL: {
+            sText = GetStringByStrRef(124); // Select the Appearance of your Character
+            sText += "(" + GetStringByStrRef(2410) + ")"; // Tail
+            SetHeader(sText);
+            Do2daLoop("tailmodel", "Label", GetPRCSwitch(FILE_END_TAILS));
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TAIL_CHECK: {
+            sText = GetStringByStrRef(16824209) + " "; // You have selected:
+            int nTailType = GetCreatureTailType();
+            sText += Get2DACache("tailmodel", "label", nTailType);
+            sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
         case FINAL_STAGE: {
             sText = "Your character will now be generated. As part of this process, you will be booted. Please exit NWN completely before rejoining.";
             SetHeader(sText);
@@ -1132,6 +1239,144 @@ int HandleChoice(int nStage, int nChoice)
                 nStage = STAGE_PORTRAIT;
                 MarkStageNotSetUp(STAGE_PORTRAIT_CHECK, OBJECT_SELF);
                 MarkStageNotSetUp(STAGE_PORTRAIT, OBJECT_SELF);
+            }
+            break;
+        }
+        case STAGE_SOUNDSET: {
+            if (nChoice == -1) // no change
+            {
+                nStage == GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                // store the choice
+                SetLocalInt(OBJECT_SELF, "Soundset", nChoice);
+                // modify the clone
+                DoCutscene(OBJECT_SELF);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_SOUNDSET_CHECK: {
+            if (nChoice == 2)
+            {
+                object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+                PlayVoiceChat(0 , oClone);
+            }
+            else if (nChoice == 1)
+            {
+                nStage = GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                nStage = STAGE_SOUNDSET;
+                MarkStageNotSetUp(STAGE_SOUNDSET_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_SOUNDSET, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Soundset");
+            }
+            break;
+        }
+        case STAGE_HEAD: {
+            if (nChoice == -1) // no change
+            {
+                nStage == GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                // change the head
+                SetCreatureBodyPart(CREATURE_PART_HEAD, nChoice);
+                // modify the clone's head
+                object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+                SetCreatureBodyPart(CREATURE_PART_HEAD, nChoice, oClone);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_HEAD_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage = GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                nStage = STAGE_HEAD;
+                MarkStageNotSetUp(STAGE_HEAD_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_HEAD, OBJECT_SELF);
+            }
+            break;
+        }
+        case STAGE_TATTOO: {
+            if (nChoice == -1) // no change
+            {
+                nStage == GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                int nTattooed = GetCreatureBodyPart(nChoice, OBJECT_SELF);
+                if(nTattooed == 1)
+                    nTattooed = 2;
+                else if(nTattooed == 2)
+                    nTattooed = 1;
+                // change the tattoo on the clone
+                SetCreatureBodyPart(nChoice, nTattooed, 
+                    GetLocalObject(OBJECT_SELF, "Clone"));
+                // change the tattoo on the PC
+                SetCreatureBodyPart(nChoice, nTattooed); 
+            }
+            break;
+        }
+        case STAGE_TATTOO_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage = GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                nStage = STAGE_TATTOO;
+                MarkStageNotSetUp(STAGE_TATTOO_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_TATTOO, OBJECT_SELF);
+            }
+            break;
+        }
+        case STAGE_WINGS: {
+            SetCreatureWingType(nChoice);
+            // alter the clone
+            object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+            SetCreatureWingType(nChoice, oClone);
+            nStage++;
+            break;
+        }
+        case STAGE_WINGS_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage = GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                nStage = STAGE_WINGS;
+                MarkStageNotSetUp(STAGE_WINGS_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_WINGS, OBJECT_SELF);
+            }
+            break;
+        }
+        case STAGE_TAIL: {
+            SetCreatureTailType(nChoice);
+            // alter the clone
+            object oClone = GetLocalObject(OBJECT_SELF, "Clone");
+            SetCreatureTailType(nChoice, oClone);
+            nStage++;
+            break;
+        }
+        case STAGE_TAIL_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage = GetNextCCCStage(nStage, FALSE);
+            }
+            else
+            {
+                nStage = STAGE_TAIL;
+                MarkStageNotSetUp(STAGE_TAIL_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_TAIL, OBJECT_SELF);
             }
             break;
         }

@@ -20,113 +20,62 @@ tlk entries:
 52977 // Select
 65992 // Select None
 
-void DoCutscene(object oPC, int nSetup = FALSE)
+void DoLoopTemplate()
 {
-    string sScript;
-    int nStage = GetStage(oPC);
-    if (nStage < STAGE_RACE_CHECK) // if we don't need to set the clone up
+    string q = PRC_SQLGetTick();
+    // get the results 100 rows at a time to avoid TMI
+    int nReali = GetLocalInt(OBJECT_SELF, "i");
+    int nCounter = 0;
+    string sSQL;
+    
+    // make the SQL string
+    
+    PRC_SQLExecDirect(sSQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        nCounter++;
+        // setup choices
+    }
+    
+    if (nCounter == 100)
+    {
+        SetLocalInt(OBJECT_SELF, "i", nReali+100);
+        DelayCommand(0.01, DoLoopTemplate());
+    }
+    else // end of the 2da
+    {
+        if(DEBUG) DoDebug("Finished 2da");
+        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+        DeleteLocalInt(OBJECT_SELF, "i");
+        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
         return;
-    
-    DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
-    object oClone;
-    
-    if(nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
-    {
-        // check the PC has finished entering the area
-        if(!GetIsObjectValid(GetArea(oPC)))
-        {
-            DelayCommand(1.0, DoCutscene(oPC, nSetup));
-            return;
-        }
-        // make the PC look like the race they have chosen
-        DoSetRaceAppearance(oPC);
-        // clone the PC and hide the swap with a special effect
-        // make the real PC non-collideable
-        effect eGhost = EffectCutsceneGhost();
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGhost, oPC, 99999999.9);
-        // make the swap and hide with an effect
-        effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
-        // make clone
-        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PlayerClone");
-        ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
-        // make the real PC invisible
-        effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, 9999.9);
-        // swap local objects
-        SetLocalObject(oPC, "Clone", oClone);
-        SetLocalObject(oClone, "Master", oPC);
-        // this makes sure the clone gets destroyed if the PC leaves the game
-        AssignCommand(oClone, CloneMasterCheck());
-        // end of clone making
-        
-        int nGender = GetLocalInt(oPC, "Gender");
-        // this only needs doing if the gender has changed
-        if (GetGender(oPC) != nGender)
-        {
-            sScript = LetoSet("Gender", IntToString(nSex), "byte");
-            // reset soundset only if we've not changed it yet
-            if (nStage < STAGE_SOUNDSET)
-                sScript += LetoSet("SoundSetFile", IntToString(0), "word");
-        }
-    }
-    
-    if(nStage == STAGE_APPEARANCE || (nStage > STAGE_APPEARANCE && nSetup))
-    {
-        DoSetAppearance(oPC);
-    }
-    
-    if(nStage == STAGE_SOUNDSET || (nStage > STAGE_SOUNDSET && nSetup))
-    {
-        int nSoundset = GetLocalInt(oPC, "Soundset");
-        if (nSoundset != -1) // then it has been changed
-        {
-            sScript += LetoSet("SoundSetFile", IntToString(nSoundset), "word");
-        }
-    }
-    
-    if (nStage == STAGE_SKIN_COLOUR || (nStage > STAGE_SKIN_COLOUR && nSetup))
-    {
-        int nSkin = GetLocalInt(oPC, "Skin");
-        if (nSkin != -1) // then it has been changed
-        {
-            sScript += SetSkinColor(nSkin);
-        }
-    }
-    
-    if (nStage == STAGE_HAIR_COLOUR || (nStage > STAGE_HAIR_COLOUR && nSetup))
-    {
-        int nHair = GetLocalInt(oPC, "Hair");
-        if (nHair != -1) // then it has been changed
-        {
-            sScript += SetSkinColor(nHair);
-        }
-    }
-    
-    if (nStage == STAGE_TATTOO_COLOUR1 || (nStage > STAGE_TATTOO_COLOUR1 && nSetup))
-    {
-        int nTattooColour1 = GetLocalInt(oPC, "TattooColour1");
-        if (nTattooColour1 != -1) // then it has been changed
-        {
-            sScript += SetSkinColor(nTattooColour1, 1);
-        }
-    }
-    
-    if (nStage == STAGE_TATTOO_COLOUR2 || (nStage > STAGE_TATTOO_COLOUR2 && nSetup))
-    {
-        int nTattooColour2 = GetLocalInt(oPC, "TattooColour2");
-        if (nTattooColour2 != -1) // then it has been changed
-        {
-            sScript += SetSkinColor(nTattooColour2, 2);
-        }
-    }
-    // no point in running the letoscript commands if no changes are made
-    if (nScript != "")
-    {
-        StackedLetoScript(sScript);
-        string sResult;
-        RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
-        sResult = GetLocalString(GetModule(), "LetoResult");
-        SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
     }
 }
+
+// check stage
+
+if (nChoice == 1)
+    nStage++;
+else
+{
+    nStage = 
+    MarkStageNotSetUp(STAGE_ , OBJECT_SELF);
+    MarkStageNotSetUp(STAGE_ , OBJECT_SELF);
+    // delete any local vars
+}
+
+// check stage setup
+sText = GetStringByStrRef(16824209) + " "; // You have selected:
+int nThing = GetLocalInt(OBJECT_SELF, "Thing");
+sText += GetStringByStrRef(StringToInt(Get2DACache("thing", "STRING_REF", nThing)));
+sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+SetHeader(sText);
+// choices Y/N
+AddChoice(GetStringByStrRef(4753), -1); // no
+AddChoice(GetStringByStrRef(4752), 1); // yes
+MarkStageSetUp(nStage);
+break;
+
+
+
+= "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+", "+q+"TYPE"+q+", "+q+"GENDER"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(i);

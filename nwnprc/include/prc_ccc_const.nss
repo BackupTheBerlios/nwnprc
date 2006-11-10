@@ -36,6 +36,14 @@ const int STAGE_PORTRAIT            = 28;
 const int STAGE_PORTRAIT_CHECK      = 29;
 const int STAGE_SOUNDSET            = 30;
 const int STAGE_SOUNDSET_CHECK      = 31;
+const int STAGE_HEAD                = 32;
+const int STAGE_HEAD_CHECK          = 33;
+const int STAGE_TATTOO              = 34;
+const int STAGE_TATTOO_CHECK        = 35;
+const int STAGE_WINGS               = 36;
+const int STAGE_WINGS_CHECK         = 37;
+const int STAGE_TAIL                = 38;
+const int STAGE_TAIL_CHECK          = 39;
 
 const int STAGE_SKIN_COLOUR         = 50;
 const int STAGE_HAIR_COLOUR         = 51;

@@ -776,7 +776,7 @@ void DoHeaderAndChoices(int nStage)
             sText = "Pick a colour category ";
             sText += "(" + GetStringByStrRef(337) + ")"; // Tattoo Colors
             SetHeader(sText);
-            AddChoice("Keep current skin colour", -1);
+            AddChoice("Keep current tattoo 1 colour", -1);
             AddChoice("Tan/Brown & Tan/Red", 1);
             AddChoice("Tan/Yellow & Tan/Grey", 2);
             AddChoice("Olive, White, Grey & Charcoal", 3);
@@ -825,7 +825,7 @@ void DoHeaderAndChoices(int nStage)
             sText = "Pick a colour category ";
             sText += "(" + GetStringByStrRef(337) + ")"; // Tattoo Colors
             SetHeader(sText);
-            AddChoice("Keep current skin colour", -1);
+            AddChoice("Keep current tattoo 2 colour", -1);
             AddChoice("Tan/Brown & Tan/Red", 1);
             AddChoice("Tan/Yellow & Tan/Grey", 2);
             AddChoice("Olive, White, Grey & Charcoal", 3);
@@ -1579,7 +1579,7 @@ int HandleChoice(int nStage, int nChoice)
         }
         case STAGE_SKIN_COLOUR: {
             if (nChoice == -1)
-                nStage == STAGE_SKIN_COLOUR_CHECK;
+                nStage = STAGE_SKIN_COLOUR_CHECK;
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
@@ -1612,7 +1612,7 @@ int HandleChoice(int nStage, int nChoice)
         }
         case STAGE_HAIR_COLOUR: {
             if (nChoice == -1)
-                nStage == STAGE_HAIR_COLOUR_CHECK;
+                nStage = STAGE_HAIR_COLOUR_CHECK;
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
@@ -1645,7 +1645,7 @@ int HandleChoice(int nStage, int nChoice)
         }
         case STAGE_TATTOO1_COLOUR: {
             if (nChoice == -1)
-                nStage == STAGE_TATTOO1_COLOUR_CHECK;
+                nStage = STAGE_TATTOO1_COLOUR_CHECK;
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
@@ -1678,7 +1678,7 @@ int HandleChoice(int nStage, int nChoice)
         }
         case STAGE_TATTOO2_COLOUR: {
             if (nChoice == -1)
-                nStage == STAGE_TATTOO1_COLOUR_CHECK;
+                nStage = STAGE_TATTOO2_COLOUR_CHECK;
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
@@ -1696,7 +1696,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_TATTOO2_COLOUR_CHECK: {
             if (nChoice == 1)
             {
-                nStage++;
+                nStage = FINAL_STAGE;
             }
             else
             {

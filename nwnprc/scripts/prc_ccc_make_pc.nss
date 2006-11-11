@@ -215,15 +215,9 @@ void main()
     if (nTattooColour2 != -1)
         sScript += SetTattooColor(nTattooColour2, 2);
     
-
-    
-    /* -- FOR TESTING ONLY --
-    //change the tag to mark the player as done
     sScript += LetoAdd("Tag", Encrypt(oPC), "string");
     //give an XP so the XP switch works
     SetXP(oPC, 1);
-    
-    */
 
     SetLocalInt(oPC, "StopRotatingCamera", TRUE);
     SetCutsceneMode(oPC, FALSE);

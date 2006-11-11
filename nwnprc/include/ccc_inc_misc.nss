@@ -152,6 +152,12 @@ void DoPortraitsLoop();
 // loops through soundset.2da
 void DoSoundsetLoop();
 
+// loops through wingmodel.2da
+void DoWingmodelLoop();
+
+// loops through tailmodel.2da
+void DoTailmodelLoop();
+
 // stores the feats found in race_feat_***.2da as an array on the PC
 void AddRaceFeats(int nRace);
 
@@ -160,6 +166,9 @@ void AddClassFeats(int nClass);
 
 // stores the feat listed in domais.2da in the feat array on the PC
 void AddDomainFeats();
+
+// loops through colours.2da depending on the stage for which column it uses.
+void AddColourChoices(int nStage, int nCategory);
 
 /* function definitions */
 
@@ -388,10 +397,10 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         // end of clone making
         
         int nGender = GetLocalInt(oPC, "Gender");
+        sScript = LetoSet("Gender", IntToString(nGender), "byte");
         // this only needs doing if the gender has changed
         if (GetGender(oPC) != nGender)
         {
-            sScript = LetoSet("Gender", IntToString(nGender), "byte");
             // reset soundset only if we've not changed it yet
             if (nStage < STAGE_SOUNDSET)
                 sScript += LetoSet("SoundSetFile", IntToString(0), "word");
@@ -412,7 +421,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         }
     }
     
-    if (nStage == STAGE_SKIN_COLOUR || (nStage > STAGE_SKIN_COLOUR && nSetup))
+    if (nStage == STAGE_SKIN_COLOUR_CHOICE || (nStage > STAGE_SKIN_COLOUR_CHOICE && nSetup))
     {
         int nSkin = GetLocalInt(oPC, "Skin");
         if (nSkin != -1) // then it has been changed
@@ -452,6 +461,8 @@ void DoCutscene(object oPC, int nSetup = FALSE)
     {
         StackedLetoScript(sScript);
         string sResult;
+        if (oClone == OBJECT_INVALID)
+            oClone = GetLocalObject(oPC, "Clone");
         RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
         sResult = GetLocalString(GetModule(), "LetoResult");
         SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
@@ -973,6 +984,9 @@ void SetupHeadChoices()
         else if (nGender == GENDER_FEMALE)
             nHeadNumber = 9;
     }
+    int i;
+    for(i=1;i<= nHeadNumber;i++)
+        AddChoice(IntToString(i), i);
 }
 
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
@@ -1807,6 +1821,38 @@ void DoSoundsetLoop()
     }
 }
 
+void DoWingmodelLoop()
+{
+    string q = PRC_SQLGetTick();
+    string sSQL;
+    
+    sSQL = "SELECT" +q+"rowid"+q+ ", " +q+"data"+q+" FROM " +q+"prc_cached2da"+q+ " WHERE " +q+"file"+q+ "='wingmodel' AND " +q+"columnid"+q+ " = 'LABEL' AND " +q+"data"+q+ " != '****'";
+    
+    PRC_SQLExecDirect(sSQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        string sName = PRC_SQLGetData(2);
+        AddChoice(sName, nRow);
+    }
+}
+
+void DoTailmodelLoop()
+{
+    string q = PRC_SQLGetTick();
+    string sSQL;
+    
+    sSQL = "SELECT" +q+"rowid"+q+ ", " +q+"data"+q+" FROM " +q+"prc_cached2da"+q+ " WHERE " +q+"file"+q+ "='tailmodel' AND " +q+"columnid"+q+ " = 'LABEL' AND " +q+"data"+q+ " != '****'";
+    
+    PRC_SQLExecDirect(sSQL);
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    {
+        int nRow = StringToInt(PRC_SQLGetData(1));
+        string sName = PRC_SQLGetData(2);
+        AddChoice(sName, nRow);
+    }
+}
+
 void AddRaceFeats(int nRace)
 {
     // gets which race_feat***.2da to use
@@ -1891,4 +1937,117 @@ void AddDomainFeats()
     // add to the feat array
     array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
             StringToInt(sFeat));
+}
+
+void AddColourChoices(int nStage, int nCategory)
+{
+    // get which 2da column to use
+    string s2DAColumn;
+    if (nStage == STAGE_SKIN_COLOUR_CHOICE)
+        s2DAColumn = "skin";
+    else if (nStage == STAGE_HAIR_COLOUR_CHOICE)
+        s2DAColumn = "hair";
+    else // it's one of the tattoo colour stages
+        s2DAColumn = "cloth";
+    
+    // get which rows to loop through
+    int nStart = 0;
+    int nStop = 0;
+    switch(nCategory) // the category determines which colours get listed
+    {
+        case 1:
+            nStart = 0;
+            nStop = 7;
+            break;
+        case 2:
+            nStart = 8;
+            nStop = 15;
+            break;
+        case 3:
+            nStart = 16;
+            nStop = 23;
+            break;
+        case 4:
+            nStart = 24;
+            nStop = 31;
+            break;
+        case 5:
+            nStart = 32;
+            nStop = 39;
+            break;
+        case 6:
+            nStart = 40;
+            nStop = 47;
+            break;
+        case 7:
+            nStart = 48;
+            nStop = 55;
+            break;
+        case 8: // new colours
+            nStart = 56;
+            nStop = 63;
+            break;
+        case 9:
+            nStart = 64;
+            nStop = 71;
+            break;
+        case 10:
+            nStart = 72;
+            nStop = 79;
+            break;
+        case 11:
+            nStart = 80;
+            nStop = 87;
+            break;
+        case 12:
+            nStart = 88;
+            nStop = 95;
+            break;
+        case 13:
+            nStart = 96;
+            nStop = 103;
+            break;
+        case 14:
+            nStart = 104;
+            nStop = 111;
+            break;
+        case 15:
+            nStart = 112;
+            nStop = 119;
+            break;
+        case 16:
+            nStart = 120;
+            nStop = 127;
+            break;
+        case 17:
+            nStart = 128;
+            nStop = 135;
+            break;
+        case 18:
+            nStart = 136;
+            nStop = 143;
+            break;
+        case 19:
+            nStart = 144;
+            nStop = 151;
+            break;
+        case 20:
+            nStart = 152;
+            nStop = 159;
+            break;
+        case 21:
+            nStart = 160;
+            nStop = 167;
+            break;
+        case 22:
+            nStart = 168;
+            nStop = 175;
+    }
+    // make the list
+    int i = nStart;
+    while (i <= nStop)
+    {
+        AddChoice(Get2DACache("colours", s2DAColumn, i), i);
+        i++;
+    }
 }

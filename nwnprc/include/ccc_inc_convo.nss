@@ -638,7 +638,7 @@ void DoHeaderAndChoices(int nStage)
             sText = GetStringByStrRef(124); // Select the Appearance of your Character
             sText += "(" + GetStringByStrRef(2409) + ")"; // Wings
             SetHeader(sText);
-            Do2daLoop("wingmodel", "Label", GetPRCSwitch(FILE_END_WINGS));
+            DoWingmodelLoop();
             MarkStageSetUp(nStage);
             break;
         }
@@ -658,7 +658,7 @@ void DoHeaderAndChoices(int nStage)
             sText = GetStringByStrRef(124); // Select the Appearance of your Character
             sText += "(" + GetStringByStrRef(2410) + ")"; // Tail
             SetHeader(sText);
-            Do2daLoop("tailmodel", "Label", GetPRCSwitch(FILE_END_TAILS));
+            DoTailmodelLoop();
             MarkStageSetUp(nStage);
             break;
         }
@@ -667,6 +667,51 @@ void DoHeaderAndChoices(int nStage)
             int nTailType = GetCreatureTailType();
             sText += Get2DACache("tailmodel", "label", nTailType);
             sText += "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SKIN_COLOUR: {
+            SetHeader("Pick a colour category:");
+            AddChoice("Keep current skin colour", -1);
+            AddChoice("Tan colours", 1);
+            AddChoice("Sand & Rose brown", 2);
+            AddChoice("Tan-Greys and blues", 3);
+            AddChoice("Gold and obsidian", 4);
+            AddChoice("Greens", 5);
+            AddChoice("Greys and reds", 6);
+            AddChoice("Bright blues, greens and yellows", 7);
+            // new colours
+            AddChoice("Metallic & pure white and black", 8);
+            AddChoice("Smoky Group 1", 9);
+            AddChoice("Smoky Group 2", 10);
+            AddChoice("Smoky Group 3", 11);
+            AddChoice("Smoky Group 4", 12);
+            AddChoice("Black Cherry & Cinnamon", 13);
+            AddChoice("Hunter Green & Druid Green", 14);
+            AddChoice("Graveyard Fog & Chestnut", 15);
+            AddChoice("Clay & Toasted Ash", 16);
+            AddChoice("Snail Brown & Cobalt Blue", 17);
+            AddChoice("Midnight Blue & Peacock Green", 18);
+            AddChoice("Royal Purple, Mountain Blue, & Sea Foam Green", 19);
+            AddChoice("Spring Green, Honey Gold, Copper Coin & Berry Ice", 20);
+            AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
+            AddChoice("Greens, Mystics, & Browns", 22);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SKIN_COLOUR_CHOICE: {
+            SetHeader("Pick a colour:");
+            int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
+            AddColourChoices(nStage, nCategory);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_SKIN_COLOUR_CHECK: {
+            sText = "\n"+GetStringByStrRef(16824210); // Is this correct?
             SetHeader(sText);
             // choices Y/N
             AddChoice(GetStringByStrRef(4753), -1); // no
@@ -1186,6 +1231,7 @@ int HandleChoice(int nStage, int nChoice)
             else
             {
                 SetLocalInt(OBJECT_SELF, "Appearance", nChoice);
+                SetCreatureAppearanceType(OBJECT_SELF, nChoice);
                 // change the appearance
                 DoCutscene(OBJECT_SELF);
                 nStage++;
@@ -1279,7 +1325,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_HEAD: {
             if (nChoice == -1) // no change
             {
-                nStage == GetNextCCCStage(nStage, FALSE);
+                nStage = GetNextCCCStage(nStage, FALSE);
             }
             else
             {
@@ -1308,7 +1354,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_TATTOO: {
             if (nChoice == -1) // no change
             {
-                nStage == GetNextCCCStage(nStage, FALSE);
+                nStage = GetNextCCCStage(nStage, FALSE);
             }
             else
             {
@@ -1378,6 +1424,39 @@ int HandleChoice(int nStage, int nChoice)
                 MarkStageNotSetUp(STAGE_TAIL_CHECK, OBJECT_SELF);
                 MarkStageNotSetUp(STAGE_TAIL, OBJECT_SELF);
             }
+            break;
+        }
+        case STAGE_SKIN_COLOUR: {
+            if (nChoice == -1)
+                nStage == STAGE_SKIN_COLOUR_CHECK;
+            else
+            {
+                SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_SKIN_COLOUR_CHOICE: {
+            SetLocalInt(OBJECT_SELF, "Skin", nChoice);
+            // change the clone
+            DoCutscene(OBJECT_SELF);
+            nStage++;
+            break;
+        }
+        case STAGE_SKIN_COLOUR_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage++;
+            }
+            else
+            {
+                nStage = STAGE_SKIN_COLOUR;
+                MarkStageNotSetUp(STAGE_SKIN_COLOUR_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_SKIN_COLOUR_CHOICE, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_SKIN_COLOUR, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Skin");
+            }
+            DeleteLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
             break;
         }
         case FINAL_STAGE: {

@@ -44,9 +44,13 @@ const int STAGE_WINGS               = 36;
 const int STAGE_WINGS_CHECK         = 37;
 const int STAGE_TAIL                = 38;
 const int STAGE_TAIL_CHECK          = 39;
+const int STAGE_SKIN_COLOUR         = 40;
+const int STAGE_SKIN_COLOUR_CHOICE  = 41;
+const int STAGE_SKIN_COLOUR_CHECK   = 42;
+const int STAGE_HAIR_COLOUR         = 43;
+const int STAGE_HAIR_COLOUR_CHOICE  = 44;
+const int STAGE_HAIR_COLOUR_CHECK   = 45;
 
-const int STAGE_SKIN_COLOUR         = 50;
-const int STAGE_HAIR_COLOUR         = 51;
 const int STAGE_TATTOO_COLOUR1      = 52;
 const int STAGE_TATTOO_COLOUR2      = 53;
 

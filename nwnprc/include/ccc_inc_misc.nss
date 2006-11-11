@@ -430,7 +430,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         }
     }
     
-    if (nStage == STAGE_HAIR_COLOUR || (nStage > STAGE_HAIR_COLOUR && nSetup))
+    if (nStage == STAGE_HAIR_COLOUR_CHOICE || (nStage > STAGE_HAIR_COLOUR_CHOICE && nSetup))
     {
         int nHair = GetLocalInt(oPC, "Hair");
         if (nHair != -1) // then it has been changed
@@ -439,7 +439,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         }
     }
     
-    if (nStage == STAGE_TATTOO_COLOUR1 || (nStage > STAGE_TATTOO_COLOUR1 && nSetup))
+    if (nStage == STAGE_TATTOO1_COLOUR_CHOICE || (nStage > STAGE_TATTOO1_COLOUR_CHOICE && nSetup))
     {
         int nTattooColour1 = GetLocalInt(oPC, "TattooColour1");
         if (nTattooColour1 != -1) // then it has been changed
@@ -448,7 +448,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         }
     }
     
-    if (nStage == STAGE_TATTOO_COLOUR2 || (nStage > STAGE_TATTOO_COLOUR2 && nSetup))
+    if (nStage == STAGE_TATTOO2_COLOUR_CHOICE || (nStage > STAGE_TATTOO2_COLOUR_CHOICE && nSetup))
     {
         int nTattooColour2 = GetLocalInt(oPC, "TattooColour2");
         if (nTattooColour2 != -1) // then it has been changed

@@ -40,13 +40,13 @@ void main()
     int         nSpellsPerDay0 =    GetLocalInt(oPC, "SpellsPerDay0");
     int         nSpellsPerDay1 =    GetLocalInt(oPC, "SpellsPerDay1");
 
-    /*
+
     int         nVoiceset =         GetLocalInt(oPC, "Soundset");
     int         nSkin =             GetLocalInt(oPC, "Skin");
     int         nHair =             GetLocalInt(oPC, "Hair");
     int         nTattooColour1 =    GetLocalInt(oPC, "TattooColour1");
     int         nTattooColour2 =    GetLocalInt(oPC, "TattooColour2");
-    */
+
 
     //clear existing stuff
     string sScript;
@@ -203,15 +203,18 @@ void main()
     }
 
     //Appearance stuff
-    /*
+
     if(nVoiceset != -1) //keep existing portrait
         sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
-    sScript += SetSkinColor(nSkin);
-    sScript += SetHairColor(nHair);
-    sScript += SetTattooColor(nTattooColour1, 1);
-    sScript += SetTattooColor(nTattooColour2, 2);
+    if(nSkin != -1) // keep existing skin colour
+        sScript += SetSkinColor(nSkin);
+    if(nHair != -1) // keep existing hair colour
+        sScript += SetHairColor(nHair);
+    if (nTattooColour1 != -1)
+        sScript += SetTattooColor(nTattooColour1, 1);
+    if (nTattooColour2 != -1)
+        sScript += SetTattooColor(nTattooColour2, 2);
     
-    */
 
     
     /* -- FOR TESTING ONLY --

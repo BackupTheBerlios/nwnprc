@@ -675,7 +675,9 @@ void DoHeaderAndChoices(int nStage)
             break;
         }
         case STAGE_SKIN_COLOUR: {
-            SetHeader("Pick a colour category:");
+            sText = "Pick a colour category ";
+            sText += "(" + GetStringByStrRef(128) + ")"; // Skin Color
+            SetHeader(sText);
             AddChoice("Keep current skin colour", -1);
             AddChoice("Tan colours", 1);
             AddChoice("Sand & Rose brown", 2);
@@ -704,13 +706,162 @@ void DoHeaderAndChoices(int nStage)
             break;
         }
         case STAGE_SKIN_COLOUR_CHOICE: {
-            SetHeader("Pick a colour:");
+            sText = "Pick a colour ";
+            sText += "(" + GetStringByStrRef(128) + ")"; // Skin Color
+            SetHeader(sText);
             int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
             AddColourChoices(nStage, nCategory);
             MarkStageSetUp(nStage);
             break;
         }
         case STAGE_SKIN_COLOUR_CHECK: {
+            sText = "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_HAIR_COLOUR: {
+            sText = "Pick a colour category ";
+            sText += "(" + GetStringByStrRef(125) + ")"; // Hair Color
+            SetHeader(sText);
+            AddChoice("Keep current hair colour", -1);
+            AddChoice("Chestnuts and Reds", 1);
+            AddChoice("Blondes and Browns", 2);
+            AddChoice("White, Greys and Black", 3);
+            AddChoice("Blues", 4);
+            AddChoice("Greens", 5);
+            AddChoice("Spring Greens and Yellows", 6);
+            AddChoice("Oranges and Pinks", 7);
+            // new colours
+            AddChoice("Metallic & pure white and black", 8);
+            AddChoice("Smoky Group 1", 9);
+            AddChoice("Smoky Group 2", 10);
+            AddChoice("Smoky Group 3", 11);
+            AddChoice("Smoky Group 4", 12);
+            AddChoice("Black Cherry & Cinnamon", 13);
+            AddChoice("Hunter Green & Druid Green", 14);
+            AddChoice("Graveyard Fog & Chestnut", 15);
+            AddChoice("Clay & Toasted Ash", 16);
+            AddChoice("Snail Brown & Cobalt Blue", 17);
+            AddChoice("Midnight Blue & Peacock Green", 18);
+            AddChoice("Royal Purple, Mountain Blue, & Sea Foam Green", 19);
+            AddChoice("Spring Green, Honey Gold, Copper Coin & Berry Ice", 20);
+            AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
+            AddChoice("Greens, Mystics, & Browns", 22);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_HAIR_COLOUR_CHOICE: {
+            sText = "Pick a colour ";
+            sText += "(" + GetStringByStrRef(125) + ")"; // Hair Color
+            SetHeader(sText);
+            int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
+            AddColourChoices(nStage, nCategory);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_HAIR_COLOUR_CHECK: {
+            sText = "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO1_COLOUR: {
+            sText = "Pick a colour category ";
+            sText += "(" + GetStringByStrRef(337) + ")"; // Tattoo Colors
+            SetHeader(sText);
+            AddChoice("Keep current skin colour", -1);
+            AddChoice("Tan/Brown & Tan/Red", 1);
+            AddChoice("Tan/Yellow & Tan/Grey", 2);
+            AddChoice("Olive, White, Grey & Charcoal", 3);
+            AddChoice("Blue, Aqua, Teal & Green", 4);
+            AddChoice("Yellow, Orange, Red & Pink", 5);
+            AddChoice("Purple, Violet & Shiny/Metallic group 1", 6);
+            AddChoice("Shiny/Metallic group 2", 7);
+            // new colours
+            AddChoice("Metallic & pure white and black", 8);
+            AddChoice("Smoky Group 1", 9);
+            AddChoice("Smoky Group 2", 10);
+            AddChoice("Smoky Group 3", 11);
+            AddChoice("Smoky Group 4", 12);
+            AddChoice("Black Cherry & Cinnamon", 13);
+            AddChoice("Hunter Green & Druid Green", 14);
+            AddChoice("Graveyard Fog & Chestnut", 15);
+            AddChoice("Clay & Toasted Ash", 16);
+            AddChoice("Snail Brown & Cobalt Blue", 17);
+            AddChoice("Midnight Blue & Peacock Green", 18);
+            AddChoice("Royal Purple, Mountain Blue, & Sea Foam Green", 19);
+            AddChoice("Spring Green, Honey Gold, Copper Coin & Berry Ice", 20);
+            AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
+            AddChoice("Greens, Mystics, & Browns", 22);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO1_COLOUR_CHOICE: {
+            sText = "Pick a colour ";
+            sText += "(" + GetStringByStrRef(337) + ")"; // Tattoo Colors
+            SetHeader(sText);
+            int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
+            AddColourChoices(nStage, nCategory);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO1_COLOUR_CHECK: {
+            sText = "\n"+GetStringByStrRef(16824210); // Is this correct?
+            SetHeader(sText);
+            // choices Y/N
+            AddChoice(GetStringByStrRef(4753), -1); // no
+            AddChoice(GetStringByStrRef(4752), 1); // yes
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO2_COLOUR: {
+            sText = "Pick a colour category ";
+            sText += "(" + GetStringByStrRef(337) + ")"; // Tattoo Colors
+            SetHeader(sText);
+            AddChoice("Keep current skin colour", -1);
+            AddChoice("Tan/Brown & Tan/Red", 1);
+            AddChoice("Tan/Yellow & Tan/Grey", 2);
+            AddChoice("Olive, White, Grey & Charcoal", 3);
+            AddChoice("Blue, Aqua, Teal & Green", 4);
+            AddChoice("Yellow, Orange, Red & Pink", 5);
+            AddChoice("Purple, Violet & Shiny/Metallic group 1", 6);
+            AddChoice("Shiny/Metallic group 2", 7);
+            // new colours
+            AddChoice("Metallic & pure white and black", 8);
+            AddChoice("Smoky Group 1", 9);
+            AddChoice("Smoky Group 2", 10);
+            AddChoice("Smoky Group 3", 11);
+            AddChoice("Smoky Group 4", 12);
+            AddChoice("Black Cherry & Cinnamon", 13);
+            AddChoice("Hunter Green & Druid Green", 14);
+            AddChoice("Graveyard Fog & Chestnut", 15);
+            AddChoice("Clay & Toasted Ash", 16);
+            AddChoice("Snail Brown & Cobalt Blue", 17);
+            AddChoice("Midnight Blue & Peacock Green", 18);
+            AddChoice("Royal Purple, Mountain Blue, & Sea Foam Green", 19);
+            AddChoice("Spring Green, Honey Gold, Copper Coin & Berry Ice", 20);
+            AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
+            AddChoice("Greens, Mystics, & Browns", 22);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO2_COLOUR_CHOICE: {
+            sText = "Pick a colour ";
+            sText += "(" + GetStringByStrRef(337) + ")"; // Tattoo Colors
+            SetHeader(sText);
+            int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
+            AddColourChoices(nStage, nCategory);
+            MarkStageSetUp(nStage);
+            break;
+        }
+        case STAGE_TATTOO2_COLOUR_CHECK: {
             sText = "\n"+GetStringByStrRef(16824210); // Is this correct?
             SetHeader(sText);
             // choices Y/N
@@ -1455,6 +1606,105 @@ int HandleChoice(int nStage, int nChoice)
                 MarkStageNotSetUp(STAGE_SKIN_COLOUR_CHOICE, OBJECT_SELF);
                 MarkStageNotSetUp(STAGE_SKIN_COLOUR, OBJECT_SELF);
                 DeleteLocalInt(OBJECT_SELF, "Skin");
+            }
+            DeleteLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
+            break;
+        }
+        case STAGE_HAIR_COLOUR: {
+            if (nChoice == -1)
+                nStage == STAGE_HAIR_COLOUR_CHECK;
+            else
+            {
+                SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_HAIR_COLOUR_CHOICE: {
+            SetLocalInt(OBJECT_SELF, "Hair", nChoice);
+            // change the clone
+            DoCutscene(OBJECT_SELF);
+            nStage++;
+            break;
+        }
+        case STAGE_HAIR_COLOUR_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage++;
+            }
+            else
+            {
+                nStage = STAGE_HAIR_COLOUR;
+                MarkStageNotSetUp(STAGE_HAIR_COLOUR_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_HAIR_COLOUR_CHOICE, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_HAIR_COLOUR, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "Hair");
+            }
+            DeleteLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
+            break;
+        }
+        case STAGE_TATTOO1_COLOUR: {
+            if (nChoice == -1)
+                nStage == STAGE_TATTOO1_COLOUR_CHECK;
+            else
+            {
+                SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_TATTOO1_COLOUR_CHOICE: {
+            SetLocalInt(OBJECT_SELF, "TattooColour1", nChoice);
+            // change the clone
+            DoCutscene(OBJECT_SELF);
+            nStage++;
+            break;
+        }
+        case STAGE_TATTOO1_COLOUR_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage++;
+            }
+            else
+            {
+                nStage = STAGE_TATTOO1_COLOUR;
+                MarkStageNotSetUp(STAGE_TATTOO1_COLOUR_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_TATTOO1_COLOUR_CHOICE, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_TATTOO1_COLOUR, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "TattooColour1");
+            }
+            DeleteLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
+            break;
+        }
+        case STAGE_TATTOO2_COLOUR: {
+            if (nChoice == -1)
+                nStage == STAGE_TATTOO1_COLOUR_CHECK;
+            else
+            {
+                SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
+                nStage++;
+            }
+            break;
+        }
+        case STAGE_TATTOO2_COLOUR_CHOICE: {
+            SetLocalInt(OBJECT_SELF, "TattooColour2", nChoice);
+            // change the clone
+            DoCutscene(OBJECT_SELF);
+            nStage++;
+            break;
+        }
+        case STAGE_TATTOO2_COLOUR_CHECK: {
+            if (nChoice == 1)
+            {
+                nStage++;
+            }
+            else
+            {
+                nStage = STAGE_TATTOO2_COLOUR;
+                MarkStageNotSetUp(STAGE_TATTOO2_COLOUR_CHECK, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_TATTOO2_COLOUR_CHOICE, OBJECT_SELF);
+                MarkStageNotSetUp(STAGE_TATTOO2_COLOUR, OBJECT_SELF);
+                DeleteLocalInt(OBJECT_SELF, "TattooColour2");
             }
             DeleteLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
             break;

@@ -11,41 +11,25 @@
 //:: Created By: aser
 //:: Created On: Feb/21/04
 //:: Updated by Oni5115 9/23/2004 to use new combat engine
+//:: Updated by Strat   12/11/2006 to make it work.
 //:://////////////////////////////////////////////
 
 #include "prc_alterations"
 
 void main()
 {
-     //Declare major variables
-     object oPC = OBJECT_SELF;
-     object oTarget = GetSpellTargetObject();
-     object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-     int iDur = 5 + GetLevelByClass(CLASS_TYPE_RAVAGER, oPC);
-     int bIsRangedAttack = GetWeaponRanged(oWeap);
-
-     effect eCon = EffectAbilityDecrease(ABILITY_CONSTITUTION, d4(1));
-            eCon = SupernaturalEffect(eCon);
-
-     // script now uses combat system to hit and apply effect if appropriate
-     string sSuccess = "*Cruelest Cut Hit*";
-     string sMiss    = "*Cruelest Cut Miss*";
-
-     if (bIsRangedAttack)
-     {
-          SendMessageToPC(oPC,"You must use a melee weapon with this ability!");
-          IncrementRemainingFeatUses(oPC, 2348);
-          return;
-     }
-
-     // If they are not within 5 ft, they can't do a melee attack.
-     if(!bIsRangedAttack && GetIsInMeleeRange(oTarget, oPC))
-     {
-          SendMessageToPC(oPC,"You are not close enough to your target to attack!");
-          IncrementRemainingFeatUses(oPC, 2348);
-          return;
-     }
-
-     PerformAttackRound(oTarget, oPC, eCon, RoundsToSeconds(iDur), 0, 0, 0, FALSE, sSuccess, sMiss);
-ActionAttack(oTarget);
+    object oPC = OBJECT_SELF;
+    object oTarget = PRCGetSpellTargetObject();
+    effect eDummy = EffectVisualEffect(VFX_IMP_DISEASE_S);
+    effect eDam   = EffectAbilityDecrease(ABILITY_CONSTITUTION, d4(1));
+    eDummy = EffectLinkEffects(eDummy, eDam);
+    
+    
+    PerformAttackRound(oTarget, oPC, eDam, 9999.0, 0, 0, 0, FALSE, "Cruelest Cut Hit", "Cruelest Cut Miss");
+/*    
+    if (GetLocalInt(oTarget, "PRCCombat_StruckByAttack"))
+    {
+    	ApplyAbilityDamage(oTarget, ABILITY_CONSTITUTION, d4(1), DURATION_TYPE_PERMANENT, TRUE);
+    }
+*/   
 }

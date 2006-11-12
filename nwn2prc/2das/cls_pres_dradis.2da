@@ -5,4 +5,7 @@
 1 Arcane    ARCSPELL 1             ****      
 2 BardOr    CLASSOR  1             ****      
 3 SorcOr    CLASSOR  9             ****      
+3 Hexblade  CLASSOR  61            **** 
+3 Duskblade CLASSOR  62            **** 
+3 Suel      CLASSOR  224           **** 
 4 ScriptVar VAR      X1_AllowDrDis 0         

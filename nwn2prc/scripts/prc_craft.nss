@@ -571,7 +571,8 @@ void main()
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_ADDITIONAL, strTemp.additionalcost);
                         SetLocalInt(oPC, PRC_CRAFT_MAGIC_EPIC, strTemp.epic);
                         AddChoice(ActionString("Change Name"), CHOICE_SETNAME, oPC);
-                        AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
+                        //NWN2 - not working yet
+                        //AddChoice(ActionString("Change Appearance"), CHOICE_SETAPPEARANCE, oPC);
                         if(!GetPRCSwitch(PRC_CRAFTING_ARBITRARY))
                         {
                             if(nFeat == FEAT_CRAFT_ARMS_ARMOR)

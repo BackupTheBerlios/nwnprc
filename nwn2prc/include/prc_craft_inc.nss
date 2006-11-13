@@ -1661,47 +1661,47 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
     if(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)   //name prefix will be overridden by materials
     {
         sPrefix = "Masterwork ";
-        MakeMasterwork(oNew);
+        //MakeMasterwork(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_ADAMANTINE)   //assumes only 1 material at a time
     {
         sPrefix = "Adamantine ";
-        MakeAdamantine(oNew);
+        //MakeAdamantine(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_DARKWOOD)
     {
         sPrefix = "Darkwood ";
-        MakeDarkwood(oNew);
+        //MakeDarkwood(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_DRAGONHIDE)
     {
         sPrefix = "Dragonhide ";
-        MakeDragonhide(oNew);
+        //MakeDragonhide(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_MITHRAL)
     {
         sPrefix = "Mithral ";
-        MakeMithral(oNew);
+        //MakeMithral(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_COLD_IRON)
     {
         sPrefix = "Cold Iron ";
-        MakeColdIron(oNew);
+        //MakeColdIron(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_ALCHEMICAL_SILVER)
     {
         sPrefix = "Silver ";
-        MakeSilver(oNew);
+        //MakeSilver(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_MUNDANE_CRYSTAL)
     {
         sPrefix = "Crystal ";
-        MakeMundaneCrystal(oNew);
+        //MakeMundaneCrystal(oNew);
     }
     if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
     {
         sPrefix = "Deep Crystal ";
-        MakeDeepCrystal(oNew);
+        //MakeDeepCrystal(oNew);
     }
     if(nMighty > 0) sPrefix += "Composite ";
 
@@ -1936,7 +1936,27 @@ itemproperty ConstructIP(int nType, int nSubTypeValue = 0, int nCostTableValue =
         }
         case ITEM_PROPERTY_DAMAGE_REDUCTION:
         {
-            ip = ItemPropertyDamageReduction(nSubTypeValue, nCostTableValue);
+            //NWN1 version
+            //ip = ItemPropertyDamageReduction(nSubTypeValue, nCostTableValue);
+
+// JLR-OEI 04/03/06: This version is REPLACING the old DEPRECATED one.
+// Returns Item property damage reduction.  You must specify:
+// - nAmount: amount of damage reduction
+// - nDmgBonus: (dependent on the nDRType)
+//      - DR_TYPE_NONE:       ()
+//      - DR_TYPE_DMGTYPE:    DAMAGE_TYPE_*
+//      - DR_TYPE_MAGICBONUS: (DAMAGE_POWER_*)
+//      - DR_TYPE_EPIC:       ()
+//      - DR_TYPE_GMATERIAL:  GMATERIAL_*
+//      - DR_TYPE_ALIGNMENT:  ALIGNMENT_*
+//      - DR_TYPE_NON_RANGED: ()
+// - nLimit: How much damage the effect can absorb before disappearing.
+//   Set to zero for infinite
+// - nDRType: DR_TYPE_*
+//itemproperty ItemPropertyDamageReduction(int nAmount, int nDRSubType, int nLimit=0, int nDRType=DR_TYPE_MAGICBONUS);
+
+            //NWN2 - nCostTableValue and nParam1Value assumed
+            ip = ItemPropertyDamageReduction(nSubTypeValue, nCostTableValue, 0, nParam1Value);
             break;
         }
         case ITEM_PROPERTY_DAMAGE_RESISTANCE:

@@ -25079,6 +25079,9 @@ Use this skill to tell when someone is bluffing you, to discern hidden messages 
 Synergy: If you have 5+ ranks in Sense Motive, you get a +2 to Diplomacy checks.
 
 Use: Automatic.</entry>
+  <entry id="52097" lang="en" sex="m">Cosmopolitan (iaijutsu focus)</entry>
+  <entry id="52098" lang="en" sex="m">Cosmopolitan (jump)</entry>
+  <entry id="52099" lang="en" sex="m">Cosmopolitan (truespeak)</entry>
   <entry id="52100" lang="en" sex="m">Necrotic cyst implanted.</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>
@@ -25198,6 +25201,7 @@ Use: Automatic.</entry>
 Prerequisite: Enlightened Fist level 6
 Specifics: Your fist of energy ability also adds an extra 1d10 damage when a critical hit is scored.
 Use: Automatic.</entry>
+  <entry id="52231" lang="en" sex="m">Cosmopolitan (sense motive)</entry>
   <entry id="52240" lang="en" sex="m">Acid</entry>
   <entry id="52241" lang="en" sex="m">Cold</entry>
   <entry id="52242" lang="en" sex="m">Electricity</entry>

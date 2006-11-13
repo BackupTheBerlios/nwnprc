@@ -1114,7 +1114,7 @@ int HandleChoice(int nStage, int nChoice)
             break;
         }
         case STAGE_SKILL_CHECK: {
-            if (nChoice = 1)
+            if (nChoice == 1)
                 nStage++;
             else
             {
@@ -1131,14 +1131,14 @@ int HandleChoice(int nStage, int nChoice)
             int nArraySize = array_get_size(OBJECT_SELF, "Feats");
             // alertness fix
             if (nChoice == 0)
-                nChoice == -1;
+                nChoice = -1;
             // add the feat chosen to the feat array
             array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"), nChoice);
             nStage++;
             break;
         }
         case STAGE_FEAT_CHECK: {
-            if (nChoice = 1)
+            if (nChoice == 1)
             {
                 // decrement the number of feats left to pick
                 int nFeatsRemaining = GetLocalInt(OBJECT_SELF, "Points");
@@ -1185,14 +1185,14 @@ int HandleChoice(int nStage, int nChoice)
             int nArraySize = array_get_size(OBJECT_SELF, "Feats");
             // alertness fix
             if (nChoice == 0)
-                nChoice == -1;
+                nChoice = -1;
             // add the feat chosen to the feat array
             array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"), nChoice);
             nStage++;
             break;
         }
         case STAGE_BONUS_FEAT_CHECK: {
-            if (nChoice = 1)
+            if (nChoice == 1)
             {
                 // decrement the number of feats left to pick
                 int nFeatsRemaining = GetLocalInt(OBJECT_SELF, "Points");
@@ -1281,7 +1281,6 @@ int HandleChoice(int nStage, int nChoice)
             {
                 // go to next stage after that the PC qualifies for
                 nStage = GetNextCCCStage(nStage);
-                /* TODO spells per day */
                 int nClass = GetLocalInt(OBJECT_SELF, "Class");
                 // get the cls_spgn_***2da to use
                 string sSpgn = Get2DACache("classes", "SpellGainTable", nClass);
@@ -1377,7 +1376,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_APPEARANCE: {
             if (nChoice == -1) // no change
             {
-                nStage == STAGE_PORTRAIT;
+                nStage = STAGE_PORTRAIT;
             }
             else
             {
@@ -1406,7 +1405,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_PORTRAIT: {
             if (nChoice == -1) // no change
             {
-                nStage == STAGE_SOUNDSET;
+                nStage = STAGE_SOUNDSET;
             }
             else
             {
@@ -1442,7 +1441,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_SOUNDSET: {
             if (nChoice == -1) // no change
             {
-                nStage == GetNextCCCStage(nStage, FALSE);
+                nStage = GetNextCCCStage(nStage, FALSE);
             }
             else
             {

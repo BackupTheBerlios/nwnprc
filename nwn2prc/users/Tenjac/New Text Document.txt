@@ -1,0 +1,3 @@
+ Extract the NWN2 scripts to nwn2scripts in your nwn2 sandbox then run make
+
+ Oh, and let us know if they actually work in-game without killing in. Though I think the 2das kill it before that point.

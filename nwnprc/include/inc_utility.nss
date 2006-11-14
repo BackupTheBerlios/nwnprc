@@ -111,6 +111,18 @@ int GetIsValidAlignment( int iLawChaos, int iGoodEvil, int iAlignRestrict, int i
 location GetRandomCircleLocation(location lBase, float fDistance=1.0);
 
 /**
+ * Gets a location relative to the first location
+ * Includes rotating additional location based on facing of the first
+ *
+ * @param lMaster   The starting location
+ * @param lAdd      The location to add
+ *
+ * @return          A location in random direction from lBase between
+ *                  0 and fDistance meters away.
+ */
+location AddLocationToLocation(location lMaster, location lAdd);
+
+/**
  * This function will get the width of the area passed in.
  *
  * Created By:  Zaddix
@@ -570,6 +582,31 @@ location GetRandomCircleLocation(location lBase, float fDistance=1.0)
 
     // Return the new random location.
     return Location(GetAreaFromLocation(lBase), vPosition, fFacing);
+}
+
+location AddLocationToLocation(location lMaster, location lAdd)
+{
+    //firstly rotate lAdd according to lMaster
+    vector vAdd = GetPositionFromLocation(lAdd);
+    //zero is -y in NWN convert zero to +x
+    float fAngle = GetFacingFromLocation(lMaster)-90.0;
+    //convert angle to radians
+    fAngle = (fAngle*2.0*PI)/360.0;
+    vector vNew;
+    vNew.x = (vAdd.x*cos(fAngle))-(vAdd.y*sin(fAngle));
+    vNew.y = (vAdd.x*sin(fAngle))+(vAdd.y*cos(fAngle));
+    vNew.z = vAdd.z;
+    
+    //now just add them on
+    vector vMaster = GetPositionFromLocation(lMaster); 
+    vNew.x += vMaster.x;
+    vNew.y += vMaster.y;
+    vNew.z += vMaster.z;
+    float fNew = GetFacingFromLocation(lAdd)+GetFacingFromLocation(lMaster);
+    
+    //return a location
+    location lReturn = Location(GetAreaFromLocation(lMaster), vNew, fNew);
+    return lReturn;
 }
 
 

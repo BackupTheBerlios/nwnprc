@@ -99,19 +99,19 @@ const int TOUCH_ATTACK_RANGED = 2;
 const int TOUCH_ATTACK_MELEE_SPELL  = 3;
 const int TOUCH_ATTACK_RANGED_SPELL = 4;
 
-const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
+//const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
 const string COLOR_DARK_BLUE    = "<c fþ>";    // used for electric damage.
 const string COLOR_GRAY         = "<c™™™>";    // used for negative damage.
-const string COLOR_GREEN        = "<c þ >";    // used for acid damage.
+//const string COLOR_GREEN        = "<c þ >";    // used for acid damage.
 const string COLOR_LIGHT_BLUE   = "<c™þþ>";    // used for the player's name, and cold damage.
 const string COLOR_LIGHT_GRAY   = "<c°°°>";    // used for system messages.
 const string COLOR_LIGHT_ORANGE = "<cþ™ >";    // used for sonic damage.
 const string COLOR_LIGHT_PURPLE = "<cÌ™Ì>";    // used for a target's name.
-const string COLOR_ORANGE       = "<cþf >";    // used for attack rolls and physical damage.
+//const string COLOR_ORANGE       = "<cþf >";    // used for attack rolls and physical damage.
 const string COLOR_PURPLE       = "<cÌwþ>";    // used for spell casts, as well as magic damage.
-const string COLOR_RED          = "<cþ  >";    // used for fire damage.
-const string COLOR_WHITE        = "<cþþþ>";    // used for positive damage.
-const string COLOR_YELLOW       = "<cþþ >";    // used for healing, and sent messages.
+//const string COLOR_RED          = "<cþ  >";    // used for fire damage.
+//const string COLOR_WHITE        = "<cþþþ>";    // used for positive damage.
+//const string COLOR_YELLOW       = "<cþþ >";    // used for healing, and sent messages.
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions

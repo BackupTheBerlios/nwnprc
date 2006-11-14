@@ -16,7 +16,7 @@ const int FEAT_AYUAN_FEAR          = 4646;
 const int FEAT_AYUAN_ENTANGLE      = 4647;
 const int FEAT_AYUAN_DARKNESS      = 4648;
 const int FEAT_AYUAN_NEUTRALIZE_POISON  = 4649;
-const int FEAT_AASIMAR_LIGHT       = 4650;
+//const int FEAT_AASIMAR_LIGHT       = 4650;
 const int FEAT_TIEFLING_DARK       = 4651;
 const int FEAT_SVIRF_BLIND_DEAF         = 4652;
 const int FEAT_SVIRF_BLUR          = 4653;
@@ -48,8 +48,8 @@ const int FEAT_FEYRI_ENERVATION         = 4678;
 const int FEAT_FEYRI_ALTER         = 4679;
 const int FEAT_FEYRI_REVERT        = 4680;
 const int FEAT_DUERGAR_INVIS       = 4681;
-const int FEAT_DROW_DARKNESS       = 4682;
-const int FEAT_DROW_FAERIE_FIRE         = 4683;
+//const int FEAT_DROW_DARKNESS       = 4682;
+//const int FEAT_DROW_FAERIE_FIRE         = 4683;
 
 const int FEAT_LTSENSE = 4700;
 const int FEAT_LTBLIND = 4701;
@@ -138,7 +138,7 @@ const int FEAT_ALTFORM                  = 4754;
 const int FEAT_DISGUISE                 = 4755;
 const int FEAT_LARGE                    = 4760;
 const int FEAT_AZER_HEAT      = 4790;
-const int FEAT_SVIRFNEBLIN_DODGE        = 4791;
+//const int FEAT_SVIRFNEBLIN_DODGE        = 4791;
 const int FEAT_WATER_BREATHING          = 4793;
 const int FEAT_MINOT_SCENT         = 4795;
 
@@ -254,7 +254,7 @@ const int FEAT_EPIC_DIVINE_MIGHT                       = 3120;
 const int FEAT_EPIC_DIVINE_RESISTANCE                  = 3119;
 const int FEAT_EPIC_DIVINE_SHIELD                      = 3548;
 const int FEAT_DIVINE_CLEANSING                        = 3118;
-const int FEAT_DIVINE_RESISTANCE                       = 3117;
+//const int FEAT_DIVINE_RESISTANCE                       = 3117;
 const int FEAT_DIVINE_VIGOR                            = 3116;
 const int FEAT_EPIC_DIVINE_VIGOR                       = 3115;
 const int FEAT_INVOKE_DIVINE_WRATH                     = 3114;
@@ -282,7 +282,7 @@ const int FEAT_INSIGHTFUL_REFLEXES                     = 6558;
 const int FEAT_TACTILE_TRAPSMITH                       = 6559;
 
 // Complete Divine
-const int FEAT_AUGMENT_HEALING                         = 6560;
+//const int FEAT_AUGMENT_HEALING                         = 6560;
 
 //Corpsecrafter
 const int FEAT_CORPSECRAFTER                           = 4014;
@@ -749,7 +749,7 @@ const int FEAT_ES_PEN_9  = 6712;
 const int FEAT_ES_PEN_10      = 6713;
 
 //Duelist
-const int FEAT_CANNY_DEFENSE        = 6900;
+//const int FEAT_CANNY_DEFENSE        = 6900;
 const int FEAT_PRECISE_STRIKE_1D4   = 6901;
 const int FEAT_PRECISE_STRIKE_2D4   = 6902;
 const int FEAT_PRECISE_STRIKE_3D4   = 6923;
@@ -765,7 +765,7 @@ const int FEAT_ACROBATIC_ATTACK_2   = 6908;
 const int FEAT_ACROBATIC_ATTACK_4   = 6909;
 const int FEAT_ACROBATIC_ATTACK_6   = 6910;
 const int FEAT_ACROBATIC_ATTACK_8   = 6911;
-const int FEAT_ELABORATE_PARRY      = 6912;
+//const int FEAT_ELABORATE_PARRY      = 6912;
 const int FEAT_EPIC_DUELIST         = 6913;
 
 //Hierophant
@@ -960,12 +960,12 @@ const int FEAT_SHADOWSPELLLV31    = 3320;
 // Frenzied Berserker Feats
 const int FEAT_FRENZY                       = 4300;
 const int FEAT_REMOVE_FRENZY                = 4309;
-const int FEAT_GREATER_FRENZY               = 4305;
+//const int FEAT_GREATER_FRENZY               = 4305;
 const int FEAT_INSPIRE_FRENZY               = 4306;
 const int FEAT_REMAIN_CONSCIOUS             = 4313;
-const int FEAT_DEATHLESS_FRENZY             = 4314;
+//const int FEAT_DEATHLESS_FRENZY             = 4314;
 const int FEAT_FREBZK_IMPROVED_POWER_ATTACK = 4310;
-const int FEAT_SUPREME_POWER_ATTACK         = 4311;
+//const int FEAT_SUPREME_POWER_ATTACK         = 4311;
 const int FEAT_INTIMIDATING_RAGE            = 4312;
 
 // Eye of Gruumsh Feats
@@ -986,10 +986,10 @@ const int FEAT_GATHER_HORDE_I       = 4612;
 const int FEAT_GATHER_HORDE_II      = 4613;
 
 // Tempest Feats
-const int FEAT_GREATER_TWO_WEAPON_FIGHTING = 4315;
+//const int FEAT_GREATER_TWO_WEAPON_FIGHTING = 4315;
 const int FEAT_SUPREME_TWO_WEAPON_FIGHTING = 4316;
 const int FEAT_PERFECT_TWO_WEAPON_FIGHTING = 4320;
-const int FEAT_TWO_WEAPON_DEFENSE  = 4317;
+//const int FEAT_TWO_WEAPON_DEFENSE  = 4317;
 const int FEAT_TWO_WEAPON_DEFENSE2 = 4318;
 const int FEAT_TWO_WEAPON_DEFENSE3 = 4319;
 const int FEAT_ABSOLUTE_AMBIDEX    = 4321;
@@ -1196,7 +1196,7 @@ const int FEAT_WEAPON_TEMPUS_KAMA        = 3293;
 const int FEAT_WEAPON_TEMPUS_KUKRI       = 3294;
 const int FEAT_ARMY_POWER                = 3295;
 const int FEAT_BATTLEFORGER              = 3296;
-const int FEAT_DIEHARD                   = 3297;
+//const int FEAT_DIEHARD                   = 3297;
 const int FEAT_ENCHANT_WEAPON1           = 3299;
 const int FEAT_ENCHANT_WEAPON2           = 3300;
 const int FEAT_ENCHANT_WEAPON3           = 3301;
@@ -1311,7 +1311,7 @@ const int FEAT_VIGIL_HEAL           = 6674; //CONSTANT
 //Prerequisitie feats (Hathran and Vigilant)
 const int FEAT_ETHRAN               = 6667; //CONSTANT
 const int FEAT_ENDURANCE            = 6668; //CONSTANT
-const int FEAT_TRACK                = 6669; //CONSTANT
+//const int FEAT_TRACK                = 6669; //CONSTANT
 
 // Sacred Fist
 const int FEAT_SF_AC1               = 2933;

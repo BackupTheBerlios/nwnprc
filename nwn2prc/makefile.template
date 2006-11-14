@@ -97,7 +97,7 @@ INSTALLSCRIPT	= Setup\install.nsi
 
 # The list of include paths to look for nss include files.  If there are multiple
 # folders separate by ';', eg. include1;include2;include3
-NSSINCLUDE		= include;nwn2scripts
+NSSINCLUDE		= nwn2scripts;include
 
 # This variable contains all of the files that need to be installed in the
 # NWN override directory for the prc pack to work.  If this list is changed

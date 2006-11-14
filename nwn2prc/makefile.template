@@ -97,7 +97,7 @@ INSTALLSCRIPT	= Setup\install.nsi
 
 # The list of include paths to look for nss include files.  If there are multiple
 # folders separate by ';', eg. include1;include2;include3
-NSSINCLUDE		= nwn2scripts;include
+NSSINCLUDE		= include
 
 # This variable contains all of the files that need to be installed in the
 # NWN override directory for the prc pack to work.  If this list is changed
@@ -163,9 +163,9 @@ NWN_MODULES             = $(NWN_DIR)\modules
 
 # Arguments for various rules
 !IFDEF DEBUG
-NSS_FLAGS		= -cq -I "$(MAKEDIR)\include" "$(MAKEDIR)\nwn2scripts"
+NSS_FLAGS		= -cq -i "$(MAKEDIR)\include" -i"$(MAKEDIR)\nwn2scripts"
 !ELSE
-NSS_FLAGS		= -cgoq -I "$(MAKEDIR)\include" "$(MAKEDIR)\nwn2scripts"
+NSS_FLAGS		= -cgoq -i "$(MAKEDIR)\include" -i "$(MAKEDIR)\nwn2scripts"
 !ENDIF
 
 !IFDEF DEBUG

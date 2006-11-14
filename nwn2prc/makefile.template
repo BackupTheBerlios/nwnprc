@@ -163,9 +163,9 @@ NWN_MODULES             = $(NWN_DIR)\modules
 
 # Arguments for various rules
 !IFDEF DEBUG
-NSS_FLAGS		= -cq -I "$(MAKEDIR)\include" -I "$(MAKEDIR)\nwn2scripts"
+NSS_FLAGS		= -cq -I "$(MAKEDIR)\include" "$(MAKEDIR)\nwn2scripts"
 !ELSE
-NSS_FLAGS		= -cgoq -I "$(MAKEDIR)\include"-I "$(MAKEDIR)\nwn2scripts"
+NSS_FLAGS		= -cgoq -I "$(MAKEDIR)\include" "$(MAKEDIR)\nwn2scripts"
 !ENDIF
 
 !IFDEF DEBUG

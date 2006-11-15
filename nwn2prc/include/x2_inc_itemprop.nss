@@ -18,11 +18,9 @@
 //:: Created On: 2003-06-05
 //:: Last Update: 2003-10-07
 //:://////////////////////////////////////////////
+//  ChazM 4/17/06 Updated IPGetItemPropertyByID()
 
-
-
-//Changed by primogenitor to include CEP itemtypes
-
+//void main(){}
 // *  The tag of the ip work container, a placeable which has to be set into each
 // *  module that is using any of the crafting functions.
 const string  X2_IP_WORK_CONTAINER_TAG = "x2_plc_ipbox";
@@ -301,7 +299,7 @@ object IPGetIPWorkContainer(object oCaller = OBJECT_SELF)
     object oRet = GetObjectByTag(X2_IP_WORK_CONTAINER_TAG);
     if (oRet == OBJECT_INVALID)
     {
-        oRet = CreateObject(OBJECT_TYPE_PLACEABLE,X2_IP_WORK_CONTAINER_TAG,GetStartingLocation());
+        oRet = CreateObject(OBJECT_TYPE_PLACEABLE,X2_IP_WORK_CONTAINER_TAG,GetLocation(oCaller));
         effect eInvis =  EffectVisualEffect( VFX_DUR_CUTSCENE_INVISIBILITY);
         eInvis = ExtraordinaryEffect(eInvis);
         ApplyEffectToObject(DURATION_TYPE_PERMANENT,eInvis,oRet);
@@ -315,335 +313,427 @@ object IPGetIPWorkContainer(object oCaller = OBJECT_SELF)
     return oRet;
 }
 
+/*
+sorted list of item property constants from NWScript.nss
+int ITEM_PROPERTY_ABILITY_BONUS                            = 0 ;
+int ITEM_PROPERTY_AC_BONUS                                 = 1 ;
+int ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP              = 2 ;
+int ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE                  = 3 ;
+int ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP                 = 4 ;
+int ITEM_PROPERTY_AC_BONUS_VS_SPECIFIC_ALIGNMENT           = 5 ;
+int ITEM_PROPERTY_ARCANE_SPELL_FAILURE                     = 84;
+int ITEM_PROPERTY_ATTACK_BONUS                             = 56 ;
+int ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP          = 57 ;
+int ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP             = 58 ;
+int ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT       = 59 ;
+int ITEM_PROPERTY_BASE_ITEM_WEIGHT_REDUCTION               = 11 ;
+int ITEM_PROPERTY_BONUS_FEAT                               = 12 ;
+int ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N              = 13 ;
+int ITEM_PROPERTY_CAST_SPELL                               = 15 ;
+int ITEM_PROPERTY_DAMAGE_BONUS                             = 16 ;
+int ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP          = 17 ;
+int ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP             = 18 ;
+int ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT       = 19 ;
+int ITEM_PROPERTY_DAMAGE_REDUCTION_DEPRECATED              = 22 ;
+int ITEM_PROPERTY_DAMAGE_RESISTANCE                        = 23 ;
+int ITEM_PROPERTY_DAMAGE_VULNERABILITY                     = 24 ;
+int ITEM_PROPERTY_DARKVISION                               = 26 ;
+int ITEM_PROPERTY_DECREASED_ABILITY_SCORE                  = 27 ;
+int ITEM_PROPERTY_DECREASED_AC                             = 28 ;
+int ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER                = 60 ;
+int ITEM_PROPERTY_DECREASED_DAMAGE                         = 21 ;
+int ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER           = 10 ;
+int ITEM_PROPERTY_DECREASED_SAVING_THROWS                  = 49 ;
+int ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC         = 50 ;
+int ITEM_PROPERTY_DECREASED_SKILL_MODIFIER                 = 29 ;
+int ITEM_PROPERTY_ENHANCED_CONTAINER_REDUCED_WEIGHT        = 32 ;
+int ITEM_PROPERTY_ENHANCEMENT_BONUS                        = 6 ;
+int ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_ALIGNMENT_GROUP     = 7 ;
+int ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP        = 8 ;
+int ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_SPECIFIC_ALIGNEMENT = 9 ;
+int ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE                  = 33 ;
+int ITEM_PROPERTY_EXTRA_RANGED_DAMAGE_TYPE                 = 34 ;
+int ITEM_PROPERTY_FREEDOM_OF_MOVEMENT                      = 75 ;
+int ITEM_PROPERTY_HASTE                                    = 35 ;
+int ITEM_PROPERTY_HEALERS_KIT                              = 80;
+int ITEM_PROPERTY_HOLY_AVENGER                             = 36 ;
+int ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE                     = 20 ;
+int ITEM_PROPERTY_IMMUNITY_MISCELLANEOUS                   = 37 ;
+int ITEM_PROPERTY_IMMUNITY_SPECIFIC_SPELL                  = 53 ;
+int ITEM_PROPERTY_IMMUNITY_SPELL_SCHOOL                    = 54 ;
+int ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL                 = 78 ;
+int ITEM_PROPERTY_IMPROVED_EVASION                         = 38 ;
+int ITEM_PROPERTY_KEEN                                     = 43 ;
+int ITEM_PROPERTY_LIGHT                                    = 44 ;
+int ITEM_PROPERTY_MASSIVE_CRITICALS                        = 74 ;
+int ITEM_PROPERTY_MIGHTY                                   = 45 ;
+int ITEM_PROPERTY_MIND_BLANK                               = 46 ;
+int ITEM_PROPERTY_MONSTER_DAMAGE                           = 77 ;
+int ITEM_PROPERTY_NO_DAMAGE                                = 47 ;
+int ITEM_PROPERTY_ON_HIT_PROPERTIES                        = 48 ;
+int ITEM_PROPERTY_ON_MONSTER_HIT                           = 72 ;
+int ITEM_PROPERTY_ONHITCASTSPELL                           = 82;
+int ITEM_PROPERTY_POISON                                   = 76 ; // no longer working, poison is now a on_hit subtype
+int ITEM_PROPERTY_REGENERATION                             = 51 ;
+int ITEM_PROPERTY_REGENERATION_VAMPIRIC                    = 67 ;
+int ITEM_PROPERTY_SAVING_THROW_BONUS                       = 40 ;
+int ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC              = 41 ;
+int ITEM_PROPERTY_SKILL_BONUS                              = 52 ;
+int ITEM_PROPERTY_SPECIAL_WALK                             = 79;
+int ITEM_PROPERTY_SPELL_RESISTANCE                         = 39 ;
+int ITEM_PROPERTY_THIEVES_TOOLS                            = 55 ;
+int ITEM_PROPERTY_TRAP                                     = 70 ;
+int ITEM_PROPERTY_TRUE_SEEING                              = 71 ;
+int ITEM_PROPERTY_TURN_RESISTANCE                          = 73 ;
+int ITEM_PROPERTY_UNLIMITED_AMMUNITION                     = 61 ;
+int ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP           = 62 ;
+int ITEM_PROPERTY_USE_LIMITATION_CLASS                     = 63 ;
+int ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE               = 64 ;
+int ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT        = 65 ;
+int ITEM_PROPERTY_USE_LIMITATION_TILESET                   = 66 ;
+int ITEM_PROPERTY_VISUALEFFECT	                           = 83;
+int ITEM_PROPERTY_WEIGHT_INCREASE                          = 81;
+*/	
+	
 // ----------------------------------------------------------------------------
 // This function needs to be rather extensive and needs to be updated if there are new
 // ip types we want to use, but it goes into the item property include anyway
+// ChazM - updated 11/17/06
 // ----------------------------------------------------------------------------
-//This version has been fixed up by Sunjammer from the bioware forums
-//http://nwn.bioware.com/forums/viewtopic.html?topic=431299&forum=47
-itemproperty IPGetItemPropertyByID(int nPropID, int nParam1=0, int nParam2=0, int nParam3=0, int nParam4=0)
+itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0, int nParam3 = 0, int nParam4 = 0)
 {
    itemproperty ipRet;
-   if (nPropID == ITEM_PROPERTY_ABILITY_BONUS)
+
+   if (nPropID == ITEM_PROPERTY_ABILITY_BONUS) // 0 
    {
         ipRet = ItemPropertyAbilityBonus(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_AC_BONUS)
+   else if (nPropID == ITEM_PROPERTY_AC_BONUS) // 1 
    {
         ipRet = ItemPropertyACBonus(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP)
+   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP) // 2
    {
         ipRet = ItemPropertyACBonusVsAlign(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE)
+   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE) // 3
    {
         ipRet = ItemPropertyACBonusVsDmgType(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP)
+   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP) // 4
    {
         ipRet = ItemPropertyACBonusVsRace(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_SPECIFIC_ALIGNMENT)
+   else if (nPropID == ITEM_PROPERTY_AC_BONUS_VS_SPECIFIC_ALIGNMENT) // 5
    {
         ipRet = ItemPropertyACBonusVsSAlign(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS)
-   {
-        ipRet = ItemPropertyAttackBonus(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP)
-   {
-        ipRet = ItemPropertyAttackBonusVsAlign(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP)
-   {
-        ipRet = ItemPropertyAttackBonusVsRace(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT)
-   {
-        ipRet = ItemPropertyAttackBonusVsSAlign(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_BASE_ITEM_WEIGHT_REDUCTION)
-   {
-        ipRet = ItemPropertyWeightReduction(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_BONUS_FEAT)
-   {
-        ipRet = PRCItemPropertyBonusFeat(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N)
-   {
-        ipRet = ItemPropertyBonusLevelSpell(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_CAST_SPELL)
-   {
-        ipRet = ItemPropertyCastSpell(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS)
-   {
-        ipRet = ItemPropertyDamageBonus(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP)
-   {
-        ipRet = ItemPropertyDamageBonusVsAlign(nParam1, nParam2, nParam3);
-   }
-   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP)
-   {
-        ipRet = ItemPropertyDamageBonusVsRace(nParam1, nParam2, nParam3);
-   }
-   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT)
-   {
-        ipRet = ItemPropertyDamageBonusVsSAlign(nParam1, nParam2, nParam3);
-   }
-   else if (nPropID == ITEM_PROPERTY_DAMAGE_REDUCTION)
-   {
-        ipRet = ItemPropertyDamageReduction(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DAMAGE_RESISTANCE)
-   {
-        ipRet = ItemPropertyDamageResistance(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DAMAGE_VULNERABILITY)
-   {
-        ipRet = ItemPropertyDamageResistance(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DARKVISION)
-   {
-        ipRet = ItemPropertyDarkvision();
-   }
-   else if (nPropID == ITEM_PROPERTY_DECREASED_ABILITY_SCORE)
-   {
-        ipRet = ItemPropertyDecreaseAbility(nParam1,nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DECREASED_AC)
-   {
-        ipRet = ItemPropertyDecreaseAC(nParam1,nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER)
-   {
-        ipRet = ItemPropertyAttackPenalty(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER)
-   {
-        ipRet = ItemPropertyEnhancementPenalty(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_DECREASED_SAVING_THROWS)
-   {
-        ipRet = ItemPropertyReducedSavingThrow(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC)
-   {
-        ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
-   }
-    else if (nPropID == ITEM_PROPERTY_DECREASED_SKILL_MODIFIER)
-   {
-        ipRet = ItemPropertyDecreaseSkill(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_ENHANCED_CONTAINER_REDUCED_WEIGHT)
-   {
-        ipRet = ItemPropertyContainerReducedWeight(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS)
-   {
-        ipRet = ItemPropertyEnhancementBonus(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_ALIGNMENT_GROUP)
-   {
-        ipRet = ItemPropertyEnhancementBonusVsAlign(nParam1,nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_SPECIFIC_ALIGNEMENT)
-   {
-        ipRet = ItemPropertyEnhancementBonusVsSAlign(nParam1,nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP)
-   {
-        ipRet = ItemPropertyEnhancementBonusVsRace(nParam1,nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE)
-   {
-        ipRet = ItemPropertyExtraMeleeDamageType(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_EXTRA_RANGED_DAMAGE_TYPE)
-   {
-        ipRet = ItemPropertyExtraRangeDamageType(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_HASTE)
-   {
-        ipRet = ItemPropertyHaste();
-   }
-   else if (nPropID == ITEM_PROPERTY_KEEN)
-   {
-        ipRet = ItemPropertyKeen();
-   }
-   else if (nPropID == ITEM_PROPERTY_LIGHT)
-   {
-        ipRet = ItemPropertyLight(nParam1,nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_MASSIVE_CRITICALS)
-   {
-        ipRet = ItemPropertyMassiveCritical(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_NO_DAMAGE)
-   {
-        ipRet = ItemPropertyNoDamage();
-   }
-   else if (nPropID == ITEM_PROPERTY_ON_HIT_PROPERTIES)
-   {
-        ipRet = ItemPropertyOnHitProps(nParam1, nParam2, nParam3);
-   }
-   else if (nPropID == ITEM_PROPERTY_TRAP)
-   {
-        ipRet = ItemPropertyTrap(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_TRUE_SEEING)
-   {
-        ipRet = ItemPropertyTrueSeeing();
-   }
-   else if (nPropID == ITEM_PROPERTY_UNLIMITED_AMMUNITION)
-   {
-        ipRet = ItemPropertyUnlimitedAmmo(nParam1);
-   }
-   // SJ -----------------------------------------------------------------start-
-   else if (nPropID == ITEM_PROPERTY_ONHITCASTSPELL)
-   {
-        // this constructor is bugged (@ v1.65) and will reduce nParam2 by 1
-        // we can compensate for this until it is fixed by adding 1 here
-        // however someone (you) will have to remember to remove it later!
-        ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2 + 1);
-        //Primogenitor
-        //Not strictly true. You put in the level of the spell, its just that
-        //this doesnt match the row of the 2da directly. Thus you only need
-        //to remember this when getting the value later on.
-        ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2);
-   }
-   // SJ -------------------------------------------------------------------end-
-   else if (nPropID == ITEM_PROPERTY_ARCANE_SPELL_FAILURE)
+   else if (nPropID == ITEM_PROPERTY_ARCANE_SPELL_FAILURE) // 84
    {
         ipRet = ItemPropertyArcaneSpellFailure(nParam1);
    }
-   // SJ -----------------------------------------------------------------start-
-   else if (nPropID == ITEM_PROPERTY_DECREASED_DAMAGE)
+   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS) //56
+   {
+        ipRet = ItemPropertyAttackBonus(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP) //57
+   {
+        ipRet = ItemPropertyAttackBonusVsAlign(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_RACIAL_GROUP) // 58
+   {
+        ipRet = ItemPropertyAttackBonusVsRace(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT) // 59
+   {
+        ipRet = ItemPropertyAttackBonusVsSAlign(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_BASE_ITEM_WEIGHT_REDUCTION) // 11
+   {
+        ipRet = ItemPropertyWeightReduction(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_BONUS_FEAT) // 12
+   {
+        ipRet = ItemPropertyBonusFeat(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N) // 13
+   {
+        ipRet = ItemPropertyBonusLevelSpell(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_CAST_SPELL) // 15
+   {
+        ipRet = ItemPropertyCastSpell(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS) // 16
+   {
+        ipRet = ItemPropertyDamageBonus(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP) // 17
+   {
+        ipRet = ItemPropertyDamageBonusVsAlign(nParam1, nParam2, nParam3);
+   }
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP) // 18
+   {
+        ipRet = ItemPropertyDamageBonusVsRace(nParam1, nParam2, nParam3);
+   }
+   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT) // 19
+   {
+        ipRet = ItemPropertyDamageBonusVsSAlign(nParam1, nParam2, nParam3);
+   }
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_REDUCTION) // 22 // JLR-OEI 04/03/06: NOW it is 85 (old one is deprecated!)
+   {
+        ipRet = ItemPropertyDamageReduction(nParam1, nParam2, nParam3, nParam4);
+   }
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_RESISTANCE) // 23
+   {
+        ipRet = ItemPropertyDamageResistance(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_VULNERABILITY) // 24
+   {
+        ipRet = ItemPropertyDamageResistance(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_DARKVISION) // 26
+   {
+        ipRet = ItemPropertyDarkvision();
+   }
+   else if (nPropID == ITEM_PROPERTY_DECREASED_ABILITY_SCORE) // 27
+   {
+        ipRet = ItemPropertyDecreaseAbility(nParam1,nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_DECREASED_AC) // 28
+   {
+        ipRet = ItemPropertyDecreaseAC(nParam1,nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_DECREASED_ATTACK_MODIFIER) // 60
+   {
+        ipRet = ItemPropertyAttackPenalty(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_DECREASED_DAMAGE) // 21
    {
         ipRet = ItemPropertyDamagePenalty(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_FREEDOM_OF_MOVEMENT)
+   else if (nPropID == ITEM_PROPERTY_DECREASED_ENHANCEMENT_MODIFIER) // 10
    {
-        ipRet = ItemPropertyFreeAction();
+        ipRet = ItemPropertyEnhancementPenalty(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_HEALERS_KIT)
+   else if (nPropID == ITEM_PROPERTY_DECREASED_SAVING_THROWS) // 49
    {
-        ipRet = ItemPropertyHealersKit(nParam1);
+        ipRet = ItemPropertyReducedSavingThrow(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_HOLY_AVENGER)
-   {
-        ipRet = ItemPropertyHolyAvenger();
-   }
-   else if (nPropID == ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE)
-   {
-        ipRet = ItemPropertyDamageImmunity(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_IMMUNITY_MISCELLANEOUS)
-   {
-        ipRet = ItemPropertyImmunityMisc(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPECIFIC_SPELL)
-   {
-        ipRet = ItemPropertySpellImmunitySpecific(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELL_SCHOOL)
-   {
-        ipRet = ItemPropertySpellImmunitySchool(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL)
-   {
-        // this constructor is bugged (@ v1.65) and will reduce nParam1 by 1
-        // we can compensate for this until it is fixed by adding 1 here
-        // however someone (you) will have to remember to remove it later!
-        //Primogenitor
-        //Fixed as of 1.67
-        ipRet = ItemPropertyImmunityToSpellLevel(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_IMPROVED_EVASION)
-   {
-        ipRet = ItemPropertyImprovedEvasion();
-   }
-   else if (nPropID == ITEM_PROPERTY_MIGHTY)
-   {
-        ipRet = ItemPropertyMaxRangeStrengthMod(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_MONSTER_DAMAGE)
-   {
-        ipRet = ItemPropertyMonsterDamage(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_ON_MONSTER_HIT)
-   {
-        ipRet = ItemPropertyOnMonsterHitProperties(nParam1, nParam2);
-   }
-   else if (nPropID == ITEM_PROPERTY_REGENERATION)
-   {
-        ipRet = ItemPropertyRegeneration(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_REGENERATION_VAMPIRIC)
-   {
-        ipRet = ItemPropertyVampiricRegeneration(nParam1);
-   }
-   else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS)
+   else if (nPropID == ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC) // 50
    {
         ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC)
+    else if (nPropID == ITEM_PROPERTY_DECREASED_SKILL_MODIFIER) //29
    {
-        ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
+        ipRet = ItemPropertyDecreaseSkill(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_SKILL_BONUS)
+   else if (nPropID == ITEM_PROPERTY_ENHANCED_CONTAINER_REDUCED_WEIGHT) //32
    {
-        ipRet = ItemPropertySkillBonus(nParam1, nParam2);
+        ipRet = ItemPropertyContainerReducedWeight(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_SPECIAL_WALK)
+   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS) // 6
    {
-        ipRet = ItemPropertySpecialWalk(nParam1);
+        ipRet = ItemPropertyEnhancementBonus(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_SPELL_RESISTANCE)
+   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_ALIGNMENT_GROUP) // 7
    {
-        ipRet = ItemPropertyBonusSpellResistance(nParam1);
+        ipRet = ItemPropertyEnhancementBonusVsAlign(nParam1,nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_THIEVES_TOOLS)
+   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_SPECIFIC_ALIGNEMENT) // 8
    {
-        ipRet = ItemPropertyThievesTools(nParam1);
+        ipRet = ItemPropertyEnhancementBonusVsSAlign(nParam1,nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_TURN_RESISTANCE)
+   else if (nPropID == ITEM_PROPERTY_ENHANCEMENT_BONUS_VS_RACIAL_GROUP) // 9
    {
-        ipRet = ItemPropertyTurnResistance(nParam1);
+        ipRet = ItemPropertyEnhancementBonusVsRace(nParam1,nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP)
+   else if (nPropID == ITEM_PROPERTY_EXTRA_MELEE_DAMAGE_TYPE) // 33
    {
-        ipRet = ItemPropertyLimitUseByAlign(nParam1);
+        ipRet = ItemPropertyExtraMeleeDamageType(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_CLASS)
+   else if (nPropID == ITEM_PROPERTY_EXTRA_RANGED_DAMAGE_TYPE) // 34
    {
-        ipRet = ItemPropertyLimitUseByClass(nParam1);
+        ipRet = ItemPropertyExtraRangeDamageType(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE)
+   else if (nPropID == ITEM_PROPERTY_FREEDOM_OF_MOVEMENT) // 75
    {
-        ipRet = ItemPropertyLimitUseByRace(nParam1);
+        ipRet = ItemPropertyFreeAction();
    }
-   else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT)
+   else if (nPropID == ITEM_PROPERTY_HASTE) // 35
    {
-        ipRet = ItemPropertyLimitUseBySAlign(nParam1);
+        ipRet = ItemPropertyHaste();
    }
-   else if (nPropID == ITEM_PROPERTY_VISUALEFFECT)
+   else if (nPropID == ITEM_PROPERTY_HEALERS_KIT) // 80
    {
-        ipRet = ItemPropertyVisualEffect(nParam1);
+        ipRet = ItemPropertyHealersKit(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_WEIGHT_INCREASE)
+   else if (nPropID == ITEM_PROPERTY_HOLY_AVENGER) // 36
    {
-        ipRet = ItemPropertyWeightIncrease(nParam1);
+        ipRet = ItemPropertyHolyAvenger();
    }
-   // SJ -------------------------------------------------------------------end-
+	
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE) // 20
+   {
+        ipRet = ItemPropertyDamageImmunity(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_MISCELLANEOUS) // 37
+   {
+        ipRet = ItemPropertyImmunityMisc(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPECIFIC_SPELL) // 53
+   {
+        ipRet = ItemPropertySpellImmunitySpecific(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELL_SCHOOL) // 54
+   {
+        ipRet = ItemPropertySpellImmunitySchool(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL) // 78 
+   {
+        ipRet = ItemPropertyImmunityToSpellLevel(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_IMPROVED_EVASION) // 38
+   {
+        ipRet = ItemPropertyImprovedEvasion();
+   }
+   else if (nPropID == ITEM_PROPERTY_KEEN) // 43
+   {
+        ipRet = ItemPropertyKeen();
+   }
+   else if (nPropID == ITEM_PROPERTY_LIGHT) // 44
+   {
+        ipRet = ItemPropertyLight(nParam1,nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_MASSIVE_CRITICALS) // 74
+   {
+        ipRet = ItemPropertyMassiveCritical(nParam1);
+   }
+/*	
+   else if (nPropID == ITEM_PROPERTY_MIGHTY) // 45
+   {
+        ipRet = ?(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_MIND_BLANK) // 46
+   {
+        ipRet = ?(nParam1);
+   }
+*/	
+   else if (nPropID == ITEM_PROPERTY_MONSTER_DAMAGE) // 77
+   {
+        ipRet = ItemPropertyMonsterDamage(nParam1);
+   }
+   else if (nPropID == ITEM_PROPERTY_NO_DAMAGE) // 47
+   {
+        ipRet = ItemPropertyNoDamage();
+   }
+   else if (nPropID == ITEM_PROPERTY_ON_HIT_PROPERTIES) // 48
+   {
+        ipRet = ItemPropertyOnHitProps(nParam1, nParam2, nParam3);
+   }
+   else if (nPropID == ITEM_PROPERTY_ON_MONSTER_HIT) // 72
+   {
+        ipRet = ItemPropertyOnMonsterHitProperties(nParam1, nParam2);
+   }
+   else if (nPropID == ITEM_PROPERTY_ONHITCASTSPELL) // 82
+   {
+        ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2);
+   }
+/*	
+   else if (nPropID == ITEM_PROPERTY_POISON) // 76
+   {	
+		//NWSCRIPT.nss: no longer working, poison is now a on_hit subtype
+        ipRet = ();
+   }
+*/
+	else if (nPropID == ITEM_PROPERTY_REGENERATION) // 51
+	{
+	     ipRet = ItemPropertyRegeneration(nParam1);
+	}
+	else if (nPropID == ITEM_PROPERTY_REGENERATION_VAMPIRIC) // 67
+	{
+	     ipRet = ItemPropertyVampiricRegeneration(nParam1);
+	}
+	
+	else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS) // 40
+	{
+	     ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
+	}
+	else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC) // 41
+	{
+	     ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
+	}
+	
+	else if (nPropID == ITEM_PROPERTY_SKILL_BONUS) // 52
+	{
+	     ipRet = ItemPropertySkillBonus(nParam1, nParam2);
+	}
+	else if (nPropID == ITEM_PROPERTY_SPECIAL_WALK) // 79
+	{
+	     ipRet = ItemPropertySpecialWalk(nParam1);
+	}
+	
+	else if (nPropID == ITEM_PROPERTY_SPELL_RESISTANCE)
+	{
+	     ipRet = ItemPropertyArcaneSpellFailure(nParam1); // 39
+	}
+	else if (nPropID == ITEM_PROPERTY_THIEVES_TOOLS)
+	{
+	     ipRet = ItemPropertyThievesTools(nParam1); // 55
+	}
+	
+	else if (nPropID == ITEM_PROPERTY_TRAP) // 70
+	{
+	     ipRet = ItemPropertyTrap(nParam1, nParam2);
+	}
+	else if (nPropID == ITEM_PROPERTY_TRUE_SEEING) // 71
+	{
+	     ipRet = ItemPropertyTrueSeeing();
+	}
+	
+	else if (nPropID == ITEM_PROPERTY_TURN_RESISTANCE) // 73
+	{
+	     ipRet = ItemPropertyTurnResistance(nParam1);
+	}
+	else if (nPropID == ITEM_PROPERTY_UNLIMITED_AMMUNITION) // 61
+	{
+	     ipRet = ItemPropertyUnlimitedAmmo(nParam1);
+	}
+
+	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP) // 62
+	{
+	     ipRet = ItemPropertyLimitUseByAlign(nParam1);
+	}
+	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_CLASS) // 63
+	{
+	     ipRet = ItemPropertyLimitUseByClass(nParam1);
+	}
+	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE) // 64
+	{
+	     ipRet = ItemPropertyLimitUseByRace(nParam1);
+	}
+	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT) // 65
+	{
+	     ipRet = ItemPropertyLimitUseBySAlign(nParam1);
+	}
+/*
+	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_TILESET) // 66
+	{
+	     ipRet = ();
+	}
+*/
+
+	else if (nPropID == ITEM_PROPERTY_VISUALEFFECT) // 83
+	{
+	     ipRet = ItemPropertyVisualEffect(nParam1);
+	}
+	else if (nPropID == ITEM_PROPERTY_WEIGHT_INCREASE) // 81 
+	{
+	     ipRet = ItemPropertyWeightIncrease(nParam1);
+	}
+
    return ipRet;
 }
-
 
 // ----------------------------------------------------------------------------
 // Returns TRUE if oItem is a projectile
@@ -700,26 +790,15 @@ int IPGetIsMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_SHORTSPEAR) ||
       (nItem == BASE_ITEM_SHORTSWORD) ||
       (nItem == BASE_ITEM_WARHAMMER)  ||
-      (nItem == BASE_ITEM_DWARVENWARAXE) ||
-      (nItem == 95) //1.67 trident BASE_ITEM_TRIDENT
-      || (nItem == 300) //CEP Trident
-      || (nItem == 303) //CEP Sai
-      || (nItem == 304) //CEP nunchaku
-      || (nItem == 305) //CEP falchion
-      || (nItem == 309) //CEP assassin dager
-      || (nItem == 310) //CEP katar
-      || (nItem == 312) //CEP light mace 2
-      || (nItem == 313) //CEP kukri2
-      || (nItem == 316) //CEP falchion
-      || (nItem == 317) //CEP heavymace
-      || (nItem == 318) //CEP maul
-      || (nItem == 319) //CEP sh_x1_mercuryls
-      || (nItem == 320) //CEP sh_x1_mercurygs
-      || (nItem == 321) //CEP sh_x1_doublesc
-      || (nItem == 322) //CEP goad
-      || (nItem == 323) //CEP windfirewheel
-      || (nItem == 324) //CEP maugdoublesword
-      )
+	  (nItem == BASE_ITEM_MACE)	||
+	  (nItem == BASE_ITEM_FALCHION)	||
+	  (nItem == BASE_ITEM_FLAIL)	||
+	  (nItem == BASE_ITEM_SPEAR)	||
+	  (nItem == BASE_ITEM_WARMACE)	||
+	  (nItem == BASE_ITEM_CGIANT_SWORD)	||
+	  (nItem == BASE_ITEM_CGIANT_AXE)	||
+	  (nItem == BASE_ITEM_ALLUSE_SWORD)	||
+      (nItem == BASE_ITEM_DWARVENWARAXE))
    {
         return TRUE;
    }
@@ -748,13 +827,13 @@ int IPGetIPConstCastSpellFromSpellID(int nSpellID)
 {
     // look up Spell Property Index
     string sTemp = Get2DACache("des_crft_spells","IPRP_SpellIndex",nSpellID);
-
+    /*
     if (sTemp == "") // invalid nSpellID
     {
         DoDebug("x2_inc_craft.nss::GetIPConstCastSpellFromSpellID called with invalid nSpellID" + IntToString(nSpellID));
         return -1;
     }
-
+    */
     int nSpellPrpIdx = StringToInt(sTemp);
     return nSpellPrpIdx;
 }
@@ -1696,7 +1775,3 @@ int IPGetNumberOfItemProperties(object oItem)
     }
     return nCount;
 }
-
-
-// Test main
-//void main(){}

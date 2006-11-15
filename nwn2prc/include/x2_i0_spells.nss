@@ -33,12 +33,20 @@ effect CreateBadTideEffectsLink();
 effect CreateGoodTideEffectsLink();
 // * Passes in the slashing weapon type
 int GetSlashingWeapon(object oItem);
+// * Passes in the Blunt weapon type -- JLR - OEI
+int GetBluntWeapon(object oItem);
 // * Passes in the melee weapon type
 int GetMeleeWeapon(object oItem);
 // * Passes in if the item is magical or not.
 int GetIsMagicalItem(object oItem);
 // * Passes back the stat bonus of the characters magical stat, if any.
 int GetIsMagicStatBonus(object oCaster);
+
+// * Save DC against Epic Spells is the relevant ability score of the caster
+// * + 20. The hightest ability score of the casting relevants is 99.99% identical
+// * with the one that is used for casting, so we just take it.
+// * if used by a placeable, it is equal to the placeables WILL save field.
+int GetEpicSpellSaveDC(object oCaster);
 
 // * Hub function for the epic barbarian feats that upgrade rage. Call from
 // * the end of the barbarian rage spellscript
@@ -66,7 +74,6 @@ int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaste
 
 //#include "x2_inc_itemprop"
 #include "x0_i0_spells"
-
 //::///////////////////////////////////////////////
 //:: CreateBadTideEffectsLink
 //:: Copyright (c) 2001 Bioware Corp.
@@ -85,7 +92,8 @@ effect CreateBadTideEffectsLink()
     effect eSaves = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
     effect eAttack = EffectAttackDecrease(2);
     effect eDamage = EffectDamageDecrease(2);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);	// NWN1 VFX
+    effect eDur = EffectVisualEffect( VFX_DUR_SPELL_BATTLETIDE_VICTIM );	// NWN2 VFX
     //Link the effects
     effect eLink = EffectLinkEffects(eAttack, eDamage);
     eLink = EffectLinkEffects(eLink, eSaves);
@@ -112,7 +120,8 @@ effect CreateGoodTideEffectsLink()
     effect eSaves = EffectSavingThrowIncrease(SAVING_THROW_ALL, 2);
     effect eAttack = EffectAttackIncrease(2);
     effect eDamage = EffectDamageIncrease(2);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);	// NWN1 VFX
+    effect eDur = EffectVisualEffect( VFX_DUR_SPELL_BATTLETIDE );	// NWN2 VFX
     //Link the effects
     effect eLink = EffectLinkEffects(eAttack, eDamage);
     eLink = EffectLinkEffects(eLink, eSaves);
@@ -148,20 +157,33 @@ int GetSlashingWeapon(object oItem)
       (nItem == BASE_ITEM_DWARVENWARAXE) ||
       (nItem == BASE_ITEM_THROWINGAXE) ||
       (nItem == BASE_ITEM_WHIP)
-      || (nItem == 300) //CEP Trident
-      || (nItem == 303) //CEP Sai
-      || (nItem == 305) //CEP falchion
-      || (nItem == 309) //CEP assassin dager
-      || (nItem == 310) //CEP katar
-      || (nItem == 313) //CEP kukri2
-      || (nItem == 316) //CEP falchion
-      || (nItem == 319) //CEP sh_x1_mercuryls
-      || (nItem == 320) //CEP sh_x1_mercurygs
-      || (nItem == 321) //CEP sh_x1_doublesc
-      || (nItem == 322) //CEP goad
-      || (nItem == 323) //CEP windfirewheel
-      || (nItem == 324) //CEP maugdoublesword
-      || (nItem == 300) //CEP Trident
+
+      )
+   {
+        return TRUE;
+   }
+   return FALSE;
+}
+
+//------------------------------------------------------------------------------
+// JLR - OEI 07/12/05 NWN2 3.5
+// Returns TRUE if oItem is a Blunt weapon
+//------------------------------------------------------------------------------
+int GetBluntWeapon(object oItem)
+{
+    //Declare major variables
+    int nItem = GetBaseItemType(oItem);
+
+    if((nItem == BASE_ITEM_WARHAMMER) ||
+      (nItem == BASE_ITEM_LIGHTFLAIL) ||
+      (nItem == BASE_ITEM_CLUB) ||
+      (nItem == BASE_ITEM_HEAVYFLAIL) ||
+      (nItem == BASE_ITEM_LIGHTHAMMER) ||
+      (nItem == BASE_ITEM_LIGHTMACE) ||
+      (nItem == BASE_ITEM_DIREMACE) ||
+      (nItem == BASE_ITEM_MORNINGSTAR) ||
+      (nItem == BASE_ITEM_QUARTERSTAFF) ||
+      (nItem == BASE_ITEM_CBLUDGWEAPON)
 
       )
    {
@@ -219,26 +241,7 @@ int GetMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_SHORTSWORD) ||
       (nItem == BASE_ITEM_WARHAMMER)  ||
       (nItem == BASE_ITEM_WHIP)  ||
-      (nItem == BASE_ITEM_DWARVENWARAXE)
-      || (nItem == 300) //CEP Trident
-      || (nItem == 303) //CEP Sai
-      || (nItem == 304) //CEP nunchaku
-      || (nItem == 305) //CEP falchion
-      || (nItem == 309) //CEP assassin dager
-      || (nItem == 310) //CEP katar
-      || (nItem == 312) //CEP light mace 2
-      || (nItem == 313) //CEP kukri2
-      || (nItem == 316) //CEP falchion
-      || (nItem == 317) //CEP heavymace
-      || (nItem == 318) //CEP maul
-      || (nItem == 319) //CEP sh_x1_mercuryls
-      || (nItem == 320) //CEP sh_x1_mercurygs
-      || (nItem == 321) //CEP sh_x1_doublesc
-      || (nItem == 322) //CEP goad
-      || (nItem == 323) //CEP windfirewheel
-      || (nItem == 324) //CEP maugdoublesword
-      || (nItem == 300) //CEP Trident
-      )
+      (nItem == BASE_ITEM_DWARVENWARAXE))
    {
         return TRUE;
    }
@@ -428,6 +431,7 @@ void CheckAndApplyTerrifyingRage(int nRounds)
     if (GetHasFeat(989, OBJECT_SELF))
     {
         effect eAOE = EffectAreaOfEffect(AOE_MOB_FEAR,"x2_s2_terrage_A", "","");
+        eAOE = ExtraordinaryEffect(eAOE);
         ApplyEffectToObject(DURATION_TYPE_TEMPORARY,eAOE,OBJECT_SELF,RoundsToSeconds(nRounds));
     }
 }
@@ -450,7 +454,8 @@ void DoMindBlast(int nDC, int nDuration, float fRange)
     location lTargetLocation = GetSpellTargetLocation();
     object oTarget;
     effect eCone;
-    effect eVis = EffectVisualEffect(VFX_IMP_SONIC);
+    //effect eVis = EffectVisualEffect(VFX_IMP_SONIC);	// NWN1 VFX
+    effect eVis = EffectVisualEffect( VFX_HIT_SPELL_SONIC );
 
     oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fRange, lTargetLocation, TRUE);
 
@@ -514,7 +519,7 @@ int  DoCubeParalyze(object oTarget, object oSource, int nSaveDC = 16)
 
     if (FortitudeSave(oTarget,nSaveDC, SAVING_THROW_TYPE_POISON,oSource) == 0)
     {
-      effect ePara =  EffectParalyze();
+      effect ePara =  EffectParalyze(nSaveDC, SAVING_THROW_FORT);
       effect eDur = EffectVisualEffect(VFX_DUR_PARALYZED);
       ePara = EffectLinkEffects(eDur,ePara);
       ePara = EffectLinkEffects(EffectVisualEffect(VFX_DUR_FREEZE_ANIMATION),ePara);
@@ -561,6 +566,38 @@ void EngulfAndDamage(object oTarget, object oSource)
   }
 
 
+}
+// --------------------------------------------------------------------------------
+// Georg Zoeller, 2003-09-19
+// Save DC against Epic Spells is the relevant ability score of the caster
+// + 20. The hightest ability score of the casting relevants is 99.99% identical
+// with the one that is used for casting, so we just take it.
+// if used by a placeable, it is equal to the placeables WILL save field.
+// --------------------------------------------------------------------------------
+int GetEpicSpellSaveDC(object oCaster)
+{
+
+    // * Placeables use their WILL Save field as caster level
+    if (GetObjectType(oCaster) == OBJECT_TYPE_PLACEABLE)
+    {
+        return GetWillSavingThrow(oCaster);
+    }
+
+    int nWis = GetAbilityModifier(ABILITY_WISDOM,oCaster);
+    int nInt = GetAbilityModifier(ABILITY_INTELLIGENCE,oCaster);
+    int nCha = GetAbilityModifier(ABILITY_CHARISMA,oCaster);
+
+    int nHigh = nWis;
+    if (nHigh < nInt)
+    {
+        nHigh = nInt;
+    }
+    if (nHigh < nCha)
+    {
+        nHigh = nCha;
+    }
+    int nRet = 20 + nHigh;
+    return nRet;
 }
 
 // --------------------------------------------------------------------------------
@@ -656,13 +693,13 @@ int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaste
     if( !GetIsObjectValid(oCaster))
     {
         GZRemoveSpellEffects(nSpell_ID, oTarget);
-        DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpell_ID));
+        DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString(nSpell_ID));
         return TRUE;
     }
 
-    if (GetIsDead(oCaster))
+    if (GetIsDead(oCaster) || GetIsDead(oTarget) )	// added a check to see if the target is dead so that effects don't persist on corpses
     {
-        DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString (nSpell_ID));
+        DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString(nSpell_ID));
         GZRemoveSpellEffects(nSpell_ID, oTarget);
         return TRUE;
     }
@@ -671,6 +708,4 @@ int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaste
 
 }
 
-
-// Test main
-//void main(){}
+//void main() {}

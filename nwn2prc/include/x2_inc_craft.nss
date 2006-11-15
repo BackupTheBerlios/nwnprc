@@ -13,7 +13,9 @@
 //:: Created On: 2003-05-09
 //:: Last Updated On: 2003-10-14
 //:://////////////////////////////////////////////
-
+// ChazM 5/10/06 - Removed XP costs.  Did anyone really like XP costs?
+// ChazM 5/23/06 - added AppendSpellToName().  Updated potion and wand creation to use it.
+// ChazM 5/24/06 - Updated AppendSpellToName()
 
 struct craft_struct
 {
@@ -34,23 +36,22 @@ struct craft_receipe_struct
 const string  X2_CI_CRAFTSKILL_CONV ="x2_p_craftskills";
 
 // Brew Potion related Constants
-/* moved to be code switches
 
-const int     X2_CI_BREWPOTION_MAXLEVEL       = 3;                      // Max Level for potions
-const int     X2_CI_BREWPOTION_COSTMODIFIER   = 50;                     // gp Brew Potion XPCost Modifier
+const int     X2_CI_BREWPOTION_FEAT_ID        = 944;                    // Brew Potion feat simulation
+//const int     X2_CI_BREWPOTION_MAXLEVEL       = 3;                      // Max Level for potions
+//const int     X2_CI_BREWPOTION_COSTMODIFIER   = 50;                     // gp Brew Potion XPCost Modifier
+
+const string  X2_CI_BREWPOTION_NEWITEM_RESREF = "x2_it_pcpotion";       // ResRef for new potion item
 
 // Scribe Scroll related constants
-const int     X2_CI_SCRIBESCROLL_COSTMODIFIER   = 25;                 // Scribescroll Cost Modifier
+const int     X2_CI_SCRIBESCROLL_FEAT_ID        = 945;
+//const int     X2_CI_SCRIBESCROLL_COSTMODIFIER   = 25;                 // Scribescroll Cost Modifier
+const string  X2_CI_SCRIBESCROLL_NEWITEM_RESREF = "x2_it_pcscroll";   // ResRef for new scroll item
 
 // Craft Wand related constants
-const int     X2_CI_CRAFTWAND_MAXLEVEL       = 4;
-const int     X2_CI_CRAFTWAND_COSTMODIFIER   = 750;
-*/
-const int     X2_CI_BREWPOTION_FEAT_ID        = 944;                    // Brew Potion feat simulation
-const string  X2_CI_BREWPOTION_NEWITEM_RESREF = "x2_it_pcpotion";       // ResRef for new potion item
-const int     X2_CI_SCRIBESCROLL_FEAT_ID        = 945;
-const string  X2_CI_SCRIBESCROLL_NEWITEM_RESREF = "x2_it_pcscroll";   // ResRef for new scroll item
 const int     X2_CI_CRAFTWAND_FEAT_ID        = 946;
+//const int     X2_CI_CRAFTWAND_MAXLEVEL       = 4;
+//const int     X2_CI_CRAFTWAND_COSTMODIFIER   = 750;
 const string  X2_CI_CRAFTWAND_NEWITEM_RESREF = "x2_it_pcwand";
 const int     X2_CI_CRAFTSTAFF_FEAT_ID        = 2928;
 const int     X2_CI_CRAFTSTAFF_EPIC_FEAT_ID        = 3491;
@@ -144,7 +145,7 @@ int InscribeRune();
 //#include "inc_utility"
 #include "prc_inc_newip"
 #include "prc_inc_spells"
-
+#include "ginc_debug"
 
 //////////////////////////////////////////////////
 /* Function definitions                         */
@@ -178,6 +179,9 @@ int   CIGetIsSpellRestrictedFromCraftFeat(int nSpellID, int nFeatID);
 // *  Return craftitemstructdata
 struct craft_struct CIGetCraftItemStructFrom2DA(string s2DA, int nRow, int nItemNo);
 
+// Appends the spell name to the object's name
+void AppendSpellToName(object oObject, int nSpellID);
+
 // *  Return the type of magic as one of the following constants
 // *  const int X2_CI_MAGICTYPE_INVALID = 0;
 // *  const int X2_CI_MAGICTYPE_ARCANE  = 1;
@@ -194,14 +198,14 @@ int CI_GetClassMagicType(int nClass)
                 return X2_CI_MAGICTYPE_DIVINE; break;
         case CLASS_TYPE_PALADIN:
                 return X2_CI_MAGICTYPE_DIVINE; break;
-        case CLASS_TYPE_RANGER:
-                return X2_CI_MAGICTYPE_DIVINE; break;
         case CLASS_TYPE_BARD:
                 return X2_CI_MAGICTYPE_ARCANE; break;
         case CLASS_TYPE_SORCERER:
                 return X2_CI_MAGICTYPE_ARCANE; break;
         case CLASS_TYPE_WIZARD:
                 return X2_CI_MAGICTYPE_ARCANE; break;
+        case CLASS_TYPE_RANGER:
+                return X2_CI_MAGICTYPE_DIVINE; break;
     }
     return X2_CI_MAGICTYPE_INVALID;
 }
@@ -224,6 +228,22 @@ int CIGetIsCraftFeatBaseItem(object oItem)
       return TRUE;
     else
       return FALSE;
+}
+
+void AppendSpellToName(object oObject, int nSpellID)
+{
+	int iSpellStringRef = StringToInt(Get2DAString("spells","Name", nSpellID));
+	if (iSpellStringRef == 0)
+		return;
+
+	string sSpellName = GetStringByStrRef(iSpellStringRef);
+	string  sOldName = GetFirstName(oObject);
+	PrettyDebug ("First Name = "  + GetFirstName(oObject));
+	PrettyDebug ("Last Name = "  +  GetLastName(oObject));
+	PrettyDebug ("Name = "  + GetName(oObject));
+	string sName = sOldName + " - " + sSpellName;
+	SetFirstName(oObject, sName);
+	PrettyDebug ("sNewName = "  + sName);
 }
 
 
@@ -251,6 +271,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_SINGLE_USE);
         oTarget = CreateItemOnObject(X2_CI_BREWPOTION_NEWITEM_RESREF,oCreator);
         AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
+		AppendSpellToName(oTarget, nSpellID);	
         if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
         {
             itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
@@ -259,7 +280,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
-        }
+        }	
     }
     return oTarget;
 }
@@ -352,6 +373,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
              ipLimit = ItemPropertyLimitUseByClass(CLASS_TYPE_BARD);
              AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
         }
+		AppendSpellToName(oTarget, nSpellID);				
 
         int nCharges = PRCGetCasterLevel() + d20();
 
@@ -768,7 +790,7 @@ These dont work as IPs since they are hardcoded */
     }
 
     // -------------------------------------------------------------------------
-    // check if spell is below maxlevel for craft want
+    // check if spell is below maxlevel for craft wand
     // -------------------------------------------------------------------------
     int nMaxLevel = GetPRCSwitch(X2_CI_CRAFTWAND_MAXLEVEL);
     if(nMaxLevel == 0)
@@ -847,7 +869,6 @@ These dont work as IPs since they are hardcoded */
 
     return FALSE;
 }
-
 int CICraftCheckCraftStaff(object oSpellTarget, object oCaster)
 {
     int nSpellID = PRCGetSpellId();
@@ -1636,6 +1657,7 @@ int CIGetIsSpellRestrictedFromCraftFeat(int nSpellID, int nFeatID)
     {
          sCol = "NoWand";
     }
+
     string sRet = Get2DACache(X2_CI_CRAFTING_SP_2DA,sCol,nSpellID);
     int nRet = (sRet == "1") ;
     return nRet;
@@ -2043,7 +2065,3 @@ int CIGetWeaponModificationCost(object oOldItem, object oNewItem)
    }
    return nTotal;
 }
-
-
-// Test main
-//void main(){}

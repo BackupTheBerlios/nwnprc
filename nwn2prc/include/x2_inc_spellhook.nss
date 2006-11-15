@@ -18,11 +18,10 @@
 //:: Created On: 2003-06-04
 //:: Updated On: 2003-10-25
 //:://////////////////////////////////////////////
-
+// ChazM 8/16/06 added workbench check to X2PreSpellCastCode()
+// ChazM 8/27/06 modified  X2PreSpellCastCode() - Fire "cast spell at" event on a workbench. 
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
-
-
 
 // This function checks for the Red Wizard's restricted
 // spell school and prevents him from casting the spells
@@ -110,6 +109,7 @@ int PRCGetUserSpecificSpellScriptFinished();
 #include "inc_newspellbook"
 #include "prc_sp_func"
 #include "psi_inc_manifest"
+#include "ginc_crafting"
 
 int RedWizRestrictedSchool()
 {
@@ -622,7 +622,7 @@ int X2GetSpellCastOnSequencerItem(object oItem)
     }
 
     int nMaxSeqSpells = IPGetItemSequencerProperty(oItem); // get number of maximum spells that can be stored
-    if(nMaxSeqSpells <1)
+    if (nMaxSeqSpells <1)
     {
         return FALSE;
     }
@@ -660,7 +660,7 @@ DoDebug("X2GetSpellCastOnSequencerItem() before hostile");
     }
 DoDebug("X2GetSpellCastOnSequencerItem() after bIsSSorAA stuff");
 
-    if(nHostile)
+    if(nHostile ==1)
     {
         FloatingTextStrRefOnCreature(83885,OBJECT_SELF);
         return TRUE; // no hostile spells on sequencers, sorry ya munchkins :)
@@ -691,7 +691,9 @@ DoDebug("X2GetSpellCastOnSequencerItem() before nNumberOfTriggers");
         FloatingTextStrRefOnCreature(83884, OBJECT_SELF);
     }
     else
+    {
         FloatingTextStrRefOnCreature(83859,OBJECT_SELF);
+    }
 
     return TRUE; // in any case, spell is used up from here, so do not fire regular spellscript
 }
@@ -705,7 +707,7 @@ void X2BreakConcentrationSpells()
     // * At the moment we got only one concentration spell, black blade of disaster
 
     object oAssoc = GetAssociate(ASSOCIATE_TYPE_SUMMONED);
-    if (GetIsObjectValid(oAssoc))
+    if (GetIsObjectValid(oAssoc) && GetIsPC(OBJECT_SELF)) // only applies to PCS
     {
         if(GetTag(oAssoc) == "x2_s_bblade") // black blade of disaster
         {
@@ -1274,7 +1276,3 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-spellfire "+IntToString(nContinue));
 
     return nContinue;
 }
-
-
-// Test main
-//void main(){}

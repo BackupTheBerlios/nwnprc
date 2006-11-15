@@ -13,6 +13,29 @@
 //------------------------------------------------------------------------------
 // Copyright (c) 2003 Bioware Corp. * Created By: Georg Zoeller * On: 2003-07-16
 //------------------------------------------------------------------------------
+// ChazM (OEI) 10/20/05 - added MODULE_SWITCH_ENABLE_SEPERATE_ITEM_SCRIPTS, GetEventPostfix(),
+//					modified GetUserDefinedItemEventScriptName()
+// ChazM (OEI) 4/4/06 - added support for 32 character script names for item scripts.
+// BMA-OEI 8/21/06 -- Moved campaign flags from kinc_globals.nss
+// ChazM 8/25/06 - Shortened campaign variable names to fit in 32 char limit.
+
+
+//void main(){}
+
+//------------------------------------------------------------------------------
+//									C A M P A I G N
+//------------------------------------------------------------------------------
+
+// These are stored as globals - note that global names can only be 32 chars long.
+// Force kills dominated group members if no valid members remain - checked on HeartBeat ( nw_g0_dominate )
+const string CAMPAIGN_SWITCH_FORCE_KILL_DOMINATED_GROUP = "N2_S_KILL_DOM_GROUP";
+
+// Removes effect and prevents transition if object is dominated - checked on transition ( ginc_transition )
+const string CAMPAIGN_SWITCH_REMOVE_DOMINATED_ON_TRANSITION = "N2_S_REMOVE_DOM_ON_TRAN";
+
+// This global determines whether or not the campaign uses the personal reputation system, which affects
+//	whether or not neutrals can be damaged by spells
+const string CAMPAIGN_SWITCH_USE_PERSONAL_REPUTATION = "N2_S_USE_PERSONAL_REP";
 
 
 //------------------------------------------------------------------------------
@@ -117,6 +140,16 @@ const string MODULE_SWITCH_DISABLE_SECRET_DOOR_FLASH = "X2_SWITCH_DISABLE_SECRET
 const string MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS = "X2_SWITCH_ENABLE_TAGBASED_SCRIPTS";
 
 //------------------------------------------------------------------------------
+// * Only applies if MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS is true.
+// This switch determines which type of tagbased scrtipting to use 
+// (used in module events g_mod_*, x2_s3_hitcastspell, and x2_inc_spellhook)
+// FALSE = use X2 version wherein all item events are in 1 script.  	
+// TRUE = use seperated scripts named "i_<tag>_<2 letter postfix>"
+//------------------------------------------------------------------------------
+const string MODULE_SWITCH_ENABLE_SEPERATE_ITEM_SCRIPTS = "NWN2_SEPERATE_ITEM_SCRIPTS";
+
+
+//------------------------------------------------------------------------------
 // * Setting thsi switch to TRUE will enable the XP2 Wandering Monster System
 // * for this module (if you are using the default rest script and you have set
 // * up the correct variables for each area
@@ -154,7 +187,7 @@ const string MODULE_VAR_WANDERING_MONSTER_2DA ="X2_WM_2DA_NAME";
 const string MODULE_VAR_AI_NO_DISPEL_AOE_CHANCE = "X2_L_AI_AOE_DISPEL_CHANCE";
 
 //------------------------------------------------------------------------------
-// * Setting this variable to TRUE will cause the Expertise/Improved Expertise
+// * Setting this variable to TRUE will cause the Combat Expertise/Improved Combat Expertise
 // * modes to be disabled whenever a player is casting a spell.
 //------------------------------------------------------------------------------
 const string MODULE_VAR_AI_STOP_EXPERTISE_ABUSE = "X2_L_STOP_EXPERTISE_ABUSE";
@@ -168,13 +201,6 @@ const string MODULE_VAR_AI_STOP_EXPERTISE_ABUSE = "X2_L_STOP_EXPERTISE_ABUSE";
 // * see x2_ai_demo for details
 //------------------------------------------------------------------------------
 const string CREATURE_VAR_CUSTOM_AISCRIPT = "X2_SPECIAL_COMBAT_AI_SCRIPT";
-
-//------------------------------------------------------------------------------
-// * Setting this variable on a creature will make its use a
-// * random name.
-// * see nw_c2_default9 for details.
-//------------------------------------------------------------------------------
-const string CREATURE_VAR_RANDOMIZE_NAME = "X2_NAME_RANDOM";
 
 //------------------------------------------------------------------------------
 // * Setting this variable on a spellcaster creature will make its spelluse a
@@ -250,17 +276,28 @@ const string CREATURE_VAR_PALE_MASTER_SPECIAL_ITEM = "X2_S_PM_SPECIAL_ITEM";
 // These constants define item messages that are routed to script files with
 // the item tag's through the default XP2 module scripts.
 //------------------------------------------------------------------------------
-const int X2_ITEM_EVENT_ACTIVATE = 0;
-const int X2_ITEM_EVENT_EQUIP = 1;
-const int X2_ITEM_EVENT_UNEQUIP = 2;
-const int X2_ITEM_EVENT_ONHITCAST = 3;
-const int X2_ITEM_EVENT_ACQUIRE = 4;
-const int X2_ITEM_EVENT_UNACQUIRE = 5;
-const int X2_ITEM_EVENT_SPELLCAST_AT = 6;
+const int X2_ITEM_EVENT_ACTIVATE 		= 0;
+const int X2_ITEM_EVENT_EQUIP 			= 1;
+const int X2_ITEM_EVENT_UNEQUIP 		= 2;
+const int X2_ITEM_EVENT_ONHITCAST 		= 3;
+const int X2_ITEM_EVENT_ACQUIRE 		= 4;
+const int X2_ITEM_EVENT_UNACQUIRE 		= 5;
+const int X2_ITEM_EVENT_SPELLCAST_AT 	= 6;
 
-const int X2_EXECUTE_SCRIPT_CONTINUE =0;
-const int X2_EXECUTE_SCRIPT_END =1;
+const int X2_EXECUTE_SCRIPT_CONTINUE 	=0;
+const int X2_EXECUTE_SCRIPT_END 		=1;
 
+const int SCRIPT_MAX_STRING_LENGTH 		= 32;
+const int SCRIPT_ITEM_EXTENSION_LENGTH 	= 3;
+
+const string SCRIPT_EXTENSION_ITEM_EVENT_ONHITCAST 		= "_hc";
+const string SCRIPT_EXTENSION_ITEM_EVENT_ACTIVATE		= "_ac";
+const string SCRIPT_EXTENSION_ITEM_EVENT_EQUIP 			= "_eq";
+const string SCRIPT_EXTENSION_ITEM_EVENT_UNEQUIP		= "_ue";
+const string SCRIPT_EXTENSION_ITEM_EVENT_ACQUIRE		= "_aq";
+const string SCRIPT_EXTENSION_ITEM_EVENT_UNACQUIRE		= "_ua";
+const string SCRIPT_EXTENSION_ITEM_EVENT_SPELLCAST_AT 	= "_ci";
+	
 // Set the active User Defined Item Event
 // X2_ITEM_EVENT_ACTIVATE
 // X2_ITEM_EVENT_EQUIP
@@ -404,7 +441,7 @@ void SetModuleSwitch(string sModuleSwitchConstant,int bValue)
 {
     if (bValue == 0)
     {
-        DeleteLocalInt(GetModule(),sModuleSwitchConstant);
+        DeleteLocalInt (GetModule(),sModuleSwitchConstant);
         return;
     } else if ((sModuleSwitchConstant) == MODULE_SWITCH_AOE_HURT_NEUTRAL_NPCS && bValue == TRUE)
     {
@@ -537,7 +574,7 @@ int GetCreatureFlag(object oCreature, string sFlag)
 //----------------------------------------------------------------------------
 int GetUserDefinedItemEventNumber()
 {
-    return GetLocalInt(OBJECT_SELF,"X2_L_LAST_ITEM_EVENT");
+    return GetLocalInt(OBJECT_SELF, "X2_L_LAST_ITEM_EVENT");
 }
 
 //----------------------------------------------------------------------------
@@ -554,6 +591,39 @@ void SetUserDefinedItemEventNumber(int nEvent)
 {
     SetLocalInt(OBJECT_SELF,"X2_L_LAST_ITEM_EVENT",nEvent);
 }
+	
+		
+string GetEventPostfix()
+{
+	string sPostfix = "";
+	int nEvent = GetUserDefinedItemEventNumber();
+
+	switch (nEvent)
+	{
+		case X2_ITEM_EVENT_ONHITCAST:
+			sPostfix = SCRIPT_EXTENSION_ITEM_EVENT_ONHITCAST;
+			break;
+		case X2_ITEM_EVENT_ACTIVATE:
+			sPostfix = SCRIPT_EXTENSION_ITEM_EVENT_ACTIVATE;
+			break;
+		case X2_ITEM_EVENT_EQUIP:
+			sPostfix = SCRIPT_EXTENSION_ITEM_EVENT_EQUIP;
+			break;
+		case X2_ITEM_EVENT_UNEQUIP:
+			sPostfix = SCRIPT_EXTENSION_ITEM_EVENT_UNEQUIP;
+			break;
+		case X2_ITEM_EVENT_ACQUIRE:
+			sPostfix = SCRIPT_EXTENSION_ITEM_EVENT_ACQUIRE;
+			break;
+		case X2_ITEM_EVENT_UNACQUIRE:
+			sPostfix = SCRIPT_EXTENSION_ITEM_EVENT_UNACQUIRE;
+			break;
+		case X2_ITEM_EVENT_SPELLCAST_AT:
+			sPostfix = SCRIPT_EXTENSION_ITEM_EVENT_SPELLCAST_AT;
+			break;
+	}
+	return (sPostfix);
+}
 
 //----------------------------------------------------------------------------
 // Returns the name for the User Defined Item Event script for oItem,
@@ -561,10 +631,21 @@ void SetUserDefinedItemEventNumber(int nEvent)
 //----------------------------------------------------------------------------
 string GetUserDefinedItemEventScriptName(object oItem)
 {
-    string sPrefix = GetLocalString(GetModule(),"MODULE_VAR_TAGBASED_SCRIPT_PREFIX");
-    string sTag = sPrefix + GetTag(oItem);
+    string sPrefix = GetLocalString(GetModule(), MODULE_VAR_TAGBASED_SCRIPT_PREFIX);
+	string sTag = sPrefix + GetTag(oItem);
+	int iMaxPreExtensionLength = SCRIPT_MAX_STRING_LENGTH - SCRIPT_ITEM_EXTENSION_LENGTH;
+
+	if (GetLocalInt(GetModule(), MODULE_SWITCH_ENABLE_SEPERATE_ITEM_SCRIPTS))
+	{
+	    if (GetStringLength(sTag) > iMaxPreExtensionLength)
+		{
+	        sTag = GetStringLeft(sTag, iMaxPreExtensionLength);
+		}
+	 	sTag = sTag + GetEventPostfix();
+	}
     return sTag;
 }
+
 
 //----------------------------------------------------------------------------
 // You can define a prefix for any User Defined Item Event here, to prevent
@@ -573,7 +654,7 @@ string GetUserDefinedItemEventScriptName(object oItem)
 //----------------------------------------------------------------------------
 void SetUserDefinedItemEventPrefix(string sPrefix="")
 {
-    SetLocalString(GetModule(),"MODULE_VAR_TAGBASED_SCRIPT_PREFIX",sPrefix);
+    SetLocalString(GetModule(), MODULE_VAR_TAGBASED_SCRIPT_PREFIX, sPrefix);
 }
 
 //----------------------------------------------------------------------------
@@ -605,6 +686,3 @@ void SetWanderingMonster2DAFile(string s2DAName = "des_restsystem")
 {
     SetLocalString(OBJECT_SELF,MODULE_VAR_WANDERING_MONSTER_2DA,s2DAName);
 }
-
-// Test main
-//void main(){}

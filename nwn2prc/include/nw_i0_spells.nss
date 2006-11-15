@@ -7,15 +7,38 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Jan 2, 2002
 //:: Updated By: 2003/20/10 Georg Zoeller
+//:: Updated By: 6/21/06 BDF-OEI: updated to use NWN2 VFX
 //:://////////////////////////////////////////////
+// 8/9/06 - BDF-OEI: in spellsCure, added the GetSpellCastItem() check to the GetHasFeat() check to make sure that 
+// 	clerics with the healing domain power don't get a bonus when using a healin potion
+// 8/28/06 - BDF-OEI: modified all the Remove*() functions to start back at the beginning of the effects list
+// 	in the event that a desired effect is removed; this helps ensure that effects that are linked to other
+// 	effects are removed safely
+// ChazM 8/29/06 Fix compile error in RemoveSpellEffects()
+// ChazM 8/29/06 moved spellsIsTarget() from x0_i0_spells.
+// DBR 9/08/06 - Added override ability for spellsIsTarget() filter. Added the IgnoreTargetRules* functions.
 
-//:: modifications by mr_bumpkin on dec 4, 2003
-//::
-//:: changed caster level calculations in 2 places to reflect prc caster levels.
-//:: changed MyResistSpell to MyPRCResistSpell in the spellsCure section.
+// * Constants
+// * see spellsIsTarget for a definition of these constants
+const int SPELL_TARGET_ALLALLIES = 1;
+const int SPELL_TARGET_STANDARDHOSTILE = 2;
+const int SPELL_TARGET_SELECTIVEHOSTILE = 3;
+const int SAVING_THROW_NONE = 4;
+// * used by the IgnoreTargetRules functions
+const string ITR_NUM_ENTRIES = "ITR_NUM_ENTRIES"; //number of stored targets to ignore the check.
+const string ITR_ENTRY_PREFIX = "ITR_TARGET_ENTRY"; //prefix for stored targets (ITR_TARGET_ENTRY1, ITR_TARGET_ENTRY15, etc)
+ 
 
-//Added code into spellsCure to maximize for Faith Healing and Blast Infidel
-//Aaon Graywolf - Jan 6, 2003
+// * Generic reputation wrapper
+// * definition of constants:
+// * SPELL_TARGET_ALLALLIES = Will affect all allies, even those in my faction who don't like me
+// * SPELL_TARGET_STANDARDHOSTILE: 90% of offensive area spells will work
+//   this way. They will never hurt NEUTRAL or FRIENDLY NPCs.
+//   They will never hurt FRIENDLY PCs
+//   They WILL hurt NEUTRAL PCs
+// * SPELL_TARGET_SELECTIVEHOSTILE: Will only ever hurt enemies
+int spellsIsTarget(object oTarget, int nTargetType, object oSource);
+
 
 // GZ: Number of spells in GetSpellBreachProtections
 const int NW_I0_SPELLS_MAX_BREACH = 33;
@@ -88,7 +111,37 @@ int AmIAHumanoid(object oTarget);
 void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1);
 
 void RemoveEffectsFromSpell(object oTarget, int SpellID);
+// Iterates through the list of objects on oCaster. Returns the index of the first occurance of oTarget.
+// Returns 1 or higher if a matching object was found.
+// Returns -1 if the entry is not in the list.
+int IgnoreTargetRulesGetFirstIndex(object oCaster, object oTarget);
 
+// Regarding the list of objects on oCaster - this removes the entry with index nEntry from the list.
+// side affect is that it changes the order of the list. But order is not important with the ITR object list.
+void IgnoreTargetRulesRemoveEntry(object oCaster, int nEntry);
+
+//Enqueues a target on a spell caster as an acceptable target to bypass the spellsIsTarget() check on.
+// oCaster - the creature casting the spell.
+// oTarget - the spell target.
+void IgnoreTargetRulesEnqueueTarget(object oCaster, object oTarget);
+
+
+// Enqueues a spell that will ignore the spellsIsTarget logic.
+// Does so by storing temporary variables on the caster of OK targets to bypass on.
+// Parameters the same as ActionCastSpellAtObject() in nwscript.nss
+void IgnoreTargetRulesActionCastSpellAtObject(int nSpell, object oTarget, int nMetaMagic=METAMAGIC_ANY, int bCheat=FALSE, int nDomainLevel=0, int nProjectilePathType=PROJECTILE_PATH_TYPE_DEFAULT, int bInstantSpell=FALSE);
+
+// Enqueues a spell that will ignore the spellsIsTarget logic. 
+// Variation: this will target all within the nShapeType and fShapeSize parameters. (ex SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL)
+//   try to match the nShapeType and fShapeSize parameters to prevent lingerings ITR variables.
+// Other parameters are the same as ActionCastSpellAtObject() in nwscript.nss
+void IgnoreTargetRulesActionCastSpellAtObjectArea(int nShapeType, float fShapeSize, int nSpell, object oTarget, int nMetaMagic=METAMAGIC_ANY, int bCheat=FALSE, int nDomainLevel=0, int nProjectilePathType=PROJECTILE_PATH_TYPE_DEFAULT, int bInstantSpell=FALSE);
+
+// Enqueues a spell that will ignore the spellsIsTarget logic. 
+// Variation: this will target all within the nShapeType and fShapeSize parameters. (ex SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL)
+//   try to match the nShapeType and fShapeSize parameters to prevent lingerings ITR variables.
+// Other parameters are the same as ActionCastSpellAtLocation() in nwscript.nss
+void IgnoreTargetRulesActionCastSpellAtLocationArea(int nShapeType, float fShapeSize, int nSpell, location lTargetLocation, int nMetaMagic=METAMAGIC_ANY, int bCheat=FALSE, int nProjectilePathType=PROJECTILE_PATH_TYPE_DEFAULT, int bInstantSpell=FALSE);
 
 
 #include "prcsp_engine"
@@ -96,7 +149,193 @@ void RemoveEffectsFromSpell(object oTarget, int SpellID);
 #include "inc_dispel"
 #include "prc_inc_combat"
 #include "prc_inc_sp_tch"
+//#include "x0_i0_match"
+//#include "x2_inc_switches"
+//#include "x2_inc_itemprop"
+#include "x0_i0_petrify"
 
+
+//::///////////////////////////////////////////////
+//:: spellsIsTarget
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    This is the reputation wrapper.
+    It performs the check to see if, based on the
+    constant provided
+    it is okay to target this target with the
+    spell effect.
+
+
+    MODIFIED APRIL 2003
+    - Other player's associates will now be harmed in
+       Standard Hostile mode
+    - Will ignore dead people in all target attempts
+
+    MODIFIED AUG 2003 - GZ
+    - Multiple henchmen support: made sure that
+      AoE spells cast by one henchmen do not
+      affect other henchmen in the party
+
+*/
+//:://////////////////////////////////////////////
+//:: Created By: Brent
+//:: Created On: March 6 2003
+//:://////////////////////////////////////////////
+
+int spellsIsTarget(object oTarget, int nTargetType, object oSource)
+{
+	// If we want to ignore the rules of target selection for this spell, always return true.
+	int nEntry = IgnoreTargetRulesGetFirstIndex(oSource, oTarget);	
+	if (nEntry != -1)
+	{
+		IgnoreTargetRulesRemoveEntry(oSource, nEntry);
+		return TRUE;	
+	}		
+	
+    // * if dead, not a valid target
+    if (GetIsDead(oTarget) == TRUE)
+    {
+        return FALSE;
+    }
+
+	// early out if the targets are the same...
+	if ( oTarget == oSource ) 
+	{
+		if ( nTargetType == SPELL_TARGET_ALLALLIES )	return TRUE; 			
+		else											return FALSE;
+	}
+
+
+    int nReturnValue = FALSE;
+
+    switch (nTargetType)
+    {
+        // * this kind of spell will affect all friendlies and anyone in my
+        // * party, even if we are upset with each other currently.
+        case SPELL_TARGET_ALLALLIES:
+        {
+
+            if(GetIsReactionTypeFriendly(oTarget,oSource) || GetFactionEqual(oTarget,oSource))
+            {
+                nReturnValue = TRUE;
+            }
+            break;
+        }
+        case SPELL_TARGET_STANDARDHOSTILE:
+        {
+            int bTargetIsPC = GetIsPC(oTarget);
+            int bNotAFriend = FALSE;
+            int bReactionTypeFriendly = GetIsReactionTypeFriendly(oTarget, oSource);
+			int bInSameFaction = GetFactionEqual(oTarget, oSource);
+            if (bReactionTypeFriendly == FALSE && bInSameFaction == FALSE)
+            {
+                bNotAFriend = TRUE;
+            }
+
+            // * Local Override is just an out for end users who want
+            // * the area effect spells to hurt 'neutrals'
+            if (GetLocalInt(GetModule(), "X0_G_ALLOWSPELLSTOHURT") == 10)
+            {
+                bTargetIsPC = TRUE;
+            }
+
+            int bSelfTarget = FALSE;
+            object oMaster = GetMaster(oTarget);
+
+            // March 25 2003. The player itself can be harmed
+            // by their own area of effect spells if in Hardcore mode...
+            if (GetGameDifficulty() > GAME_DIFFICULTY_NORMAL)
+            {
+                // Have I hit myself with my spell?
+                if (oTarget == oSource)
+                {
+                    bSelfTarget = TRUE;
+                }
+                else
+                // * Is the target an associate of the spellcaster
+                if (oMaster == oSource)
+                {
+                    bSelfTarget = TRUE;
+                }
+            }
+
+            // April 9 2003
+            // Hurt the associates of a hostile player
+            if (bSelfTarget == FALSE && GetIsObjectValid(oMaster) == TRUE)
+            {
+                // * I am an associate
+                // * of someone
+				
+				// 8/17/06 - BDF-OEI: NWN2 doesn't use personal reputation, so PCs in the same party
+				// will consider one another neutral by default; therefore, only hurt associates of HOSTILE PCs
+				if ( !GetGlobalInt(CAMPAIGN_SWITCH_USE_PERSONAL_REPUTATION) )
+				{
+					if ( GetIsReactionTypeHostile(oMaster,oSource) == TRUE )
+					{
+						bSelfTarget = TRUE;
+					}
+				}
+				// Otherwise, we are using personal reputation and neutrality is not a consideration
+				else if ( (GetIsReactionTypeFriendly(oMaster,oSource) == FALSE && GetIsPC(oMaster) == TRUE)
+                			|| GetIsReactionTypeHostile(oMaster,oSource) == TRUE)
+                {
+                    bSelfTarget = TRUE;
+                }
+            }
+
+
+            // Assumption: In Full PvP players, even if in same party, are Neutral
+            // * GZ: 2003-08-30: Patch to make creatures hurt each other in hardcore mode...
+
+            if (GetIsReactionTypeHostile(oTarget,oSource))
+            {
+                nReturnValue = TRUE;         // Hostile creatures are always a target
+            }
+            else if (bSelfTarget == TRUE)
+            {
+                nReturnValue = TRUE;         // Targetting Self (set above)?
+            }
+            else if (bTargetIsPC && bNotAFriend)
+            {
+                nReturnValue = TRUE;         // Enemy PC
+            }
+            else if (bNotAFriend && (GetGameDifficulty() > GAME_DIFFICULTY_NORMAL))
+            {
+                if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_NPC_AOE_HURT_ALLIES) == TRUE)
+                {
+                    nReturnValue = TRUE;        // Hostile Creature and Difficulty > Normal
+                }                               // note that in hardcore mode any creature is hostile
+            }
+            break;
+        }
+        // * only harms enemies, ever
+        // * current list:call lightning, isaac missiles, firebrand, chain lightning, dirge, Nature's balance,
+        // * Word of Faith
+        case SPELL_TARGET_SELECTIVEHOSTILE:
+        {
+            if(GetIsEnemy(oTarget,oSource))
+            {
+                nReturnValue = TRUE;
+            }
+            break;
+        }
+    }
+
+    // GZ: Creatures with the same master will never damage each other
+    if (GetMaster(oTarget) != OBJECT_INVALID && GetMaster(oSource) != OBJECT_INVALID )
+    {
+        if (GetMaster(oTarget) == GetMaster(oSource))
+        {
+            if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_MULTI_HENCH_AOE_DAMAGE) == 0 )
+            {
+                nReturnValue = FALSE;
+            }
+        }
+    }
+
+    return nReturnValue;
+}
 
 // * Returns true if Target is a humanoid
 int AmIAHumanoid(object oTarget)
@@ -120,6 +359,113 @@ int AmIAHumanoid(object oTarget)
    return FALSE;
 }
 
+//::///////////////////////////////////////////////
+//:: spellsCure
+//:: Copyright (c) 2001 Bioware Corp.
+//:://////////////////////////////////////////////
+/*
+    Used by the 'cure' series of spells.
+    Will do max heal/damage if at normal or low
+    difficulty.
+    Random rolls occur at higher difficulties.
+*/
+//:://////////////////////////////////////////////
+//:: Created By:
+//:: Created On:
+//:://////////////////////////////////////////////
+// 8/9/06 - BDF-OEI: added the GetSpellCastItem() check to the GetHasFeat() check to make sure that 
+// 	clerics with the healing domain power don't get a bonus when using a healin potion
+void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impactHurt, int vfx_impactHeal, int nSpellID)
+{
+    //Declare major variables
+    object oTarget = GetSpellTargetObject();
+    int nHeal;
+    int nMetaMagic = GetMetaMagicFeat();
+    effect eHeal, eDam;
+
+    int nExtraDamage = GetCasterLevel(OBJECT_SELF); // * figure out the bonus damage
+    if (nExtraDamage > nMaxExtraDamage)
+    {
+        nExtraDamage = nMaxExtraDamage;
+    }
+    
+	// * if low or normal difficulty is treated as MAXIMIZED
+    if(	GetIsPC(oTarget)/* && 
+       (GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES) */ )
+    {
+        nDamage = nMaximized + nExtraDamage;
+    }
+    else
+    {
+        nDamage = nDamage + nExtraDamage;
+    }
+
+
+    //Make metamagic checks
+    if (nMetaMagic == METAMAGIC_MAXIMIZE)
+    {
+        nDamage = 8 + nExtraDamage;
+        // * if low or normal difficulty then MAXMIZED is doubled.
+        if(GetIsPC(OBJECT_SELF) && GetGameDifficulty() < GAME_DIFFICULTY_CORE_RULES)
+        {
+            nDamage = nDamage + nExtraDamage;
+        }
+    }
+	// 8/9/06 - BDF-OEI: added the GetSpellCastItem() check to the GetHasFeat() check to make sure that 
+	// 	clerics with the healing domain power don't get a bonus when using a healin potion
+    if ( nMetaMagic == METAMAGIC_EMPOWER || (GetHasFeat( FEAT_HEALING_DOMAIN_POWER ) && !GetIsObjectValid( GetSpellCastItem() )) )
+    {
+        nDamage = nDamage + (nDamage/2);
+    }
+
+
+    // JLR - OEI 06/06/05 NWN2 3.5
+    if ( GetHasFeat(FEAT_AUGMENT_HEALING) )
+    {
+        int nSpellLvl = GetSpellLevel(nSpellID);
+        nDamage = nDamage + (2 * nSpellLvl);
+    }
+
+
+    if (GetRacialType(oTarget) != RACIAL_TYPE_UNDEAD)
+    {
+        //Figure out the amount of damage to heal
+        //nHeal = nDamage;  -- this line seemed kinda pointless
+        //Set the heal effect
+		//eWound- Cure spells now remove the wounding effect, which causes targets to bleed out - PKM-OEI 09.06.06
+        eHeal = EffectHeal(nDamage);
+		RemoveEffectOfType(oTarget, EFFECT_TYPE_WOUNDING);
+		//Apply heal effect and VFX impact
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eHeal, oTarget);
+        effect eVis2 = EffectVisualEffect(vfx_impactHeal);
+        ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+        //Fire cast spell at event for the specified target
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
+
+
+    }
+    //Check that the target is undead
+    else
+    {
+        int nTouch = TouchAttackMelee(oTarget);
+        if (nTouch > 0)
+        {
+            if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
+            {
+                //Fire cast spell at event for the specified target
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
+                if (!MyResistSpell(OBJECT_SELF, oTarget))
+                {
+                    eDam = EffectDamage(nDamage,DAMAGE_TYPE_DIVINE);
+                    //Apply the VFX impact and effects
+                    DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    effect eVis = EffectVisualEffect(vfx_impactHurt);
+                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                }
+            }
+        }
+    }
+}
 
 //::///////////////////////////////////////////////
 //:: DoSpelLBreach
@@ -142,9 +488,12 @@ void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1)
         nSpellId =  SPELL_GREATER_SPELL_BREACH;
     }
     effect eSR = EffectSpellResistanceDecrease(nSR);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    effect eDur;
+	
+	if ( nSpellId == SPELL_LESSER_SPELL_BREACH )	eDur = EffectVisualEffect( VFX_DUR_SPELL_LESSER_SPELL_BREACH );
+	else											eDur = EffectVisualEffect( VFX_DUR_SPELL_GREATER_SPELL_BREACH );
 
-    effect eVis = EffectVisualEffect(VFX_IMP_BREACH);
+    //effect eVis = EffectVisualEffect(VFX_HIT_SPELL_ABJURATION);
     int nCnt, nIdx;
     if(!GetIsReactionTypeFriendly(oTarget))
     {
@@ -163,8 +512,7 @@ void DoSpellBreach(object oTarget, int nTotal, int nSR, int nSpellId = -1)
         eLink = ExtraordinaryEffect(eLink);
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(10),TRUE);
     }
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-
+    //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
 }
 
 //::///////////////////////////////////////////////
@@ -320,10 +668,13 @@ void RemoveTempHitPoints()
     eProtection = GetFirstEffect(OBJECT_SELF);
     while (GetIsEffectValid(eProtection))
     {
-      if(GetEffectType(eProtection) == EFFECT_TYPE_TEMPORARY_HITPOINTS)
-        RemoveEffect(OBJECT_SELF, eProtection);
-      eProtection = GetNextEffect(OBJECT_SELF);
-    }
+      	if(GetEffectType(eProtection) == EFFECT_TYPE_TEMPORARY_HITPOINTS)
+	  	{
+       		RemoveEffect(OBJECT_SELF, eProtection);
+      		eProtection = GetFirstEffect(OBJECT_SELF);	// 8/28/06 - BDF-OEI: start back at the beginning to ensure that linked effects are removed safely
+		}
+		else 	eProtection = GetNextEffect(OBJECT_SELF);
+	}
 }
 
 // * Kovi. removes any effects from this type of spell
@@ -331,12 +682,16 @@ void RemoveTempHitPoints()
 // * mage armors
 void RemoveEffectsFromSpell(object oTarget, int SpellID)
 {
-  effect eLook = GetFirstEffect(oTarget);
-  while (GetIsEffectValid(eLook)) {
-    if (GetEffectSpellId(eLook) == SpellID)
-      RemoveEffect(oTarget, eLook);
-    eLook = GetNextEffect(oTarget);
-  }
+  	effect eLook = GetFirstEffect(oTarget);
+  	while (GetIsEffectValid(eLook)) 
+	{
+    	if (GetEffectSpellId(eLook) == SpellID)
+		{
+      		RemoveEffect(oTarget, eLook);
+			eLook = GetFirstEffect(oTarget);	// 8/28/06 - BDF-OEI: start back at the beginning to ensure that linked effects are removed safely
+		}
+		else	eLook = GetNextEffect(oTarget);
+  	}
 }
 
 int MyResistSpell(object oCaster, object oTarget, float fDelay = 0.0)
@@ -346,9 +701,13 @@ int MyResistSpell(object oCaster, object oTarget, float fDelay = 0.0)
         fDelay = fDelay - 0.1;
     }
     int nResist = ResistSpell(oCaster, oTarget);
-    effect eSR = EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE);
-    effect eGlobe = EffectVisualEffect(VFX_IMP_GLOBE_USE);
-    effect eMantle = EffectVisualEffect(VFX_IMP_SPELL_MANTLE_USE);
+    //effect eSR = EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE);	// no longer using NWN1 VFX
+    effect eSR = EffectVisualEffect( VFX_DUR_SPELL_SPELL_RESISTANCE );	// uses NWN2 VFX
+    //effect eGlobe = EffectVisualEffect(VFX_IMP_GLOBE_USE);	// no longer using NWN1 VFX
+    effect eGlobe = EffectVisualEffect( VFX_DUR_SPELL_GLOBE_INV_LESS );	// uses NWN2 VFX
+    //effect eMantle = EffectVisualEffect(VFX_IMP_SPELL_MANTLE_USE);	// no longer using NWN1 VFX
+    effect eMantle = EffectVisualEffect( VFX_DUR_SPELL_SPELL_MANTLE );	// uses NWN2 VFX
+	
     if(nResist == 1) //Spell Resistance
     {
         DelayCommand(fDelay, ApplyEffectToObject(DURATION_TYPE_INSTANT, eSR, oTarget));
@@ -390,7 +749,7 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
         bValid = FortitudeSave(oTarget, nDC, nSaveType, oSaveVersus);
         if(bValid == 1)
         {
-            eVis = EffectVisualEffect(VFX_IMP_FORTITUDE_SAVING_THROW_USE);
+            //eVis = EffectVisualEffect(VFX_IMP_FORTITUDE_SAVING_THROW_USE);	// no longer using NWN1 VFX; there is no analogous NWN2 VFX
         }
     }
     else if(nSavingThrow == SAVING_THROW_REFLEX)
@@ -398,7 +757,7 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
         bValid = ReflexSave(oTarget, nDC, nSaveType, oSaveVersus);
         if(bValid == 1)
         {
-            eVis = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
+            //eVis = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);	// no longer using NWN1 VFX; there is no analogous NWN2 VFX
         }
     }
     else if(nSavingThrow == SAVING_THROW_WILL)
@@ -406,7 +765,7 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
         bValid = WillSave(oTarget, nDC, nSaveType, oSaveVersus);
         if(bValid == 1)
         {
-            eVis = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);
+            //eVis = EffectVisualEffect(VFX_IMP_WILL_SAVING_THROW_USE);	// no longer using NWN1 VFX; there is no analogous NWN2 VFX
         }
     }
 
@@ -437,7 +796,8 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
     {
         if(bValid == 2)
         {
-            eVis = EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE);
+            //eVis = EffectVisualEffect(VFX_IMP_MAGIC_RESISTANCE_USE);	// no longer using NWN1 VFX
+			eVis = EffectVisualEffect( VFX_DUR_SPELL_SPELL_RESISTANCE );	// makes use of NWN2 VFX
             /*
             If the spell is save immune then the link must be applied in order to get the true immunity
             to be resisted.  That is the reason for returing false and not true.  True blocks the
@@ -452,47 +812,30 @@ int MySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SAVIN
 
 effect CreateProtectionFromAlignmentLink(int nAlignment, int nPower = 1)
 {
-    int nAlignmentLC;
-    int nAlignmentGE;
+    int nFinal = nPower * 2;
+    effect eAC = EffectACIncrease(nFinal, AC_DEFLECTION_BONUS);
+    eAC = VersusAlignmentEffect(eAC, ALIGNMENT_ALL, nAlignment);
+    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nFinal);
+    eSave = VersusAlignmentEffect(eSave,ALIGNMENT_ALL, nAlignment);
+    effect eImmune = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
+    eImmune = VersusAlignmentEffect(eImmune,ALIGNMENT_ALL, nAlignment);
     effect eDur;
-    if(nAlignment == ALIGNMENT_LAWFUL)
+    if(nAlignment == ALIGNMENT_EVIL)
     {
-        nAlignmentLC = ALIGNMENT_LAWFUL;
-        nAlignmentGE = ALIGNMENT_ALL;
-        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
-    }
-    else if(nAlignment == ALIGNMENT_CHAOTIC)
-    {
-        nAlignmentLC = ALIGNMENT_CHAOTIC;
-        nAlignmentGE = ALIGNMENT_ALL;
-        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
+        //eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);	// no longer using NWN1 VFX
+        eDur = EffectVisualEffect( VFX_DUR_SPELL_GOOD_CIRCLE );	// makes use of NWN2 VFX
     }
     else if(nAlignment == ALIGNMENT_GOOD)
     {
-        nAlignmentLC = ALIGNMENT_ALL;
-        nAlignmentGE = ALIGNMENT_GOOD;
-        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
-    }
-    else if(nAlignment == ALIGNMENT_EVIL)
-    {
-        nAlignmentLC = ALIGNMENT_ALL;
-        nAlignmentGE = ALIGNMENT_EVIL;
-        eDur = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
+        //eDur = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);	// no longer using NWN1 VFX
+        eDur = EffectVisualEffect( VFX_DUR_SPELL_EVIL_CIRCLE );	// makes use of NWN2 VFX
     }
 
-    int nFinal = nPower * 2;
-    effect eAC = EffectACIncrease(nFinal, AC_DEFLECTION_BONUS);
-    eAC = VersusAlignmentEffect(eAC, nAlignmentLC, nAlignmentGE);
-    effect eSave = EffectSavingThrowIncrease(SAVING_THROW_ALL, nFinal);
-    eSave = VersusAlignmentEffect(eSave,nAlignmentLC, nAlignmentGE);
-    effect eImmune = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
-    eImmune = VersusAlignmentEffect(eImmune,nAlignmentLC, nAlignmentGE);
-
-    effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    //effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     effect eLink = EffectLinkEffects(eImmune, eSave);
     eLink = EffectLinkEffects(eLink, eAC);
     eLink = EffectLinkEffects(eLink, eDur);
-    eLink = EffectLinkEffects(eLink, eDur2);
+    //eLink = EffectLinkEffects(eLink, eDur2);
     return eLink;
 }
 
@@ -503,7 +846,8 @@ effect CreateDoomEffectsLink()
     effect eAttack = EffectAttackDecrease(2);
     effect eDamage = EffectDamageDecrease(2);
     effect eSkill = EffectSkillDecrease(SKILL_ALL_SKILLS, 2);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);	// NWN1 VFX
+    effect eDur = EffectVisualEffect( VFX_DUR_SPELL_DOOM );	// NWN2 VFX
 
     effect eLink = EffectLinkEffects(eAttack, eDamage);
     eLink = EffectLinkEffects(eLink, eSaves);
@@ -516,13 +860,12 @@ effect CreateDoomEffectsLink()
 void RemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget)
 {
     //Declare major variables
-    int bValid = FALSE;
     effect eAOE;
     if(GetHasSpellEffect(nSpell_ID, oTarget))
     {
         //Search through the valid effects on the target.
         eAOE = GetFirstEffect(oTarget);
-        while (GetIsEffectValid(eAOE) && bValid == FALSE)
+        while (GetIsEffectValid(eAOE))
         {
             if (GetEffectCreator(eAOE) == oCaster)
             {
@@ -530,11 +873,19 @@ void RemoveSpellEffects(int nSpell_ID, object oCaster, object oTarget)
                 if(GetEffectSpellId(eAOE) == nSpell_ID)
                 {
                     RemoveEffect(oTarget, eAOE);
-                    bValid = TRUE;
+					eAOE = GetFirstEffect(oTarget);	// 8/28/06 - BDF-OEI: start back at the beginning to ensure that linked effects are removed safely
+                    //bValid = TRUE;
                 }
+				else
+				{
+					eAOE = GetNextEffect(oTarget);
+				}
             }
-            //Get next effect on the target
-            eAOE = GetNextEffect(oTarget);
+			else
+			{
+            	//Get next effect on the target
+            	eAOE = GetNextEffect(oTarget);
+			}
         }
     }
 }
@@ -543,7 +894,6 @@ void RemoveSpecificEffect(int nEffectTypeID, object oTarget)
 {
     //Declare major variables
     //Get the object that is exiting the AOE
-    int bValid = FALSE;
     effect eAOE;
     //Search through the valid effects on the target.
     eAOE = GetFirstEffect(oTarget);
@@ -552,11 +902,14 @@ void RemoveSpecificEffect(int nEffectTypeID, object oTarget)
         if (GetEffectType(eAOE) == nEffectTypeID)
         {
             //If the effect was created by the spell then remove it
-            bValid = TRUE;
             RemoveEffect(oTarget, eAOE);
+			eAOE = GetFirstEffect(oTarget);	// 8/28/06 - BDF-OEI: start back at the beginning to ensure that linked effects are removed safely
         }
-        //Get next effect on the target
-        eAOE = GetNextEffect(oTarget);
+		else
+		{
+        	//Get next effect on the target
+        	eAOE = GetNextEffect(oTarget);
+		}
     }
 }
 
@@ -569,13 +922,13 @@ float GetSpellEffectDelay(location SpellTargetLocation, object oTarget)
 float GetRandomDelay(float fMinimumTime = 0.4, float MaximumTime = 1.1)
 {
     float fRandom = MaximumTime - fMinimumTime;
-    int nRandom;
     if(fRandom < 0.0)
     {
         return 0.0;
     }
     else
     {
+        int nRandom;
         nRandom = FloatToInt(fRandom  * 10.0);
         nRandom = Random(nRandom) + 1;
         fRandom = IntToFloat(nRandom);
@@ -656,6 +1009,7 @@ int RemoveProtections(int nSpell_ID, object oTarget, int nCount)
             if(GetEffectSpellId(eProtection) == nSpell_ID)
             {
                 RemoveEffect(oTarget, eProtection);
+				eProtection = GetFirstEffect(oTarget);	// 8/28/06 - BDF-OEI: start back at the beginning to ensure that linked effects are removed safely
                 //return 1;
                 nCnt++;
             }
@@ -693,7 +1047,7 @@ int GetSpellBreachProtection(int nLastChecked)
     else if(nLastChecked == 7) {return SPELL_GLOBE_OF_INVULNERABILITY;}
     else if(nLastChecked == 8) {return SPELL_ENERGY_BUFFER;}
     else if(nLastChecked == 9) {return 443;} // greater sanctuary
-    else if(nLastChecked == 10) {return SPELL_MINOR_GLOBE_OF_INVULNERABILITY;}
+    else if(nLastChecked == 10) {return SPELL_LESSER_GLOBE_OF_INVULNERABILITY;}	// JLR - OEI 07/13/05 -- Name Changed
     else if(nLastChecked == 11) {return SPELL_SPELL_RESISTANCE;}
     else if(nLastChecked == 12) {return SPELL_STONESKIN;}
     else if(nLastChecked == 13) {return SPELL_LESSER_SPELL_MANTLE;}
@@ -701,21 +1055,21 @@ int GetSpellBreachProtection(int nLastChecked)
     else if(nLastChecked == 15) {return SPELL_MIND_BLANK;}
     else if(nLastChecked == 16) {return SPELL_ELEMENTAL_SHIELD;}
     else if(nLastChecked == 17) {return SPELL_PROTECTION_FROM_SPELLS;}
-    else if(nLastChecked == 18) {return SPELL_PROTECTION_FROM_ELEMENTS;}
-    else if(nLastChecked == 19) {return SPELL_RESIST_ELEMENTS;}
+    else if(nLastChecked == 18) {return SPELL_PROTECTION_FROM_ENERGY;}	// JLR - OEI 07/13/05 -- Name Changed
+    else if(nLastChecked == 19) {return SPELL_RESIST_ENERGY;}	// JLR - OEI 07/13/05 -- Name Changed
     else if(nLastChecked == 20) {return SPELL_DEATH_ARMOR;}
     else if(nLastChecked == 21) {return SPELL_GHOSTLY_VISAGE;}
     else if(nLastChecked == 22) {return SPELL_ENDURE_ELEMENTS;}
     else if(nLastChecked == 23) {return SPELL_SHADOW_SHIELD;}
     else if(nLastChecked == 24) {return SPELL_SHADOW_CONJURATION_MAGE_ARMOR;}
-    else if(nLastChecked == 25) {return SPELL_NEGATIVE_ENERGY_PROTECTION;}
+//    else if(nLastChecked == 25) {return SPELL_NEGATIVE_ENERGY_PROTECTION;}	// JLR - OEI 07/16/06 -- REMOVED
     else if(nLastChecked == 26) {return SPELL_SANCTUARY;}
     else if(nLastChecked == 27) {return SPELL_MAGE_ARMOR;}
-    else if(nLastChecked == 28) {return SPELL_STONE_BONES;}
+//    else if(nLastChecked == 28) {return SPELL_STONE_BONES;}	// JLR - OEI 07/13/05 -- REMOVED
     else if(nLastChecked == 29) {return SPELL_SHIELD;}
     else if(nLastChecked == 30) {return SPELL_SHIELD_OF_FAITH;}
     else if(nLastChecked == 31) {return SPELL_LESSER_MIND_BLANK;}
-    else if(nLastChecked == 32) {return SPELL_IRONGUTS;}
+//    else if(nLastChecked == 32) {return SPELL_IRONGUTS;}	// JLR - OEI 07/13/05 -- REMOVED
     else if(nLastChecked == 33) {return SPELL_RESISTANCE;}
     return nLastChecked;
 }
@@ -744,11 +1098,12 @@ void TrapDoElectricalDamage(int ngDamageMaster, int nSaveDC, int nSecondary)
     //Declare major variables
     object oTarget = GetEnteringObject();
     object o2ndTarget;
-    effect eLightning = EffectBeam(VFX_BEAM_LIGHTNING, oTarget, BODY_NODE_CHEST);
+    effect eLightning = EffectBeam(VFX_BEAM_LIGHTNING, oTarget, BODY_NODE_CHEST);	// no longer using NWN1 VFX; does this still work?
+    //effect eLightning = EffectVisualEffect( VFX_BEAM_LIGHTNING );	// makes use of NWN2 VFX
     int nDamageMaster = ngDamageMaster;
     int nDamage = nDamageMaster;
     effect eDam;
-    effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
+    effect eVis = EffectVisualEffect( VFX_IMP_LIGHTNING_S );
     location lTarget = GetLocation(oTarget);
     int nCount = 0;
     //Adjust the trap damage based on the feats of the target
@@ -770,7 +1125,7 @@ void TrapDoElectricalDamage(int ngDamageMaster, int nSaveDC, int nSecondary)
     if (nDamage > 0)
     {
         eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+        DelayCommand(0.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
         ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
     }
     //Reset the damage;
@@ -804,12 +1159,13 @@ void TrapDoElectricalDamage(int ngDamageMaster, int nSaveDC, int nSecondary)
                     //Set the damage effect
                     eDam = EffectDamage(nDamage, DAMAGE_TYPE_ELECTRICAL);
                     //Apply the VFX impact and damage effect
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, o2ndTarget);
+                    DelayCommand(0.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, o2ndTarget));
                     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, o2ndTarget);
                     //Connect the lightning stream from one target to another.
                     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLightning, o2ndTarget, 0.75);
                     //Set the last target as the new start for the lightning stream
-                    eLightning = EffectBeam(VFX_BEAM_LIGHTNING, o2ndTarget, BODY_NODE_CHEST);
+                    eLightning = EffectBeam(VFX_BEAM_LIGHTNING, o2ndTarget, BODY_NODE_CHEST);	// no longer using NWN1 VFX; does this still work?
+                    //eLightning = EffectVisualEffect( VFX_BEAM_LIGHTNING );	// makes use of NWN2 VFX
                 }
             }
             //Reset the damage
@@ -822,3 +1178,87 @@ void TrapDoElectricalDamage(int ngDamageMaster, int nSaveDC, int nSecondary)
     }
 }
 
+// Iterates through the list of objects on oCaster. Returns the index of the first occurance of oTarget.
+// Returns 1 or higher if a matching object was found.
+// Returns -1 if the entry is not in the list.
+int IgnoreTargetRulesGetFirstIndex(object oCaster, object oTarget)
+{
+	int nITREntries = GetLocalInt(oCaster, ITR_NUM_ENTRIES), i;
+	object oEntry;
+	for (i=1; i<=nITREntries; i++)
+	{
+		oEntry = GetLocalObject(oCaster, ITR_ENTRY_PREFIX + IntToString(i));
+		if (oEntry == oTarget)
+			return i;
+	}
+	return -1;
+}
+
+// Regarding the list of objects on oCaster - this removes the entry with index nEntry from the list.
+// side affect is that it changes the order of the list. But order is not important with the ITR object list.
+void IgnoreTargetRulesRemoveEntry(object oCaster, int nEntry)
+{
+	int nITREntries = GetLocalInt(oCaster, ITR_NUM_ENTRIES);
+	if ((nITREntries>0) && (nEntry>0) && (nEntry<=nITREntries))
+	{
+		object oEntry = GetLocalObject(oCaster, ITR_ENTRY_PREFIX + IntToString(nITREntries));
+		SetLocalObject(oCaster, ITR_ENTRY_PREFIX + IntToString(nEntry), GetLocalObject(oCaster, ITR_ENTRY_PREFIX + IntToString(nITREntries))); //replace nEntry with last object in list.
+		DeleteLocalObject(oCaster, ITR_ENTRY_PREFIX + IntToString(nITREntries));
+		SetLocalInt(oCaster, ITR_NUM_ENTRIES, nITREntries-1); //decrement list total
+	}
+}
+
+//Enqueues a target on a spell caster as an acceptable target to bypass the spellsIsTarget() check on.
+// oCaster - the creature casting the spell.
+// oTarget - the spell target.
+void IgnoreTargetRulesEnqueueTarget(object oCaster, object oTarget)
+{
+	int nITREntries = GetLocalInt(oCaster, ITR_NUM_ENTRIES) + 1;
+	SetLocalObject(oCaster, ITR_ENTRY_PREFIX + IntToString(nITREntries), oTarget);
+	SetLocalInt(oCaster,ITR_NUM_ENTRIES,nITREntries);
+}
+
+
+// Enqueues a spell that will ignore the spellsIsTarget logic.
+// Does so by storing temporary variables on the caster of OK targets to bypass on.
+// Parameters the same as ActionCastSpellAtObject() in nwscript.nss
+void IgnoreTargetRulesActionCastSpellAtObject(int nSpell, object oTarget, int nMetaMagic=METAMAGIC_ANY, int bCheat=FALSE, int nDomainLevel=0, int nProjectilePathType=PROJECTILE_PATH_TYPE_DEFAULT, int bInstantSpell=FALSE)
+{
+	IgnoreTargetRulesEnqueueTarget(OBJECT_SELF, oTarget);
+	ActionCastSpellAtObject(nSpell, oTarget, nMetaMagic,bCheat,nDomainLevel,nProjectilePathType, bInstantSpell);
+}
+
+// Enqueues a spell that will ignore the spellsIsTarget logic. 
+// Variation: this will target all within the nShapeType and fShapeSize parameters. (ex SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL)
+//   try to match the nShapeType and fShapeSize parameters to prevent lingerings ITR variables.
+// Other parameters are the same as ActionCastSpellAtObject() in nwscript.nss
+void IgnoreTargetRulesActionCastSpellAtObjectArea(int nShapeType, float fShapeSize, int nSpell, object oTarget, int nMetaMagic=METAMAGIC_ANY, int bCheat=FALSE, int nDomainLevel=0, int nProjectilePathType=PROJECTILE_PATH_TYPE_DEFAULT, int bInstantSpell=FALSE)
+{
+    oTarget = GetFirstObjectInShape(nShapeType, fShapeSize, GetLocation(OBJECT_SELF));
+    while(GetIsObjectValid(oTarget))
+    {
+		IgnoreTargetRulesEnqueueTarget(OBJECT_SELF, oTarget);		
+        //Get the next target in the specified area around the caster
+        oTarget = GetNextObjectInShape(nShapeType, fShapeSize, GetLocation(OBJECT_SELF));
+	}
+	ActionCastSpellAtObject(nSpell,oTarget,nMetaMagic,bCheat, nDomainLevel,nProjectilePathType, bInstantSpell);		
+}
+
+// Enqueues a spell that will ignore the spellsIsTarget logic. 
+// Variation: this will target all within the nShapeType and fShapeSize parameters. (ex SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL)
+//   try to match the nShapeType and fShapeSize parameters to prevent lingerings ITR variables.
+// Other parameters are the same as ActionCastSpellAtLocation() in nwscript.nss
+void IgnoreTargetRulesActionCastSpellAtLocationArea(int nShapeType, float fShapeSize, int nSpell, location lTargetLocation, int nMetaMagic=METAMAGIC_ANY, int bCheat=FALSE, int nProjectilePathType=PROJECTILE_PATH_TYPE_DEFAULT, int bInstantSpell=FALSE)
+{
+    object oTarget = GetFirstObjectInShape(nShapeType, fShapeSize, lTargetLocation);
+    while(GetIsObjectValid(oTarget))
+    {
+		IgnoreTargetRulesEnqueueTarget(OBJECT_SELF, oTarget);		
+        //Get the next target in the specified area around the caster
+        oTarget = GetNextObjectInShape(nShapeType, fShapeSize, lTargetLocation);
+	}
+	ActionCastSpellAtLocation(nSpell,lTargetLocation,nMetaMagic,bCheat,nProjectilePathType, bInstantSpell);
+}
+
+
+//void main() {}

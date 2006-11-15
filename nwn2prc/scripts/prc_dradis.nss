@@ -15,7 +15,7 @@
 #include "prc_feat_const"
 #include "prc_spell_const"
 #include "prc_ip_srcost"
-#include "pnp_shft_poly"
+//#include "pnp_shft_poly"
 #include "prc_compan_inc"
 
 //Adds total elemental immunity for the majority of dragon types.

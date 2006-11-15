@@ -78,7 +78,7 @@ int GetIsPRCCreatureWeapon(object oTest);
 float DamageAvg(int iDamage);
 
 #include "prc_alterations"
-#include "pnp_shft_poly"
+//#include "pnp_shft_poly"
 #include "prc_feat_const"
 #include "prc_ipfeat_const"
 #include "prc_class_const"
@@ -184,8 +184,8 @@ int FindUnarmedDamage(object oCreature)
     // if the creature is shifted, use model size
     // otherwise, we want to stick to what the feats say they "should" be.
     // No making pixies with Dragon Appearance for "huge" fist damage.
-    if( GetIsPolyMorphedOrShifted(oCreature) 
-        || GetPRCSwitch(PRC_APPEARANCE_SIZE))
+    if( /*GetIsPolyMorphedOrShifted(oCreature) 
+        ||*/ GetPRCSwitch(PRC_APPEARANCE_SIZE))
     {
          iSize = PRCGetCreatureSize(oCreature) - CREATURE_SIZE_MEDIUM + 5; // medium is size 5 for us
     }
@@ -285,7 +285,7 @@ int FindUnarmedDamage(object oCreature)
 void UnarmedFeats(object oCreature)
 {
     // If we are polymorphed/shifted, do not mess with the creature weapon.
-    if (GetIsPolyMorphedOrShifted(oCreature)) return;
+    //if (GetIsPolyMorphedOrShifted(oCreature)) return;
     
     object oSkin = GetPCSkin(oCreature);
 
@@ -322,7 +322,7 @@ void UnarmedFeats(object oCreature)
 void UnarmedFists(object oCreature)
 {
     // If we are polymorphed/shifted, do not mess with the creature weapon.
-    if (GetIsPolyMorphedOrShifted(oCreature)) return;
+    //if (GetIsPolyMorphedOrShifted(oCreature)) return;
     
     RemoveUnarmedAttackEffects(oCreature);
 

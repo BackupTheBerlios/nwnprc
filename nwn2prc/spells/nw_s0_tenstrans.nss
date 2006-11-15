@@ -58,7 +58,7 @@ effects are subsumed by the spell effects).
 #include "prc_alterations"
 #include "x2_inc_shifter"
 
-#include "pnp_shft_poly"
+//#include "pnp_shft_poly"
 
 int CalculateAttackBonus()
 {

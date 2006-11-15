@@ -23,7 +23,7 @@ void LevelUpHide(object oPC, object oHide, int nLevel);
 void CraftVFX(object oObject);
 
 #include "inc_utility"
-#include "pnp_shft_main"
+//#include "pnp_shft_main"
 
 void LichSkills(object oHide, int iLevel)
 {

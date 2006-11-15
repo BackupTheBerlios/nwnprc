@@ -25,7 +25,7 @@ int PRC_Polymorph_Check(object oPC);
 // oPC = PC to unshift/unpolymorph
 void PRC_UnPolymorph(object oPC);
 
-#include "pnp_shft_main"
+//#include "pnp_shft_main"
 
 
 

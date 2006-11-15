@@ -1,4 +1,3 @@
-
 #include "prc_alterations"
 
 void main()
@@ -30,7 +29,7 @@ void main()
     }
 
     //this command will make shore that polymorph plays nice with the shifter
-    ShifterCheck(OBJECT_SELF);
+    //ShifterCheck(OBJECT_SELF);
 
         ClearAllActions(); // prevents an exploit
   

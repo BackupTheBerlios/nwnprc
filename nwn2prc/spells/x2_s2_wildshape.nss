@@ -13,7 +13,7 @@
 //:: Last Updated By: Andrew Nobbs May 20, 2003
 
 #include "prc_inc_clsfunc"
-#include "pnp_shft_poly"
+//#include "pnp_shft_poly"
 
 
 void main()

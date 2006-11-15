@@ -27,7 +27,7 @@
 
 #include "prc_alterations"
 
-
+/*
 void main()
 {
     int iSpell = GetSpellId();
@@ -101,4 +101,4 @@ void main()
         //SetCreatureAppearanceType(OBJECT_SELF,nPCForm);
         
     }
-}    
+}    */

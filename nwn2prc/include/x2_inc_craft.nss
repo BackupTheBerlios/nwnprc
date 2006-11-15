@@ -577,7 +577,7 @@ These dont work as IPs since they are hardcoded */
         string sName;
         sName = Get2DACache("spells", "Name", nID);
         sName = "Potion of "+GetStringByStrRef(StringToInt(sName));
-        SetName(oPotion, sName);
+        SetFirstName(oPotion, sName);
         return TRUE;
      }
      else
@@ -836,7 +836,7 @@ These dont work as IPs since they are hardcoded */
         string sName;
         sName = Get2DACache("spells", "Name", nID);
         sName = "Wand of "+GetStringByStrRef(StringToInt(sName));
-        SetName(oWand, sName);
+        SetFirstName(oWand, sName);
         return TRUE;
      }
      else
@@ -976,7 +976,7 @@ These dont work as IPs since they are hardcoded */
         sName = GetName(oCaster)+"'s Magic Staff";
         //sName = Get2DACache("spells", "Name", nID);
         //sName = "Wand of "+GetStringByStrRef(StringToInt(sName));
-        SetName(oSpellTarget, sName);
+        SetFirstName(oSpellTarget, sName);
         return TRUE;
     }
     else
@@ -1209,7 +1209,7 @@ int InscribeRune()
         sName = "Rune of "+GetStringByStrRef(StringToInt(sName));
         if(GetLocalInt(oCaster, "MaximizeRune"))
             sName = "Maximized "+sName;
-        SetName(oRune, sName);
+        SetFirstName(oRune, sName);
     }
 
     // If we have made it this far, they have crafted the rune and the spell has been used up, so it returns false.

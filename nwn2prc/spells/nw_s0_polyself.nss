@@ -15,7 +15,7 @@
 //:: modified by mr_bumpkin Dec 4, 2003 for PRC stuff
 #include "spinc_common"
 #include "x2_inc_spellhook"
-#include "pnp_shft_poly"
+//#include "pnp_shft_poly"
 #include "prc_inc_clsfunc"
 
 void main()

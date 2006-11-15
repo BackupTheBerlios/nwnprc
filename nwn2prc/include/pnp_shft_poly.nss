@@ -3,7 +3,7 @@ int GetIsPolyMorphedOrShifted(object oCreature);
 void DoDisguise(int nRace, object oTarget = OBJECT_SELF);
 void ShifterCheck(object oPC);
 
-#include "pnp_shft_main"
+//#include "pnp_shft_main"
 
 void ShifterCheck(object oPC)
 {

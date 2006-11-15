@@ -273,7 +273,7 @@ void DoNaturalWeaponHB(object oPC = OBJECT_SELF)
     //in a different form, abort for now fix it later   
     //not in combat, abort
     if(array_exists(oPC, ARRAY_NAT_SEC_WEAP_RESREF)
-        && !GetIsPolyMorphedOrShifted(oPC)
+        //&& !GetIsPolyMorphedOrShifted(oPC)
         && GetIsInCombat(oPC))
     {   
         UpdateSecondaryWeaponSizes(oPC);

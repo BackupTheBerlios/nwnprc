@@ -22,7 +22,7 @@
 #include "prc_ipfeat_const"
 #include "inc_utility"
 #include "nw_i0_spells"
-#include "pnp_shft_poly"
+//#include "pnp_shft_poly"
 #include "x2_inc_spellhook"
 #include "prc_inc_combat"
 #include "prc_inc_sp_tch"
@@ -1392,7 +1392,7 @@ void LycanthropePoly(object oPC, int nPoly)
     }
 
     //check if a shifter and if shifted then unshift
-    ShifterCheck(oPC);
+    //ShifterCheck(oPC);
 
     ClearAllActions(); // prevents an exploit
 

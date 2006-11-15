@@ -45,7 +45,7 @@ void StoreCohort(object oCohort);
 #include "prc_feat_const"
 #include "inc_utility"
 #include "inc_ecl"
-#include "pnp_shft_poly" //for DoDisguise
+//#include "pnp_shft_poly" //for DoDisguise
 
 
 //////////////////////////////////////////////////

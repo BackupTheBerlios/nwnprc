@@ -25,8 +25,8 @@
 void main()
 {
     object oPC = OBJECT_SELF;
-    if(GetIsPolyMorphedOrShifted(oPC))
-        return;
+    //if(GetIsPolyMorphedOrShifted(oPC))
+       //return;
         
     int nRace = GetRacialType(oPC);
     int nCurrAppear = GetAppearanceType(oPC);

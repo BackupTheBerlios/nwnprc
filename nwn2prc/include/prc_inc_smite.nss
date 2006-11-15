@@ -239,7 +239,7 @@ void DoSmite(object oPC, object oTarget, int nType)
     else if(nType == SMITE_TYPE_INFIDEL)
     {
         eSmite = EffectVisualEffect(VFX_COM_HIT_DIVINE);
-        nDamage = GetLevelByClass(CLASS_TYPE_DIVINE_CHAMPION, oPC); //CoT
+        nDamage = GetLevelByClass(CLASS_TYPE_DIVINECHAMPION, oPC); //CoT
         nAttack = GetAbilityModifier(ABILITY_CHARISMA, oPC);
         string sDeity = "Torm";
         //if bane levels higher, use that

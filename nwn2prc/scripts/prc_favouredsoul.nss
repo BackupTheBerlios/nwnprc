@@ -2,7 +2,7 @@
 // Resist 3 elements, DR, Weapon Focus/Spec
 
 #include "prc_alterations"
-#include "pnp_shft_poly"
+//#include "pnp_shft_poly"
 
 void ResistElement(object oPC, object oSkin, int iLevel, int iType, string sVar)
 {

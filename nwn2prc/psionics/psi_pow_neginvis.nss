@@ -98,7 +98,7 @@ void main()
                         while(GetIsEffectValid(eTest))
                         {
                             if(GetEffectType(eTest) == EFFECT_TYPE_INVISIBILITY         ||
-                               GetEffectType(eTest) == EFFECT_TYPE_IMPROVEDINVISIBILITY
+                               GetEffectType(eTest) == EFFECT_TYPE_GREATERINVISIBILITY
                                )
                                 RemoveEffect(oTarget, eTest);
 

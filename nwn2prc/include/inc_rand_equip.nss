@@ -2714,11 +2714,8 @@ object EquipWeaponFocus(object oObject)
 }
 int GetCanDualWeild(object oObject)
 {
-    if(GetHasFeat(FEAT_AMBIDEXTERITY,oObject) == TRUE
-        && d4()==1)
-        return TRUE;
     if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING,oObject) == TRUE
-        && d4()==1)
+        && d2()==1)
         return TRUE;
     if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING,oObject) == TRUE
         && d2()==1)

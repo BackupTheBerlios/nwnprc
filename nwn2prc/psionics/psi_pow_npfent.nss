@@ -175,7 +175,7 @@ void RemoveEffectsNPF(object oObject)
             nType == EFFECT_TYPE_FRIGHTENED                ||
             nType == EFFECT_TYPE_HASTE                     ||
             nType == EFFECT_TYPE_IMMUNITY                  ||
-            nType == EFFECT_TYPE_IMPROVEDINVISIBILITY      ||
+            nType == EFFECT_TYPE_GREATERINVISIBILITY      ||
             nType == EFFECT_TYPE_INVISIBILITY              ||
             nType == EFFECT_TYPE_INVULNERABLE              ||
             nType == EFFECT_TYPE_ABILITY_INCREASE          ||

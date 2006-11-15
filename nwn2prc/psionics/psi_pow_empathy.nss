@@ -57,7 +57,7 @@ void main()
     if(manif.bCanManifest)
     {
         effect eLink =                          EffectSkillIncrease(SKILL_BLUFF,      2);
-               eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERSUADE,   2));
+               eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_DIPLOMACY,   2));
                eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_INTIMIDATE, 2));
                eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         effect eVis  = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);

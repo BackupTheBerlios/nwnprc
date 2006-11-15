@@ -858,7 +858,9 @@ int StormMagic(object oCaster)
 
     object oArea = GetArea(oCaster);
 
-    if (GetWeather(oArea) == WEATHER_RAIN || GetWeather(oArea) == WEATHER_SNOW)
+    if (GetWeather(oArea, WEATHER_TYPE_RAIN) > 0 ||
+        GetWeather(oArea, WEATHER_TYPE_SNOW) > 0  || 
+        GetWeather(oArea, WEATHER_TYPE_LIGHTNING) > 0)
     {
         return 1;
     }
@@ -1947,7 +1949,7 @@ int GetIsHealingSpell(int nSpellId)
        || nSpellId == SPELL_CURE_SERIOUS_WOUNDS
        || nSpellId == SPELL_GREATER_RESTORATION
        || nSpellId == SPELL_HEAL
-       || nSpellId == SPELL_HEALING_CIRCLE
+       //|| nSpellId == SPELL_HEALING_CIRCLE
        || nSpellId == SPELL_MASS_HEAL
        || nSpellId == SPELL_MONSTROUS_REGENERATION
        || nSpellId == SPELL_REGENERATE

@@ -27,7 +27,7 @@ void main()
 	
 	//Vodare secondary
 	//-4 Diplomacy & bluff 2d4 hours
-	effect eDebuff = EffectSkillDecrease(SKILL_PERSUADE, 4);
+	effect eDebuff = EffectSkillDecrease(SKILL_DIPLOMACY, 4);
 	       eDebuff = EffectLinkEffects(eDebuff, EffectSkillDecrease(SKILL_BLUFF, 4));
 	
 	DelayCommand(60.0f, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDebuff, oPC, HoursToSeconds(d4(2))));

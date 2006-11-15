@@ -57,7 +57,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     int bIsImprovedInvis = FALSE;
     while(GetIsEffectValid(eInvis))
     {
-        if (GetEffectType(eInvis) == EFFECT_TYPE_IMPROVEDINVISIBILITY)
+        if (GetEffectType(eInvis) == EFFECT_TYPE_GREATERINVISIBILITY)
         {
             bIsImprovedInvis = TRUE;
         }

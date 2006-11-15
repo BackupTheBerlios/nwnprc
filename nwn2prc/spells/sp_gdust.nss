@@ -48,7 +48,7 @@ void main()
             while (GetIsEffectValid(eTarget))
             {
                 int nType = GetEffectType(eTarget);
-                if (EFFECT_TYPE_INVISIBILITY == nType || EFFECT_TYPE_IMPROVEDINVISIBILITY == nType)
+                if (EFFECT_TYPE_INVISIBILITY == nType || EFFECT_TYPE_GREATERINVISIBILITY == nType)
                     RemoveEffect (oTarget, eTarget);
                     
                 eTarget = GetNextEffect(oTarget);

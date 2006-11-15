@@ -468,7 +468,7 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
             {
                 if(GetHasFeat(FEAT_EPIC_SPELL_FOCUS_DIVINATION, oCaster))
                     nDC+=6;
-                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINATION, oCaster))
+                else if(GetHasFeat(FEAT_GREATER_SPELL_FOCUS_DIVINIATION, oCaster))
                     nDC+=4;
                 else if(GetHasFeat(FEAT_SPELL_FOCUS_DIVINATION, oCaster))
                     nDC+=2;

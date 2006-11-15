@@ -329,7 +329,7 @@ void main()
    // Gully Dwarf Liabilities
     if(GetHasFeat(FEAT_COWARDPITY))
     {
-        SetCompositeBonus(oSkin, "Gully_Trait_Persuade", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
+        SetCompositeBonus(oSkin, "Gully_Trait_Persuade", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_DIPLOMACY);
         SetCompositeBonus(oSkin, "Gully_Trait_Fear", 4, ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC, SPELL_FEAR);
     }
    

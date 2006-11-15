@@ -141,7 +141,7 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_NINJA, oPC) > 0)               ExecuteScript("prc_ninjca", oPC);
     if(GetLevelByClass(CLASS_TYPE_OLLAM,oPC) > 0)                ExecuteScript("prc_ollam", oPC);
     if(GetLevelByClass(CLASS_TYPE_COMBAT_MEDIC, oPC) > 0)        ExecuteScript("prc_cbtmed", oPC);
-    if(GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
+    if(GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oPC) > 0)      DelayCommand(0.1,ExecuteScript("prc_dradis", oPC));
     if(GetLevelByClass(CLASS_TYPE_HALFLING_WARSLINGER, oPC) > 0) ExecuteScript("prc_warsling", oPC);
     if(GetLevelByClass(CLASS_TYPE_BAELNORN,oPC) > 0)             ExecuteScript("prc_baelnorn", oPC);
     if(GetLevelByClass(CLASS_TYPE_SWASHBUCKLER,oPC) > 0)         DelayCommand(0.1,ExecuteScript("prc_swashbuckler", oPC));

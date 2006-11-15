@@ -61,7 +61,7 @@ void main()
         effect eLink    =                          EffectSkillIncrease(SKILL_BLUFF,      4);
                eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_INTIMIDATE, 4));
                eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERFORM,    4));
-               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERSUADE,   4));
+               eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_DIPLOMACY,   4));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         effect eTest;
         float fDuration = 60.0f * manif.nManifesterLevel;

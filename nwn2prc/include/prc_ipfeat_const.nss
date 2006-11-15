@@ -514,7 +514,7 @@ const int IP_CONST_ONHIT_SAVEDC_19 = 19;
 // Creature Epic Criticals
 const int IP_CONST_FEAT_DEVCRITICAL_CREATURE    = 774;
 const int IP_CONST_FEAT_OVERCRITICAL_CREATURE   = 775;
-//const int IP_CONST_FEAT_WEAPON_PROF_CREATURE    = 38;    // provided by Bioware in 1.66
+const int IP_CONST_FEAT_WEAPON_PROF_CREATURE    = 38;    // provided by Bioware in 1.66
 
 // Epic DR
 const int IP_CONST_FEAT_EPIC_DR_3             = 776;

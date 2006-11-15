@@ -99,19 +99,19 @@ const int TOUCH_ATTACK_RANGED = 2;
 const int TOUCH_ATTACK_MELEE_SPELL  = 3;
 const int TOUCH_ATTACK_RANGED_SPELL = 4;
 
-//const string COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
+const string STRING_COLOR_BLUE         = "<cfÌþ>";    // used by saving throws.
 const string COLOR_DARK_BLUE    = "<c fþ>";    // used for electric damage.
 const string COLOR_GRAY         = "<c™™™>";    // used for negative damage.
-//const string COLOR_GREEN        = "<c þ >";    // used for acid damage.
+const string STRING_COLOR_GREEN        = "<c þ >";    // used for acid damage.
 const string COLOR_LIGHT_BLUE   = "<c™þþ>";    // used for the player's name, and cold damage.
 const string COLOR_LIGHT_GRAY   = "<c°°°>";    // used for system messages.
 const string COLOR_LIGHT_ORANGE = "<cþ™ >";    // used for sonic damage.
 const string COLOR_LIGHT_PURPLE = "<cÌ™Ì>";    // used for a target's name.
-//const string COLOR_ORANGE       = "<cþf >";    // used for attack rolls and physical damage.
+const string STRING_COLOR_ORANGE       = "<cþf >";    // used for attack rolls and physical damage.
 const string COLOR_PURPLE       = "<cÌwþ>";    // used for spell casts, as well as magic damage.
-//const string COLOR_RED          = "<cþ  >";    // used for fire damage.
-//const string COLOR_WHITE        = "<cþþþ>";    // used for positive damage.
-//const string COLOR_YELLOW       = "<cþþ >";    // used for healing, and sent messages.
+const string STRING_COLOR_RED          = "<cþ  >";    // used for fire damage.
+const string STRING_COLOR_WHITE        = "<cþþþ>";    // used for positive damage.
+const string STRING_COLOR_YELLOW       = "<cþþ >";    // used for healing, and sent messages.
 
 //:://////////////////////////////////////////////
 //::  Weapon Information Functions
@@ -1777,21 +1777,18 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
                 object oArmor = GetItemInSlot(INVENTORY_SLOT_CHEST, oAttacker);
                 int armorType = GetArmorType(oArmor);
                 int bHasTWF;
-                int bHasAmbidex;
-
+    
                 // since there is no way to determine the value of AB effects
                 // applied to a PC, I had to add Absolute Ambidexterity here
 
                 int bHasAbsoluteAmbidex;
 
-                if(GetHasFeat(FEAT_AMBIDEXTERITY, oAttacker) )        bHasTWF = TRUE;
-                if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oAttacker) )  bHasAmbidex = TRUE;
+                if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oAttacker) )  bHasTWF = TRUE;
                 if(GetHasFeat(FEAT_ABSOLUTE_AMBIDEX, oAttacker) )     bHasAbsoluteAmbidex = TRUE;
 
                 if(GetLevelByClass(CLASS_TYPE_RANGER, oAttacker) > 1 && armorType < ARMOR_TYPE_MEDIUM)
                 {
                      bHasTWF = TRUE;
-                     bHasAmbidex = TRUE;
                 }
 
                 int iOffHandWeapType = GetBaseItemType(oWeapL);
@@ -1802,8 +1799,7 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
                 if(iMainHand)   iAttackPenalty = 6;
                 else            iAttackPenalty = 10;
 
-                if(bHasAmbidex && !iMainHand)  iAttackPenalty -= 4;
-                if(bHasTWF)                    iAttackPenalty -= 2;
+                if(bHasTWF && !iMainHand)      iAttackPenalty -= 4;
                 if(bOffHandLight)              iAttackPenalty -= 2;
                 if(bHasAbsoluteAmbidex)        iAttackPenalty -= 2;
 
@@ -1864,8 +1860,8 @@ int GetAttackBonus(object oDefender, object oAttacker, object oWeap, int iMainHa
      iAttackBonus += GetMagicalAttackBonus(oAttacker);
 
      // Expertise penalties apply to all attack rolls
-     if     (iCombatMode == COMBAT_MODE_EXPERTISE)          iAttackBonus -= 5;
-     else if(iCombatMode == COMBAT_MODE_IMPROVED_EXPERTISE) iAttackBonus -= 10;
+     if     (iCombatMode == COMBAT_MODE_COMBAT_EXPERTISE)          iAttackBonus -= 5;
+     else if(iCombatMode == COMBAT_MODE_IMPROVED_COMBAT_EXPERTISE) iAttackBonus -= 10;
 
      return iAttackBonus;
 }
@@ -1884,7 +1880,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      // add bonus +2 for flanking, invisible attacker, attacking blind opponent
      if( GetIsFlanked(oDefender, oAttacker) ) iAttackBonus += 2;
      if((      GetHasEffect(EFFECT_TYPE_INVISIBILITY, oAttacker)           ||
-               GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)   &&
+               GetHasEffect(EFFECT_TYPE_GREATERINVISIBILITY, oAttacker)   &&
                !GetHasFeat(FEAT_BLIND_FIGHT, oDefender)                  ) ||
          GetHasEffect(EFFECT_TYPE_BLINDNESS, oDefender)
        ) iAttackBonus += 2;
@@ -1935,7 +1931,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
 
      // print off-hand of off-hand attack
      string sFeedback ="";
-     if(iMainHand == 1) sFeedback += COLOR_ORANGE + "Off Hand : ";
+     if(iMainHand == 1) sFeedback += STRING_COLOR_ORANGE + "Off Hand : ";
 
      // change color of attacker if it is Player or NPC
      if(GetIsPC(oAttacker)) sFeedback += COLOR_LIGHT_BLUE;
@@ -1950,7 +1946,7 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      else if(iTouchAttackType == TOUCH_ATTACK_MELEE|| iTouchAttackType == TOUCH_ATTACK_MELEE_SPELL)
           sFeedback += COLOR_PURPLE + " attempts touch attack on ";
      else
-          sFeedback += COLOR_ORANGE + " attacks ";
+          sFeedback += STRING_COLOR_ORANGE + " attacks ";
 
      sFeedback +=  GetName(oDefender) + ": ";
 

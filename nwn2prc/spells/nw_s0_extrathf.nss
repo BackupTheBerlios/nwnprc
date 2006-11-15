@@ -45,7 +45,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     effect eDisable = EffectSkillIncrease(SKILL_DISABLE_TRAP, 10);
     effect eMove = EffectSkillIncrease(SKILL_MOVE_SILENTLY, 10);
     effect eOpen = EffectSkillIncrease(SKILL_OPEN_LOCK, 5);
-    effect ePick = EffectSkillIncrease(SKILL_PICK_POCKET, 10);
+    effect ePick = EffectSkillIncrease(SKILL_SLEIGHT_OF_HAND, 10);
     effect eTrap = EffectSkillIncrease(SKILL_SET_TRAP, 10);
     effect eHide = EffectSkillIncrease(SKILL_HIDE, 10);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);

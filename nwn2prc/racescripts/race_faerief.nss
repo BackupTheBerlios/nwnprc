@@ -100,7 +100,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if (!MyPRCResistSpell(oCaster, oTarget,CasterLvl))
         {
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eVis, oTarget, fDuration);
-            RemoveSpecificEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oTarget);
+            RemoveSpecificEffect(EFFECT_TYPE_GREATERINVISIBILITY, oTarget);
             RemoveSpecificEffect(EFFECT_TYPE_INVISIBILITY, oTarget);
             RemoveSpecificEffect(EFFECT_TYPE_DARKNESS, oTarget);
             RemoveSpecificEffect(EFFECT_TYPE_CONCEALMENT, oTarget);

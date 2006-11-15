@@ -143,7 +143,7 @@ const int CREATURE_SIZE_COLOSSAL        =  7;
 //:: Saving Throw Const
 //:://////////////////////////////////////////////
 
-const int SAVING_THROW_NONE = 4;
+//const int SAVING_THROW_NONE = 4;
 
 
 //:://////////////////////////////////////////////

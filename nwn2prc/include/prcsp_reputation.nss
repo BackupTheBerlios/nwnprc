@@ -11,9 +11,9 @@
 
 // * Constants
 // * see spellsIsTarget for a definition of these constants
-const int SPELL_TARGET_ALLALLIES = 1;
-const int SPELL_TARGET_STANDARDHOSTILE = 2;
-const int SPELL_TARGET_SELECTIVEHOSTILE = 3;
+//const int SPELL_TARGET_ALLALLIES = 1;
+//const int SPELL_TARGET_STANDARDHOSTILE = 2;
+//const int SPELL_TARGET_SELECTIVEHOSTILE = 3;
 
 //::///////////////////////////////////////////////
 //:: spellsIsTarget

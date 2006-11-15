@@ -338,7 +338,7 @@ int GetIsDeniedDexBonusToAC(object oDefender, object oAttacker, int nIgnoreUD = 
      {
           bIsDeniedDex = TRUE;
      }
-     else if( GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
+     else if( GetHasEffect(EFFECT_TYPE_GREATERINVISIBILITY, oAttacker)  && !bDefenderHasTrueSight && !bDefenderCanSeeInvisble )
      {
           bIsDeniedDex = TRUE;
      }
@@ -420,7 +420,7 @@ int GetIsConcealed(object oDefender, object oAttacker)
      {
           bIsConcealed = 50;
      }
-     else if(GetHasEffect(EFFECT_TYPE_IMPROVEDINVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
+     else if(GetHasEffect(EFFECT_TYPE_GREATERINVISIBILITY, oDefender) && !bAttackerHasTrueSight && !bAttackerCanSeeInvisble  )
      {
           bIsConcealed = 50;
      }

@@ -58,7 +58,7 @@ void main()
 		}
 		
 		effect eLink = EffectSkillIncrease(SKILL_BLUFF, nBonus);
-		       eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_PERSUADE, nBonus));
+		       eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_DIPLOMACY, nBonus));
 		
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDur);
 	}	

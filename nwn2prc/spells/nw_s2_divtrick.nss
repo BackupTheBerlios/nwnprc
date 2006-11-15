@@ -31,9 +31,9 @@ void main()
     effect eDisable = EffectSkillIncrease(SKILL_DISABLE_TRAP, nLevel);
     effect eMove = EffectSkillIncrease(SKILL_MOVE_SILENTLY, nLevel);
     effect eOpen = EffectSkillIncrease(SKILL_OPEN_LOCK, nLevel);
-    effect ePick = EffectSkillIncrease(SKILL_PICK_POCKET, nLevel);
+    effect ePick = EffectSkillIncrease(SKILL_SLEIGHT_OF_HAND, nLevel);
     effect eHide = EffectSkillIncrease(SKILL_HIDE, nLevel);
-    effect ePers = EffectSkillIncrease(SKILL_PERSUADE, nLevel);
+    effect ePers = EffectSkillIncrease(SKILL_DIPLOMACY, nLevel);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
     
     //Link Effects

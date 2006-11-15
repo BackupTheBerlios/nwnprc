@@ -580,7 +580,7 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
                     nSkillMod += 2;
                 break;
             case SKILL_SLEIGHT_OF_HAND:
-                nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_PICKPOCKET;
+                nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_SLEIGHT_OF_HAND;
                 nFocusFeat = FEAT_SKILL_FOCUS_SLEIGHT_OF_HAND;
                 break;
             case SKILL_SEARCH:

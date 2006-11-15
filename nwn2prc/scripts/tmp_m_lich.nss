@@ -387,7 +387,7 @@ void main()
         nSkillBonus = 20;
     SetCompositeBonus(oSkin, "Template_lich_Hide",     nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     SetCompositeBonus(oSkin, "Template_lich_Listen",   nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
-    SetCompositeBonus(oSkin, "Template_lich_Persuade", nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "Template_lich_Persuade", nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "Template_lich_Silent",   nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY);
     SetCompositeBonus(oSkin, "Template_lich_Search",   nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
     SetCompositeBonus(oSkin, "Template_lich_Spot",     nSkillBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);

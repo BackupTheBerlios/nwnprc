@@ -66,7 +66,7 @@ void main()
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_BLUFF, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_INTIMIDATE, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_PERFORM, MarshCha), oTarget);
-              ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_PERSUADE, MarshCha), oTarget);
+              ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_DIPLOMACY, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_TAUNT, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_USE_MAGIC_DEVICE, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_IAIJUTSU_FOCUS, MarshCha), oTarget);
@@ -99,7 +99,7 @@ void main()
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_MOVE_SILENTLY, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_OPEN_LOCK, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_PARRY, MarshCha), oTarget);
-              ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_PICK_POCKET, MarshCha), oTarget);
+              ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_SLEIGHT_OF_HAND, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_SET_TRAP, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_TUMBLE, MarshCha), oTarget);
                  SetLocalInt(PCMarshal,"MarshalMinor",1);

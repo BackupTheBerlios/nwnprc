@@ -24,7 +24,7 @@ void Dark_Charisma(object oPC ,object oSkin, int nLevel)
 
     SetCompositeBonus(oSkin, "Dark_Charm_AE", nBonus, ITEM_PROPERTY_SKILL_BONUS,SKILL_ANIMAL_EMPATHY);
     SetCompositeBonus(oSkin, "Dark_Charm_PF", nBonus, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
-    SetCompositeBonus(oSkin, "Dark_Charm_PS", nBonus, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "Dark_Charm_PS", nBonus, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "Dark_Charm_BL", nBonus, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);
 }
 

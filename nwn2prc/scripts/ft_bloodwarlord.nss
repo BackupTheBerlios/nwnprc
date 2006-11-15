@@ -10,17 +10,17 @@ void main()
     if (!GetHasSpellEffect(GetSpellId()))
     {
         effect eBonus = EffectAreaOfEffect(AOE_MOB_DRAGON_FEAR, "ft_bloodwarlord1", "", "ft_bloodwarlord2");
-        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_PERSUADE, 2), RACIAL_TYPE_HUMANOID_ORC));
+        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_DIPLOMACY, 2), RACIAL_TYPE_HUMANOID_ORC));
         eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_INTIMIDATE, 2), RACIAL_TYPE_HUMANOID_ORC));
-        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_PERSUADE, 2), RACIAL_TYPE_HALFORC));
+        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_DIPLOMACY, 2), RACIAL_TYPE_HALFORC));
         eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_INTIMIDATE, 2), RACIAL_TYPE_HALFORC));
-        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_PERSUADE, 2), RACIAL_TYPE_GRAYORC));
+        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_DIPLOMACY, 2), RACIAL_TYPE_GRAYORC));
         eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_INTIMIDATE, 2), RACIAL_TYPE_GRAYORC));
-        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_PERSUADE, 2), RACIAL_TYPE_ORC));
+        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_DIPLOMACY, 2), RACIAL_TYPE_ORC));
         eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_INTIMIDATE, 2), RACIAL_TYPE_ORC));
-        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_PERSUADE, 2), RACIAL_TYPE_OROG));
+        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_DIPLOMACY, 2), RACIAL_TYPE_OROG));
         eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_INTIMIDATE, 2), RACIAL_TYPE_OROG));
-        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_PERSUADE, 2), RACIAL_TYPE_TANARUKK));
+        eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_DIPLOMACY, 2), RACIAL_TYPE_TANARUKK));
         eBonus = EffectLinkEffects(eBonus, VersusRacialTypeEffect(EffectSkillIncrease(SKILL_INTIMIDATE, 2), RACIAL_TYPE_TANARUKK));
     
         eBonus = ExtraordinaryEffect(eBonus);

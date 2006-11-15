@@ -23,7 +23,7 @@ void BaelnProp (object oSkin, int nBonus)
     SetCompositeBonus(oSkin, "BaelnPropL", nBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
     SetCompositeBonus(oSkin, "BaelnPropM", nBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY);
     SetCompositeBonus(oSkin, "BaelnPropS", nBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
-    SetCompositeBonus(oSkin, "BaelnPropP", nBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "BaelnPropP", nBonus, ITEM_PROPERTY_SKILL_BONUS, SKILL_DIPLOMACY);
 }
 
 //Baelnorn Ability bonus function

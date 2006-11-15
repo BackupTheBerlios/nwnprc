@@ -179,7 +179,7 @@ void ImperiousAura(object oPC ,object oSkin ,int iLevel)
 
     SetCompositeBonus(oSkin, "ImperiousAuraA", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_APPRAISE);
     SetCompositeBonus(oSkin, "ImperiousAuraP", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
-    SetCompositeBonus(oSkin, "ImperiousAuraPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "ImperiousAuraPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "ImperiousAuraT", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
     SetCompositeBonus(oSkin, "ImperiousAuraB", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);
     SetCompositeBonus(oSkin, "ImperiousAuraI", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);

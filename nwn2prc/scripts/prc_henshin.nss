@@ -30,7 +30,7 @@ void Interaction(object oPC, object oSkin)
 {
     if(GetLocalInt(oSkin, "InterP") == 4) return;
 
-    SetCompositeBonus(oSkin, "InterP", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "InterP", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "InterT", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
     SetCompositeBonus(oSkin, "InterB", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);
     SetCompositeBonus(oSkin, "InterI", 4, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);

@@ -6,7 +6,7 @@ void Evilbrand(object oPC ,object oSkin ,int iLevel)
 {
 
    if(GetLocalInt(oSkin, "EvilbrandPe") == iLevel) return;
-    SetCompositeBonus(oSkin, "EvilbrandPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "EvilbrandPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "EvilbrandI", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_INTIMIDATE);
 }
 

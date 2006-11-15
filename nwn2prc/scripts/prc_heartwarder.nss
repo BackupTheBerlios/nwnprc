@@ -19,7 +19,7 @@ void Heart_Passion(object oPC ,object oSkin ,int iLevel)
 
     SetCompositeBonus(oSkin, "HeartPassionA", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_ANIMAL_EMPATHY);
     SetCompositeBonus(oSkin, "HeartPassionP", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
-    SetCompositeBonus(oSkin, "HeartPassionPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "HeartPassionPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "HeartPassionT", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
     SetCompositeBonus(oSkin, "HeartPassionUMD", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_USE_MAGIC_DEVICE);
     SetCompositeBonus(oSkin, "HeartPassionB", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);

@@ -37,7 +37,7 @@ void Ethran(object oPC ,object oSkin ,int iLevel)
 
     SetCompositeBonus(oSkin, "EthranA", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_ANIMAL_EMPATHY);
     SetCompositeBonus(oSkin, "EthranP", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
-    SetCompositeBonus(oSkin, "EthranPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "EthranPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "EthranT", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);
     SetCompositeBonus(oSkin, "EthranA", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_APPRAISE);
     SetCompositeBonus(oSkin, "EthranB", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_BLUFF);

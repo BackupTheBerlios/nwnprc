@@ -16,7 +16,7 @@ void main()
    string nMes = "";
     RemoveSpellEffects(GetSpellId(), oPC, oPC);
 
-   effect ePersuade = EffectSkillIncrease(SKILL_PERSUADE, 2);
+   effect ePersuade = EffectSkillIncrease(SKILL_DIPLOMACY, 2);
    effect eTaunt = EffectSkillIncrease(SKILL_TAUNT, 2);
    effect eLight = EffectVisualEffect(VFX_DUR_LIGHT_WHITE_5);
    effect eLink = EffectLinkEffects(ePersuade, eTaunt);

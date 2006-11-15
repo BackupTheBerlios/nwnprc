@@ -9,7 +9,7 @@ void Sacred_Vow(object oPC ,object oSkin ,int iLevel)
 {
    if(GetLocalInt(oSkin, "SacredVow") == iLevel) return;
 
-    SetCompositeBonus(oSkin, "SacredPer", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERSUADE);
+    SetCompositeBonus(oSkin, "SacredPer", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
 }
 
 ///Vow of Obedience +4 on Will Saves /////////

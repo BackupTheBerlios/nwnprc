@@ -465,7 +465,7 @@ object RunStackedLetoScriptOnObject(object oObject, string sLetoTag = "OBJECT",
                 else
                 {
                     //unicorn syntax
-                    sCommand = "%"+sLetoTag+" = '"+sPath+"'; "; //qq{} doesnt work for me at the moment, wrong slashes
+                    sCommand = "%"+sLetoTag+" = q{"+sPath+"}; "; //qq{} doesnt work for me at the moment, wrong slashes
                 }
                 sScript = sCommand+sScript;
                 sCommand = "close %"+sLetoTag+"; ";

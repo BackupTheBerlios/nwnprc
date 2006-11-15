@@ -226,6 +226,7 @@ void DoHeaderAndChoices(int nStage)
             SetHeader(sText);
             DoSkillsLoop();
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_SKILL_CHECK: {
@@ -275,6 +276,7 @@ void DoHeaderAndChoices(int nStage)
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DoFeatLoop();
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_FEAT_CHECK: {
@@ -312,6 +314,7 @@ void DoHeaderAndChoices(int nStage)
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DoBonusFeatLoop();
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_BONUS_FEAT_CHECK: {
@@ -381,6 +384,7 @@ void DoHeaderAndChoices(int nStage)
             // choices, uses nStage to see if it's listing level 0 or level 1 spells
             DoSpellsLoop(nStage);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_SPELLS_1: {
@@ -418,6 +422,7 @@ void DoHeaderAndChoices(int nStage)
             // choices, uses nStage to see if it's listing level 0 or level 1 spells
             DoSpellsLoop(nStage);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_SPELLS_CHECK: {
@@ -458,6 +463,7 @@ void DoHeaderAndChoices(int nStage)
             else // wizard or sorc
                 Do2daLoop("hen_familiar", "STRREF", GetPRCSwitch(FILE_END_FAMILIAR));
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_FAMILIAR_CHECK: {
@@ -492,6 +498,7 @@ void DoHeaderAndChoices(int nStage)
             // choices
             DoDomainsLoop();
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_DOMAIN_CHECK: {
@@ -529,6 +536,7 @@ void DoHeaderAndChoices(int nStage)
                 DoAppearanceLoop();
             }
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_APPEARANCE_CHECK: {
@@ -552,6 +560,7 @@ void DoHeaderAndChoices(int nStage)
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DoPortraitsLoop();
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_PORTRAIT_CHECK: {
@@ -575,6 +584,7 @@ void DoHeaderAndChoices(int nStage)
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             DoSoundsetLoop();
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_SOUNDSET_CHECK: {
@@ -597,6 +607,7 @@ void DoHeaderAndChoices(int nStage)
             AddChoice("keep existing head", -1);
             SetupHeadChoices();
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_HEAD_CHECK: {
@@ -703,6 +714,7 @@ void DoHeaderAndChoices(int nStage)
             AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
             AddChoice("Greens, Mystics, & Browns", 22);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_SKIN_COLOUR_CHOICE: {
@@ -712,6 +724,7 @@ void DoHeaderAndChoices(int nStage)
             int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
             AddColourChoices(nStage, nCategory);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_SKIN_COLOUR_CHECK: {
@@ -752,6 +765,7 @@ void DoHeaderAndChoices(int nStage)
             AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
             AddChoice("Greens, Mystics, & Browns", 22);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_HAIR_COLOUR_CHOICE: {
@@ -761,6 +775,7 @@ void DoHeaderAndChoices(int nStage)
             int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
             AddColourChoices(nStage, nCategory);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_HAIR_COLOUR_CHECK: {
@@ -801,6 +816,7 @@ void DoHeaderAndChoices(int nStage)
             AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
             AddChoice("Greens, Mystics, & Browns", 22);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_TATTOO1_COLOUR_CHOICE: {
@@ -810,6 +826,7 @@ void DoHeaderAndChoices(int nStage)
             int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
             AddColourChoices(nStage, nCategory);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_TATTOO1_COLOUR_CHECK: {
@@ -850,6 +867,7 @@ void DoHeaderAndChoices(int nStage)
             AddChoice("Sugar Plum, Ice Blue, Black, & White", 21);
             AddChoice("Greens, Mystics, & Browns", 22);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_TATTOO2_COLOUR_CHOICE: {
@@ -859,6 +877,7 @@ void DoHeaderAndChoices(int nStage)
             int nCategory = GetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED");
             AddColourChoices(nStage, nCategory);
             MarkStageSetUp(nStage);
+            SetDefaultTokens();
             break;
         }
         case STAGE_TATTOO2_COLOUR_CHECK: {

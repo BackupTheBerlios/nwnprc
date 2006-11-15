@@ -1004,9 +1004,6 @@ void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
 
 void DoRacialtypesLoop()
 {
-    // remove if decide not to make the convo wait
-    if(GetLocalInt(OBJECT_SELF, "DynConv_Waiting") == FALSE)
-        return;
     // get the table/column name quote mark
     string q = PRC_SQLGetTick();
     // get the results 25 rows at a time to avoid TMI

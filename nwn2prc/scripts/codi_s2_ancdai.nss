@@ -54,7 +54,7 @@ void main()
             SetItemCursedFlag(oKatana2, TRUE);
             SetStolenFlag(oKatana2, TRUE);
         }
-        SetName(oKatana2, GetName(OBJECT_SELF)+"'s "+GetName(oKatana2));
+        SetFirstName(oKatana2, GetName(OBJECT_SELF)+"'s "+GetName(oKatana2));
     }
     //wakizashi (short sword)
     if(!bHasWakizashi)
@@ -70,7 +70,7 @@ void main()
             SetItemCursedFlag(oWakizashi2, TRUE);
             SetStolenFlag(oWakizashi2, TRUE);
         }
-        SetName(oWakizashi2, GetName(OBJECT_SELF)+"'s Wakizashi");
+        SetFirstName(oWakizashi2, GetName(OBJECT_SELF)+"'s Wakizashi");
     }
 }
 

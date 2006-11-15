@@ -29,7 +29,7 @@ void LichSkills(object oHide, int iLevel)
 {
     SetCompositeBonus(oHide, "LichSkillHide", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);
     SetCompositeBonus(oHide, "LichSkillListen", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_LISTEN);
-    SetCompositeBonus(oHide, "LichSkillPersuade", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_PERSUADE);
+    SetCompositeBonus(oHide, "LichSkillPersuade", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_DIPLOMACY);
     SetCompositeBonus(oHide, "LichSkillSilent", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY);
     SetCompositeBonus(oHide, "LichSkillSearch", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_SEARCH);
     SetCompositeBonus(oHide, "LichSkillSpot", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPOT);

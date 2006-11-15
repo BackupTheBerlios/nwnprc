@@ -1343,7 +1343,7 @@ void MakeMasterwork(object oItem)
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE, 1);
         itemproperty ip2 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY, 1);
         itemproperty ip3 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY, 1);
-        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PICK_POCKET, 1);
+        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SLEIGHT_OF_HAND, 1);
         itemproperty ip5 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SET_TRAP, 1);
         itemproperty ip6 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE, 1);
         itemproperty ip7 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP, 1);
@@ -1418,7 +1418,7 @@ void MakeDarkwood(object oItem)
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE, nBonus);
         itemproperty ip2 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY, nBonus);
         itemproperty ip3 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY, nBonus);
-        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PICK_POCKET, nBonus);
+        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SLEIGHT_OF_HAND, nBonus);
         itemproperty ip5 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SET_TRAP, nBonus);
         itemproperty ip6 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE, nBonus);
         itemproperty ip7 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP, nBonus);
@@ -1455,7 +1455,7 @@ void MakeMithral(object oItem)
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE, nBonus);
         itemproperty ip2 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_MOVE_SILENTLY, nBonus);
         itemproperty ip3 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PARRY, nBonus);
-        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_PICK_POCKET, nBonus);
+        itemproperty ip4 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SLEIGHT_OF_HAND, nBonus);
         itemproperty ip5 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_SET_TRAP, nBonus);
         itemproperty ip6 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_TUMBLE, nBonus);
         itemproperty ip7 = ConstructIP(ITEM_PROPERTY_SKILL_BONUS, SKILL_JUMP, nBonus);

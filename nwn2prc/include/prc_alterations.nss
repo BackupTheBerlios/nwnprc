@@ -137,7 +137,6 @@ const int ERROR_CODE_5_FIX_YET_ANOTHER_TIME = 1;
 #include "prc_racial_const"
 #include "prc_ipfeat_const"
 #include "prc_misc_const"
-#include "inc_acp"
 //#include "prc_inc_leadersh"
 
 
@@ -483,10 +482,10 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
         int nFocusFeat;
         switch(nSkill)
         {
-            case SKILL_ANIMAL_EMPATHY:
+          /*  case SKILL_ANIMAL_EMPATHY:
                 nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_ANIMAL_EMPATHY;
                 nFocusFeat = FEAT_SKILL_FOCUS_ANIMAL_EMPATHY;
-                break;
+                break; Removed in NWN2*/
             case SKILL_APPRAISE:
                 nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_APPRAISE;
                 nFocusFeat = FEAT_SKILLFOCUS_APPRAISE;
@@ -574,15 +573,15 @@ int GetSkill(object oObject, int nSkill, int bSynergy = FALSE, int bSize = FALSE
                 if(GetHasFeat(FEAT_ARTIST, oObject))
                     nSkillMod += 2;
                 break;
-            case SKILL_PERSUADE:
-                nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_PERSUADE;
-                nFocusFeat = FEAT_SKILL_FOCUS_PERSUADE;
+            case SKILL_DIPLOMACY:
+                nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_DIPLOMACY;
+                nFocusFeat = FEAT_SKILL_FOCUS_DIPLOMACY;
                 if(GetHasFeat(FEAT_SILVER_PALM, oObject))
                     nSkillMod += 2;
                 break;
-            case SKILL_PICK_POCKET:
+            case SKILL_SLEIGHT_OF_HAND:
                 nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_PICKPOCKET;
-                nFocusFeat = FEAT_SKILL_FOCUS_PICK_POCKET;
+                nFocusFeat = FEAT_SKILL_FOCUS_SLEIGHT_OF_HAND;
                 break;
             case SKILL_SEARCH:
                 nEpicFeat  = FEAT_EPIC_SKILL_FOCUS_SEARCH;

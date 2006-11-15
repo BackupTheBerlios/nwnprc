@@ -330,14 +330,14 @@ string TrimString(string s);
  *
  * Examples:
  *
- * StringCompare("a", "a") = 0
- * StringCompare("a", "b") = -1
- * StringCompare("b", "a") = 1
- * StringCompare("a", "1") = 1
- * StringCompare("A", "a") = -1
- * StringCompare("Aa", "A") = 1
+ * PRCStringCompare("a", "a") = 0
+ * PRCStringCompare("a", "b") = -1
+ * PRCStringCompare("b", "a") = 1
+ * PRCStringCompare("a", "1") = 1
+ * PRCStringCompare("A", "a") = -1
+ * PRCStringCompare("Aa", "A") = 1
  */
-int StringCompare(string s1, string s2);
+int PRCStringCompare(string s1, string s2);
 
 /**
  * Converts data about a given object into a string of the following format:
@@ -962,7 +962,7 @@ string TrimString(string s)
     return s;
 }
 
-int StringCompare(string s1, string s2)
+int PRCStringCompare(string s1, string s2)
 {
     object oLookup = GetWaypointByTag("prc_str_lookup");
     if(!GetIsObjectValid(oLookup))

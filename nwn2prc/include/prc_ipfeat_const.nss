@@ -105,7 +105,7 @@ const int IP_CONST_FEAT_EPIC_AUTO_SILENT_I      = 713;
 const int IP_CONST_FEAT_EPIC_AUTO_SILENT_II     = 714;
 const int IP_CONST_FEAT_EPIC_AUTO_SILENT_III    = 715;
 
-
+const int IP_CONST_FEAT_DISARM_WHIP = 37;
 const int IP_CONST_FEAT_KI_STRIKE = 757;
 
 const int IP_CONST_FEAT_REND            = 758;

@@ -110,7 +110,7 @@ HandleDispositionSTANDARDHOSTILE(object oTarget, object oSource)
     return FALSE;
 }
 
-
+/* Commented out beccause there is one in nw_i0_spells in NWN2
 int spellsIsTarget(object oTarget, int nTargetType, object oSource)
 {
     // * if dead, not a valid target
@@ -143,3 +143,4 @@ int spellsIsTarget(object oTarget, int nTargetType, object oSource)
     // unhandled dispositions
     return FALSE;
 }
+*/

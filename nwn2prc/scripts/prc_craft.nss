@@ -164,9 +164,9 @@ void AddToTempList(object oPC, string sChoice, int nChoice)
     {
         // Find the location to instert into
         string sPrev = "", sNext = GetLocalString(oPC, "PRC_CRAFT_CONVO_List_Head");
-        while(sNext != "" && StringCompare(sChoice, sNext) >= 0)
+        while(sNext != "" && PRCStringCompare(sChoice, sNext) >= 0)
         {
-            if(DEBUG_LIST) DoDebug("Comparison between '" + sChoice + "' and '" + sNext + "' = " + IntToString(StringCompare(sChoice, sNext)));
+            if(DEBUG_LIST) DoDebug("Comparison between '" + sChoice + "' and '" + sNext + "' = " + IntToString(PRCStringCompare(sChoice, sNext)));
             sPrev = sNext;
             sNext = GetLocalString(oPC, "PRC_CRAFT_CONVO_List_Next_" + sNext);
         }

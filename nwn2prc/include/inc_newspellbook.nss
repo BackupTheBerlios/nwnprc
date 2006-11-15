@@ -49,7 +49,7 @@ int GetSpellUnknownCurrentCount(object oPC, int nSpellLevel, int nClass);
 void AddSpellUse(object oPC, int nSpellbookID, int nClass, string sFile, string sArrayName, int nSpellbookType, object oSkin, int nFeatID, int nIPFeatID);
 void RemoveSpellUse(object oPC, int nSpellID, int nClass);
 int GetSpellUses(object oPC, int nSpellID, int nClass);
-int GetSpellLevel(object oPC, int nSpellID, int nClass);
+int GetSpellbookSpellLevel(object oPC, int nSpellID, int nClass);
 void SetupSpells(object oPC, int nClass);
 void CheckAndRemoveFeat(object oHide, itemproperty ipFeat);
 void WipeSpellbookHideFeats(object oPC);
@@ -544,7 +544,7 @@ if(DEBUG) DoDebug("NewSpellbookMem_"+IntToString(nClass)+" does not exist, creat
     return nCount;
 }
 
-int GetSpellLevel(object oPC, int nSpellID, int nClass)
+int GetSpellbookSpellLevel(object oPC, int nSpellID, int nClass)
 {
     string sFile = GetFileForClass(nClass);
     int nSpellbookID = SpellToSpellbookID(nSpellID, sFile);

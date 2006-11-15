@@ -2267,7 +2267,7 @@ int PRCGetSpellLevel(object oCreature, int nSpell)
             if (sSpellLevel != "")
                 return StringToInt(sSpellLevel);
 
-            int nSpellLevel = GetSpellLevel(oCreature, nSpell, nClass);
+            int nSpellLevel = GetSpellbookSpellLevel(oCreature, nSpell, nClass);
 
             if (nSpellLevel != -1)
                 return nSpellLevel;

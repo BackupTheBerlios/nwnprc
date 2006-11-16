@@ -27,7 +27,7 @@ void ContemplativeDR(object oPC, object oSkin, int iLevel)
 
 void ContemplativeSR(object oPC, int nLevel, object oSkin)
 {
-    if(GetLocalInt(oSkin, "ContemplativeSR") == nLevel) return;
+    //if(GetLocalInt(oSkin, "ContemplativeSR") == nLevel) return;
 
     int nSR = nLevel + 15;
     effect eSR = EffectSpellResistanceIncrease(nSR);

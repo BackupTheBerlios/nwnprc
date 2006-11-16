@@ -894,6 +894,8 @@ void DoHeaderAndChoices(int nStage)
             SetHeader(sText);
             AddChoice("Make Character", 1);
             MarkStageSetUp(nStage);
+            // give the PC the woodsman outfit so they don't have to be naked
+            CreateItemOnObject("NW_CLOTH001", OBJECT_SELF);
             break;
         }
         default:
@@ -1596,8 +1598,11 @@ int HandleChoice(int nStage, int nChoice)
             break;
         }
         case STAGE_SKIN_COLOUR: {
-            if (nChoice == -1)
+            if (nChoice == -1) // keep existing
+            {
                 nStage = STAGE_SKIN_COLOUR_CHECK;
+                SetLocalInt(OBJECT_SELF, "Skin", -1);
+            }
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
@@ -1629,8 +1634,11 @@ int HandleChoice(int nStage, int nChoice)
             break;
         }
         case STAGE_HAIR_COLOUR: {
-            if (nChoice == -1)
+            if (nChoice == -1) // keep existing
+            {
                 nStage = STAGE_HAIR_COLOUR_CHECK;
+                SetLocalInt(OBJECT_SELF, "Hair", -1);
+            }
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
@@ -1662,8 +1670,11 @@ int HandleChoice(int nStage, int nChoice)
             break;
         }
         case STAGE_TATTOO1_COLOUR: {
-            if (nChoice == -1)
+            if (nChoice == -1) // keep existing
+            {
                 nStage = STAGE_TATTOO1_COLOUR_CHECK;
+                SetLocalInt(OBJECT_SELF, "TattooColour1", -1);
+            }
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);
@@ -1695,8 +1706,11 @@ int HandleChoice(int nStage, int nChoice)
             break;
         }
         case STAGE_TATTOO2_COLOUR: {
-            if (nChoice == -1)
+            if (nChoice == -1) // keep existing
+            {
                 nStage = STAGE_TATTOO2_COLOUR_CHECK;
+                SetLocalInt(OBJECT_SELF, "TattooColour2", -1);
+            }
             else
             {
                 SetLocalInt(OBJECT_SELF, "CATEGORY_SELECTED", nChoice);

@@ -23,6 +23,8 @@ void DamageReduction(object oPC, object oSkin, int iLevel)
     SetLocalInt(oSkin, "FavouredSoulDR", iLevel);
 }
 
+//appearance code removed - NWN2
+/*
 void SetWings(object oPC)
 {
     // Neutral wing type
@@ -31,8 +33,9 @@ void SetWings(object oPC)
     if (nAlign == ALIGNMENT_EVIL) nWings = CREATURE_WING_TYPE_DEMON;
     else if (nAlign == ALIGNMENT_GOOD) nWings = CREATURE_WING_TYPE_ANGEL;
     //use this wrapper to make sure it interacts with polymorph etc correctly
-    DoWings(oPC, nWings);   
+    DoWings(oPC, nWings);
 }
+*/
 
 void AddWS(object oPC,object oSkin,int ip_feat_crit,int nFeat)
 {
@@ -51,7 +54,7 @@ void main()
         object oSkin = GetPCSkin(oPC);
         string sVar = "FavouredSoulResistElement";
         int nClass = GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oPC);
-    
+
         if (GetHasFeat(FEAT_FAVOURED_SOUL_ACID, oPC))
         {
             sVar += "Acid";
@@ -76,17 +79,18 @@ void main()
         {
             sVar += "Sonic";
             ResistElement(oPC, oSkin, IP_CONST_DAMAGERESIST_10, IP_CONST_DAMAGETYPE_SONIC, sVar);
-        }  
-    
-        if (nClass >= 17) SetWings(oPC);
+        }
+
+        //appearance code removed - NWN2
+        //if (nClass >= 17) SetWings(oPC);
         if (nClass >= 20) DamageReduction(oPC, oSkin, IP_CONST_DAMAGEREDUCTION_3);
-        
+
         // This gives them proficiency in the chosen weapon
         if (nClass >= 3)
         {
             int nBaseItem;
             int nIprop;
-            
+
             if(GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,         oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_BASTARD_SWORD   );
             else if(GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,       oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_BATTLE_AXE      );
             else if(GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,             oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_CLUB            );
@@ -125,15 +129,15 @@ void main()
             else if(GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD);
             else if(GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_WAR_HAMMER      );
             else if(GetHasFeat(FEAT_WEAPON_FOCUS_WHIP,             oPC)) nBaseItem = FocusToWeapProf(FEAT_WEAPON_FOCUS_WHIP            );
-   
+
             int nProf = StringToInt(Get2DACache("baseitems", "ReqFeat0", nBaseItem));
             if (nProf == FEAT_WEAPON_PROFICIENCY_EXOTIC) nIprop = IP_CONST_FEAT_WEAPON_PROF_EXOTIC;
             else if (nProf == FEAT_WEAPON_PROFICIENCY_MARTIAL) nIprop = IP_CONST_FEAT_WEAPON_PROF_MARTIAL;
-            
+
             // Finally, apply it
             if(!GetHasFeat(nProf, oPC)) IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(nIprop), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }
-    
+
         // Do Weapon spec
         if (nClass >= 12)
         {

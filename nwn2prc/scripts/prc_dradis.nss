@@ -161,7 +161,9 @@ void main()
 
     int sCale1 = GetHasFeat(FAST_HEALING_1,oPC);
     int sCale2 = GetHasFeat(FAST_HEALING_2,oPC);
-     
+
+    //removed appearance code - NWN2
+    /*
     int nWingType = CREATURE_WING_TYPE_DRAGON;
     int nTailType = CREATURE_TAIL_TYPE_LIZARD;
     if(GetPRCSwitch(MARKER_PRC_COMPANION))
@@ -180,10 +182,10 @@ void main()
                     //GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? PRC_COMP_WING_TYPE_DRAGON_PRISMATIC :
                     CREATURE_WING_TYPE_NONE;
         //dragon disciple lichs get draco-lich wings at lich 4
-        if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) 
+        if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4)
             nWingType = PRC_COMP_WING_TYPE_DRAGON_DRACOLICH;
-            
-                
+
+
         nTailType = GetHasFeat(FEAT_BLACK_DRAGON, oPC)     ? PRC_COMP_TAIL_TYPE_LIZARD_BLACK :
                     GetHasFeat(FEAT_BLUE_DRAGON, oPC)      ? PRC_COMP_TAIL_TYPE_LIZARD_BLUE :
                     GetHasFeat(FEAT_BRASS_DRAGON, oPC)     ? PRC_COMP_TAIL_TYPE_LIZARD_BRASS :
@@ -194,16 +196,17 @@ void main()
                     GetHasFeat(FEAT_SILVER_DRAGON, oPC)    ? PRC_COMP_TAIL_TYPE_LIZARD_SILVER :
                     GetHasFeat(FEAT_WHITE_DRAGON, oPC)     ? PRC_COMP_TAIL_TYPE_LIZARD_WHITE :
                     GetHasFeat(FEAT_RED_DRAGON, oPC)       ? PRC_COMP_TAIL_TYPE_LIZARD_RED :
-                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? PRC_COMP_TAIL_TYPE_LIZARD_SHADOW : 
+                    GetHasFeat(FEAT_SHADOW_DRAGON, oPC)    ? PRC_COMP_TAIL_TYPE_LIZARD_SHADOW :
                     //GetHasFeat(FEAT_PRISMATIC_DRAGON, oPC) ? PRC_COMP_TAIL_TYPE_LIZARD_PRISMATIC :
                     CREATURE_TAIL_TYPE_NONE;
         //dragon disciple lichs get bony tail at lich 4
-        if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4) 
+        if(GetLevelByClass(CLASS_TYPE_LICH, oPC) >= 4)
             nTailType = CREATURE_TAIL_TYPE_BONE;
-    }                
-    
-    int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC);
-    
+    }
+    */
+
+    int nLevel = GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oPC);
+
     //natural weapons
     //bite at level 2
     //2 claws at level 2
@@ -216,7 +219,7 @@ void main()
         {
             string sResRef = "prc_rdd_bite_";
             sResRef += GetAffixForSize(nSize);
-            AddNaturalSecondaryWeapon(oPC, sResRef); 
+            AddNaturalSecondaryWeapon(oPC, sResRef);
             //claw here
             sResRef = "prc_claw_1d6l_";
             sResRef += GetAffixForSize(nSize);
@@ -227,17 +230,17 @@ void main()
             string sResRef = "prc_rdd_wing_";
             sResRef += GetAffixForSize(nSize);
             if(nSize >= CREATURE_SIZE_MEDIUM)
-                AddNaturalSecondaryWeapon(oPC, sResRef, 2);             
+                AddNaturalSecondaryWeapon(oPC, sResRef, 2);
         }
         if(GetHasFeat(DRACONIC_TAILSLAP, oPC))
         {
             string sResRef = "prc_rdd_tail_";
             sResRef += GetAffixForSize(nSize);
             if(nSize >= CREATURE_SIZE_LARGE)
-                AddNaturalSecondaryWeapon(oPC, sResRef);             
+                AddNaturalSecondaryWeapon(oPC, sResRef);
         }
     }
-    
+
 
     int thickScale = -1;
     if(GetHasFeat(DRACONIC_ARMOR_AUG_2,oPC))
@@ -257,7 +260,8 @@ void main()
     if (bResisEle>0) SmallResist(oPC,oSkin,bResisEle,sResis);
     if (bResisEle>0) LargeResist(oPC,oSkin,bResisEle,lResis);
     if (nLevel>17) SpellResis(oPC,oSkin,nLevel);
-    if (nLevel>17) DoTail(oPC, nTailType);
-    if (nLevel>9)  DoWings(oPC, nWingType);
+    //removed appearance code - NWN2
+    //if (nLevel>17) DoTail(oPC, nTailType);
+    //if (nLevel>9)  DoWings(oPC, nWingType);
     if (nLevel>19) SeeTrue(oPC,oSkin,nLevel);
 }

@@ -41,19 +41,19 @@ int GetGrappleMod(object oTarget)
     //drunken masters drunken embrace
     if(GetHasFeat(FEAT_PRESTIGE_DRUNKEN_EMBRACE, oTarget))
         nGrapple += 4;
-    
+
     return nGrapple;
 }
 
-int DoGrappleCheck(object oAttacker, object oDefender, 
-    int nAttackerMod = 0, int nDefenderMod = 0, 
+int DoGrappleCheck(object oAttacker, object oDefender,
+    int nAttackerMod = 0, int nDefenderMod = 0,
     string sAttackerName = "", string sDefenderName = "")
 {
     //cant grapple incorporeal or ethereal things
-    if((GetIsEthereal(oDefender) && !GetIsEthereal(oAttacker)) 
+    if((GetIsEthereal(oDefender) && !GetIsEthereal(oAttacker))
         || GetIsIncorporeal(oDefender))
         return FALSE;
-        
+
     int nResult;
     int nDefenderGrapple;
     int nDefenderRoll = d20();
@@ -66,27 +66,27 @@ int DoGrappleCheck(object oAttacker, object oDefender,
     //defender has benefit
     if(nAttackerGrapple > nDefenderGrapple)
         nResult = TRUE;
-        
+
     string sMessage;
     if(GetIsPC(oAttacker)) sMessage += COLOR_LIGHT_BLUE;
     else                   sMessage += COLOR_LIGHT_PURPLE;
     if(GetIsObjectValid(oAttacker))
         sMessage += GetName(oAttacker);
-    else    
+    else
         sMessage += sAttackerName;
-    sMessage += COLOR_ORANGE;
+    sMessage += STRING_COLOR_ORANGE;
     sMessage += " grapples ";
     if(GetIsObjectValid(oDefender))
         sMessage += GetName(oDefender);
-    else    
+    else
         sMessage += sDefenderName;
     sMessage += " : ";
-    
+
     if(nResult)
         sMessage += "*hit*";
     else
         sMessage += "*miss*";
-        
+
     sMessage += " : ("+IntToString(nAttackerRoll)+" + "+IntToString(nAttackerGrapple-nAttackerRoll)+" = "+IntToString(nAttackerGrapple);
     sMessage += " vs "+IntToString(nDefenderRoll)+" + "+IntToString(nDefenderGrapple-nDefenderRoll)+" = "+IntToString(nDefenderGrapple)+")";
     SendMessageToPC(oAttacker, sMessage);
@@ -117,18 +117,18 @@ void SetIsGrappledByObject(object oTarget, object oGrappler)
 }
 
 // Rather than PnP grappling where you can do various things
-// while grappling, both targets are immobilised. 
+// while grappling, both targets are immobilised.
 // If a player uses their grapple feat on a target they are already
 // grappling, then they will use grapple special attacks (constrict, swallow etc).
-void StartGrapple(object oAttacker, object oDefender, 
-    int nAttackerMod = 0, int nDefenderMod = 0, 
+void StartGrapple(object oAttacker, object oDefender,
+    int nAttackerMod = 0, int nDefenderMod = 0,
     string sAttackerName = "", string sDefenderName = "")
 {
     //cant grapple incorporeal or ethereal things
     if((GetIsEthereal(oDefender) && !GetIsEthereal(oAttacker))
         || GetIsIncorporeal(oDefender))
         return;
-        
+
     if(GetIsGrappledByObject(oDefender, oAttacker))
     {
         //special stuff code
@@ -148,8 +148,8 @@ void StartGrapple(object oAttacker, object oDefender,
             || PRCDoMeleeTouchAttack(oDefender, TRUE, oAttacker))
         {
             //grapple check
-            if(DoGrappleCheck(oAttacker, oDefender, 
-                nAttackerMod, nDefenderMod, 
+            if(DoGrappleCheck(oAttacker, oDefender,
+                nAttackerMod, nDefenderMod,
                 sAttackerName, sDefenderName))
             {
                 //now grappled
@@ -162,6 +162,6 @@ void StartGrapple(object oAttacker, object oDefender,
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oDefender, 6.0);
                 //run the pseudoHB
             }
-        }    
+        }
     }
 }

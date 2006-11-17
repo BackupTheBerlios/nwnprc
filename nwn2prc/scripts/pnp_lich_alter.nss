@@ -17,9 +17,11 @@
 
 void main()
 {
+    //all disabled - NWN2
+    /*
     if(GetPRCSwitch(PRC_LICH_ALTER_SELF_DISABLE))
     {
-        FloatingTextStringOnCreature("Lich Alter Self has been disabled in this module.", OBJECT_SELF);  
+        FloatingTextStringOnCreature("Lich Alter Self has been disabled in this module.", OBJECT_SELF);
         return;
     }
     StoreAppearance(OBJECT_SELF);
@@ -55,6 +57,7 @@ void main()
         //this will also remove complexities with lich/shifter characters
         SetShiftTrueForm(OBJECT_SELF);
         //SetCreatureAppearanceType(OBJECT_SELF,nPCForm);
-        
+
     }
+    */
 }

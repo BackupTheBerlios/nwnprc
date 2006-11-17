@@ -46,7 +46,8 @@ void main()
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_WILD_SHAPE, FALSE));
 
     //this command will make shore that polymorph plays nice with the shifter
-    ShifterCheck(OBJECT_SELF);
+    //shifter code commented out - NWN2
+    //ShifterCheck(OBJECT_SELF);
 
         ClearAllActions(); // prevents an exploit
 

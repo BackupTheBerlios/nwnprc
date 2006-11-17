@@ -165,7 +165,7 @@ string SetItemName(string sName);
 //returns a script to set description
 //for items this is unidentified description
 //use SetIdentifiedDescription for an identified description
-string SetDescription(string sDescription);
+//string SetDescription(string sDescription);   //in NWN2
 
 //returns a script to set an identified description
 //only works with items
@@ -365,6 +365,8 @@ string SetItemName(string sName)
     return LetoSet("LocalizedName", sName, "locstring");
 }
 
+//in NWN2
+/*
 string SetDescription(string sDescription)
 {
 //phoenix
@@ -373,6 +375,7 @@ string SetDescription(string sDescription)
 // /Description = qq{A mighty warrior of the realm.};
     return LetoSet("Description" , sDescription, "locstring");
 }
+*/
 
 string SetIdentifiedDescription(string sDescription)
 {

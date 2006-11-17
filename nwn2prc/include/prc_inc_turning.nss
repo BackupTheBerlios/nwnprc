@@ -82,7 +82,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
         {
             return FALSE;
         }
-    
+
     return TRUE;
     }
     else if (GetHasFeat(FEAT_EPIC_PLANAR_TURNING) && nTurnType == SPELL_TURN_UNDEAD && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OUTSIDER)
@@ -91,12 +91,12 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
         if(GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL)
         {
             if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL) return FALSE;
-            
+
             return TRUE;
-        }  
+        }
         // Good clerics turn non-good outsiders, and rebuke good outsiders
     if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_GOOD) return FALSE;
-        
+
     return TRUE;
     }
     else if(nTurnType == SPELL_TURN_BLIGHTSPAWNED)
@@ -111,7 +111,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
         if (GetTag(oTarget) == "prc_blightspawn" || GetLevelByClass(CLASS_TYPE_BLIGHTLORD, GetMaster(oTarget)) > 0)
         {
             return FALSE;
-        }       
+        }
         // Rebuke/Command evil plants
         /*if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_PLANT && GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
         {
@@ -124,13 +124,15 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
     else if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OOZE && nTurnType == SPELL_TURN_OOZE)
     {
     return FALSE;
-    }    
+    }
     // Plant domain rebukes or commands plants
     /*else if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_PLANT && nTurnType == SPELL_TURN_PLANT)
     {
     return FALSE;
     }     */
-    
+
+    //appearance type checking changed - NWN2
+    /*
     else if (nTurnType == SPELL_TURN_AIR)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_AIR ||
@@ -145,7 +147,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return FALSE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GARGOYLE ||
@@ -155,7 +157,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         return TRUE;
     }
     else if (nTurnType == SPELL_TURN_EARTH)
@@ -171,7 +173,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GARGOYLE ||
@@ -181,7 +183,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return FALSE;
             }
-            
+
         return TRUE;
     }
     else if (nTurnType == SPELL_TURN_FIRE)
@@ -199,7 +201,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return FALSE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_WATER ||
@@ -208,7 +210,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         return TRUE;
     }
     else if (nTurnType == SPELL_TURN_WATER)
@@ -226,7 +228,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_WATER ||
@@ -235,9 +237,9 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return FALSE;
             }
-            
+
         return TRUE;
-    }    
+    }
     else if (nTurnType == SPELL_TURN_REPTILE)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_KOBOLD_A ||
@@ -274,7 +276,8 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
             {
                 return FALSE;
             }
-    }   
+    }
+    */
 
     return TRUE;
 }
@@ -321,7 +324,7 @@ void DoTurnAttempt(object oTarget, int nTurningMaxHD, int nLevel, int nTurnType)
     // Check for Exalted Turning
     // take 3d6 damage if they do
     // Only works on undead
-    if (GetHasFeat(FEAT_EXALTED_TURNING) && 
+    if (GetHasFeat(FEAT_EXALTED_TURNING) &&
         GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_GOOD &&
         MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
     {
@@ -461,7 +464,7 @@ int GetCanTurn(object oTarget, int nTurnType)
         if (GetTag(oTarget) == "prc_blightspawn" || GetLevelByClass(CLASS_TYPE_BLIGHTLORD, GetMaster(oTarget)) > 0)
         {
             return TRUE;
-        }       
+        }
         // Rebuke/Command evil plants
         /*if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_PLANT && GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL)
         {
@@ -472,13 +475,15 @@ int GetCanTurn(object oTarget, int nTurnType)
     else if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_OOZE && nTurnType == SPELL_TURN_OOZE)
     {
     return TRUE;
-    }    
+    }
     // Plant domain rebukes or commands plants
     /*else if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_PLANT && nTurnType == SPELL_TURN_PLANT)
     {
     return TRUE;
     }     */
-    
+
+    //appearance type checking changed - NWN2
+    /*
     else if (nTurnType == SPELL_TURN_AIR)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_AIR ||
@@ -493,7 +498,7 @@ int GetCanTurn(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GARGOYLE ||
@@ -517,7 +522,7 @@ int GetCanTurn(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_EARTH_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GARGOYLE ||
@@ -543,7 +548,7 @@ int GetCanTurn(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_WATER ||
@@ -568,7 +573,7 @@ int GetCanTurn(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-            
+
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_WATER_ELDER ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_WATER ||
@@ -577,7 +582,7 @@ int GetCanTurn(object oTarget, int nTurnType)
             {
                 return TRUE;
             }
-    }    
+    }
     else if (nTurnType == SPELL_TURN_REPTILE)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_KOBOLD_A ||
@@ -615,6 +620,7 @@ int GetCanTurn(object oTarget, int nTurnType)
                 return TRUE;
             }
     }
+    */
 
     return FALSE;
 }
@@ -688,13 +694,13 @@ int GetTurningClassLevel(int bUndeadOnly = FALSE)
         if(GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3>0)
             nLevel += GetLevelByClass(CLASS_TYPE_ANTI_PALADIN)-3;
     }
-    
+
     //Baelnorn adds all class levels.  Careful not to count double.
     if(GetLevelByClass(CLASS_TYPE_BAELNORN))
     {
         nLevel = GetHitDice(OBJECT_SELF);
-    }    
-    
+    }
+
     return nLevel;
 }
 
@@ -760,7 +766,7 @@ int CheckTargetName(object oTarget, string sName)
     string sTest = GetSubString(GetName(oTarget), nPos, GetStringLength(sName));
     // If this all worked, sTest should equal sName
     if (sTest == sName) return TRUE;
-    
+
     return FALSE;
 }
 

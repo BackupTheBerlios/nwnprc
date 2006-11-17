@@ -73,7 +73,9 @@ void ChoiceSelected(int nChoiceNo)
             }
             else if(GetChoice(OBJECT_SELF) == 1)
             {
-                SetCreatureAppearanceType(OBJECT_SELF, 
+                //removing appearance code - NWN2
+                /*
+                SetCreatureAppearanceType(OBJECT_SELF,
                     StringToInt(Get2DACache("racialtypes", "Appearance",
                         GetLocalInt(OBJECT_SELF, "Race"))));
                 SetCreatureWingType(CREATURE_WING_TYPE_NONE, OBJECT_SELF);
@@ -97,7 +99,7 @@ void ChoiceSelected(int nChoiceNo)
                     SetCreatureAppearanceType(OBJECT_SELF, APPEARANCE_TYPE_DRIDER_FEMALE);
                 //set tattoos to 2 so they show
                 //1 is no tatoo
-                //0 is nothing at all                
+                //0 is nothing at all
                 SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, 1);
                 SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, 1);
                 SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, 2);
@@ -117,14 +119,15 @@ void ChoiceSelected(int nChoiceNo)
                 SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, 1);
                 SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, 1);
                 SetCreatureBodyPart(CREATURE_PART_HEAD, 1);
-                
+                */
+
                 //make the clone
                 MakeClone();
                 ApplyEffectAtLocation(DURATION_TYPE_INSTANT,
                     EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1),
                         GetLocation(OBJECT_SELF));
-                
-                
+
+
                 DoCloneLetoscript();
                 DoRotatingCamera();
                 //racial bonuses
@@ -296,7 +299,7 @@ void ChoiceSelected(int nChoiceNo)
                 //save all remaining
                 array_set_int(OBJECT_SELF, "Skills", -1,
                     array_get_int(OBJECT_SELF, "Skills", -1)+GetLocalInt(OBJECT_SELF, "Points"));
-                nPoints = 0;    
+                nPoints = 0;
             }
             else
             {
@@ -316,10 +319,10 @@ void ChoiceSelected(int nChoiceNo)
             else
             {
                 ClearCurrentStage();
-                MarkStageNotSetUp(nStage);    
-            }    
+                MarkStageNotSetUp(nStage);
+            }
             break;
-            
+
         case STAGE_SKILL_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
             {
@@ -389,7 +392,7 @@ void ChoiceSelected(int nChoiceNo)
                 nStage++;
             }
             break;
-            
+
         case STAGE_BONUS_FEAT:
             if(GetChoice(OBJECT_SELF) == -1)
                 nStage++;//skip the check
@@ -397,7 +400,7 @@ void ChoiceSelected(int nChoiceNo)
                 SetLocalInt(OBJECT_SELF, "BonusFeat", GetChoice(OBJECT_SELF));
             nStage++;
             break;
-            
+
         case STAGE_BONUS_FEAT_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
             {
@@ -426,7 +429,7 @@ void ChoiceSelected(int nChoiceNo)
                     array_delete(OBJECT_SELF, "ChoiceTokens");
                 }
             }
-            break;            
+            break;
 
         case STAGE_FAMILIAR:
             if(GetChoice(OBJECT_SELF) == -1)
@@ -608,7 +611,7 @@ void ChoiceSelected(int nChoiceNo)
                     break;
             }
             break;
-            
+
         case STAGE_SPELLS_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
             {
@@ -636,7 +639,7 @@ void ChoiceSelected(int nChoiceNo)
                     GetChoice(OBJECT_SELF));
             nStage++;
             break;
-            
+
         case STAGE_WIZ_SCHOOL_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
             {
@@ -783,43 +786,60 @@ void ChoiceSelected(int nChoiceNo)
             break;
 
         case STAGE_APPEARANCE:
+            //removing appearance code - NWN2
+            /*
             SetCreatureAppearanceType(OBJECT_SELF,
                 GetChoice(OBJECT_SELF));
             SetCreatureAppearanceType(GetLocalObject(OBJECT_SELF, "Clone"),
                 GetChoice(OBJECT_SELF));
+            */
             nStage++;
             break;
         case STAGE_HEAD:
+            //removing appearance code - NWN2
+            /*
             SetCreatureBodyPart(CREATURE_PART_HEAD,
-                GetChoice(OBJECT_SELF), 
-                OBJECT_SELF);   
+                GetChoice(OBJECT_SELF),
+                OBJECT_SELF);
             SetCreatureBodyPart(CREATURE_PART_HEAD,
-                GetChoice(OBJECT_SELF), 
-                GetLocalObject(OBJECT_SELF, "Clone"));   
+                GetChoice(OBJECT_SELF),
+                GetLocalObject(OBJECT_SELF, "Clone"));
+            */
             nStage++;
             break;
         case STAGE_PORTRAIT:
-            SetPortraitId(OBJECT_SELF, 
+            //removing appearance code - NWN2
+            /*
+            SetPortraitId(OBJECT_SELF,
                 GetChoice(OBJECT_SELF));
-            SetPortraitId(GetLocalObject(OBJECT_SELF, "Clone"), 
+            SetPortraitId(GetLocalObject(OBJECT_SELF, "Clone"),
                 GetChoice(OBJECT_SELF));
+            */
             nStage++;
             break;
         case STAGE_TAIL:
-            SetCreatureTailType(GetChoice(OBJECT_SELF), 
-                GetLocalObject(OBJECT_SELF, "Clone"));    
-            SetCreatureTailType(GetChoice(OBJECT_SELF), 
-                OBJECT_SELF);   
+            //removing appearance code - NWN2
+            /*
+            SetCreatureTailType(GetChoice(OBJECT_SELF),
+                GetLocalObject(OBJECT_SELF, "Clone"));
+            SetCreatureTailType(GetChoice(OBJECT_SELF),
+                OBJECT_SELF);
+            */
             nStage++;
             break;
         case STAGE_WINGS:
-            SetCreatureWingType(GetChoice(OBJECT_SELF), 
-                GetLocalObject(OBJECT_SELF, "Clone"));   
-            SetCreatureWingType(GetChoice(OBJECT_SELF), 
-                OBJECT_SELF);  
+            //removing appearance code - NWN2
+            /*
+            SetCreatureWingType(GetChoice(OBJECT_SELF),
+                GetLocalObject(OBJECT_SELF, "Clone"));
+            SetCreatureWingType(GetChoice(OBJECT_SELF),
+                OBJECT_SELF);
+            */
             nStage++;
             break;
         case STAGE_TATTOOPART:
+            //removing appearance code - NWN2
+            /*
             if(GetChoice(OBJECT_SELF) == 0)
             {
                 nStage++;
@@ -832,12 +852,13 @@ void ChoiceSelected(int nChoiceNo)
                 else if(nTattooed == 2)
                     nTattooed = 1;
                 SetCreatureBodyPart(GetChoice(OBJECT_SELF),
-                    nTattooed, 
-                    GetLocalObject(OBJECT_SELF, "Clone"));  
+                    nTattooed,
+                    GetLocalObject(OBJECT_SELF, "Clone"));
                 SetCreatureBodyPart(GetChoice(OBJECT_SELF),
-                    nTattooed, 
-                    OBJECT_SELF);  
+                    nTattooed,
+                    OBJECT_SELF);
             }
+            */
             break;
         case STAGE_TATTOOPART_CHECK:
             if(GetChoice(OBJECT_SELF) == -1)
@@ -853,7 +874,7 @@ void ChoiceSelected(int nChoiceNo)
                 nStage++;
             }
             break;
-            
+
         case STAGE_HAIR:
             SetLocalInt(OBJECT_SELF, "Hair",
                 GetChoice(OBJECT_SELF));

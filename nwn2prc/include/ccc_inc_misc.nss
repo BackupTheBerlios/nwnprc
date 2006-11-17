@@ -33,22 +33,22 @@ void DoCutscene(object oPC, int nSetup = FALSE);
 /**
  * Cutscene pseudo HB functions
  */
- 
+
 // used to cleanup clones when a player leaves
 void CloneMasterCheck();
 
-// sets up the camera to rotate around the clone 
+// sets up the camera to rotate around the clone
 // and the clone do random animations
 void DoRotatingCamera(object oPC);
 
 /**
  * functions to set appearance, portrait, soundset
  */
- 
+
 // sets race appearance as defined in racialtype.2da
 // removes wings, tails and undead graft arm as well as making invisible bits visible
 void DoSetRaceAppearance(object oPC);
- 
+
 // assigns the ccc chosen gender to the clone and resets the soundset
 // if it's changed
 void DoCloneGender(object oPC);
@@ -80,7 +80,7 @@ int GetMeetsANDPreReq(string sPreReqFeat1, string sPreReqFeat2);
 
 // checks if the PC has any one of the 5 feats given as arguements
 // '****' as an arguement is treated as an automatic TRUE for that arguement
-// used to check if the PC meets the prerequisites in the OrReqFeat0 OR OrReqFeat1 
+// used to check if the PC meets the prerequisites in the OrReqFeat0 OR OrReqFeat1
 // OR OrReqFeat2 OR OrReqFeat3 OR OrReqFeat4 columns of feat.2da
 int GetMeetsORPreReq(string sOrReqFeat0, string sOrReqFeat1, string sOrReqFeat2, string sOrReqFeat3, string sOrReqFeat4);
 
@@ -159,7 +159,7 @@ int DoLetoscriptTest(object oPC)
         sScript = LetoGet("FirstName")+" "+LetoGet("LastName");
     else
         sScript = LetoGet("FirstName")+"print ' ';"+LetoGet("LastName");
-        
+
     StackedLetoScript(sScript);
     RunStackedLetoScriptOnObject(oPC, "LETOTEST", "SCRIPT", "", FALSE);
     string sResult = GetLocalString(GetModule(), "LetoResult");
@@ -173,7 +173,7 @@ int DoLetoscriptTest(object oPC)
         WriteTimestampedLogEntry("Letoscript is not setup correctly. Please check that you have set the directory to the correct one.");
         bBoot = TRUE;
     }
-    
+
     return bBoot;
 }
 
@@ -249,6 +249,8 @@ void DoSetRaceAppearance(object oPC)
     int nSex = GetLocalInt(oPC, "Gender");
     int nRace = GetLocalInt(oPC, "Race");
     // appearance type switches go here
+    //commenting out appearance code - NWN2
+    /*
     if(nRace == RACIAL_TYPE_RAKSHASA
         && nSex == GENDER_FEMALE
         && GetPRCSwitch(PRC_CONVOCC_RAKSHASHA_FEMALE_APPEARANCE))
@@ -258,15 +260,15 @@ void DoSetRaceAppearance(object oPC)
         && GetPRCSwitch(PRC_CONVOCC_DRIDER_FEMALE_APPEARANCE))
         SetCreatureAppearanceType(oPC, APPEARANCE_TYPE_DRIDER_FEMALE);
     else
-        SetCreatureAppearanceType(oPC, 
+        SetCreatureAppearanceType(oPC,
                     StringToInt(Get2DACache("racialtypes", "Appearance",
                         GetLocalInt(oPC, "Race"))));
-    
+
     // remove wings and tails - so this can be set later
     // enforcing wing and tail related switches comes later too
     SetCreatureWingType(CREATURE_WING_TYPE_NONE);
     SetCreatureTailType(CREATURE_TAIL_TYPE_NONE);
-    
+
     // get rid of invisible/undead etc bits, but keep tatoos as is
     SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, 1);
     SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, 1);
@@ -297,6 +299,7 @@ void DoSetRaceAppearance(object oPC)
         SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, 2);
     if(!(GetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP) == 1))
         SetCreatureBodyPart(CREATURE_PART_RIGHT_BICEP, 2);
+    */
 }
 
 void DoCloneGender(object oPC)
@@ -318,7 +321,7 @@ void DoCloneGender(object oPC)
 
 void DoCutscene(object oPC, int nSetup = FALSE)
 {
-    
+
     // get what stage we're at
     int nStage = GetStage(oPC);
     DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
@@ -326,7 +329,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
     // in response to a choice or by prc_enter
     int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
 
-    // if we are on STAGE_RACE_CHECK 
+    // if we are on STAGE_RACE_CHECK
     // or if we are setting up the cutscene and have got at least that far in the convo
     if (nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
     {
@@ -440,10 +443,10 @@ void DoCleanup()
     DeleteLocalInt(oPC, "Domain2");
 
     DeleteLocalInt(oPC, "School");
-    
+
     DeleteLocalInt(oPC, "SpellsPerDay0");
     DeleteLocalInt(oPC, "SpellsPerDay1");
-    
+
     // delete some arrays
     array_delete(oPC, "spellLvl0");
     array_delete(oPC, "spellLvl1");
@@ -457,7 +460,7 @@ void AddAbilityChoice(int nAbilityScore, string sAbilityName, string sRacialAdju
     // if it is still possible to increase the ability score, add that choice
     if (nAbilityScore < GetLocalInt(OBJECT_SELF, "MaxStat") && GetLocalInt(OBJECT_SELF, "Points") >= GetCost(nAbilityScore + 1))
     {
-        AddChoice(sAbilityName + " " + IntToString(nAbilityScore) + " (Racial " + sRacialAdjust + "). " 
+        AddChoice(sAbilityName + " " + IntToString(nAbilityScore) + " (Racial " + sRacialAdjust + "). "
             + GetStringByStrRef(137) + " " + IntToString(GetCost(nAbilityScore + 1)), nAbilityConst);
     }
 }
@@ -513,7 +516,7 @@ int GetNextCCCStage(int nStage)
                 // if they can pick level 1 spells
                 if (StringToInt(Get2DACache(sSpkn, "SpellLevel1", 0)))
                     return STAGE_SPELLS_1;
-            }       
+            }
         }
         case STAGE_SPELLS_1: {
             if (nClass == CLASS_TYPE_WIZARD || nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
@@ -607,9 +610,9 @@ int GetMeetSkillPrereq(string sReqSkill, string sReqSkill2, string sReqSkillRank
     // test if the PC meets the first prereq
     if(!CheckSkillPrereq(sReqSkill, sReqSkillRanks))
         return FALSE;
-    
+
     // got this far, then the first prereq was met
-	// is there a second prereq? If not, done
+    // is there a second prereq? If not, done
     if(sReqSkill2 == "****")
         return TRUE;
     if(!CheckSkillPrereq(sReqSkill2, sReqSkillRanks2))
@@ -648,7 +651,7 @@ void SetWizCantrips(int iSpellschool)
     {
         sOpposition = Get2DACache("spellschools", "Letter", StringToInt(Get2DACache("spellschools", "Opposition", iSpellschool)));
     }
-    
+
     array_create(OBJECT_SELF, "SpellLvl0");
     string q = PRC_SQLGetTick();
     string sSQL = "SELECT "+q+"rowid"+q+" FROM "+q+"prc_cached2da_spells"+q+" WHERE ("+q+"Wiz_Sorc"+q+" = '0') AND ("+q+"School"+q+" != '"+sOpposition+"')";
@@ -715,7 +718,7 @@ void DoRacialtypesLoop()
         nCounter++;
         int nRace = StringToInt(PRC_SQLGetData(1)); // rowid
         int bIsTakeable = TRUE;
-        
+
         // check for right drow gender IF the switch is set
         if(GetPRCSwitch(PRC_CONVOCC_DROW_ENFORCE_GENDER))
         {
@@ -726,7 +729,7 @@ void DoRacialtypesLoop()
                 && GetLocalInt(OBJECT_SELF, "Gender") == GENDER_FEMALE)
                 bIsTakeable = FALSE;
         }
-        
+
         // add the choices, choice number is race rowid/constant value
         if(bIsTakeable)
         {
@@ -734,7 +737,7 @@ void DoRacialtypesLoop()
             AddChoice(sName, nRace);
         }
     }
-    
+
     // IF there were 25 rows, carry on
     if(nCounter == 25)
     {
@@ -761,7 +764,7 @@ void DoClassesLoop()
     int nReali = GetLocalInt(OBJECT_SELF, "i");
     /*
     SELECT `rowid`, `PreReqTable` FROM `prc_cached2da_classes`
-    WHERE (`PlayerClass` = 1) AND (`XPPenalty` = 1) 
+    WHERE (`PlayerClass` = 1) AND (`XPPenalty` = 1)
     LIMIT 25 OFFSET <nReali>
     */
     string sSQL = "SELECT "+q+"rowid"+q+", "+q+"PreReqTable"+q+" FROM "+q+"prc_cached2da_classes"+q+" WHERE ("+q+"PlayerClass"+q+" = 1) AND ("+q+"XPPenalty"+q+" = 1) LIMIT 25 OFFSET "+IntToString(nReali);
@@ -784,7 +787,7 @@ void DoClassesLoop()
         array_set_string(OBJECT_SELF, "temp_class_prereq", array_get_size(OBJECT_SELF, "temp_class_prereq"), sPreReq);
 
     }
-    
+
     // loop through the temp array to check for banned classes
     int i;
     for (i=0; i < array_get_size(OBJECT_SELF, "temp_classes"); i++)
@@ -807,14 +810,14 @@ void DoClassesLoop()
                 }
             } // end of if (sReqType == "VAR")
             j++;
-            
+
         } while (sReqType != "VAR"); // terminates as soon as we get the allowed variable
-        
+
     } // end of for loop
     // clean up
     array_delete(OBJECT_SELF, "temp_classes");
     array_delete(OBJECT_SELF, "temp_class_prereq");
-    
+
     // IF there were 25 rows, carry on
     if(nCounter == 25)
     {
@@ -895,46 +898,46 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
     // get the table/column name quote mark
     string q = PRC_SQLGetTick();
     object oPC = OBJECT_SELF;
-    
+
     // check if UMD and animal empathy can be taken for prereq for the skill focus feats
     // done here because reading the 2da cache clears out any existing SQL results
     // note: any other skill that is restricted to certain classes needs to be hardcoded here
     string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(oPC, "Class"));
-    
+
     /*
      * SELECT SkillIndex FROM <cls_skill_***> WHERE SkillIndex = <skill>
      */
-    
+
     // query to see if animal empathy is on that list
     string sSkillAnimalEmpathy = "0"; // as int 0 is the same as a non existant row
     string sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND "
     +q+"data"+q+ " = '" + sSkillAnimalEmpathy + "'";
-    
+
     PRC_SQLExecDirect(sSQL);
     if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == "0") // check it was the right skill
         SetLocalInt(oPC, "bHasAnimalEmpathy", TRUE);
-    
+
     // query to see if use magic device is on that list
     string sSkillUMD = IntToString(SKILL_USE_MAGIC_DEVICE);
     sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND "
     +q+"data"+q+ " = '" + sSkillUMD + "'";
-    
+
     PRC_SQLExecDirect(sSQL);
     if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == sSkillUMD) // check it was the right skill
         SetLocalInt(oPC, "bHasUMD", TRUE);
-    
+
     // get the information needed to work out if the prereqs are met
     int nSex = GetLocalInt(oPC, "Gender");
-	int nRace = GetLocalInt(oPC, "Race");
-	int nClass = GetLocalInt(oPC, "Class");
+    int nRace = GetLocalInt(oPC, "Race");
+    int nClass = GetLocalInt(oPC, "Class");
     int nStr = GetLocalInt(oPC, "Str");
     int nDex = GetLocalInt(oPC, "Dex");
     int nCon = GetLocalInt(oPC, "Con");
     int nInt = GetLocalInt(oPC, "Int");
     int nWis = GetLocalInt(oPC, "Wis");
-    int nCha = GetLocalInt(oPC, "Cha"); 
+    int nCha = GetLocalInt(oPC, "Cha");
     int nOrder = GetLocalInt(oPC, "LawfulChaotic");
     int nMoral = GetLocalInt(oPC, "GoodEvil");
 
@@ -945,16 +948,16 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
     nInt += StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace));
     nWis += StringToInt(Get2DACache("racialtypes", "WisAdjust", nRace));
     nCha += StringToInt(Get2DACache("racialtypes", "ChaAdjust", nRace));
-    
+
     // get BAB
     int nBAB = StringToInt(Get2DACache(Get2DACache("classes", "AttackBonusTable", nClass), "BAB", 0));
-    
+
     // get fortitude save
     int nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", 0));
-    
+
     // get the results 5 rows at a time to avoid TMI
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    
+
     if (!nClassFeatStage) // select the general feats
     {
         /*
@@ -974,7 +977,7 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
         AND `mincha`<= <nCha>
         AND `MinFortSave` <= <nFortSave>
         */
-        
+
         sSQL = "SELECT "+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
                 +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
                 +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
@@ -997,11 +1000,11 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
     {
         // get which cls_feat_*** 2da to use
         string sFile = Get2DACache("classes", "FeatsTable", nClass);
-        
+
         /*
-        SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT, 
-            prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, 
-            prc_cached2da_feat.OrReqFeat0, prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, 
+        SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT,
+            prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2,
+            prc_cached2da_feat.OrReqFeat0, prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4,
             prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,
             prc_cached2da_feat.ReqMinSkillRanks, prc_cached2da_feat.ReqMinSkillRanks2
         FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat
@@ -1023,7 +1026,7 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
             AND `mincha`<= <nCha>
             AND `MinFortSave` <= <nFortSave>
         */
-        
+
         sSQL = "SELECT "+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
                 +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
                 +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
@@ -1047,20 +1050,20 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
                 +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
                 +" LIMIT 5 OFFSET "+IntToString(nReali);
     }
-    
+
     // debug print the sql statement
     if(DEBUG)
     {
         DoDebug(sSQL);
     }
-            
+
     PRC_SQLExecDirect(sSQL);
     // to keep track of where in the 25 rows we stop getting a result
     int nCounter = 0;
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
         nCounter++;
-	    int nRow = StringToInt(PRC_SQLGetData(1));
+        int nRow = StringToInt(PRC_SQLGetData(1));
         int nStrRef = StringToInt(PRC_SQLGetData(2));
         string sName = GetStringByStrRef(nStrRef);
         string sPreReqFeat1 = PRC_SQLGetData(3);
@@ -1074,7 +1077,7 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
         string sReqSkill2 = PRC_SQLGetData(11);
         string sReqSkillRanks = PRC_SQLGetData(12);
         string sReqSkillRanks2 = PRC_SQLGetData(13);
-        
+
         // check AND feat prerequisites
         if (GetMeetsANDPreReq(sPreReqFeat1, sPreReqFeat2))
         {
@@ -1107,7 +1110,7 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
             if(DEBUG) DoDebug("Not met AND prereqfeat test for feat " + IntToString(nRow) + ". Not added!");
         }
     } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-    
+
     if(nCounter == 5)
     {
         SetLocalInt(OBJECT_SELF, "i", nReali+5);
@@ -1139,46 +1142,46 @@ void DoBonusFeatLoop()
     // get the table/column name quote mark
     string q = PRC_SQLGetTick();
     object oPC = OBJECT_SELF;
-    
+
     // check if UMD and animal empathy can be taken for prereq for the skill focus feats
     // done here because reading the 2da cache clears out any existing SQL results
     // note: any other skill that is restricted to certain classes needs to be hardcoded here
     string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(oPC, "Class"));
-    
+
     /*
      * SELECT SkillIndex FROM <cls_skill_***> WHERE SkillIndex = <skill>
      */
-    
+
     // query to see if animal empathy is on that list
     string sSkillAnimalEmpathy = "0"; // as int 0 is the same as a non existant row
     string sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND "
     +q+"data"+q+ " = '" + sSkillAnimalEmpathy + "'";
-    
+
     PRC_SQLExecDirect(sSQL);
     if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == "0") // check it was the right skill
         SetLocalInt(oPC, "bHasAnimalEmpathy", TRUE);
-    
+
     // query to see if use magic device is on that list
     string sSkillUMD = IntToString(SKILL_USE_MAGIC_DEVICE);
     sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND "
     +q+"data"+q+ " = '" + sSkillUMD + "'";
-    
+
     PRC_SQLExecDirect(sSQL);
     if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == sSkillUMD) // check it was the right skill
         SetLocalInt(oPC, "bHasUMD", TRUE);
-    
+
     // get the information needed to work out if the prereqs are met
     int nSex = GetLocalInt(oPC, "Gender");
-	int nRace = GetLocalInt(oPC, "Race");
-	int nClass = GetLocalInt(oPC, "Class");
+    int nRace = GetLocalInt(oPC, "Race");
+    int nClass = GetLocalInt(oPC, "Class");
     int nStr = GetLocalInt(oPC, "Str");
     int nDex = GetLocalInt(oPC, "Dex");
     int nCon = GetLocalInt(oPC, "Con");
     int nInt = GetLocalInt(oPC, "Int");
     int nWis = GetLocalInt(oPC, "Wis");
-    int nCha = GetLocalInt(oPC, "Cha"); 
+    int nCha = GetLocalInt(oPC, "Cha");
     int nOrder = GetLocalInt(oPC, "LawfulChaotic");
     int nMoral = GetLocalInt(oPC, "GoodEvil");
 
@@ -1189,23 +1192,23 @@ void DoBonusFeatLoop()
     nInt += StringToInt(Get2DACache("racialtypes", "IntAdjust", nRace));
     nWis += StringToInt(Get2DACache("racialtypes", "WisAdjust", nRace));
     nCha += StringToInt(Get2DACache("racialtypes", "ChaAdjust", nRace));
-    
+
     // get BAB
     int nBAB = StringToInt(Get2DACache(Get2DACache("classes", "AttackBonusTable", nClass), "BAB", 0));
-    
+
     // get fortitude save
     int nFortSave = StringToInt(Get2DACache(Get2DACache("classes","SavingThrowTable" , nClass), "FortSave", 0));
-    
+
     // get the results 5 rows at a time to avoid TMI
     int nReali = GetLocalInt(OBJECT_SELF, "i");
-    
+
     // get which cls_feat_*** 2da to use
     sFile = Get2DACache("classes", "FeatsTable", nClass);
-        
+
         /*
-        SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT, 
-            prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2, 
-            prc_cached2da_feat.OrReqFeat0, prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4, 
+        SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT,
+            prc_cached2da_feat.PREREQFEAT1, prc_cached2da_feat.PREREQFEAT2,
+            prc_cached2da_feat.OrReqFeat0, prc_cached2da_feat.OrReqFeat1, prc_cached2da_feat.OrReqFeat2, prc_cached2da_feat.OrReqFeat3, prc_cached2da_feat.OrReqFeat4,
             prc_cached2da_feat.REQSKILL, prc_cached2da_feat.REQSKILL2,
             prc_cached2da_feat.ReqMinSkillRanks, prc_cached2da_feat.ReqMinSkillRanks2
         FROM prc_cached2da_cls_feat INNER JOIN prc_cached2da_feat
@@ -1227,7 +1230,7 @@ void DoBonusFeatLoop()
             AND `mincha`<= <nCha>
             AND `MinFortSave` <= <nFortSave>
         */
-        
+
         sSQL = "SELECT "+q+"prc_cached2da_feat"+q+"."+q+"rowid"+q+", "+q+"FEAT"+q+", "+q+"PREREQFEAT1"+q+", "+q+"PREREQFEAT2"+q+", "
                 +q+"OrReqFeat0"+q+", "+q+"OrReqFeat1"+q+", "+q+"OrReqFeat2"+q+", "+q+"OrReqFeat3"+q+", "+q+"OrReqFeat4"+q+", "
                 +q+"REQSKILL"+q+", "+q+"REQSKILL2"+q+", "+q+"ReqSkillMinRanks"+q+", "+q+"ReqSkillMinRanks2"+q+
@@ -1249,20 +1252,20 @@ void DoBonusFeatLoop()
                 +" AND ("+q+"MINCHA"+q+" <= "+IntToString(nCha)+")"
                 +" AND ("+q+"MinFortSave"+q+" <= "+IntToString(nFortSave)+")"
                 +" LIMIT 5 OFFSET "+IntToString(nReali);
-                
+
     // debug print the sql statement
     if(DEBUG)
     {
         DoDebug(sSQL);
     }
-            
+
     PRC_SQLExecDirect(sSQL);
     // to keep track of where in the 25 rows we stop getting a result
     int nCounter = 0;
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
         nCounter++;
-	    int nRow = StringToInt(PRC_SQLGetData(1));
+        int nRow = StringToInt(PRC_SQLGetData(1));
         int nStrRef = StringToInt(PRC_SQLGetData(2));
         string sName = GetStringByStrRef(nStrRef);
         string sPreReqFeat1 = PRC_SQLGetData(3);
@@ -1276,7 +1279,7 @@ void DoBonusFeatLoop()
         string sReqSkill2 = PRC_SQLGetData(11);
         string sReqSkillRanks = PRC_SQLGetData(12);
         string sReqSkillRanks2 = PRC_SQLGetData(13);
-        
+
         // check AND feat prerequisites
         if (GetMeetsANDPreReq(sPreReqFeat1, sPreReqFeat2))
         {
@@ -1309,7 +1312,7 @@ void DoBonusFeatLoop()
             if(DEBUG) DoDebug("Not met AND prereqfeat test for feat " + IntToString(nRow) + ". Not added!");
         }
     } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-    
+
     if(nCounter == 5)
     {
         SetLocalInt(OBJECT_SELF, "i", nReali+5);
@@ -1352,7 +1355,7 @@ void DoSpellsLoop(int nStage)
             break;
         }
     }
-    
+
     PRC_SQLExecDirect(sSQL);
     // to keep track of where in the 10 rows we stop getting a result
     int nCounter = 0;
@@ -1368,7 +1371,7 @@ void DoSpellsLoop(int nStage)
             AddChoice(sName, nSpell);
         }
     } // end of while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
-    
+
     if (nCounter == 30)
     {
         SetLocalInt(OBJECT_SELF, "i", nReali+30);
@@ -1425,7 +1428,7 @@ void AddRaceFeats(int nRace)
         // add on any bonus feats from switches here
         nQTMCount += (GetPRCSwitch(PRC_CONVOCC_BONUS_FEATS));
         SetLocalInt(OBJECT_SELF, "QTM", nQTMCount);
-        
+
         array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
             StringToInt(sFeat));
         i++;
@@ -1465,7 +1468,7 @@ void AddClassFeats(int nClass)
     {
         /* TODO - start again */
     }
-    
+
 }
 
 void AddDomainFeats()
@@ -1479,7 +1482,7 @@ void AddDomainFeats()
     // add to the feat array
     array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
             StringToInt(sFeat));
-    
+
     nDomain = GetLocalInt(OBJECT_SELF, "Domain2");
     // air domain fix
     if (nDomain == -1)

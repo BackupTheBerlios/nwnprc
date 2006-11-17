@@ -205,6 +205,8 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
             SetLocalInt(oCohort, "CohortLevelLag", 2);
         }
 
+        //Commented out for NWN2
+        /*
         //if it was a premade one, give it a random name
         //randomize its appearance using DoDisguise
         if(GetResRef(oCohort) != COHORT_TAG)
@@ -297,7 +299,7 @@ void AddCohortToPlayerByObject(object oCohort, object oPC, int bDoSetup = TRUE)
             else if(GetRacialType(oCohort) == RACIAL_TYPE_AVARIEL)
                 SetCreatureWingType(CREATURE_WING_TYPE_BIRD, oCohort);
         }
-
+        */
         //if its a custom made cohort, need to cancel GreatX feats
         if(GetResRef(oCohort) == COHORT_TAG)
             CancelGreatFeats(oCohort);

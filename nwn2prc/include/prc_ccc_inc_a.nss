@@ -158,42 +158,42 @@ void SetupStage()
             {
                 AddChoice(IntToString(nStr)+" "+GetStringByStrRef(135)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nStr+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "StrAdjust", nRace)+")", 
+                        +" (Racial "+Get2DACache("racialtypes", "StrAdjust", nRace)+")",
                         ABILITY_STRENGTH);
             }
             if(nDex < nMaxStat && nPoints >= GetCost(nDex+1))
             {
                 AddChoice(IntToString(nDex)+" "+GetStringByStrRef(133)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nDex+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")", 
+                        +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")",
                         ABILITY_DEXTERITY);
             }
             if(nCon < nMaxStat && nPoints >= GetCost(nCon+1))
             {
                 AddChoice(IntToString(nCon)+" "+GetStringByStrRef(132)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCon+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "ConAdjust", nRace)+")", 
+                        +" (Racial "+Get2DACache("racialtypes", "ConAdjust", nRace)+")",
                         ABILITY_CONSTITUTION);
             }
             if(nInt < nMaxStat && nPoints >= GetCost(nInt+1))
             {
                 AddChoice(IntToString(nInt)+" "+GetStringByStrRef(134)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nInt+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "IntAdjust", nRace)+")", 
+                        +" (Racial "+Get2DACache("racialtypes", "IntAdjust", nRace)+")",
                         ABILITY_INTELLIGENCE);
             }
             if(nWis < nMaxStat && nPoints >= GetCost(nWis+1))
             {
                 AddChoice(IntToString(nWis)+" "+GetStringByStrRef(136)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nWis+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")", 
+                        +" (Racial "+Get2DACache("racialtypes", "DexAdjust", nRace)+")",
                         ABILITY_WISDOM);
             }
             if(nCha < nMaxStat && nPoints >= GetCost(nCha+1))
             {
                 AddChoice(IntToString(nCha)+" "+GetStringByStrRef(131)+". "+GetStringByStrRef(137)+" "
                         +IntToString(GetCost(nCha+1))+"."
-                        +" (Racial "+Get2DACache("racialtypes", "ChaAdjust", nRace)+")", 
+                        +" (Racial "+Get2DACache("racialtypes", "ChaAdjust", nRace)+")",
                         ABILITY_CHARISMA);
             }
             //Dont mark it as setup, needs to be recreated
@@ -217,7 +217,7 @@ void SetupStage()
                         nPoints = 4;
                     SetLocalInt(OBJECT_SELF, "Points", nPoints);
                 }
-            
+
                 i=0;
                 //add the "store" option
                 AddChoice("Store all remaining points.", -2);
@@ -243,22 +243,22 @@ void SetupStage()
                             int nCap = 1+3; //this should be level +3
                             if(nStoredPoints >= nCap)
                                 sName = "";
-                            else 
+                            else
                                 sName += " : "+IntToString(nStoredPoints);
                         }
                         else
                         {
                             //cross-class skill
-                            sName += " (Cross-class skill)";                            
+                            sName += " (Cross-class skill)";
                             //check at least 2 points remaining
                             if(nPoints < 2)
                                 sName = "";
-                            //check not capped    
+                            //check not capped
                             int nStoredPoints = array_get_int(OBJECT_SELF, "Skills", nSkillID);
                             int nCap = (1+3)/2; //this should be level +3
                             if(nStoredPoints >= nCap)
                                 sName = "";
-                            else if(sName != "") 
+                            else if(sName != "")
                                 sName += " : "+IntToString(nStoredPoints);
                         }
                         if(sName != "")
@@ -593,6 +593,8 @@ void SetupStage()
             break;
         case STAGE_TATTOOPART:
             AddChoice("Done", 0);
+            //removing appearance code - NWN2
+            /*
             AddChoice("Torso", CREATURE_PART_TORSO);
             AddChoice("Left bicep", CREATURE_PART_LEFT_BICEP);
             AddChoice("Left forearm", CREATURE_PART_LEFT_FOREARM);
@@ -602,6 +604,7 @@ void SetupStage()
             AddChoice("Right forearm", CREATURE_PART_RIGHT_FOREARM);
             AddChoice("Right thigh", CREATURE_PART_RIGHT_THIGH);
             AddChoice("Right shin", CREATURE_PART_RIGHT_SHIN);
+            */
             MarkStageSetUp(nStage);
             break;
 

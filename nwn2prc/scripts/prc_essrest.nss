@@ -1,9 +1,10 @@
-
+//no epic spells yet :P
 #include "prc_alterations"
-#include "inc_epicspells"
+//#include "inc_epicspells"
 
 void RestMeUp(object oPC)
 {
+    /*
     FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
     ForceRest(oPC);
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
@@ -12,13 +13,15 @@ void RestMeUp(object oPC)
     {
         ReplenishSlots(oPC);
     }
+    */
 }
 
 
- 
+
 void main()
 {
     object oPC=OBJECT_SELF;
+    /*
 
     if (!GetLocalInt(oPC,"ForceRest"))
     {
@@ -28,4 +31,5 @@ void main()
       AssignCommand(oPC, ActionStartConversation(OBJECT_SELF, "_rest_button", TRUE, FALSE));
     }
     DeleteLocalInt(oPC,"ForceRest");
+    */
 }

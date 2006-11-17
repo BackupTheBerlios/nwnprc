@@ -25,6 +25,24 @@ void CraftVFX(object oObject);
 #include "inc_utility"
 //#include "pnp_shft_main"
 
+//added from shifter include so things work - NWN2
+void RemoveAllItemProperties(object oItem)
+{
+    itemproperty iProp = GetFirstItemProperty(oItem);
+
+    while (GetIsItemPropertyValid(iProp))
+    {
+
+//        SendMessageToPC(GetItemPossessor(oItem),"item prop type-" + IntToString(GetItemPropertyType(iProp)));
+
+        RemoveItemProperty(oItem,iProp);
+        iProp = GetNextItemProperty(oItem);
+
+    }
+    // for a skin and prcs to get their feats back
+    DeletePRCLocalInts(oItem);
+}
+
 void LichSkills(object oHide, int iLevel)
 {
     SetCompositeBonus(oHide, "LichSkillHide", iLevel, ITEM_PROPERTY_SKILL_BONUS, SKILL_HIDE);

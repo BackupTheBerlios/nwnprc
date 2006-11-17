@@ -364,79 +364,79 @@ int FavouredSoul(object oPC = OBJECT_SELF)
 
      if (nFS >= 3)
      {
-	nFocus += GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,    oPC) +
-	GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,       oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,             oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE,         oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,           oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_DART,             oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,        oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,       oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,            oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,        oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD,      oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD,          oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE,         oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW,   oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL,      oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_KAMA,             oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_KATANA,           oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI,            oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW,   oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL,      oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER,     oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE,       oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD,       oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW,          oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR,     oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER,           oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR,         oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE,           oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,      oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,         oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,         oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,           oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SLING,            oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,            oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,            oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,     oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC) 	      +
-    	GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC) 	      +
-	GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC) 	      ;
+    nFocus += GetHasFeat(FEAT_WEAPON_FOCUS_BASTARD_SWORD,    oPC) +
+    GetHasFeat(FEAT_WEAPON_FOCUS_BATTLE_AXE,       oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_CLUB,             oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_CREATURE,         oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_DAGGER,           oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_DART,             oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_DIRE_MACE,        oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_DOUBLE_AXE,       oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_DWAXE,            oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_AXE,        oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_GREAT_SWORD,      oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_HALBERD,          oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_HAND_AXE,         oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_CROSSBOW,   oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_HEAVY_FLAIL,      oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_KAMA,             oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_KATANA,           oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_KUKRI,            oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_CROSSBOW,   oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_FLAIL,      oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_HAMMER,     oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_LIGHT_MACE,       oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_LONG_SWORD,       oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_LONGBOW,          oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_MORNING_STAR,     oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_RAPIER,           oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SCIMITAR,         oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SCYTHE,           oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SHORT_SWORD,      oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SHORTBOW,         oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SHURIKEN,         oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SICKLE,           oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SLING,            oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_SPEAR,            oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_STAFF,            oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_THROWING_AXE,     oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_TWO_BLADED_SWORD, oPC)           +
+        GetHasFeat(FEAT_WEAPON_FOCUS_UNARMED_STRIKE,   oPC)           +
+    GetHasFeat(FEAT_WEAPON_FOCUS_WAR_HAMMER,       oPC)           ;
 
-     	if (nFocus >= 1 && nFS >= 3) { nCheck = TRUE; }
-     	else { nCheck = FALSE; }
+        if (nFocus >= 1 && nFS >= 3) { nCheck = TRUE; }
+        else { nCheck = FALSE; }
 
-     	if (nCheck != TRUE)
-    	{
+        if (nCheck != TRUE)
+        {
 
-      	    FloatingTextStringOnCreature("You must select a Weapon Focus Feat. Please reselect your feats.", oPC, FALSE);
-      	         return FALSE;
-     	}
+            FloatingTextStringOnCreature("You must select a Weapon Focus Feat. Please reselect your feats.", oPC, FALSE);
+                 return FALSE;
+        }
 
      }
 
      if (nFS >= 5)
      {
 
-     	nEnergy += GetHasFeat(FEAT_FAVOURED_SOUL_ACID, oPC) +
-     	           GetHasFeat(FEAT_FAVOURED_SOUL_COLD, oPC) +
-     	           GetHasFeat(FEAT_FAVOURED_SOUL_ELEC, oPC) +
-     	           GetHasFeat(FEAT_FAVOURED_SOUL_FIRE, oPC) +
-     	           GetHasFeat(FEAT_FAVOURED_SOUL_SONIC, oPC);
+        nEnergy += GetHasFeat(FEAT_FAVOURED_SOUL_ACID, oPC) +
+                   GetHasFeat(FEAT_FAVOURED_SOUL_COLD, oPC) +
+                   GetHasFeat(FEAT_FAVOURED_SOUL_ELEC, oPC) +
+                   GetHasFeat(FEAT_FAVOURED_SOUL_FIRE, oPC) +
+                   GetHasFeat(FEAT_FAVOURED_SOUL_SONIC, oPC);
 
-     	if (nEnergy == 3 && nFS >= 15) { nCheck = TRUE; }
-     	else if (nEnergy == 2 && nFS > 5 && nFS < 15) { nCheck = TRUE; }
-     	else if (nEnergy == 1 && nFS >= 5) { nCheck = TRUE; }
-     	else { nCheck = FALSE; }
-	
-     	if (nCheck != TRUE)
-     	{
-	
-     	     FloatingTextStringOnCreature("You must select an Energy Resistance Feat. Please reselect your feats.", oPC, FALSE);
-     	          return FALSE;
-     	}
-	
+        if (nEnergy == 3 && nFS >= 15) { nCheck = TRUE; }
+        else if (nEnergy == 2 && nFS > 5 && nFS < 15) { nCheck = TRUE; }
+        else if (nEnergy == 1 && nFS >= 5) { nCheck = TRUE; }
+        else { nCheck = FALSE; }
+
+        if (nCheck != TRUE)
+        {
+
+             FloatingTextStringOnCreature("You must select an Energy Resistance Feat. Please reselect your feats.", oPC, FALSE);
+                  return FALSE;
+        }
+
      }
      return TRUE;
 }
@@ -779,7 +779,7 @@ int PWSwitchRestructions(object oPC = OBJECT_SELF)
 int DraDisFeats(object oPC = OBJECT_SELF)
 {
 
-     int bLd = (GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC));
+     int bLd = (GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oPC));
 
      int iBld = 0;
      int dBlood = 0;
@@ -927,7 +927,7 @@ int MarshalAuraLimit(object oPC = OBJECT_SELF)
 int CasterFeats(object oPC = OBJECT_SELF)
 {
     int nCaster = GetCasterLvl(TYPE_DIVINE, oPC);
-    if(DEBUG) DoDebug("GetCasterLevel: " + IntToString(nCaster));	
+    if(DEBUG) DoDebug("GetCasterLevel: " + IntToString(nCaster));
     if (nCaster < 3 && GetHasFeat(FEAT_INSCRIBE_RUNE, oPC))
     {
             FloatingTextStringOnCreature("Inscribe Rune requires Level 2 Divine Spells", oPC, FALSE);

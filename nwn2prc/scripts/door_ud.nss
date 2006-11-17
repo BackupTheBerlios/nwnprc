@@ -5,9 +5,9 @@
 //:://////////////////////////////////////////////
 /*
     This handles re-creating the door after it has been destroyed
-    
+
     To trigger it, send a user defined event no 500 to the door
-    
+
     This will not lock or trap the door again
 */
 //:://////////////////////////////////////////////
@@ -27,7 +27,8 @@ void main()
             ApplyEffectToObject(DURATION_TYPE_INSTANT,
                 EffectHeal(GetMaxHitPoints(OBJECT_SELF)-GetCurrentHitPoints(OBJECT_SELF)),
                 OBJECT_SELF);
-            PlayAnimation(ANIMATION_DOOR_CLOSE);
+            //no animation constant - NWN2
+            //PlayAnimation(ANIMATION_DOOR_CLOSE);
         }
         break;
     }

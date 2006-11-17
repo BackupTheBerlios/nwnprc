@@ -111,6 +111,8 @@ void SetupRacialAppearances()
         AddAppearance(APPEARANCE_TYPE_ASABI_SHAMAN);
         AddAppearance(APPEARANCE_TYPE_ASABI_WARRIOR);
     }
+    //removing appearance code - NWN2
+    /*
     else if(nRace == RACIAL_TYPE_DRIDER)
     {
         if(nSex == GENDER_MALE)
@@ -148,6 +150,7 @@ void SetupRacialAppearances()
         AddAppearance(APPEARANCE_TYPE_BEHOLDER_MAGE);
         AddAppearance(APPEARANCE_TYPE_BEHOLDER_MOTHER);
     }
+    */
     else
     {
         SetLocalInt(OBJECT_SELF, "Stage", GetLocalInt(OBJECT_SELF, "Stage")+2);

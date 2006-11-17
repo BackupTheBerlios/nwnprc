@@ -36,7 +36,7 @@ void main()
     int         nDomain2 =          GetLocalInt(oPC, "Domain2");
 
     int         nSchool =           GetLocalInt(oPC, "School");
-    
+
     int         nSpellsPerDay0 =    GetLocalInt(oPC, "SpellsPerDay0");
     int         nSpellsPerDay1 =    GetLocalInt(oPC, "SpellsPerDay1");
 
@@ -78,6 +78,8 @@ void main()
     sScript += LetoAdd("LawfulChaotic", IntToString(nOrder), "byte");
     sScript += LetoAdd("GoodEvil", IntToString(nMoral), "byte");
 
+    //arguments for RandomName() removed - NWN2
+
     //Familiar
     //has a random name
     if((nClass == CLASS_TYPE_WIZARD
@@ -86,7 +88,7 @@ void main()
     {
         sScript += LetoAdd("FamiliarType", IntToString(nFamiliar), "int");
         if(GetFamiliarName(oPC) == "")
-            sScript += LetoAdd("FamiliarName", RandomName(NAME_FAMILIAR), "string");
+            sScript += LetoAdd("FamiliarName", RandomName(), "string");
     }
 
     //Animal Companion
@@ -95,7 +97,7 @@ void main()
     {
         sScript += LetoAdd("CompanionType", IntToString(nAnimalCompanion), "int");
         if(GetAnimalCompanionName(oPC) == "")
-            sScript += LetoAdd("CompanionName", RandomName(NAME_ANIMAL), "string");
+            sScript += LetoAdd("CompanionName", RandomName(), "string");
     }
 
     //Domains
@@ -210,16 +212,16 @@ void main()
     sScript += SetHairColor(nHair);
     sScript += SetTatooColor(nTattooColour1, 1);
     sScript += SetTatooColor(nTattooColour2, 2);
-    
+
     */
 
-    
+
     /* -- FOR TESTING ONLY --
     //change the tag to mark the player as done
     sScript += LetoAdd("Tag", Encrypt(oPC), "string");
     //give an XP so the XP switch works
     SetXP(oPC, 1);
-    
+
     */
 
     SetLocalInt(oPC, "StopRotatingCamera", TRUE);

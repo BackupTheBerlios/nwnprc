@@ -25,7 +25,7 @@ void main()
     {
         case PRC_CRAFT_LISTEN_SETNAME:
         {
-            SetName(oItem, sString);
+            SetFirstName(oItem, sString);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_BREACH), oPC);
             break;
         }

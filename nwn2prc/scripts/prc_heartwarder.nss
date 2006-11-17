@@ -17,7 +17,7 @@ void Heart_Passion(object oPC ,object oSkin ,int iLevel)
 
    if(GetLocalInt(oSkin, "HeartPassionA") == iLevel) return;
 
-    SetCompositeBonus(oSkin, "HeartPassionA", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_ANIMAL_EMPATHY);
+    //SetCompositeBonus(oSkin, "HeartPassionA", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_ANIMAL_EMPATHY);
     SetCompositeBonus(oSkin, "HeartPassionP", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_PERFORM);
     SetCompositeBonus(oSkin, "HeartPassionPe", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_DIPLOMACY);
     SetCompositeBonus(oSkin, "HeartPassionT", iLevel, ITEM_PROPERTY_SKILL_BONUS,SKILL_TAUNT);

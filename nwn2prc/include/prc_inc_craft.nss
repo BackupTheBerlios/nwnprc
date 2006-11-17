@@ -418,8 +418,8 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
     //Consume them even if you don't meet the requisites (i.e. you failed a skill check)
     if (report.GPcost < 0)
         report.GPcost = 0;
-        
-    if (!GetHasGPToSpend(OBJECT_SELF, report.GPcost)    
+
+    if (!GetHasGPToSpend(OBJECT_SELF, report.GPcost)
         || !GetHasXPToSpend(OBJECT_SELF, report.XPcost))
         report.result = "";
 
@@ -446,7 +446,7 @@ struct ireqreport CheckIReqs(object oRecipe, int nDisplay=TRUE, int nConsumeIReq
 
     if (report.consume) {
         //Consume GP and XP if we're not meeting all the requisites, too (i.e. on a failed skill check)
-        if (GetHasGPToSpend(OBJECT_SELF, report.GPcost) 
+        if (GetHasGPToSpend(OBJECT_SELF, report.GPcost)
             && GetHasXPToSpend(OBJECT_SELF, report.XPcost))
         {
             SpendXP(OBJECT_SELF, report.XPcost);
@@ -546,7 +546,7 @@ struct ireqreport CheckReqResult(struct ireqreport report, string sReqParam1, st
 
         report.stacksize = StringToInt(sReqParam2);
         if (report.stacksize < 1)
-            //report.stacksize = GetItemStackSize(oTempObject); 
+            //report.stacksize = GetItemStackSize(oTempObject);
             //changed to get max stack size, avoiding crafting arrows etc 1 at a time
             report.stacksize = StringToInt(Get2DACache("baseitems", "Stacking", GetBaseItemType(oTempObject)));
 
@@ -1077,8 +1077,11 @@ struct ireqreport CheckReqRace(struct ireqreport report, string sReqParam1, stri
     int nRace   = StringToInt(sReqParam1);
     int nResult = (GetRacialType(OBJECT_SELF) == nRace);
 
+    //GetSubRace() returns an int - NWN2
+    /*
     if (sReqParam2 != "")
         nResult &= (GetSubRace(OBJECT_SELF) == sReqParam2);
+    */
     string sMessage;
     if (report.display)
     {

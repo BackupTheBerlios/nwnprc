@@ -611,7 +611,7 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                                 PRCGetHasSpell(SPELL_FLAME_WEAPON) &&
                                 PRCGetHasSpell(SPELL_LIGHT) &&
                                 PRCGetHasSpell(SPELL_PRISMATIC_SPRAY) &&
-                                PRCGetHasSpell(SPELL_PROTECTION_FROM_ELEMENTS) &&
+                                PRCGetHasSpell(SPELL_PROTECTION_FROM_ENERGY) &&
                                 PRCGetHasSpell(SPELL_WALL_OF_FIRE));
                         if(bDecrement)
                         {
@@ -620,7 +620,7 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                             PRCDecrementRemainingSpellUses(oPC, SPELL_FLAME_WEAPON);
                             PRCDecrementRemainingSpellUses(oPC, SPELL_LIGHT);
                             PRCDecrementRemainingSpellUses(oPC, SPELL_PRISMATIC_SPRAY);
-                            PRCDecrementRemainingSpellUses(oPC, SPELL_PROTECTION_FROM_ELEMENTS);
+                            PRCDecrementRemainingSpellUses(oPC, SPELL_PROTECTION_FROM_ENERGY);
                             PRCDecrementRemainingSpellUses(oPC, SPELL_WALL_OF_FIRE);
                         }
                         return bOR;
@@ -1060,7 +1060,7 @@ void ApplyItemProps(object oItem, string sFile, int nLine)
                 case 43:
                 {
                     ApplyBonusToStatBasedChecks(oItem, ABILITY_CHARISMA, 3);
-                    SetName(oItem, GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine))));
+                    SetFirstName(oItem, GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine))));
                     return;
                     break;
                 }
@@ -1086,7 +1086,7 @@ void ApplyItemProps(object oItem, string sFile, int nLine)
         }
     }
     if(sFile != "craft_weapon" && sFile != "craft_armour")
-        SetName(oItem, GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine))));
+        SetFirstName(oItem, GetStringByStrRef(StringToInt(Get2DACache(sFile, "Name", nLine))));
 }
 
 //Partly ripped off the lexicon :P
@@ -1269,7 +1269,7 @@ int CheckCraftingMaterial(int nBaseItem, int nMaterial, int nBaseAC = -1)
         (nBaseItem == 304) ||   //nunchaku
         (nBaseItem == BASE_ITEM_SCYTHE) ||
         (nBaseItem == BASE_ITEM_SHORTSPEAR) ||
-        (nBaseItem == BASE_ITEM_TRIDENT) ||
+        //(nBaseItem == BASE_ITEM_TRIDENT) ||
         (nBaseItem == BASE_ITEM_HALBERD) ||
         (nBaseItem == 322) ||   //goad
         (nBaseItem == BASE_ITEM_CLUB)
@@ -1705,9 +1705,9 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
     }
     if(nMighty > 0) sPrefix += "Composite ";
 
-    SetName(oNew, sPrefix + GetName(oNew));
+    SetFirstName(oNew, sPrefix + GetName(oNew));
     if((nBaseItemType == BASE_ITEM_ARMOR) && (nBaseAC == 0))
-        SetName(oNew, "Robe");
+        SetFirstName(oNew, "Robe");
 
     return oNew;
 }

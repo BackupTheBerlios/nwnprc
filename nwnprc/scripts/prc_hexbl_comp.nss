@@ -14,6 +14,19 @@ void main()
 {
    int nMax = GetMaxHenchmen();
    SetMaxHenchmen(nMax + 10);
+  
+    int i = 1;
+    object oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
+    while (GetIsObjectValid(oHench))
+    {
+        if (GetTag(oHench) == "prc_hex_darkcomp")
+	{
+            FloatingTextStringOnCreature("You already have a Dark Companion", OBJECT_SELF, FALSE);
+            return;
+        }
+        i += 1;
+        oHench = GetAssociate(ASSOCIATE_TYPE_HENCHMAN, OBJECT_SELF, i);
+    }   
    
    if (DEBUG) DoDebug("Creating Dark Companion");
     
@@ -30,6 +43,7 @@ void main()
    effect eGhost = EffectCutsceneGhost();
    effect eGhostVs = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE);
    eGhost = EffectLinkEffects(eGhost, eGhostVs);
+   eGhost = SupernaturalEffect(eGhost);
    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eGhost, oCreature);
    
    AssignCommand(oCreature, ActionForceFollowObject(OBJECT_SELF, 1.0));

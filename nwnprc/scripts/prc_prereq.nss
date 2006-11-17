@@ -94,6 +94,10 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
+     if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) >= 14)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }     
      if (GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC) >= 10)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);

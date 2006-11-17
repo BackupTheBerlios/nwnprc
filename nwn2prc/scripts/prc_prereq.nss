@@ -94,6 +94,10 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
      }
+     if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) >= 14)
+     {
+          SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     }     
      if (GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC) >= 10)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
@@ -743,6 +747,13 @@ void RacialHD(object oPC)
     }
 }
 
+void Virtuoso(object oPC)
+{   //Needs 6 ranks of Persuade OR 6 ranks of Intimidate
+    SetLocalInt(oPC, "PRC_PrereqVirtuoso", 1);
+    if((GetSkillRank(SKILL_PERSUADE, oPC) >= 6) || (GetSkillRank(SKILL_INTIMIDATE, oPC) >= 6))
+        SetLocalInt(oPC, "PRC_PrereqVirtuoso", 0);
+}
+
 void main()
 {
      //Declare Major Variables
@@ -899,6 +910,7 @@ void main()
      Tempus(oPC);
      Asmodeus(oPC);
      RacialHD(oPC);
+     Virtuoso(oPC);
      Brimstone(oPC);
      // Truly massive debug message flood if activated.
      /*

@@ -1,7 +1,8 @@
 //for the form selected from the list and confermed, delete from known forms array
+//removed shifting code
 
 #include "nw_i0_generic"
-#include "inc_soul_shift"
+//#include "inc_soul_shift"
 
 void main()
 {
@@ -9,5 +10,5 @@ void main()
     int nStartIndex = GetLocalInt(oPC,"ShifterListIndex");
     // add index to the start
     nStartIndex+=0;
-    DeleteFromKnownArray(nStartIndex,oPC);
+    //DeleteFromKnownArray(nStartIndex,oPC);
 }

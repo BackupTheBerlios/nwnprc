@@ -1,6 +1,7 @@
 //include file for new polymorph like functions using the pnp shifters shifting code
 //created by paradox_42 - 2005/07/01
 
+//removed shifting code - NWN2
 
 // used to shift by resref
 // oPC = PC to shift/polymorph
@@ -31,11 +32,13 @@ void PRC_UnPolymorph(object oPC);
 
 int PRC_Polymorph_ResRef(object oPC, string sResRef, int iExtraAbilitys)
 {
+    /*
     StoreAppearance(oPC);
     if (!CanShift(oPC))
     {
         return FALSE;
     }
+    */
     int i = 0;
     object oLimbo = GetObjectByTag("Limbo", i);
     location lLimbo;
@@ -81,21 +84,25 @@ int PRC_Polymorph_ResRef(object oPC, string sResRef, int iExtraAbilitys)
         //set oTarget for deletion
         SetLocalInt(oTarget,"pnp_shifter_deleteme",1);
         //Shift the PC to it
+        /*
         if (iExtraAbilitys == TRUE)
             SetShiftEpic(oPC, oTarget);
         else
             SetShift(oPC, oTarget);
+        */
         return TRUE;
     }
 }
 
 int PRC_Polymorph_Object(object oPC, object oTarget, int iExtraAbilitys, int iDeleteTarget, int iUseClone)
 {
+    /*
     StoreAppearance(oPC);
     if (!CanShift(oPC))
     {
         return FALSE;
     }
+    */
     if (iUseClone == TRUE)
     {
         string sResRef = GetResRef(oTarget);
@@ -144,10 +151,12 @@ int PRC_Polymorph_Object(object oPC, object oTarget, int iExtraAbilitys, int iDe
             SetLocalInt(oTarget,"pnp_shifter_deleteme",1);
         }
         //Shift the PC to it
+        /*
         if (iExtraAbilitys == TRUE)
             SetShiftEpic(oPC, oTarget);
         else
             SetShift(oPC, oTarget);
+        */
         return TRUE;
     }
 }

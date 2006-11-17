@@ -11,5 +11,6 @@ void main()
     int iEpic = GetLocalInt(oPC,"pnp_shft_qse");
     // add index to the start
     iIndex+=4;
-    SetQuickSlot(oPC,iIndex,iQuickSlot,iEpic);
+    //removed shifting code - NWN2
+    //SetQuickSlot(oPC,iIndex,iQuickSlot,iEpic);
 }

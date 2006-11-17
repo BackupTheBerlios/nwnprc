@@ -7,17 +7,17 @@ void main()
     object oPC = PRCGetSpellTargetObject();
     object oTarget = GetEnteringObject();
     object PCMarshal = GetAreaOfEffectCreator();
-    
+
     string sMes = "";
 
     int MarshCha = GetAbilityModifier(ABILITY_CHARISMA, PCMarshal);
-    
-    if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))   
+
+    if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))
     {
             //Demand Fortitude
             if(GetHasSpellEffect(3500, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -30,7 +30,7 @@ void main()
             //Force of Will
             if(GetHasSpellEffect(3501, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -43,7 +43,7 @@ void main()
             //Watchful Eye
             if(GetHasSpellEffect(3502, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -56,13 +56,13 @@ void main()
             //Boost Charisma
             if(GetHasSpellEffect(3503, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
               else
                  {
-              ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_ANIMAL_EMPATHY, MarshCha), oTarget);
+              //ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_ANIMAL_EMPATHY, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_BLUFF, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_INTIMIDATE, MarshCha), oTarget);
               ApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectSkillIncrease(SKILL_PERFORM, MarshCha), oTarget);
@@ -76,7 +76,7 @@ void main()
             //Boost Constitution
             if(GetHasSpellEffect(3504, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -89,7 +89,7 @@ void main()
             //Boost Dexterity
             if(GetHasSpellEffect(3505, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -108,7 +108,7 @@ void main()
             //Boost Intelligence
             if(GetHasSpellEffect(3506, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -129,7 +129,7 @@ void main()
             //Boost Strength
             if(GetHasSpellEffect(3507, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -143,7 +143,7 @@ void main()
             //Boost Wisdom
             if(GetHasSpellEffect(3508, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -156,9 +156,9 @@ void main()
                  }
               }
             //Determined Caster
-            if(GetHasSpellEffect(3509, PCMarshal)) 
+            if(GetHasSpellEffect(3509, PCMarshal))
               {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }
@@ -169,13 +169,13 @@ void main()
                  }
               }
     }
-    
-    if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()))   
+
+    if(GetIsEnemy(oTarget, GetAreaOfEffectCreator()))
    {
                //Art of War
                if(GetHasSpellEffect(3510, PCMarshal))
                  {
-              if (GetLocalInt(PCMarshal,"MarshalMinor")>0) 
+              if (GetLocalInt(PCMarshal,"MarshalMinor")>0)
                  {
                  return;
                  }

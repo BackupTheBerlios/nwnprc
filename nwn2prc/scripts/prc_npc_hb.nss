@@ -4,21 +4,22 @@
 //:://////////////////////////////////////////////
 #include "prc_alterations"
 #include "prc_inc_death"
-#include "inc_epicspellai"
+//#include "inc_epicspellai"
 
 void main()
 {
-    
+
     //NPC substiture for OnEquip
     DoEquipTest();
 
-
+    //removed epic spells - NWN2
+    /*
     if(DoEpicSpells())
     {
         ActionDoCommand(SetCommandable(TRUE));
         SetCommandable(FALSE);
     }
-    
+    */
     if(DoDeadHealingAI())
     {
         ActionDoCommand(SetCommandable(TRUE));

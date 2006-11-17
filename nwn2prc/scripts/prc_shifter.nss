@@ -15,14 +15,16 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-#include "prc_inc_shifting"
+//commented out almost everything - NWN2
+
+//#include "prc_inc_shifting"
 
 const string SHIFTER_DEFAULT_TEMPLATES = "shifterlist";
 
 void DelayedStoreTemplate(object oPC, location lSpawn, string sResRef)
 {
     object oTemplate = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
-    StoreShiftingTemplate(oPC, SHIFTER_TYPE_SHIFTER, oTemplate);
+    //StoreShiftingTemplate(oPC, SHIFTER_TYPE_SHIFTER, oTemplate);
     DestroyObject(oTemplate, 0.5f);
 }
 
@@ -32,11 +34,12 @@ void main()
     object oPC = OBJECT_SELF;
 
     // Store true form if not stored already. But not if affected by a polymorph effect
+    /*
     if(!GetPersistantLocalInt(oPC, SHIFTER_TRUEAPPEARANCE))
         StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
 
     // Variables for the default templates granting
-    int nShifterLevel = GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC);
+    int nShifterLevel = 0;GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC);
     int nGainedUpTo   = GetLocalInt(oPC, "PRC_Shifter_AutoGranted");
     int nLevel, i     = 0;
     string sLevel;
@@ -72,4 +75,5 @@ void main()
         // Update the variable listing the highest level of autogranted templates
         SetLocalInt(oPC, "PRC_Shifter_AutoGranted", nShifterLevel);
     }
+    */
 }

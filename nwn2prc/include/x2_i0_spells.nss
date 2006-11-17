@@ -46,7 +46,8 @@ int GetIsMagicStatBonus(object oCaster);
 // * + 20. The hightest ability score of the casting relevants is 99.99% identical
 // * with the one that is used for casting, so we just take it.
 // * if used by a placeable, it is equal to the placeables WILL save field.
-int GetEpicSpellSaveDC(object oCaster);
+//removed epic spells - NWN2
+//int GetEpicSpellSaveDC(object oCaster);
 
 // * Hub function for the epic barbarian feats that upgrade rage. Call from
 // * the end of the barbarian rage spellscript
@@ -92,8 +93,8 @@ effect CreateBadTideEffectsLink()
     effect eSaves = EffectSavingThrowDecrease(SAVING_THROW_ALL, 2);
     effect eAttack = EffectAttackDecrease(2);
     effect eDamage = EffectDamageDecrease(2);
-    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);	// NWN1 VFX
-    effect eDur = EffectVisualEffect( VFX_DUR_SPELL_BATTLETIDE_VICTIM );	// NWN2 VFX
+    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);   // NWN1 VFX
+    effect eDur = EffectVisualEffect( VFX_DUR_SPELL_BATTLETIDE_VICTIM );    // NWN2 VFX
     //Link the effects
     effect eLink = EffectLinkEffects(eAttack, eDamage);
     eLink = EffectLinkEffects(eLink, eSaves);
@@ -120,8 +121,8 @@ effect CreateGoodTideEffectsLink()
     effect eSaves = EffectSavingThrowIncrease(SAVING_THROW_ALL, 2);
     effect eAttack = EffectAttackIncrease(2);
     effect eDamage = EffectDamageIncrease(2);
-    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);	// NWN1 VFX
-    effect eDur = EffectVisualEffect( VFX_DUR_SPELL_BATTLETIDE );	// NWN2 VFX
+    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);   // NWN1 VFX
+    effect eDur = EffectVisualEffect( VFX_DUR_SPELL_BATTLETIDE );   // NWN2 VFX
     //Link the effects
     effect eLink = EffectLinkEffects(eAttack, eDamage);
     eLink = EffectLinkEffects(eLink, eSaves);
@@ -454,7 +455,7 @@ void DoMindBlast(int nDC, int nDuration, float fRange)
     location lTargetLocation = GetSpellTargetLocation();
     object oTarget;
     effect eCone;
-    //effect eVis = EffectVisualEffect(VFX_IMP_SONIC);	// NWN1 VFX
+    //effect eVis = EffectVisualEffect(VFX_IMP_SONIC);  // NWN1 VFX
     effect eVis = EffectVisualEffect( VFX_HIT_SPELL_SONIC );
 
     oTarget = GetFirstObjectInShape(SHAPE_SPELLCONE, fRange, lTargetLocation, TRUE);
@@ -574,6 +575,8 @@ void EngulfAndDamage(object oTarget, object oSource)
 // with the one that is used for casting, so we just take it.
 // if used by a placeable, it is equal to the placeables WILL save field.
 // --------------------------------------------------------------------------------
+//removed epic spells - NWN2
+/*
 int GetEpicSpellSaveDC(object oCaster)
 {
 
@@ -598,7 +601,7 @@ int GetEpicSpellSaveDC(object oCaster)
     }
     int nRet = 20 + nHigh;
     return nRet;
-}
+}*/
 
 // --------------------------------------------------------------------------------
 // GZ: Sept 2003
@@ -697,7 +700,7 @@ int GZGetDelayedSpellEffectsExpired(int nSpell_ID, object oTarget, object oCaste
         return TRUE;
     }
 
-    if (GetIsDead(oCaster) || GetIsDead(oTarget) )	// added a check to see if the target is dead so that effects don't persist on corpses
+    if (GetIsDead(oCaster) || GetIsDead(oTarget) )  // added a check to see if the target is dead so that effects don't persist on corpses
     {
         DeleteLocalInt(oTarget,"XP2_L_SPELL_SAVE_DC_" + IntToString(nSpell_ID));
         GZRemoveSpellEffects(nSpell_ID, oTarget);

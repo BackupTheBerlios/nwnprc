@@ -14,8 +14,10 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+//commented out almost everything - NWN2
+
 #include "inc_dynconv"
-#include "prc_inc_shifting"
+//#include "prc_inc_shifting"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -52,7 +54,7 @@ const string QSMODIFYVAR    = "PRC_ShiftConvo_QSToModify";
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
-
+/*
 void GenerateShapeList(object oPC)
 {
     int i, nArraySize = GetNumberOfStoredTemplates(oPC, SHIFTER_TYPE_SHIFTER);
@@ -60,7 +62,7 @@ void GenerateShapeList(object oPC)
     for(i = 0; i < nArraySize; i++)
         AddChoice(GetStoredTemplateName(oPC, SHIFTER_TYPE_SHIFTER, i), i, oPC);
 }
-
+*/
 
 
 
@@ -103,8 +105,8 @@ void main()
 
 
                 AddChoiceStrRef(16828366,     CHOICE_CHANGESHAPE,      oPC); // "Change shape"
-                if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) > 10) // Show the epic shift choice only if the character could use it
-                    AddChoiceStrRef(16828367, CHOICE_CHANGESHAPE_EPIC, oPC); // "Change shape (epic)"
+                //if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) > 10) // Show the epic shift choice only if the character could use it
+                //    AddChoiceStrRef(16828367, CHOICE_CHANGESHAPE_EPIC, oPC); // "Change shape (epic)"
                 AddChoiceStrRef(16828368,     CHOICE_LISTQUICKSHIFTS,  oPC); // "View / Assign shapes to your 'Quick Shift Slots'"
                 AddChoiceStrRef(16828369,     CHOICE_DELETESHAPE,      oPC); // "Delete shapes you do not want anymore"
                 AddChoiceStrRef(16828370,     CHOICE_SETTINGS,         oPC); // "Special settings"
@@ -122,7 +124,7 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                //GenerateShapeList(oPC);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -168,7 +170,7 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                //GenerateShapeList(oPC);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -179,7 +181,7 @@ void main()
                 // The list may be long, so list the back choice first
                 AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC);
 
-                GenerateShapeList(oPC);
+                //GenerateShapeList(oPC);
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -265,6 +267,7 @@ void main()
                 if(!GetLocalInt(oPC, EPICVAR)) // Normal shapechange
                 {
                     // First try paying using Greater Wildshape uses
+                    /*
                     if(GetHasFeat(FEAT_PRESTIGE_SHIFTER_GWSHAPE_1, oPC))
                     {
                         DecrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
@@ -276,7 +279,7 @@ void main()
                            )
                         {
                             IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
-						    DecrementRemainingFeatUses(oPC, FEAT_WILD_SHAPE);
+                            DecrementRemainingFeatUses(oPC, FEAT_WILD_SHAPE);
                         }
 
                         bPaid = TRUE;
@@ -286,21 +289,25 @@ void main()
                             GetHasFeat(FEAT_WILD_SHAPE, oPC)
                             )
                     {
-					    DecrementRemainingFeatUses(oPC, FEAT_WILD_SHAPE);
-					    bPaid = TRUE;
+                        DecrementRemainingFeatUses(oPC, FEAT_WILD_SHAPE);
+                        bPaid = TRUE;
                     }
+                    */
                 }
                 // Epic shift, uses Epic Greater Wildshape
+                /*
                 else if(GetHasFeat(FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1, oPC))
                 {
                     DecrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_EGWSHAPE_1);
                     bPaid = TRUE;
                 }
+                */
 
                 // If the user could pay for the shifting, do it
                 if(bPaid)
                 {
                     // Choice is index into the template list
+                    /*
                     if(!ShiftIntoResRef(oPC, SHIFTER_TYPE_SHIFTER,
                                         GetStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice),
                                         GetLocalInt(oPC, EPICVAR)
@@ -313,6 +320,7 @@ void main()
                         else
                             IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
                     }
+                    */
 
                     // The convo should end now
                     AllowExit(DYNCONV_EXIT_FORCE_EXIT);
@@ -340,9 +348,9 @@ void main()
                 // Store the number of the slot to be modified
                 SetLocalInt(oPC, QSMODIFYVAR, nChoice);
                 // If the character is an epic shifter, they can select whether the quickselection is normal or epic shift
-                if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) > 10)
-                    nStage = STAGE_SELECTQUICKSHIFTTYPE;
-                else
+                //if(GetLevelByClass(CLASS_TYPE_PNP_SHIFTER, oPC) > 10)
+                //    nStage = STAGE_SELECTQUICKSHIFTTYPE;
+                //else
                     nStage = STAGE_SELECTQUICKSHIFTSHAPE;
             }
         }
@@ -365,6 +373,7 @@ void main()
                 // Store the chosen template into the quickslot, choice is the template's index in the main list
                 int nSlot = GetLocalInt(oPC, QSMODIFYVAR);
                 int bEpic = GetLocalInt(oPC, EPICVAR);
+                /*
                 SetPersistantLocalString(oPC, "PRC_Shifter_Quick_" + IntToString(nSlot) + "_ResRef",
                                          GetStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice)
                                          );
@@ -373,7 +382,7 @@ void main()
                                        + (bEpic ? " (epic)" : "")
                                          );
                 SetPersistantLocalInt(oPC, "PRC_Shifter_Quick_" + IntToString(nSlot) + "_Epic", bEpic);
-
+                */
                 // Clean up
                 DeleteLocalInt(oPC, EPICVAR);
                 DeleteLocalInt(oPC, QSMODIFYVAR);
@@ -388,7 +397,7 @@ void main()
             if(nChoice != CHOICE_BACK_TO_MAIN)
             {
                 // Choice is index into the template list
-                DeleteStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice);
+                //DeleteStoredTemplate(oPC, SHIFTER_TYPE_SHIFTER, nChoice);
             }
 
             // Return to main menu in any case
@@ -408,7 +417,7 @@ void main()
             else if(nChoice == CHOICE_STORE_TRUEAPPEARANCE)
             {
                 // Probably should give feedback about whether this was successfull or not. Though the warning in the selection text could be enough
-                StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
+                //StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
                 nStage = STAGE_ENTRY;
             }
         }

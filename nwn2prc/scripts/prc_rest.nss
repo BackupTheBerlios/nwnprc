@@ -6,12 +6,14 @@
     Hooked NPC's into this via prc_npc_rested - 06.03.2004, Ornedan
 */
 
+//removed epic references - NWN2
+
 #include "prc_alterations"
 #include "psi_inc_psifunc"
 #include "prc_sp_func"
 #include "prc_inc_domain"
 #include "true_inc_trufunc"
-#include "inc_epicspells"
+//#include "inc_epicspells"
 
 void PrcFeats(object oPC)
 {
@@ -64,13 +66,14 @@ void RestFinished(object oPC)
         SetLocalInt(oPC,"FEAT_LIPS_RAPTUR",iLips);
         SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
     }
-
+    /*
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
         GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||
         GetIsEpicFavSoul(oPC) || GetIsEpicHealer(oPC)) {
         FloatingTextStringOnCreature("*You feel refreshed*", oPC, FALSE);
         ReplenishSlots(oPC);
     }
+    */
 
     if (GetHasFeat(FEAT_SF_CODE,oPC))
         RemoveSpecificProperty(GetPCSkin(oPC),ITEM_PROPERTY_BONUS_FEAT,IP_CONST_FEAT_SF_CODE);
@@ -191,7 +194,7 @@ void RestStarted(object oPC)
         }
     }
     */
-    
+
     SetLocalInt(oPC, "PnP_Rest_InitialHP", GetCurrentHitPoints(oPC));
     //clean up bonded summon
     if(GetLevelByClass(CLASS_TYPE_BONDED_SUMMONNER, oPC))
@@ -223,7 +226,7 @@ void main()
     object oPC = GetLastBeingRested();
 
     if(DEBUG) DoDebug("prc_rest: Running for " + DebugObject2Str(oPC));
-    
+
     // return here for DMs as they don't need all this stuff
     if(GetIsDM(oPC))
         return;

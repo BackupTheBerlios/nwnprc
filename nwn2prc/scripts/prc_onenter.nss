@@ -4,7 +4,7 @@
 #include "prc_inc_teleport"
 #include "prc_inc_leadersh"
 #include "prc_inc_domain"
-#include "prc_inc_shifting"
+//#include "prc_inc_shifting"
 #include "true_inc_trufunc"
 
 
@@ -220,8 +220,11 @@ void main()
         AssignCommand(GetModule(), CheckHB(oPC));
 
     // If the PC logs in shifted, unshift them
+    //shifting code removed - NWN2
+    /*
     if(GetPersistantLocalInt(oPC, SHIFTER_ISSHIFTED_MARKER))
         UnShift(oPC);
+    */
 
     // Execute scripts hooked to this event for the player triggering it
     //How can this work? The PC isnt a valid object before this. - Primogenitor

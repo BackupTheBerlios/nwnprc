@@ -95,7 +95,8 @@ int PerformJump(object oPC, location lLoc, int bDoKnockDown = TRUE)
      // skill 28 = jump
      int iJumpRoll = d20() + GetSkillRank(SKILL_JUMP, oPC) + iBonus + GetAbilityModifier(ABILITY_STRENGTH, oPC);
 
-     if(GetSkillRank(SKILL_TUMBLE, oPC, TRUE) >= 5) iJumpRoll += 2;
+     //removed 3rd argument from GetSkillRank(), no longer exists - NWN2
+     if(GetSkillRank(SKILL_TUMBLE, oPC) >= 5) iJumpRoll += 2;
 
      // Jump distance is determined by the number exceeding 10
      // divided based on running or standing jump.

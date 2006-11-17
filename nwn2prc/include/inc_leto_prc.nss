@@ -104,9 +104,9 @@ void PRCLetoLevelup(object oPC)
             //now the 2da lookup to get the maximum hp
             //uses the same cache system as the ConvoCC
             int nMax = StringToInt(Get2DACache("classes", "HitDie", nClass));
-            if(nClass == CLASS_TYPE_DRAGON_DISCIPLE)
+            if(nClass == CLASS_TYPE_DRAGONDISCIPLE)
             {
-                int nClassLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE, oPC) ;
+                int nClassLevel = GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE, oPC) ;
                 switch(nClassLevel)
                 {
                     case 1: nMax = 6; break;

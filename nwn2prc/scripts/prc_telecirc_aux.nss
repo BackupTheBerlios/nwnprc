@@ -21,6 +21,8 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
+//trap functions removed - NWN2
+
 #include "spinc_telecircle"
 
 void TrapMonitorHB(object oAoE)
@@ -74,6 +76,7 @@ void VFXHB(location lCenter)
 
 void main()
 {
+    /*
     // Check whether we are running for the PC who selected the location the circle points at or for the area of effect object
     if(GetTag(OBJECT_SELF) != Get2DACache("vfx_persistent", "LABEL", AOE_PER_TELEPORTATIONCIRCLE))
     {
@@ -141,4 +144,5 @@ void main()
         // Mark the initalisation being done
         SetLocalInt(oAoE, "PRC_TeleCircle_AoE_Inited", TRUE);
     }
+    */
 }

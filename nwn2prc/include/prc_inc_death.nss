@@ -7,18 +7,21 @@
     When a creature dies, they are returned to 10HP.
     Each round they loose DAMAGE_FROM_BLEEDINGHP from bleeding.
     When they get to zero HP, they are really dead.
-    
+
     Each TIME_BETWEEN_BLEEDING seconds they have a BLEED_TO_STABLE_CHANCE% chance to stabilise.
     Once stabilised, they recover HEAL_FROM_STABLEHP per TIME_BETWEEN_STABLE
     seconds and suffer DAMAGE_FROM_STABLE per TIME_BETWEEN_STABLE seconds
-    
+
     Each round they have a STABLE_TO_BLEED_CHANCE% to start bleeding again.
     Each round they have a STABLE_TO_DISABLED_CHANCE% to become disabled again.
-    
+
     Once disabled, they can only move at half speed.
     TO BE IMPLEMENTED: Strenuous activity puts them back to stable
-    
+
     If they get back above 10HP, they recover.
+
+
+    GetCutsceneMode() doesn't exist in NWN2, commented out
 */
 //:://////////////////////////////////////////////
 //:: Created By: Primogenitor
@@ -50,7 +53,7 @@ void DoDeadHB(object oPC, int nIsPC)
         //cleanup
         DeleteLocalInt(oPC, "DeadDying");
         DeleteLocalInt(oPC, "DeadStable");
-        if(GetIsPC(oPC) && GetCutsceneMode(oPC))
+        if(GetIsPC(oPC) /*&& GetCutsceneMode(oPC)*/)
         {
             SetCutsceneMode(oPC, FALSE);
             SetPlotFlag(oPC, FALSE);
@@ -161,7 +164,7 @@ void DoDeadHB(object oPC, int nIsPC)
             FloatingTextStringOnCreature("* "+GetName(oPC)+" regained conciousness *", oPC, TRUE);
             SetLocalInt(oPC, "DeadStable", 2);
             //give PC control back
-            if(GetIsPC(oPC) && GetCutsceneMode(oPC))
+            if(GetIsPC(oPC) /*&& GetCutsceneMode(oPC)*/)
             {
                 SetCutsceneMode(oPC, FALSE);
                 SetPlotFlag(oPC, FALSE);
@@ -197,7 +200,7 @@ void DoDeadHB(object oPC, int nIsPC)
 
     //mark it as cutscene, nonplot
     //if not already
-    if(GetIsPC(oPC) && !GetCutsceneMode(oPC))
+    if(GetIsPC(oPC) /*&& !GetCutsceneMode(oPC)*/)
     {
         SetCutsceneMode(oPC, TRUE);
         SetPlotFlag(oPC, FALSE);
@@ -264,7 +267,7 @@ void DoDied(object oPC, int nIsPC)
                     4.0)));
         //mark it as cutscene, nonplot
         //if not already
-        if(GetIsPC(oPC) && !GetCutsceneMode(oPC))
+        if(GetIsPC(oPC) /*&& !GetCutsceneMode(oPC)*/)
         {
             SetCutsceneMode(oPC, TRUE);
             SetPlotFlag(oPC, FALSE);

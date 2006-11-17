@@ -26,7 +26,7 @@ void BonusFeat(object oPC, object oSkin)
 {
     if (GetHasFeat(FEAT_UR_FAST_MOVEMENT,oPC) && !GetHasFeat(FEAT_BARBARIAN_ENDURANCE,oPC) )
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_BarbEndurance),oSkin);
-    if (GetHasFeat(FEAT_UNCANNYX_DODGE_1,oPC) && !GetHasFeat(FEAT_UNCANNY_DODGE_1,oPC) )
+    if (GetHasFeat(FEAT_UNCANNYX_DODGE_1,oPC) && !GetHasFeat(FEAT_UNCANNY_DODGE,oPC) )
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_UNCANNY_DODGE1),oSkin);
     if (GetHasFeat(FEAT_UR_OWL_TOTEM,oPC) && !GetHasFeat(FEAT_ALERTNESS,oPC) )
         AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusFeat(IP_CONST_FEAT_ALERTNESS),oSkin);
@@ -123,8 +123,8 @@ void main()
        }
        else
        {
-      	  int iAC = GetHasFeat(FEAT_TWO_WEAPON_DEFENSE2,oPC) ? 2 : 1;
-  	      iAC = GetHasFeat(FEAT_TWO_WEAPON_DEFENSE3,oPC) ? 3 : iAC;
+          int iAC = GetHasFeat(FEAT_TWO_WEAPON_DEFENSE2,oPC) ? 2 : 1;
+          iAC = GetHasFeat(FEAT_TWO_WEAPON_DEFENSE3,oPC) ? 3 : iAC;
           SetCompositeBonus(oSkin, "TwoWeaponDefenseBonus", iAC, ITEM_PROPERTY_AC_BONUS);
           string nMes = "*Two-Weapon Defense Activated*";
           FloatingTextStringOnCreature(nMes, oPC, FALSE);

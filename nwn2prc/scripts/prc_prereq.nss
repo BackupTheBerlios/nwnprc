@@ -18,13 +18,13 @@
 void FindTrueAbilityScores(object oPC)
 {
     int i;
-
-    int iStr = GetAbilityScore(oPC, ABILITY_STRENGTH, TRUE);
-    int iDex = GetAbilityScore(oPC, ABILITY_DEXTERITY, TRUE);
-    int iCon = GetAbilityScore(oPC, ABILITY_CONSTITUTION, TRUE);
-    int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE, TRUE);
-    int iWis = GetAbilityScore(oPC, ABILITY_WISDOM, TRUE);
-    int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA, TRUE);
+    //now officially buggered - NWN2
+    int iStr = GetAbilityScore(oPC, ABILITY_STRENGTH/*, TRUE*/);
+    int iDex = GetAbilityScore(oPC, ABILITY_DEXTERITY/*, TRUE*/);
+    int iCon = GetAbilityScore(oPC, ABILITY_CONSTITUTION/*, TRUE*/);
+    int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE/*, TRUE*/);
+    int iWis = GetAbilityScore(oPC, ABILITY_WISDOM/*, TRUE*/);
+    int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA/*, TRUE*/);
     object oHide = GetPCSkin(oPC);
     SetLocalInt(oHide, "PRC_trueSTR", iStr);
     SetLocalInt(oHide, "PRC_trueDEX", iDex);
@@ -113,7 +113,8 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
 
      // these races have an alternate form
      if(GetRacialType(oPC) == RACIAL_TYPE_PURE_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);
-     if(GetRacialType(oPC) == RACIAL_TYPE_ABOM_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);
+     //race removed? - NWN2
+     //if(GetRacialType(oPC) == RACIAL_TYPE_ABOM_YUAN) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_PIXIE) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA) SetLocalInt(oPC, "PRC_PrereqShift", 0);
      if(GetRacialType(oPC) == RACIAL_TYPE_FEYRI) SetLocalInt(oPC, "PRC_PrereqShift", 0);
@@ -125,8 +126,9 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
 void Tempest(object oPC)
 {
      SetLocalInt(oPC, "PRC_PrereqTemp", 1);
-
-     if ((GetHasFeat(FEAT_AMBIDEXTERITY, oPC) && GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oPC)) || GetHasFeat(FEAT_RANGER_DUAL, oPC))
+     // JLR - OEI 06/03/05 NWN2 3.5 -- Ambidexterity merged with Two-Weapon Fighting
+     //  apparently - NWN2
+     if (/*(GetHasFeat(FEAT_AMBIDEXTERITY, oPC) &&*/ GetHasFeat(FEAT_TWO_WEAPON_FIGHTING, oPC)/*)*/ || GetHasFeat(FEAT_RANGER_DUAL, oPC))
      {
      SetLocalInt(oPC, "PRC_PrereqTemp", 0);
      }

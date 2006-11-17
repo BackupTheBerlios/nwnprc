@@ -45,6 +45,7 @@ const int TRAP_EVENT_RECOVERED = 3;    //this is in addition to being disarmed
 object PRGT_CreateTrapAtLocation(location lLoc, struct trap tTrap)
 {
     object oTrap;
+    /*
     oTrap = CreateTrapAtLocation(TRAP_BASE_TYPE_PRGT,
         lLoc,
         tTrap.fSize,
@@ -56,12 +57,13 @@ object PRGT_CreateTrapAtLocation(location lLoc, struct trap tTrap)
     SetLocalTrap(oTrap, "TrapSettings", tTrap);
     SetTrapOneShot(oTrap, FALSE);
     SetTrapRecoverable(oTrap, FALSE);
-
+    */
     return oTrap;
 }
 
 void PRGT_CreateTrapOnObject(object oTrap, struct trap tTrap)
 {
+    /*
     CreateTrapOnObject(TRAP_BASE_TYPE_PRGT,
         oTrap,
         STANDARD_FACTION_HOSTILE,
@@ -71,6 +73,7 @@ void PRGT_CreateTrapOnObject(object oTrap, struct trap tTrap)
     SetLocalTrap(oTrap, "TrapSettings", tTrap);
     SetTrapOneShot(oTrap, FALSE);
     SetTrapRecoverable(oTrap, FALSE);
+    */
 }
 
 

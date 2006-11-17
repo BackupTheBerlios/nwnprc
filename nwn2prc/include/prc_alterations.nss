@@ -68,9 +68,6 @@ const int PRC_SIZEMASK_SIMPLE = 4;         // 'simple' size changes that have si
 
 const int PRC_SIZEMASK_ALL = 7;
 
-//removed by obs
-const int DAMAGE_TYPE_BASE_WEAPON = 4096;
-
 /**
  * A PRC wrapper for GetCreatureSize that takes size adjustment
  * feats into account.
@@ -723,6 +720,10 @@ object GetObjectToApplyNewEffect(string sTag, object oPC, int nStripEffects = TR
     return oWP;
 }
 
+void VoidActionUseSkill(int nSkill, object oTarget, int nSubSkill=0, object oItemUsed=OBJECT_INVALID )
+{
+    ActionUseSkill(nSkill, oTarget, nSubSkill, oItemUsed);
+}
 
 // Test main
 //void main(){}

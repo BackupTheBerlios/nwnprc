@@ -13,7 +13,7 @@
 void SoheiDamageResist(object oPC, object oSkin, int nLevel)
 {
     if(GetLocalInt(oSkin, "SoheiDamageResist") == TRUE) return;
-    
+
     int nDR;
     if (nLevel >= 38) nDR = IP_CONST_DAMAGERESIST_10;
     else if (nLevel >= 35) nDR = IP_CONST_DAMAGERESIST_9;
@@ -40,21 +40,21 @@ void main()
     object oWeap = GetItemLastEquipped();
     object oUnequip = GetItemLastUnequipped();
     int nEvent = GetRunningEvent();
-    
+
 
     if(nSoh >= 3) SoheiDamageResist(oPC, oSkin, nSoh);
     if(nSoh >= 5)
     {
-    	// Gains immunity to stunning
-    	// Can't be done as an iprop, so we effect bomb
-    	effect eStun = EffectImmunity(IMMUNITY_TYPE_STUN);
-    	effect eSleep = EffectImmunity(IMMUNITY_TYPE_SLEEP);
-    	// No Dispelling, and no going away on rest
-    	eStun = EffectLinkEffects(eStun, eSleep);
-    	eStun = SupernaturalEffect(eStun);
-    	ApplyEffectToObject(DURATION_TYPE_PERMANENT, eStun, oPC);
+        // Gains immunity to stunning
+        // Can't be done as an iprop, so we effect bomb
+        effect eStun = EffectImmunity(IMMUNITY_TYPE_STUN);
+        effect eSleep = EffectImmunity(IMMUNITY_TYPE_SLEEP);
+        // No Dispelling, and no going away on rest
+        eStun = EffectLinkEffects(eStun, eSleep);
+        eStun = SupernaturalEffect(eStun);
+        ApplyEffectToObject(DURATION_TYPE_PERMANENT, eStun, oPC);
     }
-    
+
     //Defensive Strike
     if(nEvent == FALSE && nSoh >= 7)
     {
@@ -67,10 +67,10 @@ void main()
     else if(nEvent == EVENT_ONHEARTBEAT)
     {
         // Only applies when using expertise
-        if(GetModeActive(ACTION_MODE_EXPERTISE))
+        if(GetModeActive(ACTION_MODE_COMBAT_EXPERTISE))
         {
-       		effect eAtk = EffectAttackIncrease(4);
-       		ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, 6.0);
+            effect eAtk = EffectAttackIncrease(4);
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAtk, oPC, 6.0);
         }
-    }// end if - Running OnHeart event       
+    }// end if - Running OnHeart event
 }

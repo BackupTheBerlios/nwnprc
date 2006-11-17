@@ -24,7 +24,7 @@ Created:   11/17/06
 
 #include "prc_alterations"
 #include "spinc_common"
-#include "prc_shadowmagic"
+#include "prc_inc_shadow"
 
 void main()
 {

@@ -16,7 +16,45 @@ You must succeed on a ranged touch attack to deal
 you score a critical hit, triple the damage.
 
 Author:    Tenjac
-Created:   
+Created:   11/17/06
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
+
+#include "prc_alterations"
+#include "spinc_common"
+#include "prc_inc_shadow"
+
+void main()
+{
+	if(!X2PreSpellCastCode()) return;
+	
+	SPSetSchool(SPELL_SCHOOL_EVOCATION);
+	
+	object oPC = OBJECT_SELF;
+	object oTarget = PRCGetSpellTargetObject;
+	int nDam;
+	
+	
+	int nTouch = PRCDoRangedTouchAttack(oTarget);
+	
+	if(nTouch > 0)
+	{
+		nDam = d4(2);
+		
+		//metashadow
+		
+		if(nTouch == 2)
+		{
+			nDam = (nDam * 3);
+		}
+		
+		//VFX
+		
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+	}
+	
+	SPSetSchool();
+}
+		
+	

@@ -23,7 +23,7 @@ Created:
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
-#include "spinc_shadow"
+#include "prc_inc_shadow"
 
 void main()
 {

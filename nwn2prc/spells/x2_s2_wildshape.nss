@@ -34,10 +34,11 @@ void main()
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELLABILITY_WILD_SHAPE, FALSE));
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(OBJECT_SELF);
-	
-	ClearAllActions(); // prevents an exploit
+    //this command will make shore that polymorph plays nice with the shifter
+    //removed - NWN2
+    //ShifterCheck(OBJECT_SELF);
+
+    ClearAllActions(); // prevents an exploit
 
     //Apply the VFX impact and effects
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);

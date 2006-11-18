@@ -149,8 +149,8 @@ void main()
     //--------------------------------------------------------------------------
     if (GetLocalInt(GetModule(),"X2_L_STOP_EXPERTISE_ABUSE") == TRUE)
     {
-         SetActionMode(OBJECT_SELF,ACTION_MODE_EXPERTISE,FALSE);
-         SetActionMode(OBJECT_SELF,ACTION_MODE_IMPROVED_EXPERTISE,FALSE);
+         SetActionMode(OBJECT_SELF,ACTION_MODE_COMBAT_EXPERTISE,FALSE);
+         SetActionMode(OBJECT_SELF,ACTION_MODE_IMPROVED_COMBAT_EXPERTISE,FALSE);
     }
 
     //--------------------------------------------------------------------------

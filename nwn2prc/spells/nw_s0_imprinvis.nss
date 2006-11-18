@@ -28,7 +28,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     eLink = EffectLinkEffects(eLink, eVis);
 
     //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_IMPROVED_INVISIBILITY, FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_GREATER_INVISIBILITY, FALSE));
     int CasterLvl = nCasterLevel;
     int nDuration = CasterLvl;
     if (GetHasFeat(FEAT_INSIDIOUSMAGIC,OBJECT_SELF) && GetHasFeat(FEAT_SHADOWWEAVE,oTarget))

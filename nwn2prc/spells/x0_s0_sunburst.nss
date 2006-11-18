@@ -72,7 +72,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         nCasterLvl = 25;
     }
     int nPenetr = CasterLvl + SPGetPenetr();
-    
+
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eLOS, GetSpellTargetLocation());
     int bDoNotDoDamage = FALSE;
@@ -104,9 +104,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                }
                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
-                    
+
                 // * if a vampire then destroy it
-                if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_MALE || GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_FEMALE || GetStringLowerCase(GetSubRace(oTarget)) == "vampire" )
+                //subrace code removed - NWN2
+                if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_MALE || GetAppearanceType(oTarget) == APPEARANCE_TYPE_VAMPIRE_FEMALE /*|| GetStringLowerCase(GetSubRace(oTarget)) == "vampire"*/ )
                 {
                     // SpeakString("I vampire");
                     // * if reflex saving throw fails no blindness

@@ -16,6 +16,8 @@
 
 void main()
 {
+    //removed - NWN2
+    /*
     StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
     int nPCForm = GetTrueForm(OBJECT_SELF);
@@ -36,4 +38,5 @@ void main()
         SetShiftTrueForm(OBJECT_SELF);
         //SetCreatureAppearanceType(OBJECT_SELF,nPCForm);
     }
+    */
 }

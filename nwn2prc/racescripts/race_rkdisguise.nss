@@ -17,6 +17,8 @@
 
 void main()
 {
+    //removed - NWN2
+    /*
     StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
     int nPCForm = GetTrueForm(OBJECT_SELF);
@@ -38,6 +40,7 @@ void main()
         //this will also remove complexities with lich/shifter characters
         SetShiftTrueForm(OBJECT_SELF);
         //SetCreatureAppearanceType(OBJECT_SELF,nPCForm);
-        
+
     }
+    */
 }

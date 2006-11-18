@@ -42,7 +42,8 @@ void BondedSummon2()
     }
     oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i-1);
     //set its name
-    SetName(oSummon, GetFamiliarName(oPC));
+    //renamed function - NWN2
+    SetFirstName(oSummon, GetFamiliarName(oPC));
     //apply bonus based on level
     int nArcaneLevel = GetCasterLvl(TYPE_ARCANE);
     object oSkin  = GetItemInSlot(INVENTORY_SLOT_CARMOUR, oSummon);
@@ -260,7 +261,8 @@ void main()
         AssignCommand(oFam, SetIsDestroyable(FALSE, TRUE, TRUE));
         //set the name
         //set its name
-        SetName(oFam, GetFamiliarName(OBJECT_SELF));
+        //renamed function - NWN2
+        SetFirstName(oFam, GetFamiliarName(OBJECT_SELF));
         //dont do normal familiars too
         return;
     }

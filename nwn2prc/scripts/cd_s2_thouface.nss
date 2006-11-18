@@ -27,9 +27,9 @@
 
 #include "prc_alterations"
 
-/*
+
 void main()
-{
+{   /*
     int iSpell = GetSpellId();
     StoreAppearance(OBJECT_SELF);
     int nCurForm = GetAppearanceType(OBJECT_SELF);
@@ -90,7 +90,7 @@ void main()
             SetShiftTrueForm(OBJECT_SELF);
             //SetCreatureAppearanceType(OBJECT_SELF,nPCForm);
         }
-    }   
+    }
     else // Switch to PC
     {
         effect eFx = EffectVisualEffect(VFX_IMP_MAGICAL_VISION);
@@ -99,6 +99,7 @@ void main()
         //this will also remove complexities with lich/shifter characters
         SetShiftTrueForm(OBJECT_SELF);
         //SetCreatureAppearanceType(OBJECT_SELF,nPCForm);
-        
+
     }
-}    */
+    */
+}

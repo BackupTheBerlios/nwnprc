@@ -79,10 +79,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_POLYMORPH_SELF, FALSE));
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(oTarget);
-	
-	AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
+    //this command will make shore that polymorph plays nice with the shifter
+    //removed - NWN2
+    //ShifterCheck(oTarget);
+
+    AssignCommand(oTarget, ClearAllActions()); // prevents an exploit
 
     //Apply the VFX impact and effects
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);

@@ -45,21 +45,21 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     object oTarget = OBJECT_SELF;
     effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
     int nMetaMagic = GetMetaMagicFeat();
-
-    effect eSkillAnimal = EffectSkillIncrease(SKILL_ANIMAL_EMPATHY, 4);
+    //removed animal empathy - NWN2
+    //effect eSkillAnimal = EffectSkillIncrease(SKILL_ANIMAL_EMPATHY, 4);
     effect eHide = EffectSkillIncrease(SKILL_HIDE, 4);
     effect eMove = EffectSkillIncrease(SKILL_MOVE_SILENTLY, 4);
     effect eSearch = EffectSkillIncrease(SKILL_SET_TRAP, 4);
 
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eLink = EffectLinkEffects(eSkillAnimal, eMove);
-    eLink = EffectLinkEffects(eLink, eHide);
+    //effect eLink = EffectLinkEffects(eSkillAnimal, eMove);
+    effect eLink = EffectLinkEffects(eMove, eHide);
     eLink = EffectLinkEffects(eLink, eSearch);
 
     eLink = EffectLinkEffects(eLink, eDur);
 
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDuration = CasterLvl; 
+    int nDuration = CasterLvl;
      if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))    //Duration is +100%
     {
          nDuration = nDuration * 2;

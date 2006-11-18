@@ -99,12 +99,13 @@ void main()
     }
 
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(OBJECT_SELF);
+    //this command will make shore that polymorph plays nice with the shifter
+    //removed - NWN2
+    //ShifterCheck(OBJECT_SELF);
 
     //Apply the VFX impact and effects
     ClearAllActions(); // prevents an exploit
-    
+
     ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, OBJECT_SELF);
     ApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePoly, OBJECT_SELF, HoursToSeconds(nDuration));
 

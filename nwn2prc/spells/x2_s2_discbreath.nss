@@ -498,7 +498,7 @@ void main()
     DelayCommand(fDelay, SendMessageToPC(oPC, "Your breath weapon is ready now")); /// TODO: TLKify
 
     int nConBoost = max(GetAbilityModifier(ABILITY_CONSTITUTION), 0); // Apply Con bonus to DC if there is a bonus. Penalties do not apply
-    int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_DISCIPLE,oPC);
+    int nLevel = GetLevelByClass(CLASS_TYPE_DRAGONDISCIPLE,oPC);
     int nDamageDice;
 
     //Sets the save DC for Dragon Breath attacks.  This is a reflex save to halve the damage.

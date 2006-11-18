@@ -115,8 +115,11 @@ void PnPTensTransPseudoHB()
         else
         {
             int nTwoWeapon;
+            //feat no longer exists, lumped with twf - NWN2
+            /*
             if(GetHasFeat(FEAT_AMBIDEXTERITY))
                 nTwoWeapon++;
+            */
             if(GetHasFeat(FEAT_TWO_WEAPON_FIGHTING))
                 nTwoWeapon++;
             if(GetHasFeat(FEAT_IMPROVED_TWO_WEAPON_FIGHTING))
@@ -192,7 +195,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
         effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY, nDex);
         effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, nCon);
         effect eBAB = EffectAttackIncrease(nBAB);
-//accounted for in prc_bab_caller    
+//accounted for in prc_bab_caller
 //        effect eAttacks = EffectModifyAttacks(nAttacks);
         SetLocalInt(OBJECT_SELF, "AttackCount_TensersTrans", nTotalAttacks);
         ExecuteScript("prc_bab_caller", OBJECT_SELF);
@@ -310,7 +313,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     SignalEvent(OBJECT_SELF, EventSpellCastAt(OBJECT_SELF, SPELL_TENSERS_TRANSFORMATION, FALSE));
 
     //this command will make shore that polymorph plays nice with the shifter
-    ShifterCheck(OBJECT_SELF);
+    //removed - NWN2
+    //ShifterCheck(OBJECT_SELF);
 
     ClearAllActions(); // prevents an exploit
 

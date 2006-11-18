@@ -63,10 +63,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nDamage;
     float fDelay;
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetSpellTargetLocation());
-    
+
     CasterLvl +=SPGetPenetr();
-    
- 
+
+
     //Get first target in the specified area
     oTarget =MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
     while (GetIsObjectValid(oTarget))
@@ -89,7 +89,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         if(MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD)
         {
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CIRCLE_OF_DOOM, FALSE));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_INFLICT_LIGHT_WOUNDS, FALSE));
             //Set the heal effect
             eHeal = EffectHeal(nDamage);
             //Apply the impact VFX and healing effect
@@ -101,16 +101,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
            if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
             {
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CIRCLE_OF_DOOM));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_INFLICT_LIGHT_WOUNDS));
                 //Make an SR Check
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
                     int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_NEGATIVE, OBJECT_SELF, fDelay))
                     {
-			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
-			// This script does nothing if it has Mettle, bail
-				nDamage = 0;                    
+            if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+            // This script does nothing if it has Mettle, bail
+                nDamage = 0;
                         nDamage = nDamage/2;
                     }
                     //Set Damage
@@ -124,7 +124,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         //Get next target in the specified area
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM, GetSpellTargetLocation());
     }
-    
+
 
 }
 

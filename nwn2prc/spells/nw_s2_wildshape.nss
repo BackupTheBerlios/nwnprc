@@ -110,8 +110,9 @@ void main()
     }
 
 
-	//this command will make shore that polymorph plays nice with the shifter
-	ShifterCheck(OBJECT_SELF);
+    //this command will make shore that polymorph plays nice with the shifter
+    //removed - NWN2
+    //ShifterCheck(OBJECT_SELF);
 
     ClearAllActions(); // prevents an exploit
 

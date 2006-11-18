@@ -699,3 +699,5 @@ const int IP_CONST_FEAT_TEMPLATE_HALF_CELESTIAL_MARKER       = 16322;
 
 //removed by obs
 const int IP_CONST_FEAT_DISARM                        = 28;
+const int IP_CONST_FEAT_MOBILITY                      = 27;
+const int IP_CONST_FEAT_WHIRLWIND                     = 29;

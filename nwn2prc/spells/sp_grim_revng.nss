@@ -47,7 +47,8 @@ void main()
     int bRightHandMissing;
     int bLeftAnimated = FALSE;
     int bRightAnimated = FALSE;
-
+    //removed appearance code - NWN2
+    /*
     if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) == nModelNumber)
     {
         bLeftHandMissing = TRUE;
@@ -57,7 +58,7 @@ void main()
     {
         bRightHandMissing = TRUE;
     }
-
+    */
     //Spellhook
     if(!X2PreSpellCastCode()) return;
 
@@ -94,8 +95,8 @@ void main()
                 {
                     //deal damage
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
-
-                    SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
+                    //removed appearance code - NWN2
+                    //SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
                     SetPersistantLocalInt(oTarget, "LEFT_HAND_USELESS", 1);
 
                     //Force unequip
@@ -109,7 +110,8 @@ void main()
                     //deal damage
                     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
 
-                    SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
+                    //removed appearance code - NWN2
+                    //SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
                     SetPersistantLocalInt(oTarget, "RIGHT_HAND_USELESS", 1);
 
                     //Force unequip
@@ -125,7 +127,8 @@ void main()
 
                 //Create copy of target, set all body parts null
                 object oHand = CopyObject(oTarget, GetLocation(oTarget), OBJECT_INVALID);
-
+                //removed appearance code - NWN2
+                /*
                 SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT, nModelNumber, oHand);
                 SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT, nModelNumber, oHand);
                 SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN, nModelNumber, oHand);
@@ -153,7 +156,7 @@ void main()
                 {
                     SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oHand);
                 }
-
+                */
                 //Set Bonuses
                 effect eLink = EffectACIncrease(4, AC_DODGE_BONUS, AC_VS_DAMAGE_TYPE_ALL);
                        eLink = EffectLinkEffects(eLink, EffectAttackIncrease(4, ATTACK_BONUS_MISC));

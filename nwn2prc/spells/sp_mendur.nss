@@ -3,8 +3,8 @@
 
 void main()
 {
-	// If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
-	if (!X2PreSpellCastCode()) return;
-    
-	DoMassBuff (MASSBUFF_STAT, ABILITY_CONSTITUTION, SPELL_ENDURANCE);
+    // If code within the PreSpellCastHook (i.e. UMD) reports FALSE, do not run this spell
+    if (!X2PreSpellCastCode()) return;
+
+    DoMassBuff (MASSBUFF_STAT, ABILITY_CONSTITUTION, SPELL_BEARS_ENDURANCE);
 }

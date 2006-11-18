@@ -170,7 +170,7 @@ void main()
              ExecuteScript("race_azer_flame", oPC);
          }
     }
-/* Bioware reads size based on appearance    
+/* Bioware reads size based on appearance
     //-1AC, -1 ATT, -4hide
     if(GetHasFeat(FEAT_LARGE))
     {
@@ -332,7 +332,7 @@ void main()
         SetCompositeBonus(oSkin, "Gully_Trait_Persuade", 4, ITEM_PROPERTY_SKILL_BONUS, SKILL_DIPLOMACY);
         SetCompositeBonus(oSkin, "Gully_Trait_Fear", 4, ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC, SPELL_FEAR);
     }
-   
+
     // Skill Affinity, +4 to move silently
     if(GetHasFeat(FEAT_SA_MOVE4))
     {
@@ -344,13 +344,13 @@ void main()
     {
         SetCompositeBonus(oSkin, "SA_Craft_Armor", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_ARMOR);
     }
- 
+
     // Skill Affinity, +2 to craft weapon
     if(GetHasFeat(FEAT_SA_CRFTWEAP))
     {
         SetCompositeBonus(oSkin, "SA_Craft_Weapon", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_CRAFT_WEAPON);
     }
- 
+
     // Skill Affinity, +2 to craft trap
     if(GetHasFeat(FEAT_SA_CRFTTRAP))
     {
@@ -389,7 +389,8 @@ void main()
     {
         SetCompositeBonus(oSkin, "SA_Appraise", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_APPRAISE);
     }
-
+    //removed - NWN2
+    /*
     // Skill Affinity, +6 to animal empathy
     if(GetHasFeat(FEAT_SA_ANIMAL_EMP_6))
     {
@@ -407,6 +408,7 @@ void main()
     {
         SetCompositeBonus(oSkin, "PSA_Persuade", 1, ITEM_PROPERTY_SKILL_BONUS, SKILL_ANIMAL_EMPATHY);
     }
+    */
 
     // PSA to Lore and Spellcraft
     if(GetHasFeat(FEAT_PSA_LORESPELL))
@@ -442,7 +444,7 @@ void main()
         itemproperty ipIP = ItemPropertyDamageVulnerability(DAMAGE_TYPE_FIRE, IP_CONST_DAMAGEVULNERABILITY_50_PERCENT);
         IPSafeAddItemProperty(oSkin, ipIP, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
     }
- 
+
     //Svirfneblin dodge bonus (+4)
     if(GetHasFeat(FEAT_SVIRFNEBLIN_DODGE))
     {
@@ -520,14 +522,14 @@ void main()
             AssignCommand(oPC, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSilence, oPC));
         }
     }
-    
+
     //Wemic
     // Skill Bonus, +8 to jump
     if(GetHasFeat(FEAT_WEMIC_JUMP_8))
     {
         SetCompositeBonus(oSkin, "WEMIC_JUMP_8", 8, ITEM_PROPERTY_SKILL_BONUS, 28);
-    }    
-    
+    }
+
     //natural weapons
     //replace with a feat check
     int nRace = GetRacialType(oPC);

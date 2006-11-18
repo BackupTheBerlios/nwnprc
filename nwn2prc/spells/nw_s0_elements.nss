@@ -22,12 +22,12 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 {
     int nSpellID = PRCGetSpellId();
     int nMetaMagic = PRCGetMetaMagicFeat();
-    float fDuration = (nSpellID == SPELL_RESIST_ELEMENTS) ? TurnsToSeconds(nCasterLevel) : HoursToSeconds(24);
+    float fDuration = (nSpellID == SPELL_RESIST_ENERGY) ? TurnsToSeconds(nCasterLevel) : HoursToSeconds(24);
     int nResistance = 0;
     switch(nSpellID)
     {
-        case SPELL_PROTECTION_FROM_ELEMENTS: nResistance += 10;
-        case SPELL_RESIST_ELEMENTS: nResistance += 10;
+        case SPELL_PROTECTION_FROM_ENERGY: nResistance += 10;
+        case SPELL_RESIST_ENERGY: nResistance += 10;
         case SPELL_ENDURE_ELEMENTS: nResistance += 10; break;
     }
     int nAmount = nResistance + 10;

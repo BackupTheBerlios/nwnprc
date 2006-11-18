@@ -27,27 +27,27 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
     //Declare major variables
     object oTarget = GetEnteringObject();
 
-    if (GetHasSpellEffect(SPELL_IMPROVED_INVISIBILITY, oTarget) == TRUE)
+    if (GetHasSpellEffect(SPELL_GREATER_INVISIBILITY, oTarget) == TRUE)
     {
-        RemoveAnySpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget);
+        RemoveAnySpellEffects(SPELL_GREATER_INVISIBILITY, oTarget);
     }
     else
     if (GetHasSpellEffect(SPELL_INVISIBILITY, oTarget) == TRUE)
     {
         RemoveAnySpellEffects(SPELL_INVISIBILITY, oTarget);
     }
-    else 
-    if (GetHasSpellEffect(SPELLABILITY_AS_INVISIBILITY, oTarget) == TRUE) 
-    { 
-        RemoveAnySpellEffects(SPELLABILITY_AS_INVISIBILITY , oTarget); 
-    } 
-    else 
-    if(GetHasSpellEffect(SPELLABILITY_AS_IMPROVED_INVISIBLITY , oTarget) == TRUE) 
-    { 
-        RemoveAnySpellEffects(SPELLABILITY_AS_IMPROVED_INVISIBLITY , oTarget); 
+    else
+    if (GetHasSpellEffect(SPELLABILITY_AS_INVISIBILITY, oTarget) == TRUE)
+    {
+        RemoveAnySpellEffects(SPELLABILITY_AS_INVISIBILITY , oTarget);
+    }
+    else
+    if(GetHasSpellEffect(SPELLABILITY_AS_GREATER_INVISIBLITY , oTarget) == TRUE)
+    {
+        RemoveAnySpellEffects(SPELLABILITY_AS_GREATER_INVISIBLITY , oTarget);
     }
 
-    
+
 
     effect eInvis = GetFirstEffect(oTarget);
 
@@ -78,7 +78,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             RemoveEffect(oTarget, eInvis);
             if (bIsImprovedInvis)
             {
-                RemoveSpellEffects(SPELL_IMPROVED_INVISIBILITY, oTarget, oTarget);
+                RemoveSpellEffects(SPELL_GREATER_INVISIBILITY, oTarget, oTarget);
             }
         }
         //Get Next Effect

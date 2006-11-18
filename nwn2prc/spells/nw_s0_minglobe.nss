@@ -50,7 +50,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
     int nDuration = CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();
     //Fire cast spell at event for the specified target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MINOR_GLOBE_OF_INVULNERABILITY, FALSE));
+    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_LESSER_GLOBE_OF_INVULNERABILITY, FALSE));
 
     //Enter Metamagic conditions
     if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))

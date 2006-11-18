@@ -52,11 +52,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
   //Declare major variables
   object oTarget;
-  
+
   int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
 
 
-  
+
 
   int nCasterLvl = CasterLvl;
   int nDamagen, nModify, nHurt, nHP;
@@ -72,9 +72,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
   {
     nCasterLvl = 20;
   }
-  
+
   CasterLvl +=SPGetPenetr();
-  
+
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, GetSpellTargetLocation());
     //Get first target in shape
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
@@ -87,7 +87,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             if(!GetIsReactionTypeFriendly(oTarget))
             {
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEALING_CIRCLE));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_CURE_LIGHT_WOUNDS));
                 //Make SR check
                 if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
                 {
@@ -104,13 +104,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                         nModify += (nModify/2); //Damage/Healing is +50%
                     }
                     if (GetLevelByClass(CLASS_TYPE_HEALER, OBJECT_SELF))
-            		nModify += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
+                    nModify += GetAbilityModifier(ABILITY_CHARISMA, OBJECT_SELF);
                     //Make Fort save
                     if (PRCMySavingThrow(SAVING_THROW_FORT, oTarget, (nDC), SAVING_THROW_TYPE_NONE, OBJECT_SELF, fDelay))
                     {
-			if (GetHasMettle(oTarget, SAVING_THROW_FORT))
-			// This script does nothing if it has Mettle, bail
-				nModify = 0;;                    
+            if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+            // This script does nothing if it has Mettle, bail
+                nModify = 0;;
                         nModify /= 2;
                     }
                     //Calculate damage
@@ -129,7 +129,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             if(!GetIsReactionTypeHostile(oTarget) || GetFactionEqual(oTarget))
             {
                 //Fire cast spell at event for the specified target
-                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_HEALING_CIRCLE, FALSE));
+                SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_MASS_CURE_LIGHT_WOUNDS, FALSE));
                 nHP = d8();
                 //Enter Metamagic conditions
                 int iBlastFaith = BlastInfidelOrFaithHeal(OBJECT_SELF, oTarget, DAMAGE_TYPE_POSITIVE, FALSE);
@@ -154,7 +154,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
         //Get next target in the shape
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
     }
-    
+
 
 
 DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");

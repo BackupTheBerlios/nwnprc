@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jun 14, 2006
-    Modified: Jun 30, 2006
+    Modified: Nov 21, 2006
 
     Consolidation of heal/harm scripts
     Mass Heal vfx on target looks like heal
@@ -79,7 +79,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
         iHeal = GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
                 ((!bIsHeal && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD) ||
                 (bIsHeal && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD));
-        if(iHeal && spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster))
+        if(iHeal && (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster) || (GetIsDead(oTarget) && (GetCurrentHitPoints(oTarget) > -10))))
         {
             SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, FALSE));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget));

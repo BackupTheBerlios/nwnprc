@@ -79,7 +79,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, int bI
         iHeal = GetObjectType(oTarget) == OBJECT_TYPE_CREATURE &&
                 ((!bIsHeal && MyPRCGetRacialType(oTarget) == RACIAL_TYPE_UNDEAD) ||
                 (bIsHeal && MyPRCGetRacialType(oTarget) != RACIAL_TYPE_UNDEAD));
-        if(iHeal && spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster))
+        if(iHeal && (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster) || (GetIsDead(oTarget) && (GetCurrentHitPoints(oTarget) > -10))))
         {
             SignalEvent(oTarget, EventSpellCastAt(oCaster, nSpellID, FALSE));
             DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget));

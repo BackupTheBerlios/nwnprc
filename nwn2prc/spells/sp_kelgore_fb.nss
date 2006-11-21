@@ -33,41 +33,41 @@ Material component: A handful of ashes
 
 void main()
 {
-	if(!X2PreSpellCastCode()) return;
-	
-	SPSetSchool(SPELL_SCHOOL_EVOCATION);
-	
-	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
-	int nCasterLvl = PRCGetCasterLevel(oPC);
-	int nMetaMagic = PRCGetMetaMagicFeat();
-	int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
-	effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
-	int nMax = nCasterLvl;
-	if (nMax > 5) nMax = 5;
-	int nDam = d6(nMax);
-	
-	SPRaiseSpellCastAt(oTarget,TRUE, SPELL_KELGORES_FIRE_ORB, oPC);
+    if(!X2PreSpellCastCode()) return;
 
-	if(nMetaMagic == METAMAGIC_MAXIMIZE)
-	{
-		nDam = 6 * nMax;
-	}
-	if(nMetaMagic == METAMAGIC_EMPOWER)
-	{
-		nDam += (nDam/2);
-	}	
-	
-	if(MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
-	{
-		nDam = d6(1);
-		eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
-	}	
-	
-	nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nDC, SAVING_THROW_TYPE_FIRE);
-	
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-	SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_FIRE, nDam), oTarget);
-		
-	SPSetSchool();
+    SPSetSchool(SPELL_SCHOOL_EVOCATION);
+
+    object oPC = OBJECT_SELF;
+    object oTarget = GetSpellTargetObject();
+    int nCasterLvl = PRCGetCasterLevel(oPC);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
+    effect eVis = EffectVisualEffect(VFX_IMP_FLAME_M);
+    int nMax = nCasterLvl;
+    if (nMax > 5) nMax = 5;
+    int nDam = d6(nMax);
+
+    SPRaiseSpellCastAt(oTarget,TRUE, SPELL_KELGORES_FIRE_ORB, oPC);
+
+    if(nMetaMagic == METAMAGIC_MAXIMIZE)
+    {
+        nDam = 6 * nMax;
+    }
+    if(nMetaMagic == METAMAGIC_EMPOWER)
+    {
+        nDam += (nDam/2);
+    }
+
+    if(MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
+    {
+        nDam = d6(1);
+        eVis = EffectVisualEffect(VFX_IMP_FLAME_S);
+    }
+
+    nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, nDC, SAVING_THROW_TYPE_FIRE);
+
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);
+
+    SPSetSchool();
 }

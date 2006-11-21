@@ -75,8 +75,8 @@ void main()
     sScript += LetoAdd("LvlStatList/[0]/SkillList", "", "list");
 
     //Alignment
-    sScript += LetoAdd("LawfulChaotic", IntToString(nOrder), "byte");
-    sScript += LetoAdd("GoodEvil", IntToString(nMoral), "byte");
+    sScript += LetoSet("LawfulChaotic", IntToString(nOrder), "byte");
+    sScript += LetoSet("GoodEvil", IntToString(nMoral), "byte");
 
     //Familiar
     //has a random name
@@ -204,8 +204,8 @@ void main()
 
     //Appearance stuff
 
-    if(nVoiceset != -1) //keep existing portrait
-        sScript += LetoAdd("SoundSetFile", IntToString(nVoiceset), "word");
+    if(nVoiceset != -1) //keep existing voiceset
+        sScript += LetoSet("SoundSetFile", IntToString(nVoiceset), "word");
     if(nSkin != -1) // keep existing skin colour
         sScript += SetSkinColor(nSkin);
     if(nHair != -1) // keep existing hair colour
@@ -215,7 +215,7 @@ void main()
     if (nTattooColour2 != -1)
         sScript += SetTattooColor(nTattooColour2, 2);
     
-    sScript += LetoAdd("Tag", Encrypt(oPC), "string");
+    sScript += LetoSet("Tag", Encrypt(oPC), "string");
     //give an XP so the XP switch works
     SetXP(oPC, 1);
 

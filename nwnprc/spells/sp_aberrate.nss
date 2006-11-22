@@ -77,7 +77,7 @@ void main()
             
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
             AddItemProperty(DURATION_TYPE_TEMPORARY, ipRace, oSkin, fDur);
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oTarget, fDur);          
+            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oTarget, fDur, TRUE, PRCGetSpellId(), nCasterLvl, oPC);          
         }
     }
     

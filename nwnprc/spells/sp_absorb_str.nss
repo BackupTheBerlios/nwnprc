@@ -111,7 +111,7 @@ void main()
     }
     
     //Apply
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBonus, oPC, fDuration);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBonus, oPC, fDuration, TRUE, PRCGetSpellId(), nCasterLvl);
     
     //If appropriate, expose player to disease
     DiseaseCheck(oTarget, oPC);

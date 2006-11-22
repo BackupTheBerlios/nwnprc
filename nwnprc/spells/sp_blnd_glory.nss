@@ -59,11 +59,11 @@ void main()
     }
     
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oPC, fDuration);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eDur, oPC, fDuration, TRUE, SPELL_BLINDING_GLORY, -1);
     
     //Create an instance of the AOE Object using the Apply Effect function
     
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDuration, TRUE, SPELL_BLINDING_GLORY, nCasterLvl);
     
     SPGoodShift(oPC);
     SPSetSchool();

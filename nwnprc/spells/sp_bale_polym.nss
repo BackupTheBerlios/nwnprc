@@ -71,7 +71,7 @@ void main()
 				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nDam), oTarget);
 				
 				effect ePoly = EffectPolymorph(POLYMORPH_TYPE_CHICKEN, TRUE);
-				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoly, oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_PERMANENT, ePoly, oTarget, TRUE, SPELL_BALEFUL_POLYMORPH, nCasterLvl);
 			}
 			
 		}

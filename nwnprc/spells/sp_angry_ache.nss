@@ -84,7 +84,7 @@ void main()
 		effect ePenalty = EffectAttackDecrease(nPenalty, ATTACK_BONUS_MISC);
 		
 		//Apply Effect
-		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePenalty, oTarget, fDuration);
+		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePenalty, oTarget, fDuration, TRUE, SPELL_ANGRY_ACHE, nCasterLvl);
 	}
 	
 	SPSetSchool();		

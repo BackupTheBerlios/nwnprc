@@ -54,7 +54,7 @@ void main()
 		fDur += fDur;
 	}
 	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur);
+	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur, TRUE, SPELL_ANIMALISTIC_POWER, nCasterLvl);
 	
 	SPSetSchool();
 }

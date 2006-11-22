@@ -81,7 +81,7 @@ void main()
 			effect eSarc = EffectLinkEffects(EffectTemporaryHitpoints(10 * min(20, nCasterLvl)), EffectCutsceneParalyze());
 			//     eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS));
 				     			
-			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur, TRUE, PRCGetSpellId(), nCasterLvl);
 			
 			//Get starting HP
 			int nNormHP = GetCurrentHitPoints(oTarget);

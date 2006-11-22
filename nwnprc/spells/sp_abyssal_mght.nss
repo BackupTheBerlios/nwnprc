@@ -83,7 +83,7 @@ void main()
         }
         
         //Apply
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDuration);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oPC, fDuration, TRUE, PRCGetSpellId(), nCasterLvl);
     }
     
     SPEvilShift(oPC);

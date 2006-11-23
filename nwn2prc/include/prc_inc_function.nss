@@ -262,7 +262,7 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_mithral", oPC);
     if(GetPRCSwitch(PRC_ENFORCE_RACIAL_APPEARANCE))
         ExecuteScript("race_appear", oPC);
-    
+
 
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
@@ -444,16 +444,16 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SkullClanParalysis");
     DeleteLocalInt(oSkin, "SkullClanAbilityDrain");
     DeleteLocalInt(oSkin, "SkullClanLevelDrain");
-    
+
     // Hexblade
     DeleteLocalInt(oSkin, "HexbladeArmourCasting");
-    
+
     // Sohei
-    DeleteLocalInt(oSkin, "SoheiDamageResist"); 
-    
+    DeleteLocalInt(oSkin, "SoheiDamageResist");
+
     // Duskblade
-    DeleteLocalInt(oSkin, "DuskbladeArmourCasting");  
-    
+    DeleteLocalInt(oSkin, "DuskbladeArmourCasting");
+
     // Scout
     DeleteLocalInt(oPC, "ScoutBattleFort");
     DeleteLocalInt(oPC, "ScoutFreeMove");
@@ -688,15 +688,18 @@ void BardSong(object oPC)
     nTotal += GetLevelByClass(CLASS_TYPE_VIRTUOSO, oPC);
 
     if(GetHasFeat(FEAT_EXTRA_MUSIC, oPC)) nTotal += 4;
+    SetPersistantLocalInt(oPC, "Bard_Song_Uses", nTotal);
 
     FeatUsePerDay(oPC, FEAT_BARD_SONGS, -1, nTotal);
 }
 
 void FeatVirtuoso(object oPC)
 {
-    int nUses = GetLevelByClass(CLASS_TYPE_BARD, oPC) + GetLevelByClass(CLASS_TYPE_VIRTUOSO, oPC);
+    int nUses = GetLevelByClass(CLASS_TYPE_VIRTUOSO, oPC);
     if(GetHasFeat(FEAT_EXTRA_MUSIC, oPC)) nUses += 4;
     SetPersistantLocalInt(oPC, "Virtuoso_Performance_Uses", nUses);
+    FeatUsePerDay(oPC, FEAT_VIRTUOSO_PERFORMANCE, -1, nUses);
+    /*
     int nFeat, nTemp;
     for(nFeat = FEAT_VIRTUOSO_SUSTAINING_SONG; nFeat <= FEAT_VIRTUOSO_PERFORMANCE; nFeat++)
     {   //OMG nested loops!
@@ -706,6 +709,7 @@ void FeatVirtuoso(object oPC)
         for(; nTemp > 0; nTemp--)
             IncrementRemainingFeatUses(oPC, nFeat);
     }
+    */
 }
 
 void FeatSpecialUsePerDay(object oPC)
@@ -739,32 +743,32 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_DOMAIN_POWER_SCALEYKIND, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_PLANT_DOMAIN_POWER, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
-    
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_1, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_1, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_2"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_2, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_2"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_2, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_2, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_2, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_3"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_3, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_3"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_3, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_3, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_3, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_4"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_4, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_4"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_4, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_4, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_4, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_5"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_5, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_5"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_5, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_5, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_5, -1, 1);
-        
+
     BardSong(oPC);
     FeatVirtuoso(oPC);
     ResetExtraStunfistUses(oPC);

@@ -19,7 +19,7 @@
 //:: Updated On: 2003-10-25
 //:://////////////////////////////////////////////
 // ChazM 8/16/06 added workbench check to X2PreSpellCastCode()
-// ChazM 8/27/06 modified  X2PreSpellCastCode() - Fire "cast spell at" event on a workbench. 
+// ChazM 8/27/06 modified  X2PreSpellCastCode() - Fire "cast spell at" event on a workbench.
 
 const int X2_EVENT_CONCENTRATION_BROKEN = 12400;
 
@@ -173,23 +173,41 @@ int EShamConc()
 {
     object oCaster     = OBJECT_SELF;
     int bInShambler    = GetLocalInt(oCaster, "PRC_IsInEctoplasmicShambler");
-    int bJarringSong   = GetHasSpellEffect(SPELL_VIRTUOSO_JARRING_SONG, oCaster);
-    int bReturn        = TRUE;
+
+    int bJarringSong = 0;
+    object oJar;
+    effect eCheck = GetFirstEffect(oCaster);
+    while(GetIsEffectValid(eCheck))
+    {
+        if(GetEffectSpellId(eCheck) == SPELL_VIRTUOSO_JARRING_SONG)
+        {
+             bJarringSong = 1;
+             oJar = GetEffectCreator(eCheck);
+        }
+        eCheck = GetNextEffect(oCaster);
+    }
     if(bInShambler || bJarringSong)
     {
         string nSpellLevel = lookup_spell_level(PRCGetSpellId());
-
-        bReturn = GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel)));
-        if(!bReturn)
+        if(bInShambler)
         {
-            if(bInShambler)
+            if(!GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, (15 + StringToInt(nSpellLevel))))
+            {
                 FloatingTextStrRefOnCreature(16824061, oCaster, FALSE); // "Ectoplasmic Shambler has disrupted your concentration."
-            else if(bJarringSong)
+                return FALSE;
+            }
+        }
+        if(bJarringSong)
+        {
+            if(!GetIsSkillSuccessful(oCaster, SKILL_CONCENTRATION, GetSkillRank(SKILL_PERFORM, oJar) + d20()))
+            {
                 FloatingTextStringOnCreature("Jarring Song has disrupted your concentration.", oCaster, FALSE);
+                return FALSE;
+            }
         }
     }
 
-    return bReturn;
+    return TRUE;
 }
 
 int NullPsionicsField()
@@ -228,8 +246,8 @@ int DuskbladeArcaneChanneling()
 
         // Don't channel from objects
         if(oItem != OBJECT_INVALID)
-            return TRUE;    
-    
+            return TRUE;
+
         //dont cast
         nReturn = FALSE;
         int nSpell     = PRCGetSpellId();

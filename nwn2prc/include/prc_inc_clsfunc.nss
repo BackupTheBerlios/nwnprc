@@ -1698,45 +1698,38 @@ int Ninja_AbilitiesEnabled (object oPC)
 //Decrements the daily uses of Virtuoso Performance by the
 //  correct amount, returns FALSE if there are insufficient
 //  uses remaining to use the current feat
+
+//changed for 3.5, now the usage feats are unlimited, capped by the
+//  performance feat, which now appears on the radial, but
+//  does nothing except indicate uses left, and is reset here
+//  if someone else messes with it
 int VirtuosoPerformanceDecrement(object oPC, int nSpellID)
 {
-    int nDecrement = 0;
-    int nDifference = 1122; //hack, difference in number between feat and spell 2da lines
-    switch(nSpellID)
-    {
-        case SPELL_VIRTUOSO_SUSTAINING_SONG:
-        case SPELL_VIRTUOSO_CALUMNY:
-        case SPELL_VIRTUOSO_GREATER_CALUMNY: nDecrement = 1; break;
-
-        case SPELL_VIRTUOSO_MINDBENDING_MELODY:
-        case SPELL_VIRTUOSO_MAGICAL_MELODY:
-        case SPELL_VIRTUOSO_REVEALING_MELODY: nDecrement = 2; break;
-
-        case SPELL_VIRTUOSO_SHARP_NOTE:
-        case SPELL_VIRTUOSO_JARRING_SONG:
-        case SPELL_VIRTUOSO_SONG_OF_FURY: nDecrement = 3; break;
-    }
-    if(!nDecrement) return FALSE;   //sanity check
+    int bReturn = FALSE;
     int nUses = GetPersistantLocalInt(oPC, "Virtuoso_Performance_Uses");
-    if(nUses >= nDecrement)
+    int nBardSong = GetPersistantLocalInt(oPC, "Bard_Song_Uses");
+    int nTemp = nUses;
+    if(!nUses)
     {
-        SetPersistantLocalInt(oPC, "Virtuoso_Performance_Uses", nUses - nDecrement);
-        int nFeat, nDec;
-        for(nFeat = FEAT_VIRTUOSO_SUSTAINING_SONG; nFeat <= FEAT_VIRTUOSO_PERFORMANCE; nFeat++)
-        {
-            nDec = nDecrement;
-            if(nFeat == (nSpellID + nDifference))
-                nDec--; //already decremented once by being used
-            for(; nDec > 0; nDec--)
-                DecrementRemainingFeatUses(oPC, nFeat);
-        }
-        return TRUE;
+        nTemp--;
+        bReturn = TRUE;
     }
+    else if(nBardSong >= 2)
+    {
+        DecrementRemainingFeatUses(oPC, FEAT_BARD_SONGS);
+        DecrementRemainingFeatUses(oPC, FEAT_BARD_SONGS);
+        bReturn = TRUE;
+    }
+    /*
     else
-    {   //refund feat use :P
-        IncrementRemainingFeatUses(oPC, nSpellID + nDifference);
-        return FALSE;
+        bReturn = FALSE;
+    */
+    if(nTemp != nUses)
+    {
+        SetPersistantLocalInt(oPC, "Virtuoso_Performance_Uses", nTemp);
+        FeatUsePerDay(oPC, FEAT_VIRTUOSO_PERFORMANCE, -1, nTemp);
     }
+    return bReturn;
 }
 
 ////////////////End Virtuoso//////////////
@@ -1748,8 +1741,8 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
 {
     int nSLAFeatID = -1; //feat  ID of the SLA in use
     int nSLASpellID = -1;//spell ID of the SLA in use NOT THE SPELL BEING CAST
-    
-    //get the spellID of the spell your trying to cast    
+
+    //get the spellID of the spell your trying to cast
     //+1 offset for unassigned
     int nSpellID    = GetPersistantLocalInt(oPC, "PRC_SLA_SpellID_"+IntToString(nSLAID))-1;
     //test if already stored
@@ -1764,22 +1757,22 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
     }
     else
     {
-        //stored, recast it 
+        //stored, recast it
         int nSpellClass = GetPersistantLocalInt(oPC, "PRC_SLA_Class_"+IntToString(nSLAID));
         int nSpellLevel = GetCasterLvl(nSpellClass);
         int nMetamagic  = GetPersistantLocalInt(oPC, "PRC_SLA_Meta_"+IntToString(nSLAID));
-        
+
         //since this is targetted using a generic feat,
         //make sure were within range and target is valid for this spell
-        
+
         //get current distance
         string sRange = Get2DACache("spells", "Range", nSpellID);
         float fDist;
         if(GetIsObjectValid(oTarget))
              fDist = GetDistanceToObject(oTarget);
-        else     
+        else
              fDist = GetDistanceBetweenLocations(GetLocation(oPC), lTarget);
-        //check distance is allowed 
+        //check distance is allowed
         if(fDist < 0.0
             || (sRange == "T" && fDist >  2.25)
             || (sRange == "S" && fDist >  8.0 )
@@ -1794,7 +1787,7 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             //end the script
             return;
         }
-        
+
         //check object type
         int nTargetType = HexToInt(Get2DACache("spells", "TargetType", nSpellID));
         /*
@@ -1819,7 +1812,7 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             {
                 nTargetValid = FALSE;
                 FloatingTextStringOnCreature("You cannot target yourself", oPC);
-            }   
+            }
         }
         //test targetting others
         if(GetIsObjectValid(oTarget))
@@ -1831,28 +1824,28 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
                     {
                         nTargetValid = FALSE;
                         FloatingTextStringOnCreature("You cannot target creatures", oPC);
-                    }   
+                    }
                     break;
                 case OBJECT_TYPE_ITEM:
                     if(!nItem)
                     {
                         nTargetValid = FALSE;
                         FloatingTextStringOnCreature("You cannot target items", oPC);
-                    }   
+                    }
                     break;
                 case OBJECT_TYPE_DOOR:
                     if(!nDoor)
                     {
                         nTargetValid = FALSE;
                         FloatingTextStringOnCreature("You cannot target doors", oPC);
-                    }   
+                    }
                     break;
                 case OBJECT_TYPE_PLACEABLE:
                     if(!nDoor)
                     {
                         nTargetValid = FALSE;
                         FloatingTextStringOnCreature("You cannot target placeables", oPC);
-                    }   
+                    }
                     break;
             }
         }
@@ -1863,10 +1856,10 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             {
                 nTargetValid = FALSE;
                 FloatingTextStringOnCreature("You cannot target locations", oPC);
-            }   
-            
+            }
+
         }
-        
+
         //target was not valid, abort
         if(!nTargetValid)
         {
@@ -1874,9 +1867,9 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             IncrementRemainingFeatUses(oPC, nSLAFeatID);
             //end the script
             return;
-        
+
         }
-        
+
         //actually cast it at this point
         //note that these are instant-spells, so we have to add the animation part too
         if(GetIsObjectValid(GetAreaFromLocation(lTarget)))
@@ -1885,6 +1878,6 @@ void DoArchmageHeirophantSLA(object oPC, object oTarget, location lTarget, int n
             ActionCastFakeSpellAtObject(nSpellID, oTarget);
         ActionDoCommand(ActionCastSpell(nSpellID, nSpellLevel, 0, -1, nMetamagic));
     }
-}    
-    
+}
+
 /////////////// End Archmage & Heirophant SLAs ///////////

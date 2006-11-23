@@ -5,13 +5,13 @@
 1   FEAT_VIRTUOSO_SUSTAINING_SONG        4168      3    3              1      
 2   FEAT_VIRTUOSO_CALUMNY                4169      0    99             0      
 3   FEAT_VIRTUOSO_JARRING_SONG           4170      3    5              1      
-4   FEAT_VIRTUOSO_SHARP_NOTE             4171      0    99             1      
+4   FEAT_VIRTUOSO_SHARP_NOTE             4171      0    99             0      
 5   FEAT_VIRTUOSO_MINDBENDING_MELODY     4172      3    9              1      
 6   FEAT_VIRTUOSO_GREATER_CALUMNY        4173      0    99             0      
-7   FEAT_VIRTUOSO_MAGICAL_MELODY         4174      0    99             1      
+7   FEAT_VIRTUOSO_MAGICAL_MELODY         4174      0    99             0      
 8   FEAT_VIRTUOSO_SONG_OF_FURY           4175      3    7              1      
 9   FEAT_VIRTUOSO_REVEALING_MELODY       4176      3    10             1      
-10  FEAT_VIRTUOSO_PERFORMANCE            4177      3    1              0      
+10  FEAT_VIRTUOSO_PERFORMANCE            4177      3    1              1      
 11  SpellFocusCon                        166       0    -1             0      
 12  SpellFocusDiv                        167       0    -1             0      
 13  SpellFocusEnc                        168       0    -1             0      

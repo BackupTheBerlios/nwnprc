@@ -274,7 +274,7 @@ void CheckAndBoot(object oPC)
 
 void DoSetRaceAppearance(object oPC)
 {
-    DoDebug(DebugObject2Str(oPC));
+    if(DEBUG) DoDebug(DebugObject2Str(oPC));
     // sets the appearance type
     int nSex = GetLocalInt(oPC, "Gender");
     int nRace = GetLocalInt(oPC, "Race");
@@ -348,7 +348,7 @@ void DoCloneGender(object oPC)
 
 void DoSetAppearance(object oPC)
 {
-    DoDebug(DebugObject2Str(oPC));
+    if(DEBUG) DoDebug(DebugObject2Str(oPC));
     // get the appearance type
     int nAppearance = GetLocalInt(oPC, "Appearance");
     // get the clone object
@@ -363,7 +363,7 @@ void DoCutscene(object oPC, int nSetup = FALSE)
     if (nStage < STAGE_RACE_CHECK) // if we don't need to set the clone up
         return;
     
-    DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
+    if(DEBUG) DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
     object oClone;
     
     if(nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
@@ -397,10 +397,10 @@ void DoCutscene(object oPC, int nSetup = FALSE)
         // end of clone making
         
         int nGender = GetLocalInt(oPC, "Gender");
-        sScript = LetoSet("Gender", IntToString(nGender), "byte");
         // this only needs doing if the gender has changed
         if (GetGender(oPC) != nGender)
         {
+            sScript = LetoSet("Gender", IntToString(nGender), "byte");
             // reset soundset only if we've not changed it yet
             if (nStage < STAGE_SOUNDSET)
                 sScript += LetoSet("SoundSetFile", IntToString(0), "word");
@@ -940,53 +940,167 @@ void SetupHeadChoices()
     int nAppearance = GetLocalInt(OBJECT_SELF, "Appearance");
     // determine the number of heads (based on both appearance and gender)
     int nHeadNumber;
+    int nHead2Start; // some appearances have a second run of head numbers
+    int nHead2End;
     // change numbers to account for custom heads here
-    if(nAppearance == APPEARANCE_TYPE_HUMAN
+    if(GetPRCSwitch(MARKER_CEP2)) // add in the extra (consecutive) heads
+    {
+        if(nAppearance == APPEARANCE_TYPE_HUMAN
         || nAppearance == APPEARANCE_TYPE_HALF_ELF)
-    {
-        if(nGender == GENDER_MALE)
-            nHeadNumber = 21;
-        else if (nGender == GENDER_FEMALE)
-            nHeadNumber = 15;
+        {
+            if(nGender == GENDER_MALE)
+            {
+                nHeadNumber = 49;
+                nHead2Start = 100;
+                nHead2End = 113;
+            }
+            else if (nGender == GENDER_FEMALE)
+            {
+                nHeadNumber = 49;
+                nHead2Start = 100;
+                nHead2End = 114;
+            }
+        }
+        else if (nAppearance == APPEARANCE_TYPE_ELF)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 34;
+            else if (nGender == GENDER_FEMALE)
+            {
+                nHeadNumber = 43;
+                nHead2Start = 179;
+                nHead2End = 180;
+            }
+        }
+        else if (nAppearance == APPEARANCE_TYPE_HALFLING)
+        {
+            if(nGender == GENDER_MALE)
+            {
+                nHeadNumber = 26;
+                nHead2Start = 160;
+                nHead2End = 161;
+            }
+            else if (nGender == GENDER_FEMALE)
+            {
+                nHeadNumber = 15;
+                nHead2Start = 161;
+                nHead2End = 167;
+            }
+        }
+        else if (nAppearance == APPEARANCE_TYPE_HALF_ORC)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 31;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 15;
+        }
+        else if (nAppearance == APPEARANCE_TYPE_DWARF)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 24;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 23;
+        }
+        else if(nAppearance == APPEARANCE_TYPE_GNOME)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 35;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 10;
+        }
     }
-    else if (nAppearance == APPEARANCE_TYPE_ELF)
+    else
     {
-        if(nGender == GENDER_MALE)
-            nHeadNumber = 10;
-        else if (nGender == GENDER_FEMALE)
-            nHeadNumber = 16;
-    }
-    else if (nAppearance == APPEARANCE_TYPE_HALFLING)
-    {
-        if(nGender == GENDER_MALE)
-            nHeadNumber = 8;
-        else if (nGender == GENDER_FEMALE)
-            nHeadNumber = 11;
-    }
-    else if (nAppearance == APPEARANCE_TYPE_HALF_ORC)
-    {
-        if(nGender == GENDER_MALE)
-            nHeadNumber = 11;
-        else if (nGender == GENDER_FEMALE)
-            nHeadNumber = 11;
-    }
-    else if (nAppearance == APPEARANCE_TYPE_DWARF)
-    {
-        if(nGender == GENDER_MALE)
-            nHeadNumber = 10;
-        else if (nGender == GENDER_FEMALE)
-            nHeadNumber = 12;
-    }
-    else if(nAppearance == APPEARANCE_TYPE_GNOME)
-    {
-        if(nGender == GENDER_MALE)
-            nHeadNumber = 11;
-        else if (nGender == GENDER_FEMALE)
-            nHeadNumber = 9;
+        if(nAppearance == APPEARANCE_TYPE_HUMAN
+            || nAppearance == APPEARANCE_TYPE_HALF_ELF)
+        {
+            if(nGender == GENDER_MALE)
+            {
+                nHeadNumber = 34;
+                nHead2Start = 140;
+                nHead2End = 143;
+            }
+            else if (nGender == GENDER_FEMALE)
+            {
+                nHeadNumber = 27;
+                nHead2Start = 140;
+                nHead2End = 143;
+            }
+        }
+        else if (nAppearance == APPEARANCE_TYPE_ELF)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 18;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 16;
+        }
+        else if (nAppearance == APPEARANCE_TYPE_HALFLING)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 10;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 11;
+        }
+        else if (nAppearance == APPEARANCE_TYPE_HALF_ORC)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 13;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 12;
+        }
+        else if (nAppearance == APPEARANCE_TYPE_DWARF)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 13;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 12;
+        }
+        else if(nAppearance == APPEARANCE_TYPE_GNOME)
+        {
+            if(nGender == GENDER_MALE)
+                nHeadNumber = 13;
+            else if (nGender == GENDER_FEMALE)
+                nHeadNumber = 9;
+        }
     }
     int i;
     for(i=1;i<= nHeadNumber;i++)
         AddChoice(IntToString(i), i);
+    if (nHead2Start)
+    {
+        for(i = nHead2Start;i <= nHead2End;i++)
+        AddChoice(IntToString(i), i);
+    }
+    
+    // and the non consecutive heads for the CEP
+    if((nAppearance == APPEARANCE_TYPE_HUMAN
+        || nAppearance == APPEARANCE_TYPE_HALF_ELF) && GetPRCSwitch(MARKER_CEP2))
+    {
+        if(nGender == GENDER_MALE)
+        {
+            AddChoice(IntToString(140), 140);
+            AddChoice(IntToString(141), 141);
+            AddChoice(IntToString(142), 142);
+            AddChoice(IntToString(143), 143);
+            AddChoice(IntToString(155), 155);
+        }
+        else if (nGender == GENDER_FEMALE)
+        {
+            AddChoice(IntToString(140), 140);
+            AddChoice(IntToString(141), 141);
+            AddChoice(IntToString(142), 142);
+            AddChoice(IntToString(143), 143);
+            AddChoice(IntToString(147), 147);
+            AddChoice(IntToString(148), 148);
+            AddChoice(IntToString(149), 149);
+            AddChoice(IntToString(150), 150);
+            AddChoice(IntToString(151), 151);
+            AddChoice(IntToString(152), 152);
+            AddChoice(IntToString(155), 155);
+            AddChoice(IntToString(180), 180);
+            AddChoice(IntToString(181), 181);
+        }
+    }
 }
 
 void Do2daLoop(string s2da, string sColumnName, int nFileEnd)

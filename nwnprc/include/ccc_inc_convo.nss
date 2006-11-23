@@ -976,7 +976,6 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_ALIGNMENT: {
             // for stage check later
             SetLocalInt(OBJECT_SELF, "AlignChoice", nChoice);
-            DoDebug("AlignChoice is: " + IntToString(nChoice));
             switch(nChoice)
             {
                 case 112: //lawful good
@@ -1019,8 +1018,6 @@ int HandleChoice(int nStage, int nChoice)
                     DoDebug("Duh, that clearly didn't work right");
             }
             nStage++;
-            DoDebug("LawfulChaotic is: " + IntToString(GetLocalInt(OBJECT_SELF, "LawfulChaotic")));
-            DoDebug("GoodEvil is: " + IntToString(GetLocalInt(OBJECT_SELF, "GoodEvil")));
             break;
         }
         case STAGE_ALIGNMENT_CHECK: {

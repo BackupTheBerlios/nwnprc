@@ -135,17 +135,19 @@ void main()
                 // variable named nStage determines the current conversation node
                 // this function sets up the text displayed and the response options
                 // for the current conversation node
-                if(DEBUG) DoDebug("prc_ccc: Stage was not already set up");
-                /* TODO - function*/
-                DoDebug("Pass to DoHeaderAndChoices(): " + IntToString(nStage));
+                if(DEBUG)
+                {
+                    DoDebug("prc_ccc: Stage was not already set up");
+                    DoDebug("Pass to DoHeaderAndChoices(): " + IntToString(nStage));
+                }
                    // SpawnScriptDebugger();
                 DoHeaderAndChoices(nStage);
-                DoDebug("DoHeaderAndChoices() finished");
+                if(DEBUG) DoDebug("DoHeaderAndChoices() finished");
             }
     
             // Do token setup
             SetupTokens();
-            ExecuteScript("prc_ccc_debug", oPC); // doesn't do anything right now
+            if(DEBUG) ExecuteScript("prc_ccc_debug", oPC);
         }
         // End of conversation cleanup
         else if(nValue == DYNCONV_EXITED)
@@ -172,9 +174,9 @@ void main()
             int nChoice = GetChoice(oPC);
             
             // get nStage back so SetStage() actually changes the stage
-            DoDebug("nStage before HandleChoice: " + IntToString(nStage));
+            if(DEBUG) DoDebug("nStage before HandleChoice: " + IntToString(nStage));
             nStage = HandleChoice(nStage, nChoice);
-            DoDebug("nStage after HandleChoice: " + IntToString(nStage));
+            if(DEBUG) DoDebug("nStage after HandleChoice: " + IntToString(nStage));
     
             // Store the stage value. If it has been changed, this clears out the choices
             SetStage(nStage, oPC);

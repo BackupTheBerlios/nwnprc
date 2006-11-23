@@ -31,7 +31,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     effect eDam;
-    effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
+    effect eVis = EffectVisualEffect(VFX_HIT_SPELL_ACID);
     effect eSlow = EffectMovementSpeedDecrease(50);
     object oTarget = GetEnteringObject();
     float fDelay = GetRandomDelay(1.0, 2.2);

@@ -17,6 +17,11 @@
 
 void main()
 {
+    // NWN2 addition
+    string sDeathScript = GetLocalString(OBJECT_SELF, "DeathScript");
+	if (sDeathScript != "")
+		ExecuteScript(sDeathScript, OBJECT_SELF);
+    
     int nClass = GetLevelByClass(CLASS_TYPE_COMMONER);
     int nAlign = GetAlignmentGoodEvil(OBJECT_SELF);
     object oKiller = GetLastKiller();
@@ -34,12 +39,6 @@ void main()
     //Shout Attack my target, only works with the On Spawn In setup
     SpeakString("NW_ATTACK_MY_TARGET", TALKVOLUME_SILENT_TALK);
 
-    // NOTE: the OnDeath user-defined event does not
-    // trigger reliably and should probably be removed
-    if(GetSpawnInCondition(NW_FLAG_DEATH_EVENT))
-    {
-         SignalEvent(OBJECT_SELF, EventUserDefined(1007));
-    }
     craft_drop_items(oKiller);
 
     ExecuteScript("prc_npc_death", OBJECT_SELF);

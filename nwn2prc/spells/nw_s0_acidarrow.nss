@@ -33,10 +33,12 @@ void RunImpact(object oTarget, object oCaster, int nMetamagic,int EleDmg);
 void main()
 {
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
 
-   object oTarget = PRCGetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
+    object oCaster = OBJECT_SELF;
+    int CasterLvl = PRCGetCasterLevel(oCaster);
+    int nSpellID = PRCGetSpellId();
 
     //--------------------------------------------------------------------------
     // Spellcast Hook Code
@@ -50,22 +52,14 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     }
     // End of Spell Cast Hook
 
-    //--------------------------------------------------------------------------
-    // This spell no longer stacks. If there is one of that type, thats ok
-    //--------------------------------------------------------------------------
-    if (GetHasSpellEffect(GetSpellId(),oTarget))
-    {
-        FloatingTextStrRefOnCreature(100775,OBJECT_SELF,FALSE);
-        return;
-    }
 
     //--------------------------------------------------------------------------
     // Calculate the duration
     //--------------------------------------------------------------------------
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int EleDmg =ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID);
-        CasterLvl +=SPGetPenetr();
+    
+    int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID);
+    CasterLvl += SPGetPenetr();
     int nDuration = (CasterLvl/3);
 
     if ((nMetaMagic & METAMAGIC_EXTEND))
@@ -82,28 +76,35 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     //--------------------------------------------------------------------------
     // Setup VFX
     //--------------------------------------------------------------------------
-    effect eVis      = EffectVisualEffect(VFX_IMP_ACID_L);
-    effect eDur      = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-    effect eArrow = EffectVisualEffect(245);
-
+    effect eVis      = EffectVisualEffect(VFX_HIT_SPELL_ACID);
+    effect eDur      = EffectVisualEffect(VFX_DUR_SPELL_MELFS_ACID_ARROW);
+    //effect eArrow = EffectVisualEffect(245);
 
     //--------------------------------------------------------------------------
     // Set the VFX to be non dispelable, because the acid is not magic
     //--------------------------------------------------------------------------
     eDur = ExtraordinaryEffect(eDur);
      // * Dec 2003- added the reaction check back i
-    if (GetIsReactionTypeFriendly(oTarget) == FALSE)
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
     {
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
 
         float fDist = GetDistanceToObject(oTarget);
         float fDelay = (fDist/25.0);//(3.0 * log(fDist) + 2.0);
 
-        int iAttackRoll = PRCDoRangedTouchAttack(oTarget);;
-        if(iAttackRoll > 0)
+        if(PRCDoRangedTouchAttack(oTarget) > 0)
         {
-            if(MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl) == FALSE)
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
             {
+                //--------------------------------------------------------------------------
+                // This spell no longer stacks. If there is one of that type, thats ok
+                //--------------------------------------------------------------------------
+                // NWN2 change
+                if (GetHasSpellEffect(nSpellID,oTarget))
+                {
+                    RemoveSpellEffects(nSpellID, oCaster, oTarget);
+                }
+                
                 //----------------------------------------------------------------------
                 // Do the initial 3d6 points of damage
                 //----------------------------------------------------------------------
@@ -126,14 +127,13 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 // Indicate Failure
                 //----------------------------------------------------------------------
                 effect eSmoke = EffectVisualEffect(VFX_IMP_REFLEX_SAVE_THROW_USE);
-                DelayCommand(fDelay+0.1f,SPApplyEffectToObject(DURATION_TYPE_INSTANT,eSmoke,oTarget));
+                DelayCommand(fDelay+0.1f,ApplyEffectToObject(DURATION_TYPE_INSTANT,eSmoke,oTarget));
             }
          }
     }
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
+    // SPApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    SPSetSchool();
 
 }
 
@@ -155,9 +155,9 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         int nDamage = PRCMaximizeOrEmpower(6,1,nMetaMagic);
         effect eDam = EffectDamage(nDamage, EleDmg);
-        effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
+        effect eVis = EffectVisualEffect(VFX_HIT_SPELL_ACID);
         eDam = EffectLinkEffects(eVis,eDam); // flare up
-        SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget);
+        SPApplyEffectToObject (DURATION_TYPE_INSTANT,eDam,oTarget, 0.0f, TRUE, nSpellID, nCasterLevel);
         DelayCommand(6.0f,RunImpact(oTarget,oCaster,nMetaMagic,EleDmg));
     }
 }

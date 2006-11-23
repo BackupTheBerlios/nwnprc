@@ -22,16 +22,16 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
 
- ActionDoCommand(SetAllAoEInts(SPELL_ACID_FOG,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(SPELL_ACID_FOG,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage = d6(2);
     effect eDam;
-    effect eVis = EffectVisualEffect(VFX_IMP_ACID_S);
+    effect eVis = EffectVisualEffect(VFX_HIT_SPELL_ACID);
     object oTarget;
     float fDelay;
 
@@ -70,9 +70,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_ACID, GetAreaOfEffectCreator(), fDelay))
             {
                  nDamage = d6(); 
-		if (GetHasMettle(oTarget, SAVING_THROW_FORT))
-		// This script does nothing if it has Mettle, bail
-			nDamage = 0;                 
+                 if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+                 // This script does nothing if it has Mettle, bail
+                 nDamage = 0;                 
             }
             fDelay = GetRandomDelay(0.4, 1.2);
             //Fire cast spell at event for the affected target
@@ -80,9 +80,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //Spell resistance check
             if(!MyPRCResistSpell(GetAreaOfEffectCreator(), oTarget,nPenetr, fDelay))
             {
-               //Apply damage and visuals
+                //Apply damage and visuals
                 //Set the damage effect
-    		eDam = EffectDamage(nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_ACID));
+                eDam = EffectDamage(nDamage, ChangedElementalDamage(GetAreaOfEffectCreator(), DAMAGE_TYPE_ACID));
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
                 PRCBonusDamage(oTarget);
                 DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -93,6 +93,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     }
 
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
+    // Getting rid of the local integer storing the spellschool name
 }

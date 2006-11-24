@@ -20008,9 +20008,9 @@ Level
 4: 
 5: Virtuoso performance (jarring song)
 6: 
-7: Virtuoso performance (mindbending melody)
+7: Virtuoso performance (song of fury)
 8: 
-9: Virtuoso performance (song of fury)
+9: Virtuoso performance (mindbending melody)
 10: Virtuoso performance (revealing melody)
 
 SPELLS PER DAY/SPELLS KNOWN
@@ -20027,16 +20027,16 @@ VIRTUOSO PERFORMANCE
 
 A virtuoso can use his perform skill to create magical effects on those around him. He can use this abiliy once per day per virtuoso level. Each ability requires both a minimum virtuoso level and a minimum number of ranks in perform to qualify. If a virtuoso does not have the required number of ranks in perform, the performance will fail. Starting a virtuoso performance effect is a standard action. Some virtuoso abilities require concentration, which means that the virtuoso must take a standard action each round to maintain the ability. Unlike with bardic music, virtuoso performance doesn't restrict a virtuoso's spellcasting or magic item activation. If the virtuoso has the bardic music class feature, he can spend two daily uses of bardic music to deliver a virtuoso performance.
 
-Persuasive Song: Influences audience using perform instead of diplomacy check (not implemented)
+Persuasive Song: Influences audience using perform instead of diplomacy check (not implemented, module dependent)
 Sustaining Song: Stabilises unconcious allies
 Jarring Song: Inhibits spellcasting (forces concentration check)
-Mindbending Melody: Dominates target
+Mindbending Melody: Dominates fascinated target
 Song of Fury: Enrages allies
 Revealing Melody: Gives True Seeing effect</entry>
   <entry id="51224" lang="en" sex="m">Sustaining Song</entry>
   <entry id="51225" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Virtuoso Level 3, Perform 13 ranks.
-Specifics: A 1st-level virtuoso with at least 13 ranks in Perform can sustain her unconcious allies, negating their need for stabilisation checks during her performance. Because they're not making stabilisation checks, the affected allies are neither stabilising nor losing hit points. Sustaining song is a supernatural ability.
+Specifics: A 3rd-level virtuoso with at least 13 ranks in Perform can sustain his dying allies, assisting their recovery. Each round that the song continues, all allies within 30 feet of hum automatically become stable (if dying) or regain 1 hit point (if stable and between -1 and -9 hit points). A sustaining song has no effect on enemies or on allies with 0 or more hit points. A virtuoso can keep up his sustaining song for 5 minutes. This is a mind-affecting ability.
 Use: Selected.</entry>
   <entry id="51226" lang="en" sex="m">Calumny</entry>
   <entry id="51227" lang="en" sex="m">Type of Feat: Class
@@ -20046,7 +20046,7 @@ Use: Selected.</entry>
   <entry id="51228" lang="en" sex="m">Jarring Song</entry>
   <entry id="51229" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Virtuoso Level 5, Perform 15 ranks.
-Specifics: A 4th-level virtuoso with at least 15 ranks in Perform can inhibit spellcasting. Anyone attempting to cast a spell during a jarring song must make a Concentration check (DC 15 + the spell level). Success allows the normal completion of the spell; failure means it is lost. A jarring song requires three daily uses of virtuoso performance and is a supernatural, sonic ability.
+Specifics: A 5th-level virtuoso with at least 15 ranks in Perform can inhibit spellcasting. Any enemy within 30 feet attempting to cast a spell during a jarring song must make a Concentration check with a DC equal to the virtuoso's Perform check to avoid losing the spell. A virtuoso can keep up his jarring song for 10 rounds.
 Use: Selected.</entry>
   <entry id="51230" lang="en" sex="m">Sharp Note</entry>
   <entry id="51231" lang="en" sex="m">Type of Feat: Class
@@ -20055,8 +20055,8 @@ Specifics: A 5th-level virtuoso with at least 15 ranks in Perform can sharpen th
 Use: Selected.</entry>
   <entry id="51232" lang="en" sex="m">Mindbending Melody</entry>
   <entry id="51233" lang="en" sex="m">Type of Feat: Class
-Prerequisite: Virtuoso Level 7, Perform 17 ranks.
-Specifics: A 6th-level virtuoso with at least 17 ranks in Perform can dominate a humanoid. Thos ability functions exactly like a Dominate Person spell cast by a 9th-level sorcerer. The target can make a Will save (DC 15 + the virtuoso's Charisma modifier) to negate the effect. Mindbending melody requires two daily uses of virtuoso performance and is a spell-like, mind-affecting, language-dependent, charm ability.
+Prerequisite: Virtuoso Level 9, Perform 19 ranks.
+Specifics: A 9th-level virtuoso with at least 19 ranks in Perform can dominate a humanoid that he has already fascinated. This ability functions like a Dominate Person spell with a caster level equal to the virtuoso's class level. The target can make a Will save (DC 10 + the virtuoso's class level + the virtuoso's Charisma modifier) to negate the effect. A mindbending melody is a mind-affecting, language-dependent, enchantment (compulsion ability).
 Use: Selected.</entry>
   <entry id="51234" lang="en" sex="m">Greater Calumny</entry>
   <entry id="51235" lang="en" sex="m">Type of Feat: Class
@@ -20070,13 +20070,13 @@ Specifics: A 8th-level virtuoso with at least 18 ranks in Perform can empower al
 Use: Selected.</entry>
   <entry id="51238" lang="en" sex="m">Song of Fury</entry>
   <entry id="51239" lang="en" sex="m">Type of Feat: Class
-Prerequisite: Virtuoso Level 9, Perform 19 ranks.
-Specifics: A 9th-level virtuoso with at least 19 ranks in Perform can enrage her allies. This ability functions exactly like barbarian rage on all willing allies within range. Song of Fury requires three daily uses of virtuoso performance and is a supernatural, mind-affecting ability.
+Prerequisite: Virtuoso Level 7, Perform 17 ranks.
+Specifics: A 7th-level virtuoso with at least 17 ranks in Perform can use his performance to turn his allies into furious berserkers. Each ally within 30 feet who can see and hear the virtuoso enters a rage. This functions identically to a barbarian's rage, except that it ends if the virtuoso stops performing. This is a mind-affecting ability.
 Use: Selected.</entry>
   <entry id="51240" lang="en" sex="m">Revealing Melody</entry>
   <entry id="51241" lang="en" sex="m">Type of Feat: Class
 Prerequisite: Virtuoso Level 10, Perform 20 ranks.
-Specifics: A 10th-level virtuoso with at least 20 ranks in Perform can reveal all things as they actually are. All those who hear the Revealing Melody are affected as if by a True Seeing spell cast by a 17th-level sorcerer. Revealing Melody requires two daily uses of virtuoso performance and is a spell-like, divination ability.
+Specifics: A 10th-level virtuoso with at least 20 ranks in Perform can use his performance to reveal all things as they actually are. All allies within 30 feet who can see and hear the virtuoso's performance are affected as if by a True Seeing spell with a caster level equal to the virtuoso's class level. The effect lasts as long as the virtuoso performs.
 Use: Selected.</entry>
   <entry id="51242" lang="en" sex="m">&lt;CUSTOM0&gt; sings Sustaining Song.</entry>
   <entry id="51243" lang="en" sex="m">&lt;CUSTOM0&gt; sings Calumny.</entry>

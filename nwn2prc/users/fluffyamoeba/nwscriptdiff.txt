@@ -1,0 +1,280 @@
+329c329,330
+< 
+---
+> int    RACIAL_SUBTYPE_GITHYANKI			= 41;	// BMA-OEI 09/11/2006
+> int    RACIAL_SUBTYPE_GITHZERAI			= 42;
+649a651
+> int EFFECT_TYPE_WILDSHAPE		    = 103;	// AFW-OEI 10/30/2006
+1667c1669,1688
+< 
+---
+> int VFX_DUR_FEAT_SACRED_VENGEANCE				= 906;
+> int VFX_DUR_FEAT_DIVINE_RESISTANCE				= 907;
+> int VFX_SOUND_WEB								= 908;
+> int VFX_SOUND_BLADE								= 909;
+> int VFX_SOUND_ENTANGLE							= 910;
+> int VFX_SOUND_FIRE								= 911;
+> int VFX_SOUND_SPIKE								= 912;
+> int VFX_SOUND_TENTACLE							= 913;
+> int VFX_DUR_FEAT_FIENDISH_RES					= 914;
+> int VFX_SPELL_DUR_CALL_LIGHTNING				= 915;
+> int VFX_SPELL_HIT_CALL_LIGHTNING				= 916;
+> int VFX_SPELL_HIT_SWAMP_LUNG					= 917;
+> int VFX_SPELL_DUR_TORT_SHELL					= 918;
+> int VFX_SPELL_DUR_COCOON						= 919;
+> int VFX_SPELL_DUR_FOUND_STONE					= 920;
+> int VFX_SPELL_BEAM_MOON_BOLT					= 921;
+> int VFX_SPELL_DUR_JAGGED_TOOTH					= 922;
+> int VFX_SPELL_DUR_NATURE_AVATAR					= 923;
+> int VFX_SPELL_DUR_BODY_SUN						= 924;
+> int VFX_SPELL_DUR_STORM_AVATAR					= 925;
+1728a1750,1751
+> int AOE_MOB_SHARD_BARRIER		= 59;
+> int AOE_MOB_BODY_SUN			= 60;
+2505c2528,2543
+< 	
+---
+> int SPELL_ARROW_NOFOG						= 993; // Special-use spell for wall-battle.
+> int SPELL_ARROW_FIRE_NOFOG					= 994; // Special-use spell for wall-battle.
+> int SPELL_SILVER_SWORD_ATTACK				= 995;
+> int SPELL_SHARD_SHIELD						= 996;
+> int SPELL_SHARD_ATTACK						= 997;
+> int SPELL_SILVER_SWORD_STOP_ABILITY			= 998;
+> int SPELL_SILVER_SWORD_RECHARGE				= 999;
+> int SPELL_FOUNDATION_OF_STONE				= 1000;
+> int SPELL_BODY_OF_THE_SUN					= 1001;
+> int SPELL_JAGGED_TOOTH						= 1002;
+> int SPELL_MOON_BOLT							= 1003;
+> int SPELL_REJUVENATION_COCOON				= 1004;
+> int SPELL_TORTOISE_SHELL					= 1005;
+> int SPELL_SWAMP_LUNG						= 1006;
+> int SPELL_STORM_AVATAR						= 1007;
+> int SPELL_NATURE_AVATAR						= 1008;
+2507a2546,2547
+> 	
+> 
+4552a4593
+> int ASSOCIATE_COMMAND_MOVETOMASTER	      = -24;
+5468a5510
+> int EVENT_ACTION_ATTACK_FAILED_NO_PATH				= 2100;
+5638a5681,5682
+> int IP_CONST_FEAT_DEFLECT_ARROWS             	= 40;
+> 
+6793a6838,6855
+> // AFW-OEI 10/24/2006
+> int ARMOR_RANK_NONE	= 0;
+> int ARMOR_RANK_LIGHT	= 1;
+> int ARMOR_RANK_MEDIUM	= 2;
+> int ARMOR_RANK_HEAVY	= 3;
+> 
+> // AFW-OEI 10/24/2006
+> int WEAPON_TYPE_NONE			= 0;
+> int WEAPON_TYPE_PIERCING		= 1;
+> int WEAPON_TYPE_BLUDGEONING		= 2;
+> int WEAPON_TYPE_SLASHING		= 3;
+> int WEAPON_TYPE_PIERCING_AND_SLASHING	= 4;
+> 
+> // Brock H. - OEI 11/03/06
+> int ENCUMBRANCE_STATE_INVALID = -1;
+> int ENCUMBRANCE_STATE_NORMAL = 0;
+> int ENCUMBRANCE_STATE_HEAVY = 1;
+> int ENCUMBRANCE_STATE_OVERLOADED = 2;
+6801a6864
+> // For all the Print* functions, output is controlled by ini setting: nwnplayer.ini - [Server Options]Scripts Print To Log
+7712c7775,7777
+< void ActionForceFollowObject(object oFollow, float fFollowDistance=0.0f, int iFollowPosition = 0);
+---
+> // Note that the minimum follow distance is 0.5. Any number lower than that will be 
+> // set to 0.5
+> void ActionForceFollowObject(object oFollow, float fFollowDistance=0.5f, int iFollowPosition = 0);
+8427a8493
+> // - bBaseOnly: If TRUE, returns base skill ranks only, otherwise adds in all modifiers.
+8430c8496
+< int GetSkillRank(int nSkill, object oTarget=OBJECT_SELF);
+---
+> int GetSkillRank(int nSkill, object oTarget=OBJECT_SELF, int bBaseOnly=FALSE );
+8606a8673,8699
+> /*
+> 	The following is a list of the effect types that can be modified by this constructor:
+> 	Attack Increase
+> 	Attack Decrease
+> 	Damage Increase
+> 	Damage Decrease
+> 	Sanctuary
+> 	Invisibility
+> 	Concealment
+> 	Damage Resistance
+> 	Damage Reduction (NWN1)
+> 	Immunity Increase
+> 	Immunity Decrease
+> 	Immunity
+> 	AC Increase
+> 	AC Decrease
+> 	Spell Resistance Incease
+> 	Spell Resistance Decrease
+> 	Saving Throw Increase
+> 	Saving Throw Decrease
+> 	Skill Incease
+> 	Skill Decrease
+> 	
+> 	Be advised that this is the COMPREHENSIVE list!  Other effect types will not
+> 	be modified, even if you pass a valid effect as the first parameter!
+> 
+> */
+9758d9850
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9765d9856
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9772d9862
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9779d9868
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9786d9874
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9790d9877
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9797d9883
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9804d9889
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9811d9895
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9818d9901
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9825d9907
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9840d9921
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9846d9926
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+9852d9931
+< // AFW-OEI 09/08/2006: Campaign DB functions are not currently supported.
+10733a10813,10815
+> // Compare this with EffectArcaneSpellFailure, which stacks with armor/shield ASF,
+> // and is ignored by the same classes & abilities (e.g. divine casters).  EffectSpellFailure
+> // incurs another spell failure check after the ASF check and cannot be mitigated.
+11194c11276
+< //using AttachEffectToObject and AttachEffectToLocation
+---
+> //using ApplyEffectToObject and ApplyEffectToLocation
+11266,11267c11348,11351
+< // nAmtShared is the % amount (1-100) of the damage received that will instead
+< // be passed on to the oHelper Object.
+---
+> // nAmtShared is the % amount (1-100) of the damage dealt that the target will take.
+> // nAmtCasterShared is the % amount (1-100) of the damage dealt that the caster will take.
+> // The two numbers do not need to add up to 100; a sum of under 100 means some damage "disappears",
+> // a sum of over 100 means extra damage is "created".
+11337a11422
+> // output controlled by ini settings: nwn.ini - [Game Options]Debug Text & nwnplayer.ini - [Server Options]Scripts Print To Screen
+12215c12300
+< //Sets the first name of any valid target object
+---
+> //Gets the first name of any valid target object
+12218c12303
+< //Sets the last name of any valid target object
+---
+> //Gets the last name of any valid target object
+12221c12306
+< //Sets the description of any valid target object
+---
+> //Gets the description of any valid target object
+12301c12386,12479
+< int GetOnePartyMode();
+\ No newline at end of file
+---
+> int GetOnePartyMode();
+> 
+> //RWT-OEI 10/10/06
+> //Returns the object ID of the primary player. The primary player is the player who
+> //is hosting the game, i.e., they are running the client/server version of the game and
+> //participating in the game. 
+> //This function will return invalid object if no primary player is found. It is possible
+> //to not have a primary player under many circumstances, such as:
+> //  hosting player is logged in as a DM - Will not be counted as a primary player
+> //  game is running on a dedicated server - No primary player possible
+> //  hosting player is still in character creation - Primary player not in the game yet
+> object GetPrimaryPlayer();
+> 
+> // AFW-OEI 10/19/2006
+> // Creates an effect that inhibits spells.  This modifies a character's Arcane Spell Failure,
+> // and stacks with armor/shield ASF.  It is ignored by classes & abilities (e.g. divine casters)
+> // that ignore ASF.
+> // Compare this with EffectSpellFailure, which incurs another spell failure check after the ASF check
+> // and cannot be mitigated.
+> // - nPercent - percent modifier to Arcane Spell Failure; is added (not multiplied) to existing ASF.
+> //		Total ASF (armor + shield + EffectArcaneSpellFailure) is clamped between 0 and 100.
+> //		This can be a negative number, which will reduce existing ASF.
+> effect EffectArcaneSpellFailure(int nPercent);
+> 
+> // Brock H. - OEI 10/19/06
+> // This will create a "blood" effect as if the creature has taken damage. 
+> // oCreature -  The creature that the blood is spawned from. This will
+> //              creature's blood type will be looked up based on the 
+> //              creature's appearance. 
+> // bCritical -  This controls whether the blood being spawned is standard, or 
+> //              mimics a "Critical Hit"
+> // oAttacker -  This represents the creature that would be damaging the target
+> //              creature, which may alter the trajectory of the particles. 
+> //              OBJECT_INVALID can be used here. 
+> void SpawnBloodHit( object oCreature, int bCriticalHit, object oAttacker );
+> 
+> 
+> // Brock H. - OEI 10/19/06 
+> // GetFirstArea() is used to begin iterating over all of the objects in the module
+> object GetFirstArea();
+> 
+> // Brock H. - OEI 10/19/06 
+> // GetNextArea() is used to iterate over successive areas in the module. 
+> // It will return OBJECT_INVALID once it has passed the end of the list
+> object GetNextArea();
+> 
+> // AFW-OEI 10/24/2006:
+> // Returns the ARMOR_RANK_* (NONE, LIGHT, MEDIUM, HEAVY) of oItem.
+> // If the object is not an item, returns ARMOR_RANK_NONE.
+> int GetArmorRank(object oItem);
+> 
+> // AFW-OEI 10/24/2006:
+> // Returns the WEAPON_TYPE_* (NONE, PIERCING, BLUDGEONING, SLASHING, PIERCING_AND_SLASHING) of oItem.
+> // If the object is not an item, returns WEAPON_TYPE_NONE.
+> int GetWeaponType(object oItem);
+> 
+> // Brock H. - OEI 10/30/06 
+> // If oCreature is controlled by a player, this will be the 
+> // Object that the player has selected as their current target object.
+> // If the player has no target, or if oCreature is not player controlled, 
+> // then the return value will be OBJECT_INVALID
+> object GetPlayerCurrentTarget( object oCreature );
+> 
+> // AFW-OEI 10/31/2006:
+> // Create a Wildshape effect.
+> // Right now the wildshape effect does nothing except note that the target is wildshaped;
+> // this is used for Natural Spell checking.  If you are creating a Druid polymorphing/wildshaping
+> // script, make sure you link this effect in so they can cast while in that form.
+> effect EffectWildshape();
+> 
+> 
+> // Brock H. - OEI 11/03/06
+> // Returns the current encumbrance state of the creature, 
+> // as ENCUMBRANCE_STATE_* defined above.
+> // Will return ENCUMBRANCE_STATE_INVALID if oCreature 
+> // is not a valid creature. 
+> int GetEncumbranceState( object oCreature );
+> 
+> // Removes any records from a database that have been marked for deletion.
+> void PackCampaignDatabase(string sCampaignName);
+> 
+> 
+> // Brock H. - OEI 11/07/06
+> // This will permanantly unlink a door, so that it will no longer function as an area transition. 
+> // This is nessisary if you wish to delete a door that is linked to another area.
+> void UnlinkDoor( object oDoor );
+> 
+> 
+> // Brock H. - OEI 11/07/06
+> // If oCreature is controlled by a player, this will be the 
+> // creature that the player currently has up in the 
+> // creature examine window. 
+> // then the return value will be OBJECT_INVALID
+> object GetPlayerCreatureExamineTarget( object oCreature );
+\ No newline at end of file

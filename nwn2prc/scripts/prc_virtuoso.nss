@@ -129,6 +129,7 @@ void main()
             eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE));
 
             int nRacial = MyPRCGetRacialType(oTarget);
+            int nLevel = GetLevelByClass(CLASS_TYPE_VIRTUOSO, oPC);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_DOMINATE_PERSON, FALSE));
             bCheck = FALSE;
@@ -144,22 +145,19 @@ void main()
                     (nRacial == RACIAL_TYPE_HALFORC))
                 {
                    //Make SR Check
-                   if(!MyPRCResistSpell(oPC, oTarget, PRCGetCasterLevel(oPC) + SPGetPenetr()))
+                   if(!MyPRCResistSpell(oPC, oTarget, nLevel + SPGetPenetr()))
                    {
                         //Make Will Save
-                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, 10 + GetLevelByClass(CLASS_TYPE_VIRTUOSO, oPC) + GetAbilityModifier(ABILITY_CHARISMA, oPC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, 1.0))
+                        if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, 10 + nLevel + GetAbilityModifier(ABILITY_CHARISMA, oPC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, 1.0))
                         {
                             bCheck = TRUE;
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,nLevel);
                             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DOMINATE_S), oTarget);
                         }
                     }
                 }
             }
-            if(!bCheck)
-            {
-                SendMessageToPC(oPC, "You failed to dominate the target.");
-                return;
-            }
+            return;
 
             break;
         }

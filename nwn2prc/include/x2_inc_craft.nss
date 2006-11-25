@@ -404,7 +404,7 @@ void AppendSpellToName(object oObject, int nSpellID)
 // -----------------------------------------------------------------------------
 // Wrapper for the crafting cost calculation, returns GP required
 // -----------------------------------------------------------------------------
-int CIGetCraftGPCost(int nLevel, int nMod, sCasterLevelSwitch)
+int CIGetCraftGPCost(int nLevel, int nMod, string sCasterLevelSwitch)
 {
     int nLvlRow =   IPGetIPConstCastSpellFromSpellID(GetSpellId());
     int nCLevel;// = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));

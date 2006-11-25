@@ -954,7 +954,7 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
 
 //Returns an int depending on the weapon type
 //  returns 0 if not a weapon
-int GetWeaponType(int nBaseItem)
+int MyGetWeaponType(int nBaseItem)
 {
     int nFeat = StringToInt(Get2DACache("baseitems", "ReqFeat0", nBaseItem));
     switch(nFeat)
@@ -1161,7 +1161,7 @@ string GetCrafting2DA(object oItem)
         return "craft_armour";
     }
 
-    if(GetWeaponType(nBase) ||
+    if(MyGetWeaponType(nBase) ||
         (nBase == BASE_ITEM_ARROW) ||
         (nBase == BASE_ITEM_BOLT) ||
         (nBase == BASE_ITEM_BULLET)
@@ -1194,7 +1194,7 @@ int GetCraftingFeat(object oItem)
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
         (nBase == BASE_ITEM_TOWERSHIELD)) ||
-        (GetWeaponType(nBase) ||
+        (MyGetWeaponType(nBase) ||
         (nBase == BASE_ITEM_ARROW) ||
         (nBase == BASE_ITEM_BOLT) ||
         (nBase == BASE_ITEM_BULLET)
@@ -1286,7 +1286,7 @@ int GetCraftingDC(object oItem)
 {
     int nDC = 0;
     int nBase = GetBaseItemType(oItem);
-    int nType = GetWeaponType(nBase);
+    int nType = MyGetWeaponType(nBase);
     if(((nBase == BASE_ITEM_ARMOR) ||
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
@@ -1355,7 +1355,7 @@ void MakeMasterwork(object oItem)
         IPSafeAddItemProperty(oItem, ip6, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
         IPSafeAddItemProperty(oItem, ip7, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
     }
-    else if(GetWeaponType(nBase))
+    else if(MyGetWeaponType(nBase))
     {
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_ATTACK_BONUS, 0, 1);
         IPSafeAddItemProperty(oItem, ip1, 0.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING);

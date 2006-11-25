@@ -16,7 +16,15 @@
 // ChazM 5/10/06 - Removed XP costs.  Did anyone really like XP costs?
 // ChazM 5/23/06 - added AppendSpellToName().  Updated potion and wand creation to use it.
 // ChazM 5/24/06 - Updated AppendSpellToName()
+// ChazM 11/6/06 - Modified CIGetSpellInnateLevel() to instead get the caster level, Added 
+//				MakeItemUseableByClassesWithSpellAccess() and helper functions used in CICraftCraftWand()
+// ChazM 11/7/06 - Calculate spell level based on caster class and spells.2da entries, Changed 0 level spells to 
+//				cost half of first level spells, reorganized some sections, replaced string refs w/ constants, 
+//				fixed SPELLS_WIZ_SORC_LEVEL_COL
 
+//--------------------------------------------------------------------
+// Structs
+//--------------------------------------------------------------------
 struct craft_struct
 {
     int    nRow;
@@ -32,6 +40,27 @@ struct craft_receipe_struct
     object oMajor;
     object oMinor;
 };
+
+//--------------------------------------------------------------------
+// Constants
+//--------------------------------------------------------------------
+// Item Creation string refs
+
+const int STR_REF_IC_SPELL_TO_HIGH_FOR_WAND 		= 83623;
+const int STR_REF_IC_SPELL_TO_HIGH_FOR_POTION 		= 76416;
+const int STR_REF_IC_SPELL_RESTRICTED_FOR_POTION	= 83450;
+const int STR_REF_IC_SPELL_RESTRICTED_FOR_SCROLL	= 83451;
+const int STR_REF_IC_SPELL_RESTRICTED_FOR_WAND		= 83452;
+const int STR_REF_IC_MISSING_REQUIRED_FEAT			= 40487;
+
+const int STR_REF_IC_INSUFFICIENT_GOLD				= 3786;
+const int STR_REF_IC_INSUFFICIENT_XP				= 3785;
+
+const int STR_REF_IC_SUCCESS						= 8502;
+const int STR_REF_IC_FAILED							= 76417;
+const int STR_REF_IC_DISABLED						= 83612;
+const int STR_REF_IC_ITEM_USE_NOT_ALLOWED			= 83373;
+
 
 const string  X2_CI_CRAFTSKILL_CONV ="x2_p_craftskills";
 
@@ -58,10 +87,24 @@ const int     X2_CI_CRAFTSTAFF_EPIC_FEAT_ID        = 3491;
 //const string  X2_CI_CRAFTSTAFF_NEWITEM_RESREF = "x2_it_pcwand";
 
 // 2da for the craftskills
-const string X2_CI_CRAFTING_WP_2DA = "des_crft_weapon" ;
-const string X2_CI_CRAFTING_AR_2DA = "des_crft_armor" ;
-const string X2_CI_CRAFTING_MAT_2DA = "des_crft_mat";
+const string X2_CI_CRAFTING_WP_2DA 		= "des_crft_weapon" ;
+const string X2_CI_CRAFTING_AR_2DA 		= "des_crft_armor" ;
+const string X2_CI_CRAFTING_MAT_2DA 	= "des_crft_mat";
 
+
+// spells 2da
+const string SPELLS_2DA 				= "spells";			// 2da
+const int SPELLS_ROW_COUNT				= 1008; 			// number of rows in the spells table.
+const string SPELLS_NAME_COL 			= "Name";			// str ref of spell name
+const string SPELLS_DESC_COL 			= "SpellDesc";		// str ref of spell description
+const string SPELLS_INNATE_LEVEL_COL 	= "Innate";			// Innate level of spell
+const string SPELLS_BARD_LEVEL_COL 		= "Bard";			// Bard spell level
+const string SPELLS_CLERIC_LEVEL_COL 	= "Cleric";			// Cleric spell level
+const string SPELLS_DRUID_LEVEL_COL 	= "Druid";			// Druid spell level
+const string SPELLS_PALADIN_LEVEL_COL 	= "Paladin";		// Paladin spell level
+const string SPELLS_RANGER_LEVEL_COL 	= "Ranger";			// Ranger spell level
+const string SPELLS_WIZ_SORC_LEVEL_COL 	= "Wiz_Sorc";		// Wizard and Sorceror spell level
+const string SPELLS_WARLOCK_LEVEL_COL 	= "Warlock";		// Warlock spell level
 
 // 2da for matching spells to properties
 const string X2_CI_CRAFTING_SP_2DA = "des_crft_spells" ;
@@ -102,11 +145,25 @@ const int PRC_RUNE_CHARGES         = 1;
 const int PRC_RUNE_PERDAY          = 2;
 const int PRC_RUNE_MAXCHARGES      = 3;
 const int PRC_RUNE_MAXUSESPERDAY   = 4;
+//--------------------------------------------------------------------
+// Prototypes
+//--------------------------------------------------------------------
+// *  Returns the innate level of a spell. If bDefaultZeroToOne is given
+// *  Level 0 spell will be returned as level 1 spells
+int   CIGetSpellInnateLevel(int nSpellID, int bDefaultZeroToOne = FALSE);
+
+string GetClassSpellLevelColumn(int iClass);
+int GetSpellLevelForClass(int iSpell, int iClass);
+int IsOnSpellList(int iSpell, int iClass);
+void MakeItemUseableByClass(int iClassType, object oItem);
+void MakeItemUseableByClassesWithSpellAccess(int iSpell, object oItem);
 
 // *  Returns TRUE if an item is a Craft Base Item
 // *  to be used in spellscript that can be cast on items - i.e light
 int   CIGetIsCraftFeatBaseItem( object oItem );
 
+// *******************************************************
+// ** Craft Checks
 // *  Checks if the last spell cast was used to brew potion and will do the brewing process.
 // *  Returns TRUE if the spell was indeed used to brew a potion (regardless of the actual outcome of the brewing process)
 // *  Meant to be used in spellscripts only
@@ -117,11 +174,18 @@ int   CICraftCheckBrewPotion(object oSpellTarget, object oCaster);
 // *  Meant to be used in spellscripts only
 int   CICraftCheckScribeScroll(object oSpellTarget, object oCaster);
 
+int CICraftCheckCraftWand(object oSpellTarget, object oCaster);
+
+// *******************************************************
+// ** Craft!
 // *   Create a new potion item based on the spell nSpellID  on the creator
 object CICraftBrewPotion(object oCreator, int nSpellID );
 
 // *   Create a new scroll item based on the spell nSpellID on the creator
 object CICraftScribeScroll(object oCreator, int nSpellID);
+
+// *   Create a new wand item based on the spell nSpellID on the creator
+object CICraftCraftWand(object oCreator, int nSpellID );
 
 
 // *  Checks if the caster intends to use his item creation feats and
@@ -136,32 +200,7 @@ int   CIGetSpellWasUsedForItemCreation(object oSpellTarget);
 int InscribeRune();
 
 
-//////////////////////////////////////////////////
-/* Include section                              */
-//////////////////////////////////////////////////
 
-#include "x2_inc_itemprop"
-#include "x2_inc_switches"
-//#include "inc_utility"
-#include "prc_inc_newip"
-#include "prc_inc_spells"
-#include "ginc_debug"
-
-//////////////////////////////////////////////////
-/* Function definitions                         */
-//////////////////////////////////////////////////
-
-
-// *  Returns the innate level of a spell. If bDefaultZeroToOne is given
-// *  Level 0 spell will be returned as level 1 spells
-int   CIGetSpellInnateLevel(int nSpellID, int bDefaultZeroToOne = FALSE)
-{
-    int nRet = StringToInt(Get2DACache(X2_CI_CRAFTING_SP_2DA, "Level", nSpellID));
-    if (nRet == 0 && bDefaultZeroToOne == TRUE) // Was missing the "bDefaultZeroToOne == TRUE" check, fixed to match specification - Ornedan
-        nRet = 1;
-
-    return nRet;
-}
 
 // * Makes oPC do a Craft check using nSkill to create the item supplied in sResRe
 // * If oContainer is specified, the item will be created there.
@@ -181,6 +220,122 @@ struct craft_struct CIGetCraftItemStructFrom2DA(string s2DA, int nRow, int nItem
 
 // Appends the spell name to the object's name
 void AppendSpellToName(object oObject, int nSpellID);
+
+//////////////////////////////////////////////////
+/* Include section                              */
+//////////////////////////////////////////////////
+
+#include "x2_inc_itemprop"
+#include "x2_inc_switches"
+//#include "inc_utility"
+#include "prc_inc_newip"
+#include "prc_inc_spells"
+#include "ginc_debug"
+
+//////////////////////////////////////////////////
+/* Function definitions                         */
+//////////////////////////////////////////////////
+// *  Returns the innate level of a spell. If bDefaultZeroToOne is given
+// *  Level 0 spell will be returned as level 1 spells
+int   CIGetSpellInnateLevel(int nSpellID, int bDefaultZeroToOne = FALSE)
+{
+    //int nRet = StringToInt(Get2DAString(X2_CI_CRAFTING_SP_2DA, "Level", nSpellID));
+	// Instead of using innate level (a single level always used for a spell) we now use actual level.
+		
+	// The level of a spell is dependent on what class casts it.  For example
+	// Dominate Person is level 5 when cast by Wizard or Sorceror, but 4th level
+	// when cast by a Bard.  The spell can't be cast by any other class.
+   	int nRet = GetSpellLevel(nSpellID);
+	//int nClass = GetLastSpellCastClass();
+   	//int nRet = GetSpellLevelForClass(nSpellID, nClass);
+	
+	//PrettyDebug ("CIGetSpellInnateLevel: For Spell " + IntToString(nSpellID) + " with last spell clast class of " +
+	//			 IntToString(nClass) + " Level is: " + IntToString(nRet));
+	
+	if (bDefaultZeroToOne == TRUE)
+	    if (nRet == 0)
+	        nRet =1;
+
+    return nRet;
+}
+
+
+string GetClassSpellLevelColumn(int iClass)
+{
+	string sCol;
+	
+	switch (iClass)
+	{
+		case CLASS_TYPE_BARD: 			sCol = SPELLS_BARD_LEVEL_COL;		break;
+		case CLASS_TYPE_CLERIC: 		sCol = SPELLS_CLERIC_LEVEL_COL;		break;
+		case CLASS_TYPE_DRUID: 			sCol = SPELLS_DRUID_LEVEL_COL;		break;
+		case CLASS_TYPE_PALADIN: 		sCol = SPELLS_PALADIN_LEVEL_COL;	break;
+		case CLASS_TYPE_RANGER: 		sCol = SPELLS_RANGER_LEVEL_COL;		break;
+		case CLASS_TYPE_WIZARD:	// Wiz & Sorc share same list
+		case CLASS_TYPE_SORCERER: 		sCol = SPELLS_WIZ_SORC_LEVEL_COL;	break;
+		case CLASS_TYPE_WARLOCK: 		sCol = SPELLS_WARLOCK_LEVEL_COL;	break;
+		default:						sCol = SPELLS_INNATE_LEVEL_COL;		break;
+	}		
+	return (sCol);
+}
+
+// spell level for this class, or -1 on error
+int GetSpellLevelForClass(int iSpell, int iClass)
+{
+	int iSpellLevel;
+	string sCol = GetClassSpellLevelColumn(iClass);
+	string sSpellLevel = Get2DACache(SPELLS_2DA, sCol, iSpell);
+	
+	if (sSpellLevel == "")
+		iSpellLevel = -1;
+	else
+	 	iSpellLevel = StringToInt(sSpellLevel);
+		
+	//PrettyDebug ("GetSpellLevelForClass: For Spell " + IntToString(iSpell) + " and class of " +
+	//			 IntToString(iClass) + " Level is: " + IntToString(iSpellLevel));
+		
+	return (iSpellLevel);
+}
+
+int IsOnSpellList(int iSpell, int iClass)
+{
+	return (GetSpellLevelForClass(iSpell, iClass) >= 0);
+}
+
+
+void MakeItemUseableByClass(int iClassType, object oItem)
+{
+	itemproperty ipLimit = ItemPropertyLimitUseByClass(iClassType);
+	AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oItem);
+}
+
+void MakeItemUseableByClassesWithSpellAccess(int iSpell, object oItem)
+{
+	if (IsOnSpellList(iSpell, CLASS_TYPE_BARD))
+		MakeItemUseableByClass(CLASS_TYPE_BARD, oItem);
+		
+	if (IsOnSpellList(iSpell, CLASS_TYPE_CLERIC))
+		MakeItemUseableByClass(CLASS_TYPE_CLERIC, oItem);
+	
+	if (IsOnSpellList(iSpell, CLASS_TYPE_DRUID))
+		MakeItemUseableByClass(CLASS_TYPE_DRUID, oItem);
+		
+	if (IsOnSpellList(iSpell, CLASS_TYPE_PALADIN))
+		MakeItemUseableByClass(CLASS_TYPE_PALADIN, oItem);
+
+	if (IsOnSpellList(iSpell, CLASS_TYPE_RANGER))
+		MakeItemUseableByClass(CLASS_TYPE_RANGER, oItem);
+	
+	if (IsOnSpellList(iSpell, CLASS_TYPE_WIZARD))
+	{
+		MakeItemUseableByClass(CLASS_TYPE_WIZARD, oItem);
+		MakeItemUseableByClass(CLASS_TYPE_SORCERER, oItem);
+	}
+	
+	if (IsOnSpellList(iSpell, CLASS_TYPE_WARLOCK))
+		MakeItemUseableByClass(CLASS_TYPE_WARLOCK, oItem);
+}		
+	
 
 // *  Return the type of magic as one of the following constants
 // *  const int X2_CI_MAGICTYPE_INVALID = 0;
@@ -246,6 +401,47 @@ void AppendSpellToName(object oObject, int nSpellID)
 	PrettyDebug ("sNewName = "  + sName);
 }
 
+// -----------------------------------------------------------------------------
+// Wrapper for the crafting cost calculation, returns GP required
+// -----------------------------------------------------------------------------
+int CIGetCraftGPCost(int nLevel, int nMod, sCasterLevelSwitch)
+{
+    int nLvlRow =   IPGetIPConstCastSpellFromSpellID(GetSpellId());
+    int nCLevel;// = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
+    //PRC modification
+    if(GetPRCSwitch(sCasterLevelSwitch))
+    {
+        nCLevel = PRCGetCasterLevel();
+    }
+    else
+    {
+        nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
+    }
+
+	int bZeroLevel = (nLevel == 0);
+	if (bZeroLevel)
+		nLevel = 1;
+		
+    // -------------------------------------------------------------------------
+    // in case we don't get a valid CLevel, use spell level instead
+    // -------------------------------------------------------------------------
+    if (nCLevel ==0)
+    {
+        nCLevel = nLevel;
+    }
+	int nRet = nCLevel * nLevel * nMod;
+
+	// zero level spells are only half the cost of 1st level spells	
+	if (bZeroLevel)
+		nRet = nRet/2;
+
+    return nRet;
+
+}
+
+
+// *******************************************************
+// ** Craft!
 
 // -----------------------------------------------------------------------------
 // Georg, 2003-06-12
@@ -285,34 +481,6 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
     return oTarget;
 }
 
-// -----------------------------------------------------------------------------
-// Wrapper for the crafting cost calculation, returns GP required
-// -----------------------------------------------------------------------------
-int CIGetCraftGPCost(int nLevel, int nMod, string sCasterLevelSwitch)
-{
-    int nLvlRow =   IPGetIPConstCastSpellFromSpellID(PRCGetSpellId());
-    int nCLevel;// = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
-    //PRC modification
-    if(GetPRCSwitch(sCasterLevelSwitch))
-    {
-        nCLevel = PRCGetCasterLevel();
-    }
-    else
-    {
-        nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
-    }
-
-    // -------------------------------------------------------------------------
-    // in case we don't get a valid CLevel, use spell level instead
-    // -------------------------------------------------------------------------
-    if (nCLevel ==0)
-    {
-        nCLevel = nLevel;
-    }
-    int nRet = nCLevel * nLevel * nMod;
-    return nRet;
-
-}
 
 // -----------------------------------------------------------------------------
 // Georg, 2003-06-12
@@ -350,6 +518,9 @@ object CICraftCraftWand(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
 
+		MakeItemUseableByClassesWithSpellAccess(nSpellID, oTarget);
+		
+		/*
         int nType = CI_GetClassMagicType(PRCGetLastSpellCastClass());
         itemproperty ipLimit;
 
@@ -373,9 +544,14 @@ object CICraftCraftWand(object oCreator, int nSpellID )
              ipLimit = ItemPropertyLimitUseByClass(CLASS_TYPE_BARD);
              AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
         }
+		*/
 		AppendSpellToName(oTarget, nSpellID);				
 
-        int nCharges = PRCGetCasterLevel() + d20();
+		
+		// Wands are now always created w/ 50 charges 
+        int nCharges = 50;
+		/*		
+		nCharges = GetLevelByClass(GetLastSpellCastClass(),OBJECT_SELF) + d20();
 
         if (nCharges == 0) // stupi cheaters
         {
@@ -384,12 +560,11 @@ object CICraftCraftWand(object oCreator, int nSpellID )
         // Hard core rule mode enabled
         if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_CRAFT_WAND_50_CHARGES))
         {
-            SetItemCharges(oTarget,50);
+            nCharges = 50;
         }
-        else
-        {
-            SetItemCharges(oTarget,nCharges);
-        }
+		*/
+        SetItemCharges(oTarget,nCharges);
+
         // TODOL Add use restrictions there when item becomes available
     }
     return oTarget;
@@ -476,6 +651,10 @@ object CICraftScribeScroll(object oCreator, int nSpellID)
     return oTarget;
 }
 
+
+// *******************************************************
+// ** Craft Checks
+
 // -----------------------------------------------------------------------------
 // Returns TRUE if the player used the last spell to brew a potion
 // -----------------------------------------------------------------------------
@@ -485,7 +664,7 @@ int CICraftCheckBrewPotion(object oSpellTarget, object oCaster)
     object oSpellTarget = GetSpellTargetObject();
     object oCaster      = OBJECT_SELF;
     int    nID          = PRCGetSpellId();
-    int    nLevel       = CIGetSpellInnateLevel(nID,TRUE);
+    int    nLevel       = CIGetSpellInnateLevel(nID,FALSE);
     if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
     {
         int nMetaMagic = PRCGetMetaMagicFeat();
@@ -518,7 +697,7 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     if (GetHasFeat(X2_CI_BREWPOTION_FEAT_ID, oCaster) != TRUE)
     {
-      FloatingTextStrRefOnCreature(40487, oCaster); // Item Creation Failed - Don't know how to create that type of item
+      FloatingTextStrRefOnCreature(STR_REF_IC_MISSING_REQUIRED_FEAT, oCaster); // Item Creation Failed - Don't know how to create that type of item
       return TRUE;
     }
 
@@ -530,7 +709,7 @@ These dont work as IPs since they are hardcoded */
         nPotionMaxLevel = 3;
     if (nLevel > nPotionMaxLevel)
     {
-        FloatingTextStrRefOnCreature(76416, oCaster);
+        FloatingTextStrRefOnCreature(STR_REF_IC_SPELL_TO_HIGH_FOR_POTION, oCaster);
         return TRUE;
     }
 
@@ -539,7 +718,7 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     if (CIGetIsSpellRestrictedFromCraftFeat(nID, X2_CI_BREWPOTION_FEAT_ID))
     {
-        FloatingTextStrRefOnCreature(83450, oCaster);
+        FloatingTextStrRefOnCreature(STR_REF_IC_SPELL_RESTRICTED_FOR_POTION, oCaster);
         return TRUE;
     }
 
@@ -559,7 +738,7 @@ These dont work as IPs since they are hardcoded */
     //if (GetGold(oCaster) < nGoldCost)
     if(!GetHasGPToSpend(oCaster, nGoldCost))
     {
-        FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
+        FloatingTextStrRefOnCreature(STR_REF_IC_INSUFFICIENT_GOLD, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
     }
 
@@ -574,7 +753,7 @@ These dont work as IPs since they are hardcoded */
     //if (nMinXPForLevel > nNewXP || nNewXP == 0 )
     if (!GetHasXPToSpend(oCaster, FloatToInt(nExperienceCost)))
     {
-        FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
+        FloatingTextStrRefOnCreature(STR_REF_IC_INSUFFICIENT_XP, oCaster); // Item Creation Failed - Not enough XP
         return TRUE;
     }
 
@@ -593,7 +772,7 @@ These dont work as IPs since they are hardcoded */
         SpendXP(oCaster, FloatToInt(nExperienceCost));
         SpendGP(oCaster, nGoldCost);
         DestroyObject (oSpellTarget);
-        FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
+        FloatingTextStrRefOnCreature(STR_REF_IC_SUCCESS, oCaster); // Item Creation successful
         //if time is enabled, fast forward
         AdvanceTimeForPlayer(oCaster, HoursToSeconds(24));
         string sName;
@@ -604,7 +783,7 @@ These dont work as IPs since they are hardcoded */
      }
      else
      {
-         FloatingTextStrRefOnCreature(76417, oCaster); // Item Creation Failed
+         FloatingTextStrRefOnCreature(STR_REF_IC_FAILED, oCaster); // Item Creation Failed
         return TRUE;
      }
 
@@ -624,7 +803,7 @@ int CICraftCheckScribeScroll(object oSpellTarget, object oCaster)
     // -------------------------------------------------------------------------
     if (GetHasFeat(X2_CI_SCRIBESCROLL_FEAT_ID, oCaster) != TRUE)
     {
-      FloatingTextStrRefOnCreature(40487, oCaster); // Item Creation Failed - Don't know how to create that type of item
+      FloatingTextStrRefOnCreature(STR_REF_IC_MISSING_REQUIRED_FEAT, oCaster); // Item Creation Failed - Don't know how to create that type of item
       return TRUE;
     }
 
@@ -633,14 +812,14 @@ int CICraftCheckScribeScroll(object oSpellTarget, object oCaster)
     // -------------------------------------------------------------------------
     if (CIGetIsSpellRestrictedFromCraftFeat(nID, X2_CI_SCRIBESCROLL_FEAT_ID))
     {
-        FloatingTextStrRefOnCreature(83451, oCaster); // can not be used with this feat
+        FloatingTextStrRefOnCreature(STR_REF_IC_SPELL_RESTRICTED_FOR_SCROLL, oCaster); // can not be used with this feat
         return TRUE;
     }
 
     // -------------------------------------------------------------------------
     // XP/GP Cost Calculation
     // -------------------------------------------------------------------------
-    int  nLevel    = CIGetSpellInnateLevel(nID,TRUE);
+    int  nLevel    = CIGetSpellInnateLevel(nID,FALSE);
     int nCostModifier = GetPRCSwitch(X2_CI_SCRIBESCROLL_COSTMODIFIER);
     if(nCostModifier == 0)
         nCostModifier = 25;
@@ -680,7 +859,7 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     if(!GetHasGPToSpend(oCaster, nGoldCost))
     {
-        FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
+        FloatingTextStrRefOnCreature(STR_REF_IC_INSUFFICIENT_GOLD, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
     }
 
@@ -694,7 +873,7 @@ These dont work as IPs since they are hardcoded */
     //if (nMinXPForLevel > nNewXP || nNewXP == 0 )
     if (!GetHasXPToSpend(oCaster, FloatToInt(fExperienceCost)))
     {
-         FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
+         FloatingTextStrRefOnCreature(STR_REF_IC_INSUFFICIENT_XP, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
     }
 
@@ -716,18 +895,12 @@ These dont work as IPs since they are hardcoded */
         SpendXP(oCaster, FloatToInt(fExperienceCost));
         SpendGP(oCaster, nGoldCost);
         DestroyObject (oSpellTarget);
-        FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
-        //1 day per 1000GP base cost, min 1
-        int nDays = nGoldCost/500;
-        // Maester class cuts crafting time in half.
-        if (GetLevelByClass(CLASS_TYPE_MAESTER, oCaster)) nDays /= 2;
-        if(!nDays) nDays = 1;
-        AdvanceTimeForPlayer(oCaster, HoursToSeconds(nDays*24));
+        FloatingTextStrRefOnCreature(STR_REF_IC_SUCCESS, oCaster); // Item Creation successful
         return TRUE;
      }
      else
      {
-        FloatingTextStrRefOnCreature(76417, oCaster); // Item Creation Failed
+        FloatingTextStrRefOnCreature(STR_REF_IC_FAILED, oCaster); // Item Creation Failed
         return TRUE;
      }
 
@@ -748,7 +921,7 @@ int CICraftCheckCraftWand(object oSpellTarget, object oCaster)
     // -------------------------------------------------------------------------
     if (GetHasFeat(X2_CI_CRAFTWAND_FEAT_ID, oCaster) != TRUE)
     {
-      FloatingTextStrRefOnCreature(40487, oCaster); // Item Creation Failed - Don't know how to create that type of item
+      FloatingTextStrRefOnCreature(STR_REF_IC_MISSING_REQUIRED_FEAT, oCaster); // Item Creation Failed - Don't know how to create that type of item
       return TRUE; // tried item creation but do not know how to do it
     }
 
@@ -757,11 +930,12 @@ int CICraftCheckCraftWand(object oSpellTarget, object oCaster)
     // -------------------------------------------------------------------------
     if (CIGetIsSpellRestrictedFromCraftFeat(nID, X2_CI_CRAFTWAND_FEAT_ID))
     {
-        FloatingTextStrRefOnCreature(83452, oCaster); // can not be used with this feat
+        FloatingTextStrRefOnCreature(STR_REF_IC_SPELL_RESTRICTED_FOR_WAND, oCaster); // can not be used with this feat
         return TRUE;
     }
 
-    int nLevel = CIGetSpellInnateLevel(nID,TRUE);
+	// now returns the actual spell level the spell was cast with.
+    int nLevel = CIGetSpellInnateLevel(nID,FALSE);
     if(GetPRCSwitch(PRC_CRAFT_WAND_CASTER_LEVEL))
     {
         int nMetaMagic = PRCGetMetaMagicFeat();
@@ -797,7 +971,7 @@ These dont work as IPs since they are hardcoded */
         nMaxLevel = 4;
     if (nLevel > nMaxLevel)
     {
-        FloatingTextStrRefOnCreature(83623, oCaster);
+        FloatingTextStrRefOnCreature(STR_REF_IC_SPELL_TO_HIGH_FOR_WAND, oCaster);
         return TRUE;
     }
 
@@ -816,7 +990,7 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
     if(!GetHasGPToSpend(oCaster, nGoldCost))
     {
-        FloatingTextStrRefOnCreature(3786, oCaster); // Item Creation Failed - not enough gold!
+        FloatingTextStrRefOnCreature(STR_REF_IC_INSUFFICIENT_GOLD, oCaster); // Item Creation Failed - not enough gold!
         return TRUE;
     }
 
@@ -830,7 +1004,7 @@ These dont work as IPs since they are hardcoded */
     // -------------------------------------------------------------------------
      if (!GetHasXPToSpend(oCaster, FloatToInt(nExperienceCost)))
     {
-         FloatingTextStrRefOnCreature(3785, oCaster); // Item Creation Failed - Not enough XP
+         FloatingTextStrRefOnCreature(STR_REF_IC_INSUFFICIENT_XP, oCaster); // Item Creation Failed - Not enough XP
          return TRUE;
     }
 
@@ -847,7 +1021,7 @@ These dont work as IPs since they are hardcoded */
         SpendXP(oCaster, FloatToInt(nExperienceCost));
         SpendGP(oCaster, nGoldCost); 
         DestroyObject (oSpellTarget);
-        FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
+        FloatingTextStrRefOnCreature(STR_REF_IC_SUCCESS, oCaster); // Item Creation successful
         //if time is enabled, fast forward
         //1 day per 1000GP base cost, min 1
         int nDays = nGoldCost/500;
@@ -863,7 +1037,7 @@ These dont work as IPs since they are hardcoded */
      }
      else
      {
-        FloatingTextStrRefOnCreature(76417, oCaster); // Item Creation Failed
+        FloatingTextStrRefOnCreature(STR_REF_IC_FAILED, oCaster); // Item Creation Failed
         return TRUE;
      }
 
@@ -1263,7 +1437,7 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
         // ---------------------------------------------------------------------
         if (GetModuleSwitchValue(MODULE_SWITCH_DISABLE_ITEM_CREATION_FEATS) == TRUE)
         {
-            FloatingTextStrRefOnCreature(83612, oCaster); // * Item creation feats are not enabled in this module *
+            FloatingTextStrRefOnCreature(STR_REF_IC_DISABLED, oCaster); // * Item creation feats are not enabled in this module *
             return FALSE;
         }
         if (GetLocalInt(GetArea(oCaster), PRC_AREA_DISABLE_CRAFTING))
@@ -1277,7 +1451,7 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
         // ---------------------------------------------------------------------
         if (GetSpellCastItem() != OBJECT_INVALID)
         {
-            FloatingTextStrRefOnCreature(83373, oCaster); // can not use one item to enchant another
+            FloatingTextStrRefOnCreature(STR_REF_IC_ITEM_USE_NOT_ALLOWED, oCaster); // can not use one item to enchant another
             return TRUE;
         }
 

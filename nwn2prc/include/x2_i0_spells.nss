@@ -137,6 +137,7 @@ effect CreateGoodTideEffectsLink()
 //------------------------------------------------------------------------------
 int GetSlashingWeapon(object oItem)
 {
+/*
     //Declare major variables
     int nItem = GetBaseItemType(oItem);
 
@@ -164,6 +165,9 @@ int GetSlashingWeapon(object oItem)
         return TRUE;
    }
    return FALSE;
+   */
+   // AFW-OEI 10/24/2006: Use new engine function
+   return (GetWeaponType(oItem) == WEAPON_TYPE_SLASHING);
 }
 
 //------------------------------------------------------------------------------
@@ -172,6 +176,7 @@ int GetSlashingWeapon(object oItem)
 //------------------------------------------------------------------------------
 int GetBluntWeapon(object oItem)
 {
+	/*
     //Declare major variables
     int nItem = GetBaseItemType(oItem);
 
@@ -191,6 +196,10 @@ int GetBluntWeapon(object oItem)
         return TRUE;
    }
    return FALSE;
+   */
+   // AFW-OEI 10/24/2006: Use new engine function
+   return (GetWeaponType(oItem) == WEAPON_TYPE_BLUDGEONING);
+
 }
 
 

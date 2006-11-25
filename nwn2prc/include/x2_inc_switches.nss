@@ -18,7 +18,8 @@
 // ChazM (OEI) 4/4/06 - added support for 32 character script names for item scripts.
 // BMA-OEI 8/21/06 -- Moved campaign flags from kinc_globals.nss
 // ChazM 8/25/06 - Shortened campaign variable names to fit in 32 char limit.
-
+// BMA-OEI 10/08/06 -- Added CAMPAIGN_SWITCH_UNPLOT_ON_ROSTER_SPAWN
+// ChazM 9/11/06 - Added 0100010's misnamed constant bug fix
 
 //void main(){}
 
@@ -36,6 +37,9 @@ const string CAMPAIGN_SWITCH_REMOVE_DOMINATED_ON_TRANSITION = "N2_S_REMOVE_DOM_O
 // This global determines whether or not the campaign uses the personal reputation system, which affects
 //	whether or not neutrals can be damaged by spells
 const string CAMPAIGN_SWITCH_USE_PERSONAL_REPUTATION = "N2_S_USE_PERSONAL_REP";
+
+// Set companion's Plot Flag FALSE on UserDefined EVENT_ROSTER_SPAWN_IN (2051)
+const string CAMPAIGN_SWITCH_UNPLOT_ON_ROSTER_SPAWN = "N2_S_UNPLOT_ON_ROSTER_SPAWN";
 
 
 //------------------------------------------------------------------------------
@@ -173,7 +177,9 @@ const string MODULE_SWITCH_NO_RANDOM_MONSTER_LOOT = "X2_L_NOTREASURE";
 //------------------------------------------------------------------------------
 const string MODULE_VAR_OVERRIDE_SPELLSCRIPT ="X2_S_UD_SPELLSCRIPT";
 
-const string MODULE_VAR_TAGBASED_SCRIPT_PREFIX ="X2_S_UD_SPELLSCRIPT";
+// thanks to "0100010" for spotting this!
+//const string MODULE_VAR_TAGBASED_SCRIPT_PREFIX ="X2_S_UD_SPELLSCRIPT";
+const string MODULE_VAR_TAGBASED_SCRIPT_PREFIX ="X2_S_UD_TAGBASED_SCRIPT_PREFIX";
 
 //------------------------------------------------------------------------------
 // * Variable that holds the wandering monster 2da filename

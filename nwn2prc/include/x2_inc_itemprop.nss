@@ -19,6 +19,8 @@
 //:: Last Update: 2003-10-07
 //:://////////////////////////////////////////////
 //  ChazM 4/17/06 Updated IPGetItemPropertyByID()
+//  ChazM 10/16/06 fixed ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP and ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT in IPGetItemPropertyByID()
+//  ChazM 11/13/06 fixed ITEM_PROPERTY_SPELL_RESISTANCE, ITEM_PROPERTY_DAMAGE_VULNERABILITY, ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC in IPGetItemPropertyByID() (found by Webscav)
 
 //void main(){}
 // *  The tag of the ip work container, a placeable which has to be set into each
@@ -334,7 +336,8 @@ int ITEM_PROPERTY_DAMAGE_BONUS                             = 16 ;
 int ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP          = 17 ;
 int ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP             = 18 ;
 int ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT       = 19 ;
-int ITEM_PROPERTY_DAMAGE_REDUCTION_DEPRECATED              = 22 ;
+int ITEM_PROPERTY_DAMAGE_REDUCTION              		   = 85 ;
+int ITEM_PROPERTY_DAMAGE_REDUCTION_DEPRECATED              = 22 ; // not called
 int ITEM_PROPERTY_DAMAGE_RESISTANCE                        = 23 ;
 int ITEM_PROPERTY_DAMAGE_VULNERABILITY                     = 24 ;
 int ITEM_PROPERTY_DARKVISION                               = 26 ;
@@ -468,7 +471,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyDamageBonus(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_ALIGNMENT_GROUP) // 17
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP) // 17
    {
         ipRet = ItemPropertyDamageBonusVsAlign(nParam1, nParam2, nParam3);
    }
@@ -476,7 +479,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyDamageBonusVsRace(nParam1, nParam2, nParam3);
    }
-   else if (nPropID == ITEM_PROPERTY_ATTACK_BONUS_VS_SPECIFIC_ALIGNMENT) // 19
+   else if (nPropID == ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT) // 19
    {
         ipRet = ItemPropertyDamageBonusVsSAlign(nParam1, nParam2, nParam3);
    }
@@ -490,7 +493,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    }
    else if (nPropID == ITEM_PROPERTY_DAMAGE_VULNERABILITY) // 24
    {
-        ipRet = ItemPropertyDamageResistance(nParam1, nParam2);
+        ipRet = ItemPropertyDamageVulnerability(nParam1, nParam2);
    }
    else if (nPropID == ITEM_PROPERTY_DARKVISION) // 26
    {
@@ -522,7 +525,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    }
    else if (nPropID == ITEM_PROPERTY_DECREASED_SAVING_THROWS_SPECIFIC) // 50
    {
-        ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
+        ipRet = ItemPropertyReducedSavingThrowVsX(nParam1, nParam2);
    }
     else if (nPropID == ITEM_PROPERTY_DECREASED_SKILL_MODIFIER) //29
    {
@@ -572,7 +575,6 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyHolyAvenger();
    }
-	
    else if (nPropID == ITEM_PROPERTY_IMMUNITY_DAMAGE_TYPE) // 20
    {
         ipRet = ItemPropertyDamageImmunity(nParam1, nParam2);
@@ -654,7 +656,6 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
 	{
 	     ipRet = ItemPropertyVampiricRegeneration(nParam1);
 	}
-	
 	else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS) // 40
 	{
 	     ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
@@ -672,16 +673,14 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
 	{
 	     ipRet = ItemPropertySpecialWalk(nParam1);
 	}
-	
 	else if (nPropID == ITEM_PROPERTY_SPELL_RESISTANCE)
 	{
-	     ipRet = ItemPropertyArcaneSpellFailure(nParam1); // 39
+	     ipRet = ItemPropertyBonusSpellResistance(nParam1); // 39
 	}
 	else if (nPropID == ITEM_PROPERTY_THIEVES_TOOLS)
 	{
 	     ipRet = ItemPropertyThievesTools(nParam1); // 55
 	}
-	
 	else if (nPropID == ITEM_PROPERTY_TRAP) // 70
 	{
 	     ipRet = ItemPropertyTrap(nParam1, nParam2);
@@ -690,7 +689,6 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
 	{
 	     ipRet = ItemPropertyTrueSeeing();
 	}
-	
 	else if (nPropID == ITEM_PROPERTY_TURN_RESISTANCE) // 73
 	{
 	     ipRet = ItemPropertyTurnResistance(nParam1);

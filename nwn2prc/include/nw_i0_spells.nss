@@ -17,6 +17,29 @@
 // ChazM 8/29/06 Fix compile error in RemoveSpellEffects()
 // ChazM 8/29/06 moved spellsIsTarget() from x0_i0_spells.
 // DBR 9/08/06 - Added override ability for spellsIsTarget() filter. Added the IgnoreTargetRules* functions.
+// BDF 9/13/06 - Added a bail out to spellsIsTarget() for when the target is ScriptHidden
+// BDF 9/19/06 - modified spellsIsTarget() to use GetCurrentMaster(), which accounts for companions (roster members)
+// BDF 9/25/06 - Added a conditional to end of spellsIsTarget() to limit to damaging spells
+// BDF 10/03/06 - Added a conditional to end of spellsIsTarget() to better enforce associate vs associate spell damage
+// BDF 10/20/06 - modified spellsIsTarget to ignore the deprecated MODULE_SWITCH_ENABLE_MULTI_HENCH_AOE_DAMAGE check
+//					which was disabling inter-party AOE spell damage; Hardcore difficulty is now aptly named;
+//					also modified to only escape early when the target is the caster when game difficulty is lower
+//					than hardcore; also made accommodations for companions to damage inter-party PC's (non-master)
+//					in hardcore
+// 10/23/06 - BDF(OEI): added GetIsReactionTypeHostile to the SELECTIVEHOSTILE case of spellsIsTarget since
+//					GetIsEnemy may not capture all cases in game modes that don't use personal reputation (OC)
+// DBR 11/09/06 - fixed minor logic error in RemoveProtections()
+// 11/09/06 - BDF(OEI): modified spellsIsTarget to check for master object validity in the 1st and 3rd "Hardcore" checks;
+//	in 1st check, NPC casters could hurt themselves and in the 3rd check, NPCs of non-hostile factions could damage each other.
+//	In the 3rd check, one-to-one object comparison was insufficient since GetCurrentMaster() would return OBJECT_INVALID
+//	for non-PC-party NPC targets and sources, causing the function to return TRUE even if they were non-hostile to one another.
+// 	These changes may confound rules pundits, but the heart of the issue here is difficulty, not rules loyalty.
+
+
+
+
+
+
 
 // * Constants
 // * see spellsIsTarget for a definition of these constants
@@ -153,7 +176,7 @@ void IgnoreTargetRulesActionCastSpellAtLocationArea(int nShapeType, float fShape
 //#include "x2_inc_switches"
 //#include "x2_inc_itemprop"
 #include "x0_i0_petrify"
-
+#include "x0_i0_assoc"
 
 //::///////////////////////////////////////////////
 //:: spellsIsTarget
@@ -185,6 +208,12 @@ void IgnoreTargetRulesActionCastSpellAtLocationArea(int nShapeType, float fShape
 
 int spellsIsTarget(object oTarget, int nTargetType, object oSource)
 {
+	// If the target is a ScriptHidden creature, we do not want to affect it.
+	if ( GetScriptHidden(oTarget) == TRUE )
+	{
+		return FALSE;
+	}
+	
 	// If we want to ignore the rules of target selection for this spell, always return true.
 	int nEntry = IgnoreTargetRulesGetFirstIndex(oSource, oTarget);	
 	if (nEntry != -1)
@@ -203,7 +232,7 @@ int spellsIsTarget(object oTarget, int nTargetType, object oSource)
 	if ( oTarget == oSource ) 
 	{
 		if ( nTargetType == SPELL_TARGET_ALLALLIES )	return TRUE; 			
-		else											return FALSE;
+		//else											return FALSE;
 	}
 
 
@@ -241,14 +270,19 @@ int spellsIsTarget(object oTarget, int nTargetType, object oSource)
             }
 
             int bSelfTarget = FALSE;
-            object oMaster = GetMaster(oTarget);
+            //object oMaster = GetMaster(oTarget);
+            object oMaster = GetCurrentMaster(oTarget); 	// 9/19/06 - BDF: changed to GetCurrentMaster() for companion consideration
+			object oSourceMaster = GetCurrentMaster( oSource );	// GetCurrentMaster() will return OBJECT_INVALID when the queried object is not in a PC party.
 
             // March 25 2003. The player itself can be harmed
             // by their own area of effect spells if in Hardcore mode...
             if (GetGameDifficulty() > GAME_DIFFICULTY_NORMAL)
             {
                 // Have I hit myself with my spell?
-                if (oTarget == oSource)
+				// 11/10/06 - BDF(OEI): non-PC-party NPCs should not be able to hurt themselves in Hardcore+ difficulty;
+				//	it may not please the rules purist, but this is a difficulty consideration, not a rules consideration,
+				//	and allowing a hostile NPC to kill itself with its own AOEs does not make the game more difficult.
+                if ( oTarget == oSource && GetIsObjectValid(oSourceMaster) )
                 {
                     bSelfTarget = TRUE;
                 }
@@ -258,6 +292,14 @@ int spellsIsTarget(object oTarget, int nTargetType, object oSource)
                 {
                     bSelfTarget = TRUE;
                 }
+				// 11/10/06 - BDF(OEI): GetCurrentMaster() will return OBJECT_INVALID when the queried object is not in a PC party.
+				//	This causes non-PC-party NPCs to affect one another even if they are not hostile to one another.  Bad.
+				else if ( oMaster == oSourceMaster && 
+						  GetIsObjectValid(oSourceMaster) &&
+						  GetIsObjectValid(oMaster)  )	// This will also ensure that PC party members in multiplayer are affected
+				{
+					bSelfTarget = TRUE;
+				}
             }
 
             // April 9 2003
@@ -311,10 +353,11 @@ int spellsIsTarget(object oTarget, int nTargetType, object oSource)
         }
         // * only harms enemies, ever
         // * current list:call lightning, isaac missiles, firebrand, chain lightning, dirge, Nature's balance,
-        // * Word of Faith
+        // * Word of Faith, bard songs that should never affect friendlies
         case SPELL_TARGET_SELECTIVEHOSTILE:
         {
-            if(GetIsEnemy(oTarget,oSource))
+			// 10/23/06 - BDF(OEI): added GetIsReactionTypeHostile() since GetIsEnemy may not capture all cases
+            if( GetIsEnemy(oTarget,oSource) || GetIsReactionTypeHostile(oTarget, oSource) )	
             {
                 nReturnValue = TRUE;
             }
@@ -322,17 +365,28 @@ int spellsIsTarget(object oTarget, int nTargetType, object oSource)
         }
     }
 
+	/*	10/20/06 - BDF(OEI): this block of code is now deprecated.  It essentially prevents companions from damaging the
+								party in Hardcore difficulty, which isn't very hardcore at all
     // GZ: Creatures with the same master will never damage each other
-    if (GetMaster(oTarget) != OBJECT_INVALID && GetMaster(oSource) != OBJECT_INVALID )
-    {
-        if (GetMaster(oTarget) == GetMaster(oSource))
-        {
-            if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_MULTI_HENCH_AOE_DAMAGE) == 0 )
-            {
-                nReturnValue = FALSE;
-            }
-        }
-    }
+	if ( nTargetType != SPELL_TARGET_ALLALLIES )	// 9/25/06 - BDF: Added this conditional to limit this filter to damaging spells
+	{
+		if ( !GetIsPC(oTarget) && !GetIsPC(oSource) )	// 10/03/06 - BDF: this further reinforces that this block
+		{												// will only run when the target and source are NOT PC's
+	    	//if (GetMaster(oTarget) != OBJECT_INVALID && GetMaster(oSource) != OBJECT_INVALID )
+			if (GetCurrentMaster(oTarget) != OBJECT_INVALID && GetCurrentMaster(oSource) != OBJECT_INVALID )	// 9/19/06 - BDF: changed to GetCurrentMaster() for companion consideration
+		    {
+		        //if (GetMaster(oTarget) == GetMaster(oSource))
+		        if (GetCurrentMaster(oTarget) == GetCurrentMaster(oSource))	// 9/19/06 - BDF: changed to GetCurrentMaster() for companion consideration
+		        {
+		            if (GetModuleSwitchValue(MODULE_SWITCH_ENABLE_MULTI_HENCH_AOE_DAMAGE) == 0 )
+		            {
+		                nReturnValue = FALSE;
+		            }
+		        }
+		    }
+		}	
+	}
+	*/	
 
     return nReturnValue;
 }
@@ -456,11 +510,28 @@ void spellsCure(int nDamage, int nMaxExtraDamage, int nMaximized, int vfx_impact
                 SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
                 if (!MyResistSpell(OBJECT_SELF, oTarget))
                 {
-                    eDam = EffectDamage(nDamage,DAMAGE_TYPE_DIVINE);
-                    //Apply the VFX impact and effects
-                    DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    effect eVis = EffectVisualEffect(vfx_impactHurt);
-                    ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+					int nSave = WillSave(oTarget, GetSpellSaveDC(), SAVING_THROW_TYPE_NONE, OBJECT_SELF);
+					if	(nSave ==2)
+					{
+						return;
+					}
+					
+					else if  (nSave == 1)
+					{
+                    	eDam = EffectDamage(nDamage/2,DAMAGE_TYPE_DIVINE);
+                    	//Apply the VFX impact and effects
+                    	DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    	effect eVis = EffectVisualEffect(vfx_impactHurt);
+                    	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+					}
+					else
+					{
+						eDam = EffectDamage(nDamage,DAMAGE_TYPE_DIVINE);
+                    	//Apply the VFX impact and effects
+                    	DelayCommand(1.0, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+                    	effect eVis = EffectVisualEffect(vfx_impactHurt);
+                    	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+					}
                 }
             }
         }
@@ -1013,8 +1084,8 @@ int RemoveProtections(int nSpell_ID, object oTarget, int nCount)
                 //return 1;
                 nCnt++;
             }
-            //Get next effect on the target
-            eProtection = GetNextEffect(oTarget);
+			else       //Get next effect on the target
+            	eProtection = GetNextEffect(oTarget);
         }
     }
     if(nCnt > 0)

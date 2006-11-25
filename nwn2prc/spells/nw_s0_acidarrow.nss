@@ -37,7 +37,7 @@ void main()
 
     object oTarget = PRCGetSpellTargetObject();
     object oCaster = OBJECT_SELF;
-    int CasterLvl = PRCGetCasterLevel(oCaster);
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
 
     //--------------------------------------------------------------------------
@@ -60,9 +60,9 @@ void main()
     
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID);
     CasterLvl += SPGetPenetr();
-    int nDuration = (CasterLvl/3);
+    int nDuration = (nCasterLevel/3);
 
-    if ((nMetaMagic & METAMAGIC_EXTEND))
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
        nDuration = nDuration * 2;
     }
@@ -87,7 +87,7 @@ void main()
      // * Dec 2003- added the reaction check back i
     if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, oCaster))
     {
-        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));
+        SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
 
         float fDist = GetDistanceToObject(oTarget);
         float fDelay = (fDist/25.0);//(3.0 * log(fDist) + 2.0);

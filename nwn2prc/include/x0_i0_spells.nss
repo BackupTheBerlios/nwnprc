@@ -28,6 +28,8 @@
 //:: 8/15/06 - BDF-OEI: modified spellsIsTarget (case SPELL_TARGET_STANDARDHOSTILE) to disregard targets that are associates of
 //::    non-hostile PC's that are in the party, based on personal reputation global flag
 // ChazM 8/29/06 moved spellsIsTarget() (and includes and constants) to NW_I0_SPELLS
+//:: 10/16/06 - BDF-OEI: modified doAura() to substitute EffectDamageIncrease for EffectDamageShield(), which cannot be set for VersusAlignmentEffect()
+// ChazM 10/19/06 - modified DoMissileStorm() to more evenly distribute.
 
 //* get the hightest spellcasting class level of oCreature)
 int GZGetHighestSpellcastingClassLevel(object oCreature);
@@ -105,7 +107,8 @@ void DoCaltropEffect(object oTarget);
 void DoTrapSpike(int nDamage);
 
 //* fires a storm of nCap missiles at targets in area
-void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE, int nMaxHits = 10 );
+//void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE, int nMaxHits = 10 );
+void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nVIS = VFX_IMP_MAGBLUE, int nDamageType = DAMAGE_TYPE_MAGICAL, int iReflexSaveType = -1, int nMaxHits = 10 );
 
 // * Applies ability score damage
 void DoDirgeEffect(object oTarget,int nPenetr);
@@ -149,6 +152,59 @@ void spellsDispelAoE(object oTargetAoE, object oCaster, int nCasterLevel);
 
 // JLR - OEI 08/24/05 -- Metamagic changes
 #include "nwn2_inc_metmag"
+//*********************
+// helper functions
+//**********************
+int GetIntInRange(int iVal, int iMin, int iMax);
+int GetCappedCasterLevel(int nCap);
+int CountEnemies(location lTarget, float fRadius=RADIUS_SIZE_GARGANTUAN, int nMaxEnemies=100);
+
+
+// return value within the bounds of iMin and iMax
+int GetIntInRange(int iVal, int iMin, int iMax)	
+{
+    if ( iVal > iMax ) 
+		iVal = iMax;
+    if ( iVal < iMin) 
+		iVal = iMin;
+	return (iVal);
+}
+
+// Number of missiles is lesser of caster level and nCap.
+int GetCappedCasterLevel(int iCap)
+{
+    int iCappedCasterLevel 	= PRCGetCasterLevel(OBJECT_SELF);
+
+    if (iCappedCasterLevel > iCap)	
+		iCappedCasterLevel = iCap;
+
+	return (iCappedCasterLevel);
+}
+
+
+// Count number of enemies within radius of target location up to nMaxEnemies
+int CountEnemies(location lTarget, float fRadius=RADIUS_SIZE_GARGANTUAN, int nMaxEnemies=100)
+{
+    int nEnemies = 0;
+    object oTarget 	= OBJECT_INVALID;
+
+    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+    //Cycle through the targets within the spell shape until an invalid object is captured.
+    while (GetIsObjectValid(oTarget) && nEnemies <= nMaxEnemies )
+    {
+        // * caster cannot be harmed by this spell
+        if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF))
+        {
+            // * You can only fire missiles on visible targets
+            if (GetObjectSeen(oTarget,OBJECT_SELF))
+            {
+                nEnemies++;
+            }
+        }
+        oTarget = GetNextObjectInShape(SHAPE_SPHERE, fRadius, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+     }
+	return (nEnemies);
+}
 
 //::///////////////////////////////////////////////
 //:: DoTrapSpike
@@ -620,7 +676,7 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
     }
     else if (nTouch >0 )
     {
-        if(!GetIsReactionTypeFriendly(oTarget))
+        if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
@@ -649,6 +705,100 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
     }
 }
 
+//********************************
+// Missile Storm functions
+//********************************
+int RollMissileDamage(object oTarget, int nD6Dice, int nMetaMagic, int iReflexSaveType);
+void ShootMissilesAtTarget(object oTarget, location lSourceLoc, location lTargetLoc, int nSpell, int nPathType, 
+							int nMissilesForThisTarget, effect eVis, float fDelay, int nCnt, 
+							int nD6Dice, int nDamageType, int nMetaMagic, int iReflexSaveType);
+
+// int nD6Dice - dice to roll per missile
+// int nMetaMagic - MetaMagic used
+// int iReflexSaveType - A SAVING_THROW_TYPE_* constant, or -1 if no reflex save allowed.
+int RollMissileDamage(object oTarget, int nD6Dice, int nMetaMagic, int iReflexSaveType)
+{
+	//Roll damage
+	int nDam = d6(nD6Dice);
+	//Enter Metamagic conditions
+	if (nMetaMagic & METAMAGIC_MAXIMIZE)
+	{
+	    nDam = nD6Dice*6;//Damage is at max
+	}
+	else if (nMetaMagic & METAMAGIC_EMPOWER)
+	{
+		nDam = nDam + nDam/2; //Damage/Healing is +50%
+	}
+	// Jan. 29, 2004 - Jonathan Epp
+	// Reflex save was not being calculated for Firebrand
+	if(iReflexSaveType != -1)
+	{
+	    nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, GetSpellSaveDC(), iReflexSaveType);
+	}
+	return (nDam);
+}
+
+// oTarget, lSourceLoc, lTargetLoc, nSpell, nPathType - spell projectile params
+// int nMissilesForThisTarget - Number of missiles to shoot
+// effect eVis - Visual impact effect
+// float fDelay - Delay for the projectile travel time.
+// int nCnt - the count of enemies processed (used for delaying/spreading out the impacts)
+// int nD6Dice - dice to roll per missile
+// int nDamageType - The Type of Damage being applied
+// int nMetaMagic - MetaMagic used
+// int iReflexSaveType - A SAVING_THROW_TYPE_* constant, or -1 if no reflex save allowed.
+void ShootMissilesAtTarget(object oTarget, location lSourceLoc, location lTargetLoc, int nSpell, int nPathType, 
+							int nMissilesForThisTarget, effect eVis, float fDelay, int nCnt, 
+							int nD6Dice, int nDamageType, int nMetaMagic, int iReflexSaveType)
+{
+	float fTime 	= fDelay + ((nCnt - 1) * 0.25);
+	float fTime2 	= ((nCnt - 1) * 0.25);	
+
+	effect eDam;
+	
+	int nDam;
+	int i;
+	int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
+	//--------------------------------------------------------------
+	// GZ: Moved SR check out of loop to have 1 check per target
+	//     not one check per missile, which would rip spell mantels
+	//     apart
+	//--------------------------------------------------------------
+	for (i=1; i <= nMissilesForThisTarget; i++)
+	{
+		// Don't apply damage if target successfully resists
+		if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel, fDelay))
+		{
+			//Roll damage
+			nDam = RollMissileDamage(oTarget, nD6Dice, nMetaMagic, iReflexSaveType);
+			
+			//Set damage effect
+			eDam = EffectDamage(nDam, nDamageType);
+			eDam = EffectLinkEffects( eDam, eVis );
+			DelayCommand(fTime, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
+		}
+		// always show the attempted effect visually
+		DelayCommand( fTime2, SpawnSpellProjectile(OBJECT_SELF, oTarget, lSourceLoc, lTargetLoc, nSpell, nPathType) );
+	} 
+}
+/*
+void DoLesserMissileStorm()
+{
+    DoMissileStorm(1, 10, SPELL_ISAACS_LESSER_MISSILE_STORM, VFX_IMP_MAGBLUE, DAMAGE_TYPE_MAGICAL, -1, 10);
+}
+
+void DoGreaterMissileStorm()
+{
+    DoMissileStorm(2, 20, SPELL_ISAACS_GREATER_MISSILE_STORM, VFX_IMP_MAGBLUE, DAMAGE_TYPE_MAGICAL, -1, 20);
+}
+
+void DoFireBrand(int nD6Dice)
+{
+    DoMissileStorm(nD6Dice, 15, SPELL_FIREBRAND, VFX_HIT_SPELL_FIRE, DAMAGE_TYPE_FIRE, SAVING_THROW_TYPE_FIRE, 1);
+}
+*/
+
+
 //::///////////////////////////////////////////////
 //:: DoMissileStorm
 //:: Copyright (c) 2002 Bioware Corp.
@@ -674,220 +824,69 @@ void spellsInflictTouchAttack(int nDamage, int nMaxExtraDamage, int nMaximized, 
 //:: AFW-OEI 06/06/2006:
 //::    Changed to target only enemies.
 
-void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nMIRV = VFX_IMP_MIRV, int nVIS = VFX_IMP_MAGBLUE, int nDAMAGETYPE = DAMAGE_TYPE_MAGICAL, int nONEHIT = FALSE, int nReflexSave = FALSE, int nMaxHits = 10 )
+// int nD6Dice 	- Dice of damage (d6) each missile does
+// int nCap		- The max number of missiles that can be fired
+// int nSpell	- Spell id
+// int nVIS 	- Visual impact effect to use
+// int nDamageType - type of damage
+// int iReflexSaveType - A SAVING_THROW_TYPE_* constant, or -1 if no reflex save allowed.
+// int nMaxHits - Maximum number of hits any one target.
+void DoMissileStorm(int nD6Dice, int nCap, int nSpell, int nVIS = VFX_IMP_MAGBLUE, int nDamageType = DAMAGE_TYPE_MAGICAL, int iReflexSaveType = -1, int nMaxHits = 10 )
 {
-    //SpawnScriptDebugger();
-
-    location lTarget = GetSpellTargetLocation(); // missile spread centered around caster
-    object oTarget  = OBJECT_INVALID;
-    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nMetaMagic = PRCGetMetaMagicFeat();
-    int nCnt        = 1; // # of enemies processed
-    //effect eMissile = EffectVisualEffect(nMIRV);  // this information is no longer valid for NWN2; the projectile effect is now being created by SpawnSpellProjectile()
-    effect eVis     = EffectVisualEffect(nVIS);
-    float fDist     = 0.0;
-    float fDelay    = 0.0;
-//    float fDelay2 = 0.0;
-    float fTime     = 0.0;
-    float fTime2    = 0.0;
-    int nMissiles   = nCasterLvl;
-    int nSpellID    = GetSpellId();
-    location lSourceLoc = GetLocation( OBJECT_SELF );
-    int nPathType = PROJECTILE_PATH_TYPE_BURST;
-
-    nCasterLvl +=SPGetPenetr();
-    // Clamp the number of missles
-    if (nMissiles > nCap)   nMissiles = nCap;
-
-    /*
-        Brock Heinz - OEI - 08/15/05 - Limit hits per target
-            1. Count # of targets
-            2. First target gets nMaxHits missles
-            3. Remaining missles divided evenly between
-                other enemies, with a minimum of 1 and a
-                max of nMaxHits per enemy
-    */
-
-    int nEnemies = 0;
-
-    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-    //Cycle through the targets within the spell shape until an invalid object is captured.
-    while (GetIsObjectValid(oTarget) && nEnemies < nMissiles )
-    {
-        // * caster cannot be harmed by this spell
-        if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF))
-        {
-            // * You can only fire missiles on visible targets
-            if (GetObjectSeen(oTarget,OBJECT_SELF))
-            {
-                nEnemies++;
-            }
-        }
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
-     }
-
+	//SpawnScriptDebugger();
+	
+	location lTargetLoc	= GetSpellTargetLocation(); // missile spread centered around target location
+	location lSourceLoc = GetLocation( OBJECT_SELF );
+	
+	int nSpellID 		= PRCGetSpellId();
+    int nMetaMagic 		= PRCGetMetaMagicFeat();
+    effect eVis 		= EffectVisualEffect(nVIS);
+	
+    float fDelay 		= 0.0;
+    int nMissiles 		= GetCappedCasterLevel(nCap);
+	int nPathType 		= PROJECTILE_PATH_TYPE_BURST;
+	int nEnemies 		= CountEnemies(lTargetLoc, RADIUS_SIZE_GARGANTUAN, nMissiles); // how many enemies (up to max number of missiles)
 
      // * Exit if no enemies to hit
-     if (nEnemies == 0)
-        return;
+     if (nEnemies == 0) 
+        return; 
 
-    // Since we can't have more than nMaxHits per enemy, make sure that we're not
-    // trying to target more missles than can allocate
-    int nMaxMissiles = nEnemies * nMaxHits;
-    if ( nMissiles > nMaxMissiles )
-        nMissiles = nMaxMissiles;
-
-     // make sure the primary target gets a full payload
-     int nMissilesAtPrimary  = nMissiles;
-     if ( nMissilesAtPrimary > nMaxHits ) nMissilesAtPrimary = nMaxHits;
-
-     // divide the remaining missles evenly amongst the rest of the enemies;
-     int nMissilesAtOthers   = (nMissiles - nMissilesAtPrimary) / nEnemies;
-
-     if ( nMissilesAtOthers < 1 )
-        nMissilesAtOthers = 1;  // No less than 1 missle per enemy. Note that this results in a possible
-                                // state where more missles are fired than should be, but it was in last
-                                // year's game, so I'm leaving it in... :P
-
-     if ( nMissilesAtOthers > nMaxHits )
-        nMissilesAtOthers = nMaxHits; // No more than this many missles per enemy
-
-     // Another way to get the remainder, since we're mathing it up with ints...
-     int nRemainingMissiles  = nMissiles - ( nMissilesAtPrimary +
-                               ( nMissilesAtOthers * (nEnemies-1) ) );
-
-    // If we've overflowed our missle allocation, this will be negative...
-    // just clamp it.
-    if ( nRemainingMissiles < 0 ) nRemainingMissiles = 0;
-
-
-    // Firebrand.
-    // It means that once the target has taken damage this round from the
-    // spell it won't take subsequent damage
-    if ( nONEHIT == TRUE )
-    {
-        nMissilesAtPrimary  = 1;
-        nMissilesAtOthers   = 1;
-    }
-
-    int nMissilesForThisTarget = 0;
-    int nHasProcessedPrimary = FALSE;
-
-    oTarget = GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+     // divide the missles evenly amongst the enemies;
+    int nMissilesPerTarget	= nMissiles / nEnemies;
+	int nExtraMissiles   	= nMissiles % nEnemies;
+	
+	int nMissilesForThisTarget 	= 0;
+	location lThisTargetLoc;
+    int nCnt 				= 1; // # of enemies processed
+	
     //Cycle through the targets within the spell shape until an invalid object is captured.
+    object oTarget 			= GetFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTargetLoc, TRUE, OBJECT_TYPE_CREATURE);
     while (GetIsObjectValid(oTarget) && nCnt <= nEnemies)
     {
         // * caster cannot be harmed by this spell
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF) && (oTarget != OBJECT_SELF) && (GetObjectSeen(oTarget,OBJECT_SELF)))
         {
-            lTarget = GetLocation( oTarget );
-
-            //if ( nCnt == 1 )
-            //{
-            //  fDelay = 0.0;
-            //}
-            //else fDelay = GetProjectileTravelTime( lSourceLoc, lTarget, nPathType );
-            fDelay = GetProjectileTravelTime( lSourceLoc, lTarget, nPathType );
-
-            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpell));
-
-            // * recalculate appropriate distances
-            //fDist = GetDistanceBetween(OBJECT_SELF, oTarget);
-            //fDelay = fDist/(3.0 * log(fDist) + 2.0);
-
-            // * determine the number of missles to fire at this target
-            if ( nHasProcessedPrimary == TRUE )
-            {
-                nMissilesForThisTarget = nMissilesAtOthers;
-
-                // Any unallocated missles? try to launch a few here...
-                if ( nRemainingMissiles > 0 )
-                {
-                    int nExtra = nMaxHits - nMissilesForThisTarget;
-                    if ( nExtra > nRemainingMissiles )
-                        nExtra = nRemainingMissiles;
-
-                    nRemainingMissiles -= nExtra;
-                    nMissilesForThisTarget += nExtra;
-                }
-            }
-            else
-            {
-                nMissilesForThisTarget = nMissilesAtPrimary;
-                nHasProcessedPrimary = TRUE;
-            }
-
-            int i = 0;
-            //--------------------------------------------------------------
-            // GZ: Moved SR check out of loop to have 1 check per target
-            //     not one check per missile, which would rip spell mantels
-            //     apart
-            //--------------------------------------------------------------
-            if (!MyResistSpell(OBJECT_SELF, oTarget, fDelay))
-            {
-                for (i=1; i <= nMissilesForThisTarget; i++)
-                {
-                    fTime = fDelay + ((nCnt - 1) * 0.25);
-                    fTime2 = ((nCnt - 1) * 0.25);
-
-                    //Roll damage
-                    int nDam = d6(nD6Dice);
-                    //Enter Metamagic conditions
-                        if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-                        {
-                             nDam = nD6Dice*6;//Damage is at max
-                        }
-                        if ((nMetaMagic & METAMAGIC_EMPOWER))
-                    {
-                          nDam = nDam + nDam/2; //Damage/Healing is +50%
-                    }
-                        if(i == 1)
-                        {
-                            nDam += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF);
-                            DelayCommand(fDelay, PRCBonusDamage(oTarget));
-                        }
-                    // Jan. 29, 2004 - Jonathan Epp
-                    // Reflex save was not being calculated for Firebrand
-                    if(nReflexSave)
-                    {
-                            if(nDAMAGETYPE == DAMAGE_TYPE_FIRE)
-                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_FIRE);
-                            else if(nDAMAGETYPE == DAMAGE_TYPE_ELECTRICAL)
-                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_ELECTRICITY);
-                            else if(nDAMAGETYPE == DAMAGE_TYPE_COLD)
-                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_COLD);
-                            else if(nDAMAGETYPE == DAMAGE_TYPE_ACID)
-                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_ACID);
-                            else if(nDAMAGETYPE == DAMAGE_TYPE_SONIC)
-                                nDam = PRCGetReflexAdjustedDamage(nDam, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_SONIC);
-                    }
-
-                    /*
-                    fTime = fDelay;
-                    fDelay2 += 0.1;
-                    fTime += fDelay2;
-                    */
-
-                    //Set damage effect
-                    effect eDam = EffectDamage(nDam, nDAMAGETYPE);
-                    eDam = EffectLinkEffects( eDam, eVis );
-                    //Apply the MIRV and damage effect
-                    //DelayCommand(fTime, ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));   // NWN1 VFX
-                    //DelayCommand(fDelay2, ApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget)); // NWN1 VFX
-                    DelayCommand(fTime, ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget));
-                    DelayCommand( fTime2, SpawnSpellProjectile(OBJECT_SELF, oTarget, lSourceLoc, lTarget, nSpell, nPathType) );
-                }
-            }
-            else
-            {   // * apply a dummy visual effect
-                //ApplyEffectToObject(DURATION_TYPE_INSTANT, eMissile, oTarget);    // NWN1 VFX
-                DelayCommand( fTime2, SpawnSpellProjectile(OBJECT_SELF, oTarget, lSourceLoc, lTarget, nSpell, nPathType) );
-            }
-
-            nCnt++;// * increment count of enemies processed
+			lThisTargetLoc = GetLocation( oTarget );
+			fDelay = GetProjectileTravelTime( lSourceLoc, lThisTargetLoc, nPathType );
+			
+			//Fire cast spell at event for the specified target
+			SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpell));
+			
+			// * determine the number of missles to fire at this target
+	    	nMissilesForThisTarget = nMissilesPerTarget;
+			if (nCnt <= nExtraMissiles)
+				nMissilesForThisTarget++;
+				
+			// ensure we observe cap
+			nMissilesForThisTarget = GetIntInRange(nMissilesForThisTarget, 0, nMaxHits);
+			
+			ShootMissilesAtTarget(oTarget, lSourceLoc, lThisTargetLoc, nSpell, nPathType, 
+							nMissilesForThisTarget, eVis, fDelay, nCnt, 
+							nD6Dice, nDamageType, nMetaMagic, iReflexSaveType);
+			
+			nCnt++;// * increment count of enemies processed
         }
-        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTarget, TRUE, OBJECT_TYPE_CREATURE);
+        oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_GARGANTUAN, lTargetLoc, TRUE, OBJECT_TYPE_CREATURE);
     }
 }
 
@@ -914,62 +913,90 @@ FEB 19: Made it so only Animal Companions get these bonuses
 void DoMagicFang(int nPower, int nDamagePower,int nCasterLevel)
 {
     //Declare major variables
-    object oTarget = GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION);
+    object oTarget = GetSpellTargetObject();
+	object oCaster	=	OBJECT_SELF;
+	int nCasterLevel = PRCGetCasterLevel(oCaster);
+	int nSpellID = PRCGetSpellId();
 
-    if (GetIsObjectValid(oTarget) == FALSE)
-    {
-            FloatingTextStrRefOnCreature(8962, OBJECT_SELF, FALSE);
-            return; // has neither an animal companion
-    }
+if (GetIsObjectValid(oTarget))
+	{
+		if (spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, oCaster))
+		{
+			if (MyPRCGetRacialType(oTarget) == RACIAL_TYPE_ANIMAL
+				|| MyPRCGetRacialType(oTarget) == RACIAL_TYPE_BEAST
+				|| MyPRCGetRacialType(oTarget) == RACIAL_TYPE_VERMIN)
+			{
+//Remove effects of anyother fang spells
+    			RemoveSpellEffects(452, GetMaster(oTarget), oTarget);
+    			RemoveSpellEffects(453, GetMaster(oTarget), oTarget);
 
-    //Remove effects of anyother fang spells
-    RemoveSpellEffects(452, GetMaster(oTarget), oTarget);
-    RemoveSpellEffects(453, GetMaster(oTarget), oTarget);
+    			//effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);	// old NWN1 VFX
+    			effect eVis;
+				
+				if ( PRCGetSpellId() == SPELL_MAGIC_FANG )	
+				{
+					eVis = EffectVisualEffect( VFX_DUR_SPELL_MAGIC_FANG );	// Check if we got here from Magic Fang; adjust VFX accordingly
+				}
+				else 									
+				{
+					eVis = EffectVisualEffect( VFX_DUR_SPELL_GREATER_MAGIC_FANG );	// otherwise assume that we cast Greater Magic Fang; adjust VFX accordingly
+  				}
+				
+				int nMetaMagic = PRCGetMetaMagicFeat();
 
-    //effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);   // old NWN1 VFX
-    effect eVis;
-    if ( GetSpellId() == SPELL_MAGIC_FANG ) eVis = EffectVisualEffect( VFX_DUR_SPELL_MAGIC_FANG );  // Check if we got here from Magic Fang; adjust VFX accordingly
-    else                                    eVis = EffectVisualEffect( VFX_DUR_SPELL_GREATER_MAGIC_FANG );  // otherwise assume that we cast Greater Magic Fang; adjust VFX accordingly
-    int nMetaMagic = PRCGetMetaMagicFeat();
+    			effect eAttack = EffectAttackIncrease(nPower);
+    			effect eDamage = EffectDamageIncrease(nPower);
+				effect eReduction;
+				
+/*switch( nDamagePower )
+{
+case DAMAGE_POWER_PLUS_ONE:
+eReduction = EffectDamageReduction( nPower, DAMAGE_TYPE_MAGICAL, 0, DR_TYPE_DMGTYPE ); 	// * doing this because
+                                                       									// * it creates a true
+                                                       									// * enhancement bonus
+break;
+		
+// stubs for 3.5 DR approximation
+case DAMAGE_POWER_PLUS_TWO:		
+case DAMAGE_POWER_PLUS_THREE:
+case DAMAGE_POWER_PLUS_FOUR:
+case DAMAGE_POWER_PLUS_FIVE:
+default:
+eReduction = EffectDamageReduction( nPower, GMATERIAL_METAL_ADAMANTINE, 0, DR_TYPE_GMATERIAL );
+break;	
+}*/
 
-    effect eAttack = EffectAttackIncrease(nPower);
-    effect eDamage = EffectDamageIncrease(nPower);
-    effect eReduction;
-    switch( nDamagePower )
-    {
-        case DAMAGE_POWER_PLUS_ONE:
-            eReduction = EffectDamageReduction( nPower, DAMAGE_TYPE_MAGICAL, 0, DR_TYPE_DMGTYPE );  // * doing this because
-                                                                                                    // * it creates a true
-                                                                                                    // * enhancement bonus
-            break;
+//effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);	// NWN1 VFX
+    
+				effect eLink = EffectLinkEffects(eAttack, eVis);
+    			eLink = EffectLinkEffects(eLink, eDamage);
+    
+//eLink = EffectLinkEffects(eLink, eReduction);
 
-        // stubs for 3.5 DR approximation
-        case DAMAGE_POWER_PLUS_TWO:
-        case DAMAGE_POWER_PLUS_THREE:
-        case DAMAGE_POWER_PLUS_FOUR:
-        case DAMAGE_POWER_PLUS_FIVE:
-        default:
-            eReduction = EffectDamageReduction( nPower, GMATERIAL_METAL_ADAMANTINE, 0, DR_TYPE_GMATERIAL );
-            break;
-    }
+    			int nDuration = nCasterLevel; // * Duration 1 turn/level
+    			if (nMetaMagic & METAMAGIC_EXTEND)
+			    {
+			        nDuration = nDuration *2; //Duration is +100%
+			    }
+    			// need to add NWN2 metamagic here
+                int nDurType = DURATION_TYPE_TEMPORARY;
 
-    //effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);   // NWN1 VFX
-    effect eLink = EffectLinkEffects(eAttack, eVis);
-    eLink = EffectLinkEffects(eLink, eDamage);
-    eLink = EffectLinkEffects(eLink, eReduction);
+//Fire spell cast at event for target
+    			SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
 
-    int nDuration = nCasterLevel; // * Duration 1 turn/level
-     if ((nMetaMagic & METAMAGIC_EXTEND))    //Duration is +100%
-    {
-         nDuration = nDuration * 2;
-    }
+//Apply VFX impact and bonus effects
+//ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);	// NWN1 VFX
+    			SPApplyEffectToObject(nDurType, eLink, oTarget, TurnsToSeconds(nDuration), TRUE, nSpellID, nCasterLevel);	
+			}
+			else
+			{
+				FloatingTextStrRefOnCreature(184683, oCaster, FALSE);
+				return;
+			}
+		}
+	}
 
-    //Fire spell cast at event for target
-    SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));
 
-    //Apply VFX impact and bonus effects
-    //ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);    // NWN1 VFX
-    ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, TurnsToSeconds(nDuration));
 }
 
 //::///////////////////////////////////////////////
@@ -1119,7 +1146,7 @@ int ArcaneArcherCalculateBonus()
 void DoPetrification(int nPower, object oSource, object oTarget, int nSpellID, int nFortSaveDC)
 {
 
-    if(!GetIsReactionTypeFriendly(oTarget))
+    if (spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         // * exit if creature is immune to petrification
         if (spellsIsImmuneToPetrification(oTarget) == TRUE)
@@ -1425,10 +1452,10 @@ void doAura(int nAlign, int nVis1, int nVis2, int nDamageType)
     //Change the effects so that it only applies when the target is evil
     effect eImmune = EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS);
     effect eSR = EffectSpellResistanceIncrease(25); //Check if this is a bonus or a setting.
-    //effect eDur = EffectVisualEffect(nVis2);  // NWN1 VFX
-    //effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);  // NWN1 VFX
-    effect eShield = EffectDamageShield(6, DAMAGE_BONUS_1d8, nDamageType);
-
+    //effect eDur = EffectVisualEffect(nVis2);	// NWN1 VFX
+    //effect eDur2 = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);	// NWN1 VFX
+    //effect eShield = EffectDamageShield(6, DAMAGE_BONUS_1d8, nDamageType);	// 10/16/06 - BDF: this effect cannot be set "vs alignment"
+	effect eDamIncrease = EffectDamageIncrease( DAMAGE_BONUS_1d6, nDamageType );
 
     // * make them versus the alignment
 
@@ -1436,17 +1463,18 @@ void doAura(int nAlign, int nVis1, int nVis2, int nDamageType)
     eSR = VersusAlignmentEffect(eSR,ALIGNMENT_ALL, nAlign);
     eAC =  VersusAlignmentEffect(eAC,ALIGNMENT_ALL, nAlign);
     eSave = VersusAlignmentEffect(eSave,ALIGNMENT_ALL, nAlign);
-    eShield = VersusAlignmentEffect(eShield,ALIGNMENT_ALL, nAlign);
-
+    //eShield = VersusAlignmentEffect(eShield,ALIGNMENT_ALL, nAlign);
+	eDamIncrease = VersusAlignmentEffect( eDamIncrease, ALIGNMENT_ALL, nAlign );
 
     //Link effects
     effect eLink = EffectLinkEffects(eImmune, eSave);
     eLink = EffectLinkEffects(eLink, eAC);
     eLink = EffectLinkEffects(eLink, eSR);
-    //eLink = EffectLinkEffects(eLink, eDur);   // NWN1 VFX
-    //eLink = EffectLinkEffects(eLink, eDur2);  // NWN1 VFX
-    eLink = EffectLinkEffects(eLink, eShield);
-    eLink = EffectLinkEffects(eLink, eVis); // NWN2 VFX
+    //eLink = EffectLinkEffects(eLink, eDur);	// NWN1 VFX
+    //eLink = EffectLinkEffects(eLink, eDur2);	// NWN1 VFX
+    //eLink = EffectLinkEffects(eLink, eShield);
+    eLink = EffectLinkEffects(eLink, eVis);	// NWN2 VFX
+    eLink = EffectLinkEffects( eLink, eDamIncrease );
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, PRCGetSpellId(), FALSE));

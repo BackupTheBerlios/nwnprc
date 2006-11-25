@@ -66,7 +66,7 @@ void SaveRosterLoadModule( string sModuleName, string sWaypoint="" );
 void ForceRestParty( object oPC );
 
 int GetInfluence(object oCompanion);
-int SetInfluence(object oCompanion, int nInfluence);
+void SetInfluence(object oCompanion, int nInfluence);
 
 // User defined event handler for possessing a party member
 // Forces unpossessed, non-associates to follow the new leader

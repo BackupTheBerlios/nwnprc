@@ -36,10 +36,6 @@ void RunPersistentSong(object oCaster, int nSpellId, effect eEffect, int nCounte
 
         if(nSpellId == SPELL_VIRTUOSO_JARRING_SONG)
             ApplyHostileSongEffectsToArea(oCaster, nSpellId, 4.0, RADIUS_SIZE_COLOSSAL, eEffect, SAVING_THROW_WILL, 99);
-        else if(nSpellId == SPELL_VIRTUOSO_MINDBENDING_MELODY)
-        {
-            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eEffect, oTarget, fDuration,TRUE,-1,99);
-        }
         else
             ApplyFriendlySongEffectsToArea(oCaster, nSpellId, fDuration, RADIUS_SIZE_COLOSSAL, eEffect);
 
@@ -151,7 +147,7 @@ void main()
                         if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, 10 + nLevel + GetAbilityModifier(ABILITY_CHARISMA, oPC), SAVING_THROW_TYPE_MIND_SPELLS, OBJECT_SELF, 1.0))
                         {
                             bCheck = TRUE;
-                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration,TRUE,-1,nLevel);
+                            SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(2 + (nLevel / 3)),TRUE,-1,nLevel);
                             SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_DOMINATE_S), oTarget);
                         }
                     }

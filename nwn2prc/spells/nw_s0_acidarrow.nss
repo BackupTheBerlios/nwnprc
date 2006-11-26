@@ -59,7 +59,7 @@ void main()
     int nMetaMagic = PRCGetMetaMagicFeat();
     
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID);
-    CasterLevel += SPGetPenetr();
+    nCasterLevel += SPGetPenetr();
     int nDuration = (nCasterLevel/3);
 
     if (nMetaMagic & METAMAGIC_EXTEND)
@@ -92,9 +92,10 @@ void main()
         float fDist = GetDistanceToObject(oTarget);
         float fDelay = (fDist/25.0);//(3.0 * log(fDist) + 2.0);
 
-        if(PRCDoRangedTouchAttack(oTarget) > 0)
+        int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
+        if(iAttackRoll > 0)
         {
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl))
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel))
             {
                 //--------------------------------------------------------------------------
                 // This spell no longer stacks. If there is one of that type, thats ok
@@ -153,6 +154,8 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         // Calculate Damage
         //----------------------------------------------------------------------
+        int nCasterLevel = PRCGetCasterLevel(oCaster);
+        int nSpellID = PRCGetSpellId();
         int nDamage = PRCMaximizeOrEmpower(6,1,nMetaMagic);
         effect eDam = EffectDamage(nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_HIT_SPELL_ACID);

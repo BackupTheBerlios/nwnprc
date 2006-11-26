@@ -59,7 +59,6 @@ void main()
     int nMetaMagic = PRCGetMetaMagicFeat();
     
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID);
-    nCasterLevel += SPGetPenetr();
     int nDuration = (nCasterLevel/3);
 
     if (nMetaMagic & METAMAGIC_EXTEND)
@@ -95,7 +94,7 @@ void main()
         int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
         if(iAttackRoll > 0)
         {
-            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, nCasterLevel))
+            if(!MyPRCResistSpell(OBJECT_SELF, oTarget, (nCasterLevel + SPGetPenetr())))
             {
                 //--------------------------------------------------------------------------
                 // This spell no longer stacks. If there is one of that type, thats ok

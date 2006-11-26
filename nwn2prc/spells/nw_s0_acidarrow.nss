@@ -59,7 +59,7 @@ void main()
     int nMetaMagic = PRCGetMetaMagicFeat();
     
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ACID);
-    CasterLvl += SPGetPenetr();
+    CasterLevel += SPGetPenetr();
     int nDuration = (nCasterLevel/3);
 
     if (nMetaMagic & METAMAGIC_EXTEND)

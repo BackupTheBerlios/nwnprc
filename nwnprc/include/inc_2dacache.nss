@@ -525,7 +525,8 @@ if(nDebug) DoDebug("Get2DACache: Cache chest does not exist, creating new one");
         }
 
         //get the token for this file
-        string sFileWPName = ""+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
+        //string sFileWPName = ""+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
+        string sFileWPName = "Bio2DACacheToken";
 if(nDebug) DoDebug("Get2DACache: token tag is "+sFileWPName);
         oFileWP = GetObjectByTag(sFileWPName);
         //token doesnt exist make it

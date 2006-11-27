@@ -588,10 +588,10 @@ location AddLocationToLocation(location lMaster, location lAdd)
 {
     //firstly rotate lAdd according to lMaster
     vector vAdd = GetPositionFromLocation(lAdd);
-    //zero is -y in NWN convert zero to +x
-    float fAngle = GetFacingFromLocation(lMaster)-90.0;
+    //zero is +y in NWN convert zero to +x
+    float fAngle = GetFacingFromLocation(lMaster);
     //convert angle to radians
-    fAngle = (fAngle*2.0*PI)/360.0;
+    fAngle = ((fAngle-90)/360.0)*2.0*PI;
     vector vNew;
     vNew.x = (vAdd.x*cos(fAngle))-(vAdd.y*sin(fAngle));
     vNew.y = (vAdd.x*sin(fAngle))+(vAdd.y*cos(fAngle));

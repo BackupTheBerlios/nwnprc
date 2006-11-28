@@ -65,7 +65,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 			nDam += (nDam/2);
 		}
 		
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 	}
 	return iAttackRoll;    //return TRUE if spell charges should be decremented
 }

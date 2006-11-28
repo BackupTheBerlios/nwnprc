@@ -94,7 +94,7 @@ void main()
 		
 		
 		//Apply damage
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 	}
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 0);
 	SPSetSchool();

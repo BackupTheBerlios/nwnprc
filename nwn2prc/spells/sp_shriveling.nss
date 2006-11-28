@@ -73,7 +73,7 @@ void main()
             effect eVis = EffectVisualEffect(VFX_FNF_GAS_EXPLOSION_GREASE);
             
             //Apply damage & visual
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         }
     }

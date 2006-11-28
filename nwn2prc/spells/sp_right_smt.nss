@@ -109,7 +109,7 @@ void main()
 			//Deal damage to non-good
 			if(nAlign != ALIGNMENT_GOOD)
 			{
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 			}	
 		}
 		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 6.10, lLoc, FALSE, OBJECT_TYPE_CREATURE);

@@ -108,7 +108,7 @@ void HiImABomb(object oTarget, int nCounter, int nHP, int nCasterLvl)
             }
             
             //Apply damage
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oOuch);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oOuch);
             
             //Get next victim
             oOuch = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_MEDIUM,lLoc, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);

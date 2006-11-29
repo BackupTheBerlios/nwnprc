@@ -110,7 +110,6 @@ void main()
                 //----------------------------------------------------------------------
                 int nDamage = PRCMaximizeOrEmpower(6,3,nMetaMagic);
                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, EleDmg);
-                PRCBonusDamage(oTarget);
 
                 DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
 

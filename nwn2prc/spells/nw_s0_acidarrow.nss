@@ -108,7 +108,7 @@ void main()
                 //----------------------------------------------------------------------
                 // Do the initial 3d6 points of damage
                 //----------------------------------------------------------------------
-                int nDamage = PRCMaximizeOrEmpower(6,3,nMetaMagic);
+                int nDamage = PRCMaximizeOrEmpower(4,2,nMetaMagic);
                 ApplyTouchAttackDamage(OBJECT_SELF, oTarget, iAttackRoll, nDamage, EleDmg);
 
                 DelayCommand(fDelay,SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
@@ -154,7 +154,7 @@ void RunImpact(object oTarget, object oCaster, int nMetaMagic,int EleDmg)
         //----------------------------------------------------------------------
         int nCasterLevel = PRCGetCasterLevel(oCaster);
         int nSpellID = PRCGetSpellId();
-        int nDamage = PRCMaximizeOrEmpower(6,1,nMetaMagic);
+        int nDamage = PRCMaximizeOrEmpower(4,2,nMetaMagic);
         effect eDam = EffectDamage(nDamage, EleDmg);
         effect eVis = EffectVisualEffect(VFX_HIT_SPELL_ACID);
         eDam = EffectLinkEffects(eVis,eDam); // flare up

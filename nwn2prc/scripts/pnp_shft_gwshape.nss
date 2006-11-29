@@ -14,13 +14,12 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-//#include "prc_inc_shifting"
+#include "prc_inc_shifting"
 
 
 void main()
 {
-    //commenting out shifter scripts - NWN2
-    /*
+   
     object oPC     = OBJECT_SELF;
     object oTarget = PRCGetSpellTargetObject();
 
@@ -52,5 +51,4 @@ void main()
     // Couldn't shift, refund the feat use
     else
         IncrementRemainingFeatUses(oPC, FEAT_PRESTIGE_SHIFTER_GWSHAPE_1);
-    */
 }

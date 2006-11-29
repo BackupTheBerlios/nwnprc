@@ -15,9 +15,8 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-//commented out almost everything - NWN2
 
-//#include "prc_inc_shifting"
+#include "prc_inc_shifting"
 
 const string SHIFTER_DEFAULT_TEMPLATES = "shifterlist";
 
@@ -34,7 +33,6 @@ void main()
     object oPC = OBJECT_SELF;
 
     // Store true form if not stored already. But not if affected by a polymorph effect
-    /*
     if(!GetPersistantLocalInt(oPC, SHIFTER_TRUEAPPEARANCE))
         StoreCurrentAppearanceAsTrueAppearance(oPC, TRUE);
 
@@ -75,5 +73,4 @@ void main()
         // Update the variable listing the highest level of autogranted templates
         SetLocalInt(oPC, "PRC_Shifter_AutoGranted", nShifterLevel);
     }
-    */
 }

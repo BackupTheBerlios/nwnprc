@@ -766,10 +766,16 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
         // Ability score adjustments
         // Get the base delta
+/* SBH - Obs needs to update GetAbilityScore to allow base
         int nDeltaSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH,     TRUE) - GetAbilityScore(oShifter, ABILITY_STRENGTH,     TRUE);
         int nDeltaDEX = GetAbilityScore(oTemplate, ABILITY_DEXTERITY,    TRUE) - GetAbilityScore(oShifter, ABILITY_DEXTERITY,    TRUE);
         int nDeltaCON = GetAbilityScore(oTemplate, ABILITY_CONSTITUTION, TRUE) - GetAbilityScore(oShifter, ABILITY_CONSTITUTION, TRUE);
         int nNewDEX   = GetAbilityScore(oShifter, ABILITY_DEXTERITY, TRUE) + nDeltaDEX; // For calculating AC bonuses in case of dex bonus overflow
+*/
+        int nDeltaSTR = GetAbilityScore(oTemplate, ABILITY_STRENGTH) - GetAbilityScore(oShifter, ABILITY_STRENGTH);
+        int nDeltaDEX = GetAbilityScore(oTemplate, ABILITY_DEXTERITY) - GetAbilityScore(oShifter, ABILITY_DEXTERITY);
+        int nDeltaCON = GetAbilityScore(oTemplate, ABILITY_CONSTITUTION) - GetAbilityScore(oShifter, ABILITY_CONSTITUTION);
+        int nNewDEX   = GetAbilityScore(oShifter, ABILITY_DEXTERITY) + nDeltaDEX; // For calculating AC bonuses in case of dex bonus overflow
         int nExtraSTR = 0, nExtraDEX = 0, nExtraCON = 0;
 
         // Adjust for caps
@@ -1555,6 +1561,7 @@ struct appearancevalues GetAppearanceData(object oTemplate)
 	struct appearancevalues appval;
 	// The appearance type
     appval.nAppearanceType         = GetAppearanceType(oTemplate);
+/* SBH OBS needs to add GetCreatureBodyPart
     // Body parts
     appval.nBodyPart_RightFoot     = GetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT,     oTemplate);
     appval.nBodyPart_LeftFoot      = GetCreatureBodyPart(CREATURE_PART_LEFT_FOOT,      oTemplate);
@@ -1575,17 +1582,23 @@ struct appearancevalues GetAppearanceData(object oTemplate)
     appval.nBodyPart_RightHand     = GetCreatureBodyPart(CREATURE_PART_RIGHT_HAND,     oTemplate);
     appval.nBodyPart_LeftHand      = GetCreatureBodyPart(CREATURE_PART_LEFT_HAND,      oTemplate);
     appval.nBodyPart_Head          = GetCreatureBodyPart(CREATURE_PART_HEAD,           oTemplate);
+
     // Wings
     appval.nWingType               = GetCreatureWingType(oTemplate);
     // Tail
     appval.nTailType               = GetCreatureTailType(oTemplate);
+*/
+    /* SBH No portraits in NWN2
     // Portrait ID
     appval.nPortraitID             = GetPortraitId(oTemplate);
     // Portrait resref
     appval.sPortraitResRef         = GetPortraitResRef(oTemplate);
+    */
+
+/* SBH OBS needs to add GetFootstepType
     // Footstep type
     appval.nFootStepType           = GetFootstepType(oTemplate);
-
+*/
 
     return appval;
 }
@@ -1598,6 +1611,7 @@ void SetAppearanceData(object oTarget, struct appearancevalues appval)
 	// Body parts - Delayed, since it seems not delaying this makes the body part setting fail, instead resulting in no visible
 	// parts. Some interaction with SetCreatureAppearance(), maybe?
 	// Applies to NWN1 1.68. Kudos to Primogenitor for originally figuring this out - Ornedan
+/* SBH OBS needs to add SetCreatureBodyPart
 	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_FOOT     , appval.nBodyPart_RightFoot     , oTarget));
 	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_LEFT_FOOT      , appval.nBodyPart_LeftFoot      , oTarget));
 	DelayCommand(1.0f, SetCreatureBodyPart(CREATURE_PART_RIGHT_SHIN     , appval.nBodyPart_RightShin     , oTarget));
@@ -1623,14 +1637,17 @@ void SetAppearanceData(object oTarget, struct appearancevalues appval)
     SetCreatureTailType(appval.nTailType, oTarget);
     // Footstep type
     SetFootstepType(appval.nFootStepType, oTarget);
+*/
 
     /* Portrait stuff */
+    /* SBH no portraits in NWN2
     // If the portrait ID is not PORTRAIT_INVALID, use it. This will also set the resref
     if(appval.nPortraitID != PORTRAIT_INVALID)
         SetPortraitId(oTarget, appval.nPortraitID);
     // Otherwise, use the portrait resref. This will set portrait ID to PORTRAIT_INVALID
     else
         SetPortraitResRef(oTarget, appval.sPortraitResRef);
+    */
 }
 
 struct appearancevalues GetLocalAppearancevalues(object oStore, string sName)
@@ -1787,8 +1804,9 @@ string DebugAppearancevalues2Str(struct appearancevalues appval)
          + "Body part - Head           = " + IntToString(appval.nBodyPart_Head         ) + "\n"
          + "Wings                      = " + IntToString(appval.nWingType) + "\n"
          + "Tail                       = " + IntToString(appval.nTailType) + "\n"
-         + "Portrait ID                = " + (appval.nPortraitID == PORTRAIT_INVALID ? "PORTRAIT_INVALID" : IntToString(appval.nPortraitID)) + "\n"
-         + "Portrait ResRef            = " + appval.sPortraitResRef + "\n"
+	// SBH no portraits in NWN2	
+//         + "Portrait ID                = " + (appval.nPortraitID == PORTRAIT_INVALID ? "PORTRAIT_INVALID" : IntToString(appval.nPortraitID)) + "\n"
+//         + "Portrait ResRef            = " + appval.sPortraitResRef + "\n"
          + "Footstep type              = " + IntToString(appval.nFootStepType) + "\n"
          ;
 }

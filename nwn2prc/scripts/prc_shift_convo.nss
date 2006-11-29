@@ -14,10 +14,9 @@
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
 
-//commented out almost everything - NWN2
 
 #include "inc_dynconv"
-//#include "prc_inc_shifting"
+#include "prc_inc_shifting"
 
 //////////////////////////////////////////////////
 /* Constant defintions                          */
@@ -54,7 +53,6 @@ const string QSMODIFYVAR    = "PRC_ShiftConvo_QSToModify";
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
-/*
 void GenerateShapeList(object oPC)
 {
     int i, nArraySize = GetNumberOfStoredTemplates(oPC, SHIFTER_TYPE_SHIFTER);
@@ -62,7 +60,6 @@ void GenerateShapeList(object oPC)
     for(i = 0; i < nArraySize; i++)
         AddChoice(GetStoredTemplateName(oPC, SHIFTER_TYPE_SHIFTER, i), i, oPC);
 }
-*/
 
 
 

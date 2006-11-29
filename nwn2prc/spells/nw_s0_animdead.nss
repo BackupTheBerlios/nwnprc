@@ -19,8 +19,7 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
 /*
   Spellcast Hook Code
   Added 2003-06-23 by GeorgZ
@@ -41,38 +40,36 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //Declare major variables
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
-    int nDuration = 24;
+    int nDuration = nCasterLevel; // nwn2 change
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
     effect eSummon;
-    string sResRef;
     int nHD;
     //Metamagic extension if needed
-    if ((nMetaMagic & METAMAGIC_EXTEND))
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration = nDuration * 2;  //Duration is +100%
     }
+    
     //Summon the appropriate creature based on the summoner level
     if (nCasterLevel <= 5)
     {
-        //Tyrant Fog Zombie
-        eSummon = EffectSummonCreature("NW_S_ZOMBTYRANT",VFX_FNF_SUMMON_UNDEAD);
-        sResRef = "NW_S_ZOMBTYRANT";
-        nHD = 4;
+        // Skeleton
+		eSummon = EffectSummonCreature("c_skeleton", VFX_FNF_SUMMON_UNDEAD);
+        nHD = 1;
     }
     else if ((nCasterLevel >= 6) && (nCasterLevel <= 9))
     {
-        //Skeleton Warrior
-        eSummon = EffectSummonCreature("NW_S_SKELWARR",VFX_FNF_SUMMON_UNDEAD);
-        sResRef = "NW_S_SKELWARR";
-        nHD = 6;
+        // Zombie
+		eSummon = EffectSummonCreature("c_zombie", VFX_FNF_SUMMON_UNDEAD);
+        nHD = 2;
     }
     else
     {
-        //Skeleton Chieftain
-        eSummon = EffectSummonCreature("NW_S_SKELCHIEF",VFX_FNF_SUMMON_UNDEAD);
-        sResRef = "NW_S_SKELCHIEF";
-        nHD = 7;
+        // Skeleton Warrior
+		eSummon = EffectSummonCreature("c_skeletonwarrior", VFX_FNF_SUMMON_UNDEAD);
+        nHD = 3;
     }
+
     //Apply the summon visual and summon the two undead.
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
     MultisummonPreSummon();
@@ -92,9 +89,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
     else
         ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, PRCGetSpellTargetLocation(), HoursToSeconds(nDuration));
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    SPEvilShift(OBJECT_SELF);
+    SPSetSchool();
 
 }
 

@@ -22,8 +22,7 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION);
+     SPSetSchool(GetSpellSchool(PRCGetSpellId()));
 /*
   Spellcast Hook Code
   Added 2003-06-23 by GeorgZ
@@ -46,41 +45,38 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_TRANSMUTATION
     effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH,4);
     effect eDex = EffectAbilityIncrease(ABILITY_DEXTERITY,4);
     effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION,4);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
 
     effect eLink = EffectLinkEffects(eStr, eDex);
     eLink = EffectLinkEffects(eLink, eCon);
-    eLink = EffectLinkEffects(eLink, eDur);
 
-    effect eVis = EffectVisualEffect(VFX_IMP_IMPROVE_ABILITY_SCORE);
-    effect eImpact = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
+    effect eVis = EffectVisualEffect(VFX_DUR_SPELL_AURA_OF_VITALITY);
+    eLink = EffectLinkEffects(eLink, eVis);
+    // effect eImpact = EffectVisualEffect(VFX_FNF_LOS_HOLY_30);
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
+    int nSpellID = PRCGetSpellId();
     
     float fDelay;
 
     int nMetaMagic = PRCGetMetaMagicFeat();
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration *= 2; //Duration is +100%
     }
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eImpact, PRCGetSpellTargetLocation());
+    
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     while(GetIsObjectValid(oTarget))
     {
-        if(GetFactionEqual(oTarget) || GetIsReactionTypeFriendly(oTarget))
+        if(spellsIsTarget(oTarget, SPELL_TARGET_ALLALLIES, OBJECT_SELF))
         {
             fDelay = GetRandomDelay(0.4, 1.1);
             //Signal the spell cast at event
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_AURA_OF_VITALITY, FALSE));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
             //Apply effects and VFX to target
-            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl));
-            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget));
+            DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE, nSpellID,CasterLvl));
         }
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(OBJECT_SELF));
     }
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
-
+    SPSetSchool();
 }

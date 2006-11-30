@@ -140,6 +140,9 @@ void main()
     //Wait 10 minutes, then rebirth
     DelayCommand(600.0f, Rebirth(oPC));
     
+    //Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+    AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+    
     SPSetSchool();
     SPGoodShift(oPC);
 }

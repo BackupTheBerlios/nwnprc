@@ -210,6 +210,11 @@ void main()
 		DelayCommand(fDur, DeleteLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment"));
 	}
 	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
+	SPGoodShift(oPC);
+	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(1), 0);
 	SPSetSchool();
 }

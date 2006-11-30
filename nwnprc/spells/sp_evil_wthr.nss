@@ -137,6 +137,9 @@ void main()
 	
 	SPEvilShift(oPC);
 	
+	//Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
+	
 	//Corruption cost
 	int nCost = d6(3);
 	

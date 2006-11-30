@@ -35,7 +35,7 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_TRANSMUTATION);
 	//define vars
 	object oPC = OBJECT_SELF;
-	object oTarget = GetSpellTargetObject();
+	object oTarget = PRCGetSpellTargetObject();
 	location lTarget = GetLocation(oTarget);
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
@@ -81,6 +81,10 @@ void main()
 	
 	DoCorruptionCost(oPC, ABILITY_CONSTITUTION, nCost, 0);
 	
+	//Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
+	
+	SPEvilShift(oPC);	
 	SPSetSchool();
 	
 }

@@ -85,6 +85,9 @@ void main()
 		
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, nCorrupt, 0);	
 	
+	//Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
+	
 	//Alignment shift if switch set
 	SPEvilShift(oPC);
 		

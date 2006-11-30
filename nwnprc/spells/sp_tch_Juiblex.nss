@@ -86,6 +86,9 @@ void main()
     int nCost = d6(1);  
     DoCorruptionCost(oPC, ABILITY_STRENGTH, nCost, 0);
     
+    //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
+    AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
+    
     SPSetSchool();
 }
     

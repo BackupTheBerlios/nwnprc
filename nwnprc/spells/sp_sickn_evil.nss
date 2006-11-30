@@ -56,6 +56,9 @@ void main()
 	
 	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eAOE, lLoc, fDuration);
 	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
 	SPGoodShift(oPC);
 	DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_STRENGTH, d4(), 0));
 	SPSetSchool();

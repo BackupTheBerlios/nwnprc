@@ -122,6 +122,8 @@ void main()
         DelayCommand(fDuration, DoCorruptionCost(oPC, ABILITY_WISDOM, nCost, 0));
     }   
     
+    //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
+    AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
     
     SPEvilShift(oPC);
     

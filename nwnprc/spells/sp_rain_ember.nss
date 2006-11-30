@@ -69,6 +69,10 @@ void main()
 	EmberLoop(nCounter, nCasterLvl, nMetaMagic, oPC, lLoc);
 	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 1);
+	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
 	SPSetSchool();
 	SPGoodShift(oPC);
 }

@@ -101,6 +101,12 @@ void main()
 	
 	//Bwahah... yes, it's secretly Corruption cost and not Sacrifice :P
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 0);
+	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
+	SPGoodShift(oPC);
+	
 	SPSetSchool();
 }
 	

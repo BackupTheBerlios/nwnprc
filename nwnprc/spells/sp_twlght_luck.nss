@@ -51,6 +51,9 @@ void main()
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eBuff, oTarget, fDur);
 	}
 	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
 	SPGoodShift(oPC);
 	
 	SPSetSchool();

@@ -49,5 +49,11 @@ void main()
 	IPSafeAddItemProperty(oSkin, iBonus, fDur, X2_IP_ADDPROP_POLICY_IGNORE_EXISTING, FALSE, FALSE);
 	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d2(), 0);
+	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
+	//Adding a good shift even though the spell has no [Good] descriptor; need to check source
+	SPGoodShift(oPC);
 }
 	

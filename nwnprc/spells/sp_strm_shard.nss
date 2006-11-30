@@ -85,6 +85,9 @@ void main()
 		oTarget = GetNextObjectInShape(SHAPE_SPHERE, 24.38f, lLoc, FALSE, OBJECT_TYPE_CREATURE);
 	}
 	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
 	SPGoodShift(oPC);
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(1), 1);
 	SPSetSchool();

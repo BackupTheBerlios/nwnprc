@@ -59,6 +59,11 @@ void main()
 	effect eAOE = EffectAreaOfEffect(VFX_MOB_BRILLIANT_EMANATION);
 	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oPC, fDur);
 	
+	//Sanctified spells get mandatory 10 pt good adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_GOOD, 10);
+	
+	SPGoodShift(oPC);
+	
 	DoCorruptionCost(oPC, ABILITY_STRENGTH, d3(), 0);
 	SPSetSchool();		
 }

@@ -109,7 +109,10 @@ void main()
 	//Add props
 	IPSafeAddItemProperty(oLClaw, ipClaws, fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE); 
 	IPSafeAddItemProperty(oRClaw, ipClaws, fDuration, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING, FALSE, FALSE);
-			
+	
+	//Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
+	AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
+	
 	SPEvilShift(oPC);
 	SPSetSchool();
 }

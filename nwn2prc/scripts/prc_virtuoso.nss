@@ -32,7 +32,7 @@ void RunPersistentSong(object oCaster, int nSpellId, effect eEffect, int nCounte
     float fRadius;
     if(nSingingSpellId == nSpellId)
     {
-        float fDuration = 4.0; //RoundsToSeconds(5);
+        float fDuration = 7.5; //RoundsToSeconds(5);
 
         if(nSpellId == SPELL_VIRTUOSO_JARRING_SONG)
             ApplyHostileSongEffectsToArea(oCaster, nSpellId, 4.0, RADIUS_SIZE_COLOSSAL, eEffect, SAVING_THROW_WILL, 99);
@@ -40,7 +40,7 @@ void RunPersistentSong(object oCaster, int nSpellId, effect eEffect, int nCounte
             ApplyFriendlySongEffectsToArea(oCaster, nSpellId, fDuration, RADIUS_SIZE_COLOSSAL, eEffect);
 
         // Schedule the next ping
-        DelayCommand(2.5f, RunPersistentSong(oCaster, nSpellId, eEffect, (nCounter == -1) ? -1 : --nCounter, oTarget));
+        DelayCommand(6.0f, RunPersistentSong(oCaster, nSpellId, eEffect, (nCounter == -1) ? -1 : --nCounter, oTarget));
     }
 }
 

@@ -1,3 +1,22 @@
+/**@file Awaken
+Transmutation
+Level: 	Drd 5
+Components: 	   V, S, DF, XP
+Casting Time:      24 hours *changed to instant*
+Range: 	           Touch
+Target:            Animal or tree touched *animal companion only*
+Duration: 	       Instantaneous
+Saving Throw:  	   Will negates *removed*
+Spell Resistance:  Yes
+
+changed from the SRD to:
+
+An awakened animal gets 3d6 Intelligence, +1d3 Charisma, and +2 HD.
+The 2HD are added by granting +2 to attack and 2d8 HP.
+
+XP Cost:  250 XP. *removed*
+*/
+
 /*
     nw_s0_awaken
 
@@ -13,85 +32,53 @@
 
 #include "prc_sp_func"
 
-//Implements the spell impact, put code here
-//  if called in many places, return TRUE if
-//  stored charges should be decreased
-//  eg. touch attack hits
-//
-//  Variables passed may be changed if necessary
-int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
-{
-    //Declare major variables
-    int CasterLvl = nCasterLevel;
-    effect eStr = EffectAbilityIncrease(ABILITY_STRENGTH, 4);
-    effect eCon = EffectAbilityIncrease(ABILITY_CONSTITUTION, 4);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
-    effect eInt;
-    effect eAttack = EffectAttackIncrease(2);
-    effect eVis = EffectVisualEffect(VFX_IMP_HOLY_AID);
-    int nInt = d10();
-    int nDuration = 24;
-    int nMetaMagic = PRCGetMetaMagicFeat();
 
+void main()
+{
+
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+    if (!X2PreSpellCastCode()) return;
+    
+    object oCaster = OBJECT_SELF;
+    int nCasterLevel = PRCGetCasterLevel(oCaster);
+    int nSpellID = PRCGetSpellId();
+    object oTarget = PRCGetSpellTargetObject();
+    int nInt = d6(3);
+    int nCha = d3();
+    effect eHP = EffectTemporaryHitpoints(d8(2)); // instead of 2HD
+    effect eAttack = EffectAttackIncrease(2); // instead of 2 HD
+    effect eVis = EffectVisualEffect(VFX_DUR_SPELL_AWAKEN);
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    
     if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
     {
         if(!GetHasSpellEffect(SPELL_AWAKEN))
         {
             //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_AWAKEN, FALSE));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
             //Enter Metamagic conditions
-            if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
+            if (nMetaMagic & METAMAGIC_MAXIMIZE)
             {
-                18;//Damage is at max
+                nInt = 18; // max int
+                nCha = 3; // max cha
             }
-            else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
+            else if (nMetaMagic & METAMAGIC_EMPOWER)
             {
-                nInt = nInt + (nInt/2); //Damage/Healing is +50%
+                nInt = nInt + (nInt/2); // int +50%
+                nCha = nCha + (nCha/2); // cha +50%
             }
-            else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
-            {
-                nDuration = nDuration *2; //Duration is +100%
-            }
-            eInt = EffectAbilityIncrease(ABILITY_WISDOM, nInt);
-
-            effect eLink = EffectLinkEffects(eStr, eCon);
+            
+            effect eInt = EffectAbilityIncrease(ABILITY_INTELLIGENCE, nInt);
+            effect eCha = EffectAbilityIncrease(ABILITY_CHARISMA, nCha);
+            effect eLink = EffectLinkEffects(eInt, eCha);
             eLink = EffectLinkEffects(eLink, eAttack);
-            eLink = EffectLinkEffects(eLink, eInt);
-            eLink = EffectLinkEffects(eLink, eDur);
+            eLink = EffectLinkEffects(eLink, eHP);
+            eLink = EffectLinkEffects(eLink, eVis);
             eLink = SupernaturalEffect(eLink);
             //Apply the VFX impact and effects
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,TRUE,-1,CasterLvl);
+            SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,TRUE,nSpellID, nCasterLevel);
         }
     }
-
-    return TRUE;    //return TRUE if spell charges should be decremented
-}
-
-void main()
-{
-    object oCaster = OBJECT_SELF;
-    int nCasterLevel = PRCGetCasterLevel(oCaster);
-    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
-    if (!X2PreSpellCastCode()) return;
-    object oTarget = PRCGetSpellTargetObject();
-    int nEvent = GetLocalInt(oCaster, PRC_SPELL_EVENT); //use bitwise & to extract flags
-    if(!nEvent) //normal cast
-    {
-        if(GetLocalInt(oCaster, PRC_SPELL_HOLD) && oCaster == oTarget)
-        {   //holding the charge, casting spell on self
-            SetLocalSpellVariables(oCaster, 1);   //change 1 to number of charges
-            return;
-        }
-        DoSpell(oCaster, oTarget, nCasterLevel, nEvent);
-    }
-    else
-    {
-        if(nEvent & PRC_SPELL_EVENT_ATTACK)
-        {
-            if(DoSpell(oCaster, oTarget, nCasterLevel, nEvent))
-                DecrementSpellCharges(oCaster);
-        }
-    }
+    
     SPSetSchool();
 }

@@ -12,8 +12,8 @@ nw_s0_aid.nss
 nw_s0_animdead.nss
 nw_s0_auravital.nss
 nw_s0_awaken.nss
-nw_s0_barkskin.nss
-nw_s0_bescurse.nss
+nw_s0_barkskin.nss done -Tj
+nw_s0_bescurse.nss done -Tj
 nw_s0_bladebar.nss
 nw_s0_bladebara.nss
 nw_s0_bladebarc.nss

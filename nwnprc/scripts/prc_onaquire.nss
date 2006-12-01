@@ -20,39 +20,6 @@ void main()
 
 //if(DEBUG) DoDebug("Running OnAcquireItem, creature = '" + GetName(oCreature) + "' is PC: " + BooleanToString(GetIsPC(oCreature)) + "; Item = '" + GetName(oItem) + "' - '" + GetTag(oItem) + "'");
 
-    if(GetPRCSwitch(PRC_AUTO_IDENTIFY_ON_ACQUIRE))
-    {
-        if(!GetIdentified(oItem))
-        {
-            int nLore = GetSkillRank(SKILL_LORE, oCreature);
-            int nGP;
-            string sMax = Get2DACache("SkillVsItemCost", "DeviceCostMax", nLore);
-            int nMax = StringToInt(sMax);
-            if (sMax == "") 
-                nMax = 120000000;
-            // Check for the value of the item first.
-            SetIdentified(oItem, TRUE);
-            nGP = GetGoldPieceValue(oItem);
-            SetIdentified(oItem, FALSE);
-            // If oPC has enough Lore skill to ID the item, then do so.
-            if(nMax >= nGP)
-            {
-                SetIdentified(oItem, TRUE);
-                SendMessageToPC(oCreature, GetStringByStrRef(16826224) + " " + GetName(oItem) + " " + GetStringByStrRef(16826225));
-            }
-        }   
-    }
-
-    //rest kits
-    if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
-        ExecuteScript("sbr_onaquire", OBJECT_SELF);
-
-    // This is a resource hog. To work around, we assume that it's not going to cause noticeable issues if
-    // racial restrictions are only ever expanded when a PC is involved
-    if(GetIsPC(oCreature) 
-        || GetIsPC(GetMaster(oCreature))
-        || GetPRCSwitch(PRC_NPC_FORCE_RACE_ACQUIRE))
-        ExecuteScript("race_ev_aquire", OBJECT_SELF);
         
     //fix for all-beige 1.67 -> 1.68 cloaks
     //gives them a random color
@@ -96,6 +63,43 @@ void main()
         //mark it as set just to be sure
         SetLocalInt(oItem, "CloakDone", TRUE);
     }    
+    
+            // This is a resource hog. To work around, we assume that it's not going to cause noticeable issues if
+    // racial restrictions are only ever expanded when a PC is involved
+    if(GetIsPC(oCreature) 
+        || GetIsPC(GetMaster(oCreature))
+        || GetPRCSwitch(PRC_NPC_FORCE_RACE_ACQUIRE))
+        ExecuteScript("race_ev_aquire", OBJECT_SELF);
+    else // no NPCs past this point
+        return; 
+    
+    
+        if(GetPRCSwitch(PRC_AUTO_IDENTIFY_ON_ACQUIRE))
+    {
+        if(!GetIdentified(oItem))
+        {
+            int nLore = GetSkillRank(SKILL_LORE, oCreature);
+            int nGP;
+            string sMax = Get2DACache("SkillVsItemCost", "DeviceCostMax", nLore);
+            int nMax = StringToInt(sMax);
+            if (sMax == "") 
+                nMax = 120000000;
+            // Check for the value of the item first.
+            SetIdentified(oItem, TRUE);
+            nGP = GetGoldPieceValue(oItem);
+            SetIdentified(oItem, FALSE);
+            // If oPC has enough Lore skill to ID the item, then do so.
+            if(nMax >= nGP)
+            {
+                SetIdentified(oItem, TRUE);
+                SendMessageToPC(oCreature, GetStringByStrRef(16826224) + " " + GetName(oItem) + " " + GetStringByStrRef(16826225));
+            }
+        }   
+    }
+    
+    //rest kits
+    if(GetPRCSwitch(PRC_SUPPLY_BASED_REST))
+        ExecuteScript("sbr_onaquire", OBJECT_SELF);
     
     //PRC Companion
     //DOA visible dyepot items

@@ -163,7 +163,6 @@ void main()
         else if(nValue == DYNCONV_ABORTED)
         {
             // shouldn't reach this stage as aboting isn't allowed
-            /* TODO - stick CheckAndBoot() in an include */
             AssignCommand(oPC, DelayCommand(1.0, CheckAndBoot(oPC)));
         }
         // Handle PC responses

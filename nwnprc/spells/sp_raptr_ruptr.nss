@@ -108,10 +108,10 @@ void main()
         }
     }
     
-   SPEvilShift(oPC);
+   SPEvilShift(oCaster);
    
    //Corrupt spells get mandatory 10 pt evil adjustment, regardless of switch
-   AdjustAlignment(oPC, ALIGNMENT_EVIL, 10);
+   AdjustAlignment(oCaster, ALIGNMENT_EVIL, 10);
 
    SPSetSchool();
 }

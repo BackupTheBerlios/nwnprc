@@ -23,8 +23,9 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    int nSpellID = PRCGetSpellId();
+    SPSetSchool(GetSpellSchool(nSpellID));
+
 /*
   Spellcast Hook Code
   Added 2003-06-20 by Georg
@@ -44,23 +45,19 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
     //Declare major variables
     object oCaster = OBJECT_SELF;
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nCasterLvl = PRCGetCasterLevel(oCaster);
 
-    int nCasterLvl = CasterLvl;
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nDamage;
     float fDelay;
-    effect eVis = EffectVisualEffect(VFX_IMP_LIGHTNING_M);
+    effect eVis = EffectVisualEffect(VFX_HIT_SPELL_LIGHTNING);
+	effect eVis2 = EffectVisualEffect(916); //VFX_SPELL_HIT_CALL_LIGHTNING
+	effect eDur = EffectVisualEffect(915); //VFX_SPELL_DUR_CALL_LIGHTNING
+	effect eLink = EffectLinkEffects(eVis, eVis2);
     effect eDam;
     //Get the spell target location as opposed to the spell target.
     location lTarget = GetSpellTargetLocation();
-    //Limit Caster level for the purposes of damage
-    if (nCasterLvl > 10)
-    {
-        nCasterLvl = 10;
-    }
     
-    CasterLvl +=SPGetPenetr();
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL);
     
     //Declare the spell shape, size and the location.  Capture the first target object in the shape.
@@ -71,23 +68,28 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         if (spellsIsTarget(oTarget, SPELL_TARGET_SELECTIVEHOSTILE, OBJECT_SELF))
         {
            //Fire cast spell at event for the specified target
-            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CALL_LIGHTNING));
+            SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID));
             //Get the distance between the explosion and the target to calculate delay
             fDelay = GetRandomDelay(0.4, 1.75);
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,(nCasterLvl + SPGetPenetr()), fDelay))
             {
+                //Limit Caster level for the purposes of damage
+                if (nCasterLvl > 10)
+                {
+                    nCasterLvl = 10;
+                }
+                
                 //Roll damage for each target
                 nDamage = d6(nCasterLvl);
                 //Resolve metamagic
-                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
+                if (nMetaMagic & METAMAGIC_MAXIMIZE)
                 {
                     nDamage = 6 * nCasterLvl;
                 }
-                else if ((nMetaMagic & METAMAGIC_EMPOWER))
+                else if (nMetaMagic & METAMAGIC_EMPOWER)
                 {
                    nDamage = nDamage + nDamage / 2;
                 }
-                nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
                 //Adjust the damage based on the Reflex Save, Evasion and Improved Evasion.
                 nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_ELECTRICITY);
                 //Set the damage effect
@@ -105,9 +107,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
        //Select the next target within the spell shape.
        oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
     }
-
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    SPSetSchool();
 
 }

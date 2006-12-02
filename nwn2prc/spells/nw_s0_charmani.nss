@@ -20,8 +20,7 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
 /*
   Spellcast Hook Code
   Added 2003-06-23 by GeorgZ
@@ -41,27 +40,25 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     //Declare major variables
     object oTarget = GetSpellTargetObject();
-    effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
+    effect eVis = EffectVisualEffect(VFX_DUR_SPELL_CHARM_MONSTER);
     effect eCharm = EffectCharmed();
     eCharm = GetScaledEffect(eCharm, oTarget);
-    effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
     //Link the charm and duration visual effects
-    effect eLink = EffectLinkEffects(eMind, eCharm);
-    eLink = EffectLinkEffects(eLink, eDur);
+    effect eLink = EffectLinkEffects(eVis, eCharm);
 
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDuration = 2  + CasterLvl/3;
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = 2  + nCasterLvl/3;
     nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
-    int nPenetr = CasterLvl + SPGetPenetr();
+    int nPenetr = nCasterLvl + SPGetPenetr();
     //Meta magic duration check
     if ((nMetaMagic & METAMAGIC_EXTEND))
     {
         nDuration = nDuration * 2;
     }
-    if(!GetIsReactionTypeFriendly(oTarget))
+    
+    if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         //Fire spell cast at event to fire on the target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHARM_PERSON_OR_ANIMAL, FALSE));
@@ -86,10 +83,11 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
                 if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //Apply impact effects and linked duration and charm effect
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,PRCGetSpellId(),nCasterLvl);
                 }
             }
         }
     }
+    SPSetSchool();
+
 }

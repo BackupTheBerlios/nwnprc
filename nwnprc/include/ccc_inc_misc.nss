@@ -1811,19 +1811,44 @@ void  DoDomainsLoop()
     int i = 0;
     string sName;
     // get the first domain chosen if it's there
-    string sDomain = IntToString(GetLocalInt(OBJECT_SELF, "Domain1"));
-    // fix for air domain being 0
-    if (sDomain == "-1")
-        sDomain = "0";
-    sName = Get2DACache("domains", "Name", i);
-    while(i < GetPRCSwitch(FILE_END_DOMAINS))
+    int nDomain = GetLocalInt(OBJECT_SELF, "Domain1");
+    string sDomain = IntToString(nDomain);
+    // genasi elemental domain enforcement only is needed on the first domain
+    if (!nDomain && GetPRCSwitch(PRC_CONVOCC_GENASI_ENFORCE_DOMAINS))
     {
-        if (sName != "" && sName != sDomain)
-        {
-            AddChoice(GetStringByStrRef(StringToInt(sName)), i);
-        }
-        i++;
+        // now check PC race
+        int nRace = GetLocalInt(OBJECT_SELF, "Race");
+        if(nRace == RACIAL_TYPE_AIR_GEN)
+            i = DOMAIN_AIR;
+        else if(nRace == RACIAL_TYPE_EARTH_GEN)
+            i = DOMAIN_EARTH;
+        else if(nRace == RACIAL_TYPE_FIRE_GEN)
+            i = DOMAIN_FIRE;
+        else if(nRace == RACIAL_TYPE_WATER_GEN)
+            i = DOMAIN_WATER;
+    }
+    // see if i was just set
+    if (i) // if set, then the player gets no choice
+    {
+        i--; // the domain constants are offset by 1 to their 2da lines
         sName = Get2DACache("domains", "Name", i);
+        AddChoice(GetStringByStrRef(StringToInt(sName)), i);
+    }
+    else // give them the full domain list
+    {
+        // fix for air domain being 0
+        if (sDomain == "-1")
+            sDomain = "0";
+        sName = Get2DACache("domains", "Name", i);
+        while(i < GetPRCSwitch(FILE_END_DOMAINS))
+        {
+            if (sName != "" && sName != sDomain)
+            {
+                AddChoice(GetStringByStrRef(StringToInt(sName)), i);
+            }
+            i++;
+            sName = Get2DACache("domains", "Name", i);
+        }
     }
 }
 

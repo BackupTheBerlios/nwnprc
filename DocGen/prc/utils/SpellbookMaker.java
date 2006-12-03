@@ -336,7 +336,7 @@ public final class SpellbookMaker{
 		}
 		
 		//change the ImpactScript
-		String script = "prc_" + classfilename + "_" + metaScript + "_gen";
+		String script = "prc_" + (classfilename.length() <= 5 ? classfilename : classfilename.substring(0, 5)) + "_" + metaScript + "_gen";
 		spells2da.setEntry("ImpactScript", spells2daRow, script);
 		//change the Label
 		spells2da.setEntry("Label", spells2daRow, label);

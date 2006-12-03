@@ -10,8 +10,15 @@
 //:: Created On: Jan 29, 2001
 //:://////////////////////////////////////////////
 //:: Update Pass By: Preston W, On: July 25, 2001
+/** @file Charm Monster
+Enchantment (Charm) [Mind-Affecting]
+Level: 	    Brd 3, Sor/Wiz 4
+Target: 	One living creature
+Duration: 	One day/level
 
-
+This spell functions like charm person, except that the effect 
+is not restricted by creature type or size. 
+*/
 
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "spinc_common"
@@ -22,8 +29,8 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+
 /*
   Spellcast Hook Code
   Added 2003-06-23 by GeorgZ
@@ -42,30 +49,26 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
 
     //Declare major variables
-    object oTarget = GetSpellTargetObject();
-    effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
+    object oTarget = PRCGetSpellTargetObject();
+    effect eVis = EffectVisualEffect(VFX_DUR_SPELL_CHARM_MONSTER);
     effect eCharm = EffectCharmed();
     eCharm = GetScaledEffect(eCharm, oTarget);
-    effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
 
     //Link effects
-    effect eLink = EffectLinkEffects(eMind, eCharm);
-    eLink = EffectLinkEffects(eLink, eDur);
+    effect eLink = EffectLinkEffects(eVis, eCharm);
 
     int nMetaMagic = PRCGetMetaMagicFeat();
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDuration = 3 + CasterLvl/2;
-    int nPenetr = CasterLvl + SPGetPenetr();
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nDuration = nCasterLvl;
+    int nPenetr = nCasterLvl + SPGetPenetr();
     nDuration = GetScaledDuration(nDuration, oTarget);
-    int nRacial = MyPRCGetRacialType(oTarget);
 
     //Metamagic extend check
-    if ((nMetaMagic & METAMAGIC_EXTEND))
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration = nDuration * 2;
     }
-    if(!GetIsReactionTypeFriendly(oTarget))
+    if(spellsIsTarget(oTarget, SPELL_TARGET_STANDARDHOSTILE, OBJECT_SELF))
     {
         //Fire cast spell at event for the specified target
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHARM_MONSTER, FALSE));
@@ -76,9 +79,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
             if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
             {
                 //Apply impact and linked effect
-                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,-1,CasterLvl);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration*24),TRUE,PRCGetSpellId(),nCasterLvl);
             }
         }
     }
+    SPSetSchool();
+
 }

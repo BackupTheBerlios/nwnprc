@@ -9,8 +9,15 @@
 //:: Created By: Preston Watamaniuk
 //:: Created On: Jan 29, 2001
 //:://////////////////////////////////////////////
+/**@file charm animal
+Enchantment (Charm) [Mind-Affecting]
+Level: 	    Drd 1, Rgr 1
+Target: 	One animal
 
+This spell functions like charm person, except that it affects a 
+creature of the animal type. 
 
+*/
 
 //:: modified by mr_bumpkin Dec 4, 2003
 #include "spinc_common"
@@ -48,12 +55,12 @@ void main()
 
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nDuration = 2  + nCasterLvl/3;
+    int nDuration = nCasterLvl;
     nDuration = GetScaledDuration(nDuration, oTarget);
     int nRacial = MyPRCGetRacialType(oTarget);
     int nPenetr = nCasterLvl + SPGetPenetr();
     //Meta magic duration check
-    if ((nMetaMagic & METAMAGIC_EXTEND))
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         nDuration = nDuration * 2;
     }
@@ -66,24 +73,13 @@ void main()
         if (!MyPRCResistSpell(OBJECT_SELF, oTarget,nPenetr))
         {
             //Make sure the racial type of the target is applicable
-            if  ((nRacial == RACIAL_TYPE_DWARF) ||
-                (nRacial == RACIAL_TYPE_ANIMAL) ||
-                (nRacial == RACIAL_TYPE_ELF) ||
-                (nRacial == RACIAL_TYPE_GNOME) ||
-                (nRacial == RACIAL_TYPE_HUMANOID_GOBLINOID) ||
-                (nRacial == RACIAL_TYPE_HALFLING) ||
-                (nRacial == RACIAL_TYPE_HUMAN) ||
-                (nRacial == RACIAL_TYPE_HALFELF) ||
-                (nRacial == RACIAL_TYPE_HALFORC) ||
-                (nRacial == RACIAL_TYPE_HUMANOID_MONSTROUS) ||
-                (nRacial == RACIAL_TYPE_HUMANOID_ORC) ||
-                (nRacial == RACIAL_TYPE_HUMANOID_REPTILIAN))
+            if  (nRacial == RACIAL_TYPE_ANIMAL)
             {
                 //Make Will Save
                 if (!/*Will Save*/ PRCMySavingThrow(SAVING_THROW_WILL, oTarget, PRCGetSaveDC(oTarget, OBJECT_SELF), SAVING_THROW_TYPE_MIND_SPELLS))
                 {
                     //Apply impact effects and linked duration and charm effect
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDuration),TRUE,PRCGetSpellId(),nCasterLvl);
+                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,PRCGetSpellId(),nCasterLvl);
                 }
             }
         }

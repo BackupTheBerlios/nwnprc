@@ -50,21 +50,13 @@ void main()
     object oCaster = OBJECT_SELF;
     int nCasterLvl = PRCGetCasterLevel(oCaster);
     float fDuration = TurnsToSeconds(nCasterLvl);
-    int nBonus = d8(1);
     
     int nSpellID = PRCGetSpellId();
     int nMetaMagic = PRCGetMetaMagicFeat();
 
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_MAXIMIZE))
-    {
-        nBonus = 8;//Damage is at max
-    }
-    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EMPOWER))
-    {
-        nBonus = nBonus + (nBonus/2); //Damage/Healing is +50%
-    }
-    else if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    int nBonus = PRCMaximizeOrEmpower(8,1,nMetaMagic);
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
         fDuration = fDuration *2; //Duration is +100%
     }

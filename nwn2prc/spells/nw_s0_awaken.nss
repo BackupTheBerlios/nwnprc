@@ -43,12 +43,13 @@ void main()
     int nCasterLevel = PRCGetCasterLevel(oCaster);
     int nSpellID = PRCGetSpellId();
     object oTarget = PRCGetSpellTargetObject();
-    int nInt = d6(3);
-    int nCha = d3();
+    int nMetaMagic = PRCGetMetaMagicFeat();
+    int nInt = PRCMaximizeOrEmpower(6,3, nMetaMagic);
+    int nCha = PRCMaximizeOrEmpower(3,1, nMetaMagic);
     effect eHP = EffectTemporaryHitpoints(d8(2)); // instead of 2HD
     effect eAttack = EffectAttackIncrease(2); // instead of 2 HD
     effect eVis = EffectVisualEffect(VFX_DUR_SPELL_AWAKEN);
-    int nMetaMagic = PRCGetMetaMagicFeat();
+
     
     if(GetAssociate(ASSOCIATE_TYPE_ANIMALCOMPANION) == oTarget)
     {
@@ -56,17 +57,6 @@ void main()
         {
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
-            //Enter Metamagic conditions
-            if (nMetaMagic & METAMAGIC_MAXIMIZE)
-            {
-                nInt = 18; // max int
-                nCha = 3; // max cha
-            }
-            else if (nMetaMagic & METAMAGIC_EMPOWER)
-            {
-                nInt = nInt + (nInt/2); // int +50%
-                nCha = nCha + (nCha/2); // cha +50%
-            }
             
             effect eInt = EffectAbilityIncrease(ABILITY_INTELLIGENCE, nInt);
             effect eCha = EffectAbilityIncrease(ABILITY_CHARISMA, nCha);

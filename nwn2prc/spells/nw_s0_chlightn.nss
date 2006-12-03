@@ -34,8 +34,8 @@ bugfix by Kovi 2002.07.28
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+
 /*
   Spellcast Hook Code
   Added 2003-06-20 by Georg
@@ -54,8 +54,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
 
 
     //Declare major variables
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nCasterLevel = CasterLvl;
+    int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
+    int nPenetr = nCasterLevel + SPGetPenetr();
     //Limit caster level
     // June 2/04 - Bugfix: Cap the level BEFORE the damage calculation, not after. Doh.
     if (nCasterLevel > 20)
@@ -63,31 +63,19 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         nCasterLevel = 20;
     }
     
-    int nDamage = d6(nCasterLevel);
     int nDamStrike;
     int nNumAffected = 0;
     int nMetaMagic = PRCGetMetaMagicFeat();
     //Declare lightning effect connected the casters hands
     effect eLightning = EffectBeam(VFX_BEAM_LIGHTNING, OBJECT_SELF, BODY_NODE_HAND);;
-    effect eVis  = EffectVisualEffect(VFX_IMP_LIGHTNING_S);
+    effect eVis  = EffectVisualEffect(VFX_HIT_SPELL_LIGHTNING);
     effect eDamage;
     object oFirstTarget = GetSpellTargetObject();
     object oHolder;
     object oTarget;
     location lSpellLocation;
-
-    //Enter Metamagic conditions
-    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-    {
-        nDamage = 6 * nCasterLevel;//Damage is at max
-    }
-    if ((nMetaMagic & METAMAGIC_EMPOWER))
-    {
-        nDamage = nDamage + (nDamage/2); //Damage/is +50%
-    }
-    nDamage += ApplySpellBetrayalStrikeDamage(oTarget, OBJECT_SELF, FALSE);
+    int nDamage = PRCMaximizeOrEmpower(6,nCasterLevel, nMetaMagic);
     
-    CasterLvl +=SPGetPenetr();
     
     int EleDmg = ChangedElementalDamage(OBJECT_SELF, DAMAGE_TYPE_ELECTRICAL);
 
@@ -97,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         //Fire cast spell at event for the specified target
         SignalEvent(oFirstTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHAIN_LIGHTNING));
         //Make an SR Check
-        if (!MyPRCResistSpell(OBJECT_SELF, oFirstTarget,CasterLvl))
+        if (!MyPRCResistSpell(OBJECT_SELF, oFirstTarget,nPenetr))
         {
            int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
             //Adjust damage via Reflex Save or Evasion or Improved Evasion
@@ -108,7 +96,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             if(nDamStrike > 0)
             {
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oFirstTarget);
-                PRCBonusDamage(oFirstTarget);
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oFirstTarget);
             }
         }
@@ -143,19 +130,10 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
             //Fire cast spell at event for the specified target
             SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CHAIN_LIGHTNING));
             //Do an SR check
-            if (!MyPRCResistSpell(OBJECT_SELF, oTarget,CasterLvl, fDelay))
+            if (!MyPRCResistSpell(OBJECT_SELF, oTarget, nPenetr, fDelay))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
-                nDamage = d6(nCasterLevel) ;
-
-                if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-                {
-                    nDamage = 6 * nCasterLevel;//Damage is at max
-                }
-                if ((nMetaMagic & METAMAGIC_EMPOWER))
-                {
-                    nDamage = nDamage + (nDamage/2); //Damage/is +50%
-                }
+                nDamage = PRCMaximizeOrEmpower(6,nCasterLevel, nMetaMagic);                
                 //Adjust damage via Reflex Save or Evasion or Improved Evasion
                 nDamStrike = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, SAVING_THROW_TYPE_ELECTRICITY);
                 //Apply the damage and VFX impact to the current target
@@ -163,7 +141,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
                 if(nDamStrike > 0) //age > 0)
                 {
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,eDamage,oTarget));
-                    PRCBonusDamage(oTarget);
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT,eVis,oTarget));
                 }
             }
@@ -199,5 +176,6 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_EVOCATION);
         oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_COLOSSAL, GetLocation(oFirstTarget), TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
       }
       
-     
+     SPSetSchool();
+
  }

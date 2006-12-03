@@ -2,6 +2,7 @@ package prc.utils;
 
 import java.util.*;
 
+import prc.Main;
 import prc.autodoc.Data_2da;
 
 /**
@@ -20,6 +21,7 @@ public class List2daEntries {
 		if(args.length == 0) readMe();
 		String filePath = null;
 		ArrayList<String> labels = new ArrayList<String>();
+		boolean quiet = false;
 		
 		// parse args
 		for(String param : args){//[--help] | pathof2da columnlabel+
@@ -29,6 +31,8 @@ public class List2daEntries {
 				else{
 					for(char c : param.substring(1).toCharArray()){
 						switch(c){
+						case 'q':
+							quiet = true;
 						default:
 							System.out.println("Unknown parameter: " + c);
 							readMe();
@@ -45,6 +49,11 @@ public class List2daEntries {
 			}
 		}
 		
+		if(quiet) {
+			Main.verbose = false;
+			Main.spinner.disable();
+		}
+		
 		// Load the 2da
 		Data_2da file = Data_2da.load2da(filePath);
 		
@@ -59,7 +68,7 @@ public class List2daEntries {
 				entries.add(value);
 			}
 			
-			StringBuffer toPrint = new StringBuffer(file.getName() + ": entries on column " + label + "\n");
+			StringBuffer toPrint = new StringBuffer(quiet ? "" : (file.getName() + ": entries on column " + label + "\n"));
 			for(String entry : entries){
 				toPrint.append(entry + "\n");
 			}
@@ -70,11 +79,12 @@ public class List2daEntries {
 	
 	private static void readMe(){
 		System.out.println("Usage:\n"+
-                           "  [--help] | pathof2da columnlabel+\n"+
+                           "  [--help] | [-q] pathof2da columnlabel+\n"+
                            "\n" +
                            " pathof2da   path of the 2da to check\n"+
                            " columnlabel label of a column to list entries of\n" +
                            "\n"+
+                           "  -q      silent mode. Only prints the results" +
                            "  --help  prints this text\n"
                 );
 		System.exit(0);

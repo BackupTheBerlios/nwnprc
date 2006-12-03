@@ -33,6 +33,7 @@ public class List2daEntries {
 						switch(c){
 						case 'q':
 							quiet = true;
+							break;
 						default:
 							System.out.println("Unknown parameter: " + c);
 							readMe();

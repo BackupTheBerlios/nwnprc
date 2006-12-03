@@ -1934,33 +1934,49 @@ void DoSoundsetLoop()
 
 void DoWingmodelLoop()
 {
-    string q = PRC_SQLGetTick();
-    string sSQL;
-    
-    sSQL = "SELECT" +q+"rowid"+q+ ", " +q+"data"+q+" FROM " +q+"prc_cached2da"+q+ " WHERE " +q+"file"+q+ "='wingmodel' AND " +q+"columnid"+q+ " = 'LABEL' AND " +q+"data"+q+ " != '****'";
-    
-    PRC_SQLExecDirect(sSQL);
-    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    if (GetPRCSwitch(PRC_CONVOCC_AVARIEL_WINGS) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_AVARIEL)
+        AddChoice("Bird", 6);
+    else if (GetPRCSwitch(PRC_CONVOCC_FEYRI_WINGS) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_FEYRI)
+        AddChoice("Bat", 3);
+    else if (GetPRCSwitch(PRC_CONVOCC_DISALLOW_CUSTOMISE_WINGS))
+        AddChoice("None", 0);
+    else
     {
-        int nRow = StringToInt(PRC_SQLGetData(1));
-        string sName = PRC_SQLGetData(2);
-        AddChoice(sName, nRow);
+        string q = PRC_SQLGetTick();
+        string sSQL;
+        
+        sSQL = "SELECT" +q+"rowid"+q+ ", " +q+"data"+q+" FROM " +q+"prc_cached2da"+q+ " WHERE " +q+"file"+q+ "='wingmodel' AND " +q+"columnid"+q+ " = 'LABEL' AND " +q+"data"+q+ " != '****'";
+        
+        PRC_SQLExecDirect(sSQL);
+        while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        {
+            int nRow = StringToInt(PRC_SQLGetData(1));
+            string sName = PRC_SQLGetData(2);
+            AddChoice(sName, nRow);
+        }
     }
 }
 
 void DoTailmodelLoop()
 {
-    string q = PRC_SQLGetTick();
-    string sSQL;
-    
-    sSQL = "SELECT" +q+"rowid"+q+ ", " +q+"data"+q+" FROM " +q+"prc_cached2da"+q+ " WHERE " +q+"file"+q+ "='tailmodel' AND " +q+"columnid"+q+ " = 'LABEL' AND " +q+"data"+q+ " != '****'";
-    
-    PRC_SQLExecDirect(sSQL);
-    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+    if (GetPRCSwitch(PRC_CONVOCC_FEYRI_TAIL) && GetLocalInt(OBJECT_SELF, "Race") == RACIAL_TYPE_FEYRI)
+        AddChoice("Devil", 3);
+    else if (GetPRCSwitch(PRC_CONVOCC_DISALLOW_CUSTOMISE_TAIL))
+        AddChoice("None", 0);
+    else
     {
-        int nRow = StringToInt(PRC_SQLGetData(1));
-        string sName = PRC_SQLGetData(2);
-        AddChoice(sName, nRow);
+        string q = PRC_SQLGetTick();
+        string sSQL;
+        
+        sSQL = "SELECT" +q+"rowid"+q+ ", " +q+"data"+q+" FROM " +q+"prc_cached2da"+q+ " WHERE " +q+"file"+q+ "='tailmodel' AND " +q+"columnid"+q+ " = 'LABEL' AND " +q+"data"+q+ " != '****'";
+        
+        PRC_SQLExecDirect(sSQL);
+        while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        {
+            int nRow = StringToInt(PRC_SQLGetData(1));
+            string sName = PRC_SQLGetData(2);
+            AddChoice(sName, nRow);
+        }
     }
 }
 

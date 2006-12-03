@@ -19025,7 +19025,7 @@ Saving Throw: 	None
 Spell Resistance: 	Yes
 
 You blast your enemies with fiery rays. You may fire one ray, plus one additional ray for every four levels
-beyond 3rd (to a maximum of three rays at 11th level). Each ray requires a ranged touch attack to hit and deals 
+beyond 3rd (to a maximum of three rays at 11th level). Each ray requires a ranged touch attack to hit and deals
 4d6 points of fire damage.
 
 
@@ -19043,8 +19043,8 @@ Duration: 	1 min./level
 Saving Throw: 	Fortitude partial; see text
 Spell Resistance: 	Yes
 
-A black ray projects from your pointing finger. You must succeed on a ranged touch attack with the ray 
-to strike a target.  The subject is immediately exhausted for the spell?s duration. A successful Fortitude save means the creature is only fatigued. 
+A black ray projects from your pointing finger. You must succeed on a ranged touch attack with the ray
+to strike a target.  The subject is immediately exhausted for the spell?s duration. A successful Fortitude save means the creature is only fatigued.
 
 Material Component: A drop of sweat.
 </entry>
@@ -19061,7 +19061,7 @@ Duration: 	Instantaneous
 Saving Throw: 	No
 Spell Resistance: 	Yes
 
-Waves of negative energy render all living creatures in the spell?s area fatigued. This spell has no effect 
+Waves of negative energy render all living creatures in the spell?s area fatigued. This spell has no effect
 on a creature that is already fatigued. </entry>
   <entry id="50371" lang="en" sex="m">Waves of Fatigue (9)</entry>
   <entry id="50501" lang="en" sex="m">***50,501 -&gt; 51,000 reserved for domains and spells***</entry>
@@ -30537,9 +30537,7 @@ Spell Resistance: Yes
 
 The target creature is dazed for one round.</entry>
   <entry id="54855" lang="en" sex="m">Vision of Heaven (1)</entry>
-  <entry id="54856" lang="en" sex="m">Sword of Conscience
-
-</entry>
+  <entry id="54856" lang="en" sex="m">Sword of Conscience</entry>
   <entry id="54857" lang="en" sex="m">Enchantment
 Level: Clr 4, Rgr 4
 Components: V, DF

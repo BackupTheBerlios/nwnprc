@@ -343,22 +343,22 @@ int RunecasterRunePowerDC(object oCaster)
         }
         return nDC;
 }
- 
+
  //Unheavened spell
 int UnheavenedAdjustment(object oTarget, object oCaster)
 {
     int nAdjust = 0;
-    
+
     if(GetHasSpellEffect(SPELL_UNHEAVENED, oTarget))
     {
         if((MyPRCGetRacialType(oCaster) == RACIAL_TYPE_OUTSIDER) && (GetAlignmentGoodEvil(oCaster) == ALIGNMENT_GOOD))
         {
-            nAdjust = 4;
+            nAdjust = -4;
         }
     }
     return nAdjust;
 }
-    
+
 
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
@@ -393,17 +393,17 @@ int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
                 nDC += StringToInt(Get2DACache("Spells", "Ranger", nSpellID));
             else if(nClass == CLASS_TYPE_PALADIN)
                 nDC += StringToInt(Get2DACache("Spells", "Paladin", nSpellID));
-            else if(nClass == CLASS_TYPE_WIZARD 
+            else if(nClass == CLASS_TYPE_WIZARD
                 || nClass == CLASS_TYPE_SORCERER)
                 nDC += StringToInt(Get2DACache("Spells", "Wiz_Sorc", nSpellID));
-            else    
+            else
             nDC += StringToInt(Get2DACache("Spells", "Innate", nSpellID));
             if(nClass == CLASS_TYPE_FAVOURED_SOUL)
                 nDC += (GetAbilityModifier(ABILITY_WISDOM, oCaster));
             else
                 nDC += ((GetAbilityForClass(nClass, oCaster)-10)/2);
         }
-            
+
         DoDebug("Forced Base-DC casting at DC " + IntToString(nDC));
         if(!GetIsObjectValid(oItem)
             || (GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF
@@ -530,7 +530,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += KOTCSpellFocusVsDemons(oTarget, oCaster);
     nDC += BloodMagusBloodComponent(oCaster);
     nDC += RunecasterRunePowerDC(oCaster);
-    nDC -= UnheavenedAdjustment(oTarget, oCaster);   
+    nDC += UnheavenedAdjustment(oTarget, oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
 

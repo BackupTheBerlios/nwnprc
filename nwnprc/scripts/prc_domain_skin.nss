@@ -79,10 +79,10 @@ void AddDomainFeat(object oPC, object oSkin)
     	SetCompositeBonus(oSkin, "SpellDomainPowerSpell", 2, ITEM_PROPERTY_SKILL_BONUS, SKILL_SPELLCRAFT);
     }
     // Electrical resist 5
-    if (GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC))         IPSafeAddItemProperty(oSkin, PRCItemPropertyBonusFeat(IP_CONST_FEAT_STORM_DOMAIN      ), 0.0f, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+    if (GetHasFeat(FEAT_DOMAIN_POWER_STORM, oPC))         
     {
 	if(GetLocalInt(oSkin, "StormDomainPower")) return;
-
+	
 	RemoveSpecificProperty(oSkin, ITEM_PROPERTY_DAMAGE_RESISTANCE, IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_5);
 	AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyDamageResistance(IP_CONST_DAMAGETYPE_ELECTRICAL, IP_CONST_DAMAGERESIST_5),oSkin);
 	SetLocalInt(oSkin, "StormDomainPower",TRUE);

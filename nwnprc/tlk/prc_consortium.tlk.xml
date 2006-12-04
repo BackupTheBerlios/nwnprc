@@ -30567,6 +30567,8 @@ A moderate wind (11+ mph), such as from a gust of wind spell, disperses the fog 
 
 This spell does not function underwater.</entry>
   <entry id="54861" lang="en" sex="m">Obscuring Mist (1)</entry>
+  <entry id="54898" lang="en" sex="m">You have not drained levels in the last 24 hours, Soul Blast does not work.</entry>
+  <entry id="54899" lang="en" sex="m">Target is immune to negative levels.</entry>
   <entry id="54900" lang="en" sex="m">Soul Eater</entry>
   <entry id="54901" lang="en" sex="m">Soul Eaters</entry>
   <entry id="54902" lang="en" sex="m">soul eater</entry>
@@ -30582,36 +30584,56 @@ REQUIREMENTS:
 Race: Living Non-Humanoid (No dwarves, elves, humans, gnomes, halflings, or half orcs)
 Base Attack Bonus: +5.
 Skills: Lore 2 ranks.
-Feats:  Alertness
+Feats: Alertness, Weapon Focus(creature or unarmed strike)
 
 ABILITIES:
 
 Level
-1: Energy Drain 1 - Bestow 1 negative level with a touch.
-2: Soul Strength - When a soul eater uses energy drain, it gets +4 Strength for 24 hours
-3: Soul Blast - 1d6 damage per soul eater level to one target, once per day
-4: Soul Enhancement - When a soul eater uses energy drain, it gets a +2 bonus to Saves and Skills
-5: Soul Endurance - When a soul eater uses energy drain, it gets +4 Constitution for 24 hours
-6: Soul Radiance - If a soul eater kills a creature with energy drain, it may shift into that creatures form, taking on its appearance and abilities for 24 hours.
-7: Energy Drain 2 - Bestow 2 negative levels with a touch.
-8: Soul Agility - When a soul eater uses energy drain, it gets +4 Dexterity
-9: Soul Slave - If a soul eater kills a creature with energy drain, it returns as a wight under the command of the soul eater.
-10: Soul Power - When a soul eater uses energy drain, it gets +2 to all spell like and supernatural ability DCs. </entry>
+1:  Energy Drain 1
+2:  Soul Strength
+3:  Soul Blast
+4:  Soul Enhancement
+5:  Soul Endurance
+6:  Soul Radiance
+7:  Energy Drain 2
+8:  Soul Agility
+9:  Soul Slave
+10: Soul Power
+
+
+Energy Drain (Su): A soul eater gains the ability to drain energy, bestowing negative levels upon it's victims. Beginning at 1st level, the touch of a soul eater bestows one negative level on it's target. At 7th level, the soul eater bestows two negative levels with a touch.
+
+Soul Strength (Su): When a 2nd-level soul eater uses it's energy drain ability, it gains a +4 bonus to Strenth for 24 hours.
+
+Soul Blast (Su): A 3rd-level may project a 100-foot ray of force that deals 1d6 points of damage per soul eater level against one target. The target is allowed a Reflex saving throw to avoid the damage (DC 10 + class level + Cha bonus). This supernatural ability can be used once per day, and only on a day when the soul eater has drained levels.
+
+Soul Enhancement (Su): When a 4th-level soul eater uses it's energy drain ability, it gains a +2 enhancement bonus on all saving throws and skill checks for 24 hours.
+
+Soul Endurance (Su): When a 5nd-level soul eater uses it's energy drain ability, it gains a +4 bonus to Constitution for 24 hours.
+
+Soul Radiance (Su): If a 6th-level soul eater completely drains a creature of energy, it may adopt the creature's soul radiance, taking the victim's form, appearance, and abilities for 24 hours.
+
+Soul Agility (Su): When a 8th-level soul eater uses it's energy drain ability, it gains a +4 bonus to Dexterity for 24 hours.
+
+Soul Slave (Su): If a 9th-level soul eater completely drains a creature of energy, the victim becomes a wight under the command of the soul eater.
+
+Soul Power (Su): After a 10th-level soul eater has drained energy, all spell-like and supernatural abilities gains a +2 profane bonus to their saving throw DC for 24 hours. Further, it may use it's Soul Blast ability up to two times instead of one during that 24-hour period.
+(Further, any and all spell-like or supernatural abilities the soul eater possesses may be used twice as often as normal during that 24-hour period.)</entry>
   <entry id="54904" lang="en" sex="m">Energy Drain</entry>
   <entry id="54905" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Soul Eater level 1.
 Specifics: Attempt a touch attack to drain 1 negative level from a target. At level 7 this increases to 2 levels.
-Use: Selected. </entry>
+Use: Selected.</entry>
   <entry id="54906" lang="en" sex="m">&lt;Custom0&gt; Drains Energy</entry>
   <entry id="54907" lang="en" sex="m">Soul Radiance</entry>
   <entry id="54908" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Soul Eater level 6.
-Specifics: Allows the soul eater to change into the form of a creature it has killed.
-Use: Selected.</entry>
+Specifics: If a 6th-level soul eater completely drains a creature of energy, it may adopt the creature's soul radiance, taking the victim's form, appearance, and abilities for 24 hours.
+Use: Switched on/off. While on, upon killing a creature with energy drain, the soul eater will shift into that creature.</entry>
   <entry id="54909" lang="en" sex="m">Soul Blast</entry>
   <entry id="54910" lang="en" sex="m">Type of Feat: Class Specific
 Prerequisite: Soul Eater level 3.
-Specifics: The soul eater projects a ray of force that deals 1d6 damage per soul eater level against one target. The target is allowed a reflex save vs 10 + Class Level + Soul Eater's Cha modifier. This can be used one a day.
+Specifics: A 3rd-level may project a 100-foot ray of force that deals 1d6 points of damage per soul eater level against one target. The target is allowed a Reflex saving throw to avoid the damage (DC 10 + class level + Cha bonus). This supernatural ability can be used once per day, and only on a day when the soul eater has drained levels.
 Use: Selected.</entry>
   <entry id="54911" lang="en" sex="m">Dragon Disciple</entry>
   <entry id="54912" lang="en" sex="m">Dragon Disciples</entry>

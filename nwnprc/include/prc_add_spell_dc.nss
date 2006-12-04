@@ -359,6 +359,12 @@ int UnheavenedAdjustment(object oTarget, object oCaster)
     return nAdjust;
 }
 
+// Soul Eater's 10th level Soul Power ability. If they've drained in the last 24h, they get +2 to DCs
+int SoulEaterSoulPower(object oCaster)
+{
+    return (GetLocalInt(oCaster, "PRC_SoulEater_HasDrained") && GetLevelByClass(CLASS_TYPE_SOUL_EATER, oCaster) >= 10) ? 2 : 0;
+}
+
 
 int PRCGetSaveDC(object oTarget, object oCaster, int nSpellID = -1)
 {
@@ -531,6 +537,7 @@ int GetChangesToSaveDC(object oTarget, object oCaster = OBJECT_SELF, int nSpellI
     nDC += BloodMagusBloodComponent(oCaster);
     nDC += RunecasterRunePowerDC(oCaster);
     nDC += UnheavenedAdjustment(oTarget, oCaster);
+    nDC += SoulEaterSoulPower(oCaster);
     nDC += GetLocalInt(oCaster, PRC_DC_ADJUSTMENT);//this is for builder use
     return nDC;
 

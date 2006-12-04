@@ -444,6 +444,14 @@ const string PRC_BARD_DISALLOW_NEWSPELLBOOK     = "PRC_BARD_DISALLOW_NEWSPELLBOO
  */
 const string PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO = "PRC_CWSAMURAI_NO_HEIRLOOM_DAISHO";
 
+/**
+ * Determines the number of wight henchmen a Soul Eater can have via their Soul Slave
+ * class ability.
+ * Default: 4
+ * Special: Due to it not being possible to differentiate between a set 0 and an unset 0,
+ *          to prevent any wight henchmen, set the switch to -1. (0 counts as the default)
+ */
+const string PRC_SOUL_EATER_MAX_SLAVES       = "PRC_SOUL_EATER_MAX_SLAVES";
 
 
 /******************************************************************************\

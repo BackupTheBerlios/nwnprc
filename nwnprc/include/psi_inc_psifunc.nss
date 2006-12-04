@@ -415,6 +415,10 @@ int GetManifesterDC(object oManifester = OBJECT_SELF)
         }
     }
 
+    /// Other DC adjustments
+    nDC += (GetLocalInt(oManifester, "PRC_SoulEater_HasDrained") && GetLevelByClass(CLASS_TYPE_SOUL_EATER, oManifester) >= 10) ? 2 : 0;
+
+
     return nDC;
 }
 

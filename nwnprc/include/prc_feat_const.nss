@@ -1510,6 +1510,11 @@ const int FEAT_CLANGEDDINS_MIGHT                 = 3992;
 const int FEAT_ALAG_SILVERBEARD                  = 3993;
 const int FEAT_ALAG_ROCKBURST                    = 3994;
 
+// Soul Eater
+const int FEAT_SLEAT_ENERGY_DRAIN                = 3995;
+const int FEAT_SLEAT_SBLAST                      = 3996;
+const int FEAT_SLEAT_SRADIANCE                   = 3997;
+
 // Combat Medic
 const int FEAT_HEALING_KICKER_1                  = 3540;
 const int FEAT_HEALING_KICKER_2                  = 3541;
@@ -2166,7 +2171,7 @@ const int FEAT_TEMPLATE_FIENDISH_SMITE_GOOD         = 22603;
  const int FEAT_EF_SPEED                       = 4395;
  const int FEAT_EF_EXTRA_STUNNING              = 4396;
  const int FEAT_EF_FIST_OF_ENERGY_BURST        = 4397;
- 
+
 /*//////////////////////////////////////////////////
 //////////////// TRUENAMING ////////////////////////
 //////////////////////////////////////////////////*/

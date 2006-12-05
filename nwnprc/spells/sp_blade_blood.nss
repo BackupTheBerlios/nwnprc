@@ -57,7 +57,7 @@ void main()
 		
 	if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
 	{
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, 5), oPC);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5, DAMAGE_TYPE_MAGICAL), oPC);
 		nDamBonus = d6(3);
 		
 		if(nMetaMagic == METAMAGIC_MAXIMIZE)

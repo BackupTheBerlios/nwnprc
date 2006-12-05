@@ -19,10 +19,7 @@
 void main()
 {
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-
- ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_EVIL,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_EVIL,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
     //Get the object that is exiting the AOE
@@ -46,6 +43,4 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         }
     }
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
- // delete the variable showing the spell's school
 }

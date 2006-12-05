@@ -23,17 +23,11 @@
 void main()
 {
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-
- ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_EVIL,OBJECT_SELF, GetSpellSaveDC()));
-
+    ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_EVIL,OBJECT_SELF, GetSpellSaveDC()));
 
     object oTarget = GetEnteringObject();
     if(GetIsFriend(oTarget, GetAreaOfEffectCreator()))
     {
-        //Declare major variables
-        int nDuration = PRCGetCasterLevel(OBJECT_SELF);
         //effect eVis = EffectVisualEffect(VFX_IMP_GOOD_HELP);
         effect eLink = CreateProtectionFromAlignmentLink(ALIGNMENT_EVIL);
 

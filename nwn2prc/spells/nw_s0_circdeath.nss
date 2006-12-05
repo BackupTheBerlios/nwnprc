@@ -27,8 +27,8 @@
 void main()
 {
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+
 /*
   Spellcast Hook Code
   Added 2003-06-20 by Georg
@@ -50,13 +50,16 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     object oTarget;
     object oLowest;
     effect eDeath =  EffectDeath();
-    effect eVis = EffectVisualEffect(VFX_IMP_DEATH);
-    effect eFNF = EffectVisualEffect(VFX_FNF_LOS_EVIL_20);
+    effect eVis = EffectVisualEffect(VFX_HIT_SPELL_NECROMANCY);
     int bContinueLoop = FALSE; //Used to determine if we have a next valid target
-    int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-
-    int nHD = d4(CasterLvl); //Roll to see how many HD worth of creature will be killed
+    int nCasterLvl = PRCGetCasterLevel(OBJECT_SELF);
+    int nDice;
+    if (nCasterLvl > 20)
+        nDice = 20; // changed to 20 as in the srd
+    else
+        nDice = nCasterLvl;
     int nMetaMagic = PRCGetMetaMagicFeat();
+    int nHD = PRCMaximizeOrEmpower(4, nDice,nMetaMagic); //Roll to see how many HD worth of creature will be killed
     int nCurrentHD;
     int bAlreadyAffected;
     int nMax = 10;// maximun hd creature affected, set this to 9 so that a lower HD creature is chosen automatically
@@ -64,18 +67,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     float fDelay;
     string sIdentifier = GetTag(OBJECT_SELF);
 
-    //Enter Metamagic conditions
-    if ((nMetaMagic & METAMAGIC_MAXIMIZE))
-    {
-        nHD = 4 * CasterLvl;
-    }
-    if ((nMetaMagic & METAMAGIC_EMPOWER))
-    {
-        nHD = nHD + (nHD/2); //Damage/Healing is +50%
-    }
-    ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eFNF, GetSpellTargetLocation());
     //Check for at least one valid object to start the main loop
-    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+    oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, PRCGetSpellTargetLocation());
     if (GetIsObjectValid(oTarget))
     {
         bContinueLoop = TRUE;
@@ -84,7 +77,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     // the loop.
 
     
-    CasterLvl +=SPGetPenetr();
+    int nPenetr = nCasterLvl + SPGetPenetr();
     
 
     while ((nHD > 0) && (bContinueLoop))
@@ -92,7 +85,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         int nLow = nMax; //Set nLow to the lowest HD creature in the last pass through the loop
         bContinueLoop = FALSE; //Set this to false so that the loop only continues in the case of new low HD creature
         //Get first target creature in loop
-        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+        oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, PRCGetSpellTargetLocation());
         while (GetIsObjectValid(oTarget))
         {
             //Make sure the currect target is not an enemy
@@ -115,7 +108,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 }
             }
             //Get next target in shape to test for a new
-            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, GetSpellTargetLocation());
+            oTarget = MyNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, PRCGetSpellTargetLocation());
         }
         //Check to make sure that oLowest has changed
         if(bContinueLoop == TRUE)
@@ -123,7 +116,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
             //Fire cast spell at event for the specified target
             SignalEvent(oLowest, EventSpellCastAt(OBJECT_SELF, SPELL_CIRCLE_OF_DEATH));
             fDelay = GetRandomDelay();
-            if(!MyPRCResistSpell(OBJECT_SELF, oLowest,CasterLvl, fDelay))
+            if(!MyPRCResistSpell(OBJECT_SELF, oLowest, nPenetr, fDelay))
             {
                 int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
                 //Make a Fort Save versus death effects
@@ -131,7 +124,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
                 {
                     DeathlessFrenzyCheck(oTarget); 
                     DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDeath, oLowest));
-                    //DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oLowest));
+                    DelayCommand(fDelay, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oLowest));
                 }
             }
             //Even if the target made their save mark them as having been affected by the spell
@@ -145,7 +138,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         }
     }
     
+    SPSetSchool();
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+
 }

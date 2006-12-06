@@ -47,7 +47,7 @@ void main()
     int bRightHandMissing;
     int bLeftAnimated = FALSE;
     int bRightAnimated = FALSE;
-
+    /* needs rewrite for nwn2
     if(GetCreatureBodyPart(CREATURE_PART_LEFT_HAND, oTarget) == nModelNumber)
     {
         bLeftHandMissing = TRUE;
@@ -167,7 +167,7 @@ void main()
                 AssignCommand(oHand, SetIsEnemy(oTarget));
             }
         }
-    }
+    } */
     SPEvilShift(oPC);
     SPSetSchool();
 }

@@ -4,8 +4,7 @@
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
-    Add basic protection from good effects to
-    entering allies.
+    Circle Against Good onExit
 */
 //:://////////////////////////////////////////////
 //:: Created By: Preston Watamaniuk

@@ -4,8 +4,7 @@
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
-    Add basic protection from evil effects to
-    entering allies.
+    Nagic Circle Against Law onEnter
 */
 //:://////////////////////////////////////////////
 //:: Created By: Preston Watamaniuk
@@ -23,10 +22,7 @@
 void main()
 {
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-
- ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_LAW,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_LAW,OBJECT_SELF, GetSpellSaveDC()));
 
 
     object oTarget = GetEnteringObject();

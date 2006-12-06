@@ -55,20 +55,6 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         }
     }
 
-    if((nSpellID == SPELL_MAGIC_CIRCLE_AGAINST_CHAOS) ||
-        (nSpellID == SPELL_MAGIC_CIRCLE_AGAINST_GOOD))
-    {
-        eVis = EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MINOR);
-        eVis2 = EffectVisualEffect(VFX_IMP_EVIL_HELP);
-    }
-    else
-    {
-        eVis = EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MINOR);
-        eVis2 = EffectVisualEffect(VFX_IMP_GOOD_HELP);
-    }
-
-    effect eLink = EffectLinkEffects(eAOE, eVis);
-    eLink = EffectLinkEffects(eLink, eDur);
     int nDuration = nCasterLevel;
     int nMetaMagic = PRCGetMetaMagicFeat();
     //Make sure duration does not equal 0
@@ -77,7 +63,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         nDuration = 1;
     }
     //Check Extend metamagic feat.
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if (nMetaMagic & METAMAGIC_EXTEND)
     {
        nDuration = nDuration *2;    //Duration is +100%
     }
@@ -85,10 +71,9 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, nSpellID, FALSE));
     //Create an instance of the AOE Object using the Apply Effect function
     if (GetLocalInt(OBJECT_SELF,temp))
-     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(GetLocalInt(OBJECT_SELF,temp)),TRUE,-1,nCasterLevel);
+     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, RoundsToSeconds(GetLocalInt(OBJECT_SELF,temp)),TRUE,nSpellID,nCasterLevel);
     else
-     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, HoursToSeconds(nDuration),TRUE,-1,nCasterLevel);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis2, oTarget);
+     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eAOE, oTarget, HoursToSeconds(nDuration),TRUE,nSpellID,nCasterLevel);
     DeleteLocalInt(OBJECT_SELF,temp);
 
     return TRUE;    //return TRUE if spell charges should be decremented

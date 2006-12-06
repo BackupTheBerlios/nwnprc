@@ -4,8 +4,7 @@
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
-    Add basic protection from good effects to
-    entering allies.
+    Magic Circle Against Chaos onEnter script
 */
 //:://////////////////////////////////////////////
 //:: Created By: Preston Watamaniuk
@@ -22,9 +21,6 @@
 
 void main()
 {
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
 
  ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_CHAOS,OBJECT_SELF, GetSpellSaveDC()));
 
@@ -43,7 +39,5 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
         //SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
         SPApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oTarget,0.0f,FALSE);
      }
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
 
 }

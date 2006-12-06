@@ -4,8 +4,7 @@
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
-    Add basic protection from evil effects to
-    entering allies.
+    Magic Circle Against Evil onExit
 */
 //:://////////////////////////////////////////////
 //:: Created By: Preston Watamaniuk

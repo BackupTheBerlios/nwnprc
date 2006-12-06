@@ -4,8 +4,7 @@
 //:: Copyright (c) 2001 Bioware Corp.
 //:://////////////////////////////////////////////
 /*
-    Add basic protection from evil effects to
-    entering allies.
+    Magic Circle Against Law onExit
 */
 //:://////////////////////////////////////////////
 //:: Created By: Preston Watamaniuk
@@ -19,10 +18,7 @@
 void main()
 {
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
-
- ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_LAW,OBJECT_SELF, GetSpellSaveDC()));
+    ActionDoCommand(SetAllAoEInts(SPELL_MAGIC_CIRCLE_AGAINST_LAW,OBJECT_SELF, GetSpellSaveDC()));
 
     //Declare major variables
     //Get the object that is exiting the AOE
@@ -45,7 +41,4 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ABJURATION);
             eAOE = GetNextEffect(oTarget);
         }
     }
-
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
- // delete the variable showing the spell's school
 }

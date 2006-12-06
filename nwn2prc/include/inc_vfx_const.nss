@@ -14,6 +14,7 @@
 /* Unenumerated BW VFX                          */
 //////////////////////////////////////////////////
 
+/* Commented out all NWN1 VFX, since it is no longer relevant
 const int VFX_COM_BLOOD_REG_WIMPY       = 296;
 const int VFX_COM_BLOOD_LRG_WIMPY       = 297;
 const int VFX_COM_BLOOD_CRT_WIMPY       = 298;
@@ -119,7 +120,7 @@ const int NORMAL_DART               = 359;
 //
 // I also tried Mirv's with chunk models - using the black skull from the mind
 // fear effect.  It looked even dumber manifesting at the target before impact.
-
+/* Commented out all NWN1 VFX, since it is no longer relevant
 const int VFX_IMP_MIRV_SILENT           = 1000;
 const int VFX_IMP_MIRV_DN_YELLOW        = 1001;
 const int VFX_IMP_MIRV_DN_RED           = 1002;
@@ -487,7 +488,7 @@ const int VFX_DUR_AIR2   = 515;
 //////////////////////////////////////////////////
 /* Soopaman's VFX from SMP (Granted to us now)  */
 //////////////////////////////////////////////////
-
+/* Commented out all NWN1 VFX, since it is no longer relevant
 const int VFX_FNF_TORNADO                 	   = 851;
 const int VFX_IMP_PWBLIND                 	   = 852;
 const int VFX_IMP_RED_MISSLE              	   = 853;
@@ -586,7 +587,7 @@ const int VFX_DUR_PHASE_DOOR              	   = 946;
 const int VFX_FNF_SCINTILLATING_PATTERN   	   = 947;
 const int VFX_IMP_DRAGONBLAST             	   = 948;
 const int VFX_FNF_DEEP_SLUMBER            	   = 949;
-const int VFX_AOE_ZONE_OF_TRUTH           	   = 950;
+const int VFX_AOE_ZONE_OF_TRUTH           	   = 950;*/
 					   
 					   
 					   

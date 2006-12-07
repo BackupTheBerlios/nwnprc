@@ -199,6 +199,7 @@ void DoHeaderAndChoices(int nStage)
             int nPoints = GetLocalInt(OBJECT_SELF, "Points");
             if(nPoints == 0)
             {
+                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
                 //calculate number of points
                 nPoints += StringToInt(Get2DACache("classes", "SkillPointBase", GetLocalInt(OBJECT_SELF, "Class")));
                 // calculate the intelligence bonus/penalty
@@ -217,7 +218,6 @@ void DoHeaderAndChoices(int nStage)
                 if(nPoints < 4)
                     nPoints = 4;
                 SetLocalInt(OBJECT_SELF, "Points", nPoints);
-                SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
             }
             // do header
             sText = GetStringByStrRef(396) + "\n"; // Allocate skill points

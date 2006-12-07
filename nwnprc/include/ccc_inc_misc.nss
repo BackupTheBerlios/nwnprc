@@ -545,6 +545,12 @@ void DoCleanup()
     DeleteLocalInt(oPC, "SpellsPerDay0");
     DeleteLocalInt(oPC, "SpellsPerDay1");
     
+    DeleteLocalInt(oPC, "Soundset");
+    DeleteLocalInt(oPC, "Skin");
+    DeleteLocalInt(oPC, "Hair");
+    DeleteLocalInt(oPC, "TattooColour1");
+    DeleteLocalInt(oPC, "TattooColour2");
+    
     // delete some arrays
     array_delete(oPC, "spellLvl0");
     array_delete(oPC, "spellLvl1");

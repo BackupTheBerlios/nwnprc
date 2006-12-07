@@ -11,7 +11,7 @@
 
 #include "prc_alterations"
 #include "prc_inc_teleport"
-#include "inc_vfx_const"
+#include "prc_vfx_const"
 #include "x0_i0_position"
 
 

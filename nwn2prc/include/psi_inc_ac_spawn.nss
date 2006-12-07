@@ -10,7 +10,7 @@
 #include "psi_inc_ac_const"
 #include "prc_ipfeat_const"
 #include "prc_feat_const"
-#include "inc_vfx_const"
+#include "prc_vfx_const"
 
 
 //////////////////////////////////////////////////

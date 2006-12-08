@@ -1459,6 +1459,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_SOUNDSET: {
             if (nChoice == -1) // no change
             {
+                SetLocalInt(OBJECT_SELF, "Soundset", nChoice);
                 nStage = GetNextCCCStage(nStage, FALSE);
             }
             else

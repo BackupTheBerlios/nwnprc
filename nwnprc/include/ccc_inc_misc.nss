@@ -1895,15 +1895,17 @@ void DoPortraitsLoop()
     int nReali = GetLocalInt(OBJECT_SELF, "i");
     int nCounter = 0;
     string sSQL;
+    // note: "BaseResRef != 'matron'" is because that portrait is referenced in bioware's
+    // portraits.2da, but doesn't exist
     if (GetPRCSwitch(PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX))
     {
         // get the gender and add it to the SQL statement
         string sGender = IntToString(GetLocalInt(OBJECT_SELF, "Gender"));
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****' AND "+q+"SEX"+q+" = '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" = '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
     }
     else
     {
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron')LIMIT 100 OFFSET "+IntToString(nReali);
     }
     PRC_SQLExecDirect(sSQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)

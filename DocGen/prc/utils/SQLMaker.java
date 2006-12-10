@@ -28,7 +28,7 @@ public final class SQLMaker{
 			readMe();
 
 		String dir = args[0];
-		if(args.length >= 1 && args[1].equals("MySQL")){
+		if(args.length >= 1 && args[1].equalsIgnoreCase("MySQL")){
 			q = "`";
 			mysql = true;
 			sqlite = false;
@@ -217,7 +217,7 @@ public final class SQLMaker{
 			}
 			entry.append(");");
 			sql.append(entry + "\n");
-			printSQL(false);
+			//printSQL(false);
 		}
 
 		printSQL(false);
@@ -248,7 +248,7 @@ public final class SQLMaker{
 			}
 			entry.append(");");
 			sql.append(entry + "\n");
-			printSQL(false);
+			//printSQL(false);
 		}
 
 		printSQL(false);
@@ -270,7 +270,7 @@ public final class SQLMaker{
 
 				if(verbose) spinner.spin();
 			}
-			printSQL(false);
+			//printSQL(false);
 		}
 
 		printSQL(false);

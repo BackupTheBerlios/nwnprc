@@ -13,7 +13,7 @@ import static prc.Main.*;
 public final class SQLMaker{
 	private SQLMaker(){}
 
-	private static StringBuilder sql;
+	private static BufferedWriter sql;
 	private static String q = "";
 	private static boolean mysql = false;
 	private static boolean sqlite = true;
@@ -33,9 +33,20 @@ public final class SQLMaker{
 			mysql = true;
 			sqlite = false;
 		}
+		
+		// Create the output stream
+		File target = new File("out.sql");
+		// Clean up old version if necessary
+		if(target.exists()){
+			if(verbose) System.out.println("Deleting previous version of " + target.getName());
+			target.delete();
+		}
+		target.createNewFile();
 
-		// Allocate a buffer for constructing the string in - 1Kb
-		sql = new StringBuilder(0x3FF);
+		// Allocate output buffer of 1Mb
+		sql = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(target)), 0xFFFFF);
+		
+		
 		//setup the transaction
 		if(sqlite)
 			sql.append("BEGIN IMMEDIATE;\n");
@@ -79,8 +90,6 @@ public final class SQLMaker{
     		       ""+q+"rowid"+q+" 			integer DEFAULT -1, "			+
     		       ""+q+"data"+q+" 				varchar(255) DEFAULT '_');\n"
     	           );
-		printSQL(true); //start a new file
-
 
 		File[] files = new File(dir).listFiles();
 		for(int i = 0; i < files.length; i++)
@@ -101,9 +110,9 @@ public final class SQLMaker{
 		//complete the transaction
 		if(sqlite)
 			sql.append("COMMIT;\n");
-
-		printSQL(false);
-
+		
+		sql.flush();
+		sql.close();
 	}
 
 	private static void readMe(){
@@ -153,28 +162,8 @@ public final class SQLMaker{
 		}
 		//tell user finished that table
 		if(verbose) System.out.println("- Done");
-	}
-
-	private static void printSQL(boolean newFile) throws Exception{
-	//private static void printSQL(boolean newFile){
-		File target = new File("out.sql");
-		// Clean up old version if necessary
-		if(target.exists() && newFile){
-			if(verbose) System.out.println("Deleting previous version of " + target.getName());
-			target.delete();
-		}
-		target.createNewFile();
-
-		// Creater the writer and print
-		FileWriter writer = new FileWriter(target, true);
-		writer.write(sql.toString());
-		// Clean up
-		writer.flush();
-		writer.close();
-		// Allocate a new buffer - 1Mb this time, since the strings following the first are likely to be larger
-		sql = new StringBuilder(0xFFFFF);
-
-		// Force garbage collection
+		
+//		 Force garbage collection
 		System.gc();
 	}
 
@@ -217,10 +206,7 @@ public final class SQLMaker{
 			}
 			entry.append(");");
 			sql.append(entry + "\n");
-			//printSQL(false);
 		}
-
-		printSQL(false);
 	}
 
 	private static void addSQLForGroupedTable(Data_2da data, String filename, String tablename) throws Exception{
@@ -248,10 +234,7 @@ public final class SQLMaker{
 			}
 			entry.append(");");
 			sql.append(entry + "\n");
-			//printSQL(false);
 		}
-
-		printSQL(false);
 	}
 	private static void addSQLForGeneralTable(Data_2da data, String filename) throws Exception{
 		String[] labels = data.getLabels();
@@ -270,9 +253,6 @@ public final class SQLMaker{
 
 				if(verbose) spinner.spin();
 			}
-			//printSQL(false);
 		}
-
-		printSQL(false);
 	}
 }

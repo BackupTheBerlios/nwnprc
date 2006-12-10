@@ -161,3 +161,4 @@ const int CLASS_TYPE_BINDER                  = 218;
 const int CLASS_TYPE_SACRED_SEAL             = 219;
 const int CLASS_TYPE_TENEBROUS_APOSTATE      = 220;
 const int CLASS_TYPE_WITCH_SLAYER        = 221;
+const int CLASS_TYPE_DRAGON_SHAMAN           = 204;

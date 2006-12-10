@@ -4,7 +4,7 @@ int SkirmishDamage(object oPC, object oTarget, int nClass)
 {
     int nDamage = 0;
     // Only works on non-crit immune and they're within 30 feet
-    if (!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT) && FeetToMeters(30.0) > GetDistanceBetween(oPC, oTarget))
+    if (!GetIsImmune(oTarget, IMMUNITY_TYPE_CRITICAL_HIT) && FeetToMeters(30.0) >= GetDistanceBetween(oPC, oTarget))
     {
         // Increased Dice every 4 levels (1, 5, 9 and so on)
         int nDice = (nClass + 3) / 4;
@@ -25,9 +25,6 @@ void SkirmishAC(object oPC, int nClass)
 
 void BattleFortitude(object oPC, int nClass)
 {
-    // Don't need to do this all the time
-    if (!GetLocalInt(oPC, "ScoutBattleFort"))
-    {
         int nFort;
         // Increased Fort every 9 levels (2, 11, 20 and so on)
         if (nClass >= 38)      nFort = 5;
@@ -37,15 +34,12 @@ void BattleFortitude(object oPC, int nClass)
         else if (nClass >= 2)  nFort = 1;
         effect eFort = ExtraordinaryEffect(EffectSavingThrowIncrease(SAVING_THROW_FORT, nFort));
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, eFort, oPC);
-
-        SetLocalInt(oPC, "ScoutBattleFort", TRUE);
-    }
 }
 
 // Permanent Freedom of movement spell
 void FreeMovement(object oPC, int nClass)
 {
-    if (nClass >= 18 && !GetLocalInt(oPC, "ScoutFreeMove"))
+    if (nClass >= 18)
     {
         effect eParal = EffectImmunity(IMMUNITY_TYPE_PARALYSIS);
         effect eEntangle = EffectImmunity(IMMUNITY_TYPE_ENTANGLE);
@@ -58,36 +52,23 @@ void FreeMovement(object oPC, int nClass)
         eLink = EffectLinkEffects(eLink, eMove);
 
         ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(eLink), oPC);
-        SetLocalInt(oPC, "ScoutFreeMove", TRUE);
     }
 }
 
 void FastMovement(object oPC, int nClass)
 {
-    // Don't need to do this all the time
-    if (!GetLocalInt(oPC, "ScoutFastMove"))
-    {
         // Speed bonus. +20 feet at level 11, +10 feet at level 3
         // In NWN this is +66% and +33% (Assume 30 feet as base speed)
         if (nClass >= 11) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectMovementSpeedIncrease(66)), oPC);
         else if (nClass >= 3) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectMovementSpeedIncrease(33)), oPC);
-
-        SetLocalInt(oPC, "ScoutFastMove", TRUE);
-    }
 }
 
 void BlindSight(object oPC, int nClass)
 {
-    // Don't need to do this all the time
-    if (!GetLocalInt(oPC, "ScoutBlindsight"))
-    {
         // Blindsense -> Darkvis
-        // Blindsight - True Seeing
+        // Blindsight -> True Seeing
         if (nClass >= 20) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectUltravision()), oPC);
         else if (nClass >= 10) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectTrueSeeing()), oPC);
-
-        SetLocalInt(oPC, "ScoutBlindsight", TRUE);
-    }
 }
 
 void main()
@@ -173,13 +154,13 @@ void main()
             IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_BOLTS, oPC);
-            IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_BULLETS, oPC);
-            IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
 
             oAmmo = GetItemInSlot(INVENTORY_SLOT_ARROWS, oPC);
-            IPSafeAddItemProperty(oItem, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
+            IPSafeAddItemProperty(oAmmo, ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1), 99999.0, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         }
     }
     // We are called from the OnPlayerUnEquipItem eventhook. Remove OnHitCast: Unique Power from oPC's weapon

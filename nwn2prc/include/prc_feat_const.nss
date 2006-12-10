@@ -2836,6 +2836,33 @@ const int FEAT_ORCUS_SPELLCST_SUEL  	       = 15163;
 const int FEAT_ORCUS_SPELLCST_SHDL  	       = 15164;
 const int FEAT_ORCUS_SPELLCST_HEXBLD	       = 15165;
 const int FEAT_ORCUS_SPELLCST_DSKBLD           = 15166;
+
+// Dragon Shaman
+const int FEAT_DRAGONSHAMAN_RESOLVE               = 3838;
+const int FEAT_DRAGONSHAMAN_TOUCHVITALITY         = 3834;
+const int FEAT_DRAGONSHAMAN_TOUCHVITALITY_MINOR   = 3835;
+const int FEAT_DRAGONSHAMAN_TOUCHVITALITY_RESTORE = 3836;
+const int FEAT_DRAGONSHAMAN_TOUCHVITALITY_MAJOR   = 3837;
+const int FEAT_DRAGONSHAMAN_BREATH                = 3840;
+const int FEAT_DRAGONSHAMAN_AURA_POWER            = 3826;
+const int FEAT_DRAGONSHAMAN_AURA_SENSES           = 3829;
+const int FEAT_DRAGONSHAMAN_AURA_PRESENCE         = 3832;
+const int FEAT_DRAGONSHAMAN_AURA_RESISTANCE       = 3831;
+const int FEAT_DRAGONSHAMAN_AURA_ENERGYSHLD       = 3827;
+const int FEAT_DRAGONSHAMAN_AURA_VIGOR            = 3830;
+const int FEAT_DRAGONSHAMAN_AURA_TOUGHNESS        = 3828;
+const int FEAT_DRAGONSHAMAN_ARMOR                 = 3833;
+const int FEAT_DRAGONSHAMAN_ENERGY_IMMUNITY       = 3839;
+const int FEAT_DRAGONSHAMAN_RED                   = 3841;
+const int FEAT_DRAGONSHAMAN_BLACK                 = 3844;
+const int FEAT_DRAGONSHAMAN_BLUE                  = 3842;
+const int FEAT_DRAGONSHAMAN_SILVER                = 3846;
+const int FEAT_DRAGONSHAMAN_BRASS                 = 3848;
+const int FEAT_DRAGONSHAMAN_GOLD                  = 3847;
+const int FEAT_DRAGONSHAMAN_GREEN                 = 3843;
+const int FEAT_DRAGONSHAMAN_COPPER                = 3850;
+const int FEAT_DRAGONSHAMAN_WHITE                 = 3845;
+const int FEAT_DRAGONSHAMAN_BRONZE                = 3849;
                                              
 /*//////////////////////////////////////////////////              
 //////////////// TRUENAMING ////////////////////////

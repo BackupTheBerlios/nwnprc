@@ -66,6 +66,12 @@ void RestFinished(object oPC)
         SetLocalInt(oPC,"FEAT_LIPS_RAPTUR",iLips);
         SendMessageToPC(oPC," Lips of Rapture : use "+IntToString(iLips-1));
     }
+    if(GetHasFeat(FEAT_DRAGONSHAMAN_TOUCHVITALITY, oPC))
+    {
+        int nHealPower = ((2 * (GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC)) * GetAbilityModifier(ABILITY_CONSTITUTION, oPC));
+        SetLocalInt(oPC, "DRAGON_SHAMAN_TOUCH_REMAIN", nHealPower);
+        SendMessageToPC(oPC, "Healing power remaining " + IntToString(nHealPower) + " points.");
+    }
     /*
     if (GetIsEpicCleric(oPC) || GetIsEpicDruid(oPC) ||
         GetIsEpicSorcerer(oPC) || GetIsEpicWizard(oPC) ||

@@ -1078,6 +1078,83 @@ int LeadershipHD(object oPC)
     }
     return TRUE;
 }
+int DragonShamanFeats(object oPC)
+{
+    int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC);
+    int nNumAuras;
+    int nNumDragonTotem;
+    int nNumOfSkillFocus;
+
+    nNumDragonTotem +=   GetHasFeat(FEAT_RED_DRAGON, oPC) +
+                         GetHasFeat(FEAT_SILVER_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BLACK_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BLUE_DRAGON, oPC) +
+                         GetHasFeat(FEAT_GREEN_DRAGON, oPC) +
+                         GetHasFeat(FEAT_WHITE_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BRASS_DRAGON, oPC) +
+                         GetHasFeat(FEAT_BRONZE_DRAGON, oPC) +
+                         GetHasFeat(FEAT_COPPER_DRAGON, oPC) +
+                         GetHasFeat(FEAT_GOLD_DRAGON, oPC);
+
+    nNumAuras +=         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_POWER, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_PRESENCE, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_ENERGYSHLD, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_SENSES, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_RESISTANCE, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_VIGOR, oPC) +
+                         GetHasFeat(FEAT_DRAGONSHAMAN_AURA_TOUGHNESS, oPC);
+
+    nNumOfSkillFocus +=  GetHasFeat(SKILLFOCUS_HIDE) +
+                         GetHasFeat(SKILLFOCUS_MOVE) +
+                         GetHasGeat(SKILLFOCUS_BLUFF);
+
+    if(nNumDragonTotem > 1)
+    {
+        FloatingTextStringOnCreature("You cannot take more than one Dragon Totem, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel <= 2 && nNumAuras < 3 || nNumAuras > 3)
+    {
+        FloatingTextStringOnCreature("You must have 3 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if(nLevel <= 4 && nNumAuras < 4 || nNumAuras > 4)
+    {
+        FloatingTextStringOnCreature("You must have 4 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if(nLevel <= 7 && nNumAuras < 5 || nNumAuras > 5)
+    {
+        FloatingTextStringOnCreature("You must have 5 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if(nLevel <= 8 && nNumAuras < 6 || nNumAuras > 6)
+    {
+        FloatingTextStringOnCreature("You must have 6 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    else if(nLevel >= 9 && nNumAuras < 7)
+    {
+        FloatingTextStringOnCreature("You must have 7 auras, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel == 2 && nNumOfSkillFocus < 1) || nNumOfSkillFocus > 1)
+    {
+        FloatingTextStringOnCreature("You must have 1 class skill focus, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel == 8 && nNumOfSkillFocus < 2 || nNumOfSkillFocus > 2)
+    {
+        FloatingTextStringOnCreature("You must have 2 class skill focuses, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    if(nLevel == 16 && nNumOfSkillFocus < 3)
+    {
+        FloatingTextStringOnCreature("You must have 3 class skill focuses, please reselect your feats.", oPC, FALSE);
+        return FALSE;
+    }
+    return TRUE;
+}
 
 void main()
 {
@@ -1106,6 +1183,7 @@ void main()
          || !RacialHD(oPC)
          || !LeadershipHD(oPC)
          || !FavouredSoul(oPC)
+         || !DragonShamanFeats(oPC)
        )
     {
        int nHD = GetHitDice(oPC);

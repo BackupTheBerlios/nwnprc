@@ -285,7 +285,7 @@ void DoHeaderAndChoices(int nStage)
             int nFeat = array_get_int(OBJECT_SELF, "Feats", (array_get_size(OBJECT_SELF, "Feats") - 1));
             // alertness fix
             if (nFeat == -1)
-                nFeat == 0;
+                nFeat = 0;
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeat))) + "\n"; // name
             sText += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeat))) + "\n"; // description
             sText+= "\n"+GetStringByStrRef(16824210); // Is this correct?

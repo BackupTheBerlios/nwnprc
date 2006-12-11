@@ -14,10 +14,10 @@
 //sVarNameBase is the root of the variables and tag of token
 //nLoopSize is the number of rows per call
 void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
-    string sDestColumn, string sVarNameBase, int nLoopSize = 100);
+    string sDestColumn, string sVarNameBase, int nLoopSize = 100, string sTag = "");
 
 void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
-    string sColumnName, string sColumnValue, int nLoopSize = 100);
+    string sColumnName, string sColumnValue, int nLoopSize = 100, string sTag = "");
 
 //this returns the real SpellID of "wrapper" spells cast by psionic or the new spellbooks
 int GetPowerFromSpellID(int nSpellID);
@@ -35,23 +35,24 @@ int GetPowerfileIndexFromSpellID(int nSpellID);
 int GetClassFeatFromPower(int nPowerID, int nClass);
 
 /**
- * Determines the name of the 2da file that defines the number of powers
- * known, maximum level of powers known and number of power points
- * at each level of the given class.
+ * Determines the name of the 2da file that defines the number of alternate magic
+ * system powers/spells/whathaveyou known, maximum level of such known and
+ * number of uses at each level of the given class. And possibly related things
+ * that apply to that specific system.
  *
- * @param nClass CLASS_TYPE_* of the class to determine the psionics 2da name of
- * @return       The name of the given class's psionics 2da
+ * @param nClass CLASS_TYPE_* of the class to determine the powers known 2da name of
+ * @return       The name of the given class's powers known 2da
  */
-string GetPsionicFileName(int nClass);
+string GetAMSKnownFileName(int nClass);
 
 /**
- * Determines the name of the 2da file that lists the powers
- * on the given class's power list.
+ * Determines the name of the 2da file that lists the powers/spells/whathaveyou
+ * on the given class's list of such.
  *
  * @param nClass CLASS_TYPE_* of the class to determine the power list 2da name of
  * @return       The name of the given class's power list 2da
  */
-string GetPsiBookFileName(int nClass);
+string GetAMSDefinitionFileName(int nClass);
 
 #include "inc_utility"
 #include "prc_class_const"
@@ -77,7 +78,7 @@ void MakeLookupLoopMaster()
     // The Truenamer uses the same lookup loop style as the psionic classes. Time adjusted to put it after the last of the caster lookup loops
     DelayCommand(7.3, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(7.5, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_TRUENAMER)));
-    DelayCommand(7.6, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));    
+    DelayCommand(7.6, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     //add new psionic classes here
     //also add them later too
 
@@ -197,21 +198,21 @@ void MakeLookupLoopMaster()
     DelayCommand(8.0, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(8.1, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(8.2, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(8.3, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));    
+    DelayCommand(8.3, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
     DelayCommand(8.4, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(8.5, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(8.6, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(8.7, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));        
+    DelayCommand(8.7, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
     DelayCommand(9.0, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(9.1, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(9.2, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(9.3, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));            
+    DelayCommand(9.3, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
     DelayCommand(9.6, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
     DelayCommand(9.7, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(9.8, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(9.9, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(10.0, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));    
-    DelayCommand(11.3, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));    
+    DelayCommand(10.0, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
+    DelayCommand(11.3, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));
     DelayCommand(10.3, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
     DelayCommand(10.4, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(10.5, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
@@ -221,112 +222,142 @@ void MakeLookupLoopMaster()
     DelayCommand(10.9, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "6"));
     DelayCommand(11.0, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "7"));
     DelayCommand(11.1, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "8"));
-    DelayCommand(11.2, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));    
+    DelayCommand(11.2, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));
 }
 
 void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
-    string sColumnName, string sColumnValue, int nLoopSize = 100)
+    string sColumnName, string sColumnValue, int nLoopSize = 100, string sTag = "")
 {
-    string sFile;
-    if(nClass == CLASS_TYPE_PSION          ||
-       nClass == CLASS_TYPE_PSYWAR         ||
-       nClass == CLASS_TYPE_WILDER         ||
-       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
-       nClass == CLASS_TYPE_WARMIND        ||
-       nClass == CLASS_TYPE_TRUENAMER //Uses this function as well
-    //add new psionic classes here
-        )
-        sFile = GetPsiBookFileName(nClass);
-    else
-    {
-        sFile = Get2DACache("classes", "FeatsTable", nClass);
-        sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
-    }
-
-    //get the token to store it on
-    //this is piggybacked into 2da caching
-    string sTag = ""+sVarNameBase+"_"+IntToString(nClass)+"_"+sColumnName+"_"+sColumnValue;
-    object oWP = GetObjectByTag(sTag);
-    if(!GetIsObjectValid(oWP))
-    {
-        object oChest = GetObjectByTag("Bioware2DACache");
-        if(!GetIsObjectValid(oChest))
-        {
-            //has to be an object, placeables cant go through the DB
-            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
-             GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
-        }
-        if(!GetIsObjectValid(oChest))
-        {
-            //has to be an object, placeables cant go through the DB
-            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
-                GetStartingLocation(), FALSE, "Bioware2DACache");
-        }
-        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
-        DestroyObject(oWP);
-        oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
-    }
-    //token exists, if starting new run abort assuming restored from database
-    if(nMin == 0
-        && array_exists(oWP, sTag))
-    {
-        DoDebug("MakeSpellbookLevelLoop("+sTag+") restored from database");
-        return;
-    }
-
-    if(nMin == 0)
-        array_create(oWP, sTag);
-
-    if(!GetIsObjectValid(oWP))
-    {
-        DoDebug("Problem creating token for "+sTag);
-        return;
-    }
-
-
-    int i = nMin;
-    for(i=nMin;i<nMin+nLoopSize;i++)
-    {
-        if(Get2DACache(sFile, sColumnName, i) == sColumnValue
-            && Get2DACache(sFile, "ReqFeat", i) == "")
-            array_set_int(oWP, sTag, array_get_size(oWP, sTag), i);
-    }
-    if(i<nMax)
-        DelayCommand(0.0, MakeSpellbookLevelLoop(nClass, i, nMax, sVarNameBase, sColumnName, sColumnValue, nLoopSize));
-
-if(DEBUG) DoDebug("MakeSpellbookLevelLoop("
+    if(DEBUG) DoDebug("MakeSpellbookLevelLoop("
                  +IntToString(nClass)+", "
-                 +IntToString(i)+", "
+                 +IntToString(nMin)+", "
                  +IntToString(nMax)+", "
                  +sVarNameBase+", "
                  +sColumnName+", "
                  +sColumnValue+", "
                  +IntToString(nLoopSize)+", "
                  +") : sTag = "+sTag);
-}
 
-void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
-    string sDestColumn, string sVarNameBase, int nLoopSize = 100)
-{
-
+    /// Determine the 2da to use
+    int bNewSpellbook = FALSE;
     string sFile;
+    // Stuff handled in GetAMSDefinitionFileName()
     if(nClass == CLASS_TYPE_PSION          ||
        nClass == CLASS_TYPE_PSYWAR         ||
        nClass == CLASS_TYPE_WILDER         ||
        nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
        nClass == CLASS_TYPE_WARMIND        ||
-       nClass == CLASS_TYPE_TRUENAMER //Uses this function as well
-    //add new psionic classes here
-        )
-        sFile = GetPsiBookFileName(nClass);
+       // Add new psionic classes here
+
+       // Other new caster types
+       nClass == CLASS_TYPE_TRUENAMER
+       )
+        sFile = GetAMSDefinitionFileName(nClass);
     else
     {
         sFile = Get2DACache("classes", "FeatsTable", nClass);
-        sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+        //sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+        sFile = "cls_spell" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
+        bNewSpellbook = TRUE;
+    }
+
+    //get the token to store it on
+    //this is piggybacked into 2da caching
+    if(sTag == "")
+        sTag = sVarNameBase + "_" + IntToString(nClass) + "_" + sColumnName + "_" + sColumnValue;
+    object oWP = GetObjectByTag(sTag);
+    if(!GetIsObjectValid(oWP))
+    {
+        object oChest = GetObjectByTag("Bioware2DACache");
+        if(!GetIsObjectValid(oChest))
+        {
+            //has to be an object, placeables cant go through the DB
+            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
+                                  GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
+        }
+        if(!GetIsObjectValid(oChest))
+        {
+            //has to be an object, placeables cant go through the DB
+            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
+                                  GetStartingLocation(), FALSE, "Bioware2DACache");
+        }
+        // Some inventory shuffle, probably? - Ornedan
+        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
+        DestroyObject(oWP);
+        oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
+
+        if(!GetIsObjectValid(oWP))
+        {
+            DoDebug("Problem creating token for " + sTag);
+            return;
+        }
+    }
+    // Starting a new run and the array exists already. Assume the whole thing is present and abort
+    if(nMin == 0 && array_exists(oWP, sTag))
+    {
+        DoDebug("MakeSpellbookLevelLoop("+sTag+") restored from database");
+        return;
+    }
+
+    // New run, create the array
+    if(nMin == 0)
+        array_create(oWP, sTag);
+
+    // Cache loopsize rows
+    int i;
+    for(i = nMin; i < nMin + nLoopSize; i++)
+    {
+        // None of the relevant 2da files have blank Label entries on rows other than 0. We can assume i is greater than 0 at this point
+        if(i > 0 && Get2DAString(sFile, "Label", i) == "") // Using Get2DAString() instead of Get2DACache() to avoid caching extra
+            return;
+
+        if(Get2DACache(sFile, sColumnName, i) == sColumnValue &&
+           (!bNewSpellbook ||Get2DACache(sFile, "ReqFeat", i)   == "") // Only new spellbooks have the ReqFeat column. No sense in caching it for other stuff
+           )
+            array_set_int(oWP, sTag, array_get_size(oWP, sTag), i);
+    }
+
+    // And delay continuation to avoid TMI
+    if(i < nMax)
+        DelayCommand(0.0, MakeSpellbookLevelLoop(nClass, i, nMax, sVarNameBase, sColumnName, sColumnValue, nLoopSize, sTag));
+}
+
+void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
+    string sDestColumn, string sVarNameBase, int nLoopSize = 100, string sTag = "")
+{
+    if(DEBUG) DoDebug("MakeLookupLoop("
+                 +IntToString(nClass)+", "
+                 +IntToString(nMin)+", "
+                 +IntToString(nMax)+", "
+                 +sSourceColumn+", "
+                 +sDestColumn+", "
+                 +sVarNameBase+", "
+                 +IntToString(nLoopSize)+", "
+                 +") : sTag = "+sTag);
+
+    string sFile;
+    // Stuff handled in GetAMSDefinitionFileName()
+    if(nClass == CLASS_TYPE_PSION          ||
+       nClass == CLASS_TYPE_PSYWAR         ||
+       nClass == CLASS_TYPE_WILDER         ||
+       nClass == CLASS_TYPE_FIST_OF_ZUOKEN ||
+       nClass == CLASS_TYPE_WARMIND        ||
+       // Add new psionic classes here
+
+       // Other new caster types
+       nClass == CLASS_TYPE_TRUENAMER
+       )
+        sFile = GetAMSDefinitionFileName(nClass);
+    else
+    {
+        sFile = Get2DACache("classes", "FeatsTable", nClass);
+        //sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
+        sFile = "cls_spell" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     }
     //get the token to store it on
     //this is piggybacked into 2da caching
-    string sTag = "PRC_"+sVarNameBase;
+    if(sTag == "")
+        sTag = "PRC_" + sVarNameBase;
     object oWP = GetObjectByTag(sTag);
     if(!GetIsObjectValid(oWP))
     {
@@ -343,9 +374,17 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
                 GetStartingLocation(), FALSE, "Bioware2DACache");
         }
+        // Some inventory shuffle, probably? - Ornedan
         oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
+
+        //cant short-ciruit it cos it gets confused between classes
+        if(!GetIsObjectValid(oWP))
+        {
+            DoDebug("Problem creating token for " + sTag);
+            return;
+        }
     }
     //else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
     if(nMin == 0
@@ -355,44 +394,33 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         return;
     }
 
-    //cant short-ciruit it cos it gets confused between classes
-    if(!GetIsObjectValid(oWP))
+    int i;
+    int nSource, nDest;
+    for(i = nMin; i < nMin + nLoopSize; i++)
     {
-        DoDebug("Problem creating token for "+sTag);
-        return;
-    }
+        // None of the relevant 2da files have blank Label entries on rows other than 0. We can assume i is greater than 0 at this point
+        if(i > 0 && Get2DAString(sFile, "Label", i) == "") // Using Get2DAString() instead of Get2DACache() to avoid caching extra
+            return;
 
-    int i = nMin;
-    for(i=nMin;i<nMin+nLoopSize;i++)
-    {
-        int nSource;
         if(sSourceColumn == "")
             nSource = i;
         else
             nSource = StringToInt(Get2DACache(sFile, sSourceColumn, i));
-        int nDest;
+
         if(sDestColumn == "")
             nDest = i;
         else
-            nDest = StringToInt(Get2DACache(sFile, sDestColumn,   i));
-        if(nSource != 0
-            && nDest != 0)
+            nDest = StringToInt(Get2DACache(sFile, sDestColumn, i));
+
+        if(nSource != 0 && nDest != 0)
         {
-            SetLocalInt(oWP, sTag+"_"+IntToString(nSource), nDest);
+            SetLocalInt(oWP, sTag + "_" + IntToString(nSource), nDest);
         }
     }
-    if(i<nMax)
-        DelayCommand(0.0, MakeLookupLoop(nClass, i, nMax, sSourceColumn, sDestColumn, sVarNameBase, nLoopSize));
 
-if(DEBUG) DoDebug("MakeLookupLoop("
-                 +IntToString(nClass)+", "
-                 +IntToString(i)+", "
-                 +IntToString(nMax)+", "
-                 +sSourceColumn+", "
-                 +sDestColumn+", "
-                 +sVarNameBase+", "
-                 +IntToString(nLoopSize)+", "
-                 +") : sTag = "+sTag);
+    // And delay continuation to avoid TMI
+    if(i < nMax)
+        DelayCommand(0.0, MakeLookupLoop(nClass, i, nMax, sSourceColumn, sDestColumn, sVarNameBase, nLoopSize, sTag));
 }
 
 int GetPowerFromSpellID(int nSpellID)
@@ -421,35 +449,34 @@ int GetClassFeatFromPower(int nPowerID, int nClass)
     return nPower;
 }
 
-string GetPsionicFileName(int nClass)
+string GetAMSKnownFileName(int nClass)
 {
-    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
-    // Different naming structure
-    if (nClass == CLASS_TYPE_TRUENAMER) 
-    {
-        sPsiFile = "cls_true_known";
-    }
+    // Get the class-specific base
+    string sFile = Get2DACache("classes", "FeatsTable", nClass);
+
+    // Various naming schemes based on system
+    if(nClass == CLASS_TYPE_TRUENAMER)
+        sFile = "cls_true_known";
+    // Assume psionics if no other match
     else
-    {
-        sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
-    }
-    
-    return sPsiFile;
+        sFile = "cls_psbk" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
+
+    return sFile;
 }
 
-string GetPsiBookFileName(int nClass)
+string GetAMSDefinitionFileName(int nClass)
 {
-    string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
-    // Different naming structure
-    if (nClass == CLASS_TYPE_TRUENAMER) 
-    {
-        sPsiFile = "cls_true_utter";
-    }
+    // Get the class-specific base
+    string sFile = Get2DACache("classes", "FeatsTable", nClass);
+
+    // Various naming schemes based on system
+    if(nClass == CLASS_TYPE_TRUENAMER)
+        sFile = "cls_true_utter";
+    // Assume psionics if no other match
     else
-    {
-        sPsiFile = GetStringLeft(sPsiFile, 4)+"psipw"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
-    }
-    return sPsiFile;
+        sFile = "cls_psipw" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
+
+    return sFile;
 }
 
 // Test main

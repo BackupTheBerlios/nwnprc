@@ -162,8 +162,8 @@ void main()
     int nStage = GetStage(oPC);
 
     int nClass = GetLocalInt(oPC, "nClass");
-    string sPsiFile = GetPsionicFileName(nClass);
-    string sPowerFile = GetPsiBookFileName(nClass);
+    string sPsiFile = GetAMSKnownFileName(nClass);
+    string sPowerFile = GetAMSDefinitionFileName(nClass);
 
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort

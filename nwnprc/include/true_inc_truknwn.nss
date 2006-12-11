@@ -210,7 +210,7 @@ void _RemoveUtteranceArray(object oCreature, int nList, int nLevel, int nLexicon
                           );
 
     // Remove each Utterance in the array
-    _TruenameRecurseRemoveArray(oCreature, sArray, GetPsiBookFileName(nList), nSize, 0);
+    _TruenameRecurseRemoveArray(oCreature, sArray, GetAMSDefinitionFileName(nList), nSize, 0);
 
     // Remove the array itself
     persistant_array_delete(oCreature, sArray);
@@ -225,7 +225,7 @@ int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int nLexicon, in
 {
     string sBase      = _UTTERANCE_LIST_NAME_BASE + IntToString(nList) + IntToString(nLexicon);
     string sArray     = sBase;
-    string sUtterFile = GetPsiBookFileName(nList);
+    string sUtterFile = GetAMSDefinitionFileName(nList);
     string sTestArray;
     int i, j, nSize, bReturn;
 
@@ -359,11 +359,11 @@ int GetMaxUtteranceCount(object oCreature, int nList, int nLexicon)
             if(nLevel == 0)
                 break;
                 if (LEXICON_EVOLVING_MIND == nLexicon)
-            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "EvolvingMind", nLevel - 1));
-		else if (LEXICON_CRAFTED_TOOL == nLexicon)
-            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "CraftedTool", nLevel - 1));            		
-		else if (LEXICON_PERFECTED_MAP == nLexicon)
-            		nMaxUtterances = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_TRUENAMER), "PerfectedMap", nLevel - 1));            		
+                    nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "EvolvingMind", nLevel - 1));
+                else if (LEXICON_CRAFTED_TOOL == nLexicon)
+                    nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "CraftedTool", nLevel - 1));
+                else if (LEXICON_PERFECTED_MAP == nLexicon)
+                    nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "PerfectedMap", nLevel - 1));
 
             // Calculate feats
 
@@ -389,7 +389,7 @@ int GetHasUtterance(int nUtter, object oCreature = OBJECT_SELF)
 {
     if((GetLevelByClass(CLASS_TYPE_TRUENAMER, oCreature)
         && GetHasFeat(GetClassFeatFromPower(nUtter, CLASS_TYPE_TRUENAMER), oCreature)
-        ) 
+        )
         // add new truenaming classes here
        )
         return TRUE;
@@ -418,7 +418,7 @@ string DebugListKnownUtterances(object oCreature)
         sReturn += " utterances known:\n";
 
         // Determine if the character has any utterances from this list
-        sUtterFile = GetPsiBookFileName(nUtterList);
+        sUtterFile = GetAMSDefinitionFileName(nUtterList);
         sArrayBase = _UTTERANCE_LIST_NAME_BASE + IntToString(nUtterList);
 
         // Loop over levels

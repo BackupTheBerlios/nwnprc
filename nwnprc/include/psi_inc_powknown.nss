@@ -242,7 +242,7 @@ void _RemovePowerArray(object oCreature, int nList, int nLevel)
                           );
 
     // Remove each power in the array
-    _RecurseRemoveArray(oCreature, sArray, GetPsiBookFileName(/*PowerListToClassType(*/nList/*)*/), nSize, 0);
+    _RecurseRemoveArray(oCreature, sArray, GetAMSDefinitionFileName(/*PowerListToClassType(*/nList/*)*/), nSize, 0);
 
     // Remove the array itself
     persistant_array_delete(oCreature, sArray);
@@ -257,7 +257,7 @@ int AddPowerKnown(object oCreature, int nList, int n2daRow, int bLevelDependent 
 {
     string sBase      = _POWER_LIST_NAME_BASE + IntToString(nList);
     string sArray     = sBase;
-    string sPowerFile = GetPsiBookFileName(/*PowerListToClassType(*/nList/*)*/);
+    string sPowerFile = GetAMSDefinitionFileName(/*PowerListToClassType(*/nList/*)*/);
     string sTestArray;
     int i, j, nSize, bReturn;
 
@@ -402,7 +402,7 @@ int GetMaxPowerCount(object oCreature, int nList)
                 nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_PSION ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxPowers = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_PSION), "PowersKnown", nLevel - 1));
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_PSION), "PowersKnown", nLevel - 1));
 
             // Calculate feats
             // Apply the epic feat Power Knowledge - +2 powers known per
@@ -424,7 +424,7 @@ int GetMaxPowerCount(object oCreature, int nList)
                 nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_WILDER ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxPowers = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_WILDER), "PowersKnown", nLevel - 1));
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WILDER), "PowersKnown", nLevel - 1));
 
             // Calculate feats
             // Apply the epic feat Power Knowledge - +2 powers known per
@@ -446,7 +446,7 @@ int GetMaxPowerCount(object oCreature, int nList)
                 nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_PSYWAR ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxPowers = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_PSYWAR), "PowersKnown", nLevel - 1));
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_PSYWAR), "PowersKnown", nLevel - 1));
 
             // Calculate feats
             // Apply the epic feat Power Knowledge - +2 powers known per
@@ -468,7 +468,7 @@ int GetMaxPowerCount(object oCreature, int nList)
                 nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_FIST_OF_ZUOKEN ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxPowers = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_FIST_OF_ZUOKEN), "PowersKnown", nLevel - 1));
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_FIST_OF_ZUOKEN), "PowersKnown", nLevel - 1));
 
             // Calculate feats
             // Apply the epic feat Power Knowledge - +2 powers known per
@@ -490,7 +490,7 @@ int GetMaxPowerCount(object oCreature, int nList)
                 nLevel += GetFirstPsionicClass(oCreature) == CLASS_TYPE_WARMIND ? GetPsionicPRCLevels(oCreature) : 0;
             if(nLevel == 0)
                 break;
-            nMaxPowers = StringToInt(Get2DACache(GetPsionicFileName(CLASS_TYPE_WARMIND), "PowersKnown", nLevel - 1));
+            nMaxPowers = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_WARMIND), "PowersKnown", nLevel - 1));
 
             // Calculate feats
             // Apply the epic feat Power Knowledge - +2 powers known per
@@ -570,7 +570,7 @@ string DebugListKnownPowers(object oCreature)
         sReturn += " powers known:\n";
 
         // Determine if the character has any powers from this list
-        sPowerFile = GetPsiBookFileName(nPowerList);
+        sPowerFile = GetAMSDefinitionFileName(nPowerList);
         sArrayBase = _POWER_LIST_NAME_BASE + IntToString(nPowerList);
 
         // Loop over levels

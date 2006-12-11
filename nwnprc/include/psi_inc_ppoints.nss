@@ -178,7 +178,7 @@ int _GetModifierPP (object oChar, int nFirstPsiClass)
     int nZuoken  = GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oChar)
                  + (nFirstPsiClass == CLASS_TYPE_FIST_OF_ZUOKEN ? GetPsionicPRCLevels(oChar) : 0);
     int nWarmind = GetLevelByClass(CLASS_TYPE_WARMIND, oChar)
-                 + (nFirstPsiClass == CLASS_TYPE_WARMIND ? GetPsionicPRCLevels(oChar) : 0);                 
+                 + (nFirstPsiClass == CLASS_TYPE_WARMIND ? GetPsionicPRCLevels(oChar) : 0);
 
     if(nPsion > 0)
     {
@@ -209,7 +209,7 @@ int _GetModifierPP (object oChar, int nFirstPsiClass)
         if(nWarmind > 10) nWarmind = 10;
         nBonus = (nWarmind * GetAbilityModifier(ABILITY_WISDOM, oChar)) / 2;
         nPP += nBonus;
-    }    
+    }
 
     return nPP;
 }
@@ -226,7 +226,7 @@ int _GetPPForClass (object oChar, int nClass, int nFirstPsiClass)
     int nPP;
     int nLevel = GetLevelByClass(nClass, oChar)
                + (nFirstPsiClass == nClass ? GetPsionicPRCLevels(oChar) : 0);
-    string sPsiFile = GetPsionicFileName(nClass);
+    string sPsiFile = GetAMSKnownFileName(nClass);
     nPP = StringToInt(Get2DACache(sPsiFile, "PowerPoints", nLevel - 1)); // Index from 0
 
     return nPP;

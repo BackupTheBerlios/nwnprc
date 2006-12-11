@@ -38,7 +38,7 @@ const int STRREF_SELECTED_HEADER2   = 16824210; // "Is this correct?"
 const int STRREF_END_HEADER         = 16828476; // "You will be able to select more utterances after you gain another level in a truenaming caster class."
 const int STRREF_LEXICONLIST_HEADER = 16828477; // "Select Lexicon to choose utterances in."
 const int STRREF_END_CONVO_SELECT   = 16824212; // "Finish"
-const int LEVEL_STRREF_START        = 16824809; 
+const int LEVEL_STRREF_START        = 16824809;
 const int STRREF_EVOLVING_MIND      = 16828478; // "Lexicon of the Evolving Mind."
 const int STRREF_CRAFTED_TOOL       = 16828479; // "Lexicon of the Crafted Tool."
 const int STRREF_PERFECTED_MAP      = 16828480; // "Lexicon of the Perfected Map."
@@ -163,11 +163,11 @@ void main()
     object oPC = GetPCSpeaker();
     int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
     int nStage = GetStage(oPC);
-    
+
     // For this conversation, this is always Truenamer, although that may change in the future.
     int nClass = GetLocalInt(oPC, "nClass");
-    string sPsiFile = GetPsionicFileName(nClass);
-    string sPowerFile = GetPsiBookFileName(nClass);
+    string sPsiFile = GetAMSKnownFileName(nClass);
+    string sPowerFile = GetAMSDefinitionFileName(nClass);
 
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
@@ -186,17 +186,17 @@ void main()
             {
                 if(DEBUG) DoDebug("true_utterconv: Building lexicon selection");
                 SetHeader(GetStringByStrRef(STRREF_LEXICONLIST_HEADER));
-                
+
                 // Determine which Lexicons they're missing utterances in.
                 int nTrueSpeakLevel = GetLevelByClass(nClass, oPC);
                 // They're always missing one in Evolving Mind, so that's skipped.
                 int nMaxCT = StringToInt(Get2DACache(sPsiFile, "CraftedTool",  nTrueSpeakLevel - 1));
                 int nMaxPM = StringToInt(Get2DACache(sPsiFile, "PerfectedMap", nTrueSpeakLevel - 1));
-                
+
                 int nCountCT = GetUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_CRAFTED_TOOL);
                 int nCountPM = GetUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_PERFECTED_MAP);
-                
-                if(DEBUG) 
+
+                if(DEBUG)
                 {
                 	DoDebug("true_utterconv: Truenamer Level: " + IntToString(nTrueSpeakLevel));
                 	DoDebug("true_utterconv: Max Crafted Tool Known: " + IntToString(nMaxCT));
@@ -212,37 +212,37 @@ void main()
                 if (nMaxCT > nCountCT)
                 	AddChoice(GetStringByStrRef(STRREF_CRAFTED_TOOL), 2);
                 if (nMaxPM > nCountPM)
-                	AddChoice(GetStringByStrRef(STRREF_PERFECTED_MAP), 3);                
+                	AddChoice(GetStringByStrRef(STRREF_PERFECTED_MAP), 3);
 
                 // Set the next, previous and wait tokens to default values
                 SetDefaultTokens();
                 // Set the convo quit text to "Abort"
                 SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(DYNCONV_STRREF_ABORT_CONVO));
-            }            
+            }
             // Level selection stage
             if(nStage == STAGE_SELECT_LEVEL)
             {
                 if(DEBUG) DoDebug("true_utterconv: Building level selection");
                 SetHeader(GetStringByStrRef(STRREF_LEVELLIST_HEADER));
-                
+
                 // Set the first choice to be return to lexicon selection stage
-                AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC); 
+                AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);
                 string sLexicon;
                 int nLexicon = GetLocalInt(oPC, "nLexiconToBrowse");
                 if (nLexicon == LEXICON_EVOLVING_MIND)      sLexicon = "EvolvingMind";
                 else if (nLexicon == LEXICON_CRAFTED_TOOL)  sLexicon = "CraftedTool";
                 else if (nLexicon == LEXICON_PERFECTED_MAP) sLexicon = "PerfectedMap";
-                
-                
+
+
                 // Determine maximum utterance level
                 int nTrueSpeakLevel = GetLevelByClass(nClass, oPC);
                 int nMaxLevel = StringToInt(Get2DACache("cls_true_maxlvl", sLexicon, nTrueSpeakLevel - 1));
-                
-                if(DEBUG) 
+
+                if(DEBUG)
                 {
                 	DoDebug("true_utterconv: Truenamer Level: " + IntToString(nTrueSpeakLevel));
                 	DoDebug("true_utterconv: Max " + sLexicon + " Level: " + IntToString(nMaxLevel));
-                }                
+                }
 
                 // Set the tokens
                 int i;
@@ -261,13 +261,13 @@ void main()
             if(nStage == STAGE_SELECT_UTTERANCE)
             {
                 if(DEBUG) DoDebug("true_utterconv: Building utterance selection");
-                
+
 		string sLexicon;
                 int nLexicon = GetLocalInt(oPC, "nLexiconToBrowse");
                 if (nLexicon == LEXICON_EVOLVING_MIND)      sLexicon = "EvolvingMind";
                 else if (nLexicon == LEXICON_CRAFTED_TOOL)  sLexicon = "CraftedTool";
                 else if (nLexicon == LEXICON_PERFECTED_MAP) sLexicon = "PerfectedMap";
-                
+
                 int nCurrentUtters = GetUtteranceCount(oPC, nClass, nLexicon);
                 int nMaxUtters = GetMaxUtteranceCount(oPC, nClass, nLexicon);
                 string sToken = GetStringByStrRef(STRREF_UTTERLIST_HEADER1) + " " + //"Select a utterance to gain.\n You can select "
@@ -284,8 +284,8 @@ void main()
 
 
                 int nUtterLevelToBrowse = GetLocalInt(oPC, "nUtterLevelToBrowse");
-                
-                if(DEBUG) 
+
+                if(DEBUG)
                 {
                 	DoDebug("true_utterconv: Current Utterances: " + IntToString(nCurrentUtters));
                 	DoDebug("true_utterconv: Max Utterances: " + IntToString(nMaxUtters));
@@ -293,8 +293,8 @@ void main()
                 	DoDebug("true_utterconv: Max " + sLexicon + " Level: " + IntToString(nMaxLevel));
                 	DoDebug("true_utterconv: Utterance Level To Browse: " + IntToString(nUtterLevelToBrowse));
                 }
-                
-                
+
+
                 int i, nUtterLevel;
                 string sFeatID;
                 for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
@@ -400,7 +400,7 @@ void main()
             if(DEBUG) DoDebug("true_utterconv: Lexicon selected");
             SetLocalInt(oPC, "nLexiconToBrowse", nChoice);
             nStage = STAGE_SELECT_LEVEL;
-        }        
+        }
         else if(nStage == STAGE_SELECT_LEVEL)
         {
             if(nChoice == CHOICE_BACK_TO_LSELECT)
@@ -415,7 +415,7 @@ void main()
             	SetLocalInt(oPC, "nUtterLevelToBrowse", nChoice);
             	nStage = STAGE_SELECT_UTTERANCE;
             }
-            MarkStageNotSetUp(STAGE_SELECT_LEVEL, oPC);            
+            MarkStageNotSetUp(STAGE_SELECT_LEVEL, oPC);
         }
         else if(nStage == STAGE_SELECT_UTTERANCE)
         {
@@ -460,8 +460,8 @@ void main()
             int nMaxCT = GetMaxUtteranceCount(oPC, nClass, LEXICON_CRAFTED_TOOL);
             int nPM = GetUtteranceCount(oPC, nClass, LEXICON_PERFECTED_MAP);
             int nMaxPM = GetMaxUtteranceCount(oPC, nClass, LEXICON_PERFECTED_MAP);
-            
-                if(DEBUG) 
+
+                if(DEBUG)
                 {
                 	DoDebug("true_utterconv: Checking all Lexicons for being full");
                 	DoDebug("true_utterconv: Evolving Mind Count: " + IntToString(nEM));
@@ -470,8 +470,8 @@ void main()
                 	DoDebug("true_utterconv: Crafted Tool Max: " + IntToString(nMaxCT));
                 	DoDebug("true_utterconv: Perfected Map Count: " + IntToString(nPM));
                 	DoDebug("true_utterconv: Perfected Map Max: " + IntToString(nMaxPM));
-                }            
-            
+                }
+
 	    //Check all three lexicons for being full
     	    if(nEM >= nMaxEM && nCT >= nMaxCT && nPM >= nMaxPM)
                 nStage = STAGE_ALL_UTTERS_SELECTED;

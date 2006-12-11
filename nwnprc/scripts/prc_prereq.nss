@@ -97,7 +97,7 @@ void Shifter(object oPC, int iArcSpell, int iDivSpell)
      if (GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC) >= 14)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
-     }     
+     }
      if (GetLevelByClass(CLASS_TYPE_INITIATE_DRACONIC, oPC) >= 10)
      {
           SetLocalInt(oPC, "PRC_PrereqShift", 0);
@@ -859,7 +859,7 @@ void main()
                 bFirstPsiClassFound = TRUE;
             }
             int nAbility = GetAbilityForClass(nClass, oPC);
-            string sPsiFile = GetPsionicFileName(nClass);
+            string sPsiFile = GetAMSKnownFileName(nClass);
             int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nLevel));
 
             int nPsiHighest = min(nMaxLevel, nAbility - 10);

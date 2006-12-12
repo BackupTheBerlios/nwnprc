@@ -14,7 +14,7 @@ void DoHeaderAndChoices(int nStage)
     switch(nStage)
     {
         case STAGE_INTRODUCTION: {
-            sText = "This is the Conversation Character Creator (CCC) by Primogenitor.\n";
+            sText = "This is the PRC Conversation Character Creator (CCC).\n";
             sText+= "This is a replicate of the bioware character creator, but it will allow you to select custom content at level 1. ";
             sText+= "Simply follow the step by step instructions and select what you want. ";
             sText+= "If you dont get all the options you think you should at a stage, select one, then select No at the confirmation step.";
@@ -218,13 +218,23 @@ void DoHeaderAndChoices(int nStage)
                 if(nPoints < 4)
                     nPoints = 4;
                 SetLocalInt(OBJECT_SELF, "Points", nPoints);
+                DelayCommand(0.01, DoSkillsLoop());
             }
+            else
+                DoSkillsLoop();
             // do header
             sText = GetStringByStrRef(396) + "\n"; // Allocate skill points
             sText += GetStringByStrRef(395) + ": "; // Remaining Points
             sText += IntToString(GetLocalInt(OBJECT_SELF, "Points"));
             SetHeader(sText);
-            DoSkillsLoop();
+            /* Hack - Returning to the skill selection stage, restore the
+             * offset to be the same as it was choosing the skill.
+             */
+            if(GetLocalInt(OBJECT_SELF, "SkillListChoiceOffset"))
+            {
+                SetLocalInt(OBJECT_SELF, DYNCONV_CHOICEOFFSET, GetLocalInt(OBJECT_SELF, "SkillListChoiceOffset") - 1);
+                DeleteLocalInt(OBJECT_SELF, "SkillListChoiceOffset");
+            }
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;
@@ -1126,7 +1136,13 @@ int HandleChoice(int nStage, int nChoice)
             // store new points total
             SetLocalInt(OBJECT_SELF, "Points", nPoints);
             if (nPoints) // still some left to allocate
+            {
+                // Store offset so that if the user decides not to take the power,
+                // we can return to the same page in the power list instead of resetting to the beginning
+                // Store the value +1 in order to be able to differentiate between offset 0 and undefined
+                SetLocalInt(OBJECT_SELF, "SkillListChoiceOffset", GetLocalInt(OBJECT_SELF, DYNCONV_CHOICEOFFSET) + 1);
                 ClearCurrentStage();
+            }
             else
                 nStage++;
             break;

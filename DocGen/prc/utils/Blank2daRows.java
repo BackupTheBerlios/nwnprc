@@ -1,6 +1,7 @@
 package prc.utils;
 
 import java.util.*;
+import java.io.*;
 import prc.autodoc.*;
 
 /**
@@ -75,7 +76,7 @@ public class Blank2daRows {
 			blankRows(target, range[0], range[1]);
 		
 		// Save 2da back out
-		target.save2da(targetPath, true, true);
+		target.save2da(new File(targetPath).getParent(), true, true);
 	}
 
 	/**

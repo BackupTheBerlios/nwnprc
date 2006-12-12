@@ -88,6 +88,9 @@ public class Main {
 		else if(toCall.equals("2damerge")){
 			prc.utils.Data2daMerge.main(paramsToPass);
 		}
+		else if(toCall.equals("blank2da")){
+			prc.utils.Blank2daRows.main(paramsToPass);
+		}
 		else{
 			System.out.println("Unknown class: " + toCall);
 			readMe();
@@ -127,6 +130,7 @@ public class Main {
 						   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
 						   "         npcevol        - Alters packages based on logfile scores\n" +
 						   "         2damerge       - Merges 2 directories of 2da files, and outputs to a third\n" +
+						   "         blank2da       - Blanks rows in a 2da\n" +
 		                   "\n"+
 						   "parameters  a list of parameters passed to the class called\n"+
 						   "\n"+

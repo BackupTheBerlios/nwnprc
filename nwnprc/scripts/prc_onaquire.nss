@@ -70,7 +70,7 @@ void main()
         ExecuteScript("race_ev_aquire", OBJECT_SELF);
 
     // Creatures not related to PCs skip this block, contents are irrelevant for them
-    if(GetIsPC(oCreature) || GetIsPC(GetMaster(oCreature))
+    if(GetIsPC(oCreature) || GetIsPC(GetMaster(oCreature)))
     {
         if(GetPRCSwitch(PRC_AUTO_IDENTIFY_ON_ACQUIRE))
         {

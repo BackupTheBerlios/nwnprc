@@ -1939,7 +1939,10 @@ void DoSoundsetLoop()
     string sSQL;
     
     // make the SQL string
-    sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
+    if(GetPRCSwitch(PRC_CONVOCC_ONLY_PLAYER_VOICESETS))
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') AND ("+q+"TYPE"+q+" = '0') LIMIT 100 OFFSET "+IntToString(nReali);
+    else
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
     
     PRC_SQLExecDirect(sSQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)

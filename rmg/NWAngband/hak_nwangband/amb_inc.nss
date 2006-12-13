@@ -269,3 +269,74 @@ void DoFeelingCheck(object oPC)
             DestroyObject(OBJECT_SELF);
     }
 }
+
+object CreateSecretDetection(object oTarget, string sDesc, location lSpawn, int nDC = 0, int nOneShot = FALSE, float fRadius = 10.0)
+{
+DoDebug("CreateSecretDetection() running");
+    //sounds are in a nice shade of blue
+    string sMess = GetRGB(100, 100, 200)+"* You find: "+sDesc+GetRGB(100, 100, 200)+" *";
+    //pick a suitable AoE effect based on radius size
+    int nAoE = GetAoEForRadius(fRadius);
+    effect eAoE = EffectAreaOfEffect(nAoE, "amb_search_enter", "amb_search_hb", "amb_search_exit");
+    //make supernatural so cant be dispelled etc
+    eAoE = SupernaturalEffect(eAoE);
+    //apply it
+    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, eAoE, lSpawn);
+    //get the AoE Object we just made
+    string sTag = Get2DAString("vfx_persistent", "LABEL", nAoE);
+    object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lSpawn, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    while(GetIsObjectValid(oAoE))
+    {
+        // Test if we found the correct AoE
+        if(GetTag(oAoE) == sTag
+            && !GetLocalInt(oAoE, "ParanoiaMarker") // Just in case there are two traps in the almost same location
+           )
+        {
+            SetLocalInt(oAoE, "ParanoiaMarker", TRUE);
+            break;
+        }
+        // Didn't find, get next
+        oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lSpawn, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    }
+    if(GetIsObjectValid(oAoE))
+        DoDebug("oAoE is valid");
+    else    
+        DoDebug("oAoE is *NOT* valid");
+    //set information on the AoE object
+    SetLocalInt(oAoE, "SearchDC", nDC);
+    SetLocalString(oAoE, "SearchDesc", sDesc);
+    SetLocalString(oAoE, "SearchMess", sMess);
+    SetLocalObject(oAoE, "SearchTarget", oTarget);
+    SetLocalInt(oAoE, "SearchOneShot", nOneShot);
+    return oAoE;
+}
+
+void DoSearchCheck(object oPC)
+{
+    //check if the PC has already tested recently
+    if(GetLocalInt(OBJECT_SELF, "TestedSearch_"+ObjectToString(oPC)))
+        return;
+    //mark them as having tried to listen
+    SetLocalInt(OBJECT_SELF, "TestedSearch_"+ObjectToString(oPC), TRUE);
+    DelayCommand(SOUND_TEST_DELAY, DeleteLocalInt(OBJECT_SELF, "TestedSearch_"+ObjectToString(oPC)));
+    //get stored information
+    int nDC = GetLocalInt(OBJECT_SELF, "SearchDC");
+    string sMess = GetLocalString(OBJECT_SELF, "SearchMess");
+    string sDesc = GetLocalString(OBJECT_SELF, "SearchDesc");
+    int nOneShot = GetLocalInt(OBJECT_SELF, "SearchOneShot");
+    object oTarget = GetLocalObject(OBJECT_SELF, "SearchTarget"); 
+    //make the skill check
+    int nRoll = d20()+GetSkillRank(SKILL_SEARCH, oPC);
+    //DEBUG
+    FloatingTextStringOnCreature(IntToString(nRoll)+" vs "+IntToString(nDC), oPC);
+    if(nRoll > nDC)
+    {
+        //do the message
+        SendAmbientMessage(oPC, sMess, sDesc, "find");
+        //send the target a UD event
+        SignalEvent(oTarget, EventUserDefined(900));
+        //if its one-shot, clean up
+        if(nOneShot)
+            DestroyObject(OBJECT_SELF);
+    }
+}

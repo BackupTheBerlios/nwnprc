@@ -1,6 +1,6 @@
 const string REG_RESREF_PREFIX      = "prc_npc_";//"mob_";
-const int    REG_RACE_MAX           = 255;
-const int    REG_RACE_INSTANCE_MAX  = 100;
+const int    REG_RACE_MAX           = 7;
+const int    REG_RACE_INSTANCE_MAX  = 10;
 
 int GetPackageForClass(int nClass);
 object REG_CreateNPC(location lSpawn, float fCR, int nRace);

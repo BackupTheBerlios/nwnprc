@@ -139,12 +139,12 @@ location GetFreeLocation(location lStart, float fAngle, float fGap = 5.0, float 
     lTest = lOld;
 
     //retest with smaller gap
-    if(fGap>1.0)
+    if(fGap>0.1)
     {
         if(fMaxDist < 0.0)
-            lTest = GetFreeLocation(lTest, fAngle, fGap*0.5, -1.0);
+            lTest = GetFreeLocation(lTest, fAngle, fGap*0.1, -1.0);
         else if(fMaxDist > fDist)
-            lTest = GetFreeLocation(lTest, fAngle, fGap*0.5, fMaxDist-fDist);
+            lTest = GetFreeLocation(lTest, fAngle, fGap*0.1, fMaxDist-fDist);
     }
 
     return lTest;
@@ -231,7 +231,7 @@ struct room GetRoom(location lStart, float fRoomMinSize = 8.0,
         )
     {
         //DoDebug("Room Invalid");
-             /*
+        /*
         if(fXMax <= fXMin)
             DoDebug("GetRoom() : room invalid : fXSize = "+FloatToString(fXSize));
         if(fYMax <= fYMin)
@@ -248,7 +248,7 @@ struct room GetRoom(location lStart, float fRoomMinSize = 8.0,
             DoDebug("GetRoom() : room invalid : fNorth = "+FloatToString(fNorth));
         if(!LineOfSightVector(vAverage, GetPositionFromLocation(lStart)))
             DoDebug("GetRoom() : room invalid : no line of sight");
-                         */
+        */
         struct room rInvalid;
         return rInvalid;
     }
@@ -323,8 +323,33 @@ DrawBeam(lRight, lLeft, VFX_BEAM_SILENT_LIGHTNING);
     return FALSE;
 }
 
-location GetAngleFacingWall(location lSpawn, float fDist = 2.0,  float fGap = 3.0)
+int CheckNotFacingWall(location lTest, float fDist = 2.0)
 {
+    vector vOldPos = GetPositionFromLocation(lTest);
+    location lFront;
+    vector vFront = GetChangedPosition(vOldPos, fDist,
+        GetFacingFromLocation(lTest));
+    lFront = Location(GetAreaFromLocation(lFront),
+        vFront, 0.0);
+    int nFront  = GetIsLocValid(lFront, 101);
+    if(nFront)
+        nFront += LineOfSightVector(vFront, vOldPos);
+    if(nFront)
+    {
+//        DoDebug("CheckSymetry = TRUE");
+DrawBeam(lTest, lFront, VFX_BEAM_SILENT_LIGHTNING);
+        return FALSE;
+    }
+//    DoDebug("CheckSymetry = FALSE");
+    return TRUE;
+}
+
+location GetAngleFacingWall(location lSpawn, float fDist = 2.0,  float fGap = 5.0)
+{
+    //sanit check, fGap must be at least 5degrees
+    if(fGap < 5.0)
+        fGap = 5.0;
+
     vector vPos     = GetPositionFromLocation(lSpawn);
     object oArea    = GetAreaFromLocation(lSpawn);
     float fOriginal = GetFacingFromLocation(lSpawn);
@@ -332,7 +357,7 @@ location GetAngleFacingWall(location lSpawn, float fDist = 2.0,  float fGap = 3.
     float fMinus     = fOriginal-fGap;
     location lPlus  = lSpawn;
     location lMinus = lSpawn;
-    int nPlusSym    = CheckSymetry(lSpawn, fDist);
+    int nPlusSym    = CheckSymetry(lSpawn, fDist) | CheckNotFacingWall(lSpawn, fDist);
     int nMinusSym   = nPlusSym;//same location, same result
     while(!nPlusSym && !nMinusSym
         && fPlus  < fOriginal + 180.0
@@ -342,8 +367,8 @@ location GetAngleFacingWall(location lSpawn, float fDist = 2.0,  float fGap = 3.
     {
         lPlus  = Location(oArea, vPos, fPlus);
         lMinus = Location(oArea, vPos, fMinus);
-        nPlusSym  = CheckSymetry(lPlus);
-        nMinusSym = CheckSymetry(lMinus);
+        nPlusSym  = CheckSymetry(lPlus) | CheckNotFacingWall(lPlus, fDist);
+        nMinusSym = CheckSymetry(lMinus) | CheckNotFacingWall(lMinus, fDist);
         fPlus += fGap;
         fMinus -= fGap;
     }
@@ -420,4 +445,37 @@ int GetIsLocationInTrigger(location lLoc, object oTrigger = OBJECT_INVALID)
         oTest = GetNextInPersistentObject(oTrigger, OBJECT_TYPE_CREATURE);
     }
     return FALSE;
+}
+
+object RAD_CreateObject(location lSpawn, int nCount, float fCR)
+{
+    string sResRef = Get2DACache(RAD_SPAWN, "ResRef", nCount);
+    object                              oSpawn = CreateObject(OBJECT_TYPE_PLACEABLE, sResRef, lSpawn);
+    if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
+    if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_ITEM, sResRef, lSpawn);
+    if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_WAYPOINT, sResRef, lSpawn);
+    if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_STORE, sResRef, lSpawn);
+    if(!GetIsObjectValid(oSpawn))       DoDebug("Error spawning "+sResRef);
+    //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1), lSpawn);
+    int nVarNo;
+    for(nVarNo = 1; nVarNo <=5; nVarNo++)
+    {
+        string sVarType = Get2DACache(RAD_SPAWN, "VarType"+IntToString(nVarNo), nCount);
+        if(sVarType == "int")
+            SetLocalInt(oSpawn,
+                Get2DACache(RAD_SPAWN, "VarName"+IntToString(nVarNo), nCount),
+                StringToInt(Get2DACache(RAD_SPAWN, "VarVal"+IntToString(nVarNo), nCount)));
+        else if(sVarType == "string")
+            SetLocalString(oSpawn,
+                Get2DACache(RAD_SPAWN, "VarName"+IntToString(nVarNo), nCount),
+                Get2DACache(RAD_SPAWN, "VarVal"+IntToString(nVarNo), nCount));
+        else if(sVarType == "float")
+            SetLocalFloat(oSpawn,
+                Get2DACache(RAD_SPAWN, "VarName"+IntToString(nVarNo), nCount),
+                StringToFloat(Get2DACache(RAD_SPAWN, "VarVal"+IntToString(nVarNo), nCount)));
+    }
+    DoDebug( "Creating "+sResRef);
+    SetLocalFloat(oSpawn, "CR", fCR);
+    ExecuteScript(sResRef, oSpawn);
+    return oSpawn;
 }

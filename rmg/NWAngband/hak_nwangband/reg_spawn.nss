@@ -5,11 +5,46 @@
 #include "rng_inc"
 #include "inc_ecl"
 #include "pnp_shft_poly"
+#include "prc_alterations"
+
+void EquipByType(int nType, int nSlot, int nAC = 0, int nTrial = 10)
+{
+    //repeated failures, abort
+    if(nTrial <= 0)
+        return;
+    //dead, abort
+    if(GetIsDead(OBJECT_SELF))
+        return;    
+        
+    object oItem = GetRandomizedItemByType(
+        nType,
+        //GetECL(OBJECT_SELF),
+        GetHitDice(OBJECT_SELF),
+        nAC);
+        
+    if(!GetIsObjectValid(oItem))
+    {
+        float fDelay = IntToFloat(Random(60))/10.0;
+        DelayCommand(fDelay, 
+            EquipByType(nType, nSlot, nAC, nTrial-1));
+        return;
+    }
+
+    if(nSlot != -1)
+    {
+        //if its armor, make sure not in combat mode
+        if(nType == BASE_ITEM_ARMOR)
+            ClearAllActions(TRUE);
+        ForceEquip(OBJECT_SELF,
+            oItem,
+            nSlot);
+    }       
+}
 
 void DoArmor()
 {
     //get AC
-    int nAC;
+    int nAC = 0;
     if(GetHasFeat(FEAT_ARMOR_PROFICIENCY_HEAVY))
         nAC = RandomI(3)+6;
     else if(GetHasFeat(FEAT_ARMOR_PROFICIENCY_MEDIUM))
@@ -28,45 +63,32 @@ void DoArmor()
     else if(GetLevelByClass(CLASS_TYPE_RANGER)
         || GetLevelByClass(CLASS_TYPE_BARD))
         nAC = RandomI(3)+1;
-    if(nAC)
-    {
-        DelayCommand(0.2,
-            ForceEquip(OBJECT_SELF,
-                GetRandomizedItemByType(BASE_ITEM_ARMOR,
-                    GetECL(OBJECT_SELF), nAC),
-                INVENTORY_SLOT_CHEST));
-    }
+    DelayCommand(0.1, 
+        EquipByType(BASE_ITEM_ARMOR, 
+            INVENTORY_SLOT_CHEST, 
+            nAC));
 }
 
 void DoRanged()
 {
     int nType = GetHandItemType(OBJECT_SELF, FALSE, TRUE);
     //delay this so the ammo creates first
-    DelayCommand(0.1, ForceEquip(OBJECT_SELF,
-        GetRandomizedItemByType(
-            nType,
-            GetECL(OBJECT_SELF)),
-        INVENTORY_SLOT_RIGHTHAND));
+    DelayCommand(1.1, 
+        EquipByType(nType, INVENTORY_SLOT_RIGHTHAND));
     if(nType == BASE_ITEM_HEAVYCROSSBOW
         || nType == BASE_ITEM_LIGHTCROSSBOW)
-        ForceEquip(OBJECT_SELF,
-            GetRandomizedItemByType(
-                BASE_ITEM_BOLT,
-                GetECL(OBJECT_SELF)),
-            INVENTORY_SLOT_BOLTS);
+        DelayCommand(0.2, 
+            EquipByType(BASE_ITEM_BOLT,     
+                INVENTORY_SLOT_BOLTS));
     else if(nType == BASE_ITEM_LONGBOW
         || nType == BASE_ITEM_SHORTBOW)
-        ForceEquip(OBJECT_SELF,
-            GetRandomizedItemByType(
-                BASE_ITEM_ARROW,
-                GetECL(OBJECT_SELF)),
-            INVENTORY_SLOT_ARROWS);
+        DelayCommand(0.3, 
+            EquipByType(BASE_ITEM_ARROW, 
+                INVENTORY_SLOT_ARROWS));
     else if(nType == BASE_ITEM_SLING)
-        ForceEquip(OBJECT_SELF,
-            GetRandomizedItemByType(
-                BASE_ITEM_BULLET,
-                GetECL(OBJECT_SELF)),
-            INVENTORY_SLOT_BULLETS);
+        DelayCommand(0.4, 
+            EquipByType(BASE_ITEM_BULLET, 
+                INVENTORY_SLOT_BULLETS));
 }
 
 void main()
@@ -118,20 +140,122 @@ void main()
     //SetName(OBJECT_SELF, RandomName()+" "+RandomName());
     DelayCommand(0.01, SetName(OBJECT_SELF, RNG_GetRandomNameForObject()+" "+RNG_GetRandomNameForObject()));
 
-    DelayCommand(0.1, DoDisguise(GetRacialType(OBJECT_SELF)));
+    DelayCommand(1.0, DoDisguise(GetRacialType(OBJECT_SELF)));
 
-    DelayCommand(0.2, DoArmor());
+    DelayCommand(2.0, DoArmor());
 
     //equip ranged first
-    DelayCommand(0.3, DoRanged());
+    DelayCommand(3.0, DoRanged());
     //create melee weapons for later
     //will also make shields
-    DelayCommand(0.4,
-        VoidGetRandomizedItemByType(
-            GetHandItemType(OBJECT_SELF, FALSE, FALSE),
-            GetECL(OBJECT_SELF)));
-    DelayCommand(0.5,
-        VoidGetRandomizedItemByType(
-            GetHandItemType(OBJECT_SELF, TRUE, FALSE),
-            GetECL(OBJECT_SELF)));
-}
+    DelayCommand(4.0,
+        EquipByType(GetHandItemType(OBJECT_SELF, FALSE, FALSE),-1));
+    DelayCommand(5.0,
+        EquipByType(GetHandItemType(OBJECT_SELF, TRUE, FALSE),-1));
+        
+    //other items
+    int nECL = GetHitDice(OBJECT_SELF);
+    //number of slots to fill
+    int nSlotMax = 8;
+    //half by ECL, and half by chance
+    int nSlotCount = FloatToInt((IntToFloat(nECL)/20.0)*(IntToFloat(nSlotMax)/2.0));
+    nSlotCount += Random(nSlotCount+1);
+    //fill them
+    int nSlots;
+    int i;
+    while(i<nSlotCount)
+    {
+        int nRandom = Random(8);
+        switch(nRandom)
+        {
+            case 0:
+                if(!(nSlots & 1))
+                {
+                    nSlots = nSlots | 1;
+                    i++;
+                }    
+                break;
+            case 1:
+                if(!(nSlots & 2))
+                {
+                    nSlots = nSlots | 2;
+                    i++;
+                }    
+                break;
+            case 2:
+                if(!(nSlots & 4))
+                {
+                    nSlots = nSlots | 4;
+                    i++;
+                }    
+                break;
+            case 3:
+                if(!(nSlots & 8))
+                {
+                    nSlots = nSlots | 8;
+                    i++;
+                }    
+                break;
+            case 4:
+                if(!(nSlots & 16))
+                {
+                    nSlots = nSlots | 16;
+                    i++;
+                }    
+                break;
+            case 5:
+                if(!(nSlots & 32))
+                {
+                    nSlots = nSlots | 32;
+                    i++;
+                }    
+                break;
+            case 6:
+                if(!(nSlots & 64))
+                {
+                    nSlots = nSlots | 64;
+                    i++;
+                }    
+                break;
+            case 7:
+                if(!(nSlots & 128))
+                {
+                    nSlots = nSlots | 128;
+                    i++;
+                }    
+                break;
+        }
+    }
+    //bitwise math
+    //head
+    if(nSlots & 1)
+        DelayCommand(5.0,
+            EquipByType(BASE_ITEM_HELMET, INVENTORY_SLOT_HEAD));
+    //rings
+    if(nSlots & 2)
+        DelayCommand(6.0,
+            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_LEFTHAND));
+    if(nSlots & 4)
+        DelayCommand(7.0,
+            EquipByType(BASE_ITEM_RING, INVENTORY_SLOT_RIGHTHAND));
+    //belt        
+    if(nSlots & 8)
+        DelayCommand(8.0,
+            EquipByType(BASE_ITEM_BELT, INVENTORY_SLOT_BELT));
+    //belt        
+    if(nSlots & 16)
+        DelayCommand(9.0,
+            EquipByType(BASE_ITEM_BOOTS, INVENTORY_SLOT_BOOTS));
+    //cloak        
+    if(nSlots & 32)
+        DelayCommand(10.0,
+            EquipByType(BASE_ITEM_CLOAK, INVENTORY_SLOT_CLOAK));
+    //necklace        
+    if(nSlots & 64)
+        DelayCommand(11.0,
+            EquipByType(BASE_ITEM_AMULET, INVENTORY_SLOT_NECK));
+    //bracers/gloves        
+    if(nSlots & 128)
+        DelayCommand(12.0,
+            EquipByType(BASE_ITEM_BRACER, INVENTORY_SLOT_ARMS));
+}    

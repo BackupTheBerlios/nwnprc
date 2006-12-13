@@ -66,7 +66,7 @@ const float RAL_TRANSIT_DIST = 10.0;
 int RAL_GetRegionOfObject(object oObject = OBJECT_SELF)
 {
     object oArea = GetArea(oObject);
-    string sTag = GetTag(oArea);
+    string sTag = GetResRef(oArea);
 //DoDebug("RAL_GetRegionOfObject(): sTag = "+sTag);
     sTag = GetStringRight(sTag, GetStringLength(sTag)-4);//trim RAL_
     int nRegionType = StringToInt(GetStringLeft(sTag, RAL_REGION_LENGTH));
@@ -136,6 +136,23 @@ object RAL_GetNextDungeonArea(int nRegionType = 0)
     nAreaID++;
     object oArea = RAL_GetDungeonArea(nAreaID, nRegionType);
     SetLocalInt(GetModule(), "DungeonAreaID_"+IntToString(nRegionType), nAreaID);
+    return oArea;
+}
+
+object RAL_GetRandomDungeonArea(int nRegionType = 0)
+{
+    if(nRegionType == 0) nRegionType = RAL_GetRegionOfObject();
+    if(nRegionType == 0) nRegionType = GetLocalInt(GetModule(), "DungeonRegionID");
+    
+    int nCount;
+    object oArea = RAL_GetFirstDungeonArea(nRegionType);
+    while(GetIsObjectValid(oArea))
+    {
+        oArea = RAL_GetNextDungeonArea(nRegionType);
+        nCount++;
+    }
+    nCount = RandomI(nCount)+1;
+    oArea = RAL_GetDungeonArea(nCount, nRegionType);
     return oArea;
 }
 

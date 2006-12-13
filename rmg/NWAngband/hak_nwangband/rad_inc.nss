@@ -18,7 +18,7 @@
 void SpawnRoom(location lCorner1, location lCorner2, string sFilename,
     float fCR, int nFreqPerim = 4, int nFreqArea = 100, float fRoomMinSize = 8.0,
     float fRoomMinArea = 100.0, float fShapeLimit = 45.0, int nCount = 10,
-    float fMaxSize = -1.0);
+    float fMaxSize = -1.0, string sLocalLabel = "");
 
 //attempt to spawn an object in a room
 //fAngle            = degrees
@@ -34,7 +34,7 @@ void SpawnRoom(location lCorner1, location lCorner2, string sFilename,
 //            minimum distance to nearest tile seam
 void TryToSpawn(float fAngle, location lAverage, float fCR,
     string sFilename, float fFreeLocationGap = 5.0, int nTrial = 0,
-    float fMaxSize = -1.0);
+    float fMaxSize = -1.0, string sLocalLabel = "");
 
 location GetNearestWalkableLocation(location lLoc);
 
@@ -52,13 +52,14 @@ const int RAD_FLAG_TRIGGER              = 8;
 #include "prc_gateway"
 #include "random_inc"
 #include "rad_inc_util"
+#include "rad_plc_inc"
 
 void TryToSpawn(float fAngle, location lAverage, float fCR,
     string sFilename, float fFreeLocationGap = 5.0, int nTrial = 0,
-    float fMaxSize = -1.0)
+    float fMaxSize = -1.0, string sLocalLabel = "")
 {
-DoDebug("Start of TryToSpawn()");
-//    DoDebug("TryToSpawn() fMaxSize = "+FloatToString(fMaxSize));
+//DoDebug("Start of TryToSpawn()");
+//DoDebug("TryToSpawn() fMaxSize = "+FloatToString(fMaxSize));
     location lSpawn = GetFreeLocation(lAverage, fAngle, fFreeLocationGap, fMaxSize);
     if(GetIsLocValid(lSpawn))
     {
@@ -69,6 +70,9 @@ DoDebug("Start of TryToSpawn()");
         float fRoom                 = StringToFloat(Get2DACache(RAD_SPAWN, "Room",   nCount));
         float fFacingInterval       = StringToFloat(Get2DACache(RAD_SPAWN, "Facing", nCount));
         float fDistance             = StringToFloat(Get2DACache(RAD_SPAWN, "Size",   nCount));
+        float fDistanceToPlace      = StringToFloat(Get2DACache(RAD_SPAWN, "DistPlace",   nCount));
+        float fDistanceToDoor       = StringToFloat(Get2DACache(RAD_SPAWN, "DistDoor",   nCount));
+        float fDistanceToWalk       = StringToFloat(Get2DACache(RAD_SPAWN, "DistWalk",   nCount));
         int nFlags                  = StringToInt  (Get2DACache(RAD_SPAWN, "Flags",   nCount));
 
         //spawn in the room, not at the end
@@ -117,11 +121,11 @@ DoDebug("Start of TryToSpawn()");
             lSpawn = GetNearestWalkableLocation(lSpawn);
             if(RAD_FLAG_WALK & nFlags
                 ||(GetIsLocValid(lSpawn)
-                    && GetDistanceBetweenLocations(lSpawn, lOriginalSpawn) < fDistance))
+                    && GetDistanceBetweenLocations(lSpawn, lOriginalSpawn) < fDistanceToWalk))
             {
                 if(RAD_FLAG_PLACE & nFlags
-                    || (GetDistanceToNearestPlaceable(lSpawn) > fDistance
-                        && GetDistanceToNearestDoor(lSpawn) > fDistance))
+                    || (GetDistanceToNearestPlaceable(lSpawn) > fDistanceToPlace
+                        && GetDistanceToNearestDoor(lSpawn) > fDistanceToDoor))
                 {
                     object oTrigger = GetNearestTriggerToLocationWithTag(lSpawn, "rad_avoid");
                     if(RAD_FLAG_TRIGGER & nFlags
@@ -135,37 +139,14 @@ DoDebug("Start of TryToSpawn()");
                         lSpawn = Location(GetArea(OBJECT_SELF), GetPositionFromLocation(lSpawn), fPosAngle);
                         if(GetIsLocValid(lSpawn))
                         {
-                            lSpawn = GetAngleFacingWall(lSpawn, fDistance, fPosAngle);
+                            //only need to do this if within fDistance of end of room
+                            if(fDistanceToUse > fTotalDistance-fDistance)
+                                lSpawn = GetAngleFacingWall(lSpawn, fDistance, fPosAngle);
                             if(GetIsLocValid(lSpawn))
                             {
-                                object                              oSpawn = CreateObject(OBJECT_TYPE_PLACEABLE, sResRef, lSpawn);
-                                if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_CREATURE, sResRef, lSpawn);
-                                if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_ITEM, sResRef, lSpawn);
-                                if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_WAYPOINT, sResRef, lSpawn);
-                                if(!GetIsObjectValid(oSpawn))       oSpawn = CreateObject(OBJECT_TYPE_STORE, sResRef, lSpawn);
-                                if(!GetIsObjectValid(oSpawn))       WriteTimestampedLogEntry("Error spawning "+sResRef);
-                            //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1), lSpawn);
-                                int nVarNo;
-                                for(nVarNo = 1; nVarNo <=5; nVarNo++)
-                                {
-                                    string sVarType = Get2DACache(RAD_SPAWN, "VarType"+IntToString(nVarNo), nCount);
-                                    if(sVarType == "int")
-                                        SetLocalInt(oSpawn,
-                                            Get2DACache(RAD_SPAWN, "VarName"+IntToString(nVarNo), nCount),
-                                            StringToInt(Get2DACache(RAD_SPAWN, "VarVal"+IntToString(nVarNo), nCount)));
-                                    else if(sVarType == "string")
-                                        SetLocalString(oSpawn,
-                                            Get2DACache(RAD_SPAWN, "VarName"+IntToString(nVarNo), nCount),
-                                            Get2DACache(RAD_SPAWN, "VarVal"+IntToString(nVarNo), nCount));
-                                    else if(sVarType == "float")
-                                        SetLocalFloat(oSpawn,
-                                            Get2DACache(RAD_SPAWN, "VarName"+IntToString(nVarNo), nCount),
-                                            StringToFloat(Get2DACache(RAD_SPAWN, "VarVal"+IntToString(nVarNo), nCount)));
-                                }
-                                DoDebug( "Creating "+sResRef);
-                                SetLocalFloat(oSpawn, "CR", fCR);
-                                ExecuteScript(sResRef, oSpawn);
-DoDebug("End of TryToSpawn()");
+                                object oSpawn = RAD_CreateObject(lSpawn, nCount, fCR);
+                                SetLocalString(oSpawn, "RAD_Label", sLocalLabel);
+//DoDebug("End of TryToSpawn()");
                                 return;
                             }
 //                            else
@@ -194,8 +175,8 @@ DoDebug("End of TryToSpawn()");
     {
         //move the angle a little bit +/-5%
         fAngle = fAngle*(1.0+((IntToFloat(RandomI(101))/10.0)-5.0));
-        DelayCommand(0.1, TryToSpawn(fAngle, lAverage, fCR,
-            sFilename, fFreeLocationGap, nTrial+1, fMaxSize));
+        DelayCommand(0.01, TryToSpawn(fAngle, lAverage, fCR,
+            sFilename, fFreeLocationGap, nTrial+1, fMaxSize, sLocalLabel));
     }
 DoDebug("End of TryToSpawn()");
 }
@@ -203,16 +184,16 @@ DoDebug("End of TryToSpawn()");
 void SpawnRoom(location lCorner1, location lCorner2, string sFilename,
     float fCR, int nFreqPerim = 4, int nFreqArea = 100, float fRoomMinSize = 8.0,
     float fRoomMinArea = 100.0, float fShapeLimit = 45.0, int nCount = 10,
-    float fMaxSize = -1.0)
+    float fMaxSize = -1.0, string sLocalLabel = "")
 {
-DoDebug("Start of SpawnRoom()");
-//DoDebug("SpawnRoom(lCorner1, lCorner2, "+sFilename+", "+FloatToString(fCR)+", "+IntToString(nFreqPerim)+", "+IntToString(nFreqArea)+", "+FloatToString(fRoomMinSize)
-//    +", "+FloatToString(fRoomMinArea)+", "+FloatToString(fShapeLimit)+", "+IntToString(nCount)+", "+FloatToString(fMaxSize)+");");
+//DoDebug("Start of SpawnRoom()");
+DoDebug("SpawnRoom(lCorner1, lCorner2, "+sFilename+", "+FloatToString(fCR)+", "+IntToString(nFreqPerim)+", "+IntToString(nFreqArea)+", "+FloatToString(fRoomMinSize)
+    +", "+FloatToString(fRoomMinArea)+", "+FloatToString(fShapeLimit)+", "+IntToString(nCount)+", "+FloatToString(fMaxSize)+");");
     //sanity check
     object oArea = GetAreaFromLocation(lCorner1);
     if(!GetIsObjectValid(oArea))
     {
-//        DoDebug("SpawnRoom() : Area is not valid");
+        DoDebug("SpawnRoom() : Area is not valid");
 DoDebug("End of SpawnRoom()");
         return;
     }
@@ -269,13 +250,28 @@ DoDebug("End of SpawnRoom()");
     if(rRoom == ROOM_INVALID)
     {
         //try again
-//        DoDebug("room invalid, retrying");
+        DoDebug("room invalid, retrying");
         if(nCount)
-            DelayCommand(0.1, SpawnRoom(lCorner1, lCorner2, sFilename, fCR,
+            DelayCommand(0.0, SpawnRoom(lCorner1, lCorner2, sFilename, fCR,
                 nFreqPerim, nFreqArea, fRoomMinSize, fRoomMinArea, fShapeLimit,
-                nCount-1, fMaxSize));
+                nCount-1, fMaxSize, sLocalLabel));
 DoDebug("End of SpawnRoom()");
         return;
+    }
+    
+    //if the location of the new room is not close enough to the corners, retry
+    if(lCorner1 != lCorner2
+        || (lCorner1 == lCorner2
+            && GetDistanceBetweenLocations(lCorner1, rRoom.lCenter) > fMaxSize/4.0)
+        && nCount > 0)
+    {
+        if(nCount)
+        {
+            DelayCommand(0.0, SpawnRoom(rRoom.lCenter, rRoom.lCenter, sFilename, fCR,
+                nFreqPerim, nFreqArea, fRoomMinSize, fRoomMinArea, fShapeLimit,
+                nCount-1, fMaxSize, sLocalLabel));  
+            return;
+        }    
     }
 
     float fXSize = rRoom.fEW;
@@ -308,15 +304,15 @@ DoDebug("End of SpawnRoom()");
         if(fAngle > 360.0)
             fAngle = fAngle - 360.0;
 
-        DelayCommand(0.1, TryToSpawn(fAngle, lAverage, fCR, sFilename, fFreeLocationGap, 0, fMaxSize));
+        DelayCommand(0.0, TryToSpawn(fAngle, lAverage, fCR, sFilename, fFreeLocationGap, 0, fMaxSize, sLocalLabel));
     }
 DoDebug("End of SpawnRoom()");
 }
 
-void SpawnArea(object oArea, float fCR, string sFilename, float fRoomSize)
+void SpawnArea(object oArea, float fCR, string sFilename, float fRoomSize, string sLocalLabel = "")
 {
-DoDebug("Start of SpawnArea()");
-//DoDebug("SpawnArea("+GetName(oArea)+", "+FloatToString(fCR)+", "+sFilename+", "+FloatToString(fRoomSize)+")");
+//DoDebug("Start of SpawnArea()");
+DoDebug("SpawnArea("+GetName(oArea)+", "+FloatToString(fCR)+", "+sFilename+", "+FloatToString(fRoomSize)+")");
     if(!GetIsObjectValid(oArea))
     {
 //        DoDebug("SpawnArea() : Area is not valid");
@@ -330,8 +326,17 @@ DoDebug("End of SpawnArea()");
     float fAreaY = IntToFloat(10*GetAreaSize(AREA_HEIGHT, oArea));
     int x;
     int y;
-    int nTotalCountX = FloatToInt(fAreaX/fRoomSize);
-    int nTotalCountY = FloatToInt(fAreaY/fRoomSize);
+    int nTotalCountX; 
+    int nTotalCountY; 
+    if(fRoomSize != 0.0)
+    {
+        nTotalCountX = FloatToInt(fAreaX/fRoomSize);
+        nTotalCountY = FloatToInt(fAreaY/fRoomSize);
+    }    
+    if(nTotalCountX < 1)
+        nTotalCountX = 1;
+    if(nTotalCountY < 1)
+        nTotalCountY = 1;
     int nFreqPerim;
     int nFreqArea;
     float fRoomMinSize;
@@ -367,10 +372,95 @@ DoDebug("End of SpawnArea()");
             fRoomMaxSize        = StringToFloat(Get2DACache(RAD_ROOM, "RoomMaxSize", nCount));
 
             float fDelay = IntToFloat((x*nTotalCountX)+y)*0.01;
+            //float fDelay = 0.0;
             DelayCommand(fDelay, SpawnRoom(lCorner1, lCorner2, sResRef, fCR,
                 nFreqPerim, nFreqArea, fRoomMinSize, fRoomMinArea, fShapeLimit,
-                10, fRoomMaxSize));
+                10, fRoomMaxSize, sLocalLabel));
         }
     }
 DoDebug("End of SpawnArea()");
 }
+
+void JumpToPortal(object oPC, object oArea, string sTag, string sRoomResRef, string sScriptToRun)
+{       
+    DoDebug("JumpToPortal running for "+GetResRef(oArea), oPC);
+    object oPortal = GetFirstObjectInArea(oArea);
+    while(GetIsObjectValid(oPortal))
+    {
+        if(GetLocalString(oPortal, "RAD_Label") == sTag)
+            break;//end while loop
+        oPortal = GetNextObjectInArea(oArea);    
+    }
+    if(GetIsObjectValid(oPortal))
+    {
+        SignalEvent(oArea,
+            EventUserDefined(RAL_SETUP_EVENT_ID));
+        SetLocalObject(OBJECT_SELF, "JumpToPortal_Obj", oPortal);
+        ExecuteScript(sScriptToRun, OBJECT_SELF);
+        DelayCommand(1.0, DeleteLocalObject(OBJECT_SELF, "JumpToPortal_Obj"));
+        location lLoc = GetLocation(oPortal);
+        AssignCommand(oPC, JumpToLocation(lLoc));
+    }
+    else
+    {
+        //create a "portal" room
+        AssignCommand(GetFirstObjectInArea(oArea),
+            SpawnArea(oArea, 0.0, sRoomResRef, 0.0, sTag));
+        DelayCommand(6.0, JumpToPortal(oPC, oArea, sTag, sRoomResRef, sScriptToRun));
+    }    
+}
+
+void SpawnAndJumpByAreaType(object oPC, int nType, string sRoomResRef, string sTargetTag, string sScriptToRun = "")
+{
+    if(nType == -1)
+        nType =RAL_GetRegionOfObject();
+    object oArea = RAL_GetRandomDungeonArea(nType);
+    if(GetIsObjectValid(oArea))
+    {
+        //create a "portal" room
+        AssignCommand(GetFirstObjectInArea(oArea),
+            SpawnArea(oArea, 0.0, sRoomResRef, 0.0, sTargetTag));
+        //start the monitoring pseudoHB
+        DelayCommand(6.0, JumpToPortal(oPC, oArea, sTargetTag, sRoomResRef, sScriptToRun));
+    }
+}   
+
+void StoreSecretLink(object oDoor, object oArea, string sTag, string sRoomResRef, string sScriptToRun)
+{       
+    object oPortal = GetFirstObjectInArea(oArea);
+    while(GetIsObjectValid(oPortal))
+    {
+        if(GetLocalString(oPortal, "RAD_Label") == sTag)
+            break;//end while loop
+        oPortal = GetNextObjectInArea(oArea);    
+    }
+    if(GetIsObjectValid(oPortal))
+    {
+        SignalEvent(oArea,
+            EventUserDefined(RAL_SETUP_EVENT_ID));
+        SetLocalObject(oDoor, "DoorTarget", oPortal);
+        ExecuteScript(sScriptToRun, OBJECT_SELF);
+    }
+    else
+    {
+        //create a "portal" room
+        AssignCommand(GetFirstObjectInArea(oArea),
+            SpawnArea(oArea, 0.0, sRoomResRef, 0.0, sTag));
+        DelayCommand(6.0, StoreSecretLink(oDoor, oArea, sTag, sRoomResRef, sScriptToRun));
+    }    
+}
+
+void SpawnAndStoreByAreaType(object oPC, int nType, string sRoomResRef, string sTargetTag, string sScriptToRun = "")
+{
+    if(nType == -1)
+        nType =RAL_GetRegionOfObject();
+    object oArea = RAL_GetRandomDungeonArea(nType);
+    if(GetIsObjectValid(oArea))
+    {
+        //create a "portal" room
+        AssignCommand(GetFirstObjectInArea(oArea),
+            SpawnArea(oArea, 0.0, sRoomResRef, 0.0, sTargetTag));
+        //start the monitoring pseudoHB
+        DelayCommand(6.0, StoreSecretLink(OBJECT_SELF, oArea, sTargetTag, sRoomResRef, sScriptToRun));
+    }
+}   

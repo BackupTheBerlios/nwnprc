@@ -4,6 +4,9 @@
 #include "sy_inc_random"
 #include "prc_alterations"
 
+
+const int PRC_EVENT_DISABLE = FALSE;
+
 //****
 /*
 //****

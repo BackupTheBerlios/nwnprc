@@ -88,7 +88,7 @@ void main()
                 sMessage += "You have remaining:\n";
                 if(!persistant_array_exists(oPC, "NewSpellbookMem_"+IntToString(nSpellClass)))
                 {
-            DoDebug("Error: NewSpellbookMem_"+IntToString(nSpellClass)+" array does not exist");
+                    if(DEBUG) DoDebug("Error: NewSpellbookMem_"+IntToString(nSpellClass)+" array does not exist");
                     persistant_array_create(oPC,  "NewSpellbookMem_"+IntToString(nSpellClass));
                 }
                 int nArraySize = persistant_array_get_size(oPC, "NewSpellbookMem_" + IntToString(nSpellClass));
@@ -164,10 +164,10 @@ void main()
                     {
                         int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nRow));
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), nRow, oPC);
-DoDebug("PRC_S_spellb i="+IntToString(nRow));
-DoDebug("PRC_S_spellb sFile="+sFile);
-DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
-DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
+                        if(DEBUG) DoDebug("PRC_S_spellb i="+IntToString(nRow));
+                        if(DEBUG) DoDebug("PRC_S_spellb sFile="+sFile);
+                        if(DEBUG) DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
+                        if(DEBUG) DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
                     }
                 }
                 /*
@@ -180,10 +180,10 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
                     {
                         int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", i));
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), i, oPC);
-DoDebug("PRC_S_spellb i="+IntToString(i));
-DoDebug("PRC_S_spellb sFile="+sFile);
-DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
-DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
+if(DEBUG) DoDebug("PRC_S_spellb i="+IntToString(i));
+if(DEBUG) DoDebug("PRC_S_spellb sFile="+sFile);
+if(DEBUG) DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
+if(DEBUG) DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
                     }
                 }
                 */

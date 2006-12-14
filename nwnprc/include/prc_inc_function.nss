@@ -262,7 +262,7 @@ void EvalPRCFeats(object oPC)
     ExecuteScript("prc_mithral", oPC);
     if(GetPRCSwitch(PRC_ENFORCE_RACIAL_APPEARANCE))
         ExecuteScript("race_appear", oPC);
-    
+
 
     //handle PnP sling switch
     if(GetPRCSwitch(PRC_PNP_SLINGS))
@@ -273,24 +273,26 @@ void EvalPRCFeats(object oPC)
                 999999.9);
     }
 
-    if(GetLevelByClass(CLASS_TYPE_PSION, oPC)
-        || GetLevelByClass(CLASS_TYPE_WILDER, oPC)
-        || GetLevelByClass(CLASS_TYPE_PSYWAR, oPC)
-        || GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN, oPC)
-        || GetLevelByClass(CLASS_TYPE_WARMIND, oPC))
-        DelayCommand(1.0, ExecuteScript("psi_powergain", oPC));
-    if(GetLevelByClass(CLASS_TYPE_BARD, oPC)
-        || GetLevelByClass(CLASS_TYPE_SORCERER, oPC)
-        || GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oPC)
-        || GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL, oPC)
-        || GetLevelByClass(CLASS_TYPE_HEXBLADE, oPC)
-        || GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC)
-        || (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC)
-            && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
+    // Handle alternate caster types gaining new stuff
+    if(// Psionics
+       GetLevelByClass(CLASS_TYPE_PSION,            oPC) ||
+       GetLevelByClass(CLASS_TYPE_WILDER,           oPC) ||
+       GetLevelByClass(CLASS_TYPE_PSYWAR,           oPC) ||
+       GetLevelByClass(CLASS_TYPE_FIST_OF_ZUOKEN,   oPC) ||
+       GetLevelByClass(CLASS_TYPE_WARMIND,          oPC) ||
+       // New spellbooks
+       GetLevelByClass(CLASS_TYPE_BARD,             oPC) ||
+       GetLevelByClass(CLASS_TYPE_SORCERER,         oPC) ||
+       GetLevelByClass(CLASS_TYPE_SUEL_ARCHANAMACH, oPC) ||
+       GetLevelByClass(CLASS_TYPE_FAVOURED_SOUL,    oPC) ||
+       GetLevelByClass(CLASS_TYPE_HEXBLADE,         oPC) ||
+       GetLevelByClass(CLASS_TYPE_DUSKBLADE,        oPC) ||
+       // Truenaming
+       GetLevelByClass(CLASS_TYPE_TRUENAMER,        oPC) ||
+       // Racial casters
+       (GetLevelByClass(CLASS_TYPE_OUTSIDER, oPC) && GetRacialType(oPC) == RACIAL_TYPE_RAKSHASA)
         )
-        DelayCommand(1.0, ExecuteScript("prc_spellgain", oPC));
-    if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC))
-        DelayCommand(1.0, ExecuteScript("true_uttergain", oPC));
+        DelayCommand(1.0, ExecuteScript("prc_amagsys_gain", oPC));
 
     // Gathers all the calls to UnarmedFists & Feats to one place.
     // Must be after all evaluationscripts that need said functions.
@@ -444,16 +446,16 @@ void DeletePRCLocalInts(object oSkin)
     DeleteLocalInt(oSkin, "SkullClanParalysis");
     DeleteLocalInt(oSkin, "SkullClanAbilityDrain");
     DeleteLocalInt(oSkin, "SkullClanLevelDrain");
-    
+
     // Hexblade
     DeleteLocalInt(oSkin, "HexbladeArmourCasting");
-    
+
     // Sohei
-    DeleteLocalInt(oSkin, "SoheiDamageResist"); 
-    
+    DeleteLocalInt(oSkin, "SoheiDamageResist");
+
     // Duskblade
-    DeleteLocalInt(oSkin, "DuskbladeArmourCasting");  
-    
+    DeleteLocalInt(oSkin, "DuskbladeArmourCasting");
+
     // Scout
     DeleteLocalInt(oPC, "ScoutBattleFort");
     DeleteLocalInt(oPC, "ScoutFreeMove");
@@ -739,32 +741,32 @@ void FeatSpecialUsePerDay(object oPC)
     FeatUsePerDay(oPC, FEAT_DOMAIN_POWER_SCALEYKIND, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_PLANT_DOMAIN_POWER, ABILITY_CHARISMA, 3);
     FeatUsePerDay(oPC, FEAT_WWOC_WIDEN_SPELL, ABILITY_CHARISMA, GetLevelByClass(CLASS_TYPE_WAR_WIZARD_OF_CORMYR, oPC));
-    
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_1"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_1, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_1, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_1, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_2"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_2, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_2"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_2, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_2, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_2, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_3"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_3, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_3"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_3, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_3, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_3, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_4"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_4, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_4"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_4, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_4, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_4, -1, 1);
-        
+
     if(GetPersistantLocalInt(oPC, "PRC_SLA_Uses_5"))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_5, -1, GetPersistantLocalInt(oPC, "PRC_SLA_Uses_5"));
-    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_5, oPC))    
+    else if(GetHasFeat(FEAT_SPELL_LIKE_ABILITY_5, oPC))
         FeatUsePerDay(oPC, FEAT_SPELL_LIKE_ABILITY_5, -1, 1);
-        
+
     BardSong(oPC);
     FeatVirtuoso(oPC);
     ResetExtraStunfistUses(oPC);

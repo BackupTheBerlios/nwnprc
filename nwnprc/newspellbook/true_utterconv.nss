@@ -389,6 +389,7 @@ void main()
         // always be forbidden and as such, any attempts to abort the conversation
         // should be handled transparently by the system
         if(DEBUG) DoDebug("true_utterconv: ERROR: Conversation abort section run");
+        DelayCommand(1.0, EvalPRCFeats(oPC));
     }
     // Handle PC response
     else

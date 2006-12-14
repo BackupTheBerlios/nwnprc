@@ -596,14 +596,14 @@ location AddLocationToLocation(location lMaster, location lAdd)
     vNew.x = (vAdd.x*cos(fAngle))-(vAdd.y*sin(fAngle));
     vNew.y = (vAdd.x*sin(fAngle))+(vAdd.y*cos(fAngle));
     vNew.z = vAdd.z;
-    
+
     //now just add them on
-    vector vMaster = GetPositionFromLocation(lMaster); 
+    vector vMaster = GetPositionFromLocation(lMaster);
     vNew.x += vMaster.x;
     vNew.y += vMaster.y;
     vNew.z += vMaster.z;
     float fNew = GetFacingFromLocation(lAdd)+GetFacingFromLocation(lMaster);
-    
+
     //return a location
     location lReturn = Location(GetAreaFromLocation(lMaster), vNew, fNew);
     return lReturn;
@@ -846,6 +846,12 @@ void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0)
        GetLocalObject(oPC, "ForceEquipToSlot_" + IntToString(nSlot)) != oItem
        )
         return;
+    // Fail on non-commandable NPCs after ~1min
+    if(!GetIsPC(oPC) && !GetCommandable(oPC) && nThCall > 60)
+    {
+        WriteTimestampedLogEntry("ForceEquip() failed on non-commandable NPC: " + DebugObject2Str(oPC) + " for item: " + DebugObject2Str(oItem));
+        return;
+    }
 
     float fDelay;
 
@@ -865,8 +871,11 @@ void ForceEquip(object oPC, object oItem, int nSlot, int nThCall = 0)
         else
         {
             // Nuke the target's action queue. This should result in "immediate" equipping of the item
-            AssignCommand(oPC, ClearAllActions());
-            AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
+            if(GetIsPC(oPC) || nThCall > 5) // Skip nuking NPC action queue at first, since that can cause problems. 5 = magic number here. May need adjustment
+            {
+                AssignCommand(oPC, ClearAllActions());
+                AssignCommand(oPC, ActionEquipItem(oItem, nSlot));
+            }
             // Use a lenghtening delay in order to attempt handling lag and possible other interference. From 0.1s to 1s
             fDelay = min(nThCall, 10) / 10.0f;
         }
@@ -884,6 +893,12 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0)
     // Sanity checks
     if(!GetIsObjectValid(oPC)) return;
     if(!GetIsObjectValid(oItem)) return;
+    // Fail on non-commandable NPCs after ~1min
+    if(!GetIsPC(oPC) && !GetCommandable(oPC) && nThCall > 60)
+    {
+        WriteTimestampedLogEntry("ForceUnequip() failed on non-commandable NPC: " + DebugObject2Str(oPC) + " for item: " + DebugObject2Str(oItem));
+        return;
+    }
 
     float fDelay;
 
@@ -898,7 +913,8 @@ void ForceUnequip(object oPC, object oItem, int nSlot, int nThCall = 0)
     {
         // Attempt to avoid interference by not clearing actions before the first attempt
         if(nThCall > 1)
-            AssignCommand(oPC, ClearAllActions());
+            if(GetIsPC(oPC) || nThCall > 5) // Skip nuking NPC action queue at first, since that can cause problems. 5 = magic number here. May need adjustment
+                AssignCommand(oPC, ClearAllActions());
 
         AssignCommand(oPC, ActionUnequipItem(oItem));
 
@@ -1134,11 +1150,11 @@ int GetHasXPToSpend(object oPC, int nCost)
     // To be TRUE, make sure that oPC wouldn't lose a level by spending nCost.
     int nHitDice = GetHitDice(oPC);
     int nHitDiceXP = (500 * nHitDice * (nHitDice - 1)); // simplification of the sum
-    //get current XP    
+    //get current XP
     int nXP = GetXP(oPC);
     if(!nXP)
         nXP = GetLocalInt(oPC, "NPC_XP");
-    //the test    
+    //the test
     if (nXP >= (nHitDiceXP + nCost))
         return TRUE;
     return FALSE;
@@ -1164,7 +1180,7 @@ int GetHasGPToSpend(object oPC, int nCost)
         && GetIsObjectValid(GetMaster(oPC)))
     {
         oPC = GetMaster(oPC);
-    }    
+    }
     //test if it has gold
     if(GetIsPC(oPC))
     {
@@ -1172,7 +1188,7 @@ int GetHasGPToSpend(object oPC, int nCost)
         //has enough gold
         if(nGold >= nCost)
             return TRUE;
-        //does not have enough gold    
+        //does not have enough gold
         return FALSE;
     }
     //NPC in NPC faction

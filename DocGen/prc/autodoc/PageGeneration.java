@@ -459,16 +459,22 @@ public final class PageGeneration{
 		       epicPath      = contentPath + "epic_feats" + fileSeparator,
 		       classFeatPath = contentPath + "class_feats" + fileSeparator,
 		       classEpicPath = contentPath + "class_epic_feats" + fileSeparator;
-		String name     = null,
-		       text     = null,
-		       path     = null;
+		String name       = null,
+		       text       = null,
+		       path       = null,
+			   subradName = null,
+	           subradIcon = null;
 		FeatEntry entry = null;
+		StringBuffer subradialText = null;
 		boolean isEpic      = false,
 		        isClassFeat = false;
 		boolean errored;
+		int featSpell,
+		    subRadial;
 
 		feats = new HashMap<Integer, FeatEntry>();
-		Data_2da feats2da = twoDA.get("feat");
+		Data_2da feats2da  = twoDA.get("feat");
+		Data_2da spells2da = twoDA.get("spells");
 
 		for(int i = 0; i < feats2da.getEntryCount(); i++){
 			// Skip blank rows and markers
@@ -506,7 +512,56 @@ public final class PageGeneration{
 				}
 				text = text.replaceAll("~~~Icon~~~", Icons.buildIcon(icon));
 
-
+				// Handle subradials, if any
+				subradialText = new StringBuffer();
+				if(!feats2da.getEntry("SPELLID", i).equals("****")) {
+					try {
+						featSpell = Integer.parseInt(feats2da.getEntry("SPELLID", i));
+						// Assume that if there are any, the first slot is always non-****
+						if(!spells2da.getEntry("SubRadSpell1", featSpell).equals("****")){
+							for(int j = 1; j <= 5; j++) {
+								// Also assume that all the valid entries are in order, such that if Nth SubRadSpell entry
+								// is ****, all > N are also **** 
+								if(spells2da.getEntry("SubRadSpell" + j, featSpell).equals("****"))
+									break;
+								try {
+									subRadial = Integer.parseInt(spells2da.getEntry("SubRadSpell" + j, featSpell));
+									
+									// Try name
+									subradName = tlk.get(spells2da.getEntry("Name", subRadial))
+									                .replaceAll("/", " / ");
+									// Check the name for validity
+									if(subradName.equals(badStrRef)){
+										err_pr.println("Invalid name entry for spell " + subRadial);
+										errored = true;
+									}
+									
+									// Try icon
+									subradIcon = spells2da.getEntry("IconResRef", subRadial);
+									if(subradIcon.equals("****")){
+										err_pr.println("Icon not defined for spell " + subRadial + ": " + subradName);
+										errored = true;
+									}
+									
+									// Build list
+									subradialText.append(spellSubradialListEntryTemplate.replaceAll("~~~Icon~~~", Icons.buildIcon(subradIcon))
+									                                                    .replaceAll("~~~SubradialName~~~", subradName));
+								} catch(NumberFormatException e) {
+									err_pr.println("Invalid SubRadSpell" + j + " for spell " + featSpell + ": " + name);
+									errored = true;
+								}
+							}
+							
+							subradialText = new StringBuffer(spellSubradialListTemplate.replaceAll("~~~EntryList~~~", subradialText.toString()));
+						}
+					} catch(NumberFormatException e) {
+						err_pr.println("Invalid SPELLID for feat " + i + ": " + name);
+						errored = true;
+					}
+				}
+				text = text.replaceAll("~~~SubradialNames~~~", subradialText.toString());
+				
+				// Classification
 				isEpic = feats2da.getEntry("PreReqEpic", i).equals("1");
 				isClassFeat = !feats2da.getEntry("ALLCLASSESCANUSE", i).equals("1");
 

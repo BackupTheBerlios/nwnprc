@@ -722,7 +722,7 @@ int GetHitDiceForTurning(object oTarget)
 
 int GetCommandedTotalHD()
 {
-    int i;
+    int i = 1; // Changed variable declaration since GetAssociate starts indexing at 1.
     int nCommandedTotalHD;
     object oTest = GetAssociate(ASSOCIATE_TYPE_DOMINATED, OBJECT_SELF, i);
     object oOldTest = OBJECT_INVALID;

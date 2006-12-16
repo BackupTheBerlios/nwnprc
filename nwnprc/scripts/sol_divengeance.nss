@@ -8,7 +8,7 @@ void main()
      SpeakStringByStrRef(40550);
      return;
    }
-   if (GetAlignmentGoodEvil(OBJECT_SELF) == ALIGNMENT_EVIL) return;
+   // removed evil check since Defenders of Faith has no mention of evil being unable to use.
     
    DecrementRemainingFeatUses(OBJECT_SELF,FEAT_TURN_UNDEAD);
 

@@ -907,7 +907,8 @@ public class EntryGeneration {
 					path = prestigeClassPath + i + ".html";
 
 				if(!errored || tolErr) {
-					classes.put(i, new ClassEntry(name, text, icon, path, i, temp.equals("1")));
+					classes.put(i, new ClassEntry(name, text, icon, path, i, temp.equals("1"),
+							                      babSav, skillList, featList, magics));
 				} else
 					throw new PageGenerationException("Error(s) encountered while creating page");
 			} catch(PageGenerationException e) {

@@ -17,7 +17,7 @@ public final class MenuGeneration{
 	 * Sorts any of the pages for which GenericEntry is enough into alphabetic order
 	 * using a TreeMap, and prints a menu page out of the results.
 	 */
-	public static void doGenericMenu(HashMap<Integer, GenericEntry> entries, String menuName, String menuFileName){
+	public static void doGenericMenu(HashMap<Integer, ? extends GenericEntry> entries, String menuName, String menuFileName){
 		TreeMap<String, String> links = new TreeMap<String, String>();
 		StringBuffer toPrint = new StringBuffer();
 		

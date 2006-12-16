@@ -525,9 +525,9 @@ public class Main{
 	public static HashMap<Integer, FeatEntry> masterFeats,
 	                                          feats;
 	public static HashMap<Integer, ClassEntry> classes;
-	public static HashMap<Integer, GenericEntry> skills,
-	                                             domains,
-	                                             races;
+	public static HashMap<Integer, DomainEntry> domains;
+	public static HashMap<Integer, RaceEntry> races;
+	public static HashMap<Integer, GenericEntry> skills;
 	/** Map of psionic power names to the indexes of the spells.2da entries chosen to represent the power in question */
 	public static HashMap<String, Integer> psiPowMap;
 	

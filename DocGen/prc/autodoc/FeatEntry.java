@@ -5,22 +5,21 @@ import java.util.*;
 /**
  * Data structure for a feat or masterfeat entry.
  */
-public class FeatEntry implements Comparable<FeatEntry>{
+public class FeatEntry extends GenericEntry {
 	/** A list of masterfeat's children */
 	public TreeMap<String, FeatEntry> childFeats       = new TreeMap<String, FeatEntry>();
 	/** A list of feats that have this feat as their prerequisite */
 	public TreeMap<String, FeatEntry> requiredForFeats = new TreeMap<String, FeatEntry>();
-
+	/** A list of this feat's AND prerequisites */
+	public TreeMap<String, FeatEntry> andRequirements  = new TreeMap<String, FeatEntry>();
+	/** A list of this feat's OR prerequisites */
+	public TreeMap<String, FeatEntry> orRequirements   = new TreeMap<String, FeatEntry>();
+	
 	/** This feat's masterfeat, if any */
 	public FeatEntry master;
-	/** This feat's name */
-	public String name;
-	/** The html description of this feat */
-	public String text;
-	/** The path of the file where this feat's html description will be written to */
-	public String filePath;
-	/** feat.2da index of the feat */
-	public int entryNum;
+	/** This feat's successor, if any */
+	public FeatEntry successor;
+	
 	/** Whether this feat is epic, as defined by feat.2da column PreReqEpic. For masterfeats, if any of the children are epic */
 	public boolean isEpic;
 	/** Whether all of a masterfeat's children are epic. This is used to determine which menus a link to it will be printed */
@@ -32,38 +31,33 @@ public class FeatEntry implements Comparable<FeatEntry>{
 	/** Whether this feat has a successor */
 	public boolean isSuccessor;
 	
+	/** The feat's subradials, if any. List of feat name, icon path tuples. */
+	public final List<Tuple<String, String>> subradials;
+	
 	/**
 	 * The constructor.
 	 * 
 	 * @param name        Name of the feat/masterfeat
-	 * @param text        Work-In-Progress contents of the html page describing this feat
+	 * @param text        Description of the feat
+	 * @param iconPath    Path of the feat's icon
 	 * @param filePath    Path where the html page for this feat will be written to
 	 * @param entryNum    feat.2da / masterfeats.2da index
 	 * @param isEpic      Whether the feat is an epic feat
 	 * @param isClassFeat Whether the feat is a class-specific feat
+	 * @param subradials  List of this feat's subradials, if any
 	 */
-	public FeatEntry(String name, String text, String filePath,
-	                 int entryNum, boolean isEpic, boolean isClassFeat){
-		this.name        = name;
-		this.text        = text;
-		this.filePath    = filePath;
-		this.entryNum    = entryNum;
+	public FeatEntry(String name, String text, String iconPath, String filePath,
+	                 int entryNum, boolean isEpic, boolean isClassFeat,
+	                 List<Tuple<String, String>> subradials) {
+		super(name, text, iconPath, filePath, entryNum);
 		this.isEpic      = isEpic;
 		this.isClassFeat = isClassFeat;
+		this.subradials  = subradials;
 		
-		master = null;
-		isSuccessor = false;
+		master               = null;
+		successor            = null;
+		isSuccessor          = false;
 		allChildrenClassFeat = false;
-		allChildrenEpic = false;
-	}
-	
-	/**
-	 * Comparable implementation. Uses the name fields for comparison.
-	 * 
-	 * @param other FeatEntry to compare this one to
-	 * @return      @see java.lang.Comparable#compareTo
-	 */
-	public int compareTo(FeatEntry other){
-		return name.compareTo(other.name);
+		allChildrenEpic      = false;
 	}
 }

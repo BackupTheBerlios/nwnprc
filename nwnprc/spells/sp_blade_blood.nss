@@ -22,7 +22,6 @@ the target of the attack.  You can voluntarily take
 5 hit points of damage to empower the weapon to deal
 an extra 2d6 points of damage(for a total of 3d6 
 points of extra damage).
-
 The weapon loses this property if its wielder drops 
 it or otherwise loses contact with it.
 
@@ -36,52 +35,34 @@ void main()
 	SPSetSchool(SPELL_SCHOOL_NECROMANCY);
 	
 	object oPC = OBJECT_SELF;
+	object oTarget = IPGetTargetedOrEquippedMeleeWeapon();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
 	int nSpell = PRCGetSpellId();
-	int nHPLoss;
-	float fDur = RoundsToSeconds(nCasterLvl);
-	
+	float fDur = RoundsToSeconds(nCasterLvl);	
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	
 	if(nMetaMagic == METAMAGIC_EXTEND)
 	{
-		fDur += fDur;
+			fDur += fDur;
 	}
-				
-	int nDamBonus = d6(1);
 	
-	if(nMetaMagic == METAMAGIC_MAXIMIZE)
-	{
-		nDamBonus = 6;
-	}
-		
 	if(nSpell == SPELL_BLADE_OF_BLOOD_EMP)
 	{
 		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(5, DAMAGE_TYPE_MAGICAL), oPC);
-		nDamBonus = d6(3);
-		
-		if(nMetaMagic == METAMAGIC_MAXIMIZE)
-		{
-			nDamBonus = 18;
-		}
-		
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_EVIL_HELP), oPC);
 	}
 	
-	if(nMetaMagic == METAMAGIC_EMPOWER)
-	{
-		nDamBonus += (nDamBonus/2);
-	}
-	
-	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectDamageIncrease(nDamBonus, DAMAGE_TYPE_MAGICAL), oPC, fDur);
-	
+	//Set local ints
+	SetLocalInt(oTarget, "PRC_BLADE_BLOOD_METAMAGIC", nMetaMagic);
+	SetLocalInt(oTarget, "PRC_BLADE_BLOOD_SPELLID", nSpell);
+		
 	//Set up removal
 	itemproperty ipHook = ItemPropertyOnHitCastSpell(IP_CONST_ONHIT_CASTSPELL_ONHIT_UNIQUEPOWER, 1);
 	object oWeapon = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
 	
 	IPSafeAddItemProperty(oWeapon, ipHook, fDur);
 	
-	AddEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_bloodb", FALSE, FALSE);
+	
+	AddEventScript(oWeapon, EVENT_ONHIT, "prc_evnt_bladeb", FALSE, FALSE);
 	
 	SPSetSchool();
 }

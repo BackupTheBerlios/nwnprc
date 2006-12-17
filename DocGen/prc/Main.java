@@ -10,6 +10,9 @@ import prc.autodoc.Spinner;
  */
 public class Main {
 
+	/** Version number for public releases. Raise by one whenever doing a release. */
+	private static final int releaseNum = 1;
+	
 	/** A convenience object for printing both to log and System.err */
 	public static ErrorPrinter err_pr = new ErrorPrinter();
 
@@ -135,9 +138,12 @@ public class Main {
 		                   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
 		                   "         spellbookmaker - Creates and/or updates the new spellbooks data\n" +
 		                   "\n"+
-		                   "parameters  a list of parameters passed to the class called\n"+
+		                   "parameters  a list of parameters passed to the tool called\n"+
 		                   "\n"+
-		                   "--help      prints this info you are reading\n"
+		                   "--help      prints this info you are reading\n" +
+		                   "\n" +
+		                   "\n" +
+		                   "Release number: " + releaseNum + "\n"
 		                  );
 		System.exit(0);
 	}

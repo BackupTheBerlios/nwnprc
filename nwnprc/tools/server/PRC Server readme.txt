@@ -1,6 +1,8 @@
-PRC Server Pack v1.6
+PRC Server Pack v1.7
 
 This is an server package for the PRC, avalibale in self-install and manual-install editions. This should only be installed after the main PRC packages. To make full use of this you should be using PRC 3.0c or higher. 
+
+More detailed install information in server_pack_install.html, mostly useful if doing a manual install.
 
 This package includes:
 
@@ -25,6 +27,7 @@ The Precacher is based on a version made for the PRC by Yuritch, but rewritten i
 For full instructions, see the PRC Web site http://nwnprc.netgamers.co.uk/manual/index.html In particular see the PRC Server Pack installation instructions, http://nwnprc.netgamers.co.uk/manual/english/content/installation/prc_server_pg01.htm
 
 Changelog
+v1.7    Installation instructions added, plus precacher is now much faster
 v1.6    Removed a few unneeded bioware 2das, updated rest to NWN 1.68, added NWNx for Linux to the manual-install version
 v1.3    New version to go with PRC 3.0c & NWN 1.67
 v1.2	Replaced Yuriched precacher with a java version

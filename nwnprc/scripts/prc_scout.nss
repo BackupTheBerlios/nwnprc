@@ -57,18 +57,18 @@ void FreeMovement(object oPC, int nClass)
 
 void FastMovement(object oPC, int nClass)
 {
-        // Speed bonus. +20 feet at level 11, +10 feet at level 3
-        // In NWN this is +66% and +33% (Assume 30 feet as base speed)
-        if (nClass >= 11) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectMovementSpeedIncrease(66)), oPC);
-        else if (nClass >= 3) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectMovementSpeedIncrease(33)), oPC);
+    // Speed bonus. +20 feet at level 11, +10 feet at level 3
+    // In NWN this is +66% and +33% (Assume 30 feet as base speed)
+    if (nClass >= 11) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectMovementSpeedIncrease(66)), oPC);
+    else if (nClass >= 3) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectMovementSpeedIncrease(33)), oPC);
 }
 
 void BlindSight(object oPC, int nClass)
 {
-        // Blindsense -> Darkvis
-        // Blindsight -> True Seeing
-        if (nClass >= 20) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectUltravision()), oPC);
-        else if (nClass >= 10) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectTrueSeeing()), oPC);
+    // Blindsense -> Darkvis
+    // Blindsight -> True Seeing
+    if (nClass >= 20) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectUltravision()), oPC);
+    else if (nClass >= 10) ApplyEffectToObject(DURATION_TYPE_PERMANENT, ExtraordinaryEffect(EffectTrueSeeing()), oPC);
 }
 
 void main()
@@ -109,7 +109,7 @@ void main()
         // Doesn't depend on light armour
         BlindSight(oPC, nClass);
 
-	// Hook in the events, needed from level 1 for Skirmish
+        // Hook in the events, needed from level 1 for Skirmish
         if(DEBUG) DoDebug("prc_scout: Adding eventhooks");
         AddEventScript(oPC, EVENT_ONPLAYEREQUIPITEM,   "prc_scout", TRUE, FALSE);
         AddEventScript(oPC, EVENT_ONPLAYERUNEQUIPITEM, "prc_scout", TRUE, FALSE);
@@ -128,12 +128,13 @@ void main()
                           );
 
         // Only applies to weapons, and the Scout must have moved this round.
-            if((IPGetIsMeleeWeapon(oItem) || GetWeaponRanged(oItem)) && GetLocalInt(oPC, "ScoutSkirmish"))
+        if(GetLocalInt(oPC, "ScoutSkirmish") && (IPGetIsMeleeWeapon(oItem) || GetWeaponRanged(oItem)))
         {
             // Calculate Skirmish damage and apply
             int nDamageType = GetWeaponDamageType(oItem);
             effect eDam = EffectDamage(SkirmishDamage(oPC, oTarget, nClass), nDamageType);
             ApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            FloatingTextStrRefOnCreature(16828412, oPC); // "* Skirmish *"
         }// end if - Item is a melee weapon
     }// end if - Running OnHit event
     // We are called from the OnPlayerEquipItem eventhook. Add OnHitCast: Unique Power to oPC's weapon
@@ -195,11 +196,13 @@ void main()
     else if(nEvent == EVENT_ONHEARTBEAT && 3 >= nArmour)
     {
         // Check to see if the WP is valid
-        object oTestWP = GetWaypointByTag("PRC_ScoutWP_" + GetName(oPC));
+        string sWPTag = "PRC_ScoutWP_" + GetName(oPC);
+        object oTestWP = GetWaypointByTag(sWPTag);
         if (!GetIsObjectValid(oTestWP))
         {
             // Create waypoint for the movement
-            CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, "PRC_ScoutWP_" + GetName(oPC));
+            CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);
+            if(DEBUG) DoDebug("prc_scout: Scout WP for " + DebugObject2Str(oPC) + " didn't exist, creating. Tag: " + sWPTag);
         }
         else // We have a test waypoint, now to check the distance
         {
@@ -210,10 +213,12 @@ void main()
 
             // Now clean up the WP and create a new one for next round's check
             DestroyObject(oTestWP);
-            CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, "PRC_ScoutWP_" + GetName(oPC));
+            CreateObject(OBJECT_TYPE_WAYPOINT, "nw_waypoint001", GetLocation(oPC), FALSE, sWPTag);
+
+            if(DEBUG) DoDebug("prc_scout: Moved enough: " + BooleanToString(fDist >= fCheck));
 
             // Moved the distance
-            if (fDist > fCheck)
+            if (fDist >= fCheck)
             {
                 // We have Skirmished
                 SetLocalInt(oPC, "ScoutSkirmish", TRUE);

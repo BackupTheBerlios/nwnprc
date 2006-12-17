@@ -166,7 +166,7 @@ void SPGoodShift(object oPC);
 /**
  * Applies the corruption cost for Corrupt spells.
  *
- * @param oCaster  The caster of the Corrupt spell
+ * @param oPC      The caster of the Corrupt spell
  * @param oTarget  The target of the spell.
  *                 Not used for anything, should probably remove - Ornedan
  * @param nAbility ABILITY_* of the ability to apply the cost to
@@ -174,7 +174,7 @@ void SPGoodShift(object oPC);
  * @param bDrain   If this is TRUE, the cost is applied as ability drain.
  *                 If FALSE, as ability damage.
  */
-void DoCorruptionCost(object oCaster, int nAbility, int nCost, int bDrain);
+void DoCorruptionCost(object oPC, int nAbility, int nCost, int bDrain);
 
 // This function is used in the spellscripts
 // It functions as Evasion for Fortitude and Will partial saves
@@ -446,7 +446,7 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_FAVOURED_SOUL ||
             nClass==CLASS_TYPE_SOHEI ||
             nClass==CLASS_TYPE_HEALER ||
-            nClass==CLASS_TYPE_SLAYER_OF_DOMIEL || 
+            nClass==CLASS_TYPE_SLAYER_OF_DOMIEL ||
             nClass==CLASS_TYPE_OCULAR);
 }
 
@@ -1171,9 +1171,9 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     {
         return 0;
     }
-    
+
     // Hexblade gets a bonus against spells equal to his Charisma (Min +1)
-    int nHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget);    
+    int nHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget);
     if (nHex > 0)
     {
     	int nHexCha = GetAbilityModifier(ABILITY_CHARISMA, oTarget);
@@ -1282,7 +1282,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         nDC -= 3;
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
         nDC -= 1+(GetHitDice(oTarget)/5);
-    
+
     // This ability removes evasion from the target
     if (GetLocalInt(oTarget, "TrueConfoundingResistance"))
     {
@@ -1291,7 +1291,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         {
             return nDamage / 2;
         }
-        
+
         return nDamage;
     }
 
@@ -1435,14 +1435,14 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
              else
                  iTemp = iHex / 2;
              return iTemp;
-             break;  
+             break;
 	case CLASS_TYPE_DUSKBLADE:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_DUSKBLADE)
                  iTemp = iArc;
              else
                  iTemp = iDsk;
              return iTemp;
-             break;              
+             break;
         case CLASS_TYPE_FAVOURED_SOUL:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_FAVOURED_SOUL)
                  iTemp = iDiv;
@@ -1456,21 +1456,21 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
              else
                  iTemp = iSoh / 2;
              return iTemp;
-             break; 
+             break;
         case CLASS_TYPE_HEALER:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_HEALER)
                  iTemp = iDiv;
              else
                  iTemp = iHlr;
              return iTemp;
-             break;             
+             break;
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_SLAYER_OF_DOMIEL)
                  iTemp = iDiv;
              else
                  iTemp = iSod;
              return iTemp;
-             break;             
+             break;
         case CLASS_TYPE_BLACKGUARD:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_BLACKGUARD)
                  iTemp = iDiv;
@@ -1868,7 +1868,7 @@ void DoCorruptionCost(object oPC, int nAbility, int nCost, int bDrain)
     // Undead redirect all damage & drain to Charisma, sez http://www.wizards.com/dnd/files/BookVileFAQ12102002.zip
     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_UNDEAD)
         nAbility = ABILITY_CHARISMA;
-        
+
     //Exalted Raiment
     if(GetHasSpellEffect(SPELL_EXALTED_RAIMENT, GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)))
     {
@@ -2042,7 +2042,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
         AssignCommand(oTarget, ClearAllActions(TRUE));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);
     }
-    else if (nSpellId == SPELL_COMMAND_FLEE || nSpellId == SPELL_GREATER_COMMAND_FLEE || 
+    else if (nSpellId == SPELL_COMMAND_FLEE || nSpellId == SPELL_GREATER_COMMAND_FLEE ||
              nSpellId == SPELL_DOA_COMMAND_FLEE || nSpellId == SPELL_DOA_GREATER_COMMAND_FLEE)
     {
         // Force the target to flee the caster

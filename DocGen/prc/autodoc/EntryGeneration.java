@@ -464,15 +464,15 @@ public class EntryGeneration {
 				try {
 					featSpell = Integer.parseInt(feats2da.getEntry("SPELLID", i));
 					// Assume that if there are any, the first slot is always non-****
-					if(!spells2da.getEntry("SubRadSpell1", i).equals("****")) {
+					if(!spells2da.getEntry("SubRadSpell1", featSpell).equals("****")) {
 						subradials = new ArrayList<Tuple<String, String>>(5);
 						for(int j = 1; j <= 5; j++) {
 							// Also assume that all the valid entries are in order, such that if Nth SubRadSpell entry
 							// is ****, all > N are also **** 
-							if(spells2da.getEntry("SubRadSpell" + j, i).equals("****"))
+							if(spells2da.getEntry("SubRadSpell" + j, featSpell).equals("****"))
 								break;
 							try {
-								subRadial = Integer.parseInt(spells2da.getEntry("SubRadSpell" + j, i));
+								subRadial = Integer.parseInt(spells2da.getEntry("SubRadSpell" + j, featSpell));
 								
 								// Try name
 								subradName = tlk.get(spells2da.getEntry("Name", subRadial))
@@ -493,7 +493,7 @@ public class EntryGeneration {
 								// Build list
 								subradials.add(new Tuple<String, String>(subradName, subradIcon));
 							} catch(NumberFormatException e) {
-								err_pr.println("Spell " + i + ": " + name + " contains an invalid SubRadSpell" + j + " entry");
+								err_pr.println("Spell " + featSpell + ": " + name + " contains an invalid SubRadSpell" + j + " entry");
 								errored = true;
 							}
 						}
@@ -734,12 +734,14 @@ public class EntryGeneration {
 				if(domains2da.getEntry("Level_" + j, i).equals("****")) continue;
 				try {
 					grantedSpell = spells.get(Integer.parseInt(domains2da.getEntry("Level_" + j, i)));
-					spellList.add(grantedSpell);
+					if(grantedSpell != null)
+						spellList.add(grantedSpell);
+					else {
+						err_pr.println("Level_" + j + " entry for domain " + i + ": " + name + " points to non-existent spell: " + domains2da.getEntry("Level_" + j, i));
+						errored = true;
+					}
 				} catch(NumberFormatException e) {
 					err_pr.println("Invalid entry in Level_" + j + " of domain " + i + ": " + name);
-					errored = true;
-				} catch(NullPointerException e) {
-					err_pr.println("Level_" + j + " entry for domain " + i + ": " + name + " points to non-existent spell: " + domains2da.getEntry("Level_" + j, i));
 					errored = true;
 				}
 			}
@@ -841,8 +843,8 @@ public class EntryGeneration {
 		       path      = null,
 		       temp      = null;
 		List<String[]> babSav = null;
-		TreeMap<String, Tuple<GenericEntry, Boolean>> skillList = null;
-		Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>> featList = null;
+		Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>> skillList = null;
+		Tuple<List<Integer>, Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>> featList = null;
 		List<Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>> magics = null;
 
 		boolean errored;
@@ -989,21 +991,24 @@ public class EntryGeneration {
 	 * @param classes2da  data structure wrapping classes.2da
 	 * @param entryNum    number of the entry to generate table for
 	 *
-	 * @return  TreeMap<String, Tuple<GenericEntry, Boolean>> containing the
-	 *          class and cross-class skills of the given class. The map key
-	 *          is the name of the skill, the boolean determines whether the
-	 *          skill is class or cross-class. <code>true</code> for class skill.
+	 * @return  Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>>
+	 *          containing the class and cross-class skills of the given class. The
+	 *          first tuple member contains the class skills, the second cross-class.
+	 *          The map key is the name of the skill.
 	 *
 	 * @throws PageGenerationException if there is an error while generating the list and error tolerance is off
 	 */
-	private static TreeMap<String, Tuple<GenericEntry, Boolean>> buildSkillList(Data_2da classes2da, int entryNum){
+	private static Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>> buildSkillList(Data_2da classes2da, int entryNum){
 		Data_2da skillTable = null;
 		try {
 			skillTable = twoDA.get(classes2da.getEntry("SkillsTable", entryNum));
 		} catch(TwoDAReadException e) {
 			throw new PageGenerationException("Failed to read CLS_SKILL_*.2da for class " + entryNum + ": " + tlk.get(classes2da.getEntry("Name", entryNum)) + ":\n" + e);
 		}
-		TreeMap<String, Tuple<GenericEntry, Boolean>> toReturn = new TreeMap<String, Tuple<GenericEntry, Boolean>>();
+		
+		Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>> toReturn =
+			new Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>>(
+					new TreeMap<String, GenericEntry>(), new TreeMap<String, GenericEntry>()); 
 		String skillNum = null;
 		GenericEntry skillEntry = null;
 
@@ -1032,7 +1037,10 @@ public class EntryGeneration {
 				} else throw new PageGenerationException("SkillIndex entry in " + skillTable.getName() + " on row " + i + " points to non-existent skill");
 			}
 
-			toReturn.put(skillEntry.name, new Tuple<GenericEntry, Boolean>(skillEntry, skillNum.equals("1")));
+			if(skillNum.equals("1"))
+				toReturn.e1.put(skillEntry.name, skillEntry); // Class skill
+			else
+				toReturn.e2.put(skillEntry.name, skillEntry); // Cross-class skill
 		}
 		
 		return toReturn;
@@ -1052,12 +1060,13 @@ public class EntryGeneration {
 	 *
 	 * @throws PageGenerationException if there is an error while generating the lists and error tolerance is off
 	 */
-	private static Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>
+	private static Tuple<List<Integer>, Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>>
 					buildClassFeatList(Data_2da classes2da, int entryNum) {
 		Data_2da featTable      = null,
 		         bonusFeatTable = null;
-		ArrayList<TreeMap<String, FeatEntry>> grantedFeatList    = new ArrayList<TreeMap<String, FeatEntry>>(40),
-		                                      selectableFeatList = new ArrayList<TreeMap<String, FeatEntry>>(40);
+		ArrayList<TreeMap<String, FeatEntry>> grantedFeatList    = new ArrayList<TreeMap<String, FeatEntry>>(0),
+		                                      selectableFeatList = new ArrayList<TreeMap<String, FeatEntry>>(0);
+		ArrayList<Integer> bonusFeatCounts = new ArrayList<Integer>();
 		HashSet<FeatEntry> masterFeatsUsed = new HashSet<FeatEntry>();
 		String listNum = null;
 		FeatEntry classFeat = null;
@@ -1209,7 +1218,22 @@ public class EntryGeneration {
 			throw new PageGenerationException("Too few entries in class bonus feat table " + bonusFeatTable.getName() + ": " + bonusFeatTable.getEntryCount() + ". Need " + maxLevel);
 		}
 		
-		return new Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>(grantedFeatList, selectableFeatList);
+		for(int i = 0; i < maxLevel; i++) {
+			try {
+				bonusFeatCounts.add(Integer.parseInt(bonusFeatTable.getEntry("Bonus", i)));
+			} catch(NumberFormatException e) {
+				if(tolErr) {
+					err_pr.println("Invalid Bonus entry in " + bonusFeatTable.getName() + " on row " + i + ": " + bonusFeatTable.getEntry("Bonus", i));
+					continue;
+				} else throw new PageGenerationException("Invalid Bonus entry in " + bonusFeatTable.getName() + " on row " + i + ": " + bonusFeatTable.getEntry("Bonus", i));
+			}
+		}
+		
+		return new Tuple<List<Integer>, Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>>(
+				bonusFeatCounts,
+				new Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>(
+						grantedFeatList,
+						selectableFeatList));
 	}
 	
 	/**

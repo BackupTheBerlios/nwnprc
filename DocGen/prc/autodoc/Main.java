@@ -9,8 +9,9 @@ import java.util.concurrent.*;
 import static prc.autodoc.Main.SpellType.*;
 
 /* Mutual static import to make the file sizes manageable */
-import static prc.autodoc.PageGeneration.*;
+import static prc.autodoc.EntryGeneration.*;
 import static prc.autodoc.MenuGeneration.*;
+import static prc.autodoc.PageGeneration.*;
 
 /* Error printer, spinner and verbosity settings */
 import static prc.Main.*;
@@ -807,12 +808,19 @@ public class Main{
 		preliMasterFeats();
 		preliFeats();
 		linkFeats();
-		printFeats();
 		
 		/* Last, domains, races and classes, which all link to the previous */
 		doDomains();
 		doRaces();
 		doClasses();
+		
+		/* Then, print all of it */
+		printSkills();
+		printSpells();
+		printFeats();
+		printDomains();
+		printRaces();
+		printClasses();
 	}
 	
 	/**

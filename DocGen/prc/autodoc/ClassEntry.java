@@ -19,19 +19,19 @@ public class ClassEntry extends GenericEntry {
 	public final List<String[]> babSav;
 
 	/**
-	 * The list of this class's class and cross-class skills. Map keys are skill names,
-	 * values are (skill entry, boolean) tuples. The boolean determines whether the
-	 * skill is class or cross-class, true for class skill.
+	 * The list of this class's class and cross-class skills. First tuple member
+	 * cotnaints the class skills, the second cross-class skills.
+	 * Map keys are skill names.
 	 */
-	public final TreeMap<String, Tuple<GenericEntry, Boolean>> skillList;
+	public final Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>> skillList;
 	
 	/**
-	 * Lists of this class's granted and selectable feats. First tuple member is the
-	 * granted feats, second member is selectable feats.
+	 * Lists of this class's granted and selectable feats. First tuple member lists bonus feat
+	 * # at each level. First inner tuple member is the granted feats, second member is selectable feats.
 	 * Each list consists of the feats that are related to the list indexth level.
 	 * The map keys are feat names. 
 	 */
-	public final Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>> featList;
+	public final Tuple<List<Integer>, Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>> featList;
 	
 	/**
 	 * The alternate magic systems available to this class. Each list entry describes one
@@ -58,8 +58,8 @@ public class ClassEntry extends GenericEntry {
 	 */
 	public ClassEntry(String name, String text, String iconPath, String filePath,
 			          int entryNum, boolean isBase, List<String[]> babSav,
-			          TreeMap<String, Tuple<GenericEntry, Boolean>> skillList,
-			          Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>> featList,
+			          Tuple<TreeMap<String, GenericEntry>, TreeMap<String, GenericEntry>> skillList,
+			          Tuple<List<Integer>, Tuple<List<TreeMap<String, FeatEntry>>, List<TreeMap<String, FeatEntry>>>> featList,
 			          List<Tuple<Tuple<String, String>, TreeMap<Integer, TreeMap<String, SpellEntry>>>> magics) {
 		super(name, text, iconPath, filePath, entryNum);
 		this.isBase    = isBase;

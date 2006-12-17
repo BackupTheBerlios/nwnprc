@@ -107,7 +107,8 @@ public final class PageGeneration{
 	 * Prints the masterfeat pages.
 	 */
 	private static void printMasterFeatsAux() {
-		String text = null;
+		String text = null,
+		       temp = null;
 		
 		for(FeatEntry masterfeat : masterFeats.values()) {
 			if(verbose) System.out.println("Printing page for " + masterfeat.name);
@@ -119,6 +120,14 @@ public final class PageGeneration{
 			                       masterfeat.text);
 			// Add in the icon
 			text = text.replaceAll("~~~Icon~~~", masterfeat.iconPath);
+			
+			// Add in child feats
+			temp = "";
+			for(FeatEntry child : masterfeat.childFeats.values()) {
+				temp += pageLinkTemplate.replace("~~~Path~~~", child.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+	                                    .replace("~~~Name~~~", child.name);
+			}
+			text = text.replaceAll("~~~MasterFeatChildList~~~", temp);
 			
 			// Print the page
 			try {
@@ -135,7 +144,8 @@ public final class PageGeneration{
 	 * Prints the feat pages.
 	 */
 	private static void printFeatsAux() {
-		String                 text = null;
+		String                 text = null,
+		                       temp = null;
 		StringBuilder subradialText = null;
 		
 		for(FeatEntry feat : feats.values()) {
@@ -149,6 +159,30 @@ public final class PageGeneration{
 			// Add in the icon
 			text = text.replaceAll("~~~Icon~~~", feat.iconPath);
 			
+			// Print prerequisites into the entry
+			temp = "";
+			if(feat.andRequirements.size() != 0) {
+				temp += prereqANDFeatHeaderTemplate;
+				for(FeatEntry andReq : feat.andRequirements.values())
+					temp += pageLinkTemplate.replace("~~~Path~~~", andReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+					                        .replace("~~~Name~~~", andReq.name);
+			}
+			if(feat.orRequirements.size() != 0) {
+				temp += prereqORFeatHeaderTemplate;
+				for(FeatEntry orReq : feat.orRequirements.values())
+					temp += pageLinkTemplate.replace("~~~Path~~~", orReq.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+					                        .replace("~~~Name~~~", orReq.name);
+			}
+			text = text.replaceAll("~~~PrerequisiteFeatList~~~", temp);
+			
+			// Print the successor, if any, into the entry
+			temp = "";
+			if(feat.successor != null) {
+				temp += successorFeatHeaderTemplate + pageLinkTemplate.replace("~~~Path~~~", feat.successor.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+				                                                      .replace("~~~Name~~~", feat.successor.name);
+			}
+			text = text.replaceAll("~~~SuccessorFeat~~~", temp);
+			
 			// Handle subradials, if any
 			subradialText = new StringBuilder();
 			if(feat.subradials != null) {
@@ -159,6 +193,17 @@ public final class PageGeneration{
 				subradialText = new StringBuilder(spellSubradialListTemplate.replaceAll("~~~EntryList~~~", subradialText.toString()));
 			}
 			text = text.replaceAll("~~~SubradialNames~~~", subradialText.toString());
+			
+			// Handle feats that have this as their prerequisite
+			temp = "";
+			if(feat.requiredForFeats.size() != 0) {
+				temp += requiredForFeatHeaderTemplate;
+				for(FeatEntry req : feat.requiredForFeats.values()) {
+					temp += pageLinkTemplate.replace("~~~Path~~~", req.filePath.replace(contentPath, "../").replaceAll("\\\\", "/"))
+	                                        .replace("~~~Name~~~", req.name);
+				}
+			}
+			text = text.replaceAll("~~~RequiredForFeatList~~~", temp);
 			
 			// Print the page
 			try {

@@ -166,7 +166,7 @@ public class EntryGeneration {
 							}
 							
 							// Build list
-							subradials.add(new Tuple<String, String>(subradName, subradIcon));
+							subradials.add(new Tuple<String, String>(subradName, Icons.buildIcon(subradIcon)));
 						} catch(NumberFormatException e) {
 							err_pr.println("Spell " + i + ": " + name + " contains an invalid SubRadSpell" + j + " entry");
 							errored = true;
@@ -450,7 +450,6 @@ public class EntryGeneration {
 				errored = true;
 			}
 			// Add in the icon
-
 			icon = feats2da.getEntry("ICON", i);
 			if(icon.equals("****")) {
 				err_pr.println("Icon not defined for feat " + i + ": " + name);
@@ -491,7 +490,7 @@ public class EntryGeneration {
 								}
 								
 								// Build list
-								subradials.add(new Tuple<String, String>(subradName, subradIcon));
+								subradials.add(new Tuple<String, String>(subradName, Icons.buildIcon(subradIcon)));
 							} catch(NumberFormatException e) {
 								err_pr.println("Spell " + featSpell + ": " + name + " contains an invalid SubRadSpell" + j + " entry");
 								errored = true;
@@ -533,45 +532,43 @@ public class EntryGeneration {
 	 * Builds the master - child, predecessor - successor and prerequisite links
 	 * and modifies the entry texts accordingly.
 	 */
-	public static void linkFeats(){
+	public static void linkFeats() {
 		FeatEntry other   = null;
-		String temp       = null;
 		Data_2da feats2da = twoDA.get("feat");
 		boolean allChildrenEpic, allChildrenClassFeat;
 
 		// Link normal feats to each other and to masterfeats
-		for(FeatEntry check : feats.values()){
+		for(FeatEntry check : feats.values()) {
 			if(verbose) System.out.println("Linking feat " + check.name);
 			// Link to master
 			if(!feats2da.getEntry("MASTERFEAT", check.entryNum).equals("****")){
-				try{
+				try {
 					other = masterFeats.get(Integer.parseInt(feats2da.getEntry("MASTERFEAT", check.entryNum)));
-					check.master = other;
 					other.childFeats.put(check.name, check);
+					check.master = other;
 					if(check.isEpic) other.isEpic = true;
 					if(!check.isClassFeat) other.isClassFeat = false;
-				}catch(NumberFormatException e){
+				} catch(NumberFormatException e) {
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid MASTERFEAT entry");
-				}catch(NullPointerException e){
+				} catch(NullPointerException e) {
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " MASTERFEAT points to a nonexistent masterfeat entry");
 			}}
 
 			// Handle prerequisites
 			buildPrerequisites(check, feats2da);
 
-			// Print the successor, if any, into the entry
-			temp = "";
-			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")){
-				try{
+			// Handle successor feat, if any
+			if(!feats2da.getEntry("SUCCESSOR", check.entryNum).equals("****")) {
+				try {
 					other = feats.get(Integer.parseInt(feats2da.getEntry("SUCCESSOR", check.entryNum)));
 					// Check for feats that have themselves as successor
 					if(other == check)
 						err_pr.println("Feat " + check.entryNum + ": " + check.name + " has itself as successor");
-					check.successor = other;
 					other.isSuccessor = true;
-				}catch(NumberFormatException e){
+					check.successor = other;
+				} catch(NumberFormatException e) {
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " contains an invalid SUCCESSOR entry");
-				}catch(NullPointerException e){
+				} catch(NullPointerException e) {
 					err_pr.println("Feat " + check.entryNum + ": " + check.name + " SUCCESSOR points to a nonexistent feat entry");
 			}}
 		}
@@ -580,7 +577,7 @@ public class EntryGeneration {
 		for(FeatEntry check : masterFeats.values()) {
 			if(verbose) System.out.println("Linking masterfeat " + check.name);
 			allChildrenEpic = allChildrenClassFeat = true;
-			for(FeatEntry child : check.childFeats.values()){
+			for(FeatEntry child : check.childFeats.values()) {
 				if(!child.isEpic)      allChildrenEpic      = false; 
 				if(!child.isClassFeat) allChildrenClassFeat = false;
 			}

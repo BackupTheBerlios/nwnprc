@@ -103,37 +103,40 @@ public class Main {
 	 */
 	private static void readMe(){
 		//                  0        1         2         3         4         5         6         7         8
-		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890
+		//                  12345678901234567890123456789012345678901234567890123456789012345678901234567890
 		System.out.println("Usage:\n"+
-		                   "  java -jar prc.jar [--help] | class [parameters]\n"+
+		                   "  java -jar prc.jar [--help] | tool [parameters]\n"+
 		                   "\n"+
-		                   "class   name of the class to call. possible values:\n"+
+		                   "tool    name of the tool to call. possible values:\n"+
+		                   "         2da            - Either verifies a single 2da file or compares two\n"+
+		                   "         2damerge       - Merges 2 directories of 2da files, and outputs to a third\n" +
+		                   "         blank2da       - Blanks rows in a 2da\n" +
+		                   "         codegen        - Autogenerates scripts (or other files)\n"+
+		                   "         dupentries     - Seeks for duplicate entries in the given columns\n" +
+		                   "                          of a given 2da\n"+
+		                   "         dupsubrad      - Seeks through spells.2da and prints lines\n"+
+		                   "                          containing duplicate subradial values\n"+
+		                   "         letoxml        - Creates Leto XML lists from 2da and TLK\n" +
+		                   "         lsentries      - Lists the unique entries in given columns of a\n" +
+		                   "                          given 2da\n" +
+		                   "         lssubrad       - Lists subradial IDs used in spells.2da\n" +
+		                   "         makedep        - Builds include dependency lists\n" +
+		                   "         radials        - Generates subradial FeatID values\n"+
+		                   "\n" +
+		                   "        The following tools are also available, but almost certainly too\n" +
+		                   "        specialized for general use:\n" +
+		                   "         2datosql       - Creates a SQL file from 2das\n" +
+		                   "         itempropmaker  - Creates the itemproperty cache item templates\n" +
 		                   "         manual         - Generates the manual\n"+
-						   "         2da            - Either verifies a single 2da file or compares two\n"+
-						   "         codegen        - Autogenerates scripts (or other files)\n"+
-						   "         radials        - Generates subradial FeatID values\n"+
-						   "         lssubrad       - Lists subradial IDs used in spells.2da\n" +
-						   "         dupsubrad      - Seeks through spells.2da and prints lines\n"+
-						   "                          containing duplicate subradial values\n"+
-						   "         makedep        - Builds include dependency lists\n" +
-						   "         upclsfeat      - Updates base cls_feat_*.2da based on given templates\n" +
-						   "         lsentries      - Lists the unique entries in given columns of a\n" +
-						   "                          given 2da\n" +
-						   "         dupentries     - Seeks for duplicate entries in the given columns\n" +
-						   "                          of a given 2da\n"+
-						   "         2datosql       - Creates a SQL file from 2das\n" +
-						   "         spellbookmaker - Creates and/or updates the new spellbooks data\n" +
-						   "         itempropmaker  - Creates the itemproperty cache item templates\n" +
-						   "         letoxml        - Creates Leto XML lists from 2da and TLK\n" +
-						   "         prec2dagen     - Creates a 2da file that lists spells/feat.2da rows\n" +
-						   "                          that should be precached\n" +
-						   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
-						   "         npcevol        - Alters packages based on logfile scores\n" +
-						   "         2damerge       - Merges 2 directories of 2da files, and outputs to a third\n" +
-						   "         blank2da       - Blanks rows in a 2da\n" +
+		                   "         npcevol        - Alters packages based on logfile scores\n" +
+		                   "         upclsfeat      - Updates base cls_feat_*.2da based on given templates\n" +
+		                   "         prec2dagen     - Creates a 2da file that lists spells/feat.2da rows\n" +
+		                   "                          that should be precached\n" +
+		                   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
+		                   "         spellbookmaker - Creates and/or updates the new spellbooks data\n" +
 		                   "\n"+
-						   "parameters  a list of parameters passed to the class called\n"+
-						   "\n"+
+		                   "parameters  a list of parameters passed to the class called\n"+
+		                   "\n"+
 		                   "--help      prints this info you are reading\n"
 		                  );
 		System.exit(0);

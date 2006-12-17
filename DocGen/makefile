@@ -11,7 +11,7 @@ default:
 	$(COMPILER) $(FLAGS) $(TARGET)
 
 jar:
-	jar -cvfm prc.jar prc\prc.mf prc\*
+	jar -cvfm prc.jar prc\\prc.mf prc\\*
 
 
 run:

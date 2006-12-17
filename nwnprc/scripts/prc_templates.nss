@@ -18,22 +18,22 @@
 #include "prc_inc_template"
 
 void RunTemplateStuff(int nTemplate, object oPC = OBJECT_SELF)
-{   
+{
     //run the maintenence script
-    string sScript = Get2DACache("templates", "MaintainScript", nTemplate); 
-    DoDebug("Running template maintenence script "+sScript);
+    string sScript = Get2DACache("templates", "MaintainScript", nTemplate);
+    if(DEBUG) DoDebug("Running template maintenence script "+sScript);
     ExecuteScript(sScript, oPC);
 }
 
 
 void main()
 {
-    DoDebug("Running Prc_templates");
+    if(DEBUG) DoDebug("Running Prc_templates");
     object oPC = OBJECT_SELF;
     //stop infinite loop
     if(GetLocalInt(oPC, "TemplateTest"))
         return;
-    
+
     //loop over all templates and see if the player has them
     if(!persistant_array_exists(oPC, "templates"))
         persistant_array_create(oPC, "templates");
@@ -45,21 +45,21 @@ void main()
         if(GetHasTemplate(nTemplate, oPC))
         {
             bHasTemplate = TRUE;
-            RunTemplateStuff(nTemplate, oPC);    
-        }    
+            RunTemplateStuff(nTemplate, oPC);
+        }
     }
-    
+
     if(bHasTemplate)
     {
-    
+
     /*
         //call evalPRCFeats again to repeat templates
         SetLocalInt(oPC, "TemplateTest", TRUE);
         DelayCommand(1.0, DeleteLocalInt(oPC, "TemplateTest"));
         EvalPRCFeats(oPC);
     */
-        DoDebug("Re-running prc_feat");
-        
+        if(DEBUG) DoDebug("Re-running prc_feat");
+
         //run the main PRC feat system so we trigger any other feats weve borrowed
         ExecuteScript("prc_feat", oPC);
     }

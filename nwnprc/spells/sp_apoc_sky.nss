@@ -55,23 +55,29 @@ void main()
 	object oArea = GetArea(oPC);
 	int nDam;
 	int nDamType;
-	int nSpell = GetSpellId();		
+	int nSpell = GetSpellId();
+	effect eVis;
 	
 	//Handle damage types
 	if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_FIRE)
 	{
 		nDamType = DAMAGE_TYPE_FIRE;
+		eVis = EffectVisualEffect(VFX_FNF_METEOR_SWARM);
 	}
 	
 	if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_ACID)
 	{
 		nDamType = DAMAGE_TYPE_ACID;
+		eVis = EffectVisualEffect(VFX_FNF_STORM);
 	}
 	
 	if(nSpell == SPELL_APOCALYPSE_FROM_THE_SKY_SONIC)
 	{
 		nDamType = DAMAGE_TYPE_SONIC;
+		eVis = EffectVisualEffect(VFX_FNF_SOUND_BURST);
 	}
+	
+	ApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oPC);
 	
 	object oObject = GetFirstObjectInArea(oArea);
 	

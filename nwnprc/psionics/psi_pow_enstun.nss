@@ -130,21 +130,23 @@ void main()
                             // Cold has a fort save for half
                             if(PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, enAdj.nSaveType))
                             {
-				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
-				// This script does nothing if it has Mettle, bail
-					nDamage = 0;                              
+                                if (GetHasMettle(oTarget, SAVING_THROW_FORT))
+                                // This script does nothing if it has Mettle, bail
+                                    nDamage = 0;
                                 nDamage /= 2;
                             }
                             // Failed save, now Will save vs Stun
-                            else if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                            else if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, enAdj.nSaveType))
                                 bStun = TRUE;
                         }
                         else
+                        {
                             // Adjust damage according to Reflex Save, Evasion or Improved Evasion
                             if(nDamage == (nDamage = PRCGetReflexAdjustedDamage(nDamage, oTarget, nDC, enAdj.nSaveType)))
                                 // Failed save, now Will save vs Stun
-                                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+                                if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, enAdj.nSaveType))
                                     bStun = TRUE;
+                        }
 
                         // Damage, VFX and stun if the target didn't manage to avoid the whole thing (Evasion)
                         if(nDamage > 0)

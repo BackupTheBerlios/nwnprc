@@ -304,12 +304,18 @@ void main()
             {
             	// Get the choice
                 int nSummon = GetLocalInt(oPC, "TrueGateChoice");
+                if (DEBUG) 
+                {
+                	DoDebug("true_gate_conv: Summon is " + IntToSummonResref(nSummon));
+                	DoDebug("true_gate_conv: Duration is " + FloatToString(GetLocalFloat(oPC, "TrueGateDuration")));
+                }
+                
                 // Convert to Resref and setup effect
-                effect eSummon = EffectSummonCreature(IntToSummonResref(nSummon), VFX_FNF_SUMMON_GATE, 3.0);        
+                effect eSummon = EffectSummonCreature(IntToSummonResref(nSummon), VFX_FNF_SUMMON_GATE);        
                 // Do Multisummon
-        	DelayCommand(5.0, MultisummonPreSummon());
+        	MultisummonPreSummon();
         	// Bring in the creature
-        	DelayCommand(3.0, ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetLocation(oPC), GetLocalFloat(oPC, "TrueGateDuration")));                
+        	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSummon, oPC, GetLocalFloat(oPC, "TrueGateDuration"));
 
                 // And we're all done
                 AllowExit(DYNCONV_EXIT_FORCE_EXIT);

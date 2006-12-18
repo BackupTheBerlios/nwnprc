@@ -134,7 +134,7 @@ public final class SQLMaker{
 		filename = file.getName();
 		filename = filename.substring(0, filename.length()-4);
 		//tell the user what were doing
-		if(verbose) System.out.print("Making SQL from "+filename+" - ");
+		if(verbose) System.out.print("Making SQL from "+filename+" ");
 		//specific files get their own tables
         if(filename.matches("feat")
             || filename.matches("spells")

@@ -25783,13 +25783,21 @@ Duration: 3d6 minutes
 Saving Throw: None
 Spell Resistance: No
 
-The caster conjures a type of evil weather. It functions as described in Chapter 2 of the Book of Vile Darkness, except that area and duration are as given for this spell. To conjure violet rain, the caster must sacrifice 10,000 gp worth of amethysts and spend 200 XP. Other forms of evil weather have no material component or experience point cost.
+The caster conjures a type of evil weather. It functions as described in Chapter 2 of the Book of Vile Darkness, except that area and duration are as given for this spell. 
+
+Rain of Blood: Blood pours down in thick drops for 2d10 minutes.  Any living, non-evil character in the area must succeed on a will save (DC 20) or take a -1 morale penalty on attack and damage rolls, checks, and saves for 24 hours. Undead gain a +1 morale bonus on attack and damage rolls, checks, and saves for 24 hours. 
+
+Violet Rain: Once violet rain begins to fall, divine spells are uncastable for 24 hours.
+
+Green Fog: Clouds of dark greenish mist roll across the countryside.  Any creature touched by a mist must succeed on a Fortitude save (DC 17) or be polymorphed into a random creature.  The fog lasts for 10 minutes.
+
+Rain of Frogs or Fish: Thousands of animals fall from the sky, causing 1d3 pts per round of damage.  The rain lasts 2d6 rounds.
 
 Corruption Cost: 3d6 points of Constitution damage.</entry>
   <entry id="52320" lang="en" sex="m">Rain of Blood</entry>
   <entry id="52321" lang="en" sex="m">Violet Rain</entry>
   <entry id="52322" lang="en" sex="m">Green Fog</entry>
-  <entry id="52323" lang="en" sex="m">Rain of Fish</entry>
+  <entry id="52323" lang="en" sex="m">Rain of Frogs or Fish</entry>
   <entry id="52324" lang="en" sex="m">Extract Drug</entry>
   <entry id="52325" lang="en" sex="m">Extract Drug
 Conjuration (Creation)

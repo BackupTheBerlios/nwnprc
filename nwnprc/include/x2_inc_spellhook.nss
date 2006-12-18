@@ -973,8 +973,17 @@ int X2PreSpellCastCode()
             }
         }
     }
-
-
+    
+    //Violet Rain check
+    if(GetHasSpellEffect(SPELL_EVIL_WEATHER_VIOLET_RAIN, oCaster))
+    {
+	    int nClass = PRCGetLastSpellCastClass();
+	    
+	    if(GetIsDivineClass(nClass, oCaster))
+	    {
+		    nContinue = FALSE;
+	    }
+    }
 
     //---------------------------------------------------------------------------
     // Break any spell require maintaining concentration (only black blade of

@@ -236,35 +236,40 @@ public class Data_2da implements Cloneable{
 
 		// Create a Scanner for reading the 2da
 		Scanner reader = null;
-		try{
+		try {
 			// Fully read the file into a byte array
 			RandomAccessFile raf = new RandomAccessFile(baseFile, "r");
 			byte[] bytebuf = new byte[(int)raf.length()];
 			raf.readFully(bytebuf);
+			raf.close();
 			//reader = new Scanner(baseFile);
 			reader = new Scanner(new String(bytebuf));
-		}catch(Exception e){
+		} catch(Exception e) {
 			err_pr.println("File operation failed. Aborting.\nException data:\n" + e);
 			System.exit(1);
 		}
 
-		// Check the 2da header
-		//String data = getNextNonEmptyRow(reader);
-		if(!reader.hasNextLine())
-			throw new TwoDAReadException("Empty file: " + name + "!");
-		String data = reader.nextLine();
-		
-		if(!(bugCompat ? Pattern.matches("2DA[ \t]V2\\.0\\s*", data) : data.contains("2DA V2.0")))
-			throw new TwoDAReadException("2da header missing or invalid: " + name);
-
-		// Initialise the return object
-		toReturn = new Data_2da(name);
-
-		// Start the actual reading
-		try{
-			toReturn.createData(reader, matcher, bugCompat);
-		}catch(TwoDAReadException e){
-			throw new TwoDAReadException("Exception occurred when reading 2da file: " + toReturn.getName() + "\n" + e, e);
+		try {
+			// Check the 2da header
+			if(!reader.hasNextLine())
+				throw new TwoDAReadException("Empty file: " + name + "!");
+			String data = reader.nextLine();
+			
+			if(!(bugCompat ? Pattern.matches("2DA[ \t]V2\\.0\\s*", data) : data.contains("2DA V2.0")))
+				throw new TwoDAReadException("2da header missing or invalid: " + name);
+	
+			// Initialise the return object
+			toReturn = new Data_2da(name);
+	
+			// Start the actual reading
+			try {
+				toReturn.createData(reader, matcher, bugCompat);
+			} catch(TwoDAReadException e) {
+				throw new TwoDAReadException("Exception occurred when reading 2da file: " + toReturn.getName() + "\n" + e.getMessage(), e);
+			}
+		} finally {
+			// Cleanup
+			reader.close();
 		}
 
 		if(verbose) System.out.println("- Done");

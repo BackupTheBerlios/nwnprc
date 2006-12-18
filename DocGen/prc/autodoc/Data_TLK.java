@@ -22,7 +22,7 @@ public class Data_TLK{
 	 * @throws IllegalArgumentException  <code>filePath</code> does not filePath a TLK file
 	 * @throws TLKReadException          reading the TLK file specified does not succeed
 	 */
-	public Data_TLK(String filePath){
+	public Data_TLK(String filePath) {
 		// Some paranoia checking for bad parameters
 		if(!filePath.toLowerCase().endsWith("tlk"))
 			throw new IllegalArgumentException("Non-tlk filename passed to Data_TLK: " + filePath);
@@ -50,7 +50,7 @@ public class Data_TLK{
 		// Tell the user what we are doing
 		if(verbose) System.out.print("Reading TLK file: " + fileName + " ");
 
-		try{
+		try {
 			// Check the header
 			reader.readFully(bytes4);
 			if(!new String(bytes4).equals("TLK "))
@@ -76,8 +76,15 @@ public class Data_TLK{
 
 			// Store the highest string for writing back later
 			highestEntry = stringLengths.length;
-		}catch(IOException e){
+		} catch(IOException e) {
 			throw new TLKReadException("IOException while reading TLK file: " + fileName, e);
+		} finally {
+			try {
+				reader.close();
+			} catch(IOException e) {
+				// No idea under what conditions closing a file could fail and not cause an Error to be thrown...
+				e.printStackTrace();
+			}
 		}
 
 		if(verbose) System.out.println("- Done");

@@ -98,27 +98,23 @@ void main()
 	//Violet Rain   No divine spells/abilities for 24 hours
 	if (nSpell == SPELL_EVIL_WEATHER_VIOLET_RAIN)
 	{
-		if(HasGold(10000, oPC))
+		//GetFirst
+		object oObject = GetFirstObjectInArea(oArea);
+		
+		//Loop
+		while(GetIsObjectValid(oObject))
 		{
-			//Spend Gold
-			TakeGold(10000, oPC, TRUE);
+			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oObject, HoursToSeconds(24));
 			
-			//Handle 200XP cost
-			int nXP = GetXP(oPC);
-			int nNewXP = (nXP - 200);
-			SetXP(oPC, nNewXP);
-			
-			//Set local on area
-			SetLocalInt(oArea, "VIOLET_RAIN_MARKER", 1);
-			
-			//Change to rain
-			SetWeather(oArea, WEATHER_RAIN);
-			
-			DelayCommand(fDuration, SetWeather(oArea, nWeather));
-			DelayCommand(fDuration, DeleteLocalInt(oArea, "VIOLET_RAIN_MARKER"));		
+			oObject = GetNextObjectInArea();
 		}
-	}
-	
+				
+		//Change to rain
+		SetWeather(oArea, WEATHER_RAIN);
+		
+		DelayCommand(fDuration, SetWeather(oArea, nWeather));
+	}	
+		
 	//Green Fog
 	if (nSpell == SPELL_EVIL_WEATHER_GREEN_FOG)
 	{

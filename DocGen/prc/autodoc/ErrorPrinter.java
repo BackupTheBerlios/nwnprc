@@ -21,6 +21,7 @@ public class ErrorPrinter {
 			isInit = true;
 		}catch(Exception e){
 			System.err.println("Error while creating error logger. Yes, it's ironic. Now debug");
+			e.printStackTrace();
 			System.exit(1);
 		}
 	}

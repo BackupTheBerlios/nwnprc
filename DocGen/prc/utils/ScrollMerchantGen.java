@@ -5,7 +5,7 @@ import static prc.Main.verbose;
 import java.util.*;
 import java.io.*;
 import prc.autodoc.*;
-
+import prc.autodoc.Main.TLKStore;
 
 /**
  *  A little tool that parses des_crft_scroll, extracts unique item resrefs from it and
@@ -23,16 +23,17 @@ public class ScrollMerchantGen {
 	 */
 	public static void main(String[] args) throws IOException{
 		if(args.length == 0) readMe();
-		String filePath = null;
+		String twoDAPath = null;
+		String tlkPath   = null;
 
 		// parse args
-		for(String param : args){//[--help] | path_to_des_crft_scroll.2da
+		for(String param : args) {//[--help] | path_to_des_crft_scroll.2da
 			// Parameter parseage
-			if(param.startsWith("-")){
+			if(param.startsWith("-")) {
 				if(param.equals("--help")) readMe();
 				else{
-					for(char c : param.substring(1).toCharArray()){
-						switch(c){
+					for(char c : param.substring(1).toCharArray()) {
+						switch(c) {
 						default:
 							System.out.println("Unknown parameter: " + c);
 							readMe();
@@ -40,10 +41,12 @@ public class ScrollMerchantGen {
 					}
 				}
 			}
-			else{
+			else {
 				// It's a pathname
-				if(filePath == null)
-					filePath = param;
+				if(twoDAPath == null)
+					twoDAPath = param;
+				else if(tlkPath == null)
+					tlkPath = param;
 				else{
 					System.out.println("Unknown parameter: " + param);
 					readMe();
@@ -52,24 +55,26 @@ public class ScrollMerchantGen {
 		}
 
 		// Load the 2da file
-		Data_2da scrolls2da = Data_2da.load2da(filePath);
+		Data_2da scrolls2da = Data_2da.load2da(twoDAPath + File.separator + "des_crft_scroll.2da");
+		Data_2da spells2da  = Data_2da.load2da(twoDAPath + File.separator + "spells.2da");
+		TLKStore tlks = new TLKStore("dialog.tlk", "prc_consortium.tlk", tlkPath);
 
 		// Loop over the scroll entries and get a list of unique resrefs
-		Set<String> scrollResRefs = new TreeSet<String>();
+		TreeMap<Integer, TreeMap<String, String>> scrollResRefs = new TreeMap<Integer, TreeMap<String, String>>();
 		String entry;
 		for(int i = 0; i < scrolls2da.getEntryCount(); i++) {
 			if(!(entry = scrolls2da.getEntry("Wiz_Sorc", i)).equals("****"))
-				scrollResRefs.add(entry.toLowerCase());
+				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Cleric", i)).equals("****"))
-				scrollResRefs.add(entry.toLowerCase());
+				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Paladin", i)).equals("****"))
-				scrollResRefs.add(entry.toLowerCase());
+				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Druid", i)).equals("****"))
-				scrollResRefs.add(entry.toLowerCase());
+				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Ranger", i)).equals("****"))
-				scrollResRefs.add(entry.toLowerCase());
+				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Bard", i)).equals("****"))
-				scrollResRefs.add(entry.toLowerCase());
+				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 		}
 
 		String xmlPrefix =
@@ -113,21 +118,22 @@ public class ScrollMerchantGen {
 
 		StringBuffer xmlString = new StringBuffer();
 		int posCounter = 0;
-		for(String resref : scrollResRefs){
-			xmlString.append(
+		for(Map<String, String> levelScrollResRefs : scrollResRefs.values())
+			for(String resref : levelScrollResRefs.values()) {
+				xmlString.append(
 "                    <struct id=\"0\" >"                                                                 + "\n" +
 "                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "\n" +
 "                        <element name=\"Repos_PosX\" type=\"0\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
 "                        <element name=\"Repos_Posy\" type=\"0\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
 "                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                           + "\n" +
 "                    </struct>"                                                                          + "\n"
-					);
-			posCounter++;
-		}
+						);
+				posCounter++;
+			}
 		
 		File target = new File("prc_scrolls.utm.xml");
 		// Clean up old version if necessary
-		if(target.exists()){
+		if(target.exists()) {
 			if(verbose) System.out.println("Deleting previous version of " + target.getName());
 			target.delete();
 		}
@@ -143,18 +149,43 @@ public class ScrollMerchantGen {
 		// Force garbage collection
 		System.gc();
 	}
+	
+	private static void addScroll(TreeMap<Integer, TreeMap<String, String>> scrollResRefs,
+			                      Data_2da spells2da, TLKStore tlks, int rowNum, String scrollResRef) {
+		int innateLevel = -1,
+		         tlkRef = -1;
+		
+		try {
+			innateLevel = Integer.parseInt(spells2da.getEntry("Innate", rowNum));
+		} catch (NumberFormatException e) {
+			System.err.println("Non-number value in spells.2da Innate column on line " + rowNum + ": " + spells2da.getEntry("Innate", rowNum));
+			return;
+		}
+		
+		try {
+			tlkRef = Integer.parseInt(spells2da.getEntry("Name", rowNum));
+		} catch (NumberFormatException e) {
+			System.err.println("Non-number value in spells.2da Name column on line " + rowNum + ": " + spells2da.getEntry("Name", rowNum));
+			return;
+		}
+		
+		if(scrollResRefs.get(innateLevel) == null)
+			scrollResRefs.put(innateLevel, new TreeMap<String, String>());
+		
+		scrollResRefs.get(innateLevel).put(tlks.get(tlkRef), scrollResRef);
+	}
 
 	/**
 	 * Prints the use instructions for this program and kills execution.
 	 */
-	private static void readMe(){
+	private static void readMe() {
 		//                  0        1         2         3         4         5         6         7         8
 		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890
 		System.out.println("Usage:\n"+
-		                   "  java -jar prc.jar [--help] | path_to_des_crft_scroll.2da\n"+
+		                   "  java -jar prc.jar [--help] | 2dadir tlkdir\n"+
 		                   "\n"+
-		                   "path_to_des_crft_scroll.2da Path to the version of des_crft_scroll.2da to\n" +
-		                   "                            create scroll merchant from\n"+
+		                   "2dadir   Path to a directory containing des_crft_scroll.2da and spells.2da.\n" +
+		                   "tlkdir   Path to a directory containing dialog.tlk and prc_consortium.tlk\n" +
 						   "\n"+
 		                   "--help      prints this info you are reading\n" +
 		                   "\n" +

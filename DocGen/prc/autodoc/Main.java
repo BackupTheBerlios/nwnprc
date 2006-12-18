@@ -31,16 +31,31 @@ public class Main{
 		                 custom;
 		
 		/**
-		 * Creates a new TLKStore around the given two filenames.
+		 * Creates a new TLKStore around the given two filenames. Equivalent to
+		 * TLKStore(normalName, customName, "tlk").
 		 *
 		 * @param normalName dialog.tlk or equivalent for the given language
 		 * @param customName prc_consortium.tlk or equivalent for the given languag
 		 *
 		 * @throws TLKReadException if there are any problems reading either TLK
 		 */
-		public TLKStore(String normalName, String customName){
+		public TLKStore(String normalName, String customName) {
 			this.normal = new Data_TLK("tlk" + fileSeparator + normalName);
 			this.custom = new Data_TLK("tlk" + fileSeparator + customName);
+		}
+		
+		/**
+		 * Creates a new TLKStore around the given two filenames.
+		 *
+		 * @param normalName dialog.tlk or equivalent for the given language
+		 * @param customName prc_consortium.tlk or equivalent for the given languag
+		 * @param tlkDir     Directory containing the two .tlk files
+		 *
+		 * @throws TLKReadException if there are any problems reading either TLK
+		 */
+		public TLKStore(String normalName, String customName, String tlkDir) {
+			this.normal = new Data_TLK(tlkDir + fileSeparator + normalName);
+			this.custom = new Data_TLK(tlkDir + fileSeparator + customName);
 		}
 		
 		/**

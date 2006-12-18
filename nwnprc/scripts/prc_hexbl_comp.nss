@@ -21,7 +21,12 @@ void main()
     {
         if (GetTag(oHench) == "prc_hex_darkcomp")
 	{
-            FloatingTextStringOnCreature("You already have a Dark Companion", OBJECT_SELF, FALSE);
+            FloatingTextStringOnCreature("Unsummoning Dark Companion", OBJECT_SELF, FALSE);
+            // Die, die die my darling, don't utter a single word.
+            SetPlotFlag(oHench,FALSE);
+	    SetImmortal(oHench, FALSE);
+	    AssignCommand(oHench, SetIsDestroyable(TRUE, FALSE, FALSE));
+            DestroyObject(oHench, 0.2);
             return;
         }
         i += 1;

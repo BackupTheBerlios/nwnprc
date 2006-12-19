@@ -130,8 +130,8 @@ void main()
             nDam = nDam - nDiv;
             
             //Apply damage
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, nDiv), oTarget);
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_FIRE, nDam), oTarget);            
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDiv, DAMAGE_TYPE_DIVINE), oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_FIRE), oTarget);            
         }
         //Get next object in shape
         object oTarget = GetNextObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_LARGE, lLoc, TRUE, OBJECT_TYPE_CREATURE);

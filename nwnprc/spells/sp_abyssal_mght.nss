@@ -65,13 +65,13 @@ void main()
         effect eResist = EffectSpellResistanceIncrease(nBonus);
         
         //Some sort of VFX
-        effect eVis = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_PROTECTION_EVIL_MAJOR), oTarget, 1.5); 
         
         //Link 'em up
         effect eLink = EffectLinkEffects(eStr, eDex);
         eLink = EffectLinkEffects(eLink, eCon);
         eLink = EffectLinkEffects(eLink, eResist);
-        eLink = EffectLinkEffects(eLink, eVis);
+        
         
         //Duration 10 min/level
         float fDuration = IntToFloat(nCasterLvl * 600);

@@ -63,7 +63,7 @@ void main()
 			}
 			
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_S), oTarget);
-			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_POSITIVE, nHeal), oTarget);
+			SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nHeal, DAMAGE_TYPE_POSITIVE), oTarget);
 		}
 	}
 	

@@ -99,7 +99,7 @@ void main()
 				 }
 				 
 				 //define damage
-				 effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
+				 effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
 				 
 				 
 				 //Apply damage

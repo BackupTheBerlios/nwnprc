@@ -39,7 +39,7 @@ void FesterLoop(object oTarget, int nConc, int nHP)
     
     int nDam = d6(2);
     nHP = GetCurrentHitPoints(oTarget);
-    effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
+    effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
     
     if(nDam > nHP)
     {

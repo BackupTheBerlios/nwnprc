@@ -64,12 +64,12 @@ void DarkLoop(object oTarget)
     {       
         if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_GOOD)
         {
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, d6(2)), oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(2), DAMAGE_TYPE_DIVINE), oTarget);
         }
         
         else if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_NEUTRAL)
         {
-            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_DIVINE, d6(2)), oTarget);
+            SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(2), DAMAGE_TYPE_DIVINE), oTarget);
         }
         
         else

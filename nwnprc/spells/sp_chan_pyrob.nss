@@ -135,7 +135,7 @@ void main()
 			nDam = nDam/2;			
 		}
 		
-		effect eDam = EffectDamage(DAMAGE_TYPE_FIRE, nDam);
+		effect eDam = EffectDamage(nDam, DAMAGE_TYPE_FIRE);
 		
 		if(fRadius == 0.0f)
 		{

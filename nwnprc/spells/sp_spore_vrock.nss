@@ -56,7 +56,7 @@ void SporeLoop(object oTarget, int nMetaMagic, int nRounds)
             nDam2 += (nDam2/2);
         }
         
-        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam2), oTarget);
+        SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam2, DAMAGE_TYPE_MAGICAL), oTarget);
         
         nRounds--;
         
@@ -94,7 +94,7 @@ void main()
             if(!PRCMySavingThrow(SAVING_THROW_FORT, oTarget, nDC, SAVING_THROW_TYPE_EVIL))
             {
                 SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oTarget);
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
                 SporeLoop(oTarget, nMetaMagic, nRounds);                
             }
         }

@@ -85,7 +85,7 @@ void main()
                     nDam += (nDam/2);
                 }
 
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 
                 //Remove hand from oTarget - left hand first?
                 //http://nwn.bioware.com/players/167/scripts_commandslist.html
@@ -93,7 +93,7 @@ void main()
                 if(!bLeftHandMissing)
                 {
                     //deal damage
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 
                     SetCreatureBodyPart(CREATURE_PART_LEFT_HAND, nModelNumber, oTarget);
                     SetPersistantLocalInt(oTarget, "LEFT_HAND_USELESS", 1);
@@ -107,7 +107,7 @@ void main()
                 else if(!bRightHandMissing)
                 {
                     //deal damage
-                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 
                     SetCreatureBodyPart(CREATURE_PART_RIGHT_HAND, nModelNumber, oTarget);
                     SetPersistantLocalInt(oTarget, "RIGHT_HAND_USELESS", 1);

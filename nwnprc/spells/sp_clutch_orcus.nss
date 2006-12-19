@@ -57,7 +57,7 @@ void CrushLoop(object oTarget, object oPC, int bEndSpell, int nDC)
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, ePar, oTarget, 6.0f);
 		
 		//damage
-		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d3(1)), oTarget);
+		SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d3(1), DAMAGE_TYPE_MAGICAL), oTarget);
 		
 		//if dead, end effect
 		if(GetIsDead(oTarget))

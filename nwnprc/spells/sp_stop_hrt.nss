@@ -49,13 +49,13 @@ void Deathloop(object oTarget, int nHP, int nCounter)
         //Round 1
         if(nCounter == 3)
         {
-            eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, (nHP - 2));            
+            eDam = EffectDamage((nHP - 2), DAMAGE_TYPE_MAGICAL);            
         }
         
         //Round 2
         if(nCounter == 2)
         {
-            eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, (nHP -1));         
+            eDam = EffectDamage((nHP -1), DAMAGE_TYPE_MAGICAL);         
         }
         
         //Round 3 - should have drank that healing potion

@@ -171,7 +171,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent, string
                 }
 
                 // Apply Damage
-                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDam), oTarget);
+                SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDam, DAMAGE_TYPE_MAGICAL), oTarget);
 
                 // If this spell was a held charge, it can have multiple targets. So we need to keep track of who has been already affected
                 if(nEvent)
@@ -195,7 +195,7 @@ void WoundLoop(object oTarget, int nDamage = 0)
 
     // Roll and apply new damage
     nDamage = d6();
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, nDamage), oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(nDamage, DAMAGE_TYPE_MAGICAL), oTarget);
 
     DelayCommand(6.0f, WoundLoop(oTarget, nDamage));
 }

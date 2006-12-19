@@ -75,7 +75,7 @@ void main()
         	{
 			if(!GetHasMettle(oTarget, SAVING_THROW_FORT))
 			{
-				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(DAMAGE_TYPE_MAGICAL, d6(3) + nCasterLvl), oTarget);
+				SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectDamage(d6(3) + nCasterLvl, DAMAGE_TYPE_MAGICAL), oTarget);
 			}
         	    
         	} 

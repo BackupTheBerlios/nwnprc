@@ -64,7 +64,7 @@ void main()
 			}
 			
 			//Damage
-			effect eDam = EffectDamage(DAMAGE_TYPE_MAGICAL, nDam);
+			effect eDam = EffectDamage(nDam, DAMAGE_TYPE_MAGICAL);
 			SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
 		}
 	}	

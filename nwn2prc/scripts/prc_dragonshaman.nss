@@ -4,7 +4,7 @@
 void main()
 {
 	// Clear the current PCSkin to remove any existing bonuses.
-	RemovePCSkin();
+	// RemovePCSkin();
 	// Create a new skin on the PC.
 	object oArmor = GetPCSkin();
 	int nDSLevel = GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN);

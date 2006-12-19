@@ -10,9 +10,9 @@
 6     TurnUndead                            294         3      3                1        
 7     WeapProfEx                            44          0      -1               0        
 8     WeapProfMar                           45          0      -1               0        
-9     DefArrow                              8           0      -1               0        
-10    FEAT_SHAMAN_SPIRITSIGHT               ****        3      2                0        
-11    FEAT_SHAMAN_SPIRITFAVOR               ****        3      5                0        
+9     DefArrow                              8           2      -1               0        
+10    ImpExpertise                          ****        2      -1               ****     
+11    FEAT_SHAMAN_SPIRITFAVOR               3851        3      5                0        
 12    GrSpllFcsAbj                          393         1      -1               0        
 13    GrSpllFcsCnj                          394         1      -1               0        
 14    GrSpllFcsDiv                          395         1      -1               0        
@@ -42,7 +42,7 @@
 38    FEAT_EPIC_IMPROVED_COMBAT_CASTING     696         1      -1               0        
 39    FEAT_EPIC_ARMOR_SKIN                  490         1      -1               0        
 40    FEAT_EPIC_SPELL_PENETRATION           618         1      -1               0        
-41    FEAT_EPIC_CLERIC                      969         3      21               0        
+41    FEAT_EPIC_SHAMAN                      969         3      21               0        
 42    FEAT_EPIC_GREAT_WISDOM_1              804         1      -1               0        
 43    FEAT_EPIC_GREAT_WISDOM_2              805         1      -1               0        
 44    FEAT_EPIC_GREAT_WISDOM_3              806         1      -1               0        
@@ -61,7 +61,7 @@
 57    FEAT_SPONTANEOUS_CONVERSION           1858        3      1                0        
 58    Expertise                             ****        2      -1               0        
 59    StunningFist                          ****        2      -1               0        
-60    Dodge                                 ****        2      ****             0        
+60    Dodge                                 ****        2      -1               0        
 61    padding                               ****        0      ****             0        
 62    padding                               ****        0      ****             0        
 63    padding                               ****        0      ****             0        

@@ -2865,10 +2865,17 @@ const int FEAT_DRAGONSHAMAN_WHITE                 = 3845;
 const int FEAT_DRAGONSHAMAN_BRONZE                = 3849;
 
 // Shaman
-const int FEAT_SHAMAN_SPIRITSIGHT                       = 0000;
-const int FEAT_SHAMAN_SPIRITFAVOR                       = 0000;
-const int FEAT_SHAMAN_PRACTICEDCASTER                   = 0000;
-const int FEAT_SHAMAN_EXTRASLOT                         = 0000;
+const int FEAT_SHAMAN_SPIRITFAVOR                       = 3851;
+const int FEAT_SHAMAN_PRACTICEDCASTER                   = 3852;
+const int FEAT_EXTRA_SLOT_SHAMAN_0                      = 3853;
+const int FEAT_EXTRA_SLOT_SHAMAN_1                      = 3854;
+const int FEAT_EXTRA_SLOT_SHAMAN_2                      = 3855;
+const int FEAT_EXTRA_SLOT_SHAMAN_3                      = 3856;
+const int FEAT_EXTRA_SLOT_SHAMAN_4                      = 3857;
+const int FEAT_EXTRA_SLOT_SHAMAN_5                      = 3858;
+const int FEAT_EXTRA_SLOT_SHAMAN_6                      = 3859;
+const int FEAT_EXTRA_SLOT_SHAMAN_7                      = 3860;
+const int FEAT_EXTRA_SLOT_SHAMAN_8                      = 3861;
 
                                              
 /*//////////////////////////////////////////////////              

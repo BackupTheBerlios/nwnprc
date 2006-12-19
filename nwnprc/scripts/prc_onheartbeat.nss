@@ -73,46 +73,50 @@ void main()
     object oPC = GetFirstPC(); // Init the PC object
     while(GetIsObjectValid(oPC))
     {
-        // Persistent World time tracking
-        if(bPWTime)
+        // no running stuff for DMs
+        if(!GetIsDM(oPC))
         {
-            //store it on all PCs separately
-            SetPersistantLocalTime(oPC, "persist_Time", GetTimeAndDate());
-        }
-        // Automatic character export every 6n seconds
-        if(bPWPCAutoexport)
-        {
-            bHasPoly = FALSE;
-            eTest = GetFirstEffect(oPC);
-            while(!bHasPoly && GetIsEffectValid(eTest))
+            // Persistent World time tracking
+            if(bPWTime)
             {
-                if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
-                    bHasPoly = TRUE;
-                else
-                    eTest = GetNextEffect(oPC);
+                //store it on all PCs separately
+                SetPersistantLocalTime(oPC, "persist_Time", GetTimeAndDate());
             }
-            if(!bHasPoly)
-                ExportSingleCharacter(oPC);
-        }
-        // Persistant hit point tracking
-        if(bPWHPTracking)
-            SetPersistantLocalInt(oPC, "persist_HP", GetCurrentHitPoints(oPC));
-        // Persistant location tracking
-        if(bPWLocationTracking)
-            SetPersistantLocalMetalocation(oPC, "persist_loc", LocationToMetalocation(GetLocation(oPC)));
-        // Persistant map pin tracking
-        if(bPWMappinTracking)
-        {
-            nMapPinCount = GetNumberOfMapPins(oPC);
-            for(i = 1; i <= nMapPinCount; i++)
+            // Automatic character export every 6n seconds
+            if(bPWPCAutoexport)
             {
-                struct metalocation mLoc = CreateMetalocationFromMapPin(oPC, i);
-                SetPersistantLocalMetalocation(oPC, "MapPin_" + IntToString(i), mLoc);
+                bHasPoly = FALSE;
+                eTest = GetFirstEffect(oPC);
+                while(!bHasPoly && GetIsEffectValid(eTest))
+                {
+                    if(GetEffectType(eTest) == EFFECT_TYPE_POLYMORPH)
+                        bHasPoly = TRUE;
+                    else
+                        eTest = GetNextEffect(oPC);
+                }
+                if(!bHasPoly)
+                    ExportSingleCharacter(oPC);
             }
-            SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
+            // Persistant hit point tracking
+            if(bPWHPTracking)
+                SetPersistantLocalInt(oPC, "persist_HP", GetCurrentHitPoints(oPC));
+            // Persistant location tracking
+            if(bPWLocationTracking)
+                SetPersistantLocalMetalocation(oPC, "persist_loc", LocationToMetalocation(GetLocation(oPC)));
+            // Persistant map pin tracking
+            if(bPWMappinTracking)
+            {
+                nMapPinCount = GetNumberOfMapPins(oPC);
+                for(i = 1; i <= nMapPinCount; i++)
+                {
+                    struct metalocation mLoc = CreateMetalocationFromMapPin(oPC, i);
+                    SetPersistantLocalMetalocation(oPC, "MapPin_" + IntToString(i), mLoc);
+                }
+                SetPersistantLocalInt(oPC, "MapPinCount", nMapPinCount);
+            }
+            //run the individual HB event script
+            ExecuteScript("prc_onhb_indiv", oPC);
         }
-        //run the individual HB event script
-        ExecuteScript("prc_onhb_indiv", oPC);
         // Get the next PC for the loop
         oPC = GetNextPC();
     }

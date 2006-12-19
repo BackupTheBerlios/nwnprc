@@ -79,7 +79,7 @@ void main()
 		}
 		
 		//VFX
-	      //SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_LUMINOUS_ARMOR), oTarget, fDur);
+	        ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oTarget);
 		
 		//Light as a daylight spell
 		

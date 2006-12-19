@@ -204,6 +204,7 @@ void main()
 	//object is valid but has no AC value (clothes, robes, etc).
 	if((GetIsObjectValid(oMyArmor)) && (nAC < 1))
 	{
+		ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SUPER_HEROISM), oPC);
 		SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eArmor, oMyArmor, fDur);
 		IPSafeAddItemProperty(oMyArmor, ipSR, fDur);
 		SetLocalInt(oMyArmor, "PRC_Has_Exalted_Raiment", 1);

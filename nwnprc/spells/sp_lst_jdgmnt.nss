@@ -108,6 +108,8 @@ void main()
 			}
 			oTarget = GetNextObjectInShape(SHAPE_SPHERE, 7.62, lLoc, FALSE, OBJECT_TYPE_CREATURE);			
 		}
+		
+		else SendMessageToPC(oPC, "You do not meet the casting requirements for this spell.");
 	}	
 	SPGoodShift(oPC);
 	SPSetSchool();

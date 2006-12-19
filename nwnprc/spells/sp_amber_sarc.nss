@@ -79,7 +79,7 @@ void main()
 		{
 			//Apply effects
 			effect eSarc = EffectLinkEffects(EffectTemporaryHitpoints(10 * min(20, nCasterLvl)), EffectCutsceneParalyze());
-			//     eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_AMBER_SARCOPHAGUS));
+			       eSarc = EffectLinkEffects(eSarc, EffectVisualEffect(VFX_DUR_PROTECTION_GOOD_MAJOR));
 				     			
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eSarc, oTarget, fDur, TRUE, PRCGetSpellId(), nCasterLvl);
 			

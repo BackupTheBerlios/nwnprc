@@ -16,9 +16,12 @@ import static prc.Main.*;
 public class ScrollGen {
 
 	/**
-	 * @param args
+	 * Ye olde maine methode.
+	 * 
+	 * @param args         The arguments
+	 * @throws IOException Just toss any exceptions encountered
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		if(args.length == 0) readMe();
 		String twoDAPath = null;
 		String outPath   = null;
@@ -137,6 +140,9 @@ public class ScrollGen {
 			if(classes.contains(7))
 				des_crft_scroll.setEntry("Ranger", spellsIndex, scrollName);
 		}
+		
+		// Save updated des_crft_scrolls.2da
+		des_crft_scroll.save2da(twoDAPath, true, true);
 	}
 	
 	private static final String xmlPrefix =

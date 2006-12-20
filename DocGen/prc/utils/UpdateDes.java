@@ -6,7 +6,6 @@ import java.util.*;
 import prc.autodoc.*;
 import prc.autodoc.Main.TwoDAStore;
 
-import static prc.Main.*;
 import static prc.autodoc.Main.TwoDAStore;
 
 /**

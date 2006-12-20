@@ -60,21 +60,22 @@ public class ScrollMerchantGen {
 		TLKStore tlks = new TLKStore("dialog.tlk", "prc_consortium.tlk", tlkPath);
 
 		// Loop over the scroll entries and get a list of unique resrefs
-		TreeMap<Integer, TreeMap<String, String>> scrollResRefs = new TreeMap<Integer, TreeMap<String, String>>();
+		TreeMap<Integer, TreeMap<String, String>> arcaneScrollResRefs = new TreeMap<Integer, TreeMap<String, String>>();
+		TreeMap<Integer, TreeMap<String, String>> divineScrollResRefs = new TreeMap<Integer, TreeMap<String, String>>();
 		String entry;
 		for(int i = 0; i < scrolls2da.getEntryCount(); i++) {
 			if(!(entry = scrolls2da.getEntry("Wiz_Sorc", i)).equals("****"))
-				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				addScroll(arcaneScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Cleric", i)).equals("****"))
-				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Paladin", i)).equals("****"))
-				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Druid", i)).equals("****"))
-				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Ranger", i)).equals("****"))
-				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 			if(!(entry = scrolls2da.getEntry("Bard", i)).equals("****"))
-				addScroll(scrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				addScroll(arcaneScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
 		}
 
 		String xmlPrefix =
@@ -118,7 +119,21 @@ public class ScrollMerchantGen {
 
 		StringBuffer xmlString = new StringBuffer();
 		int posCounter = 0;
-		for(Map<String, String> levelScrollResRefs : scrollResRefs.values())
+		// First arcane scrolls
+		for(Map<String, String> levelScrollResRefs : arcaneScrollResRefs.values())
+			for(String resref : levelScrollResRefs.values()) {
+				xmlString.append(
+"                    <struct id=\"0\" >"                                                                 + "\n" +
+"                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "\n" +
+"                        <element name=\"Repos_PosX\" type=\"0\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
+"                        <element name=\"Repos_Posy\" type=\"0\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
+"                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                           + "\n" +
+"                    </struct>"                                                                          + "\n"
+						);
+				posCounter++;
+			}
+		// Then divine scrolls
+		for(Map<String, String> levelScrollResRefs : divineScrollResRefs.values())
 			for(String resref : levelScrollResRefs.values()) {
 				xmlString.append(
 "                    <struct id=\"0\" >"                                                                 + "\n" +
@@ -154,6 +169,10 @@ public class ScrollMerchantGen {
 			                      Data_2da spells2da, TLKStore tlks, int rowNum, String scrollResRef) {
 		int innateLevel = -1,
 		         tlkRef = -1;
+		
+		// HACK - Skip non-PRC scrolls
+		if(!scrollResRef.startsWith("prc_scr_"))
+			return;
 		
 		try {
 			innateLevel = Integer.parseInt(spells2da.getEntry("Innate", rowNum));

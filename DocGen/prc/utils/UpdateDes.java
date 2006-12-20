@@ -26,10 +26,10 @@ public class UpdateDes {
 	public static void main(String[] args) throws IOException {
 		if(args.length == 0) readMe();
 		String twoDAPath = null;
-		String tlkPath   = null;
+		//String tlkPath   = null;
 
 		// parse args
-		for(String param : args) {//2dadir tlkdir | [--help]
+		for(String param : args) {//2dadir | [--help]
 			// Parameter parseage
 			if(param.startsWith("-")) {
 				if(param.equals("--help")) readMe();
@@ -47,8 +47,8 @@ public class UpdateDes {
 				// It's a pathname
 				if(twoDAPath == null)
 					twoDAPath = param;
-				else if(tlkPath == null)
-					tlkPath = param;
+				/*else if(tlkPath == null)
+					tlkPath = param;*/
 				else{
 					System.out.println("Unknown parameter: " + param);
 					readMe();
@@ -165,10 +165,10 @@ public class UpdateDes {
 		//                  0        1         2         3         4         5         6         7         8
 		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890
 		System.out.println("Usage:\n"+
-		                   "  java -jar prc.jar updatedescrft 2dadir tlkdir | [--help]\n"+
+		                   "  java -jar prc.jar updatedescrft 2dadir | [--help]\n"+
 		                   "\n"+
 		                   "2dadir   Path to a directory containing 2da files\n" +
-		                   "tlkdir   Path to a directory containing dialog.tlk and prc_consortium.tlk\n" +
+//		                   "tlkdir   Path to a directory containing dialog.tlk and prc_consortium.tlk\n" +
 						   "\n"+
 		                   "--help      prints this info you are reading\n" +
 		                   "\n" +

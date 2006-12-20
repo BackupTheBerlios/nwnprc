@@ -266,7 +266,7 @@ public class Validator {
 			    ) &&
 			   des_crft_spells.getEntry("NoScroll", i).equals("1")
 			   )
-				err_pr.println("Error: NoScroll 1 in des_crft_spells.2da non-zero when a scroll entry has been defined in des_crft_scroll.2da on line: " + i);
+				err_pr.println("Error: NoScroll 1 in des_crft_spells.2da when a scroll entry has been defined in des_crft_scroll.2da on line: " + i);
 		}
 		
 		// Then check that all spells that should have a scroll do have a scroll

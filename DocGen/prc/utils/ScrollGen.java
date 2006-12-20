@@ -118,9 +118,9 @@ public class ScrollGen {
 			// Update des_crft_scrolls accordingly
 			List<Integer> classes = arcaneScrolls.get(spellsIndex).e2;
 			if(classes.contains(1))
-				des_crft_scroll.setEntry("Bard", spellsIndex, scrollName);
+				setScroll(des_crft_scroll, spells, spellsIndex, "Bard", scrollName);
 			if(classes.contains(9) || classes.contains(10))
-				des_crft_scroll.setEntry("Wiz_Sorc", spellsIndex, scrollName);
+				setScroll(des_crft_scroll, spells, spellsIndex, "Wiz_Sorc", scrollName);
 		}
 		for(int spellsIndex : divineScrolls.keySet()) {
 			String scrollName = "prc_scr_dv_" + divineScrolls.get(spellsIndex).e1.toString();
@@ -132,19 +132,31 @@ public class ScrollGen {
 			// Update des_crft_scrolls accordingly
 			List<Integer> classes = divineScrolls.get(spellsIndex).e2;
 			if(classes.contains(2))
-				des_crft_scroll.setEntry("Cleric", spellsIndex, scrollName);
+				setScroll(des_crft_scroll, spells, spellsIndex, "Cleric", scrollName);
 			if(classes.contains(3))
-				des_crft_scroll.setEntry("Druid", spellsIndex, scrollName);
+				setScroll(des_crft_scroll, spells, spellsIndex, "Druid", scrollName);
 			if(classes.contains(6))
-				des_crft_scroll.setEntry("Paladin", spellsIndex, scrollName);
+				setScroll(des_crft_scroll, spells, spellsIndex, "Paladin", scrollName);
 			if(classes.contains(7))
-				des_crft_scroll.setEntry("Ranger", spellsIndex, scrollName);
+				setScroll(des_crft_scroll, spells, spellsIndex, "Ranger", scrollName);
+			
 		}
 		
 		// Save updated des_crft_scrolls.2da
 		des_crft_scroll.save2da(twoDAPath, true, true);
 	}
 	
+	private static void setScroll(Data_2da des_crft_scroll, Data_2da spells, int spellsIndex, String column, String scrollName) {
+		// Set the main entry
+		des_crft_scroll.setEntry(column, spellsIndex, scrollName);
+		
+		// Set each subradial's entry
+		for(int i = 1; i <= 5; i++)
+			if(!spells.getEntry("SubRadSpell" + i, spellsIndex).equals("****")) {
+				des_crft_scroll.setEntry(column, Integer.parseInt(spells.getEntry("SubRadSpell" + i, spellsIndex)), scrollName);
+			}
+	}
+
 	private static final String xmlPrefix =
 "<gff name=\"~~~Name~~~.uti\" type=\"UTI \" version=\"V3.2\" >"                   + "\n" +
 "    <struct id=\"-1\" >"                                                         + "\n" +

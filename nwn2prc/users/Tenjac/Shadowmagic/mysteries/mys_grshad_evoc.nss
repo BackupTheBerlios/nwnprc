@@ -1,15 +1,15 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  
+//:: Name      Greater Shadow Evocation
+//:: FileName  mys_grshad_evoc.nss
 //:://////////////////////////////////////////////
-/**@file 
+/**@file Greater Shadow Evocation
+Initiate, Dark Reflections
+Level/School: 6th/Illusion (Shadow)
 
-Level/School: 
-Range: 
-Effect: 
-Duration:  
-Saving Throw:  
-Spell Resistance: 
+This mystery functions like the spell greater
+shadow evocation, except as noted above. In addition,
+this mystery can mimic an evocation spell of lower
+than 7th level (rather than 8th).
 
 Author:    Tenjac
 Created:   

@@ -153,7 +153,7 @@ void main()
                             {
 				if (GetHasMettle(oTarget, SAVING_THROW_FORT))
 				// This script does nothing if it has Mettle, bail
-					nDamage = 0;                              
+					nDamage = 0;
                                 nDamage /= 2;
                             }
                         }

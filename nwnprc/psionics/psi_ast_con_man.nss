@@ -68,7 +68,7 @@ if (!PsiPrePowerCastCode()){ return; }
         struct user_augment_profile uapOverride;
         uapOverride.nOption_1 = nACLevel - 1; // The other options are left auto-initialised to 0
 
-    SetAugmentationOverride(oManifester, uapOverride);
+        SetAugmentationOverride(oManifester, uapOverride);
 
         // Determine manifestation
         struct manifestation manif;
@@ -79,7 +79,7 @@ if (!PsiPrePowerCastCode()){ return; }
                                   METAPSIONIC_EXTEND /*| METAPSIONIC_TWIN  Can't be used as long as the effect is a real summon and not a henchmand*/
                                   );
         if(!manif.bCanManifest)
-                return;
+            return;
 
 
         int nOptionFlags   = GetLocalInt(oManifester, ASTRAL_CONSTRUCT_OPTION_FLAGS       + sSlot);

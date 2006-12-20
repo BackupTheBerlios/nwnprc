@@ -454,7 +454,8 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
     int nSurge               = GetWildSurge(manif.oManifester);
     int nAugPPCost           = 0;
     int nAugPPCostReductions = 0;
-    int bMaxAugment          = GetLocalInt(manif.oManifester, PRC_AUGMENT_MAXAUGMENT);
+    int bMaxAugment          = GetLocalInt(manif.oManifester, PRC_AUGMENT_MAXAUGMENT) &&
+                               !GetLocalInt(manif.oManifester, PRC_AUGMENT_OVERRIDE); // Override profile also overrides max augment
 
     // Initialise the augmentation data in the manifestation structure to zero
     /* Probably unnecessary due to auto-init

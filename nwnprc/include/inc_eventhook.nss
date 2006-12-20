@@ -298,7 +298,7 @@ const string PERMANENCY_SUFFIX = "_permanent";
  * @param oObject          The object that the script is to be fired for
  * @param nEvent           One of the EVENT_* constants defined in "inc_eventhook",
  *                         (or any number, but then need to be a bit more careful, since the system won't complain if you typo it)
- * @param sScript          The script to be fired on the event
+ * @param sScript          The script to be fired on the event. Special case: "" will not be stored.
  * @param bPermanent       Unless this is set, the script will be only fired once, after which it
  *                         is removed from the list
  *
@@ -435,8 +435,8 @@ void AddEventScript(object oObject, int nEvent, string sScript, int bPermanent =
 
     string sArrayName = EventTypeIdToName(nEvent);
 
-    // Abort if the object given / event isn't valid
-    if(!GetIsObjectValid(oObject) || sArrayName == "") return;
+    // Abort if the object given / event / script isn't valid
+    if(!GetIsObjectValid(oObject) || sArrayName == "" || sScript == "") return;
 
 
     sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
@@ -489,8 +489,8 @@ void RemoveEventScript(object oObject, int nEvent, string sScript, int bPermanen
     string sArrayNameBase = EventTypeIdToName(nEvent),
            sArrayName;
 
-    // Abort if the object given / event isn't valid
-    if(!GetIsObjectValid(oObject) || sArrayNameBase == "") return;
+    // Abort if the object given / event / script isn't valid
+    if(!GetIsObjectValid(oObject) || sArrayNameBase == "" || sScript == "") return;
 
     // Go through one-shot array
     if(!bPermanent || bIgnorePermanency){
@@ -609,9 +609,12 @@ string GetFirstEventScript(object oObject, int nEvent, int bPermanent){
     if(!GetIsObjectValid(oObject) || sArrayName == "") return "";
 
     sArrayName += bPermanent ? PERMANENCY_SUFFIX : "";
-
-    SetLocalInt(oObject, sArrayName + "_index", 1);
-    DelayCommand(0.0f, DeleteLocalInt(oObject, sArrayName + "_index"));
+    
+    // DelayCommand is somewhat expensive, so do this bit only if there is actually an array to iterate over
+    if(wrap_array_exists(oObject, sArrayName)) {
+        SetLocalInt(oObject, sArrayName + "_index", 1);
+        DelayCommand(0.0f, DeleteLocalInt(oObject, sArrayName + "_index"));
+    }
 
     return wrap_array_get_string(oObject, sArrayName, 0);
 }
@@ -835,37 +838,37 @@ string _GetMarkerLocalName(string sScript, string sArrayName)
 
 
 int wrap_array_create(object store, string name){
-    if(GetObjectType(store) == OBJECT_TYPE_CREATURE)
+    if(GetIsPC(store))
         return persistant_array_create(store, name);
     else
         return array_create(store, name);
 }
 int wrap_array_set_string(object store, string name, int i, string entry){
-    if(GetObjectType(store) == OBJECT_TYPE_CREATURE)
+    if(GetIsPC(store))
         return persistant_array_set_string(store, name, i, entry);
     else
         return array_set_string(store, name, i, entry);
 }
 string wrap_array_get_string(object store, string name, int i){
-    if(GetObjectType(store) == OBJECT_TYPE_CREATURE)
+    if(GetIsPC(store))
         return persistant_array_get_string(store, name, i);
     else
         return array_get_string(store, name, i);
 }
 int wrap_array_shrink(object store, string name, int size_new){
-    if(GetObjectType(store) == OBJECT_TYPE_CREATURE)
+    if(GetIsPC(store))
         return persistant_array_shrink(store, name, size_new);
     else
         return array_shrink(store, name, size_new);
 }
 int wrap_array_get_size(object store, string name){
-    if(GetObjectType(store) == OBJECT_TYPE_CREATURE)
+    if(GetIsPC(store))
         return persistant_array_get_size(store, name);
     else
         return array_get_size(store, name);
 }
 int wrap_array_exists(object store, string name){
-    if(GetObjectType(store) == OBJECT_TYPE_CREATURE)
+    if(GetIsPC(store))
         return persistant_array_exists(store, name);
     else
         return array_exists(store, name);

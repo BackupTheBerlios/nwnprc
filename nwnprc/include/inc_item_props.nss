@@ -1589,7 +1589,7 @@ itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID)
     object oTemp = GetObjectByTag(sTag);
     if(!GetIsObjectValid(oTemp))
     {
-        DoDebug("PRCItemPropertyBonusFeat() : "+sTag+" is not valid");
+        if(DEBUG) DoDebug("PRCItemPropertyBonusFeat() : Cache object " + sTag + " is not valid, creating");
         location lLimbo;
         object oLimbo = GetObjectByTag("HEARTOFCHAOS");
         if(GetIsObjectValid(oLimbo))
@@ -1601,9 +1601,9 @@ itemproperty PRCItemPropertyBonusFeat(int nBonusFeatID)
     itemproperty ipReturn = GetFirstItemProperty(oTemp);
     if(!GetIsItemPropertyValid(ipReturn))
     {
-        DoDebug("PRCItemPropertyBonusFeat() : ipReturn is not valid");
+        if(DEBUG) DoDebug("PRCItemPropertyBonusFeat() : Itemproperty was not present on cache object, adding");
         ipReturn = ItemPropertyBonusFeat(nBonusFeatID);
-        AddItemProperty(DURATION_TYPE_PERMANENT,ipReturn, oTemp);
+        AddItemProperty(DURATION_TYPE_PERMANENT, ipReturn, oTemp);
     }
     return ipReturn;
 }

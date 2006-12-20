@@ -94,6 +94,15 @@ public class Main {
 		else if(toCall.equals("blank2da")){
 			prc.utils.Blank2daRows.main(paramsToPass);
 		}
+		else if(toCall.equals("validator")){
+			prc.utils.Validator.main(paramsToPass);
+		}
+		else if(toCall.equals("updatedescrft")){
+			prc.utils.UpdateDes.main(paramsToPass);
+		}
+		else if(toCall.equals("scrollgen")){
+			prc.utils.ScrollGen.main(paramsToPass);
+		}
 		else{
 			System.out.println("Unknown class: " + toCall);
 			readMe();
@@ -137,6 +146,9 @@ public class Main {
 		                   "                          that should be precached\n" +
 		                   "         scrmrchgen     - Creates scroll merchant based on des_crft_scroll.2da\n" +
 		                   "         spellbookmaker - Creates and/or updates the new spellbooks data\n" +
+		                   "         validator      - Performs a bunch of 2da integrity tests\n" +
+		                   "         updatedescrft  - Updates des_crft_*.2da based on spells.2da\n" +
+		                   "         scrollgen      - Create spell scrolls based on (iprp_)spells.2da\n" +
 		                   "\n"+
 		                   "parameters  a list of parameters passed to the tool called\n"+
 		                   "\n"+

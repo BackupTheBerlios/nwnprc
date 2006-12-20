@@ -89,7 +89,7 @@ public class Main{
 	/**
 	 * Another data structure class. Stores 2das and handles loading them.
 	 */
-	public static class TwoDAStore{
+	public static class TwoDAStore {
 		private static class Loader implements Runnable{
 			private String pathToLoad;
 			private List<Data_2da> list;
@@ -121,14 +121,26 @@ public class Main{
 				}
 			}
 		}
+		
 		private HashMap<String, Data_2da> data = new HashMap<String, Data_2da>();
+		private String twoDAPath;
+		
+		/**
+		 * Creates a new TwoDAStore, without preloading anything.
+		 * 
+		 * @param twoDAPath Path of the directory containing 2da files. 
+		 */
+		public TwoDAStore(String twoDAPath) {
+			this.twoDAPath = twoDAPath;
+		}
 		
 		/**
 		 * Generates a new TwoDAStore with all the main 2das preread in.
 		 * On a read failure, kills program execution, since there's nothing
 		 * that could be done anyway.
 		 */
-		public TwoDAStore(){
+		public TwoDAStore() {
+			this("2da");
 			//long start = System.currentTimeMillis();
 			if(verbose) System.out.print("Loading main 2da files ");
 			boolean oldVerbose = verbose;
@@ -191,7 +203,7 @@ public class Main{
 			else{
 				Data_2da temp = null;
 				try{
-					temp = Data_2da.load2da("2da" + fileSeparator + name + ".2da", true);
+					temp = Data_2da.load2da(twoDAPath + fileSeparator + name + ".2da", true);
 				}catch(IllegalArgumentException e){
 					throw new TwoDAReadException("Problem with filename when trying to read from 2da:\n" + e);
 				}

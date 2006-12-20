@@ -27,7 +27,7 @@ public class ScrollMerchantGen {
 		String tlkPath   = null;
 
 		// parse args
-		for(String param : args) {//[--help] | path_to_des_crft_scroll.2da
+		for(String param : args) {//2dadir tlkdir | [--help]
 			// Parameter parseage
 			if(param.startsWith("-")) {
 				if(param.equals("--help")) readMe();
@@ -182,7 +182,7 @@ public class ScrollMerchantGen {
 		//                  0        1         2         3         4         5         6         7         8
 		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890
 		System.out.println("Usage:\n"+
-		                   "  java -jar prc.jar [--help] | 2dadir tlkdir\n"+
+		                   "  java -jar prc.jar scrmrchgen 2dadir tlkdir | [--help]\n"+
 		                   "\n"+
 		                   "2dadir   Path to a directory containing des_crft_scroll.2da and spells.2da.\n" +
 		                   "tlkdir   Path to a directory containing dialog.tlk and prc_consortium.tlk\n" +

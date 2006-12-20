@@ -20,7 +20,7 @@ void main()
 	// Get the amount of damage to heal which will be subtracted from the amount of damage remaining to heal.
 	int nAmountToHeal = (GetMaxHitPoints(oTarget) - GetCurrentHitPoints(oTarget));
 	// if the spell is lay hands to restore damage.
-	if(nSpellId == 1111)
+	if(nSpellId == 3767)
 	{	
 		// If the caster has 0 healing power left, let him know.
 		if(nHealPowerRemain == 0)
@@ -50,7 +50,7 @@ void main()
 		}
 	}
 	// else if the spell is Touch Minor, heal ability damage and remove daze effect
-	else if(nSpellId == 1112)
+	else if(nSpellId == 3168)
 	{
 		if(nHealPowerRemain < 8)
 		{
@@ -88,7 +88,7 @@ void main()
 		}
 	}
 	// else if the spell is touch restore - remove stunned or poisoned effect
-	else if(nSpellId == 1113)
+	else if(nSpellId == 3767)
 	{
 		if(nHealPowerRemain < 15)
 		{
@@ -126,7 +126,7 @@ void main()
 		}
 	}
 	// else if the spell is touch major - remove disease, blind/deaf, negative level
-	else if(nSpellId == 1114)
+	else if(nSpellId == 3770)
 	{
 		if(nHealPowerRemain < 30)
 		{

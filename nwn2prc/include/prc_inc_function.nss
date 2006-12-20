@@ -168,7 +168,8 @@ void EvalPRCFeats(object oPC)
     if(GetLevelByClass(CLASS_TYPE_TRUENAMER, oPC) > 0)           ExecuteScript("true_truenamer", oPC);
     if(GetLevelByClass(CLASS_TYPE_DUSKBLADE, oPC) > 0)           ExecuteScript("prc_duskblade", oPC);
     if(GetLevelByClass(CLASS_TYPE_SCOUT, oPC) > 0)               ExecuteScript("prc_scout", oPC);
-    if(GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC) > 0)        ExecuteScript("prc_dragonshaman", oPC);
+    if(GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC) > 0)       ExecuteScript("prc_dragonshaman", oPC);
+    if(GetLevelByClass(CLASS_TYPE_SHAMAN, oPC) > 0)              ExecuteScript("prc_shaman", oPC);
 
     // Bonus Domain check
     // If there is a bonus domain, it will always be in the first slot, so just check that.
@@ -466,6 +467,9 @@ void DeletePRCLocalInts(object oSkin)
     // Dragon Shaman
     DeleteLocalInt(oPC, "DraconicImmunity");
     DeleteLocalInt(oPC, "DraconicResolve");
+    
+    // OA Shaman
+    DeleteLocalInt(oPC, "SaveBonus");
 }
 
 void ScrubPCSkin(object oPC, object oSkin)

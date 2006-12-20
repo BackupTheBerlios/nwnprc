@@ -26747,7 +26747,7 @@ Negative Energy Plane    1d6/level (15d6 maximum)
   <entry id="52439" lang="en" sex="m">Call Faithful Servants
 Conjuration(Calling) [Good]
 Level: Celestial 6, cleric 6, sorc/wiz 6
-Components: V, S, Abstinance, Celestial
+Components: V, S, Abstinance, Celestial (caster must be good outsider)
 Casting Time: 1 minute
 Range: Close
 Duration: Instantaneous
@@ -26914,7 +26914,7 @@ Rays of holy light flash from your eyes.  You can fire 1 ray per 2 caster levels
   <entry id="52461" lang="en" sex="m">Last Judgment
 Necromancy [Death, Good]
 Level: Clr 8, Sor/Wiz 8, Wrath 8
-Components: V, Celestial
+Components: V, Celestial (caster must be good outsider)
 Casting Time: 1 round
 Range: Close (25 ft. + 5 ft./2 levels)
 Target: One evil humanoid, monstrous humanoid, or

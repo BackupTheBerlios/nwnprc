@@ -728,7 +728,9 @@ int GetCommandedTotalHD()
     object oOldTest = OBJECT_INVALID;
     while(GetIsObjectValid(oTest) && oTest != oOldTest)
     {
-        if(GetHasSpellEffect(GetSpellId(), oTest))
+        if(GetHasEffect(EFFECT_TYPE_DOMINATED, oTest)) 
+        // Changed from GetHasSpellEffect because it was looking for Turn Undead spell attached to creature
+        // instead of looking for the dominated effect.
         {
             int nTestHD = GetHitDiceForTurning(oTest);
             if(MyPRCGetRacialType(oTest) != RACIAL_TYPE_UNDEAD

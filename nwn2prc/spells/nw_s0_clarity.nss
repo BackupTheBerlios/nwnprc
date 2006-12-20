@@ -22,8 +22,8 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+
 /*
   Spellcast Hook Code
   Added 2003-06-23 by GeorgZ
@@ -46,17 +46,19 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     effect eDam = EffectDamage(1, DAMAGE_TYPE_NEGATIVE);
     effect eVis = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_POSITIVE);
     effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    effect eHit = EffectVisualEffect(VFX_HIT_SPELL_NECROMANCY);
 
     effect eLink = EffectLinkEffects(eImm1, eVis);
     eLink = EffectLinkEffects(eLink, eDur);
 
-    object oTarget = GetSpellTargetObject();
-    effect eSearch = GetFirstEffect(oTarget);
+    object oTarget = PRCGetSpellTargetObject();
+    
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();
     //Enter Metamagic conditions
-    if (CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    // need NWN2 metamagic
+    if (nMetaMagic, METAMAGIC_EXTEND)
     {
         nDuration = nDuration *2; //Duration is +100%
     }
@@ -65,6 +67,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CLARITY, FALSE));
     //Search through effects
+    effect eSearch = GetFirstEffect(oTarget);
     while(GetIsEffectValid(eSearch))
     {
         bValid = FALSE;
@@ -93,6 +96,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         if (bValid == TRUE)
         {
             SPApplyEffectToObject(DURATION_TYPE_INSTANT, eDam, oTarget);
+            ApplyEffectToObject(DURATION_TYPE_INSTANT, eHit, oTarget);
             RemoveEffect(oTarget, eSearch);
             bVisual = TRUE;
         }
@@ -100,9 +104,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
     float fTime = 30.0  + RoundsToSeconds(nDuration);
     //After effects are removed we apply the immunity to mind spells to the target
-    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fTime,TRUE,-1,CasterLvl);
+    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fTime,TRUE,PRCGetSpellId(),CasterLvl);
 
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    SPSetSchool();
+
 }
 

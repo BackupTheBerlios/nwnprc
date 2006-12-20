@@ -21,8 +21,8 @@
 
 void main()
 {
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
+    SPSetSchool(GetSpellSchool(PRCGetSpellId()));
+
 /*
   Spellcast Hook Code
   Added 2003-06-23 by GeorgZ
@@ -43,22 +43,20 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
     //Declare major variables
     effect eSpot = EffectSkillIncrease(SKILL_SPOT, 10);
     effect eListen = EffectSkillIncrease(SKILL_LISTEN, 10);
-    effect eVis = EffectVisualEffect(VFX_DUR_MAGICAL_SIGHT);
-    effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE);
+    effect eVis = EffectVisualEffect( VFX_DUR_SPELL_CLAIRAUD );
 
     effect eLink = EffectLinkEffects(eSpot, eListen);
     eLink = EffectLinkEffects(eLink, eVis);
-    eLink = EffectLinkEffects(eLink, eDur);
 
-    object oTarget = GetSpellTargetObject();
+    object oTarget = PRCGetSpellTargetObject();
     int CasterLvl = PRCGetCasterLevel(OBJECT_SELF);
-    int nLevel = CasterLvl;
+    int nDur = CasterLvl;
     int nMetaMagic = GetMetaMagicFeat();
 
     //Meta-Magic checks
-    if(CheckMetaMagic(nMetaMagic, METAMAGIC_EXTEND))
+    if(nMetaMagic && METAMAGIC_EXTEND)
     {
-        nLevel *= 2;
+        nDur *= 2;
     }
 
     //Make sure the spell has not already been applied
@@ -68,10 +66,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_DIVINATION);
         SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, SPELL_CLAIRAUDIENCE_AND_CLAIRVOYANCE, FALSE));
 
          //Apply linked and VFX effects
-         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nLevel),TRUE,-1,CasterLvl);
+         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, RoundsToSeconds(nDur),TRUE,PRCGetSpellId(),CasterLvl);
     }
-DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
-// Getting rid of the local integer storing the spellschool name
+    SPSetSchool();
 
 }
 

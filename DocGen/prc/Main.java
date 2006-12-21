@@ -103,6 +103,9 @@ public class Main {
 		else if(toCall.equals("scrollgen")){
 			prc.utils.ScrollGen.main(paramsToPass);
 		}
+		else if(toCall.equals("buildscrhack")){
+			prc.utils.BuildScrollHack.main(paramsToPass);
+		}
 		else{
 			System.out.println("Unknown class: " + toCall);
 			readMe();

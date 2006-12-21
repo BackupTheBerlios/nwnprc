@@ -56,10 +56,24 @@ public class ScrollGen {
 		
 		// Load data
 		TwoDAStore twoDA = new TwoDAStore(twoDAPath);
+		
+		doScrollGen(twoDA, twoDAPath, outPath);
+	}
+	
+	/**
+	 * Performs the actual scroll generation. Made public for the purposes of BuildScrollHack.
+	 * 
+	 * @param twoDA        A TwoDAStore for loading 2da data from
+	 * @param twoDAPath    Path where the 2da files are located. For resaving
+	 * @param outPath      Path to directory to store the xml files in
+	 * @throws IOException Just tossed back up
+	 */
+	public static void doScrollGen(TwoDAStore twoDA, String twoDAPath, String outPath) throws IOException {
 		Data_2da          spells = twoDA.get("spells"),
 		         des_crft_scroll = twoDA.get("des_crft_scroll"),
 		         des_crft_spells = twoDA.get("des_crft_spells"),
 		             iprp_spells = twoDA.get("iprp_spells");
+		
 		
 		// For each spells.2da entry, find the iprp_spells.2da entry with lowest CasterLvl value
 		Map<Integer, Tuple<Integer, Integer>> lowestIndex = new HashMap<Integer, Tuple<Integer, Integer>>(); // Map of spells.2da index -> (iprp_spells.2da index, CasterLvl value)

@@ -15,7 +15,6 @@ import static prc.autodoc.Main.TwoDAStore;
  * @author Ornedan
  */
 public class UpdateDes {
-	private static TwoDAStore twoDA;
 	
 	/**
 	 * Ye olde maine methode.
@@ -56,8 +55,19 @@ public class UpdateDes {
 			}
 		}
 		
-		twoDA = new TwoDAStore(twoDAPath);
+		TwoDAStore twoDA = new TwoDAStore(twoDAPath);
 		
+		doUpdateDes(twoDA, twoDAPath);
+	}
+	
+	/**
+	 * Performs the actual 2da updating. Made public for the purposes of BuildScrollHack.
+	 * 
+	 * @param twoDA        A TwoDAStore for loading 2da data from
+	 * @param twoDAPath    Path where the 2da files are located. For resaving
+	 * @throws IOException Just tossed back up
+	 */
+	public static void doUpdateDes(TwoDAStore twoDA, String twoDAPath) throws IOException {
 		Data_2da          spells = twoDA.get("spells"),
 		         des_crft_scroll = twoDA.get("des_crft_scroll"),
 		         des_crft_spells = twoDA.get("des_crft_spells"),

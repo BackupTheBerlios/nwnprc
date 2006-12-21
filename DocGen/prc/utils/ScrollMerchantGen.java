@@ -4,8 +4,10 @@ import static prc.Main.verbose;
 
 import java.util.*;
 import java.io.*;
+
 import prc.autodoc.*;
 import prc.autodoc.Main.TLKStore;
+import prc.autodoc.Main.TwoDAStore;
 
 /**
  *  A little tool that parses des_crft_scroll, extracts unique item resrefs from it and
@@ -53,29 +55,47 @@ public class ScrollMerchantGen {
 				}
 			}
 		}
-
+		
+		// Load data
+		TwoDAStore twoDA = new TwoDAStore(twoDAPath);
+		TLKStore    tlks = new TLKStore("dialog.tlk", "prc_consortium.tlk", tlkPath);
+		
+		doScrollMerchantGen(twoDA, tlks);
+	}
+	
+	/**
+	 * Performs the scroll merchant generation. Made public for the purposes of BuildScrollHack.
+	 * 
+	 * @param twoDA        A TwoDAStore for loading 2da data from
+	 * @param tlks         A TLKStore for reading tlk data from
+	 * @throws IOException Just tossed back up
+	 */
+	public static void doScrollMerchantGen(TwoDAStore twoDA, TLKStore tlks) throws IOException {
 		// Load the 2da file
-		Data_2da scrolls2da = Data_2da.load2da(twoDAPath + File.separator + "des_crft_scroll.2da");
-		Data_2da spells2da  = Data_2da.load2da(twoDAPath + File.separator + "spells.2da");
-		TLKStore tlks = new TLKStore("dialog.tlk", "prc_consortium.tlk", tlkPath);
+		Data_2da scrolls2da = twoDA.get("des_crft_scroll");
+		Data_2da spells2da  = twoDA.get("spells");
+		
 
 		// Loop over the scroll entries and get a list of unique resrefs
 		TreeMap<Integer, TreeMap<String, String>> arcaneScrollResRefs = new TreeMap<Integer, TreeMap<String, String>>();
 		TreeMap<Integer, TreeMap<String, String>> divineScrollResRefs = new TreeMap<Integer, TreeMap<String, String>>();
 		String entry;
 		for(int i = 0; i < scrolls2da.getEntryCount(); i++) {
-			if(!(entry = scrolls2da.getEntry("Wiz_Sorc", i)).equals("****"))
-				addScroll(arcaneScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
-			if(!(entry = scrolls2da.getEntry("Cleric", i)).equals("****"))
-				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
-			if(!(entry = scrolls2da.getEntry("Paladin", i)).equals("****"))
-				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
-			if(!(entry = scrolls2da.getEntry("Druid", i)).equals("****"))
-				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
-			if(!(entry = scrolls2da.getEntry("Ranger", i)).equals("****"))
-				addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
-			if(!(entry = scrolls2da.getEntry("Bard", i)).equals("****"))
-				addScroll(arcaneScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+			// Skip subradials
+			if(spells2da.getEntry("Master", i).equals("****")) {
+				if(!(entry = scrolls2da.getEntry("Wiz_Sorc", i)).equals("****"))
+					addScroll(arcaneScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				if(!(entry = scrolls2da.getEntry("Cleric", i)).equals("****"))
+					addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				if(!(entry = scrolls2da.getEntry("Paladin", i)).equals("****"))
+					addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				if(!(entry = scrolls2da.getEntry("Druid", i)).equals("****"))
+					addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				if(!(entry = scrolls2da.getEntry("Ranger", i)).equals("****"))
+					addScroll(divineScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+				if(!(entry = scrolls2da.getEntry("Bard", i)).equals("****"))
+					addScroll(arcaneScrollResRefs, spells2da, tlks, i, entry.toLowerCase());
+			}
 		}
 
 		String xmlPrefix =
@@ -112,7 +132,7 @@ public class ScrollMerchantGen {
 "            <struct id=\"3\" />"                                       + "\n" +
 "            <struct id=\"1\" />"                                       + "\n" +
 "        </element>"                                                    + "\n" +
-"        <element name=\"ID\" type=\"0\" value=\"0\" />"                + "\n" +
+"        <element name=\"ID\" type=\"0\" value=\"5\" />"                + "\n" +
 "        <element name=\"Comment\" type=\"10\" value=\"\" />"           + "\n" +
 "    </struct>"                                                         + "\n" +
 "</gff>"                                                                + "\n";
@@ -121,12 +141,13 @@ public class ScrollMerchantGen {
 		int posCounter = 0;
 		// First arcane scrolls
 		for(Map<String, String> levelScrollResRefs : arcaneScrollResRefs.values())
-			for(String resref : levelScrollResRefs.values()) {
+			for(String name : levelScrollResRefs.keySet()) {
+				String resref = levelScrollResRefs.get(name);
 				xmlString.append(
-"                    <struct id=\"0\" >"                                                                 + "\n" +
-"                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "\n" +
-"                        <element name=\"Repos_PosX\" type=\"0\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
-"                        <element name=\"Repos_Posy\" type=\"0\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
+"                    <struct id=\"" + posCounter + "\" >"                                                + "\n" +
+"                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "<!-- " + name + " -->" + "\n" +
+"                        <element name=\"Repos_PosX\" type=\"2\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
+"                        <element name=\"Repos_Posy\" type=\"2\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
 "                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                           + "\n" +
 "                    </struct>"                                                                          + "\n"
 						);
@@ -134,12 +155,13 @@ public class ScrollMerchantGen {
 			}
 		// Then divine scrolls
 		for(Map<String, String> levelScrollResRefs : divineScrollResRefs.values())
-			for(String resref : levelScrollResRefs.values()) {
+			for(String name : levelScrollResRefs.keySet()) {
+				String resref = levelScrollResRefs.get(name);
 				xmlString.append(
-"                    <struct id=\"0\" >"                                                                 + "\n" +
-"                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "\n" +
-"                        <element name=\"Repos_PosX\" type=\"0\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
-"                        <element name=\"Repos_Posy\" type=\"0\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
+"                    <struct id=\"" + posCounter + "\" >"                                                + "\n" +
+"                        <element name=\"InventoryRes\" type=\"11\" value=\"" + resref + "\" />"         + "<!-- " + name + " -->" + "\n" +
+"                        <element name=\"Repos_PosX\" type=\"2\" value=\"" + (posCounter % 10) + "\" />" + "\n" +
+"                        <element name=\"Repos_Posy\" type=\"2\" value=\"" + (posCounter / 10) + "\" />" + "\n" +
 "                        <element name=\"Infinite\" type=\"0\" value=\"1\" />"                           + "\n" +
 "                    </struct>"                                                                          + "\n"
 						);
@@ -161,8 +183,6 @@ public class ScrollMerchantGen {
 		// Clean up
 		writer.flush();
 		writer.close();
-		// Force garbage collection
-		System.gc();
 	}
 	
 	private static void addScroll(TreeMap<Integer, TreeMap<String, String>> scrollResRefs,

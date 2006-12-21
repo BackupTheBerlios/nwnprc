@@ -1,15 +1,14 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  
+//:: Name      Shadow Time
+//:: FileName  mys_shad_time.nss
 //:://////////////////////////////////////////////
-/**@file 
+/**@file Shadow Time
+Master, Dark Metamorphosis
+Level/School: 9th/Transmutation
+Duration: 1d4 + 4 rounds
 
-Level/School: 
-Range: 
-Effect: 
-Duration:  
-Saving Throw:  
-Spell Resistance: 
+This mystery functions like the spell time stop,
+except as noted above.
 
 Author:    Tenjac
 Created:   

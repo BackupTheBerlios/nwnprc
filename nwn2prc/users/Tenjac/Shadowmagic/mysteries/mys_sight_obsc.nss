@@ -1,15 +1,20 @@
 //::///////////////////////////////////////////////
-//:: Name      
-//:: FileName  
+//:: Name      Sight Obscured
+//:: FileName  mys_sight_obsc.nss
 //:://////////////////////////////////////////////
-/**@file 
+/**@file Sight Obscured
+Fundamental
+Level/School: 0/Illusion(Glamer)
+Range: Touch
+Target: Creature touched
+Duration:  1 round/level
+Saving Throw:  Will negates (harmless)
+Spell Resistance: Yes (harmless)
 
-Level/School: 
-Range: 
-Effect: 
-Duration:  
-Saving Throw:  
-Spell Resistance: 
+This mystery grants a +5 circumstance bonus on Hide
+checks, Sleight of Hand checks, and any other checks
+that involve concealing the subject's actions or
+gestures.
 
 Author:    Tenjac
 Created:   

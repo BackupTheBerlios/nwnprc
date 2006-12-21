@@ -77,7 +77,7 @@ void MakeLookupLoopMaster()
     // The Truenamer uses the same lookup loop style as the psionic classes. Time adjusted to put it after the last of the caster lookup loops
     DelayCommand(7.3, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "RealSpellID", "GetPowerFromSpellID"));
     DelayCommand(7.5, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "RealSpellID", "FeatID",  "GetClassFeatFromPower_"+IntToString(CLASS_TYPE_TRUENAMER)));
-    DelayCommand(7.6, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));    
+    DelayCommand(7.6, MakeLookupLoop(CLASS_TYPE_TRUENAMER,        0, GetPRCSwitch(FILE_END_CLASS_POWER), "SpellID", "", "SpellIDToClsPsipw"));
     //add new psionic classes here
     //also add them later too
 
@@ -197,21 +197,21 @@ void MakeLookupLoopMaster()
     DelayCommand(8.0, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(8.1, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(8.2, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(8.3, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));    
+    DelayCommand(8.3, MakeSpellbookLevelLoop(CLASS_TYPE_HEXBLADE,         0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
     DelayCommand(8.4, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(8.5, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(8.6, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(8.7, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));        
+    DelayCommand(8.7, MakeSpellbookLevelLoop(CLASS_TYPE_SOHEI,            0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
     DelayCommand(9.0, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(9.1, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(9.2, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(9.3, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));            
+    DelayCommand(9.3, MakeSpellbookLevelLoop(CLASS_TYPE_SLAYER_OF_DOMIEL,   0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
     DelayCommand(9.6, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
     DelayCommand(9.7, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(9.8, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
     DelayCommand(9.9, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "3"));
-    DelayCommand(10.0, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));    
-    DelayCommand(11.3, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));    
+    DelayCommand(10.0, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "4"));
+    DelayCommand(11.3, MakeSpellbookLevelLoop(CLASS_TYPE_DUSKBLADE,        0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "5"));
     DelayCommand(10.3, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "0"));
     DelayCommand(10.4, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "1"));
     DelayCommand(10.5, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "2"));
@@ -221,7 +221,7 @@ void MakeLookupLoopMaster()
     DelayCommand(10.9, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "6"));
     DelayCommand(11.0, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "7"));
     DelayCommand(11.1, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "8"));
-    DelayCommand(11.2, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));    
+    DelayCommand(11.2, MakeSpellbookLevelLoop(CLASS_TYPE_HEALER,           0, GetPRCSwitch(FILE_END_CLASS_SPELLBOOK) , "SpellLvl", "Level", "9"));
 }
 
 void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
@@ -262,7 +262,7 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
                 GetStartingLocation(), FALSE, "Bioware2DACache");
         }
-        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
+        oWP = CreateObject(OBJECT_TYPE_ITEM, "prc_hidetoken", GetLocation(oChest), FALSE, sTag);
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
@@ -343,7 +343,7 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
             oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
                 GetStartingLocation(), FALSE, "Bioware2DACache");
         }
-        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
+        oWP = CreateObject(OBJECT_TYPE_ITEM, "prc_hidetoken", GetLocation(oChest), FALSE, sTag);
         DestroyObject(oWP);
         oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
     }
@@ -425,7 +425,7 @@ string GetPsionicFileName(int nClass)
 {
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     // Different naming structure
-    if (nClass == CLASS_TYPE_TRUENAMER) 
+    if (nClass == CLASS_TYPE_TRUENAMER)
     {
         sPsiFile = "cls_true_known";
     }
@@ -433,7 +433,7 @@ string GetPsionicFileName(int nClass)
     {
         sPsiFile = GetStringLeft(sPsiFile, 4)+"psbk"+GetStringRight(sPsiFile, GetStringLength(sPsiFile)-8);
     }
-    
+
     return sPsiFile;
 }
 
@@ -441,7 +441,7 @@ string GetPsiBookFileName(int nClass)
 {
     string sPsiFile = Get2DACache("classes", "FeatsTable", nClass);
     // Different naming structure
-    if (nClass == CLASS_TYPE_TRUENAMER) 
+    if (nClass == CLASS_TYPE_TRUENAMER)
     {
         sPsiFile = "cls_true_utter";
     }

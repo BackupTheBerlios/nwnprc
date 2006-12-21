@@ -225,13 +225,11 @@ object GetHideToken(object oPC)
 
             // Move the token to hide's inventory
             if(GetIsObjectValid(oToken))
-                AssignCommand(oHide, ActionTakeItem(oToken, oPC)); // Does this work? - Ornedan
+                AssignCommand(oHide, ActionTakeItem(oToken, oPC));
         }
         if(!GetIsObjectValid(oToken))
         {
-    //        oToken = CreateItemOnObject("hidetoken", oPC);
-    //        AssignCommand(oHide, ActionTakeItem(oToken, oPC));
-            oToken = CreateItemOnObject("hidetoken", oHide);
+            oToken = CreateItemOnObject("prc_hidetoken", oHide);
         }
 
         // Cache the token so that there needn't be multiple loops over an inventory

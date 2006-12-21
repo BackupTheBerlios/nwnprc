@@ -501,14 +501,14 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
         nNotWPCached = TRUE;
         nNotBiowareCached = TRUE;
         nNotNWNXCached = TRUE;
-    
+
     }
-    
+
     //lower case the 2da and column
     s2DA = GetStringLowerCase(s2DA);
     sColumn = GetStringLowerCase(sColumn);
-    
-    if (s == "" 
+
+    if (s == ""
         && !GetPRCSwitch(PRC_2DA_CACHE_IN_CREATURE))
     {
         //get the chest that contains the cache
@@ -518,7 +518,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
         {
             //oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
             //    GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
-            //has to be a creature, placeables cant go through the DB    
+            //has to be a creature, placeables cant go through the DB
             oCacheWP = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
                 GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
 if(nDebug) DoDebug("Get2DACache: Cache chest does not exist, creating new one");
@@ -532,7 +532,7 @@ if(nDebug) DoDebug("Get2DACache: token tag is "+sFileWPName);
         if (!GetIsObjectValid(oFileWP))
         {
 if(nDebug) DoDebug("Get2DACache: token does not exist, creating new one");
-            oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
+            oFileWP = CreateObject(OBJECT_TYPE_ITEM, "prc_hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
             DestroyObject(oFileWP);
             oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
         }
@@ -542,7 +542,7 @@ if(nDebug) DoDebug("Get2DACache: token does not exist, creating new one");
             s = GetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow));
         if(s == "")
             nNotWPCached = TRUE;
-    }    
+    }
 
 if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
 
@@ -552,12 +552,12 @@ if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
 
     //if its not locally cached already
     //check if we should use the database
-    if (s == "" 
+    if (s == ""
         && GetPRCSwitch(PRC_2DA_CACHE_IN_NWNXDB))
     {
         string q = PRC_SQLGetTick();
         string SQL;
-        
+
         if(s2DA == "feat"
             || s2DA == "spells"
             || s2DA == "portraits"
@@ -595,11 +595,11 @@ if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
         if(s == "")
             nNotNWNXCached = TRUE;
     }
-    
+
     //if its not locally cached already
     //check if we should use the database
     string sBiowareDBEntry;
-    if (s == "" 
+    if (s == ""
         && GetPRCSwitch(PRC_2DA_CACHE_IN_BIOWAREDB))
     {
         sBiowareDBEntry = s2DA+"_"+sColumn+"_"+IntToString(nRow)+"_2DA";
@@ -607,16 +607,16 @@ if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
         if(s == "")
             nNotBiowareCached = TRUE;
     }
-    
-    
-    
+
+
+
     //entry didnt exist in the database
     if(s == "")
     {
         //fetch from the 2da file
         s = Get2DAString(s2DA, sColumn, nRow);
         if (s == "")
-            s = "****";   
+            s = "****";
     }
 
     if(nNotNWNXCached
@@ -696,8 +696,8 @@ if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
     if(nNotWPCached
         && !GetPRCSwitch(PRC_2DA_CACHE_IN_CREATURE))
         SetLocalString(oFileWP, "2DA_"+s2DA+"_"+sColumn+"_"+IntToString(nRow), s);
-        
-    if (nNotBiowareCached 
+
+    if (nNotBiowareCached
         && GetPRCSwitch(PRC_2DA_CACHE_IN_BIOWAREDB))
     {
         SetCampaignString(GetBiowareDBName()+"b", sBiowareDBEntry, s);

@@ -14,7 +14,7 @@ void main()
     // Do not run for some of the PRC special items
     if(GetTag(oItem) == PRC_MANIFESTATION_TOKEN_NAME ||
        GetTag(oItem) == "HideToken"                  ||
-       GetResRef(oItem) == "base_prc_skin"
+       GetResRef(oItem) == "prc_base_skin"
        )
         return;
 
@@ -33,7 +33,7 @@ void main()
             }
             else
                 SetIdentified(oItem, FALSE);
-        }   
+        }
         else
         {
             //put on ground?

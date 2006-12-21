@@ -26,7 +26,7 @@ void main()
        nBaseItem == BASE_ITEM_CREATUREITEM                         ||
        nBaseItem == BASE_ITEM_CSLASHWEAPON                         ||
        nBaseItem == BASE_ITEM_CSLSHPRCWEAP                         ||
-       sResRef == "hidetoken"                                      ||
+       sResRef == "prc_hidetoken"                                  ||
        sResRef == GetStringLowerCase(PRC_MANIFESTATION_TOKEN_NAME)
        )
         return;

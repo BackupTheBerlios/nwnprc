@@ -303,18 +303,16 @@ if(DEBUG) Assert(GetObjectType(oPC) == OBJECT_TYPE_CREATURE, "GetObjectType(oPC)
         oSkin = GetLocalObject(oPC, "PRCSkinCache");
         if(!GetIsObjectValid(oSkin))
         {
-            if(GetHasItem(oPC, "base_prc_skin"))
+            if(GetHasItem(oPC, "prc_base_skin"))
             {
-                oSkin = GetItemPossessedBy(oPC, "base_prc_skin");
+                oSkin = GetItemPossessedBy(oPC, "prc_base_skin");
                 ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
-                //AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
             }
 
             //Added GetHasItem check to prevent creation of extra skins on module entry
             else {
-                oSkin = CreateItemOnObject("base_prc_skin", oPC);
+                oSkin = CreateItemOnObject("prc_base_skin", oPC);
                 ForceEquip(oPC, oSkin, INVENTORY_SLOT_CARMOUR);
-                //AssignCommand(oPC, ActionEquipItem(oSkin, INVENTORY_SLOT_CARMOUR));
 
                 // The skin should not be droppable
                 SetDroppableFlag(oSkin, FALSE);

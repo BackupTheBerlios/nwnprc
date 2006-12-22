@@ -77,7 +77,7 @@ void main()
 			         {
 			       		RemoveSpecificProperty(oTarget,ITEM_PROPERTY_DAMAGE_BONUS,iDamageType,iTemp,1);
 			       		// eLink2 is used for Impact Effects (Vis)
-        				utter.eLink2 = EffectVisualEffect(VFX_IMP_DISENTIGRATION_SMP);
+        				utter.eLink2 = EffectVisualEffect(VFX_IMP_DESTRUCTION);
 			       		
 					// Once you've removed the iprop, readd it later
                			  	DelayCommand(utter.fDur, AddItemProperty(DURATION_TYPE_PERMANENT, ItemPropertyDamageBonus(iDamageType, iTemp), oTarget));

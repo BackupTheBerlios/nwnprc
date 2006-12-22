@@ -63,7 +63,7 @@ void main()
     {
         effect eLink    =                          EffectRegenerate(10, 6.0f);
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
-               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROT_ACIDSHIELD));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_GLOW_GREEN));
         effect eVis     = EffectVisualEffect(VFX_IMP_HEAD_NATURE);
         float fDuration = 60.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;

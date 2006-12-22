@@ -66,7 +66,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
     int iAttackRoll = PRCDoRangedTouchAttack(oTarget);
 
     // Shoot the ray
-    effect eRay = EffectBeam(VFX_BEAM_DISINTEGRATE, oCaster, BODY_NODE_HAND, !(iAttackRoll > 0));
+    effect eRay = EffectBeam(VFX_BEAM_EVIL, oCaster, BODY_NODE_HAND, !(iAttackRoll > 0));
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7, FALSE);
 
     // Apply effect if hit

@@ -107,7 +107,7 @@ void main()
                 	{
                 		// Paralyzed
 				utter.eLink = EffectLinkEffects(EffectParalyze(), EffectVisualEffect(VFX_DUR_PARALYZE_HOLD));
-				utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_DISEASE_S), EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE_RED));
+				utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_DISEASE_S), EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));
 			}
         	}
         }

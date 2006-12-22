@@ -541,7 +541,7 @@ void DoWordOfNurturingReverse(object oTrueSpeaker, object oTarget, struct uttera
     // Empower it
     if(utter.bEmpower) nDamage += (nDamage/2);
     // If we're using this, target has already failed SR and Saves
-    effect eImp = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGLAW), EffectDamage(nDamage));
+    effect eImp = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGBLUE), EffectDamage(nDamage));
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, oTarget);
 }
 
@@ -564,7 +564,7 @@ void DoEnergyNegation(object oTrueSpeaker, object oTarget, struct utterance utte
     // Empower it
     if(utter.bEmpower) nDamage += (nDamage/2);
         // Impact VFX
-        utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGVIO), EffectDamage(nDamage, nDamageType));
+        utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGBLUE), EffectDamage(nDamage, nDamageType));
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
 

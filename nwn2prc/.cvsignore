@@ -5,6 +5,7 @@ raceobjs
 tempcpl
 spellobjs
 psionicsobjs
+CompiledResources
 findstr.exe
 makefile.temp
 newspellbookobjs

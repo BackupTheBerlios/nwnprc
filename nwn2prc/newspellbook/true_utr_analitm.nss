@@ -52,7 +52,7 @@ void main()
     {
         SetIdentified(oTarget, TRUE);
         // eLink2 is used for Impact Effects (Damage)
-        utter.eLink2 = EffectVisualEffect(VFX_IMP_FAERIE_FIRE);
+        utter.eLink2 = EffectVisualEffect(VFX_IMP_FLAME_M);
 
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);

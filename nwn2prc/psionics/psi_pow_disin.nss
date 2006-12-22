@@ -107,7 +107,7 @@ void DoPower(struct manifestation manif, object oTarget, int nDC, int nPen, int 
     int nTouchAttack = PRCDoRangedTouchAttack(oTarget);
 
     // Shoot the ray
-    effect eRay = EffectBeam(VFX_BEAM_DISINTEGRATE, manif.oManifester, BODY_NODE_HAND, !(nTouchAttack > 0));
+    effect eRay = EffectBeam(VFX_BEAM_EVIL, manif.oManifester, BODY_NODE_HAND, !(nTouchAttack > 0));
     SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eRay, oTarget, 1.7, FALSE);
 
     if(nTouchAttack > 0)

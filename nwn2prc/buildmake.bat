@@ -113,6 +113,7 @@ SET MAKENEWSPELLBOOKPATH=newspellbook
 SET MAKENEWSPELLBOOKOBJSPATH=newspellbookobjs
 SET MAKEOCFIXERFPATH=ocfixerf
 SET MAKEOCFIXERFOBJSPATH=ocfixerfobjs
+SET MAKEINCLUDEPATH=include
 
 REM before doing the real build build the dependencies for include files.
 tools\nmake -NOLOGO -f makefile.temp MAKEFILE=makefile.temp depends

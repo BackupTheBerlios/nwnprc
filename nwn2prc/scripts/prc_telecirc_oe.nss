@@ -36,5 +36,5 @@ void main()
     // Some VFX at the location the creature suddenly disappears from
     //ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_CONJ_MIND), GetLocation(oTarget), 2.0f);
     //ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_CONJ_MIND), GetLocation(oTarget));
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_CONJ_MIND), oTarget);
+    ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_BEAM_CONJURATION), oTarget);
 }

@@ -129,7 +129,7 @@ void main()
 			// Empower it
 			if(utter.bEmpower) nDamage += (nDamage/2);
        			// Impact VFX 
-        		utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGVIO), EffectDamage(nDamage, nDamageType));
+        		utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGBLUE), EffectDamage(nDamage, nDamageType));
         		// Convert the seconds back into rounds for nBeats
         		int nBeats = FloatToInt(utter.fDur / 6.0);
         		// This takes care of the duration bit of the utterance

@@ -63,13 +63,13 @@ void main()
         if (utter.nSpellId == UTTER_HIDDEN_TRUTH)
         {
         	// Lore
-        	utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_LORE, 10), EffectVisualEffect(VFX_DUR_SHIELD_OF_LAW));
+        	utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_LORE, 10), EffectVisualEffect(VFX_DUR_SPELL_SHIELD_OF_FAITH));
         }
         // The REVERSE effect of the Utterance goes here
         else // UTTER_HIDDEN_TRUTH_R
         {
 		// Bluff
-		utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_BLUFF, 10), EffectVisualEffect(VFX_DUR_ENTROPIC_SHIELD));
+		utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_BLUFF, 10), EffectVisualEffect(VFX_DUR_SPELL_ENTROPIC_SHIELD));
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);

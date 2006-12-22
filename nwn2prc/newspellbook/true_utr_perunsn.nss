@@ -73,7 +73,7 @@ void main()
         else /* Effects of UTTER_PERCEIVE_UNSEEN_R would be here */
         {
         	// Concealment
-		utter.eLink = EffectLinkEffects(EffectConcealment(20), EffectVisualEffect(VFX_DUR_CHAOS_CLOAK));
+		utter.eLink = EffectLinkEffects(EffectConcealment(20), EffectVisualEffect(VFX_DUR_DEATH_ARMOR));
 		utter.eLink2 = EffectVisualEffect(VFX_IMP_HOLY_AID);
         }
         // If either of these ApplyEffect isn't needed, delete it.

@@ -76,7 +76,7 @@ void main()
                eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_ELECTRICAL, nResist));
                eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_FIRE,       nResist));
                eLink = EffectLinkEffects(eLink, EffectDamageResistance(DAMAGE_TYPE_SONIC,      nResist));
-               eLink = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_ENERGY_ADAPTATION_ALL));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD));
         effect eVis  = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
 
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, -1, manif.nManifesterLevel);

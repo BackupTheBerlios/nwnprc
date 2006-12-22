@@ -14,8 +14,11 @@ void main()
     }
 
     //arrow vfx
-    effect eArrow = EffectVisualEffect(NORMAL_ARROW);
-    ApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
+ 	location lSourceLoc = GetLocation( OBJECT_SELF );
+	location lTarget = GetLocation( oTarget );
+	int nPathType = PROJECTILE_PATH_TYPE_DEFAULT;
+	int nSpell = SPELL_ARROW_NOFOG;
+	SpawnSpellProjectile(OBJECT_SELF, oTarget, lSourceLoc, lTarget, nSpell, nPathType);
 
     //spell ID determines level of effect
     int nSpellId = GetSpellId();

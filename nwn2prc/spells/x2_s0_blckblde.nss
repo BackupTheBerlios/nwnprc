@@ -58,7 +58,7 @@ void DoPnPAttack(object oSummon)
            {
                 // Generate the RTA beam.
                 AssignCommand(oSummon, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                EffectBeam(VFX_BEAM_DISINTEGRATE, OBJECT_SELF, BODY_NODE_HAND), oTarget, 1.0,FALSE));
+                EffectBeam(VFX_BEAM_EVIL, OBJECT_SELF, BODY_NODE_HAND), oTarget, 1.0,FALSE));
 
                 // Fort save or die time, but we implement death by doing massive damage
                 // since disintegrate works on constructs, undead, etc.  At some point EffectDie()

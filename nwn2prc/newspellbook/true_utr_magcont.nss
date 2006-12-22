@@ -74,7 +74,7 @@ void main()
 		// Empower
 		SetLocalInt(oTarget, "TrueMagicalContraction", TRUE);
 		DelayCommand(utter.fDur, DeleteLocalInt(oTarget, "TrueMagicalContraction"));
-		utter.eLink = EffectVisualEffect(VFX_DUR_SHIELD_OF_LAW);
+		utter.eLink = EffectVisualEffect(VFX_DUR_SPELL_SHIELD_OF_FAITH);
         }
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);

@@ -89,7 +89,7 @@ void main()
         	// Used to Ignore SR in Speak Unto the Masses for friendly utterances.
 		utter.bIgnoreSR = TRUE;
 		utter.eLink     =                                EffectEthereal();
-		utter.eLink     = EffectLinkEffects(utter.eLink, EffectVisualEffect(VFX_DUR_TEMPORAL_STASIS));
+		utter.eLink     = EffectLinkEffects(utter.eLink, EffectVisualEffect(VFX_DUR_PARALYZE_HOLD));
                 utter.eLink     = EffectLinkEffects(utter.eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         }
         // Duration Effects

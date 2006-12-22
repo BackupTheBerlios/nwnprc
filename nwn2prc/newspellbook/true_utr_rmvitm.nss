@@ -68,7 +68,7 @@ void main()
     		DelayCommand(utter.fDur, RestoreItem(oTarget));
     		// Then remove it
     		DestroyObject(oTarget);
-    		utter.eLink2 = EffectVisualEffect(VFX_FNF_RUSTING_GRASP);
+    		utter.eLink2 = EffectVisualEffect(VFX_FNF_DEMON_HAND);
     	}
 
         // Impact Effects

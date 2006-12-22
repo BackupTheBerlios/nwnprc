@@ -70,7 +70,7 @@ void main()
         int nNumberOfDice = 2 + manif.nTimesAugOptUsed_1;
         int nDieSize      = 6;
         int nDamage;
-        effect eVis       = EffectVisualEffect(PSI_FNF_RECALL_AGONY);
+        effect eVis       = EffectVisualEffect(VFX_FNF_HOWL_MIND);
         effect eDamage;
 
         // Let the AI know

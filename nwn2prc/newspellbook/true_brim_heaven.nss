@@ -45,7 +45,7 @@ void main()
 
     if(GetIsSkillSuccessful(oTrueSpeaker, SKILL_TRUESPEAK, nDC))
     {
-	effect eSummon = EffectSummonCreature(sSummon, VFX_FNF_SMP_GATE, 3.0);        
+	effect eSummon = EffectSummonCreature(sSummon, VFX_FNF_SUMMON_GATE, 3.0);        
         // Do Multisummon
         DelayCommand(5.0, MultisummonPreSummon());
         // Bring in the creature, one minute duration

@@ -188,8 +188,8 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE_ELDER ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_FIRE ||
@@ -215,8 +215,8 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE_ELDER ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_FIRE ||
@@ -264,7 +264,7 @@ int GetIsTurnNotRebuke(object oTarget, int nTurnType)
     }
     else if (nTurnType == SPELL_TURN_SPIDER)
     {
-        if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_DEMON ||
+        if (//GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_DEMON ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_DIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_GIANT ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_SWORD ||
@@ -532,8 +532,8 @@ int GetCanTurn(object oTarget, int nTurnType)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE_ELDER ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_FIRE ||
@@ -557,8 +557,8 @@ int GetCanTurn(object oTarget, int nTurnType)
     {
         if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_ELEMENTAL_FIRE_ELDER ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
-            GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_MALE ||
+            //GetAppearanceType(oTarget) == APPEARANCE_TYPE_AZER_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_GIANT_FIRE_FEMALE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_MEPHIT_FIRE ||
@@ -604,7 +604,7 @@ int GetCanTurn(object oTarget, int nTurnType)
     }
     else if (nTurnType == SPELL_TURN_SPIDER)
     {
-        if (GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_DEMON ||
+        if (//GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_DEMON ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_DIRE ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_GIANT ||
             GetAppearanceType(oTarget) == APPEARANCE_TYPE_SPIDER_SWORD ||

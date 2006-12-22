@@ -66,6 +66,7 @@ SET MAKEPSIONICSOBJSPATH=psionicsobjs
 SET MAKEMISCPATH=others
 SET MAKENEWSPELLBOOKPATH=newspellbook
 SET MAKENEWSPELLBOOKOBJSPATH=newspellbookobjs
+SET MAKEINCLUDEPATH=include
 
 REM run nmake to do the build.
 tools\nmake -NOLOGO -k -f makefile.temp IGNOREERRORS=true %1 %2 %3 %4 %5 %6 %7 %8 %9

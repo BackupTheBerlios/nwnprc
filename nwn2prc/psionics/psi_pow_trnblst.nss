@@ -220,7 +220,7 @@ void DoRandomMove(object oTarget)
       + "Commandability = " + BooleanToString(bCommandable) + "\n"
         );*/
     // Do some VFX during the jump delay
-    DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_WIND, oArea, vOrigin, vTarget, 0.0f,
+    DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_TORNADO, oArea, vOrigin, vTarget, 0.0f,
                                FloatToInt(GetDistanceBetweenLocations(GetLocation(oTarget), lTargetDestination)), // One VFX every meter
                                fDelay
                                );

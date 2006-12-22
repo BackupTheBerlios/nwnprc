@@ -92,7 +92,7 @@ void main()
                eLink = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ACID,       50));
                eLink = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_ELECTRICAL, 50));
                eLink = EffectLinkEffects(eLink, EffectDamageImmunityIncrease(DAMAGE_TYPE_FIRE,       50));
-               eLink = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_SHADOW_BODY));
+               eLink = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SHADOW_CLOAK));
         effect eVis  = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
         float fDuration = 60.0f * manif.nManifesterLevel;
         if(manif.bExtend) fDuration *= 2;

@@ -56,8 +56,8 @@ void main()
 	utter.nSaveThrow = SAVING_THROW_FORT;
 	utter.nSaveDC    = GetTrueSpeakerDC(oTrueSpeaker); 
         int nDamage;
-        effect eExplode = EffectVisualEffect(VFX_PRC_FNF_EARTHQUAKE);
-        effect eVis = EffectVisualEffect(VFX_IMP_LEAF);
+        effect eExplode = EffectVisualEffect(VFX_FNF_SCREEN_SHAKE);
+        effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
         effect eDam;
         
     	//Declare major variables

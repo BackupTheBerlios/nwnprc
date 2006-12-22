@@ -66,7 +66,7 @@ void main()
         	utter.ipIProp1 = ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_BACKSTAB);
         	IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         	// eLink2 is used for Impact Effects (Damage)
-        	utter.eLink2 = EffectVisualEffect(VFX_FNF_MAGIC_VESTAMENT);
+        	utter.eLink2 = EffectVisualEffect(VFX_FNF_DISPEL);
         }
         // The REVERSE effect of the Utterance goes here
         else /* Effects of UTTER_FORTIFY_ARMOUR_CRIT_r would be here */
@@ -75,7 +75,7 @@ void main()
         	utter.ipIProp1 = ItemPropertyImmunityMisc(IP_CONST_IMMUNITYMISC_CRITICAL_HITS);
         	IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         	// eLink2 is used for Impact Effects (Damage)
-        	utter.eLink2 = EffectVisualEffect(VFX_FNF_MAGIC_VESTAMENT);
+        	utter.eLink2 = EffectVisualEffect(VFX_FNF_DISPEL);
         }
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);

@@ -87,7 +87,7 @@ void main()
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_TRAP));
                eLink    = EffectLinkEffects(eLink, EffectImmunity(IMMUNITY_TYPE_MIND_SPELLS));
         // Visuals
-               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_TIMELESS_BODY));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SPELL_GREATER_SPELL_MANTLE));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_CESSATE_POSITIVE));
         effect eVis     = EffectVisualEffect(VFX_IMP_MAGIC_PROTECTION);
         float fDuration = 6.0f;

@@ -49,7 +49,7 @@ void main()
     location lTarget = PRCGetSpellTargetLocation();
     int nCasterLvl   = PRCGetCasterLevel();
     int nSpellID     = PRCGetSpellId();
-    effect eVis      = EffectLinkEffects(EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_GREEN), EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_SOUNDFX));
+    effect eVis      = EffectLinkEffects(EffectVisualEffect(VFX_IMP_ACID_L), EffectVisualEffect(VFX_IMP_ACID_S));
     float fDur       = SPGetMetaMagicDuration(HoursToSeconds(24 * nCasterLvl));
 
 

@@ -36,7 +36,7 @@ int DoPower(object oManifester, object oTarget, struct manifestation manif)
         MyDestroyObject(oSeed);
     // Create new seed and do some VFX
     oSeed = CreateObject(OBJECT_TYPE_PLACEABLE, "x2_plc_phylact", PRCGetSpellTargetLocation());
-    effect eVis = EffectVisualEffect(PSI_FNF_ASTRAL_SEED);
+    effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_GATE);
     DelayCommand(0.5, SPApplyEffectToObject(DURATION_TYPE_INSTANT, eVis, oSeed));
     // Store a reference to the seed on the manifester
     SetLocalObject(oManifester, "PRC_AstralSeed_SeedObject", oSeed);

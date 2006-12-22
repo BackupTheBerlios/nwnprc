@@ -74,7 +74,7 @@ void main()
         	utter.ipIProp1 = ItemPropertyNoDamage();
 		object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
         	IPSafeAddItemProperty(oItem, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-        	utter.eLink = EffectVisualEffect(VFX_DUR_LIGHTNING_SHELL);
+        	utter.eLink = EffectVisualEffect(VFX_DUR_GLOW_LIGHT_BLUE);
 		SetBaseAttackBonus(1, oTarget);
 		// Just in case anyone tries something tricky
 		if (!GetPlotFlag(oTarget)) 

@@ -2026,12 +2026,19 @@ int GetAttackRoll(object oDefender, object oAttacker, object oWeapon, int iMainH
      //at least you see some projectile rather than none at all
      if(GetWeaponRanged(oWeapon))
      {
+		location lSourceLoc = GetLocation( oAttacker );
+		location lTarget = GetLocation( oDefender );
+		int nPathType = PROJECTILE_PATH_TYPE_DEFAULT;
+		int nSpell = SPELL_ARROW_NOFOG;
+		
         if(iReturn == 1 || iReturn == 2)
-            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT,
-                EffectVisualEffect(NORMAL_ARROW, FALSE), oDefender));
+            AssignCommand(oAttacker, SpawnSpellProjectile(oAttacker, oDefender, lSourceLoc, lTarget, nSpell, nPathType));
         else
-            AssignCommand(oAttacker, ApplyEffectToObject(DURATION_TYPE_INSTANT,
-                EffectVisualEffect(NORMAL_ARROW, TRUE), oDefender));
+        {
+			// a miss!
+			lTarget = CalcSafeLocation(oDefender,lSourceLoc,5.0,TRUE,TRUE);
+            AssignCommand(oAttacker, SpawnSpellProjectile(oAttacker, oDefender, lSourceLoc, lTarget, nSpell, nPathType));
+        }
      }
 
      if(bShowFeedback) DelayCommand(fDelay, SendMessageToPC(oAttacker, sFeedback));

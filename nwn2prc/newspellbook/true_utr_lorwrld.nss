@@ -52,8 +52,8 @@ void main()
         // This is done so Speak Unto the Masses can read it out of the structure
         utter.fDur       = RoundsToSeconds(10);
         if(utter.bExtend) utter.fDur *= 2;
-        utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_LORE, utter.nTruespeakerLevel), EffectVisualEffect(VFX_DUR_CROWN_OF_GLORY));
-        utter.eLink2 = EffectVisualEffect(VFX_CONJ_MIND);
+        utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_LORE, utter.nTruespeakerLevel), EffectVisualEffect(VFX_DUR_SPELL_DIVINE_FAVOR));
+        utter.eLink2 = EffectVisualEffect(VFX_HIT_SPELL_CONJURATION);
         
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);

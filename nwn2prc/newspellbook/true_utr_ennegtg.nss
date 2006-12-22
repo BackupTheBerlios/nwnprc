@@ -120,7 +120,7 @@ void main()
 			nDamageType = DAMAGE_TYPE_ACID;
 		
         	// Damage Shield, 
-        	utter.eLink = EffectLinkEffects(EffectDamageShield(0, DAMAGE_BONUS_20, nDamageType), EffectVisualEffect(VFX_DUR_CHILL_SHIELD));
+        	utter.eLink = EffectLinkEffects(EffectDamageShield(0, DAMAGE_BONUS_20, nDamageType), EffectVisualEffect(VFX_DUR_ICESKIN));
         	// Impact VFX 
         	utter.eLink2 = EffectVisualEffect(VFX_IMP_ELEMENTAL_PROTECTION);
         }

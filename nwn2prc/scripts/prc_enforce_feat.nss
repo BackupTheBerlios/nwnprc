@@ -1104,9 +1104,9 @@ int DragonShamanFeats(object oPC)
                          GetHasFeat(FEAT_DRAGONSHAMAN_AURA_VIGOR, oPC) +
                          GetHasFeat(FEAT_DRAGONSHAMAN_AURA_TOUGHNESS, oPC);
 
-    nNumOfSkillFocus +=  GetHasFeat(SKILLFOCUS_HIDE) +
-                         GetHasFeat(SKILLFOCUS_MOVE) +
-                         GetHasGeat(SKILLFOCUS_BLUFF);
+    nNumOfSkillFocus +=  GetHasFeat(FEAT_SKILL_FOCUS_HIDE) +
+                         GetHasFeat(FEAT_SKILL_FOCUS_MOVE_SILENTLY) +
+                         GetHasFeat(FEAT_SKILL_FOCUS_BLUFF);
 
     if(nNumDragonTotem > 1)
     {
@@ -1138,7 +1138,7 @@ int DragonShamanFeats(object oPC)
         FloatingTextStringOnCreature("You must have 7 auras, please reselect your feats.", oPC, FALSE);
         return FALSE;
     }
-    if(nLevel == 2 && nNumOfSkillFocus < 1) || nNumOfSkillFocus > 1)
+    if(nLevel == 2 && nNumOfSkillFocus < 1 || nNumOfSkillFocus > 1)
     {
         FloatingTextStringOnCreature("You must have 1 class skill focus, please reselect your feats.", oPC, FALSE);
         return FALSE;

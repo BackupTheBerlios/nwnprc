@@ -20,7 +20,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
     int nDamage;
     effect eDam;
     object oTarget;
-    effect eVis2 = EffectVisualEffect(VFX_DUR_ENTROPIC_SHIELD);
+    effect eVis2 = EffectVisualEffect(VFX_DUR_ETHEREAL_VISAGE);
     effect eLink = EffectLinkEffects(eVis2, EffectConcealment(20));
     //Capture the first target object in the shape.
     oTarget = GetEnteringObject();

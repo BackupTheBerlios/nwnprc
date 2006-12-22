@@ -155,7 +155,7 @@ void StartGrapple(object oAttacker, object oDefender,
                 //now grappled
                 //create the effect
                 effect eHold = EffectCutsceneImmobilize();
-                effect eEntangle = EffectVisualEffect(VFX_DUR_SPELLTURNING_R);
+                effect eEntangle = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
                 effect eLink = EffectLinkEffects(eHold, eEntangle);
                 //apply the effect
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oAttacker, 6.0);

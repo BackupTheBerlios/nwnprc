@@ -77,7 +77,7 @@ void main()
         int nDieSize      = 6;
         int nDamage;
         effect eStun      = EffectStunned();
-        effect eVis       = EffectVisualEffect(PSI_FNF_PSYCHIC_CRUSH);
+        effect eVis       = EffectVisualEffect(VFX_FNF_HOWL_MIND);
 
         // Let the AI know
         SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);

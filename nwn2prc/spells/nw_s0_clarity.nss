@@ -58,7 +58,7 @@ void main()
     int nMetaMagic = GetMetaMagicFeat();
     //Enter Metamagic conditions
     // need NWN2 metamagic
-    if (nMetaMagic, METAMAGIC_EXTEND)
+    if (nMetaMagic == METAMAGIC_EXTEND)
     {
         nDuration = nDuration *2; //Duration is +100%
     }

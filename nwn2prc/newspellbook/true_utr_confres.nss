@@ -66,7 +66,7 @@ void main()
        		object oSkin = GetPCSkin(oTrueSpeaker);
        		IPSafeAddItemProperty(oSkin, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
        		// Visuals 
-       		utter.eLink = EffectVisualEffect(VFX_DUR_BLUESHIELDPROTECT);
+       		utter.eLink = EffectVisualEffect(VFX_DUR_ELEMENTAL_SHIELD);
        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HOLY_AID);
         }
         // The REVERSE effect of the Utterance goes here
@@ -77,7 +77,7 @@ void main()
 		DelayCommand(utter.fDur, DeleteLocalInt(oTarget, "TrueConfoundingResistance"));
 		// Visuals 
 		utter.eLink = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
-       		utter.eLink2 = EffectVisualEffect(VFX_IMP_BLINDDEAD_DN_GREEN);
+       		utter.eLink2 = EffectVisualEffect(VFX_IMP_BLIND_DEAF_M);
         }
         // If either of these ApplyEffect isn't needed, delete it.
         // Duration Effects

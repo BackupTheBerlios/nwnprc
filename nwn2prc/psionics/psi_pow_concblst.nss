@@ -78,7 +78,7 @@ void main()
         int nExtraTargets = manif.nTimesAugOptUsed_2;
         int nNumberOfDice = 1 + manif.nTimesAugOptUsed_1;
         int nDieSize      = 6;
-        effect eVis       = EffectVisualEffect(PSI_IMP_CONCUSSION_BLAST);
+        effect eVis       = EffectVisualEffect(VFX_IMP_CONFUSION_S);
 
         // Hit the main target
         SPRaiseSpellCastAt(oMainTarget, TRUE, manif.nSpellID, oManifester);

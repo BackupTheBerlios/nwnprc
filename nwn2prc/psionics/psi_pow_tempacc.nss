@@ -75,7 +75,7 @@ void main()
 
         location lTarget = PRCGetSpellTargetLocation();
         effect eImpact   = EffectVisualEffect(VFX_FNF_TIME_STOP);
-        effect eDur      = EffectVisualEffect(PSI_DUR_TEMPORAL_ACCELERATION);
+        effect eDur      = EffectVisualEffect(VFX_DUR_BLUR);
         effect eTStop    = EffectTimeStop();
         float fDuration  = 6.0f * (1 + manif.nTimesAugOptUsed_1);
         if(manif.bExtend) fDuration *= 2;

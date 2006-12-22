@@ -165,7 +165,7 @@ void SpellfireDamage(object oCaster, object oTarget, int nRoll, int nDamage, int
     }
     else
         ApplyTouchAttackDamage(oCaster, oTarget, nRoll, nDamage, DAMAGE_TYPE_MAGICAL, DAMAGE_TYPE_FIRE);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SPELLF_FLAME), oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_FLAME_M), oTarget);
 }
 
 //Spellfire attack roll -> damage
@@ -187,7 +187,7 @@ void SpellfireAttackRoll(object oCaster, object oTarget, int nExpend, int iMod =
         nDamage = PRCGetReflexAdjustedDamage(d6(nExpend), oTarget, nDC, SAVING_THROW_TYPE_NONE, oCaster);
     }
     if(bBeam)
-        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_SPELLFIRE, oCaster, BODY_NODE_HAND, !nRoll), oTarget, 1.2 /*+ (0.5 * IntToFloat(nAttacks))*/);
+        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_FIRE, oCaster, BODY_NODE_HAND, !nRoll), oTarget, 1.2 /*+ (0.5 * IntToFloat(nAttacks))*/);
     if(nRoll && nDamage)
         SpellfireDamage(oCaster, oTarget, nRoll, nDamage, bMaelstrom);
 }
@@ -231,7 +231,7 @@ void SpellfireHeal(object oCaster, object oTarget)
         nHeal = d4(nExpend) + nExpend;
 
     SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectHeal(nHeal), oTarget);
-    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_SPELLF_HEAL), oTarget);
+    SPApplyEffectToObject(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_IMP_HEALING_M), oTarget);
     DelayCommand(0.1, SendMessageToPC(oCaster, "Spellfire levels stored: " + IntToString(GetPersistantLocalInt(oCaster, "SpellfireLevelStored"))));
 }
 
@@ -250,7 +250,7 @@ void SpellfireMaelstrom(object oCaster)
     int nExpend = ExpendSpellfire(oCaster);
     float fDelay;
     location lTarget = GetLocation(oCaster);
-    effect eExplode = EffectVisualEffect(VFX_FNF_SPELLF_EXP);
+    effect eExplode = EffectVisualEffect(VFX_FNF_FIREBALL);
     //KABOOM!
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eExplode, lTarget);
     object oTarget = MyFirstObjectInShape(SHAPE_SPHERE, RADIUS_SIZE_HUGE, lTarget, TRUE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);

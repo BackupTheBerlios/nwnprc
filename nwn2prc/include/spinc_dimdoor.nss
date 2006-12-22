@@ -301,7 +301,7 @@ void DoDimensionDoorTeleport(object oCaster, location lTarget, int bTeleportingP
         //BeamPolygon(1, 73, lCaster, 5.0, 8, 3.0, "prc_invisobj", 1.0, 0.0, 0.0, "z", -1, -1, 0.0, 1.0, 2.0);
 
         // After a moment, draw a line from the caster to the destination
-        DelayCommand(1.0, DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_WIND, GetArea(oCaster), GetPositionFromLocation(lCaster), GetPositionFromLocation(lTarget), 0.0,
+        DelayCommand(1.0, DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_TORNADO, GetArea(oCaster), GetPositionFromLocation(lCaster), GetPositionFromLocation(lTarget), 0.0,
                                                      FloatToInt(GetDistanceBetweenLocations(lCaster, lTarget)), // One VFX every meter
                                                      0.5));
         // Then, spawn a circle of ligtning at the destination

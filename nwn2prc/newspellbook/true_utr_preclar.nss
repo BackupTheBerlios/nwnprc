@@ -69,7 +69,7 @@ void main()
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectAttackIncrease(5), EffectVisualEffect(VFX_DUR_CROWN_OF_GLORY));
+        	utter.eLink = EffectLinkEffects(EffectAttackIncrease(5), EffectVisualEffect(VFX_DUR_SPELL_DIVINE_FAVOR));
         	// Impact VFX 
         	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
         }
@@ -82,7 +82,7 @@ void main()
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_ALL_SKILLS, 5), EffectVisualEffect(VFX_DUR_CROWN_OF_GLORY));
+        	utter.eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_ALL_SKILLS, 5), EffectVisualEffect(VFX_DUR_SPELL_DIVINE_FAVOR));
         	// Impact VFX 
         	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
         }
@@ -95,7 +95,7 @@ void main()
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectSavingThrowIncrease(SAVING_THROW_ALL, 5), EffectVisualEffect(VFX_DUR_CROWN_OF_GLORY));
+        	utter.eLink = EffectLinkEffects(EffectSavingThrowIncrease(SAVING_THROW_ALL, 5), EffectVisualEffect(VFX_DUR_SPELL_DIVINE_FAVOR));
         	// Impact VFX 
         	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
         }        
@@ -113,7 +113,7 @@ void main()
         		if(!nSaveCheck)
                 	{
                 		// Confusion
-				utter.eLink = EffectLinkEffects(EffectConfused(), EffectVisualEffect(VFX_DUR_CHAOS_CLOAK));
+				utter.eLink = EffectLinkEffects(EffectConfused(), EffectVisualEffect(VFX_DUR_DEATH_ARMOR));
 				utter.eLink2 = EffectVisualEffect(VFX_IMP_FEAR_S);
 			}
         	}

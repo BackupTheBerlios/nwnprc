@@ -39,11 +39,15 @@ void main()
     //do the attacks in a loop
     effect eInvalid;
     int i;
+ 	location lSourceLoc = GetLocation( OBJECT_SELF );
+	location lTarget = GetLocation( oTarget );
+	int nPathType = PROJECTILE_PATH_TYPE_DEFAULT;
+	int nSpell = SPELL_ARROW_NOFOG;
+	
     for(i=0;i<iAttacks;i++)
     {
         PerformAttack(oTarget, OBJECT_SELF, eInvalid, 0.0, nABPenalty, 0,0, "*Many Shot Hit*", "*Many Shot Miss*");
-        effect eArrow = EffectVisualEffect(NORMAL_ARROW);
-        ApplyEffectToObject(DURATION_TYPE_INSTANT, eArrow, oTarget);
+		SpawnSpellProjectile(OBJECT_SELF, oTarget, lSourceLoc, lTarget, nSpell, nPathType);
     }
 }
 

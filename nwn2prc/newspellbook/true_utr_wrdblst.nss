@@ -139,7 +139,7 @@ void main()
        			if(utter.bEmpower) nLoss += (nLoss/2);
        			ApplyAbilityDamage(oTarget, GetLocalInt(oTrueSpeaker, "TrueWordBlasting"), nLoss, DURATION_TYPE_TEMPORARY, TRUE, utter.fDur, TRUE, -1, utter.nTruespeakerLevel);
        			// Impact VFX 
-        		utter.eLink2 = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE_GRN);
+        		utter.eLink2 = EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE);
         	}
         }
         // Impact Effects

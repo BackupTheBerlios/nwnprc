@@ -66,7 +66,7 @@ ActionDoCommand(SetAllAoEInts(SPELL_EVARDS_BLACK_TENTACLES,OBJECT_SELF, GetSpell
             //now being grappled
             AssignCommand(oTarget, ClearAllActions());
             effect eHold = EffectCutsceneImmobilize();
-            effect eEntangle = EffectVisualEffect(VFX_DUR_SPELLTURNING_R);
+            effect eEntangle = EffectVisualEffect(VFX_DUR_PARALYZE_HOLD);
             effect eLink = EffectLinkEffects(eHold, eEntangle);
             //eLink = EffectKnockdown();
             SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);

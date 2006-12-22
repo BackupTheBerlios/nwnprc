@@ -68,6 +68,7 @@ SET MAKENEWSPELLBOOKPATH=newspellbook
 SET MAKENEWSPELLBOOKOBJSPATH=newspellbookobjs
 SET MAKEOCFIXERFPATH=ocfixerf
 SET MAKEOCFIXERFOBJSPATH=ocfixerfobjs
+SET MAKEINCLUDEPATH=include
 
 REM run nmake to do the build.
 tools\nmake -NOLOGO -f makefile.temp %1 %2 %3 %4 %5 %6 %7 %8 %9

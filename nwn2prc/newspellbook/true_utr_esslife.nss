@@ -86,7 +86,7 @@ void main()
         	nSRCheck = MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen);
         	if (!nSRCheck)
         	{
-			utter.eLink2 = EffectLinkEffects(EffectNegativeLevel(1), EffectVisualEffect(VFX_IMP_NEGBLAST_ENERGY));
+			utter.eLink2 = EffectLinkEffects(EffectNegativeLevel(1), EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY));
         	}
         }
         // Impact Effects

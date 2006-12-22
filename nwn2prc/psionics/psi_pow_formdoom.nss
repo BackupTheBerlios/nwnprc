@@ -101,7 +101,7 @@ void main()
                eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_JUMP, 10));
                //eLink    = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_INTIMIDATE, 10));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_PROT_SHADOW_ARMOR));
-               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(PSI_DUR_SHADOW_BODY));
+               eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_SHADOW_CLOAK));
                eLink    = EffectLinkEffects(eLink, EffectVisualEffect(VFX_DUR_TENTACLE));
         effect eTest;
         float fDuration = 6.0f * (manif.nManifesterLevel + (2 * manif.nTimesAugOptUsed_1));

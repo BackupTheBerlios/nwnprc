@@ -80,7 +80,7 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
 
         // Shoot the beam. Hit / miss animation
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY,
-                              EffectBeam(VFX_BEAM_DISINTEGRATE, oCaster, BODY_NODE_HAND, !iAttackRoll),
+                              EffectBeam(VFX_BEAM_EVIL, oCaster, BODY_NODE_HAND, !iAttackRoll),
                               oTarget, 1.0, FALSE);
 
         // If the beam hit, affect the target

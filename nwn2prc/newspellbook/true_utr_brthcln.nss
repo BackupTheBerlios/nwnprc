@@ -105,7 +105,7 @@ void main()
                 			// Nauseated: Can't Cast spells or Attack, can only move
 					utter.eLink = EffectLinkEffects(EffectSpellFailure(), EffectAttackDecrease(20));
 					SetBaseAttackBonus(1, oTarget);
-					utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_DISEASE_S), EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE_RED));
+					utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_DISEASE_S), EffectVisualEffect(VFX_IMP_REDUCE_ABILITY_SCORE));
 					DelayCommand(utter.fDur, RestoreBaseAttackBonus(oTarget));
 				}
 			}

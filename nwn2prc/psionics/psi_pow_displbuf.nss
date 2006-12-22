@@ -67,7 +67,7 @@ void main()
 
     if(manif.bCanManifest)
     {
-        effect eDur     = EffectVisualEffect(PSI_DUR_DISPELLING_BUFFER);
+        effect eDur     = EffectVisualEffect(VFX_DUR_GLOBE_INVULNERABILITY);
         float fDuration = HoursToSeconds(manif.nManifesterLevel);
         if(manif.bExtend) fDuration *= 2;
 

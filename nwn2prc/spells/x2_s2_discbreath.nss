@@ -577,7 +577,7 @@ void main()
     if (dShadow > 0) ShadowBreath (oPC, oSkin, dShadow, nSaveDC, nLevel);
 
     //breath VFX
-    effect eVis = EffectVisualEffect(VFX_FNF_DRAGBREATHGROUND);
+    effect eVis = EffectVisualEffect(VFX_CONE_RED_DRAGON_FIRE);
     ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, PRCGetSpellTargetLocation());
 }
 

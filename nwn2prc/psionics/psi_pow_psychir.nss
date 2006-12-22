@@ -91,7 +91,7 @@ void main()
     if(manif.bCanManifest)
     {
         int nEffectType;
-        effect eVis = EffectVisualEffect(PSI_FNF_PSYCHIC_CHIRURGY);
+        effect eVis = EffectVisualEffect(VFX_FNF_NATURES_BALANCE);
         effect eTest;
 
         // Let the AI know - Special handling

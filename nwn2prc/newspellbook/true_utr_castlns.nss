@@ -67,7 +67,7 @@ void main()
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
         	SetLocalInt(oTarget, "TrueCasterLens", 2);
-        	utter.eLink = EffectVisualEffect(VFX_DUR_ENTROPIC_SHIELD);
+        	utter.eLink = EffectVisualEffect(VFX_DUR_SPELL_ENTROPIC_SHIELD);
         	// Impact VFX 
         	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_MIND);
         }
@@ -80,7 +80,7 @@ void main()
         	{
        			// eLink is used for Duration Effects (Buff/Penalty to AC)
        			SetLocalInt(oTarget, "TrueCasterLens", -2);
-       			utter.eLink = EffectVisualEffect(VFX_DUR_SHADOWS_ANTILIGHT);
+       			utter.eLink = EffectVisualEffect(VFX_DUR_ANTI_LIGHT_10);
        			// Impact VFX 
         		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
         	}

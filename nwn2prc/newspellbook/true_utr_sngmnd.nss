@@ -108,7 +108,7 @@ void main()
                 	{
                 		// Dominated
 				utter.eLink = EffectLinkEffects(EffectDominated(), EffectVisualEffect(VFX_DUR_MIND_AFFECTING_DOMINATED));
-				utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_DOMINATE_S), EffectVisualEffect(VFX_FNF_FEEBLEMIND));
+				utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_DOMINATE_S), EffectVisualEffect(VFX_FNF_HOWL_MIND));
 			}
         	}
         }

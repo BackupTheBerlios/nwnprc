@@ -121,7 +121,7 @@ void TeleportAux(object oCaster)
     if(GetCanTeleport(oCaster, lTarget, TRUE, TRUE))
     {
         // VFX on the starting location
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_TELEPORT_OUT), lCaster);
+        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION), lCaster);
 
         // Loop over the targets, checking if they can teleport. Redundant check on the caster, but shouldn't cause any trouble
         for(i = 0; i < array_get_size(oCaster, PRC_TELEPORTING_OBJECTS_ARRAY); i++)
@@ -134,7 +134,7 @@ void TeleportAux(object oCaster)
         }
 
         // VFX at arrival location. May run out before the teleporting people arrive
-        DelayCommand(1.0f, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_TELEPORT_IN), lTarget));
+        DelayCommand(1.0f, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_MYSTICAL_EXPLOSION), lTarget));
     }
 
     // Cleanup

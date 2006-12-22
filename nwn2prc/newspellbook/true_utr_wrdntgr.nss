@@ -67,7 +67,7 @@ void main()
         	// Regeneration
         	utter.eLink = EffectRegenerate(20, 6.0);
         	// Impact VFX 
-        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_X_MAG);
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_X);
         }
         // The REVERSE effect of the Utterance goes here
         else // UTTER_WORD_NURTURING_GREATER_R
@@ -84,7 +84,7 @@ void main()
        			int nDamage = d6(10);
        			// Empower it
 			if(utter.bEmpower) nDamage += (nDamage/2);
-        		utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGGRN), EffectDamage(nDamage));
+        		utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGBLUE), EffectDamage(nDamage));
         		// This takes care of the concentration bit of the utterance
         		DelayCommand(6.0, DoWordOfNurturingReverse(oTrueSpeaker, oTarget, utter));
         	}

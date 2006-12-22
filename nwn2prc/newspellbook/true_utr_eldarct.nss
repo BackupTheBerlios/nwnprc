@@ -76,7 +76,7 @@ void main()
                 	{
                 		// Movement
 				DoPush(oTarget, oTrueSpeaker, TRUE);
-				utter.eLink2 = EffectVisualEffect(VFX_IMP_DIMENSIONLOCK);
+				utter.eLink2 = EffectVisualEffect(VFX_IMP_STUN);
 			}
         	}
         }
@@ -94,7 +94,7 @@ void main()
                 	{
                 		// Movement
 				DoPush(oTarget, oTrueSpeaker);
-				utter.eLink2 = EffectVisualEffect(VFX_IMP_DIMENSIONLOCK);
+				utter.eLink2 = EffectVisualEffect(VFX_IMP_STUN);
 			}
         	}
         }

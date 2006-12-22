@@ -70,7 +70,7 @@ void main()
         int nDieSize      = 6;
         int nDamage;
         effect eFNF       = EffectVisualEffect(VFX_FNF_HOWL_MIND);
-        effect eVis       = EffectVisualEffect(PSI_IMP_ULTRABLAST);
+        effect eVis       = EffectVisualEffect(VFX_IMP_STUN);
         effect eDamage;
         float fRadius     = EvaluateWidenPower(manif, FeetToMeters(15.0f));
         float fDelay;

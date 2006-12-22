@@ -172,7 +172,7 @@ void SuppressItem(object oTrueSpeaker, object oTarget, int nBeats)
 	DelayCommand(5.8, RestoreAllProperties(oTarget, GetItemPossessor(oTarget)));
 	
 	// Apply VFX
-	effect eImp = EffectVisualEffect(VFX_IMP_PULSE_BOMB);
+	effect eImp = EffectVisualEffect(VFX_IMP_PULSE_NEGATIVE);
 	SPApplyEffectToObject(DURATION_TYPE_INSTANT, eImp, GetItemPossessor(oTarget));
 	
 	DelayCommand(6.0, SuppressItem(oTrueSpeaker, oTarget, nBeats - 1));

@@ -69,7 +69,7 @@ void main()
         int nDamage, i;
         effect eDamage;
         effect eSpikes    = EffectVisualEffect(VFX_IMP_WALLSPIKE);
-        effect eDart      = EffectVisualEffect(NORMAL_DART);
+        effect eDart      = EffectVisualEffect(VFX_IMP_FROST_S);
         float fWidth      = EvaluateWidenPower(manif, FeetToMeters(15.0f));
         float fDelay;
         location lTarget  = PRCGetSpellTargetLocation();

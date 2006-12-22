@@ -28,7 +28,7 @@ void main()
         // Effects
         float fDur = RoundsToSeconds(2);
         int nClass = GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker);
- 	effect eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_OPEN_LOCK, nClass/3), EffectVisualEffect(VFX_DUR_HEARD));
+ 	effect eLink = EffectLinkEffects(EffectSkillIncrease(SKILL_OPEN_LOCK, nClass/3), EffectVisualEffect(VFX_DUR_INVOCATION_BEGUILE_INFLUENCE));
  	eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_DISABLE_TRAP, nClass/3));
  	eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_CRAFT_WEAPON, nClass/3));
  	eLink = EffectLinkEffects(eLink, EffectSkillIncrease(SKILL_CRAFT_TRAP, nClass/3));

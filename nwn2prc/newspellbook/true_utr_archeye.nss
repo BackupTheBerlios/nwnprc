@@ -76,7 +76,7 @@ void main()
         else /* Effects of UTTER_ARCHERS_EYE_R would be here */
         {
         	// Damage Resistance 10 piercing, max of 100 total
-		utter.eLink = EffectLinkEffects(EffectDamageResistance(DAMAGE_TYPE_PIERCING, 10, min((10 * utter.nTruespeakerLevel), 100)), EffectVisualEffect(VFX_DUR_PROTECTION_ARROWS));
+		utter.eLink = EffectLinkEffects(EffectDamageResistance(DAMAGE_TYPE_PIERCING, 10, min((10 * utter.nTruespeakerLevel), 100)), EffectVisualEffect(VFX_DUR_SPELL_ENTROPIC_SHIELD));
         }
         // If either of these ApplyEffect isn't needed, delete it.
         // Duration Effects

@@ -28,7 +28,7 @@ void main()
         // Effects
         float fDur = RoundsToSeconds(1);
         int nClass = GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker);
- 	effect eLink = EffectLinkEffects(EffectACIncrease(nClass/3, AC_NATURAL_BONUS), EffectVisualEffect(VFX_DUR_SHIELD_OF_FAITH));
+ 	effect eLink = EffectLinkEffects(EffectACIncrease(nClass/3, AC_NATURAL_BONUS), EffectVisualEffect(VFX_DUR_SPELL_SHIELD_OF_FAITH));
 
         // Duration Effects
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTrueSpeaker, fDur, TRUE, PRCGetSpellId(), GetTrueSpeakerLevel(oTrueSpeaker));

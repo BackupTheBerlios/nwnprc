@@ -60,7 +60,7 @@ void main()
         oTarget = GetNextInPersistentObject(OBJECT_SELF);
     }
 
-    int nVFX = VFX_FNF_PW_DN_YG;
+    int nVFX = VFX_IMP_ACID_L;
     vector vVFX = GetPosition(oAoE);
            vVFX.z -= 1.0f;
     location lVFX = Location(GetArea(oAoE), vVFX, 0.0f);

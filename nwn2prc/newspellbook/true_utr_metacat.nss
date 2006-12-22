@@ -77,7 +77,7 @@ void main()
         	utter.ipIProp1 = ItemPropertyCastSpellMetamagic(nipSpellID, METAMAGIC_EMPOWER);
         	IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         	// eLink2 is used for Impact Effects (Damage)
-        	utter.eLink2 = EffectVisualEffect(TOF_VFX_ALARM_MENTAL);
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_GOOD_HELP);
         }
         // The second effect of the Utterance goes here
         else if (utter.nSpellId == UTTER_METAMAGIC_CATALYST_EXT)
@@ -86,7 +86,7 @@ void main()
         	utter.ipIProp1 = ItemPropertyCastSpellMetamagic(nipSpellID, METAMAGIC_EXTEND);
         	IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         	// eLink2 is used for Impact Effects (Damage)
-        	utter.eLink2 = EffectVisualEffect(TOF_VFX_ALARM_MENTAL);
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_GOOD_HELP);
         }        
         else /* Effects of UTTER_METAMAGIC_CATALYST_MAX would be here */
         {
@@ -94,7 +94,7 @@ void main()
         	utter.ipIProp1 = ItemPropertyCastSpellMetamagic(nipSpellID, METAMAGIC_MAXIMIZE);
         	IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         	// eLink2 is used for Impact Effects (Damage)
-        	utter.eLink2 = EffectVisualEffect(TOF_VFX_ALARM_MENTAL);
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_GOOD_HELP);
         }
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);

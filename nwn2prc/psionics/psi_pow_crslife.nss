@@ -74,7 +74,7 @@ void main()
         int nDamage;
         effect eVisDeath  = EffectVisualEffect(VFX_IMP_DEATH_L);
         effect eVisDamage = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
-        effect eVis       = EffectVisualEffect(PSI_FNF_CRISIS_OF_LIFE);
+        effect eVis       = EffectVisualEffect(VFX_FNF_HOWL_MIND);
         effect eDamage;
 
         // Let the AI know

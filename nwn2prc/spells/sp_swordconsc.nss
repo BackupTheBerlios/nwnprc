@@ -75,7 +75,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_ENCHANTMENT);
 
     int nDC = PRCGetSaveDC(oTarget,OBJECT_SELF);
     int nCaster = PRCGetCasterLevel(OBJECT_SELF);
-    effect eVis = EffectVisualEffect(VFX_IMP_NEGBLAST_ENERGY);
+    effect eVis = EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY);
 
     //Fire cast spell at event for the specified target
     SignalEvent(oTarget, EventSpellCastAt(OBJECT_SELF, GetSpellId()));

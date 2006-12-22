@@ -152,6 +152,7 @@ MISCPATH                = $(MAKEMISCPATH)
 OCFIXERFPATH            = $(MAKEOCFIXERFPATH)
 OCFIXERFOBJSPATH        = $(MAKEOCFIXERFOBJSPATH)
 GFXPATH                 = gfx
+INCLUDEPATH				= $(MAKEINCLUDEPATH)
 
 # Paths for the various folders in the NWN install directory.
 NWN_ERF                 = $(NWN_DIR)\erf
@@ -239,8 +240,10 @@ rar: hak database $(RAR)
 hak110: $(ERF110) $(HAK) install
 
 # Rule to build the 2.0 haks
-hak: $(SCRIPTSHAK) $(2DASHAK) $(TEXTURESHAK) $(ERF) $(OCFIX_ERF) $(TLK)\
-	$(SPELLSHAK) $(EPICSPELLSCRIPTSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
+# NWN2 removed haks add back in when needed
+# $(OCFIX_ERF) $(TEXTURESHAK) $(ERF) $(EPICSPELLSCRIPTSHAK)
+hak: $(SCRIPTSHAK) $(2DASHAK) $(TLK)\
+	$(SPELLSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
 	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) $(MISCHAK) install
 
 # Rule to build the NSIS installer.
@@ -372,7 +375,7 @@ $(HAK): $(2DAS) $(GFX) $(OTHERS) $(CRAFT2DAS)
 $(ERF): $(ERFFILES)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $**
+	@"$(ERFCOMPILER)" -c $@ $(ERFFILESPATH)\*.*
 
 
 # Rule for the TLK
@@ -385,7 +388,7 @@ $(TLK): $(TLKXML)
 $(INCLUDEHAK): $(INCLUDE)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $**
+	@"$(ERFCOMPILER)" -c $@ $(INCLUDEPATH)\*.*
 
 # Rule to build the 2.0 scripts HAK file.
 $(SCRIPTSHAK): $(OBJS) $(SCRIPTS)
@@ -397,17 +400,12 @@ $(SCRIPTSHAK): $(OBJS) $(SCRIPTS)
 #	@"$(ERFCOMPILER)" -c $@ $(SCRIPTS)
 #	@"$(ERFCOMPILER)" -u $@ $(OBJS) >nul
 #
-# At some point we may need to use the below method to generate the hak
-# it will add the files to the hak one at a time to prevent command line
-# too long errors, but it runs orders of magnitude slower.
-#	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
-#	!@"$(ERFCOMPILER)" -u $@ $** >nul
 
 $(SPELLSHAK): $(SPELLOBJS) $(SPELLS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $(SPELLS) >nul
-	@"$(ERFCOMPILER)" -u $@ $(SPELLOBJS) >nul
+	@"$(ERFCOMPILER)" -c $@ $(SPELLSRCPATH)\*.*
+	@"$(ERFCOMPILER)" -u $@ $(SPELLOBJPATH)\*.* 
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.
@@ -444,37 +442,28 @@ $(RACEHAK): $(RACE2DAS) $(RACEOBJS) $(RACESCRIPTS)
 $(PSIONICSHAK): $(PSIONICSSCRIPTS) $(PSIONICSOBJS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $(PSIONICSSCRIPTS)
-	@"$(ERFCOMPILER)" -u $@ $(PSIONICSOBJS) >nul
-# At some point we may need to use the below method to generate the hak
-# it will add the files to the hak one at a time to prevent command line
-# too long errors, but it runs orders of magnitude slower.
-#	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
-#	!@"$(ERFCOMPILER)" -u $@ $** >nul
+	@"$(ERFCOMPILER)" -c $@ $(PSIONICSSRCPATH)\*.*
+	@"$(ERFCOMPILER)" -u $@ $(PSIONICSOBJSPATH)\*.* 
 
 # Rule to build the 2.0 scripts HAK file.
 $(NEWSPELLBOOKHAK): $(NEWSPELLBOOKSCRIPTS) $(NEWSPELLBOOKOBJS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $(NEWSPELLBOOKSCRIPTS)
-	@"$(ERFCOMPILER)" -u $@ $(NEWSPELLBOOKOBJS) >nul
-# At some point we may need to use the below method to generate the hak
-# it will add the files to the hak one at a time to prevent command line
-# too long errors, but it runs orders of magnitude slower.
-#	@"$(ERFCOMPILER)" -c $@ howto.txt >nul
-#	!@"$(ERFCOMPILER)" -u $@ $** >nul
+	@"$(ERFCOMPILER)" -c $@ $(NEWSPELLBOOKSRCPATH)\*.*
+	@"$(ERFCOMPILER)" -u $@ $(NEWSPELLBOOKOBJSPATH)\*.*
 
+# Rule to build the 2.0 2das HAK file.
 $(OCFIX_ERF): $(OCFIXOBJS) $(OCFIXFILES)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(OCFIXERFPATH)\*.*
-	@"$(ERFCOMPILER)" -u $@ $(OCFIXOBJS) >nul
+	@"$(ERFCOMPILER)" -u $@ $(OCFIXOBJSPATH)\*.* 
 
 # Rule to build the 2.0 2das HAK file.
 $(2DASHAK): $(2DAS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $**
+	@"$(ERFCOMPILER)" -c $@ $(2DAPATH)\*.*
 
 
 # Rule to build the 2.0 textures HAK file.
@@ -499,7 +488,7 @@ $(MISCHAK): $(MISCPATH)\prc_scrolls.utm $(OTHERS)
 $(CRAFT2DASHAK): $(CRAFT2DAS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $**
+	@"$(ERFCOMPILER)" -c $@ $(CRAFT2DASPATH)\*.*
 
 # Rule to build the HIF file from it's template.
 $(HIF): PRCPackTemplate.hif config.make

@@ -54,7 +54,7 @@ void main()
         if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
         {
        		// eLink is used for Duration Effects (Penalty to AB etc)
-       		utter.eLink = EffectLinkEffects(EffectNegativeLevel(2), EffectVisualEffect(VFX_DUR_DEATHWARD));
+       		utter.eLink = EffectLinkEffects(EffectNegativeLevel(2), EffectVisualEffect(VFX_DUR_SPELL_DEATH_WARD));
         }
         // If either of these ApplyEffect isn't needed, delete it.
         // Duration Effects

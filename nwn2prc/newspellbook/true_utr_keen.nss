@@ -62,7 +62,7 @@ void main()
         utter.ipIProp1 = ItemPropertyKeen();
         IPSafeAddItemProperty(oTarget, utter.ipIProp1, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
         // eLink2 is used for Impact Effects (Damage)
-        utter.eLink2 = EffectVisualEffect(VFX_FNF_MAGIC_WEAPON);
+        utter.eLink2 = EffectVisualEffect(VFX_FNF_STRIKE_HOLY);
 
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, GetItemPossessor(oTarget));

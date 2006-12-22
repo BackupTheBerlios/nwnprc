@@ -14,7 +14,7 @@ void main()
 	int nTouch = PRCDoRangedTouchAttack(oTarget);
 	
 	//Beam VFX.  Ornedan is my hero.
-	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_DISINTEGRATE, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
+	ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectBeam(VFX_BEAM_EVIL, oPC, BODY_NODE_HAND, !nTouch), oTarget, 1.0f); 
 	
 	if (nTouch)
 	{

@@ -66,7 +66,7 @@ void main()
         	// This utterance applies only to friends
         	utter.bFriend = TRUE;
         	// eLink is used for Duration Effects (Buff/Penalty to AC)
-        	utter.eLink = EffectLinkEffects(EffectAttackIncrease(5), EffectVisualEffect(VFX_DUR_MARK_OF_THE_HUNTER));
+        	utter.eLink = EffectLinkEffects(EffectAttackIncrease(5), EffectVisualEffect(VFX_DUR_SPELL_GREATER_HEROISM));
         	utter.eLink = EffectLinkEffects(EffectDamageIncrease(DAMAGE_BONUS_5), utter.eLink);
         	// Impact VFX 
         	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);
@@ -82,7 +82,7 @@ void main()
        			// Damage Decrease
 			object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget);
 			int nDamage = GetWeaponDamageType(oItem);
-			utter.eLink = EffectLinkEffects(EffectAttackDecrease(2), EffectVisualEffect(VFX_DUR_SPHERE_OF_ANHILIATION));
+			utter.eLink = EffectLinkEffects(EffectAttackDecrease(2), EffectVisualEffect(VFX_DUR_SPELL_GLOBE_INV_GREAT));
 			utter.eLink = EffectLinkEffects(utter.eLink, EffectDamageDecrease(5, nDamage));
        			// Impact VFX 
         		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEAD_ODD);

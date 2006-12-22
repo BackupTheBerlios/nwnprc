@@ -68,7 +68,7 @@ void RestFinished(object oPC)
     }
     if(GetHasFeat(FEAT_DRAGONSHAMAN_TOUCHVITALITY, oPC))
     {
-        int nHealPower = ((2 * (GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC)) * GetAbilityModifier(ABILITY_CONSTITUTION, oPC));
+        int nHealPower = ( (2 * GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC)) * GetAbilityModifier(ABILITY_CONSTITUTION, oPC) );
         SetLocalInt(oPC, "DRAGON_SHAMAN_TOUCH_REMAIN", nHealPower);
         SendMessageToPC(oPC, "Healing power remaining " + IntToString(nHealPower) + " points.");
     }

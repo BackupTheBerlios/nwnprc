@@ -88,7 +88,7 @@ void main()
     array_create(oCaster, sDistance);
     array_create(oCaster, sFlag);
     oTarget = MyFirstObjectInShape(SHAPE_SPHERE, nRadius, lLocation, TRUE);
-    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_RAINBOW_PATTERN), lLocation);
+    ApplyEffectAtLocation(DURATION_TYPE_PERMANENT, EffectVisualEffect(VFX_DUR_GLOW_YELLOW), lLocation);
 
     while(GetIsObjectValid(oTarget))
     {

@@ -8,7 +8,9 @@ void main ()
 {
     //declare variables
     object oPC = OBJECT_SELF;
-    effect eBaelnEyes = EffectVisualEffect(VFX_DUR_BAELN_EYES);   
+    //effect eBaelnEyes = EffectVisualEffect(VFX_DUR_BAELN_EYES);   
+    // NWN2 no eyes
+    effect eBaelnEyes = EffectVisualEffect(VFX_DUR_DARKVISION);   
     
     //Apply eyes
     if(GetLevelByClass(CLASS_TYPE_BAELNORN, oPC)> 0)

@@ -55,8 +55,8 @@ void main()
         utter.nSaveType  = SAVING_THROW_TYPE_NONE;
 	utter.nSaveThrow = SAVING_THROW_FORT;
 	int nDamage;
-        effect eExplode = EffectVisualEffect(VFX_PRC_FNF_EARTHQUAKE);
-        effect eVis = EffectVisualEffect(VFX_IMP_LEAF);
+        effect eExplode = EffectVisualEffect(VFX_FNF_SCREEN_SHAKE);
+        effect eVis = EffectVisualEffect(VFX_IMP_PULSE_NATURE);
         effect eDam;
         
     	location lTarget = GetSpellTargetLocation();

@@ -299,7 +299,7 @@ void _HostileMind(object oManifester, object oTarget)
         {
             //Apply damage and some VFX
             SPApplyEffectToObject(DURATION_TYPE_INSTANT,
-                                  EffectLinkEffects(EffectDamage(d6(2)), EffectVisualEffect(VFX_FNF_SPELL_FAIL_HEA)),
+                                  EffectLinkEffects(EffectDamage(d6(2)), EffectVisualEffect(VFX_FNF_BLINDDEAF)),
                                   oManifester
                                   );
         }

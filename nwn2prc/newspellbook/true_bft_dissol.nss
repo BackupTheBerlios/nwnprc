@@ -53,7 +53,7 @@ void main()
         if (!MyPRCResistSpell(oTrueSpeaker, oTarget, utter.nPen))
         {
        		// Damage
-       		utter.eLink = EffectLinkEffects(EffectDamage(d6(8)), EffectVisualEffect(VFX_IMP_SHILLELAGH));
+       		utter.eLink = EffectLinkEffects(EffectDamage(d6(8)), EffectVisualEffect(VFX_IMP_NEGATIVE_ENERGY));
         }
         // If either of these ApplyEffect isn't needed, delete it.
         // Duration Effects

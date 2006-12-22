@@ -41,7 +41,7 @@ void main()
 	
 	// Do some VFX
 	DelayCommand(0.5f, ApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY), oPC, 0.55));
-	DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_WIND, GetArea(oPC), GetPosition(oPC), GetPositionFromLocation(lTarget), 0.0, FloatToInt(GetDistanceBetweenLocations(GetLocation(oPC), lTarget)), 0.5);
+	DrawLineFromVectorToVector(DURATION_TYPE_INSTANT, VFX_IMP_TORNADO, GetArea(oPC), GetPosition(oPC), GetPositionFromLocation(lTarget), 0.0, FloatToInt(GetDistanceBetweenLocations(GetLocation(oPC), lTarget)), 0.5);
 	
 	SPSetSchool();
 }

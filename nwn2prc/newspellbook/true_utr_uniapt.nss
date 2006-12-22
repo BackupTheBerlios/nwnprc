@@ -68,7 +68,7 @@ void main()
         	// Skill Boost
         	utter.eLink = EffectSkillIncrease(SKILL_ALL_SKILLS, 5);
         	// Impact VFX 
-        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_M_CYA);
+        	utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_M);
         }
         // The REVERSE effect of the Utterance goes here
         else // UTTER_UNIVERSAL_APTITUDE_R
@@ -80,7 +80,7 @@ void main()
        			// Skill Penalty
        			utter.eLink = EffectSkillDecrease(SKILL_ALL_SKILLS, 5);
        			// Impact VFX 
-        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_S_RED);
+        		utter.eLink2 = EffectVisualEffect(VFX_IMP_HEALING_S);
         	}
         }
         // Duration Effects

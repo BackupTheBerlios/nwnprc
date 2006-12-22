@@ -19,9 +19,9 @@ void ShamanSpiritFavor(object oPC, object oSkin, int nAmount)
 void main()
 {
     object oPC = OBJECT_SELF;
-    object oSkin = GetPCSkin();
+    object oSkin = GetPCSkin(oPC);
     
-    if(GetHasFeat(FEAT_SHAMAN_SPIRITFAVOR, oPC)
+    if(GetHasFeat(FEAT_SHAMAN_SPIRITFAVOR, oPC))
     {
         int nBonus = GetAbilityModifier(ABILITY_CHARISMA, oPC);
         ShamanSpiritFavor(oPC, oSkin, nBonus);

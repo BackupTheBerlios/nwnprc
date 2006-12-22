@@ -9,7 +9,7 @@
 
 
     Notes:
-        restricted to 1 at a time
+        restricted to 1 per character at a time
 */
 
 #include "prc_craft_inc"

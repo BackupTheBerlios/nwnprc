@@ -416,8 +416,8 @@ $(SPELLSHAK): $(SPELLOBJS) $(SPELLS)
 $(EPICSPELLSCRIPTSHAK): $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $(EPICSPELLSCRIPTS)
-	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLOBJS) >nul
+	@"$(ERFCOMPILER)" -c $@ $(EPICSPELLSCRIPTSPATH)\*.*
+	@"$(ERFCOMPILER)" -u $@ $(EPICSPELLOBJSPATH)\*.*
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.
@@ -429,9 +429,9 @@ $(EPICSPELLSCRIPTSHAK): $(EPICSPELLOBJS) $(EPICSPELLSCRIPTS)
 $(RACEHAK): $(RACE2DAS) $(RACEOBJS) $(RACESCRIPTS)
 	@echo $(@F)
 	-@del "$@" 2>nul
-	@"$(ERFCOMPILER)" -c $@ $(RACE2DAS)
-	@"$(ERFCOMPILER)" -u $@ $(RACESCRIPTS) >nul
-	@"$(ERFCOMPILER)" -u $@ $(RACEOBJS) >nul
+	@"$(ERFCOMPILER)" -c $@ $(RACE2DASPATH)\*.*
+	@"$(ERFCOMPILER)" -u $@ $(RACESCRIPTSPATH)\*.*
+	@"$(ERFCOMPILER)" -u $@ $(RACEOBJSPATH)\*.*
 # At some point we may need to use the below method to generate the hak
 # it will add the files to the hak one at a time to prevent command line
 # too long errors, but it runs orders of magnitude slower.

@@ -399,7 +399,7 @@ struct user_augment_profile GetCurrentUserAugmentationProfile(object oUser)
     // Is augmentation override in effect?
     if(GetLocalInt(oUser, PRC_AUGMENT_OVERRIDE))
     {
-        uap_ret = _DecodeProfile(GetLocalInt(oUser, PRC_AUGMENT_OVERRIDE));
+        uap_ret = _DecodeProfile(GetLocalInt(oUser, PRC_AUGMENT_OVERRIDE) - 1);
         uap_ret.bValueIsPP = FALSE; // Override is always considered to be augmentation levels
     }
     // It wasn't, so get normally
@@ -689,7 +689,7 @@ struct manifestation EvaluateAugmentation(struct manifestation manif, struct pow
 
 void SetAugmentationOverride(object oCreature, struct user_augment_profile uap)
 {
-    SetLocalInt(oCreature, PRC_AUGMENT_OVERRIDE, _EncodeProfile(uap));
+    SetLocalInt(oCreature, PRC_AUGMENT_OVERRIDE, _EncodeProfile(uap) + 1);
 }
 
 // Test main

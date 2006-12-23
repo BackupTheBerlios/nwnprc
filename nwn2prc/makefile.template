@@ -241,9 +241,9 @@ hak110: $(ERF110) $(HAK) install
 
 # Rule to build the 2.0 haks
 # NWN2 removed haks add back in when needed
-# $(OCFIX_ERF) $(TEXTURESHAK) $(ERF) $(EPICSPELLSCRIPTSHAK)
+# $(OCFIX_ERF) $(TEXTURESHAK) $(ERF) $(EPICSPELLSCRIPTSHAK) $(RACEHAK)
 hak: $(SCRIPTSHAK) $(2DASHAK) $(TLK)\
-	$(SPELLSHAK) $(RACEHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
+	$(SPELLSHAK) $(PSIONICSHAK) $(NEWSPELLBOOKHAK) \
 	$(CRAFT2DASHAK) $(INCLUDEHAK) $(HIF) $(MISCHAK) install
 
 # Rule to build the NSIS installer.

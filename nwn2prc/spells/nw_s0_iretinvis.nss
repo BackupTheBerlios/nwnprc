@@ -112,7 +112,7 @@ void main()
     // Set up arguments for OnDispellCallback
 	object oCaster = OBJECT_SELF;
 	int nSaveDC = GetSpellSaveDC();
-	float fDuration = RoundsToSeconds( GetCasterLevel(oCreator) );	// Oni5115 - Fixed to PnP Duration... 1 round/casterlvl
+	float fDuration = RoundsToSeconds( GetCasterLevel(oCaster) );	// Oni5115 - Fixed to PnP Duration... 1 round/casterlvl
     //fDuration = ApplyMetamagicDurationMods( fDuration );
 
     //Declare major variables

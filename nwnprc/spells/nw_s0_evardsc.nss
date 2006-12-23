@@ -33,6 +33,10 @@ through the area at only half normal speed.
 #include "x2_inc_spellhook"
 #include "inc_grapple"
 
+void DecrementTentacleCount(oTarget, sVar)
+{
+    SetLocalInt(oTarget, sVar, GetLocalInt(oTarget, sVar) - 1);
+}
 
 void main()
 {
@@ -57,8 +61,8 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
             //this spell doesnt need to make a touch attack
             //as defined in the spell
             int nAttackerGrappleMod = nCasterLevel+4+4;
-            nGrappleSucessful = DoGrappleCheck(OBJECT_INVALID, oTarget, 
-                nAttackerGrappleMod, 0, 
+            nGrappleSucessful = DoGrappleCheck(OBJECT_INVALID, oTarget,
+                nAttackerGrappleMod, 0,
                 GetStringByStrRef(6341), "");
             if(nGrappleSucessful)
             {
@@ -67,9 +71,9 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 {
                     //apply the damage
                     int nDamage = d6();
-                    if(nMetaMagic == METAMAGIC_MAXIMIZE)
+                    if(nMetaMagic & METAMAGIC_MAXIMIZE)
                         nDamage = 6;
-                    if(nMetaMagic == METAMAGIC_EMPOWER)
+                    if(nMetaMagic & METAMAGIC_EMPOWER)
                         nDamage += d6()/2;
                     nDamage += 4;
                     effect eDam = EffectDamage(nDamage, DAMAGE_TYPE_BLUDGEONING, DAMAGE_POWER_NORMAL);
@@ -84,14 +88,12 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_CONJURATION);
                 SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, 6.0);
                 SetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF),
                     GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF))+1);
-                DelayCommand(6.1,
-                    SetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF),
-                        GetLocalInt(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF))-1));
+                DelayCommand(6.1, DecrementTentacleCount(oTarget, "GrappledBy_"+ObjectToString(OBJECT_SELF)));
             }
         }
         oTarget = GetNextInPersistentObject();
     }
-    
+
     DeleteLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR");
 // Getting rid of the local integer storing the spellschool name
 

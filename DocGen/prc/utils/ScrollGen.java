@@ -7,6 +7,7 @@ import prc.autodoc.*;
 import prc.autodoc.Main.TwoDAStore;
 
 import static prc.Main.*;
+import static prc.autodoc.Main.twoDA;
 
 /**
  * Creates scrolls based on iprp_spells.2da and spells.2da.
@@ -88,78 +89,105 @@ public class ScrollGen {
 			}
 		}
 		
-		// Generate lists of arcane and divine scrolls
+		/// For each spell, find which new spellbooks have that spell
+		// Map of spells.2da index -> list of classes.2da index
+		Map<Integer, Set<Integer>> newSpellBooks = getNewSpellbooksClasses(twoDA, spells);
+		
+		/// For each scroll to make, find which spellcasting classes should be able to use that scroll
 		// Map of spells.2da index -> (iprp_spells.2da index, list of classes.2da index)
-		Map<Integer, Tuple<Integer, List<Integer>>> arcaneScrolls = new HashMap<Integer, Tuple<Integer, List<Integer>>>();
-		Map<Integer, Tuple<Integer, List<Integer>>> divineScrolls = new HashMap<Integer, Tuple<Integer, List<Integer>>>();
+		Map<Integer, Tuple<Integer, Set<Integer>>> scrolls = new HashMap<Integer, Tuple<Integer, Set<Integer>>>();
+		
 		int iprpIndex;
 		for(int spellsIndex : lowestIndex.keySet()) {
 			iprpIndex = lowestIndex.get(spellsIndex).e1;
-			List<Integer> arcaneClasses = new ArrayList<Integer>();
-			List<Integer> divineClasses = new ArrayList<Integer>();
+			Set<Integer> classList = new HashSet<Integer>();
 			
-			// HACK!
+			// BAD
 			// Hardcoded classes.2da indexes
 			if(!spells.getEntry("Bard",     spellsIndex).equals("****"))
-				arcaneClasses.add(1);
+				classList.add(1);
 			if(!spells.getEntry("Cleric",   spellsIndex).equals("****"))
-				divineClasses.add(2);
+				classList.add(2);
 			if(!spells.getEntry("Druid",    spellsIndex).equals("****"))
-				divineClasses.add(3);
+				classList.add(3);
 			if(!spells.getEntry("Paladin",  spellsIndex).equals("****"))
-				divineClasses.add(6);
+				classList.add(6);
 			if(!spells.getEntry("Ranger",   spellsIndex).equals("****"))
-				divineClasses.add(7);
+				classList.add(7);
 			if(!spells.getEntry("Wiz_Sorc", spellsIndex).equals("****")) {
-				arcaneClasses.add(9);
-				arcaneClasses.add(10);
+				classList.add(9);
+				classList.add(10);
 			}
 			
-			if(arcaneClasses.size() > 0)
-				arcaneScrolls.put(spellsIndex, new Tuple<Integer, List<Integer>>(iprpIndex, arcaneClasses));
-			if(divineClasses.size() > 0)
-				divineScrolls.put(spellsIndex, new Tuple<Integer, List<Integer>>(iprpIndex, divineClasses));
+			// New spellbooks
+			if(newSpellBooks.get(spellsIndex) != null)
+				classList.addAll(newSpellBooks.get(spellsIndex));
+			
+			if(classList.size() > 0)
+				scrolls.put(spellsIndex, new Tuple<Integer, Set<Integer>>(iprpIndex, classList));
 		}
 		
 		// Do the scrolls
-		for(int spellsIndex : arcaneScrolls.keySet()) {
-			String scrollName = "prc_scr_ar_" + arcaneScrolls.get(spellsIndex).e1.toString();
-			String scrollXml = doScroll(spells, scrollName, spellsIndex, arcaneScrolls.get(spellsIndex).e1, arcaneScrolls.get(spellsIndex).e2);
+		for(int spellsIndex : scrolls.keySet()) {
+			String scrollName = "prc_scr_" + scrolls.get(spellsIndex).e1.toString();
+			String scrollXml = doScroll(spells, scrollName, spellsIndex, scrolls.get(spellsIndex).e1, scrolls.get(spellsIndex).e2);
 			
 			// Print the scroll
 			printScroll(outPath, scrollName, scrollXml);
 			
 			// Update des_crft_scrolls accordingly
-			List<Integer> classes = arcaneScrolls.get(spellsIndex).e2;
-			if(classes.contains(1))
+			Set<Integer> classList = scrolls.get(spellsIndex).e2;
+			if(classList.contains(1))
 				setScroll(des_crft_scroll, spells, spellsIndex, "Bard", scrollName);
-			if(classes.contains(9) || classes.contains(10))
+			if(classList.contains(9) || classList.contains(10))
 				setScroll(des_crft_scroll, spells, spellsIndex, "Wiz_Sorc", scrollName);
-		}
-		for(int spellsIndex : divineScrolls.keySet()) {
-			String scrollName = "prc_scr_dv_" + divineScrolls.get(spellsIndex).e1.toString();
-			String scrollXml = doScroll(spells, scrollName, spellsIndex, divineScrolls.get(spellsIndex).e1, divineScrolls.get(spellsIndex).e2);
-			
-			// Print the scroll
-			printScroll(outPath, scrollName, scrollXml);
-			
-			// Update des_crft_scrolls accordingly
-			List<Integer> classes = divineScrolls.get(spellsIndex).e2;
-			if(classes.contains(2))
+			if(classList.contains(2))
 				setScroll(des_crft_scroll, spells, spellsIndex, "Cleric", scrollName);
-			if(classes.contains(3))
+			if(classList.contains(3))
 				setScroll(des_crft_scroll, spells, spellsIndex, "Druid", scrollName);
-			if(classes.contains(6))
+			if(classList.contains(6))
 				setScroll(des_crft_scroll, spells, spellsIndex, "Paladin", scrollName);
-			if(classes.contains(7))
+			if(classList.contains(7))
 				setScroll(des_crft_scroll, spells, spellsIndex, "Ranger", scrollName);
-			
 		}
 		
 		// Save updated des_crft_scrolls.2da
 		des_crft_scroll.save2da(twoDAPath, true, true);
 	}
 	
+	private static Map<Integer, Set<Integer>> getNewSpellbooksClasses(TwoDAStore twoDA, Data_2da spells) {
+		// Map of spells.2da index -> list of classes.2da index
+		HashMap<Integer, Set<Integer>> toReturn = new HashMap<Integer, Set<Integer>>();
+		String classAbrev = null;
+		Data_2da   classes = twoDA.get("classes"), 
+		         spellList = null;
+		Integer spellId;
+		
+		for(int classId = 0; classId < classes.getEntryCount(); classId++) {
+			if(!classes.getEntry("PlayerClass", classId).equals("1")) continue;
+			
+			// Extract the class abbreviation
+			classAbrev = classes.getEntry("FeatsTable", classId).toLowerCase().substring(9);
+			
+			// Attempt to load the spellbook 2da
+			try {
+				spellList = twoDA.get("cls_spcr_" + classAbrev);
+			} catch(TwoDAReadException e) { continue; }
+			
+			for(int i = 0; i < spellList.getEntryCount(); i++) {
+				if(!spellList.getEntry("SpellID", i).equals("****")) {
+					spellId = Integer.parseInt(spellList.getEntry("SpellID", i));
+					if(toReturn.get(spellId) == null)
+						toReturn.put(spellId, new HashSet<Integer>());
+					
+					toReturn.get(spellId).add(classId);
+				}
+			}
+		}
+		
+		return toReturn;
+	}
+
 	private static void setScroll(Data_2da des_crft_scroll, Data_2da spells, int spellsIndex, String column, String scrollName) {
 		// Set the main entry
 		des_crft_scroll.setEntry(column, spellsIndex, scrollName);
@@ -216,7 +244,7 @@ public class ScrollGen {
 "    </struct>"                                                                   + "\n" +
 "</gff>";
 	
-	private static String doScroll(Data_2da spells, String name, int spellsIndex, int iprpIndex, List<Integer> classes) {
+	private static String doScroll(Data_2da spells, String name, int spellsIndex, int iprpIndex, Set<Integer> classes) {
 		// Determine TLK references
 		int tlkName = Integer.parseInt(spells.getEntry("Name",      spellsIndex));
 		int tlkDesc = Integer.parseInt(spells.getEntry("SpellDesc", spellsIndex));

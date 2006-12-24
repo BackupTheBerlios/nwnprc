@@ -33,7 +33,7 @@ through the area at only half normal speed.
 #include "x2_inc_spellhook"
 #include "inc_grapple"
 
-void DecrementTentacleCount(oTarget, sVar)
+void DecrementTentacleCount(object oTarget, string sVar)
 {
     SetLocalInt(oTarget, sVar, GetLocalInt(oTarget, sVar) - 1);
 }

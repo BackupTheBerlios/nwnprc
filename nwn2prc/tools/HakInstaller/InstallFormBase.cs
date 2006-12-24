@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using HakInstaller.Utilities;
 using NWN;
 
+
 namespace HakInstaller
 {
 	/// <summary>
@@ -43,8 +44,8 @@ namespace HakInstaller
 				StringResources.GetString("VersionFormatXP1") : string.Empty;
 			string xp2 = NWNInfo.IsXP1Installed ? 
 				StringResources.GetString("VersionFormatXP2") : string.Empty;
-			string NWN1or2 = NWNInfo.IsNWN2Installed ?
-				StringResources.GetString("VersionNWN2") : StringResources.GetString("VersionNWN1");
+			string NWN1or2 = NWNInfo.ModeNWN1 ?
+				StringResources.GetString("VersionNWN1") : StringResources.GetString("VersionNWN2");
 
 			labelVersion.Text = StringResources.GetString("VersionFormat", NWNInfo.Version, NWN1or2, xp1, xp2);
 			labelPath.Text = StringResources.GetString("PathFormat", NWNInfo.InstallPath);
@@ -91,7 +92,7 @@ namespace HakInstaller
 
 			// Get all of the modules in the module directory and add them to
 			// the list box.
-			string[] modules = Directory.GetFiles(NWNInfo.ModulesPath, "*.mod");
+			string[] modules = NWNInfo.GetAllModules;
 			foreach (string module in modules)
 			{
 				checkedModules.Items.Add(new Module(Path.GetFileName(module)));
@@ -106,7 +107,7 @@ namespace HakInstaller
 			if (NWNInfo.IsXP1ModsInstalled)
 				checkedModules.Items.Insert(0, new Module(StringResources.GetString("XP1Name"), NWNInfo.XP1Modules));
 			if (NWNInfo.IsOCModsInstalled) 
-				checkedModules.Items.Insert(0, new Module(StringResources.GetString("OCName"), NWNInfo.OCModules));
+				checkedModules.Items.Insert(0, new Module(NWNInfo.OCName, NWNInfo.OCModules));
 		}
 
 		/// <summary>

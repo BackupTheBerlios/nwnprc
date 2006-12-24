@@ -255,8 +255,10 @@ namespace HakInstaller
 			checkedHaks.Items.Clear();
 			checkedModules.Items.Clear();
 			// Fill in the check list boxes.
+			SetLabels(labelVersion, labelPath);
 			LoadHakInfoList(checkedHaks);
 			LoadModuleList(checkedModules);
+
 		}
 		#endregion
 
@@ -351,18 +353,29 @@ namespace HakInstaller
 		{
 			Application.Exit();
 		}
-		#endregion
 
+		/// <summary>
+		/// Switches to NWN1 update mode
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void radioButtonNWN1Mode_CheckedChanged(object sender, System.EventArgs e)
 		{
 			NWNInfo.ModeNWN1 = true;
 			InstallForm_Load(sender,e);
 		}
 
+		/// <summary>
+		/// Switches to NWN2 update mode
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void radioButtonNWN2Mode_CheckedChanged(object sender, System.EventArgs e)
 		{
 			NWNInfo.ModeNWN1 = false;
 			InstallForm_Load(sender,e);
 		}
+		#endregion
+
 	}
 }

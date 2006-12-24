@@ -102,4 +102,7 @@
 	<data name="VersionNWN2">
 		<value>2</value>
 	</data>
+	<data name="OC2Name">
+		<value>Neverwinter 2 Original Campaign</value>
+	</data>
 </root>

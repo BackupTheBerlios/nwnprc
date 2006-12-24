@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.Win32;
+using HakInstaller.Utilities;
 
 namespace NWN
 {
@@ -18,12 +19,30 @@ namespace NWN
 		/// <summary>
 		/// Returns true if XP1 is installed.
 		/// </summary>
-		public static bool IsXP1Installed { get { return singleton.isXP1Installed; } }
+		public static bool IsXP1Installed 
+		{ 
+			get 
+			{
+				if (singleton.modeNWN1)
+					return singleton.isXP1Installed; 
+				else
+					return false;
+			} 
+		}
 
 		/// <summary>
 		/// Returns true if XP2 is installed.
 		/// </summary>
-		public static bool IsXP2Installed { get { return singleton.isXP2Installed; } }
+		public static bool IsXP2Installed 
+		{ 
+			get 
+			{
+				if (singleton.modeNWN1)
+					return singleton.isXP2Installed; 
+				else
+					return false;
+			} 
+		}
 	
 		/// <summary>
 		/// Returns true if NWN2 is installed.
@@ -46,12 +65,23 @@ namespace NWN
 					ocMods = oc2Modules;
 
 
-				foreach (string module in ocModules)
+				foreach (string module in ocMods)
 				{
 					string file = Path.Combine(NWMPath, module);
 					if (!File.Exists(file)) return false;
 				}
 				return true;
+			}
+		}
+
+		public static string OCName
+		{
+			get
+			{
+				if (singleton.modeNWN1)
+					return StringResources.GetString("OCName");
+				else
+					return StringResources.GetString("OC2Name");
 			}
 		}
 
@@ -217,7 +247,7 @@ namespace NWN
 				if (singleton.modeNWN1)
 					return Path.Combine(InstallPath, "Modules"); 
 				else
-					return Path.Combine(InstallPath, "Modules");
+					return Path.Combine(DocumentPath, "Modules");
 			} 
 		}
 
@@ -272,6 +302,22 @@ namespace NWN
 			set
 			{
 				singleton.modeNWN1 = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets all the user installed (nonOC) modules for a given install of nwn 1 or 2
+		/// </summary>
+		public static string[] GetAllModules
+		{
+			get
+			{
+				string [] modules;
+				if (singleton.modeNWN1)
+					modules = Directory.GetFiles(NWNInfo.ModulesPath, "*.mod");
+				else
+					modules = Directory.GetFiles(NWNInfo.ModulesPath, "*.mod");
+				return modules;
 			}
 		}
 

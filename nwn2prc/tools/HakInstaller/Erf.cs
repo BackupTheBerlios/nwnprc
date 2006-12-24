@@ -17,6 +17,7 @@ namespace NWN.FileTypes.Tools
 	{
 		#region values
 		Invalid = 0xffff,
+		ResRes = 0,
 		ResBMP = 1,
 		ResTGA = 3,
 		ResWAV = 4,
@@ -60,7 +61,16 @@ namespace NWN.FileTypes.Tools
 		ResNDB = 2064,
 		ResPTM = 2065,
 		ResPTT = 2066,
+		ResUSC = 3001,
 		ResTRN = 3002,
+		ResUTR = 3003,
+		ResULT = 3005,
+		ResSEF = 3006,
+		ResPFX = 3007,
+		ResLFX = 3009,
+		ResUPE = 3011,
+		ResBBX = 3018,
+		ResXML = 3021,
 		ResTRX = 3035
 		#endregion
 	}
@@ -437,14 +447,17 @@ namespace NWN.FileTypes
 				get
 				{
 					// If the resource type is invalid then return an empty string.
-					if (ResType.Invalid == this.ResType) return string.Empty;
-					if (0 == ResRef.Length) return string.Empty;
+					if (ResType.Invalid == this.ResType) 
+						return string.Empty;
+					if (0 == ResRef.Length) 
+						return string.Empty;
 
 					// Convert the restype to a string to get the extension,
 					// if it is an unknown extension then arbitrarily use
 					// "ResUNK" to get "UNK" as the extension.
 					string restype = this.ResType.ToString();
-					if (restype.Length < 6) restype = "ResUNK";
+					if (restype.Length < 6) 
+						restype = "ResUNK";
 
 					System.Text.StringBuilder b = new System.Text.StringBuilder(32);
 					b.Append(ResRef);
@@ -568,14 +581,17 @@ namespace NWN.FileTypes
 				get
 				{
 					// If the resource type is invalid then return an empty string.
-					if (ResType.Invalid == this.ResType) return string.Empty;
-					if (0 == ResRef.Length) return string.Empty;
+					if (ResType.Invalid == this.ResType) 
+						return string.Empty;
+					if (0 == ResRef.Length) 
+						return string.Empty;
 
 					// Convert the restype to a string to get the extension,
 					// if it is an unknown extension then arbitrarily use
 					// "ResUNK" to get "UNK" as the extension.
 					string restype = this.ResType.ToString();
-					if (restype.Length < 6) restype = "ResUNK";
+					if (restype.Length < 6) 
+						restype = "ResUNK";
 
 					System.Text.StringBuilder b = new System.Text.StringBuilder(32);
 					b.Append(ResRef);

@@ -1538,6 +1538,7 @@ int GetPnPItemCost(struct itemvars strTemp)
     SetIdentified(strTemp.item, TRUE);
     int nFlag = StringToInt(Get2DACache("prc_craft_gen_it", "Type", nType));
     int nAdd = 0;
+    int nMighty = 0;
     string sMaterial = GetStringLeft(GetTag(strTemp.item), 3);
     nMaterial = StringToInt(sMaterial);
     if(GetMaterialString(nMaterial) != sMaterial)
@@ -1614,6 +1615,22 @@ int GetPnPItemCost(struct itemvars strTemp)
     if(nMaterial & PRC_CRAFT_FLAG_DEEP_CRYSTAL)
     {
         //not implemented
+    }
+    if(((nType == BASE_ITEM_LONGBOW) ||
+        (nType == BASE_ITEM_SHORTBOW))
+        )
+    {
+        int nCompMult = (nType == BASE_ITEM_LONGBOW) ? 100 : 75;
+        itemproperty ip = GetFirstItemProperty(strTemp.item);
+        while(GetIsItemPropertyValid(ip))
+        {
+            if(GetItemPropertyType(ip) == ITEM_PROPERTY_MIGHTY)
+            {
+                nAdd += GetItemPropertyCostTableValue(ip) * nCompMult;
+                break;
+            }
+            ip = GetNextItemProperty(strTemp.item);
+        }
     }
     nTemp += nAdd;
     nEnhancement = GetEnhancementBaseCost(strTemp.item) * strTemp.enhancement * strTemp.enhancement;

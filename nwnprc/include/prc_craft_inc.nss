@@ -1615,6 +1615,22 @@ int GetPnPItemCost(struct itemvars strTemp)
     {
         //not implemented
     }
+    if(((nType == BASE_ITEM_LONGBOW) ||
+        (nType == BASE_ITEM_SHORTBOW))
+        )
+    {
+        int nCompMult = (nType == BASE_ITEM_LONGBOW) ? 100 : 75;
+        itemproperty ip = GetFirstItemProperty(strTemp.item);
+        while(GetIsItemPropertyValid(ip))
+        {
+            if(GetItemPropertyType(ip) == ITEM_PROPERTY_MIGHTY)
+            {
+                nAdd += GetItemPropertyCostTableValue(ip) * nCompMult;
+                break;
+            }
+            ip = GetNextItemProperty(strTemp.item);
+        }
+    }
     nTemp += nAdd;
     nEnhancement = GetEnhancementBaseCost(strTemp.item) * strTemp.enhancement * strTemp.enhancement;
     if(strTemp.epic) nEnhancement *= 10;

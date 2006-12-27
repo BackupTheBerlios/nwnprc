@@ -62,3 +62,8 @@ Session Start (NWN:#prc-help): Wed Aug 23 19:33:25 2006
 [23:38] Stratovarius: It is if you donthave the DB in the right place
 [23:38] Stratovarius: or are using a MySQL DB without caching it
 [23:48] Flaming_Sword: at first glance, i have no idea what's causing those bugs, i'll copy down the chat logs to look at them later
+
+
+3.1 BUGS
+
+Fav. soul vs. suel spellbook crash

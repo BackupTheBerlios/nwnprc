@@ -1650,10 +1650,11 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
         sTag = sMaterial + GetUniqueID() + PRC_CRAFT_UID_SUFFIX;
     object oNew = CopyObject(oTemp, GetLocation(oChest), oChest, sTag);
     string sPrefix = "";
-    if(nMighty)
+    if(nMighty > 0)
     {
+        if(nMighty > 20) nMighty = 20;
         itemproperty ip1 = ConstructIP(ITEM_PROPERTY_MIGHTY, 0, nMighty);
-        itemproperty ip2 = ConstructIP(ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE, ABILITY_STRENGTH, nMighty);
+        itemproperty ip2 = ConstructIP(ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE, ABILITY_STRENGTH, ((nMighty * 2) + 10));
         IPSafeAddItemProperty(oNew, ip1, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
         IPSafeAddItemProperty(oNew, ip2, 0.0, X2_IP_ADDPROP_POLICY_REPLACE_EXISTING);
     }

@@ -399,7 +399,7 @@ if(DEBUG) DoDebug("GetSpellKnownCurrentCount("+GetName(oPC)+", "+IntToString(nSp
 
 int GetSpellUnknownCurrentCount(object oPC, int nSpellLevel, int nClass)
 {
-    string sTag = "SpellLvl_"+IntToString(nClass)+"_Level_"+IntToString(nSpellLevel);
+    string sTag = "SpellLvl_" + IntToString(nClass) + "_Level_" + IntToString(nSpellLevel);
 
     object oCache = GetObjectByTag(sTag);
     if(!GetIsObjectValid(oCache))
@@ -407,7 +407,7 @@ int GetSpellUnknownCurrentCount(object oPC, int nSpellLevel, int nClass)
 if(DEBUG) DoDebug(sTag+" is not valid");
         return 0;
     }
-    int nTotal = array_get_size(oCache, sTag);
+    int nTotal = array_get_size(oCache, "Lkup");
     int nKnown = GetSpellKnownCurrentCount(oPC, nSpellLevel, nClass);
     int nUnknown = nTotal - nKnown;
 

@@ -156,9 +156,9 @@ void main()
                 object oWP = GetObjectByTag(sTag);
                 if(!GetIsObjectValid(oWP))
                     DoDebug("ERROR: "+sTag+" is not valid");
-                for(i=0; i<array_get_size(oWP, sTag); i++)
+                for(i = 0; i < array_get_size(oWP, "Lkup"); i++)
                 {
-                    int nRow = array_get_int(oWP, sTag, i);
+                    int nRow = array_get_int(oWP, "Lkup", i);
                     if(Get2DACache(sFile, "ReqFeat", nRow)==""                                // Has no prerequisites
                         || GetHasFeat(StringToInt(Get2DACache(sFile, "ReqFeat", nRow)), oPC)) // Or has prerequisites which the PC posseses
                     {

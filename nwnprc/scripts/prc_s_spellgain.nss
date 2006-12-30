@@ -133,9 +133,9 @@ DoDebug("nSpellsAvaliable is TRUE");
                 // Add responses for the PC
                 string sTag = "SpellLvl_"+IntToString(nClass)+"_Level_"+IntToString(nSpellLevel);
                 object oWP = GetObjectByTag(sTag);
-                for(i=0; i<array_get_size(oWP, sTag); i++)
+                for(i = 0; i < array_get_size(oWP, "Lkup"); i++)
                 {
-                    int nRow = array_get_int(oWP, sTag, i);
+                    int nRow = array_get_int(oWP, "Lkup", i);
                     int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nRow));
                     if(Get2DACache(sFile, "ReqFeat", nRow)==""      // Has no prerequisites
                         && !GetHasFeat(nFeatID, oPC))               // And doesnt have it already

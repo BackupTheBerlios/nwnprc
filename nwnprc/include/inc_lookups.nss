@@ -7,6 +7,10 @@
     lookups.
 */
 
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
+
 //nClass is the class to do this for
 //nMin is the row to start at
 //sSourceColumn is the column you want to lookup by
@@ -54,8 +58,56 @@ string GetAMSKnownFileName(int nClass);
  */
 string GetAMSDefinitionFileName(int nClass);
 
+
+//////////////////////////////////////////////////
+/*             Internal functions               */
+//////////////////////////////////////////////////
+
+object _inc_lookups_GetCacheObject(string sTag)
+{
+    object oWP = GetObjectByTag(sTag);
+    if(!GetIsObjectValid(oWP))
+    {
+        object oChest = GetObjectByTag("Bioware2DACache");
+        if(!GetIsObjectValid(oChest))
+        {
+            //has to be an object, placeables cant go through the DB
+            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
+                                  GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
+        }
+        if(!GetIsObjectValid(oChest))
+        {
+            //has to be an object, placeables cant go through the DB
+            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
+                                  GetStartingLocation(), FALSE, "Bioware2DACache");
+        }
+        // Some inventory shuffle, probably? - Ornedan
+        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
+        DestroyObject(oWP);
+        oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
+
+        if(!GetIsObjectValid(oWP))
+        {
+            DoDebug("ERROR: Failed to create lookup storage token for " + sTag);
+            return OBJECT_INVALID;
+        }
+    }
+
+    return oWP;
+}
+
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
 #include "inc_utility"
 #include "prc_class_const"
+
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
 
 void MakeLookupLoopMaster()
 {
@@ -253,6 +305,7 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
        nClass == CLASS_TYPE_TRUENAMER
        )
         sFile = GetAMSDefinitionFileName(nClass);
+    // New spellbook class
     else
     {
         sFile = Get2DACache("classes", "FeatsTable", nClass);
@@ -261,39 +314,18 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
         bNewSpellbook = TRUE;
     }
 
-    //get the token to store it on
-    //this is piggybacked into 2da caching
+    // If on the first iteration, generate the storage token tag
     if(sTag == "")
         sTag = sVarNameBase + "_" + IntToString(nClass) + "_" + sColumnName + "_" + sColumnValue;
-    object oWP = GetObjectByTag(sTag);
-    if(!GetIsObjectValid(oWP))
-    {
-        object oChest = GetObjectByTag("Bioware2DACache");
-        if(!GetIsObjectValid(oChest))
-        {
-            //has to be an object, placeables cant go through the DB
-            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
-                                  GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
-        }
-        if(!GetIsObjectValid(oChest))
-        {
-            //has to be an object, placeables cant go through the DB
-            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
-                                  GetStartingLocation(), FALSE, "Bioware2DACache");
-        }
-        // Some inventory shuffle, probably? - Ornedan
-        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
-        DestroyObject(oWP);
-        oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
 
-        if(!GetIsObjectValid(oWP))
-        {
-            DoDebug("Problem creating token for " + sTag);
-            return;
-        }
-    }
+    // Get the token to store the lookup table on. The token is piggybacked in the 2da cache creature's inventory
+    object oToken = _inc_lookups_GetCacheObject(sTag);
+    // Failed to obtain a valid token - nothing to store on
+    if(!GetIsObjectValid(oToken))
+        return;
+
     // Starting a new run and the array exists already. Assume the whole thing is present and abort
-    if(nMin == 0 && array_exists(oWP, sTag))
+    if(nMin == 0 && array_exists(oToken, "Lkup"))
     {
         DoDebug("MakeSpellbookLevelLoop("+sTag+") restored from database");
         return;
@@ -301,20 +333,22 @@ void MakeSpellbookLevelLoop(int nClass, int nMin, int nMax, string sVarNameBase,
 
     // New run, create the array
     if(nMin == 0)
-        array_create(oWP, sTag);
+        array_create(oToken, "Lkup");
 
     // Cache loopsize rows
     int i;
     for(i = nMin; i < nMin + nLoopSize; i++)
     {
         // None of the relevant 2da files have blank Label entries on rows other than 0. We can assume i is greater than 0 at this point
-        if(i > 0 && Get2DAString(sFile, "Label", i) == "") // Using Get2DAString() instead of Get2DACache() to avoid caching extra
+        if(i > 0 && Get2DAString(sFile, "Label", i) == "") // Using Get2DAString() instead of Get2DACache() to avoid caching useless data
             return;
 
         if(Get2DACache(sFile, sColumnName, i) == sColumnValue &&
-           (!bNewSpellbook ||Get2DACache(sFile, "ReqFeat", i)   == "") // Only new spellbooks have the ReqFeat column. No sense in caching it for other stuff
+           (!bNewSpellbook ||Get2DACache(sFile, "ReqFeat", i) == "") // Only new spellbooks have the ReqFeat column. No sense in caching it for other stuff
            )
-            array_set_int(oWP, sTag, array_get_size(oWP, sTag), i);
+        {
+            array_set_int(oToken, "Lkup", array_get_size(oToken, "Lkup"), i);
+        }
     }
 
     // And delay continuation to avoid TMI
@@ -348,47 +382,27 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
        nClass == CLASS_TYPE_TRUENAMER
        )
         sFile = GetAMSDefinitionFileName(nClass);
+    // New spellbook class
     else
     {
         sFile = Get2DACache("classes", "FeatsTable", nClass);
         //sFile = GetStringLeft(sFile, 4)+"spell"+GetStringRight(sFile, GetStringLength(sFile)-8);
         sFile = "cls_spell" + GetStringRight(sFile, GetStringLength(sFile) - 8); // Hardcoded the cls_ part. It's not as if any class uses some other prefix - Ornedan, 20061210
     }
-    //get the token to store it on
-    //this is piggybacked into 2da caching
+
+    // If on the first iteration, generate the storage token tag
     if(sTag == "")
         sTag = "PRC_" + sVarNameBase;
-    object oWP = GetObjectByTag(sTag);
-    if(!GetIsObjectValid(oWP))
-    {
-        object oChest = GetObjectByTag("Bioware2DACache");
-        if(!GetIsObjectValid(oChest))
-        {
-            //has to be an object, placeables cant go through the DB
-            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
-             GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
-        }
-        if(!GetIsObjectValid(oChest))
-        {
-            //has to be an object, placeables cant go through the DB
-            oChest = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
-                GetStartingLocation(), FALSE, "Bioware2DACache");
-        }
-        // Some inventory shuffle, probably? - Ornedan
-        oWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oChest), FALSE, sTag);
-        DestroyObject(oWP);
-        oWP = CopyObject(oWP, GetLocation(oChest), oChest, sTag);
 
-        //cant short-ciruit it cos it gets confused between classes
-        if(!GetIsObjectValid(oWP))
-        {
-            DoDebug("Problem creating token for " + sTag);
-            return;
-        }
-    }
-    //else if(nMin == 0)//token exists, if starting new run abort assuming restored from database
+    // Get the token to store the lookup table on. The token is piggybacked in the 2da cache creature's inventory
+    object oToken = _inc_lookups_GetCacheObject(sTag);
+    // Failed to obtain a valid token - nothing to store on
+    if(!GetIsObjectValid(oToken))
+        return;
+
+    // Starting a new run and the data is present already. Assume the whole thing is present and abort
     if(nMin == 0
-        && GetLocalInt(oWP, sTag+"_"+IntToString(StringToInt(Get2DACache(sFile, sSourceColumn, nMin+1)))))//+1 cos 0 is always null
+        && GetLocalInt(oToken, /*sTag + "_" + */IntToString(StringToInt(Get2DACache(sFile, sSourceColumn, nMin + 1)))))//+1 cos 0 is always null
     {
         DoDebug("MakeLookupLoop("+sTag+") restored from database");
         return;
@@ -402,19 +416,28 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
         if(i > 0 && Get2DAString(sFile, "Label", i) == "") // Using Get2DAString() instead of Get2DACache() to avoid caching extra
             return;
 
-        if(sSourceColumn == "")
-            nSource = i;
-        else
-            nSource = StringToInt(Get2DACache(sFile, sSourceColumn, i));
+        // In case of blank source or destination column, use current row index
+        // Otherwise, read the relevant data from the 2da and convert it to an integer - we assume that the 2da data is numeral
+        if(sSourceColumn == "") nSource = i;
+        else                    nSource = StringToInt(Get2DACache(sFile, sSourceColumn, i));
 
-        if(sDestColumn == "")
-            nDest = i;
-        else
-            nDest = StringToInt(Get2DACache(sFile, sDestColumn, i));
+        if(sDestColumn == "") nDest = i;
+        else                  nDest = StringToInt(Get2DACache(sFile, sDestColumn, i));
 
+        // Skip storing invalid values. The source column value should always be non-zero in valid cases.
+        // The destination column value might be zero in some cases. However, due to non-presence = 0, it works out OK.
         if(nSource != 0 && nDest != 0)
         {
-            SetLocalInt(oWP, sTag + "_" + IntToString(nSource), nDest);
+            if(DEBUG) Assert(!GetLocalInt(oToken, IntToString(nSource)) || (GetLocalInt(oToken, IntToString(nSource)) == nDest),
+                             "!GetLocalInt(" + DebugObject2Str(oToken) + ", IntToString(" + IntToString(nSource) + ")) || GetLocalInt(" + DebugObject2Str(oToken) + ", IntToString(" + IntToString(nSource) + ")) == " + IntToString(nDest) + ")\n"
+                           + " = !" + IntToString(GetLocalInt(oToken, IntToString(nSource))) + " || " + IntToString(GetLocalInt(oToken, IntToString(nSource))) + " == " + IntToString(nDest)
+                             ,
+                             "sFile = " + sFile + "\n"
+                           + "i = " + IntToString(i)
+                           + "sSourceColumn = " + sSourceColumn + "\n"
+                           + "sDestColumn = " + sDestColumn
+                             , "inc_lookups", "MakeLookupLoop");
+            SetLocalInt(oToken, /*sTag + "_" + */IntToString(nSource), nDest);
         }
     }
 
@@ -426,7 +449,7 @@ void MakeLookupLoop(int nClass, int nMin, int nMax, string sSourceColumn,
 int GetPowerFromSpellID(int nSpellID)
 {
     object oWP = GetObjectByTag("PRC_GetPowerFromSpellID");
-    int nPower = GetLocalInt(oWP, "PRC_GetPowerFromSpellID_"+IntToString(nSpellID));
+    int nPower = GetLocalInt(oWP, /*"PRC_GetPowerFromSpellID_" + */IntToString(nSpellID));
     if(nPower == 0)
         nPower = -1;
     return nPower;
@@ -435,15 +458,15 @@ int GetPowerFromSpellID(int nSpellID)
 int GetPowerfileIndexFromSpellID(int nSpellID)
 {
     object oWP = GetObjectByTag("PRC_SpellIDToClsPsipw");
-    int nIndex = GetLocalInt(oWP, "PRC_SpellIDToClsPsipw_" + IntToString(nSpellID));
+    int nIndex = GetLocalInt(oWP, /*"PRC_SpellIDToClsPsipw_" + */IntToString(nSpellID));
     return nIndex;
 }
 
 int GetClassFeatFromPower(int nPowerID, int nClass)
 {
-    string sLabel = "PRC_GetClassFeatFromPower_"+IntToString(nClass);
+    string sLabel = "PRC_GetClassFeatFromPower_" + IntToString(nClass);
     object oWP = GetObjectByTag(sLabel);
-    int nPower = GetLocalInt(oWP, sLabel+"_"+IntToString(nPowerID));
+    int nPower = GetLocalInt(oWP, /*sLabel+"_" + */IntToString(nPowerID));
     if(nPower == 0)
         nPower = -1;
     return nPower;

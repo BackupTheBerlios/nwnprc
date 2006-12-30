@@ -129,5 +129,5 @@ void Assert(int bAssertion, string sAssertion, string sMessage = "", string sFil
 
 void Die()
 {
-    while(TRUE);
+    while(TRUE) {;}
 }

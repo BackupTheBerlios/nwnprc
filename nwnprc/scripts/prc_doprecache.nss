@@ -16,6 +16,7 @@ void precacheSpell(int row);
 void precacheNewSpell(int row);
 void precachePower(int row);
 void precachePowerFeat(int row);
+void precachePowerSpell(int row);
 void handleCraft();
 void handleCraftProperties2da(string s2da, int row = 0);
 void handleCraftItems2da(int row = 0);
@@ -46,8 +47,13 @@ void auxLoop(int i)
                 precacheNewSpell(StringToInt(Get2DAString("precacherows", "RowNum", i)));
             else if(sType == "P" )
                 precachePower(StringToInt(Get2DAString("precacherows", "RowNum", i)));
-            else if(sType == "F" )
+            else if(sType == "PF" )
                 precachePowerFeat(StringToInt(Get2DAString("precacherows", "RowNum", i)));
+            else if(sType == "PS" )
+                precachePowerSpell(StringToInt(Get2DAString("precacherows", "RowNum", i)));
+
+            else
+                DoDebug("Unknown precache type: " + sType);
         }
         else
         {
@@ -73,9 +79,9 @@ void precacheSpell(int row)
     Get2DACache("spells", "Wiz_Sorc", row);
     if(Get2DACache("spells", "Innate", row) == "")
         Get2DACache("spells", "Master",     row);
-    Get2DACache("spells", "ItemImmunity",   row);
-    Get2DACache("spells", "ConjTime",       row);
-    Get2DACache("spells", "CastTime",       row);
+//    Get2DACache("spells", "ItemImmunity",   row);
+//    Get2DACache("spells", "ConjTime",       row);
+//    Get2DACache("spells", "CastTime",       row);
     Get2DACache("spells", "Category",       row);
     Get2DACache("spells", "HostileSetting", row);
     Get2DACache("spells", "ImpactScript",   row);
@@ -94,9 +100,10 @@ void precacheNewSpell(int row)
 
 void precachePower(int row)
 {
-    Get2DACache("spells", "Range",    row);
-    Get2DACache("spells", "ConjTime", row);
-    Get2DACache("spells", "CastTime", row);
+    Get2DACache("spells", "Innate",    row);
+//    Get2DACache("spells", "Range",    row);
+//    Get2DACache("spells", "ConjTime", row);
+//    Get2DACache("spells", "CastTime", row);
 }
 
 void precachePowerFeat(int row)
@@ -110,6 +117,22 @@ void precachePowerFeat(int row)
        Get2DACache("feat", "OrReqFeat2", row) != "" &&
        Get2DACache("feat", "OrReqFeat3", row) != "")
         Get2DACache("feat", "OrReqFeat4", row);
+}
+
+void precachePowerSpell(int row)
+{
+//    Get2DACache("spells", "Name",     row);
+    Get2DACache("spells", "School",   row);
+    if(Get2DACache("spells", "Innate", row) == "")
+        Get2DACache("spells", "Master",     row);
+    Get2DACache("spells", "ItemImmunity",   row);
+    Get2DACache("spells", "ConjTime",       row);
+    Get2DACache("spells", "CastTime",       row);
+//    Get2DACache("spells", "HostileSetting", row);
+    Get2DACache("spells", "ImpactScript",   row);
+    Get2DACache("spells", "Range",          row);
+//    Get2DACache("spells", "TargetType",     row);
+//    Get2DACache("spells", "UserType",       row);
 }
 
 void handleCraft()

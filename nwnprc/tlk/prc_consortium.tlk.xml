@@ -6745,7 +6745,7 @@ Augment: You can augment this power in one or both of the following ways.
   <entry id="46535" lang="en" sex="m">Metacreativity (Creation)
 Level: Psion/wilder 2
 Manifesting Time: 1 standard action
-Range: 15 ft.
+Range: 30 ft.
 Area: Cone-shaped spread
 Duration: Instantaneous
 Saving Throw: None
@@ -25784,9 +25784,9 @@ Duration: 3d6 minutes
 Saving Throw: None
 Spell Resistance: No
 
-The caster conjures a type of evil weather. It functions as described in Chapter 2 of the Book of Vile Darkness, except that area and duration are as given for this spell. 
+The caster conjures a type of evil weather. It functions as described in Chapter 2 of the Book of Vile Darkness, except that area and duration are as given for this spell.
 
-Rain of Blood: Blood pours down in thick drops for 2d10 minutes.  Any living, non-evil character in the area must succeed on a will save (DC 20) or take a -1 morale penalty on attack and damage rolls, checks, and saves for 24 hours. Undead gain a +1 morale bonus on attack and damage rolls, checks, and saves for 24 hours. 
+Rain of Blood: Blood pours down in thick drops for 2d10 minutes.  Any living, non-evil character in the area must succeed on a will save (DC 20) or take a -1 morale penalty on attack and damage rolls, checks, and saves for 24 hours. Undead gain a +1 morale bonus on attack and damage rolls, checks, and saves for 24 hours.
 
 Violet Rain: Once violet rain begins to fall, divine spells are uncastable for 24 hours.
 

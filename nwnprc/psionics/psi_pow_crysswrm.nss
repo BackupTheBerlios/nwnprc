@@ -13,7 +13,7 @@
     Metacreativity (Creation)
     Level: Psion/wilder 2
     Manifesting Time: 1 standard action
-    Range: 15 ft.
+    Range: 30 ft.
     Area: Cone-shaped spread
     Duration: Instantaneous
     Saving Throw: None
@@ -70,7 +70,7 @@ void main()
         effect eDamage;
         effect eSpikes    = EffectVisualEffect(VFX_IMP_WALLSPIKE);
         effect eDart      = EffectVisualEffect(NORMAL_DART);
-        float fWidth      = EvaluateWidenPower(manif, FeetToMeters(15.0f));
+        float fWidth      = EvaluateWidenPower(manif, FeetToMeters(30.0f));
         float fDelay;
         location lTarget  = PRCGetSpellTargetLocation();
         object oTarget;

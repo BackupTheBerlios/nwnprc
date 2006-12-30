@@ -1,47 +1,149 @@
-//
-// Stub function for possible later use.
-//
+//::///////////////////////////////////////////////
+//:: PRC On Module Load event handler
+//:: prc_onmodload
+//::///////////////////////////////////////////////
+/** @file prc_onmodload
+    Things we need to happen upon a module being
+    loaded. For example, setting up caches and
+    switches.
+
+*/
+//:://////////////////////////////////////////////
+//:://////////////////////////////////////////////
+
 #include "prc_alterations"
 #include "prc_inc_leadersh"
 
+
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
+
+void OnLoad_Always(object oModule);
+void OnLoad_Save(object oModule);
+void OnLoad_Fresh(object oModule);
+
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
+
 void CheckDB()
 {
-     string sDBName = GetBiowareDBName();
+    string sDBName = GetBiowareDBName();
     //check PRC version
     if(GetCampaignString(sDBName, "version") != PRC_VERSION)
     {
-        DoDebug("Removing old databases");
+        DoDebug("Removing old PRC version databases");
         DestroyCampaignDatabase(sDBName);
         DestroyCampaignDatabase(COHORT_DATABASE);
     }
     SetCampaignString(sDBName, "version", PRC_VERSION);
 
+    // 2da cache fingerprint handling
+    // This is for detecting a cache updated by someone else upon loading a saved game
+    // and avoiding clobbering it.
+    string sFingerprint;
+
+    // Generate the fingerprint from module name, current millisecond value and
+    // 31-bit random number.
+    sFingerprint = GetModuleName() + "_" + IntToString(GetTimeMillisecond()) + "_" + IntToString(Random(0x7fffffff));
+
+    DoDebug("Module 2da cache fingerprint: " + sFingerprint);
+
+    // Store the fingerprint on the module - it will be written to the DB upon cache storage
+    SetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint", sFingerprint);
+
     location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
     //only get it if one doesnt already exist (saved games)
+    // This never gets run on saved games due to the "prc_mod_load_done" check.
+    // However, it is still usefull cleanup in case some unforseen condition does
+    // leave a cache object present in a freshly loaded module - Ornedan 20061229
     if(GetIsObjectValid(GetObjectByTag("Bioware2DACache")))
         DestroyObject(GetObjectByTag("Bioware2DACache"));
+    DoDebug("Starting to load 2da cache object from " + sDBName);
     object oChest = RetrieveCampaignObject(sDBName, "CacheChest", lLoc);
     if(!GetIsObjectValid(oChest))
-        DoDebug("Unable to retieve CacheChest from "+sDBName);
+        DoDebug("WARNING: Unable to load 2da cache object (CacheChest) from " + sDBName);
+    else
+        DoDebug("Finished loading 2da cache object from " + sDBName);
+}
+
+/**
+ * Called when a saved game load is detected. Determines if the
+ * 2da cache DB has changed in the meanwhile. If it has, reload the
+ * cache creature from the DB.
+ */
+void CheckDBUpdate()
+{
+    // Get Module and DB fingerprints
+    string sDBName = GetBiowareDBName();
+    string sModuleFingerprint = GetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint");
+    string sDBFingerprint     = GetCampaignString(sDBName,  "PRC_2DA_Cache_Fingerprint");
+
+    DoDebug("CheckDBUpdate():\n"
+          + " Module fingerprint: " + sModuleFingerprint + "\n"
+          + " Database fingerprint: " + sDBFingerprint
+            );
+    // If they differ, the DB has changed in meanwhile and we need to reload the cache chest
+    if(sModuleFingerprint != sDBFingerprint)
+    {
+        DoDebug("Fingerprint mismatch, reloading 2da cache from " + sDBName);
+        location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
+        DestroyObject(GetObjectByTag("Bioware2DACache"));
+
+        DoDebug("Starting to load 2da cache object from " + sDBName);
+        object oChest = RetrieveCampaignObject(sDBName, "CacheChest", lLoc);
+        if(!GetIsObjectValid(oChest))
+            DoDebug("ERROR: Unable to load 2da cache object (CacheChest) from " + sDBName);
+        else
+            DoDebug("Finished loading 2da cache object from " + sDBName);
+    }
 }
 
 void main()
 {
     object oModule = GetModule();
 
+    OnLoad_Always(oModule);
+
+    // Determine if we are loading a saved game or entering a fresh module
+    // Some things should only be run in one situation or the other.
+    if(GetLocalInt(oModule, "prc_mod_load_done"))
+    {
+        OnLoad_Save(oModule);
+    }
+    else
+    {
+        SetLocalInt(oModule, "prc_mod_load_done", TRUE);
+        OnLoad_Fresh(oModule);
+    }
+}
+
+/**
+ * Things that should always be run on loading a module,
+ * irrespective of whether it's a fresh load or a save.
+ */
+void OnLoad_Always(object oModule)
+{
     //this triggers NWNX on Linux
     SetLocalInt(oModule, "NWNX!INIT", 1);
     SetLocalString(oModule, "NWNX!INIT", "1");
+}
 
-    // Loading a saved game runs the module load event, but since the point of the stuff
-    // we do here is to set local variables and those don't get cleared over saved games,
-    // there is no point in wasting (a massive load of) CPU on doing it all over again.
-    if(GetLocalInt(oModule, "prc_mod_load_done"))
-        return;
-    else
-        SetLocalInt(oModule, "prc_mod_load_done", TRUE);
+/**
+ * Things that should be run only when a saved game is loaded.
+ */
+void OnLoad_Save(object oModule)
+{
+    CheckDBUpdate();
+}
 
-
+/**
+ * Things that should only be run when a module is first loaded.
+ */
+void OnLoad_Fresh(object oModule)
+{
     // Set PRC presence & version marker. If plugins ever happen, this would be useful.
     SetLocalString(oModule, "PRC_VERSION", PRC_VERSION);
 
@@ -49,7 +151,7 @@ void main()
 
     // Run a script to determine if the PRC Companion is present
     ExecuteScript("hakmarker", OBJECT_SELF);
-    
+
     //load any default switch 2da
     if(!GetPRCSwitch(PRC_DISABLE_SWITCH_CHANGING_CONVO))
     {
@@ -144,14 +246,13 @@ void main()
     }
 
     //delay the 2da lookup stuff
-    //DelayCommand(10.0, ExecuteScript("look2daint", OBJECT_SELF));//helps avoid TMI errors
     DelayCommand(12.0, MakeLookupLoopMaster());
-    
+
     //mark server as loading
     float fDelay = IntToFloat(GetPRCSwitch(PRC_PW_LOGON_DELAY))*60.0;
     if(fDelay>0.0)
     {
         SetLocalInt(GetModule(), PRC_PW_LOGON_DELAY+"_TIMER", TRUE);
         DelayCommand(fDelay, DeleteLocalInt(GetModule(), PRC_PW_LOGON_DELAY+"_TIMER"));
-    }   
+    }
 }

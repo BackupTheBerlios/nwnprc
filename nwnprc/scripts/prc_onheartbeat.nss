@@ -63,9 +63,12 @@ void main()
             string sDBName = GetBiowareDBName();
             DestroyCampaignDatabase(sDBName);
             object o2daCache = GetObjectByTag("Bioware2DACache");
+            // Rebuild the DB
             StoreCampaignObject(sDBName, "CacheChest", o2daCache);
-            //have to set the version number each time the database is re-built
             SetCampaignString(sDBName, "version", PRC_VERSION);
+            SetCampaignString(sDBName, "PRC_2DA_Cache_Fingerprint", GetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint"));
+            if(DEBUG) DoDebug                 ("Finished storing Bioware2DACache");
+            else      WriteTimestampedLogEntry("Finished storing Bioware2DACache");
         }
     }
 

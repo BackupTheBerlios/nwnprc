@@ -162,7 +162,7 @@ public class Precache2daGen {
 					output.appendRow();
 					temp = output.getEntryCount() - 1;
 					output.setEntry("RowNum", temp, cls_psipw.getEntry("FeatID", i));
-					output.setEntry("Type",   temp, "F");
+					output.setEntry("Type",   temp, "PF");
 				}
 				// Add the real entry's data
 				if(!cls_psipw.getEntry("RealSpellID", i).equals("****")) {
@@ -172,7 +172,7 @@ public class Precache2daGen {
 						output.appendRow();
 						temp = output.getEntryCount() - 1;
 						output.setEntry("RowNum", temp, cls_psipw.getEntry("RealSpellID", i));
-						output.setEntry("Type",   temp, "N");
+						output.setEntry("Type",   temp, "PS");
 					}
 				}
 			}
@@ -210,7 +210,7 @@ public class Precache2daGen {
 					output.appendRow();
 					temp = output.getEntryCount() - 1;
 					output.setEntry("RowNum", temp, cls_true.getEntry("FeatID", i));
-					output.setEntry("Type",   temp, "F");
+					output.setEntry("Type",   temp, "PF");
 				}
 				// Add the real entry's data
 				if(!cls_true.getEntry("RealSpellID", i).equals("****")) {
@@ -220,7 +220,7 @@ public class Precache2daGen {
 						output.appendRow();
 						temp = output.getEntryCount() - 1;
 						output.setEntry("RowNum", temp, cls_true.getEntry("RealSpellID", i));
-						output.setEntry("Type",   temp, "N");
+						output.setEntry("Type",   temp, "PS");
 					}
 				}
 			}

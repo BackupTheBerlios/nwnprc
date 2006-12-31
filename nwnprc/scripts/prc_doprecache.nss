@@ -101,9 +101,9 @@ void precacheNewSpell(int row)
 void precachePower(int row)
 {
     Get2DACache("spells", "Innate",    row);
-//    Get2DACache("spells", "Range",    row);
-//    Get2DACache("spells", "ConjTime", row);
-//    Get2DACache("spells", "CastTime", row);
+    Get2DACache("spells", "Range",     row); // Needed by the PRCGetSpellTargetObject() in UsePower()
+//    Get2DACache("spells", "ConjTime",  row);
+//    Get2DACache("spells", "CastTime",  row);
 }
 
 void precachePowerFeat(int row)

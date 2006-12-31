@@ -711,8 +711,8 @@ string IntToPaddedString(int nX, int nLength = 4, int nSigned = FALSE)
 
 string ReplaceChars(string sString, string sToReplace, string sReplacement)
 {
-    int nInd = FindSubString(sString, sToReplace);
-    while(nInd != -1)
+    int nInd;
+    while((nInd = FindSubString(sString, sToReplace)) != -1)
     {
         sString = GetStringLeft(sString, nInd) +
                   sReplacement +

@@ -9,7 +9,9 @@
 const int PRC_SQL_ERROR = 0;
 const int PRC_SQL_SUCCESS = 1;
 
-string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE);
+const int DEBUG_GET2DACACHE = FALSE;
+
+string Get2DACache(string s2DA, string sColumn, int nRow, string s = "");
 
 string GetBiowareDBName();
 
@@ -489,7 +491,7 @@ Caching behaviours
 2)      Direct to BiowareDB
 3)      Direct to MySQL DB
 */
-string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDebug = FALSE)
+string Get2DACache(string s2DA, string sColumn, int nRow, string s = "")
 {
     object oFileWP;
     int nNotWPCached = FALSE;
@@ -518,23 +520,23 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
         //if no chest, use HEARTOFCHAOS in limbo as a location to make a new one
         if (!GetIsObjectValid(oCacheWP))
         {
+            if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Cache container does not exist, creating new one");
             //oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
             //    GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
             //has to be a creature, placeables cant go through the DB
             oCacheWP = CreateObject(OBJECT_TYPE_CREATURE, "prc_2da_cache",
-                GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
-//if(nDebug) DoDebug("Get2DACache: Cache chest does not exist, creating new one");
+                                    GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
         }
 
         //get the token for this file
         //string sFileWPName = ""+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
         string sFileWPName = "Bio2DACacheToken_" + GetSubString(GetStringUpperCase(s2DA), 0, 1);
-//if(nDebug) DoDebug("Get2DACache: token tag is "+sFileWPName);
+        //if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Token tag is " + sFileWPName);
         oFileWP = GetObjectByTag(sFileWPName);
         //token doesnt exist make it
         if (!GetIsObjectValid(oFileWP))
         {
-//if(nDebug) DoDebug("Get2DACache: token does not exist, creating new one");
+            if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Token does not exist, creating new one");
             oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
             DestroyObject(oFileWP);
             oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
@@ -545,10 +547,11 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
             s = GetLocalString(oFileWP, s2DA+"|"+sColumn+"|"+IntToString(nRow));
         if(s == "") {
             nNotWPCached = TRUE;
+            if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Missing from cache: " + s2DA + "|" + sColumn + "|" + IntToString(nRow));
         }
     }
 
-//if(nDebug) DoDebug("Get2DACache: live cached value is "+s);
+    //if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Live cached value is '" + s + "'");
 
 
     //sColumn = ReplaceChars(sColumn, "_" , "z");
@@ -702,7 +705,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "", int nDe
         SetCampaignString(GetBiowareDBName()+"b", sBiowareDBEntry, s);
     }
 
-//if(nDebug) PrintString("Get2DACache: returned value is "+s);
+    //if(DEBUG_GET2DACACHE) PrintString("Get2DACache: Returned value is '" + s + "'");
 
     if (s=="****")
         return "";

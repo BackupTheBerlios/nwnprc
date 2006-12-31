@@ -13,26 +13,6 @@
 #include "inc_newspellbook"
 #include "prc_allow_const"
 
-// this creates a clone of the PC in limbo, removes the effects and equipment,
-// then stores the results of a ability score query onto the PC's hide.
-void FindTrueAbilityScores(object oPC)
-{
-    int i;
-
-    int iStr = GetAbilityScore(oPC, ABILITY_STRENGTH, TRUE);
-    int iDex = GetAbilityScore(oPC, ABILITY_DEXTERITY, TRUE);
-    int iCon = GetAbilityScore(oPC, ABILITY_CONSTITUTION, TRUE);
-    int iInt = GetAbilityScore(oPC, ABILITY_INTELLIGENCE, TRUE);
-    int iWis = GetAbilityScore(oPC, ABILITY_WISDOM, TRUE);
-    int iCha = GetAbilityScore(oPC, ABILITY_CHARISMA, TRUE);
-    object oHide = GetPCSkin(oPC);
-    SetLocalInt(oHide, "PRC_trueSTR", iStr);
-    SetLocalInt(oHide, "PRC_trueDEX", iDex);
-    SetLocalInt(oHide, "PRC_trueCON", iCon);
-    SetLocalInt(oHide, "PRC_trueINT", iInt);
-    SetLocalInt(oHide, "PRC_trueWIS", iWis);
-    SetLocalInt(oHide, "PRC_trueCHA", iCha);
-}
 
 void SneakRequirement(object oPC)
 {
@@ -762,9 +742,6 @@ void main()
      int iDivSpell1;
      int iSnkLevel;
 
-     FindTrueAbilityScores(oPC);
-
-
      // Initialize all the variables.
      string sVariable;
      int iCount;
@@ -912,12 +889,6 @@ void main()
      Brimstone(oPC);
      // Truly massive debug message flood if activated.
      /*
-     SendMessageToPC(oPC, "Your true Strength: " + IntToString(GetLocalInt(oHide, "PRC_trueSTR")));
-     SendMessageToPC(oPC, "Your true Dexterity: " + IntToString(GetLocalInt(oHide, "PRC_trueDEX")));
-     SendMessageToPC(oPC, "Your true Constitution: " + IntToString(GetLocalInt(oHide, "PRC_trueCON")));
-     SendMessageToPC(oPC, "Your true Intelligence: " + IntToString(GetLocalInt(oHide, "PRC_trueINT")));
-     SendMessageToPC(oPC, "Your true Wisdom: " + IntToString(GetLocalInt(oHide, "PRC_trueWIS")));
-     SendMessageToPC(oPC, "Your true Charisma: " + IntToString(GetLocalInt(oHide, "PRC_trueCHA")));
 
      string sPRC_AllSpell;
      string sPRC_ArcSpell;

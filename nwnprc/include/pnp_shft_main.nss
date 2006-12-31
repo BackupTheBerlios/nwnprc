@@ -141,7 +141,7 @@ void StoreAppearance(object oPC)
         int i;
         for(i=0;i<=20;i++)
         {
-            SetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i), GetCreatureBodyPart(i, oPC));        
+            SetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i), GetCreatureBodyPart(i, oPC));
         }
     }
 }
@@ -322,9 +322,9 @@ void SetShift_02(object oPC, object oTarget)
     int nTCon = GetAbilityScore(oTarget, ABILITY_CONSTITUTION);
 
     // Get the PCs str, dex, and con from the clone
-    int nPCStr = GetLocalInt(oHidePC, "PRC_trueSTR");
-    int nPCDex = GetLocalInt(oHidePC, "PRC_trueDEX");
-    int nPCCon = GetLocalInt(oHidePC, "PRC_trueCON");
+    int nPCStr = GetAbilityScore(oPC, ABILITY_STRENGTH,     TRUE);
+    int nPCDex = GetAbilityScore(oPC, ABILITY_DEXTERITY,    TRUE);
+    int nPCCon = GetAbilityScore(oPC, ABILITY_CONSTITUTION, TRUE);
 
     // Get the deltas
     int nStrDelta = nTStr - nPCStr;
@@ -664,8 +664,8 @@ void SetShift_02(object oPC, object oTarget)
     for(i=0;i<=20;i++)
     {
         DelayCommand(1.0, SetCreatureBodyPart(i, GetCreatureBodyPart(i, oTarget), oPC));
-    }    
-        
+    }
+
     // For spells to make sure they now treat you like the new race
     SetLocalInt(oPC,"RACIAL_TYPE",MyPRCGetRacialType(oTarget)+1);
 
@@ -2148,10 +2148,10 @@ void SetVisualTrueForm(object oPC)
         int i;
         for(i=0;i<=20;i++)
         {
-            DelayCommand(1.0, 
-                SetCreatureBodyPart(i,  
+            DelayCommand(1.0,
+                SetCreatureBodyPart(i,
                     GetPersistantLocalInt(oPC,    "AppearanceStoredPart"+IntToString(i)), oPC));
-        }    
+        }
     }
     else
         //hasnt been previously stored

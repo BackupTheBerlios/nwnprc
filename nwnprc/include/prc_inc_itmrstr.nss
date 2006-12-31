@@ -135,30 +135,7 @@ int CheckPRCLimitations(object oItem, object oPC)
         {
             int nValue = GetItemPropertyCostTableValue(ipTest);
             int nAbility = GetItemPropertySubType(ipTest);
-            object oHide = GetPCSkin(oPC);
-            int nTrueValue;
-            switch(nAbility)
-            {
-                case ABILITY_STRENGTH:
-                    nTrueValue = GetLocalInt(oHide, "PRC_trueSTR");
-                    break;
-                case ABILITY_DEXTERITY:
-                    nTrueValue = GetLocalInt(oHide, "PRC_trueDEX");
-                    break;
-                case ABILITY_CONSTITUTION:
-                    nTrueValue = GetLocalInt(oHide, "PRC_trueCON");
-                    break;
-                case ABILITY_INTELLIGENCE:
-                    nTrueValue = GetLocalInt(oHide, "PRC_trueINT");
-                    break;
-                case ABILITY_WISDOM:
-                    nTrueValue = GetLocalInt(oHide, "PRC_trueWIS");
-                    break;
-                case ABILITY_CHARISMA:
-                    nTrueValue = GetLocalInt(oHide, "PRC_trueCHA");
-                    break;
-            }
-            if(nTrueValue < nValue)
+            if(GetAbilityScore(oPC, nAbility, TRUE) < nValue)
                 bPass = FALSE;
             nUMDDC += nValue-15;
         }

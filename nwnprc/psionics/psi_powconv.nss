@@ -184,8 +184,7 @@ void main()
                 SetHeader(GetStringByStrRef(STRREF_LEVELLIST_HEADER));
 
                 // Determine maximum power level
-                int nManifestLevel = GetLevelByClass(nClass, oPC);
-                    nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
+                int nManifestLevel = GetManifesterLevel(oPC, nClass);
                 int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel - 1));
 
                 // Set the tokens
@@ -216,8 +215,7 @@ void main()
                 AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);
 
                 // Determine maximum power level
-                int nManifestLevel = GetLevelByClass(nClass, oPC);
-                    nManifestLevel += nClass == GetFirstPsionicClass(oPC) ? GetPsionicPRCLevels(oPC) : 0;
+                int nManifestLevel = GetManifesterLevel(oPC, nClass);
                 int nMaxLevel = StringToInt(Get2DACache(sPsiFile, "MaxPowerLevel", nManifestLevel-1));
 
 

@@ -42,8 +42,11 @@ void main()
     //DelayCommand(0.3, PrcFeats(oPC));
     PrcFeats(oPC);
 
-    // Handle ability skill limited items
+    // Handle custom limitation itemproperties and other itemproperties that trigger when equipped, like PnP Holy Avenger and speed modifications
+    SetLocalInt(oPC, "ONEQUIP", 2); // Ugly hack to work around event detection in CheckPRCLimitations() - Ornedan
     ExecuteScript("prc_equip_rstr", OBJECT_SELF);
+    DeleteLocalInt(oPC, "ONEQUIP");
+
     //timestop noncombat equip
     DoTimestopEquip();
 

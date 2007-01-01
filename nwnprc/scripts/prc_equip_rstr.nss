@@ -11,21 +11,23 @@ Fired from prc_equip
 
 void main()
 {
-    object oPC = GetItemLastEquippedBy();
+    object oPC   = GetItemLastEquippedBy();
     object oItem = GetItemLastEquipped();
-    itemproperty ipTest = GetFirstItemProperty(oItem);
-    int bUnequip = CheckPRCLimitations(oItem, oPC);
-    if(!bUnequip)
+    int bUnequip = !CheckPRCLimitations(oItem, oPC);
+    if(bUnequip)
     {
-        SendMessageToPC(oPC, "You cannot equip "+GetName(oItem));
-        int i;
-        object oTest = GetItemInSlot(i, oPC);
-        while(oTest != oItem && i < 20)
-        {
-            i++;
+        // "You cannot equip " + GetName(oItem)
+        SendMessageToPC(oPC, ReplaceChars(GetStringByStrRef(16828407), "<itemname>", GetName(oItem)));
+        int i = 0;
+        object oTest;
+        do {
             oTest = GetItemInSlot(i, oPC);
-        }
-        if(i<20)
-            DelayCommand(0.3f, ForceUnequip(oPC, oItem, i));
+            if(oTest == oItem)
+            {
+                DelayCommand(0.3f, ForceUnequip(oPC, oItem, i));
+                return;
+            }
+            i++;
+        } while(i < NUM_INVENTORY_SLOTS);
     }
 }

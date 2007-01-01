@@ -7,70 +7,128 @@
 
 */
 
+
+//////////////////////////////////////////////////
+/*                 Constants                    */
+//////////////////////////////////////////////////
+
 const string PLAYER_SPEED_INCREASE = "player_speed_increase";
 const string PLAYER_SPEED_DECREASE = "player_speed_decrease";
 
-void ApplySpeedIncrease(object oPC);
-void ApplySpeedDecrease(object oPC);
+
+//////////////////////////////////////////////////
+/*             Function prototypes              */
+//////////////////////////////////////////////////
+
 int DoUMDCheck(object oItem, object oPC, int nDCMod);
-int CheckPRCLimitations(object oItem, object oPC);
+
+int CheckPRCLimitations(object oItem, object oPC = OBJECT_INVALID);
+
+/**
+ * Non-returning wrapper for CheckPRCLimitations.
+ */
+void VoidCheckPRCLimitations(object oItem, object oPC = OBJECT_INVALID);
+
 void CheckForPnPHolyAvenger(object oItem);
+
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
 
 #include "inc_utility"
 #include "prc_inc_newip"
 
-//credit to silvercloud for this :)
-void ApplySpeedIncrease(object oPC)
-{
-    int nSpeedMod = GetLocalInt(oPC, PLAYER_SPEED_INCREASE);
-    //clean existing modification
-    effect eTest = GetFirstEffect(oPC);
 
+//////////////////////////////////////////////////
+/*             Internal functions               */
+//////////////////////////////////////////////////
+
+void _prc_inc_itmrstr_ApplySpeedModification(object oPC, int nEffectType, int nSpeedMod)
+{
+    if(DEBUG) DoDebug("_prc_inc_itmrstr_ApplySpeedModification(" + DebugObject2Str(oPC) + ", " + IntToString(nEffectType) + ", " + IntToString(nSpeedMod) + ")");
+    // The skin object should be OBJECT_SELF here
+    // Clean up existing speed modification
+    effect eTest = GetFirstEffect(oPC);
     while(GetIsEffectValid(eTest))
     {
-        if(GetEffectCreator(eTest) == OBJECT_SELF
-           && GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_INCREASE
-           && GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL
+        if(GetEffectCreator(eTest) == OBJECT_SELF         &&
+           GetEffectType(eTest)    == nEffectType         &&
+           GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL
            )
             RemoveEffect(oPC, eTest);
         eTest = GetNextEffect(oPC);
     }
-    //add new modification
-    if (nSpeedMod > 0)
-    {
-        // when applying start above 100%, since 100% equals base speed
-        nSpeedMod += 100;
 
-        effect eSpeedMod = SupernaturalEffect(EffectMovementSpeedIncrease(nSpeedMod));
-                DelayCommand(0.5, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeedMod, oPC));
-    }
-}
-
-//credit to silvercloud for this :)
-void ApplySpeedDecrease(object oPC)
-{
-    int nSpeedMod = GetLocalInt(oPC, PLAYER_SPEED_DECREASE);
-    //clean existing modification
-    effect eTest = GetFirstEffect(oPC);
-    while(GetIsEffectValid(eTest))
+    // Apply speed mod if there is any
+    if(nSpeedMod > 0)
     {
-        if(GetEffectCreator(eTest) == OBJECT_SELF
-           && GetEffectType(eTest) == EFFECT_TYPE_MOVEMENT_SPEED_DECREASE
-           && GetEffectSubType(eTest) == SUBTYPE_SUPERNATURAL
-           )
-            RemoveEffect(oPC, eTest);
-        eTest = GetNextEffect(oPC);
-    }
-    //add new modification
-    if (nSpeedMod > 0)
-    {
-        //setting a decrease over 99 doesnt work
-        if (nSpeedMod > 99) nSpeedMod = 99;
-
-        effect eSpeedMod = SupernaturalEffect(EffectMovementSpeedDecrease(nSpeedMod));
+        effect eSpeedMod = SupernaturalEffect(nEffectType == EFFECT_TYPE_MOVEMENT_SPEED_INCREASE ?
+                                               EffectMovementSpeedIncrease(nSpeedMod) :
+                                               EffectMovementSpeedDecrease(nSpeedMod)
+                                              );
+        /// @todo Determine if the delay is actually needed here
         DelayCommand(0.5, ApplyEffectToObject(DURATION_TYPE_PERMANENT, eSpeedMod, oPC));
     }
 }
+
+void _prc_inc_itmrstr_ApplySpeedIncrease(object oPC)
+{
+    // Get target speed modification value. Limit to 99, since that's the effect constructor maximum value
+    int nSpeedMod = min(99, GetLocalInt(oPC, PLAYER_SPEED_INCREASE));
+    object oSkin = GetPCSkin(oPC);
+
+    AssignCommand(oSkin, _prc_inc_itmrstr_ApplySpeedModification(oPC, EFFECT_TYPE_MOVEMENT_SPEED_INCREASE, nSpeedMod));
+}
+
+
+void _prc_inc_itmrstr_ApplySpeedDecrease(object oPC)
+{
+    // Get target speed modification value. Limit to 99, since that's the effect constructor maximum value
+    int nSpeedMod = GetLocalInt(oPC, PLAYER_SPEED_DECREASE);
+    object oSkin = GetPCSkin(oPC);
+
+    AssignCommand(oSkin, _prc_inc_itmrstr_ApplySpeedModification(oPC, EFFECT_TYPE_MOVEMENT_SPEED_DECREASE, nSpeedMod));
+}
+
+void _prc_inc_itmrstr_ApplyAoE(object oPC, object oItem, int nSubType, int nCost)
+{
+    int nAoEID    = StringToInt(Get2DACache("iprp_aoe", "AoEID", nSubType));
+    string sEnter = Get2DACache("iprp_aoe", "EnterScript", nSubType);
+    string sExit  = Get2DACache("iprp_aoe", "ExitScript",  nSubType);
+    string sHB    = Get2DACache("iprp_aoe", "HBScript",    nSubType);
+    effect eAoE   = EffectAreaOfEffect(nAoEID, sEnter, sHB, sExit);
+
+    // The item applies the AoE effect
+    ApplyEffectToObject(DURATION_TYPE_PERMANENT, eAoE, oPC);
+
+    // Get an object reference to the newly created AoE
+    location lLoc = GetLocation(oPC);
+    object oAoE = GetFirstObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    while(GetIsObjectValid(oAoE))
+    {
+        // Test if we found the correct AoE
+        if(GetTag(oAoE) == Get2DACache("vfx_persistent", "LABEL", nAoEID) &&
+           !GetLocalInt(oAoE, "PRC_AoE_IPRP_Init")
+           )
+        {
+            SetLocalInt(oAoE, "PRC_AoE_IPRP_Init", TRUE);
+            break;
+        }
+        // Didn't find, get next
+        oAoE = GetNextObjectInShape(SHAPE_SPHERE, 1.0f, lLoc, FALSE, OBJECT_TYPE_AREA_OF_EFFECT);
+    }
+    if(!GetIsObjectValid(oAoE)) DoDebug("ERROR: _prc_inc_itmrstr_ApplyAoE: Can't find AoE created by " + DebugObject2Str(oItem));
+
+    // Set caster level override on the AoE
+    SetLocalInt(oAoE, PRC_CASTERLEVEL_OVERRIDE, nCost);
+    //if(DEBUG) DoDebug("_prc_inc_itmrstr_ApplyAoE: AoE level: " + IntToString(nCost));
+}
+
+
+//////////////////////////////////////////////////
+/*             Function definitions             */
+//////////////////////////////////////////////////
 
 int GetUMDForItemCost(object oItem)
 {
@@ -109,78 +167,96 @@ int DoUMDCheck(object oItem, object oPC, int nDCMod)
     else
         return TRUE;
 }
-void VoidCheckPRCLimitations(object oItem, object oPC)
+
+void VoidCheckPRCLimitations(object oItem, object oPC = OBJECT_INVALID)
 {
     CheckPRCLimitations(oItem, oPC);
 }
 
 //tests for use restrictions
 //also appies effects for those IPs tat need them
-int CheckPRCLimitations(object oItem, object oPC)
+/// @todo Rename. It's not just limitations anymore
+int CheckPRCLimitations(object oItem, object oPC = OBJECT_INVALID)
 {
-    //sanity checks
+    // Sanity check - the item needs to be valid
+    if(!GetIsObjectValid(oItem))
+        return FALSE; /// @todo Might be better to auto-pass the limitation aspect in case of invalid item
+
+    // In case no item owner was given, find it out
     if(!GetIsObjectValid(oPC))
         oPC = GetItemPossessor(oItem);
 
-    itemproperty ipTest = GetFirstItemProperty(oItem);
-    int bPass = TRUE;
-    int nUMDDC;
+    // Sanity check - the item needs to be in some creature's possession for this function to make sense
+    if(!GetIsObjectValid(oPC))
+        return FALSE;
+
+    // Equip and Unequip events need some special handling
+    int bUnequip = GetItemLastUnequipped() == oItem && GetLocalInt(oPC, "ONEQUIP") == 1;
+    int bEquip   = GetItemLastEquipped()   == oItem && GetLocalInt(oPC, "ONEQUIP") == 2;
+
+    // Use restriction and UMD use
+    int bPass  = TRUE;
+    int nUMDDC = 0;
+
+    // Speed modification. Used to determine if effects need to be applied
     int nSpeedIncrease = GetLocalInt(oPC, PLAYER_SPEED_INCREASE);
     int nSpeedDecrease = GetLocalInt(oPC, PLAYER_SPEED_DECREASE);
-    object oSkin = GetPCSkin(oPC);
 
+    // Loop over all itemproperties on the item
+    itemproperty ipTest = GetFirstItemProperty(oItem);
     while(GetIsItemPropertyValid(ipTest))
     {
-        if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE)
+        /* Use restrictions. All of these can be skipped when unequipping */
+        if     (!bUnequip && GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_ABILITY_SCORE)
         {
             int nValue = GetItemPropertyCostTableValue(ipTest);
             int nAbility = GetItemPropertySubType(ipTest);
             if(GetAbilityScore(oPC, nAbility, TRUE) < nValue)
                 bPass = FALSE;
-            nUMDDC += nValue-15;
+            nUMDDC += nValue - 15;
         }
-        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_SKILL_RANKS)
+        else if(!bUnequip && GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_SKILL_RANKS)
         {
             int nValue = GetItemPropertyCostTableValue(ipTest);
             int nSkill = GetItemPropertySubType(ipTest);
             int nTrueValue = GetSkillRank(nSkill, oPC);
             if(nTrueValue < nValue)
                 bPass = FALSE;
-            nUMDDC += nValue-10;
+            nUMDDC += nValue - 10;
         }
-        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_SPELL_LEVEL)
+        else if(!bUnequip && GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_SPELL_LEVEL)
         {
             int nLevel = GetItemPropertyCostTableValue(ipTest);
-            int nValid = GetLocalInt(oPC, "PRC_AllSpell"+IntToString(nLevel));
+            int nValid = GetLocalInt(oPC, "PRC_AllSpell" + IntToString(nLevel));
             if(nValid)
                 bPass = FALSE;
-            nUMDDC += (nLevel*2)-20;
+            nUMDDC += (nLevel * 2) - 20;
         }
-        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_ARCANE_SPELL_LEVEL)
+        else if(!bUnequip && GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_ARCANE_SPELL_LEVEL)
         {
             int nLevel = GetItemPropertyCostTableValue(ipTest);
-            int nValid = GetLocalInt(oPC, "PRC_ArcSpell"+IntToString(nLevel));
+            int nValid = GetLocalInt(oPC, "PRC_ArcSpell" + IntToString(nLevel));
             if(nValid)
                 bPass = FALSE;
-            nUMDDC += (nLevel*2)-20;
+            nUMDDC += (nLevel * 2) - 20;
         }
-        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_DIVINE_SPELL_LEVEL)
+        else if(!bUnequip && GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_DIVINE_SPELL_LEVEL)
         {
             int nLevel = GetItemPropertyCostTableValue(ipTest);
-            int nValid = GetLocalInt(oPC, "PRC_DivSpell"+IntToString(nLevel));
+            int nValid = GetLocalInt(oPC, "PRC_DivSpell" + IntToString(nLevel));
             if(nValid)
                 bPass = FALSE;
-            nUMDDC += (nLevel*2)-20;
+            nUMDDC += (nLevel * 2) - 20;
         }
-        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_SNEAK_ATTACK)
+        else if(!bUnequip && GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_SNEAK_ATTACK)
         {
             int nLevel = GetItemPropertyCostTableValue(ipTest);
-            int nValid = GetLocalInt(oPC, "PRC_SneakLevel"+IntToString(nLevel));
+            int nValid = GetLocalInt(oPC, "PRC_SneakLevel" + IntToString(nLevel));
             if(nValid)
                 bPass = FALSE;
-            nUMDDC += (nLevel*2)-20;
+            nUMDDC += (nLevel * 2) - 20;
         }
-        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_GENDER)
+        else if(!bUnequip && GetItemPropertyType(ipTest) == ITEM_PROPERTY_USE_LIMITATION_GENDER)
         {
             int nIPGender = GetItemPropertySubType(ipTest);
             int nRealGender = GetGender(oPC);
@@ -188,29 +264,29 @@ int CheckPRCLimitations(object oItem, object oPC)
                 bPass = FALSE;
             nUMDDC += 5;
         }
+
+        /* Properties that apply effects. Unequip should cause cleanup here */
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_SPEED_INCREASE)
         {
             int iItemAdjust = 0;
             int nCost = GetItemPropertyCostTableValue(ipTest);
             switch(nCost)
             {
-                case 0: iItemAdjust = 10; break;
-                case 1: iItemAdjust = 20; break;
-                case 2: iItemAdjust = 30; break;
-                case 3: iItemAdjust = 40; break;
-                case 4: iItemAdjust = 50; break;
-                case 5: iItemAdjust = 60; break;
-                case 6: iItemAdjust = 70; break;
-                case 7: iItemAdjust = 80; break;
-                case 8: iItemAdjust = 90; break;
+                case 0: iItemAdjust = 10;  break;
+                case 1: iItemAdjust = 20;  break;
+                case 2: iItemAdjust = 30;  break;
+                case 3: iItemAdjust = 40;  break;
+                case 4: iItemAdjust = 50;  break;
+                case 5: iItemAdjust = 60;  break;
+                case 6: iItemAdjust = 70;  break;
+                case 7: iItemAdjust = 80;  break;
+                case 8: iItemAdjust = 90;  break;
                 case 9: iItemAdjust = 100; break;
             }
-            if(GetItemLastUnequipped() == oItem) //unequip event
-                nSpeedDecrease -= iItemAdjust;
-            else
+            if(bUnequip)
+                nSpeedIncrease -= iItemAdjust;
+            else if(bEquip)
                 nSpeedIncrease += iItemAdjust;
-            SetLocalInt(oPC, PLAYER_SPEED_INCREASE, nSpeedIncrease);
-            AssignCommand(oSkin, ApplySpeedIncrease(oPC));
         }
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_SPEED_DECREASE)
         {
@@ -229,16 +305,14 @@ int CheckPRCLimitations(object oItem, object oPC)
                 case 8: iItemAdjust = 90; break;
                 case 9: iItemAdjust = 99; break;
             }
-            if(GetItemLastUnequipped() == oItem) //unequip event
+            if(bUnequip)
                 nSpeedDecrease -= iItemAdjust;
-            else
+            else if(bEquip)
                 nSpeedDecrease += iItemAdjust;
-            SetLocalInt(oPC, PLAYER_SPEED_DECREASE, nSpeedDecrease);
-            AssignCommand(oSkin, ApplySpeedDecrease(oPC));
         }
         else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_PNP_HOLY_AVENGER)
         {
-            if(GetItemLastEquipped() == oItem) //unequip event
+            if(bEquip)
             {
                 int nPaladinLevels = GetLevelByClass(CLASS_TYPE_PALADIN, oPC);
                 if(!nPaladinLevels)
@@ -257,6 +331,8 @@ int CheckPRCLimitations(object oItem, object oPC)
                             nPaladinLevels = nSkill;
                     }
                 }
+
+                // Add Holy Avenger specials for Paladins (or successfull fake-Paladins)
                 if(nPaladinLevels)
                 {
                     DelayCommand(0.1, IPSafeAddItemProperty(oItem,
@@ -272,13 +348,20 @@ int CheckPRCLimitations(object oItem, object oPC)
                         ItemPropertyCastSpellCasterLevel(SPELL_DISPEL_MAGIC,
                             nPaladinLevels), 99999.9));
                 }
+                // Non-Paladin's get +2 enhancement bonus
                 else
                 {
                     DelayCommand(0.1, IPSafeAddItemProperty(oItem,
                         ItemPropertyEnhancementBonus(2), 99999.9));
+
+                    // Remove Paladin specials
+                    IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS, DURATION_TYPE_TEMPORARY, -1);
+                    IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP, DURATION_TYPE_TEMPORARY, IP_CONST_ALIGNMENTGROUP_EVIL);
+                    IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_CAST_SPELL, DURATION_TYPE_TEMPORARY);
+                    IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_CAST_SPELL_CASTER_LEVEL, DURATION_TYPE_TEMPORARY);
                 }
             }
-            else
+            else if(bUnequip)
             {
                 IPRemoveMatchingItemProperties(oItem, ITEM_PROPERTY_ENHANCEMENT_BONUS,
                     DURATION_TYPE_TEMPORARY, -1);
@@ -294,60 +377,67 @@ int CheckPRCLimitations(object oItem, object oPC)
         {
             int nSubType  = GetItemPropertySubType(ipTest);
             int nCost     = GetItemPropertyCostTable(ipTest);
-            int nAoEID    = StringToInt(Get2DACache("iprp_aoe", "AoEID", nSubType));
-            string sEnter = Get2DACache("iprp_aoe", "EnterScript", nSubType);
-            string sExit = Get2DACache("iprp_aoe", "ExitScript", nSubType);
-            string sHB = Get2DACache("iprp_aoe", "HBScript", nSubType);
-            //clean existing modification
-            effect eTest = GetFirstEffect(oPC);
 
-            while(GetIsEffectValid(eTest))
+            // This should only happen on equip or unequip
+            if(bEquip || bUnequip)
             {
-                if(GetEffectCreator(eTest) == oItem
-                   && GetEffectType(eTest) == EFFECT_TYPE_AREA_OF_EFFECT)
+                // Remove existing AoE
+                effect eTest = GetFirstEffect(oPC);
+                while(GetIsEffectValid(eTest))
                 {
-                    RemoveEffect(oPC, eTest);
-                    DoDebug("Removing old AoE effect");
+                    if(GetEffectCreator(eTest) == oItem
+                       && GetEffectType(eTest) == EFFECT_TYPE_AREA_OF_EFFECT)
+                    {
+                        RemoveEffect(oPC, eTest);
+                        if(DEBUG) DoDebug("CheckPRCLimitations: Removing old AoE effect");
+                    }
+                    eTest = GetNextEffect(oPC);
                 }
-                eTest = GetNextEffect(oPC);
-            }
 
-            AssignCommand(oItem,
-                ApplyEffectToObject(DURATION_TYPE_PERMANENT,
-                    EffectAreaOfEffect(nAoEID, sEnter, sHB, sExit),
-                        oPC));
-            //wont get AoE if its directly ontop of it
-            location lLoc = GetLocation(oPC);
-            vector vPos = GetPositionFromLocation(lLoc);
-            vPos.x += 0.001;
-            lLoc = Location(GetAreaFromLocation(lLoc), vPos, 0.0);
-            //get te Aoe Object we just created
-            int i=1;
-            object oAoE = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lLoc, i);
-            if(!GetIsObjectValid(oAoE))
-                SendMessageToPC(oPC, "No AoE objects detected");
-            else
+                // Create new AoE - Only when equipping
+                if(bEquip)
+                {
+                    AssignCommand(oItem, _prc_inc_itmrstr_ApplyAoE(oPC, oItem, nSubType, nCost));
+                }// end if - Equip event
+            }// end if - Equip or Unequip event
+        }// end if - AoE iprp
+        else if(GetItemPropertyType(ipTest) == ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N)
+        {
+            // Only equippable items can provide bonus spell slots
+            if(bEquip || bUnequip)
             {
-                while(GetAreaOfEffectCreator(oAoE) != oItem
-                    && GetIsObjectValid(oAoE))
-                {
-                    i++;
-                    oAoE = GetNearestObjectToLocation(OBJECT_TYPE_AREA_OF_EFFECT, lLoc, i);
-                }
-                if(!GetIsObjectValid(oAoE))
-                    DoDebug("Unable to detect AoE created by "+GetName(oItem));
-                else
-                {
-                    SetLocalInt(oAoE, PRC_CASTERLEVEL_OVERRIDE, nCost);
-DoDebug("AoE is level "+IntToString(nCost));
-                }
+                int nSubType  = GetItemPropertySubType(ipTest);
+                int nCost     = GetItemPropertyCostTable(ipTest);
+                SetLocalInt(oPC,
+                            "PRC_IPRPBonSpellSlots_" + IntToString(nSubType) + "_" + IntToString(nCost),
+                            GetLocalInt(oPC,
+                                        "PRC_IPRPBonSpellSlots_" + IntToString(nSubType) + "_" + IntToString(nCost)
+                                        )
+                             + (bEquip ? 1 : -1)
+                            );
             }
-
         }
+
         ipTest = GetNextItemProperty(oItem);
+    }// end while - Loop over all itemproperties
+
+    // Determine if speed modification totals had changed
+    if(nSpeedDecrease != GetLocalInt(oPC, PLAYER_SPEED_DECREASE))
+    {
+        SetLocalInt(oPC, PLAYER_SPEED_DECREASE, nSpeedDecrease);
+        _prc_inc_itmrstr_ApplySpeedDecrease(oPC);
     }
-    if(!bPass)
+    if(nSpeedIncrease != GetLocalInt(oPC, PLAYER_SPEED_INCREASE))
+    {
+        SetLocalInt(oPC, PLAYER_SPEED_INCREASE, nSpeedIncrease);
+        _prc_inc_itmrstr_ApplySpeedIncrease(oPC);
+    }
+
+    // If some restriction would prevent item use, perform UMD skill check
+    // Skip in case of unequip
+    if(!bUnequip && !bPass)
         bPass = DoUMDCheck(oItem, oPC, nUMDDC);
+
     return bPass;
 }
 

@@ -69,6 +69,9 @@ void main()
             SetCampaignString(sDBName, "PRC_2DA_Cache_Fingerprint", GetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint"));
             if(DEBUG) DoDebug                 ("Finished storing Bioware2DACache");
             else      WriteTimestampedLogEntry("Finished storing Bioware2DACache");
+
+            // Updated last access fingerprint
+            SetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint_LastAccessed", GetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint"));
         }
     }
 

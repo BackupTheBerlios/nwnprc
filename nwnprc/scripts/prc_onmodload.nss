@@ -54,6 +54,9 @@ void CheckDB()
     // Store the fingerprint on the module - it will be written to the DB upon cache storage
     SetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint", sFingerprint);
 
+    // Also store the fingerprint of the DB we will be loading shortly
+    SetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint_LastAccessed", GetCampaignString(sDBName,  "PRC_2DA_Cache_Fingerprint"));
+
     location lLoc = GetLocation(GetObjectByTag("HEARTOFCHAOS"));
     //only get it if one doesnt already exist (saved games)
     // This never gets run on saved games due to the "prc_mod_load_done" check.
@@ -76,13 +79,13 @@ void CheckDB()
  */
 void CheckDBUpdate()
 {
-    // Get Module and DB fingerprints
+    // Get last loaded (or saved) and DB fingerprints
     string sDBName = GetBiowareDBName();
-    string sModuleFingerprint = GetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint");
+    string sModuleFingerprint = GetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint_LastAccessed");
     string sDBFingerprint     = GetCampaignString(sDBName,  "PRC_2DA_Cache_Fingerprint");
 
     DoDebug("CheckDBUpdate():\n"
-          + " Module fingerprint: " + sModuleFingerprint + "\n"
+          + " Module last access fingerprint: " + sModuleFingerprint + "\n"
           + " Database fingerprint: " + sDBFingerprint
             );
     // If they differ, the DB has changed in meanwhile and we need to reload the cache chest
@@ -98,6 +101,9 @@ void CheckDBUpdate()
             DoDebug("ERROR: Unable to load 2da cache object (CacheChest) from " + sDBName);
         else
             DoDebug("Finished loading 2da cache object from " + sDBName);
+
+        // Updated last access fingerprint
+        SetLocalString(GetModule(), "PRC_2DA_Cache_Fingerprint_LastAccessed", sDBFingerprint);
     }
 }
 

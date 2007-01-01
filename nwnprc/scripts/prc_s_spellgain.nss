@@ -1,13 +1,16 @@
 //:://////////////////////////////////////////////
-//:: Short description
-//:: filename
+//:: New Spellbooks spell learning conversation
+//:: prc_s_spellgain
 //:://////////////////////////////////////////////
 /** @file
-    Long description
+    New spellbooks spell learning conversation.
+    Displays spell levels available and spells
+    from those levels available for learning.
 
+    Each conversation instance is tied to some
+    class's spellbook.
 
-    @author Joe Random
-    @date   Created  - yyyy.mm.dd
+    @date Modified - 2007.01.01
 */
 //:://////////////////////////////////////////////
 //:://////////////////////////////////////////////
@@ -15,8 +18,9 @@
 #include "inc_dynconv"
 #include "inc_newspellbook"
 
+
 //////////////////////////////////////////////////
-/* Constant defintions                          */
+/* Constant definitions                         */
 //////////////////////////////////////////////////
 
 const int STAGE_SELECT_LEVEL = 0;
@@ -30,7 +34,7 @@ const int LEVEL_STRREF_START        = 16824809;
 const int STRREF_YES                = 4752;     // "Yes"
 const int STRREF_NO                 = 4753;     // "No"
 
-const int ERROR_CODE_5 = 999;
+
 //////////////////////////////////////////////////
 /* Aid functions                                */
 //////////////////////////////////////////////////
@@ -44,17 +48,7 @@ const int ERROR_CODE_5 = 999;
 void main()
 {
     object oPC = GetPCSpeaker();
-    /* Get the value of the local variable set by the conversation script calling
-     * this script. Values:
-     * DYNCONV_ABORTED     Conversation aborted
-     * DYNCONV_EXITED      Conversation exited via the exit node
-     * DYNCONV_SETUP_STAGE System's reply turn
-     * 0                   Error - something else called the script
-     * Other               The user made a choice
-     */
     int nValue = GetLocalInt(oPC, DYNCONV_VARIABLE);
-    // The stage is used to determine the active conversation node.
-    // 0 is the entry node.
     int nStage = GetStage(oPC);
 
     // Check which of the conversation scripts called the scripts
@@ -72,130 +66,110 @@ void main()
             // Function AddChoice to add a response option for the PC. The responses are show in order added
             if(nStage == STAGE_SELECT_LEVEL)
             {
-                int nClass = GetLocalInt(oPC, "SpellGainClass");
+                int nClass             = GetLocalInt(oPC, "SpellGainClass");
                 int nSpellbookMinLevel = GetLocalInt(oPC, "SpellbookMinSpelllevel");
                 int nSpellbookMaxLevel = GetLocalInt(oPC, "SpellbookMaxSpelllevel");
-                int nLevel = GetSpellslotLevel(nClass, oPC);
-                string sFile = GetFileForClass(nClass);
+                int nLevel             = GetSpellslotLevel(nClass, oPC);
+                string sFile           = GetFileForClass(nClass);
                 int nSpellsKnownCurrent;
                 int nSpellsKnownMax;
-                int nSpellsKnownToSelect;
                 int i;
 
                 int nAddedASpellLevel = FALSE;
-                for(i=nSpellbookMinLevel;i<=nSpellbookMaxLevel;i++)
+                for(i = nSpellbookMinLevel; i <= nSpellbookMaxLevel; i++)
                 {
                     nSpellsKnownCurrent  = GetSpellKnownCurrentCount(oPC, i, nClass);
                     nSpellsKnownMax      = GetSpellKnownMaxCount(nLevel, i, nClass, oPC);
-                    int nSpellsAvaliable = GetSpellUnknownCurrentCount(oPC, i, nClass);
+                    int nSpellsAvailable = GetSpellUnknownCurrentCount(oPC, i, nClass);
                     if(nSpellsKnownCurrent < nSpellsKnownMax)
                     {
-DoDebug("nSpellsKnownCurrent < nSpellsKnownMax is TRUE");
-                        //if(nSpellsAvaliable >= nSpellsKnownToSelect)
-                        if(nSpellsAvaliable)
+                        if(nSpellsAvailable >= (nSpellsKnownMax - nSpellsKnownCurrent))
                         {
-DoDebug("nSpellsAvaliable is TRUE");
                             nAddedASpellLevel = TRUE;
-                            AddChoice("Spell Level "+IntToString(i), i);
+                            AddChoice(GetStringByStrRef(7544)/*"Spell Level"*/ + " " + IntToString(i), i);
                         }
                         else
-                            DoDebug("Insufficient spells to fill level "+IntToString(i));
+                            DoDebug("ERROR: prc_s_spellgain: Insufficient spells to fill level " + IntToString(i) + "; Class: " + IntToString(nClass));
                     }
                 }
                 if(!nAddedASpellLevel)
                 {
-                    SetHeader("You can select more spells when you next gain a level.");
-                    SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
+                    SetHeaderStrRef(16828406); // "You can select more spells when you next gain a level."
                     AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, oPC);
-                    DelayCommand(0.01, AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, oPC));
-                    DelayCommand(0.1 , AllowExit(DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, TRUE, oPC));
+                    SetCustomToken(DYNCONV_TOKEN_EXIT, GetStringByStrRef(STRREF_END_CONVO_SELECT));
                 }
                 else
                 {
                     SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
-                    SetHeader("Select a level to gain spells");
+                    // "<classname> spellbook.\nSelect a spell level to gain spells from."
+                    SetHeader(ReplaceChars(GetStringByStrRef(16828405), "<classname>", GetStringByStrRef(StringToInt(Get2DACache("classes", "Name", nClass)))));
                 }
                 MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
             }
             else if(nStage == STAGE_SELECT_SPELL)
             {
-                int nClass = GetLocalInt(oPC, "SpellGainClass");
-                int nLevel = GetSpellslotLevel(nClass, oPC);
+                int nClass      = GetLocalInt(oPC, "SpellGainClass");
+                int nLevel      = GetSpellslotLevel(nClass, oPC);
                 int nSpellLevel = GetLocalInt(oPC, "SelectedLevel");
-                string sFile = GetFileForClass(nClass);
-                // Set the header
-                int nSpellsKnownCurrent = GetSpellKnownCurrentCount(oPC, nSpellLevel, nClass);
-                int nSpellsKnownMax = GetSpellKnownMaxCount(nLevel, nSpellLevel, nClass, oPC);
+                string sFile    = GetFileForClass(nClass);
+
+                // Determine how many spells the character can select
+                int nSpellsKnownCurrent  = GetSpellKnownCurrentCount(oPC, nSpellLevel, nClass);
+                int nSpellsKnownMax      = GetSpellKnownMaxCount(nLevel, nSpellLevel, nClass, oPC);
                 int nSpellsKnownToSelect = nSpellsKnownMax - nSpellsKnownCurrent;
-                string sHeader;
+
+                // Set up header
+                // "You have <selectcount> level <spelllevel> spells remaining to select."
+                SetHeader(ReplaceChars(ReplaceChars(GetStringByStrRef(16828404),
+                          "<selectcount>", IntToString(nSpellsKnownToSelect)),
+                          "<spelllevel>", IntToString(nSpellLevel))
+                          );
+
+                // List all spells not yet selected of this level
                 int i;
                 int nRow;
-                // Add responses for the PC
-                string sTag = "SpellLvl_"+IntToString(nClass)+"_Level_"+IntToString(nSpellLevel);
+                string sTag = "SpellLvl_" + IntToString(nClass) + "_Level_" + IntToString(nSpellLevel);
                 object oWP = GetObjectByTag(sTag);
                 for(i = 0; i < array_get_size(oWP, "Lkup"); i++)
                 {
-                    int nRow = array_get_int(oWP, "Lkup", i);
+                    int nRow    = array_get_int(oWP, "Lkup", i);
                     int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nRow));
-                    if(Get2DACache(sFile, "ReqFeat", nRow)==""      // Has no prerequisites
-                        && !GetHasFeat(nFeatID, oPC))               // And doesnt have it already
+                    if(Get2DACache(sFile, "ReqFeat", nRow) == "" && // Has no prerequisites
+                       !GetHasFeat(nFeatID, oPC))                   // And doesnt have it already
                     {
                         int nFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nRow));
                         AddChoice(GetStringByStrRef(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))), nRow, oPC);
-DoDebug("PRC_S_spellb i="+IntToString(nRow));
-DoDebug("PRC_S_spellb sFile="+sFile);
-DoDebug("PRC_S_spellb nFeatID="+IntToString(nFeatID));
-DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID))));
+
+                        if(DEBUG) DoDebug("prc_s_spellgain: Adding spell selection choice:\n"
+                                        + "i = " + IntToString(nRow)          + "\n"
+                                        + "sFile = " + sFile                  + "\n"
+                                        + "nFeatID = " + IntToString(nFeatID) + "\n"
+                                        + "resref = " + IntToString(StringToInt(Get2DACache("iprp_feats", "Name", nFeatID)))
+                                          );
                     }
                 }
-                /*
-                for(nRow=0;nRow<GetPRCSwitch(FILE_END_CLASS_SPELLBOOK);nRow++)
-                {
-                    int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nRow));
-                    if(!GetHasFeat(nFeatID, oPC)
-                        && Get2DACache(sFile, "ReqFeat", nRow) == ""
-                        && Get2DACache(sFile, "Level", nRow) == IntToString(nSpellLevel)
-                        )
-                    {
-                        int bHas = FALSE;
-                        for(i=0;i<persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass)) && !bHas;i++)
-                        {
-                            int nNewSpellbookID = persistant_array_get_int(oPC, "Spellbook"+IntToString(nClass), i)-1;
-                            if(nNewSpellbookID == nRow)
-                                bHas = TRUE;
-                        }
-                        if(!bHas)
-                        {
-                            string sName = GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT", nFeatID)));
-                            AddChoice(sName, nRow);
-                        }
-                    }
-                }*/
-                sHeader += "You have "+IntToString(nSpellsKnownToSelect)+" level "+IntToString(nSpellLevel);
-                sHeader += " spells remaining to select.";
-                SetHeader(sHeader);
-                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
-                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
+
+                SetDefaultTokens();
+                MarkStageSetUp(nStage, oPC);
             }
             else if(nStage == STAGE_CONFIRM)
             {
-                int nRow = GetLocalInt(oPC, "SelectedSpell");
-                int nClass = GetLocalInt(oPC, "SpellGainClass");
+                int nRow     = GetLocalInt(oPC, "SelectedSpell");
+                int nClass   = GetLocalInt(oPC, "SpellGainClass");
                 string sFile = GetFileForClass(nClass);
+                int nFeat    = StringToInt(Get2DACache(sFile, "FeatID", nRow));
 
-                string sDesc;
-                sDesc += "You have selected: ";
-                sDesc += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT",
-                    StringToInt(Get2DACache(sFile, "FeatID", nRow)))));
-                sDesc += "\n\n";
-                sDesc += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION",
-                    StringToInt(Get2DACache(sFile, "FeatID", nRow)))));
-                sDesc += "\n\nIs this correct?";
-                SetHeader(sDesc);
+                string sToken  = GetStringByStrRef(16824209) + "\n\n"; // "You have selected:"
+                       sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "FEAT",        nFeat))) + "\n";
+                       sToken += GetStringByStrRef(StringToInt(Get2DACache("feat", "DESCRIPTION", nFeat))) + "\n\n";
+                       sToken += GetStringByStrRef(16824210); // "Is this correct?"
+                SetHeader(sToken);
+
                 AddChoice(GetStringByStrRef(STRREF_YES), TRUE);
                 AddChoice(GetStringByStrRef(STRREF_NO), FALSE);
-                MarkStageSetUp(nStage, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
-                SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
+
+                MarkStageSetUp(nStage, oPC);
+                SetDefaultTokens();
             }
             //add more stages for more nodes with Else If clauses
         }
@@ -242,8 +216,6 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
         }
         else if(nStage == STAGE_SELECT_SPELL)
         {
-            // Move to another stage based on response, for example
-            //nStage = STAGE_QUUX;
             SetLocalInt(oPC, "SelectedSpell", nChoice);
             nStage = STAGE_CONFIRM;
             MarkStageNotSetUp(nStage, oPC);
@@ -251,31 +223,36 @@ DoDebug("PRC_S_spellb resref="+IntToString(StringToInt(Get2DACache("iprp_feats",
         else if(nStage == STAGE_CONFIRM)
         {
             // Move to another stage based on response, for example
-            //nStage = STAGE_QUUX;
             if(nChoice == TRUE)
             {
-                int nClass = GetLocalInt(oPC, "SpellGainClass");
+                int nClass   = GetLocalInt(oPC, "SpellGainClass");
+                int nRow     = GetLocalInt(oPC, "SelectedSpell");
                 string sFile = GetFileForClass(nClass);
-                int nRow = GetLocalInt(oPC, "SelectedSpell");
                 object oSkin = GetPCSkin(oPC);
+
                 int nIPFeatID = StringToInt(Get2DACache(sFile, "IPFeatID", nRow));
-                int nFeatID = StringToInt(Get2DACache(sFile, "FeatID", nRow));
-                int nLevel = StringToInt(Get2DACache(sFile, "Level", nRow));
-DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
-                if(!persistant_array_exists(oPC, "Spellbook"+IntToString(nClass)))
-                    persistant_array_create(oPC, "Spellbook"+IntToString(nClass));
-DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
-                persistant_array_set_int(oPC, "Spellbook"+IntToString(nClass),
-                    persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass)), nRow);
-DoDebug("persistant_array_get_size(oPC, Spellbook+IntToString(nClass)) = "+IntToString(persistant_array_get_size(oPC, "Spellbook"+IntToString(nClass))));
-                //this will add feat and stuff
-                //changed in this version
-                AddSpellUse(oPC, nRow, nClass, sFile, "NewSpellbookMem_"+IntToString(nClass), GetSpellbookTypeForClass(nClass), oSkin, nFeatID, nIPFeatID);
+                int nFeatID   = StringToInt(Get2DACache(sFile, "FeatID", nRow));
+                int nLevel    = StringToInt(Get2DACache(sFile, "Level", nRow));
+
+                // Create spells known array if it is missing
+                if(!persistant_array_exists(oPC, "Spellbook" + IntToString(nClass)))
+                    persistant_array_create(oPC, "Spellbook" + IntToString(nClass));
+
+                // Mark the spell as known
+                //if(DEBUG) DoDebug("prc_s_spellgain: persistant_array_get_size(" + DebugObject2Str(oPC) + ", Spellbook" + IntToString(nClass)") = " + IntToString(persistant_array_get_size(oPC, "Spellbook" + IntToString(nClass))));
+                persistant_array_set_int(oPC, "Spellbook" + IntToString(nClass),
+                                         persistant_array_get_size(oPC, "Spellbook" + IntToString(nClass)),
+                                         nRow);
+                //if(DEBUG) DoDebug("prc_s_spellgain: persistant_array_get_size(" + DebugObject2Str(oPC) + ", Spellbook" + IntToString(nClass)") = " + IntToString(persistant_array_get_size(oPC, "Spellbook" + IntToString(nClass))));
+
+                // Adds spell use feat
+                AddSpellUse(oPC, nRow, nClass, sFile, "NewSpellbookMem_" + IntToString(nClass), GetSpellbookTypeForClass(nClass), oSkin, nFeatID, nIPFeatID);
             }
             else
             {
                 DeleteLocalInt(oPC, "SelectedSpell");
             }
+
             nStage = STAGE_SELECT_LEVEL;
             MarkStageNotSetUp(nStage, oPC);
         }

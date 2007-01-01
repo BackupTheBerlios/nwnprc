@@ -19943,6 +19943,15 @@ Level
 28: Bonus Feat
 29:  -
 30: Superior Defense +10</entry>
+  <entry id="51188" lang="en" sex="m">You have &lt;selectcount&gt; level &lt;spelllevel&gt; spells remaining to select.</entry>
+  <entry id="51189" lang="en" sex="m">&lt;classname&gt; spellbook.
+Select a spell level to gain spells from.</entry>
+  <entry id="51190" lang="en" sex="m">You can select more spells when you next gain a level.</entry>
+  <entry id="51191" lang="en" sex="m">You cannot equip &lt;itemname&gt;</entry>
+  <entry id="51192" lang="en" sex="m">You have &lt;count&gt; castings of spells of level &lt;spelllevel&gt; remaining</entry>
+  <entry id="51193" lang="en" sex="m">You have no castings of spells of level &lt;spelllevel&gt; remaining!</entry>
+  <entry id="51194" lang="en" sex="m">You have &lt;count&gt; castings of &lt;spellname&gt; remaining</entry>
+  <entry id="51195" lang="en" sex="m">You have no castings of &lt;spellname&gt; remaining!</entry>
   <entry id="51196" lang="en" sex="m">* Skirmish *</entry>
   <entry id="51197" lang="en" sex="m">rends</entry>
   <entry id="51198" lang="en" sex="m">Two-Weapon Rend</entry>

@@ -39,6 +39,18 @@ int GetPowerfileIndexFromSpellID(int nSpellID);
 int GetClassFeatFromPower(int nPowerID, int nClass);
 
 /**
+ * Determines cls_spell_*.2da index from a given new spellbook class-specific
+ * spell spells.2da index.
+ *
+ * @param nSpell The class-specific spell to find cls_spell_*.2da index for
+ * @return       The cls_spell_*.2da index in whichever class's file that the
+ *               given spell belongs to.
+ *               If the spell at nSpell isn't a newspellbook class-specific spell,
+ *               returns -1 instead.
+ */
+int SpellToSpellbookID(int nSpell);
+
+/**
  * Determines the name of the 2da file that defines the number of alternate magic
  * system powers/spells/whathaveyou known, maximum level of such known and
  * number of uses at each level of the given class. And possibly related things
@@ -57,6 +69,14 @@ string GetAMSKnownFileName(int nClass);
  * @return       The name of the given class's power list 2da
  */
 string GetAMSDefinitionFileName(int nClass);
+
+
+//////////////////////////////////////////////////
+/*                  Includes                    */
+//////////////////////////////////////////////////
+
+#include "inc_utility"
+#include "prc_class_const"
 
 
 //////////////////////////////////////////////////
@@ -95,14 +115,6 @@ object _inc_lookups_GetCacheObject(string sTag)
 
     return oWP;
 }
-
-
-//////////////////////////////////////////////////
-/*                  Includes                    */
-//////////////////////////////////////////////////
-
-#include "inc_utility"
-#include "prc_class_const"
 
 
 //////////////////////////////////////////////////
@@ -470,6 +482,16 @@ int GetClassFeatFromPower(int nPowerID, int nClass)
     if(nPower == 0)
         nPower = -1;
     return nPower;
+}
+
+int SpellToSpellbookID(int nSpell)
+{
+    object oWP = GetObjectByTag("PRC_GetRowFromSpellID");
+    int nOutSpellID = GetLocalInt(oWP, /*"PRC_GetRowFromSpellID_" + */IntToString(nSpell));
+    if(nOutSpellID == 0)
+        nOutSpellID = -1;
+    //if(DEBUG) DoDebug("SpellToSpellbookID(" + IntToString(nSpell) + ", " + sFile + ") = " + IntToString(nOutSpellID));
+    return nOutSpellID;
 }
 
 string GetAMSKnownFileName(int nClass)

@@ -51,7 +51,7 @@ void TransportToWaypoint(object oPC, object oWaypoint);
 void TransportToLocation(object oPC, location oLoc);
 
 // Transport an entire party to a waypoint
-void TransportAllToWaypoint(object oPC, object oWay);
+void TransportAllToWaypoint(object oPC, object oWaypoint);
 
 // Transport an entire party to a location
 void TransportAllToLocation(object oPC, location lLoc);

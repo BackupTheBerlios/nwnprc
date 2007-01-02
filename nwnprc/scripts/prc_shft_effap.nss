@@ -52,7 +52,7 @@ void main()
 
         if(DEBUG) DoDebug("prc_sft_effap: Applying extra Strength bonus / penalty\n"
                         + "nExtraSTR = " + IntToString(nExtraSTR) + "\n"
-                        + "nDamageType = " + IntToString(nDamageType) + "\n"
+                        + "nDamageType = " + IntToString(nDamageType)
                           );
 
         // Determine whether we need to apply a bonus or a penalty
@@ -107,6 +107,10 @@ void main()
     {
         int nExtraDEX = GetLocalInt(oShifter, "PRC_Shifter_ExtraDEX");
 
+        if(DEBUG) DoDebug("prc_sft_effap: Applying extra Dexterity bonus / penalty\n"
+                        + "nExtraDEX = " + IntToString(nExtraDEX)
+                          );
+
         // Generate effect
         if(nExtraDEX > 0)
             eTotalEffect = EffectLinkEffects(eTotalEffect, EffectACIncrease(nExtraDEX));
@@ -122,6 +126,10 @@ void main()
     {
         int nExtraCON = GetLocalInt(oShifter, "PRC_Shifter_ExtraCON");
 
+        if(DEBUG) DoDebug("prc_sft_effap: Applying extra Constitution bonus\n"
+                        + "nExtraCON = " + IntToString(nExtraCON)
+                          );
+
         // Generate effect
         eTotalEffect = EffectLinkEffects(eTotalEffect, EffectTemporaryHitpoints(nExtraCON * GetHitDice(oShifter)));
 
@@ -134,6 +142,10 @@ void main()
     {
         int nNaturalAC = GetLocalInt(oShifter, "PRC_Shifter_NaturalAC");
 
+        if(DEBUG) DoDebug("prc_sft_effap: Applying extra Natural AC bonus\n"
+                        + "nNaturalAC = " + IntToString(nNaturalAC)
+                          );
+
         // Generate effect
         eTotalEffect = EffectLinkEffects(eTotalEffect, EffectACIncrease(nNaturalAC, AC_NATURAL_BONUS));
 
@@ -144,6 +156,8 @@ void main()
     // Harmlessly invisible
     if(GetLocalInt(oShifter, "PRC_Shifter_HarmlessInvisible"))
     {
+        if(DEBUG) DoDebug("prc_sft_effap: Applying harmlessness invisibility");
+
         // Generate effect
         eTotalEffect = EffectLinkEffects(eTotalEffect, EffectInvisibility(INVISIBILITY_TYPE_NORMAL));
 

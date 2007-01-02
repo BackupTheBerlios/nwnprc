@@ -774,12 +774,12 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
 
         // Adjust for caps
         /// @todo Think of a more accurate calculation method
-        if     (nDeltaSTR >  12) { nExtraSTR = 12 - nDeltaSTR; nDeltaSTR =  12; }
-        else if(nDeltaSTR < -10) { nExtraSTR = 10 + nDeltaSTR; nDeltaSTR = -10; }
-        if     (nDeltaDEX > 12)  { nExtraDEX = 12 - nDeltaDEX; nDeltaDEX =  12; }
-        else if(nDeltaDEX < -10) { nExtraDEX = 10 + nDeltaDEX; nDeltaDEX = -10; }
-        if     (nDeltaCON > 12)  { nExtraCON = 12 - nDeltaCON; nDeltaCON =  12; }
-        else if(nDeltaCON < -10) { nExtraCON = 10 + nDeltaCON; nDeltaCON = -10; }
+        if     (nDeltaSTR >  12) { nExtraSTR = nDeltaSTR - 12; nDeltaSTR =  12; }
+        else if(nDeltaSTR < -10) { nExtraSTR = nDeltaSTR + 10; nDeltaSTR = -10; }
+        if     (nDeltaDEX > 12)  { nExtraDEX = nDeltaDEX - 12; nDeltaDEX =  12; }
+        else if(nDeltaDEX < -10) { nExtraDEX = nDeltaDEX + 10; nDeltaDEX = -10; }
+        if     (nDeltaCON > 12)  { nExtraCON = nDeltaCON - 12; nDeltaCON =  12; }
+        else if(nDeltaCON < -10) { nExtraCON = nDeltaCON + 10; nDeltaCON = -10; }
 
         // Set the ability score adjustments as composite bonuses
         if(nDeltaSTR > 0)
@@ -953,9 +953,11 @@ void _prc_inc_shifting_ShiftIntoTemplateAux(object oShifter, int nShifterType, o
         if(bNeedSpellCast)
         {
             object oCastingObject = CreateObject(OBJECT_TYPE_PLACEABLE, "x0_rodwonder", GetLocation(oShifter));
-            if(!GetIsObjectValid(oCastingObject))
-                if(DEBUG) DoDebug("prc_inc_shifting: _ShiftIntoTemplateAux(): ERROR: Unable to create x0_rodwonder object for casting effect application spell");
-            else
+            if(!GetIsObjectValid(oCastingObject)) {
+                string sErr = "prc_inc_shifting: _ShiftIntoTemplateAux(): ERROR: Unable to create x0_rodwonder object for casting effect application spell";
+                if(DEBUG) DoDebug(sErr);
+                else WriteTimestampedLogEntry(sErr);
+            } else
                 AssignCommand(oCastingObject, ActionCastSpellAtObject(SPELL_SHIFTING_EFFECTS, oShifter, METAMAGIC_NONE, TRUE, 0, PROJECTILE_PATH_TYPE_DEFAULT, TRUE));
         }
 

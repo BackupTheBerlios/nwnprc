@@ -336,7 +336,7 @@ int ITEM_PROPERTY_DAMAGE_BONUS                             = 16 ;
 int ITEM_PROPERTY_DAMAGE_BONUS_VS_ALIGNMENT_GROUP          = 17 ;
 int ITEM_PROPERTY_DAMAGE_BONUS_VS_RACIAL_GROUP             = 18 ;
 int ITEM_PROPERTY_DAMAGE_BONUS_VS_SPECIFIC_ALIGNMENT       = 19 ;
-int ITEM_PROPERTY_DAMAGE_REDUCTION              		   = 85 ;
+int ITEM_PROPERTY_DAMAGE_REDUCTION                         = 85 ;
 int ITEM_PROPERTY_DAMAGE_REDUCTION_DEPRECATED              = 22 ; // not called
 int ITEM_PROPERTY_DAMAGE_RESISTANCE                        = 23 ;
 int ITEM_PROPERTY_DAMAGE_VULNERABILITY                     = 24 ;
@@ -394,10 +394,10 @@ int ITEM_PROPERTY_USE_LIMITATION_CLASS                     = 63 ;
 int ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE               = 64 ;
 int ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT        = 65 ;
 int ITEM_PROPERTY_USE_LIMITATION_TILESET                   = 66 ;
-int ITEM_PROPERTY_VISUALEFFECT	                           = 83;
+int ITEM_PROPERTY_VISUALEFFECT                             = 83;
 int ITEM_PROPERTY_WEIGHT_INCREASE                          = 81;
-*/	
-	
+*/
+
 // ----------------------------------------------------------------------------
 // This function needs to be rather extensive and needs to be updated if there are new
 // ip types we want to use, but it goes into the item property include anyway
@@ -407,11 +407,11 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
 {
    itemproperty ipRet;
 
-   if (nPropID == ITEM_PROPERTY_ABILITY_BONUS) // 0 
+   if (nPropID == ITEM_PROPERTY_ABILITY_BONUS) // 0
    {
         ipRet = ItemPropertyAbilityBonus(nParam1, nParam2);
    }
-   else if (nPropID == ITEM_PROPERTY_AC_BONUS) // 1 
+   else if (nPropID == ITEM_PROPERTY_AC_BONUS) // 1
    {
         ipRet = ItemPropertyACBonus(nParam1);
    }
@@ -591,7 +591,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertySpellImmunitySchool(nParam1);
    }
-   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL) // 78 
+   else if (nPropID == ITEM_PROPERTY_IMMUNITY_SPELLS_BY_LEVEL) // 78
    {
         ipRet = ItemPropertyImmunityToSpellLevel(nParam1);
    }
@@ -611,7 +611,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyMassiveCritical(nParam1);
    }
-/*	
+/*
    else if (nPropID == ITEM_PROPERTY_MIGHTY) // 45
    {
         ipRet = ?(nParam1);
@@ -620,7 +620,7 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ?(nParam1);
    }
-*/	
+*/
    else if (nPropID == ITEM_PROPERTY_MONSTER_DAMAGE) // 77
    {
         ipRet = ItemPropertyMonsterDamage(nParam1);
@@ -641,94 +641,94 @@ itemproperty IPGetItemPropertyByID(int nPropID, int nParam1 = 0, int nParam2 = 0
    {
         ipRet = ItemPropertyOnHitCastSpell(nParam1, nParam2);
    }
-/*	
+/*
    else if (nPropID == ITEM_PROPERTY_POISON) // 76
-   {	
-		//NWSCRIPT.nss: no longer working, poison is now a on_hit subtype
+   {
+        //NWSCRIPT.nss: no longer working, poison is now a on_hit subtype
         ipRet = ();
    }
 */
-	else if (nPropID == ITEM_PROPERTY_REGENERATION) // 51
-	{
-	     ipRet = ItemPropertyRegeneration(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_REGENERATION_VAMPIRIC) // 67
-	{
-	     ipRet = ItemPropertyVampiricRegeneration(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS) // 40
-	{
-	     ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
-	}
-	else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC) // 41
-	{
-	     ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
-	}
-	
-	else if (nPropID == ITEM_PROPERTY_SKILL_BONUS) // 52
-	{
-	     ipRet = ItemPropertySkillBonus(nParam1, nParam2);
-	}
-	else if (nPropID == ITEM_PROPERTY_SPECIAL_WALK) // 79
-	{
-	     ipRet = ItemPropertySpecialWalk(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_SPELL_RESISTANCE)
-	{
-	     ipRet = ItemPropertyBonusSpellResistance(nParam1); // 39
-	}
-	else if (nPropID == ITEM_PROPERTY_THIEVES_TOOLS)
-	{
-	     ipRet = ItemPropertyThievesTools(nParam1); // 55
-	}
-	else if (nPropID == ITEM_PROPERTY_TRAP) // 70
-	{
-	     ipRet = ItemPropertyTrap(nParam1, nParam2);
-	}
-	else if (nPropID == ITEM_PROPERTY_TRUE_SEEING) // 71
-	{
-	     ipRet = ItemPropertyTrueSeeing();
-	}
-	else if (nPropID == ITEM_PROPERTY_TURN_RESISTANCE) // 73
-	{
-	     ipRet = ItemPropertyTurnResistance(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_UNLIMITED_AMMUNITION) // 61
-	{
-	     ipRet = ItemPropertyUnlimitedAmmo(nParam1);
-	}
+    else if (nPropID == ITEM_PROPERTY_REGENERATION) // 51
+    {
+         ipRet = ItemPropertyRegeneration(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_REGENERATION_VAMPIRIC) // 67
+    {
+         ipRet = ItemPropertyVampiricRegeneration(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS) // 40
+    {
+         ipRet = ItemPropertyBonusSavingThrow(nParam1, nParam2);
+    }
+    else if (nPropID == ITEM_PROPERTY_SAVING_THROW_BONUS_SPECIFIC) // 41
+    {
+         ipRet = ItemPropertyBonusSavingThrowVsX(nParam1, nParam2);
+    }
 
-	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP) // 62
-	{
-	     ipRet = ItemPropertyLimitUseByAlign(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_CLASS) // 63
-	{
-	     ipRet = ItemPropertyLimitUseByClass(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE) // 64
-	{
-	     ipRet = ItemPropertyLimitUseByRace(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT) // 65
-	{
-	     ipRet = ItemPropertyLimitUseBySAlign(nParam1);
-	}
+    else if (nPropID == ITEM_PROPERTY_SKILL_BONUS) // 52
+    {
+         ipRet = ItemPropertySkillBonus(nParam1, nParam2);
+    }
+    else if (nPropID == ITEM_PROPERTY_SPECIAL_WALK) // 79
+    {
+         ipRet = ItemPropertySpecialWalk(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_SPELL_RESISTANCE)
+    {
+         ipRet = ItemPropertyBonusSpellResistance(nParam1); // 39
+    }
+    else if (nPropID == ITEM_PROPERTY_THIEVES_TOOLS)
+    {
+         ipRet = ItemPropertyThievesTools(nParam1); // 55
+    }
+    else if (nPropID == ITEM_PROPERTY_TRAP) // 70
+    {
+         ipRet = ItemPropertyTrap(nParam1, nParam2);
+    }
+    else if (nPropID == ITEM_PROPERTY_TRUE_SEEING) // 71
+    {
+         ipRet = ItemPropertyTrueSeeing();
+    }
+    else if (nPropID == ITEM_PROPERTY_TURN_RESISTANCE) // 73
+    {
+         ipRet = ItemPropertyTurnResistance(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_UNLIMITED_AMMUNITION) // 61
+    {
+         ipRet = ItemPropertyUnlimitedAmmo(nParam1);
+    }
+
+    else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_ALIGNMENT_GROUP) // 62
+    {
+         ipRet = ItemPropertyLimitUseByAlign(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_CLASS) // 63
+    {
+         ipRet = ItemPropertyLimitUseByClass(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_RACIAL_TYPE) // 64
+    {
+         ipRet = ItemPropertyLimitUseByRace(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_SPECIFIC_ALIGNMENT) // 65
+    {
+         ipRet = ItemPropertyLimitUseBySAlign(nParam1);
+    }
 /*
-	else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_TILESET) // 66
-	{
-	     ipRet = ();
-	}
+    else if (nPropID == ITEM_PROPERTY_USE_LIMITATION_TILESET) // 66
+    {
+         ipRet = ();
+    }
 */
 
-	else if (nPropID == ITEM_PROPERTY_VISUALEFFECT) // 83
-	{
-	     ipRet = ItemPropertyVisualEffect(nParam1);
-	}
-	else if (nPropID == ITEM_PROPERTY_WEIGHT_INCREASE) // 81 
-	{
-	     ipRet = ItemPropertyWeightIncrease(nParam1);
-	}
+    else if (nPropID == ITEM_PROPERTY_VISUALEFFECT) // 83
+    {
+         ipRet = ItemPropertyVisualEffect(nParam1);
+    }
+    else if (nPropID == ITEM_PROPERTY_WEIGHT_INCREASE) // 81
+    {
+         ipRet = ItemPropertyWeightIncrease(nParam1);
+    }
 
    return ipRet;
 }
@@ -788,15 +788,17 @@ int IPGetIsMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_SHORTSPEAR) ||
       (nItem == BASE_ITEM_SHORTSWORD) ||
       (nItem == BASE_ITEM_WARHAMMER)  ||
-	  (nItem == BASE_ITEM_MACE)	||
-	  (nItem == BASE_ITEM_FALCHION)	||
-	  (nItem == BASE_ITEM_FLAIL)	||
-	  (nItem == BASE_ITEM_SPEAR)	||
-	  (nItem == BASE_ITEM_WARMACE)	||
-	  (nItem == BASE_ITEM_CGIANT_SWORD)	||
-	  (nItem == BASE_ITEM_CGIANT_AXE)	||
-	  (nItem == BASE_ITEM_ALLUSE_SWORD)	||
-      (nItem == BASE_ITEM_DWARVENWARAXE))
+      (nItem == BASE_ITEM_MACE) ||
+      (nItem == BASE_ITEM_FALCHION) ||
+      (nItem == BASE_ITEM_FLAIL)    ||
+      (nItem == BASE_ITEM_SPEAR)    ||
+      (nItem == BASE_ITEM_WARMACE)  ||
+      (nItem == BASE_ITEM_CGIANT_SWORD) ||
+      (nItem == BASE_ITEM_CGIANT_AXE)   ||
+      (nItem == BASE_ITEM_ALLUSE_SWORD) ||
+      (nItem == BASE_ITEM_DWARVENWARAXE)
+      || (nItem == 201) //crafted staffs
+      )
    {
         return TRUE;
    }

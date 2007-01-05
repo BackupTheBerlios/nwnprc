@@ -1,8 +1,7 @@
 /*
 	fileend.c
 
-	generates a .nss file containing a fileends function
-		for 2da files
+	generates switches for use with PRCGetFileEnd()
 
 	By: Flaming_Sword
 	Created: Sept 5, 2006
@@ -28,7 +27,7 @@ int main(int argc, char *argv[])
 	char *sTemp = (char *) malloc(65536 * sizeof(char));
 	char sName[20];
 	char sComp[3];
-	printf("int PRCGetFileEnd(string sTable)\n{\n");
+	printf("    //START AUTO-GENERATED FILEENDS\n");
 	FILE *fp;
 	DIR *dp;
 	int nCount, i;
@@ -57,13 +56,13 @@ int main(int argc, char *argv[])
 			{
 				nCount++;
 			}
-			printf("    if(sTable == %c%s%c) return %d;\n", 34, strtok(sName, "."), 34, nCount - 4);
+			printf("    SetPRCSwitch(%cPRC_FILE_END_%s%c, %d);\n", 34, strtok(sName, "."), 34, nCount - 4);
 			fclose(fp);
 		}
 		(void) closedir (dp);
 	}
 
-	printf("\n    if(DEBUG) DoDebug(%cPRCGetFileEnd: Unrecognised 2da file: %c + sTable);\n    return 0;\n}", 34, 34);
+	printf("    //END AUTO-GENERATED FILEENDS\n");
 	free(sTemp);
 	return 0;
 }

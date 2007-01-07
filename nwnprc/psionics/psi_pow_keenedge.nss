@@ -14,7 +14,7 @@
     Level: Psion/wilder 3, psychic warrior 3
     Manifesting Time: 1 standard action
     Range: Close (25 ft. + 5 ft./2 levels)
-    Targets: One weapon or a stack projectiles
+    Targets: One weapon
     Duration: 10 min./level
     Saving Throw: None
     Power Resistance: No
@@ -57,7 +57,7 @@ void main()
         FloatingTextStrRefOnCreature(83615, oManifester); // Item must be weapon or creature holding a weapon
     	return;
     }
-    	
+
     struct manifestation manif =
         EvaluateManifestation(oManifester, oTarget,
                               PowerAugmentationProfile(),

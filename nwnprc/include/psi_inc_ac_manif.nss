@@ -93,12 +93,13 @@ void DoAstralConstructCreation(struct manifestation manif, location locTarget, i
     object oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, manif.oManifester, i);
     while(GetIsObjectValid(oCheck))
     {
+        //DoDebug("DoAstralConstructCreation: Handling associate " + DebugObject2Str(oCheck));
         // If multisummon is active, make all summons indestructible. If not, only make astral constructs
         if(bMultisummon || GetStringLeft(GetTag(oCheck), 14) == "psi_astral_con")
         {
             AssignCommand(oCheck, SetIsDestroyable(FALSE, FALSE, FALSE));
             AssignCommand(oCheck, DelayCommand(1.0, SetIsDestroyable(TRUE, FALSE, FALSE)));
-            oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, manif.oManifester, i++);
+            oCheck = GetAssociate(ASSOCIATE_TYPE_SUMMONED, manif.oManifester, ++i);
         }
     }
 

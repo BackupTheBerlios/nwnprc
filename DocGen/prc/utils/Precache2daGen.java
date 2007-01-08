@@ -27,7 +27,8 @@ public class Precache2daGen {
 	/**
 	 * Ye olde maine methode.
 	 * 
-	 * @param args
+	 * @param args The program arguments
+	 * @throws Throwable Any problems just crash the program
 	 */
 	public static void main(String[] args) throws Throwable {
 //		 parse args
@@ -148,6 +149,7 @@ public class Precache2daGen {
 		
 		int temp;
 		Set<Integer> realEntriesHandled = new HashSet<Integer>();
+		// First, spells.2da referencing entries
 		for(Data_2da cls_psipw : cls_psipw_2das) {
 			for(int i = 0; i < cls_psipw.getEntryCount(); i++) {
 				// Add the feat-linked power's data
@@ -156,13 +158,6 @@ public class Precache2daGen {
 					temp = output.getEntryCount() - 1;
 					output.setEntry("RowNum", temp, cls_psipw.getEntry("SpellID", i));
 					output.setEntry("Type",   temp, "P");
-				}
-				// The feat's data
-				if(!cls_psipw.getEntry("FeatID", i).equals("****")) {
-					output.appendRow();
-					temp = output.getEntryCount() - 1;
-					output.setEntry("RowNum", temp, cls_psipw.getEntry("FeatID", i));
-					output.setEntry("Type",   temp, "PF");
 				}
 				// Add the real entry's data
 				if(!cls_psipw.getEntry("RealSpellID", i).equals("****")) {
@@ -174,6 +169,18 @@ public class Precache2daGen {
 						output.setEntry("RowNum", temp, cls_psipw.getEntry("RealSpellID", i));
 						output.setEntry("Type",   temp, "PS");
 					}
+				}
+			}
+		}
+		// Feat.2da entries
+		for(Data_2da cls_psipw : cls_psipw_2das) {
+			for(int i = 0; i < cls_psipw.getEntryCount(); i++) {
+				// The feat's data
+				if(!cls_psipw.getEntry("FeatID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_psipw.getEntry("FeatID", i));
+					output.setEntry("Type",   temp, "PF");
 				}
 			}
 		}
@@ -196,6 +203,7 @@ public class Precache2daGen {
 		
 		int temp;
 		Set<Integer> realEntriesHandled = new HashSet<Integer>();
+		// First, spells.2da referencing entries
 		for(Data_2da cls_true : cls_true_2das) {
 			for(int i = 0; i < cls_true.getEntryCount(); i++) {
 				// Add the feat-linked spells.2da data
@@ -204,13 +212,6 @@ public class Precache2daGen {
 					temp = output.getEntryCount() - 1;
 					output.setEntry("RowNum", temp, cls_true.getEntry("SpellID", i));
 					output.setEntry("Type",   temp, "P");
-				}
-				// The feat's data
-				if(!cls_true.getEntry("FeatID", i).equals("****")) {
-					output.appendRow();
-					temp = output.getEntryCount() - 1;
-					output.setEntry("RowNum", temp, cls_true.getEntry("FeatID", i));
-					output.setEntry("Type",   temp, "PF");
 				}
 				// Add the real entry's data
 				if(!cls_true.getEntry("RealSpellID", i).equals("****")) {
@@ -222,6 +223,18 @@ public class Precache2daGen {
 						output.setEntry("RowNum", temp, cls_true.getEntry("RealSpellID", i));
 						output.setEntry("Type",   temp, "PS");
 					}
+				}
+			}
+		}
+		// Feat.2da entries
+		for(Data_2da cls_true : cls_true_2das) {
+			for(int i = 0; i < cls_true.getEntryCount(); i++) {
+				// The feat's data
+				if(!cls_true.getEntry("FeatID", i).equals("****")) {
+					output.appendRow();
+					temp = output.getEntryCount() - 1;
+					output.setEntry("RowNum", temp, cls_true.getEntry("FeatID", i));
+					output.setEntry("Type",   temp, "PF");
 				}
 			}
 		}

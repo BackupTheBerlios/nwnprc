@@ -38,60 +38,58 @@ public class Main {
 	 * 
 	 * @param args The arguments. See readMe() for accepted ones
 	 */
-	public static void main(String[] args){
-		//Map<String, NSSNode> debugMap = scripts;
+	public static void main(String[] args) {
+		HashMap<String, String> targetList = new LinkedHashMap<String, String>();
+		List<String> targetListFileNames = new ArrayList<String>();
+		boolean targetsFromStdin = false;
+		
 		// Parse arguments
-		int i = 0;
-		String arg;
-		while(i < args.length){
-			arg = args[i];
-			if(arg.equals("-a"))
-				append = true;
-			else if(arg.equals("-n"))
-				ignoreMissing = true;
-			else if(arg.startsWith("-s"))
-				getFiles(arg.substring(2));
-			else if(arg.startsWith("-o"))
-				setOutput(arg.substring(2));
-			else if(arg.equals("-?") || arg.equals("--help"))
-				readMe();
-			else
-				break;
-			i++;
+		for(int i = 0; i < args.length; i++) {//[-aio?] targetslist+
+			// Parameter parseage
+			String param = args[i];
+			if(param.startsWith("-")) {
+				if(param.startsWith("-s")) {
+					getFiles(param.substring(2));
+				}
+				else if(param.startsWith("-o")) {
+					setOutput(param.substring(2));
+				}
+				else {
+					if(param.equals("--help")) readMe();
+					else if(param.equals("-")) {
+						targetsFromStdin = true;
+					}
+					else {
+						for(char c : param.substring(1).toCharArray()){
+							switch(c) {
+							case 'a':
+								append = true;
+								break;
+							case 'n':
+								ignoreMissing = true;
+								break;
+							
+							default:
+								System.out.println("Unknown parameter: " + c);
+							case '?':
+								readMe();
+							}
+						}
+					}
+				}
+			}
+			else {
+				// It's a targets list file
+				targetListFileNames.add(param);
+			}
 		}
 		
-		/*
-		// Add the remaining params to source list
-		String temp;
-		for(; i < args.length; i++){
-			//scripts.add(new NSSNode(args[i]));
-			//files.add(args[i]);
-			temp = NSSNode.getScriptName(args[i]);
-			if(!scripts.containsKey(temp))
-				scripts.put(temp, new NSSNode(args[i]));
-			else{
-				err_pr.println("Duplicate script file: " + temp);
-				error = true;
-			}
-		}
-		*/
-		// Parse the target file list
-		HashMap<String, String> targetList = new LinkedHashMap<String, String>();
-		File targetListFile;// = new File(args[i]);
+		// Read targets from stdin if so specified
 		Scanner scan;
 		String targetName;
-		for(; i < args.length; i++){
-			targetListFile = new File(args[i]);
-			// Read the contents
-			try {
-				scan = new Scanner(targetListFile);
-			} catch (FileNotFoundException e) {
-				err_pr.println("Could not find file: " + args[i]);
-				error = true;
-				continue;
-			}
-			
-			while(scan.hasNextLine()){
+		if(targetsFromStdin) {
+			scan = new Scanner(System.in);
+			while(scan.hasNextLine()) {
 				targetName = scan.nextLine().toLowerCase();
 				// Strip everything after the .ncs from the line
 				targetName = targetName.substring(0, targetName.indexOf(".ncs") + 4);
@@ -99,7 +97,38 @@ public class Main {
 			}
 		}
 		
+		// Parse the target file list
+		File targetListFile;
+		for(String fileName : targetListFileNames) {
+			targetListFile = new File(fileName);
+			// Read the contents
+			try {
+				scan = new Scanner(targetListFile);
+			} catch (FileNotFoundException e) {
+				err_pr.println("Could not find file: " + fileName);
+				error = true;
+				continue;
+			}
+			
+			while(scan.hasNextLine()) {
+				targetName = scan.nextLine().toLowerCase();
+				// Strip everything after the .ncs from the line
+				targetName = targetName.substring(0, targetName.indexOf(".ncs") + 4);
+				targetList.put(NSSNode.getScriptName(targetName), targetName);
+			}
+		}
 		
+		// Input sanity checks
+		if(targetList.size() == 0) {
+			err_pr.println("No targets specified.");
+			error = true;
+		}
+		for(String target : targetList.keySet()) {
+			if(scripts.get(target.toLowerCase()) == null) {
+				err_pr.println("Script file for target " + target + " not found in given source directories.");
+				error = true;
+			}
+		}
 		
 		// Terminate if errored
 		if(error) System.exit(1);
@@ -120,7 +149,7 @@ public class Main {
 		}
 		
 		// Do the printing
-		for(String target : targetList.keySet()){
+		for(String target : targetList.keySet()) {
 			scripts.get(target.toLowerCase()).printSelf(oStrm, append, targetList.get(target));
 		}
 	}
@@ -128,17 +157,21 @@ public class Main {
 	/**
 	 * Prints usage and terminates.
 	 */
-	private static void readMe(){
-		System.out.println("Usage:   makedep [-aio?] targetlist+\n" +
+	private static void readMe() {
+		//					0        1         2         3         4         5         6         7         8
+		//					12345678901234567890123456789012345678901234567890123456789012345678901234567890
+		System.out.println("Usage:   makedep [-aio?] targetslist+\n" +
 				           "Options:\n" +
 				           "-a                Append to outputfile. This option must be defined before -o\n"+
 				           "-n                Ignore include file if not found\n"+
 				           "-sPATH[,PATH...]  List of source directories\n"+
-				           "-oFILE            Use FILE as outputfile, stdout assumed\n"+
+				           "-oFILE            Use FILE as outputfile, stdout assumed\n" +
+				           "-                 Read targets from stdin. Same format as targets list files\n"+
 				           "-?, --help        This text\n"+
 				           "\n"+
-				           "targetlist is the name of a file containing a list of object files to calculate\n"+
-				           "dependencies for. One filename per line."
+				           "targetslist       Name of a file containing a list of object (.ncs) files to\n"+
+				           "                  generate a make targets for.\n" +
+				           "                  File format is one path-to-target per line."
 				           );
 		System.exit(0);
 	}

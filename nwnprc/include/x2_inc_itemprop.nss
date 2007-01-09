@@ -702,7 +702,7 @@ int IPGetIsMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_WARHAMMER)  ||
       (nItem == BASE_ITEM_DWARVENWARAXE) ||
       (nItem == 95) //1.67 trident BASE_ITEM_TRIDENT
-      || (nItem == 201) //crafted staffs
+      || (nItem == BASE_ITEM_CRAFTED_STAFF) //crafted staffs
       || (nItem == 300) //CEP Trident
       || (nItem == 303) //CEP Sai
       || (nItem == 304) //CEP nunchaku

@@ -220,7 +220,7 @@ int CIGetIsCraftFeatBaseItem(object oItem)
 {
     int nBt = GetBaseItemType(oItem);
     // blank scroll, empty potion, wand
-    if (nBt == 101 || nBt == 102 || nBt == 103 || nBt == 200 || nBt == 201)
+    if (nBt == 101 || nBt == 102 || nBt == 103 || nBt == 200 || nBt == BASE_ITEM_CRAFTED_STAFF)
       return TRUE;
     else
       return FALSE;
@@ -823,7 +823,7 @@ These dont work as IPs since they are hardcoded */
     if (GetIsObjectValid(oWand))
     {
         SpendXP(oCaster, FloatToInt(nExperienceCost));
-        SpendGP(oCaster, nGoldCost); 
+        SpendGP(oCaster, nGoldCost);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         //if time is enabled, fast forward
@@ -917,7 +917,7 @@ These dont work as IPs since they are hardcoded */
         nCost = (nCost*3)/4;
     else if(nCount+1 >= 3)
         nCost = nCost/2;
-        
+
     int nXP = nCost / 25;
     int nGoldCost = nCost / 2;
     if(nGoldCost < 1) nXP = 1;
@@ -962,7 +962,7 @@ These dont work as IPs since they are hardcoded */
         //TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
         //SetXP(oCaster, nNewXP);
         SpendXP(oCaster, nXP);
-        SpendGP(oCaster, nGoldCost); 
+        SpendGP(oCaster, nGoldCost);
         //DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         //if time is enabled, fast forward
@@ -1297,7 +1297,7 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
                            //nRet = CICraftCheckCraftWand(oSpellTarget,oCaster);
                            break;
 
-                case 201 :
+                case BASE_ITEM_CRAFTED_STAFF :
                             // -------------------------------------------------
                             // Craft Staff
                             // -------------------------------------------------

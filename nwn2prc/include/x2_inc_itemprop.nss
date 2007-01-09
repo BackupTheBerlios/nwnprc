@@ -797,7 +797,7 @@ int IPGetIsMeleeWeapon(object oItem)
       (nItem == BASE_ITEM_CGIANT_AXE)   ||
       (nItem == BASE_ITEM_ALLUSE_SWORD) ||
       (nItem == BASE_ITEM_DWARVENWARAXE)
-      || (nItem == 201) //crafted staffs
+      || (nItem == BASE_ITEM_CRAFTED_STAFF) //crafted staffs
       )
    {
         return TRUE;

@@ -246,3 +246,7 @@ const int DOMAIN_BLIGHTBRINGER = 59;
 
 const int TRAP_BASE_TYPE_PRGT       = 100;
 const int TRAP_BASE_TYPE_TELECIRCLE = 101;
+
+// BaseItems
+
+const int BASE_ITEM_CRAFTED_STAFF   = 201;

@@ -714,7 +714,9 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     {
         //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
         if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
-            && GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF)
+            && ((GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF) ||
+                (GetBaseItemType(oItem) == BASE_ITEM_CRAFTED_STAFF))
+            )
         {
             iCastingClass = GetFirstArcaneClass(oCaster);//sets it to an arcane class
         }
@@ -1176,9 +1178,9 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     int nHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget);
     if (nHex > 0)
     {
-    	int nHexCha = GetAbilityModifier(ABILITY_CHARISMA, oTarget);
-    	if (nHexCha < 1) nHexCha = 1;
-    	nDC -= nHexCha;
+        int nHexCha = GetAbilityModifier(ABILITY_CHARISMA, oTarget);
+        if (nHexCha < 1) nHexCha = 1;
+        nDC -= nHexCha;
     }
 
     // This is done here because it is possible to tell the saving throw type here
@@ -1429,14 +1431,14 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iSue;
              return iTemp;
              break;
-	case CLASS_TYPE_HEXBLADE:
+    case CLASS_TYPE_HEXBLADE:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_HEXBLADE)
                  iTemp = iArc;
              else
                  iTemp = iHex / 2;
              return iTemp;
              break;
-	case CLASS_TYPE_DUSKBLADE:
+    case CLASS_TYPE_DUSKBLADE:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_DUSKBLADE)
                  iTemp = iArc;
              else

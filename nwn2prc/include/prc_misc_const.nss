@@ -257,3 +257,6 @@ const int DAMAGE_TYPE_BASE_WEAPON = 4096;
 //:: moved from other places
 //:://////////////////////////////////////////////
 
+// BaseItems
+
+const int BASE_ITEM_CRAFTED_STAFF   = 201;

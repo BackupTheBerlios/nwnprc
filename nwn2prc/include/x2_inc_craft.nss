@@ -16,11 +16,11 @@
 // ChazM 5/10/06 - Removed XP costs.  Did anyone really like XP costs?
 // ChazM 5/23/06 - added AppendSpellToName().  Updated potion and wand creation to use it.
 // ChazM 5/24/06 - Updated AppendSpellToName()
-// ChazM 11/6/06 - Modified CIGetSpellInnateLevel() to instead get the caster level, Added 
-//				MakeItemUseableByClassesWithSpellAccess() and helper functions used in CICraftCraftWand()
-// ChazM 11/7/06 - Calculate spell level based on caster class and spells.2da entries, Changed 0 level spells to 
-//				cost half of first level spells, reorganized some sections, replaced string refs w/ constants, 
-//				fixed SPELLS_WIZ_SORC_LEVEL_COL
+// ChazM 11/6/06 - Modified CIGetSpellInnateLevel() to instead get the caster level, Added
+//              MakeItemUseableByClassesWithSpellAccess() and helper functions used in CICraftCraftWand()
+// ChazM 11/7/06 - Calculate spell level based on caster class and spells.2da entries, Changed 0 level spells to
+//              cost half of first level spells, reorganized some sections, replaced string refs w/ constants,
+//              fixed SPELLS_WIZ_SORC_LEVEL_COL
 
 //--------------------------------------------------------------------
 // Structs
@@ -46,20 +46,20 @@ struct craft_receipe_struct
 //--------------------------------------------------------------------
 // Item Creation string refs
 
-const int STR_REF_IC_SPELL_TO_HIGH_FOR_WAND 		= 83623;
-const int STR_REF_IC_SPELL_TO_HIGH_FOR_POTION 		= 76416;
-const int STR_REF_IC_SPELL_RESTRICTED_FOR_POTION	= 83450;
-const int STR_REF_IC_SPELL_RESTRICTED_FOR_SCROLL	= 83451;
-const int STR_REF_IC_SPELL_RESTRICTED_FOR_WAND		= 83452;
-const int STR_REF_IC_MISSING_REQUIRED_FEAT			= 40487;
+const int STR_REF_IC_SPELL_TO_HIGH_FOR_WAND         = 83623;
+const int STR_REF_IC_SPELL_TO_HIGH_FOR_POTION       = 76416;
+const int STR_REF_IC_SPELL_RESTRICTED_FOR_POTION    = 83450;
+const int STR_REF_IC_SPELL_RESTRICTED_FOR_SCROLL    = 83451;
+const int STR_REF_IC_SPELL_RESTRICTED_FOR_WAND      = 83452;
+const int STR_REF_IC_MISSING_REQUIRED_FEAT          = 40487;
 
-const int STR_REF_IC_INSUFFICIENT_GOLD				= 3786;
-const int STR_REF_IC_INSUFFICIENT_XP				= 3785;
+const int STR_REF_IC_INSUFFICIENT_GOLD              = 3786;
+const int STR_REF_IC_INSUFFICIENT_XP                = 3785;
 
-const int STR_REF_IC_SUCCESS						= 8502;
-const int STR_REF_IC_FAILED							= 76417;
-const int STR_REF_IC_DISABLED						= 83612;
-const int STR_REF_IC_ITEM_USE_NOT_ALLOWED			= 83373;
+const int STR_REF_IC_SUCCESS                        = 8502;
+const int STR_REF_IC_FAILED                         = 76417;
+const int STR_REF_IC_DISABLED                       = 83612;
+const int STR_REF_IC_ITEM_USE_NOT_ALLOWED           = 83373;
 
 
 const string  X2_CI_CRAFTSKILL_CONV ="x2_p_craftskills";
@@ -87,24 +87,24 @@ const int     X2_CI_CRAFTSTAFF_EPIC_FEAT_ID        = 3491;
 //const string  X2_CI_CRAFTSTAFF_NEWITEM_RESREF = "x2_it_pcwand";
 
 // 2da for the craftskills
-const string X2_CI_CRAFTING_WP_2DA 		= "des_crft_weapon" ;
-const string X2_CI_CRAFTING_AR_2DA 		= "des_crft_armor" ;
-const string X2_CI_CRAFTING_MAT_2DA 	= "des_crft_mat";
+const string X2_CI_CRAFTING_WP_2DA      = "des_crft_weapon" ;
+const string X2_CI_CRAFTING_AR_2DA      = "des_crft_armor" ;
+const string X2_CI_CRAFTING_MAT_2DA     = "des_crft_mat";
 
 
 // spells 2da
-const string SPELLS_2DA 				= "spells";			// 2da
-const int SPELLS_ROW_COUNT				= 1008; 			// number of rows in the spells table.
-const string SPELLS_NAME_COL 			= "Name";			// str ref of spell name
-const string SPELLS_DESC_COL 			= "SpellDesc";		// str ref of spell description
-const string SPELLS_INNATE_LEVEL_COL 	= "Innate";			// Innate level of spell
-const string SPELLS_BARD_LEVEL_COL 		= "Bard";			// Bard spell level
-const string SPELLS_CLERIC_LEVEL_COL 	= "Cleric";			// Cleric spell level
-const string SPELLS_DRUID_LEVEL_COL 	= "Druid";			// Druid spell level
-const string SPELLS_PALADIN_LEVEL_COL 	= "Paladin";		// Paladin spell level
-const string SPELLS_RANGER_LEVEL_COL 	= "Ranger";			// Ranger spell level
-const string SPELLS_WIZ_SORC_LEVEL_COL 	= "Wiz_Sorc";		// Wizard and Sorceror spell level
-const string SPELLS_WARLOCK_LEVEL_COL 	= "Warlock";		// Warlock spell level
+const string SPELLS_2DA                 = "spells";         // 2da
+const int SPELLS_ROW_COUNT              = 1008;             // number of rows in the spells table.
+const string SPELLS_NAME_COL            = "Name";           // str ref of spell name
+const string SPELLS_DESC_COL            = "SpellDesc";      // str ref of spell description
+const string SPELLS_INNATE_LEVEL_COL    = "Innate";         // Innate level of spell
+const string SPELLS_BARD_LEVEL_COL      = "Bard";           // Bard spell level
+const string SPELLS_CLERIC_LEVEL_COL    = "Cleric";         // Cleric spell level
+const string SPELLS_DRUID_LEVEL_COL     = "Druid";          // Druid spell level
+const string SPELLS_PALADIN_LEVEL_COL   = "Paladin";        // Paladin spell level
+const string SPELLS_RANGER_LEVEL_COL    = "Ranger";         // Ranger spell level
+const string SPELLS_WIZ_SORC_LEVEL_COL  = "Wiz_Sorc";       // Wizard and Sorceror spell level
+const string SPELLS_WARLOCK_LEVEL_COL   = "Warlock";        // Warlock spell level
 
 // 2da for matching spells to properties
 const string X2_CI_CRAFTING_SP_2DA = "des_crft_spells" ;
@@ -240,21 +240,21 @@ void AppendSpellToName(object oObject, int nSpellID);
 int   CIGetSpellInnateLevel(int nSpellID, int bDefaultZeroToOne = FALSE)
 {
     //int nRet = StringToInt(Get2DAString(X2_CI_CRAFTING_SP_2DA, "Level", nSpellID));
-	// Instead of using innate level (a single level always used for a spell) we now use actual level.
-		
-	// The level of a spell is dependent on what class casts it.  For example
-	// Dominate Person is level 5 when cast by Wizard or Sorceror, but 4th level
-	// when cast by a Bard.  The spell can't be cast by any other class.
-   	int nRet = GetSpellLevel(nSpellID);
-	//int nClass = GetLastSpellCastClass();
-   	//int nRet = GetSpellLevelForClass(nSpellID, nClass);
-	
-	//PrettyDebug ("CIGetSpellInnateLevel: For Spell " + IntToString(nSpellID) + " with last spell clast class of " +
-	//			 IntToString(nClass) + " Level is: " + IntToString(nRet));
-	
-	if (bDefaultZeroToOne == TRUE)
-	    if (nRet == 0)
-	        nRet =1;
+    // Instead of using innate level (a single level always used for a spell) we now use actual level.
+
+    // The level of a spell is dependent on what class casts it.  For example
+    // Dominate Person is level 5 when cast by Wizard or Sorceror, but 4th level
+    // when cast by a Bard.  The spell can't be cast by any other class.
+    int nRet = GetSpellLevel(nSpellID);
+    //int nClass = GetLastSpellCastClass();
+    //int nRet = GetSpellLevelForClass(nSpellID, nClass);
+
+    //PrettyDebug ("CIGetSpellInnateLevel: For Spell " + IntToString(nSpellID) + " with last spell clast class of " +
+    //           IntToString(nClass) + " Level is: " + IntToString(nRet));
+
+    if (bDefaultZeroToOne == TRUE)
+        if (nRet == 0)
+            nRet =1;
 
     return nRet;
 }
@@ -262,80 +262,80 @@ int   CIGetSpellInnateLevel(int nSpellID, int bDefaultZeroToOne = FALSE)
 
 string GetClassSpellLevelColumn(int iClass)
 {
-	string sCol;
-	
-	switch (iClass)
-	{
-		case CLASS_TYPE_BARD: 			sCol = SPELLS_BARD_LEVEL_COL;		break;
-		case CLASS_TYPE_CLERIC: 		sCol = SPELLS_CLERIC_LEVEL_COL;		break;
-		case CLASS_TYPE_DRUID: 			sCol = SPELLS_DRUID_LEVEL_COL;		break;
-		case CLASS_TYPE_PALADIN: 		sCol = SPELLS_PALADIN_LEVEL_COL;	break;
-		case CLASS_TYPE_RANGER: 		sCol = SPELLS_RANGER_LEVEL_COL;		break;
-		case CLASS_TYPE_WIZARD:	// Wiz & Sorc share same list
-		case CLASS_TYPE_SORCERER: 		sCol = SPELLS_WIZ_SORC_LEVEL_COL;	break;
-		case CLASS_TYPE_WARLOCK: 		sCol = SPELLS_WARLOCK_LEVEL_COL;	break;
-		default:						sCol = SPELLS_INNATE_LEVEL_COL;		break;
-	}		
-	return (sCol);
+    string sCol;
+
+    switch (iClass)
+    {
+        case CLASS_TYPE_BARD:           sCol = SPELLS_BARD_LEVEL_COL;       break;
+        case CLASS_TYPE_CLERIC:         sCol = SPELLS_CLERIC_LEVEL_COL;     break;
+        case CLASS_TYPE_DRUID:          sCol = SPELLS_DRUID_LEVEL_COL;      break;
+        case CLASS_TYPE_PALADIN:        sCol = SPELLS_PALADIN_LEVEL_COL;    break;
+        case CLASS_TYPE_RANGER:         sCol = SPELLS_RANGER_LEVEL_COL;     break;
+        case CLASS_TYPE_WIZARD: // Wiz & Sorc share same list
+        case CLASS_TYPE_SORCERER:       sCol = SPELLS_WIZ_SORC_LEVEL_COL;   break;
+        case CLASS_TYPE_WARLOCK:        sCol = SPELLS_WARLOCK_LEVEL_COL;    break;
+        default:                        sCol = SPELLS_INNATE_LEVEL_COL;     break;
+    }
+    return (sCol);
 }
 
 // spell level for this class, or -1 on error
 int GetSpellLevelForClass(int iSpell, int iClass)
 {
-	int iSpellLevel;
-	string sCol = GetClassSpellLevelColumn(iClass);
-	string sSpellLevel = Get2DACache(SPELLS_2DA, sCol, iSpell);
-	
-	if (sSpellLevel == "")
-		iSpellLevel = -1;
-	else
-	 	iSpellLevel = StringToInt(sSpellLevel);
-		
-	//PrettyDebug ("GetSpellLevelForClass: For Spell " + IntToString(iSpell) + " and class of " +
-	//			 IntToString(iClass) + " Level is: " + IntToString(iSpellLevel));
-		
-	return (iSpellLevel);
+    int iSpellLevel;
+    string sCol = GetClassSpellLevelColumn(iClass);
+    string sSpellLevel = Get2DACache(SPELLS_2DA, sCol, iSpell);
+
+    if (sSpellLevel == "")
+        iSpellLevel = -1;
+    else
+        iSpellLevel = StringToInt(sSpellLevel);
+
+    //PrettyDebug ("GetSpellLevelForClass: For Spell " + IntToString(iSpell) + " and class of " +
+    //           IntToString(iClass) + " Level is: " + IntToString(iSpellLevel));
+
+    return (iSpellLevel);
 }
 
 int IsOnSpellList(int iSpell, int iClass)
 {
-	return (GetSpellLevelForClass(iSpell, iClass) >= 0);
+    return (GetSpellLevelForClass(iSpell, iClass) >= 0);
 }
 
 
 void MakeItemUseableByClass(int iClassType, object oItem)
 {
-	itemproperty ipLimit = ItemPropertyLimitUseByClass(iClassType);
-	AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oItem);
+    itemproperty ipLimit = ItemPropertyLimitUseByClass(iClassType);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oItem);
 }
 
 void MakeItemUseableByClassesWithSpellAccess(int iSpell, object oItem)
 {
-	if (IsOnSpellList(iSpell, CLASS_TYPE_BARD))
-		MakeItemUseableByClass(CLASS_TYPE_BARD, oItem);
-		
-	if (IsOnSpellList(iSpell, CLASS_TYPE_CLERIC))
-		MakeItemUseableByClass(CLASS_TYPE_CLERIC, oItem);
-	
-	if (IsOnSpellList(iSpell, CLASS_TYPE_DRUID))
-		MakeItemUseableByClass(CLASS_TYPE_DRUID, oItem);
-		
-	if (IsOnSpellList(iSpell, CLASS_TYPE_PALADIN))
-		MakeItemUseableByClass(CLASS_TYPE_PALADIN, oItem);
+    if (IsOnSpellList(iSpell, CLASS_TYPE_BARD))
+        MakeItemUseableByClass(CLASS_TYPE_BARD, oItem);
 
-	if (IsOnSpellList(iSpell, CLASS_TYPE_RANGER))
-		MakeItemUseableByClass(CLASS_TYPE_RANGER, oItem);
-	
-	if (IsOnSpellList(iSpell, CLASS_TYPE_WIZARD))
-	{
-		MakeItemUseableByClass(CLASS_TYPE_WIZARD, oItem);
-		MakeItemUseableByClass(CLASS_TYPE_SORCERER, oItem);
-	}
-	
-	if (IsOnSpellList(iSpell, CLASS_TYPE_WARLOCK))
-		MakeItemUseableByClass(CLASS_TYPE_WARLOCK, oItem);
-}		
-	
+    if (IsOnSpellList(iSpell, CLASS_TYPE_CLERIC))
+        MakeItemUseableByClass(CLASS_TYPE_CLERIC, oItem);
+
+    if (IsOnSpellList(iSpell, CLASS_TYPE_DRUID))
+        MakeItemUseableByClass(CLASS_TYPE_DRUID, oItem);
+
+    if (IsOnSpellList(iSpell, CLASS_TYPE_PALADIN))
+        MakeItemUseableByClass(CLASS_TYPE_PALADIN, oItem);
+
+    if (IsOnSpellList(iSpell, CLASS_TYPE_RANGER))
+        MakeItemUseableByClass(CLASS_TYPE_RANGER, oItem);
+
+    if (IsOnSpellList(iSpell, CLASS_TYPE_WIZARD))
+    {
+        MakeItemUseableByClass(CLASS_TYPE_WIZARD, oItem);
+        MakeItemUseableByClass(CLASS_TYPE_SORCERER, oItem);
+    }
+
+    if (IsOnSpellList(iSpell, CLASS_TYPE_WARLOCK))
+        MakeItemUseableByClass(CLASS_TYPE_WARLOCK, oItem);
+}
+
 
 // *  Return the type of magic as one of the following constants
 // *  const int X2_CI_MAGICTYPE_INVALID = 0;
@@ -379,7 +379,7 @@ int CIGetIsCraftFeatBaseItem(object oItem)
 {
     int nBt = GetBaseItemType(oItem);
     // blank scroll, empty potion, wand
-    if (nBt == 101 || nBt == 102 || nBt == 103 || nBt == 200 || nBt == 201)
+    if (nBt == 101 || nBt == 102 || nBt == 103 || nBt == 200 || nBt == BASE_ITEM_CRAFTED_STAFF)
       return TRUE;
     else
       return FALSE;
@@ -387,18 +387,18 @@ int CIGetIsCraftFeatBaseItem(object oItem)
 
 void AppendSpellToName(object oObject, int nSpellID)
 {
-	int iSpellStringRef = StringToInt(Get2DAString("spells","Name", nSpellID));
-	if (iSpellStringRef == 0)
-		return;
+    int iSpellStringRef = StringToInt(Get2DAString("spells","Name", nSpellID));
+    if (iSpellStringRef == 0)
+        return;
 
-	string sSpellName = GetStringByStrRef(iSpellStringRef);
-	string  sOldName = GetFirstName(oObject);
-	PrettyDebug ("First Name = "  + GetFirstName(oObject));
-	PrettyDebug ("Last Name = "  +  GetLastName(oObject));
-	PrettyDebug ("Name = "  + GetName(oObject));
-	string sName = sOldName + " - " + sSpellName;
-	SetFirstName(oObject, sName);
-	PrettyDebug ("sNewName = "  + sName);
+    string sSpellName = GetStringByStrRef(iSpellStringRef);
+    string  sOldName = GetFirstName(oObject);
+    PrettyDebug ("First Name = "  + GetFirstName(oObject));
+    PrettyDebug ("Last Name = "  +  GetLastName(oObject));
+    PrettyDebug ("Name = "  + GetName(oObject));
+    string sName = sOldName + " - " + sSpellName;
+    SetFirstName(oObject, sName);
+    PrettyDebug ("sNewName = "  + sName);
 }
 
 // -----------------------------------------------------------------------------
@@ -418,10 +418,10 @@ int CIGetCraftGPCost(int nLevel, int nMod, string sCasterLevelSwitch)
         nCLevel = StringToInt(Get2DACache("iprp_spells","CasterLvl",nLvlRow));
     }
 
-	int bZeroLevel = (nLevel == 0);
-	if (bZeroLevel)
-		nLevel = 1;
-		
+    int bZeroLevel = (nLevel == 0);
+    if (bZeroLevel)
+        nLevel = 1;
+
     // -------------------------------------------------------------------------
     // in case we don't get a valid CLevel, use spell level instead
     // -------------------------------------------------------------------------
@@ -429,11 +429,11 @@ int CIGetCraftGPCost(int nLevel, int nMod, string sCasterLevelSwitch)
     {
         nCLevel = nLevel;
     }
-	int nRet = nCLevel * nLevel * nMod;
+    int nRet = nCLevel * nLevel * nMod;
 
-	// zero level spells are only half the cost of 1st level spells	
-	if (bZeroLevel)
-		nRet = nRet/2;
+    // zero level spells are only half the cost of 1st level spells
+    if (bZeroLevel)
+        nRet = nRet/2;
 
     return nRet;
 
@@ -467,7 +467,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
         itemproperty ipProp = ItemPropertyCastSpell(nPropID,IP_CONST_CASTSPELL_NUMUSES_SINGLE_USE);
         oTarget = CreateItemOnObject(X2_CI_BREWPOTION_NEWITEM_RESREF,oCreator);
         AddItemProperty(DURATION_TYPE_PERMANENT,ipProp,oTarget);
-		AppendSpellToName(oTarget, nSpellID);	
+        AppendSpellToName(oTarget, nSpellID);
         if(GetPRCSwitch(PRC_BREW_POTION_CASTER_LEVEL))
         {
             itemproperty ipLevel = ItemPropertyCastSpellCasterLevel(nSpellID, PRCGetCasterLevel());
@@ -476,7 +476,7 @@ object CICraftBrewPotion(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipMeta,oTarget);
         itemproperty ipDC = ItemPropertyCastSpellDC(nSpellID, PRCGetSaveDC(PRCGetSpellTargetObject(), OBJECT_SELF));
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
-        }	
+        }
     }
     return oTarget;
 }
@@ -518,9 +518,9 @@ object CICraftCraftWand(object oCreator, int nSpellID )
             AddItemProperty(DURATION_TYPE_PERMANENT,ipDC,oTarget);
         }
 
-		MakeItemUseableByClassesWithSpellAccess(nSpellID, oTarget);
-		
-		/*
+        MakeItemUseableByClassesWithSpellAccess(nSpellID, oTarget);
+
+        /*
         int nType = CI_GetClassMagicType(PRCGetLastSpellCastClass());
         itemproperty ipLimit;
 
@@ -544,14 +544,14 @@ object CICraftCraftWand(object oCreator, int nSpellID )
              ipLimit = ItemPropertyLimitUseByClass(CLASS_TYPE_BARD);
              AddItemProperty(DURATION_TYPE_PERMANENT,ipLimit,oTarget);
         }
-		*/
-		AppendSpellToName(oTarget, nSpellID);				
+        */
+        AppendSpellToName(oTarget, nSpellID);
 
-		
-		// Wands are now always created w/ 50 charges 
+
+        // Wands are now always created w/ 50 charges
         int nCharges = 50;
-		/*		
-		nCharges = GetLevelByClass(GetLastSpellCastClass(),OBJECT_SELF) + d20();
+        /*
+        nCharges = GetLevelByClass(GetLastSpellCastClass(),OBJECT_SELF) + d20();
 
         if (nCharges == 0) // stupi cheaters
         {
@@ -562,7 +562,7 @@ object CICraftCraftWand(object oCreator, int nSpellID )
         {
             nCharges = 50;
         }
-		*/
+        */
         SetItemCharges(oTarget,nCharges);
 
         // TODOL Add use restrictions there when item becomes available
@@ -934,7 +934,7 @@ int CICraftCheckCraftWand(object oSpellTarget, object oCaster)
         return TRUE;
     }
 
-	// now returns the actual spell level the spell was cast with.
+    // now returns the actual spell level the spell was cast with.
     int nLevel = CIGetSpellInnateLevel(nID,FALSE);
     if(GetPRCSwitch(PRC_CRAFT_WAND_CASTER_LEVEL))
     {
@@ -1019,7 +1019,7 @@ These dont work as IPs since they are hardcoded */
     if (GetIsObjectValid(oWand))
     {
         SpendXP(oCaster, FloatToInt(nExperienceCost));
-        SpendGP(oCaster, nGoldCost); 
+        SpendGP(oCaster, nGoldCost);
         DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(STR_REF_IC_SUCCESS, oCaster); // Item Creation successful
         //if time is enabled, fast forward
@@ -1112,7 +1112,7 @@ These dont work as IPs since they are hardcoded */
         nCost = (nCost*3)/4;
     else if(nCount+1 >= 3)
         nCost = nCost/2;
-        
+
     int nXP = nCost / 25;
     int nGoldCost = nCost / 2;
     if(nGoldCost < 1) nXP = 1;
@@ -1157,7 +1157,7 @@ These dont work as IPs since they are hardcoded */
         //TakeGoldFromCreature(nGoldCost, oCaster, TRUE);
         //SetXP(oCaster, nNewXP);
         SpendXP(oCaster, nXP);
-        SpendGP(oCaster, nGoldCost); 
+        SpendGP(oCaster, nGoldCost);
         //DestroyObject (oSpellTarget);
         FloatingTextStrRefOnCreature(8502, oCaster); // Item Creation successful
         //if time is enabled, fast forward
@@ -1492,7 +1492,7 @@ int CIGetSpellWasUsedForItemCreation(object oSpellTarget)
                            //nRet = CICraftCheckCraftWand(oSpellTarget,oCaster);
                            break;
 
-                case 201 :
+                case BASE_ITEM_CRAFTED_STAFF :
                             // -------------------------------------------------
                             // Craft Staff
                             // -------------------------------------------------

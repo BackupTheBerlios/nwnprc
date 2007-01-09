@@ -446,7 +446,7 @@ int GetIsDivineClass (int nClass, object oCaster = OBJECT_SELF)
             nClass==CLASS_TYPE_FAVOURED_SOUL ||
             nClass==CLASS_TYPE_SOHEI ||
             nClass==CLASS_TYPE_HEALER ||
-            nClass==CLASS_TYPE_SLAYER_OF_DOMIEL || 
+            nClass==CLASS_TYPE_SLAYER_OF_DOMIEL ||
             nClass==CLASS_TYPE_OCULAR);
 }
 
@@ -714,7 +714,8 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
     {
         //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
         if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
-            && GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF)
+            && ((GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF) ||
+                (GetBaseItemType(oItem) == BASE_ITEM_CRAFTED_STAFF))
         {
             iCastingClass = GetFirstArcaneClass(oCaster);//sets it to an arcane class
         }
@@ -859,7 +860,7 @@ int StormMagic(object oCaster)
     object oArea = GetArea(oCaster);
 
     if (GetWeather(oArea, WEATHER_TYPE_RAIN) > 0 ||
-        GetWeather(oArea, WEATHER_TYPE_SNOW) > 0  || 
+        GetWeather(oArea, WEATHER_TYPE_SNOW) > 0  ||
         GetWeather(oArea, WEATHER_TYPE_LIGHTNING) > 0)
     {
         return 1;
@@ -1173,14 +1174,14 @@ int PRCMySavingThrow(int nSavingThrow, object oTarget, int nDC, int nSaveType=SA
     {
         return 0;
     }
-    
+
     // Hexblade gets a bonus against spells equal to his Charisma (Min +1)
-    int nHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget);    
+    int nHex = GetLevelByClass(CLASS_TYPE_HEXBLADE, oTarget);
     if (nHex > 0)
     {
-    	int nHexCha = GetAbilityModifier(ABILITY_CHARISMA, oTarget);
-    	if (nHexCha < 1) nHexCha = 1;
-    	nDC -= nHexCha;
+        int nHexCha = GetAbilityModifier(ABILITY_CHARISMA, oTarget);
+        if (nHexCha < 1) nHexCha = 1;
+        nDC -= nHexCha;
     }
 
     // This is done here because it is possible to tell the saving throw type here
@@ -1284,7 +1285,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         nDC -= 3;
     else if(nSaveType == SAVING_THROW_TYPE_ACID && GetHasFeat(FEAT_HARD_EARTH, oTarget))
         nDC -= 1+(GetHitDice(oTarget)/5);
-    
+
     // This ability removes evasion from the target
     if (GetLocalInt(oTarget, "TrueConfoundingResistance"))
     {
@@ -1293,7 +1294,7 @@ int PRCGetReflexAdjustedDamage(int nDamage, object oTarget, int nDC, int nSaveTy
         {
             return nDamage / 2;
         }
-        
+
         return nDamage;
     }
 
@@ -1431,20 +1432,20 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
                  iTemp = iSue;
              return iTemp;
              break;
-	case CLASS_TYPE_HEXBLADE:
+    case CLASS_TYPE_HEXBLADE:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_HEXBLADE)
                  iTemp = iArc;
              else
                  iTemp = iHex / 2;
              return iTemp;
-             break;  
-	case CLASS_TYPE_DUSKBLADE:
+             break;
+    case CLASS_TYPE_DUSKBLADE:
              if (GetFirstArcaneClass(oCaster) == CLASS_TYPE_DUSKBLADE)
                  iTemp = iArc;
              else
                  iTemp = iDsk;
              return iTemp;
-             break;              
+             break;
         case CLASS_TYPE_FAVOURED_SOUL:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_FAVOURED_SOUL)
                  iTemp = iDiv;
@@ -1458,21 +1459,21 @@ int GetCasterLvl(int iTypeSpell, object oCaster = OBJECT_SELF)
              else
                  iTemp = iSoh / 2;
              return iTemp;
-             break; 
+             break;
         case CLASS_TYPE_HEALER:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_HEALER)
                  iTemp = iDiv;
              else
                  iTemp = iHlr;
              return iTemp;
-             break;             
+             break;
         case CLASS_TYPE_SLAYER_OF_DOMIEL:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_SLAYER_OF_DOMIEL)
                  iTemp = iDiv;
              else
                  iTemp = iSod;
              return iTemp;
-             break;             
+             break;
         case CLASS_TYPE_BLACKGUARD:
              if (GetFirstDivineClass(oCaster) == CLASS_TYPE_BLACKGUARD)
                  iTemp = iDiv;
@@ -1870,7 +1871,7 @@ void DoCorruptionCost(object oPC, int nAbility, int nCost, int bDrain)
     // Undead redirect all damage & drain to Charisma, sez http://www.wizards.com/dnd/files/BookVileFAQ12102002.zip
     if(MyPRCGetRacialType(oPC) == RACIAL_TYPE_UNDEAD)
         nAbility = ABILITY_CHARISMA;
-        
+
     //Exalted Raiment
     if(GetHasSpellEffect(SPELL_EXALTED_RAIMENT, GetItemInSlot(INVENTORY_SLOT_CHEST, oPC)))
     {
@@ -2044,7 +2045,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
         AssignCommand(oTarget, ClearAllActions(TRUE));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);
     }
-    else if (nSpellId == SPELL_COMMAND_FLEE || nSpellId == SPELL_GREATER_COMMAND_FLEE || 
+    else if (nSpellId == SPELL_COMMAND_FLEE || nSpellId == SPELL_GREATER_COMMAND_FLEE ||
              nSpellId == SPELL_DOA_COMMAND_FLEE || nSpellId == SPELL_DOA_GREATER_COMMAND_FLEE)
     {
         // Force the target to flee the caster

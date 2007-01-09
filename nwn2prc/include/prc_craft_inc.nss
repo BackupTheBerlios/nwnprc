@@ -1208,7 +1208,7 @@ int GetCraftingFeat(object oItem)
     if(nBase == BASE_ITEM_RING) return FEAT_FORGE_RING;
     if(nBase == BASE_ITEM_MAGICROD) return FEAT_CRAFT_ROD;
     if((nBase == BASE_ITEM_MAGICSTAFF) ||
-        (nBase == 201)
+        (nBase == BASE_ITEM_CRAFTED_STAFF)
         )
         return FEAT_CRAFT_STAFF;
     if(nBase == BASE_ITEM_MAGICWAND) return FEAT_CRAFT_WAND;

@@ -2,7 +2,7 @@
 
 int isSimple(object oItem)
 {
-	if(DEBUG) DoDebug("prc_intuiatk: Running isSimple()");
+    if(DEBUG) DoDebug("prc_intuiatk: Running isSimple()");
       int iType= GetBaseItemType(oItem);
 
       switch (iType)
@@ -29,7 +29,7 @@ int isSimple(object oItem)
 
 int isLight(object oItem)
 {
-	if(DEBUG) DoDebug("prc_intuiatk: Running isLight()");
+    if(DEBUG) DoDebug("prc_intuiatk: Running isLight()");
      // weapon finesse works with dagger, handaxe, kama,
      // kukri, light hammer, mace, rapier, short sword,
      // whip, and unarmed strike.
@@ -54,13 +54,13 @@ int isLight(object oItem)
 
 void main()
 {
-	if(DEBUG) DoDebug("prc_intuiatk: Running main()");
-   object oPC = OBJECT_SELF;
+    if(DEBUG) DoDebug("prc_intuiatk: Running main()");
+   object oPC = GetSpellTargetObject();
    object oSkin = GetPCSkin(oPC);
 
    if (GetHasFeat(FEAT_RAVAGEGOLDENICE, oPC))
    {
-	if(DEBUG) DoDebug("prc_intuiatk: PC has Ravage: Golden Ice");
+    if(DEBUG) DoDebug("prc_intuiatk: PC has Ravage: Golden Ice");
        int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
        object oItem;
 
@@ -101,7 +101,7 @@ void main()
 
    if(GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC) || GetHasFeat(FEAT_WEAPON_FINESSE, oPC))
    {
-   	if(DEBUG) DoDebug("prc_intuiatk: PC has Intuitive Attack or WepFinesse");
+    if(DEBUG) DoDebug("prc_intuiatk: PC has Intuitive Attack or WepFinesse");
       // shorthand - IA is intuitive attack and WF is weapon finesse
       object oItem ;
       int iEquip = GetLocalInt(oPC,"ONEQUIP") ;
@@ -111,7 +111,7 @@ void main()
       int iIABonus = 0;
       int iWFBonus = 0;
       int bHasIA = GetHasFeat(FEAT_INTUITIVE_ATTACK, oPC);
-      int bHasWF = GetHasFeat(FEAT_WEAPON_FINESSE, oPC); 
+      int bHasWF = GetHasFeat(FEAT_WEAPON_FINESSE, oPC);
       int bUseIA = FALSE;
       int bUseWF = FALSE;
       int bIsSimpleR = isSimple(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC));
@@ -122,9 +122,9 @@ void main()
                     GetBaseItemType(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == BASE_ITEM_HEAVYCROSSBOW;
       int bUnarmed = GetIsObjectValid(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC)) == FALSE;
       int bCreWeap = bUnarmed && GetLocalInt(oPC, "UsingCreature") == TRUE;
-      
-	if(DEBUG) DoDebug("prc_intuiatk: Finished setting up ints");
-	
+
+    if(DEBUG) DoDebug("prc_intuiatk: Finished setting up ints");
+
       // Initialize all these values to 0:
       SetCompositeAttackBonus(oPC, "IntuitiveAttackR", 0, ATTACK_BONUS_ONHAND);
       SetCompositeAttackBonus(oPC, "IntuitiveAttackL", 0, ATTACK_BONUS_OFFHAND);
@@ -157,7 +157,7 @@ void main()
       // If the character only has intuitive attack, add appropriate bonuses.
       if (bUseIA && !bUseWF)
       {
-      	if(DEBUG) DoDebug("prc_intuiatk: PC has only Intuitive Attack");
+        if(DEBUG) DoDebug("prc_intuiatk: PC has only Intuitive Attack");
           if (bIsSimpleR)
               SetCompositeAttackBonus(oPC, "IntuitiveAttackR", iIABonus, ATTACK_BONUS_ONHAND);
           else if (bUnarmed)
@@ -169,7 +169,7 @@ void main()
       // If the character has both intuitive attack and weapon finesse, things can get hairy:
       else if (bUseWF && bUseIA)
       {
-      	if(DEBUG) DoDebug("prc_intuiatk: PC has both IA and WF");
+        if(DEBUG) DoDebug("prc_intuiatk: PC has both IA and WF");
           int iMod = (iWis > iDex) ? (iWis - iDex) : (0);
 
           if (bIsSimpleR && !bIsLightR)
@@ -184,8 +184,8 @@ void main()
 
           if (bCreWeap)
           {
-          	if(DEBUG) DoDebug("prc_intuiatk: PC using creature weapon");
-  
+            if(DEBUG) DoDebug("prc_intuiatk: PC using creature weapon");
+
               if (iMod > 0)
                   SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iIABonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
 //              else
@@ -193,14 +193,14 @@ void main()
           }
           else if (!bCreWeap && bUnarmed)
           {
-          	if(DEBUG) DoDebug("prc_intuiatk: PC has no creature weapon and is unarmed");
+            if(DEBUG) DoDebug("prc_intuiatk: PC has no creature weapon and is unarmed");
               SetCompositeAttackBonus(oPC, "IntuitiveAttackUnarmed", iMod);
           }
       }
       // If the character has only weapon finesse and a creature weapon
       else if (bUseWF && !bUseIA && bCreWeap)
       {
-          //1.67 Bioware fixed this so it should be disabled 
+          //1.67 Bioware fixed this so it should be disabled
 //          SetLocalInt(oPC, "UnarmedWeaponFinesseBonus", iWFBonus); // This will be added by SPELL_UNARMED_ATTACK_PEN
       }
    }

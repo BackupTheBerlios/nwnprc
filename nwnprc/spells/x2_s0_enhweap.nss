@@ -165,7 +165,8 @@ int DoSpell(object oCaster, object oTarget, int nCasterLevel, int nEvent)
         {
             nVis = VFX_IMP_EVIL_HELP;
             bCondition = bCondition && (GetBaseItemType(oMyWeapon) == BASE_ITEM_QUARTERSTAFF) ||
-                                        (GetBaseItemType(oMyWeapon) == BASE_ITEM_MAGICSTAFF);
+                                        (GetBaseItemType(oMyWeapon) == BASE_ITEM_MAGICSTAFF) ||
+                                        (GetBaseItemType(oMyWeapon) == BASE_ITEM_CRAFTED_STAFF);
             break;
         }
         case SPELL_BLESS_WEAPON:

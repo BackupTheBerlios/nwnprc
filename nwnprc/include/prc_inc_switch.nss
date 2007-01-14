@@ -3167,7 +3167,7 @@ void SetDefaultFileEnds()
         return;
     SetPRCSwitch(FILE_END_CLASSES,         PRCGetFileEnd("classes"));
     SetPRCSwitch(FILE_END_RACIALTYPES,     PRCGetFileEnd("racialtypes"));
-    SetPRCSwitch(FILE_END_GENDER,          2);//overriden to 2
+    SetPRCSwitch(FILE_END_GENDER,          1);//overriden to 1 for convoCC m/f only choice
     SetPRCSwitch(FILE_END_PORTRAITS,       PRCGetFileEnd("portraits"));
     SetPRCSwitch(FILE_END_SKILLS,          PRCGetFileEnd("skills"));
     SetPRCSwitch(FILE_END_CLASS_FEAT,      600);

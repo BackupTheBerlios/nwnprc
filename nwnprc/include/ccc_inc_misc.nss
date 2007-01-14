@@ -70,6 +70,9 @@ int IncreaseAbilityScore(int nCurrentAbilityScore);
 //or the cost saved by dropping from that score
 int GetCost(int nAbilityScore);
 
+// this marks if the PC qualifies for skill focus feats that are class specific
+void MarkSkillFocusPrereq(int nSkill, string sVarName);
+
 // works out the next stage to go to between STAGE_FEAT_CHECK and STAGE_APPEARANCE
 // when given the stage just completed
 // covers caster and familiar related choices
@@ -586,6 +589,22 @@ int GetCost(int nAbilityScore)
     if(nCost < 1)
         nCost = 1;
     return nCost;
+}
+
+void MarkSkillFocusPrereq(int nSkill, string sVarName)
+{
+    string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(OBJECT_SELF, "Class"));
+    // get the table/column name quote mark
+    string q = PRC_SQLGetTick();
+    // query to see if nSkill is on the cls_skill*** list
+    string sSkill = IntToString(nSkill);
+    string sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
+    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
+    +q+"data"+q+ " = '" + sSkill + "'";
+    
+    PRC_SQLExecDirect(sSQL);
+    if (PRC_SQLFetch() == PRC_SQL_SUCCESS)
+        SetLocalInt(OBJECT_SELF, sVarName, TRUE);
 }
 
 int GetNextCCCStage(int nStage, int nSpellCasterStage = TRUE)
@@ -1114,7 +1133,7 @@ void Do2daLoop(string s2da, string sColumnName, int nFileEnd)
     int i = 0;
     string sName;
     sName = Get2DACache(s2da, sColumnName, i);
-    while(i < nFileEnd)
+    while(i <= nFileEnd)
     {
         AddChoice(GetStringByStrRef(StringToInt(sName)), i);
         i++;
@@ -1321,36 +1340,8 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
     /* TODO - class feats, scripting feat enforcement */
     // get the table/column name quote mark
     string q = PRC_SQLGetTick();
+    string sSQL;
     object oPC = OBJECT_SELF;
-    
-    // check if UMD and animal empathy can be taken for prereq for the skill focus feats
-    // done here because reading the 2da cache clears out any existing SQL results
-    // note: any other skill that is restricted to certain classes needs to be hardcoded here
-    string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(oPC, "Class"));
-    
-    /*
-     * SELECT SkillIndex FROM <cls_skill_***> WHERE SkillIndex = <skill>
-     */
-    
-    // query to see if animal empathy is on that list
-    string sSkillAnimalEmpathy = "0"; // as int 0 is the same as a non existant row
-    string sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
-    +q+"data"+q+ " = '" + sSkillAnimalEmpathy + "'";
-    
-    PRC_SQLExecDirect(sSQL);
-    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == "0") // check it was the right skill
-        SetLocalInt(oPC, "bHasAnimalEmpathy", TRUE);
-    
-    // query to see if use magic device is on that list
-    string sSkillUMD = IntToString(SKILL_USE_MAGIC_DEVICE);
-    sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
-    +q+"data"+q+ " = '" + sSkillUMD + "'";
-    
-    PRC_SQLExecDirect(sSQL);
-    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == sSkillUMD) // check it was the right skill
-        SetLocalInt(oPC, "bHasUMD", TRUE);
     
     // get the information needed to work out if the prereqs are met
     int nSex = GetLocalInt(oPC, "Gender");
@@ -1565,36 +1556,8 @@ void DoBonusFeatLoop()
     /* TODO - scripting feat enforcement */
     // get the table/column name quote mark
     string q = PRC_SQLGetTick();
+    string sSQL;
     object oPC = OBJECT_SELF;
-    
-    // check if UMD and animal empathy can be taken for prereq for the skill focus feats
-    // done here because reading the 2da cache clears out any existing SQL results
-    // note: any other skill that is restricted to certain classes needs to be hardcoded here
-    string sFile = Get2DACache("classes", "SkillsTable", GetLocalInt(oPC, "Class"));
-    
-    /*
-     * SELECT SkillIndex FROM <cls_skill_***> WHERE SkillIndex = <skill>
-     */
-    
-    // query to see if animal empathy is on that list
-    string sSkillAnimalEmpathy = "0"; // as int 0 is the same as a non existant row
-    string sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
-    +q+"data"+q+ " = '" + sSkillAnimalEmpathy + "'";
-    
-    PRC_SQLExecDirect(sSQL);
-    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == "0") // check it was the right skill
-        SetLocalInt(oPC, "bHasAnimalEmpathy", TRUE);
-    
-    // query to see if use magic device is on that list
-    string sSkillUMD = IntToString(SKILL_USE_MAGIC_DEVICE);
-    sSQL = "SELECT " +q+"data"+q+ " FROM " + q +"prc_cached2da"+ q +
-    " WHERE " + q +"file"+q + " = '" + sFile + "' AND " +q+"columnid"+q+ "= 'SkillIndex' AND " 
-    +q+"data"+q+ " = '" + sSkillUMD + "'";
-    
-    PRC_SQLExecDirect(sSQL);
-    if (PRC_SQLFetch() == PRC_SQL_SUCCESS && PRC_SQLGetData(1) == sSkillUMD) // check it was the right skill
-        SetLocalInt(oPC, "bHasUMD", TRUE);
     
     // get the information needed to work out if the prereqs are met
     int nSex = GetLocalInt(oPC, "Gender");
@@ -1627,7 +1590,7 @@ void DoBonusFeatLoop()
     int nReali = GetLocalInt(OBJECT_SELF, "i");
     
     // get which cls_feat_*** 2da to use
-    sFile = Get2DACache("classes", "FeatsTable", nClass);
+    string sFile = Get2DACache("classes", "FeatsTable", nClass);
         
         /*
         SELECT prc_cached2da_cls_feat.FeatIndex, prc_cached2da_cls_feat.FEAT, 
@@ -1846,7 +1809,7 @@ void  DoDomainsLoop()
         if (sDomain == "-1")
             sDomain = "0";
         sName = Get2DACache("domains", "Name", i);
-        while(i < GetPRCSwitch(FILE_END_DOMAINS))
+        while(i <= GetPRCSwitch(FILE_END_DOMAINS))
         {
             if (sName != "" && sName != sDomain)
             {
@@ -2020,29 +1983,33 @@ void AddRaceFeats(int nRace)
 {
     // gets which race_feat***.2da to use
     string sFile = GetStringLowerCase(Get2DACache("racialtypes", "FeatsTable", nRace));
-    int i = 0;
     // create the Feats array
     array_create(OBJECT_SELF, "Feats");
-    // initialise the while loop
-    string sFeat = Get2DACache(sFile, "FeatIndex", i);
-    while(sFeat != "") // while there's non empty lines in the 2da
+    int nQTMCount = 0;
+    // add on any bonus feats from switches here
+    nQTMCount += (GetPRCSwitch(PRC_CONVOCC_BONUS_FEATS));
+    // get the table/column name quote mark
+    string q = PRC_SQLGetTick();
+    /*
+        SELECT `data` FROM `prc_cached2da`
+        WHERE (`file` = <race_feat***>) AND (`columnid` = 'FeatIndex') AND (`data` != '****')
+    */
+    string sSQL = "SELECT "+q+"data"+q+" FROM "+q+"prc_cached2da"+q+" WHERE ("+q+"file"+q+" = '" + sFile + "') AND ("+q+"columnid"+q+" = 'FeatIndex') AND ("+q+"data"+q+" != '****')";
+    PRC_SQLExecDirect(sSQL);
+    int nFeat;
+    while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
     {
+        nFeat = StringToInt(PRC_SQLGetData(1)); // feat index
         //alertness fix
-        if(sFeat == "0")
-            sFeat = "-1";
-        int nQTMCount = 0;
+        if(nFeat == 0)
+            nFeat = -1;
         // if one of these is quick to master, mark for doing the bonus feat later
-        if (sFeat == "258")
+        if (nFeat == 258)
             nQTMCount++;
-        // add on any bonus feats from switches here
-        nQTMCount += (GetPRCSwitch(PRC_CONVOCC_BONUS_FEATS));
-        SetLocalInt(OBJECT_SELF, "QTM", nQTMCount);
-        
-        array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"),
-            StringToInt(sFeat));
-        i++;
-        sFeat = Get2DACache(sFile, "FeatIndex", i);
+        array_set_int(OBJECT_SELF, "Feats", array_get_size(OBJECT_SELF, "Feats"), nFeat);
     }
+    // set final bonus feat count
+    SetLocalInt(OBJECT_SELF, "QTM", nQTMCount);
 }
 
 void AddClassFeats(int nClass)
@@ -2059,9 +2026,9 @@ void AddClassFeats(int nClass)
         // class feats granted at level 1
         /*
         SELECT `FeatIndex` FROM `prc_cached2da_cls_feat`
-        WHERE (`file` = <cls_feat***>) AND (`List` = 3) AND (`GrantedOnLevel` = 1)
+        WHERE (`file` = <cls_feat***>) AND (`List` = 3) AND (`GrantedOnLevel` = 1) AND (`FeatIndex` != '****')
         */
-        string sSQL = "SELECT "+q+"FeatIndex"+q+" FROM "+q+"prc_cached2da_cls_feat"+q+" WHERE ("+q+"file"+q+" = '" + sFile + "') AND ("+q+"List"+q+" = 3) AND ("+q+"GrantedOnLevel"+q+" = 1)";
+        string sSQL = "SELECT "+q+"FeatIndex"+q+" FROM "+q+"prc_cached2da_cls_feat"+q+" WHERE ("+q+"file"+q+" = '" + sFile + "') AND ("+q+"List"+q+" = 3) AND ("+q+"GrantedOnLevel"+q+" = 1) AND ("+q+"FeatIndex"+q+" != '****')";
         PRC_SQLExecDirect(sSQL);
         int nFeat;
         while (PRC_SQLFetch() == PRC_SQL_SUCCESS)

@@ -180,12 +180,20 @@ void DoHeaderAndChoices(int nStage)
         }
         case STAGE_ABILITY_CHECK: {
             sText = GetStringByStrRef(16824209) + "\n"; // You have selected:
-            sText += GetStringByStrRef(135) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Str")) + "\n"; // str
-            sText += GetStringByStrRef(133) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Dex")) + "\n"; // dex
-            sText += GetStringByStrRef(132) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Con")) + "\n"; // con
-            sText += GetStringByStrRef(134) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Int")) + "\n"; // int
-            sText += GetStringByStrRef(136) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Wis")) + "\n"; // wis
-            sText += GetStringByStrRef(131) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Cha")) + "\n"; // cha
+            // get the racial adjustment
+            int nRace = GetLocalInt(OBJECT_SELF, "Race");
+            string sStrAdjust = Get2DACache("racialtypes", "StrAdjust", nRace);
+            string sDexAdjust = Get2DACache("racialtypes", "DexAdjust", nRace);
+            string sConAdjust = Get2DACache("racialtypes", "ConAdjust", nRace);
+            string sIntAdjust = Get2DACache("racialtypes", "IntAdjust", nRace);
+            string sWisAdjust = Get2DACache("racialtypes", "WisAdjust", nRace);
+            string sChaAdjust = Get2DACache("racialtypes", "ChaAdjust", nRace);
+            sText += GetStringByStrRef(135) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Str") + StringToInt(sStrAdjust)) + "\n"; // str
+            sText += GetStringByStrRef(133) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Dex") + StringToInt(sDexAdjust)) + "\n"; // dex
+            sText += GetStringByStrRef(132) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Con") + StringToInt(sConAdjust)) + "\n"; // con
+            sText += GetStringByStrRef(134) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Int") + StringToInt(sIntAdjust)) + "\n"; // int
+            sText += GetStringByStrRef(136) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Wis") + StringToInt(sWisAdjust)) + "\n"; // wis
+            sText += GetStringByStrRef(131) + ": " + IntToString(GetLocalInt(OBJECT_SELF, "Cha") + StringToInt(sChaAdjust)) + "\n"; // cha
             sText += "\n" + GetStringByStrRef(16824210); // Is this correct?
             SetHeader(sText);
             // choices Y/N
@@ -247,7 +255,7 @@ void DoHeaderAndChoices(int nStage)
                 sText += IntToString(GetLocalInt(OBJECT_SELF, "SavedSkillPoints")) + "\n";
             }
             // loop through the "Skills" array
-            for(i=0; i < GetPRCSwitch(FILE_END_SKILLS); i++) // the array can't be bigger than the skills 2da
+            for(i=0; i <= GetPRCSwitch(FILE_END_SKILLS); i++) // the array can't be bigger than the skills 2da
             {
                 if(array_get_int(OBJECT_SELF, "Skills",i) != 0) // if there are points in the skill, add it to the header
                 {
@@ -275,6 +283,13 @@ void DoHeaderAndChoices(int nStage)
                 nFeatsRemaining += GetLocalInt(OBJECT_SELF, "QTM");
                 // set how many times to go through this stage
                 SetLocalInt(OBJECT_SELF, "Points", nFeatsRemaining);
+                // mark skill focus feat prereq here so it's only done once
+                // note: any other skill that is restricted to certain classes needs to be added here
+                // and the local ints deleted in the STAGE_BONUS_FEAT_CHECK case of HandleChoice()
+                // and it enforced in CheckSkillPrereq()
+                // UMD and animal empathy are the only ones so far
+                MarkSkillFocusPrereq(SKILL_ANIMAL_EMPATHY, "bHasAnimalEmpathy");
+                MarkSkillFocusPrereq(SKILL_USE_MAGIC_DEVICE, "bHasUMD");
             }
             // check for bonus feat(s) from class - show the player the total feats
             // even though class bonuses are a different stage
@@ -1235,6 +1250,9 @@ int HandleChoice(int nStage, int nChoice)
                 if (nFeatsRemaining == 0)
                 {
                     // no more feats left to pick
+                    // tidy up locals
+                    DeleteLocalInt(OBJECT_SELF, "bHasAnimalEmpathy");
+                    DeleteLocalInt(OBJECT_SELF, "bHasUMD");
                     // go to next stage after that the PC qualifies for
                     nStage = GetNextCCCStage(nStage);
                 }
@@ -1410,6 +1428,7 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_APPEARANCE: {
             if (nChoice == -1) // no change
             {
+                SetLocalInt(OBJECT_SELF, "Appearance", GetAppearanceType(OBJECT_SELF));
                 nStage = STAGE_PORTRAIT;
             }
             else
@@ -1496,6 +1515,11 @@ int HandleChoice(int nStage, int nChoice)
             }
             else if (nChoice == 1)
             {
+                // set up colour defaults here to make sure they don't reset for non-player type appearances
+                SetLocalInt(OBJECT_SELF, "Skin", -1);
+                SetLocalInt(OBJECT_SELF, "Hair", -1);
+                SetLocalInt(OBJECT_SELF, "TattooColour1", -1);
+                SetLocalInt(OBJECT_SELF, "TattooColour2", -1);
                 nStage = GetNextCCCStage(nStage, FALSE);
             }
             else

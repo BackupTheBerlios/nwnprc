@@ -136,7 +136,7 @@ void main()
     }
 
     //Skills
-    for (i=0;i<GetPRCSwitch(FILE_END_SKILLS);i++)
+    for (i=0;i<=GetPRCSwitch(FILE_END_SKILLS);i++)
     {
         sScript += LetoAdd("SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");
         sScript += LetoAdd("LvlStatList/[_]/SkillList/Rank", IntToString(array_get_int(oPC, "Skills", i)), "byte");

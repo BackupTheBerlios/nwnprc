@@ -486,6 +486,9 @@ void PreCache(string s2DA, string sColumn, int nRow, string sValue)
 }
 
 /*
+This is fugly and long. Should maybe be refactored to multiple functions. But everything inline does give
+a few less instructions used.
+
 Caching behaviours
 1)      Tokens in creature inventory
 2)      Direct to BiowareDB
@@ -520,7 +523,7 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "")
         //if no chest, use HEARTOFCHAOS in limbo as a location to make a new one
         if (!GetIsObjectValid(oCacheWP))
         {
-            if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Cache container does not exist, creating new one");
+            if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Cache container creature does not exist, creating new one");
             //oCacheWP = CreateObject(OBJECT_TYPE_PLACEABLE, "plc_chest2",
             //    GetLocation(GetObjectByTag("HEARTOFCHAOS")), FALSE, "Bioware2DACache");
             //has to be a creature, placeables cant go through the DB
@@ -529,17 +532,79 @@ string Get2DACache(string s2DA, string sColumn, int nRow, string s = "")
         }
 
         //get the token for this file
-        //string sFileWPName = ""+GetStringUpperCase(s2DA)+"_"+sColumn+"_"+IntToString(nRow/1000);
-        string sFileWPName = "Bio2DACacheToken_" + GetSubString(GetStringUpperCase(s2DA), 0, 1);
+        string sFileWPName = s2DA + "_" + sColumn + "_" + IntToString(nRow / 1000);
+        //string sFileWPName = "Bio2DACacheToken_" + GetSubString(GetStringUpperCase(s2DA), 0, 1);
         //if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Token tag is " + sFileWPName);
         oFileWP = GetObjectByTag(sFileWPName);
         //token doesnt exist make it
-        if (!GetIsObjectValid(oFileWP))
+        if(!GetIsObjectValid(oFileWP))
         {
             if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Token does not exist, creating new one");
-            oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
+
+            // Use containers to avoid running out of inventory space
+            int nContainer = 0;
+            string sContainerName = "Bio2DACacheTokenContainer_" + GetSubString(s2DA, 0, 1) + "_";
+            object oContainer     = GetObjectByTag(sContainerName + IntToString(nContainer));
+
+            // Find last existing container
+            if(GetIsObjectValid(oContainer))
+            {
+                if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Seeking last container in series: " + sContainerName);
+                for(;;) // Infinite loop until we hit an non-existent container
+                {
+                    nContainer++;
+                    object oTemp = GetObjectByTag(sContainerName + IntToString(nContainer));
+                    if(!GetIsObjectValid(oTemp))
+                        break;
+                    else
+                        oContainer = oTemp;
+                }
+
+                if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Found: " + DebugObject2Str(oContainer));
+
+                // Make sure it's not full
+                /*
+                if(GetIsObjectValid(oContainer))
+                {
+                    int nNumItems = 0;
+                    object oTest = GetFirstItemInInventory(oContainer);
+                    while(GetIsObjectValid(oTest))
+                    {
+                        nNumItems++;
+                        oTest = GetNextItemInInventory(oContainer);
+                    }
+                    if(nNumItems > (35 - 5)) // 35 is max number of items that can fit in one container page. Try to not fill containers completely in order to avoid accidentall overfills
+                        oContainer = OBJECT_INVALID;
+                }
+                */
+                if(GetIsObjectValid(oContainer) && (GetLocalInt(oContainer, "NumTokensInside") >= 34)) // Container has 35 slots. Attempt to not use them all, just in case
+                {
+                    if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Container full: " + DebugObject2Str(oContainer));
+                    oContainer = OBJECT_INVALID;
+                }
+            }
+            // We need to create a container
+            if(!GetIsObjectValid(oContainer))
+            {
+                if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Creating new container");
+
+                oContainer = CreateObject(OBJECT_TYPE_ITEM, "nw_it_contain001", GetLocation(oCacheWP), FALSE, sContainerName + IntToString(nContainer));
+                DestroyObject(oContainer);
+                oContainer = CopyObject(oContainer, GetLocation(oCacheWP), oCacheWP, sContainerName + IntToString(nContainer));
+            }
+
+            if(DEBUG_GET2DACACHE) DoDebug("Get2DACache: Using container: " + DebugObject2Str(oContainer));
+
+            // Create the new token
+            /*oFileWP = CreateObject(OBJECT_TYPE_ITEM, "hidetoken", GetLocation(oCacheWP), FALSE, sFileWPName);
             DestroyObject(oFileWP);
-            oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);
+            oFileWP = CopyObject(oFileWP, GetLocation(oCacheWP), oCacheWP, sFileWPName);*/
+            oFileWP = CreateItemOnObject("hidetoken", oContainer, 1, sFileWPName);
+
+            //SetName(oFileWP, "2da Cache - " + sFileWPName);
+
+            // Increment token count tracking variable
+            SetLocalInt(oContainer, "NumTokensInside", GetLocalInt(oContainer, "NumTokensInside") + 1);
         }
 
         //store to check if pushed in

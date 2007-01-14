@@ -28,7 +28,8 @@ const int STAGE_QUICKS         = 2;
 const int STAGE_MISC           = 3;
 const int STAGE_LEV_OR_PP      = 4;
 const int STAGE_SET_DEFAULTS   = 5;
-const int STAGE_MODIFY_PROFILE = 6;
+const int STAGE_SET_AUTOMETA   = 6;
+const int STAGE_MODIFY_PROFILE = 7;
 
 const int CHOICE_BACK_TO_MAIN = -1;
 
@@ -58,13 +59,17 @@ const int STRREF_SELECT_QUICKS       = 16828421; // "Select quickselection to mo
 const int STRREF_MAKE_SELECTION      = 16828422; // "Make your selection."
 const int STRREF_ENTERSTAGE_LVLORPP  = 16828423; // "Set how the values in an augmentation profile are treated."
 const int STRREF_ENTERSTAGE_SMPLDEF  = 16828424; // "Set augmentation profiles to a simple default."
+const int STRREF_ENTERSTAGE_AUTOMET  = 16828403; // "Set whether metapsionics code tries to avoid exceeding manifester level cap."
 const int STRREF_EXPLAIN_LVLORPP     = 16828425; // "You may define how your personal augmentation profiles are treated. The option values may either mean how many times to use that option, or how many power points to use for that option. In the latter case, the number of times the option is used is the number of power points divided by the cost of the option, rounded down.\nCurrent setting:"
 const int STRREF_POWER_POINTS        = 16826409; // "Power Points"
 const int STRREF_LEVELS              = 5220;     // "Levels"
 const int STRREF_CHANGETO            = 16828426; // "Change to"
 const int STRREF_SET_SIMPLE_DEFAULT  = 16828427; // "This will set your profiles to a simple progression, where each profile's first augmentation option's value is equal to the profile's number and all the other options are zero.\n\nThis change is irreversible, are you sure you want to do this?"
+const int STRREF_EXPLAIN_AUTOMETA    = 16828402; // "Normally, active metapsionics are applied to an eligible power regardless of whether this would bring the PP cost over the manifester level cap\nAt your option, application of activated metapsionics other than quicken will be skipped if applying that metapsionic power would raise the PP cost over manifester level.\nCurrent setting: "
 const int STRREF_YES                 = 4752;     // "Yes"
 const int STRREF_NO                  = 4753;     // "No"
+const int STRREF_ON                  = 16828380; // "On"
+const int STRREF_OFF                 = 16828381; // "Off"
 const int STRREF_SET_PROFILEVAL      = 16828428; // "Set the profile's values. Current:"
 const int STRREF_OPTION              = 16823498; // "Option"
 const int STRREF_RAISE_OPTION        = 16828429; // "Raise option"
@@ -189,6 +194,8 @@ void main()
                 AddChoiceStrRef(STRREF_ENTERSTAGE_LVLORPP, STAGE_LEV_OR_PP, oPC); // "Set how the values in an augmentation profile are treated."
                 // Set the profiles to a default that approximates the old behaviour
                 AddChoiceStrRef(STRREF_ENTERSTAGE_SMPLDEF, STAGE_SET_DEFAULTS, oPC); // "Set augmentation profiles to a simple default."
+                // Toggle whether metapsionics automatically skips affecting a power if it would cause manifester cap to be exceeded
+                AddChoiceStrRef(STRREF_ENTERSTAGE_AUTOMET, STAGE_SET_AUTOMETA, oPC); // "Set whether metapsionics code tries to avoid exceeding manifester level cap."
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -215,6 +222,23 @@ void main()
 
                 AddChoiceStrRef(STRREF_YES, CHOICE_YES, oPC);
                 AddChoiceStrRef(STRREF_NO,  CHOICE_NO,  oPC);
+
+                MarkStageSetUp(nStage, oPC);
+            }
+            else if(nStage == STAGE_SET_AUTOMETA)
+            {
+                SetHeader(GetStringByStrRef(STRREF_EXPLAIN_AUTOMETA) + " " // "Normally, active metapsionics are applied to an eligible power regardless of whether this would bring the PP cost over the manifester level cap\nAt your option, application of activated metapsionics other than quicken will be skipped if applying that metapsionic power would raise the PP cost over manifester level.\nCurrent setting: "
+                        + (GetPersistantLocalInt(oPC, PRC_PLAYER_SWITCH_AUTOMETAPSI) ?
+                           GetStringByStrRef(STRREF_ON) : // "On"
+                           GetStringByStrRef(STRREF_OFF)  // "Off"
+                           )
+                          );
+
+                // Back to main choice
+                AddChoiceStrRef(STRREF_BACK_TO_MAIN, CHOICE_BACK_TO_MAIN, oPC); // "Back to main menu"
+
+                AddChoice(GetStringByStrRef(STRREF_ON),  TRUE,  oPC); // "On"
+                AddChoice(GetStringByStrRef(STRREF_OFF), FALSE, oPC); // "Off"
 
                 MarkStageSetUp(nStage, oPC);
             }
@@ -345,6 +369,16 @@ void main()
             }
 
             nStage = STAGE_ENTRY;
+        }
+        else if(nStage == STAGE_SET_AUTOMETA)
+        {
+            if(nChoice == CHOICE_BACK_TO_MAIN) nStage = STAGE_ENTRY;
+            else
+            {
+                // The value of the choice is the new value of the switch
+                SetPersistantLocalInt(oPC, PRC_PLAYER_SWITCH_AUTOMETAPSI, nChoice);
+                ClearCurrentStage(oPC);
+            }
         }
         else if(nStage == STAGE_MODIFY_PROFILE)
         {

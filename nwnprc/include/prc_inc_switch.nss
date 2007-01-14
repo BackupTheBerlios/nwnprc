@@ -1320,6 +1320,14 @@ const string PRC_PSI_IMP_METAPSIONICS_USE_SUM        = "PRC_PSI_IMP_METAPSIONICS
  */
 const string PRC_PLAYER_SWITCH_AUGMENT_IS_PP         = "PRC_PLAYER_SWITCH_AUGMENT_IS_PP";
 
+/**
+ * A switch a player can personally toggle. If set, the metapsionics code attempts
+ * to avoid exceeding the manifester level cap by skipping application of
+ * such active metapsionic feats where the cost would cause manifester level cap to
+ * be exceeded. Quicken Power is exempt from ever being skipped if it is active.
+ */
+const string PRC_PLAYER_SWITCH_AUTOMETAPSI           = "PRC_PLAYER_SWITCH_AUTOMETAPSI";
+
 /******************************************************************************\
 *                               PnP Polymorphing switches                      *
 \******************************************************************************/

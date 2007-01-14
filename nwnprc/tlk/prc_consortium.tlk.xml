@@ -19943,6 +19943,10 @@ Level
 28: Bonus Feat
 29:  -
 30: Superior Defense +10</entry>
+  <entry id="51186" lang="en" sex="m">Normally, active metapsionics are applied to an eligible power regardless of whether this would bring the PP cost over the manifester level cap.
+At your option, application of activated metapsionics other than quicken will be skipped if applying that metapsionic power would raise the PP cost over manifester level.
+Current setting:</entry>
+  <entry id="51187" lang="en" sex="m">Set whether metapsionics code tries to avoid exceeding manifester level cap.</entry>
   <entry id="51188" lang="en" sex="m">You have &lt;selectcount&gt; level &lt;spelllevel&gt; spells remaining to select.</entry>
   <entry id="51189" lang="en" sex="m">&lt;classname&gt; spellbook.
 Select a spell level to gain spells from.</entry>

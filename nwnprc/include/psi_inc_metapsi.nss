@@ -208,6 +208,19 @@ void _DeleteChainArray(object oManifester)
     array_delete(oManifester, PRC_CHAIN_POWER_ARRAY);
 }
 
+/** Internal function.
+ * Calculates whether adding a metapsi with the given cost would cause ML cap to be exceeded.
+ */
+int _GetWillExceedCap(struct manifestation manif, int nTotal, int nCost, int nIMPsiRed, int bUseSum)
+{
+    return (manif.nManifesterLevel
+             - (manif.nPPCost
+              + (bUseSum ? (_GetMetaPsiPPCost(nTotal + nCost, nIMPsiRed, FALSE)) : (nTotal + _GetMetaPsiPPCost(nCost, nIMPsiRed, FALSE)))
+                )
+            )
+            >= 0;
+}
+
 
 //////////////////////////////////////////////////
 /*             Function definitions             */
@@ -221,9 +234,11 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
     int bIgnoreConstr = (DEBUG) ? GetLocalInt(manif.oManifester, PRC_DEBUG_IGNORE_CONSTRAINTS) : FALSE;
     // A switch value that governs how Improved Metapsionics epic feat works
     int bUseSum = GetPRCSwitch(PRC_PSI_IMP_METAPSIONICS_USE_SUM);
+    // A personal switch values that determines whether we should make an effort to attempt not to exceed PP cap
+    int bAvoidCap = GetPersistantLocalInt(manif.oManifester, PRC_PLAYER_SWITCH_AUTOMETAPSI) && !bIgnoreConstr;
     // Epic feat Improved Metapsionics - 2 PP per.
     int nImpMetapsiReduction, i = FEAT_IMPROVED_METAPSIONICS_1;
-    while(i < FEAT_IMPROVED_METAPSIONICS_10 && GetHasFeat(i, manif.oManifester))
+    while(i <= FEAT_IMPROVED_METAPSIONICS_10 && GetHasFeat(i, manif.oManifester))
     {
         nImpMetapsiReduction += 2;
         i++;
@@ -246,63 +261,70 @@ struct manifestation EvaluateMetapsionics(struct manifestation manif, int nMetaP
         DeleteLocalInt(manif.oManifester, PRC_POWER_IS_QUICKENED);
     }
 
-    if((nMetaPsiFlags & METAPSIONIC_CHAIN)            && // The power allows this metapsionic to apply
+    if((nMetaPsiFlags & METAPSIONIC_CHAIN)                   && // The power allows this metapsionic to apply
        GetLocalInt(manif.oManifester, METAPSIONIC_CHAIN_VAR) && // The manifester is using the metapsionic
-       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)    // The manifester can pay the psionic focus expenditure
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)        && // The manifester can pay the psionic focus expenditure
+       (!bAvoidCap || _GetWillExceedCap(manif, nMetaPsiPP, METAPSIONIC_CHAIN_COST, nImpMetapsiReduction, bUseSum)) // ML cap won't be exceeded. Or we don't care about exceeding it
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_CHAIN_COST, nImpMetapsiReduction, bUseSum);
         manif.bChain = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_EMPOWER)             &&
+    if((nMetaPsiFlags & METAPSIONIC_EMPOWER)                    &&
         GetLocalInt(manif.oManifester, METAPSIONIC_EMPOWER_VAR) &&
-        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
+        (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)          &&
+        (!bAvoidCap || _GetWillExceedCap(manif, nMetaPsiPP, METAPSIONIC_EMPOWER_COST, nImpMetapsiReduction, bUseSum))
         )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_EMPOWER_COST, nImpMetapsiReduction, bUseSum);
         manif.bEmpower = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_EXTEND)            &&
+    if((nMetaPsiFlags & METAPSIONIC_EXTEND)                   &&
        GetLocalInt(manif.oManifester, METAPSIONIC_EXTEND_VAR) &&
-       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)         &&
+       (!bAvoidCap || _GetWillExceedCap(manif, nMetaPsiPP, METAPSIONIC_EXTEND_COST, nImpMetapsiReduction, bUseSum))
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_EXTEND_COST, nImpMetapsiReduction, bUseSum);
         manif.bExtend = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_MAXIMIZE)       &&
+    if((nMetaPsiFlags & METAPSIONIC_MAXIMIZE)                   &&
        GetLocalInt(manif.oManifester, METAPSIONIC_MAXIMIZE_VAR) &&
-       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)           &&
+       (!bAvoidCap || _GetWillExceedCap(manif, nMetaPsiPP, METAPSIONIC_MAXIMIZE_COST, nImpMetapsiReduction, bUseSum))
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_MAXIMIZE_COST, nImpMetapsiReduction, bUseSum);
         manif.bMaximize = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_SPLIT)            &&
+    if((nMetaPsiFlags & METAPSIONIC_SPLIT)                   &&
        GetLocalInt(manif.oManifester, METAPSIONIC_SPLIT_VAR) &&
-       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)        &&
+       (!bAvoidCap || _GetWillExceedCap(manif, nMetaPsiPP, METAPSIONIC_SPLIT_COST, nImpMetapsiReduction, bUseSum))
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_SPLIT_COST, nImpMetapsiReduction, bUseSum);
         manif.bSplit = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_TWIN)            &&
+    if((nMetaPsiFlags & METAPSIONIC_TWIN)                   &&
        GetLocalInt(manif.oManifester, METAPSIONIC_TWIN_VAR) &&
-       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)       &&
+       (!bAvoidCap || _GetWillExceedCap(manif, nMetaPsiPP, METAPSIONIC_TWIN_COST, nImpMetapsiReduction, bUseSum))
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_TWIN_COST, nImpMetapsiReduction, bUseSum);
         manif.bTwin = TRUE;
         manif.nPsiFocUsesRemain--;
     }
-    if((nMetaPsiFlags & METAPSIONIC_WIDEN)            &&
+    if((nMetaPsiFlags & METAPSIONIC_WIDEN)                   &&
        GetLocalInt(manif.oManifester, METAPSIONIC_WIDEN_VAR) &&
-       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)
+       (manif.nPsiFocUsesRemain > 0 || bIgnoreConstr)        &&
+       (!bAvoidCap || _GetWillExceedCap(manif, nMetaPsiPP, METAPSIONIC_WIDEN_COST, nImpMetapsiReduction, bUseSum))
        )
     {
         nMetaPsiPP += _GetMetaPsiPPCost(METAPSIONIC_WIDEN_COST, nImpMetapsiReduction, bUseSum);

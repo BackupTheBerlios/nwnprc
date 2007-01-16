@@ -715,7 +715,7 @@ int PRCGetCasterLevel(object oCaster = OBJECT_SELF)
         //SendMessageToPC(oCaster, "Item casting at level " + IntToString(GetCasterLevel(oCaster)));
         if(GetPRCSwitch(PRC_STAFF_CASTER_LEVEL)
             && ((GetBaseItemType(oItem) == BASE_ITEM_MAGICSTAFF) ||
-                (GetBaseItemType(oItem) == BASE_ITEM_CRAFTED_STAFF))
+                (GetBaseItemType(oItem) == BASE_ITEM_CRAFTED_STAFF)))
         {
             iCastingClass = GetFirstArcaneClass(oCaster);//sets it to an arcane class
         }

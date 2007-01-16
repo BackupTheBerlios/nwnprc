@@ -121,7 +121,7 @@ string LetoAdjust(string sLocation, int nValue, string sType)
         return LetoSet(sLocation, "(<gff:get '"+sLocation+"'>"+sValue+")", sType);
 //unicorn
     else
-        return LetoSet(sLocation, "(/"+sLocation+sValue+")", sType);
+        return "/"+sLocation+" = /"+sLocation+sValue+"; ";
 }
 
 //deleting a field

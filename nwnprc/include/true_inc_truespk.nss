@@ -22,6 +22,8 @@ const string TRUE_SPEAK_UNTO_MASSES  = "PRC_True_SpeakMass";
 const int    LEXICON_EVOLVING_MIND   = 1;
 const int    LEXICON_CRAFTED_TOOL    = 2;
 const int    LEXICON_PERFECTED_MAP   = 3;
+const int    LEXICON_MIN_VALUE       = 1;
+const int    LEXICON_MAX_VALUE       = 3;
 
 
 //////////////////////////////////////////////////
@@ -29,7 +31,7 @@ const int    LEXICON_PERFECTED_MAP   = 3;
 //////////////////////////////////////////////////
 
 /**
- * Returns the base DC of an Utterance. 
+ * Returns the base DC of an Utterance.
  * This is where the various formulas can be chosen by switch
  * Accounts for Speak Unto the Masses if used
  *
@@ -115,7 +117,7 @@ int GetCraftedToolCR(object oItem)
 {
     int nID=0;
     if (!GetIdentified(oItem))
-    {   
+    {
         nID=1;
         SetIdentified(oItem,TRUE);
     }
@@ -162,7 +164,7 @@ int GetCraftedToolCR(object oItem)
  * @return                SpellId of the NORMAL Utterance
  */
 int GetNormalUtterSpellId(int nSpellId)
-{	
+{
 	// Level 1 Utterances
 	if (nSpellId == UTTER_DEFENSIVE_EDGE_R || nSpellId == UTTER_DEFENSIVE_EDGE) return UTTER_DEFENSIVE_EDGE;
 	else if (nSpellId == UTTER_INERTIAL_SURGE_R || nSpellId == UTTER_INERTIAL_SURGE) return UTTER_INERTIAL_SURGE;
@@ -171,7 +173,7 @@ int GetNormalUtterSpellId(int nSpellId)
 	else if (nSpellId == UTTER_WORD_NURTURING_MINOR_R || nSpellId == UTTER_WORD_NURTURING_MINOR) return UTTER_WORD_NURTURING_MINOR;
 	else if (nSpellId == UTTER_FORTIFY_ARMOUR_SNEAK || nSpellId == UTTER_FORTIFY_ARMOUR_CRIT) return UTTER_FORTIFY_ARMOUR_SNEAK;
 	else if (nSpellId == UTTER_FOG_VOID_CLOUD || nSpellId == UTTER_FOG_VOID_SOLID) return UTTER_FOG_VOID_CLOUD;
-	
+
 	// Level 2 Utterances
 	else if (nSpellId == UTTER_ARCHERS_EYE_R || nSpellId == UTTER_ARCHERS_EYE) return UTTER_ARCHERS_EYE;
 	else if (nSpellId == UTTER_HIDDEN_TRUTH_R || nSpellId == UTTER_HIDDEN_TRUTH) return UTTER_HIDDEN_TRUTH;
@@ -183,7 +185,7 @@ int GetNormalUtterSpellId(int nSpellId)
 	else if (nSpellId == UTTER_WORD_NURTURING_LESSER_R || nSpellId == UTTER_WORD_NURTURING_LESSER) return UTTER_WORD_NURTURING_LESSER;
 	else if (nSpellId == UTTER_AGITATE_ITEM_HOT || nSpellId == UTTER_AGITATE_ITEM_COLD) return UTTER_AGITATE_ITEM_HOT;
 	else if (nSpellId == UTTER_ENERGY_VORTEX_ACID || nSpellId == UTTER_ENERGY_VORTEX_COLD || nSpellId == UTTER_ENERGY_VORTEX_ELEC || nSpellId == UTTER_ENERGY_VORTEX_FIRE) return UTTER_ENERGY_VORTEX_ACID;
-	
+
 	// Level 3 Utterances
 	else if (nSpellId == UTTER_ACCELERATED_ATTACK_R || nSpellId == UTTER_ACCELERATED_ATTACK) return UTTER_ACCELERATED_ATTACK;
 	else if (nSpellId == UTTER_ENERGY_NEGATION_R || nSpellId == UTTER_ENERGY_NEGATION || nSpellId == UTTER_ENERGY_NEGATION_CHOICE) return UTTER_ENERGY_NEGATION;
@@ -191,8 +193,8 @@ int GetNormalUtterSpellId(int nSpellId)
 	else if (nSpellId == UTTER_SPEED_ZEPHYR_GREATER_R || nSpellId == UTTER_SPEED_ZEPHYR_GREATER) return UTTER_SPEED_ZEPHYR_GREATER;
 	else if (nSpellId == UTTER_TEMPORAL_SPIRAL_R || nSpellId == UTTER_TEMPORAL_SPIRAL) return UTTER_TEMPORAL_SPIRAL;
 	else if (nSpellId == UTTER_VISION_SHARPENED_R || nSpellId == UTTER_VISION_SHARPENED) return UTTER_VISION_SHARPENED;
-	else if (nSpellId == UTTER_WORD_NURTURING_MODERATE_R || nSpellId == UTTER_WORD_NURTURING_MODERATE) return UTTER_WORD_NURTURING_MODERATE;	
-	
+	else if (nSpellId == UTTER_WORD_NURTURING_MODERATE_R || nSpellId == UTTER_WORD_NURTURING_MODERATE) return UTTER_WORD_NURTURING_MODERATE;
+
 	// Level 4 Utterances
 	else if (nSpellId == UTTER_BREATH_CLEANSING_R || nSpellId == UTTER_BREATH_CLEANSING) return UTTER_BREATH_CLEANSING;
 	else if (nSpellId == UTTER_CASTER_LENS_R || nSpellId == UTTER_CASTER_LENS) return UTTER_CASTER_LENS;
@@ -200,8 +202,8 @@ int GetNormalUtterSpellId(int nSpellId)
 	else if (nSpellId == UTTER_MORALE_BOOST_R || nSpellId == UTTER_MORALE_BOOST) return UTTER_MORALE_BOOST;
 	else if (nSpellId == UTTER_MAGICAL_CONTRACTION_R || nSpellId == UTTER_MAGICAL_CONTRACTION) return UTTER_MAGICAL_CONTRACTION;
 	else if (nSpellId == UTTER_SPELL_REBIRTH_R || nSpellId == UTTER_SPELL_REBIRTH) return UTTER_SPELL_REBIRTH;
-	else if (nSpellId == UTTER_WORD_NURTURING_POTENT_R || nSpellId == UTTER_WORD_NURTURING_POTENT) return UTTER_WORD_NURTURING_POTENT;		
-	
+	else if (nSpellId == UTTER_WORD_NURTURING_POTENT_R || nSpellId == UTTER_WORD_NURTURING_POTENT) return UTTER_WORD_NURTURING_POTENT;
+
 	// Level 5 Utterances
 	else if (nSpellId == UTTER_ELDRITCH_ATTRACTION_R || nSpellId == UTTER_ELDRITCH_ATTRACTION) return UTTER_ELDRITCH_ATTRACTION;
 	else if (nSpellId == UTTER_ENERGY_NEGATION_GREATER_R || nSpellId == UTTER_ENERGY_NEGATION_GREATER || nSpellId == UTTER_ENERGY_NEGATION_GREATER_CHOICE) return UTTER_ENERGY_NEGATION_GREATER;
@@ -209,22 +211,22 @@ int GetNormalUtterSpellId(int nSpellId)
 	else if (nSpellId == UTTER_PRETERNATURAL_CLARITY_ATTACK || nSpellId == UTTER_PRETERNATURAL_CLARITY_SKILL || nSpellId == UTTER_PRETERNATURAL_CLARITY_SAVE || nSpellId == UTTER_PRETERNATURAL_CLARITY_R) return UTTER_PRETERNATURAL_CLARITY_ATTACK;
 	else if (nSpellId == UTTER_SENSORY_FOCUS_R || nSpellId == UTTER_SENSORY_FOCUS) return UTTER_SENSORY_FOCUS;
 	else if (nSpellId == UTTER_WARD_PEACE_R || nSpellId == UTTER_WARD_PEACE) return UTTER_WARD_PEACE;
-	else if (nSpellId == UTTER_WORD_NURTURING_CRITICAL_R || nSpellId == UTTER_WORD_NURTURING_CRITICAL) return UTTER_WORD_NURTURING_CRITICAL;		
+	else if (nSpellId == UTTER_WORD_NURTURING_CRITICAL_R || nSpellId == UTTER_WORD_NURTURING_CRITICAL) return UTTER_WORD_NURTURING_CRITICAL;
 	else if (nSpellId == UTTER_METAMAGIC_CATALYST_EMP || nSpellId == UTTER_METAMAGIC_CATALYST_EXT || nSpellId == UTTER_METAMAGIC_CATALYST_MAX) return UTTER_METAMAGIC_CATALYST_EMP;
-	
+
 	// Level 6 Utterances
 	else if (nSpellId == UTTER_BREATH_RECOVERY_R || nSpellId == UTTER_BREATH_RECOVERY) return UTTER_BREATH_RECOVERY;
 	else if (nSpellId == UTTER_ETHER_REFORGED_R || nSpellId == UTTER_ETHER_REFORGED) return UTTER_ETHER_REFORGED;
 	else if (nSpellId == UTTER_KNIGHTS_PUISSANCE_GREATER_R || nSpellId == UTTER_KNIGHTS_PUISSANCE_GREATER) return UTTER_KNIGHTS_PUISSANCE_GREATER;
 	else if (nSpellId == UTTER_MYSTIC_RAMPART_R || nSpellId == UTTER_MYSTIC_RAMPART) return UTTER_MYSTIC_RAMPART;
 	else if (nSpellId == UTTER_SINGULAR_MIND_R || nSpellId == UTTER_SINGULAR_MIND) return UTTER_SINGULAR_MIND;
-	else if (nSpellId == UTTER_WORD_NURTURING_GREATER_R || nSpellId == UTTER_WORD_NURTURING_GREATER) return UTTER_WORD_NURTURING_GREATER;	
-	
+	else if (nSpellId == UTTER_WORD_NURTURING_GREATER_R || nSpellId == UTTER_WORD_NURTURING_GREATER) return UTTER_WORD_NURTURING_GREATER;
+
 	// Class abilities
 	else if (nSpellId == SYLLABLE_AFFLICATION_SIGHT || nSpellId == SYLLABLE_AFFLICATION_SOUND || nSpellId == SYLLABLE_AFFLICATION_TOUCH) return SYLLABLE_AFFLICATION_SIGHT;
 	else if (nSpellId == BRIMSTONE_FIRE_3D6 || nSpellId == BRIMSTONE_FIRE_5D6 || nSpellId == BRIMSTONE_FIRE_8D6) return BRIMSTONE_FIRE_3D6;
 	else if (nSpellId == BRIMSTONE_HEAVEN_LESSER || nSpellId == BRIMSTONE_HEAVEN_NORMAL || nSpellId == BRIMSTONE_HEAVEN_GREATER) return BRIMSTONE_HEAVEN_LESSER;
-	
+
 	// This should never be triggered
 	return -1;
 }
@@ -242,7 +244,7 @@ int GetSwitchAdjustedDC(int nCR, int nTargets, object oTrueSpeaker)
 	if(nBonus) nDC -= nClass/nBonus;
 	// Remove the existing constant and add the new one
 	if(nConst) nDC = (nDC - 15) + nConst;
-	
+
 	return nDC;
 }
 
@@ -252,7 +254,7 @@ int GetFeatAdjustedDC(object oTrueSpeaker)
 	// Check for both, not either or
 	if (GetHasFeat(FEAT_SKILL_FOCUS_TRUESPEAK, oTrueSpeaker)) nDC += 3;
 	if (GetHasFeat(FEAT_EPIC_SKILL_FOCUS_TRUESPEAK, oTrueSpeaker)) nDC += 10;
-	
+
 	return nDC;
 }
 
@@ -263,7 +265,7 @@ int GetFeatAdjustedDC(object oTrueSpeaker)
 int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 {
 	int nDC;
-	
+
 	// We're targetting a creature
 	if (nLexicon == LEXICON_EVOLVING_MIND)
 	{
@@ -277,14 +279,14 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 			// So we loop through and count all the targets, as well as figure out the highest CR
 			int nMaxCR = FloatToInt(GetChallengeRating(oTarget));
 			int nCurCR, nTargets;
-			
+
 			// Loop over targets
                         object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
                         while(GetIsObjectValid(oAreaTarget))
                         {
                             // Skip the original target, it doesn't count as a target
                             if (oAreaTarget == oTarget) continue;
-                            
+
                             // Targeting limitations
                             if(MyPRCGetRacialType(oAreaTarget) == nRacial)
                             {
@@ -326,19 +328,19 @@ int GetBaseUtteranceDC(object oTarget, object oTrueSpeaker, int nLexicon)
 		// Default is 0, off
 		int nMulti = GetPRCSwitch(PRC_PERFECTED_MAP_MULTIPLIER);
 		int nConst = GetPRCSwitch(PRC_PERFECTED_MAP_CONSTANT);
-		
+
 		// Using Errata formula to prevent abuses
 		nDC = 25 + (GetUtteranceLevel(oTrueSpeaker) * 2);
-		
+
 		// nMulti is stored as an int
 		if(nMulti) nDC = 25 + (GetUtteranceLevel(oTrueSpeaker) * nMulti);
 		// Remove the existing constant and add the new one
-		if(nConst) nDC = (nDC - 25) + nConst;		
-	}	
+		if(nConst) nDC = (nDC - 25) + nConst;
+	}
 	// Check to see if the PC has either of the Skill Focus feats.
 	// If so, subtract (They are a bonus to the PC) from the DC roll
 	nDC -= GetFeatAdjustedDC(oTrueSpeaker);
-	
+
 	return nDC;
 }
 
@@ -386,10 +388,10 @@ int AddPersonalTruenameDC(object oTrueSpeaker, object oTarget)
 	// But you get a +4 Bonus to speak your own truename
 	// Total Adjustment: -2
 	int nDC = 0;
-	
+
 	// Only works when the Truespeaker targets himself at the moment.
 	if (oTrueSpeaker == oTarget) nDC = -2;
-	
+
 	return nDC;
 }
 
@@ -397,7 +399,7 @@ int AddIgnoreSpellResistDC(object oTrueSpeaker)
 {
 	int nDC = 0;
 	if (GetLocalInt(oTrueSpeaker, TRUE_IGNORE_SR)) nDC += 5;
-	
+
 	return nDC;
 }
 
@@ -410,7 +412,7 @@ int AddUtteranceSpecificDC(object oTrueSpeaker)
 	if (PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_MAX) nDC += 10;
 	// When using this utterance you add +10 to the DC to create a solid fog spell
 	if (PRCGetSpellId() == UTTER_FOG_VOID_SOLID) nDC += 10;
-	
+
 	return nDC;
 }
 
@@ -419,7 +421,7 @@ int GetRecitationDC(object oTrueSpeaker)
 	int nCR = GetHitDice(oTrueSpeaker);
 	// Formula for the DC. The -2 is from speak your own Truename. See AddPersonalTruenameDC
 	int nDC = 15 + (2 * nCR) - 2;
-	
+
 	return nDC;
 }
 

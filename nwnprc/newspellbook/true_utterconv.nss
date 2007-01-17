@@ -166,7 +166,6 @@ void main()
 
     // For this conversation, this is always Truenamer, although that may change in the future.
     int nClass = GetLocalInt(oPC, "nClass");
-    string sPsiFile = GetAMSKnownFileName(nClass);
     string sPowerFile = GetAMSDefinitionFileName(nClass);
 
     // Check which of the conversation scripts called the scripts
@@ -189,10 +188,10 @@ void main()
 
                 // Determine which Lexicons they're missing utterances in.
                 int nTrueSpeakLevel = GetLevelByClass(nClass, oPC);
-                // They're always missing one in Evolving Mind, so that's skipped.
-                int nMaxCT = StringToInt(Get2DACache(sPsiFile, "CraftedTool",  nTrueSpeakLevel - 1));
-                int nMaxPM = StringToInt(Get2DACache(sPsiFile, "PerfectedMap", nTrueSpeakLevel - 1));
-
+                int nMaxEM = GetMaxUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_EVOLVING_MIND);
+                int nMaxCT = GetMaxUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_CRAFTED_TOOL);
+                int nMaxPM = GetMaxUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_PERFECTED_MAP);
+                int nCountEM = GetUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_EVOLVING_MIND);
                 int nCountCT = GetUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_CRAFTED_TOOL);
                 int nCountPM = GetUtteranceCount(oPC, UTTERANCE_LIST_TRUENAMER, LEXICON_PERFECTED_MAP);
 
@@ -206,9 +205,9 @@ void main()
                 }
 
                 // Set the tokens
-                // This one is always here
-                AddChoice(GetStringByStrRef(STRREF_EVOLVING_MIND), 1);
                 // If the max they should have is greater than the amount they do have, add the choice.
+                if (nMaxEM > nCountEM)
+                    AddChoice(GetStringByStrRef(STRREF_EVOLVING_MIND), 1);
                 if (nMaxCT > nCountCT)
                 	AddChoice(GetStringByStrRef(STRREF_CRAFTED_TOOL), 2);
                 if (nMaxPM > nCountPM)
@@ -229,7 +228,7 @@ void main()
                 AddChoice(GetStringByStrRef(STRREF_BACK_TO_LSELECT), CHOICE_BACK_TO_LSELECT, oPC);
                 string sLexicon;
                 int nLexicon = GetLocalInt(oPC, "nLexiconToBrowse");
-                if (nLexicon == LEXICON_EVOLVING_MIND)      sLexicon = "EvolvingMind";
+                if      (nLexicon == LEXICON_EVOLVING_MIND) sLexicon = "EvolvingMind";
                 else if (nLexicon == LEXICON_CRAFTED_TOOL)  sLexicon = "CraftedTool";
                 else if (nLexicon == LEXICON_PERFECTED_MAP) sLexicon = "PerfectedMap";
 
@@ -262,9 +261,9 @@ void main()
             {
                 if(DEBUG) DoDebug("true_utterconv: Building utterance selection");
 
-		string sLexicon;
+		        string sLexicon;
                 int nLexicon = GetLocalInt(oPC, "nLexiconToBrowse");
-                if (nLexicon == LEXICON_EVOLVING_MIND)      sLexicon = "EvolvingMind";
+                if      (nLexicon == LEXICON_EVOLVING_MIND) sLexicon = "EvolvingMind";
                 else if (nLexicon == LEXICON_CRAFTED_TOOL)  sLexicon = "CraftedTool";
                 else if (nLexicon == LEXICON_PERFECTED_MAP) sLexicon = "PerfectedMap";
 
@@ -462,18 +461,18 @@ void main()
             int nPM = GetUtteranceCount(oPC, nClass, LEXICON_PERFECTED_MAP);
             int nMaxPM = GetMaxUtteranceCount(oPC, nClass, LEXICON_PERFECTED_MAP);
 
-                if(DEBUG)
-                {
-                	DoDebug("true_utterconv: Checking all Lexicons for being full");
-                	DoDebug("true_utterconv: Evolving Mind Count: " + IntToString(nEM));
-                	DoDebug("true_utterconv: Evolving Mind Max: " + IntToString(nMaxEM));
-                	DoDebug("true_utterconv: Crafted Tool Count: " + IntToString(nCT));
-                	DoDebug("true_utterconv: Crafted Tool Max: " + IntToString(nMaxCT));
-                	DoDebug("true_utterconv: Perfected Map Count: " + IntToString(nPM));
-                	DoDebug("true_utterconv: Perfected Map Max: " + IntToString(nMaxPM));
-                }
+            if(DEBUG)
+            {
+            	DoDebug("true_utterconv: Checking all Lexicons for being full");
+            	DoDebug("true_utterconv: Evolving Mind Count: " + IntToString(nEM));
+            	DoDebug("true_utterconv: Evolving Mind Max: " + IntToString(nMaxEM));
+            	DoDebug("true_utterconv: Crafted Tool Count: " + IntToString(nCT));
+            	DoDebug("true_utterconv: Crafted Tool Max: " + IntToString(nMaxCT));
+            	DoDebug("true_utterconv: Perfected Map Count: " + IntToString(nPM));
+            	DoDebug("true_utterconv: Perfected Map Max: " + IntToString(nMaxPM));
+            }
 
-	    //Check all three lexicons for being full
+	        //Check all three lexicons for being full
     	    if(nEM >= nMaxEM && nCT >= nMaxCT && nPM >= nMaxPM)
                 nStage = STAGE_ALL_UTTERS_SELECTED;
             else

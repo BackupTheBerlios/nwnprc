@@ -75,9 +75,8 @@ int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int nLexicon, in
  *
  * @param oCreature The creature whose utterances to remove
  * @param nLevel    The level to clear
- * @param nLexicon     Type of the Utterance: Evolving Mind, Crafted Tool, or Perfected Map
  */
-void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel, int nLexicon);
+void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel);
 
 /**
  * Gets the value of the utterances known modifier, which is a value that is added
@@ -310,12 +309,7 @@ int AddUtteranceKnown(object oCreature, int nList, int n2daRow, int nLexicon, in
     return TRUE;
 }
 
-/** @todo If ever required
-int RemoveSpecificPowerKnown(object oCreature, int nList, int n2daRow)
-{
-}
-*/
-void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel, int nLexicon)
+void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel)
 {
     if(DEBUG) DoDebug("true_inc_truknwn: RemoveUtterancesKnownOnLevel():\n"
                     + "oCreature = " + DebugObject2Str(oCreature) + "\n"
@@ -323,13 +317,16 @@ void RemoveUtterancesKnownOnLevel(object oCreature, int nLevel, int nLexicon)
                       );
 
     string sPostFix = _UTTERANCE_LIST_LEVEL_ARRAY + IntToString(nLevel);
-    // For each Utterance list, determine if an array exists for this level and Lexicon.
-    if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_TRUENAMER) + IntToString(nLexicon) + sPostFix))
-        // If one does exist, clear it
-        _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_TRUENAMER, nLevel, nLexicon);
+    // For each Utterance list and lexicon, determine if an array exists for this level.
+    int nLexicon;
+    for(nLexicon = LEXICON_MIN_VALUE;  nLexicon <= LEXICON_MAX_VALUE; nLexicon++)
+    {
+        if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_TRUENAMER) + IntToString(nLexicon) + sPostFix))
+            _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_TRUENAMER, nLevel, nLexicon);
 
-    if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_MISC) + IntToString(nLexicon) + sPostFix))
-        _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_MISC, nLevel, nLexicon);
+        if(persistant_array_exists(oCreature, _UTTERANCE_LIST_NAME_BASE + IntToString(UTTERANCE_LIST_MISC) + IntToString(nLexicon) + sPostFix))
+            _RemoveUtteranceArray(oCreature, UTTERANCE_LIST_MISC, nLevel, nLexicon);
+    }
 }
 
 int GetKnownUtterancesModifier(object oCreature, int nList, int nLexicon)
@@ -358,10 +355,10 @@ int GetMaxUtteranceCount(object oCreature, int nList, int nLexicon)
             int nLevel = GetLevelByClass(CLASS_TYPE_TRUENAMER, oCreature);
             if(nLevel == 0)
                 break;
-                if (LEXICON_EVOLVING_MIND == nLexicon)
+                if      (LEXICON_EVOLVING_MIND == nLexicon)
                     nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "EvolvingMind", nLevel - 1));
-                else if (LEXICON_CRAFTED_TOOL == nLexicon)
-                    nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "CraftedTool", nLevel - 1));
+                else if (LEXICON_CRAFTED_TOOL  == nLexicon)
+                    nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "CraftedTool",  nLevel - 1));
                 else if (LEXICON_PERFECTED_MAP == nLexicon)
                     nMaxUtterances = StringToInt(Get2DACache(GetAMSKnownFileName(CLASS_TYPE_TRUENAMER), "PerfectedMap", nLevel - 1));
 
@@ -398,7 +395,7 @@ int GetHasUtterance(int nUtter, object oCreature = OBJECT_SELF)
 
 string DebugListKnownUtterances(object oCreature)
 {
-    string sReturn = "Powers known by " + DebugObject2Str(oCreature) + ":\n";
+    string sReturn = "Utterances known by " + DebugObject2Str(oCreature) + ":\n";
     int i, j, k, numUtterLists = 6;
     int nUtterList, nSize;
     string sTemp, sArray, sArrayBase, sUtterFile;

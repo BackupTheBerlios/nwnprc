@@ -51,6 +51,16 @@ int GetTruespeakingClass(object oTrueSpeaker = OBJECT_SELF);
 int GetTruespeakerLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INVALID, int nUseHD = FALSE);
 
 /**
+ * Determines whether a given creature uses truenaming.
+ * Requires either levels in a truenaming-related class or
+ * natural truenaming ability based on race.
+ *
+ * @param oCreature Creature to test
+ * @return          TRUE if the creature can use truenames, FALSE otherwise.
+ */
+int GetIsTruenamingUser(object oCreature);
+
+/**
  * Determines the given creature's highest undmodified truespeaker level among it's
  * uttering classes.
  *
@@ -58,6 +68,14 @@ int GetTruespeakerLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INV
  * @return          The highest unmodified truespeaker level the creature can have
  */
 int GetHighestTrueSpeakerLevel(object oCreature);
+
+/**
+ * Determines whether a given class is a truenaming-related class or not.
+ *
+ * @param nClass CLASS_TYPE_* of the class to test
+ * @return       TRUE if the class is a truenaming-related class, FALSE otherwise
+ */
+int GetIsTruenamingClass(int nClass);
 
 /**
  * Gets the level of the Utterance being currently truespoken.
@@ -235,7 +253,7 @@ int CheckTrueSpeechSkill(object oTrueSpeaker);
 
 #include "prc_utter_const"
 #include "prc_alterations"
-#include "true_inc_utter" 
+#include "true_inc_utter"
 #include "true_inc_truknwn"
 
 //////////////////////////////////////////////////
@@ -253,7 +271,7 @@ int GetTrueSpeakerLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INV
     int nAdjust = GetLocalInt(oTrueSpeaker, PRC_CASTERLEVEL_ADJUSTMENT);
     // Bereft's speak syllables and use their character level.
     if (GetIsSyllable(PRCGetSpellId())) nUseHD = TRUE;
-    
+
     // If this is set, return the user's HD
     if (nUseHD) return GetHitDice(oTrueSpeaker);
 
@@ -261,10 +279,13 @@ int GetTrueSpeakerLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INV
     // instead of whatever the character last truespoken a Utterance as
     if(nSpecificClass != CLASS_TYPE_INVALID)
     {
-        int nClassLevel = GetLevelByClass(nSpecificClass, oTrueSpeaker);
-        if (nClassLevel > 0)
+        if(GetIsTruenamingClass(nSpecificClass))
         {
-        	nLevel = nClassLevel;
+            int nClassLevel = GetLevelByClass(nSpecificClass, oTrueSpeaker);
+            if (nClassLevel > 0)
+            {
+            	nLevel = nClassLevel;
+            }
         }
         // A character's truespeaker level gained from non-uttering classes is always a nice, round zero
         else
@@ -311,6 +332,13 @@ int GetTrueSpeakerLevel(object oTrueSpeaker, int nSpecificClass = CLASS_TYPE_INV
     return nLevel;
 }
 
+int GetIsTruenamingUser(object oCreature)
+{
+    return !!(GetLevelByClass(CLASS_TYPE_TRUENAMER, oCreature) ||
+              GetLevelByClass(CLASS_TYPE_BEREFT,    oCreature)
+             );
+}
+
 int GetHighestTrueSpeakerLevel(object oCreature)
 {
     return max(max(PRCGetClassByPosition(1, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, PRCGetClassByPosition(1, oCreature)) : 0,
@@ -319,6 +347,14 @@ int GetHighestTrueSpeakerLevel(object oCreature)
                PRCGetClassByPosition(3, oCreature) != CLASS_TYPE_INVALID ? GetTrueSpeakerLevel(oCreature, PRCGetClassByPosition(3, oCreature)) : 0
                );
 }
+
+int GetIsTruenamingClass(int nClass)
+{
+    return (nClass == CLASS_TYPE_TRUENAMER ||
+            nClass == CLASS_TYPE_BEREFT
+            );
+}
+
 int GetUtteranceLevel(object oTrueSpeaker)
 {
     return GetLocalInt(oTrueSpeaker, PRC_UTTERANCE_LEVEL);
@@ -351,50 +387,50 @@ int GetTrueSpeakerDC(object oTrueSpeaker = OBJECT_SELF)
     // DC is 10 + 1/2 Truenamer level + Ability (Charisma)
     int nClass = GetTruespeakingClass(oTrueSpeaker);
     int nDC = 10;
-    nDC += GetLevelByClass(nClass, oTrueSpeaker)/2;
+    nDC += GetLevelByClass(nClass, oTrueSpeaker) / 2;
     nDC += GetAbilityModifier(GetTruenameAbilityOfClass(nClass), oTrueSpeaker);
 
     // Focused Lexicon. Bonus vs chosen racial type
-         if (GetHasFeat(FEAT_FOCUSED_LEXICON_ABERRATION,   oTrueSpeaker) && nRace == RACIAL_TYPE_ABERRATION) nDC += 1;    
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ANIMAL,       oTrueSpeaker) && nRace == RACIAL_TYPE_ANIMAL) nDC += 1;      
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_BEAST,        oTrueSpeaker) && nRace == RACIAL_TYPE_BEAST) nDC += 1;       
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_CONSTRUCT,    oTrueSpeaker) && nRace == RACIAL_TYPE_CONSTRUCT) nDC += 1;   
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_DRAGON,       oTrueSpeaker) && nRace == RACIAL_TYPE_DRAGON) nDC += 1;     
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_DWARF,        oTrueSpeaker) && nRace == RACIAL_TYPE_DWARF) nDC += 1;       
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ELEMENTAL,    oTrueSpeaker) && nRace == RACIAL_TYPE_ELEMENTAL) nDC += 1;
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ELF,          oTrueSpeaker) && nRace == RACIAL_TYPE_ELF) nDC += 1;         
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_FEY,          oTrueSpeaker) && nRace == RACIAL_TYPE_FEY) nDC += 1;         
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_GIANT,        oTrueSpeaker) && nRace == RACIAL_TYPE_GIANT) nDC += 1;       
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_GNOME,        oTrueSpeaker) && nRace == RACIAL_TYPE_GNOME) nDC += 1;       
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HALFELF,      oTrueSpeaker) && nRace == RACIAL_TYPE_HALFELF) nDC += 1;     
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HALFLING,     oTrueSpeaker) && nRace == RACIAL_TYPE_HALFLING) nDC += 1;    
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HALFORC,      oTrueSpeaker) && nRace == RACIAL_TYPE_HALFORC) nDC += 1;     
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_HUMAN,        oTrueSpeaker) && nRace == RACIAL_TYPE_HUMAN) nDC += 1;       
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_GOBLINOID,    oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_GOBLINOID) nDC += 1;   
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_MONSTROUS,    oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_MONSTROUS) nDC += 1;   
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_ORC,          oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_ORC) nDC += 1;         
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_REPTILIAN,    oTrueSpeaker) && nRace == RACIAL_TYPE_HUMANOID_REPTILIAN) nDC += 1;   
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_MAGICALBEAST, oTrueSpeaker) && nRace == RACIAL_TYPE_MAGICAL_BEAST) nDC += 1;
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_OOZE,         oTrueSpeaker) && nRace == RACIAL_TYPE_OOZE) nDC += 1;        
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_OUTSIDER,     oTrueSpeaker) && nRace == RACIAL_TYPE_OUTSIDER) nDC += 1;    
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_SHAPECHANGER, oTrueSpeaker) && nRace == RACIAL_TYPE_SHAPECHANGER) nDC += 1;
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_UNDEAD,       oTrueSpeaker) && nRace == RACIAL_TYPE_UNDEAD) nDC += 1;      
-    else if (GetHasFeat(FEAT_FOCUSED_LEXICON_VERMIN,       oTrueSpeaker) && nRace == RACIAL_TYPE_VERMIN) nDC += 1;      
-    
+    if      (nRace == RACIAL_TYPE_ABERRATION         && GetHasFeat(FEAT_FOCUSED_LEXICON_ABERRATION,   oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_ANIMAL             && GetHasFeat(FEAT_FOCUSED_LEXICON_ANIMAL,       oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_BEAST              && GetHasFeat(FEAT_FOCUSED_LEXICON_BEAST,        oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_CONSTRUCT          && GetHasFeat(FEAT_FOCUSED_LEXICON_CONSTRUCT,    oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_DRAGON             && GetHasFeat(FEAT_FOCUSED_LEXICON_DRAGON,       oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_DWARF              && GetHasFeat(FEAT_FOCUSED_LEXICON_DWARF,        oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_ELEMENTAL          && GetHasFeat(FEAT_FOCUSED_LEXICON_ELEMENTAL,    oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_ELF                && GetHasFeat(FEAT_FOCUSED_LEXICON_ELF,          oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_FEY                && GetHasFeat(FEAT_FOCUSED_LEXICON_FEY,          oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_GIANT              && GetHasFeat(FEAT_FOCUSED_LEXICON_GIANT,        oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_GNOME              && GetHasFeat(FEAT_FOCUSED_LEXICON_GNOME,        oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HALFELF            && GetHasFeat(FEAT_FOCUSED_LEXICON_HALFELF,      oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HALFLING           && GetHasFeat(FEAT_FOCUSED_LEXICON_HALFLING,     oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HALFORC            && GetHasFeat(FEAT_FOCUSED_LEXICON_HALFORC,      oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HUMAN              && GetHasFeat(FEAT_FOCUSED_LEXICON_HUMAN,        oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HUMANOID_GOBLINOID && GetHasFeat(FEAT_FOCUSED_LEXICON_GOBLINOID,    oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HUMANOID_MONSTROUS && GetHasFeat(FEAT_FOCUSED_LEXICON_MONSTROUS,    oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HUMANOID_ORC       && GetHasFeat(FEAT_FOCUSED_LEXICON_ORC,          oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_HUMANOID_REPTILIAN && GetHasFeat(FEAT_FOCUSED_LEXICON_REPTILIAN,    oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_MAGICAL_BEAST      && GetHasFeat(FEAT_FOCUSED_LEXICON_MAGICALBEAST, oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_OOZE               && GetHasFeat(FEAT_FOCUSED_LEXICON_OOZE,         oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_OUTSIDER           && GetHasFeat(FEAT_FOCUSED_LEXICON_OUTSIDER,     oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_SHAPECHANGER       && GetHasFeat(FEAT_FOCUSED_LEXICON_SHAPECHANGER, oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_UNDEAD             && GetHasFeat(FEAT_FOCUSED_LEXICON_UNDEAD,       oTrueSpeaker)) nDC += 1;
+    else if (nRace == RACIAL_TYPE_VERMIN             && GetHasFeat(FEAT_FOCUSED_LEXICON_VERMIN,       oTrueSpeaker)) nDC += 1;
+
     // Utterance Focus. DC Bonus for a chosen utterance
-         if (GetHasFeat(FEAT_UTTERANCE_FOCUS_BREATH_CLEANSING,      oTrueSpeaker) && nSpellId == UTTER_BREATH_CLEANSING_R) nDC += 1;    
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_BREATH_RECOVERY,       oTrueSpeaker) && nSpellId == UTTER_BREATH_RECOVERY_R) nDC += 1;      
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_ELDRITCH_ATTRACTION,   oTrueSpeaker) && nSpellId == UTTER_ELDRITCH_ATTRACTION) nDC += 1;       
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_ELDRITCH_ATTRACTION,   oTrueSpeaker) && nSpellId == UTTER_ELDRITCH_ATTRACTION_R) nDC += 1;       
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_MORALE_BOOST,          oTrueSpeaker) && nSpellId == UTTER_MORALE_BOOST_R) nDC += 1;   
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_PRETERNATURAL_CLARITY, oTrueSpeaker) && nSpellId == UTTER_PRETERNATURAL_CLARITY_R) nDC += 1;     
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SENSORY_FOCUS,         oTrueSpeaker) && nSpellId == UTTER_SENSORY_FOCUS_R) nDC += 1;       
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SILENT_CASTER,         oTrueSpeaker) && nSpellId == UTTER_SILENT_CASTER_R) nDC += 1;
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SINGULAR_MIND,         oTrueSpeaker) && nSpellId == UTTER_SINGULAR_MIND_R) nDC += 1;         
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_TEMPORAL_SPIRAL,       oTrueSpeaker) && nSpellId == UTTER_TEMPORAL_SPIRAL_R) nDC += 1;         
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_TEMPORAL_TWIST,        oTrueSpeaker) && nSpellId == UTTER_TEMPORAL_TWIST_R) nDC += 1;       
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_WARD_PEACE,            oTrueSpeaker) && nSpellId == UTTER_WARD_PEACE_R) nDC += 1;           
-    else if (GetHasFeat(FEAT_UTTERANCE_FOCUS_SHOCKWAVE,             oTrueSpeaker) && nSpellId == UTTER_SHOCKWAVE) nDC += 1;           
+    if      (nSpellId == UTTER_BREATH_CLEANSING_R      && GetHasFeat(FEAT_UTTERANCE_FOCUS_BREATH_CLEANSING,      oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_BREATH_RECOVERY_R       && GetHasFeat(FEAT_UTTERANCE_FOCUS_BREATH_RECOVERY,       oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_ELDRITCH_ATTRACTION     && GetHasFeat(FEAT_UTTERANCE_FOCUS_ELDRITCH_ATTRACTION,   oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_ELDRITCH_ATTRACTION_R   && GetHasFeat(FEAT_UTTERANCE_FOCUS_ELDRITCH_ATTRACTION,   oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_MORALE_BOOST_R          && GetHasFeat(FEAT_UTTERANCE_FOCUS_MORALE_BOOST,          oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_PRETERNATURAL_CLARITY_R && GetHasFeat(FEAT_UTTERANCE_FOCUS_PRETERNATURAL_CLARITY, oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_SENSORY_FOCUS_R         && GetHasFeat(FEAT_UTTERANCE_FOCUS_SENSORY_FOCUS,         oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_SILENT_CASTER_R         && GetHasFeat(FEAT_UTTERANCE_FOCUS_SILENT_CASTER,         oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_SINGULAR_MIND_R         && GetHasFeat(FEAT_UTTERANCE_FOCUS_SINGULAR_MIND,         oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_TEMPORAL_SPIRAL_R       && GetHasFeat(FEAT_UTTERANCE_FOCUS_TEMPORAL_SPIRAL,       oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_TEMPORAL_TWIST_R        && GetHasFeat(FEAT_UTTERANCE_FOCUS_TEMPORAL_TWIST,        oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_WARD_PEACE_R            && GetHasFeat(FEAT_UTTERANCE_FOCUS_WARD_PEACE,            oTrueSpeaker)) nDC += 1;
+    else if (nSpellId == UTTER_SHOCKWAVE               && GetHasFeat(FEAT_UTTERANCE_FOCUS_SHOCKWAVE,             oTrueSpeaker)) nDC += 1;
 
     return nDC;
 }
@@ -407,11 +443,11 @@ int GetTrueSpeakPenetration(object oTrueSpeaker = OBJECT_SELF)
     if(GetHasFeat(FEAT_EPIC_SPELL_PENETRATION, oTrueSpeaker)) nPen += 6;
     else if(GetHasFeat(FEAT_GREATER_SPELL_PENETRATION, oTrueSpeaker)) nPen += 4;
     else if(GetHasFeat(FEAT_SPELL_PENETRATION, oTrueSpeaker)) nPen += 2;
-    
+
     // Blow away SR totally, just add 9000
     // Does not work on Syllables, only utterances
     if (GetLocalInt(oTrueSpeaker, TRUE_IGNORE_SR) && !GetIsSyllable(PRCGetSpellId())) nPen += 9000;
-    
+
     if(DEBUG) DoDebug("GetTrueSpeakPenetration(" + GetName(oTrueSpeaker) + "): " + IntToString(nPen));
 
     return nPen;
@@ -443,7 +479,7 @@ string GetLexiconName(int nLexicon)
 	if (nLexicon == LEXICON_EVOLVING_MIND)      sName = GetStringByStrRef(16828478);
 	else if (nLexicon == LEXICON_CRAFTED_TOOL)  sName = GetStringByStrRef(16828479);
 	else if (nLexicon == LEXICON_PERFECTED_MAP) sName = GetStringByStrRef(16828480);
-	
+
 	return sName;
 }
 
@@ -466,18 +502,18 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
 {
 	// Check for Speak Unto the Masses, exit function if not set
 	if (!GetLocalInt(oTrueSpeaker, TRUE_SPEAK_UNTO_MASSES)) return;
-	
+
 	// Speak to the Masses affects all creatures of the same race in the AoE
 	int nRacial = MyPRCGetRacialType(oTarget);
 	object oSkin;
-	
+
 	// Loop over targets
         object oAreaTarget = MyFirstObjectInShape(SHAPE_SPHERE, FeetToMeters(30.0), GetLocation(oTarget), TRUE, OBJECT_TYPE_CREATURE);
         while(GetIsObjectValid(oAreaTarget))
         {
             // Skip the original target/truespeaker, its already been hit
             if (oAreaTarget == oTarget || oAreaTarget == oTrueSpeaker) continue;
-            
+
             // Targeting limitations
             if(MyPRCGetRacialType(oAreaTarget) == nRacial)
             {
@@ -506,7 +542,7 @@ void DoSpeakUntoTheMasses(object oTrueSpeaker, object oTarget, struct utterance 
                 			if (GetIsItemPropertyValid(utter.ipIProp3))
                 			{
                 				IPSafeAddItemProperty(oSkin, utter.ipIProp3, utter.fDur, X2_IP_ADDPROP_POLICY_KEEP_EXISTING, FALSE, FALSE);
-                			}                			
+                			}
                 	              	// Duration Effects
 			              	SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, utter.eLink, oAreaTarget, utter.fDur, TRUE, utter.nSpellId, utter.nTruespeakerLevel);
 			              	// Impact Effects
@@ -554,7 +590,7 @@ int GetIsSyllable(int nSpellId)
 	else if (SYLLABLE_EXILE == nSpellId)             return TRUE;
 	else if (SYLLABLE_DISSOLUTION == nSpellId)       return TRUE;
 	else if (SYLLABLE_ENERVATION == nSpellId)        return TRUE;
-	
+
 	return FALSE;
 }
 
@@ -563,11 +599,11 @@ void DoEnergyNegation(object oTrueSpeaker, object oTarget, struct utterance utte
 	int nDamage = d6(2);
 	// Empower it
 	if(utter.bEmpower) nDamage += (nDamage/2);
-       	// Impact VFX 
+       	// Impact VFX
         utter.eLink2 = EffectLinkEffects(EffectVisualEffect(VFX_IMP_MAGVIO), EffectDamage(nDamage, nDamageType));
         // Impact Effects
         SPApplyEffectToObject(DURATION_TYPE_INSTANT, utter.eLink2, oTarget);
-        
+
         nBeats -= 1;
         if (nBeats > 0)
         	DelayCommand(6.0, DoEnergyNegation(oTrueSpeaker, oTarget, utter, nBeats, nDamageType));
@@ -578,9 +614,9 @@ object CraftedToolTarget(object oTrueSpeaker, object oTarget)
 	// Check to see if its a weapon or item of some sort
 	// Return it if its a valid base item type
 	if (GetBaseItemType(oTarget) != BASE_ITEM_INVALID) return oTarget;
-	
+
 	object oItem = OBJECT_INVALID;
-	
+
 	// These are utterances that only target weapons
 	if (PRCGetSpellId() == UTTER_KEEN_WEAPON || PRCGetSpellId() == UTTER_SUPPRESS_WEAPON || PRCGetSpellId() == UTTER_TRANSMUTE_WEAPON)
 	{
@@ -608,7 +644,7 @@ object CraftedToolTarget(object oTrueSpeaker, object oTarget)
 		// Check the spare hand, and make sure its not a shield
 		oItem = GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget);
 		// If its a valid weapon and not a shield, return it
-		if (GetBaseItemType(oItem) != BASE_ITEM_INVALID     &&    
+		if (GetBaseItemType(oItem) != BASE_ITEM_INVALID     &&
 		    GetBaseItemType(oItem) != BASE_ITEM_LARGESHIELD &&
                     GetBaseItemType(oItem) != BASE_ITEM_SMALLSHIELD &&
                     GetBaseItemType(oItem) != BASE_ITEM_TOWERSHIELD) return oItem;
@@ -617,7 +653,7 @@ object CraftedToolTarget(object oTrueSpeaker, object oTarget)
 	{
 		return GetItemInSlot(INVENTORY_SLOT_CHEST, oTarget);
 	}// This one targets scrolls and potions
-	else if (PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_EMP || PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_EXT || 
+	else if (PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_EMP || PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_EXT ||
 	         PRCGetSpellId() == UTTER_METAMAGIC_CATALYST_MAX)
 	{
 		oItem = GetFirstItemInInventory(oTarget);
@@ -693,7 +729,7 @@ int CheckTrueSpeechSkill(object oTrueSpeaker)
 	// We want base ranks only
 	int nRanks = GetSkillRank(SKILL_TRUESPEAK, oTrueSpeaker, TRUE);
 
-	// The Truenamer class has Truespeech as a class skill, so no relevel 
+	// The Truenamer class has Truespeech as a class skill, so no relevel
 	if (GetLevelByClass(CLASS_TYPE_TRUENAMER, oTrueSpeaker) > 0) return FALSE;
 	// Same for this class
 	else if (GetLevelByClass(CLASS_TYPE_BEREFT, oTrueSpeaker) > 0) return FALSE;
@@ -706,9 +742,9 @@ int CheckTrueSpeechSkill(object oTrueSpeaker)
 	{
 		// Relevel
     		FloatingTextStringOnCreature("You cannot have more than " + IntToString(nMax) + " in TrueSpeech.", oTrueSpeaker, FALSE);
-    		return TRUE;	
+    		return TRUE;
 	}
-	
+
     	// No relevel normally
     	return FALSE;
 }

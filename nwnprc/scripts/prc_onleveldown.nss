@@ -17,6 +17,9 @@
 
 #include "prc_alterations"
 #include "psi_inc_psifunc"
+#include "true_inc_trufunc"
+#include "true_inc_truknwn"
+
 
 void PrcFeats(object oPC)
 {
@@ -48,6 +51,14 @@ void main()
         int i = nOldLevel;
         for(; i > GetHitDice(oPC); i--)
             RemovePowersKnownOnLevel(oPC, i);
+    }
+
+    // Same for Truenamers
+    if(GetIsTruenamingUser(oPC))
+    {
+        int i = nOldLevel;
+        for(; i > GetHitDice(oPC); i--)
+            RemoveUtterancesKnownOnLevel(oPC, i);
     }
 
     // Check to see which special prc requirements (i.e. those that can't be done)

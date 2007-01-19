@@ -7,6 +7,36 @@
 #include "prc_inc_shifting"
 #include "true_inc_trufunc"
 
+/**
+ * Reads the 2da file onenter_locals.2da and sets local variables
+ * on the entering PC accordingly. 2da format same as personal_switches.2da,
+ * see prc_inc_switches header comment for details.
+ *
+ * @param oPC The PC that just entered the module
+ */
+void DoAutoLocals(object oPC)
+{
+    int i = 0;
+    string sSwitchName, sSwitchType, sSwitchValue;
+    // Use Get2DAString() instead of Get2DACache() to avoid caching.
+    while((sSwitchName = Get2DAString("onenter_locals", "SwitchName", i)) != "")
+    {
+        // Read rest of the line
+        sSwitchType  = Get2DAString("onenter_locals", "SwitchType",  i);
+        sSwitchValue = Get2DAString("onenter_locals", "SwitchValue", i);
+
+        // Determine switch type and set the var
+        if     (sSwitchType == "float")
+            SetLocalFloat(oPC, sSwitchName, StringToFloat(sSwitchValue));
+        else if(sSwitchType == "int")
+            SetLocalInt(oPC, sSwitchName, StringToInt(sSwitchValue));
+        else if(sSwitchType == "string")
+            SetLocalString(oPC, sSwitchName, sSwitchValue);
+
+        // Increment loop counter
+        i += 1;
+    }
+}
 
 void main()
 {
@@ -222,6 +252,9 @@ void main()
     // If the PC logs in shifted, unshift them
     if(GetPersistantLocalInt(oPC, SHIFTER_ISSHIFTED_MARKER))
         UnShift(oPC);
+
+    // Set up local variables based on a 2da file
+    DoAutoLocals(oPC);
 
     // Execute scripts hooked to this event for the player triggering it
     //How can this work? The PC isnt a valid object before this. - Primogenitor

@@ -53,7 +53,7 @@ void main()
 	location lLoc = GetSpellTargetLocation();
 	
 	//VFX
-	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_HORRID_WILTING), lLoc, 
+	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_HORRID_WILTING), lLoc); 
 		
 	object oTarget = GetFirstObjectInShape(SHAPE_SPHERE, (10.0f * nCasterLevel), lLoc, FALSE, OBJECT_TYPE_CREATURE | OBJECT_TYPE_DOOR | OBJECT_TYPE_PLACEABLE);
 	

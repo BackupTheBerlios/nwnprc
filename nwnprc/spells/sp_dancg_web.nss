@@ -48,6 +48,8 @@ void main()
 	int nMin = min(10, nCasterLvl);
 	int nDam;
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
+	
+	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_DISPEL_DISJUNCTION), lLoc));
 		
 	while(GetIsObjectValid(oTarget))
 	{				

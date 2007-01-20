@@ -45,20 +45,21 @@ void main()
 	float fDur;
 	int nMetaMagic = PRCGetMetaMagicFeat();
 	int nCasterLvl = PRCGetCasterLevel(oPC);
+	int nMin = min(10, nCasterLvl);
 	int nDam;
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 		
 	while(GetIsObjectValid(oTarget))
-	{
+	{				
 		//SR
 		if(!MyPRCResistSpell(oPC, oTarget, nCasterLvl + SPGetPenetr()))
 		{
 			//Should be non-lethal
-			nDam = d6(min(10, nCasterLvl));
+			nDam = d6(nMin);
 			
 			if(nMetaMagic == METAMAGIC_MAXIMIZE)
 			{
-				nDam = 6 * min(10, nCasterLvl);
+				nDam = 6 * nMin;
 				fDur = RoundsToSeconds(6);
 			}
 			

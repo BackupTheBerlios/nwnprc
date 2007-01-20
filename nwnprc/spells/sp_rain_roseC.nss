@@ -55,7 +55,7 @@ void main()
 				ApplyAbilityDamage(oTarget, ABILITY_WISDOM, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0f);
 			}
 		}
-		GetNextInPersistentObject();
+		oTarget = GetNextInPersistentObject();
 	}
 }
 				

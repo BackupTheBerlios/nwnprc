@@ -1512,6 +1512,11 @@ const string PRC_APPEARANCE_SIZE                        = "PRC_APPEARANCE_SIZE";
 const string PRC_DISABLE_CRAFT                       = "PRC_DISABLE_CRAFT";
 
 /*
+ * Disables epic crafting
+ */
+const string PRC_DISABLE_CRAFT_EPIC                  = "PRC_DISABLE_CRAFT_EPIC";
+
+/*
  * set this on an area to disable crafting within that area
  * Best used in conjunction with the time elapsing and no-rest
  * This applies to both PRC Crafting and biowares scroll/wand/potions

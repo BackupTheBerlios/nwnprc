@@ -949,6 +949,16 @@ struct itemvars GetItemVars(object oPC, object oItem, string sFile, int bEpic = 
             }
         }
     }
+    else if(GetPRCSwitch(PRC_DISABLE_CRAFT_EPIC))
+    {   //disabling epic crafting at npc facilities
+        for(i = 0; i <= nFileEnd; i++)
+        {   //will skip over properties already disallowed
+            if(array_get_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i) && Get2DACache(sFile, "Epic", i) == "1")
+            {
+                array_set_int(oPC, PRC_CRAFT_ITEMPROP_ARRAY, i, 0);
+            }
+        }
+    }
     return strTemp;
 }
 

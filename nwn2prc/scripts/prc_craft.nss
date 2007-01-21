@@ -561,7 +561,7 @@ void main()
                         string sMaterial = GetStringLeft(GetTag(oItem), 3);
                         SetLocalString(oPC, PRC_CRAFT_FILE, sFile);
                         int nFeat = GetCraftingFeat(oItem);
-                        int bEpic = GetHasFeat(GetEpicCraftingFeat(nFeat), oPC);
+                        int bEpic = (GetHasFeat(GetEpicCraftingFeat(nFeat), oPC) && (!GetPRCSwitch(PRC_DISABLE_CRAFT_EPIC)));
                         if(bToken)
                             sTemp = "Using crafting facilities\n\n";
                         sTemp += ItemStats(oItem) + "\nPlease make a selection.";

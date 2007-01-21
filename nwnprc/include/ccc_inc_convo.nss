@@ -299,7 +299,16 @@ void DoHeaderAndChoices(int nStage)
             SetHeader(sText);
             // do feat list
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            DoFeatLoop();
+            if (array_exists(OBJECT_SELF, "CachedChoiceTokens"))
+            {
+                // add cached choices to convo
+                AddChoicesFromCache();
+                DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+            }
+            else
+            {
+                DoFeatLoop();
+            }
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;
@@ -337,7 +346,16 @@ void DoHeaderAndChoices(int nStage)
             SetHeader(sText);
             // do feat list
             SetLocalInt(OBJECT_SELF, "DynConv_Waiting", TRUE);
-            DoBonusFeatLoop();
+            if (array_exists(OBJECT_SELF, "CachedChoiceTokens"))
+            {
+                // add cached choices to convo
+                AddChoicesFromCache();
+                DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+            }
+            else
+            {
+                DoBonusFeatLoop();
+            }
             MarkStageSetUp(nStage);
             SetDefaultTokens();
             break;
@@ -1189,6 +1207,8 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_FEAT_CHECK: {
             if (nChoice == 1)
             {
+                // delete the stored convo choice list
+                ClearCachedChoices();
                 // decrement the number of feats left to pick
                 int nFeatsRemaining = GetLocalInt(OBJECT_SELF, "Points");
                 --nFeatsRemaining;
@@ -1243,6 +1263,8 @@ int HandleChoice(int nStage, int nChoice)
         case STAGE_BONUS_FEAT_CHECK: {
             if (nChoice == 1)
             {
+                // delete the stored convo choice list
+                ClearCachedChoices();
                 // decrement the number of feats left to pick
                 int nFeatsRemaining = GetLocalInt(OBJECT_SELF, "Points");
                 --nFeatsRemaining;

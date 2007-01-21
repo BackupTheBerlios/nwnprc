@@ -49,7 +49,7 @@ void main()
 	int nDam;
 	int nDC = SPGetSpellSaveDC(oTarget, oPC);
 	
-	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_DISPEL_DISJUNCTION), lLoc));
+	ApplyEffectAtLocation(DURATION_TYPE_INSTANT, EffectVisualEffect(VFX_FNF_DISPEL_DISJUNCTION), lLoc);
 		
 	while(GetIsObjectValid(oTarget))
 	{				

@@ -78,6 +78,17 @@ void MarkSkillFocusPrereq(int nSkill, string sVarName);
 // covers caster and familiar related choices
 int GetNextCCCStage(int nStage, int nSpellCasterStage = TRUE);
 
+// adds a reply choice to the cache array
+// used to store a set of dynamic conversation choices so they don't have to be
+// unnecessarily regenerated from the database
+void AddCachedChoice(string sText, int nValue, object oPC = OBJECT_SELF);
+
+// delete the stored convo choice cache array
+void ClearCachedChoices(object oPC = OBJECT_SELF);
+
+// sets the convoCC's current choice list to the values stored in the cache array 
+void AddChoicesFromCache(object oPC = OBJECT_SELF);
+
 // checks if the PC has the two feats given as arguements
 // '****' as an arguement is treated as an automatic TRUE for that arguement
 // used to check if the PC meets the prerequisites in the PreReqFeat1 AND PreReqFeat2
@@ -705,6 +716,36 @@ int GetNextCCCStage(int nStage, int nSpellCasterStage = TRUE)
         }
     }
     return -1; // silly compiler
+}
+
+void AddCachedChoice(string sText, int nValue, object oPC = OBJECT_SELF)
+{
+    // pretty much the same as the AddChoice() function
+    if(!array_exists(oPC, "CachedChoiceTokens"))
+        array_create(oPC, "CachedChoiceTokens");
+    if(!array_exists(oPC, "CachedChoiceValues"))
+        array_create(oPC, "CachedChoiceValues");
+    array_set_string(oPC, "CachedChoiceTokens", array_get_size(oPC, "CachedChoiceTokens"), sText);
+    array_set_int   (oPC, "CachedChoiceValues", array_get_size(oPC, "CachedChoiceValues"), nValue);
+}
+
+void ClearCachedChoices(object oPC = OBJECT_SELF)
+{
+    array_delete(oPC, "CachedChoiceTokens");
+    array_delete(oPC, "CachedChoiceValues");
+}
+
+void AddChoicesFromCache(object oPC = OBJECT_SELF)
+{
+    int nArraySize = array_get_size(oPC, "CachedChoiceTokens");
+    int i, nValue;
+    string sText;
+    for(i = 0; i < nArraySize; i++)
+    {
+        sText = array_get_string(oPC, "CachedChoiceTokens", i);
+        nValue = array_get_int(oPC, "CachedChoiceValues", i);
+        AddChoice(sText, nValue);
+    }
 }
 
 int GetMeetsANDPreReq(string sPreReqFeat1, string sPreReqFeat2)
@@ -1337,7 +1378,7 @@ void DoSkillsLoop()
 
 void DoFeatLoop(int nClassFeatStage = FALSE)
 {
-    /* TODO - class feats, scripting feat enforcement */
+    /* TODO - scripting feat enforcement */
     // get the table/column name quote mark
     string q = PRC_SQLGetTick();
     string sSQL;
@@ -1504,7 +1545,9 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
                 {
                     // check they don't have it already
                     if(!PreReqFeatArrayLoop(nRow))
-                        AddChoice(sName, nRow);
+                    {
+                        AddCachedChoice(sName, nRow);
+                    }
                     else
                     {
                         if(DEBUG) DoDebug("Already picked feat " + IntToString(nRow) + ". Not added!");
@@ -1535,6 +1578,7 @@ void DoFeatLoop(int nClassFeatStage = FALSE)
     {
         if(nClassFeatStage)
         {
+            AddChoicesFromCache();
             FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
             if(DEBUG) DoDebug("Finished class feats");
             DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
@@ -1707,6 +1751,7 @@ void DoBonusFeatLoop()
     }
     else // there were less than 5 rows, it's the end of the 2da
     {
+        AddChoicesFromCache();
         if(DEBUG) DoDebug("Finished bonus feats");
         FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
         DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");

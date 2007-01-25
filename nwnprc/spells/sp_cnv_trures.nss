@@ -82,7 +82,7 @@ void main()
 		while (GetIsObjectValid(oChoice)) // People in party
 		{
 			// If the selection is a PC
-			if (GetIsPC(oChoice))
+			if (GetIsPC(oChoice) && oChoice != oPC)
 			{
 				AddChoice(GetName(oChoice), nChoice, oPC);
 				StorePCForRecovery(oPC, oChoice, nChoice);
@@ -141,9 +141,8 @@ void main()
         }
         else if(nStage == STAGE_CONFIRMATION)//confirmation
         {
-            // No point in letting them finish if they haven't healed anything
-            // Or if they try to exit without healing for at least 20
-            if(nChoice == TRUE && GetLocalInt(oPC, "BloodMartyrAmount") >= 20)
+            // Res and Exit
+            if(nChoice == TRUE)
             {
             	object oChoice = RetrievePC(oPC, GetLocalInt(oPC, "TrueResChoice"));
             	// Res the target

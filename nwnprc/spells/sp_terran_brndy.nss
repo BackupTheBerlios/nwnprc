@@ -2,8 +2,7 @@
 //:: Name      Terran Brandy
 //:: FileName  sp_terran_brndy.nss 
 //:://////////////////////////////////////////////
-/** Script for the drug Sannish
-
+/** Script for the drug Terran Brandy
 Author:    Tenjac
 Created:   5/23/06
 */
@@ -19,7 +18,7 @@ void main()
 	//Handle resetting addiction DC
 	SetPersistantLocalInt(oPC, "PRC_Addiction_TerranBrandy_DC", 6);
 			
-		//Handle satiation
+	//Handle satiation
 	SetPersistantLocalInt(oPC, "PRC_TerranBrandySatiation", 10);
 	
 	//Primary - +2 Caster level 1d20 +20 min

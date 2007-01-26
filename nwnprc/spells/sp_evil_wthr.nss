@@ -74,6 +74,12 @@ void main()
 		//Loop
 		while(GetIsObjectValid(oObject))
 		{
+			//Send message to PCs
+			if(GetIsPC(oObject))
+			{
+				SendMessageToPC(oObject, "The sky pours a thick rain of blood");
+			}
+			
 			nType = MyPRCGetRacialType(oObject);
 			
 			if (nType == RACIAL_TYPE_UNDEAD)
@@ -104,6 +110,12 @@ void main()
 		//Loop
 		while(GetIsObjectValid(oObject))
 		{
+			//Send message to PCs
+			if(GetIsPC(oObject))
+			{
+				SendMessageToPC(oObject, "Drops of deep violet rain fall, severing the connection of the divine to those in the area.");
+			}
+			
 			SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE), oObject, HoursToSeconds(24));
 			
 			oObject = GetNextObjectInArea();
@@ -129,7 +141,19 @@ void main()
 		SetWeather(oArea, WEATHER_RAIN);		
 		DelayCommand(fDuration, SetWeather(oArea, nWeather));
 		
-	}	
+		//GetFirst
+		object oObject = GetFirstObjectInArea(oArea);
+		
+		//Loop
+		while(GetIsObjectValid(oObject))
+		{
+			//Send message to PCs
+			if(GetIsPC(oObject))
+			{
+				SendMessageToPC(oObject, "A torrential rain of aquatic animals falls from the sky, bludgeoning those in the open.");
+			}			
+		}
+	}
 	
 	SPEvilShift(oPC);
 	

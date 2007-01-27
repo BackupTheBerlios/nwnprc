@@ -75,9 +75,9 @@ void main()
         int nPen          = GetPsiPenetration(oManifester);
         int nExtraTargets = manif.nTimesAugOptUsed_3;
         effect eMindVFX  = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
-    	effect eDominate = EffectDominated();
-    	effect eLink;
-    	location lTarget = PRCGetSpellTargetLocation();
+        effect eDominate = EffectDominated();
+        effect eLink;
+        location lTarget = PRCGetSpellTargetLocation();
         float fRadius = EvaluateWidenPower(manif, FeetToMeters(15.0f));
 
         // Calculate duration
@@ -111,7 +111,7 @@ void main()
                     {
                         // Determine effect and apply it
                         eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oTarget));
-                        SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                        DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
                     }// end if - Save
                 }// end if - SR check
             }// end if - Target type check
@@ -140,7 +140,7 @@ void main()
                             {
                                 // Determine effect and apply it
                                 eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oExtraTarget));
-                                SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oExtraTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel);
+                                DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oExtraTarget, fDuration, TRUE, manif.nSpellID, manif.nManifesterLevel));
                             }// end if - Save
                         }// end if - SR check
 

@@ -98,7 +98,7 @@ void main()
             effect eLink = EffectLinkEffects(eMind, eCharm);
 
             // Fire cast spell at event for the specified target
-            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+            SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
 
             // Handle Twin Power
             int nRepeats = manif.bTwin ? 2 : 1;

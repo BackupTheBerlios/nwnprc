@@ -92,13 +92,25 @@ void main()
         if(bValidType)
         {
             // Create effects
+            /*
             effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
             effect eCharm = EffectCharmed();
                    eCharm = GetScaledEffect(eCharm, oTarget); // Game difficulty adjustments
             effect eLink = EffectLinkEffects(eMind, eCharm);
+            */
+
+            effect eVis = EffectVisualEffect(VFX_IMP_CHARM);
+            effect eCharm = EffectCharmed();
+            eCharm = GetScaledEffect(eCharm, oTarget);
+            effect eMind = EffectVisualEffect(VFX_DUR_MIND_AFFECTING_NEGATIVE);
+            effect eDur = EffectVisualEffect(VFX_DUR_CESSATE_NEGATIVE);
+
+            //Link persistant effects
+            effect eLink = EffectLinkEffects(eMind, eCharm);
+            eLink = EffectLinkEffects(eLink, eDur);
 
             // Fire cast spell at event for the specified target
-            SPRaiseSpellCastAt(oTarget, TRUE, manif.nSpellID, oManifester);
+            SPRaiseSpellCastAt(oTarget, FALSE, manif.nSpellID, oManifester);
 
             // Handle Twin Power
             int nRepeats = manif.bTwin ? 2 : 1;

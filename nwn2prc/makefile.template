@@ -354,25 +354,25 @@ database:
 	@copy /Y "$(NWN_DATABASE)\PRC_DATA.FPT" $(OUTPATH)
 
 # Rule to update the scroll and scroll merchant files
-$(MISCPATH)\prc_scrolls.utm: $(2DAPATH)\des_crft_scroll.2da $(2DAPATH)\iprp_spells.2da $(2DAPATH)\spells.2da
-    @echo Generating scrolls, scrollmerchant and updating des_crft_scroll.2da and des_crft_spells.2da
-	-@mkdir scrolltemp 2>nul
-	@$(PRCJAR) buildscrhack $(2DAPATH) $(TLKPATH) scrolltemp
-
-	@REM Convert the scroll xml files to uti
-	@java -cp .\tools\modpacker\lib\log4j.jar;.\tools\modpacker\lib\meta-jb-util.jar;.\tools\modpacker\lib\meta-jb-xml.jar;.\tools\modpacker\nwn-tools.jar org.progeeks.nwn.XmlToGff scrolltemp scrolltemp\*.uti.xml
-
-	@REM Convert the merchant xml to utm
-	@java -cp .\tools\modpacker\lib\log4j.jar;.\tools\modpacker\lib\meta-jb-util.jar;.\tools\modpacker\lib\meta-jb-xml.jar;.\tools\modpacker\nwn-tools.jar org.progeeks.nwn.XmlToGff . prc_scrolls.utm.xml
-
-	@REM Move the files
-	@move /y scrolltemp\prc_scr*.uti $(MISCPATH) 2>nul >nul
-	@move /y prc_scrolls.utm $(MISCPATH)
-
-	@REM Cleanup
-	-@rmdir /s /q scrolltemp 2>nul
-	-@del prc_scrolls.utm.xml 2>nul
-	-@del System.out 2>nul
+#$(MISCPATH)\prc_scrolls.utm: $(2DAPATH)\des_crft_scroll.2da $(2DAPATH)\iprp_spells.2da $(2DAPATH)\spells.2da
+#    @echo Generating scrolls, scrollmerchant and updating des_crft_scroll.2da and des_crft_spells.2da
+#	-@mkdir scrolltemp 2>nul
+#	@$(PRCJAR) buildscrhack $(2DAPATH) $(TLKPATH) scrolltemp
+#
+#	@REM Convert the scroll xml files to uti
+#	@java -cp .\tools\modpacker\lib\log4j.jar;.\tools\modpacker\lib\meta-jb-util.jar;.\tools\modpacker\lib\meta-jb-xml.jar;.\tools\modpacker\nwn-tools.jar org.progeeks.nwn.XmlToGff scrolltemp scrolltemp\*.uti.xml
+#
+#	@REM Convert the merchant xml to utm
+#	@java -cp .\tools\modpacker\lib\log4j.jar;.\tools\modpacker\lib\meta-jb-util.jar;.\tools\modpacker\lib\meta-jb-xml.jar;.\tools\modpacker\nwn-tools.jar org.progeeks.nwn.XmlToGff . prc_scrolls.utm.xml
+#
+#	@REM Move the files
+#	@move /y scrolltemp\prc_scr*.uti $(MISCPATH) 2>nul >nul
+#	@move /y prc_scrolls.utm $(MISCPATH)
+#
+#	@REM Cleanup
+#	-@rmdir /s /q scrolltemp 2>nul
+#	-@del prc_scrolls.utm.xml 2>nul
+#	-@del System.out 2>nul
 
 
 # Rule to build the HAK file.
@@ -486,8 +486,9 @@ $(TEXTURESHAK): $(GFX)
 #	"$(ERFCOMPILER)" -c $@ $**
 
 
-# Rule to build the 2.0 misc HAK file.
-$(MISCHAK): $(MISCPATH)\prc_scrolls.utm $(OTHERS)
+# Rule to build the 2.0 misc HAK file. Commented out scrolls for the moment.
+#$(MISCHAK): $(MISCPATH)\prc_scrolls.utm $(OTHERS)
+$(MISCHAK): $(OTHERS)
 	@echo $(@F)
 	-@del "$@" 2>nul
 	@"$(ERFCOMPILER)" -c $@ $(MISCPATH)\*.*

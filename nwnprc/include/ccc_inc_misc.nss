@@ -161,7 +161,7 @@ void  DoDomainsLoop();
 void DoAppearanceLoop();
 
 // loops through portraits.2da
-void DoPortraitsLoop();
+void DoPortraitsLoop(int nGenderSort = TRUE);
 
 // loops through soundset.2da
 void DoSoundsetLoop();
@@ -1896,24 +1896,24 @@ void DoAppearanceLoop()
     }
 }
 
-void DoPortraitsLoop()
+void DoPortraitsLoop(int nGenderSort = TRUE)
 {
     string q = PRC_SQLGetTick();
     // get the results 100 rows at a time to avoid TMI
     int nReali = GetLocalInt(OBJECT_SELF, "i");
     int nCounter = 0;
     string sSQL;
+    // get the gender and add it to the SQL statement
+    string sGender = IntToString(GetLocalInt(OBJECT_SELF, "Gender"));
     // note: "BaseResRef != 'matron'" is because that portrait is referenced in bioware's
     // portraits.2da, but doesn't exist
-    if (GetPRCSwitch(PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX))
+    if (nGenderSort)
     {
-        // get the gender and add it to the SQL statement
-        string sGender = IntToString(GetLocalInt(OBJECT_SELF, "Gender"));
         sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" = '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
     }
     else
     {
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron')LIMIT 100 OFFSET "+IntToString(nReali);
+        sSQL = "SELECT "+q+"rowid"+q+", "+q+"BaseResRef"+q+" FROM "+q+"prc_cached2da_portraits"+q+" WHERE ("+q+"InanimateType"+q+" = '****') AND ("+q+"BaseResRef"+q+" != '****') AND ("+q+"BaseResRef"+q+" != 'matron') AND ("+q+"SEX"+q+" != '" + sGender + "') LIMIT 100 OFFSET "+IntToString(nReali);
     }
     PRC_SQLExecDirect(sSQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)
@@ -1926,15 +1926,25 @@ void DoPortraitsLoop()
     if (nCounter == 100)
     {
         SetLocalInt(OBJECT_SELF, "i", nReali+100);
-        DelayCommand(0.01, DoPortraitsLoop());
+        DelayCommand(0.01, DoPortraitsLoop(nGenderSort));
     }
     else // end of the 2da
     {
-        if(DEBUG) DoDebug("Finished portraits");
-        FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
-        DeleteLocalInt(OBJECT_SELF, "i");
-        DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
-        return;
+        if (nGenderSort && !GetPRCSwitch(PRC_CONVOCC_RESTRICT_PORTRAIT_BY_SEX)) // run again to select the rest of the portraits
+        {
+            nGenderSort = FALSE;
+            if(DEBUG) DoDebug("Finished gender specific portraits");
+            DeleteLocalInt(OBJECT_SELF, "i");
+            DelayCommand(0.01, DoPortraitsLoop(nGenderSort));
+        }
+        else // done
+        {
+            if(DEBUG) DoDebug("Finished portraits");
+            FloatingTextStringOnCreature("Done", OBJECT_SELF, FALSE);
+            DeleteLocalInt(OBJECT_SELF, "i");
+            DeleteLocalInt(OBJECT_SELF, "DynConv_Waiting");
+            return;
+        }
     }
 }
 
@@ -1946,11 +1956,19 @@ void DoSoundsetLoop()
     int nCounter = 0;
     string sSQL;
     
+    sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****')";
+    
+    if(GetPRCSwitch(PRC_CONVOCC_RESTRICT_VOICESETS_BY_SEX))
+    {
+        int nGender = GetLocalInt(OBJECT_SELF, "Gender");
+        sSQL += " AND ("+q+"GENDER"+q+" = '" + IntToString(nGender) + "')";
+    }
+    
     // make the SQL string
     if(GetPRCSwitch(PRC_CONVOCC_ONLY_PLAYER_VOICESETS))
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') AND ("+q+"TYPE"+q+" = '0') LIMIT 100 OFFSET "+IntToString(nReali);
+        sSQL += " AND ("+q+"TYPE"+q+" = '0') LIMIT 100 OFFSET "+IntToString(nReali);
     else
-        sSQL = "SELECT "+q+"rowid"+q+", "+q+"STRREF"+q+" FROM "+q+"prc_cached2da_soundset"+q+" WHERE ("+q+"RESREF"+q+" != '****') LIMIT 100 OFFSET "+IntToString(nReali);
+        sSQL += " ORDER BY "+q+"TYPE"+q+" LIMIT 100 OFFSET "+IntToString(nReali);
     
     PRC_SQLExecDirect(sSQL);
     while(PRC_SQLFetch() == PRC_SQL_SUCCESS)

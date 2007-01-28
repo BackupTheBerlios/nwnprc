@@ -1401,7 +1401,7 @@
 1397 ProtectionArrows                  16825808 3         2         4500   1800       0         1       1          ife_defarrow               
 1398 TouchIdiocy                       16825810 3         2         4500   1801       0         1       1          iss_feebmind               
 1399 DeepSlumber                       16825812 5         3         11250  1802       0         1       1          iss_sleep                  
-1400 HoundDoom                         16825814 5         3         11250  1803       ****      1       1          ife_animal                 
+1400 HoundDoom                         16825814 5         3         11250  1803       0         1       1          ife_animal                 
 1401 RepelVermin                       16825816 7         4         21000  1804       1         0       0          iss_spiderskin             
 1402 BalefulPolymorph                  16825818 9         5         33750  1805       0         0       1          iss_shapechg               
 1403 BreakEnchantment                  16825820 9         5         33750  1806       0         0       1          iss_regen                  

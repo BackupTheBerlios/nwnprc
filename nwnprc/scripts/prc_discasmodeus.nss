@@ -12,6 +12,8 @@
 
 void main()
 {
+	object oPC = OBJECT_SELF;
+        int nClass = GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oPC);
         // Does the +2 AC/Saves/Attack
-        ActionCastSpellOnSelf(SPELL_DISCIPLE_ASMODEUS_DREAD_MIGHT);    
+        if (nClass >= 10) ActionCastSpellOnSelf(SPELL_DISCIPLE_ASMODEUS_DREAD_MIGHT);    
 }

@@ -32,15 +32,16 @@ void main()
     {
         if(GetAlignmentGoodEvil(oTarget) == ALIGNMENT_EVIL && GetHitDice(oPC) > GetHitDice(oTarget))
             {
-            // Let the AI know
-            SPRaiseSpellCastAt(oTarget, TRUE, PRCGetSpellId(), oPC);
-            //Make a saving throw check
-            if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
-            {
-                    // Determine effect and apply it
-                    eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oTarget));
-                    SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, PRCGetSpellId(), PRCGetCasterLevel(oPC));
-            }// end if - Save
+            	// Let the AI know
+            	//SPRaiseSpellCastAt(oTarget, TRUE, PRCGetSpellId(), oPC);
+            	//Make a saving throw check
+            	if(!PRCMySavingThrow(SAVING_THROW_WILL, oTarget, nDC, SAVING_THROW_TYPE_MIND_SPELLS))
+            	{
+            	        // Determine effect and apply it
+            	        eLink = EffectLinkEffects(eMindVFX, GetScaledEffect(eDominate, oTarget));
+            	        DelayCommand(1.0, SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, eLink, oTarget, fDuration, TRUE, PRCGetSpellId(), PRCGetCasterLevel(oPC)));
+            	        if(DEBUG) DoDebug("prc_doa_evilauth - Duration is " + FloatToString(fDuration));
+            	}// end if - Save
             }   
 
             //Select the next target within the spell shape.

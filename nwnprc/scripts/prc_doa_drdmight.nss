@@ -22,5 +22,6 @@ void main()
 
     RemoveEffectsFromSpell(oPC, GetSpellId());
 
+    if(DEBUG) DoDebug("prc_doa_drdmight - Applying Spell");
     ApplyEffectToObject(DURATION_TYPE_PERMANENT, eLink, oPC);
 }

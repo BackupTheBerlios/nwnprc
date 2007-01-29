@@ -26,15 +26,18 @@ void main()
 
     if (GetLevelByClass(CLASS_TYPE_DISCIPLE_OF_ASMODEUS, oPC) >= 9)
     {
+        if(DEBUG) DoDebug("prc_doa_hellcat - MultiSummon Branch");
 	// Override so they get 1d4 summons
-    	MultisummonPreSummon(oPC, TRUE);
+    	
     	ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     	
     	int i;
     	int nNumSummons = d4();
     	for(i = 1; i <= nNumSummons; i++)
         {
+        	MultisummonPreSummon(oPC, TRUE);
     		ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
+    		if(DEBUG) DoDebug("prc_doa_hellcat - Summoning Loop");
     	}
     }
     else

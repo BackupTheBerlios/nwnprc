@@ -29,8 +29,6 @@ Created:   29/4/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
-#include "inc_dynconv"
-
 
 void DoGreaterCommandRecursion(object oCaster, object oTarget, int nSpellId, int nLastBeat, effect eLink, int nDC, int nCaster, int nCurrentBeat = 0)
 {

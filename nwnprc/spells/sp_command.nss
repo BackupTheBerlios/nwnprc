@@ -28,7 +28,6 @@ Created:   29/4/06
 //:://////////////////////////////////////////////
 
 #include "spinc_common"
-#include "inc_dynconv"
 
 void main()
 {

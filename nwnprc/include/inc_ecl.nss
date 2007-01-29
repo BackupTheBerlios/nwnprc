@@ -10,6 +10,10 @@
 /* Function prototypes                          */
 //////////////////////////////////////////////////
 
+// returns oTarget's LA value, including their race and template(s) LA
+int GetTotalLA(object oTarget);
+
+// returns oTarget's level adjusted by their LA
 int GetECL(object oTarget);
 void GiveXPReward(object oPC, object oTarget, int nCR = 0);
 void GiveXPRewardToParty(object oPC, object oTarget, int nCR = 0);
@@ -25,6 +29,18 @@ int GetXPReward(object oPC, object oTarget, int nCR = 0);
 //////////////////////////////////////////////////
 /* Function definitions                         */
 //////////////////////////////////////////////////
+
+int GetTotalLA(object oTarget)
+{
+    int nLA;
+    int nRace = GetRacialType(oTarget);
+    if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
+        nLA += StringToInt(Get2DACache("ECL", "LA", nRace));
+    if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
+        nLA += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
+    nLA += GetTemplateLA(oTarget);
+    return nLA;
+}
 
 int GetECL(object oTarget)
 {
@@ -51,12 +67,7 @@ int GetECL(object oTarget)
         nLevel = FloatToInt(0.5 + sqrt(0.25 + ( IntToFloat(GetXP(oTarget)) / 500 )));
     else
         nLevel = GetHitDice(oTarget);
-    int nRace = GetRacialType(oTarget);
-    if(GetPRCSwitch(PRC_XP_USE_SIMPLE_LA))
-        nLevel += StringToInt(Get2DACache("ECL", "LA", nRace));
-    if(GetPRCSwitch(PRC_XP_INCLUDE_RACIAL_HIT_DIE_IN_LA))
-        nLevel += StringToInt(Get2DACache("ECL", "RaceHD", nRace));
-    nLevel += GetTemplateLA(oTarget);
+    nLevel += GetTotalLA(oTarget);
     return nLevel;
 }
 

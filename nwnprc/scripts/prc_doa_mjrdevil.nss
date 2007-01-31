@@ -17,6 +17,7 @@ void main()
 {
     //Declare major variables
     object oPC = OBJECT_SELF;
+    if(DEBUG) DoDebug("prc_doa_mjrdevil: Begin");
     
     effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_GATE);
     float fDuration = HoursToSeconds(24);
@@ -37,4 +38,5 @@ void main()
     MultisummonPreSummon(oPC);
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eVis, GetSpellTargetLocation());
     ApplyEffectAtLocation(DURATION_TYPE_TEMPORARY, eSummon, GetSpellTargetLocation(), fDuration);
+    if(DEBUG) DoDebug("prc_doa_mjrdevil: End");
 }

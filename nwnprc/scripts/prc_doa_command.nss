@@ -16,6 +16,7 @@ void main()
 {
     object oPC = OBJECT_SELF;
     int nSpellId = PRCGetSpellId();
+    if(DEBUG) DoDebug("prc_doa_command: SpellId: " + IntToString(nSpellId));
     // Put each one into the appropriate spot
     if (nSpellId == SPELL_DOA_COMMAND_APPROACH        ) ActionCastSpell(SPELL_COMMAND_APPROACH        );
     if (nSpellId == SPELL_DOA_COMMAND_DROP            ) ActionCastSpell(SPELL_COMMAND_DROP            );

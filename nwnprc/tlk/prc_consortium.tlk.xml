@@ -18111,6 +18111,11 @@ Special Abilities:
 - Hide in Plain Sight: Brownies are able to use the Hide skill even while being observed.
 - Spell-Like Abilities: 1/day - Confusion. Caster level 7th plus character level. The DC is Charisma-based.
 - Fey: Brownies are considered Fey for the purpose of spells.</entry>
+  <entry id="49750" lang="en" sex="m">Summon Cornugon</entry>
+  <entry id="49751" lang="en" sex="m">Summon Gelugon</entry>
+  <entry id="49752" lang="en" sex="m">Summon Glabrezu</entry>
+  <entry id="49753" lang="en" sex="m">Summon Hamatula</entry>
+  <entry id="49754" lang="en" sex="m">Summon Osyluth</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

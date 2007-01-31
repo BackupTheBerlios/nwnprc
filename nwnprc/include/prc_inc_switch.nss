@@ -2549,7 +2549,7 @@ void SetPRCSwitch(string sSwitch, int nState)
 
 void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
 {
-    if(!GetPRCSwitch(PRC_MULTISUMMON) && !bOverride)
+    if(!GetPRCSwitch(PRC_MULTISUMMON) || !bOverride)
         return;
     int i=1;
     int nCount = GetPRCSwitch(PRC_MULTISUMMON);

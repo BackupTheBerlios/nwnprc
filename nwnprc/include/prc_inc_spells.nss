@@ -2019,10 +2019,12 @@ int GetHasMettle(object oTarget, int nSavingThrow)
 
 void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration, int nCaster)
 {
+    if(DEBUG) DoDebug("Command Spell: Begin");
     if (nSpellId == SPELL_COMMAND_APPROACH || nSpellId == SPELL_GREATER_COMMAND_APPROACH ||
         nSpellId == SPELL_DOA_COMMAND_APPROACH || nSpellId == SPELL_DOA_GREATER_COMMAND_APPROACH)
     {
         // Force the target to approach the caster
+        if(DEBUG) DoDebug("Command Spell: Approach");
         AssignCommand(oTarget, ClearAllActions(TRUE));
         AssignCommand(oTarget, ActionForceMoveToObject(oCaster, TRUE));
     }
@@ -2033,6 +2035,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
              (nSpellId == SPELL_DOA_GREATER_COMMAND_DROP && GetIsCreatureDisarmable(oTarget)))
     {
         // Force the target to drop what its holding
+        if(DEBUG) DoDebug("Command Spell: Drop");
         AssignCommand(oTarget, ClearAllActions(TRUE));
         AssignCommand(oTarget, ActionPutDownItem(GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oTarget)));
         AssignCommand(oTarget, ActionPutDownItem(GetItemInSlot(INVENTORY_SLOT_LEFTHAND, oTarget)));
@@ -2041,6 +2044,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
              nSpellId == SPELL_DOA_COMMAND_FALL || nSpellId == SPELL_DOA_GREATER_COMMAND_FALL)
     {
         // Force the target to fall down
+        if(DEBUG) DoDebug("Command Spell: Fall");
         AssignCommand(oTarget, ClearAllActions(TRUE));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectKnockdown(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);
     }
@@ -2048,6 +2052,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
              nSpellId == SPELL_DOA_COMMAND_FLEE || nSpellId == SPELL_DOA_GREATER_COMMAND_FLEE)
     {
         // Force the target to flee the caster
+        if(DEBUG) DoDebug("Command Spell: Flee");
         AssignCommand(oTarget, ClearAllActions(TRUE));
         AssignCommand(oTarget, ActionMoveAwayFromObject(oCaster, TRUE));
     }
@@ -2055,6 +2060,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
              nSpellId == SPELL_DOA_COMMAND_HALT || nSpellId == SPELL_DOA_GREATER_COMMAND_HALT)
     {
         // Force the target to stand still
+        if(DEBUG) DoDebug("Command Spell: Stand"); 
         AssignCommand(oTarget, ClearAllActions(TRUE));
         SPApplyEffectToObject(DURATION_TYPE_TEMPORARY, EffectCutsceneParalyze(), oTarget, RoundsToSeconds(nDuration),TRUE,-1,nCaster);
     }
@@ -2069,6 +2075,7 @@ void DoCommandSpell(object oCaster, object oTarget, int nSpellId, int nDuration,
             FloatingTextStringOnCreature("sp_command/sp_greatcommand: Error, Unknown SpellId", oCaster, FALSE);
         }
     }
+    if(DEBUG) DoDebug("Command Spell: End");
 }
 
 int GetIsIncorporeal(object oTarget)

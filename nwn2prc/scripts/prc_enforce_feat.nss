@@ -1081,6 +1081,7 @@ int LeadershipHD(object oPC)
 int DragonShamanFeats(object oPC)
 {
     int nLevel = GetLevelByClass(CLASS_TYPE_DRAGON_SHAMAN, oPC);
+    if (1 > nLevel) return TRUE;
     int nNumAuras;
     int nNumDragonTotem;
     int nNumOfSkillFocus;

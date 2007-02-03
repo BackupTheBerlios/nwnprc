@@ -26,6 +26,8 @@ void main()
 
     int         nOrder =            GetLocalInt(oPC, "LawfulChaotic");
     int         nMoral =            GetLocalInt(oPC, "GoodEvil");
+    
+    int         nSkillPointsSaved=  GetLocalInt(oPC, "SavedSkillPoints");
 
 
     int         nFamiliar =         GetLocalInt(oPC, "Familiar");
@@ -143,6 +145,9 @@ void main()
     }
     sScript += LetoAdd("SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
     sScript += LetoAdd("LvlStatList/[_]/SkillPoints", IntToString(array_get_int(oPC, "Skills", -1)), "word");
+    
+    // saved skill points - this is set regardless to stop the skill point exploit
+    sScript += LetoSet("SkillPoints", IntToString(nSkillPointsSaved), "word");
 
     //Spells
     if(nClass == CLASS_TYPE_WIZARD)

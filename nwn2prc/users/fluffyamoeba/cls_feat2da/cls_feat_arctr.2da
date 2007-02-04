@@ -1,0 +1,32 @@
+2DA V2.0
+
+   FeatLabel                               FeatIndex List GrantedOnLevel OnMenu 
+0  FEAT_ARCTRICKSTER_SPELLCASTING_BARD     1512      2    1              0      
+1  FEAT_ARCTRICKSTER_SPELLCASTING_SORCERER 1513      2    1              0      
+2  FEAT_ARCTRICKSTER_SPELLCASTING_WIZARD   1514      2    1              0      
+3  FEAT_ARCTRICKSTER_SPELLCASTING_WARLOCK  1677      2    1              0      
+4  FEAT_PILFER_MAGIC_1                     1853      3    1              0      
+5  FEAT_PILFER_MAGIC_2                     1854      3    5              0      
+6  FEAT_PILFER_MAGIC_3                     1855      3    9              0      
+7  FEAT_ARCTRICKSTER_SNEAK_ATTACK_1        1502      3    2              0      
+8  FEAT_ARCTRICKSTER_SNEAK_ATTACK_2        1503      3    4              0      
+9  FEAT_ARCTRICKSTER_SNEAK_ATTACK_3        1504      3    6              0      
+10 FEAT_ARCTRICKSTER_SNEAK_ATTACK_4        1505      3    8              0      
+11 FEAT_ARCTRICKSTER_SNEAK_ATTACK_5        1506      3    10             0      
+12 FEAT_IMPROMPTU_SNEAK_ATTACK_1           1510      3    3              0      
+13 FEAT_IMPROMPTU_SNEAK_ATTACK_2           1511      3    7              0      
+14 padding                                 ****      1    ****           0      
+15 padding                                 ****      1    ****           0      
+16 padding                                 ****      1    ****           0      
+17 padding                                 ****      1    ****           0      
+18 padding                                 ****      1    ****           0      
+19 padding                                 ****      1    ****           0      
+20 padding                                 ****      1    ****           0      
+21 padding                                 ****      1    ****           0      
+22 padding                                 ****      1    ****           0      
+23 padding                                 ****      1    ****           0      
+24 padding                                 ****      1    ****           0      
+25 padding                                 ****      1    ****           0      
+26 padding                                 ****      1    ****           0      
+27 padding                                 ****      1    ****           0      
+28 padding                                 ****      1    ****           0      

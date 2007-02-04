@@ -1,5 +1,5 @@
 2DA V2.0
-    
+
     FeatLabel                          FeatIndex List GrantedOnLevel OnMenu 
 0   ExtTurn                            13        0    -1             0      
 1   SpellFocusCon                      166       0    -1             0      
@@ -86,116 +86,19 @@
 82  FEAT_EPIC_AUTOMATIC_STILL_SPELL_1  863       0    -1             0      
 83  FEAT_EPIC_AUTOMATIC_STILL_SPELL_2  864       0    -1             0      
 84  FEAT_EPIC_AUTOMATIC_STILL_SPELL_3  865       0    -1             0      
-85  FEAT_TEMPUS_SPELLCST_CLER  	       14548	 2    -1             0
-86  FEAT_TEMPUS_SPELLCST_DRUID 	       14549	 2    -1             0
-87  FEAT_TEMPUS_SPELLCST_PAL   	       14550	 2    -1             0
-88  FEAT_TEMPUS_SPELLCST_RNG   	       14551	 2    -1             0
-89  FEAT_TEMPUS_SPELLCST_BLKG  	       14552	 2    -1             0
-90  FEAT_TEMPUS_SPELLCST_SOL   	       14553	 2    -1             0
-91  FEAT_TEMPUS_SPELLCST_VASSAL	       14554	 2    -1             0
-92  FEAT_TEMPUS_SPELLCST_KMC   	       14555	 2    -1             0
-93  FEAT_TEMPUS_SPELLCST_KCH   	       14556	 2    -1             0
-94  FEAT_TEMPUS_SPELLCST_APAL  	       14557	 2    -1             0
-95  FEAT_TEMPUS_SPELLCST_VGL   	       14558	 2    -1             0
-96  FEAT_TEMPUS_SPELLCST_FVS   	       14559	 2    -1             0
-97  FEAT_TEMPUS_SPELLCST_SOHEI 	       14560	 2    -1             0
-98  FEAT_TEMPUS_SPELLCST_HLR   	       14561 	 2    -1             0
-99  FEAT_TEMPUS_SPELLCST_SOD   	       14562	 2    -1             0
-100 FEAT_TEMPUS_SPELLCST_OCULAR	       14563	 2    -1             0
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
+85  FEAT_TEMPUS_SPELLCST_CLER          14548     2    -1             0      
+86  FEAT_TEMPUS_SPELLCST_DRUID         14549     2    -1             0      
+87  FEAT_TEMPUS_SPELLCST_PAL           14550     2    -1             0      
+88  FEAT_TEMPUS_SPELLCST_RNG           14551     2    -1             0      
+89  FEAT_TEMPUS_SPELLCST_BLKG          14552     2    -1             0      
+90  FEAT_TEMPUS_SPELLCST_SOL           14553     2    -1             0      
+91  FEAT_TEMPUS_SPELLCST_VASSAL        14554     2    -1             0      
+92  FEAT_TEMPUS_SPELLCST_KMC           14555     2    -1             0      
+93  FEAT_TEMPUS_SPELLCST_KCH           14556     2    -1             0      
+94  FEAT_TEMPUS_SPELLCST_APAL          14557     2    -1             0      
+95  FEAT_TEMPUS_SPELLCST_VGL           14558     2    -1             0      
+96  FEAT_TEMPUS_SPELLCST_FVS           14559     2    -1             0      
+97  FEAT_TEMPUS_SPELLCST_SOHEI         14560     2    -1             0      
+98  FEAT_TEMPUS_SPELLCST_HLR           14561     2    -1             0      
+99  FEAT_TEMPUS_SPELLCST_SOD           14562     2    -1             0      
+100 FEAT_TEMPUS_SPELLCST_OCULAR        14563     2    -1             0      

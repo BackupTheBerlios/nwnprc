@@ -75,7 +75,7 @@
 71  FEAT_EPIC_GREAT_WISDOM_9                  812       1    -1             0      
 72  FEAT_EPIC_GREAT_WISDOM_10                 813       1    -1             0      
 73  FEAT_EPIC_BLINDING_SPEED                  491       0    -1             1      
-74  EnableHierophant                          ****      **** ****           ****      
+74  EnableHierophant                          ****      **** ****           ****   
 75  FEAT_CRAFT_WONDROUS_ITEM                  2925      0    3              1      
 76  FEAT_CRAFT_MAGIC_ARMS_AND_ARMOR           2926      0    5              1      
 77  FEAT_CRAFT_ROD                            2927      0    9              1      

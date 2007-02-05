@@ -1,7 +1,6 @@
 2DA V2.0
 
     FeatLabel                                      FeatIndex List GrantedOnLevel OnMenu 
-0   Ambidex                                        1         1    -1             0      
 1   CShot                                          5         1    -1             0      
 2   Cleave                                         6         1    -1             0      
 3   DefArrow                                       8         1    -1             0      
@@ -284,4 +283,7 @@
 280 Epic_WeaponFocus_Mindblade                     3618      1    -1             0      
 281 ImpCrit_Mindblade                              3614      1    -1             0      
 282 PERFECT_TWO_WEAPON_FIGHTING                    4320      1    -1             0      
+42 FEAT_ELDRITCH_KNIGHT_SPELLCASTING_BARD     1820      2    1              0      
+43 FEAT_ELDRITCH_KNIGHT_SPELLCASTING_SORCERER 1821      2    1              0      
+44 FEAT_ELDRITCH_KNIGHT_SPELLCASTING_WIZARD   1822      2    1              0      
 283 Two-Weapon_Rend                                3113      1    -1             0      

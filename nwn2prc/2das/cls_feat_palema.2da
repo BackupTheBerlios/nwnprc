@@ -13,7 +13,6 @@
 9  FEAT_DEATHLESS_MASTER_TOUCH               897       3    10             1      
 10 darkvision                                228       3    3              0      
 11 DefArrow                                  8         0    -1             0      
-12 Ambidex                                   1         0    -1             0      
 13 FEAT_EPIC_SPELL_FOCUS_ABJURATION          610       1    -1             0      
 14 FEAT_EPIC_SPELL_FOCUS_CONJURATION         611       1    -1             0      
 15 FEAT_EPIC_SPELL_FOCUS_DIVINATION          612       1    -1             0      

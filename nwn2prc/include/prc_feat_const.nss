@@ -2836,6 +2836,14 @@ const int FEAT_ORCUS_SPELLCST_SUEL  	       = 15163;
 const int FEAT_ORCUS_SPELLCST_SHDL  	       = 15164;
 const int FEAT_ORCUS_SPELLCST_HEXBLD	       = 15165;
 const int FEAT_ORCUS_SPELLCST_DSKBLD           = 15166;
+const int FEAT_EK_SPELLCST_WIZ  	       = 15167;
+const int FEAT_EK_SPELLCST_SORC  	       = 15168;
+const int FEAT_EK_SPELLCST_BARD  	       = 15169;
+const int FEAT_EK_SPELLCST_ASSN  	       = 15170;
+const int FEAT_EK_SPELLCST_SUEL  	       = 15171;
+const int FEAT_EK_SPELLCST_SHDL  	       = 15172;
+const int FEAT_EK_SPELLCST_HEXBLD	       = 15173;
+const int FEAT_EK_SPELLCST_DSKBLD	       = 15174;
 
 // Dragon Shaman
 const int FEAT_DRAGONSHAMAN_RESOLVE               = 3838;

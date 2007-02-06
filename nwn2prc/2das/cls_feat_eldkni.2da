@@ -287,8 +287,8 @@
 283 FEAT_ELDRITCH_KNIGHT_SPELLCASTING_SORCERER     1821      2    1              0      
 284 FEAT_ELDRITCH_KNIGHT_SPELLCASTING_WIZARD       1822      2    1              0      
 285 Two-Weapon_Rend                                3113      1    -1             0      
-286 FEAT_EK_SPELLCST_ASSN                          15170     2    1              0      
-287 FEAT_EK_SPELLCST_SUEL                          15171     2    1              0      
-288 FEAT_EK_SPELLCST_SHDL                          15172     2    1              0      
-289 FEAT_EK_SPELLCST_HEXBLD                        15173     2    1              0      
-290 FEAT_EK_SPELLCST_DSKBLD                        15174     2    1              0      
+286 FEAT_EK_SPELLCST_ASSN                          7670      2    1              0      
+287 FEAT_EK_SPELLCST_SUEL                          7671      2    1              0      
+288 FEAT_EK_SPELLCST_SHDL                          7672      2    1              0      
+289 FEAT_EK_SPELLCST_HEXBLD                        7673      2    1              0      
+290 FEAT_EK_SPELLCST_DSKBLD                        7674      2    1              0      

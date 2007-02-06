@@ -40,15 +40,9 @@ void main()
             return;
         
         // check letoscript is setup correctly
+        // will boot the PC later if they should go through the convoCC but can't
+        // otherwise ignore
         bBoot = DoLetoscriptTest(oPC);
-        if(bBoot) // if singleplayer game or letoscript not set up correctly
-        {
-            effect eParal = EffectCutsceneParalyze();
-            eParal = SupernaturalEffect(eParal);
-            ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
-            AssignCommand(oPC, DelayCommand(10.0, CheckAndBoot(oPC)));
-            return;
-        }
         
         // encryption stuff
         /* TODO proper comment */
@@ -59,6 +53,35 @@ void main()
         if((GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetXP(oPC) == 0)
         || (!GetPRCSwitch(PRC_CONVOCC_USE_XP_FOR_NEW_CHAR) && GetTag(oPC) != sEncrypt))
         {
+            // if letoscript can't find the bic, the convoCC won't work
+            // so kick the PC now
+            if(bBoot) // if singleplayer game or letoscript not set up correctly
+            {
+                effect eParal = EffectCutsceneParalyze();
+                eParal = SupernaturalEffect(eParal);
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
+                AssignCommand(oPC, DelayCommand(10.0, CheckAndBoot(oPC)));
+                return;
+            }
+            // next see if someone has already started the convo
+            if(GetLocalInt(GetModule(), "ccc_active"))
+            {
+                // no avoiding the convoCC, so stop them running off
+                effect eParal = EffectCutsceneParalyze();
+                eParal = SupernaturalEffect(eParal);
+                ApplyEffectToObject(DURATION_TYPE_PERMANENT, eParal, oPC);
+                // floaty text info as we can't use the dynamic convo for this
+                DelayCommand(10.0, FloatingTextStringOnCreature(
+                    "The conversation Character Creator is in use, please try later.", oPC, FALSE));
+                DelayCommand(11.0, FloatingTextStringOnCreature("You will be booted in 5...", oPC, FALSE));
+                DelayCommand(12.0, FloatingTextStringOnCreature("4...", oPC, FALSE));
+                DelayCommand(13.0, FloatingTextStringOnCreature("3...", oPC, FALSE));
+                DelayCommand(14.0, FloatingTextStringOnCreature("2...", oPC, FALSE));
+                DelayCommand(15.0, FloatingTextStringOnCreature("1...", oPC, FALSE));
+                AssignCommand(oPC, DelayCommand(16.0, CheckAndBoot(oPC)));
+            }
+            // now reserve the conversation slot - only one at a time
+            SetLocalInt(GetModule(), "ccc_active", 1);
             // remove equipped items and clear out inventory
             DoStripPC(oPC);
             //rest them so that they loose cutscene invisible

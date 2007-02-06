@@ -45,4 +45,5 @@ void main()
     DoDebug("Head:  "+IntToString(GetLocalInt(oPC, "Head")));
     DoDebug("Points:  "+IntToString(GetLocalInt(oPC, "Points")));
     DoDebug("i:  "+IntToString(GetLocalInt(oPC, "i")));
+    DoDebug("ccc_active:  "+IntToString(GetLocalInt(GetModule(), "ccc_active")));
 }

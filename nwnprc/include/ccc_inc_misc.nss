@@ -213,8 +213,8 @@ int DoLetoscriptTest(object oPC)
          && sResult != " "+sName)
          )
     {
-        SendMessageToPC(oPC, "Letoscript is not setup correctly. Please check that you have set the directory to the correct one.");
-        WriteTimestampedLogEntry("Letoscript is not setup correctly. Please check that you have set the directory to the correct one.");
+        SendMessageToPC(oPC, "Letoscript is not setup correctly or it cannot find your bic file. Check nwnx_leto.log for error messages.");
+        WriteTimestampedLogEntry("Letoscript is not setup correctly or it cannot find your bic file. Check nwnx_leto.log for error messages.");
         bBoot = TRUE;
     }
     
@@ -374,112 +374,115 @@ void DoCutscene(object oPC, int nSetup = FALSE)
 {
     string sScript;
     int nStage = GetStage(oPC);
-    if (nStage < STAGE_RACE_CHECK) // if we don't need to set the clone up
+    
+    // check the PC has finished entering the area
+    if(!GetIsObjectValid(GetArea(oPC)))
+    {
+        DelayCommand(1.0, DoCutscene(oPC, nSetup));
         return;
+    }
     
     if(DEBUG) DoDebug("DoCutscene() stage is :" + IntToString(nStage) + " nSetup = " + IntToString(nSetup));
-    object oClone;
     
-    if(nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
+    if (nStage >= STAGE_RACE_CHECK) // if we don't need to set the clone up
     {
-        // check the PC has finished entering the area
-        if(!GetIsObjectValid(GetArea(oPC)))
-        {
-            DelayCommand(1.0, DoCutscene(oPC, nSetup));
-            return;
-        }
-        // make the PC look like the race they have chosen
-        DoSetRaceAppearance(oPC);
-        // clone the PC and hide the swap with a special effect
-        // make the real PC non-collideable
-        effect eGhost = EffectCutsceneGhost();
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGhost, oPC, 99999999.9);
-        // make the swap and hide with an effect
-        effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
-        // make clone
-        oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PlayerClone");
-        ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
-        // make the real PC invisible
-        effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
-        ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, 9999.9);
-        // swap local objects
-        SetLocalObject(oPC, "Clone", oClone);
-        SetLocalObject(oClone, "Master", oPC);
-        // this makes sure the clone gets destroyed if the PC leaves the game
-        AssignCommand(oClone, CloneMasterCheck());
-        // end of clone making
+        object oClone;
         
-        int nGender = GetLocalInt(oPC, "Gender");
-        // this only needs doing if the gender has changed
-        if (GetGender(oPC) != nGender)
+        if(nStage == STAGE_RACE_CHECK || (nStage > STAGE_RACE_CHECK && nSetup))
         {
-            sScript = LetoSet("Gender", IntToString(nGender), "byte");
-            // reset soundset only if we've not changed it yet
-            if (nStage < STAGE_SOUNDSET)
-                sScript += LetoSet("SoundSetFile", IntToString(0), "word");
+            // make the PC look like the race they have chosen
+            DoSetRaceAppearance(oPC);
+            // clone the PC and hide the swap with a special effect
+            // make the real PC non-collideable
+            effect eGhost = EffectCutsceneGhost();
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eGhost, oPC, 99999999.9);
+            // make the swap and hide with an effect
+            effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_MONSTER_1);
+            ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, GetLocation(oPC));
+            // make clone
+            oClone = CopyObject(oPC, GetLocation(oPC), OBJECT_INVALID, "PlayerClone");
+            ChangeToStandardFaction(oClone, STANDARD_FACTION_MERCHANT);
+            // make the real PC invisible
+            effect eInvis = EffectVisualEffect(VFX_DUR_CUTSCENE_INVISIBILITY);
+            ApplyEffectToObject(DURATION_TYPE_TEMPORARY, eInvis, oPC, 9999.9);
+            // swap local objects
+            SetLocalObject(oPC, "Clone", oClone);
+            SetLocalObject(oClone, "Master", oPC);
+            // this makes sure the clone gets destroyed if the PC leaves the game
+            AssignCommand(oClone, CloneMasterCheck());
+            // end of clone making
+            
+            int nGender = GetLocalInt(oPC, "Gender");
+            // this only needs doing if the gender has changed
+            if (GetGender(oPC) != nGender)
+            {
+                sScript = LetoSet("Gender", IntToString(nGender), "byte");
+                // reset soundset only if we've not changed it yet
+                if (nStage < STAGE_SOUNDSET)
+                    sScript += LetoSet("SoundSetFile", IntToString(0), "word");
+            }
         }
-    }
-    
-    if(nStage == STAGE_APPEARANCE || (nStage > STAGE_APPEARANCE && nSetup))
-    {
-        DoSetAppearance(oPC);
-    }
-    
-    if(nStage == STAGE_SOUNDSET || (nStage > STAGE_SOUNDSET && nSetup))
-    {
-        int nSoundset = GetLocalInt(oPC, "Soundset");
-        if (nSoundset != -1) // then it has been changed
+        
+        if(nStage == STAGE_APPEARANCE || (nStage > STAGE_APPEARANCE && nSetup))
         {
-            sScript += LetoSet("SoundSetFile", IntToString(nSoundset), "word");
+            DoSetAppearance(oPC);
         }
-    }
-    
-    if (nStage == STAGE_SKIN_COLOUR_CHOICE || (nStage > STAGE_SKIN_COLOUR_CHOICE && nSetup))
-    {
-        int nSkin = GetLocalInt(oPC, "Skin");
-        if (nSkin != -1) // then it has been changed
+        
+        if(nStage == STAGE_SOUNDSET || (nStage > STAGE_SOUNDSET && nSetup))
         {
-            sScript += SetSkinColor(nSkin);
+            int nSoundset = GetLocalInt(oPC, "Soundset");
+            if (nSoundset != -1) // then it has been changed
+            {
+                sScript += LetoSet("SoundSetFile", IntToString(nSoundset), "word");
+            }
         }
-    }
-    
-    if (nStage == STAGE_HAIR_COLOUR_CHOICE || (nStage > STAGE_HAIR_COLOUR_CHOICE && nSetup))
-    {
-        int nHair = GetLocalInt(oPC, "Hair");
-        if (nHair != -1) // then it has been changed
+        
+        if (nStage == STAGE_SKIN_COLOUR_CHOICE || (nStage > STAGE_SKIN_COLOUR_CHOICE && nSetup))
         {
-            sScript += SetHairColor(nHair);
+            int nSkin = GetLocalInt(oPC, "Skin");
+            if (nSkin != -1) // then it has been changed
+            {
+                sScript += SetSkinColor(nSkin);
+            }
         }
-    }
-    
-    if (nStage == STAGE_TATTOO1_COLOUR_CHOICE || (nStage > STAGE_TATTOO1_COLOUR_CHOICE && nSetup))
-    {
-        int nTattooColour1 = GetLocalInt(oPC, "TattooColour1");
-        if (nTattooColour1 != -1) // then it has been changed
+        
+        if (nStage == STAGE_HAIR_COLOUR_CHOICE || (nStage > STAGE_HAIR_COLOUR_CHOICE && nSetup))
         {
-            sScript += SetTattooColor(nTattooColour1, 1);
+            int nHair = GetLocalInt(oPC, "Hair");
+            if (nHair != -1) // then it has been changed
+            {
+                sScript += SetHairColor(nHair);
+            }
         }
-    }
-    
-    if (nStage == STAGE_TATTOO2_COLOUR_CHOICE || (nStage > STAGE_TATTOO2_COLOUR_CHOICE && nSetup))
-    {
-        int nTattooColour2 = GetLocalInt(oPC, "TattooColour2");
-        if (nTattooColour2 != -1) // then it has been changed
+        
+        if (nStage == STAGE_TATTOO1_COLOUR_CHOICE || (nStage > STAGE_TATTOO1_COLOUR_CHOICE && nSetup))
         {
-            sScript += SetTattooColor(nTattooColour2, 2);
+            int nTattooColour1 = GetLocalInt(oPC, "TattooColour1");
+            if (nTattooColour1 != -1) // then it has been changed
+            {
+                sScript += SetTattooColor(nTattooColour1, 1);
+            }
         }
-    }
-    // no point in running the letoscript commands if no changes are made
-    if (sScript != "")
-    {
-        StackedLetoScript(sScript);
-        string sResult;
-        if (oClone == OBJECT_INVALID)
-            oClone = GetLocalObject(oPC, "Clone");
-        RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
-        sResult = GetLocalString(GetModule(), "LetoResult");
-        SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
+        
+        if (nStage == STAGE_TATTOO2_COLOUR_CHOICE || (nStage > STAGE_TATTOO2_COLOUR_CHOICE && nSetup))
+        {
+            int nTattooColour2 = GetLocalInt(oPC, "TattooColour2");
+            if (nTattooColour2 != -1) // then it has been changed
+            {
+                sScript += SetTattooColor(nTattooColour2, 2);
+            }
+        }
+        // no point in running the letoscript commands if no changes are made
+        if (sScript != "")
+        {
+            StackedLetoScript(sScript);
+            string sResult;
+            if (oClone == OBJECT_INVALID)
+                oClone = GetLocalObject(oPC, "Clone");
+            RunStackedLetoScriptOnObject(oClone, "OBJECT", "SPAWN", "prc_ccc_app_lspw", TRUE);
+            sResult = GetLocalString(GetModule(), "LetoResult");
+            SetLocalObject(GetModule(), "PCForThread"+sResult, OBJECT_SELF);
+        }
     }
     DoRotatingCamera(oPC);
 }
@@ -489,6 +492,8 @@ void CloneMasterCheck()
     object oMaster = GetLocalObject(OBJECT_SELF, "Master");
     if(!GetIsObjectValid(oMaster))
     {
+        // free up the convoCC if they logged out
+        DeleteLocalInt(GetModule(), "ccc_active");
         SetIsDestroyable(TRUE);
         DestroyObject(OBJECT_SELF);
     }
@@ -499,7 +504,12 @@ void CloneMasterCheck()
 void DoRotatingCamera(object oPC)
 {
     if(!GetIsObjectValid(oPC))
+    {
+        // then the ccc is free to use again
+        DeleteLocalInt(GetModule(), "ccc_active");
+        if (DEBUG) DoDebug("Invalid PC given to DoRotatingCamera()");
         return;
+    }
     if(GetLocalInt(oPC, "StopRotatingCamera"))
     {
         DeleteLocalInt(oPC, "StopRotatingCamera");
@@ -514,7 +524,7 @@ void DoRotatingCamera(object oPC)
         fDirection += 360.0;
     SetLocalFloat(oPC, "DoRotatingCamera", fDirection);
     SetCameraMode(oPC, CAMERA_MODE_TOP_DOWN);
-    SetCameraFacing(fDirection, 4.0, 45.0, CAMERA_TRANSITION_TYPE_VERY_SLOW);
+    SetCameraFacing(fDirection, 2.0, 45.0, CAMERA_TRANSITION_TYPE_VERY_SLOW);
     DelayCommand(6.0, DoRotatingCamera(oPC));
     //its the clone not the PC that does things
     object oClone = GetLocalObject(oPC, "Clone");

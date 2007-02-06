@@ -236,6 +236,8 @@ void main()
     SetImmortal(oPC, FALSE);
     AssignCommand(oPC, SetIsDestroyable(TRUE));
     ForceRest(oPC);
+    // let the convoCC be used by someone else
+    DeleteLocalInt(GetModule(), "ccc_active");
     StackedLetoScript(sScript);
 
     RunStackedLetoScriptOnObject(oPC, "OBJECT", "SPAWN");

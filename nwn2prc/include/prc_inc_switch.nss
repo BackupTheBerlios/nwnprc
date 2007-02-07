@@ -75,7 +75,7 @@
 
  /* This variable MUST be updated with every new version of the PRC!!! */
 
- const string PRC_VERSION                           = "PRC 3.1 Alpha 5";
+ const string PRC_VERSION                           = "PRC2 1.0 Alpha 1";
 
 
 /******************************************************************************\

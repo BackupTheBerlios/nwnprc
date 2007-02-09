@@ -500,6 +500,9 @@ struct utterance EvaluateUtterance(object oTrueSpeaker, object oTarget, int nMet
     utter.nUtterDC += AddIgnoreSpellResistDC(oTrueSpeaker);
     // DC change for specific utterances
     utter.nUtterDC += AddUtteranceSpecificDC(oTrueSpeaker);
+    // THIS IS IN ONLY AS A FIX TO THE FACT THAT CUSTOM SKILLS ARE NOT AVAILABLE AT THE MOMENT
+    // IT IS TO BE REMOVED AS SOON AS THEY ARE - STRATOVARIUS
+    utter.nUtterDC -= GetHitDice(oTrueSpeaker) + 3;
     
     // Check the Law of Sequence. Returns True if the utterance is active
     if (CheckLawOfSequence(oTrueSpeaker, utter.nSpellId))

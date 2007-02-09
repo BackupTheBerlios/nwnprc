@@ -18848,7 +18848,7 @@ The bereft are a group of truenamers who devote themselves to mastering the word
 REQUIREMENTS:
 
 Alignment: Any neutral
-Skills: Truespeak 13 ranks.
+Skills: Truespeak 13 ranks. (NOTE: UNTIL CUSTOM SKILLS ARE FIXED, THIS REQUIREMENT IS REPLACED BY THE FEAT TRUENAME TRAINING AND REQUIRED LEVEL 10)
 
 ABILITIES:
 
@@ -18902,7 +18902,7 @@ Brimstone Speakers regard the secret language of Truenames as nothing less than 
 REQUIREMENTS:
 
 Alignment: Any Good
-Skills: Truespeak 10 ranks.
+Skills: Truespeak 10 ranks. (NOTE: UNTIL CUSTOM SKILLS ARE FIXED, THIS REQUIREMENT IS REPLACED BY THE FEAT TRUENAME TRAINING AND REQUIRED LEVEL 7)
 Spellcasting: Must be able to cast 4th level divine spells.
 Special: Clerics must have Fire or Good domains.
 

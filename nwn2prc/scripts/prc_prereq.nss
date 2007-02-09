@@ -256,11 +256,20 @@ void Brimstone(object oPC)
           SetLocalInt(oPC, "PRC_PrereqBrimstone", 1);
           int nBrim = GetHasFeat(FEAT_FIRE_DOMAIN_POWER, oPC) +
                       GetHasFeat(FEAT_GOOD_DOMAIN_POWER, oPC);
-          if (nBrim >= 1)
+          if (nBrim >= 1 /* THESE REQUIREMENTS ARE ADDED BECAUSE OF INABILITY TO DO CUSTOM SKILLS AT THE MOMENT*/ && GetHasFeat(FEAT_TRUENAME_TRAINING, oPC) && GetHitDice(oPC) >= 7)
           {
             SetLocalInt(oPC, "PRC_PrereqBrimstone", 0);
           }
      }
+}
+
+void Bereft(object oPC)
+{
+          SetLocalInt(oPC, "PRC_PrereqBereft", 1);
+          if (/* THESE REQUIREMENTS ARE ADDED BECAUSE OF INABILITY TO DO CUSTOM SKILLS AT THE MOMENT*/ GetHasFeat(FEAT_TRUENAME_TRAINING, oPC) && GetHitDice(oPC) >= 10)
+          {
+            SetLocalInt(oPC, "PRC_PrereqBereft", 0);
+          }
 }
 
 void ShiningBlade(object oPC)

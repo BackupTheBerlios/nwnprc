@@ -44,6 +44,9 @@ void main()
     }
     // Account for the law of resistance
     nDC += GetLawOfResistanceDCIncrease(oTrueSpeaker, nSpellId);
+    // THIS IS IN ONLY AS A FIX TO THE FACT THAT CUSTOM SKILLS ARE NOT AVAILABLE AT THE MOMENT
+    // IT IS TO BE REMOVED AS SOON AS THEY ARE - STRATOVARIUS
+    nDC -= GetHitDice(oTrueSpeaker) + 3;     
 
     if(GetIsSkillSuccessful(oTrueSpeaker, SKILL_TRUESPEAK, nDC))
     {

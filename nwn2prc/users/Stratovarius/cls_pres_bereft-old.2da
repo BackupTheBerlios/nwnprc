@@ -3,4 +3,3 @@
   LABEL     ReqType ReqParam1       ReqParam2 
 0 Truespeak SKILL   29              13        
 1 ScriptVar VAR     PRC_AllowBereft 0         
-2 ScriptVar VAR     PRC_PrereqBereft 0         

@@ -62,7 +62,7 @@ void main()
     int nAbove = GetIsAreaAboveGround(oArea);
     int nInside = GetIsAreaInterior(oArea);
     int nNatural = GetIsAreaNatural(oArea);
-    float fDur = 60.0f + (60.0f * (nCasterLevel));
+    float fDur = (60.0f * (nCasterLevel));
 
     if(nAbove == AREA_ABOVEGROUND && nInside == FALSE)
     {

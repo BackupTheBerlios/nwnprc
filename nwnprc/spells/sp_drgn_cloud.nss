@@ -62,15 +62,12 @@ void main()
     int nAbove = GetIsAreaAboveGround(oArea);
     int nInside = GetIsAreaInterior(oArea);
     int nNatural = GetIsAreaNatural(oArea);
-    float fDur = RoundsToSeconds(nCasterLevel);
+    float fDur = 60.0f + (60.0f * (nCasterLevel));
 
-    if(nAbove == AREA_ABOVEGROUND
-        && nInside == FALSE
-        //&& nNatural == TRUE //might be in a town, able to see clouds but its not natural
-        )
+    if(nAbove == AREA_ABOVEGROUND && nInside == FALSE)
     {
         effect eVis = EffectVisualEffect(VFX_FNF_SUMMONDRAGON);
-        ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc);
+        DelayCommand(60.0f, ApplyEffectAtLocation(DURATION_TYPE_INSTANT, eVis, lLoc));
         DelayCommand(60.0f, SummonDragonCloud(lLoc, fDur));
         //only pay the cost if cast sucessfully
         DoCorruptionCost(oPC, ABILITY_CONSTITUTION, d3(), 0);

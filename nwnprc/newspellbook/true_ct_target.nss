@@ -66,6 +66,7 @@ void main()
     // The stage is used to determine the active conversation node.
     // 0 is the entry node.
     int nStage = GetStage(oPC);
+    DoDebug("Dynaconvo Var: " + IntToString(nValue));
 
     // Check which of the conversation scripts called the scripts
     if(nValue == 0) // All of them set the DynConv_Var to non-zero value, so something is wrong -> abort
@@ -94,7 +95,7 @@ void main()
                 MarkStageSetUp(STAGE_QUICKSLOT_CHOICE, oPC); // This prevents the setup being run for this stage again until MarkStageNotSetUp is called for it
                 SetDefaultTokens(); // Set the next, previous, exit and wait tokens to default values
             }
-            if(nStage == STAGE_TARGET)
+            else if(nStage == STAGE_TARGET)
             {
                 // Set the header
                 SetHeader("Which inventory slot would you like to fill the quickslot with?");
@@ -162,7 +163,7 @@ void main()
             nStage = STAGE_TARGET;
             SetLocalInt(oPC, "TrueQuickSlotToFill", nChoice);
         }
-        if(nStage == STAGE_TARGET)
+        else if(nStage == STAGE_TARGET)
         {
             nStage = STAGE_CONFIRMATION;
             SetLocalInt(oPC, "TrueInventorySlotToTarget", nChoice);

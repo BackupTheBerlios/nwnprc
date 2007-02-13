@@ -16,7 +16,7 @@ void main()
         //dont continue this script, allow next HB to kick in instead
         return;
     }
-    else if(!GetIsObjectValid(oPC) && GetIsObjectValid(oMaster))
+    else if(!GetIsObjectValid(oPC) && !GetIsObjectValid(oMaster))
     {
         //master no longer exists
         RemoveCohortFromPlayer(oCohort, oPC);

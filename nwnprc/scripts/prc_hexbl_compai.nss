@@ -23,6 +23,11 @@ void main()
    	AssignCommand(OBJECT_SELF, ClearAllActions(TRUE));
    	AssignCommand(OBJECT_SELF, ActionForceMoveToObject(oMove, TRUE));
    }
+   if (!GetIsObjectValid(GetMaster()))
+   {
+   	AssignCommand(OBJECT_SELF, SetIsDestroyable(TRUE, FALSE, FALSE));
+        DestroyObject(OBJECT_SELF, 0.2);
+   }
    	
    
    AssignCommand(OBJECT_SELF, ClearAllActions(TRUE));

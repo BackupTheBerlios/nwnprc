@@ -2367,5 +2367,7 @@ int PRCGetPrestigeCasterBoost(object oCreature, int nSlot)
 		if (GetHasFeat(FEAT_ARCH_SPELLCST_SHDL  , oCreature)) return CLASS_TYPE_SHADOWLORD;
 		if (GetHasFeat(FEAT_ARCH_SPELLCST_HEXBLD, oCreature)) return CLASS_TYPE_HEXBLADE;
 		if (GetHasFeat(FEAT_ARCH_SPELLCST_DSKBLD, oCreature)) return CLASS_TYPE_DUSKBLADE;
-	}	
+	}
+	
+	return -1;
 }

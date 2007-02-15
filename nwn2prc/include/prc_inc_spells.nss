@@ -2279,3 +2279,93 @@ int PRCGetSpellLevel(object oCreature, int nSpell)
     //return innate level?
     return -1;
 }
+
+// returns the number of spellcasting levels boosted by the PrC
+int PRCGetPrestigeCasterLevels(object oCreature, int nClass)
+{
+        int nClassLevel = GetLevelByClass(nClass, oCreature);
+        // Find the proper bonus spell level table
+        string sTable = Get2DACache("classes", "BonusSpellcasterLevelTable", nClass);
+        int nCasterLevel = 0;
+    	int i;
+    	// 2das start at row 0, loop to get each one
+    	for(i=0;i<=nClassLevel;i++)
+    	{
+    	    // As we loop, add it all up
+    	    // Values are always either 0 or 1
+            nCasterLevel += StringToInt(Get2DACache(sTable, "GrantsBonusSpellcasterLevel", i));
+        }
+
+    //return CasterLevel
+    return nCasterLevel;
+}
+
+// Finds the class that the Prestige class boosts the spellcasting of
+// Slot is the Slot of the class to check. If its Slot #1, it returns, since that has to be a base class.
+int PRCGetPrestigeCasterBoost(object oCreature, int nSlot)
+{
+	int nClass = PRCGetClassByPosition(nSlot, oCreature);
+	
+	// If the class doesn't exist
+	if (nClass == CLASS_TYPE_INVALID) return -1;
+	else if (nClass == CLASS_TYPE_ACOLYTE)
+	{
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_WIZ   , oCreature)) return CLASS_TYPE_WIZARD;
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_SORC  , oCreature)) return CLASS_TYPE_SORCERER;
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_BARD  , oCreature)) return CLASS_TYPE_BARD;
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_ASSN  , oCreature)) return CLASS_TYPE_ASSASSIN;
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_SUEL  , oCreature)) return CLASS_TYPE_SUEL_ARCHANAMACH;
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_SHDL  , oCreature)) return CLASS_TYPE_SHADOWLORD;
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_HEXBLD, oCreature)) return CLASS_TYPE_HEXBLADE;
+		if (GetHasFeat(FEAT_AOTS_SPELLCST_DSKBLD, oCreature)) return CLASS_TYPE_DUSKBLADE;
+	}
+	else if (nClass == CLASS_TYPE_MASTER_HARPER)
+	{
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_WIZ   , oCreature)) return CLASS_TYPE_WIZARD;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_SORC  , oCreature)) return CLASS_TYPE_SORCERER;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_BARD  , oCreature)) return CLASS_TYPE_BARD;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_ASSN  , oCreature)) return CLASS_TYPE_ASSASSIN;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_SUEL  , oCreature)) return CLASS_TYPE_SUEL_ARCHANAMACH;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_SHDL  , oCreature)) return CLASS_TYPE_SHADOWLORD;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_HEXBLD, oCreature)) return CLASS_TYPE_HEXBLADE;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_DSKBLD, oCreature)) return CLASS_TYPE_DUSKBLADE;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_CLER  , oCreature)) return CLASS_TYPE_CLERIC;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_DRUID , oCreature)) return CLASS_TYPE_DRUID;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_PAL   , oCreature)) return CLASS_TYPE_PALADIN;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_RNG   , oCreature)) return CLASS_TYPE_RANGER;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_BLKG  , oCreature)) return CLASS_TYPE_BLACKGUARD;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_SOL   , oCreature)) return CLASS_TYPE_SOLDIER_OF_LIGHT;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_VASSAL, oCreature)) return CLASS_TYPE_VASSAL;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_KMC   , oCreature)) return CLASS_TYPE_KNIGHT_MIDDLECIRCLE;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_KCH   , oCreature)) return CLASS_TYPE_LEGENDARY_DREADNOUGHT;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_APAL  , oCreature)) return CLASS_TYPE_ANTI_PALADIN;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_VGL   , oCreature)) return CLASS_TYPE_VIGILANT;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_FVS   , oCreature)) return CLASS_TYPE_FAVOURED_SOUL;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_SOHEI , oCreature)) return CLASS_TYPE_SOHEI;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_HLR   , oCreature)) return CLASS_TYPE_HEALER;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_SOD   , oCreature)) return CLASS_TYPE_SLAYER_OF_DOMIEL;
+		if (GetHasFeat(FEAT_MHARP_SPELLCST_OCULAR, oCreature)) return CLASS_TYPE_OCULAR;		
+	}
+	else if (nClass == CLASS_TYPE_ARCTRICK)
+	{
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_WIZ   , oCreature)) return CLASS_TYPE_WIZARD;
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_SORC  , oCreature)) return CLASS_TYPE_SORCERER;
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_BARD  , oCreature)) return CLASS_TYPE_BARD;
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_ASSN  , oCreature)) return CLASS_TYPE_ASSASSIN;
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_SUEL  , oCreature)) return CLASS_TYPE_SUEL_ARCHANAMACH;
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_SHDL  , oCreature)) return CLASS_TYPE_SHADOWLORD;
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_HEXBLD, oCreature)) return CLASS_TYPE_HEXBLADE;
+		if (GetHasFeat(FEAT_ARCTRK_SPELLCST_DSKBLD, oCreature)) return CLASS_TYPE_DUSKBLADE;
+	}
+	else if (nClass == CLASS_TYPE_ARCHMAGE)
+	{
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_WIZ   , oCreature)) return CLASS_TYPE_WIZARD;
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_SORC  , oCreature)) return CLASS_TYPE_SORCERER;
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_BARD  , oCreature)) return CLASS_TYPE_BARD;
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_ASSN  , oCreature)) return CLASS_TYPE_ASSASSIN;
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_SUEL  , oCreature)) return CLASS_TYPE_SUEL_ARCHANAMACH;
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_SHDL  , oCreature)) return CLASS_TYPE_SHADOWLORD;
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_HEXBLD, oCreature)) return CLASS_TYPE_HEXBLADE;
+		if (GetHasFeat(FEAT_ARCH_SPELLCST_DSKBLD, oCreature)) return CLASS_TYPE_DUSKBLADE;
+	}	
+}

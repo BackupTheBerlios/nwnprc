@@ -155,12 +155,12 @@ GFXPATH                 = gfx
 INCLUDEPATH				= $(MAKEINCLUDEPATH)
 
 # Paths for the various folders in the NWN install directory.
-NWN_ERF                 = $(NWN_DIR)\erf
-NWN_HAK                 = $(NWN_DIR)\hak
-NWN_TLK                 = $(NWN_DIR)\tlk
-NWN_OVERRIDE            = $(NWN_DIR)\override
-NWN_DATABASE            = $(NWN_DIR)\database
-NWN_MODULES             = $(NWN_DIR)\modules
+NWN_ERF                 = $(MY_DOCS)\erf
+NWN_HAK                 = $(MY_DOCS)\hak
+NWN_TLK                 = $(MY_DOCS)\tlk
+NWN_OVERRIDE            = $(MY_DOCS)\override
+NWN_DATABASE            = $(MY_DOCS)\database
+NWN_MODULES             = $(MY_DOCS)\modules
 
 # Arguments for various rules
 !IFDEF DEBUG

@@ -2549,7 +2549,7 @@ void SetPRCSwitch(string sSwitch, int nState)
 
 void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
 {
-    if(!GetPRCSwitch(PRC_MULTISUMMON) || !bOverride)
+    if(!GetPRCSwitch(PRC_MULTISUMMON) && !bOverride)
         return;
     int i=1;
     int nCount = GetPRCSwitch(PRC_MULTISUMMON);
@@ -2564,7 +2564,7 @@ void MultisummonPreSummon(object oPC = OBJECT_SELF, int bOverride = FALSE)
     while(GetIsObjectValid(oSummon) && i < nCount)
     {
         AssignCommand(oSummon, SetIsDestroyable(FALSE, FALSE, FALSE));
-        AssignCommand(oSummon, DelayCommand(0.1, SetIsDestroyable(TRUE, FALSE, FALSE)));
+        AssignCommand(oSummon, DelayCommand(0.3, SetIsDestroyable(TRUE, FALSE, FALSE)));
         i++;
         oSummon = GetAssociate(ASSOCIATE_TYPE_SUMMONED, oPC, i);
     }

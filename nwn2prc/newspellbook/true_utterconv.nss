@@ -297,8 +297,13 @@ void main()
                 
                 int i, nUtterLevel;
                 string sFeatID;
-                for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+                DoDebug("true_utterconv: File End Class Power: " + IntToString(GetPRCSwitch(FILE_END_CLASS_POWER)));
+                // commented out because it returns 0 for the moment
+                //for(i = 0; i < GetPRCSwitch(FILE_END_CLASS_POWER) ; i++)
+                for(i = 0; i < 300 ; i++)
+                //while (300 > i)
                 {
+                    DoDebug("true_utterconv: i Value: " + IntToString(i));
                     nUtterLevel = StringToInt(Get2DACache(sPowerFile, "Level", i));
                     // Skip any powers of too low level
                     if(nUtterLevel < nUtterLevelToBrowse){
@@ -318,9 +323,11 @@ void main()
                      && (StringToInt(Get2DACache(sPowerFile, "Lexicon", i)) == nLexicon)// its part of the Lexicon we're browsing
                        )
                     {
+                    	DoDebug("true_utterconv: Adding Feat #: " + IntToString(i));
                         if(SORT) AddToTempList(oPC, GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", i))), i);
                         else     AddChoice(GetStringByStrRef(StringToInt(Get2DACache(sPowerFile, "Name", i))), i, oPC);
                     }
+                    //i += 1;
                 }
 
                 if(SORT) TransferTempList(oPC);

@@ -32,7 +32,7 @@ int CheckMissingUtterances(object oPC, int nClass, int nLexicon)
     {
         // Mark the class for which the PC is to gain Utterances and start the conversation
         SetLocalInt(oPC, "nClass", nClass);
-        StartDynamicConversation("true_utterconv", oPC, DYNCONV_EXIT_ALLOWED_SHOW_CHOICE, FALSE, TRUE, oPC);
+        StartDynamicConversation("true_utterconv", oPC, DYNCONV_EXIT_NOT_ALLOWED, FALSE, TRUE, oPC);
 
         return TRUE;
     }

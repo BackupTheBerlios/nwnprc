@@ -934,9 +934,10 @@ int X2PreSpellCastCode()
     if(nContinue)
     {
         int nClass = PRCGetLastSpellCastClass();
+        int nBookType = GetSpellbookTypeForClass(nClass);
 
-        // This should probably check if the caster is a spontaneous caster instead? - Ornedan
-        if(nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+        // check if the caster is a spontaneous caster
+        if(nBookType == SPELLBOOK_TYPE_SPONTANEOUS)
         {
 
             //Check for each Corrupt and Sanctified spell
@@ -971,18 +972,61 @@ int X2PreSpellCastCode()
             {
                 nContinue = FALSE;
             }
+        }    
+            
+        //Check for alignment restrictions
+        if(GetAlignmentGoodEvil(oCaster) == ALIGNMENT_EVIL)
+        {
+               if(nSpellID == SPELL_AYAILLAS_RADIANT_BURST ||
+               nSpellID == SPELL_BRILLIANT_EMANATION       ||
+               nSpellID == SPELL_DIVINE_INSPIRATION        ||
+               nSpellID == SPELL_DIAMOND_SPRAY             ||
+               nSpellID == SPELL_DRAGON_CLOUD              ||
+               nSpellID == SPELL_EXALTED_FURY              ||
+               nSpellID == SPELL_HAMMER_OF_RIGHTEOUSNESS   ||
+               nSpellID == SPELL_PHIERANS_RESOLVE          ||
+               nSpellID == SPELL_PHOENIX_FIRE              ||
+               nSpellID == SPELL_RAIN_OF_EMBERS            ||
+               nSpellID == SPELL_SICKEN_EVIL               ||
+               nSpellID == SPELL_STORM_OF_SHARDS           ||
+               nSpellID == SPELL_SUNMANTLE                 ||
+               nSpellID == SPELL_TWILIGHT_LUCK)
+               {
+                       nContinue = FALSE;
+               }
+        }       
+         
+        if(GetAlignmentGoodEvil(oCaster) == ALIGNMENT_GOOD)
+        {
+                if(nSpellID == SPELL_ABSORB_STRENGTH        ||
+                nSpellID == SPELL_APOCALYPSE_FROM_THE_SKY   ||
+                nSpellID == SPELL_CLAWS_OF_THE_BEBILITH     ||
+                nSpellID == SPELL_DEATH_BY_THORNS           ||
+                nSpellID == SPELL_EVIL_WEATHER              ||
+                nSpellID == SPELL_FANGS_OF_THE_VAMPIRE_KING ||
+                nSpellID == SPELL_LAHMS_FINGER_DARTS        ||
+                nSpellID == SPELL_POWER_LEECH               ||
+                nSpellID == SPELL_RAPTURE_OF_RUPTURE        ||
+                nSpellID == SPELL_RED_FESTER                ||
+                nSpellID == SPELL_ROTTING_CURSE_OF_URFESTRA ||
+                nSpellID == SPELL_SEETHING_EYEBANE          ||
+                nSpellID == SPELL_TOUCH_OF_JUIBLEX)
+                
+                {
+                        nContinue = FALSE;
+                }                        
         }
     }
     
     //Violet Rain check
     if(GetHasSpellEffect(SPELL_EVIL_WEATHER_VIOLET_RAIN, oCaster))
     {
-	    int nClass = PRCGetLastSpellCastClass();
-	    
-	    if(GetIsDivineClass(nClass, oCaster))
-	    {
-		    nContinue = FALSE;
-	    }
+            int nClass = PRCGetLastSpellCastClass();
+            
+            if(GetIsDivineClass(nClass, oCaster))
+            {
+                    nContinue = FALSE;
+            }
     }
 
     //---------------------------------------------------------------------------

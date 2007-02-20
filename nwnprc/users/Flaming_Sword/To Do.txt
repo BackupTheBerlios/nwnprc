@@ -22,48 +22,6 @@ http://www.wizards.com/default.asp?x=dnd/psm/20050830a
 http://www.wizards.com/default.asp?x=dnd/psm/20050930a
 http://www.wizards.com/default.asp?x=dnd/psm/20060217a
 
-Session Start (NWN:#prc-help): Wed Aug 23 19:33:25 2006
-[19:33] *** Initial topic: Official Help Channel of the Player Resource Consortium. Before asking, read the Manual: (Link: http://nwnprc.netgamers.co.uk/manual/index.html)http://nwnprc.netgamers.co.uk/manual/index.html | If no one replies immediately, wait, we'll get to your question sooner or later | (Link: http://ccg.dladventures.com/index.php/Prestige_Classes)http://ccg.dladventures.com/index.php/Prestige_Classes
-[19:33] *** #prc-help: Flaming_Sword @Primogenitor ~Annihilator-X17 Ariel HackyKid FrikaC PRCbot ~Stratovarius Corrodias 
-[19:33] *** Mode change "+o Flaming_Sword" for channel #prc-help by ChanServ.
-[19:33] *** #prc-help was created on Fri Jul 28 06:18:20 2006.
-[19:47] *** somniloquy has joined #prc-help.
-[19:56] *** Primogenitor has signed off IRC (Quit: Leaving).
-[20:36] *** fluffyamoeba|clone has joined #prc-help.
-[20:37] *** Primogenitor has joined #prc-help.
-[20:37] *** Mode change "+o Primogenitor" for channel #prc-help by ChanServ.
-[20:52] *** fluffyamoeba|clone has signed off IRC (Quit: Leaving).
-[22:43] *** SwoD has joined #prc-help.
-[22:58] *** Tenjac has joined #prc-help.
-[22:58] *** Mode change "+o Tenjac" for channel #prc-help by ChanServ.
-[23:15] *** _-Maximus-_ has joined #prc-help.
-[23:15] _-Maximus-_: hi all
-[23:15] Flaming_Sword: hi
-[23:16] Tenjac: lo
-[23:17] somniloquy: Ooh, people talking. I don't suppose there's anyone here now who knows much about spellswords, orc warlords and/or dragonsong lyrists? I have problems with all three classes...
-[23:17] Flaming_Sword: what kind of problems?
-[23:18] somniloquy: With the spellsword, I can cast a spell into my sword using the channel spell ability, but then when I hit things the spell doesn't get released.
-[23:18] somniloquy: With the orc warlord, I can't summon new orcs once my old ones die or are dismissed.
-[23:18] somniloquy: With the dragonsong lyrist, my dragonsong of strength disappears when I get out of its initial radius, when it should persist until I cast a spell or use a magical device...
-[23:19] Flaming_Sword: hmm...
-[23:20] Flaming_Sword: lemme have a look
-[23:20] Flaming_Sword: playing any module in particular?
-[23:20] somniloquy: The spellsword and orc warlord are both in A Time for Heroes.
-[23:20] somniloquy: The dragonsong lyrist is in the original campaign.
-[23:21] somniloquy: Oh, and the dragonsong lyrist worked fine in chapter 1... it was the transition to chapter 2 that broke his ability, it seems.
-[23:21] somniloquy: I've actually reloaded an earlier save game and taken a level of minstrel of the edge instead of dragonsong lyrist now, since it's a bit pointless being one if the main ability I took it for doesn't work :(
-[23:22] somniloquy: I was planning on going for bard/dragonsong lyrist/minstrel of the edge, but have changed my plans to bard/minstrel of the edge/song dragon disciple...
-[23:25] Flaming_Sword: what version of the prc?
-[23:25] somniloquy: Um... the latest... 3.1 alpha 2, is it?
-[23:25] Flaming_Sword: that's the one
-[23:25] somniloquy: I upgraded to the alpha when the orc warlord failed to work for me in the latest stable release.
-[23:30] _-Maximus-_: We've got a problem with database (2da cache) - it seems our module is trying to create new db.... is it possible? (we have MySQL over NWNXDB)
-[23:31] * Flaming_Sword doesn't know jack about databases :(
-[23:38] Stratovarius: It is if you donthave the DB in the right place
-[23:38] Stratovarius: or are using a MySQL DB without caching it
-[23:48] Flaming_Sword: at first glance, i have no idea what's causing those bugs, i'll copy down the chat logs to look at them later
+modify GetSpellUses() for spellid, metamagic
 
 
-3.1 BUGS
-
-Fav. soul vs. suel spellbook crash

@@ -10524,7 +10524,7 @@ Armor Skin, Damage Reduction, Devastating Critical (whip), Epic Toughness, Epic 
   <entry id="47446" lang="en" sex="m">Quickselect 3</entry>
   <entry id="47447" lang="en" sex="m">Type of Feat: General
   Prerequisite: Can only take this feat at 1st-level.
-  Specifics: This set of feats allows the player to set the number of spellfire levels expended in the next use of a spellfire ability.
+  Specifics: This set of feats allows the player to set the number of spellfire levels expended in the next use of a spellfire ability. To change the value of a quickselect, adjust the current setting to the value you wish to store, then use Change Quickselect, then use the quickselect in which to store your setting.
   Use: Selected.</entry>
   <entry id="47448" lang="en" sex="m">Spellfire Channeler</entry>
   <entry id="47449" lang="en" sex="m">Spellfire Channelers</entry>

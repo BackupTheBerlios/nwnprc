@@ -28,7 +28,7 @@ const string TRUE_DEBUG_IGNORE_CONSTRAINTS = "TRUE_DEBUG_IGNORE_CONSTRAINTS";
  * means the variable is unitialised.
  */
 const string PRC_UTTERANCE_TOKEN_VAR  = "PRC_UtteranceToken";
-const string PRC_UTTERANCE_TOKEN_NAME = "PRC_UTTERTOKEN";
+const string PRC_UTTERANCE_TOKEN_NAME = "prc_uttertoken";
 const float  PRC_UTTERANCE_HB_DELAY   = 0.5f;
 
 

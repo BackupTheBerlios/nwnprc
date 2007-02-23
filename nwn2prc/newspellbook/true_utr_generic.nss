@@ -5,5 +5,7 @@
 
 void main()
 {
-    UseUtterance(GetPowerFromSpellID(GetSpellId()), CLASS_TYPE_TRUENAMER);
+	int nSpellId = PRCGetSpellId();
+	DoDebug("Utterance SpellId: " + IntToString(nSpellId));
+	UseUtterance(GetPowerFromSpellID(nSpellId), CLASS_TYPE_TRUENAMER);
 }

@@ -5,5 +5,5 @@
 
 void main()
 {
-    UseUtterance(GetPowerFromSpellID(PRCGetSpellId()), CLASS_TYPE_TRUENAMER);
+    UseUtterance(GetPowerFromSpellID(GetSpellId()), CLASS_TYPE_TRUENAMER);
 }

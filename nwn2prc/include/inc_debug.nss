@@ -91,8 +91,6 @@ void DoDebug(string sString, object oAdditionalRecipient = OBJECT_INVALID)
     SendMessageToPC(GetLocalObject(GetModule(), "PRC_Debug_FirstPC"), "<c´jŸ>" + sString + "</c>");
     if(oAdditionalRecipient != OBJECT_INVALID)
         SendMessageToPC(oAdditionalRecipient, "<c´jŸ>" + sString + "</c>");
-    // Doubled up because WrieTimestamped appears not to work in NWN2
-    PrintString(sString);
     WriteTimestampedLogEntry(sString);
 }
 

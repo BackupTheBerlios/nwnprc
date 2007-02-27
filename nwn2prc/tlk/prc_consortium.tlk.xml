@@ -18111,6 +18111,39 @@ Special Abilities:
 - Hide in Plain Sight: Brownies are able to use the Hide skill even while being observed.
 - Spell-Like Abilities: 1/day - Confusion. Caster level 7th plus character level. The DC is Charisma-based.
 - Fey: Brownies are considered Fey for the purpose of spells.</entry>
+  <entry id="49750" lang="en" sex="m">(PRESTIGE CLASS)
+Necromancy is usually a poor choice for arcane spellcasters. Those who really want to master the deathless arts almost always pursue divine means. However, an alternative exists for those who desire power over undead, without losing too much of their arcane power. Enter the pale master, who draws on a font of special lore that provides a macabre power all its own.
+
+- Hit Die: d6.
+- Proficiencies: A pale master does not gain any additional weapon or armor proficiencies.
+- Skill Points: 2 + Int Modifier.
+
+REQUIREMENTS:
+
+Arcane Spellcasting: Level 3 or higher.
+Feats: Skill Focus: Lore
+Skills: Lore 8 ranks.
+Alignment: Any non good
+
+
+ABILITIES:
+
+Level
+1: Bone Skin I - Add +2 to AC. This increases by another +2 for every four levels of Pale Master.
+2: Animate Dead - Once per day spell-like ability.
+3: Darkvision - Gain Darkvision ability.
+4: Summon Undead - Twice per day spell-like ability summons an undead creature.
+5: Deathless Vigor - +3 Hit Points per level
+6: Undead Graft I - Gains undead arm that twice per day can paralyze.
+7: Tough as Bone - Immune to hold, paralyze, and stunning.
+8: Undead Graft II - Paralyze touch can be used three times a day.
+9: Summon Greater Undead - Once per day spell-like ability summons a powerful undead.
+10: Deathless Mastery - Immune to critical hits.
+  Deathless Master Touch - Touch of the undead arm instantly kills (DC 17).
+
+BONUS SPELLS
+
+Upon reaching level 1, 3, 5, 7, and 9 the character gains new spells per day as if he had also gained a level in his highest caster class (bard, sorcerer or wizard). He does not learn any new spells through this ability, however.</entry>
   <entry id="49999" lang="en" sex="m">**** 50,000 - 50,500 reserved for Race Pack Feats ****</entry>
   <entry id="50000" lang="en" sex="m">Light Sensitivity</entry>
   <entry id="50001" lang="en" sex="m">Type of Feat: Racial

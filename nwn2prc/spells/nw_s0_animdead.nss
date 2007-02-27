@@ -55,19 +55,16 @@ void main()
     {
         // Skeleton
 		eSummon = EffectSummonCreature("c_skeleton", VFX_FNF_SUMMON_UNDEAD);
-        nHD = 1;
     }
     else if ((nCasterLevel >= 6) && (nCasterLevel <= 9))
     {
         // Zombie
 		eSummon = EffectSummonCreature("c_zombie", VFX_FNF_SUMMON_UNDEAD);
-        nHD = 2;
     }
     else
     {
         // Skeleton Warrior
 		eSummon = EffectSummonCreature("c_skeletonwarrior", VFX_FNF_SUMMON_UNDEAD);
-        nHD = 3;
     }
 
     //Apply the summon visual and summon the two undead.

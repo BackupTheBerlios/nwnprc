@@ -42,6 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLevel;
+    effect eSummon;
     nDuration = 24;
     string sResRef;
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
@@ -51,15 +52,23 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
         nDuration = nDuration *2;   //Duration is +100%
     }
     //Set the summoned undead to the appropriate template based on the caster level
+    //Set the summoned undead to the appropriate template based on the caster level
     if (nCasterLevel <= 11)
-        sResRef = "NW_S_GHOUL";
+    {
+        eSummon = EffectSummonCreature("c_ghoul",VFX_HIT_SPELL_SUMMON_CREATURE);
+    }
     else if ((nCasterLevel >= 12) && (nCasterLevel <= 13))
-        sResRef = "NW_S_GHAST";
+    {
+        eSummon = EffectSummonCreature("c_ghast",VFX_HIT_SPELL_SUMMON_CREATURE);
+    }
     else if ((nCasterLevel >= 14) && (nCasterLevel <= 15))
-        sResRef = "NW_S_WIGHT";
+    {
+        eSummon = EffectSummonCreature("c_mummy",VFX_HIT_SPELL_SUMMON_CREATURE); 
+    }
     else if ((nCasterLevel >= 16))
-        sResRef = "NW_S_SPECTRE";
-    effect eSummon = EffectSummonCreature(sResRef,VFX_FNF_SUMMON_UNDEAD);
+    {
+        eSummon = EffectSummonCreature("c_mummylord",VFX_HIT_SPELL_SUMMON_CREATURE);
+    }
 
     //Apply VFX impact and summon effect
     MultisummonPreSummon();

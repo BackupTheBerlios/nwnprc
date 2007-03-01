@@ -42,6 +42,7 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     int nMetaMagic = PRCGetMetaMagicFeat();
     int nCasterLevel = PRCGetCasterLevel(OBJECT_SELF);
     int nDuration = nCasterLevel;
+    effect eSummon;
     nDuration = 24;
     string sResRef;
     //effect eVis = EffectVisualEffect(VFX_FNF_SUMMON_UNDEAD);
@@ -52,14 +53,21 @@ SetLocalInt(OBJECT_SELF, "X2_L_LAST_SPELLSCHOOL_VAR", SPELL_SCHOOL_NECROMANCY);
     }
     //Determine undead to summon based on level
     if (nCasterLevel <= 15)
-        sResRef = "NW_S_VAMPIRE";
+    {
+        eSummon = EffectSummonCreature("c_shadow",VFX_HIT_SPELL_SUMMON_CREATURE);
+    }
     else if ((nCasterLevel >= 16) && (nCasterLevel <= 17))
-        sResRef = "NW_S_DOOMKGHT";
+    {
+        eSummon = EffectSummonCreature("c_wraith",VFX_HIT_SPELL_SUMMON_CREATURE);
+    }
     else if ((nCasterLevel >= 18) && (nCasterLevel <= 19))
-        sResRef = "NW_S_LICH";
+    {
+        eSummon = EffectSummonCreature("c_vampirem",VFX_HIT_SPELL_SUMMON_CREATURE);
+    }
     else
-        sResRef = "NW_S_MUMCLERIC";
-    effect eSummon = EffectSummonCreature(sResRef,VFX_FNF_SUMMON_UNDEAD);
+    {
+        eSummon = EffectSummonCreature("c_vampireelite",VFX_HIT_SPELL_SUMMON_CREATURE);
+    }
     //Apply summon effect and VFX impact.
     MultisummonPreSummon();
     if(GetPRCSwitch(PRC_CREATE_UNDEAD_UNCONTROLLED))

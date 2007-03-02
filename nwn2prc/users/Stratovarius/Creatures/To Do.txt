@@ -1,1 +1,2 @@
 Ankheg: Acid Spit attack.
+Bulette: Use scripting to alter its # of attacks a round, and correct its claw damage.

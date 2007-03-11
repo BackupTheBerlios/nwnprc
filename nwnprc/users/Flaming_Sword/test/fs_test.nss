@@ -2,6 +2,7 @@
 
 void main()
 {
+    /*
     int i;
     object oTest;
     for(i = 0; i <= 9; i++)
@@ -12,4 +13,7 @@ void main()
         DoDebug("Resref: " + GetResRef(oTest));
         DoDebug(IntToString(array_get_size(oTest, GetTag(oTest))));
     }
+    */
+    object oPC = GetFirstPC();
+    DoDebug(IntToString(PRCGetHasSpell(368, oPC)));
 }

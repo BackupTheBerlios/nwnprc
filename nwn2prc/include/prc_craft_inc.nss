@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 25, 2006
+    Modified: Mar 11, 2007
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -1161,13 +1161,14 @@ int GetItemArmourCheckPenalty(object oItem)
 string GetCrafting2DA(object oItem)
 {
     int nBase = GetBaseItemType(oItem);
+    int nMaterial = StringToInt(GetStringLeft(GetTag(oItem), 3));
     if(((nBase == BASE_ITEM_ARMOR) ||
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
         (nBase == BASE_ITEM_TOWERSHIELD))
         )
     {
-        if(GetItemBaseAC(oItem) == 0) return "craft_wondrous";
+        if((GetItemBaseAC(oItem) == 0) && !(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)) return "craft_wondrous";
         return "craft_armour";
     }
 
@@ -1200,6 +1201,7 @@ string GetCrafting2DA(object oItem)
 int GetCraftingFeat(object oItem)
 {
     int nBase = GetBaseItemType(oItem);
+    int nMaterial = StringToInt(GetStringLeft(GetTag(oItem), 3));
     if(((nBase == BASE_ITEM_ARMOR) ||
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
@@ -1211,7 +1213,7 @@ int GetCraftingFeat(object oItem)
         )
         )
     {
-        if(GetItemBaseAC(oItem) == 0) return FEAT_CRAFT_WONDROUS;
+        if((GetItemBaseAC(oItem) == 0) && !(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)) return FEAT_CRAFT_WONDROUS;
         return FEAT_CRAFT_ARMS_ARMOR;
     }
 
@@ -1733,9 +1735,9 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
     }
     if(nMighty > 0) sPrefix += "Composite ";
 
-    SetFirstName(oNew, sPrefix + GetName(oNew));
     if((nBaseItemType == BASE_ITEM_ARMOR) && (nBaseAC == 0))
         SetFirstName(oNew, "Robe");
+    SetFirstName(oNew, sPrefix + GetName(oNew));
 
     return oNew;
 }

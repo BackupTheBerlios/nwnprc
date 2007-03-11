@@ -6,7 +6,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 25, 2006
+    Modified: Mar 11, 2007
 
     LIMITATIONS:
         ITEM_PROPERTY_BONUS_FEAT
@@ -418,7 +418,7 @@ void main()
             SendMessageToPC(oPC, "Crafting has been disabled.");
             return;
         }
-        if(GetLocalInt(GetArea(oPC), PRC_AREA_DISABLE_CRAFTING))
+        if(GetLocalInt(GetArea(oPC), PRC_AREA_DISABLE_CRAFTING) != GetPRCSwitch(PRC_AREA_DISABLE_CRAFTING_INVERT))
         {
             SendMessageToPC(oPC, "Crafting has been disabled in this area.");
             return;
@@ -757,6 +757,8 @@ void main()
                             AddChoice(ActionString("Deep Crystal"), PRC_CRAFT_FLAG_DEEP_CRYSTAL, oPC);
                         */
                     }
+                    else if((nBase == BASE_ITEM_ARMOR) && (!nAC))
+                        AddChoice(ActionString("Masterwork"), PRC_CRAFT_FLAG_MASTERWORK, oPC);
                     MarkStageSetUp(nStage);
                     break;
                 }

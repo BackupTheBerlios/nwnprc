@@ -1517,12 +1517,19 @@ const string PRC_DISABLE_CRAFT                       = "PRC_DISABLE_CRAFT";
 const string PRC_DISABLE_CRAFT_EPIC                  = "PRC_DISABLE_CRAFT_EPIC";
 
 /*
- * set this on an area to disable crafting within that area
+ * Set this on an area to disable crafting within that area
  * Best used in conjunction with the time elapsing and no-rest
  * This applies to both PRC Crafting and biowares scroll/wand/potions
  */
 const string PRC_AREA_DISABLE_CRAFTING               = "PRC_AREA_DISABLE_CRAFTING";
 
+/*
+ * Inverts the behavior of previous switch
+ * Will disable crafting on all areas BUT ones with the
+ * PRC_AREA_DISABLE_CRAFTING switch set
+ * Only works for new crafting system
+ */
+const string PRC_AREA_DISABLE_CRAFTING_INVERT        = "PRC_AREA_DISABLE_CRAFTING_INVERT";
 
 /*
  * Multiply the delay (in seconds) after the creation of an item in which a PC
@@ -1668,7 +1675,7 @@ const string PRC_CRAFTING_TIME_SCALE                 = "PRC_CRAFTING_TIME_SCALE"
  *
  * PRC_CRAFT_DISABLE_<name of crafting 2da file>_<line number of property>
  *
- * where the 2da files are named craft_*
+ * where the 2da files are named craft_* (lower case)
  */
 
 /******************************************************************************\

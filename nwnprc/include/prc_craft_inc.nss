@@ -5,7 +5,7 @@
 
     By: Flaming_Sword
     Created: Jul 12, 2006
-    Modified: Sept 25, 2006
+    Modified: Mar 11, 2007
 
     GetItemPropertySubType() returns 0 or 65535, not -1
         on no subtype as in Lexicon
@@ -606,13 +606,13 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                 {
                     case 85:
                     {
-                        bOR = (PRCGetHasSpell(SPELL_DETECT_UNDEAD) &&
-                                PRCGetHasSpell(SPELL_FIREBALL) &&
-                                PRCGetHasSpell(SPELL_FLAME_WEAPON) &&
-                                PRCGetHasSpell(SPELL_LIGHT) &&
-                                PRCGetHasSpell(SPELL_PRISMATIC_SPRAY) &&
-                                PRCGetHasSpell(SPELL_PROTECTION_FROM_ELEMENTS) &&
-                                PRCGetHasSpell(SPELL_WALL_OF_FIRE));
+                        bOR = (PRCGetHasSpell(SPELL_DETECT_UNDEAD, oPC) &&
+                                PRCGetHasSpell(SPELL_FIREBALL, oPC) &&
+                                PRCGetHasSpell(SPELL_FLAME_WEAPON, oPC) &&
+                                PRCGetHasSpell(SPELL_LIGHT, oPC) &&
+                                PRCGetHasSpell(SPELL_PRISMATIC_SPRAY, oPC) &&
+                                PRCGetHasSpell(SPELL_PROTECTION_FROM_ELEMENTS, oPC) &&
+                                PRCGetHasSpell(SPELL_WALL_OF_FIRE, oPC));
                         if(bDecrement)
                         {
                             PRCDecrementRemainingSpellUses(oPC, SPELL_DETECT_UNDEAD);
@@ -629,30 +629,30 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
                 }
             }
             nSpell1 = StringToInt(Get2DACache(sFile, "Spell1", nLine));
-            if(!PRCGetHasSpell(nSpell1))
+            if(!PRCGetHasSpell(nSpell1, oPC))
                 return FALSE;
         }
         if(nSpellPattern & 2)
         {
             nSpell2 = StringToInt(Get2DACache(sFile, "Spell2", nLine));
-            if(!PRCGetHasSpell(nSpell2))
+            if(!PRCGetHasSpell(nSpell2, oPC))
                 return FALSE;
         }
         if(nSpellPattern & 4)
         {
             nSpell3 = StringToInt(Get2DACache(sFile, "Spell3", nLine));
-            if(!PRCGetHasSpell(nSpell3))
+            if(!PRCGetHasSpell(nSpell3, oPC))
                 return FALSE;
         }
         if(nSpellPattern & 8)
         {
             nSpellOR1 = StringToInt(Get2DACache(sFile, "SpellOR1", nLine));
-            if(!PRCGetHasSpell(nSpellOR1))
+            if(!PRCGetHasSpell(nSpellOR1, oPC))
                 if(nSpellPattern & 16)
                 {
                     bOR = TRUE;
                     nSpellOR2 = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
-                    if(!PRCGetHasSpell(nSpellOR2))
+                    if(!PRCGetHasSpell(nSpellOR2, oPC))
                         return FALSE;
                 }
                 else
@@ -661,7 +661,7 @@ int CheckCraftingSpells(object oPC, string sFile, int nLine, int bDecrement = FA
         else if(nSpellPattern & 16)
         {
             nSpellOR2 = StringToInt(Get2DACache(sFile, "SpellOR2", nLine));
-            if(!PRCGetHasSpell(nSpellOR2))
+            if(!PRCGetHasSpell(nSpellOR2, oPC))
                 return FALSE;
         }
         if(bDecrement)
@@ -1161,13 +1161,14 @@ int GetItemArmourCheckPenalty(object oItem)
 string GetCrafting2DA(object oItem)
 {
     int nBase = GetBaseItemType(oItem);
+    int nMaterial = StringToInt(GetStringLeft(GetTag(oItem), 3));
     if(((nBase == BASE_ITEM_ARMOR) ||
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
         (nBase == BASE_ITEM_TOWERSHIELD))
         )
     {
-        if(GetItemBaseAC(oItem) == 0) return "craft_wondrous";
+        if((GetItemBaseAC(oItem) == 0) && !(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)) return "craft_wondrous";
         return "craft_armour";
     }
 
@@ -1200,6 +1201,7 @@ string GetCrafting2DA(object oItem)
 int GetCraftingFeat(object oItem)
 {
     int nBase = GetBaseItemType(oItem);
+    int nMaterial = StringToInt(GetStringLeft(GetTag(oItem), 3));
     if(((nBase == BASE_ITEM_ARMOR) ||
         (nBase == BASE_ITEM_SMALLSHIELD) ||
         (nBase == BASE_ITEM_LARGESHIELD) ||
@@ -1211,7 +1213,7 @@ int GetCraftingFeat(object oItem)
         )
         )
     {
-        if(GetItemBaseAC(oItem) == 0) return FEAT_CRAFT_WONDROUS;
+        if((GetItemBaseAC(oItem) == 0) && !(nMaterial & PRC_CRAFT_FLAG_MASTERWORK)) return FEAT_CRAFT_WONDROUS;
         return FEAT_CRAFT_ARMS_ARMOR;
     }
 
@@ -1732,9 +1734,9 @@ object MakeMyItem(object oPC, int nBaseItemType, int nBaseAC = -1, int nMaterial
     }
     if(nMighty > 0) sPrefix += "Composite ";
 
-    SetName(oNew, sPrefix + GetName(oNew));
     if((nBaseItemType == BASE_ITEM_ARMOR) && (nBaseAC == 0))
         SetName(oNew, "Robe");
+    SetName(oNew, sPrefix + GetName(oNew));
 
     return oNew;
 }

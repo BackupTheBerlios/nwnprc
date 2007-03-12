@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////
-//  Necromental Energy Drain touch
+//  Necromental Energy Drain Touch Onhit
 //  prc_c_nmtouch.nss
 ////////////////////////////////////////////////
 /* Living creatures hit by a necromental's natural
@@ -17,3 +17,37 @@ hit points last for up to 1 hour.
 // Author: Tenjac
 // Date: 3/12/07
 ////////////////////////////////////////////////
+
+#include "spinc_common"
+
+void main()
+{
+        object oItem = OBJECT_SELF; // The item casting triggering this spellscript
+        object oSpellTarget = PRCGetSpellTargetObject(); // The one being hit. 
+        object oSpellOrigin = OBJECT_SELF; // The one wielding the weapon.
+        
+        int nAlreadyUsed = GetLocalInt(oItem, "PRC_NECROMENT_TOUCH_PRIOR_USE");
+        
+        if(nAlreadyUsed == 1)
+        {
+                if(DEBUG) DoDebug("prc_c_nmtouch.nss - Abort for prior use in round."
+                return;
+        }
+        
+        else
+        {
+                //Set int
+                SetLocalInt(oItem, "PRC_NECROMENT_TOUCH_PRIOR_USE", 1);
+                
+                //Schedule deletion
+                DelayCommand(6.0f, DeleteLocalInt(oItem, "PRC_NECROMENT_TOUCH_PRIOR_USE"));
+                
+                //Deal level drain
+                SPApplyEffectToObject(DURATION_TYPE_PERMANENT, EffectNegativeLevel(1), oSpellTarget);
+                
+                //Heal self for 5
+                ApplyEffectToObject(DURATION_TYPE_INSTANT, EffectTemporaryHitpoints(5), oSpellOrigin);
+        }
+}
+                
+        

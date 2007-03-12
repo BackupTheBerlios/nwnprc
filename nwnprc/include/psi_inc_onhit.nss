@@ -40,8 +40,10 @@ void SweepingStrike(object oCaster, object oTarget)
  		effect eVis = EffectVisualEffect(VFX_IMP_STUN);
  		object oWeap = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oCaster);
 		PerformAttack(oAreaTarget, oCaster, eVis, 0.0, 0, 0, GetWeaponDamageType(oWeap), "Sweeping Strike Hit", "Sweeping Strike Miss");
-
-		// End the loop
+		if(DEBUG) DoDebug("psi_onhit: Sweeping Strike Loop Running");
+		// End the loop, and prevent the death attack
+		SetLocalInt(oCaster, "SweepingStrikeDelay", TRUE);
+    		DelayCommand(2.0, DeleteLocalInt(oCaster, "SweepingStrikeDelay"));
 		nValidTarget = TRUE;
             }
 

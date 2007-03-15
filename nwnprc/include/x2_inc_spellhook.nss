@@ -1210,7 +1210,7 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
     if(nContinue && GetLevelByClass(CLASS_TYPE_HEALER, oCaster) >= 8)
     {
         object oComp = GetLocalObject(oCaster, "HealerCompanion");
-        ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
+        DelayCommand(3.0, ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp));
     }
 
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))

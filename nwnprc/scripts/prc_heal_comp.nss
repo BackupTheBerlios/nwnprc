@@ -5,9 +5,9 @@ Specifics: Gain a companion
 Use: Selected.
 */
 
-const int HEALER_COMP_UNICORN = -1;
-const int HEALER_COMP_LAMMASU = -1;
-const int HEALER_COMP_ANDRO   = -1;
+const int HEALER_COMP_UNICORN = 1845;
+const int HEALER_COMP_LAMMASU = 1846;
+const int HEALER_COMP_ANDRO   = 1847;
 
 #include "prc_alterations"
 

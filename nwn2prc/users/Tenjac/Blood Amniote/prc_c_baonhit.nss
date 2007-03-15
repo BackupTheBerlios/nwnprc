@@ -26,5 +26,8 @@ void main()
         object oSpellTarget = PRCGetSpellTargetObject(); // On a weapon: The one being hit.
         object oSpellOrigin  = OBJECT_SELF; // On a weapon: The one wielding the weapon. 
         
+        //deal 1d4 Con
+        ApplyAbilityDamage(oSpellTarget, ABILITY_CONSTITUION, d4(1), DURATION_TYPE_TEMPORARY, TRUE, -1.0);        
+}
         
       

@@ -1193,7 +1193,7 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
         && (PRCGetLastSpellCastClass() == CLASS_TYPE_WIZARD ||
             PRCGetLastSpellCastClass() == CLASS_TYPE_SORCERER)
         && !GetLocalInt(oCaster, "PRC_SPELL_HOLD")     //holding the charge doesnt work
-        && Get2DACache("spells", "Range", nSpellID) == "T"
+        && Get2DACache("spells", "Range", nSpellID) == "P"
         && !GetIsObjectValid(oSpellCastItem)     // no item spells
         && nSpellID != SPELL_SHAPECHANGE         // no polymorphs
         && nSpellID != SPELL_POLYMORPH_SELF
@@ -1210,7 +1210,21 @@ if(DEBUG) DoDebug("x2_inc_spellhook pre-X2CastOnItemWasAllowed "+IntToString(nCo
     if(nContinue && GetLevelByClass(CLASS_TYPE_HEALER, oCaster) >= 8)
     {
         object oComp = GetLocalObject(oCaster, "HealerCompanion");
-        DelayCommand(3.0, ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp));
+        int nHealCount = GetLocalInt(oCaster, "HealerCompanionSpell");
+        int nCompCount = GetLocalInt(oComp, "HealerCompanionSpell");        
+        if(DEBUG) DoDebug("x2_inc_spellhook: nHealCount: " + IntToString(nHealCount));
+        if(DEBUG) DoDebug("x2_inc_spellhook: nCompCount: " + IntToString(nCompCount));
+        if(DEBUG) DoDebug("x2_inc_spellhook: oCaster Name: " + GetName(oCaster));
+        // Allow the spell twice, once to affect target and once to affect companion
+        
+        if (GetIsObjectValid(oComp))
+        {
+        	SetLocalInt(oCaster, "HealerCompanionSpell", nHealCount + 1);
+        	SetLocalInt(oComp, "HealerCompanionSpell", nCompCount + 1);
+        	DelayCommand(3.0, DeleteLocalInt(oCaster, "HealerCompanionSpell"));
+        	DelayCommand(3.0, DeleteLocalInt(oComp, "HealerCompanionSpell"));
+        	if (nHealCount < 2 ) ActionCastSpell(nSpellID, PRCGetCasterLevel(), 0, PRCGetSaveDC(oComp, oComp, nSpellID), PRCGetMetaMagicFeat(), CLASS_TYPE_INVALID, FALSE, TRUE, oComp);
+        }
     }
 
     if(GetPRCSwitch(PRC_PW_SPELL_TRACKING))

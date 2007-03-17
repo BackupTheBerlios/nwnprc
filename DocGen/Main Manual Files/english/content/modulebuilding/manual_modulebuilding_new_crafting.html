@@ -257,7 +257,11 @@ To disable a specific item/special ability in PnP crafting, set a switch with th
 <b>PRC_CRAFT_DISABLE_&lt;name of crafting 2da file&gt;_&lt;line number of property&gt;</b><p>
 <a href="#top">Back to Top</a><p><hr><p>
 <a name="2da"><b>2DAs</b></a><p>
-When adding lines to 2das used, modify prc_inc_fileend.nss to allow the scripts to read the required number of lines.<p>
+When adding lines to 2das used, modify SetDefaultFileEnds() within prc_inc_switch.nss to allow the scripts to read the required number of lines. Code will be in the form:<p>
+<tt>
+&nbsp;&nbsp;&nbsp;&nbsp;SetPRCSwitch("PRC_FILE_END_&lt;file name&gt;", &lt;number&gt;);<p>
+</tt>
+The file name will be in alphabetical order and in lower case.<p>
 <b>craft_*.2da</b><p>
 Used to store items/special abilities and their prerequisites<p>
 <table cellpadding="0" cellspacing="0" align="center" border="1" class="table_contenttable">

@@ -31,3 +31,5 @@
 27 IaijutsuFocus  16826112 16826113    is_iaijutsu    0         CHA        0                 1                ****     ****  SKILL_IAIJUTSU_FOCUS   0            
 28 Jump           16826011 16826012    is_jump        1         STR        1                 1                ****     ****  SKILL_JUMP             0            
 29 Truespeak      16828470 16828471    is_truespeak   0         INT        0                 1                ****     ****  SKILL_TRUESPEAK        0            
+30 "Sense Motive" 16829311 16829312    isk_sensemtv   1         WIS        0                 1                ****     ****  SKILL_SENSE_MOTIVE     0            
+31 "Martial Lore" 16829313 16829314    isk_martlore   0         INT        0                 0                ****     ****  SKILL_MARTIAL_LORE     0            

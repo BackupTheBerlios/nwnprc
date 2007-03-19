@@ -1271,7 +1271,7 @@ Spells: Must be able to cast at least 3rd level Arcane spells.
 ABILITIES:
 
 Level
-1: Ranged Legerdemain - Disarm Trap &amp; Pick Lock at 30' range, once per day.
+1: Ranged Legerdemain - Trap &amp; Pick Lock at 30' range, once per day.
 2: Sneak Attack 1d6.
 3: Impromptu Sneak Attack - Arcane Trickster causes a sneak attack on target, can be used once per day.
 4: Sneak Attack 2d6.
@@ -25101,6 +25101,23 @@ Prerequisite: Shadowblade 10
 Description: At 10th level, you can use your unseen weapon abilities as a free action, though you are still limited to one use per day per class level.</entry>
   <entry id="52093" lang="en" sex="m">Lesser Amulet of the Silver Tongue</entry>
   <entry id="52094" lang="en" sex="m">Greater Amulet of the Silver Tongue</entry>
+  <entry id="52095" lang="en" sex="m">Sense Motive</entry>
+  <entry id="52096" lang="en" sex="m">Ability:Wisdom
+Requires Training: No
+Classes: All
+
+A successful check lets you avoid being bluffed. You can also use this skill to determine when “something is up” (that is, something odd is going on) or to assess someone’s trustworthiness.
+
+If you have 5 or more ranks in Sense Motive, you get a +2 bonus on Persuade checks.</entry>
+  <entry id="52097" lang="en" sex="m">Martial Lore
+</entry>
+  <entry id="52098" lang="en" sex="m">Ability: Intelligence.
+Requires Training: Yes.
+Classes: Crusader, Swordsage, Warblade, Bloodclaw Master, Bloodstorm Blade, Deepstone Sentinel, Eternal Blade, Jade Phoenix Mage, Master of Nine, Rudy Knight Vindicator, Shadow Sun Ninja.
+
+You can identify maneuvers and disciplines used by a combattant.
+
+Use: Automatic.</entry>
   <entry id="52100" lang="en" sex="m">Necrotic cyst implanted.</entry>
   <entry id="52101" lang="en" sex="m">Your target does not have a Necrotic Cyst!</entry>
   <entry id="52102" lang="en" sex="m">You must have a Mother Cyst to cast this spell!</entry>

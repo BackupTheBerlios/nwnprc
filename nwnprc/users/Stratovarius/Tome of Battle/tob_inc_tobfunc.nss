@@ -168,6 +168,25 @@ string GetDiscipleName(int nDisciple);
  */
 int GetDiscipleByManeuver(int nSpellId);
 
+/**
+ * Returns true or false if the initiator has the Discipline
+ * @param oInitiator    Person to check
+ * @param nDiscipline   Discipline to check
+ *
+ * @return           TRUE or FALSE
+ */
+int TOBGetHasDisciple(object oInitiator, int nDiscipline);
+
+/**
+ * Returns true or false if the swordsage has Discipline
+ * focus in the chosen discipline
+ * @param oInitiator    Person to check
+ * @param nDiscipline   Discipline to check
+ *
+ * @return           TRUE or FALSE
+ */
+int TOBGetHasDiscipleFocus(object oInitiator, int nDiscipline);
+
 */
 //////////////////////////////////////////////////
 /*                  Includes                    */
@@ -279,7 +298,7 @@ int GetIsBladeMagicClass(int nClass)
 
 int GetManeuverLevel(object oInitiator)
 {
-    return GetLocalInt(oInitiator, PRC_maneuver_LEVEL);
+    return GetLocalInt(oInitiator, PRC_MANEUVER_LEVEL);
 }
 
 int GetBladeMagicAbilityScoreOfClass(object oInitiator, int nClass)
@@ -340,19 +359,19 @@ int GetInitiatorDC(object oInitiator = OBJECT_SELF)
     else if (nRace == RACIAL_TYPE_VERMIN             && GetHasFeat(FEAT_FOCUSED_DISCIPLINE_VERMIN,       oInitiator)) nDC += 1;
 
     // maneuver Focus. DC Bonus for a chosen maneuver
-    if      (nSpellId == UTTER_BREATH_CLEANSING_R      && GetHasFeat(FEAT_maneuver_FOCUS_BREATH_CLEANSING,      oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_BREATH_RECOVERY_R       && GetHasFeat(FEAT_maneuver_FOCUS_BREATH_RECOVERY,       oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_ELDRITCH_ATTRACTION     && GetHasFeat(FEAT_maneuver_FOCUS_ELDRITCH_ATTRACTION,   oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_ELDRITCH_ATTRACTION_R   && GetHasFeat(FEAT_maneuver_FOCUS_ELDRITCH_ATTRACTION,   oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_MORALE_BOOST_R          && GetHasFeat(FEAT_maneuver_FOCUS_MORALE_BOOST,          oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_PRETERNATURAL_CLARITY_R && GetHasFeat(FEAT_maneuver_FOCUS_PRETERNATURAL_CLARITY, oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_SENSORY_FOCUS_R         && GetHasFeat(FEAT_maneuver_FOCUS_SENSORY_FOCUS,         oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_SILENT_CASTER_R         && GetHasFeat(FEAT_maneuver_FOCUS_SILENT_CASTER,         oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_SINGULAR_MIND_R         && GetHasFeat(FEAT_maneuver_FOCUS_SINGULAR_MIND,         oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_TEMPORAL_SPIRAL_R       && GetHasFeat(FEAT_maneuver_FOCUS_TEMPORAL_SPIRAL,       oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_TEMPORAL_TWIST_R        && GetHasFeat(FEAT_maneuver_FOCUS_TEMPORAL_TWIST,        oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_WARD_PEACE_R            && GetHasFeat(FEAT_maneuver_FOCUS_WARD_PEACE,            oInitiator)) nDC += 1;
-    else if (nSpellId == UTTER_SHOCKWAVE               && GetHasFeat(FEAT_maneuver_FOCUS_SHOCKWAVE,             oInitiator)) nDC += 1;
+    if      (nSpellId == UTTER_BREATH_CLEANSING_R      && GetHasFeat(FEAT_MANEUVER_FOCUS_BREATH_CLEANSING,      oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_BREATH_RECOVERY_R       && GetHasFeat(FEAT_MANEUVER_FOCUS_BREATH_RECOVERY,       oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_ELDRITCH_ATTRACTION     && GetHasFeat(FEAT_MANEUVER_FOCUS_ELDRITCH_ATTRACTION,   oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_ELDRITCH_ATTRACTION_R   && GetHasFeat(FEAT_MANEUVER_FOCUS_ELDRITCH_ATTRACTION,   oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_MORALE_BOOST_R          && GetHasFeat(FEAT_MANEUVER_FOCUS_MORALE_BOOST,          oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_PRETERNATURAL_CLARITY_R && GetHasFeat(FEAT_MANEUVER_FOCUS_PRETERNATURAL_CLARITY, oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_SENSORY_FOCUS_R         && GetHasFeat(FEAT_MANEUVER_FOCUS_SENSORY_FOCUS,         oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_SILENT_CASTER_R         && GetHasFeat(FEAT_MANEUVER_FOCUS_SILENT_CASTER,         oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_SINGULAR_MIND_R         && GetHasFeat(FEAT_MANEUVER_FOCUS_SINGULAR_MIND,         oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_TEMPORAL_SPIRAL_R       && GetHasFeat(FEAT_MANEUVER_FOCUS_TEMPORAL_SPIRAL,       oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_TEMPORAL_TWIST_R        && GetHasFeat(FEAT_MANEUVER_FOCUS_TEMPORAL_TWIST,        oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_WARD_PEACE_R            && GetHasFeat(FEAT_MANEUVER_FOCUS_WARD_PEACE,            oInitiator)) nDC += 1;
+    else if (nSpellId == UTTER_SHOCKWAVE               && GetHasFeat(FEAT_MANEUVER_FOCUS_SHOCKWAVE,             oInitiator)) nDC += 1;
 
     return nDC;
 }
